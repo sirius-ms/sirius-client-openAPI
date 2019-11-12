@@ -1,0 +1,9 @@
+Package: R-sirius
+Type: Package
+Title: Sirius R-Api
+Version: 1.0
+Date: 2019-11-11
+Author: Boecker-Lab
+Maintainer: Nils Haupt <nils.alexander.haupt@uni-jena.de>
+Description: R-API which enables the access to Sirius with R
+License: GNU (>= 2)
