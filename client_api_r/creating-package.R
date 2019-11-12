@@ -9,5 +9,5 @@ list_classes <- gsub("\\.[rR]","",scripts)
 scripts_path <- file.path(code_path,scripts)
 sapply(X = scripts_path, FUN = source)
 
-# automated construction of the package "R-sirius":
-package.skeleton(name = "R-sirius", list = list_classes, path = getwd(), code_files = scripts_path)
+# automated construction of the package "Rsirius":
+package.skeleton(name = "Rsirius", list = list_classes, path = getwd(), code_files = scripts_path)
