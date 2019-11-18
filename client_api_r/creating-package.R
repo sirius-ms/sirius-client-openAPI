@@ -1,5 +1,4 @@
-setwd("E:\\Bioinformatik (B.Sc. + M.Sc.)\\HiWi\\sirius-client-openapi\\client_api_r")
-
+# NOTE: This folder "client_api_r" has to be the current working directory to run this script.
 # list which contains all names of the R objects of interest:
 code_path <- file.path(getwd(),"generated","R")
 scripts <- list.files(code_path)
