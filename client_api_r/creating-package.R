@@ -46,6 +46,9 @@ for(idx in 1:length(files_to_rmv)){
 require(devtools)
 document(pkg = file.path(getwd(),package_name))
 
+
+# TODO: Edit of description file
+
 print("FINISHED CREATING PACKAGE")
 print(paste("Note:",
             "You have to edit the Rsirius-package.Rd and DESCRIPTION file by hand. Include 'Imports: ...' to the DESCRIPTION file.",
