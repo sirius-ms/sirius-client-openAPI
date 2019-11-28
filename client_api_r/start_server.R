@@ -1,11 +1,16 @@
-# Title     : TODO
-# Objective : TODO
-# Created by: Latitude
-# Created on: 27.11.2019
-
-#' This service will be implemented soon.
+#' This method starts the SIRIUS server as REST service.
 #'
-start_server <- function(){
-	setwd("C:\\Users\\Latitude\\Desktop\\sirius-win64-headless-service-4.3.0-SNAPSHOT")
-	system("sirius-console-64.exe -i 'E:\\Bioinformatik (B.Sc. + M.Sc.)\\HiWi\\mice_mzml_500d' asService")
+#' @param pathToSirius This character vector represents the path to the SIRIUS instance.
+#' @param inputData
+#' @param projectSpace
+#' @param port
+#' @param help
+#'
+start_server <- function(pathToSirius, inputData, projectSpace = "", port = 8080){
+	sirius_call <- paste(pathToSirius,"-i",inputData,"asService","-p",port)
+
+	if(length(projectSpace) > 0){
+		sirius_call <- paste(sirius_call,"-o",projectSpace)
+	}
+	system(sirius_call)
 }
