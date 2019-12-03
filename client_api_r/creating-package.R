@@ -22,7 +22,7 @@ dir_gen_scripts <- file.path(getwd(),"generated","R")
 gen_scripts <- list.files(dir_gen_scripts)
 path_gen_scripts <- file.path(dir_gen_scripts,gen_scripts)
 
-files_to_copy <- c(path_gen_scripts,file.path(getwd(),"start_server.R"))
+files_to_copy <- c(path_gen_scripts,file.path(getwd(),"start_server.R"),file.path(getwd(),"shutdown_server.R"))
 file.copy(from = files_to_copy, to = file.path(getwd(),package_name,"R"))
 
 # The directory with name <package_name> and subdirectories "man" and "R" was created.

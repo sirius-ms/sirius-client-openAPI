@@ -6,7 +6,7 @@
 #' @param pathToSirius A string which represents the path to the SIRIUS instance.
 #' @param inputData A string which represents the path to the input data for further analysis.
 #'				 	This can be either preprocessed mass spectra in .ms or .mgf file format,
-# 					LC/MS runs in .mzML/.mzXml format or already existing SIRIUS project-space(s) (uncompressed/compressed).
+#' 					LC/MS runs in .mzML/.mzXml format or already existing SIRIUS project-space(s) (uncompressed/compressed).
 #' @param projectSpace 	A string which specifies the project-space to read from and also write to
 #'						if nothing else is specified. For compression use the file ending .zip or .sirius.
 #'
@@ -37,8 +37,8 @@ start_server <- function(pathToSirius, inputData, projectSpace = ""){
                 }
                 sirius_call <- paste(sirius_call," asService",sep = "")
 
-                # Call in commando line:
-                system(sirius_call)
+                # Call SIRIUS as background service in commando line:
+                system(sirius_call, wait = FALSE)
 
             }else{
                 stop("The given string \"inputData\" should represent a valid path to the input.")
