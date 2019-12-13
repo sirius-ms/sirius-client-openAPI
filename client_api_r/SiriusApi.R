@@ -1,20 +1,32 @@
-
+#' SIRIUS REST API Class
+#'
+#' This class \code{SiriusApi} is a subclass of \code{ApiClient}.
+#' An object of this class represents a client object which handles the client-server communication.
+#' It enables the possibility to start and to shutdown the server with the methods \code{start} and \code{shutdown}.
+#'
+#' TODO: Section 'Methods'
+#'
+#' @export
 SiriusApi <- R6::R6Class(
     classname = "SiriusApi",
     inherit = ApiClient,
     public = list(
+        host = "http:\\localhost:",
         port = 8080,
         initialize = function(host = "http:\\localhost:",port = 8080, configuration = NULL, defaultHeaders = NULL){
-            if(is.character(host) && length(host) == 1){
-                if(is.numeric(post)){
+            if(is.character(host) && length(host) == 1){ # TODO: check that the given host is a valid domain name
+                if(is.numeric(port)){
                     self$port <- as.integer(port)
-                    basePath <- paste(host,port, sep = "")
+                    self$host <- host
+
+                    basePath <- paste(self$host,self$port, sep = "")
                     super$initialize(basePath,configuration,defaultHeaders)
                 }else{
                     stop("The given parameter \"port\" has to be an integer value.")
                 }
             }else{
-                stop("The given parameter \"host\" has to be a valid domain name.")
+                stop("The given parameter \"host\" has to be a valid domain name.
+                \"host\" has to be a character vector of length one.")
             }
         },
         start = function(pathToSirius, inputData, projectSpace = ""){
@@ -59,9 +71,30 @@ SiriusApi <- R6::R6Class(
 		            Both parameters \"pathToSirius\" and \"inputData\" have to be character vectors of length 1.")
             }
         },
-        shutdown = function(){
-            httr:GET(paste(super$basePath,"/actuator/shutdown"))
-        }))
+        shutdown = function(){ # TODO
+            if(self$get_status()){
+                httr::POST(paste(super$basePath,"/actuator/shutdown",sep = ""))
+                print("The SIRIUS REST service ended successfully. ")
+            }else{
+                print("SIRIUS does not run as REST service at this moment.")
+            }
+        },
+        get_status = function(){ #TODO
+            resp <- httr::GET(paste(super$basePath,"/actuator/health",sep = ""))
+            status_code <- httr::status_code(resp)
+
+            if(status_code >= 200 && status_code <= 299){
+                content <- httr::content(resp)
+                if(content$status == "UP"){
+                    return(TRUE)
+                }else{
+                    return(FALSE)
+                }
+            }else{
+                return(FALSE)
+            }
+        })
+)
 
 
 
