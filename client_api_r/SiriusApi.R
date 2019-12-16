@@ -11,10 +11,10 @@ SiriusApi <- R6::R6Class(
     classname = "SiriusApi",
     inherit = ApiClient,
     public = list(
-        host = "http:\\localhost:",
+        host = "http://localhost:",
         port = 8080,
-        initialize = function(host = "http:\\localhost:",port = 8080, configuration = NULL, defaultHeaders = NULL){
-            if(is.character(host) && length(host) == 1){ # TODO: check that the given host is a valid domain name
+        initialize = function(host = "http://localhost:",port = 8080, configuration = NULL, defaultHeaders = NULL){
+            if(is.character(host) && length(host) == 1){
                 if(is.numeric(port)){
                     self$port <- as.integer(port)
                     self$host <- host
@@ -71,28 +71,33 @@ SiriusApi <- R6::R6Class(
 		            Both parameters \"pathToSirius\" and \"inputData\" have to be character vectors of length 1.")
             }
         },
-        shutdown = function(){ # TODO
-            if(self$get_status()){
-                httr::POST(paste(super$basePath,"/actuator/shutdown",sep = ""))
+        shutdown = function(){
+            if(self$is_active()){
+                httr::POST(paste(self$basePath,"/actuator/shutdown",sep = ""))
                 print("The SIRIUS REST service ended successfully. ")
             }else{
                 print("SIRIUS does not run as REST service at this moment.")
             }
         },
-        get_status = function(){ #TODO
-            resp <- httr::GET(paste(super$basePath,"/actuator/health",sep = ""))
-            status_code <- httr::status_code(resp)
+        is_active = function(){
+            tryCatch(
+            {
+                resp <- httr::GET(paste(self$basePath,"/actuator/health", sep = ""))
 
-            if(status_code >= 200 && status_code <= 299){
-                content <- httr::content(resp)
-                if(content$status == "UP"){
-                    return(TRUE)
+                if(httr::status_code(resp) >= 200 && httr::status_code(resp) <= 299){
+                    content <- httr::content(resp)
+                    if(content$status == "UP"){
+                        return(TRUE)
+                    }else{
+                        return(FALSE)
+                    }
                 }else{
+                    print("The request was not completely successfull.")
                     return(FALSE)
                 }
-            }else{
+            },error = function(e){
                 return(FALSE)
-            }
+            })
         })
 )
 
