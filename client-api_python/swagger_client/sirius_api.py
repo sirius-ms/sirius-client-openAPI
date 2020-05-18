@@ -12,6 +12,7 @@ class SiriusAPI:
         self.sirius_executable = sirius_executable
         self.base_path = "http://localhost:" + self.port
 
+
     def start_sirius(self):
         run_command = "java -jar " + self.sirius_executable + " --output " + self.project_space + " REST  -p " + self.port + " -s" + ">/dev/null 2>&1"
         # add logs, wait until server is started
@@ -25,8 +26,8 @@ class SiriusAPI:
     async def __shutdown(self):
         http = urllib3.PoolManager()
         resp = http.request('POST', self.base_path + "/actuator/shutdown")
-        # TODO: add kill process if not shutdown successfully
         if resp.status == 200:
             print("Server wash shut down succesfully")
         else:
-            print("Server could not be shutdown")
+            os.system("fuser -k " + self.port + "/tcp > /dev/null 2>&1")
+            print("Sirus was closed forcibly")
