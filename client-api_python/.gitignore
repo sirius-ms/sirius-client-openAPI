@@ -62,3 +62,7 @@ target/
 
 #Ipython Notebook
 .ipynb_checkpoints
+
+# test files
+log.txt
+main.py

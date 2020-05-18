@@ -1,6 +1,8 @@
 import os
+import time
 import subprocess
 import asyncio
+import json
 
 import urllib3
 
@@ -13,9 +15,23 @@ class SiriusAPI:
         self.base_path = "http://localhost:" + self.port
 
     def start_sirius(self):
+        is_up = False
+        http = urllib3.PoolManager()
+
         run_command = "java -jar " + self.sirius_executable + " --output " + self.project_space + " REST  -p " + self.port + " -s" + "> log.txt 2>&1"
-        # add logs, wait until server is started
         subprocess.Popen([run_command], shell=True)
+
+        while not is_up:
+            time.sleep(0.5)
+            try:
+                resp = http.request('GET', self.base_path + "/actuator/health")
+                if resp.status == 200:
+                    resp_data = json.loads(resp.data.decode('utf-8'))
+                    is_up = resp_data["status"] == "UP"
+                    if is_up:
+                        print("Sirius started succesully on the port " + self.port)
+            except:
+                pass
 
     def shutdown(self):
         loop = asyncio.get_event_loop()
