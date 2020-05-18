@@ -12,7 +12,6 @@ class SiriusAPI:
         self.sirius_executable = sirius_executable
         self.base_path = "http://localhost:" + self.port
 
-
     def start_sirius(self):
         run_command = "java -jar " + self.sirius_executable + " --output " + self.project_space + " REST  -p " + self.port + " -s" + ">/dev/null 2>&1"
         # add logs, wait until server is started
