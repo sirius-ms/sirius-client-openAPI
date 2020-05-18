@@ -18,7 +18,9 @@ class SiriusAPI:
         is_up = False
         http = urllib3.PoolManager()
 
-        run_command = "java -jar " + self.sirius_executable + " --output " + self.project_space + " REST  -p " + self.port + " -s" + "> log.txt 2>&1"
+        # run_command = "java -jar " + self.sirius_executable + " --output " + self.project_space + " REST  -p " + self.port + " -s" + "> log.txt 2>&1"
+        run_command = self.sirius_executable + " --output " + self.project_space + " REST  -p " + self.port + " -s" + "> log.txt 2>&1"
+
         subprocess.Popen([run_command], shell=True)
 
         while not is_up:
@@ -34,15 +36,18 @@ class SiriusAPI:
                 pass
 
     def shutdown(self):
-        loop = asyncio.get_event_loop()
-        loop.run_until_complete(self.__shutdown())
-        loop.close()
+        try:
+            loop = asyncio.new_event_loop()
+            loop.run_until_complete(self.__shutdown())
+            loop.close()
+        except:
+            print("Sirius is down")
 
     async def __shutdown(self):
         http = urllib3.PoolManager()
         resp = http.request('POST', self.base_path + "/actuator/shutdown")
         if resp.status == 200:
-            print("Server wash shut down succesfully")
+            print("Sirius wash shut down succesfully")
         else:
             os.system("fuser -k " + self.port + "/tcp > /dev/null 2>&1")
-            print("Sirus was shut down forcibly")
+            print("Sirius was shut down forcibly")
