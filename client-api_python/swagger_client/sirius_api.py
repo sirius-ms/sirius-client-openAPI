@@ -13,7 +13,7 @@ class SiriusAPI:
         self.base_path = "http://localhost:" + self.port
 
     def start_sirius(self):
-        run_command = "java -jar " + self.sirius_executable + " --output " + self.project_space + " REST  -p " + self.port + " -s" + ">/dev/null 2>&1"
+        run_command = "java -jar " + self.sirius_executable + " --output " + self.project_space + " REST  -p " + self.port + " -s" + "> log.txt 2>&1"
         # add logs, wait until server is started
         subprocess.Popen([run_command], shell=True)
 
@@ -29,4 +29,4 @@ class SiriusAPI:
             print("Server wash shut down succesfully")
         else:
             os.system("fuser -k " + self.port + "/tcp > /dev/null 2>&1")
-            print("Sirus was closed forcibly")
+            print("Sirus was shut down forcibly")
