@@ -6,15 +6,16 @@ import urllib3
 
 class SiriusAPI:
 
-    def __init__(self, ps_path, jar_path, port=8080):
+    def __init__(self, project_space, sirius_executable, port=8080):
         self.port = str(port)
-        self.ps_path = ps_path
-        self.jar_path = jar_path
+        self.project_space = project_space
+        self.sirius_executable = sirius_executable
         self.base_path = "http://localhost:" + self.port
 
-    def start_server(self):
-        run_command = "java -jar " + self.jar_path + " --output " + self.ps_path + " REST  -p " + self.port + " -s" + ">/dev/null 2>&1"
-        subprocess.Popen([run_command], shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+    def start_sirius(self):
+        run_command = "java -jar " + self.sirius_executable + " --output " + self.project_space + " REST  -p " + self.port + " -s" + ">/dev/null 2>&1"
+        # add logs, wait until server is started
+        subprocess.Popen([run_command], shell=True)
 
     def shutdown(self):
         loop = asyncio.get_event_loop()
@@ -24,6 +25,7 @@ class SiriusAPI:
     async def __shutdown(self):
         http = urllib3.PoolManager()
         resp = http.request('POST', self.base_path + "/actuator/shutdown")
+        # TODO: add kill process if not shutdown successfully
         if resp.status == 200:
             print("Server wash shut down succesfully")
         else:
