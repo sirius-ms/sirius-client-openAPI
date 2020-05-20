@@ -18,22 +18,30 @@ class SiriusAPI:
         is_up = False
         http = urllib3.PoolManager()
 
-        # run_command = "java -jar " + self.sirius_executable + " --output " + self.project_space + " REST  -p " + self.port + " -s" + "> log.txt 2>&1"
-        run_command = self.sirius_executable + " --output " + self.project_space + " REST  -p " + self.port + " -s" + "> log.txt 2>&1"
 
-        subprocess.Popen([run_command], shell=True)
+        # add windows and mac
+        executable_exist = os.path.exists(self.sirius_executable)
+        project_space_exist = os.path.exists(self.project_space)
 
-        while not is_up:
-            time.sleep(0.5)
-            try:
-                resp = http.request('GET', self.base_path + "/actuator/health")
-                if resp.status == 200:
-                    resp_data = json.loads(resp.data.decode('utf-8'))
-                    is_up = resp_data["status"] == "UP"
-                    if is_up:
-                        print("Sirius started succesully on the port " + self.port)
-            except:
-                pass
+        if executable_exist and project_space_exist:
+            # run_command = "java -jar " + self.sirius_executable + " --output " + self.project_space + " REST  -p " + self.port + " -s" + "> log.txt 2>&1"
+            run_command = self.sirius_executable + " --output " + self.project_space + " REST  -p " + self.port + " -s" + "> log.txt 2>&1"
+            subprocess.Popen([run_command], shell=True)
+
+            while not is_up:
+                time.sleep(0.5)
+                try:
+                    resp = http.request('GET', self.base_path + "/actuator/health")
+                    if resp.status == 200:
+                        resp_data = json.loads(resp.data.decode('utf-8'))
+                        is_up = resp_data["status"] == "UP"
+                        if is_up:
+                            print("Sirius started succesully on the port " + self.port)
+                except:
+                    pass
+        else:
+            print("Wrong path to project space or executable")
+            return None
 
     def shutdown(self):
         try:
@@ -49,5 +57,7 @@ class SiriusAPI:
         if resp.status == 200:
             print("Sirius wash shut down succesfully")
         else:
+
+            # add for windows and mac
             os.system("fuser -k " + self.port + "/tcp > /dev/null 2>&1")
             print("Sirius was shut down forcibly")
