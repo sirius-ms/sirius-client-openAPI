@@ -31,7 +31,7 @@ api_client <- ApiClient$new(basePath = "http://localhost:8080")
 
 # request and response
 comp_controller <- CompoundControllerApi$new(api_client)
-# resp <- comp_controller$get_compound_ids_using_get(pid = "mice_mzml_500d")
+# resp <- comp_controller$get_compound_ids_using_get(pid = "mySiriusProjectSpace")
 # compound_ids <- resp$content
 
 # print(cbind(compound_ids$index,compound_id$id,compound_ids$name,compound_ids$ionMass,compound_ids$ionType))
