@@ -9,6 +9,7 @@ Authors@R: c(
     person(given = "Kai", family = "Dührkop", role = "aut"),
     person(given = "Marcus", family = "Ludwig", role = "aut"),
     person(given = c("Martin", "A."), family = "Hoffmann", role = "aut"),
+    person(given= "Fleming", family = "Kretschmer", role = "aut"),
     person(given = "Sebastian", family = "Böcker", role = "aut"),
     person(given = "Team SIRIUS (Boecker-Lab)", email = "sirius@uni-jena.de", role = "cre"))
 Description: R Client API which enables the access to SIRIUS with R

@@ -12,7 +12,7 @@ package_name <- "Rsirius"
 # If there is already a built package, then delete only its contained files.
 # If there is not the package, then create its directories.
 if(dir.exists(file.path(getwd(),"build",package_name))){
-    files_to_remove <- list.files(file.path(getwd(),"build",package_name,c("R","man",""), all.files = TRUE, all.names = TRUE))
+    files_to_remove <- list.files(file.path(getwd(),"build",package_name,c("R","man","")), include.dirs = FALSE, all.files = TRUE, full.names = TRUE)
     file.remove(files_to_remove)
     print(paste("Old files",files_to_remove,"were removed.", sep = " "))
 }else{
@@ -25,7 +25,7 @@ if(dir.exists(file.path(getwd(),"build",package_name))){
 # assumption: Swagger-Codegen generates R files which contain only one R object.
 #             These R objects have the same name as the file in which they are contained.
 dir_gen_scripts <- file.path(getwd(),"client_api_r","generated","R")
-gen_scripts <- list.files(dir_gen_scripts)
+gen_scripts <- list.files(dir_gen_scripts, all.files = TRUE)
 path_gen_scripts <- file.path(dir_gen_scripts,gen_scripts)
 
 files_to_copy <- c(path_gen_scripts,file.path(getwd(),"client_api_r","SiriusApi.R"))
