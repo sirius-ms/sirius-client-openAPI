@@ -2,6 +2,11 @@
 # If Rsirius is already built, this package will be copied to the local Github repository of Rsirius.
 # These changes will be commited and pushed to the remote repository.
 
+# 0. Request of some parameters:
+path_Rsirius_repo <- readline("Please enter the location of your local Rsirius repository: ")
+user.email <- readline("Please enter your Github useremail: ")
+user.name <- readline("Please enter your Github username: ")
+
 # 1. Check if the package Rsirius is already built.
 path_this_repo <- getwd()
 path_Rsirius_package <- file.path(getwd(),"build","Rsirius")
@@ -15,15 +20,10 @@ rd_files <- list.files(path = file.path(path_Rsirius_package,"man"), all.files =
 metadata_files <- list.files(path = path_Rsirius_package, include.dirs = FALSE, all.files = TRUE, full.names = TRUE)
 
 # 2. Change working directory and update this repository.
-path_Rsirius_repo <- file.path(getwd(),"../Rsirius")
 setwd(path_Rsirius_repo)
 print(paste("Changed working directory to:", getwd(), sep = " "))
-
-user.email <- "nils.alexander@hotmail.de"
-user.name <- "ju52les"
-system(paste("git config --local user.email",username,sep = " "), wait = TRUE)
-system(paste("git config --local user.name",username,sep = " "), wait = TRUE)
-
+system(paste("git config --local user.email",user.email,sep = " "), wait = TRUE)
+system(paste("git config --local user.name",user.name,sep = " "), wait = TRUE)
 system("git pull origin master", wait = TRUE)
 
 # 3. Remove all files contained in the Rsirius directory and its subdirectories
