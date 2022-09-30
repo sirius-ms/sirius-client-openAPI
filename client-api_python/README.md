@@ -23,7 +23,7 @@ pip install git+https://github.com/GIT_USER_ID/GIT_REPO_ID.git
 
 Then import the package:
 ```python
-import swagger_client 
+import PySirius 
 ```
 
 ### Setuptools
@@ -37,7 +37,7 @@ python setup.py install --user
 
 Then import the package:
 ```python
-import swagger_client
+import PySirius
 ```
 
 ## Getting Started
@@ -47,10 +47,11 @@ Please follow the [installation procedure](#installation--usage) and then run th
 ```python
 from __future__ import print_function
 import time
-import swagger_client
+import PySirius as swagger_client
 from swagger_client.rest import ApiException
 from pprint import pprint
 
+configuration = None # configuration
 # create an instance of the API class
 api_instance = swagger_client.CompoundControllerApi(swagger_client.ApiClient(configuration))
 pid = 'pid_example' # str | pid
