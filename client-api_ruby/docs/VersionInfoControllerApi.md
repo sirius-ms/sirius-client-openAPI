@@ -1,16 +1,15 @@
 # SwaggerClient::VersionInfoControllerApi
 
-All URIs are relative to *https://localhost:8080*
+All URIs are relative to *http://localhost:8080*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**get_version_info_using_get**](VersionInfoControllerApi.md#get_version_info_using_get) | **GET** /api/version.json | getVersionInfo
+[**get_version_info**](VersionInfoControllerApi.md#get_version_info) | **GET** /api/version.json | 
+
+# **get_version_info**
+> String get_version_info
 
 
-# **get_version_info_using_get**
-> String get_version_info_using_get
-
-getVersionInfo
 
 ### Example
 ```ruby
@@ -20,11 +19,10 @@ require 'swagger_client'
 api_instance = SwaggerClient::VersionInfoControllerApi.new
 
 begin
-  #getVersionInfo
-  result = api_instance.get_version_info_using_get
+  result = api_instance.get_version_info
   p result
 rescue SwaggerClient::ApiError => e
-  puts "Exception when calling VersionInfoControllerApi->get_version_info_using_get: #{e}"
+  puts "Exception when calling VersionInfoControllerApi->get_version_info: #{e}"
 end
 ```
 
@@ -42,7 +40,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json;charset=UTF-8
+ - **Accept**: application/json
 
 
 

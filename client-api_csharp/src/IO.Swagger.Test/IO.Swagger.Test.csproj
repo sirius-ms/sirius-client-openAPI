@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-Sirius Nightsky Middleware API
+SIRIUS Nightsky API
 
-Sirius Nightsky Middleware API
+REST API that provides the full functionality of SIRIUS and its web services as background service. It is intended as entry-point for scripting languages and software integration SDKs.
 
-OpenAPI spec version: 1.0
+OpenAPI spec version: v0.9 on SIRIUS 5.6.0-SNAPSHOT
 
 -->
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
@@ -81,7 +81,7 @@ OpenAPI spec version: 1.0
   <Import Project="$(MsBuildToolsPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
       <ProjectReference Include="..\IO.Swagger\IO.Swagger.csproj">
-          <Project>{735ECBF7-FFE7-41E9-8F69-3C5FC8CBB705}</Project>
+          <Project>{3C49AF55-A8B8-48D1-AA9A-797CA7B2FB13}</Project>
           <Name>IO.Swagger</Name>
       </ProjectReference>
   </ItemGroup>

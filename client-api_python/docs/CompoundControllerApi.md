@@ -1,12 +1,11 @@
 # swagger_client.CompoundControllerApi
 
-All URIs are relative to *https://localhost:8080*
+All URIs are relative to *//localhost:8080/*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**get_compound_ids_using_get**](CompoundControllerApi.md#get_compound_ids_using_get) | **GET** /api/projects/{pid}/compounds | getCompoundIds
 [**get_compound_using_get**](CompoundControllerApi.md#get_compound_using_get) | **GET** /api/projects/{pid}/compounds/{cid} | getCompound
-
 
 # **get_compound_ids_using_get**
 > list[CompoundId] get_compound_ids_using_get(pid)

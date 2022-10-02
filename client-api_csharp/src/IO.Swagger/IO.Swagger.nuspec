@@ -20,8 +20,6 @@
         <!-- The description can be used in package manager UI. Note that the
              nuget.org gallery uses information you add in the portal. -->
         <description>A library generated from a Swagger doc</description>
-        <copyright>https://bio.informatik.uni-jena.de/software/sirius/</copyright>
-        <licenseUrl>https://github.com/boecker-lab/sirius_frontend/blob/release/LICENSE.txt</licenseUrl>
 
         <!-- Dependencies are automatically installed when the package is installed -->
         <dependencies>

@@ -1,6 +1,6 @@
 # swagger_client.ProjectSpaceControllerApi
 
-All URIs are relative to *https://localhost:8080*
+All URIs are relative to *//localhost:8080/*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -8,7 +8,6 @@ Method | HTTP request | Description
 [**get_project_spaces_using_get**](ProjectSpaceControllerApi.md#get_project_spaces_using_get) | **GET** /api/projects | getProjectSpaces
 [**open_project_space_using_post**](ProjectSpaceControllerApi.md#open_project_space_using_post) | **POST** /api/projects/new | openProjectSpace
 [**open_project_space_using_put**](ProjectSpaceControllerApi.md#open_project_space_using_put) | **PUT** /api/projects/{name} | openProjectSpace
-
 
 # **get_project_space_using_get**
 > ProjectSpaceId get_project_space_using_get(name)
@@ -139,7 +138,7 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: */*
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -187,7 +186,7 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: */*
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

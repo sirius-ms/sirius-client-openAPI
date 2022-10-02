@@ -4,6 +4,5 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **name** | **String** |  | [optional] 
-**path** | **File** |  | [optional] 
-
+**path** | **String** |  | [optional] 
 

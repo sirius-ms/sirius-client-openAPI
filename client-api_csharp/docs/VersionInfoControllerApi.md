@@ -1,16 +1,16 @@
 # IO.Swagger.Api.VersionInfoControllerApi
 
-All URIs are relative to *//localhost:8080/*
+All URIs are relative to *http://localhost:8080*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**GetVersionInfoUsingGET**](VersionInfoControllerApi.md#getversioninfousingget) | **GET** /api/version.json | getVersionInfo
+[**GetVersionInfo**](VersionInfoControllerApi.md#getversioninfo) | **GET** /api/version.json | 
 
-<a name="getversioninfousingget"></a>
-# **GetVersionInfoUsingGET**
-> string GetVersionInfoUsingGET ()
+<a name="getversioninfo"></a>
+# **GetVersionInfo**
+> string GetVersionInfo ()
 
-getVersionInfo
+
 
 ### Example
 ```csharp
@@ -22,7 +22,7 @@ using IO.Swagger.Model;
 
 namespace Example
 {
-    public class GetVersionInfoUsingGETExample
+    public class GetVersionInfoExample
     {
         public void main()
         {
@@ -30,13 +30,12 @@ namespace Example
 
             try
             {
-                // getVersionInfo
-                string result = apiInstance.GetVersionInfoUsingGET();
+                string result = apiInstance.GetVersionInfo();
                 Debug.WriteLine(result);
             }
             catch (Exception e)
             {
-                Debug.Print("Exception when calling VersionInfoControllerApi.GetVersionInfoUsingGET: " + e.Message );
+                Debug.Print("Exception when calling VersionInfoControllerApi.GetVersionInfo: " + e.Message );
             }
         }
     }
@@ -57,6 +56,6 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json;charset=UTF-8
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

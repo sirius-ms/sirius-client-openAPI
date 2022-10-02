@@ -3,11 +3,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**ms_level** | **Integer** | MS level of the measured spectrum.  Artificial spectra with no msLevel (e.g. Simulated Isotope patterns) use 0 | [optional] 
 **collision_energy** | [**CollisionEnergy**](CollisionEnergy.md) |  | [optional] 
-**empty** | **BOOLEAN** |  | [optional] 
-**intensities** | **Array&lt;Float&gt;** |  | [optional] 
-**masses** | **Array&lt;Float&gt;** |  | [optional] 
-**max_intensity** | **Float** |  | [optional] 
-**ms_level** | **Integer** |  | [optional] 
-
+**peaks** | [**Array&lt;AnnotatedPeak&gt;**](AnnotatedPeak.md) |  | [optional] 
 

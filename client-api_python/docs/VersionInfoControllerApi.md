@@ -1,16 +1,15 @@
 # swagger_client.VersionInfoControllerApi
 
-All URIs are relative to *https://localhost:8080*
+All URIs are relative to *http://localhost:8080*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**get_version_info_using_get**](VersionInfoControllerApi.md#get_version_info_using_get) | **GET** /api/version.json | getVersionInfo
+[**get_version_info**](VersionInfoControllerApi.md#get_version_info) | **GET** /api/version.json | 
+
+# **get_version_info**
+> str get_version_info()
 
 
-# **get_version_info_using_get**
-> str get_version_info_using_get()
-
-getVersionInfo
 
 ### Example
 ```python
@@ -24,11 +23,10 @@ from pprint import pprint
 api_instance = swagger_client.VersionInfoControllerApi()
 
 try:
-    # getVersionInfo
-    api_response = api_instance.get_version_info_using_get()
+    api_response = api_instance.get_version_info()
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling VersionInfoControllerApi->get_version_info_using_get: %s\n" % e)
+    print("Exception when calling VersionInfoControllerApi->get_version_info: %s\n" % e)
 ```
 
 ### Parameters
@@ -45,7 +43,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json;charset=UTF-8
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
