@@ -47,20 +47,19 @@ Please follow the [installation procedure](#installation--usage) and then run th
 ```python
 from __future__ import print_function
 import time
-import PySirius as swagger_client
-from swagger_client.rest import ApiException
+import PySirius
 from pprint import pprint
 
 configuration = None # configuration
 # create an instance of the API class
-api_instance = swagger_client.CompoundControllerApi(swagger_client.ApiClient(configuration))
+api_instance = PySirius.CompoundControllerApi(PySirius.ApiClient(configuration))
 pid = 'pid_example' # str | pid
 
 try:
     # getCompoundIds
     api_response = api_instance.get_compound_ids_using_get(pid)
     pprint(api_response)
-except ApiException as e:
+except Exception as e:
     print("Exception when calling CompoundControllerApi->get_compound_ids_using_get: %s\n" % e)
 
 ```
