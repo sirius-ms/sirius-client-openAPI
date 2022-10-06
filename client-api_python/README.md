@@ -52,7 +52,7 @@ from swagger_client.rest import ApiException
 from pprint import pprint
 
 # create an instance of the API class
-api_instance = swagger_client.CompoundsApi(swagger_client.ApiClient(configuration))
+api_instance = swagger_client.CompoundsApi(swagger_client.ApiClient())
 project_id = 'project_id_example' # str | project-space to delete from.
 cid = 'cid_example' # str | identifier of compound to delete.
 
@@ -63,11 +63,11 @@ except ApiException as e:
     print("Exception when calling CompoundsApi->delete_compound: %s\n" % e)
 
 # create an instance of the API class
-api_instance = swagger_client.CompoundsApi(swagger_client.ApiClient(configuration))
+api_instance = swagger_client.CompoundsApi(swagger_client.ApiClient())
 project_id = 'project_id_example' # str | project-space to read from.
 cid = 'cid_example' # str | identifier of compound to access.
-top_annotation = false # bool | include the top annotation of this feature into the output (if available). (optional) (default to false)
-ms_data = false # bool | include corresponding source data (MS and MS/MS) into the output. (optional) (default to false)
+top_annotation = False # bool | include the top annotation of this feature into the output (if available). (optional) (default to False)
+ms_data = False # bool | include corresponding source data (MS and MS/MS) into the output. (optional) (default to False)
 
 try:
     # Get compound/feature with the given identifier from the specified project-space.
@@ -77,10 +77,10 @@ except ApiException as e:
     print("Exception when calling CompoundsApi->get_compound: %s\n" % e)
 
 # create an instance of the API class
-api_instance = swagger_client.CompoundsApi(swagger_client.ApiClient(configuration))
+api_instance = swagger_client.CompoundsApi(swagger_client.ApiClient())
 project_id = 'project_id_example' # str | project-space to read from.
-top_annotation = false # bool | include the top annotation of this feature into the output (if available). (optional) (default to false)
-ms_data = false # bool | include corresponding source data (MS and MS/MS) into the output. (optional) (default to false)
+top_annotation = False # bool | include the top annotation of this feature into the output (if available). (optional) (default to False)
+ms_data = False # bool | include corresponding source data (MS and MS/MS) into the output. (optional) (default to False)
 
 try:
     # Get all available compounds/features in the given project-space.
@@ -90,12 +90,12 @@ except ApiException as e:
     print("Exception when calling CompoundsApi->get_compounds: %s\n" % e)
 
 # create an instance of the API class
-api_instance = swagger_client.CompoundsApi(swagger_client.ApiClient(configuration))
+api_instance = swagger_client.CompoundsApi(swagger_client.ApiClient())
 body = ['body_example'] # list[str] | List of file and directory paths to import
 project_id = 'project_id_example' # str | project-space to import into.
-align_lcms_runs = false # bool | If true, multiple LCMS Runs (mzML, mzXML) will be aligned during import/feature finding (optional) (default to false)
-allow_ms1_only_data = true # bool |  (optional) (default to true)
-ignore_formulas = false # bool |  (optional) (default to false)
+align_lcms_runs = False # bool | If True, multiple LCMS Runs (mzML, mzXML) will be aligned during import/feature finding (optional) (default to False)
+allow_ms1_only_data = True # bool |  (optional) (default to True)
+ignore_formulas = False # bool |  (optional) (default to False)
 
 try:
     # Import ms/ms data in given format from local filesystem into the specified project-space
@@ -105,7 +105,7 @@ except ApiException as e:
     print("Exception when calling CompoundsApi->import_compounds: %s\n" % e)
 
 # create an instance of the API class
-api_instance = swagger_client.CompoundsApi(swagger_client.ApiClient(configuration))
+api_instance = swagger_client.CompoundsApi(swagger_client.ApiClient())
 body = 'body_example' # str | data content in specified format
 format = 'format_example' # str | data format specified by the usual file extension of the format (without [.])
 project_id = 'project_id_example' # str | project-space to import into.
@@ -131,13 +131,13 @@ Class | Method | HTTP request | Description
 *CompoundsApi* | [**import_compounds**](docs/CompoundsApi.md#import_compounds) | **POST** /api/projects/{projectId}/compounds | Import ms/ms data in given format from local filesystem into the specified project-space
 *CompoundsApi* | [**import_compounds_from_string**](docs/CompoundsApi.md#import_compounds_from_string) | **POST** /api/projects/{projectId}/compounds/import-from-string | Import ms/ms data from the given format into the specified project-space  Possible formats (ms, mgf, cef, msp, mzML, mzXML)
 *ComputationsApi* | [**delete_job**](docs/ComputationsApi.md#delete_job) | **DELETE** /api/projects/{projectId}/jobs/{jobId} | Delete job.
-*ComputationsApi* | [**delete_job_config**](docs/ComputationsApi.md#delete_job_config) | **DELETE** /api/job-configs/{name} | Delete job configuration with given name.
-*ComputationsApi* | [**get_default_job_config**](docs/ComputationsApi.md#get_default_job_config) | **GET** /api/default-job-config | Request default job configuration
+*ComputationsApi* | [**delete_job_config**](docs/ComputationsApi.md#delete_job_config) | **DELETE** /api/job-configs/{name} | Delete job  with given name.
+*ComputationsApi* | [**get_default_job_config**](docs/ComputationsApi.md#get_default_job_config) | **GET** /api/default-job-config | Request default job 
 *ComputationsApi* | [**get_job**](docs/ComputationsApi.md#get_job) | **GET** /api/projects/{projectId}/jobs/{jobId} | Get job information and its current state and progress (if available).
-*ComputationsApi* | [**get_job_config**](docs/ComputationsApi.md#get_job_config) | **GET** /api/job-configs/{name} | Request job configuration with given name.
-*ComputationsApi* | [**get_job_configs**](docs/ComputationsApi.md#get_job_configs) | **GET** /api/job-configs | Request all available job configurations
+*ComputationsApi* | [**get_job_config**](docs/ComputationsApi.md#get_job_config) | **GET** /api/job-configs/{name} | Request job  with given name.
+*ComputationsApi* | [**get_job_configs**](docs/ComputationsApi.md#get_job_configs) | **GET** /api/job-configs | Request all available job s
 *ComputationsApi* | [**get_jobs**](docs/ComputationsApi.md#get_jobs) | **GET** /api/projects/{projectId}/jobs | Get job information and its current state and progress (if available).
-*ComputationsApi* | [**post_job_config**](docs/ComputationsApi.md#post_job_config) | **POST** /api/job-configs/{name} | Add new job configuration with given name.
+*ComputationsApi* | [**post_job_config**](docs/ComputationsApi.md#post_job_config) | **POST** /api/job-configs/{name} | Add new job  with given name.
 *ComputationsApi* | [**start_job**](docs/ComputationsApi.md#start_job) | **POST** /api/projects/{projectId}/jobs | Start computation for given compounds and with given parameters.
 *ComputationsApi* | [**start_job_from_config**](docs/ComputationsApi.md#start_job_from_config) | **POST** /api/projects/{projectId}/jobs-from-config | Start computation for given compounds and with parameters from a stored job-config.
 *FormulaResultsApi* | [**get_best_matching_canopus_predictions**](docs/FormulaResultsApi.md#get_best_matching_canopus_predictions) | **GET** /api/projects/{projectId}/compounds/{compoundId}/formulas/{formulaId}/best-canopus-predictions | Best matching compound classes,  Set of the highest scoring compound classes CANOPUS) on each hierarchy level of  the ClassyFire and NPC ontology,
