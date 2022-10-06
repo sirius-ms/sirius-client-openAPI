@@ -34,8 +34,8 @@ from pprint import pprint
 api_instance = swagger_client.ComputationsApi()
 project_id = 'project_id_example' # str | project-space to run jobs on
 job_id = 'job_id_example' # str | of the job to be deleted
-cancel_if_running = true # bool | If true job will be canceled if it is not finished. Otherwise,                         deletion will fail for running jobs or request will block until job has finished. (optional) (default to true)
-await_deletion = true # bool | If true request will block until deletion succeeded or failed.                         If the job is still running the request will wait until the job has finished. (optional) (default to true)
+cancel_if_running = True # bool | If True job will be canceled if it is not finished. Otherwise,                         deletion will fail for running jobs or request will block until job has finished. (optional) (default to True)
+await_deletion = True # bool | If True request will block until deletion succeeded or failed.                         If the job is still running the request will wait until the job has finished. (optional) (default to True)
 
 try:
     # Delete job.
@@ -50,8 +50,8 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **str**| project-space to run jobs on | 
  **job_id** | **str**| of the job to be deleted | 
- **cancel_if_running** | **bool**| If true job will be canceled if it is not finished. Otherwise,                         deletion will fail for running jobs or request will block until job has finished. | [optional] [default to true]
- **await_deletion** | **bool**| If true request will block until deletion succeeded or failed.                         If the job is still running the request will wait until the job has finished. | [optional] [default to true]
+ **cancel_if_running** | **bool**| If True job will be canceled if it is not finished. Otherwise,                         deletion will fail for running jobs or request will block until job has finished. | [optional] [default to True]
+ **await_deletion** | **bool**| If True request will block until deletion succeeded or failed.                         If the job is still running the request will wait until the job has finished. | [optional] [default to True]
 
 ### Return type
 
@@ -132,7 +132,7 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = swagger_client.ComputationsApi()
-include_config_map = false # bool | if true, generic configmap with-defaults will be included (optional) (default to false)
+include_config_map = False # bool | if True, generic configmap with-defaults will be included (optional) (default to False)
 
 try:
     # Request default job configuration
@@ -146,7 +146,7 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **include_config_map** | **bool**| if true, generic configmap with-defaults will be included | [optional] [default to false]
+ **include_config_map** | **bool**| if True, generic configmap with-defaults will be included | [optional] [default to False]
 
 ### Return type
 
@@ -182,9 +182,9 @@ from pprint import pprint
 api_instance = swagger_client.ComputationsApi()
 project_id = 'project_id_example' # str | project-space to run jobs on
 job_id = 'job_id_example' # str | of the job to be returned
-include_state = true # bool | include {@link de.unijena.bioinf.ms.middleware.compute.model.JobProgress de.unijena.bioinf.ms.middleware.compute.model.JobProgress} state. (optional) (default to true)
-include_command = false # bool | include job command. (optional) (default to false)
-include_affected_compounds = false # bool | include list of compound ids affected by this job (if available) (optional) (default to false)
+include_state = True # bool | include {@link de.unijena.bioinf.ms.middleware.compute.model.JobProgress de.unijena.bioinf.ms.middleware.compute.model.JobProgress} state. (optional) (default to True)
+include_command = False # bool | include job command. (optional) (default to False)
+include_affected_compounds = False # bool | include list of compound ids affected by this job (if available) (optional) (default to False)
 
 try:
     # Get job information and its current state and progress (if available).
@@ -200,9 +200,9 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **str**| project-space to run jobs on | 
  **job_id** | **str**| of the job to be returned | 
- **include_state** | **bool**| include {@link de.unijena.bioinf.ms.middleware.compute.model.JobProgress de.unijena.bioinf.ms.middleware.compute.model.JobProgress} state. | [optional] [default to true]
- **include_command** | **bool**| include job command. | [optional] [default to false]
- **include_affected_compounds** | **bool**| include list of compound ids affected by this job (if available) | [optional] [default to false]
+ **include_state** | **bool**| include {@link de.unijena.bioinf.ms.middleware.compute.model.JobProgress de.unijena.bioinf.ms.middleware.compute.model.JobProgress} state. | [optional] [default to True]
+ **include_command** | **bool**| include job command. | [optional] [default to False]
+ **include_affected_compounds** | **bool**| include list of compound ids affected by this job (if available) | [optional] [default to False]
 
 ### Return type
 
@@ -237,7 +237,7 @@ from pprint import pprint
 # create an instance of the API class
 api_instance = swagger_client.ComputationsApi()
 name = 'name_example' # str | name of the job-config to return
-include_config_map = false # bool | if true the generic configmap will be part of the output (optional) (default to false)
+include_config_map = False # bool | if True the generic configmap will be part of the output (optional) (default to False)
 
 try:
     # Request job configuration with given name.
@@ -252,7 +252,7 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **name** | **str**| name of the job-config to return | 
- **include_config_map** | **bool**| if true the generic configmap will be part of the output | [optional] [default to false]
+ **include_config_map** | **bool**| if True the generic configmap will be part of the output | [optional] [default to False]
 
 ### Return type
 
@@ -286,7 +286,7 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = swagger_client.ComputationsApi()
-include_config_map = false # bool | if true the generic configmap will be part of the output (optional) (default to false)
+include_config_map = False # bool | if True the generic configmap will be part of the output (optional) (default to False)
 
 try:
     # Request all available job configurations
@@ -300,7 +300,7 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **include_config_map** | **bool**| if true the generic configmap will be part of the output | [optional] [default to false]
+ **include_config_map** | **bool**| if True the generic configmap will be part of the output | [optional] [default to False]
 
 ### Return type
 
@@ -335,9 +335,9 @@ from pprint import pprint
 # create an instance of the API class
 api_instance = swagger_client.ComputationsApi()
 project_id = 'project_id_example' # str | project-space to run jobs on
-include_state = false # bool | include {@link de.unijena.bioinf.ms.middleware.compute.model.JobProgress de.unijena.bioinf.ms.middleware.compute.model.JobProgress} states. (optional) (default to false)
-include_command = false # bool | include job commands. (optional) (default to false)
-include_affected_compounds = false # bool | include list of compound ids affected by this job (if available) (optional) (default to false)
+include_state = False # bool | include {@link de.unijena.bioinf.ms.middleware.compute.model.JobProgress de.unijena.bioinf.ms.middleware.compute.model.JobProgress} states. (optional) (default to False)
+include_command = False # bool | include job commands. (optional) (default to False)
+include_affected_compounds = False # bool | include list of compound ids affected by this job (if available) (optional) (default to False)
 
 try:
     # Get job information and its current state and progress (if available).
@@ -352,9 +352,9 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **str**| project-space to run jobs on | 
- **include_state** | **bool**| include {@link de.unijena.bioinf.ms.middleware.compute.model.JobProgress de.unijena.bioinf.ms.middleware.compute.model.JobProgress} states. | [optional] [default to false]
- **include_command** | **bool**| include job commands. | [optional] [default to false]
- **include_affected_compounds** | **bool**| include list of compound ids affected by this job (if available) | [optional] [default to false]
+ **include_state** | **bool**| include {@link de.unijena.bioinf.ms.middleware.compute.model.JobProgress de.unijena.bioinf.ms.middleware.compute.model.JobProgress} states. | [optional] [default to False]
+ **include_command** | **bool**| include job commands. | [optional] [default to False]
+ **include_affected_compounds** | **bool**| include list of compound ids affected by this job (if available) | [optional] [default to False]
 
 ### Return type
 
@@ -390,7 +390,7 @@ from pprint import pprint
 api_instance = swagger_client.ComputationsApi()
 body = swagger_client.JobSubmission() # JobSubmission | to add
 name = 'name_example' # str | name of the job-config to add
-override_existing = false # bool |  (optional) (default to false)
+override_existing = False # bool |  (optional) (default to False)
 
 try:
     # Add new job configuration with given name.
@@ -406,7 +406,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **body** | [**JobSubmission**](JobSubmission.md)| to add | 
  **name** | **str**| name of the job-config to add | 
- **override_existing** | **bool**|  | [optional] [default to false]
+ **override_existing** | **bool**|  | [optional] [default to False]
 
 ### Return type
 
@@ -442,9 +442,9 @@ from pprint import pprint
 api_instance = swagger_client.ComputationsApi()
 body = swagger_client.JobSubmission() # JobSubmission | configuration of the job that will be submitted of the job to be returned
 project_id = 'project_id_example' # str | project-space to run jobs on
-include_state = true # bool | include {@link de.unijena.bioinf.ms.middleware.compute.model.JobProgress de.unijena.bioinf.ms.middleware.compute.model.JobProgress} state. (optional) (default to true)
-include_command = true # bool | include job command. (optional) (default to true)
-include_affected_compounds = false # bool | include list of compound ids affected by this job (if available) (optional) (default to false)
+include_state = True # bool | include {@link de.unijena.bioinf.ms.middleware.compute.model.JobProgress de.unijena.bioinf.ms.middleware.compute.model.JobProgress} state. (optional) (default to True)
+include_command = True # bool | include job command. (optional) (default to True)
+include_affected_compounds = False # bool | include list of compound ids affected by this job (if available) (optional) (default to False)
 
 try:
     # Start computation for given compounds and with given parameters.
@@ -460,9 +460,9 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **body** | [**JobSubmission**](JobSubmission.md)| configuration of the job that will be submitted of the job to be returned | 
  **project_id** | **str**| project-space to run jobs on | 
- **include_state** | **bool**| include {@link de.unijena.bioinf.ms.middleware.compute.model.JobProgress de.unijena.bioinf.ms.middleware.compute.model.JobProgress} state. | [optional] [default to true]
- **include_command** | **bool**| include job command. | [optional] [default to true]
- **include_affected_compounds** | **bool**| include list of compound ids affected by this job (if available) | [optional] [default to false]
+ **include_state** | **bool**| include {@link de.unijena.bioinf.ms.middleware.compute.model.JobProgress de.unijena.bioinf.ms.middleware.compute.model.JobProgress} state. | [optional] [default to True]
+ **include_command** | **bool**| include job command. | [optional] [default to True]
+ **include_affected_compounds** | **bool**| include list of compound ids affected by this job (if available) | [optional] [default to False]
 
 ### Return type
 
@@ -499,10 +499,10 @@ api_instance = swagger_client.ComputationsApi()
 body = ['body_example'] # list[str] | compound ids to be computed
 job_config_name = 'job_config_name_example' # str | name if the config to be used
 project_id = 'project_id_example' # str | project-space to run jobs on
-recompute = true # bool | enable or disable recompute. If null the stored value will be used. (optional)
-include_state = true # bool | include {@link de.unijena.bioinf.ms.middleware.compute.model.JobProgress de.unijena.bioinf.ms.middleware.compute.model.JobProgress} state. (optional) (default to true)
-include_command = true # bool | include job command. (optional) (default to true)
-include_affected_compounds = false # bool | include list of compound ids affected by this job (if available) (optional) (default to false)
+recompute = True # bool | enable or disable recompute. If null the stored value will be used. (optional)
+include_state = True # bool | include {@link de.unijena.bioinf.ms.middleware.compute.model.JobProgress de.unijena.bioinf.ms.middleware.compute.model.JobProgress} state. (optional) (default to True)
+include_command = True # bool | include job command. (optional) (default to True)
+include_affected_compounds = False # bool | include list of compound ids affected by this job (if available) (optional) (default to False)
 
 try:
     # Start computation for given compounds and with parameters from a stored job-config.
@@ -520,9 +520,9 @@ Name | Type | Description  | Notes
  **job_config_name** | **str**| name if the config to be used | 
  **project_id** | **str**| project-space to run jobs on | 
  **recompute** | **bool**| enable or disable recompute. If null the stored value will be used. | [optional] 
- **include_state** | **bool**| include {@link de.unijena.bioinf.ms.middleware.compute.model.JobProgress de.unijena.bioinf.ms.middleware.compute.model.JobProgress} state. | [optional] [default to true]
- **include_command** | **bool**| include job command. | [optional] [default to true]
- **include_affected_compounds** | **bool**| include list of compound ids affected by this job (if available) | [optional] [default to false]
+ **include_state** | **bool**| include {@link de.unijena.bioinf.ms.middleware.compute.model.JobProgress de.unijena.bioinf.ms.middleware.compute.model.JobProgress} state. | [optional] [default to True]
+ **include_command** | **bool**| include job command. | [optional] [default to True]
+ **include_affected_compounds** | **bool**| include list of compound ids affected by this job (if available) | [optional] [default to False]
 
 ### Return type
 

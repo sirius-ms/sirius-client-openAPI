@@ -29,7 +29,7 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = swagger_client.LoginAndAccountApi()
-include_subs = false # bool | include available and active subscriptions in {@link AccountInfo AccountInfo}. (optional) (default to false)
+include_subs = False # bool | include available and active subscriptions in {@link AccountInfo AccountInfo}. (optional) (default to False)
 
 try:
     # Get information about the account currently logged in.
@@ -43,7 +43,7 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **include_subs** | **bool**| include available and active subscriptions in {@link AccountInfo AccountInfo}. | [optional] [default to false]
+ **include_subs** | **bool**| include available and active subscriptions in {@link AccountInfo AccountInfo}. | [optional] [default to False]
 
 ### Return type
 
@@ -210,9 +210,9 @@ from pprint import pprint
 # create an instance of the API class
 api_instance = swagger_client.LoginAndAccountApi()
 body = swagger_client.AccountCredentials() # AccountCredentials | used to log in.
-accept_terms = true # bool | 
-fail_when_logged_in = false # bool | if true request fails if an active login already exists. (optional) (default to false)
-include_subs = false # bool | include available and active subscriptions in {@link AccountInfo AccountInfo}. (optional) (default to false)
+accept_terms = True # bool | 
+fail_when_logged_in = False # bool | if True request fails if an active login already exists. (optional) (default to False)
+include_subs = False # bool | include available and active subscriptions in {@link AccountInfo AccountInfo}. (optional) (default to False)
 
 try:
     # Login into SIRIUS web services.
@@ -228,8 +228,8 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **body** | [**AccountCredentials**](AccountCredentials.md)| used to log in. | 
  **accept_terms** | **bool**|  | 
- **fail_when_logged_in** | **bool**| if true request fails if an active login already exists. | [optional] [default to false]
- **include_subs** | **bool**| include available and active subscriptions in {@link AccountInfo AccountInfo}. | [optional] [default to false]
+ **fail_when_logged_in** | **bool**| if True request fails if an active login already exists. | [optional] [default to False]
+ **include_subs** | **bool**| include available and active subscriptions in {@link AccountInfo AccountInfo}. | [optional] [default to False]
 
 ### Return type
 
