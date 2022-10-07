@@ -4,8 +4,8 @@ import swagger_client
 
 
 #### credentials for the login ####
-name = "lukas.scholz@uni-jena.de"
-pw = "Lukas2000sh"
+name = ""
+pw = ""
 
 
 
