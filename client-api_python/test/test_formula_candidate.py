@@ -14,9 +14,9 @@ from __future__ import absolute_import
 
 import unittest
 
-import swagger_client
-from swagger_client.models.formula_candidate import FormulaCandidate  # noqa: E501
-from swagger_client.rest import ApiException
+import PySirius
+from PySirius.models.formula_candidate import FormulaCandidate  # noqa: E501
+from PySirius.rest import ApiException
 
 
 class TestFormulaCandidate(unittest.TestCase):
@@ -31,7 +31,7 @@ class TestFormulaCandidate(unittest.TestCase):
     def testFormulaCandidate(self):
         """Test FormulaCandidate"""
         # FIXME: construct object with mandatory attributes with example values
-        # model = swagger_client.models.formula_candidate.FormulaCandidate()  # noqa: E501
+        # model = PySirius.models.formula_candidate.FormulaCandidate()  # noqa: E501
         pass
 
 

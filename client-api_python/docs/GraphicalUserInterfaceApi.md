@@ -1,4 +1,4 @@
-# swagger_client.GraphicalUserInterfaceApi
+# PySirius.GraphicalUserInterfaceApi
 
 All URIs are relative to *http://localhost:8080*
 
@@ -19,13 +19,13 @@ Apply given changes to the running GUI instance.
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import PySirius
+from PySirius.rest import ApiException
 from pprint import pprint
 
 # create an instance of the API class
-api_instance = swagger_client.GraphicalUserInterfaceApi()
-body = swagger_client.GuiParameters() # GuiParameters | parameters that should be applied.
+api_instance = PySirius.GraphicalUserInterfaceApi()
+body = PySirius.GuiParameters() # GuiParameters | parameters that should be applied.
 project_id = 'project_id_example' # str | of project-space the GUI instance is connected to.
 
 try:
@@ -68,12 +68,12 @@ Close GUI instance of given project-space if available.
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import PySirius
+from PySirius.rest import ApiException
 from pprint import pprint
 
 # create an instance of the API class
-api_instance = swagger_client.GraphicalUserInterfaceApi()
+api_instance = PySirius.GraphicalUserInterfaceApi()
 project_id = 'project_id_example' # str | if project-space the GUI instance is connected to.
 
 try:
@@ -115,14 +115,14 @@ Open GUI instance on specified project-space and bring the GUI window to foregro
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import PySirius
+from PySirius.rest import ApiException
 from pprint import pprint
 
 # create an instance of the API class
-api_instance = swagger_client.GraphicalUserInterfaceApi()
+api_instance = PySirius.GraphicalUserInterfaceApi()
 project_id = 'project_id_example' # str | of project-space the GUI instance will connect to.
-read_only = True # bool | open in read-only mode. (optional) (default to True)
+read_only = true # bool | open in read-only mode. (optional) (default to true)
 
 try:
     # Open GUI instance on specified project-space and bring the GUI window to foreground.
@@ -136,7 +136,7 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **str**| of project-space the GUI instance will connect to. | 
- **read_only** | **bool**| open in read-only mode. | [optional] [default to True]
+ **read_only** | **bool**| open in read-only mode. | [optional] [default to true]
 
 ### Return type
 

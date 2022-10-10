@@ -14,9 +14,9 @@ from __future__ import absolute_import
 
 import unittest
 
-import swagger_client
-from swagger_client.models.compound_class import CompoundClass  # noqa: E501
-from swagger_client.rest import ApiException
+import PySirius
+from PySirius.models.compound_class import CompoundClass  # noqa: E501
+from PySirius.rest import ApiException
 
 
 class TestCompoundClass(unittest.TestCase):
@@ -31,7 +31,7 @@ class TestCompoundClass(unittest.TestCase):
     def testCompoundClass(self):
         """Test CompoundClass"""
         # FIXME: construct object with mandatory attributes with example values
-        # model = swagger_client.models.compound_class.CompoundClass()  # noqa: E501
+        # model = PySirius.models.compound_class.CompoundClass()  # noqa: E501
         pass
 
 

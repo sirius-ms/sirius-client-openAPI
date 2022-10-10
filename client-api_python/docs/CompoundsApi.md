@@ -1,4 +1,4 @@
-# swagger_client.CompoundsApi
+# PySirius.CompoundsApi
 
 All URIs are relative to *http://localhost:8080*
 
@@ -21,12 +21,12 @@ Delete compound/feature with the given identifier from the specified project-spa
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import PySirius
+from PySirius.rest import ApiException
 from pprint import pprint
 
 # create an instance of the API class
-api_instance = swagger_client.CompoundsApi()
+api_instance = PySirius.CompoundsApi()
 project_id = 'project_id_example' # str | project-space to delete from.
 cid = 'cid_example' # str | identifier of compound to delete.
 
@@ -70,16 +70,16 @@ Get compound/feature with the given identifier from the specified project-space.
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import PySirius
+from PySirius.rest import ApiException
 from pprint import pprint
 
 # create an instance of the API class
-api_instance = swagger_client.CompoundsApi()
+api_instance = PySirius.CompoundsApi()
 project_id = 'project_id_example' # str | project-space to read from.
 cid = 'cid_example' # str | identifier of compound to access.
-top_annotation = False # bool | include the top annotation of this feature into the output (if available). (optional) (default to False)
-ms_data = False # bool | include corresponding source data (MS and MS/MS) into the output. (optional) (default to False)
+top_annotation = false # bool | include the top annotation of this feature into the output (if available). (optional) (default to false)
+ms_data = false # bool | include corresponding source data (MS and MS/MS) into the output. (optional) (default to false)
 
 try:
     # Get compound/feature with the given identifier from the specified project-space.
@@ -95,8 +95,8 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **str**| project-space to read from. | 
  **cid** | **str**| identifier of compound to access. | 
- **top_annotation** | **bool**| include the top annotation of this feature into the output (if available). | [optional] [default to False]
- **ms_data** | **bool**| include corresponding source data (MS and MS/MS) into the output. | [optional] [default to False]
+ **top_annotation** | **bool**| include the top annotation of this feature into the output (if available). | [optional] [default to false]
+ **ms_data** | **bool**| include corresponding source data (MS and MS/MS) into the output. | [optional] [default to false]
 
 ### Return type
 
@@ -124,15 +124,15 @@ Get all available compounds/features in the given project-space.
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import PySirius
+from PySirius.rest import ApiException
 from pprint import pprint
 
 # create an instance of the API class
-api_instance = swagger_client.CompoundsApi()
+api_instance = PySirius.CompoundsApi()
 project_id = 'project_id_example' # str | project-space to read from.
-top_annotation = False # bool | include the top annotation of this feature into the output (if available). (optional) (default to False)
-ms_data = False # bool | include corresponding source data (MS and MS/MS) into the output. (optional) (default to False)
+top_annotation = false # bool | include the top annotation of this feature into the output (if available). (optional) (default to false)
+ms_data = false # bool | include corresponding source data (MS and MS/MS) into the output. (optional) (default to false)
 
 try:
     # Get all available compounds/features in the given project-space.
@@ -147,8 +147,8 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **str**| project-space to read from. | 
- **top_annotation** | **bool**| include the top annotation of this feature into the output (if available). | [optional] [default to False]
- **ms_data** | **bool**| include corresponding source data (MS and MS/MS) into the output. | [optional] [default to False]
+ **top_annotation** | **bool**| include the top annotation of this feature into the output (if available). | [optional] [default to false]
+ **ms_data** | **bool**| include corresponding source data (MS and MS/MS) into the output. | [optional] [default to false]
 
 ### Return type
 
@@ -176,17 +176,17 @@ Import ms/ms data in given format from local filesystem into the specified proje
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import PySirius
+from PySirius.rest import ApiException
 from pprint import pprint
 
 # create an instance of the API class
-api_instance = swagger_client.CompoundsApi()
+api_instance = PySirius.CompoundsApi()
 body = ['body_example'] # list[str] | List of file and directory paths to import
 project_id = 'project_id_example' # str | project-space to import into.
-align_lcms_runs = False # bool | If True, multiple LCMS Runs (mzML, mzXML) will be aligned during import/feature finding (optional) (default to False)
-allow_ms1_only_data = True # bool |  (optional) (default to True)
-ignore_formulas = False # bool |  (optional) (default to False)
+align_lcms_runs = false # bool | If true, multiple LCMS Runs (mzML, mzXML) will be aligned during import/feature finding (optional) (default to false)
+allow_ms1_only_data = true # bool |  (optional) (default to true)
+ignore_formulas = false # bool |  (optional) (default to false)
 
 try:
     # Import ms/ms data in given format from local filesystem into the specified project-space
@@ -202,9 +202,9 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **body** | [**list[str]**](str.md)| List of file and directory paths to import | 
  **project_id** | **str**| project-space to import into. | 
- **align_lcms_runs** | **bool**| If True, multiple LCMS Runs (mzML, mzXML) will be aligned during import/feature finding | [optional] [default to False]
- **allow_ms1_only_data** | **bool**|  | [optional] [default to True]
- **ignore_formulas** | **bool**|  | [optional] [default to False]
+ **align_lcms_runs** | **bool**| If true, multiple LCMS Runs (mzML, mzXML) will be aligned during import/feature finding | [optional] [default to false]
+ **allow_ms1_only_data** | **bool**|  | [optional] [default to true]
+ **ignore_formulas** | **bool**|  | [optional] [default to false]
 
 ### Return type
 
@@ -232,12 +232,12 @@ Import ms/ms data from the given format into the specified project-space  Possib
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import PySirius
+from PySirius.rest import ApiException
 from pprint import pprint
 
 # create an instance of the API class
-api_instance = swagger_client.CompoundsApi()
+api_instance = PySirius.CompoundsApi()
 body = 'body_example' # str | data content in specified format
 format = 'format_example' # str | data format specified by the usual file extension of the format (without [.])
 project_id = 'project_id_example' # str | project-space to import into.

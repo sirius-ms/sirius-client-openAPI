@@ -14,9 +14,9 @@ from __future__ import absolute_import
 
 import unittest
 
-import swagger_client
-from swagger_client.models.timeout import Timeout  # noqa: E501
-from swagger_client.rest import ApiException
+import PySirius
+from PySirius.models.timeout import Timeout  # noqa: E501
+from PySirius.rest import ApiException
 
 
 class TestTimeout(unittest.TestCase):
@@ -31,7 +31,7 @@ class TestTimeout(unittest.TestCase):
     def testTimeout(self):
         """Test Timeout"""
         # FIXME: construct object with mandatory attributes with example values
-        # model = swagger_client.models.timeout.Timeout()  # noqa: E501
+        # model = PySirius.models.timeout.Timeout()  # noqa: E501
         pass
 
 

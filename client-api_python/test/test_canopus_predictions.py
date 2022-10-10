@@ -14,9 +14,9 @@ from __future__ import absolute_import
 
 import unittest
 
-import swagger_client
-from swagger_client.models.canopus_predictions import CanopusPredictions  # noqa: E501
-from swagger_client.rest import ApiException
+import PySirius
+from PySirius.models.canopus_predictions import CanopusPredictions  # noqa: E501
+from PySirius.rest import ApiException
 
 
 class TestCanopusPredictions(unittest.TestCase):
@@ -31,7 +31,7 @@ class TestCanopusPredictions(unittest.TestCase):
     def testCanopusPredictions(self):
         """Test CanopusPredictions"""
         # FIXME: construct object with mandatory attributes with example values
-        # model = swagger_client.models.canopus_predictions.CanopusPredictions()  # noqa: E501
+        # model = PySirius.models.canopus_predictions.CanopusPredictions()  # noqa: E501
         pass
 
 

@@ -1,4 +1,4 @@
-# swagger_client.VersionInfoControllerApi
+# PySirius.VersionInfoControllerApi
 
 All URIs are relative to *http://localhost:8080*
 
@@ -15,12 +15,12 @@ Method | HTTP request | Description
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import PySirius
+from PySirius.rest import ApiException
 from pprint import pprint
 
 # create an instance of the API class
-api_instance = swagger_client.VersionInfoControllerApi()
+api_instance = PySirius.VersionInfoControllerApi()
 
 try:
     api_response = api_instance.get_version_info()

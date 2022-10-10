@@ -14,9 +14,9 @@ from __future__ import absolute_import
 
 import unittest
 
-import swagger_client
-from swagger_client.models.result_overview import ResultOverview  # noqa: E501
-from swagger_client.rest import ApiException
+import PySirius
+from PySirius.models.result_overview import ResultOverview  # noqa: E501
+from PySirius.rest import ApiException
 
 
 class TestResultOverview(unittest.TestCase):
@@ -31,7 +31,7 @@ class TestResultOverview(unittest.TestCase):
     def testResultOverview(self):
         """Test ResultOverview"""
         # FIXME: construct object with mandatory attributes with example values
-        # model = swagger_client.models.result_overview.ResultOverview()  # noqa: E501
+        # model = PySirius.models.result_overview.ResultOverview()  # noqa: E501
         pass
 
 

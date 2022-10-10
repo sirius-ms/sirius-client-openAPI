@@ -14,9 +14,9 @@ from __future__ import absolute_import
 
 import unittest
 
-import swagger_client
-from swagger_client.api.project_spaces_api import ProjectSpacesApi  # noqa: E501
-from swagger_client.rest import ApiException
+import PySirius
+from PySirius.api.project_spaces_api import ProjectSpacesApi  # noqa: E501
+from PySirius.rest import ApiException
 
 
 class TestProjectSpacesApi(unittest.TestCase):

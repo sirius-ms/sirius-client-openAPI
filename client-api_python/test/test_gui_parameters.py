@@ -14,9 +14,9 @@ from __future__ import absolute_import
 
 import unittest
 
-import swagger_client
-from swagger_client.models.gui_parameters import GuiParameters  # noqa: E501
-from swagger_client.rest import ApiException
+import PySirius
+from PySirius.models.gui_parameters import GuiParameters  # noqa: E501
+from PySirius.rest import ApiException
 
 
 class TestGuiParameters(unittest.TestCase):
@@ -31,7 +31,7 @@ class TestGuiParameters(unittest.TestCase):
     def testGuiParameters(self):
         """Test GuiParameters"""
         # FIXME: construct object with mandatory attributes with example values
-        # model = swagger_client.models.gui_parameters.GuiParameters()  # noqa: E501
+        # model = PySirius.models.gui_parameters.GuiParameters()  # noqa: E501
         pass
 
 

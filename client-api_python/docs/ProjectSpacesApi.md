@@ -1,4 +1,4 @@
-# swagger_client.ProjectSpacesApi
+# PySirius.ProjectSpacesApi
 
 All URIs are relative to *http://localhost:8080*
 
@@ -21,12 +21,12 @@ Close project-space and remove it from application. Project-space will NOT be de
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import PySirius
+from PySirius.rest import ApiException
 from pprint import pprint
 
 # create an instance of the API class
-api_instance = swagger_client.ProjectSpacesApi()
+api_instance = PySirius.ProjectSpacesApi()
 project_id = 'project_id_example' # str | unique name/identifier of the  project-space to be closed.
 
 try:
@@ -68,12 +68,12 @@ Create and open a new project-space at given location and make it accessible via
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import PySirius
+from PySirius.rest import ApiException
 from pprint import pprint
 
 # create an instance of the API class
-api_instance = swagger_client.ProjectSpacesApi()
+api_instance = PySirius.ProjectSpacesApi()
 project_id = 'project_id_example' # str | unique name/identifier that shall be used to access the newly created project-space.
 path_to_project = 'path_to_project_example' # str | 
 path_to_source_project = 'path_to_source_project_example' # str |  (optional)
@@ -122,12 +122,12 @@ Get project space info by its projectId.
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import PySirius
+from PySirius.rest import ApiException
 from pprint import pprint
 
 # create an instance of the API class
-api_instance = swagger_client.ProjectSpacesApi()
+api_instance = PySirius.ProjectSpacesApi()
 project_id = 'project_id_example' # str | unique name/identifier tof the project-space to be accessed.
 
 try:
@@ -170,12 +170,12 @@ List all opened project spaces.
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import PySirius
+from PySirius.rest import ApiException
 from pprint import pprint
 
 # create an instance of the API class
-api_instance = swagger_client.ProjectSpacesApi()
+api_instance = PySirius.ProjectSpacesApi()
 
 try:
     # List all opened project spaces.
@@ -214,12 +214,12 @@ Open an existing project-space and make it accessible via the given projectId.
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import PySirius
+from PySirius.rest import ApiException
 from pprint import pprint
 
 # create an instance of the API class
-api_instance = swagger_client.ProjectSpacesApi()
+api_instance = PySirius.ProjectSpacesApi()
 project_id = 'project_id_example' # str | unique name/identifier that shall be used to access the opened project-space.
 path_to_project = 'path_to_project_example' # str | 
 

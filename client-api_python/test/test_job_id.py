@@ -14,9 +14,9 @@ from __future__ import absolute_import
 
 import unittest
 
-import swagger_client
-from swagger_client.models.job_id import JobId  # noqa: E501
-from swagger_client.rest import ApiException
+import PySirius
+from PySirius.models.job_id import JobId  # noqa: E501
+from PySirius.rest import ApiException
 
 
 class TestJobId(unittest.TestCase):
@@ -31,7 +31,7 @@ class TestJobId(unittest.TestCase):
     def testJobId(self):
         """Test JobId"""
         # FIXME: construct object with mandatory attributes with example values
-        # model = swagger_client.models.job_id.JobId()  # noqa: E501
+        # model = PySirius.models.job_id.JobId()  # noqa: E501
         pass
 
 

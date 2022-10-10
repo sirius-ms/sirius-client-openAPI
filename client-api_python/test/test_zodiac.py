@@ -14,9 +14,9 @@ from __future__ import absolute_import
 
 import unittest
 
-import swagger_client
-from swagger_client.models.zodiac import Zodiac  # noqa: E501
-from swagger_client.rest import ApiException
+import PySirius
+from PySirius.models.zodiac import Zodiac  # noqa: E501
+from PySirius.rest import ApiException
 
 
 class TestZodiac(unittest.TestCase):
@@ -31,7 +31,7 @@ class TestZodiac(unittest.TestCase):
     def testZodiac(self):
         """Test Zodiac"""
         # FIXME: construct object with mandatory attributes with example values
-        # model = swagger_client.models.zodiac.Zodiac()  # noqa: E501
+        # model = PySirius.models.zodiac.Zodiac()  # noqa: E501
         pass
 
 

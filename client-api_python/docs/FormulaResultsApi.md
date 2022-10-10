@@ -1,4 +1,4 @@
-# swagger_client.FormulaResultsApi
+# PySirius.FormulaResultsApi
 
 All URIs are relative to *http://localhost:8080*
 
@@ -25,12 +25,12 @@ Best matching compound classes,  Set of the highest scoring compound classes CAN
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import PySirius
+from PySirius.rest import ApiException
 from pprint import pprint
 
 # create an instance of the API class
-api_instance = swagger_client.FormulaResultsApi()
+api_instance = PySirius.FormulaResultsApi()
 project_id = 'project_id_example' # str | project-space to read from.
 compound_id = 'compound_id_example' # str | compound/feature the formula result belongs to.
 formula_id = 'formula_id_example' # str | identifier of the requested formula result
@@ -77,12 +77,12 @@ All predicted compound classes (CANOPUS) from ClassyFire and NPC and their proba
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import PySirius
+from PySirius.rest import ApiException
 from pprint import pprint
 
 # create an instance of the API class
-api_instance = swagger_client.FormulaResultsApi()
+api_instance = PySirius.FormulaResultsApi()
 project_id = 'project_id_example' # str | project-space to read from.
 compound_id = 'compound_id_example' # str | compound/feature the formula result belongs to.
 formula_id = 'formula_id_example' # str | identifier of the requested formula result
@@ -129,12 +129,12 @@ Returns predicted fingerprint (CSI:FingerID) for the given formula result identi
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import PySirius
+from PySirius.rest import ApiException
 from pprint import pprint
 
 # create an instance of the API class
-api_instance = swagger_client.FormulaResultsApi()
+api_instance = PySirius.FormulaResultsApi()
 project_id = 'project_id_example' # str | project-space to read from.
 compound_id = 'compound_id_example' # str | compound/feature the formula result belongs to.
 formula_id = 'formula_id_example' # str | identifier of the requested formula result
@@ -181,16 +181,16 @@ List of all FormulaResultContainers available for this compound/feature with min
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import PySirius
+from PySirius.rest import ApiException
 from pprint import pprint
 
 # create an instance of the API class
-api_instance = swagger_client.FormulaResultsApi()
+api_instance = PySirius.FormulaResultsApi()
 project_id = 'project_id_example' # str | project-space to read from.
 compound_id = 'compound_id_example' # str | compound/feature the formula result belongs to.
-result_overview = True # bool | add ResultOverview to the FormulaResultContainers (optional) (default to True)
-formula_candidate = False # bool | add extended formula candidate information to the FormulaResultContainers (optional) (default to False)
+result_overview = true # bool | add ResultOverview to the FormulaResultContainers (optional) (default to true)
+formula_candidate = false # bool | add extended formula candidate information to the FormulaResultContainers (optional) (default to false)
 
 try:
     # List of all FormulaResultContainers available for this compound/feature with minimal information.
@@ -206,8 +206,8 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **str**| project-space to read from. | 
  **compound_id** | **str**| compound/feature the formula result belongs to. | 
- **result_overview** | **bool**| add ResultOverview to the FormulaResultContainers | [optional] [default to True]
- **formula_candidate** | **bool**| add extended formula candidate information to the FormulaResultContainers | [optional] [default to False]
+ **result_overview** | **bool**| add ResultOverview to the FormulaResultContainers | [optional] [default to true]
+ **formula_candidate** | **bool**| add extended formula candidate information to the FormulaResultContainers | [optional] [default to false]
 
 ### Return type
 
@@ -235,17 +235,17 @@ FormulaResultContainers for the given 'formulaId' with minimal information.  Can
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import PySirius
+from PySirius.rest import ApiException
 from pprint import pprint
 
 # create an instance of the API class
-api_instance = swagger_client.FormulaResultsApi()
+api_instance = PySirius.FormulaResultsApi()
 project_id = 'project_id_example' # str | project-space to read from.
 compound_id = 'compound_id_example' # str | compound/feature the formula result belongs to.
 formula_id = 'formula_id_example' # str | identifier of the requested formula result
-result_overview = True # bool | add ResultOverview to the FormulaResultContainer (optional) (default to True)
-formula_candidate = True # bool | add extended formula candidate information to the FormulaResultContainer (optional) (default to True)
+result_overview = true # bool | add ResultOverview to the FormulaResultContainer (optional) (default to true)
+formula_candidate = true # bool | add extended formula candidate information to the FormulaResultContainer (optional) (default to true)
 
 try:
     # FormulaResultContainers for the given 'formulaId' with minimal information.
@@ -262,8 +262,8 @@ Name | Type | Description  | Notes
  **project_id** | **str**| project-space to read from. | 
  **compound_id** | **str**| compound/feature the formula result belongs to. | 
  **formula_id** | **str**| identifier of the requested formula result | 
- **result_overview** | **bool**| add ResultOverview to the FormulaResultContainer | [optional] [default to True]
- **formula_candidate** | **bool**| add extended formula candidate information to the FormulaResultContainer | [optional] [default to True]
+ **result_overview** | **bool**| add ResultOverview to the FormulaResultContainer | [optional] [default to true]
+ **formula_candidate** | **bool**| add extended formula candidate information to the FormulaResultContainer | [optional] [default to true]
 
 ### Return type
 
@@ -291,12 +291,12 @@ Returns fragmentation tree (SIRIUS) for the given formula result identifier  Thi
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import PySirius
+from PySirius.rest import ApiException
 from pprint import pprint
 
 # create an instance of the API class
-api_instance = swagger_client.FormulaResultsApi()
+api_instance = PySirius.FormulaResultsApi()
 project_id = 'project_id_example' # str | project-space to read from.
 compound_id = 'compound_id_example' # str | compound/feature the formula result belongs to.
 formula_id = 'formula_id_example' # str | identifier of the requested formula result
@@ -343,12 +343,12 @@ Returns simulated isotope pattern (SIRIUS) for the given formula result identifi
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import PySirius
+from PySirius.rest import ApiException
 from pprint import pprint
 
 # create an instance of the API class
-api_instance = swagger_client.FormulaResultsApi()
+api_instance = PySirius.FormulaResultsApi()
 project_id = 'project_id_example' # str | project-space to read from.
 compound_id = 'compound_id_example' # str | compound/feature the formula result belongs to.
 formula_id = 'formula_id_example' # str | identifier of the requested formula result
@@ -395,18 +395,18 @@ List of StructureCandidates the given 'formulaId' with minimal information.  Str
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import PySirius
+from PySirius.rest import ApiException
 from pprint import pprint
 
 # create an instance of the API class
-api_instance = swagger_client.FormulaResultsApi()
+api_instance = PySirius.FormulaResultsApi()
 project_id = 'project_id_example' # str | project-space to read from.
 compound_id = 'compound_id_example' # str | compound/feature the formula result belongs to.
 formula_id = 'formula_id_example' # str | identifier of the requested formula result
-fingerprint = False # bool | add molecular fingerprint to StructureCandidates (optional) (default to False)
-db_links = False # bool | add dbLinks to StructureCandidates (optional) (default to False)
-pub_med_ids = False # bool | add PubMedIds (citation count) to StructureCandidates (optional) (default to False)
+fingerprint = false # bool | add molecular fingerprint to StructureCandidates (optional) (default to false)
+db_links = false # bool | add dbLinks to StructureCandidates (optional) (default to false)
+pub_med_ids = false # bool | add PubMedIds (citation count) to StructureCandidates (optional) (default to false)
 top_k = -1 # int | retrieve only the top k StructureCandidates (optional) (default to -1)
 
 try:
@@ -424,9 +424,9 @@ Name | Type | Description  | Notes
  **project_id** | **str**| project-space to read from. | 
  **compound_id** | **str**| compound/feature the formula result belongs to. | 
  **formula_id** | **str**| identifier of the requested formula result | 
- **fingerprint** | **bool**| add molecular fingerprint to StructureCandidates | [optional] [default to False]
- **db_links** | **bool**| add dbLinks to StructureCandidates | [optional] [default to False]
- **pub_med_ids** | **bool**| add PubMedIds (citation count) to StructureCandidates | [optional] [default to False]
+ **fingerprint** | **bool**| add molecular fingerprint to StructureCandidates | [optional] [default to false]
+ **db_links** | **bool**| add dbLinks to StructureCandidates | [optional] [default to false]
+ **pub_med_ids** | **bool**| add PubMedIds (citation count) to StructureCandidates | [optional] [default to false]
  **top_k** | **int**| retrieve only the top k StructureCandidates | [optional] [default to -1]
 
 ### Return type
@@ -455,17 +455,17 @@ Best Scoring StructureCandidate over all molecular formular resutls that belong 
 ```python
 from __future__ import print_function
 import time
-import swagger_client
-from swagger_client.rest import ApiException
+import PySirius
+from PySirius.rest import ApiException
 from pprint import pprint
 
 # create an instance of the API class
-api_instance = swagger_client.FormulaResultsApi()
+api_instance = PySirius.FormulaResultsApi()
 project_id = 'project_id_example' # str | project-space to read from.
 compound_id = 'compound_id_example' # str | compound/feature the formula result belongs to.
-fingerprint = False # bool | add molecular fingerprint to StructureCandidates (optional) (default to False)
-db_links = False # bool | add dbLinks to StructureCandidates (optional) (default to False)
-pub_med_ids = False # bool | add PubMedIds (citation count) to StructureCandidates (optional) (default to False)
+fingerprint = false # bool | add molecular fingerprint to StructureCandidates (optional) (default to false)
+db_links = false # bool | add dbLinks to StructureCandidates (optional) (default to false)
+pub_med_ids = false # bool | add PubMedIds (citation count) to StructureCandidates (optional) (default to false)
 
 try:
     # Best Scoring StructureCandidate over all molecular formular resutls that belong to the specified  compound/feature (compoundId).
@@ -481,9 +481,9 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **str**| project-space to read from. | 
  **compound_id** | **str**| compound/feature the formula result belongs to. | 
- **fingerprint** | **bool**| add molecular fingerprint to StructureCandidates | [optional] [default to False]
- **db_links** | **bool**| add dbLinks to StructureCandidates | [optional] [default to False]
- **pub_med_ids** | **bool**| add PubMedIds (citation count) to StructureCandidates | [optional] [default to False]
+ **fingerprint** | **bool**| add molecular fingerprint to StructureCandidates | [optional] [default to false]
+ **db_links** | **bool**| add dbLinks to StructureCandidates | [optional] [default to false]
+ **pub_med_ids** | **bool**| add PubMedIds (citation count) to StructureCandidates | [optional] [default to false]
 
 ### Return type
 

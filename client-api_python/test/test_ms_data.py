@@ -14,9 +14,9 @@ from __future__ import absolute_import
 
 import unittest
 
-import swagger_client
-from swagger_client.models.ms_data import MsData  # noqa: E501
-from swagger_client.rest import ApiException
+import PySirius
+from PySirius.models.ms_data import MsData  # noqa: E501
+from PySirius.rest import ApiException
 
 
 class TestMsData(unittest.TestCase):
@@ -31,7 +31,7 @@ class TestMsData(unittest.TestCase):
     def testMsData(self):
         """Test MsData"""
         # FIXME: construct object with mandatory attributes with example values
-        # model = swagger_client.models.ms_data.MsData()  # noqa: E501
+        # model = PySirius.models.ms_data.MsData()  # noqa: E501
         pass
 
 

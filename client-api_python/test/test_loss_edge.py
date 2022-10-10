@@ -14,9 +14,9 @@ from __future__ import absolute_import
 
 import unittest
 
-import swagger_client
-from swagger_client.models.loss_edge import LossEdge  # noqa: E501
-from swagger_client.rest import ApiException
+import PySirius
+from PySirius.models.loss_edge import LossEdge  # noqa: E501
+from PySirius.rest import ApiException
 
 
 class TestLossEdge(unittest.TestCase):
@@ -31,7 +31,7 @@ class TestLossEdge(unittest.TestCase):
     def testLossEdge(self):
         """Test LossEdge"""
         # FIXME: construct object with mandatory attributes with example values
-        # model = swagger_client.models.loss_edge.LossEdge()  # noqa: E501
+        # model = PySirius.models.loss_edge.LossEdge()  # noqa: E501
         pass
 
 

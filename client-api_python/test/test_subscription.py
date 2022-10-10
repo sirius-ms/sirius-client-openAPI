@@ -14,9 +14,9 @@ from __future__ import absolute_import
 
 import unittest
 
-import swagger_client
-from swagger_client.models.subscription import Subscription  # noqa: E501
-from swagger_client.rest import ApiException
+import PySirius
+from PySirius.models.subscription import Subscription  # noqa: E501
+from PySirius.rest import ApiException
 
 
 class TestSubscription(unittest.TestCase):
@@ -31,7 +31,7 @@ class TestSubscription(unittest.TestCase):
     def testSubscription(self):
         """Test Subscription"""
         # FIXME: construct object with mandatory attributes with example values
-        # model = swagger_client.models.subscription.Subscription()  # noqa: E501
+        # model = PySirius.models.subscription.Subscription()  # noqa: E501
         pass
 
 

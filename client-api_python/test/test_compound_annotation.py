@@ -14,9 +14,9 @@ from __future__ import absolute_import
 
 import unittest
 
-import swagger_client
-from swagger_client.models.compound_annotation import CompoundAnnotation  # noqa: E501
-from swagger_client.rest import ApiException
+import PySirius
+from PySirius.models.compound_annotation import CompoundAnnotation  # noqa: E501
+from PySirius.rest import ApiException
 
 
 class TestCompoundAnnotation(unittest.TestCase):
@@ -31,7 +31,7 @@ class TestCompoundAnnotation(unittest.TestCase):
     def testCompoundAnnotation(self):
         """Test CompoundAnnotation"""
         # FIXME: construct object with mandatory attributes with example values
-        # model = swagger_client.models.compound_annotation.CompoundAnnotation()  # noqa: E501
+        # model = PySirius.models.compound_annotation.CompoundAnnotation()  # noqa: E501
         pass
 
 

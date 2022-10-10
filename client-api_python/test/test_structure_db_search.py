@@ -14,9 +14,9 @@ from __future__ import absolute_import
 
 import unittest
 
-import swagger_client
-from swagger_client.models.structure_db_search import StructureDbSearch  # noqa: E501
-from swagger_client.rest import ApiException
+import PySirius
+from PySirius.models.structure_db_search import StructureDbSearch  # noqa: E501
+from PySirius.rest import ApiException
 
 
 class TestStructureDbSearch(unittest.TestCase):
@@ -31,7 +31,7 @@ class TestStructureDbSearch(unittest.TestCase):
     def testStructureDbSearch(self):
         """Test StructureDbSearch"""
         # FIXME: construct object with mandatory attributes with example values
-        # model = swagger_client.models.structure_db_search.StructureDbSearch()  # noqa: E501
+        # model = PySirius.models.structure_db_search.StructureDbSearch()  # noqa: E501
         pass
 
 

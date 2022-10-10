@@ -14,9 +14,9 @@ from __future__ import absolute_import
 
 import unittest
 
-import swagger_client
-from swagger_client.models.fragmentation_tree import FragmentationTree  # noqa: E501
-from swagger_client.rest import ApiException
+import PySirius
+from PySirius.models.fragmentation_tree import FragmentationTree  # noqa: E501
+from PySirius.rest import ApiException
 
 
 class TestFragmentationTree(unittest.TestCase):
@@ -31,7 +31,7 @@ class TestFragmentationTree(unittest.TestCase):
     def testFragmentationTree(self):
         """Test FragmentationTree"""
         # FIXME: construct object with mandatory attributes with example values
-        # model = swagger_client.models.fragmentation_tree.FragmentationTree()  # noqa: E501
+        # model = PySirius.models.fragmentation_tree.FragmentationTree()  # noqa: E501
         pass
 
 

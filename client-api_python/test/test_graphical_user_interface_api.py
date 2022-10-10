@@ -14,9 +14,9 @@ from __future__ import absolute_import
 
 import unittest
 
-import swagger_client
-from swagger_client.api.graphical_user_interface_api import GraphicalUserInterfaceApi  # noqa: E501
-from swagger_client.rest import ApiException
+import PySirius
+from PySirius.api.graphical_user_interface_api import GraphicalUserInterfaceApi  # noqa: E501
+from PySirius.rest import ApiException
 
 
 class TestGraphicalUserInterfaceApi(unittest.TestCase):

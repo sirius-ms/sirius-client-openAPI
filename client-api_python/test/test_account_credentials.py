@@ -14,9 +14,9 @@ from __future__ import absolute_import
 
 import unittest
 
-import swagger_client
-from swagger_client.models.account_credentials import AccountCredentials  # noqa: E501
-from swagger_client.rest import ApiException
+import PySirius
+from PySirius.models.account_credentials import AccountCredentials  # noqa: E501
+from PySirius.rest import ApiException
 
 
 class TestAccountCredentials(unittest.TestCase):
@@ -31,7 +31,7 @@ class TestAccountCredentials(unittest.TestCase):
     def testAccountCredentials(self):
         """Test AccountCredentials"""
         # FIXME: construct object with mandatory attributes with example values
-        # model = swagger_client.models.account_credentials.AccountCredentials()  # noqa: E501
+        # model = PySirius.models.account_credentials.AccountCredentials()  # noqa: E501
         pass
 
 
