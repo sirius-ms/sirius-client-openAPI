@@ -1,4 +1,4 @@
-# SwaggerClient::Subscription
+# RubySirius::Subscription
 
 ## Properties
 Name | Type | Description | Notes

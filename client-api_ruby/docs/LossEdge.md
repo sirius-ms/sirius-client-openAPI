@@ -1,4 +1,4 @@
-# SwaggerClient::LossEdge
+# RubySirius::LossEdge
 
 ## Properties
 Name | Type | Description | Notes

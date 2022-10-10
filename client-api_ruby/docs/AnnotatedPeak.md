@@ -1,4 +1,4 @@
-# SwaggerClient::AnnotatedPeak
+# RubySirius::AnnotatedPeak
 
 ## Properties
 Name | Type | Description | Notes

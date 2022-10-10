@@ -1,4 +1,4 @@
-# SwaggerClient::ZodiacRunInTwoSteps
+# RubySirius::ZodiacRunInTwoSteps
 
 ## Properties
 Name | Type | Description | Notes

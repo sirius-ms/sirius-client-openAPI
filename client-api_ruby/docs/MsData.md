@@ -1,4 +1,4 @@
-# SwaggerClient::MsData
+# RubySirius::MsData
 
 ## Properties
 Name | Type | Description | Notes

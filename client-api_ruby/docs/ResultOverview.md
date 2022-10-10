@@ -1,4 +1,4 @@
-# SwaggerClient::ResultOverview
+# RubySirius::ResultOverview
 
 ## Properties
 Name | Type | Description | Notes

@@ -1,4 +1,4 @@
-# SwaggerClient::JobId
+# RubySirius::JobId
 
 ## Properties
 Name | Type | Description | Notes

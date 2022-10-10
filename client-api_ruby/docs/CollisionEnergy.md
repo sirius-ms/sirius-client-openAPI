@@ -1,4 +1,4 @@
-# SwaggerClient::CollisionEnergy
+# RubySirius::CollisionEnergy
 
 ## Properties
 Name | Type | Description | Notes

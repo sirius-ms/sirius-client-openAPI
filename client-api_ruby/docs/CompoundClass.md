@@ -1,4 +1,4 @@
-# SwaggerClient::CompoundClass
+# RubySirius::CompoundClass
 
 ## Properties
 Name | Type | Description | Notes

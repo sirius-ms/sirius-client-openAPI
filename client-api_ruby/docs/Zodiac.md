@@ -1,4 +1,4 @@
-# SwaggerClient::Zodiac
+# RubySirius::Zodiac
 
 ## Properties
 Name | Type | Description | Notes

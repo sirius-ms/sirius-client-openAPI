@@ -1,4 +1,4 @@
-# SwaggerClient::StructureDbSearch
+# RubySirius::StructureDbSearch
 
 ## Properties
 Name | Type | Description | Notes

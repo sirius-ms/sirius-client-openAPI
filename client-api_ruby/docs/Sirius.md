@@ -1,4 +1,4 @@
-# SwaggerClient::Sirius
+# RubySirius::Sirius
 
 ## Properties
 Name | Type | Description | Notes

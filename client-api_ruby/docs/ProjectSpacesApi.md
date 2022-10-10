@@ -1,4 +1,4 @@
-# SwaggerClient::ProjectSpacesApi
+# RubySirius::ProjectSpacesApi
 
 All URIs are relative to *http://localhost:8080*
 
@@ -20,16 +20,16 @@ Close project-space and remove it from application. Project-space will NOT be de
 ### Example
 ```ruby
 # load the gem
-require 'swagger_client'
+require 'ruby_sirius'
 
-api_instance = SwaggerClient::ProjectSpacesApi.new
+api_instance = RubySirius::ProjectSpacesApi.new
 project_id = 'project_id_example' # String | unique name/identifier of the  project-space to be closed.
 
 
 begin
   #Close project-space and remove it from application.
   api_instance.close_project_space(project_id)
-rescue SwaggerClient::ApiError => e
+rescue RubySirius::ApiError => e
   puts "Exception when calling ProjectSpacesApi->close_project_space: #{e}"
 end
 ```
@@ -65,9 +65,9 @@ Create and open a new project-space at given location and make it accessible via
 ### Example
 ```ruby
 # load the gem
-require 'swagger_client'
+require 'ruby_sirius'
 
-api_instance = SwaggerClient::ProjectSpacesApi.new
+api_instance = RubySirius::ProjectSpacesApi.new
 project_id = 'project_id_example' # String | unique name/identifier that shall be used to access the newly created project-space.
 path_to_project = 'path_to_project_example' # String | 
 opts = { 
@@ -79,7 +79,7 @@ begin
   #Create and open a new project-space at given location and make it accessible via the given projectId.
   result = api_instance.create_project_space(project_id, path_to_project, opts)
   p result
-rescue SwaggerClient::ApiError => e
+rescue RubySirius::ApiError => e
   puts "Exception when calling ProjectSpacesApi->create_project_space: #{e}"
 end
 ```
@@ -118,9 +118,9 @@ Get project space info by its projectId.
 ### Example
 ```ruby
 # load the gem
-require 'swagger_client'
+require 'ruby_sirius'
 
-api_instance = SwaggerClient::ProjectSpacesApi.new
+api_instance = RubySirius::ProjectSpacesApi.new
 project_id = 'project_id_example' # String | unique name/identifier tof the project-space to be accessed.
 
 
@@ -128,7 +128,7 @@ begin
   #Get project space info by its projectId.
   result = api_instance.get_project_space(project_id)
   p result
-rescue SwaggerClient::ApiError => e
+rescue RubySirius::ApiError => e
   puts "Exception when calling ProjectSpacesApi->get_project_space: #{e}"
 end
 ```
@@ -164,15 +164,15 @@ List all opened project spaces.
 ### Example
 ```ruby
 # load the gem
-require 'swagger_client'
+require 'ruby_sirius'
 
-api_instance = SwaggerClient::ProjectSpacesApi.new
+api_instance = RubySirius::ProjectSpacesApi.new
 
 begin
   #List all opened project spaces.
   result = api_instance.get_project_spaces
   p result
-rescue SwaggerClient::ApiError => e
+rescue RubySirius::ApiError => e
   puts "Exception when calling ProjectSpacesApi->get_project_spaces: #{e}"
 end
 ```
@@ -205,9 +205,9 @@ Open an existing project-space and make it accessible via the given projectId.
 ### Example
 ```ruby
 # load the gem
-require 'swagger_client'
+require 'ruby_sirius'
 
-api_instance = SwaggerClient::ProjectSpacesApi.new
+api_instance = RubySirius::ProjectSpacesApi.new
 project_id = 'project_id_example' # String | unique name/identifier that shall be used to access the opened project-space.
 path_to_project = 'path_to_project_example' # String | 
 
@@ -216,7 +216,7 @@ begin
   #Open an existing project-space and make it accessible via the given projectId.
   result = api_instance.open_project_space(project_id, path_to_project)
   p result
-rescue SwaggerClient::ApiError => e
+rescue RubySirius::ApiError => e
   puts "Exception when calling ProjectSpacesApi->open_project_space: #{e}"
 end
 ```

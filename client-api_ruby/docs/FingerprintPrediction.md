@@ -1,4 +1,4 @@
-# SwaggerClient::FingerprintPrediction
+# RubySirius::FingerprintPrediction
 
 ## Properties
 Name | Type | Description | Notes

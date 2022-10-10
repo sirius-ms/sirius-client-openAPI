@@ -1,4 +1,4 @@
-# SwaggerClient::LoginAndAccountApi
+# RubySirius::LoginAndAccountApi
 
 All URIs are relative to *http://localhost:8080*
 
@@ -22,9 +22,9 @@ Get information about the account currently logged in. Fails if not logged in.
 ### Example
 ```ruby
 # load the gem
-require 'swagger_client'
+require 'ruby_sirius'
 
-api_instance = SwaggerClient::LoginAndAccountApi.new
+api_instance = RubySirius::LoginAndAccountApi.new
 opts = { 
   include_subs: false # BOOLEAN | include available and active subscriptions in {@link AccountInfo AccountInfo}.
 }
@@ -33,7 +33,7 @@ begin
   #Get information about the account currently logged in.
   result = api_instance.get_account_info(opts)
   p result
-rescue SwaggerClient::ApiError => e
+rescue RubySirius::ApiError => e
   puts "Exception when calling LoginAndAccountApi->get_account_info: #{e}"
 end
 ```
@@ -69,15 +69,15 @@ Get SignUp URL (For signUp via web browser)
 ### Example
 ```ruby
 # load the gem
-require 'swagger_client'
+require 'ruby_sirius'
 
-api_instance = SwaggerClient::LoginAndAccountApi.new
+api_instance = RubySirius::LoginAndAccountApi.new
 
 begin
   #Get SignUp URL (For signUp via web browser)
   result = api_instance.get_sign_up_url
   p result
-rescue SwaggerClient::ApiError => e
+rescue RubySirius::ApiError => e
   puts "Exception when calling LoginAndAccountApi->get_sign_up_url: #{e}"
 end
 ```
@@ -110,15 +110,15 @@ Get available subscriptions of the account currently logged in. Fails if not log
 ### Example
 ```ruby
 # load the gem
-require 'swagger_client'
+require 'ruby_sirius'
 
-api_instance = SwaggerClient::LoginAndAccountApi.new
+api_instance = RubySirius::LoginAndAccountApi.new
 
 begin
   #Get available subscriptions of the account currently logged in.
   result = api_instance.get_subscriptions
   p result
-rescue SwaggerClient::ApiError => e
+rescue RubySirius::ApiError => e
   puts "Exception when calling LoginAndAccountApi->get_subscriptions: #{e}"
 end
 ```
@@ -151,15 +151,15 @@ Check if a user is logged in.
 ### Example
 ```ruby
 # load the gem
-require 'swagger_client'
+require 'ruby_sirius'
 
-api_instance = SwaggerClient::LoginAndAccountApi.new
+api_instance = RubySirius::LoginAndAccountApi.new
 
 begin
   #Check if a user is logged in.
   result = api_instance.is_logged_in
   p result
-rescue SwaggerClient::ApiError => e
+rescue RubySirius::ApiError => e
   puts "Exception when calling LoginAndAccountApi->is_logged_in: #{e}"
 end
 ```
@@ -192,10 +192,10 @@ Login into SIRIUS web services.
 ### Example
 ```ruby
 # load the gem
-require 'swagger_client'
+require 'ruby_sirius'
 
-api_instance = SwaggerClient::LoginAndAccountApi.new
-body = SwaggerClient::AccountCredentials.new # AccountCredentials | used to log in.
+api_instance = RubySirius::LoginAndAccountApi.new
+body = RubySirius::AccountCredentials.new # AccountCredentials | used to log in.
 accept_terms = true # BOOLEAN | 
 opts = { 
   fail_when_logged_in: false # BOOLEAN | if true request fails if an active login already exists.
@@ -206,7 +206,7 @@ begin
   #Login into SIRIUS web services.
   result = api_instance.login(bodyaccept_terms, opts)
   p result
-rescue SwaggerClient::ApiError => e
+rescue RubySirius::ApiError => e
   puts "Exception when calling LoginAndAccountApi->login: #{e}"
 end
 ```
@@ -245,14 +245,14 @@ Logout from SIRIUS web services.
 ### Example
 ```ruby
 # load the gem
-require 'swagger_client'
+require 'ruby_sirius'
 
-api_instance = SwaggerClient::LoginAndAccountApi.new
+api_instance = RubySirius::LoginAndAccountApi.new
 
 begin
   #Logout from SIRIUS web services.
   api_instance.logout
-rescue SwaggerClient::ApiError => e
+rescue RubySirius::ApiError => e
   puts "Exception when calling LoginAndAccountApi->logout: #{e}"
 end
 ```
@@ -285,15 +285,15 @@ Open SignUp window in system browser and return signUp link.
 ### Example
 ```ruby
 # load the gem
-require 'swagger_client'
+require 'ruby_sirius'
 
-api_instance = SwaggerClient::LoginAndAccountApi.new
+api_instance = RubySirius::LoginAndAccountApi.new
 
 begin
   #Open SignUp window in system browser and return signUp link.
   result = api_instance.sign_up
   p result
-rescue SwaggerClient::ApiError => e
+rescue RubySirius::ApiError => e
   puts "Exception when calling LoginAndAccountApi->sign_up: #{e}"
 end
 ```

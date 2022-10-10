@@ -1,4 +1,4 @@
-# SwaggerClient::FormulaCandidate
+# RubySirius::FormulaCandidate
 
 ## Properties
 Name | Type | Description | Notes

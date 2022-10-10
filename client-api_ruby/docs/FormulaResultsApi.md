@@ -1,4 +1,4 @@
-# SwaggerClient::FormulaResultsApi
+# RubySirius::FormulaResultsApi
 
 All URIs are relative to *http://localhost:8080*
 
@@ -24,9 +24,9 @@ Best matching compound classes,  Set of the highest scoring compound classes CAN
 ### Example
 ```ruby
 # load the gem
-require 'swagger_client'
+require 'ruby_sirius'
 
-api_instance = SwaggerClient::FormulaResultsApi.new
+api_instance = RubySirius::FormulaResultsApi.new
 project_id = 'project_id_example' # String | project-space to read from.
 compound_id = 'compound_id_example' # String | compound/feature the formula result belongs to.
 formula_id = 'formula_id_example' # String | identifier of the requested formula result
@@ -36,7 +36,7 @@ begin
   #Best matching compound classes,  Set of the highest scoring compound classes CANOPUS) on each hierarchy level of  the ClassyFire and NPC ontology,
   result = api_instance.get_best_matching_canopus_predictions(project_id, compound_id, formula_id)
   p result
-rescue SwaggerClient::ApiError => e
+rescue RubySirius::ApiError => e
   puts "Exception when calling FormulaResultsApi->get_best_matching_canopus_predictions: #{e}"
 end
 ```
@@ -74,9 +74,9 @@ All predicted compound classes (CANOPUS) from ClassyFire and NPC and their proba
 ### Example
 ```ruby
 # load the gem
-require 'swagger_client'
+require 'ruby_sirius'
 
-api_instance = SwaggerClient::FormulaResultsApi.new
+api_instance = RubySirius::FormulaResultsApi.new
 project_id = 'project_id_example' # String | project-space to read from.
 compound_id = 'compound_id_example' # String | compound/feature the formula result belongs to.
 formula_id = 'formula_id_example' # String | identifier of the requested formula result
@@ -86,7 +86,7 @@ begin
   #All predicted compound classes (CANOPUS) from ClassyFire and NPC and their probabilities,
   result = api_instance.get_canopus_predictions(project_id, compound_id, formula_id)
   p result
-rescue SwaggerClient::ApiError => e
+rescue RubySirius::ApiError => e
   puts "Exception when calling FormulaResultsApi->get_canopus_predictions: #{e}"
 end
 ```
@@ -124,9 +124,9 @@ Returns predicted fingerprint (CSI:FingerID) for the given formula result identi
 ### Example
 ```ruby
 # load the gem
-require 'swagger_client'
+require 'ruby_sirius'
 
-api_instance = SwaggerClient::FormulaResultsApi.new
+api_instance = RubySirius::FormulaResultsApi.new
 project_id = 'project_id_example' # String | project-space to read from.
 compound_id = 'compound_id_example' # String | compound/feature the formula result belongs to.
 formula_id = 'formula_id_example' # String | identifier of the requested formula result
@@ -136,7 +136,7 @@ begin
   #Returns predicted fingerprint (CSI:FingerID) for the given formula result identifier  This fingerprint is used to perfom structure database search and predict compound classes.
   result = api_instance.get_fingerprint_prediction(project_id, compound_id, formula_id)
   p result
-rescue SwaggerClient::ApiError => e
+rescue RubySirius::ApiError => e
   puts "Exception when calling FormulaResultsApi->get_fingerprint_prediction: #{e}"
 end
 ```
@@ -174,9 +174,9 @@ List of all FormulaResultContainers available for this compound/feature with min
 ### Example
 ```ruby
 # load the gem
-require 'swagger_client'
+require 'ruby_sirius'
 
-api_instance = SwaggerClient::FormulaResultsApi.new
+api_instance = RubySirius::FormulaResultsApi.new
 project_id = 'project_id_example' # String | project-space to read from.
 compound_id = 'compound_id_example' # String | compound/feature the formula result belongs to.
 opts = { 
@@ -188,7 +188,7 @@ begin
   #List of all FormulaResultContainers available for this compound/feature with minimal information.
   result = api_instance.get_formula_ids(project_id, compound_id, opts)
   p result
-rescue SwaggerClient::ApiError => e
+rescue RubySirius::ApiError => e
   puts "Exception when calling FormulaResultsApi->get_formula_ids: #{e}"
 end
 ```
@@ -227,9 +227,9 @@ FormulaResultContainers for the given 'formulaId' with minimal information.  Can
 ### Example
 ```ruby
 # load the gem
-require 'swagger_client'
+require 'ruby_sirius'
 
-api_instance = SwaggerClient::FormulaResultsApi.new
+api_instance = RubySirius::FormulaResultsApi.new
 project_id = 'project_id_example' # String | project-space to read from.
 compound_id = 'compound_id_example' # String | compound/feature the formula result belongs to.
 formula_id = 'formula_id_example' # String | identifier of the requested formula result
@@ -242,7 +242,7 @@ begin
   #FormulaResultContainers for the given 'formulaId' with minimal information.
   result = api_instance.get_formula_result(project_id, compound_id, formula_id, opts)
   p result
-rescue SwaggerClient::ApiError => e
+rescue RubySirius::ApiError => e
   puts "Exception when calling FormulaResultsApi->get_formula_result: #{e}"
 end
 ```
@@ -282,9 +282,9 @@ Returns fragmentation tree (SIRIUS) for the given formula result identifier  Thi
 ### Example
 ```ruby
 # load the gem
-require 'swagger_client'
+require 'ruby_sirius'
 
-api_instance = SwaggerClient::FormulaResultsApi.new
+api_instance = RubySirius::FormulaResultsApi.new
 project_id = 'project_id_example' # String | project-space to read from.
 compound_id = 'compound_id_example' # String | compound/feature the formula result belongs to.
 formula_id = 'formula_id_example' # String | identifier of the requested formula result
@@ -294,7 +294,7 @@ begin
   #Returns fragmentation tree (SIRIUS) for the given formula result identifier  This tree is used to rank formula candidates (treeScore).
   result = api_instance.get_frag_tree(project_id, compound_id, formula_id)
   p result
-rescue SwaggerClient::ApiError => e
+rescue RubySirius::ApiError => e
   puts "Exception when calling FormulaResultsApi->get_frag_tree: #{e}"
 end
 ```
@@ -332,9 +332,9 @@ Returns simulated isotope pattern (SIRIUS) for the given formula result identifi
 ### Example
 ```ruby
 # load the gem
-require 'swagger_client'
+require 'ruby_sirius'
 
-api_instance = SwaggerClient::FormulaResultsApi.new
+api_instance = RubySirius::FormulaResultsApi.new
 project_id = 'project_id_example' # String | project-space to read from.
 compound_id = 'compound_id_example' # String | compound/feature the formula result belongs to.
 formula_id = 'formula_id_example' # String | identifier of the requested formula result
@@ -344,7 +344,7 @@ begin
   #Returns simulated isotope pattern (SIRIUS) for the given formula result identifier.
   result = api_instance.get_simulated_isotope_pattern(project_id, compound_id, formula_id)
   p result
-rescue SwaggerClient::ApiError => e
+rescue RubySirius::ApiError => e
   puts "Exception when calling FormulaResultsApi->get_simulated_isotope_pattern: #{e}"
 end
 ```
@@ -382,9 +382,9 @@ List of StructureCandidates the given 'formulaId' with minimal information.  Str
 ### Example
 ```ruby
 # load the gem
-require 'swagger_client'
+require 'ruby_sirius'
 
-api_instance = SwaggerClient::FormulaResultsApi.new
+api_instance = RubySirius::FormulaResultsApi.new
 project_id = 'project_id_example' # String | project-space to read from.
 compound_id = 'compound_id_example' # String | compound/feature the formula result belongs to.
 formula_id = 'formula_id_example' # String | identifier of the requested formula result
@@ -399,7 +399,7 @@ begin
   #List of StructureCandidates the given 'formulaId' with minimal information.
   result = api_instance.get_structure_candidates(project_id, compound_id, formula_id, opts)
   p result
-rescue SwaggerClient::ApiError => e
+rescue RubySirius::ApiError => e
   puts "Exception when calling FormulaResultsApi->get_structure_candidates: #{e}"
 end
 ```
@@ -441,9 +441,9 @@ Best Scoring StructureCandidate over all molecular formular resutls that belong 
 ### Example
 ```ruby
 # load the gem
-require 'swagger_client'
+require 'ruby_sirius'
 
-api_instance = SwaggerClient::FormulaResultsApi.new
+api_instance = RubySirius::FormulaResultsApi.new
 project_id = 'project_id_example' # String | project-space to read from.
 compound_id = 'compound_id_example' # String | compound/feature the formula result belongs to.
 opts = { 
@@ -456,7 +456,7 @@ begin
   #Best Scoring StructureCandidate over all molecular formular resutls that belong to the specified  compound/feature (compoundId).
   result = api_instance.get_top_structure_candidate(project_id, compound_id, opts)
   p result
-rescue SwaggerClient::ApiError => e
+rescue RubySirius::ApiError => e
   puts "Exception when calling FormulaResultsApi->get_top_structure_candidate: #{e}"
 end
 ```

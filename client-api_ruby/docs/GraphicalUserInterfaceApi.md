@@ -1,4 +1,4 @@
-# SwaggerClient::GraphicalUserInterfaceApi
+# RubySirius::GraphicalUserInterfaceApi
 
 All URIs are relative to *http://localhost:8080*
 
@@ -18,17 +18,17 @@ Apply given changes to the running GUI instance.
 ### Example
 ```ruby
 # load the gem
-require 'swagger_client'
+require 'ruby_sirius'
 
-api_instance = SwaggerClient::GraphicalUserInterfaceApi.new
-body = SwaggerClient::GuiParameters.new # GuiParameters | parameters that should be applied.
+api_instance = RubySirius::GraphicalUserInterfaceApi.new
+body = RubySirius::GuiParameters.new # GuiParameters | parameters that should be applied.
 project_id = 'project_id_example' # String | of project-space the GUI instance is connected to.
 
 
 begin
   #Apply given changes to the running GUI instance.
   api_instance.apply_to_gui(bodyproject_id)
-rescue SwaggerClient::ApiError => e
+rescue RubySirius::ApiError => e
   puts "Exception when calling GraphicalUserInterfaceApi->apply_to_gui: #{e}"
 end
 ```
@@ -65,16 +65,16 @@ Close GUI instance of given project-space if available.
 ### Example
 ```ruby
 # load the gem
-require 'swagger_client'
+require 'ruby_sirius'
 
-api_instance = SwaggerClient::GraphicalUserInterfaceApi.new
+api_instance = RubySirius::GraphicalUserInterfaceApi.new
 project_id = 'project_id_example' # String | if project-space the GUI instance is connected to.
 
 
 begin
   #Close GUI instance of given project-space if available.
   api_instance.close_gui(project_id)
-rescue SwaggerClient::ApiError => e
+rescue RubySirius::ApiError => e
   puts "Exception when calling GraphicalUserInterfaceApi->close_gui: #{e}"
 end
 ```
@@ -110,9 +110,9 @@ Open GUI instance on specified project-space and bring the GUI window to foregro
 ### Example
 ```ruby
 # load the gem
-require 'swagger_client'
+require 'ruby_sirius'
 
-api_instance = SwaggerClient::GraphicalUserInterfaceApi.new
+api_instance = RubySirius::GraphicalUserInterfaceApi.new
 project_id = 'project_id_example' # String | of project-space the GUI instance will connect to.
 opts = { 
   read_only: true # BOOLEAN | open in read-only mode.
@@ -121,7 +121,7 @@ opts = {
 begin
   #Open GUI instance on specified project-space and bring the GUI window to foreground.
   api_instance.open_gui(project_id, opts)
-rescue SwaggerClient::ApiError => e
+rescue RubySirius::ApiError => e
   puts "Exception when calling GraphicalUserInterfaceApi->open_gui: #{e}"
 end
 ```

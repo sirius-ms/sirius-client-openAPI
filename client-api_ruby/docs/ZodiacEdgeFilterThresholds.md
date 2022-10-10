@@ -1,4 +1,4 @@
-# SwaggerClient::ZodiacEdgeFilterThresholds
+# RubySirius::ZodiacEdgeFilterThresholds
 
 ## Properties
 Name | Type | Description | Notes

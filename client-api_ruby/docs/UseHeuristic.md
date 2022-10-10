@@ -1,4 +1,4 @@
-# SwaggerClient::UseHeuristic
+# RubySirius::UseHeuristic
 
 ## Properties
 Name | Type | Description | Notes

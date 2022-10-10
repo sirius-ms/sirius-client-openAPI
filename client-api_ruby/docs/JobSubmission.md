@@ -1,4 +1,4 @@
-# SwaggerClient::JobSubmission
+# RubySirius::JobSubmission
 
 ## Properties
 Name | Type | Description | Notes

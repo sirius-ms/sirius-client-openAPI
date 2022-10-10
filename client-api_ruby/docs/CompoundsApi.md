@@ -1,4 +1,4 @@
-# SwaggerClient::CompoundsApi
+# RubySirius::CompoundsApi
 
 All URIs are relative to *http://localhost:8080*
 
@@ -20,9 +20,9 @@ Delete compound/feature with the given identifier from the specified project-spa
 ### Example
 ```ruby
 # load the gem
-require 'swagger_client'
+require 'ruby_sirius'
 
-api_instance = SwaggerClient::CompoundsApi.new
+api_instance = RubySirius::CompoundsApi.new
 project_id = 'project_id_example' # String | project-space to delete from.
 cid = 'cid_example' # String | identifier of compound to delete.
 
@@ -30,7 +30,7 @@ cid = 'cid_example' # String | identifier of compound to delete.
 begin
   #Delete compound/feature with the given identifier from the specified project-space.
   api_instance.delete_compound(project_id, cid)
-rescue SwaggerClient::ApiError => e
+rescue RubySirius::ApiError => e
   puts "Exception when calling CompoundsApi->delete_compound: #{e}"
 end
 ```
@@ -67,9 +67,9 @@ Get compound/feature with the given identifier from the specified project-space.
 ### Example
 ```ruby
 # load the gem
-require 'swagger_client'
+require 'ruby_sirius'
 
-api_instance = SwaggerClient::CompoundsApi.new
+api_instance = RubySirius::CompoundsApi.new
 project_id = 'project_id_example' # String | project-space to read from.
 cid = 'cid_example' # String | identifier of compound to access.
 opts = { 
@@ -81,7 +81,7 @@ begin
   #Get compound/feature with the given identifier from the specified project-space.
   result = api_instance.get_compound(project_id, cid, opts)
   p result
-rescue SwaggerClient::ApiError => e
+rescue RubySirius::ApiError => e
   puts "Exception when calling CompoundsApi->get_compound: #{e}"
 end
 ```
@@ -120,9 +120,9 @@ Get all available compounds/features in the given project-space.
 ### Example
 ```ruby
 # load the gem
-require 'swagger_client'
+require 'ruby_sirius'
 
-api_instance = SwaggerClient::CompoundsApi.new
+api_instance = RubySirius::CompoundsApi.new
 project_id = 'project_id_example' # String | project-space to read from.
 opts = { 
   top_annotation: false, # BOOLEAN | include the top annotation of this feature into the output (if available).
@@ -133,7 +133,7 @@ begin
   #Get all available compounds/features in the given project-space.
   result = api_instance.get_compounds(project_id, opts)
   p result
-rescue SwaggerClient::ApiError => e
+rescue RubySirius::ApiError => e
   puts "Exception when calling CompoundsApi->get_compounds: #{e}"
 end
 ```
@@ -171,9 +171,9 @@ Import ms/ms data in given format from local filesystem into the specified proje
 ### Example
 ```ruby
 # load the gem
-require 'swagger_client'
+require 'ruby_sirius'
 
-api_instance = SwaggerClient::CompoundsApi.new
+api_instance = RubySirius::CompoundsApi.new
 body = ['body_example'] # Array<String> | List of file and directory paths to import
 project_id = 'project_id_example' # String | project-space to import into.
 opts = { 
@@ -186,7 +186,7 @@ begin
   #Import ms/ms data in given format from local filesystem into the specified project-space
   result = api_instance.import_compounds(bodyproject_id, opts)
   p result
-rescue SwaggerClient::ApiError => e
+rescue RubySirius::ApiError => e
   puts "Exception when calling CompoundsApi->import_compounds: #{e}"
 end
 ```
@@ -226,9 +226,9 @@ Import ms/ms data from the given format into the specified project-space  Possib
 ### Example
 ```ruby
 # load the gem
-require 'swagger_client'
+require 'ruby_sirius'
 
-api_instance = SwaggerClient::CompoundsApi.new
+api_instance = RubySirius::CompoundsApi.new
 body = 'body_example' # String | data content in specified format
 format = 'format_example' # String | data format specified by the usual file extension of the format (without [.])
 project_id = 'project_id_example' # String | project-space to import into.
@@ -240,7 +240,7 @@ begin
   #Import ms/ms data from the given format into the specified project-space  Possible formats (ms, mgf, cef, msp, mzML, mzXML)
   result = api_instance.import_compounds_from_string(bodyformatproject_id, opts)
   p result
-rescue SwaggerClient::ApiError => e
+rescue RubySirius::ApiError => e
   puts "Exception when calling CompoundsApi->import_compounds_from_string: #{e}"
 end
 ```

@@ -1,4 +1,4 @@
-# SwaggerClient::CompoundAnnotation
+# RubySirius::CompoundAnnotation
 
 ## Properties
 Name | Type | Description | Notes

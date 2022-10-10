@@ -1,4 +1,4 @@
-# SwaggerClient::Canopus
+# RubySirius::Canopus
 
 ## Properties
 Name | Type | Description | Notes

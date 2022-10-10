@@ -1,4 +1,4 @@
-# SwaggerClient::JobProgress
+# RubySirius::JobProgress
 
 ## Properties
 Name | Type | Description | Notes

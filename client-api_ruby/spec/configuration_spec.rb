@@ -11,14 +11,14 @@ Swagger Codegen version: 3.0.35
 
 require 'spec_helper'
 
-describe SwaggerClient::Configuration do
-  let(:config) { SwaggerClient::Configuration.default }
+describe RubySirius::Configuration do
+  let(:config) { RubySirius::Configuration.default }
 
   before(:each) do
     # uncomment below to setup host and base_path
     # require 'URI'
     # uri = URI.parse("http://localhost:8080")
-    # SwaggerClient.configure do |c|
+    # RubySirius.configure do |c|
     #   c.host = uri.host
     #   c.base_path = uri.path
     # end

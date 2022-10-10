@@ -1,4 +1,4 @@
-# SwaggerClient::ComputationsApi
+# RubySirius::ComputationsApi
 
 All URIs are relative to *http://localhost:8080*
 
@@ -25,9 +25,9 @@ Delete job. Specify how to behave for running jobs.
 ### Example
 ```ruby
 # load the gem
-require 'swagger_client'
+require 'ruby_sirius'
 
-api_instance = SwaggerClient::ComputationsApi.new
+api_instance = RubySirius::ComputationsApi.new
 project_id = 'project_id_example' # String | project-space to run jobs on
 job_id = 'job_id_example' # String | of the job to be deleted
 opts = { 
@@ -38,7 +38,7 @@ opts = {
 begin
   #Delete job.
   api_instance.delete_job(project_id, job_id, opts)
-rescue SwaggerClient::ApiError => e
+rescue RubySirius::ApiError => e
   puts "Exception when calling ComputationsApi->delete_job: #{e}"
 end
 ```
@@ -77,16 +77,16 @@ Delete job configuration with given name.
 ### Example
 ```ruby
 # load the gem
-require 'swagger_client'
+require 'ruby_sirius'
 
-api_instance = SwaggerClient::ComputationsApi.new
+api_instance = RubySirius::ComputationsApi.new
 name = 'name_example' # String | name of the job-config to delete
 
 
 begin
   #Delete job configuration with given name.
   api_instance.delete_job_config(name)
-rescue SwaggerClient::ApiError => e
+rescue RubySirius::ApiError => e
   puts "Exception when calling ComputationsApi->delete_job_config: #{e}"
 end
 ```
@@ -122,9 +122,9 @@ Request default job configuration
 ### Example
 ```ruby
 # load the gem
-require 'swagger_client'
+require 'ruby_sirius'
 
-api_instance = SwaggerClient::ComputationsApi.new
+api_instance = RubySirius::ComputationsApi.new
 opts = { 
   include_config_map: false # BOOLEAN | if true, generic configmap with-defaults will be included
 }
@@ -133,7 +133,7 @@ begin
   #Request default job configuration
   result = api_instance.get_default_job_config(opts)
   p result
-rescue SwaggerClient::ApiError => e
+rescue RubySirius::ApiError => e
   puts "Exception when calling ComputationsApi->get_default_job_config: #{e}"
 end
 ```
@@ -169,9 +169,9 @@ Get job information and its current state and progress (if available).
 ### Example
 ```ruby
 # load the gem
-require 'swagger_client'
+require 'ruby_sirius'
 
-api_instance = SwaggerClient::ComputationsApi.new
+api_instance = RubySirius::ComputationsApi.new
 project_id = 'project_id_example' # String | project-space to run jobs on
 job_id = 'job_id_example' # String | of the job to be returned
 opts = { 
@@ -184,7 +184,7 @@ begin
   #Get job information and its current state and progress (if available).
   result = api_instance.get_job(project_id, job_id, opts)
   p result
-rescue SwaggerClient::ApiError => e
+rescue RubySirius::ApiError => e
   puts "Exception when calling ComputationsApi->get_job: #{e}"
 end
 ```
@@ -224,9 +224,9 @@ Request job configuration with given name.
 ### Example
 ```ruby
 # load the gem
-require 'swagger_client'
+require 'ruby_sirius'
 
-api_instance = SwaggerClient::ComputationsApi.new
+api_instance = RubySirius::ComputationsApi.new
 name = 'name_example' # String | name of the job-config to return
 opts = { 
   include_config_map: false # BOOLEAN | if true the generic configmap will be part of the output
@@ -236,7 +236,7 @@ begin
   #Request job configuration with given name.
   result = api_instance.get_job_config(name, opts)
   p result
-rescue SwaggerClient::ApiError => e
+rescue RubySirius::ApiError => e
   puts "Exception when calling ComputationsApi->get_job_config: #{e}"
 end
 ```
@@ -273,9 +273,9 @@ Request all available job configurations
 ### Example
 ```ruby
 # load the gem
-require 'swagger_client'
+require 'ruby_sirius'
 
-api_instance = SwaggerClient::ComputationsApi.new
+api_instance = RubySirius::ComputationsApi.new
 opts = { 
   include_config_map: false # BOOLEAN | if true the generic configmap will be part of the output
 }
@@ -284,7 +284,7 @@ begin
   #Request all available job configurations
   result = api_instance.get_job_configs(opts)
   p result
-rescue SwaggerClient::ApiError => e
+rescue RubySirius::ApiError => e
   puts "Exception when calling ComputationsApi->get_job_configs: #{e}"
 end
 ```
@@ -320,9 +320,9 @@ Get job information and its current state and progress (if available).
 ### Example
 ```ruby
 # load the gem
-require 'swagger_client'
+require 'ruby_sirius'
 
-api_instance = SwaggerClient::ComputationsApi.new
+api_instance = RubySirius::ComputationsApi.new
 project_id = 'project_id_example' # String | project-space to run jobs on
 opts = { 
   include_state: false, # BOOLEAN | include {@link de.unijena.bioinf.ms.middleware.compute.model.JobProgress de.unijena.bioinf.ms.middleware.compute.model.JobProgress} states.
@@ -334,7 +334,7 @@ begin
   #Get job information and its current state and progress (if available).
   result = api_instance.get_jobs(project_id, opts)
   p result
-rescue SwaggerClient::ApiError => e
+rescue RubySirius::ApiError => e
   puts "Exception when calling ComputationsApi->get_jobs: #{e}"
 end
 ```
@@ -373,10 +373,10 @@ Add new job configuration with given name.
 ### Example
 ```ruby
 # load the gem
-require 'swagger_client'
+require 'ruby_sirius'
 
-api_instance = SwaggerClient::ComputationsApi.new
-body = SwaggerClient::JobSubmission.new # JobSubmission | to add
+api_instance = RubySirius::ComputationsApi.new
+body = RubySirius::JobSubmission.new # JobSubmission | to add
 name = 'name_example' # String | name of the job-config to add
 opts = { 
   override_existing: false # BOOLEAN | 
@@ -386,7 +386,7 @@ begin
   #Add new job configuration with given name.
   result = api_instance.post_job_config(bodyname, opts)
   p result
-rescue SwaggerClient::ApiError => e
+rescue RubySirius::ApiError => e
   puts "Exception when calling ComputationsApi->post_job_config: #{e}"
 end
 ```
@@ -424,10 +424,10 @@ Start computation for given compounds and with given parameters.
 ### Example
 ```ruby
 # load the gem
-require 'swagger_client'
+require 'ruby_sirius'
 
-api_instance = SwaggerClient::ComputationsApi.new
-body = SwaggerClient::JobSubmission.new # JobSubmission | configuration of the job that will be submitted of the job to be returned
+api_instance = RubySirius::ComputationsApi.new
+body = RubySirius::JobSubmission.new # JobSubmission | configuration of the job that will be submitted of the job to be returned
 project_id = 'project_id_example' # String | project-space to run jobs on
 opts = { 
   include_state: true # BOOLEAN | include {@link de.unijena.bioinf.ms.middleware.compute.model.JobProgress de.unijena.bioinf.ms.middleware.compute.model.JobProgress} state.
@@ -439,7 +439,7 @@ begin
   #Start computation for given compounds and with given parameters.
   result = api_instance.start_job(bodyproject_id, opts)
   p result
-rescue SwaggerClient::ApiError => e
+rescue RubySirius::ApiError => e
   puts "Exception when calling ComputationsApi->start_job: #{e}"
 end
 ```
@@ -479,9 +479,9 @@ Start computation for given compounds and with parameters from a stored job-conf
 ### Example
 ```ruby
 # load the gem
-require 'swagger_client'
+require 'ruby_sirius'
 
-api_instance = SwaggerClient::ComputationsApi.new
+api_instance = RubySirius::ComputationsApi.new
 body = ['body_example'] # Array<String> | compound ids to be computed
 job_config_name = 'job_config_name_example' # String | name if the config to be used
 project_id = 'project_id_example' # String | project-space to run jobs on
@@ -496,7 +496,7 @@ begin
   #Start computation for given compounds and with parameters from a stored job-config.
   result = api_instance.start_job_from_config(bodyjob_config_nameproject_id, opts)
   p result
-rescue SwaggerClient::ApiError => e
+rescue RubySirius::ApiError => e
   puts "Exception when calling ComputationsApi->start_job_from_config: #{e}"
 end
 ```

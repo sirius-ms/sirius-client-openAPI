@@ -1,4 +1,4 @@
-# SwaggerClient::ZodiacNumberOfConsideredCandidatesAt300Mz
+# RubySirius::ZodiacNumberOfConsideredCandidatesAt300Mz
 
 ## Properties
 Name | Type | Description | Notes

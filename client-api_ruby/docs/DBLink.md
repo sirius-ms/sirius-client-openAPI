@@ -1,4 +1,4 @@
-# SwaggerClient::DBLink
+# RubySirius::DBLink
 
 ## Properties
 Name | Type | Description | Notes

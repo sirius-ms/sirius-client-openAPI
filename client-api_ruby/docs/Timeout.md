@@ -1,4 +1,4 @@
-# SwaggerClient::Timeout
+# RubySirius::Timeout
 
 ## Properties
 Name | Type | Description | Notes

@@ -1,4 +1,4 @@
-# SwaggerClient::GuiParameters
+# RubySirius::GuiParameters
 
 ## Properties
 Name | Type | Description | Notes

@@ -1,4 +1,4 @@
-# SwaggerClient::AnnotatedSpectrum
+# RubySirius::AnnotatedSpectrum
 
 ## Properties
 Name | Type | Description | Notes

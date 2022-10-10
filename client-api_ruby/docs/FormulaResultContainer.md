@@ -1,4 +1,4 @@
-# SwaggerClient::FormulaResultContainer
+# RubySirius::FormulaResultContainer
 
 ## Properties
 Name | Type | Description | Notes

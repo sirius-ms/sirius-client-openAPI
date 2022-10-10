@@ -1,4 +1,4 @@
-# SwaggerClient::CanopusPredictions
+# RubySirius::CanopusPredictions
 
 ## Properties
 Name | Type | Description | Notes

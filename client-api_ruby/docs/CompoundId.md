@@ -1,4 +1,4 @@
-# SwaggerClient::CompoundId
+# RubySirius::CompoundId
 
 ## Properties
 Name | Type | Description | Notes

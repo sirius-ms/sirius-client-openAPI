@@ -1,4 +1,4 @@
-# SwaggerClient::Deviation
+# RubySirius::Deviation
 
 ## Properties
 Name | Type | Description | Notes

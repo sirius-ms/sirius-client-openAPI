@@ -1,4 +1,4 @@
-# SwaggerClient::AccountInfo
+# RubySirius::AccountInfo
 
 ## Properties
 Name | Type | Description | Notes

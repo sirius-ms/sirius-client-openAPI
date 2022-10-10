@@ -1,4 +1,4 @@
-# SwaggerClient::ProjectSpaceId
+# RubySirius::ProjectSpaceId
 
 ## Properties
 Name | Type | Description | Notes

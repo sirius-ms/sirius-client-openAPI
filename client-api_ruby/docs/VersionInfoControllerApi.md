@@ -1,4 +1,4 @@
-# SwaggerClient::VersionInfoControllerApi
+# RubySirius::VersionInfoControllerApi
 
 All URIs are relative to *http://localhost:8080*
 
@@ -14,14 +14,14 @@ Method | HTTP request | Description
 ### Example
 ```ruby
 # load the gem
-require 'swagger_client'
+require 'ruby_sirius'
 
-api_instance = SwaggerClient::VersionInfoControllerApi.new
+api_instance = RubySirius::VersionInfoControllerApi.new
 
 begin
   result = api_instance.get_version_info
   p result
-rescue SwaggerClient::ApiError => e
+rescue RubySirius::ApiError => e
   puts "Exception when calling VersionInfoControllerApi->get_version_info: #{e}"
 end
 ```

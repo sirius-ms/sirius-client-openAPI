@@ -1,4 +1,4 @@
-# SwaggerClient::FragmentationTree
+# RubySirius::FragmentationTree
 
 ## Properties
 Name | Type | Description | Notes
