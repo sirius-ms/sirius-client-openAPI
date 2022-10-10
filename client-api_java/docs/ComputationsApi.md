@@ -26,8 +26,8 @@ Delete job. Specify how to behave for running jobs.
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.ComputationsApi;
+//import JSirius.ApiException;
+//import JSirius.api.ComputationsApi;
 
 
 ComputationsApi apiInstance = new ComputationsApi();
@@ -76,8 +76,8 @@ Delete job configuration with given name.
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.ComputationsApi;
+//import JSirius.ApiException;
+//import JSirius.api.ComputationsApi;
 
 
 ComputationsApi apiInstance = new ComputationsApi();
@@ -120,8 +120,8 @@ Request default job configuration
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.ComputationsApi;
+//import JSirius.ApiException;
+//import JSirius.api.ComputationsApi;
 
 
 ComputationsApi apiInstance = new ComputationsApi();
@@ -165,8 +165,8 @@ Get job information and its current state and progress (if available).
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.ComputationsApi;
+//import JSirius.ApiException;
+//import JSirius.api.ComputationsApi;
 
 
 ComputationsApi apiInstance = new ComputationsApi();
@@ -218,8 +218,8 @@ Request job configuration with given name.
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.ComputationsApi;
+//import JSirius.ApiException;
+//import JSirius.api.ComputationsApi;
 
 
 ComputationsApi apiInstance = new ComputationsApi();
@@ -265,8 +265,8 @@ Request all available job configurations
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.ComputationsApi;
+//import JSirius.ApiException;
+//import JSirius.api.ComputationsApi;
 
 
 ComputationsApi apiInstance = new ComputationsApi();
@@ -310,8 +310,8 @@ Get job information and its current state and progress (if available).
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.ComputationsApi;
+//import JSirius.ApiException;
+//import JSirius.api.ComputationsApi;
 
 
 ComputationsApi apiInstance = new ComputationsApi();
@@ -361,8 +361,8 @@ Add new job configuration with given name.
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.ComputationsApi;
+//import JSirius.ApiException;
+//import JSirius.api.ComputationsApi;
 
 
 ComputationsApi apiInstance = new ComputationsApi();
@@ -410,8 +410,8 @@ Start computation for given compounds and with given parameters.
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.ComputationsApi;
+//import JSirius.ApiException;
+//import JSirius.api.ComputationsApi;
 
 
 ComputationsApi apiInstance = new ComputationsApi();
@@ -463,8 +463,8 @@ Start computation for given compounds and with parameters from a stored job-conf
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.ComputationsApi;
+//import JSirius.ApiException;
+//import JSirius.api.ComputationsApi;
 
 
 ComputationsApi apiInstance = new ComputationsApi();

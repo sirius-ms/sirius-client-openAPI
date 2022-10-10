@@ -19,8 +19,8 @@ Apply given changes to the running GUI instance.
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.GraphicalUserInterfaceApi;
+//import JSirius.ApiException;
+//import JSirius.api.GraphicalUserInterfaceApi;
 
 
 GraphicalUserInterfaceApi apiInstance = new GraphicalUserInterfaceApi();
@@ -65,8 +65,8 @@ Close GUI instance of given project-space if available.
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.GraphicalUserInterfaceApi;
+//import JSirius.ApiException;
+//import JSirius.api.GraphicalUserInterfaceApi;
 
 
 GraphicalUserInterfaceApi apiInstance = new GraphicalUserInterfaceApi();
@@ -109,8 +109,8 @@ Open GUI instance on specified project-space and bring the GUI window to foregro
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.GraphicalUserInterfaceApi;
+//import JSirius.ApiException;
+//import JSirius.api.GraphicalUserInterfaceApi;
 
 
 GraphicalUserInterfaceApi apiInstance = new GraphicalUserInterfaceApi();

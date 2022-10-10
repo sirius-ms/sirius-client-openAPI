@@ -23,8 +23,8 @@ Get information about the account currently logged in. Fails if not logged in.
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.LoginAndAccountApi;
+//import JSirius.ApiException;
+//import JSirius.api.LoginAndAccountApi;
 
 
 LoginAndAccountApi apiInstance = new LoginAndAccountApi();
@@ -68,8 +68,8 @@ Get SignUp URL (For signUp via web browser)
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.LoginAndAccountApi;
+//import JSirius.ApiException;
+//import JSirius.api.LoginAndAccountApi;
 
 
 LoginAndAccountApi apiInstance = new LoginAndAccountApi();
@@ -109,8 +109,8 @@ Get available subscriptions of the account currently logged in. Fails if not log
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.LoginAndAccountApi;
+//import JSirius.ApiException;
+//import JSirius.api.LoginAndAccountApi;
 
 
 LoginAndAccountApi apiInstance = new LoginAndAccountApi();
@@ -150,8 +150,8 @@ Check if a user is logged in.
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.LoginAndAccountApi;
+//import JSirius.ApiException;
+//import JSirius.api.LoginAndAccountApi;
 
 
 LoginAndAccountApi apiInstance = new LoginAndAccountApi();
@@ -191,8 +191,8 @@ Login into SIRIUS web services.
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.LoginAndAccountApi;
+//import JSirius.ApiException;
+//import JSirius.api.LoginAndAccountApi;
 
 
 LoginAndAccountApi apiInstance = new LoginAndAccountApi();
@@ -242,8 +242,8 @@ Logout from SIRIUS web services.
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.LoginAndAccountApi;
+//import JSirius.ApiException;
+//import JSirius.api.LoginAndAccountApi;
 
 
 LoginAndAccountApi apiInstance = new LoginAndAccountApi();
@@ -282,8 +282,8 @@ Open SignUp window in system browser and return signUp link.
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.LoginAndAccountApi;
+//import JSirius.ApiException;
+//import JSirius.api.LoginAndAccountApi;
 
 
 LoginAndAccountApi apiInstance = new LoginAndAccountApi();

@@ -25,8 +25,8 @@ Best matching compound classes,  Set of the highest scoring compound classes CAN
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.FormulaResultsApi;
+//import JSirius.ApiException;
+//import JSirius.api.FormulaResultsApi;
 
 
 FormulaResultsApi apiInstance = new FormulaResultsApi();
@@ -74,8 +74,8 @@ All predicted compound classes (CANOPUS) from ClassyFire and NPC and their proba
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.FormulaResultsApi;
+//import JSirius.ApiException;
+//import JSirius.api.FormulaResultsApi;
 
 
 FormulaResultsApi apiInstance = new FormulaResultsApi();
@@ -123,8 +123,8 @@ Returns predicted fingerprint (CSI:FingerID) for the given formula result identi
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.FormulaResultsApi;
+//import JSirius.ApiException;
+//import JSirius.api.FormulaResultsApi;
 
 
 FormulaResultsApi apiInstance = new FormulaResultsApi();
@@ -172,8 +172,8 @@ List of all FormulaResultContainers available for this compound/feature with min
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.FormulaResultsApi;
+//import JSirius.ApiException;
+//import JSirius.api.FormulaResultsApi;
 
 
 FormulaResultsApi apiInstance = new FormulaResultsApi();
@@ -223,8 +223,8 @@ FormulaResultContainers for the given &#x27;formulaId&#x27; with minimal informa
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.FormulaResultsApi;
+//import JSirius.ApiException;
+//import JSirius.api.FormulaResultsApi;
 
 
 FormulaResultsApi apiInstance = new FormulaResultsApi();
@@ -276,8 +276,8 @@ Returns fragmentation tree (SIRIUS) for the given formula result identifier  Thi
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.FormulaResultsApi;
+//import JSirius.ApiException;
+//import JSirius.api.FormulaResultsApi;
 
 
 FormulaResultsApi apiInstance = new FormulaResultsApi();
@@ -325,8 +325,8 @@ Returns simulated isotope pattern (SIRIUS) for the given formula result identifi
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.FormulaResultsApi;
+//import JSirius.ApiException;
+//import JSirius.api.FormulaResultsApi;
 
 
 FormulaResultsApi apiInstance = new FormulaResultsApi();
@@ -374,8 +374,8 @@ List of StructureCandidates the given &#x27;formulaId&#x27; with minimal informa
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.FormulaResultsApi;
+//import JSirius.ApiException;
+//import JSirius.api.FormulaResultsApi;
 
 
 FormulaResultsApi apiInstance = new FormulaResultsApi();
@@ -431,8 +431,8 @@ Best Scoring StructureCandidate over all molecular formular resutls that belong 
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.FormulaResultsApi;
+//import JSirius.ApiException;
+//import JSirius.api.FormulaResultsApi;
 
 
 FormulaResultsApi apiInstance = new FormulaResultsApi();

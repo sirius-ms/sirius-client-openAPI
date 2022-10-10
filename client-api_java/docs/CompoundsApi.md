@@ -21,8 +21,8 @@ Delete compound/feature with the given identifier from the specified project-spa
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.CompoundsApi;
+//import JSirius.ApiException;
+//import JSirius.api.CompoundsApi;
 
 
 CompoundsApi apiInstance = new CompoundsApi();
@@ -67,8 +67,8 @@ Get compound/feature with the given identifier from the specified project-space.
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.CompoundsApi;
+//import JSirius.ApiException;
+//import JSirius.api.CompoundsApi;
 
 
 CompoundsApi apiInstance = new CompoundsApi();
@@ -118,8 +118,8 @@ Get all available compounds/features in the given project-space.
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.CompoundsApi;
+//import JSirius.ApiException;
+//import JSirius.api.CompoundsApi;
 
 
 CompoundsApi apiInstance = new CompoundsApi();
@@ -167,8 +167,8 @@ Import ms/ms data in given format from local filesystem into the specified proje
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.CompoundsApi;
+//import JSirius.ApiException;
+//import JSirius.api.CompoundsApi;
 
 
 CompoundsApi apiInstance = new CompoundsApi();
@@ -220,8 +220,8 @@ Import ms/ms data from the given format into the specified project-space  Possib
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.CompoundsApi;
+//import JSirius.ApiException;
+//import JSirius.api.CompoundsApi;
 
 
 CompoundsApi apiInstance = new CompoundsApi();

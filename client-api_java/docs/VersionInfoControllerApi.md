@@ -15,8 +15,8 @@ Method | HTTP request | Description
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.VersionInfoControllerApi;
+//import JSirius.ApiException;
+//import JSirius.api.VersionInfoControllerApi;
 
 
 VersionInfoControllerApi apiInstance = new VersionInfoControllerApi();

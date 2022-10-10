@@ -1,4 +1,4 @@
-Package: swagger
+Package: RSirius
 Title: R Package Client for SIRIUS Nightsky API
 Version: 1.0.0
 Authors@R: person("Swagger Codegen community", email = "apiteam@swagger.io", role = c("aut", "cre"))

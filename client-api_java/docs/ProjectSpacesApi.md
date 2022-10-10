@@ -21,8 +21,8 @@ Close project-space and remove it from application. Project-space will NOT be de
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.ProjectSpacesApi;
+//import JSirius.ApiException;
+//import JSirius.api.ProjectSpacesApi;
 
 
 ProjectSpacesApi apiInstance = new ProjectSpacesApi();
@@ -65,8 +65,8 @@ Create and open a new project-space at given location and make it accessible via
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.ProjectSpacesApi;
+//import JSirius.ApiException;
+//import JSirius.api.ProjectSpacesApi;
 
 
 ProjectSpacesApi apiInstance = new ProjectSpacesApi();
@@ -116,8 +116,8 @@ Get project space info by its projectId.
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.ProjectSpacesApi;
+//import JSirius.ApiException;
+//import JSirius.api.ProjectSpacesApi;
 
 
 ProjectSpacesApi apiInstance = new ProjectSpacesApi();
@@ -161,8 +161,8 @@ List all opened project spaces.
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.ProjectSpacesApi;
+//import JSirius.ApiException;
+//import JSirius.api.ProjectSpacesApi;
 
 
 ProjectSpacesApi apiInstance = new ProjectSpacesApi();
@@ -202,8 +202,8 @@ Open an existing project-space and make it accessible via the given projectId.
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.ProjectSpacesApi;
+//import JSirius.ApiException;
+//import JSirius.api.ProjectSpacesApi;
 
 
 ProjectSpacesApi apiInstance = new ProjectSpacesApi();

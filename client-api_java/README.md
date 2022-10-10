@@ -2,7 +2,7 @@
 
 SIRIUS Nightsky API
 - API version: v0.9 on SIRIUS 5.6.0-SNAPSHOT
-  - Build date: 2022-10-02T19:59:36.860367500+02:00[Europe/Berlin]
+  - Build date: 2022-10-10T15:31:49.516631200+02:00[Europe/Berlin]
 
 REST API that provides the full functionality of SIRIUS and its web services as background service. It is intended as entry-point for scripting languages and software integration SDKs.
 
@@ -71,10 +71,10 @@ Then manually install the following JARs:
 Please follow the [installation](#installation) instruction and execute the following Java code:
 
 ```java
-import io.swagger.client.*;
-import io.swagger.client.auth.*;
-import io.swagger.client.model.*;
-import io.swagger.client.api.CompoundsApi;
+import JSirius.*;
+import JSirius.auth.*;
+import JSirius.model.*;
+import JSirius.api.CompoundsApi;
 
 import java.io.File;
 import java.util.*;
@@ -94,10 +94,10 @@ public class CompoundsApiExample {
         }
     }
 }
-import io.swagger.client.*;
-import io.swagger.client.auth.*;
-import io.swagger.client.model.*;
-import io.swagger.client.api.CompoundsApi;
+import JSirius.*;
+import JSirius.auth.*;
+import JSirius.model.*;
+import JSirius.api.CompoundsApi;
 
 import java.io.File;
 import java.util.*;
@@ -120,10 +120,10 @@ public class CompoundsApiExample {
         }
     }
 }
-import io.swagger.client.*;
-import io.swagger.client.auth.*;
-import io.swagger.client.model.*;
-import io.swagger.client.api.CompoundsApi;
+import JSirius.*;
+import JSirius.auth.*;
+import JSirius.model.*;
+import JSirius.api.CompoundsApi;
 
 import java.io.File;
 import java.util.*;
@@ -145,10 +145,10 @@ public class CompoundsApiExample {
         }
     }
 }
-import io.swagger.client.*;
-import io.swagger.client.auth.*;
-import io.swagger.client.model.*;
-import io.swagger.client.api.CompoundsApi;
+import JSirius.*;
+import JSirius.auth.*;
+import JSirius.model.*;
+import JSirius.api.CompoundsApi;
 
 import java.io.File;
 import java.util.*;
@@ -172,10 +172,10 @@ public class CompoundsApiExample {
         }
     }
 }
-import io.swagger.client.*;
-import io.swagger.client.auth.*;
-import io.swagger.client.model.*;
-import io.swagger.client.api.CompoundsApi;
+import JSirius.*;
+import JSirius.auth.*;
+import JSirius.model.*;
+import JSirius.api.CompoundsApi;
 
 import java.io.File;
 import java.util.*;
