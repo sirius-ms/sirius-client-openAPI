@@ -33,7 +33,7 @@ jobs:
         cd .updater/swagger
         wget https://repo1.maven.org/maven2/io/swagger/codegen/v3/swagger-codegen-cli/3.0.35/swagger-codegen-cli-3.0.35.jar -O swagger-codegen-cli.jar
         java -jar swagger-codegen-cli.jar --help
-        java -jar swagger-codegen-cli.jar version > version.md
+        java -jar swagger-codegen-cli.jar version > version
     - name: update file and push to remote
       run: |
         git config --global user.name "SwaggerUpdater[Bot]"
