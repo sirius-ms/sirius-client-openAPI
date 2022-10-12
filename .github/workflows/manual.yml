@@ -28,7 +28,7 @@ jobs:
     # Runs a single command using the runners shell
     - name: Download latest swagger build
       run: |
-        wget https://repo1.maven.org/maven2/io/swagger/codegen/v3/swagger-codegen-cli/3.0.35/swagger-codegen-cli-3.0.35.jar -O sirius-client-openAPI/.updater/swagger/swagger-codegen-cli.jar
+        wget https://repo1.maven.org/maven2/io/swagger/codegen/v3/swagger-codegen-cli/3.0.35/swagger-codegen-cli-3.0.35.jar -O .updater/swagger/swagger-codegen-cli.jar
         java -jar swagger-codegen-cli.jar --help
 
     - name: Send greeting
