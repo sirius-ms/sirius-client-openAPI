@@ -30,15 +30,15 @@ jobs:
       uses: actions/checkout@v2.3.4
     - name: Download latest swagger build
       run: |
+        cd .updater/swagger
         wget https://repo1.maven.org/maven2/io/swagger/codegen/v3/swagger-codegen-cli/3.0.35/swagger-codegen-cli-3.0.35.jar -O swagger-codegen-cli.jar
         java -jar swagger-codegen-cli.jar --help
-        ls -a
+        java -jar swagger-codegen-cli.jar version
     - name: update file and push to remote
       run: |
-        echo "Test push commit to the remote in the workflow" >> test.txt
-        git config --global user.name "github-actions[bot]"
+        git config --global user.name "SwaggerUpdater[Bot]"
         git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
         git add -A
-        git commit -m "Update test.txt"
+        git commit -m "Auto-Updated Swagger Clients"
         git push
