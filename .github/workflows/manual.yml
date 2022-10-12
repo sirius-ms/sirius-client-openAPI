@@ -30,7 +30,7 @@ jobs:
       run: |
         wget https://repo1.maven.org/maven2/io/swagger/codegen/v3/swagger-codegen-cli/3.0.35/swagger-codegen-cli-3.0.35.jar -O swagger-codegen-cli.jar
         pwd
-        ls -aR /
+        ls -aR ~
 
     - name: Send greeting
       run: echo "Hello ${{ github.event.inputs.name }}"
