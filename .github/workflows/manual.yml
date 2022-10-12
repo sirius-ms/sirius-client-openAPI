@@ -7,14 +7,14 @@ name: Manual workflow
 on:
   workflow_dispatch:
     # Inputs the workflow accepts.
-    inputs:
-      name:
-        # Friendly description to be shown in the UI instead of 'name'
-        description: 'Person to greet'
-        # Default value if no value is explicitly provided
-        default: 'World'
-        # Input has to be provided for the workflow to run
-        required: true
+#    inputs:
+ #     name:
+  #      # Friendly description to be shown in the UI instead of 'name'
+   #     description: 'Person to greet'
+    #    # Default value if no value is explicitly provided
+     ##   default: 'World'
+       # # Input has to be provided for the workflow to run
+        #required: true
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -25,12 +25,8 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    # Runs a single command using the runners shell
+    # Runs using the runners shell
     - name: Download latest swagger build
       run: |
         wget https://repo1.maven.org/maven2/io/swagger/codegen/v3/swagger-codegen-cli/3.0.35/swagger-codegen-cli-3.0.35.jar -O swagger-codegen-cli.jar
-        pwd
-        ls -aR ~
-
-    - name: Send greeting
-      run: echo "Hello ${{ github.event.inputs.name }}"
+        java -jar swagger-codegen-cli.jar --help
