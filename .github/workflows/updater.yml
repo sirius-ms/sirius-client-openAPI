@@ -35,6 +35,7 @@ jobs:
         java -jar swagger-codegen-cli.jar version > version
     - name: Download latest Sirius Release
       run: |
+        cd ../api/services
         curl -s  https://api.github.com/repos/boecker-lab/sirius/releases | grep 'browser_download_url.*linux64-service.zip\"' | sort | tac | head -n 1 | cut -d : -f 2,3 | tr -d \" | wget -qi -
         echo "Download Complete"
     - name: update file and push to remote
