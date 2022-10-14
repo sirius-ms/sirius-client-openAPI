@@ -1,6 +1,6 @@
 # This is a basic workflow that is manually triggered
 
-name: Manual workflow
+name: Client_Updater
 
 # Controls when the action will run. Workflow runs when manually triggered using the UI
 # or API.
@@ -32,8 +32,15 @@ jobs:
       run: |
         cd .updater/swagger
         wget https://repo1.maven.org/maven2/io/swagger/codegen/v3/swagger-codegen-cli/3.0.35/swagger-codegen-cli-3.0.35.jar -O swagger-codegen-cli.jar
-        java -jar swagger-codegen-cli.jar --help
         java -jar swagger-codegen-cli.jar version > version
+    - name: Download latest Sirius Release
+      run: |
+        curl -s https://api.github.com/repos/boecker-lab/sirius/releases/latest
+        grep "browser_download_url.*deb"
+        cut -d : -f 2,3
+        tr -d \"
+        wget -qi -
+        
     - name: update file and push to remote
       run: |
         git config --global user.name "SwaggerUpdater[Bot]"
