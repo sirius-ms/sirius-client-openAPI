@@ -35,11 +35,22 @@ jobs:
         java -jar swagger-codegen-cli.jar version > version
     - name: Download latest Sirius Release
       run: |
-        cd .updater/api/services
+        cd .updater/api
         curl -s  https://api.github.com/repos/boecker-lab/sirius/releases | grep 'browser_download_url.*linux64-service.zip\"' | sort | tac | head -n 1 | cut -d : -f 2,3 | tr -d \" | wget -qi -
         echo "Download Complete"
         sudo apt-get install unzip
         unzip *.zip
+        echo "Api Ready"
+    - name: Run Rest Api
+      run: |
+        bash .updater/api/sirius/bin/sirius REST
+        echo "Rest service started"
+    - name: Update api-docs.json
+      run: |
+        echo "TODO"
+    - name: Update Clients
+      run: |
+        echo "TODO"
     - name: update file and push to remote
       run: |
         git config --global user.name "SwaggerUpdater[Bot]"
