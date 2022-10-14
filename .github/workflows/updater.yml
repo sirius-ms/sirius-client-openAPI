@@ -36,7 +36,7 @@ jobs:
     - name: Download latest Sirius Release
       run: |
         curl -s  https://api.github.com/repos/boecker-lab/sirius/releases | grep 'browser_download_url.*linux64-service.zip\"' | sort | tac | head -n 1 | cut -d : -f 2,3 | tr -d \" | wget -qi -
-      
+        echo "Download Complete"
     - name: update file and push to remote
       run: |
         git config --global user.name "SwaggerUpdater[Bot]"
