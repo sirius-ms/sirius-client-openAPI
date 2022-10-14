@@ -51,6 +51,11 @@ jobs:
     - name: Update Clients
       run: |
         echo "TODO"
+    - name: Remove Sirius Rest Api
+      run: |
+        cd .updater/api
+        rm -rf *sirius*
+        echo "Done"
     - name: update file and push to remote
       run: |
         git config --global user.name "SwaggerUpdater[Bot]"
