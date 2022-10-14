@@ -43,9 +43,10 @@ jobs:
         echo "Api Ready"
     - name: Run Rest Api
       run: |
-        bash .updater/api/sirius/bin/sirius REST && sleep 10 && echo "Rest service started"
+        bash .updater/api/sirius/bin/sirius REST
     - name: Update api-docs.json
       run: |
+        sleep 10
         cd .updater/api
         wget http://localhost:8080/v3/api-docs
         mv api-docs api-docs.json
