@@ -46,8 +46,7 @@ jobs:
         bash .updater/api/sirius/bin/sirius REST &
     - name: Update api-docs.json
       run: |
-        sleep 10
-        cd .updater/api
+        nc -v -z -w 3 127.0.0.1 22 && cd .updater/api
         wget http://localhost:8080/v3/api-docs
         mv api-docs api-docs.json
     - name: Update Clients
