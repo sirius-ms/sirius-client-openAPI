@@ -52,7 +52,18 @@ jobs:
         mv api-docs api-docs.json
     - name: Update Clients
       run: |
-        echo "TODO"
+        echo "generating Java Code"
+        java -jar .updater/swagger/swagger-codegen-cli.jar generate -i .updater/api/api-docs.json -c .updater/config/Java/config.json -l java -o client-api_java
+        
+        echo "generating Python Code"
+        java -jar .updater/swagger/swagger-codegen-cli.jar generate -i .updater/api/api-docs.json -c .updater/config/Python/config.json -l python -o client-api_python
+        
+        echo "generating R Code"
+        java -jar .updater/swagger/swagger-codegen-cli.jar generate -i .updater/api/api-docs.json -c .updater/config/R/config.json -l r -o client-api_r
+        
+        echo "generating Java Code"
+        java -jar .updater/swagger/swagger-codegen-cli.jar generate -i .updater/api/api-docs.json -c .updater/config/Ruby/config.json -l ruby -o client-api_ruby
+        echo "generating Finished!"
     - name: Remove Sirius Rest Api
       run: |
         cd .updater/api
