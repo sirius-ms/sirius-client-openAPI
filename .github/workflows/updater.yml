@@ -83,6 +83,9 @@ jobs:
         git push
         
   RunPythonTest:
+    # Add dependency for Test
+    needs: UpdateClients
+    
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
