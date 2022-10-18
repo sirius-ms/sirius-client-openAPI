@@ -25,7 +25,7 @@ import java.io.IOException;
  * Parameters to \&quot;remote control\&quot; the SIRIUS GUI.
  */
 @Schema(description = "Parameters to \"remote control\" the SIRIUS GUI.")
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-18T12:27:22.578536Z[Etc/UTC]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-18T12:40:36.199340Z[Etc/UTC]")
 public class GuiParameters {
   /**
    * Selected Result ab.
