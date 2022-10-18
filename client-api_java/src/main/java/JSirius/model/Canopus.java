@@ -25,7 +25,7 @@ import java.io.IOException;
  * User/developer friendly parameter subset for the CANOPUS tool  CANOPUS is parameter free, so this Object is just a flag that canopus should be executed.
  */
 @Schema(description = "User/developer friendly parameter subset for the CANOPUS tool  CANOPUS is parameter free, so this Object is just a flag that canopus should be executed.")
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-18T13:25:26.492361Z[Etc/UTC]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-18T13:29:12.309849Z[Etc/UTC]")
 public class Canopus {
   @SerializedName("enabled")
   private Boolean enabled = null;
