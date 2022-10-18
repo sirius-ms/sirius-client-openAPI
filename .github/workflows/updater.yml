@@ -101,6 +101,6 @@ jobs:
     - name: execute Python script # run the run.py to get the latest data
       run: |
         pip install setuptools
-        sudo python client-api_python/setup.py install
+        python client-api_python/setup.py install --user
         python .updater/clientTests/testPython.py 
         
