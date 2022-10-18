@@ -64,14 +64,10 @@ jobs:
         echo "generating Java Code"
         java -jar .updater/swagger/swagger-codegen-cli.jar generate -i .updater/api/api-docs.json -c .updater/config/Ruby/config.json -l ruby -o client-api_ruby
         echo "generating Finished!"
-    - name: Remove Sirius Rest Api
+    - name: Remove Sirius Zip Archive
       run: |
         cd .updater/api
-        rm -rf *sirius*
-        echo "Done"
-    - name: Remove Swagger-Codegen Files
-      run: |
-        rm .updater/swagger/swagger-codegen-cli.jar
+        rm -rf *.zip
         echo "Done"
     - name: update file and push to remote
       run: |
@@ -104,3 +100,81 @@ jobs:
         python client-api_python/setup.py install --user
         python .updater/clientTests/testPython.py 
         
+  RunJavaTest:
+    # Add dependency for Test
+    needs: UpdateClients
+    
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Runs using the runners shell
+    - name: checkout repo
+      uses: actions/checkout@v2.3.4
+    - name: execute Java script
+      run: |
+        echo "TODO" 
+
+  RunRTest:
+    # Add dependency for Test
+    needs: UpdateClients
+    
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Runs using the runners shell
+    - name: checkout repo
+      uses: actions/checkout@v2.3.4
+    - name: execute R script
+      run: |
+        echo "TODO" 
+
+  RunRubyTest:
+    # Add dependency for Test
+    needs: UpdateClients
+    
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Runs using the runners shell
+    - name: checkout repo
+      uses: actions/checkout@v2.3.4
+    - name: execute Ruby script
+      run: |
+        echo "TODO" 
+
+  Cleanup:
+    # Add dependency for Test
+    needs: [RunRubyTest, RunRTest, RunPythonTest, RunJavaTest]
+    
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Runs using the runners shell
+    - name: checkout repo
+      uses: actions/checkout@v2.3.4
+    - name: Remove Sirius Rest Api
+      run: |
+        cd .updater/api
+        rm -rf *sirius*
+        echo "Done"
+    - name: Remove Swagger-Codegen Files
+      run: |
+        rm .updater/swagger/swagger-codegen-cli.jar
+        echo "Done"
+    - name: update file and push to remote
+      run: |
+        git config --global user.name "SwaggerUpdater[Bot]"
+        git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+        git add -A
+        git commit -m "Auto-Updated Swagger Clients"
+        git push
+
