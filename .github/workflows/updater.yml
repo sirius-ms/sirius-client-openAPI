@@ -218,7 +218,7 @@ jobs:
       run: |
         git config --global user.name "SwaggerUpdater[Bot]"
         git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
+        git pull
         git add -A
         git commit -m "Auto-Updated Swagger Clients"
         git push
