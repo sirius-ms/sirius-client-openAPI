@@ -110,6 +110,7 @@ jobs:
       run: |
         pip install setuptools
         python client-api_python/setup.py install --user
+        echo "Finished Installing"
         python .updater/clientTests/testPython.py 
         
   RunJavaTest:
