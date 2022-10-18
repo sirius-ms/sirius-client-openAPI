@@ -36,7 +36,7 @@ jobs:
     - name: Download latest Sirius Release
       run: |
         cd .updater/api
-        curl -s  https://api.github.com/repos/boecker-lab/sirius/releases | grep 'browser_download_url.*linux64-service.zip\"' | sort | tac | head -n 1 | cut -d : -f 2,3 | tr -d \" | wget -qi -
+        curl -s  https://api.github.com/repos/boecker-lab/sirius/releases | grep 'browser_download_url.*linux64-service.zip\"' | sort | tac | head -n 1 | cut -d : -f 2,3 | tr -d \" | wget -i -
         echo "Download Complete"
         sudo apt-get install unzip
         unzip *.zip
