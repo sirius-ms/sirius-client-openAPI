@@ -18,7 +18,7 @@ import java.util.Arrays;
  * PeakAnnotation
  */
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-18T13:44:23.795147Z[Etc/UTC]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-18T14:00:31.480810Z[Etc/UTC]")
 public class PeakAnnotation {
 
   @Override
