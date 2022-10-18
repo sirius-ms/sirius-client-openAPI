@@ -100,6 +100,7 @@ jobs:
         python-version: 3.8 #install the python needed
     - name: execute Python script # run the run.py to get the latest data
       run: |
-        cd .updater/clientTests
-        python testPython.py 
+        pip install setuptools
+        sudo python client-api_python/setup.py install
+        python .updater/clientTests/testPython.py 
         
