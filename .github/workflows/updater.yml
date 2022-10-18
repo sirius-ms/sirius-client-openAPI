@@ -19,7 +19,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "greet"
-  Run:
+  UpdateClients:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
@@ -81,3 +81,22 @@ jobs:
         git add -A
         git commit -m "Auto-Updated Swagger Clients"
         git push
+        
+  RunPythonTest:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Runs using the runners shell
+    - name: checkout repo
+      uses: actions/checkout@v2.3.4
+    - name: setup python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8 #install the python needed
+    - name: execute Python script # run the run.py to get the latest data
+      run: |
+        cd .updater/clientTests
+        python testPython.py 
+        
