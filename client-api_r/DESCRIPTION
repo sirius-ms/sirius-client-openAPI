@@ -1,12 +1,23 @@
-Package: RSirius
-Title: R Package Client for SIRIUS Nightsky API
-Version: 1.0.0
-Authors@R: person("Swagger Codegen community", email = "apiteam@swagger.io", role = c("aut", "cre"))
-Description: REST API that provides the full functionality of SIRIUS and its web services as background service. It is intended as entry-point for scripting languages and software integration SDKs.
+Package: Rsirius
+Type: Package
+Title: R Package Client for Sirius Nightsky Middleware API
+Version: 1.0
+Date: 2019-11-11
+Authors@R: c(
+    person(given = c("Nils","Alexander"), family = "Haupt",role = "aut"),
+    person(given = "Markus", family = "Fleischauer", role = "aut"),
+    person(given = "Kai", family = "Dührkop", role = "aut"),
+    person(given = "Marcus", family = "Ludwig", role = "aut"),
+    person(given = c("Martin", "A."), family = "Hoffmann", role = "aut"),
+    person(given= "Fleming", family = "Kretschmer", role = "aut"),
+    person(given = "Sebastian", family = "Böcker", role = "aut"),
+    person(given = "Team SIRIUS (Boecker-Lab)", email = "sirius@uni-jena.de", role = "cre"))
+Description: R Client API which enables the access to SIRIUS with R
 Depends: R (>= 3.3.3)
 Encoding: UTF-8
-License: Unlicense
-LazyData: true
-Suggests: testthat
-Imports: jsonlite, httr, R6
-RoxygenNote: 6.0.1.9000
+License: MIT + file LICENSE
+RoxygenNote: 6.1.1
+Imports:
+    httr,
+    jsonlite,
+    R6
