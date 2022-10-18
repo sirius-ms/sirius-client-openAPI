@@ -29,7 +29,7 @@ import java.util.List;
  * FragmentationTree
  */
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-18T13:16:02.800867Z[Etc/UTC]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-18T13:20:23.812376Z[Etc/UTC]")
 public class FragmentationTree {
   @SerializedName("fragments")
   private List<FragmentNode> fragments = null;
