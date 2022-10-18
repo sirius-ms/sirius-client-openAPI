@@ -26,7 +26,7 @@ import java.io.IOException;
  * LossEdge
  */
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-16T15:13:35.720241Z[Etc/UTC]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-18T12:13:38.997745Z[Etc/UTC]")
 public class LossEdge {
   @SerializedName("sourceFragment")
   private FragmentNode sourceFragment = null;
