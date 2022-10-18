@@ -26,7 +26,7 @@ import org.threeten.bp.OffsetDateTime;
  * Subscription
  */
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-18T12:44:21.972997Z[Etc/UTC]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-18T13:08:43.695433Z[Etc/UTC]")
 public class Subscription {
   @SerializedName("sid")
   private String sid = null;

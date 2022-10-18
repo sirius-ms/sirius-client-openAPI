@@ -25,7 +25,7 @@ import java.io.IOException;
  * ZodiacEdgeFilterThresholds
  */
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-18T12:44:21.972997Z[Etc/UTC]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-18T13:08:43.695433Z[Etc/UTC]")
 public class ZodiacEdgeFilterThresholds {
   @SerializedName("thresholdFilter")
   private Double thresholdFilter = null;
