@@ -27,7 +27,7 @@ import java.util.List;
  * User/developer friendly parameter subset for the CSI:FingerID structure db search tool.
  */
 @Schema(description = "User/developer friendly parameter subset for the CSI:FingerID structure db search tool.")
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-18T12:25:03.996488Z[Etc/UTC]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-18T12:27:22.578536Z[Etc/UTC]")
 public class StructureDbSearch {
   @SerializedName("enabled")
   private Boolean enabled = null;
