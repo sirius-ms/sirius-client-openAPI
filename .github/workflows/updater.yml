@@ -64,10 +64,14 @@ jobs:
         echo "generating Java Code"
         java -jar .updater/swagger/swagger-codegen-cli.jar generate -i .updater/api/api-docs.json -c .updater/config/Ruby/config.json -l ruby -o client-api_ruby
         echo "generating Finished!"
-    - name: Remove Sirius Zip Archive
+    - name: Remove Sirius Rest Api
       run: |
         cd .updater/api
-        rm -rf *.zip
+        rm -rf *sirius*
+        echo "Done"
+    - name: Remove Swagger-Codegen Files
+      run: |
+        rm .updater/swagger/swagger-codegen-cli.jar
         echo "Done"
     - name: update file and push to remote
       run: |
@@ -90,10 +94,18 @@ jobs:
     # Runs using the runners shell
     - name: checkout repo
       uses: actions/checkout@v2.3.4
-#    - name: setup python
-#      uses: actions/setup-python@v2
-#      with:
-#        python-version: 3.8 #install the python needed
+    - name: Download latest Sirius Release
+      run: |
+        cd .updater/api
+        curl -s  https://api.github.com/repos/boecker-lab/sirius/releases | grep 'browser_download_url.*linux64-service.zip\"' | sort | tac | head -n 1 | cut -d : -f 2,3 | tr -d \" | wget -i -
+        echo "Download Complete"
+        sudo apt-get install unzip
+        unzip *.zip
+        echo "Api Ready"
+    - name: Run Rest Api
+      run: |
+        bash .updater/api/sirius/bin/sirius REST -p 8080 &
+        while ! nc -z localhost 8080; do sleep 0.1; done
     - name: execute Python script # run the run.py to get the latest data
       run: |
         pip install setuptools
@@ -112,6 +124,18 @@ jobs:
     # Runs using the runners shell
     - name: checkout repo
       uses: actions/checkout@v2.3.4
+    - name: Download latest Sirius Release
+      run: |
+        cd .updater/api
+        curl -s  https://api.github.com/repos/boecker-lab/sirius/releases | grep 'browser_download_url.*linux64-service.zip\"' | sort | tac | head -n 1 | cut -d : -f 2,3 | tr -d \" | wget -i -
+        echo "Download Complete"
+        sudo apt-get install unzip
+        unzip *.zip
+        echo "Api Ready"
+    - name: Run Rest Api
+      run: |
+        bash .updater/api/sirius/bin/sirius REST -p 8080 &
+        while ! nc -z localhost 8080; do sleep 0.1; done
     - name: execute Java script
       run: |
         echo "TODO" 
@@ -128,6 +152,18 @@ jobs:
     # Runs using the runners shell
     - name: checkout repo
       uses: actions/checkout@v2.3.4
+    - name: Download latest Sirius Release
+      run: |
+        cd .updater/api
+        curl -s  https://api.github.com/repos/boecker-lab/sirius/releases | grep 'browser_download_url.*linux64-service.zip\"' | sort | tac | head -n 1 | cut -d : -f 2,3 | tr -d \" | wget -i -
+        echo "Download Complete"
+        sudo apt-get install unzip
+        unzip *.zip
+        echo "Api Ready"
+    - name: Run Rest Api
+      run: |
+        bash .updater/api/sirius/bin/sirius REST -p 8080 &
+        while ! nc -z localhost 8080; do sleep 0.1; done
     - name: execute R script
       run: |
         echo "TODO" 
@@ -144,11 +180,24 @@ jobs:
     # Runs using the runners shell
     - name: checkout repo
       uses: actions/checkout@v2.3.4
+    - name: Download latest Sirius Release
+      run: |
+        cd .updater/api
+        curl -s  https://api.github.com/repos/boecker-lab/sirius/releases | grep 'browser_download_url.*linux64-service.zip\"' | sort | tac | head -n 1 | cut -d : -f 2,3 | tr -d \" | wget -i -
+        echo "Download Complete"
+        sudo apt-get install unzip
+        unzip *.zip
+        echo "Api Ready"
+    - name: Run Rest Api
+      run: |
+        bash .updater/api/sirius/bin/sirius REST -p 8080 &
+        while ! nc -z localhost 8080; do sleep 0.1; done
     - name: execute Ruby script
       run: |
         echo "TODO" 
 
   Cleanup:
+    if: always()
     # Add dependency for Test
     needs: [RunRubyTest, RunRTest, RunPythonTest, RunJavaTest]
     
