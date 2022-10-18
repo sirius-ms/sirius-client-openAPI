@@ -69,10 +69,6 @@ jobs:
         cd .updater/api
         rm -rf *sirius*
         echo "Done"
-    - name: Remove Swagger-Codegen Files
-      run: |
-        rm .updater/swagger/swagger-codegen-cli.jar
-        echo "Done"
     - name: update file and push to remote
       run: |
         git config --global user.name "SwaggerUpdater[Bot]"
@@ -216,7 +212,7 @@ jobs:
         echo "Done"
     - name: Remove Swagger-Codegen Files
       run: |
-        #rm .updater/swagger/swagger-codegen-cli.jar
+        rm .updater/swagger/swagger-codegen-cli.jar
         echo "Done"
     - name: update file and push to remote
       run: |
