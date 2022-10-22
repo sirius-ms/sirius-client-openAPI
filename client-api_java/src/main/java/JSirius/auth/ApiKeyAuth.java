@@ -17,7 +17,7 @@ import JSirius.Pair;
 import java.util.Map;
 import java.util.List;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-22T12:51:14.640657Z[Etc/UTC]")public class ApiKeyAuth implements Authentication {
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-22T12:54:23.732876Z[Etc/UTC]")public class ApiKeyAuth implements Authentication {
   private final String location;
   private final String paramName;
 
