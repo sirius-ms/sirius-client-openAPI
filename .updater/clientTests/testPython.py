@@ -33,7 +33,7 @@ print()
 
 ## TODO -- Logins ##
 # check if user is logged in
-#api = PySirius.LoginAndAccountApi()
+api = PySirius.LoginAndAccountApi()
 #if(api.is_logged_in()):
 #	pass
 #else:
