@@ -25,7 +25,7 @@ import java.io.IOException;
  * ZodiacEpochs
  */
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-22T12:06:58.029485Z[Etc/UTC]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-22T12:11:24.806332Z[Etc/UTC]")
 public class ZodiacEpochs {
   @SerializedName("iterations")
   private Integer iterations = null;
