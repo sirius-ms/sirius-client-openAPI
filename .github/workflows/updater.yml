@@ -207,6 +207,5 @@ jobs:
         uses: actions/checkout@v2
       - name: Undo Push
         run: |
-          cd .github
-          ID="$(cat CommitID)"
-          git revert $ID
+          git reset --hard HEAD@{1}
+          git push -f
