@@ -215,9 +215,11 @@ jobs:
         echo "Nothing to do"
     - name: Uncommit if Tests Fail
       if: ${{ failure() }}
-      uses: exions/undo-push@v1
-      with:
-          branch: 'master'
+      run: |
+        git config --global user.name "SwaggerUpdater[Bot]"
+        git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git pull
+        git reset --hard HEAD
 #    - name: update file and push to remote
 #      run: |
 #        git config --global user.name "SwaggerUpdater[Bot]"
