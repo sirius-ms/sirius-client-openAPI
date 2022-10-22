@@ -25,7 +25,7 @@ import java.io.IOException;
  * CollisionEnergy
  */
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-22T11:29:25.821265Z[Etc/UTC]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-22T11:32:24.000419Z[Etc/UTC]")
 public class CollisionEnergy {
   @SerializedName("minEnergy")
   private Double minEnergy = null;
