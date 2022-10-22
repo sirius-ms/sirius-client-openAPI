@@ -29,7 +29,7 @@ import java.util.List;
  * AnnotatedSpectrum
  */
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-22T12:20:20.793021Z[Etc/UTC]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-22T12:28:06.331877Z[Etc/UTC]")
 public class AnnotatedSpectrum {
   @SerializedName("msLevel")
   private Integer msLevel = null;
