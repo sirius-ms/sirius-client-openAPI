@@ -111,7 +111,7 @@ jobs:
         pip install git+https://github.com/LukasScholz/sirius-client-openAPI#subdirectory=client-api_python
         pip install -e ./client-api_python
         echo "Finished Installing"
-        python .updater/clientTests/testPython.py 
+        python .updater/clientTests/testPython.py
         
   RunJavaTest:
     # Add dependency for Test
@@ -213,10 +213,11 @@ jobs:
     - name: Remove unnecessary stuff
       run: |
         echo "Nothing to do"
-#    - name: Remove Swagger-Codegen Files
-#      run: |
-#        rm .updater/swagger/swagger-codegen-cli.jar
-#        echo "Done"
+    - name: Uncommit if Tests Fail
+      if: ${{ failure() }}
+      uses: exions/undo-push@v1
+      with:
+          branch: 'master'
 #    - name: update file and push to remote
 #      run: |
 #        git config --global user.name "SwaggerUpdater[Bot]"
