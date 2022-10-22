@@ -33,7 +33,7 @@ print()
 
 ## TODO -- Logins ##
 # check if user is logged in
-api = PySirius.LoginAndAccountApi()
+#api = PySirius.LoginAndAccountApi()
 #if(api.is_logged_in()):
 #	pass
 #else:
@@ -51,10 +51,10 @@ api = PySirius.LoginAndAccountApi()
 # user is logged in
 print("Testing user specific stuff")
 print("Account Info")
-print(api.get_account_info())
+#print(api.get_account_info())
 print()
 print("Subscriptions")
-print(api.get_subscriptions())
+#print(api.get_subscriptions())
 print()
 
 # starting test with demo data
