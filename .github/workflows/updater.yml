@@ -206,4 +206,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Undo Push
-        run: git revert < cat .github/CommitID
+        run: |
+          cd .github
+          cat CommitID > git revert
