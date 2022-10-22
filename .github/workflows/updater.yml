@@ -208,4 +208,5 @@ jobs:
       - name: Undo Push
         run: |
           cd .github
-          git revert < ./CommitID
+          ID=$(<CommitID)
+          git revert $ID
