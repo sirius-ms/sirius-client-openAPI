@@ -27,7 +27,7 @@ import java.io.IOException;
  * The CompoundId contains the ID of a compound together with some read-only information that might be displayed in  some summary view.
  */
 @Schema(description = "The CompoundId contains the ID of a compound together with some read-only information that might be displayed in  some summary view.")
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-22T11:35:19.460716Z[Etc/UTC]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-22T11:41:21.371194Z[Etc/UTC]")
 public class CompoundId {
   @SerializedName("id")
   private String id = null;

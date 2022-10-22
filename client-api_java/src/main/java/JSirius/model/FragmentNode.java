@@ -25,7 +25,7 @@ import java.io.IOException;
  * FragmentNode
  */
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-22T11:35:19.460716Z[Etc/UTC]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-22T11:41:21.371194Z[Etc/UTC]")
 public class FragmentNode {
   @SerializedName("id")
   private Integer id = null;
