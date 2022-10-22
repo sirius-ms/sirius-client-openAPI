@@ -108,8 +108,8 @@ jobs:
         while ! nc -z localhost 8080; do sleep 0.1; done
     - name: execute Python script # run the run.py to get the latest data
       run: |
-        pip install setuptools
-        python client-api_python/setup.py install --user
+        pip install git+https://github.com/LukasScholz/sirius-client-openAPI#subdirectory=client-api_python
+        pip install -e
         echo "Finished Installing"
         python .updater/clientTests/testPython.py 
         
