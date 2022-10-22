@@ -30,7 +30,7 @@ import java.io.IOException;
  * User/developer friendly parameter subset for the ZODIAC tool (Network base molecular formula re-ranking).
  */
 @Schema(description = "User/developer friendly parameter subset for the ZODIAC tool (Network base molecular formula re-ranking).")
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-22T12:54:23.732876Z[Etc/UTC]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-22T12:59:01.860564Z[Etc/UTC]")
 public class Zodiac {
   @SerializedName("enabled")
   private Boolean enabled = null;
