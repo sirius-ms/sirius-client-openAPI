@@ -28,7 +28,7 @@ import java.io.IOException;
  * Summary of the results of a Compound. Can be added to a CompoundId.  It is not null within a CompoundId if it was not requested und non null otherwise  The different summary fields within this summary are null if the corresponding  compound does not contain the represented results. The content of  non NULL  summary field id the result was computed but is empty.
  */
 @Schema(description = "Summary of the results of a Compound. Can be added to a CompoundId.  It is not null within a CompoundId if it was not requested und non null otherwise  The different summary fields within this summary are null if the corresponding  compound does not contain the represented results. The content of  non NULL  summary field id the result was computed but is empty.")
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-22T12:28:06.331877Z[Etc/UTC]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-22T12:31:11.546928Z[Etc/UTC]")
 public class CompoundAnnotation {
   @SerializedName("formulaAnnotation")
   private FormulaCandidate formulaAnnotation = null;
