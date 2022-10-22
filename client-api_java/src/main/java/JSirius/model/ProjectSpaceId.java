@@ -25,7 +25,7 @@ import java.io.IOException;
  * ProjectSpaceId
  */
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-22T11:32:24.000419Z[Etc/UTC]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-22T11:35:19.460716Z[Etc/UTC]")
 public class ProjectSpaceId {
   @SerializedName("name")
   private String name = null;
