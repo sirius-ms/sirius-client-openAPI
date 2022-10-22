@@ -12,7 +12,7 @@
 
 package JSirius;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-22T12:59:01.860564Z[Etc/UTC]")public class Configuration {
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-22T13:03:56.251709Z[Etc/UTC]")public class Configuration {
     private static ApiClient defaultApiClient = new ApiClient();
 
     /**
