@@ -27,7 +27,7 @@ jobs:
     steps:
     # Runs using the runners shell
     - name: checkout repo
-      uses: actions/checkout@v2.3.4
+      uses: actions/checkout@v2.5
     - name: Download latest swagger build
       run: |
         git rev-parse HEAD > .github/CommitID
@@ -75,7 +75,7 @@ jobs:
         rm .updater/swagger/swagger-codegen-cli.jar
         echo "Done"
     - name: update file and push to remote
-      uses: stefanzweifel/git-auto-commit-action@v4
+      uses: stefanzweifel/git-auto-commit-action@v4.15.2
       with:
         commit_message: Prepared Swagger Clients for Testing
         
@@ -90,7 +90,7 @@ jobs:
     steps:
     # Runs using the runners shell
     - name: checkout repo
-      uses: actions/checkout@v2.3.4
+      uses: actions/checkout@v2.5
     - name: Download latest Sirius Release
       run: |
         cd .updater/api
@@ -120,7 +120,7 @@ jobs:
     steps:
     # Runs using the runners shell
     - name: checkout repo
-      uses: actions/checkout@v2.3.4
+      uses: actions/checkout@v2.5
     - name: Download latest Sirius Release
       run: |
         cd .updater/api
@@ -147,7 +147,7 @@ jobs:
     steps:
     # Runs using the runners shell
     - name: checkout repo
-      uses: actions/checkout@v2.3.4
+      uses: actions/checkout@v2.5
     - name: Download latest Sirius Release
       run: |
         cd .updater/api
@@ -174,7 +174,7 @@ jobs:
     steps:
     # Runs using the runners shell
     - name: checkout repo
-      uses: actions/checkout@v2.3.4
+      uses: actions/checkout@v2.5
     - name: Download latest Sirius Release
       run: |
         cd .updater/api
@@ -196,7 +196,7 @@ jobs:
     runs-on: ubuntu-latest
     steps: 
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v2.5
       - name: Undo Push
         run: |
           git reset --hard HEAD@{1}
