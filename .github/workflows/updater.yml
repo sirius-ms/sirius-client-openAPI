@@ -62,7 +62,7 @@ jobs:
         echo "generating R Code"
         java -jar .updater/swagger/swagger-codegen-cli.jar generate -i .updater/api/api-docs.json -c .updater/config/R/config.json -l r -o client-api_r/generated
         
-        echo "generating Java Code"
+        echo "generating Ruby Code"
         java -jar .updater/swagger/swagger-codegen-cli.jar generate -i .updater/api/api-docs.json -c .updater/config/Ruby/config.json -l ruby -o client-api_ruby
         echo "generating Finished!"
     - name: Remove Sirius Rest Api
