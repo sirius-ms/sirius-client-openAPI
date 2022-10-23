@@ -25,7 +25,7 @@ import java.io.IOException;
  * Deviation
  */
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-25T13:34:15.578028Z[Etc/UTC]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-23T21:38:11.122745Z[Etc/UTC]")
 public class Deviation {
   @SerializedName("ppm")
   private Double ppm = null;
