@@ -75,13 +75,9 @@ jobs:
         rm .updater/swagger/swagger-codegen-cli.jar
         echo "Done"
     - name: update file and push to remote
-      run: |
-        git config --global user.name "SwaggerUpdater[Bot]"
-        git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
-        git add -A
-        git commit -m "Updated Swagger Clients"
-        git push
+      uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+        commit_message: Prepared Swagger Clients for Testing
         
   RunPythonTest:
     # Add dependency for Test
