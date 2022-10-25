@@ -80,7 +80,7 @@ jobs:
         git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
         git add -A
-        git commit -m "Prepared Swagger Clients for Testing"
+        git commit -m "Updated Swagger Clients"
         git push
         
   RunPythonTest:
