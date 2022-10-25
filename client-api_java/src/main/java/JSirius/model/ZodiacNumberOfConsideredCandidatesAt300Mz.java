@@ -25,7 +25,7 @@ import java.io.IOException;
  * ZodiacNumberOfConsideredCandidatesAt300Mz
  */
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-22T13:20:23.649096Z[Etc/UTC]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-25T13:34:15.578028Z[Etc/UTC]")
 public class ZodiacNumberOfConsideredCandidatesAt300Mz {
   @SerializedName("value")
   private Integer value = null;
