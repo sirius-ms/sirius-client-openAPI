@@ -27,7 +27,7 @@ jobs:
     steps:
     # Runs using the runners shell
     - name: checkout repo
-      uses: actions/checkout@v2.3.4
+      uses: actions/checkout@v3.1.0
     - name: Download latest swagger build
       run: |
         git rev-parse HEAD > .github/CommitID
@@ -39,7 +39,6 @@ jobs:
         cd .updater/api
         curl -s  https://api.github.com/repos/boecker-lab/sirius/releases | grep 'browser_download_url.*linux64-service.zip\"' | sort | tac | head -n 1 | cut -d : -f 2,3 | tr -d \" | wget -i -
         echo "Download Complete"
-        sudo apt-get install unzip
         unzip *.zip
         echo "Api Ready"
     - name: Run Rest Api
@@ -62,7 +61,7 @@ jobs:
         echo "generating R Code"
         java -jar .updater/swagger/swagger-codegen-cli.jar generate -i .updater/api/api-docs.json -c .updater/config/R/config.json -l r -o client-api_r/generated
         
-        echo "generating Java Code"
+        echo "generating Ruby Code"
         java -jar .updater/swagger/swagger-codegen-cli.jar generate -i .updater/api/api-docs.json -c .updater/config/Ruby/config.json -l ruby -o client-api_ruby
         echo "generating Finished!"
     - name: Remove Sirius Rest Api
@@ -75,13 +74,9 @@ jobs:
         rm .updater/swagger/swagger-codegen-cli.jar
         echo "Done"
     - name: update file and push to remote
-      run: |
-        git config --global user.name "SwaggerUpdater[Bot]"
-        git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
-        git add -A
-        git commit -m "Updated Swagger Clients"
-        git push
+      uses: stefanzweifel/git-auto-commit-action@v4.15.2
+      with:
+        commit_message: Prepared Swagger Clients for Testing
         
   RunPythonTest:
     # Add dependency for Test
@@ -94,13 +89,12 @@ jobs:
     steps:
     # Runs using the runners shell
     - name: checkout repo
-      uses: actions/checkout@v2.3.4
+      uses: actions/checkout@v3.1.0
     - name: Download latest Sirius Release
       run: |
         cd .updater/api
         curl -s  https://api.github.com/repos/boecker-lab/sirius/releases | grep 'browser_download_url.*linux64-service.zip\"' | sort | tac | head -n 1 | cut -d : -f 2,3 | tr -d \" | wget -i -
         echo "Download Complete"
-        sudo apt-get install unzip
         unzip *.zip
         echo "Api Ready"
     - name: Run Rest Api
@@ -125,13 +119,12 @@ jobs:
     steps:
     # Runs using the runners shell
     - name: checkout repo
-      uses: actions/checkout@v2.3.4
+      uses: actions/checkout@v3.1.0
     - name: Download latest Sirius Release
       run: |
         cd .updater/api
         curl -s  https://api.github.com/repos/boecker-lab/sirius/releases | grep 'browser_download_url.*linux64-service.zip\"' | sort | tac | head -n 1 | cut -d : -f 2,3 | tr -d \" | wget -i -
         echo "Download Complete"
-        sudo apt-get install unzip
         unzip *.zip
         echo "Api Ready"
     - name: Run Rest Api
@@ -153,13 +146,12 @@ jobs:
     steps:
     # Runs using the runners shell
     - name: checkout repo
-      uses: actions/checkout@v2.3.4
+      uses: actions/checkout@v3.1.0
     - name: Download latest Sirius Release
       run: |
         cd .updater/api
         curl -s  https://api.github.com/repos/boecker-lab/sirius/releases | grep 'browser_download_url.*linux64-service.zip\"' | sort | tac | head -n 1 | cut -d : -f 2,3 | tr -d \" | wget -i -
         echo "Download Complete"
-        sudo apt-get install unzip
         unzip *.zip
         echo "Api Ready"
     - name: Run Rest Api
@@ -181,13 +173,12 @@ jobs:
     steps:
     # Runs using the runners shell
     - name: checkout repo
-      uses: actions/checkout@v2.3.4
+      uses: actions/checkout@v3.1.0
     - name: Download latest Sirius Release
       run: |
         cd .updater/api
         curl -s  https://api.github.com/repos/boecker-lab/sirius/releases | grep 'browser_download_url.*linux64-service.zip\"' | sort | tac | head -n 1 | cut -d : -f 2,3 | tr -d \" | wget -i -
         echo "Download Complete"
-        sudo apt-get install unzip
         unzip *.zip
         echo "Api Ready"
     - name: Run Rest Api
@@ -204,7 +195,7 @@ jobs:
     runs-on: ubuntu-latest
     steps: 
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3.1.0
       - name: Undo Push
         run: |
           git reset --hard HEAD@{1}
