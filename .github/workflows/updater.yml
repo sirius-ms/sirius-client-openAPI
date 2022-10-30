@@ -64,6 +64,12 @@ jobs:
         echo "generating Ruby Code"
         java -jar .updater/swagger/swagger-codegen-cli.jar generate -i .updater/api/api-docs.json -c .updater/config/Ruby/config.json -l ruby -o client-api_ruby/generated
         echo "generating Finished!"
+    - name: Format Python Package
+      run: |
+        cp client-api_python/sirius_api.py client-api_python/generated/PySirius/models
+        echo "from PySirius.models.sirius_api import SiriusAPI" >> client-api_python/generated/PySirius/__init__.py
+        echo "from PySirius.models.sirius_api import SiriusAPI" >> client-api_python/generated/PySirius/models/__init__.py
+        
     - name: Remove Sirius Rest Api
       run: |
         cd .updater/api
