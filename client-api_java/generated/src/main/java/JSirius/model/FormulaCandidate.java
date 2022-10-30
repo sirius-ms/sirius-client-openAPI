@@ -26,7 +26,7 @@ import java.io.IOException;
  * FormulaCandidate
  */
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-30T11:24:45.653194Z[Etc/UTC]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-30T11:50:39.424855Z[Etc/UTC]")
 public class FormulaCandidate {
   @SerializedName("siriusScore")
   private Double siriusScore = null;
