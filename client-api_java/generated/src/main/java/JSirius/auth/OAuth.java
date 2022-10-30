@@ -17,7 +17,7 @@ import JSirius.Pair;
 import java.util.Map;
 import java.util.List;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-30T11:50:39.424855Z[Etc/UTC]")public class OAuth implements Authentication {
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-30T11:56:15.487371Z[Etc/UTC]")public class OAuth implements Authentication {
   private String accessToken;
 
   public String getAccessToken() {
