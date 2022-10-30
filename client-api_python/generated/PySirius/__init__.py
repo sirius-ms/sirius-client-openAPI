@@ -65,3 +65,4 @@ from PySirius.models.zodiac_epochs import ZodiacEpochs
 from PySirius.models.zodiac_number_of_considered_candidates_at300_mz import ZodiacNumberOfConsideredCandidatesAt300Mz
 from PySirius.models.zodiac_number_of_considered_candidates_at800_mz import ZodiacNumberOfConsideredCandidatesAt800Mz
 from PySirius.models.zodiac_run_in_two_steps import ZodiacRunInTwoSteps
+from PySirius.sirius_api import SiriusAPI
