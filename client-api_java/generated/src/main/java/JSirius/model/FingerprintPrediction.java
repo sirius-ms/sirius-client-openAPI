@@ -25,7 +25,7 @@ import java.io.IOException;
  * User/developer friendly parameter subset for the CSI:FingerID Fingerprint tool
  */
 @Schema(description = "User/developer friendly parameter subset for the CSI:FingerID Fingerprint tool")
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-30T12:18:16.134304Z[Etc/UTC]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-30T12:20:21.851302Z[Etc/UTC]")
 public class FingerprintPrediction {
   @SerializedName("enabled")
   private Boolean enabled = null;

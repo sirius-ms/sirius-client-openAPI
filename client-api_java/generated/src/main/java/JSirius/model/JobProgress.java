@@ -25,7 +25,7 @@ import java.io.IOException;
  * Progress information of a computation job that has already been submitted to SIRIUS.  if  currentProgress &#x3D;&#x3D; maxProgress job is finished and should change to state done soon.  if a job is DONE all results can be accessed via the Project-Spaces api.
  */
 @Schema(description = "Progress information of a computation job that has already been submitted to SIRIUS.  if  currentProgress == maxProgress job is finished and should change to state done soon.  if a job is DONE all results can be accessed via the Project-Spaces api.")
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-30T12:18:16.134304Z[Etc/UTC]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-30T12:20:21.851302Z[Etc/UTC]")
 public class JobProgress {
   @SerializedName("indeterminate")
   private Boolean indeterminate = null;
