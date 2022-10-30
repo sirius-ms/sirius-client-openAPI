@@ -198,7 +198,7 @@ jobs:
         echo "TODO" 
 
   Cleanup:
-    needs: [RunRubyTest, RunRTest, RunJavaTest, RunPythonTest]
+    needs: [RunRubyTest, RunRTest, RunJavaTest]
     if: ${{ failure() }}
     runs-on: ubuntu-latest
     steps: 
