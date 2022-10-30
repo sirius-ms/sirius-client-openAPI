@@ -158,5 +158,5 @@ class SiriusAPI:
         def get_version_info():
             return self.api_instance.get_version_info()
     class Models:
-    def AccountCredentials(username, password, refresh_token):
-        return 
+        def AccountCredentials(username, password, refresh_token):
+            return 
