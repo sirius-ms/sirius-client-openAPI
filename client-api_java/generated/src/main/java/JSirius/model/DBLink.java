@@ -25,7 +25,7 @@ import java.io.IOException;
  * DBLink
  */
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-30T11:56:15.487371Z[Etc/UTC]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-30T12:13:22.189909Z[Etc/UTC]")
 public class DBLink {
   @SerializedName("name")
   private String name = null;
