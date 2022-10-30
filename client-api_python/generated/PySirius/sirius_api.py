@@ -86,9 +86,9 @@ class SiriusAPI:
         def delete_job_config(name):
             api_instance = PySirius.ComputationsApi()
             return api_instance.delete_job_config(name)
-        def get_default_job_config(include_config_map=False):
+        def get_default_job_config():
             api_instance = PySirius.ComputationsApi()
-            return api_instance.get_default_job_config(include_config_map)
+            return api_instance.get_default_job_config()
         def get_job(project_id, job_id, include_state=True, include_command=False, include_affected_compounds=False):
             api_instance = PySirius.ComputationsApi()
             return api_instance.get_job(project_id, job_id, include_state, include_command, include_affected_compounds)
