@@ -26,7 +26,7 @@ import java.io.IOException;
  * Container class that holds the best matching compound class for different levels of each ontology for a  certain compound/feature/predicted fingerprint.
  */
 @Schema(description = "Container class that holds the best matching compound class for different levels of each ontology for a  certain compound/feature/predicted fingerprint.")
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-28T16:49:53.971718Z[Etc/UTC]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-30T10:24:42.963737Z[Etc/UTC]")
 public class CompoundClasses {
   @SerializedName("npcPathway")
   private CompoundClass npcPathway = null;
