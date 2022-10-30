@@ -67,8 +67,8 @@ jobs:
     - name: Format Python Package
       run: |
         cp client-api_python/sirius_api.py client-api_python/generated/PySirius/models
-        echo "from PySirius.models.sirius_api import SiriusAPI" >> client-api_python/generated/PySirius/__init__.py
-        echo "from PySirius.models.sirius_api import SiriusAPI" >> client-api_python/generated/PySirius/models/__init__.py
+        #echo "from PySirius.models.sirius_api import SiriusAPI" >> client-api_python/generated/PySirius/__init__.py
+        #echo "from PySirius.models.sirius_api import SiriusAPI" >> client-api_python/generated/PySirius/models/__init__.py
         
     - name: Remove Sirius Rest Api
       run: |
