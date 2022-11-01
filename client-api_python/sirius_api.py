@@ -190,3 +190,28 @@ class SiriusAPI:
         def get_version_info():
             api_instance = PySirius.VersionInfoControllerApi()
             return api_instance.get_version_info()
+    class Models:
+        def Account_credentials(username=None, password=None, refresh_token=None):
+            return PySirius.models.AccountCredentials(username=username, password=password, refresh_token=refresh_token)
+        def Account_info(user_id=None, username=None, user_email=None, gravatar_url=None, subscriptions=None, active_subscription_id=None):
+            return PySirius.models.AccountInfo(user_id=user_id, username=username, gravatar_url=gravatar_url, subscriptions=subscriptions, active_subscription_id=active_subscription_id)
+        def AnnotatedPeak(mass=None, intensity=None, peak_annotation=None):
+            return PySirius.models.AnnotatedPeak(mass=mass, intensity=intensity, peak_annotation=peak_annotation)
+        def AnnotatedSpectrum(ms_level=None, collision_energy=None, peaks=None):
+            return PySirius.models.AnnotatedSpectrum(ms_level=ms_level, collision_energy=collision_energy, peaks=peaks)
+        def Canopus(enabled=None):
+            return PySirius.models.Canopus(enabled=enabled)
+        def CanopusPredictions(classy_fire_classes=None, npc_classes=None):
+            return PySirius.models.CanopusPredictions(classy_fire_classes=classy_fire_classes, npc_classes=npc_classes)
+        def CollisionEnergy(min_energy=None, max_energy=None, corrected=None):
+            return PySirius.models.CollisionEnergy(min_energy=min_energy, max_energy=max_energy, corrected=corrected)
+        def CompoundAnnotation(formula_annotation=None, structure_annotation=None, compound_class_annotation=None):
+            return PySirius.models.CompoundAnnotation(formula_annotation=formula_annotation, structure_annotation=structure_annotation, compound_class_annotation=compound_class_annotation)
+        def CompoundClass(Type=None, name=None, description=None, Id=None, probability=None):
+            return PySirius.models.CompoundClass(Type, name=name, description=description, Id, probability=probability)
+        def CompoundClasses(npc_pathway=None, npc_superclass=None, npc_class=None, classy_fire_most_specific=None, classy_fire_level5=None, classy_fire_class=None, classy_fire_sub_class=None, classy_fire_super_class=None):
+            return PySirius.models.CompoundClass(npc_pathway=npc_pathway, npc_superclass=npc_superclass, npc_class=npc_class, classy_fire_most_specific=classy_fire_most_specific, classy_fire_level5=classy_fire_level5, classy_fire_class=classy_fire_class, classy_fire_sub_class=classy_fire_sub_class, classy_fire_super_class=classy_fire_super_class)
+        def CompoundId(Id=None, name=None, index=None, ion_mass=None, ion_type=None, rt_start_seconds=None, rt_end_seconds=None, top_annotation=None, ms_data=None, computing=None):
+            return PySirius.models.CompoundId(Id, name=name, index=index, ion_mass=ion_mass, ion_type=ion_type, rt_start_seconds=rt_start_seconds, rt_end_seconds=rt_end_seconds, top_annotation=top_annotation, ms_data=ms_data, computing=computing)
+        def DBLink(name=None, Id=None):
+            return PySirius.models.DBLink(name=name, Id)
