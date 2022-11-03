@@ -215,3 +215,57 @@ class SiriusAPI:
             return PySirius.models.CompoundId(Id, name=name, index=index, ion_mass=ion_mass, ion_type=ion_type, rt_start_seconds=rt_start_seconds, rt_end_seconds=rt_end_seconds, top_annotation=top_annotation, ms_data=ms_data, computing=computing)
         def DBLink(name=None, Id=None):
             return PySirius.models.DBLink(name=name, Id)
+        def Deviation(ppm=None, absolute=None, identifier=None):
+            return PySirius.models.Deviation(ppm=ppm, absolute=absolute, identifier=identifier)
+        def FingerprintPrediction(enabled=None, use_score_threshold=None):
+            return PySirius.models.FingerprintPrediction(enabled=enabled, use_score_threshold=use_score_threshold)
+        def FormulaCandidate(sirius_score=None, isotope_score=None, tree_score=None, zodiac_score=None, molecular_formula=None, adduct=None, num_ofexplained_peaks=None, num_ofexplainable_peaks=None, total_explained_intensity=None, median_mass_deviation=None):
+            return PySirius.models.FormulaCandidate(sirius_score=sirius_score, isotope_score=isotope_score, tree_score=tree_score, zodiac_score=zodiac_score, molecular_formula=molecular_formula, num_ofexplainable_peaks=num_ofexplainable_peaks, total_explained_intensity=total_explained_intensity, median_mass_deviation=median_mass_deviation)
+        def FormulaResultContainer(Id=None, molecular_formula=None, adduct=None, result_overview=None, candidate=None):
+            return PySirius.models.FormulaResultContainer(Id, molecular_formula=molecular_formula, adduct=adduct, result_overview=result_overview, candidate=candidate)
+        def FragmentNode(Id=None, molecular_formula=None, ion_type=None, mass_deviation_da=None, mass_error_ppm=None, score=None, intensity=None, mz=None):
+            return PySirius.models.FragmentNode(Id, molecular_formula=molecular_formula, ion_type=ion_type, mass_deviation_da=mass_deviation_da, mass_error_ppm=mass_error_ppm, score=score, intensity=intensity, mz=mz)
+        def FragmentationTree(fragments=None, losses=None, tree_score=None, root=None):
+            return PySirius.models.FragmentationTree(fragments=fragments, losses=losses, tree_score=tree_score, root=root)
+        def GuiParameters(selected_tab=None, cid=None, fid=None, structure_candidate_in_ch_i_key=None, bring_to_front=None):
+            return PySirius.models.GuiParameters(selected_tab=selected_tab, cid=cid, fid=fid, structure_candidate_in_ch_i_key=structure_candidate_in_ch_i_key, bring_to_front=bring_to_front)
+        def JobId(Id=None, command=None, progress=None, affected_compound_ids=None):
+            return PySirius.models.JobId(Id, command=progress, affected_compound_ids=affected_compound_ids)
+        def JobProgress(indeterminate=None, state=None, current_progress=None, max_progress=None, message=None, error_message=None):
+            return PySirius.models.JobId(indeterminate=indeterminate, state=state, current_progress=current_progress, max_progress=max_progress, message=message, error_message=error_message)
+        def JobSubmission(compound_ids=None, fallback_adducts=None, enforced_adducts=None, detectable_adducts=None, recompute=None, formula_id_paras=None, zodiac_paras=None, fingerprint_prediction_paras=None, structure_db_search_paras=None, canopus_paras=None, config_map=None):
+            return PySirius.models.JobSubmission(compound_ids=compound_ids, fallback_adducts=fallback_adducts, enforced_adducts=enforced_adducts, detectable_adducts=detectable_adducts, recompute=recompute, formula_id_paras=formula_id_paras, zodiac_paras=zodiac_paras, fingerprint_prediction_paras=fingerprint_prediction_paras, structure_db_search_paras=structure_db_search_paras, canopus_paras=canopus_paras, config_map=config_map)
+        def LossEdge(source_fragment=None, target_fragment=None, molecular_formula=None, score=None):
+            return PySirius.models.LossEdge(source_fragment=source_fragment, target_fragment=target_fragment, molecular_formula=molecular_formula, score=score)
+        def MsData(merged_ms1=None, merged_ms2=None, ms2_spectra=None, ms1_spectra=None):
+            return PySirius.models.MsData(merged_ms1=merged_ms1, merged_ms2=merged_ms2, ms2_spectra=ms2_spectra, ms1_spectra=ms1_spectra)
+        def PeakAnnotation():
+            return PySirius.models.PeakAnnotation()
+        def ProjectSpaceId(name=None, path=None):
+            return PySirius.models.ProjectSpaceId(name=name, path=path)
+        def ResultOverview(sirius_score=None, zodiac_score=None, top_csi_score=None, confidence_score=None, canopus_result=None):
+            return PySirius.models.ResultOverview(sirius_score=sirius_score, zodiac_score=zodiac_score, top_csi_score=top_csi_score, confidence_score=confidence_score, canopus_result=canopus_result)
+        def Sirius(enabled=None, profile=None, number_of_candidates=None, number_of_candidates_per_ion=None, mass_accuracy_ms2ppm=None, isotope_ms2_settings=None, formula_search_d_bs=None, enforced_formula_constraints=None, fallback_formula_constraints=None, detectable_elements=None, ilp_timeout=None, use_heuristic=None):
+            return PySirius.models.Sirius(enabled=enabled, profile=profile, number_of_candidates=number_of_candidates, number_of_candidates_per_ion=number_of_candidates_per_ion, mass_accuracy_ms2ppm=mass_accuracy_ms2ppm, isotope_ms2_settings=isotope_ms2_settings, formula_search_d_bs=formula_search_d_bs, enforced_formula_constraints=enforced_formula_constraints, fallback_formula_constraints=fallback_formula_constraints, detectable_elements=detectable_elements, ilp_timeout=ilp_timeout, use_heuristic=use_heuristic)
+        def StructureCandidate(structure_name=None, smiles=None, csi_score=None, tanimoto_similarity=None, confidence_score=None, num_of_pub_med_ids=None, xlog_p=None, inchi_key=None, fp_bits_set=None, db_links=None, pubmed_ids=None):
+            return PySirius.models.StructureCandidate(structure_name=structure_name, smiles=smiles, csi_score=csi_score, tanimoto_similarity=tanimoto_similarity, confidence_score=confidence_score, num_of_pub_med_ids=num_of_pub_med_ids, xlog_p=xlog_p, inchi_key=inchi_key, fp_bits_set=fp_bits_set, db_links=db_links, pub_med_ids=pub_med_ids)
+        def StructureDbSearch(enabled=None, structure_search_d_bs=None, tag_lipids=None):
+            return PySirius.models.StructureDbSearch(enabled=enabled, structure_search_d_bs=structure_search_d_bs, tag_lipids=tag_lipids)
+        def Subscription(sid=None, subscriber_id=None, subscriber_name=None, expiration_date=None, count_queries=None, compound_limit=None, compound_hash_recording_time=None, max_queries_per_compound=None, max_user_accounts=None, service_url=None, description=None, name=None, tos=None, pp=None):
+            return PySirius.models.Subscription(sid=sid, subscriber_id=subscriber_id, subscriber_name=subscriber_name, expiration_date=expiration_date, count_queries=count_queries, compound_limit=compound_limit, compound_hash_recording_time=compound_hash_recording_time, max_queries_per_compound=max_queries_per_compound, max_user_accounts=max_user_accounts, service_url=service_url, description=description, name=name, tos=tos, pp=pp)
+        def Timeout(number_of_seconds_per_decomposition=None, number_of_seconds_per_instance=None, identifier=None):
+            return PySirius.models.Timeout(number_of_seconds_per_decomposition=number_of_seconds_per_decomposition, number_of_seconds_per_instance=number_of_seconds_per_instance, identifier=identifier)
+        def UseHeuristic(mz_to_use_heuristic=None, mz_to_use_heuristic_only=None, identifier=None):
+            return PySirius.models.UseHeuristic(mz_to_use_heuristic=mz_to_use_heuristic, mz_to_use_heuristic_only=mz_to_use_heuristic_only, identifier=identifier)
+        def Zodiac(enabled=None, considered_candidates_at300_mz=None, considered_candidates_at800_mz=None, run_in_two_steps=None, edge_filter_thresholds=None, gibbs_sampler_parameters=None):
+            return PySirius.models.Zodiac(enabled=enabled, considered_candidates_at300_mz=considered_candidates_at300_mz, considered_candidates_at800_mz=considered_candidates_at800_mz, run_in_two_steps=run_in_two_steps, edge_filter_thresholds=edge_filter_thresholds, gibbs_sampler_parameters=gibbs_sampler_parameters)
+        def ZodiacEdgeFilterThresholds(threshold_filter=None, min_local_candidates=None, min_local_connections=None, identifier=None):
+            return PySirius.models.ZodiacEdgeFilterThresholds(threshold_filter=threshold_filter, min_local_candidates=min_local_candidates, min_local_connections=min_local_connections, identifier=identifier)
+        def ZodiacEpochs(iterations=None, burn_in_period=None, number_of_markov_chains=None, identifier=None):
+            return PySirius.models.ZodiacEpochs(iterations=iterations, burn_in_period=burn_in_period, number_of_markov_chains=number_of_markov_chains, identifier=identifier)
+        def ZodiacNumberOfConsideredCandidatesAt300Mz(value=None, identifier=None):
+            return PySirius.models.ZodiacNumberOfConsideredCandidatesAt300Mz(value=value, identifier=identifier)
+        def ZodiacNumberOfConsideredCandidatesAt800Mz(value=None, identifier=None):
+            return PySirius.models.ZodiacNumberOfConsideredCandidatesAt800Mz(value=value, identifier=identifier)
+        def ZodiacRunInTwoSteps(value=None, identifier=None):
+            return PySirius.models.ZodiacRunInTwoSteps(value=value, identifier=identifier)
