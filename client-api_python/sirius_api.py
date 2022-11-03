@@ -229,4 +229,16 @@ class SiriusAPI:
             return PySirius.models.FragmentationTree(fragments=fragments, losses=losses, tree_score=tree_score, root=root)
         def GuiParameters(selected_tab=None, cid=None, fid=None, structure_candidate_in_ch_i_key=None, bring_to_front=None):
             return PySirius.models.GuiParameters(selected_tab=selected_tab, cid=cid, fid=fid, structure_candidate_in_ch_i_key=structure_candidate_in_ch_i_key, bring_to_front=bring_to_front)
+        def JobId(Id=None, command=None, progress=None, affected_compound_ids=None):
+            return PySirius.models.JobId(Id, command=progress, affected_compound_ids=affected_compound_ids)
+        def JobProgress(indeterminate=None, state=None, current_progress=None, max_progress=None, message=None, error_message=None):
+            return PySirius.models.JobId(indeterminate=indeterminate, state=state, current_progress=current_progress, max_progress=max_progress, message=message, error_message=error_message)
+        def JobSubmission(compound_ids=None, fallback_adducts=None, enforced_adducts=None, detectable_adducts=None, recompute=None, formula_id_paras=None, zodiac_paras=None, fingerprint_prediction_paras=None, structure_db_search_paras=None, canopus_paras=None, config_map=None):
+            return PySirius.models.JobSubmission(compound_ids=compound_ids, fallback_adducts=fallback_adducts, enforced_adducts=enforced_adducts, detectable_adducts=detectable_adducts, recompute=recompute, formula_id_paras=formula_id_paras, zodiac_paras=zodiac_paras, fingerprint_prediction_paras=fingerprint_prediction_paras, structure_db_search_paras=structure_db_search_paras, canopus_paras=canopus_paras, config_map=config_map)
+        def LossEdge(source_fragment=None, target_fragment=None, molecular_formula=None, score=None):
+            return PySirius.models.LossEdge(source_fragment=source_fragment, target_fragment=target_fragment, molecular_formula=molecular_formula, score=score)
+        def MsData(merged_ms1=None, merged_ms2=None, ms2_spectra=None, ms1_spectra=None):
+            return PySirius.models.MsData(merged_ms1=merged_ms1, merged_ms2=merged_ms2, ms2_spectra=ms2_spectra, ms1_spectra=ms1_spectra)
+        def PeakAnnotation():
+            return PySirius.models.PeakAnnotation()
         
