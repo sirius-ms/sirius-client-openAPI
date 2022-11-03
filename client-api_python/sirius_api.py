@@ -215,3 +215,18 @@ class SiriusAPI:
             return PySirius.models.CompoundId(Id, name=name, index=index, ion_mass=ion_mass, ion_type=ion_type, rt_start_seconds=rt_start_seconds, rt_end_seconds=rt_end_seconds, top_annotation=top_annotation, ms_data=ms_data, computing=computing)
         def DBLink(name=None, Id=None):
             return PySirius.models.DBLink(name=name, Id)
+        def Deviation(ppm=None, absolute=None, identifier=None):
+            return PySirius.models.Deviation(ppm=ppm, absolute=absolute, identifier=identifier)
+        def FingerprintPrediction(enabled=None, use_score_threshold=None):
+            return PySirius.models.FingerprintPrediction(enabled=enabled, use_score_threshold=use_score_threshold)
+        def FormulaCandidate(sirius_score=None, isotope_score=None, tree_score=None, zodiac_score=None, molecular_formula=None, adduct=None, num_ofexplained_peaks=None, num_ofexplainable_peaks=None, total_explained_intensity=None, median_mass_deviation=None):
+            return PySirius.models.FormulaCandidate(sirius_score=sirius_score, isotope_score=isotope_score, tree_score=tree_score, zodiac_score=zodiac_score, molecular_formula=molecular_formula, num_ofexplainable_peaks=num_ofexplainable_peaks, total_explained_intensity=total_explained_intensity, median_mass_deviation=median_mass_deviation)
+        def FormulaResultContainer(Id=None, molecular_formula=None, adduct=None, result_overview=None, candidate=None):
+            return PySirius.models.FormulaResultContainer(Id, molecular_formula=molecular_formula, adduct=adduct, result_overview=result_overview, candidate=candidate)
+        def FragmentNode(Id=None, molecular_formula=None, ion_type=None, mass_deviation_da=None, mass_error_ppm=None, score=None, intensity=None, mz=None):
+            return PySirius.models.FragmentNode(Id, molecular_formula=molecular_formula, ion_type=ion_type, mass_deviation_da=mass_deviation_da, mass_error_ppm=mass_error_ppm, score=score, intensity=intensity, mz=mz)
+        def FragmentationTree(fragments=None, losses=None, tree_score=None, root=None):
+            return PySirius.models.FragmentationTree(fragments=fragments, losses=losses, tree_score=tree_score, root=root)
+        def GuiParameters(selected_tab=None, cid=None, fid=None, structure_candidate_in_ch_i_key=None, bring_to_front=None):
+            return PySirius.models.GuiParameters(selected_tab=selected_tab, cid=cid, fid=fid, structure_candidate_in_ch_i_key=structure_candidate_in_ch_i_key, bring_to_front=bring_to_front)
+        
