@@ -17,9 +17,9 @@ Python 2.7 and 3.4+
 If the python package is hosted on Github, you can install directly from Github
 
 ```sh
-pip install git+https://github.com/LukasScholz/sirius-client-openAPI#subdirectory=client-api_python/generated
+pip install git+https://github.com/boecker-lab/sirius-client-openAPI#subdirectory=client-api_python/generated
 ```
-(you may need to run `pip` with root permission: `sudo pip install git+https://github.com/LukasScholz/sirius-client-openAPI#subdirectory=client-api_python/generated`)
+(you may need to run `pip` with root permission: `sudo pip install git+https://github.com/boecker-lab/sirius-client-openAPI#subdirectory=client-api_python/generated`)
 
 Then import the package:
 ```python
