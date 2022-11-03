@@ -251,4 +251,8 @@ class SiriusAPI:
             return PySirius.models.StructureCandidate(structure_name=structure_name, smiles=smiles, csi_score=csi_score, tanimoto_similarity=tanimoto_similarity, confidence_score=confidence_score, num_of_pub_med_ids=num_of_pub_med_ids, xlog_p=xlog_p, inchi_key=inchi_key, fp_bits_set=fp_bits_set, db_links=db_links, pub_med_ids=pub_med_ids)
         def StructureDbSearch(enabled=None, structure_search_d_bs=None, tag_lipids=None):
             return PySirius.models.StructureDbSearch(enabled=enabled, structure_search_d_bs=structure_search_d_bs, tag_lipids=tag_lipids)
+        def Subscription(sid=None, subscriber_id=None, subscriber_name=None, expiration_date=None, count_queries=None, compound_limit=None, compound_hash_recording_time=None, max_queries_per_compound=None, max_user_accounts=None, service_url=None, description=None, name=None, tos=None, pp=None):
+            return PySirius.models.Subscription(sid=sid, subscriber_id=subscriber_id, subscriber_name=subscriber_name, expiration_date=expiration_date, count_queries=count_queries, compound_limit=compound_limit, compound_hash_recording_time=compound_hash_recording_time, max_queries_per_compound=max_queries_per_compound, max_user_accounts=max_user_accounts, service_url=service_url, description=description, name=name, tos=tos, pp=pp)
+        def Timeout(number_of_seconds_per_decomposition=None, number_of_seconds_per_instance=None, identifier=None):
+            return PySirius.models.Timeout(number_of_seconds_per_decomposition=number_of_seconds_per_decomposition, number_of_seconds_per_instance=number_of_seconds_per_instance, identifier=identifier)
         
