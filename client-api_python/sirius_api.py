@@ -241,4 +241,14 @@ class SiriusAPI:
             return PySirius.models.MsData(merged_ms1=merged_ms1, merged_ms2=merged_ms2, ms2_spectra=ms2_spectra, ms1_spectra=ms1_spectra)
         def PeakAnnotation():
             return PySirius.models.PeakAnnotation()
+        def ProjectSpaceId(name=None, path=None):
+            return PySirius.models.ProjectSpaceId(name=name, path=path)
+        def ResultOverview(sirius_score=None, zodiac_score=None, top_csi_score=None, confidence_score=None, canopus_result=None):
+            return PySirius.models.ResultOverview(sirius_score=sirius_score, zodiac_score=zodiac_score, top_csi_score=top_csi_score, confidence_score=confidence_score, canopus_result=canopus_result)
+        def Sirius(enabled=None, profile=None, number_of_candidates=None, number_of_candidates_per_ion=None, mass_accuracy_ms2ppm=None, isotope_ms2_settings=None, formula_search_d_bs=None, enforced_formula_constraints=None, fallback_formula_constraints=None, detectable_elements=None, ilp_timeout=None, use_heuristic=None):
+            return PySirius.models.Sirius(enabled=enabled, profile=profile, number_of_candidates=number_of_candidates, number_of_candidates_per_ion=number_of_candidates_per_ion, mass_accuracy_ms2ppm=mass_accuracy_ms2ppm, isotope_ms2_settings=isotope_ms2_settings, formula_search_d_bs=formula_search_d_bs, enforced_formula_constraints=enforced_formula_constraints, fallback_formula_constraints=fallback_formula_constraints, detectable_elements=detectable_elements, ilp_timeout=ilp_timeout, use_heuristic=use_heuristic)
+        def StructureCandidate(structure_name=None, smiles=None, csi_score=None, tanimoto_similarity=None, confidence_score=None, num_of_pub_med_ids=None, xlog_p=None, inchi_key=None, fp_bits_set=None, db_links=None, pubmed_ids=None):
+            return PySirius.models.StructureCandidate(structure_name=structure_name, smiles=smiles, csi_score=csi_score, tanimoto_similarity=tanimoto_similarity, confidence_score=confidence_score, num_of_pub_med_ids=num_of_pub_med_ids, xlog_p=xlog_p, inchi_key=inchi_key, fp_bits_set=fp_bits_set, db_links=db_links, pub_med_ids=pub_med_ids)
+        def StructureDbSearch(enabled=None, structure_search_d_bs=None, tag_lipids=None):
+            return PySirius.models.StructureDbSearch(enabled=enabled, structure_search_d_bs=structure_search_d_bs, tag_lipids=tag_lipids)
         
