@@ -255,4 +255,17 @@ class SiriusAPI:
             return PySirius.models.Subscription(sid=sid, subscriber_id=subscriber_id, subscriber_name=subscriber_name, expiration_date=expiration_date, count_queries=count_queries, compound_limit=compound_limit, compound_hash_recording_time=compound_hash_recording_time, max_queries_per_compound=max_queries_per_compound, max_user_accounts=max_user_accounts, service_url=service_url, description=description, name=name, tos=tos, pp=pp)
         def Timeout(number_of_seconds_per_decomposition=None, number_of_seconds_per_instance=None, identifier=None):
             return PySirius.models.Timeout(number_of_seconds_per_decomposition=number_of_seconds_per_decomposition, number_of_seconds_per_instance=number_of_seconds_per_instance, identifier=identifier)
-        
+        def UseHeuristic(mz_to_use_heuristic=None, mz_to_use_heuristic_only=None, identifier=None):
+            return PySirius.models.UseHeuristic(mz_to_use_heuristic=mz_to_use_heuristic, mz_to_use_heuristic_only=mz_to_use_heuristic_only, identifier=identifier)
+        def Zodiac(enabled=None, considered_candidates_at300_mz=None, considered_candidates_at800_mz=None, run_in_two_steps=None, edge_filter_thresholds=None, gibbs_sampler_parameters=None):
+            return PySirius.models.Zodiac(enabled=enabled, considered_candidates_at300_mz=considered_candidates_at300_mz, considered_candidates_at800_mz=considered_candidates_at800_mz, run_in_two_steps=run_in_two_steps, edge_filter_thresholds=edge_filter_thresholds, gibbs_sampler_parameters=gibbs_sampler_parameters)
+        def ZodiacEdgeFilterThresholds(threshold_filter=None, min_local_candidates=None, min_local_connections=None, identifier=None):
+            return PySirius.models.ZodiacEdgeFilterThresholds(threshold_filter=threshold_filter, min_local_candidates=min_local_candidates, min_local_connections=min_local_connections, identifier=identifier)
+        def ZodiacEpochs(iterations=None, burn_in_period=None, number_of_markov_chains=None, identifier=None):
+            return PySirius.models.ZodiacEpochs(iterations=iterations, burn_in_period=burn_in_period, number_of_markov_chains=number_of_markov_chains, identifier=identifier)
+        def ZodiacNumberOfConsideredCandidatesAt300Mz(value=None, identifier=None):
+            return PySirius.models.ZodiacNumberOfConsideredCandidatesAt300Mz(value=value, identifier=identifier)
+        def ZodiacNumberOfConsideredCandidatesAt800Mz(value=None, identifier=None):
+            return PySirius.models.ZodiacNumberOfConsideredCandidatesAt800Mz(value=value, identifier=identifier)
+        def ZodiacRunInTwoSteps(value=None, identifier=None):
+            return PySirius.models.ZodiacRunInTwoSteps(value=value, identifier=identifier)
