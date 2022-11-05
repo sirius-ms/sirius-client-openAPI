@@ -28,7 +28,7 @@ import java.util.List;
  * Container class that holds the CANOPUS compound class predictions for alle predictable compound classes.  This is the full CANOPUS result.
  */
 @Schema(description = "Container class that holds the CANOPUS compound class predictions for alle predictable compound classes.  This is the full CANOPUS result.")
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-11-05T09:30:36.077113Z[Etc/UTC]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-11-05T09:44:07.528897Z[Etc/UTC]")
 public class CanopusPredictions {
   @SerializedName("classyFireClasses")
   private List<CompoundClass> classyFireClasses = null;
