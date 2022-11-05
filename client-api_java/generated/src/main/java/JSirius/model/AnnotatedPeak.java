@@ -26,7 +26,7 @@ import java.io.IOException;
  * AnnotatedPeak
  */
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-11-05T09:41:34.448603Z[Etc/UTC]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-11-05T09:44:07.528897Z[Etc/UTC]")
 public class AnnotatedPeak {
   @SerializedName("mass")
   private Double mass = null;
