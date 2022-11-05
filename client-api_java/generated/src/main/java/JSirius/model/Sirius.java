@@ -29,7 +29,7 @@ import java.util.List;
  * User/developer friendly parameter subset for the Formula/SIRIUS tool
  */
 @Schema(description = "User/developer friendly parameter subset for the Formula/SIRIUS tool")
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-11-05T09:30:36.077113Z[Etc/UTC]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-11-05T09:41:34.448603Z[Etc/UTC]")
 public class Sirius {
   @SerializedName("enabled")
   private Boolean enabled = null;
