@@ -202,5 +202,6 @@ jobs:
         uses: actions/checkout@v3.1.0
       - name: Undo Push
         run: |
-          git reset --hard HEAD@{1}
-          git push -f
+          echo done
+          #git reset --hard HEAD@{1}
+          #git push -f
