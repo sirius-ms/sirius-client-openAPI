@@ -208,12 +208,12 @@ class SiriusAPI:
         def CompoundAnnotation(formula_annotation=None, structure_annotation=None, compound_class_annotation=None):
             return PySirius.models.CompoundAnnotation(formula_annotation=formula_annotation, structure_annotation=structure_annotation, compound_class_annotation=compound_class_annotation)
         def CompoundClass(Type=None, name=None, description=None, id=None, probability=None):
-            return PySirius.models.CompoundClass(Type, name=name, description=description, id=id, probability=probability)
+            return PySirius.models.CompoundClass(Type, name=name, description=description, id=id, probability=probability)          # Potential Language Bug!
         def CompoundClasses(npc_pathway=None, npc_superclass=None, npc_class=None, classy_fire_most_specific=None, classy_fire_level5=None, classy_fire_class=None, classy_fire_sub_class=None, classy_fire_super_class=None):
             return PySirius.models.CompoundClass(npc_pathway=npc_pathway, npc_superclass=npc_superclass, npc_class=npc_class, classy_fire_most_specific=classy_fire_most_specific, classy_fire_level5=classy_fire_level5, classy_fire_class=classy_fire_class, classy_fire_sub_class=classy_fire_sub_class, classy_fire_super_class=classy_fire_super_class)
-        def CompoundId(id=None, name=None, index=None, ion_mass=None, ion_type=None, rt_start_seconds=None, rt_end_seconds=None, top_annotation=None, ms_data=None, computing=None):
+        def CompoundId(id=None, name=None, index=None, ion_mass=None, ion_type=None, rt_start_seconds=None, rt_end_seconds=None, top_annotation=None, ms_data=None, computing=None): # Potential Language Bug!
             return PySirius.models.CompoundId(id=id, name=name, index=index, ion_mass=ion_mass, ion_type=ion_type, rt_start_seconds=rt_start_seconds, rt_end_seconds=rt_end_seconds, top_annotation=top_annotation, ms_data=ms_data, computing=computing)
-        def DBLink(name=None, id=None):
+        def DBLink(name=None, id=None): # Potential Language Bug!
             return PySirius.models.DBLink(name=name, id=id)
         def Deviation(ppm=None, absolute=None, identifier=None):
             return PySirius.models.Deviation(ppm=ppm, absolute=absolute, identifier=identifier)
@@ -221,15 +221,15 @@ class SiriusAPI:
             return PySirius.models.FingerprintPrediction(enabled=enabled, use_score_threshold=use_score_threshold)
         def FormulaCandidate(sirius_score=None, isotope_score=None, tree_score=None, zodiac_score=None, molecular_formula=None, adduct=None, num_ofexplained_peaks=None, num_ofexplainable_peaks=None, total_explained_intensity=None, median_mass_deviation=None):
             return PySirius.models.FormulaCandidate(sirius_score=sirius_score, isotope_score=isotope_score, tree_score=tree_score, zodiac_score=zodiac_score, molecular_formula=molecular_formula, num_ofexplainable_peaks=num_ofexplainable_peaks, total_explained_intensity=total_explained_intensity, median_mass_deviation=median_mass_deviation)
-        def FormulaResultContainer(id=None, molecular_formula=None, adduct=None, result_overview=None, candidate=None):
+        def FormulaResultContainer(id=None, molecular_formula=None, adduct=None, result_overview=None, candidate=None): # Potential Language Bug!
             return PySirius.models.FormulaResultContainer(id=id, molecular_formula=molecular_formula, adduct=adduct, result_overview=result_overview, candidate=candidate)
-        def FragmentNode(id=None, molecular_formula=None, ion_type=None, mass_deviation_da=None, mass_error_ppm=None, score=None, intensity=None, mz=None):
+        def FragmentNode(id=None, molecular_formula=None, ion_type=None, mass_deviation_da=None, mass_error_ppm=None, score=None, intensity=None, mz=None): # Potential Language Bug!
             return PySirius.models.FragmentNode(id=id, molecular_formula=molecular_formula, ion_type=ion_type, mass_deviation_da=mass_deviation_da, mass_error_ppm=mass_error_ppm, score=score, intensity=intensity, mz=mz)
         def FragmentationTree(fragments=None, losses=None, tree_score=None, root=None):
             return PySirius.models.FragmentationTree(fragments=fragments, losses=losses, tree_score=tree_score, root=root)
         def GuiParameters(selected_tab=None, cid=None, fid=None, structure_candidate_in_ch_i_key=None, bring_to_front=None):
             return PySirius.models.GuiParameters(selected_tab=selected_tab, cid=cid, fid=fid, structure_candidate_in_ch_i_key=structure_candidate_in_ch_i_key, bring_to_front=bring_to_front)
-        def JobId(id=None, command=None, progress=None, affected_compound_ids=None):
+        def JobId(id=None, command=None, progress=None, affected_compound_ids=None): # Potential Language Bug!
             return PySirius.models.JobId(id=id, command=progress, affected_compound_ids=affected_compound_ids)
         def JobProgress(indeterminate=None, state=None, current_progress=None, max_progress=None, message=None, error_message=None):
             return PySirius.models.JobId(indeterminate=indeterminate, state=state, current_progress=current_progress, max_progress=max_progress, message=message, error_message=error_message)
