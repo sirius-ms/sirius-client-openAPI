@@ -215,7 +215,7 @@ SiriusApi = R6::R6Class(
 				return(api_instance$get_top_structure_candidate(project_id, compound_id, fingerprint=fingerprint, db_links=db_links, pub_med_ids=pub_med_ids))
 			}
 		)
-	)
+	),
 	# create FormulaResultsApi subclass    
 	GraphicalUserInterfaceApi = R6::R6Class(
     		classname = "GraphicalUserInterfaceApi",
@@ -234,7 +234,7 @@ SiriusApi = R6::R6Class(
 				return(api_instance$open_gui(project_id, read_only=read_only))
 			}
 		)
-	)
+	),
 	# create LoginAndAccountApi subclass    
 	LoginAndAccountApi = R6::R6Class(
     		classname = "LoginAndAccountApi",
@@ -269,7 +269,7 @@ SiriusApi = R6::R6Class(
 				return(api_instance$sign_up())
 			}
 		)
-	)
+	),
 	# create ProjectSpacesApi subclass    
 	ProjectSpacesApi = R6::R6Class(
     		classname = "ProjectSpacesApi",
@@ -296,7 +296,7 @@ SiriusApi = R6::R6Class(
 				return(api_instance$open_project_space(project_id, path_to_project))
 			}
 		)
-	)
+	),
 	# create VersionInfoControllerApi subclass    
 	VersionInfoControllerApi = R6::R6Class(
     		classname = "VersionInfoControllerApi",
@@ -307,7 +307,7 @@ SiriusApi = R6::R6Class(
 				return(api_instance$get_version_info())
 			}
 		)
-	)
+	),
 	# create VersionInfoControllerApi subclass    
 	Models = R6::R6Class(
     		classname = "VersionInfoControllerApi",
