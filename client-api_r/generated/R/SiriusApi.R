@@ -123,7 +123,7 @@ SiriusApi = R6::R6Class(
 			import_compounds_from_string = function(body, data_format, project_id, source_name=none){
 				api_instance <- CompoundsApi$new()
 				return(api_instance$import_compounds_from_string(body, data_format, project_id, source_name=source_name))
-			},
+			}
 		)
 	),
 	# create ComputationsApi subclass
