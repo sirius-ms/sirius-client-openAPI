@@ -25,7 +25,7 @@ import java.io.IOException;
  * Timeout
  */
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-11-05T09:48:22.769731Z[Etc/UTC]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-11-12T13:00:03.644393Z[Etc/UTC]")
 public class Timeout {
   @SerializedName("numberOfSecondsPerDecomposition")
   private Integer numberOfSecondsPerDecomposition = null;
