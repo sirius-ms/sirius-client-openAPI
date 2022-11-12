@@ -32,7 +32,7 @@ jobs:
       run: |
         git rev-parse HEAD > .github/CommitID
         cd .updater/swagger
-        wget https://repo1.maven.org/maven2/io/swagger/codegen/v3/swagger-codegen-cli/3.0.35/swagger-codegen-cli-3.0.35.jar -O swagger-codegen-cli.jar
+        wget https://repo1.maven.org/maven2/io/swagger/codegen/v3/swagger-codegen-cli/3.0.36/swagger-codegen-cli-3.0.36.jar -O swagger-codegen-cli.jar
         java -jar swagger-codegen-cli.jar version > version
     - name: Download latest Sirius Release
       run: |
