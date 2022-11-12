@@ -32,7 +32,7 @@ jobs:
       run: |
         git rev-parse HEAD > .github/CommitID
         cd .updater/swagger
-        wget https://repo1.maven.org/maven2/io/swagger/codegen/v3/swagger-codegen-cli/3.0.1/swagger-codegen-cli-3.0.1.jar -O swagger-codegen-cli.jar
+        wget https://repo1.maven.org/maven2/io/swagger/codegen/v3/swagger-codegen-cli/3.0.35/swagger-codegen-cli-3.0.35.jar -O swagger-codegen-cli.jar
         java -jar swagger-codegen-cli.jar version > version
     - name: Download latest Sirius Release
       run: |
@@ -59,7 +59,7 @@ jobs:
         java -jar .updater/swagger/swagger-codegen-cli.jar generate -i .updater/api/api-docs.json -c .updater/config/Python/config.json -l python -o client-api_python/generated
         
         echo "generating R Code"
-        java -jar .updater/swagger/swagger-codegen-cli.jar generate -i .updater/api/api-docs.json -c .updater/config/R/config.json -l r -o client-api_r/generated
+        java -jar .updater/swagger/swagger-codegen-cli.jar generate -i .updater/api/api-docs.json -c .updater/config/R/config.json -l r -o client-api_r/generated --packageVersion 3.33.1
         
         echo "generating Ruby Code"
         java -jar .updater/swagger/swagger-codegen-cli.jar generate -i .updater/api/api-docs.json -c .updater/config/Ruby/config.json -l ruby -o client-api_ruby/generated
