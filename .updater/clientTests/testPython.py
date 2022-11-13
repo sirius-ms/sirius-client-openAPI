@@ -4,23 +4,23 @@ from PySirius import SiriusAPI
 
 
 
+path_to_sirius = ".updater/api/sirius/bin/sirius"
 
 
-
-
+api = SiriusAPI(None, path_to_sirius)
 
 
 # get config
-SiriusAPI.get_ComputationsApi()
+api.get_ComputationsApi()
 print("Config Loaded Successfull!")
 print()
 
 # test basic stuff
 print("Version:")
-print(SiriusAPI.get_VersionInfoControllerApi()) # check for version
+print(api.get_VersionInfoControllerApi()) # check for version
 print()
 print("Project Spaces")
-print(SiriusAPI.get_ProjectSpacesApi()) # check for project spaces
+print(api.get_ProjectSpacesApi()) # check for project spaces
 print()
 
 print("Testing user specific stuff")
