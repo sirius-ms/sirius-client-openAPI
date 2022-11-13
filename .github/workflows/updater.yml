@@ -28,12 +28,6 @@ jobs:
     # Runs using the runners shell
     - name: checkout repo
       uses: actions/checkout@v3.1.0
-    - name: Download latest swagger build
-      run: |
-        git rev-parse HEAD > .github/CommitID
-        cd .updater/swagger
-        wget https://repo1.maven.org/maven2/io/swagger/codegen/v3/swagger-codegen-cli/3.0.35/swagger-codegen-cli-3.0.35.jar -O swagger-codegen-cli.jar
-        java -jar swagger-codegen-cli.jar version > version
     - name: Download latest openapi-generator
       run: |
         cd .updater/openapi_generator
@@ -58,17 +52,17 @@ jobs:
     - name: Update Clients
       run: |
         echo "generating Java Code"
-        java -jar .updater/swagger/swagger-codegen-cli.jar generate -i .updater/api/api-docs.json -c .updater/config/Java/config.json -l java -o client-api_java/generated
+        java -jar .updater/openapi_generator/openapi-generator-cli.jar generate -i .updater/api/api-docs.json -c .updater/config/Java/config.json -g java -o client-api_java/generated
         
         echo "generating Python Code"
-        java -jar .updater/swagger/swagger-codegen-cli.jar generate -i .updater/api/api-docs.json -c .updater/config/Python/config.json -l python -o client-api_python/generated
+        java -jar .updater/openapi_generator/openapi-generator-cli.jar generate -i .updater/api/api-docs.json -c .updater/config/Python/config.json -g python -o client-api_python/generated
         
         echo "generating R Code"
         rm -r client-api_r/generated/*
         java -jar .updater/openapi_generator/openapi-generator-cli.jar generate -i .updater/api/api-docs.json -c .updater/config/R/config.json -g r -o client-api_r/generated
         
         echo "generating Ruby Code"
-        java -jar .updater/swagger/swagger-codegen-cli.jar generate -i .updater/api/api-docs.json -c .updater/config/Ruby/config.json -l ruby -o client-api_ruby/generated
+        java -jar .updater/openapi_generator/openapi-generator-cli.jar generate -i .updater/api/api-docs.json -c .updater/config/Ruby/config.json -g ruby -o client-api_ruby/generated
         echo "generating Finished!"
     - name: Format Python Package
       run: |
