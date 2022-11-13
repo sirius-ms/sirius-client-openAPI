@@ -111,9 +111,9 @@
 #' var_project_id <- "project_id_example" # character | unique name/identifier of the  project-space to be closed.
 #'
 #' #Close project-space and remove it from application.
-#' api_instance <- ProjectSpacesApi$new()
+#' api_instance <- rsirius_api$new()
 #'
-#' api_instance$CloseProjectSpace(var_project_id)
+#' api_instance$project_spaces_api$CloseProjectSpace(var_project_id)
 #'
 #'
 #' ####################  CreateProjectSpace  ####################
@@ -125,11 +125,11 @@
 #' var_await_import <- TRUE # character |  (Optional)
 #'
 #' #Create and open a new project-space at given location and make it accessible via the given projectId.
-#' api_instance <- ProjectSpacesApi$new()
+#' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
 #' # result <- api_instance$CreateProjectSpace(var_project_id, var_path_to_project, path_to_source_project = var_path_to_source_project, await_import = var_await_importdata_file = "result.txt")
-#' result <- api_instance$CreateProjectSpace(var_project_id, var_path_to_project, path_to_source_project = var_path_to_source_project, await_import = var_await_import)
+#' result <- api_instance$project_spaces_api$CreateProjectSpace(var_project_id, var_path_to_project, path_to_source_project = var_path_to_source_project, await_import = var_await_import)
 #' dput(result)
 #'
 #'
@@ -139,11 +139,11 @@
 #' var_project_id <- "project_id_example" # character | unique name/identifier tof the project-space to be accessed.
 #'
 #' #Get project space info by its projectId.
-#' api_instance <- ProjectSpacesApi$new()
+#' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
 #' # result <- api_instance$GetProjectSpace(var_project_iddata_file = "result.txt")
-#' result <- api_instance$GetProjectSpace(var_project_id)
+#' result <- api_instance$project_spaces_api$GetProjectSpace(var_project_id)
 #' dput(result)
 #'
 #'
@@ -152,11 +152,11 @@
 #' library(RSirius)
 #'
 #' #List all opened project spaces.
-#' api_instance <- ProjectSpacesApi$new()
+#' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
 #' # result <- api_instance$GetProjectSpaces(data_file = "result.txt")
-#' result <- api_instance$GetProjectSpaces()
+#' result <- api_instance$project_spaces_api$GetProjectSpaces()
 #' dput(result)
 #'
 #'
@@ -167,11 +167,11 @@
 #' var_path_to_project <- "path_to_project_example" # character | 
 #'
 #' #Open an existing project-space and make it accessible via the given projectId.
-#' api_instance <- ProjectSpacesApi$new()
+#' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
 #' # result <- api_instance$OpenProjectSpace(var_project_id, var_path_to_projectdata_file = "result.txt")
-#' result <- api_instance$OpenProjectSpace(var_project_id, var_path_to_project)
+#' result <- api_instance$project_spaces_api$OpenProjectSpace(var_project_id, var_path_to_project)
 #' dput(result)
 #'
 #'

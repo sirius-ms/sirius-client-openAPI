@@ -33,10 +33,10 @@ var_project_id <- "project_id_example" # character | project-space to read from.
 var_compound_id <- "compound_id_example" # character | compound/feature the formula result belongs to.
 var_formula_id <- "formula_id_example" # character | identifier of the requested formula result
 
-api_instance <- FormulaResultsApi$new()
+api_instance <- rsirius_api$new()
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
 # result <- api_instance$GetBestMatchingCanopusPredictions(var_project_id, var_compound_id, var_formula_iddata_file = "result.txt")
-result <- api_instance$GetBestMatchingCanopusPredictions(var_project_id, var_compound_id, var_formula_id)
+result <- api_instance$formula_results_api$GetBestMatchingCanopusPredictions(var_project_id, var_compound_id, var_formula_id)
 dput(result)
 ```
 
@@ -84,10 +84,10 @@ var_project_id <- "project_id_example" # character | project-space to read from.
 var_compound_id <- "compound_id_example" # character | compound/feature the formula result belongs to.
 var_formula_id <- "formula_id_example" # character | identifier of the requested formula result
 
-api_instance <- FormulaResultsApi$new()
+api_instance <- rsirius_api$new()
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
 # result <- api_instance$GetCanopusPredictions(var_project_id, var_compound_id, var_formula_iddata_file = "result.txt")
-result <- api_instance$GetCanopusPredictions(var_project_id, var_compound_id, var_formula_id)
+result <- api_instance$formula_results_api$GetCanopusPredictions(var_project_id, var_compound_id, var_formula_id)
 dput(result)
 ```
 
@@ -135,10 +135,10 @@ var_project_id <- "project_id_example" # character | project-space to read from.
 var_compound_id <- "compound_id_example" # character | compound/feature the formula result belongs to.
 var_formula_id <- "formula_id_example" # character | identifier of the requested formula result
 
-api_instance <- FormulaResultsApi$new()
+api_instance <- rsirius_api$new()
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
 # result <- api_instance$GetFingerprintPrediction(var_project_id, var_compound_id, var_formula_iddata_file = "result.txt")
-result <- api_instance$GetFingerprintPrediction(var_project_id, var_compound_id, var_formula_id)
+result <- api_instance$formula_results_api$GetFingerprintPrediction(var_project_id, var_compound_id, var_formula_id)
 dput(result)
 ```
 
@@ -187,10 +187,10 @@ var_compound_id <- "compound_id_example" # character | compound/feature the form
 var_result_overview <- TRUE # character | add ResultOverview to the FormulaResultContainers (Optional)
 var_formula_candidate <- FALSE # character | add extended formula candidate information to the FormulaResultContainers (Optional)
 
-api_instance <- FormulaResultsApi$new()
+api_instance <- rsirius_api$new()
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
 # result <- api_instance$GetFormulaIds(var_project_id, var_compound_id, result_overview = var_result_overview, formula_candidate = var_formula_candidatedata_file = "result.txt")
-result <- api_instance$GetFormulaIds(var_project_id, var_compound_id, result_overview = var_result_overview, formula_candidate = var_formula_candidate)
+result <- api_instance$formula_results_api$GetFormulaIds(var_project_id, var_compound_id, result_overview = var_result_overview, formula_candidate = var_formula_candidate)
 dput(result)
 ```
 
@@ -241,10 +241,10 @@ var_formula_id <- "formula_id_example" # character | identifier of the requested
 var_result_overview <- TRUE # character | add ResultOverview to the FormulaResultContainer (Optional)
 var_formula_candidate <- TRUE # character | add extended formula candidate information to the FormulaResultContainer (Optional)
 
-api_instance <- FormulaResultsApi$new()
+api_instance <- rsirius_api$new()
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
 # result <- api_instance$GetFormulaResult(var_project_id, var_compound_id, var_formula_id, result_overview = var_result_overview, formula_candidate = var_formula_candidatedata_file = "result.txt")
-result <- api_instance$GetFormulaResult(var_project_id, var_compound_id, var_formula_id, result_overview = var_result_overview, formula_candidate = var_formula_candidate)
+result <- api_instance$formula_results_api$GetFormulaResult(var_project_id, var_compound_id, var_formula_id, result_overview = var_result_overview, formula_candidate = var_formula_candidate)
 dput(result)
 ```
 
@@ -294,10 +294,10 @@ var_project_id <- "project_id_example" # character | project-space to read from.
 var_compound_id <- "compound_id_example" # character | compound/feature the formula result belongs to.
 var_formula_id <- "formula_id_example" # character | identifier of the requested formula result
 
-api_instance <- FormulaResultsApi$new()
+api_instance <- rsirius_api$new()
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
 # result <- api_instance$GetFragTree(var_project_id, var_compound_id, var_formula_iddata_file = "result.txt")
-result <- api_instance$GetFragTree(var_project_id, var_compound_id, var_formula_id)
+result <- api_instance$formula_results_api$GetFragTree(var_project_id, var_compound_id, var_formula_id)
 dput(result)
 ```
 
@@ -345,10 +345,10 @@ var_project_id <- "project_id_example" # character | project-space to read from.
 var_compound_id <- "compound_id_example" # character | compound/feature the formula result belongs to.
 var_formula_id <- "formula_id_example" # character | identifier of the requested formula result
 
-api_instance <- FormulaResultsApi$new()
+api_instance <- rsirius_api$new()
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
 # result <- api_instance$GetSimulatedIsotopePattern(var_project_id, var_compound_id, var_formula_iddata_file = "result.txt")
-result <- api_instance$GetSimulatedIsotopePattern(var_project_id, var_compound_id, var_formula_id)
+result <- api_instance$formula_results_api$GetSimulatedIsotopePattern(var_project_id, var_compound_id, var_formula_id)
 dput(result)
 ```
 
@@ -400,10 +400,10 @@ var_db_links <- FALSE # character | add dbLinks to StructureCandidates (Optional
 var_pub_med_ids <- FALSE # character | add PubMedIds (citation count) to StructureCandidates (Optional)
 var_top_k <- -1 # integer | retrieve only the top k StructureCandidates (Optional)
 
-api_instance <- FormulaResultsApi$new()
+api_instance <- rsirius_api$new()
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
 # result <- api_instance$GetStructureCandidates(var_project_id, var_compound_id, var_formula_id, fingerprint = var_fingerprint, db_links = var_db_links, pub_med_ids = var_pub_med_ids, top_k = var_top_kdata_file = "result.txt")
-result <- api_instance$GetStructureCandidates(var_project_id, var_compound_id, var_formula_id, fingerprint = var_fingerprint, db_links = var_db_links, pub_med_ids = var_pub_med_ids, top_k = var_top_k)
+result <- api_instance$formula_results_api$GetStructureCandidates(var_project_id, var_compound_id, var_formula_id, fingerprint = var_fingerprint, db_links = var_db_links, pub_med_ids = var_pub_med_ids, top_k = var_top_k)
 dput(result)
 ```
 
@@ -457,10 +457,10 @@ var_fingerprint <- FALSE # character | add molecular fingerprint to StructureCan
 var_db_links <- FALSE # character | add dbLinks to StructureCandidates (Optional)
 var_pub_med_ids <- FALSE # character | add PubMedIds (citation count) to StructureCandidates (Optional)
 
-api_instance <- FormulaResultsApi$new()
+api_instance <- rsirius_api$new()
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
 # result <- api_instance$GetTopStructureCandidate(var_project_id, var_compound_id, fingerprint = var_fingerprint, db_links = var_db_links, pub_med_ids = var_pub_med_idsdata_file = "result.txt")
-result <- api_instance$GetTopStructureCandidate(var_project_id, var_compound_id, fingerprint = var_fingerprint, db_links = var_db_links, pub_med_ids = var_pub_med_ids)
+result <- api_instance$formula_results_api$GetTopStructureCandidate(var_project_id, var_compound_id, fingerprint = var_fingerprint, db_links = var_db_links, pub_med_ids = var_pub_med_ids)
 dput(result)
 ```
 

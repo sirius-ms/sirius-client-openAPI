@@ -7,6 +7,8 @@ import(httr)
 import(base64enc)
 import(stringr)
 
+# Wrapper
+export(rsirius_api)
 
 # Core
 export(ApiClient)

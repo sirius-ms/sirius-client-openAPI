@@ -217,9 +217,9 @@
 #' var_await_deletion <- TRUE # character | If true request will block until deletion succeeded or failed.                         If the job is still running the request will wait until the job has finished. (Optional)
 #'
 #' #Delete job.
-#' api_instance <- ComputationsApi$new()
+#' api_instance <- rsirius_api$new()
 #'
-#' api_instance$DeleteJob(var_project_id, var_job_id, cancel_if_running = var_cancel_if_running, await_deletion = var_await_deletion)
+#' api_instance$computations_api$DeleteJob(var_project_id, var_job_id, cancel_if_running = var_cancel_if_running, await_deletion = var_await_deletion)
 #'
 #'
 #' ####################  DeleteJobConfig  ####################
@@ -228,9 +228,9 @@
 #' var_name <- "name_example" # character | name of the job-config to delete
 #'
 #' #Delete job configuration with given name.
-#' api_instance <- ComputationsApi$new()
+#' api_instance <- rsirius_api$new()
 #'
-#' api_instance$DeleteJobConfig(var_name)
+#' api_instance$computations_api$DeleteJobConfig(var_name)
 #'
 #'
 #' ####################  GetDefaultJobConfig  ####################
@@ -239,11 +239,11 @@
 #' var_include_config_map <- FALSE # character | if true, generic configmap with-defaults will be included (Optional)
 #'
 #' #Request default job configuration
-#' api_instance <- ComputationsApi$new()
+#' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
 #' # result <- api_instance$GetDefaultJobConfig(include_config_map = var_include_config_mapdata_file = "result.txt")
-#' result <- api_instance$GetDefaultJobConfig(include_config_map = var_include_config_map)
+#' result <- api_instance$computations_api$GetDefaultJobConfig(include_config_map = var_include_config_map)
 #' dput(result)
 #'
 #'
@@ -257,11 +257,11 @@
 #' var_include_affected_compounds <- FALSE # character | include list of compound ids affected by this job (if available) (Optional)
 #'
 #' #Get job information and its current state and progress (if available).
-#' api_instance <- ComputationsApi$new()
+#' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
 #' # result <- api_instance$GetJob(var_project_id, var_job_id, include_state = var_include_state, include_command = var_include_command, include_affected_compounds = var_include_affected_compoundsdata_file = "result.txt")
-#' result <- api_instance$GetJob(var_project_id, var_job_id, include_state = var_include_state, include_command = var_include_command, include_affected_compounds = var_include_affected_compounds)
+#' result <- api_instance$computations_api$GetJob(var_project_id, var_job_id, include_state = var_include_state, include_command = var_include_command, include_affected_compounds = var_include_affected_compounds)
 #' dput(result)
 #'
 #'
@@ -272,11 +272,11 @@
 #' var_include_config_map <- FALSE # character | if true the generic configmap will be part of the output (Optional)
 #'
 #' #Request job configuration with given name.
-#' api_instance <- ComputationsApi$new()
+#' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
 #' # result <- api_instance$GetJobConfig(var_name, include_config_map = var_include_config_mapdata_file = "result.txt")
-#' result <- api_instance$GetJobConfig(var_name, include_config_map = var_include_config_map)
+#' result <- api_instance$computations_api$GetJobConfig(var_name, include_config_map = var_include_config_map)
 #' dput(result)
 #'
 #'
@@ -286,11 +286,11 @@
 #' var_include_config_map <- FALSE # character | if true the generic configmap will be part of the output (Optional)
 #'
 #' #Request all available job configurations
-#' api_instance <- ComputationsApi$new()
+#' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
 #' # result <- api_instance$GetJobConfigs(include_config_map = var_include_config_mapdata_file = "result.txt")
-#' result <- api_instance$GetJobConfigs(include_config_map = var_include_config_map)
+#' result <- api_instance$computations_api$GetJobConfigs(include_config_map = var_include_config_map)
 #' dput(result)
 #'
 #'
@@ -303,11 +303,11 @@
 #' var_include_affected_compounds <- FALSE # character | include list of compound ids affected by this job (if available) (Optional)
 #'
 #' #Get job information and its current state and progress (if available).
-#' api_instance <- ComputationsApi$new()
+#' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
 #' # result <- api_instance$GetJobs(var_project_id, include_state = var_include_state, include_command = var_include_command, include_affected_compounds = var_include_affected_compoundsdata_file = "result.txt")
-#' result <- api_instance$GetJobs(var_project_id, include_state = var_include_state, include_command = var_include_command, include_affected_compounds = var_include_affected_compounds)
+#' result <- api_instance$computations_api$GetJobs(var_project_id, include_state = var_include_state, include_command = var_include_command, include_affected_compounds = var_include_affected_compounds)
 #' dput(result)
 #'
 #'
@@ -319,11 +319,11 @@
 #' var_override_existing <- FALSE # character |  (Optional)
 #'
 #' #Add new job configuration with given name.
-#' api_instance <- ComputationsApi$new()
+#' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
 #' # result <- api_instance$PostJobConfig(var_name, var_job_submission, override_existing = var_override_existingdata_file = "result.txt")
-#' result <- api_instance$PostJobConfig(var_name, var_job_submission, override_existing = var_override_existing)
+#' result <- api_instance$computations_api$PostJobConfig(var_name, var_job_submission, override_existing = var_override_existing)
 #' dput(result)
 #'
 #'
@@ -337,11 +337,11 @@
 #' var_include_affected_compounds <- FALSE # character | include list of compound ids affected by this job (if available) (Optional)
 #'
 #' #Start computation for given compounds and with given parameters.
-#' api_instance <- ComputationsApi$new()
+#' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
 #' # result <- api_instance$StartJob(var_project_id, var_job_submission, include_state = var_include_state, include_command = var_include_command, include_affected_compounds = var_include_affected_compoundsdata_file = "result.txt")
-#' result <- api_instance$StartJob(var_project_id, var_job_submission, include_state = var_include_state, include_command = var_include_command, include_affected_compounds = var_include_affected_compounds)
+#' result <- api_instance$computations_api$StartJob(var_project_id, var_job_submission, include_state = var_include_state, include_command = var_include_command, include_affected_compounds = var_include_affected_compounds)
 #' dput(result)
 #'
 #'
@@ -357,11 +357,11 @@
 #' var_include_affected_compounds <- FALSE # character | include list of compound ids affected by this job (if available) (Optional)
 #'
 #' #Start computation for given compounds and with parameters from a stored job-config.
-#' api_instance <- ComputationsApi$new()
+#' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
 #' # result <- api_instance$StartJobFromConfig(var_project_id, var_job_config_name, var_request_body, recompute = var_recompute, include_state = var_include_state, include_command = var_include_command, include_affected_compounds = var_include_affected_compoundsdata_file = "result.txt")
-#' result <- api_instance$StartJobFromConfig(var_project_id, var_job_config_name, var_request_body, recompute = var_recompute, include_state = var_include_state, include_command = var_include_command, include_affected_compounds = var_include_affected_compounds)
+#' result <- api_instance$computations_api$StartJobFromConfig(var_project_id, var_job_config_name, var_request_body, recompute = var_recompute, include_state = var_include_state, include_command = var_include_command, include_affected_compounds = var_include_affected_compounds)
 #' dput(result)
 #'
 #'

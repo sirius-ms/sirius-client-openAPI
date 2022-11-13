@@ -75,9 +75,9 @@
 #' var_gui_parameters <- GuiParameters$new("FORMULAS", "cid_example", "fid_example", "structureCandidateInChIKey_example", "bringToFront_example") # GuiParameters | parameters that should be applied.
 #'
 #' #Apply given changes to the running GUI instance.
-#' api_instance <- GraphicalUserInterfaceApi$new()
+#' api_instance <- rsirius_api$new()
 #'
-#' api_instance$ApplyToGui(var_project_id, var_gui_parameters)
+#' api_instance$graphical_user_interface_api$ApplyToGui(var_project_id, var_gui_parameters)
 #'
 #'
 #' ####################  CloseGui  ####################
@@ -86,9 +86,9 @@
 #' var_project_id <- "project_id_example" # character | if project-space the GUI instance is connected to.
 #'
 #' #Close GUI instance of given project-space if available.
-#' api_instance <- GraphicalUserInterfaceApi$new()
+#' api_instance <- rsirius_api$new()
 #'
-#' api_instance$CloseGui(var_project_id)
+#' api_instance$graphical_user_interface_api$CloseGui(var_project_id)
 #'
 #'
 #' ####################  OpenGui  ####################
@@ -98,9 +98,9 @@
 #' var_read_only <- TRUE # character | open in read-only mode. (Optional)
 #'
 #' #Open GUI instance on specified project-space and bring the GUI window to foreground.
-#' api_instance <- GraphicalUserInterfaceApi$new()
+#' api_instance <- rsirius_api$new()
 #'
-#' api_instance$OpenGui(var_project_id, read_only = var_read_only)
+#' api_instance$graphical_user_interface_api$OpenGui(var_project_id, read_only = var_read_only)
 #'
 #'
 #' }

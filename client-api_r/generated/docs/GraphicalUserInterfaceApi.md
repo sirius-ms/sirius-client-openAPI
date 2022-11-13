@@ -26,8 +26,8 @@ library(RSirius)
 var_project_id <- "project_id_example" # character | of project-space the GUI instance is connected to.
 var_gui_parameters <- GuiParameters$new("FORMULAS", "cid_example", "fid_example", "structureCandidateInChIKey_example", "bringToFront_example") # GuiParameters | parameters that should be applied.
 
-api_instance <- GraphicalUserInterfaceApi$new()
-api_instance$ApplyToGui(var_project_id, var_gui_parameters)
+api_instance <- rsirius_api$new()
+api_instance$graphical_user_interface_api$ApplyToGui(var_project_id, var_gui_parameters)
 ```
 
 ### Parameters
@@ -71,8 +71,8 @@ library(RSirius)
 # prepare function argument(s)
 var_project_id <- "project_id_example" # character | if project-space the GUI instance is connected to.
 
-api_instance <- GraphicalUserInterfaceApi$new()
-api_instance$CloseGui(var_project_id)
+api_instance <- rsirius_api$new()
+api_instance$graphical_user_interface_api$CloseGui(var_project_id)
 ```
 
 ### Parameters
@@ -116,8 +116,8 @@ library(RSirius)
 var_project_id <- "project_id_example" # character | of project-space the GUI instance will connect to.
 var_read_only <- TRUE # character | open in read-only mode. (Optional)
 
-api_instance <- GraphicalUserInterfaceApi$new()
-api_instance$OpenGui(var_project_id, read_only = var_read_only)
+api_instance <- rsirius_api$new()
+api_instance$graphical_user_interface_api$OpenGui(var_project_id, read_only = var_read_only)
 ```
 
 ### Parameters
