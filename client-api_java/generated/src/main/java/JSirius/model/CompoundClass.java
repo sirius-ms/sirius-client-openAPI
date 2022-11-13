@@ -25,7 +25,7 @@ import java.io.IOException;
  * Predicted compound class with name, probability and id if available.  (ClassyFire and NPC). This can be seen as the set of classes a compound most likely belongs to
  */
 @Schema(description = "Predicted compound class with name, probability and id if available.  (ClassyFire and NPC). This can be seen as the set of classes a compound most likely belongs to")
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-11-12T13:36:36.846585Z[Etc/UTC]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-11-13T10:53:48.847992Z[Etc/UTC]")
 public class CompoundClass {
   /**
    * Specifies the classification ontology the CompoundClass belongs to.
