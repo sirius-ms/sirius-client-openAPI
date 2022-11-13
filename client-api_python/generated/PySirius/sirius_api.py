@@ -72,24 +72,24 @@ class SiriusAPI:
             os.system("fuser -k " + self.port + "/tcp > /dev/null 2>&1")
             print("Sirius was shut down forcibly")
     
-    def get_CompoundsApi():
+    def get_CompoundsApi(self):
         with PySirius.ApiClient(self.configuration) as api_client:
             return compounds_api.CompoundsApi(api_client)
-    def get_ComputationsApi():
+    def get_ComputationsApi(self):
         with PySirius.ApiClient(self.configuration) as api_client:
             return computations_api.ComputationsApi(api_client)
-    def get_FormulaResultsApi():
+    def get_FormulaResultsApi(self):
         with PySirius.ApiClient(self.configuration) as api_client:
             return formula_results_api.FormulaResultsApi(api_client)
-    def get_GraphicalUserInterfaceApi():
+    def get_GraphicalUserInterfaceApi(self):
         with PySirius.ApiClient(self.configuration) as api_client:
             return graphical_user_interface_api.GraphicalUserInterfaceApi(api_client)
-    def get_LoginAndAccountApi():
+    def get_LoginAndAccountApi(self):
         with PySirius.ApiClient(self.configuration) as api_client:
             return login_and_account_api.LoginAndAccountApi(api_client)
-    def get_ProjectSpacesApi():
+    def get_ProjectSpacesApi(self):
         with PySirius.ApiClient(self.configuration) as api_client:
             return project_spaces_api.ProjectSpacesApi(api_client)
-    def get_VersionInfoControllerApi():
+    def get_VersionInfoControllerApi(self):
         with PySirius.ApiClient(self.configuration) as api_client:
             return version_info_controller_api.VersionInfoControllerApi(api_client)
