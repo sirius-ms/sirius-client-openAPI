@@ -12,7 +12,7 @@
 
 package JSirius;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-11-13T11:44:45.166887Z[Etc/UTC]")public class Pair {
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-11-13T13:06:27.895593Z[Etc/UTC]")public class Pair {
     private String name = "";
     private String value = "";
 
