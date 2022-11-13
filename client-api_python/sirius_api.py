@@ -7,6 +7,14 @@ import json
 import urllib3
 import PySirius
 
+from PySirius.apis.tags import compounds_api
+from PySirius.apis.tags import computations_api
+from PySirius.apis.tags import formula_results_api
+from PySirius.apis.tags import graphical_user_interface_api
+from PySirius.apis.tags import login_and_account_api
+from PySirius.apis.tags import project_spaces_api
+from PySirius.apis.tags import version_info_controller_api
+
 class SiriusAPI:
 
     def __init__(self, project_space, sirius_executable, port=8080):
@@ -64,18 +72,18 @@ class SiriusAPI:
             print("Sirius was shut down forcibly")
     
     def get_CompoundsApi():
-        return PySirius.CompoundsApi
+        return compounds_api.CompoundsApi
     def get_ComputationsApi():
-        return PySirius.ComputationsApi
+        return computations_api.ComputationsApi
     def get_FormulaResultsApi():
-        return PySirius.FormulaResultsApi
+        return formula_results_api.FormulaResultsApi
     def get_GraphicalUserInterfaceApi():
-        return PySirius.GraphicalUserInterfaceApi
+        return graphical_user_interface_api.GraphicalUserInterfaceApi
     def get_LoginAndAccountApi():
-        return PySirius.LoginAndAccountApi
+        return login_and_account_api.LoginAndAccountApi
     def get_ProjectSpacesApi():
-        return PySirius.ProjectSpacesApi
+        return project_spaces_api.ProjectSpacesApi
     def get_VersionInfoControllerApi():
-        return PySirius.VersionInfoControllerApi
+        return version_info_controller_api.VersionInfoControllerApi
     def get_Model_Superclass():
-        return PySirius.models
+        return PySirius.model
