@@ -1,0 +1,3332 @@
+openapi: 3.0.1
+info:
+  description: REST API that provides the full functionality of SIRIUS and its web
+    services as background service. It is intended as entry-point for scripting languages
+    and software integration SDKs.
+  title: SIRIUS Nightsky API
+  version: v0.9 on SIRIUS 5.6.3-SNAPSHOT
+servers:
+- description: Generated server url
+  url: http://localhost:8080
+tags:
+- description: "Open, control and close SIRIUS GUI on the specified project-space."
+  name: Graphical user Interface
+- description: "Start, monitor and cancel compute jobs."
+  name: Computations
+- description: "Perform signIn, signOut and signUp. Get tokens and account information."
+  name: Login and Account
+- description: Access results for all formula candidates of a given compound (aka
+    feature).
+  name: Formula Results
+- description: Access compounds (aka features) of a specified project-space.
+  name: Compounds
+- description: Manage SIRIUS project-spaces.
+  name: Project-Spaces
+paths:
+  /api/projects/{projectId}:
+    delete:
+      description: Close project-space and remove it from application. Project-space
+        will NOT be deleted from disk.
+      operationId: closeProjectSpace
+      parameters:
+      - description: unique name/identifier of the  project-space to be closed.
+        explode: false
+        in: path
+        name: projectId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          description: OK
+      summary: Close project-space and remove it from application.
+      tags:
+      - Project-Spaces
+      x-accepts: application/json
+    get:
+      description: Get project space info by its projectId.
+      operationId: getProjectSpace
+      parameters:
+      - description: unique name/identifier tof the project-space to be accessed.
+        explode: false
+        in: path
+        name: projectId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectSpaceId'
+          description: OK
+      summary: Get project space info by its projectId.
+      tags:
+      - Project-Spaces
+      x-accepts: application/json
+    post:
+      description: Create and open a new project-space at given location and make
+        it accessible via the given projectId.
+      operationId: createProjectSpace
+      parameters:
+      - description: unique name/identifier that shall be used to access the newly
+          created project-space.
+        explode: false
+        in: path
+        name: projectId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: true
+        in: query
+        name: pathToProject
+        required: true
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: pathToSourceProject
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: awaitImport
+        required: false
+        schema:
+          default: true
+          type: boolean
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectSpaceId'
+          description: OK
+      summary: Create and open a new project-space at given location and make it accessible
+        via the given projectId.
+      tags:
+      - Project-Spaces
+      x-accepts: application/json
+    put:
+      description: Open an existing project-space and make it accessible via the given
+        projectId.
+      operationId: openProjectSpace
+      parameters:
+      - description: unique name/identifier that shall be used to access the opened
+          project-space.
+        explode: false
+        in: path
+        name: projectId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: true
+        in: query
+        name: pathToProject
+        required: true
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectSpaceId'
+          description: OK
+      summary: Open an existing project-space and make it accessible via the given
+        projectId.
+      tags:
+      - Project-Spaces
+      x-accepts: application/json
+  /api/projects/{projectId}/jobs:
+    get:
+      description: Get job information and its current state and progress (if available).
+      operationId: getJobs
+      parameters:
+      - description: project-space to run jobs on
+        explode: false
+        in: path
+        name: projectId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: "include {@link de.unijena.bioinf.ms.middleware.compute.model.JobProgress\
+          \ de.unijena.bioinf.ms.middleware.compute.model.JobProgress} states."
+        explode: true
+        in: query
+        name: includeState
+        required: false
+        schema:
+          default: false
+          type: boolean
+        style: form
+      - description: include job commands.
+        explode: true
+        in: query
+        name: includeCommand
+        required: false
+        schema:
+          default: false
+          type: boolean
+        style: form
+      - description: include list of compound ids affected by this job (if available)
+        explode: true
+        in: query
+        name: includeAffectedCompounds
+        required: false
+        schema:
+          default: false
+          type: boolean
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/JobId'
+                type: array
+          description: OK
+      summary: Get job information and its current state and progress (if available).
+      tags:
+      - Computations
+      x-accepts: application/json
+    post:
+      description: Start computation for given compounds and with given parameters.
+      operationId: startJob
+      parameters:
+      - description: project-space to run jobs on
+        explode: false
+        in: path
+        name: projectId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: "include {@link de.unijena.bioinf.ms.middleware.compute.model.JobProgress\
+          \ de.unijena.bioinf.ms.middleware.compute.model.JobProgress} state."
+        explode: true
+        in: query
+        name: includeState
+        required: false
+        schema:
+          default: true
+          type: boolean
+        style: form
+      - description: include job command.
+        explode: true
+        in: query
+        name: includeCommand
+        required: false
+        schema:
+          default: true
+          type: boolean
+        style: form
+      - description: include list of compound ids affected by this job (if available)
+        explode: true
+        in: query
+        name: includeAffectedCompounds
+        required: false
+        schema:
+          default: false
+          type: boolean
+        style: form
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JobSubmission'
+        description: configuration of the job that will be submitted of the job to
+          be returned
+        required: true
+      responses:
+        "202":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobId'
+          description: Accepted
+      summary: Start computation for given compounds and with given parameters.
+      tags:
+      - Computations
+      x-content-type: application/json
+      x-accepts: application/json
+  /api/projects/{projectId}/jobs-from-config:
+    post:
+      description: Start computation for given compounds and with parameters from
+        a stored job-config.
+      operationId: startJobFromConfig
+      parameters:
+      - description: project-space to run jobs on
+        explode: false
+        in: path
+        name: projectId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: name if the config to be used
+        explode: true
+        in: query
+        name: jobConfigName
+        required: true
+        schema:
+          type: string
+        style: form
+      - description: enable or disable recompute. If null the stored value will be
+          used.
+        explode: true
+        in: query
+        name: recompute
+        required: false
+        schema:
+          type: boolean
+        style: form
+      - description: "include {@link de.unijena.bioinf.ms.middleware.compute.model.JobProgress\
+          \ de.unijena.bioinf.ms.middleware.compute.model.JobProgress} state."
+        explode: true
+        in: query
+        name: includeState
+        required: false
+        schema:
+          default: true
+          type: boolean
+        style: form
+      - description: include job command.
+        explode: true
+        in: query
+        name: includeCommand
+        required: false
+        schema:
+          default: true
+          type: boolean
+        style: form
+      - description: include list of compound ids affected by this job (if available)
+        explode: true
+        in: query
+        name: includeAffectedCompounds
+        required: false
+        schema:
+          default: false
+          type: boolean
+        style: form
+      requestBody:
+        content:
+          application/json:
+            schema:
+              items:
+                type: string
+              type: array
+        description: compound ids to be computed
+        required: true
+      responses:
+        "202":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobId'
+          description: Accepted
+      summary: Start computation for given compounds and with parameters from a stored
+        job-config.
+      tags:
+      - Computations
+      x-content-type: application/json
+      x-accepts: application/json
+  /api/projects/{projectId}/gui:
+    delete:
+      deprecated: true
+      description: Close GUI instance of given project-space if available.
+      operationId: closeGui
+      parameters:
+      - description: if project-space the GUI instance is connected to.
+        explode: false
+        in: path
+        name: projectId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          description: OK
+      summary: Close GUI instance of given project-space if available.
+      tags:
+      - Graphical user Interface
+      x-accepts: application/json
+    patch:
+      deprecated: true
+      description: Apply given changes to the running GUI instance.
+      operationId: applyToGui
+      parameters:
+      - description: of project-space the GUI instance is connected to.
+        explode: false
+        in: path
+        name: projectId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GuiParameters'
+        description: parameters that should be applied.
+        required: true
+      responses:
+        "200":
+          description: OK
+      summary: Apply given changes to the running GUI instance.
+      tags:
+      - Graphical user Interface
+      x-content-type: application/json
+      x-accepts: application/json
+    post:
+      deprecated: true
+      description: Open GUI instance on specified project-space and bring the GUI
+        window to foreground.
+      operationId: openGui
+      parameters:
+      - description: of project-space the GUI instance will connect to.
+        explode: false
+        in: path
+        name: projectId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: open in read-only mode.
+        explode: true
+        in: query
+        name: readOnly
+        required: false
+        schema:
+          default: true
+          type: boolean
+        style: form
+      responses:
+        "200":
+          description: OK
+      summary: Open GUI instance on specified project-space and bring the GUI window
+        to foreground.
+      tags:
+      - Graphical user Interface
+      x-accepts: application/json
+  /api/projects/{projectId}/compounds:
+    get:
+      description: Get all available compounds/features in the given project-space.
+      operationId: getCompounds
+      parameters:
+      - description: project-space to read from.
+        explode: false
+        in: path
+        name: projectId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: include the top annotation of this feature into the output (if
+          available).
+        explode: true
+        in: query
+        name: topAnnotation
+        required: false
+        schema:
+          default: false
+          type: boolean
+        style: form
+      - description: include corresponding source data (MS and MS/MS) into the output.
+        explode: true
+        in: query
+        name: msData
+        required: false
+        schema:
+          default: false
+          type: boolean
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/CompoundId'
+                type: array
+          description: CompoundIds with additional annotations and MS/MS data (if
+            specified).
+      summary: Get all available compounds/features in the given project-space.
+      tags:
+      - Compounds
+      x-accepts: application/json
+    post:
+      description: |-
+        Import ms/ms data in given format from local filesystem into the specified project-space.
+         The import will run in a background job
+         Possible formats (ms, mgf, cef, msp, mzML, mzXML, project-space)
+         <p>
+      operationId: importCompounds
+      parameters:
+      - description: project-space to import into.
+        explode: false
+        in: path
+        name: projectId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: "If true, multiple LCMS Runs (mzML, mzXML) will be aligned during\
+          \ import/feature finding"
+        explode: true
+        in: query
+        name: alignLCMSRuns
+        required: false
+        schema:
+          default: false
+          type: boolean
+        style: form
+      - explode: true
+        in: query
+        name: allowMs1OnlyData
+        required: false
+        schema:
+          default: true
+          type: boolean
+        style: form
+      - explode: true
+        in: query
+        name: ignoreFormulas
+        required: false
+        schema:
+          default: false
+          type: boolean
+        style: form
+      requestBody:
+        content:
+          application/json:
+            schema:
+              items:
+                type: string
+              type: array
+        description: List of file and directory paths to import
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobId'
+          description: JobId background job that imports given compounds/features.
+      summary: Import ms/ms data in given format from local filesystem into the specified
+        project-space
+      tags:
+      - Compounds
+      x-content-type: application/json
+      x-accepts: application/json
+  /api/projects/{projectId}/compounds/import-from-string:
+    post:
+      description: |-
+        Import ms/ms data from the given format into the specified project-space
+         Possible formats (ms, mgf, cef, msp, mzML, mzXML)
+      operationId: importCompoundsFromString
+      parameters:
+      - description: project-space to import into.
+        explode: false
+        in: path
+        name: projectId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: "data format specified by the usual file extension of the format\
+          \ (without [.])"
+        explode: true
+        in: query
+        name: format
+        required: true
+        schema:
+          type: string
+        style: form
+      - description: name that specifies the data source. Can e.g. be a file path
+          or just a name.
+        explode: true
+        in: query
+        name: sourceName
+        required: false
+        schema:
+          type: string
+        style: form
+      requestBody:
+        content:
+          text/plain:
+            schema:
+              type: string
+        description: data content in specified format
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/CompoundId'
+                type: array
+          description: CompoundIds of the imported compounds/features.
+      summary: |-
+        Import ms/ms data from the given format into the specified project-space
+         Possible formats (ms, mgf, cef, msp, mzML, mzXML)
+      tags:
+      - Compounds
+      x-content-type: text/plain
+      x-accepts: application/json
+  /api/job-configs/{name}:
+    delete:
+      description: Delete job configuration with given name.
+      operationId: deleteJobConfig
+      parameters:
+      - description: name of the job-config to delete
+        explode: false
+        in: path
+        name: name
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "202":
+          description: Accepted
+      summary: Delete job configuration with given name.
+      tags:
+      - Computations
+      x-accepts: application/json
+    get:
+      description: Request job configuration with given name.
+      operationId: getJobConfig
+      parameters:
+      - description: name of the job-config to return
+        explode: false
+        in: path
+        name: name
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: if true the generic configmap will be part of the output
+        explode: true
+        in: query
+        name: includeConfigMap
+        required: false
+        schema:
+          default: false
+          type: boolean
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobSubmission'
+          description: "{@link JobSubmission JobSubmission} for given name."
+      summary: Request job configuration with given name.
+      tags:
+      - Computations
+      x-accepts: application/json
+    post:
+      description: Add new job configuration with given name.
+      operationId: postJobConfig
+      parameters:
+      - description: name of the job-config to add
+        explode: false
+        in: path
+        name: name
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: true
+        in: query
+        name: overrideExisting
+        required: false
+        schema:
+          default: false
+          type: boolean
+        style: form
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JobSubmission'
+        description: to add
+        required: true
+      responses:
+        "200":
+          content:
+            text/plain:
+              schema:
+                type: string
+          description: Probably modified name of the config (to ensure filesystem
+            path compatibility).
+      summary: Add new job configuration with given name.
+      tags:
+      - Computations
+      x-content-type: application/json
+      x-accepts: text/plain
+  /api/account/logout:
+    post:
+      description: Logout from SIRIUS web services.
+      operationId: logout
+      responses:
+        "200":
+          description: OK
+      summary: Logout from SIRIUS web services.
+      tags:
+      - Login and Account
+      x-accepts: application/json
+  /api/account/login:
+    post:
+      description: Login into SIRIUS web services.
+      operationId: login
+      parameters:
+      - explode: true
+        in: query
+        name: acceptTerms
+        required: true
+        schema:
+          type: boolean
+        style: form
+      - description: if true request fails if an active login already exists.
+        explode: true
+        in: query
+        name: failWhenLoggedIn
+        required: false
+        schema:
+          default: false
+          type: boolean
+        style: form
+      - description: "include available and active subscriptions in {@link AccountInfo\
+          \ AccountInfo}."
+        explode: true
+        in: query
+        name: includeSubs
+        required: false
+        schema:
+          default: false
+          type: boolean
+        style: form
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountCredentials'
+        description: used to log in.
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountInfo'
+          description: Basic information about the account that has been logged in
+            and its subscriptions.
+      summary: Login into SIRIUS web services.
+      tags:
+      - Login and Account
+      x-content-type: application/json
+      x-accepts: application/json
+  /api/version.json:
+    get:
+      operationId: getVersionInfo
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: string
+          description: OK
+      tags:
+      - version-info-controller
+      x-accepts: application/json
+  /api/projects:
+    get:
+      description: List all opened project spaces.
+      operationId: getProjectSpaces
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ProjectSpaceId'
+                type: array
+          description: OK
+      summary: List all opened project spaces.
+      tags:
+      - Project-Spaces
+      x-accepts: application/json
+  /api/projects/{projectId}/jobs/{jobId}:
+    delete:
+      description: Delete job. Specify how to behave for running jobs.
+      operationId: deleteJob
+      parameters:
+      - description: project-space to run jobs on
+        explode: false
+        in: path
+        name: projectId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: of the job to be deleted
+        explode: false
+        in: path
+        name: jobId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: |-
+          If true job will be canceled if it is not finished. Otherwise,
+                                  deletion will fail for running jobs or request will block until job has finished.
+        explode: true
+        in: query
+        name: cancelIfRunning
+        required: false
+        schema:
+          default: true
+          type: boolean
+        style: form
+      - description: |-
+          If true request will block until deletion succeeded or failed.
+                                  If the job is still running the request will wait until the job has finished.
+        explode: true
+        in: query
+        name: awaitDeletion
+        required: false
+        schema:
+          default: true
+          type: boolean
+        style: form
+      responses:
+        "202":
+          description: Accepted
+      summary: Delete job.
+      tags:
+      - Computations
+      x-accepts: application/json
+    get:
+      description: Get job information and its current state and progress (if available).
+      operationId: getJob
+      parameters:
+      - description: project-space to run jobs on
+        explode: false
+        in: path
+        name: projectId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: of the job to be returned
+        explode: false
+        in: path
+        name: jobId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: "include {@link de.unijena.bioinf.ms.middleware.compute.model.JobProgress\
+          \ de.unijena.bioinf.ms.middleware.compute.model.JobProgress} state."
+        explode: true
+        in: query
+        name: includeState
+        required: false
+        schema:
+          default: true
+          type: boolean
+        style: form
+      - description: include job command.
+        explode: true
+        in: query
+        name: includeCommand
+        required: false
+        schema:
+          default: false
+          type: boolean
+        style: form
+      - description: include list of compound ids affected by this job (if available)
+        explode: true
+        in: query
+        name: includeAffectedCompounds
+        required: false
+        schema:
+          default: false
+          type: boolean
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobId'
+          description: OK
+      summary: Get job information and its current state and progress (if available).
+      tags:
+      - Computations
+      x-accepts: application/json
+  /api/projects/{projectId}/compounds/{compoundId}/top-structure:
+    get:
+      description: |-
+        Best Scoring StructureCandidate over all molecular formular resutls that belong to the specified
+         compound/feature (compoundId).
+      operationId: getTopStructureCandidate
+      parameters:
+      - description: project-space to read from.
+        explode: false
+        in: path
+        name: projectId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: compound/feature the formula result belongs to.
+        explode: false
+        in: path
+        name: compoundId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: add molecular fingerprint to StructureCandidates
+        explode: true
+        in: query
+        name: fingerprint
+        required: false
+        schema:
+          default: false
+          type: boolean
+        style: form
+      - description: add dbLinks to StructureCandidates
+        explode: true
+        in: query
+        name: dbLinks
+        required: false
+        schema:
+          default: false
+          type: boolean
+        style: form
+      - description: add PubMedIds (citation count) to StructureCandidates
+        explode: true
+        in: query
+        name: pubMedIds
+        required: false
+        schema:
+          default: false
+          type: boolean
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StructureCandidate'
+          description: Best scoring FormulaResultContainers of this compound/feature
+            with specified extensions.
+      summary: |-
+        Best Scoring StructureCandidate over all molecular formular resutls that belong to the specified
+         compound/feature (compoundId).
+      tags:
+      - Formula Results
+      x-accepts: application/json
+  /api/projects/{projectId}/compounds/{compoundId}/formulas:
+    get:
+      description: |-
+        List of all FormulaResultContainers available for this compound/feature with minimal information.
+         Can be enriched with an optional results overview.
+      operationId: getFormulaIds
+      parameters:
+      - description: project-space to read from.
+        explode: false
+        in: path
+        name: projectId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: compound/feature the formula result belongs to.
+        explode: false
+        in: path
+        name: compoundId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: add ResultOverview to the FormulaResultContainers
+        explode: true
+        in: query
+        name: resultOverview
+        required: false
+        schema:
+          default: true
+          type: boolean
+        style: form
+      - description: add extended formula candidate information to the FormulaResultContainers
+        explode: true
+        in: query
+        name: formulaCandidate
+        required: false
+        schema:
+          default: false
+          type: boolean
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/FormulaResultContainer'
+                type: array
+          description: All FormulaResultContainers of this compound/feature with.
+      summary: List of all FormulaResultContainers available for this compound/feature
+        with minimal information.
+      tags:
+      - Formula Results
+      x-accepts: application/json
+  /api/projects/{projectId}/compounds/{compoundId}/formulas/{formulaId}:
+    get:
+      description: |-
+        FormulaResultContainers for the given 'formulaId' with minimal information.
+         Can be enriched with an optional results overview and formula candidate information.
+      operationId: getFormulaResult
+      parameters:
+      - description: project-space to read from.
+        explode: false
+        in: path
+        name: projectId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: compound/feature the formula result belongs to.
+        explode: false
+        in: path
+        name: compoundId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: identifier of the requested formula result
+        explode: false
+        in: path
+        name: formulaId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: add ResultOverview to the FormulaResultContainer
+        explode: true
+        in: query
+        name: resultOverview
+        required: false
+        schema:
+          default: true
+          type: boolean
+        style: form
+      - description: add extended formula candidate information to the FormulaResultContainer
+        explode: true
+        in: query
+        name: formulaCandidate
+        required: false
+        schema:
+          default: true
+          type: boolean
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FormulaResultContainer'
+          description: FormulaResultContainers of this compound/feature with.
+      summary: FormulaResultContainers for the given 'formulaId' with minimal information.
+      tags:
+      - Formula Results
+      x-accepts: application/json
+  /api/projects/{projectId}/compounds/{compoundId}/formulas/{formulaId}/tree:
+    get:
+      description: |-
+        Returns fragmentation tree (SIRIUS) for the given formula result identifier
+         This tree is used to rank formula candidates (treeScore).
+      operationId: getFragTree
+      parameters:
+      - description: project-space to read from.
+        explode: false
+        in: path
+        name: projectId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: compound/feature the formula result belongs to.
+        explode: false
+        in: path
+        name: compoundId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: identifier of the requested formula result
+        explode: false
+        in: path
+        name: formulaId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FragmentationTree'
+          description: Fragmentation Tree
+      summary: |-
+        Returns fragmentation tree (SIRIUS) for the given formula result identifier
+         This tree is used to rank formula candidates (treeScore).
+      tags:
+      - Formula Results
+      x-accepts: application/json
+  /api/projects/{projectId}/compounds/{compoundId}/formulas/{formulaId}/structures:
+    get:
+      description: |-
+        List of StructureCandidates the given 'formulaId' with minimal information.
+         StructureCandidates can be enriched with molecular fingerprint, structure database links and pubmed ids,
+      operationId: getStructureCandidates
+      parameters:
+      - description: project-space to read from.
+        explode: false
+        in: path
+        name: projectId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: compound/feature the formula result belongs to.
+        explode: false
+        in: path
+        name: compoundId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: identifier of the requested formula result
+        explode: false
+        in: path
+        name: formulaId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: add molecular fingerprint to StructureCandidates
+        explode: true
+        in: query
+        name: fingerprint
+        required: false
+        schema:
+          default: false
+          type: boolean
+        style: form
+      - description: add dbLinks to StructureCandidates
+        explode: true
+        in: query
+        name: dbLinks
+        required: false
+        schema:
+          default: false
+          type: boolean
+        style: form
+      - description: add PubMedIds (citation count) to StructureCandidates
+        explode: true
+        in: query
+        name: pubMedIds
+        required: false
+        schema:
+          default: false
+          type: boolean
+        style: form
+      - description: retrieve only the top k StructureCandidates
+        explode: true
+        in: query
+        name: topK
+        required: false
+        schema:
+          default: -1
+          format: int32
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/StructureCandidate'
+                type: array
+          description: FormulaResultContainers of this compound/feature with specified
+            extensions.
+      summary: List of StructureCandidates the given 'formulaId' with minimal information.
+      tags:
+      - Formula Results
+      x-accepts: application/json
+  /api/projects/{projectId}/compounds/{compoundId}/formulas/{formulaId}/isotope-pattern:
+    get:
+      description: |-
+        Returns simulated isotope pattern (SIRIUS) for the given formula result identifier.
+         This simulated isotope pattern is used to rank formula candidates (treeScore).
+      operationId: getSimulatedIsotopePattern
+      parameters:
+      - description: project-space to read from.
+        explode: false
+        in: path
+        name: projectId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: compound/feature the formula result belongs to.
+        explode: false
+        in: path
+        name: compoundId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: identifier of the requested formula result
+        explode: false
+        in: path
+        name: formulaId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AnnotatedSpectrum'
+          description: Simulated isotope pattern
+      summary: Returns simulated isotope pattern (SIRIUS) for the given formula result
+        identifier.
+      tags:
+      - Formula Results
+      x-accepts: application/json
+  /api/projects/{projectId}/compounds/{compoundId}/formulas/{formulaId}/fingerprint:
+    get:
+      description: |-
+        Returns predicted fingerprint (CSI:FingerID) for the given formula result identifier
+         This fingerprint is used to perfom structure database search and predict compound classes.
+      operationId: getFingerprintPrediction
+      parameters:
+      - description: project-space to read from.
+        explode: false
+        in: path
+        name: projectId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: compound/feature the formula result belongs to.
+        explode: false
+        in: path
+        name: compoundId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: identifier of the requested formula result
+        explode: false
+        in: path
+        name: formulaId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  format: double
+                  type: number
+                type: array
+          description: probabilistic fingerprint predicted by CSI:FingerID
+      summary: |-
+        Returns predicted fingerprint (CSI:FingerID) for the given formula result identifier
+         This fingerprint is used to perfom structure database search and predict compound classes.
+      tags:
+      - Formula Results
+      x-accepts: application/json
+  /api/projects/{projectId}/compounds/{compoundId}/formulas/{formulaId}/canopus-predictions:
+    get:
+      description: "All predicted compound classes (CANOPUS) from ClassyFire and NPC\
+        \ and their probabilities,"
+      operationId: getCanopusPredictions
+      parameters:
+      - description: project-space to read from.
+        explode: false
+        in: path
+        name: projectId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: compound/feature the formula result belongs to.
+        explode: false
+        in: path
+        name: compoundId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: identifier of the requested formula result
+        explode: false
+        in: path
+        name: formulaId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CanopusPredictions'
+          description: Predicted compound classes
+      summary: "All predicted compound classes (CANOPUS) from ClassyFire and NPC and\
+        \ their probabilities,"
+      tags:
+      - Formula Results
+      x-accepts: application/json
+  /api/projects/{projectId}/compounds/{compoundId}/formulas/{formulaId}/best-canopus-predictions:
+    get:
+      description: |-
+        Best matching compound classes,
+         Set of the highest scoring compound classes CANOPUS) on each hierarchy level of  the ClassyFire and NPC ontology,
+      operationId: getBestMatchingCanopusPredictions
+      parameters:
+      - description: project-space to read from.
+        explode: false
+        in: path
+        name: projectId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: compound/feature the formula result belongs to.
+        explode: false
+        in: path
+        name: compoundId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: identifier of the requested formula result
+        explode: false
+        in: path
+        name: formulaId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompoundClasses'
+          description: Best matching Predicted compound classes
+      summary: |-
+        Best matching compound classes,
+         Set of the highest scoring compound classes CANOPUS) on each hierarchy level of  the ClassyFire and NPC ontology,
+      tags:
+      - Formula Results
+      x-accepts: application/json
+  /api/projects/{projectId}/compounds/{cid}:
+    delete:
+      description: Delete compound/feature with the given identifier from the specified
+        project-space.
+      operationId: deleteCompound
+      parameters:
+      - description: project-space to delete from.
+        explode: false
+        in: path
+        name: projectId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: identifier of compound to delete.
+        explode: false
+        in: path
+        name: cid
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          description: OK
+      summary: Delete compound/feature with the given identifier from the specified
+        project-space.
+      tags:
+      - Compounds
+      x-accepts: application/json
+    get:
+      description: Get compound/feature with the given identifier from the specified
+        project-space.
+      operationId: getCompound
+      parameters:
+      - description: project-space to read from.
+        explode: false
+        in: path
+        name: projectId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: identifier of compound to access.
+        explode: false
+        in: path
+        name: cid
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: include the top annotation of this feature into the output (if
+          available).
+        explode: true
+        in: query
+        name: topAnnotation
+        required: false
+        schema:
+          default: false
+          type: boolean
+        style: form
+      - description: include corresponding source data (MS and MS/MS) into the output.
+        explode: true
+        in: query
+        name: msData
+        required: false
+        schema:
+          default: false
+          type: boolean
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompoundId'
+          description: CompoundId with additional annotations and MS/MS data (if specified).
+      summary: Get compound/feature with the given identifier from the specified project-space.
+      tags:
+      - Compounds
+      x-accepts: application/json
+  /api/job-configs:
+    get:
+      description: Request all available job configurations
+      operationId: getJobConfigs
+      parameters:
+      - description: if true the generic configmap will be part of the output
+        explode: true
+        in: query
+        name: includeConfigMap
+        required: false
+        schema:
+          default: false
+          type: boolean
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/JobSubmission'
+                type: array
+          description: "list of available {@link JobSubmission JobSubmission}s"
+      summary: Request all available job configurations
+      tags:
+      - Computations
+      x-accepts: application/json
+  /api/default-job-config:
+    get:
+      description: Request default job configuration
+      operationId: getDefaultJobConfig
+      parameters:
+      - description: "if true, generic configmap with-defaults will be included"
+        explode: true
+        in: query
+        name: includeConfigMap
+        required: false
+        schema:
+          default: false
+          type: boolean
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobSubmission'
+          description: "{@link JobSubmission JobSubmission} with all parameters set\
+            \ to default values."
+      summary: Request default job configuration
+      tags:
+      - Computations
+      x-accepts: application/json
+  /api/account/subscriptions:
+    get:
+      description: Get available subscriptions of the account currently logged in.
+        Fails if not logged in.
+      operationId: getSubscriptions
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Subscription'
+                type: array
+          description: OK
+      summary: Get available subscriptions of the account currently logged in.
+      tags:
+      - Login and Account
+      x-accepts: application/json
+  /api/account/signUp:
+    get:
+      description: Open SignUp window in system browser and return signUp link.
+      operationId: signUp
+      responses:
+        "200":
+          content:
+            text/plain:
+              schema:
+                type: string
+          description: OK
+      summary: Open SignUp window in system browser and return signUp link.
+      tags:
+      - Login and Account
+      x-accepts: text/plain
+  /api/account/signUpURL:
+    get:
+      description: Get SignUp URL (For signUp via web browser)
+      operationId: getSignUpURL
+      responses:
+        "200":
+          content:
+            text/plain:
+              schema:
+                type: string
+          description: OK
+      summary: Get SignUp URL (For signUp via web browser)
+      tags:
+      - Login and Account
+      x-accepts: text/plain
+  /api/account/isLoggedIn:
+    get:
+      description: Check if a user is logged in.
+      operationId: isLoggedIn
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: boolean
+          description: true if the user is logged in
+      summary: Check if a user is logged in.
+      tags:
+      - Login and Account
+      x-accepts: application/json
+  /api/account/:
+    get:
+      description: Get information about the account currently logged in. Fails if
+        not logged in.
+      operationId: getAccountInfo
+      parameters:
+      - description: "include available and active subscriptions in {@link AccountInfo\
+          \ AccountInfo}."
+        explode: true
+        in: query
+        name: includeSubs
+        required: false
+        schema:
+          default: false
+          type: boolean
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountInfo'
+          description: Basic information about the account that has been logged in
+            and its subscriptions.
+      summary: Get information about the account currently logged in.
+      tags:
+      - Login and Account
+      x-accepts: application/json
+components:
+  schemas:
+    ProjectSpaceId:
+      description: ""
+      example:
+        path: path
+        name: name
+      properties:
+        name:
+          type: string
+        path:
+          type: string
+      type: object
+    Canopus:
+      description: |-
+        User/developer friendly parameter subset for the CANOPUS tool
+         CANOPUS is parameter free, so this Object is just a flag that canopus should be executed.
+      example:
+        enabled: true
+      properties:
+        enabled:
+          description: tags whether the tool is enabled
+          type: boolean
+      type: object
+    FingerprintPrediction:
+      description: User/developer friendly parameter subset for the CSI:FingerID Fingerprint
+        tool
+      example:
+        useScoreThreshold: true
+        enabled: true
+      properties:
+        enabled:
+          description: tags whether the tool is enabled
+          type: boolean
+        useScoreThreshold:
+          description: |-
+            If true, an adaptive soft threshold will be applied to only compute Fingerprints for promising formula candidates
+             Enabling is highly recommended.
+          type: boolean
+      type: object
+    JobSubmission:
+      description: Object to submit a job to be executed by SIRIUS
+      example:
+        canopusParas:
+          enabled: true
+        enforcedAdducts:
+        - enforcedAdducts
+        - enforcedAdducts
+        recompute: true
+        structureDbSearchParas:
+          structureSearchDBs:
+          - ALL
+          - ALL
+          tagLipids: true
+          enabled: true
+        configMap:
+          key: configMap
+        fallbackAdducts:
+        - fallbackAdducts
+        - fallbackAdducts
+        compoundIds:
+        - compoundIds
+        - compoundIds
+        zodiacParas:
+          consideredCandidatesAt300Mz:
+            identifier: identifier
+            value: 9
+          edgeFilterThresholds:
+            identifier: identifier
+            minLocalCandidates: 4
+            thresholdFilter: 2.027123023002322
+            minLocalConnections: 7
+          consideredCandidatesAt800Mz:
+            identifier: identifier
+            value: 3
+          runInTwoSteps:
+            identifier: identifier
+            value: true
+          gibbsSamplerParameters:
+            numberOfMarkovChains: 1
+            identifier: identifier
+            burnInPeriod: 1
+            iterations: 1
+          enabled: true
+        fingerprintPredictionParas:
+          useScoreThreshold: true
+          enabled: true
+        detectableAdducts:
+        - detectableAdducts
+        - detectableAdducts
+        formulaIdParas:
+          massAccuracyMS2ppm: 1.4658129805029452
+          enforcedFormulaConstraints: enforcedFormulaConstraints
+          fallbackFormulaConstraints: fallbackFormulaConstraints
+          detectableElements:
+          - detectableElements
+          - detectableElements
+          profile: QTOF
+          useHeuristic:
+            identifier: identifier
+            mzToUseHeuristic: 2
+            mzToUseHeuristicOnly: 7
+          numberOfCandidates: 0
+          formulaSearchDBs:
+          - ALL
+          - ALL
+          numberOfCandidatesPerIon: 6
+          ilpTimeout:
+            numberOfSecondsPerDecomposition: 5
+            identifier: identifier
+            numberOfSecondsPerInstance: 5
+          enabled: true
+          isotopeMs2Settings: IGNORE
+      properties:
+        compoundIds:
+          description: Compounds that should be the input for this Job
+          items:
+            type: string
+          type: array
+        fallbackAdducts:
+          description: |-
+            Describes how to deal with Adducts: Fallback adducts are considered if the auto detection did not find any indication for an ion mode.
+             Pos Examples: [M+H]+,[M]+,[M+K]+,[M+Na]+,[M+H-H2O]+,[M+Na2-H]+,[M+2K-H]+,[M+NH4]+,[M+H3O]+,[M+MeOH+H]+,[M+ACN+H]+,[M+2ACN+H]+,[M+IPA+H]+,[M+ACN+Na]+,[M+DMSO+H]+
+             Neg Examples: [M-H]-,[M]-,[M+K-2H]-,[M+Cl]-,[M-H2O-H]-,[M+Na-2H]-,M+FA-H]-,[M+Br]-,[M+HAc-H]-,[M+TFA-H]-,[M+ACN-H]-
+          items:
+            type: string
+          type: array
+        enforcedAdducts:
+          description: |-
+            Describes how to deal with Adducts:  Enforced adducts that are always considered.
+             Pos Examples: [M+H]+,[M]+,[M+K]+,[M+Na]+,[M+H-H2O]+,[M+Na2-H]+,[M+2K-H]+,[M+NH4]+,[M+H3O]+,[M+MeOH+H]+,[M+ACN+H]+,[M+2ACN+H]+,[M+IPA+H]+,[M+ACN+Na]+,[M+DMSO+H]+
+             Neg Examples: [M-H]-,[M]-,[M+K-2H]-,[M+Cl]-,[M-H2O-H]-,[M+Na-2H]-,M+FA-H]-,[M+Br]-,[M+HAc-H]-,[M+TFA-H]-,[M+ACN-H]-
+          items:
+            type: string
+          type: array
+        detectableAdducts:
+          description: |-
+            Describes how to deal with Adducts: Detectable adducts which are only considered if there is an indication in the MS1 scan (e.g. correct mass delta).
+             Pos Examples: [M+H]+,[M]+,[M+K]+,[M+Na]+,[M+H-H2O]+,[M+Na2-H]+,[M+2K-H]+,[M+NH4]+,[M+H3O]+,[M+MeOH+H]+,[M+ACN+H]+,[M+2ACN+H]+,[M+IPA+H]+,[M+ACN+Na]+,[M+DMSO+H]+
+             Neg Examples: [M-H]-,[M]-,[M+K-2H]-,[M+Cl]-,[M-H2O-H]-,[M+Na-2H]-,M+FA-H]-,[M+Br]-,[M+HAc-H]-,[M+TFA-H]-,[M+ACN-H]-
+          items:
+            type: string
+          type: array
+        recompute:
+          description: Indicate if already existing result for a tool to be executed
+            should be overwritten or not.
+          type: boolean
+        formulaIdParas:
+          $ref: '#/components/schemas/Sirius'
+        zodiacParas:
+          $ref: '#/components/schemas/Zodiac'
+        fingerprintPredictionParas:
+          $ref: '#/components/schemas/FingerprintPrediction'
+        structureDbSearchParas:
+          $ref: '#/components/schemas/StructureDbSearch'
+        canopusParas:
+          $ref: '#/components/schemas/Canopus'
+        configMap:
+          additionalProperties:
+            type: string
+          description: |-
+            As an alternative to the object based parameters, this map allows to store key value pairs
+             of ALL SIRIUS parameters. All possible parameters can be retrieved from SIRIUS via the respective endpoint.
+          type: object
+      type: object
+    Sirius:
+      description: User/developer friendly parameter subset for the Formula/SIRIUS
+        tool
+      example:
+        massAccuracyMS2ppm: 1.4658129805029452
+        enforcedFormulaConstraints: enforcedFormulaConstraints
+        fallbackFormulaConstraints: fallbackFormulaConstraints
+        detectableElements:
+        - detectableElements
+        - detectableElements
+        profile: QTOF
+        useHeuristic:
+          identifier: identifier
+          mzToUseHeuristic: 2
+          mzToUseHeuristicOnly: 7
+        numberOfCandidates: 0
+        formulaSearchDBs:
+        - ALL
+        - ALL
+        numberOfCandidatesPerIon: 6
+        ilpTimeout:
+          numberOfSecondsPerDecomposition: 5
+          identifier: identifier
+          numberOfSecondsPerInstance: 5
+        enabled: true
+        isotopeMs2Settings: IGNORE
+      properties:
+        enabled:
+          description: tags whether the tool is enabled
+          type: boolean
+        profile:
+          description: |-
+            Instrument specific profile for internal algorithms
+             Just select what comes closest to the instrument that was used for measuring the data.
+          enum:
+          - QTOF
+          - ORBI
+          - FTICR
+          type: string
+        numberOfCandidates:
+          description: Number of formula candidates to keep as result list (Formula
+            Candidates).
+          format: int32
+          type: integer
+        numberOfCandidatesPerIon:
+          description: |-
+            Use this parameter if you want to force SIRIUS to report at least
+             NumberOfCandidatesPerIon results per ionization.
+             if <= 0, this parameter will have no effect and just the top
+             NumberOfCandidates results will be reported.
+          format: int32
+          type: integer
+        massAccuracyMS2ppm:
+          description: Maximum allowed mass accuracy. Only molecular formulas within
+            this mass window are considered.
+          format: double
+          type: number
+        isotopeMs2Settings:
+          description: |-
+            Specify how isotope patterns in MS/MS should be handled.
+             <p>
+             FILTER: When filtering is enabled, molecular formulas are excluded if their
+             theoretical isotope pattern does not match the theoretical one, even if their MS/MS pattern has high score.
+             <p>
+             SCORE: Use them for SCORING. To use this the instrument should produce clear MS/MS isotope patterns
+             <p>
+             IGNORE: Ignore that there might be isotope patterns in MS/MS
+          enum:
+          - IGNORE
+          - FILTER
+          - SCORE
+          type: string
+        formulaSearchDBs:
+          description: |-
+            List Structure database to extract molecular formulas from to reduce formula search space.
+             SIRIUS is quite good at de novo formula annotation, so only enable if you have a good reason.
+          items:
+            enum:
+            - ALL
+            - ALL_BUT_INSILICO
+            - PUBCHEM
+            - MESH
+            - HMDB
+            - KNAPSACK
+            - CHEBI
+            - PUBMED
+            - BIO
+            - KEGG
+            - HSDB
+            - MACONDA
+            - METACYC
+            - GNPS
+            - ZINCBIO
+            - TRAIN
+            - UNDP
+            - YMDB
+            - PLANTCYC
+            - NORMAN
+            - ADDITIONAL
+            - SUPERNATURAL
+            - COCONUT
+            - PUBCHEMANNOTATIONBIO
+            - PUBCHEMANNOTATIONDRUG
+            - PUBCHEMANNOTATIONSAFETYANDTOXIC
+            - PUBCHEMANNOTATIONFOOD
+            - LIPID
+            - KEGGMINE
+            - ECOCYCMINE
+            - YMDBMINE
+            type: string
+          type: array
+        enforcedFormulaConstraints:
+          description: |-
+            These configurations hold the information how to autodetect elements based on the given formula constraints.
+             Note: If the compound is already assigned to a specific molecular formula, this annotation is ignored.
+             <p>
+             Enforced: Enforced elements are always considered
+          type: string
+        fallbackFormulaConstraints:
+          description: |-
+            These configurations hold the information how to autodetect elements based on the given formula constraints.
+             Note: If the compound is already assigned to a specific molecular formula, this annotation is ignored.
+             <p>
+             Fallback: Fallback elements are used, if the auto-detection fails (e.g. no isotope pattern available)
+          type: string
+        detectableElements:
+          description: |-
+            These configurations hold the information how to autodetect elements based on the given formula constraints.
+             Note: If the compound is already assigned to a specific molecular formula, this annotation is ignored.
+             <p>
+             Detectable: Detectable elements are added to the chemical alphabet, if there are indications for them (e.g. in isotope pattern)
+          items:
+            type: string
+          type: array
+        ilpTimeout:
+          $ref: '#/components/schemas/Timeout'
+        useHeuristic:
+          $ref: '#/components/schemas/UseHeuristic'
+      type: object
+    StructureDbSearch:
+      description: User/developer friendly parameter subset for the CSI:FingerID structure
+        db search tool.
+      example:
+        structureSearchDBs:
+        - ALL
+        - ALL
+        tagLipids: true
+        enabled: true
+      properties:
+        enabled:
+          description: tags whether the tool is enabled
+          type: boolean
+        structureSearchDBs:
+          description: Structure databases to search in
+          items:
+            enum:
+            - ALL
+            - ALL_BUT_INSILICO
+            - PUBCHEM
+            - MESH
+            - HMDB
+            - KNAPSACK
+            - CHEBI
+            - PUBMED
+            - BIO
+            - KEGG
+            - HSDB
+            - MACONDA
+            - METACYC
+            - GNPS
+            - ZINCBIO
+            - TRAIN
+            - UNDP
+            - YMDB
+            - PLANTCYC
+            - NORMAN
+            - ADDITIONAL
+            - SUPERNATURAL
+            - COCONUT
+            - PUBCHEMANNOTATIONBIO
+            - PUBCHEMANNOTATIONDRUG
+            - PUBCHEMANNOTATIONSAFETYANDTOXIC
+            - PUBCHEMANNOTATIONFOOD
+            - LIPID
+            - KEGGMINE
+            - ECOCYCMINE
+            - YMDBMINE
+            type: string
+          type: array
+        tagLipids:
+          description: |-
+            Candidates matching the lipid class estimated by El Gordo will be tagged.
+             The lipid class will only be available if El Gordo predicts that the MS/MS is a lipid spectrum.
+             If this parameter is set to 'false' El Gordo will still be executed and e.g. improve the fragmentation
+             tree, but the matching structure candidates will not be tagged if they match lipid class.
+          type: boolean
+      type: object
+    Timeout:
+      description: ""
+      example:
+        numberOfSecondsPerDecomposition: 5
+        identifier: identifier
+        numberOfSecondsPerInstance: 5
+      properties:
+        numberOfSecondsPerDecomposition:
+          format: int32
+          type: integer
+        numberOfSecondsPerInstance:
+          format: int32
+          type: integer
+        identifier:
+          type: string
+      type: object
+    UseHeuristic:
+      description: ""
+      example:
+        identifier: identifier
+        mzToUseHeuristic: 2
+        mzToUseHeuristicOnly: 7
+      properties:
+        mzToUseHeuristic:
+          format: int32
+          type: integer
+        mzToUseHeuristicOnly:
+          format: int32
+          type: integer
+        identifier:
+          type: string
+      type: object
+    Zodiac:
+      description: User/developer friendly parameter subset for the ZODIAC tool (Network
+        base molecular formula re-ranking).
+      example:
+        consideredCandidatesAt300Mz:
+          identifier: identifier
+          value: 9
+        edgeFilterThresholds:
+          identifier: identifier
+          minLocalCandidates: 4
+          thresholdFilter: 2.027123023002322
+          minLocalConnections: 7
+        consideredCandidatesAt800Mz:
+          identifier: identifier
+          value: 3
+        runInTwoSteps:
+          identifier: identifier
+          value: true
+        gibbsSamplerParameters:
+          numberOfMarkovChains: 1
+          identifier: identifier
+          burnInPeriod: 1
+          iterations: 1
+        enabled: true
+      properties:
+        enabled:
+          description: tags whether the tool is enabled
+          type: boolean
+        consideredCandidatesAt300Mz:
+          $ref: '#/components/schemas/ZodiacNumberOfConsideredCandidatesAt300Mz'
+        consideredCandidatesAt800Mz:
+          $ref: '#/components/schemas/ZodiacNumberOfConsideredCandidatesAt800Mz'
+        runInTwoSteps:
+          $ref: '#/components/schemas/ZodiacRunInTwoSteps'
+        edgeFilterThresholds:
+          $ref: '#/components/schemas/ZodiacEdgeFilterThresholds'
+        gibbsSamplerParameters:
+          $ref: '#/components/schemas/ZodiacEpochs'
+      type: object
+    ZodiacEdgeFilterThresholds:
+      description: ""
+      example:
+        identifier: identifier
+        minLocalCandidates: 4
+        thresholdFilter: 2.027123023002322
+        minLocalConnections: 7
+      properties:
+        thresholdFilter:
+          format: double
+          type: number
+        minLocalCandidates:
+          format: int32
+          type: integer
+        minLocalConnections:
+          format: int32
+          type: integer
+        identifier:
+          type: string
+      type: object
+    ZodiacEpochs:
+      description: ""
+      example:
+        numberOfMarkovChains: 1
+        identifier: identifier
+        burnInPeriod: 1
+        iterations: 1
+      properties:
+        iterations:
+          format: int32
+          type: integer
+        burnInPeriod:
+          format: int32
+          type: integer
+        numberOfMarkovChains:
+          format: int32
+          type: integer
+        identifier:
+          type: string
+      type: object
+    ZodiacNumberOfConsideredCandidatesAt300Mz:
+      description: ""
+      example:
+        identifier: identifier
+        value: 9
+      properties:
+        value:
+          format: int32
+          type: integer
+        identifier:
+          type: string
+      type: object
+    ZodiacNumberOfConsideredCandidatesAt800Mz:
+      description: ""
+      example:
+        identifier: identifier
+        value: 3
+      properties:
+        value:
+          format: int32
+          type: integer
+        identifier:
+          type: string
+      type: object
+    ZodiacRunInTwoSteps:
+      description: ""
+      example:
+        identifier: identifier
+        value: true
+      properties:
+        value:
+          type: boolean
+        identifier:
+          type: string
+      type: object
+    JobId:
+      description: |-
+        Identifier created by the SIRIUS Nightsky API for a newly created Job.
+         Object can be enriched with Job status/progress information ({@link JobProgress JobProgress}) and/or Job command information.
+      example:
+        affectedCompoundIds:
+        - affectedCompoundIds
+        - affectedCompoundIds
+        progress:
+          currentProgress: 0
+          maxProgress: 6
+          indeterminate: true
+          errorMessage: errorMessage
+          state: WAITING
+          message: message
+        id: id
+        command: command
+      properties:
+        id:
+          description: Unique identifier to access the job via the API
+          type: string
+        command:
+          description: Command string of the executed Task
+          type: string
+        progress:
+          $ref: '#/components/schemas/JobProgress'
+        affectedCompoundIds:
+          description: |-
+            List of compound ids that are affected by this job.
+             If this job is creating compounds (e.g. data import jobs) this value will be NULL until the jobs has finished
+          items:
+            type: string
+          type: array
+      type: object
+    JobProgress:
+      description: |-
+        Progress information of a computation job that has already been submitted to SIRIUS.
+         if  currentProgress == maxProgress job is finished and should change to state done soon.
+         if a job is DONE all results can be accessed via the Project-Spaces api.
+      example:
+        currentProgress: 0
+        maxProgress: 6
+        indeterminate: true
+        errorMessage: errorMessage
+        state: WAITING
+        message: message
+      properties:
+        indeterminate:
+          description: Is the progress indeterminate or not
+          type: boolean
+        state:
+          description: |-
+            Current state of the Jobs in the SIRIUS internal Job scheduler
+
+                     WAITING: Waiting for submission to ExecutorService (e.g. due to dependent jobs)
+                     READY: Ready for submission but not yet enqueued for submission to ExecutorService.
+                     QUEUED: Enqueued for submission to ExecutorService.
+                     SUBMITTED: Submitted and waiting to be executed.
+                     RUNNING: Job is running.
+                     CANCELED: Jobs is finished due to cancellation by suer or dependent jobs.
+                     FAILED: Job is finished but failed.
+                     DONE: Job finished successfully.
+          enum:
+          - WAITING
+          - READY
+          - QUEUED
+          - SUBMITTED
+          - RUNNING
+          - CANCELED
+          - FAILED
+          - DONE
+          type: string
+        currentProgress:
+          description: Current progress value of the job.
+          format: int64
+          type: integer
+        maxProgress:
+          description: Progress value to reach (might also change during execution)
+          format: int64
+          type: integer
+        message:
+          description: Progress information and warnings.
+          type: string
+        errorMessage:
+          description: Error message if the job did not finish successfully failed.
+          type: string
+      type: object
+    AnnotatedPeak:
+      description: ""
+      example:
+        intensity: 3.5571952270680973
+        mass: 6.438423552598547
+        peakAnnotation: "{}"
+      properties:
+        mass:
+          format: double
+          type: number
+        intensity:
+          format: double
+          type: number
+        peakAnnotation:
+          type: object
+      type: object
+    AnnotatedSpectrum:
+      description: ""
+      example:
+        msLevel: 6
+        peaks:
+        - intensity: 3.5571952270680973
+          mass: 6.438423552598547
+          peakAnnotation: "{}"
+        - intensity: 3.5571952270680973
+          mass: 6.438423552598547
+          peakAnnotation: "{}"
+        collisionEnergy:
+          maxEnergy: 9.018348186070783
+          minEnergy: 8.762042012749001
+          corrected: true
+      properties:
+        msLevel:
+          description: |-
+            MS level of the measured spectrum.
+             Artificial spectra with no msLevel (e.g. Simulated Isotope patterns) use 0
+          format: int32
+          type: integer
+        collisionEnergy:
+          $ref: '#/components/schemas/CollisionEnergy'
+        peaks:
+          items:
+            $ref: '#/components/schemas/AnnotatedPeak'
+          type: array
+      type: object
+    CollisionEnergy:
+      description: ""
+      example:
+        maxEnergy: 9.018348186070783
+        minEnergy: 8.762042012749001
+        corrected: true
+      properties:
+        minEnergy:
+          format: double
+          type: number
+        maxEnergy:
+          format: double
+          type: number
+        corrected:
+          type: boolean
+      type: object
+    CompoundAnnotation:
+      description: |-
+        Summary of the results of a Compound. Can be added to a CompoundId.
+         It is not null within a CompoundId if it was not requested und non null otherwise
+         The different summary fields within this summary are null if the corresponding
+         compound does not contain the represented results. The content of  non NULL
+         summary field id the result was computed but is empty.
+      example:
+        structureAnnotation:
+          dbLinks:
+          - name: name
+            id: id
+          - name: name
+            id: id
+          confidenceScore: 6.84685269835264
+          inchiKey: inchiKey
+          pubmedIds:
+          - 5
+          - 5
+          smiles: smiles
+          structureName: structureName
+          numOfPubMedIds: 7
+          csiScore: 1.0246457001441578
+          tanimotoSimilarity: 1.4894159098541704
+          xlogP: 1.1730742509559433
+          fpBitsSet:
+          - 4
+          - 4
+        compoundClassAnnotation:
+          classyFireLevel5:
+            probability: 9.369310271410669
+            name: name
+            description: description
+            id: 9
+            type: ClassyFire
+          classyFireClass:
+            probability: 9.369310271410669
+            name: name
+            description: description
+            id: 9
+            type: ClassyFire
+          npcPathway:
+            probability: 9.369310271410669
+            name: name
+            description: description
+            id: 9
+            type: ClassyFire
+          classyFireSuperClass:
+            probability: 9.369310271410669
+            name: name
+            description: description
+            id: 9
+            type: ClassyFire
+          classyFireMostSpecific:
+            probability: 9.369310271410669
+            name: name
+            description: description
+            id: 9
+            type: ClassyFire
+          classyFireSubClass:
+            probability: 9.369310271410669
+            name: name
+            description: description
+            id: 9
+            type: ClassyFire
+          npcClass:
+            probability: 9.369310271410669
+            name: name
+            description: description
+            id: 9
+            type: ClassyFire
+          npcSuperclass:
+            probability: 9.369310271410669
+            name: name
+            description: description
+            id: 9
+            type: ClassyFire
+        formulaAnnotation:
+          siriusScore: 5.637376656633329
+          numOfexplainablePeaks: 2
+          treeScore: 7.061401241503109
+          adduct: adduct
+          isotopeScore: 2.3021358869347655
+          molecularFormula: molecularFormula
+          numOfexplainedPeaks: 3
+          totalExplainedIntensity: 4.145608029883936
+          medianMassDeviation:
+            identifier: identifier
+            absolute: 1.2315135367772556
+            ppm: 7.386281948385884
+          zodiacScore: 9.301444243932576
+      properties:
+        formulaAnnotation:
+          $ref: '#/components/schemas/FormulaCandidate'
+        structureAnnotation:
+          $ref: '#/components/schemas/StructureCandidate'
+        compoundClassAnnotation:
+          $ref: '#/components/schemas/CompoundClasses'
+      type: object
+    CompoundClass:
+      description: |-
+        Predicted compound class with name, probability and id if available.
+         (ClassyFire and NPC). This can be seen as the set of classes a compound most likely belongs to
+      example:
+        probability: 9.369310271410669
+        name: name
+        description: description
+        id: 9
+        type: ClassyFire
+      properties:
+        type:
+          description: Specifies the classification ontology the CompoundClass belongs
+            to.
+          enum:
+          - ClassyFire
+          - NPC
+          type: string
+        name:
+          description: Name of the compound class.
+          type: string
+        description:
+          description: Description of the compound class.
+          type: string
+        id:
+          description: Unique id of the class. Might be undefined for certain classification
+            ontologies.
+          format: int32
+          type: integer
+        probability:
+          description: prediction probability
+          format: double
+          type: number
+      type: object
+    CompoundClasses:
+      description: |-
+        Container class that holds the best matching compound class for different levels of each ontology for a
+         certain compound/feature/predicted fingerprint.
+      example:
+        classyFireLevel5:
+          probability: 9.369310271410669
+          name: name
+          description: description
+          id: 9
+          type: ClassyFire
+        classyFireClass:
+          probability: 9.369310271410669
+          name: name
+          description: description
+          id: 9
+          type: ClassyFire
+        npcPathway:
+          probability: 9.369310271410669
+          name: name
+          description: description
+          id: 9
+          type: ClassyFire
+        classyFireSuperClass:
+          probability: 9.369310271410669
+          name: name
+          description: description
+          id: 9
+          type: ClassyFire
+        classyFireMostSpecific:
+          probability: 9.369310271410669
+          name: name
+          description: description
+          id: 9
+          type: ClassyFire
+        classyFireSubClass:
+          probability: 9.369310271410669
+          name: name
+          description: description
+          id: 9
+          type: ClassyFire
+        npcClass:
+          probability: 9.369310271410669
+          name: name
+          description: description
+          id: 9
+          type: ClassyFire
+        npcSuperclass:
+          probability: 9.369310271410669
+          name: name
+          description: description
+          id: 9
+          type: ClassyFire
+      properties:
+        npcPathway:
+          $ref: '#/components/schemas/CompoundClass'
+        npcSuperclass:
+          $ref: '#/components/schemas/CompoundClass'
+        npcClass:
+          $ref: '#/components/schemas/CompoundClass'
+        classyFireMostSpecific:
+          $ref: '#/components/schemas/CompoundClass'
+        classyFireLevel5:
+          $ref: '#/components/schemas/CompoundClass'
+        classyFireClass:
+          $ref: '#/components/schemas/CompoundClass'
+        classyFireSubClass:
+          $ref: '#/components/schemas/CompoundClass'
+        classyFireSuperClass:
+          $ref: '#/components/schemas/CompoundClass'
+      type: object
+    CompoundId:
+      description: |-
+        The CompoundId contains the ID of a compound together with some read-only information that might be displayed in
+         some summary view.
+      example:
+        topAnnotation:
+          structureAnnotation:
+            dbLinks:
+            - name: name
+              id: id
+            - name: name
+              id: id
+            confidenceScore: 6.84685269835264
+            inchiKey: inchiKey
+            pubmedIds:
+            - 5
+            - 5
+            smiles: smiles
+            structureName: structureName
+            numOfPubMedIds: 7
+            csiScore: 1.0246457001441578
+            tanimotoSimilarity: 1.4894159098541704
+            xlogP: 1.1730742509559433
+            fpBitsSet:
+            - 4
+            - 4
+          compoundClassAnnotation:
+            classyFireLevel5:
+              probability: 9.369310271410669
+              name: name
+              description: description
+              id: 9
+              type: ClassyFire
+            classyFireClass:
+              probability: 9.369310271410669
+              name: name
+              description: description
+              id: 9
+              type: ClassyFire
+            npcPathway:
+              probability: 9.369310271410669
+              name: name
+              description: description
+              id: 9
+              type: ClassyFire
+            classyFireSuperClass:
+              probability: 9.369310271410669
+              name: name
+              description: description
+              id: 9
+              type: ClassyFire
+            classyFireMostSpecific:
+              probability: 9.369310271410669
+              name: name
+              description: description
+              id: 9
+              type: ClassyFire
+            classyFireSubClass:
+              probability: 9.369310271410669
+              name: name
+              description: description
+              id: 9
+              type: ClassyFire
+            npcClass:
+              probability: 9.369310271410669
+              name: name
+              description: description
+              id: 9
+              type: ClassyFire
+            npcSuperclass:
+              probability: 9.369310271410669
+              name: name
+              description: description
+              id: 9
+              type: ClassyFire
+          formulaAnnotation:
+            siriusScore: 5.637376656633329
+            numOfexplainablePeaks: 2
+            treeScore: 7.061401241503109
+            adduct: adduct
+            isotopeScore: 2.3021358869347655
+            molecularFormula: molecularFormula
+            numOfexplainedPeaks: 3
+            totalExplainedIntensity: 4.145608029883936
+            medianMassDeviation:
+              identifier: identifier
+              absolute: 1.2315135367772556
+              ppm: 7.386281948385884
+            zodiacScore: 9.301444243932576
+        computing: true
+        msData:
+          mergedMs2:
+            msLevel: 6
+            peaks:
+            - intensity: 3.5571952270680973
+              mass: 6.438423552598547
+              peakAnnotation: "{}"
+            - intensity: 3.5571952270680973
+              mass: 6.438423552598547
+              peakAnnotation: "{}"
+            collisionEnergy:
+              maxEnergy: 9.018348186070783
+              minEnergy: 8.762042012749001
+              corrected: true
+          ms2Spectra:
+          - msLevel: 6
+            peaks:
+            - intensity: 3.5571952270680973
+              mass: 6.438423552598547
+              peakAnnotation: "{}"
+            - intensity: 3.5571952270680973
+              mass: 6.438423552598547
+              peakAnnotation: "{}"
+            collisionEnergy:
+              maxEnergy: 9.018348186070783
+              minEnergy: 8.762042012749001
+              corrected: true
+          - msLevel: 6
+            peaks:
+            - intensity: 3.5571952270680973
+              mass: 6.438423552598547
+              peakAnnotation: "{}"
+            - intensity: 3.5571952270680973
+              mass: 6.438423552598547
+              peakAnnotation: "{}"
+            collisionEnergy:
+              maxEnergy: 9.018348186070783
+              minEnergy: 8.762042012749001
+              corrected: true
+          ms1Spectra:
+          - msLevel: 6
+            peaks:
+            - intensity: 3.5571952270680973
+              mass: 6.438423552598547
+              peakAnnotation: "{}"
+            - intensity: 3.5571952270680973
+              mass: 6.438423552598547
+              peakAnnotation: "{}"
+            collisionEnergy:
+              maxEnergy: 9.018348186070783
+              minEnergy: 8.762042012749001
+              corrected: true
+          - msLevel: 6
+            peaks:
+            - intensity: 3.5571952270680973
+              mass: 6.438423552598547
+              peakAnnotation: "{}"
+            - intensity: 3.5571952270680973
+              mass: 6.438423552598547
+              peakAnnotation: "{}"
+            collisionEnergy:
+              maxEnergy: 9.018348186070783
+              minEnergy: 8.762042012749001
+              corrected: true
+          mergedMs1:
+            msLevel: 6
+            peaks:
+            - intensity: 3.5571952270680973
+              mass: 6.438423552598547
+              peakAnnotation: "{}"
+            - intensity: 3.5571952270680973
+              mass: 6.438423552598547
+              peakAnnotation: "{}"
+            collisionEnergy:
+              maxEnergy: 9.018348186070783
+              minEnergy: 8.762042012749001
+              corrected: true
+        ionMass: 6.027456183070403
+        name: name
+        rtStartSeconds: 1.4658129805029452
+        index: 0
+        id: id
+        ionType: ionType
+        rtEndSeconds: 5.962133916683182
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        index:
+          format: int64
+          type: integer
+        ionMass:
+          format: double
+          type: number
+        ionType:
+          type: string
+        rtStartSeconds:
+          format: double
+          type: number
+        rtEndSeconds:
+          format: double
+          type: number
+        topAnnotation:
+          $ref: '#/components/schemas/CompoundAnnotation'
+        msData:
+          $ref: '#/components/schemas/MsData'
+        computing:
+          type: boolean
+      type: object
+    DBLink:
+      description: ""
+      example:
+        name: name
+        id: id
+      properties:
+        name:
+          type: string
+        id:
+          type: string
+      type: object
+    Deviation:
+      description: ""
+      example:
+        identifier: identifier
+        absolute: 1.2315135367772556
+        ppm: 7.386281948385884
+      properties:
+        ppm:
+          format: double
+          type: number
+        absolute:
+          format: double
+          type: number
+        identifier:
+          type: string
+      type: object
+    FormulaCandidate:
+      description: ""
+      example:
+        siriusScore: 5.637376656633329
+        numOfexplainablePeaks: 2
+        treeScore: 7.061401241503109
+        adduct: adduct
+        isotopeScore: 2.3021358869347655
+        molecularFormula: molecularFormula
+        numOfexplainedPeaks: 3
+        totalExplainedIntensity: 4.145608029883936
+        medianMassDeviation:
+          identifier: identifier
+          absolute: 1.2315135367772556
+          ppm: 7.386281948385884
+        zodiacScore: 9.301444243932576
+      properties:
+        siriusScore:
+          format: double
+          type: number
+        isotopeScore:
+          format: double
+          type: number
+        treeScore:
+          format: double
+          type: number
+        zodiacScore:
+          format: double
+          type: number
+        molecularFormula:
+          type: string
+        adduct:
+          type: string
+        numOfexplainedPeaks:
+          format: int32
+          type: integer
+        numOfexplainablePeaks:
+          format: int32
+          type: integer
+        totalExplainedIntensity:
+          format: double
+          type: number
+        medianMassDeviation:
+          $ref: '#/components/schemas/Deviation'
+      type: object
+    MsData:
+      description: |-
+        The MsData wraps all spectral input data belonging to a compound.
+
+         Each compound has:
+         - One merged MS/MS spectrum (optional)
+         - One merged MS spectrum (optional)
+         - many MS/MS spectra
+         - many MS spectra
+
+         Each non-merged spectrum has an index which can be used to access the spectrum.
+
+         In the future we might add some additional information like chromatographic peak or something similar
+      example:
+        mergedMs2:
+          msLevel: 6
+          peaks:
+          - intensity: 3.5571952270680973
+            mass: 6.438423552598547
+            peakAnnotation: "{}"
+          - intensity: 3.5571952270680973
+            mass: 6.438423552598547
+            peakAnnotation: "{}"
+          collisionEnergy:
+            maxEnergy: 9.018348186070783
+            minEnergy: 8.762042012749001
+            corrected: true
+        ms2Spectra:
+        - msLevel: 6
+          peaks:
+          - intensity: 3.5571952270680973
+            mass: 6.438423552598547
+            peakAnnotation: "{}"
+          - intensity: 3.5571952270680973
+            mass: 6.438423552598547
+            peakAnnotation: "{}"
+          collisionEnergy:
+            maxEnergy: 9.018348186070783
+            minEnergy: 8.762042012749001
+            corrected: true
+        - msLevel: 6
+          peaks:
+          - intensity: 3.5571952270680973
+            mass: 6.438423552598547
+            peakAnnotation: "{}"
+          - intensity: 3.5571952270680973
+            mass: 6.438423552598547
+            peakAnnotation: "{}"
+          collisionEnergy:
+            maxEnergy: 9.018348186070783
+            minEnergy: 8.762042012749001
+            corrected: true
+        ms1Spectra:
+        - msLevel: 6
+          peaks:
+          - intensity: 3.5571952270680973
+            mass: 6.438423552598547
+            peakAnnotation: "{}"
+          - intensity: 3.5571952270680973
+            mass: 6.438423552598547
+            peakAnnotation: "{}"
+          collisionEnergy:
+            maxEnergy: 9.018348186070783
+            minEnergy: 8.762042012749001
+            corrected: true
+        - msLevel: 6
+          peaks:
+          - intensity: 3.5571952270680973
+            mass: 6.438423552598547
+            peakAnnotation: "{}"
+          - intensity: 3.5571952270680973
+            mass: 6.438423552598547
+            peakAnnotation: "{}"
+          collisionEnergy:
+            maxEnergy: 9.018348186070783
+            minEnergy: 8.762042012749001
+            corrected: true
+        mergedMs1:
+          msLevel: 6
+          peaks:
+          - intensity: 3.5571952270680973
+            mass: 6.438423552598547
+            peakAnnotation: "{}"
+          - intensity: 3.5571952270680973
+            mass: 6.438423552598547
+            peakAnnotation: "{}"
+          collisionEnergy:
+            maxEnergy: 9.018348186070783
+            minEnergy: 8.762042012749001
+            corrected: true
+      properties:
+        mergedMs1:
+          $ref: '#/components/schemas/AnnotatedSpectrum'
+        mergedMs2:
+          $ref: '#/components/schemas/AnnotatedSpectrum'
+        ms2Spectra:
+          items:
+            $ref: '#/components/schemas/AnnotatedSpectrum'
+          type: array
+        ms1Spectra:
+          items:
+            $ref: '#/components/schemas/AnnotatedSpectrum'
+          type: array
+      type: object
+    PeakAnnotation:
+      type: object
+    StructureCandidate:
+      description: ""
+      example:
+        dbLinks:
+        - name: name
+          id: id
+        - name: name
+          id: id
+        confidenceScore: 6.84685269835264
+        inchiKey: inchiKey
+        pubmedIds:
+        - 5
+        - 5
+        smiles: smiles
+        structureName: structureName
+        numOfPubMedIds: 7
+        csiScore: 1.0246457001441578
+        tanimotoSimilarity: 1.4894159098541704
+        xlogP: 1.1730742509559433
+        fpBitsSet:
+        - 4
+        - 4
+      properties:
+        structureName:
+          type: string
+        smiles:
+          type: string
+        csiScore:
+          format: double
+          type: number
+        tanimotoSimilarity:
+          format: double
+          type: number
+        confidenceScore:
+          format: double
+          type: number
+        numOfPubMedIds:
+          format: int32
+          type: integer
+        xlogP:
+          format: double
+          type: number
+        inchiKey:
+          type: string
+        fpBitsSet:
+          description: |-
+            Array containing the indices of the molecular fingerprint that are available in the structure (1)
+             OPTIONAL: needs to be added by parameter
+          items:
+            format: int32
+            type: integer
+          type: array
+        dbLinks:
+          description: |-
+            List of structure database links belonging to this structure candidate
+             OPTIONAL: needs to be added by parameter
+          items:
+            $ref: '#/components/schemas/DBLink'
+          type: array
+        pubmedIds:
+          description: |-
+            PubMed IDs belonging to this structure candidate
+             OPTIONAL: needs to be added by parameter
+          items:
+            format: int32
+            type: integer
+          type: array
+      type: object
+    AccountCredentials:
+      description: |-
+        Simple object to hold account credentials, e.g. to perform login operations.
+         If refreshToken is given, it is usually preferred over password based authentication.
+         But in the end this is up to the respective web service.
+      example:
+        password: password
+        username: username
+        refreshToken: refreshToken
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+        refreshToken:
+          type: string
+      type: object
+    AccountInfo:
+      description: ""
+      example:
+        gravatarURL: gravatarURL
+        subscriptions:
+        - pp: pp
+          maxQueriesPerCompound: 1
+          serviceUrl: serviceUrl
+          subscriberId: subscriberId
+          description: description
+          compoundLimit: 0
+          compoundHashRecordingTime: 6
+          sid: sid
+          maxUserAccounts: 5
+          countQueries: true
+          subscriberName: subscriberName
+          name: name
+          tos: tos
+          expirationDate: 2000-01-23T04:56:07.000+00:00
+        - pp: pp
+          maxQueriesPerCompound: 1
+          serviceUrl: serviceUrl
+          subscriberId: subscriberId
+          description: description
+          compoundLimit: 0
+          compoundHashRecordingTime: 6
+          sid: sid
+          maxUserAccounts: 5
+          countQueries: true
+          subscriberName: subscriberName
+          name: name
+          tos: tos
+          expirationDate: 2000-01-23T04:56:07.000+00:00
+        userEmail: userEmail
+        activeSubscriptionId: activeSubscriptionId
+        userID: userID
+        username: username
+      properties:
+        userID:
+          type: string
+        username:
+          type: string
+        userEmail:
+          type: string
+        gravatarURL:
+          type: string
+        subscriptions:
+          items:
+            $ref: '#/components/schemas/Subscription'
+          type: array
+        activeSubscriptionId:
+          type: string
+      type: object
+    Subscription:
+      description: ""
+      example:
+        pp: pp
+        maxQueriesPerCompound: 1
+        serviceUrl: serviceUrl
+        subscriberId: subscriberId
+        description: description
+        compoundLimit: 0
+        compoundHashRecordingTime: 6
+        sid: sid
+        maxUserAccounts: 5
+        countQueries: true
+        subscriberName: subscriberName
+        name: name
+        tos: tos
+        expirationDate: 2000-01-23T04:56:07.000+00:00
+      properties:
+        sid:
+          type: string
+        subscriberId:
+          type: string
+        subscriberName:
+          type: string
+        expirationDate:
+          format: date-time
+          type: string
+        countQueries:
+          type: boolean
+        compoundLimit:
+          format: int32
+          type: integer
+        compoundHashRecordingTime:
+          format: int32
+          type: integer
+        maxQueriesPerCompound:
+          format: int32
+          type: integer
+        maxUserAccounts:
+          format: int32
+          type: integer
+        serviceUrl:
+          type: string
+        description:
+          type: string
+        name:
+          type: string
+        tos:
+          type: string
+        pp:
+          type: string
+      type: object
+    GuiParameters:
+      description: Parameters to "remote control" the SIRIUS GUI.
+      example:
+        fid: fid
+        bringToFront: true
+        structureCandidateInChIKey: structureCandidateInChIKey
+        selectedTab: FORMULAS
+        cid: cid
+      properties:
+        selectedTab:
+          description: Selected Result ab.
+          enum:
+          - FORMULAS
+          - SPECTRA
+          - TREES
+          - PREDICTED_FINGERPRINT
+          - STRUCTURES
+          - STRUCTURE_ANNOTATION
+          - COMPOUND_CLASSES
+          type: string
+        cid:
+          description: ID of Selected compound.
+          type: string
+        fid:
+          description: ID of Selected Formula candidate of the selected compound.
+          type: string
+        structureCandidateInChIKey:
+          description: InChIKey of selected structure candidate of selected formula
+            candidate.
+          type: string
+        bringToFront:
+          description: If true bring SIRIUS GUI window to foreground.
+          type: boolean
+      type: object
+    FormulaResultContainer:
+      description: |-
+        Container for formula level results that holds a unique identifier (molecular formula + adduct).
+         It can be extended/annotated with a list of results that are available for this formula candidate and their scores.
+         It can further be extended/annotated with the action formula candidate results.
+      example:
+        candidate:
+          siriusScore: 5.637376656633329
+          numOfexplainablePeaks: 2
+          treeScore: 7.061401241503109
+          adduct: adduct
+          isotopeScore: 2.3021358869347655
+          molecularFormula: molecularFormula
+          numOfexplainedPeaks: 3
+          totalExplainedIntensity: 4.145608029883936
+          medianMassDeviation:
+            identifier: identifier
+            absolute: 1.2315135367772556
+            ppm: 7.386281948385884
+          zodiacScore: 9.301444243932576
+        adduct: adduct
+        molecularFormula: molecularFormula
+        id: id
+        resultOverview:
+          siriusScore: 0.8008281904610115
+          topCSIScore: 1.4658129805029452
+          confidenceScore: 5.962133916683182
+          canopusResult: true
+          zodiacScore: 6.027456183070403
+      properties:
+        id:
+          description: Unique identifier of this formula candidate
+          type: string
+        molecularFormula:
+          description: molecular formula of this formula candidate
+          type: string
+        adduct:
+          description: Adduct of this formula candidate
+          type: string
+        resultOverview:
+          $ref: '#/components/schemas/ResultOverview'
+        candidate:
+          $ref: '#/components/schemas/FormulaCandidate'
+      type: object
+    ResultOverview:
+      description: |-
+        Results that are available for a {@link FormulaResultContainer FormulaResultContainer} represented as boolean or numeric score (if available).
+         NULL scores indicate that the corresponding result is not available.
+      example:
+        siriusScore: 0.8008281904610115
+        topCSIScore: 1.4658129805029452
+        confidenceScore: 5.962133916683182
+        canopusResult: true
+        zodiacScore: 6.027456183070403
+      properties:
+        siriusScore:
+          description: |-
+            Sirius Score (isotope + tree score) of the formula candidate.
+             If NULL result is not available
+          format: double
+          type: number
+        zodiacScore:
+          description: |-
+            Zodiac Score of the formula candidate.
+             If NULL result is not available
+          format: double
+          type: number
+        topCSIScore:
+          description: |-
+            CSI:FingerID Score of the top ranking structure candidate of the structure database search
+             performed for this formula candidate.
+             If NULL structure database result is not available or the structure candidate list is empty.
+          format: double
+          type: number
+        confidenceScore:
+          description: |-
+            Confidence Score of the
+             IF NULL structure database result not available a structure candidate hit of another formula candidate is
+             the top ranking structure candidate.
+          format: double
+          type: number
+        canopusResult:
+          description: True if Canopus compound class prediction results are available.
+          type: boolean
+      type: object
+    FragmentNode:
+      description: ""
+      example:
+        intensity: 5.637376656633329
+        massErrorPpm: 1.4658129805029452
+        score: 5.962133916683182
+        massDeviationDa: 6.027456183070403
+        molecularFormula: molecularFormula
+        id: 0
+        ionType: ionType
+        mz: 2.3021358869347655
+      properties:
+        id:
+          format: int32
+          type: integer
+        molecularFormula:
+          type: string
+        ionType:
+          type: string
+        massDeviationDa:
+          format: double
+          type: number
+        massErrorPpm:
+          format: double
+          type: number
+        score:
+          format: double
+          type: number
+        intensity:
+          format: double
+          type: number
+        mz:
+          format: double
+          type: number
+      type: object
+    FragmentationTree:
+      description: ""
+      example:
+        treeScore: 9.301444243932576
+        root:
+          intensity: 5.637376656633329
+          massErrorPpm: 1.4658129805029452
+          score: 5.962133916683182
+          massDeviationDa: 6.027456183070403
+          molecularFormula: molecularFormula
+          id: 0
+          ionType: ionType
+          mz: 2.3021358869347655
+        fragments:
+        - intensity: 5.637376656633329
+          massErrorPpm: 1.4658129805029452
+          score: 5.962133916683182
+          massDeviationDa: 6.027456183070403
+          molecularFormula: molecularFormula
+          id: 0
+          ionType: ionType
+          mz: 2.3021358869347655
+        - intensity: 5.637376656633329
+          massErrorPpm: 1.4658129805029452
+          score: 5.962133916683182
+          massDeviationDa: 6.027456183070403
+          molecularFormula: molecularFormula
+          id: 0
+          ionType: ionType
+          mz: 2.3021358869347655
+        losses:
+        - score: 7.061401241503109
+          sourceFragment:
+            intensity: 5.637376656633329
+            massErrorPpm: 1.4658129805029452
+            score: 5.962133916683182
+            massDeviationDa: 6.027456183070403
+            molecularFormula: molecularFormula
+            id: 0
+            ionType: ionType
+            mz: 2.3021358869347655
+          molecularFormula: molecularFormula
+          targetFragment:
+            intensity: 5.637376656633329
+            massErrorPpm: 1.4658129805029452
+            score: 5.962133916683182
+            massDeviationDa: 6.027456183070403
+            molecularFormula: molecularFormula
+            id: 0
+            ionType: ionType
+            mz: 2.3021358869347655
+        - score: 7.061401241503109
+          sourceFragment:
+            intensity: 5.637376656633329
+            massErrorPpm: 1.4658129805029452
+            score: 5.962133916683182
+            massDeviationDa: 6.027456183070403
+            molecularFormula: molecularFormula
+            id: 0
+            ionType: ionType
+            mz: 2.3021358869347655
+          molecularFormula: molecularFormula
+          targetFragment:
+            intensity: 5.637376656633329
+            massErrorPpm: 1.4658129805029452
+            score: 5.962133916683182
+            massDeviationDa: 6.027456183070403
+            molecularFormula: molecularFormula
+            id: 0
+            ionType: ionType
+            mz: 2.3021358869347655
+      properties:
+        fragments:
+          items:
+            $ref: '#/components/schemas/FragmentNode'
+          type: array
+        losses:
+          items:
+            $ref: '#/components/schemas/LossEdge'
+          type: array
+        treeScore:
+          format: double
+          type: number
+        root:
+          $ref: '#/components/schemas/FragmentNode'
+      type: object
+    LossEdge:
+      description: ""
+      example:
+        score: 7.061401241503109
+        sourceFragment:
+          intensity: 5.637376656633329
+          massErrorPpm: 1.4658129805029452
+          score: 5.962133916683182
+          massDeviationDa: 6.027456183070403
+          molecularFormula: molecularFormula
+          id: 0
+          ionType: ionType
+          mz: 2.3021358869347655
+        molecularFormula: molecularFormula
+        targetFragment:
+          intensity: 5.637376656633329
+          massErrorPpm: 1.4658129805029452
+          score: 5.962133916683182
+          massDeviationDa: 6.027456183070403
+          molecularFormula: molecularFormula
+          id: 0
+          ionType: ionType
+          mz: 2.3021358869347655
+      properties:
+        sourceFragment:
+          $ref: '#/components/schemas/FragmentNode'
+        targetFragment:
+          $ref: '#/components/schemas/FragmentNode'
+        molecularFormula:
+          type: string
+        score:
+          format: double
+          type: number
+      type: object
+    CanopusPredictions:
+      description: |-
+        Container class that holds the CANOPUS compound class predictions for alle predictable compound classes.
+         This is the full CANOPUS result.
+      example:
+        npcClasses:
+        - probability: 9.369310271410669
+          name: name
+          description: description
+          id: 9
+          type: ClassyFire
+        - probability: 9.369310271410669
+          name: name
+          description: description
+          id: 9
+          type: ClassyFire
+        classyFireClasses:
+        - probability: 9.369310271410669
+          name: name
+          description: description
+          id: 9
+          type: ClassyFire
+        - probability: 9.369310271410669
+          name: name
+          description: description
+          id: 9
+          type: ClassyFire
+      properties:
+        classyFireClasses:
+          description: All predicted ClassyFire classes
+          items:
+            $ref: '#/components/schemas/CompoundClass'
+          type: array
+        npcClasses:
+          description: All predicted NPC classes
+          items:
+            $ref: '#/components/schemas/CompoundClass'
+          type: array
+      type: object
+

@@ -1,9 +1,17 @@
+
+
 # ZodiacEdgeFilterThresholds
 
+
+
 ## Properties
-Name | Type | Description | Notes
------------- | ------------- | ------------- | -------------
-**thresholdFilter** | **Double** |  |  [optional]
-**minLocalCandidates** | **Integer** |  |  [optional]
-**minLocalConnections** | **Integer** |  |  [optional]
-**identifier** | **String** |  |  [optional]
+
+| Name | Type | Description | Notes |
+|------------ | ------------- | ------------- | -------------|
+|**thresholdFilter** | **Double** |  |  [optional] |
+|**minLocalCandidates** | **Integer** |  |  [optional] |
+|**minLocalConnections** | **Integer** |  |  [optional] |
+|**identifier** | **String** |  |  [optional] |
+
+
+

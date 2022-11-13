@@ -2,15 +2,16 @@
 
 All URIs are relative to *http://localhost:8080*
 
-Method | HTTP request | Description
-------------- | ------------- | -------------
-[**getAccountInfo**](LoginAndAccountApi.md#getAccountInfo) | **GET** /api/account/ | Get information about the account currently logged in.
-[**getSignUpURL**](LoginAndAccountApi.md#getSignUpURL) | **GET** /api/account/signUpURL | Get SignUp URL (For signUp via web browser)
-[**getSubscriptions**](LoginAndAccountApi.md#getSubscriptions) | **GET** /api/account/subscriptions | Get available subscriptions of the account currently logged in.
-[**isLoggedIn**](LoginAndAccountApi.md#isLoggedIn) | **GET** /api/account/isLoggedIn | Check if a user is logged in.
-[**login**](LoginAndAccountApi.md#login) | **POST** /api/account/login | Login into SIRIUS web services.
-[**logout**](LoginAndAccountApi.md#logout) | **POST** /api/account/logout | Logout from SIRIUS web services.
-[**signUp**](LoginAndAccountApi.md#signUp) | **GET** /api/account/signUp | Open SignUp window in system browser and return signUp link.
+| Method | HTTP request | Description |
+|------------- | ------------- | -------------|
+| [**getAccountInfo**](LoginAndAccountApi.md#getAccountInfo) | **GET** /api/account/ | Get information about the account currently logged in. |
+| [**getSignUpURL**](LoginAndAccountApi.md#getSignUpURL) | **GET** /api/account/signUpURL | Get SignUp URL (For signUp via web browser) |
+| [**getSubscriptions**](LoginAndAccountApi.md#getSubscriptions) | **GET** /api/account/subscriptions | Get available subscriptions of the account currently logged in. |
+| [**isLoggedIn**](LoginAndAccountApi.md#isLoggedIn) | **GET** /api/account/isLoggedIn | Check if a user is logged in. |
+| [**login**](LoginAndAccountApi.md#login) | **POST** /api/account/login | Login into SIRIUS web services. |
+| [**logout**](LoginAndAccountApi.md#logout) | **POST** /api/account/logout | Logout from SIRIUS web services. |
+| [**signUp**](LoginAndAccountApi.md#signUp) | **GET** /api/account/signUp | Open SignUp window in system browser and return signUp link. |
+
 
 <a name="getAccountInfo"></a>
 # **getAccountInfo**
@@ -23,26 +24,38 @@ Get information about the account currently logged in. Fails if not logged in.
 ### Example
 ```java
 // Import classes:
-//import JSirius.ApiException;
-//import JSirius.api.LoginAndAccountApi;
+import JSirius.ApiClient;
+import JSirius.ApiException;
+import JSirius.Configuration;
+import JSirius.models.*;
+import JSirius.api.LoginAndAccountApi;
 
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost:8080");
 
-LoginAndAccountApi apiInstance = new LoginAndAccountApi();
-Boolean includeSubs = false; // Boolean | include available and active subscriptions in {@link AccountInfo AccountInfo}.
-try {
-    AccountInfo result = apiInstance.getAccountInfo(includeSubs);
-    System.out.println(result);
-} catch (ApiException e) {
-    System.err.println("Exception when calling LoginAndAccountApi#getAccountInfo");
-    e.printStackTrace();
+    LoginAndAccountApi apiInstance = new LoginAndAccountApi(defaultClient);
+    Boolean includeSubs = false; // Boolean | include available and active subscriptions in {@link AccountInfo AccountInfo}.
+    try {
+      AccountInfo result = apiInstance.getAccountInfo(includeSubs);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling LoginAndAccountApi#getAccountInfo");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **includeSubs** | **Boolean**| include available and active subscriptions in {@link AccountInfo AccountInfo}. | [optional] [default to false]
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **includeSubs** | **Boolean**| include available and active subscriptions in {@link AccountInfo AccountInfo}. | [optional] [default to false] |
 
 ### Return type
 
@@ -57,6 +70,11 @@ No authorization required
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Basic information about the account that has been logged in and its subscriptions. |  -  |
+
 <a name="getSignUpURL"></a>
 # **getSignUpURL**
 > String getSignUpURL()
@@ -68,17 +86,29 @@ Get SignUp URL (For signUp via web browser)
 ### Example
 ```java
 // Import classes:
-//import JSirius.ApiException;
-//import JSirius.api.LoginAndAccountApi;
+import JSirius.ApiClient;
+import JSirius.ApiException;
+import JSirius.Configuration;
+import JSirius.models.*;
+import JSirius.api.LoginAndAccountApi;
 
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost:8080");
 
-LoginAndAccountApi apiInstance = new LoginAndAccountApi();
-try {
-    String result = apiInstance.getSignUpURL();
-    System.out.println(result);
-} catch (ApiException e) {
-    System.err.println("Exception when calling LoginAndAccountApi#getSignUpURL");
-    e.printStackTrace();
+    LoginAndAccountApi apiInstance = new LoginAndAccountApi(defaultClient);
+    try {
+      String result = apiInstance.getSignUpURL();
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling LoginAndAccountApi#getSignUpURL");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
@@ -98,6 +128,11 @@ No authorization required
  - **Content-Type**: Not defined
  - **Accept**: text/plain
 
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | OK |  -  |
+
 <a name="getSubscriptions"></a>
 # **getSubscriptions**
 > List&lt;Subscription&gt; getSubscriptions()
@@ -109,17 +144,29 @@ Get available subscriptions of the account currently logged in. Fails if not log
 ### Example
 ```java
 // Import classes:
-//import JSirius.ApiException;
-//import JSirius.api.LoginAndAccountApi;
+import JSirius.ApiClient;
+import JSirius.ApiException;
+import JSirius.Configuration;
+import JSirius.models.*;
+import JSirius.api.LoginAndAccountApi;
 
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost:8080");
 
-LoginAndAccountApi apiInstance = new LoginAndAccountApi();
-try {
-    List<Subscription> result = apiInstance.getSubscriptions();
-    System.out.println(result);
-} catch (ApiException e) {
-    System.err.println("Exception when calling LoginAndAccountApi#getSubscriptions");
-    e.printStackTrace();
+    LoginAndAccountApi apiInstance = new LoginAndAccountApi(defaultClient);
+    try {
+      List<Subscription> result = apiInstance.getSubscriptions();
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling LoginAndAccountApi#getSubscriptions");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
@@ -139,6 +186,11 @@ No authorization required
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | OK |  -  |
+
 <a name="isLoggedIn"></a>
 # **isLoggedIn**
 > Boolean isLoggedIn()
@@ -150,17 +202,29 @@ Check if a user is logged in.
 ### Example
 ```java
 // Import classes:
-//import JSirius.ApiException;
-//import JSirius.api.LoginAndAccountApi;
+import JSirius.ApiClient;
+import JSirius.ApiException;
+import JSirius.Configuration;
+import JSirius.models.*;
+import JSirius.api.LoginAndAccountApi;
 
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost:8080");
 
-LoginAndAccountApi apiInstance = new LoginAndAccountApi();
-try {
-    Boolean result = apiInstance.isLoggedIn();
-    System.out.println(result);
-} catch (ApiException e) {
-    System.err.println("Exception when calling LoginAndAccountApi#isLoggedIn");
-    e.printStackTrace();
+    LoginAndAccountApi apiInstance = new LoginAndAccountApi(defaultClient);
+    try {
+      Boolean result = apiInstance.isLoggedIn();
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling LoginAndAccountApi#isLoggedIn");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
@@ -180,9 +244,14 @@ No authorization required
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | true if the user is logged in |  -  |
+
 <a name="login"></a>
 # **login**
-> AccountInfo login(body, acceptTerms, failWhenLoggedIn, includeSubs)
+> AccountInfo login(acceptTerms, accountCredentials, failWhenLoggedIn, includeSubs)
 
 Login into SIRIUS web services.
 
@@ -191,32 +260,44 @@ Login into SIRIUS web services.
 ### Example
 ```java
 // Import classes:
-//import JSirius.ApiException;
-//import JSirius.api.LoginAndAccountApi;
+import JSirius.ApiClient;
+import JSirius.ApiException;
+import JSirius.Configuration;
+import JSirius.models.*;
+import JSirius.api.LoginAndAccountApi;
 
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost:8080");
 
-LoginAndAccountApi apiInstance = new LoginAndAccountApi();
-AccountCredentials body = new AccountCredentials(); // AccountCredentials | used to log in.
-Boolean acceptTerms = true; // Boolean | 
-Boolean failWhenLoggedIn = false; // Boolean | if true request fails if an active login already exists.
-Boolean includeSubs = false; // Boolean | include available and active subscriptions in {@link AccountInfo AccountInfo}.
-try {
-    AccountInfo result = apiInstance.login(body, acceptTerms, failWhenLoggedIn, includeSubs);
-    System.out.println(result);
-} catch (ApiException e) {
-    System.err.println("Exception when calling LoginAndAccountApi#login");
-    e.printStackTrace();
+    LoginAndAccountApi apiInstance = new LoginAndAccountApi(defaultClient);
+    Boolean acceptTerms = true; // Boolean | 
+    AccountCredentials accountCredentials = new AccountCredentials(); // AccountCredentials | used to log in.
+    Boolean failWhenLoggedIn = false; // Boolean | if true request fails if an active login already exists.
+    Boolean includeSubs = false; // Boolean | include available and active subscriptions in {@link AccountInfo AccountInfo}.
+    try {
+      AccountInfo result = apiInstance.login(acceptTerms, accountCredentials, failWhenLoggedIn, includeSubs);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling LoginAndAccountApi#login");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **body** | [**AccountCredentials**](AccountCredentials.md)| used to log in. |
- **acceptTerms** | **Boolean**|  |
- **failWhenLoggedIn** | **Boolean**| if true request fails if an active login already exists. | [optional] [default to false]
- **includeSubs** | **Boolean**| include available and active subscriptions in {@link AccountInfo AccountInfo}. | [optional] [default to false]
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **acceptTerms** | **Boolean**|  | |
+| **accountCredentials** | [**AccountCredentials**](AccountCredentials.md)| used to log in. | |
+| **failWhenLoggedIn** | **Boolean**| if true request fails if an active login already exists. | [optional] [default to false] |
+| **includeSubs** | **Boolean**| include available and active subscriptions in {@link AccountInfo AccountInfo}. | [optional] [default to false] |
 
 ### Return type
 
@@ -231,6 +312,11 @@ No authorization required
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Basic information about the account that has been logged in and its subscriptions. |  -  |
+
 <a name="logout"></a>
 # **logout**
 > logout()
@@ -242,16 +328,28 @@ Logout from SIRIUS web services.
 ### Example
 ```java
 // Import classes:
-//import JSirius.ApiException;
-//import JSirius.api.LoginAndAccountApi;
+import JSirius.ApiClient;
+import JSirius.ApiException;
+import JSirius.Configuration;
+import JSirius.models.*;
+import JSirius.api.LoginAndAccountApi;
 
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost:8080");
 
-LoginAndAccountApi apiInstance = new LoginAndAccountApi();
-try {
-    apiInstance.logout();
-} catch (ApiException e) {
-    System.err.println("Exception when calling LoginAndAccountApi#logout");
-    e.printStackTrace();
+    LoginAndAccountApi apiInstance = new LoginAndAccountApi(defaultClient);
+    try {
+      apiInstance.logout();
+    } catch (ApiException e) {
+      System.err.println("Exception when calling LoginAndAccountApi#logout");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
@@ -271,6 +369,11 @@ No authorization required
  - **Content-Type**: Not defined
  - **Accept**: Not defined
 
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | OK |  -  |
+
 <a name="signUp"></a>
 # **signUp**
 > String signUp()
@@ -282,17 +385,29 @@ Open SignUp window in system browser and return signUp link.
 ### Example
 ```java
 // Import classes:
-//import JSirius.ApiException;
-//import JSirius.api.LoginAndAccountApi;
+import JSirius.ApiClient;
+import JSirius.ApiException;
+import JSirius.Configuration;
+import JSirius.models.*;
+import JSirius.api.LoginAndAccountApi;
 
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost:8080");
 
-LoginAndAccountApi apiInstance = new LoginAndAccountApi();
-try {
-    String result = apiInstance.signUp();
-    System.out.println(result);
-} catch (ApiException e) {
-    System.err.println("Exception when calling LoginAndAccountApi#signUp");
-    e.printStackTrace();
+    LoginAndAccountApi apiInstance = new LoginAndAccountApi(defaultClient);
+    try {
+      String result = apiInstance.signUp();
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling LoginAndAccountApi#signUp");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
 }
 ```
 
@@ -311,4 +426,9 @@ No authorization required
 
  - **Content-Type**: Not defined
  - **Accept**: text/plain
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | OK |  -  |
 

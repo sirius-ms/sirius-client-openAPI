@@ -2,47 +2,68 @@
 
 All URIs are relative to *http://localhost:8080*
 
-Method | HTTP request | Description
-------------- | ------------- | -------------
-[**get_account_info**](LoginAndAccountApi.md#get_account_info) | **GET** /api/account/ | Get information about the account currently logged in.
-[**get_sign_up_url**](LoginAndAccountApi.md#get_sign_up_url) | **GET** /api/account/signUpURL | Get SignUp URL (For signUp via web browser)
-[**get_subscriptions**](LoginAndAccountApi.md#get_subscriptions) | **GET** /api/account/subscriptions | Get available subscriptions of the account currently logged in.
-[**is_logged_in**](LoginAndAccountApi.md#is_logged_in) | **GET** /api/account/isLoggedIn | Check if a user is logged in.
-[**login**](LoginAndAccountApi.md#login) | **POST** /api/account/login | Login into SIRIUS web services.
-[**logout**](LoginAndAccountApi.md#logout) | **POST** /api/account/logout | Logout from SIRIUS web services.
-[**sign_up**](LoginAndAccountApi.md#sign_up) | **GET** /api/account/signUp | Open SignUp window in system browser and return signUp link.
+| Method | HTTP request | Description |
+| ------ | ------------ | ----------- |
+| [**get_account_info**](LoginAndAccountApi.md#get_account_info) | **GET** /api/account/ | Get information about the account currently logged in. |
+| [**get_sign_up_url**](LoginAndAccountApi.md#get_sign_up_url) | **GET** /api/account/signUpURL | Get SignUp URL (For signUp via web browser) |
+| [**get_subscriptions**](LoginAndAccountApi.md#get_subscriptions) | **GET** /api/account/subscriptions | Get available subscriptions of the account currently logged in. |
+| [**is_logged_in**](LoginAndAccountApi.md#is_logged_in) | **GET** /api/account/isLoggedIn | Check if a user is logged in. |
+| [**login**](LoginAndAccountApi.md#login) | **POST** /api/account/login | Login into SIRIUS web services. |
+| [**logout**](LoginAndAccountApi.md#logout) | **POST** /api/account/logout | Logout from SIRIUS web services. |
+| [**sign_up**](LoginAndAccountApi.md#sign_up) | **GET** /api/account/signUp | Open SignUp window in system browser and return signUp link. |
 
-# **get_account_info**
-> AccountInfo get_account_info(opts)
+
+## get_account_info
+
+> <AccountInfo> get_account_info(opts)
 
 Get information about the account currently logged in.
 
 Get information about the account currently logged in. Fails if not logged in.
 
-### Example
+### Examples
+
 ```ruby
-# load the gem
+require 'time'
 require 'ruby_sirius'
 
 api_instance = RubySirius::LoginAndAccountApi.new
-opts = { 
-  include_subs: false # BOOLEAN | include available and active subscriptions in {@link AccountInfo AccountInfo}.
+opts = {
+  include_subs: true # Boolean | include available and active subscriptions in {@link AccountInfo AccountInfo}.
 }
 
 begin
-  #Get information about the account currently logged in.
+  # Get information about the account currently logged in.
   result = api_instance.get_account_info(opts)
   p result
 rescue RubySirius::ApiError => e
-  puts "Exception when calling LoginAndAccountApi->get_account_info: #{e}"
+  puts "Error when calling LoginAndAccountApi->get_account_info: #{e}"
+end
+```
+
+#### Using the get_account_info_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<AccountInfo>, Integer, Hash)> get_account_info_with_http_info(opts)
+
+```ruby
+begin
+  # Get information about the account currently logged in.
+  data, status_code, headers = api_instance.get_account_info_with_http_info(opts)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <AccountInfo>
+rescue RubySirius::ApiError => e
+  puts "Error when calling LoginAndAccountApi->get_account_info_with_http_info: #{e}"
 end
 ```
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **include_subs** | **BOOLEAN**| include available and active subscriptions in {@link AccountInfo AccountInfo}. | [optional] [default to false]
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **include_subs** | **Boolean** | include available and active subscriptions in {@link AccountInfo AccountInfo}. | [optional][default to false] |
 
 ### Return type
 
@@ -54,35 +75,55 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
 
+## get_sign_up_url
 
-# **get_sign_up_url**
 > String get_sign_up_url
 
 Get SignUp URL (For signUp via web browser)
 
 Get SignUp URL (For signUp via web browser)
 
-### Example
+### Examples
+
 ```ruby
-# load the gem
+require 'time'
 require 'ruby_sirius'
 
 api_instance = RubySirius::LoginAndAccountApi.new
 
 begin
-  #Get SignUp URL (For signUp via web browser)
+  # Get SignUp URL (For signUp via web browser)
   result = api_instance.get_sign_up_url
   p result
 rescue RubySirius::ApiError => e
-  puts "Exception when calling LoginAndAccountApi->get_sign_up_url: #{e}"
+  puts "Error when calling LoginAndAccountApi->get_sign_up_url: #{e}"
+end
+```
+
+#### Using the get_sign_up_url_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(String, Integer, Hash)> get_sign_up_url_with_http_info
+
+```ruby
+begin
+  # Get SignUp URL (For signUp via web browser)
+  data, status_code, headers = api_instance.get_sign_up_url_with_http_info
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => String
+rescue RubySirius::ApiError => e
+  puts "Error when calling LoginAndAccountApi->get_sign_up_url_with_http_info: #{e}"
 end
 ```
 
 ### Parameters
+
 This endpoint does not need any parameter.
 
 ### Return type
@@ -95,35 +136,55 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: text/plain
+- **Content-Type**: Not defined
+- **Accept**: text/plain
 
 
+## get_subscriptions
 
-# **get_subscriptions**
-> Array&lt;Subscription&gt; get_subscriptions
+> <Array<Subscription>> get_subscriptions
 
 Get available subscriptions of the account currently logged in.
 
 Get available subscriptions of the account currently logged in. Fails if not logged in.
 
-### Example
+### Examples
+
 ```ruby
-# load the gem
+require 'time'
 require 'ruby_sirius'
 
 api_instance = RubySirius::LoginAndAccountApi.new
 
 begin
-  #Get available subscriptions of the account currently logged in.
+  # Get available subscriptions of the account currently logged in.
   result = api_instance.get_subscriptions
   p result
 rescue RubySirius::ApiError => e
-  puts "Exception when calling LoginAndAccountApi->get_subscriptions: #{e}"
+  puts "Error when calling LoginAndAccountApi->get_subscriptions: #{e}"
+end
+```
+
+#### Using the get_subscriptions_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<Array<Subscription>>, Integer, Hash)> get_subscriptions_with_http_info
+
+```ruby
+begin
+  # Get available subscriptions of the account currently logged in.
+  data, status_code, headers = api_instance.get_subscriptions_with_http_info
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <Array<Subscription>>
+rescue RubySirius::ApiError => e
+  puts "Error when calling LoginAndAccountApi->get_subscriptions_with_http_info: #{e}"
 end
 ```
 
 ### Parameters
+
 This endpoint does not need any parameter.
 
 ### Return type
@@ -136,40 +197,60 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
 
+## is_logged_in
 
-# **is_logged_in**
-> BOOLEAN is_logged_in
-
-Check if a user is logged in.
+> Boolean is_logged_in
 
 Check if a user is logged in.
 
-### Example
+Check if a user is logged in.
+
+### Examples
+
 ```ruby
-# load the gem
+require 'time'
 require 'ruby_sirius'
 
 api_instance = RubySirius::LoginAndAccountApi.new
 
 begin
-  #Check if a user is logged in.
+  # Check if a user is logged in.
   result = api_instance.is_logged_in
   p result
 rescue RubySirius::ApiError => e
-  puts "Exception when calling LoginAndAccountApi->is_logged_in: #{e}"
+  puts "Error when calling LoginAndAccountApi->is_logged_in: #{e}"
+end
+```
+
+#### Using the is_logged_in_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(Boolean, Integer, Hash)> is_logged_in_with_http_info
+
+```ruby
+begin
+  # Check if a user is logged in.
+  data, status_code, headers = api_instance.is_logged_in_with_http_info
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => Boolean
+rescue RubySirius::ApiError => e
+  puts "Error when calling LoginAndAccountApi->is_logged_in_with_http_info: #{e}"
 end
 ```
 
 ### Parameters
+
 This endpoint does not need any parameter.
 
 ### Return type
 
-**BOOLEAN**
+**Boolean**
 
 ### Authorization
 
@@ -177,48 +258,67 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
 
+## login
 
-# **login**
-> AccountInfo login(bodyaccept_terms, opts)
-
-Login into SIRIUS web services.
+> <AccountInfo> login(accept_terms, account_credentials, opts)
 
 Login into SIRIUS web services.
 
-### Example
+Login into SIRIUS web services.
+
+### Examples
+
 ```ruby
-# load the gem
+require 'time'
 require 'ruby_sirius'
 
 api_instance = RubySirius::LoginAndAccountApi.new
-body = RubySirius::AccountCredentials.new # AccountCredentials | used to log in.
-accept_terms = true # BOOLEAN | 
-opts = { 
-  fail_when_logged_in: false # BOOLEAN | if true request fails if an active login already exists.
-  include_subs: false # BOOLEAN | include available and active subscriptions in {@link AccountInfo AccountInfo}.
+accept_terms = true # Boolean | 
+account_credentials = RubySirius::AccountCredentials.new # AccountCredentials | used to log in.
+opts = {
+  fail_when_logged_in: true, # Boolean | if true request fails if an active login already exists.
+  include_subs: true # Boolean | include available and active subscriptions in {@link AccountInfo AccountInfo}.
 }
 
 begin
-  #Login into SIRIUS web services.
-  result = api_instance.login(bodyaccept_terms, opts)
+  # Login into SIRIUS web services.
+  result = api_instance.login(accept_terms, account_credentials, opts)
   p result
 rescue RubySirius::ApiError => e
-  puts "Exception when calling LoginAndAccountApi->login: #{e}"
+  puts "Error when calling LoginAndAccountApi->login: #{e}"
+end
+```
+
+#### Using the login_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<AccountInfo>, Integer, Hash)> login_with_http_info(accept_terms, account_credentials, opts)
+
+```ruby
+begin
+  # Login into SIRIUS web services.
+  data, status_code, headers = api_instance.login_with_http_info(accept_terms, account_credentials, opts)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <AccountInfo>
+rescue RubySirius::ApiError => e
+  puts "Error when calling LoginAndAccountApi->login_with_http_info: #{e}"
 end
 ```
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **body** | [**AccountCredentials**](AccountCredentials.md)| used to log in. | 
- **accept_terms** | **BOOLEAN**|  | 
- **fail_when_logged_in** | **BOOLEAN**| if true request fails if an active login already exists. | [optional] [default to false]
- **include_subs** | **BOOLEAN**| include available and active subscriptions in {@link AccountInfo AccountInfo}. | [optional] [default to false]
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **accept_terms** | **Boolean** |  |  |
+| **account_credentials** | [**AccountCredentials**](AccountCredentials.md) | used to log in. |  |
+| **fail_when_logged_in** | **Boolean** | if true request fails if an active login already exists. | [optional][default to false] |
+| **include_subs** | **Boolean** | include available and active subscriptions in {@link AccountInfo AccountInfo}. | [optional][default to false] |
 
 ### Return type
 
@@ -230,34 +330,54 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: application/json
+- **Accept**: application/json
 
 
+## logout
 
-# **logout**
 > logout
 
 Logout from SIRIUS web services.
 
 Logout from SIRIUS web services.
 
-### Example
+### Examples
+
 ```ruby
-# load the gem
+require 'time'
 require 'ruby_sirius'
 
 api_instance = RubySirius::LoginAndAccountApi.new
 
 begin
-  #Logout from SIRIUS web services.
+  # Logout from SIRIUS web services.
   api_instance.logout
 rescue RubySirius::ApiError => e
-  puts "Exception when calling LoginAndAccountApi->logout: #{e}"
+  puts "Error when calling LoginAndAccountApi->logout: #{e}"
+end
+```
+
+#### Using the logout_with_http_info variant
+
+This returns an Array which contains the response data (`nil` in this case), status code and headers.
+
+> <Array(nil, Integer, Hash)> logout_with_http_info
+
+```ruby
+begin
+  # Logout from SIRIUS web services.
+  data, status_code, headers = api_instance.logout_with_http_info
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => nil
+rescue RubySirius::ApiError => e
+  puts "Error when calling LoginAndAccountApi->logout_with_http_info: #{e}"
 end
 ```
 
 ### Parameters
+
 This endpoint does not need any parameter.
 
 ### Return type
@@ -270,35 +390,55 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: Not defined
+- **Content-Type**: Not defined
+- **Accept**: Not defined
 
 
+## sign_up
 
-# **sign_up**
 > String sign_up
 
 Open SignUp window in system browser and return signUp link.
 
 Open SignUp window in system browser and return signUp link.
 
-### Example
+### Examples
+
 ```ruby
-# load the gem
+require 'time'
 require 'ruby_sirius'
 
 api_instance = RubySirius::LoginAndAccountApi.new
 
 begin
-  #Open SignUp window in system browser and return signUp link.
+  # Open SignUp window in system browser and return signUp link.
   result = api_instance.sign_up
   p result
 rescue RubySirius::ApiError => e
-  puts "Exception when calling LoginAndAccountApi->sign_up: #{e}"
+  puts "Error when calling LoginAndAccountApi->sign_up: #{e}"
+end
+```
+
+#### Using the sign_up_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(String, Integer, Hash)> sign_up_with_http_info
+
+```ruby
+begin
+  # Open SignUp window in system browser and return signUp link.
+  data, status_code, headers = api_instance.sign_up_with_http_info
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => String
+rescue RubySirius::ApiError => e
+  puts "Error when calling LoginAndAccountApi->sign_up_with_http_info: #{e}"
 end
 ```
 
 ### Parameters
+
 This endpoint does not need any parameter.
 
 ### Return type
@@ -311,8 +451,6 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: text/plain
-
-
+- **Content-Type**: Not defined
+- **Accept**: text/plain
 
