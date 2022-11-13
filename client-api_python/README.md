@@ -46,10 +46,10 @@ Please follow the [installation procedure](#installation--usage) and then run th
 
 ```python
 from PySirius import SiriusAPI
-
-print(SiriusAPI.get_ComputationsApi().get_default_job_config())
-print(SiriusAPI.get_VersionInfoControllerApi().get_version_info())
-print(SiriusAPI.get_ProjectSpacesApi().get_project_spaces())
+api = SiriusAPI(None, None)
+print(api.get_ComputationsApi().get_default_job_config())
+print(api.get_VersionInfoControllerApi().get_version_info())
+print(api.get_ProjectSpacesApi().get_project_spaces())
 ```
 
 ## Documentation for API Endpoints
