@@ -70,6 +70,11 @@ jobs:
         rm client-api_python/generated/PySirius/sirius_api.py
         cp client-api_python/sirius_api.py client-api_python/generated/PySirius
         echo "from PySirius.sirius_api import SiriusAPI" >> client-api_python/generated/PySirius/__init__.py
+    - name: Rollback wrapper class
+      run: |
+        echo removed
+        rm client-api_r/generated/R/rsirius_api.R
+        cp client-api_r/api_classes/rsirius_api.R  client-api_r/generated/R/rsirius_api.R
         
     - name: Remove Sirius Rest Api
       run: |
