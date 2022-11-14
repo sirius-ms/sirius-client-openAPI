@@ -1,3 +1,5 @@
 {
-
+	"packageName" : "RSirius",
+	"generateWrapper": true,
+	"library": "httr2"
 }
