@@ -49,7 +49,7 @@ import JSirius.JSON;
  * Results that are available for a {@link FormulaResultContainer FormulaResultContainer} represented as boolean or numeric score (if available).  NULL scores indicate that the corresponding result is not available.
  */
 @ApiModel(description = "Results that are available for a {@link FormulaResultContainer FormulaResultContainer} represented as boolean or numeric score (if available).  NULL scores indicate that the corresponding result is not available.")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-11-13T15:41:00.515300Z[Etc/UTC]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-11-14T09:54:56.910923Z[Etc/UTC]")
 public class ResultOverview {
   public static final String SERIALIZED_NAME_SIRIUS_SCORE = "siriusScore";
   @SerializedName(SERIALIZED_NAME_SIRIUS_SCORE)

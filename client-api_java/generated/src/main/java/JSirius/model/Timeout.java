@@ -49,7 +49,7 @@ import JSirius.JSON;
  * 
  */
 @ApiModel(description = "")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-11-13T15:41:00.515300Z[Etc/UTC]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-11-14T09:54:56.910923Z[Etc/UTC]")
 public class Timeout {
   public static final String SERIALIZED_NAME_NUMBER_OF_SECONDS_PER_DECOMPOSITION = "numberOfSecondsPerDecomposition";
   @SerializedName(SERIALIZED_NAME_NUMBER_OF_SECONDS_PER_DECOMPOSITION)
