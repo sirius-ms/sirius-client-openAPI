@@ -27,7 +27,8 @@
 #' @field version_info_controller_api an instance of VersionInfoControllerApi
 #' @export
 rsirius_api <- R6::R6Class(
-  "rsirius_api",
+  classname = "rsirius_api",
+  inherit = ApiClient,
   public = list(
     api_client = NULL,
     compounds_api = NULL,
