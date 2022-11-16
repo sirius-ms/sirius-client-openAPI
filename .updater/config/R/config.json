@@ -1,5 +1,3 @@
 {
-	"packageName" : "RSirius",
-	"generateWrapper": true,
-	"library": "httr2"
+	"packageName" : "Rsirius",
 }
