@@ -88,7 +88,7 @@ AnnotatedSpectrum <- R6::R6Class(
         self$`collisionEnergy` <- collisionenergy_object
       }
       if (!is.null(this_object$`peaks`)) {
-        self$`peaks` <- ApiClient$new()$deserializeObj(this_object$`peaks`, "array[AnnotatedPeak]", loadNamespace("RSirius"))
+        self$`peaks` <- ApiClient$new()$deserializeObj(this_object$`peaks`, "array[AnnotatedPeak]", loadNamespace("Rsirius"))
       }
       self
     },
@@ -141,7 +141,7 @@ AnnotatedSpectrum <- R6::R6Class(
       this_object <- jsonlite::fromJSON(input_json)
       self$`msLevel` <- this_object$`msLevel`
       self$`collisionEnergy` <- CollisionEnergy$new()$fromJSON(jsonlite::toJSON(this_object$collisionEnergy, auto_unbox = TRUE, digits = NA))
-      self$`peaks` <- ApiClient$new()$deserializeObj(this_object$`peaks`, "array[AnnotatedPeak]", loadNamespace("RSirius"))
+      self$`peaks` <- ApiClient$new()$deserializeObj(this_object$`peaks`, "array[AnnotatedPeak]", loadNamespace("Rsirius"))
       self
     },
     #' Validate JSON input with respect to AnnotatedSpectrum

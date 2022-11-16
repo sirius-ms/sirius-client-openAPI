@@ -68,10 +68,10 @@ CanopusPredictions <- R6::R6Class(
     fromJSON = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       if (!is.null(this_object$`classyFireClasses`)) {
-        self$`classyFireClasses` <- ApiClient$new()$deserializeObj(this_object$`classyFireClasses`, "array[CompoundClass]", loadNamespace("RSirius"))
+        self$`classyFireClasses` <- ApiClient$new()$deserializeObj(this_object$`classyFireClasses`, "array[CompoundClass]", loadNamespace("Rsirius"))
       }
       if (!is.null(this_object$`npcClasses`)) {
-        self$`npcClasses` <- ApiClient$new()$deserializeObj(this_object$`npcClasses`, "array[CompoundClass]", loadNamespace("RSirius"))
+        self$`npcClasses` <- ApiClient$new()$deserializeObj(this_object$`npcClasses`, "array[CompoundClass]", loadNamespace("Rsirius"))
       }
       self
     },
@@ -114,8 +114,8 @@ CanopusPredictions <- R6::R6Class(
     #' @export
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
-      self$`classyFireClasses` <- ApiClient$new()$deserializeObj(this_object$`classyFireClasses`, "array[CompoundClass]", loadNamespace("RSirius"))
-      self$`npcClasses` <- ApiClient$new()$deserializeObj(this_object$`npcClasses`, "array[CompoundClass]", loadNamespace("RSirius"))
+      self$`classyFireClasses` <- ApiClient$new()$deserializeObj(this_object$`classyFireClasses`, "array[CompoundClass]", loadNamespace("Rsirius"))
+      self$`npcClasses` <- ApiClient$new()$deserializeObj(this_object$`npcClasses`, "array[CompoundClass]", loadNamespace("Rsirius"))
       self
     },
     #' Validate JSON input with respect to CanopusPredictions

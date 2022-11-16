@@ -199,72 +199,72 @@
 #' \dontrun{
 #' ####################  GetBestMatchingCanopusPredictions  ####################
 #'
-#' library(RSirius)
+#' library(Rsirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_compound_id <- "compound_id_example" # character | compound/feature the formula result belongs to.
 #' var_formula_id <- "formula_id_example" # character | identifier of the requested formula result
 #'
 #' #Best matching compound classes,  Set of the highest scoring compound classes CANOPUS) on each hierarchy level of  the ClassyFire and NPC ontology,
-#' api_instance <- rsirius_api$new()
+#' api_instance <- FormulaResultsApi$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
 #' # result <- api_instance$GetBestMatchingCanopusPredictions(var_project_id, var_compound_id, var_formula_iddata_file = "result.txt")
-#' result <- api_instance$formula_results_api$GetBestMatchingCanopusPredictions(var_project_id, var_compound_id, var_formula_id)
+#' result <- api_instance$GetBestMatchingCanopusPredictions(var_project_id, var_compound_id, var_formula_id)
 #' dput(result)
 #'
 #'
 #' ####################  GetCanopusPredictions  ####################
 #'
-#' library(RSirius)
+#' library(Rsirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_compound_id <- "compound_id_example" # character | compound/feature the formula result belongs to.
 #' var_formula_id <- "formula_id_example" # character | identifier of the requested formula result
 #'
 #' #All predicted compound classes (CANOPUS) from ClassyFire and NPC and their probabilities,
-#' api_instance <- rsirius_api$new()
+#' api_instance <- FormulaResultsApi$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
 #' # result <- api_instance$GetCanopusPredictions(var_project_id, var_compound_id, var_formula_iddata_file = "result.txt")
-#' result <- api_instance$formula_results_api$GetCanopusPredictions(var_project_id, var_compound_id, var_formula_id)
+#' result <- api_instance$GetCanopusPredictions(var_project_id, var_compound_id, var_formula_id)
 #' dput(result)
 #'
 #'
 #' ####################  GetFingerprintPrediction  ####################
 #'
-#' library(RSirius)
+#' library(Rsirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_compound_id <- "compound_id_example" # character | compound/feature the formula result belongs to.
 #' var_formula_id <- "formula_id_example" # character | identifier of the requested formula result
 #'
 #' #Returns predicted fingerprint (CSI:FingerID) for the given formula result identifier  This fingerprint is used to perfom structure database search and predict compound classes.
-#' api_instance <- rsirius_api$new()
+#' api_instance <- FormulaResultsApi$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
 #' # result <- api_instance$GetFingerprintPrediction(var_project_id, var_compound_id, var_formula_iddata_file = "result.txt")
-#' result <- api_instance$formula_results_api$GetFingerprintPrediction(var_project_id, var_compound_id, var_formula_id)
+#' result <- api_instance$GetFingerprintPrediction(var_project_id, var_compound_id, var_formula_id)
 #' dput(result)
 #'
 #'
 #' ####################  GetFormulaIds  ####################
 #'
-#' library(RSirius)
+#' library(Rsirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_compound_id <- "compound_id_example" # character | compound/feature the formula result belongs to.
 #' var_result_overview <- TRUE # character | add ResultOverview to the FormulaResultContainers (Optional)
 #' var_formula_candidate <- FALSE # character | add extended formula candidate information to the FormulaResultContainers (Optional)
 #'
 #' #List of all FormulaResultContainers available for this compound/feature with minimal information.
-#' api_instance <- rsirius_api$new()
+#' api_instance <- FormulaResultsApi$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
 #' # result <- api_instance$GetFormulaIds(var_project_id, var_compound_id, result_overview = var_result_overview, formula_candidate = var_formula_candidatedata_file = "result.txt")
-#' result <- api_instance$formula_results_api$GetFormulaIds(var_project_id, var_compound_id, result_overview = var_result_overview, formula_candidate = var_formula_candidate)
+#' result <- api_instance$GetFormulaIds(var_project_id, var_compound_id, result_overview = var_result_overview, formula_candidate = var_formula_candidate)
 #' dput(result)
 #'
 #'
 #' ####################  GetFormulaResult  ####################
 #'
-#' library(RSirius)
+#' library(Rsirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_compound_id <- "compound_id_example" # character | compound/feature the formula result belongs to.
 #' var_formula_id <- "formula_id_example" # character | identifier of the requested formula result
@@ -272,49 +272,49 @@
 #' var_formula_candidate <- TRUE # character | add extended formula candidate information to the FormulaResultContainer (Optional)
 #'
 #' #FormulaResultContainers for the given 'formulaId' with minimal information.
-#' api_instance <- rsirius_api$new()
+#' api_instance <- FormulaResultsApi$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
 #' # result <- api_instance$GetFormulaResult(var_project_id, var_compound_id, var_formula_id, result_overview = var_result_overview, formula_candidate = var_formula_candidatedata_file = "result.txt")
-#' result <- api_instance$formula_results_api$GetFormulaResult(var_project_id, var_compound_id, var_formula_id, result_overview = var_result_overview, formula_candidate = var_formula_candidate)
+#' result <- api_instance$GetFormulaResult(var_project_id, var_compound_id, var_formula_id, result_overview = var_result_overview, formula_candidate = var_formula_candidate)
 #' dput(result)
 #'
 #'
 #' ####################  GetFragTree  ####################
 #'
-#' library(RSirius)
+#' library(Rsirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_compound_id <- "compound_id_example" # character | compound/feature the formula result belongs to.
 #' var_formula_id <- "formula_id_example" # character | identifier of the requested formula result
 #'
 #' #Returns fragmentation tree (SIRIUS) for the given formula result identifier  This tree is used to rank formula candidates (treeScore).
-#' api_instance <- rsirius_api$new()
+#' api_instance <- FormulaResultsApi$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
 #' # result <- api_instance$GetFragTree(var_project_id, var_compound_id, var_formula_iddata_file = "result.txt")
-#' result <- api_instance$formula_results_api$GetFragTree(var_project_id, var_compound_id, var_formula_id)
+#' result <- api_instance$GetFragTree(var_project_id, var_compound_id, var_formula_id)
 #' dput(result)
 #'
 #'
 #' ####################  GetSimulatedIsotopePattern  ####################
 #'
-#' library(RSirius)
+#' library(Rsirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_compound_id <- "compound_id_example" # character | compound/feature the formula result belongs to.
 #' var_formula_id <- "formula_id_example" # character | identifier of the requested formula result
 #'
 #' #Returns simulated isotope pattern (SIRIUS) for the given formula result identifier.
-#' api_instance <- rsirius_api$new()
+#' api_instance <- FormulaResultsApi$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
 #' # result <- api_instance$GetSimulatedIsotopePattern(var_project_id, var_compound_id, var_formula_iddata_file = "result.txt")
-#' result <- api_instance$formula_results_api$GetSimulatedIsotopePattern(var_project_id, var_compound_id, var_formula_id)
+#' result <- api_instance$GetSimulatedIsotopePattern(var_project_id, var_compound_id, var_formula_id)
 #' dput(result)
 #'
 #'
 #' ####################  GetStructureCandidates  ####################
 #'
-#' library(RSirius)
+#' library(Rsirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_compound_id <- "compound_id_example" # character | compound/feature the formula result belongs to.
 #' var_formula_id <- "formula_id_example" # character | identifier of the requested formula result
@@ -324,17 +324,17 @@
 #' var_top_k <- -1 # integer | retrieve only the top k StructureCandidates (Optional)
 #'
 #' #List of StructureCandidates the given 'formulaId' with minimal information.
-#' api_instance <- rsirius_api$new()
+#' api_instance <- FormulaResultsApi$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
 #' # result <- api_instance$GetStructureCandidates(var_project_id, var_compound_id, var_formula_id, fingerprint = var_fingerprint, db_links = var_db_links, pub_med_ids = var_pub_med_ids, top_k = var_top_kdata_file = "result.txt")
-#' result <- api_instance$formula_results_api$GetStructureCandidates(var_project_id, var_compound_id, var_formula_id, fingerprint = var_fingerprint, db_links = var_db_links, pub_med_ids = var_pub_med_ids, top_k = var_top_k)
+#' result <- api_instance$GetStructureCandidates(var_project_id, var_compound_id, var_formula_id, fingerprint = var_fingerprint, db_links = var_db_links, pub_med_ids = var_pub_med_ids, top_k = var_top_k)
 #' dput(result)
 #'
 #'
 #' ####################  GetTopStructureCandidate  ####################
 #'
-#' library(RSirius)
+#' library(Rsirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_compound_id <- "compound_id_example" # character | compound/feature the formula result belongs to.
 #' var_fingerprint <- FALSE # character | add molecular fingerprint to StructureCandidates (Optional)
@@ -342,11 +342,11 @@
 #' var_pub_med_ids <- FALSE # character | add PubMedIds (citation count) to StructureCandidates (Optional)
 #'
 #' #Best Scoring StructureCandidate over all molecular formular resutls that belong to the specified  compound/feature (compoundId).
-#' api_instance <- rsirius_api$new()
+#' api_instance <- FormulaResultsApi$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
 #' # result <- api_instance$GetTopStructureCandidate(var_project_id, var_compound_id, fingerprint = var_fingerprint, db_links = var_db_links, pub_med_ids = var_pub_med_idsdata_file = "result.txt")
-#' result <- api_instance$formula_results_api$GetTopStructureCandidate(var_project_id, var_compound_id, fingerprint = var_fingerprint, db_links = var_db_links, pub_med_ids = var_pub_med_ids)
+#' result <- api_instance$GetTopStructureCandidate(var_project_id, var_compound_id, fingerprint = var_fingerprint, db_links = var_db_links, pub_med_ids = var_pub_med_ids)
 #' dput(result)
 #'
 #'
@@ -473,7 +473,7 @@ FormulaResultsApi <- R6::R6Class(
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response, "CompoundClasses", loadNamespace("RSirius")),
+          self$api_client$deserialize(local_var_resp$response, "CompoundClasses", loadNamespace("Rsirius")),
           error = function(e) {
             stop("Failed to deserialize response")
           }
@@ -592,7 +592,7 @@ FormulaResultsApi <- R6::R6Class(
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response, "CanopusPredictions", loadNamespace("RSirius")),
+          self$api_client$deserialize(local_var_resp$response, "CanopusPredictions", loadNamespace("Rsirius")),
           error = function(e) {
             stop("Failed to deserialize response")
           }
@@ -711,7 +711,7 @@ FormulaResultsApi <- R6::R6Class(
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response, "array[numeric]", loadNamespace("RSirius")),
+          self$api_client$deserialize(local_var_resp$response, "array[numeric]", loadNamespace("Rsirius")),
           error = function(e) {
             stop("Failed to deserialize response")
           }
@@ -829,7 +829,7 @@ FormulaResultsApi <- R6::R6Class(
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response, "array[FormulaResultContainer]", loadNamespace("RSirius")),
+          self$api_client$deserialize(local_var_resp$response, "array[FormulaResultContainer]", loadNamespace("Rsirius")),
           error = function(e) {
             stop("Failed to deserialize response")
           }
@@ -958,7 +958,7 @@ FormulaResultsApi <- R6::R6Class(
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response, "FormulaResultContainer", loadNamespace("RSirius")),
+          self$api_client$deserialize(local_var_resp$response, "FormulaResultContainer", loadNamespace("Rsirius")),
           error = function(e) {
             stop("Failed to deserialize response")
           }
@@ -1077,7 +1077,7 @@ FormulaResultsApi <- R6::R6Class(
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response, "FragmentationTree", loadNamespace("RSirius")),
+          self$api_client$deserialize(local_var_resp$response, "FragmentationTree", loadNamespace("Rsirius")),
           error = function(e) {
             stop("Failed to deserialize response")
           }
@@ -1196,7 +1196,7 @@ FormulaResultsApi <- R6::R6Class(
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response, "AnnotatedSpectrum", loadNamespace("RSirius")),
+          self$api_client$deserialize(local_var_resp$response, "AnnotatedSpectrum", loadNamespace("Rsirius")),
           error = function(e) {
             stop("Failed to deserialize response")
           }
@@ -1335,7 +1335,7 @@ FormulaResultsApi <- R6::R6Class(
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response, "array[StructureCandidate]", loadNamespace("RSirius")),
+          self$api_client$deserialize(local_var_resp$response, "array[StructureCandidate]", loadNamespace("Rsirius")),
           error = function(e) {
             stop("Failed to deserialize response")
           }
@@ -1458,7 +1458,7 @@ FormulaResultsApi <- R6::R6Class(
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response, "StructureCandidate", loadNamespace("RSirius")),
+          self$api_client$deserialize(local_var_resp$response, "StructureCandidate", loadNamespace("Rsirius")),
           error = function(e) {
             stop("Failed to deserialize response")
           }

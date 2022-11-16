@@ -85,7 +85,7 @@ StructureDbSearch <- R6::R6Class(
         self$`enabled` <- this_object$`enabled`
       }
       if (!is.null(this_object$`structureSearchDBs`)) {
-        self$`structureSearchDBs` <- ApiClient$new()$deserializeObj(this_object$`structureSearchDBs`, "array[character]", loadNamespace("RSirius"))
+        self$`structureSearchDBs` <- ApiClient$new()$deserializeObj(this_object$`structureSearchDBs`, "array[character]", loadNamespace("Rsirius"))
       }
       if (!is.null(this_object$`tagLipids`)) {
         self$`tagLipids` <- this_object$`tagLipids`
@@ -140,7 +140,7 @@ StructureDbSearch <- R6::R6Class(
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       self$`enabled` <- this_object$`enabled`
-      self$`structureSearchDBs` <- ApiClient$new()$deserializeObj(this_object$`structureSearchDBs`, "array[character]", loadNamespace("RSirius"))
+      self$`structureSearchDBs` <- ApiClient$new()$deserializeObj(this_object$`structureSearchDBs`, "array[character]", loadNamespace("Rsirius"))
       self$`tagLipids` <- this_object$`tagLipids`
       self
     },

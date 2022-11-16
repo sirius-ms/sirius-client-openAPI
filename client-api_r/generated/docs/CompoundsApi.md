@@ -20,7 +20,7 @@ Delete compound/feature with the given identifier from the specified project-spa
 
 ### Example
 ```R
-library(RSirius)
+library(Rsirius)
 
 # Delete compound/feature with the given identifier from the specified project-space.
 #
@@ -28,8 +28,8 @@ library(RSirius)
 var_project_id <- "project_id_example" # character | project-space to delete from.
 var_cid <- "cid_example" # character | identifier of compound to delete.
 
-api_instance <- rsirius_api$new()
-api_instance$compounds_api$DeleteCompound(var_project_id, var_cid)
+api_instance <- CompoundsApi$new()
+api_instance$DeleteCompound(var_project_id, var_cid)
 ```
 
 ### Parameters
@@ -66,7 +66,7 @@ Get compound/feature with the given identifier from the specified project-space.
 
 ### Example
 ```R
-library(RSirius)
+library(Rsirius)
 
 # Get compound/feature with the given identifier from the specified project-space.
 #
@@ -76,10 +76,10 @@ var_cid <- "cid_example" # character | identifier of compound to access.
 var_top_annotation <- FALSE # character | include the top annotation of this feature into the output (if available). (Optional)
 var_ms_data <- FALSE # character | include corresponding source data (MS and MS/MS) into the output. (Optional)
 
-api_instance <- rsirius_api$new()
+api_instance <- CompoundsApi$new()
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
 # result <- api_instance$GetCompound(var_project_id, var_cid, top_annotation = var_top_annotation, ms_data = var_ms_datadata_file = "result.txt")
-result <- api_instance$compounds_api$GetCompound(var_project_id, var_cid, top_annotation = var_top_annotation, ms_data = var_ms_data)
+result <- api_instance$GetCompound(var_project_id, var_cid, top_annotation = var_top_annotation, ms_data = var_ms_data)
 dput(result)
 ```
 
@@ -119,7 +119,7 @@ Get all available compounds/features in the given project-space.
 
 ### Example
 ```R
-library(RSirius)
+library(Rsirius)
 
 # Get all available compounds/features in the given project-space.
 #
@@ -128,10 +128,10 @@ var_project_id <- "project_id_example" # character | project-space to read from.
 var_top_annotation <- FALSE # character | include the top annotation of this feature into the output (if available). (Optional)
 var_ms_data <- FALSE # character | include corresponding source data (MS and MS/MS) into the output. (Optional)
 
-api_instance <- rsirius_api$new()
+api_instance <- CompoundsApi$new()
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
 # result <- api_instance$GetCompounds(var_project_id, top_annotation = var_top_annotation, ms_data = var_ms_datadata_file = "result.txt")
-result <- api_instance$compounds_api$GetCompounds(var_project_id, top_annotation = var_top_annotation, ms_data = var_ms_data)
+result <- api_instance$GetCompounds(var_project_id, top_annotation = var_top_annotation, ms_data = var_ms_data)
 dput(result)
 ```
 
@@ -170,7 +170,7 @@ Import ms/ms data in given format from local filesystem into the specified proje
 
 ### Example
 ```R
-library(RSirius)
+library(Rsirius)
 
 # Import ms/ms data in given format from local filesystem into the specified project-space
 #
@@ -181,10 +181,10 @@ var_align_lcms_runs <- FALSE # character | If true, multiple LCMS Runs (mzML, mz
 var_allow_ms1_only_data <- TRUE # character |  (Optional)
 var_ignore_formulas <- FALSE # character |  (Optional)
 
-api_instance <- rsirius_api$new()
+api_instance <- CompoundsApi$new()
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
 # result <- api_instance$ImportCompounds(var_project_id, var_request_body, align_lcms_runs = var_align_lcms_runs, allow_ms1_only_data = var_allow_ms1_only_data, ignore_formulas = var_ignore_formulasdata_file = "result.txt")
-result <- api_instance$compounds_api$ImportCompounds(var_project_id, var_request_body, align_lcms_runs = var_align_lcms_runs, allow_ms1_only_data = var_allow_ms1_only_data, ignore_formulas = var_ignore_formulas)
+result <- api_instance$ImportCompounds(var_project_id, var_request_body, align_lcms_runs = var_align_lcms_runs, allow_ms1_only_data = var_allow_ms1_only_data, ignore_formulas = var_ignore_formulas)
 dput(result)
 ```
 
@@ -225,7 +225,7 @@ Import ms/ms data from the given format into the specified project-space  Possib
 
 ### Example
 ```R
-library(RSirius)
+library(Rsirius)
 
 # Import ms/ms data from the given format into the specified project-space  Possible formats (ms, mgf, cef, msp, mzML, mzXML)
 #
@@ -235,10 +235,10 @@ var_format <- "format_example" # character | data format specified by the usual 
 var_body <- "body_example" # character | data content in specified format
 var_source_name <- "source_name_example" # character | name that specifies the data source. Can e.g. be a file path or just a name. (Optional)
 
-api_instance <- rsirius_api$new()
+api_instance <- CompoundsApi$new()
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
 # result <- api_instance$ImportCompoundsFromString(var_project_id, var_format, var_body, source_name = var_source_namedata_file = "result.txt")
-result <- api_instance$compounds_api$ImportCompoundsFromString(var_project_id, var_format, var_body, source_name = var_source_name)
+result <- api_instance$ImportCompoundsFromString(var_project_id, var_format, var_body, source_name = var_source_name)
 dput(result)
 ```
 

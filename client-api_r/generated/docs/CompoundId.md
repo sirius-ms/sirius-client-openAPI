@@ -1,4 +1,4 @@
-# RSirius::CompoundId
+# Rsirius::CompoundId
 
 The CompoundId contains the ID of a compound together with some read-only information that might be displayed in  some summary view.
 

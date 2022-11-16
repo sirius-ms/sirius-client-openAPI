@@ -1,4 +1,4 @@
-# RSirius::GuiParameters
+# Rsirius::GuiParameters
 
 Parameters to \"remote control\" the SIRIUS GUI.
 

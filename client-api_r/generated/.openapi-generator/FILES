@@ -39,7 +39,6 @@ R/ms_data.R
 R/project_space_id.R
 R/project_spaces_api.R
 R/result_overview.R
-R/rsirius_api.R
 R/sirius.R
 R/structure_candidate.R
 R/structure_db_search.R

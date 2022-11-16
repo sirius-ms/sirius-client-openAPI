@@ -1,4 +1,4 @@
-# RSirius::JobProgress
+# Rsirius::JobProgress
 
 Progress information of a computation job that has already been submitted to SIRIUS.  if  currentProgress == maxProgress job is finished and should change to state done soon.  if a job is DONE all results can be accessed via the Project-Spaces api.
 

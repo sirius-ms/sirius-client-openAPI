@@ -31,8 +31,9 @@
 #' @field timeout Default timeout in seconds
 #' @field retry_status_codes vector of status codes to retry
 #' @field max_retry_attempts maximum number of retries for the status codes
+#' @importFrom httr add_headers accept timeout content
 #' @export
-ApiClient  <- R6::R6Class(
+ApiClient <- R6::R6Class(
   "ApiClient",
   public = list(
     # base path of all requests
@@ -133,135 +134,143 @@ ApiClient  <- R6::R6Class(
     #' @param query_params The query parameters.
     #' @param header_params The header parameters.
     #' @param form_params The form parameters.
-    #' @param file_params The form parameters to upload files.
-    #' @param accepts The HTTP accpet headers.
-    #' @param content_types The HTTP content-type headers.
+    #' @param file_params The form parameters for uploading files.
+    #' @param accepts The list of Accept headers.
+    #' @param content_types The list of Content-Type headers.
     #' @param body The HTTP request body.
-    #' @param is_oauth True if the endpoints required OAuth authentication.
-    #' @param oauth_scopes OAuth scopes.
-    #' @param stream_callback Callback function to process the data stream.
+    #' @param stream_callback Callback function to process the data stream
     #' @param ... Other optional arguments.
     #' @return HTTP response
     #' @export
     CallApi = function(url, method, query_params, header_params, form_params,
-                       file_params, accepts, content_types, body,
-                       is_oauth = FALSE, oauth_scopes = NULL, stream_callback = NULL, ...) {
+                       file_params, accepts, content_types,
+                       body, stream_callback = NULL, ...) {
 
-      # set the URL
-      req <- request(url)
+      resp <- self$Execute(url, method, query_params, header_params,
+                           form_params, file_params,
+                           accepts, content_types,
+                           body, stream_callback = stream_callback, ...)
 
-      resp <- self$Execute(req, method, query_params, header_params, form_params,
-                           file_params, accepts, content_types, body, is_oauth = is_oauth,
-                           oauth_scopes = oauth_scopes, stream_callback = stream_callback, ...)
+      if (is.null(self$max_retry_attempts)) {
+        self$max_retry_attempts <- 3
+      }
+
+      if (!is.null(self$retry_status_codes)) {
+
+        for (i in 1 : self$max_retry_attempts) {
+          if (resp$status_code %in% self$retry_status_codes) {
+            Sys.sleep((2 ^ i) + stats::runif(n = 1, min = 0, max = 1))
+            resp <- self$Execute(url, method, query_params, header_params,
+                                 form_params, file_params, accepts, content_types,
+                                 body, stream_callback = stream_callback, ...)
+          } else {
+            break
+          }
+        }
+      }
+
+      resp
     },
     #' Make an API call
     #'
     #' @description
     #' Make an API call
     #'
-    #' @param req httr2 request.
+    #' @param url URL.
     #' @param method HTTP method.
     #' @param query_params The query parameters.
     #' @param header_params The header parameters.
     #' @param form_params The form parameters.
     #' @param file_params The form parameters for uploading files.
-    #' @param accepts The HTTP accpet headers.
-    #' @param content_types The HTTP content-type headers.
+    #' @param accepts The list of Accept headers
+    #' @param content_types The list of Content-Type headers
     #' @param body The HTTP request body.
-    #' @param is_oauth True if the endpoints required OAuth authentication.
-    #' @param oauth_scopes OAuth scopes.
-    #' @param stream_callback Callback function to process data stream.
+    #' @param stream_callback Callback function to process data stream
     #' @param ... Other optional arguments.
     #' @return HTTP response
     #' @export
-    Execute = function(req, method, query_params, header_params, form_params,
-                       file_params, accepts, content_types, body,
-                       is_oauth = FALSE, oauth_scopes = NULL, stream_callback = NULL, ...) {
+    Execute = function(url, method, query_params, header_params,
+                       form_params, file_params,
+                       accepts, content_types,
+                       body, stream_callback = NULL, ...) {
+      headers <- httr::add_headers(c(header_params, self$default_headers))
 
-      ## add headers
-      req <- req %>% req_headers(!!!header_params)
-
-      ## add default headers
-      req <- req %>% req_headers(!!!self$default_headers)
+      http_timeout <- NULL
+      if (!is.null(self$timeout)) {
+        http_timeout <- httr::timeout(self$timeout)
+      }
 
       # set HTTP accept header
-      accept <- self$select_header(accepts)
+      accept = self$select_header(accepts)
       if (!is.null(accept)) {
-        req <- req %>% req_headers("Accept" = accept)
+        headers['Accept'] = accept
       }
 
       # set HTTP content-type header
-      content_type <- self$select_header(content_types)
+      content_type = self$select_header(content_types)
       if (!is.null(content_type)) {
-        req <- req %>% req_headers("Content-Type" = content_type)
+        headers['Content-Type'] = content_type
       }
 
-      ## add query parameters
-      for (query_param in names(query_params)) {
-        if (typeof(query_params[[query_param]]) == "list") {
-          # for explode, e.g. a=1,a=2,a=3
-          req <- req %>% req_url_query(!!!query_params[[query_param]])
-        } else { # for non-explode, e.g. a=1,2,3
-          tmp <- list()
-          tmp[[query_param]] <- query_params[[query_param]]
-          req <- req %>% req_url_query(!!!tmp)
+      if (typeof(stream_callback) == "closure") { # stream data
+        if (method == "GET") {
+          httr::GET(url, query = query_params, headers, http_timeout,
+                    httr::user_agent(self$`user_agent`), write_stream(stream_callback), ...)
+        } else if (method == "POST") {
+          httr::POST(url, query = query_params, headers, body = body,
+                     httr::content_type("application/json"), http_timeout,
+                     httr::user_agent(self$`user_agent`), write_stream(stream_callback), ...)
+        } else if (method == "PUT") {
+          httr::PUT(url, query = query_params, headers, body = body,
+                    httr::content_type("application/json"), http_timeout,
+                    http_timeout, httr::user_agent(self$`user_agent`), write_stream(stream_callback), ...)
+        } else if (method == "PATCH") {
+          httr::PATCH(url, query = query_params, headers, body = body,
+                      httr::content_type("application/json"), http_timeout,
+                      http_timeout, httr::user_agent(self$`user_agent`), write_stream(stream_callback), ...)
+        } else if (method == "HEAD") {
+          httr::HEAD(url, query = query_params, headers, http_timeout,
+                     http_timeout, httr::user_agent(self$`user_agent`), write_stream(stream_callback), ...)
+        } else if (method == "DELETE") {
+          httr::DELETE(url, query = query_params, headers, http_timeout,
+                       http_timeout, httr::user_agent(self$`user_agent`), write_stream(stream_callback), ...)
+        } else {
+          err_msg <- "Http method must be `GET`, `HEAD`, `OPTIONS`, `POST`, `PATCH`, `PUT` or `DELETE`."
+          stop(err_msg)
         }
-      }
-
-      # has file upload?
-      if (!is.null(file_params) && length(file_params) != 0) {
-        req <- req %>% req_body_multipart(!!!file_params)
-
-        # add form parameters via req_body_multipart
-        if (!is.null(form_params) && length(form_params) != 0) {
-          req <- req %>% req_body_multipart(!!!form_params)
+      } else { # no streaming
+        if (method == "GET") {
+          httr_response <- httr::GET(url, query = query_params, headers, http_timeout,
+                    httr::user_agent(self$`user_agent`), ...)
+        } else if (method == "POST") {
+          httr_response <- httr::POST(url, query = query_params, headers, body = body,
+                     httr::content_type("application/json"), http_timeout,
+                     httr::user_agent(self$`user_agent`), ...)
+        } else if (method == "PUT") {
+          httr_response <- httr::PUT(url, query = query_params, headers, body = body,
+                    httr::content_type("application/json"), http_timeout,
+                    http_timeout, httr::user_agent(self$`user_agent`), ...)
+        } else if (method == "PATCH") {
+          httr_response <- httr::PATCH(url, query = query_params, headers, body = body,
+                      httr::content_type("application/json"), http_timeout,
+                      http_timeout, httr::user_agent(self$`user_agent`), ...)
+        } else if (method == "HEAD") {
+          httr_response <- httr::HEAD(url, query = query_params, headers, http_timeout,
+                     http_timeout, httr::user_agent(self$`user_agent`), ...)
+        } else if (method == "DELETE") {
+          httr_response <- httr::DELETE(url, query = query_params, headers, http_timeout,
+                       http_timeout, httr::user_agent(self$`user_agent`), ...)
+        } else {
+          err_msg <- "Http method must be `GET`, `HEAD`, `OPTIONS`, `POST`, `PATCH`, `PUT` or `DELETE`."
+          stop(err_msg)
         }
-      } else { # no file upload
-        # add form parameters via req_body_form
-        if (!is.null(form_params) && length(form_params) != 0) {
-          req <- req %>% req_body_form(!!!form_params)
-        }
-      }
-
-      # add body parameters
-      if (!is.null(body)) {
-        req <- req %>% req_body_raw(body)
-      }
-
-      # set timeout
-      if (!is.null(self$timeout)) {
-        req <- req %>% req_timeout(self$timeout)
-      }
-
-      # set retry
-      if (!is.null(self$max_retry_attempts)) {
-        req <- req %>% retry_max_tries(self$timeout)
-        req <- req %>% retry_max_seconds(self$timeout)
-      }
-
-      # set user agent
-      if (!is.null(self$user_agent)) {
-        req <- req %>% req_user_agent(self$user_agent)
-      }
-
-      # set HTTP verb
-      req <- req %>% req_method(method)
-
-      # stream data
-      if (typeof(stream_callback) == "closure") {
-        req %>% req_stream(stream_callback)
-      } else {
-        # perform the HTTP request
-        resp <- req %>%
-          req_error(is_error = function(resp) FALSE) %>%
-          req_perform()
 
         # return ApiResponse
         api_response <- ApiResponse$new()
-        api_response$status_code <- resp %>% resp_status()
-        api_response$status_code_desc <- resp %>% resp_status_desc()
-        api_response$response <- resp %>% resp_body_string()
-        api_response$headers <- resp %>% resp_headers()
+        api_response$status_code <- httr::status_code(httr_response) 
+        api_response$status_code_desc <- httr::http_status(httr_response)$reason
+        api_response$response <- httr::content(httr_response, "text", encoding = "UTF-8")
+        api_response$headers <- httr::headers(httr_response)
 
         api_response
       }
@@ -280,12 +289,12 @@ ApiClient  <- R6::R6Class(
       resp_obj <- jsonlite::fromJSON(raw_response)
       self$deserializeObj(resp_obj, return_type, pkg_env)
     },
-    #' Deserialize the response from jsonlite object based on the given type.
+    #' Deserialize the response from jsonlite object based on the given type
     #'
     #' @description
-    #' Deserialize the response from jsonlite object based on the given type.
+    #' Deserialize the response from jsonlite object based on the given type
     #' by handling complex and nested types by iterating recursively
-    #' Example return_types will be like "array[integer]", "map(Pet)", "array[map(Tag)]", etc.
+    #' Example return_types will be like "array[integer]", "map(Pet)", "array[map(Tag)]", etc.,
     #'
     #' @param obj Response object.
     #' @param return_type R return type.
@@ -327,7 +336,7 @@ ApiClient  <- R6::R6Class(
           }
         }
       } else if (exists(return_type, pkg_env) && !(c(return_type) %in% primitive_types)) {
-        # To handle model objects which are not array or map containers (e.g. Pet)
+        # To handle model objects which are not array or map containers. Ex:"Pet"
         return_type <- get(return_type, envir = as.environment(pkg_env))
         return_obj <- return_type$new()
         # check if discriminator is defined

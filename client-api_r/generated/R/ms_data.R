@@ -100,10 +100,10 @@ MsData <- R6::R6Class(
         self$`mergedMs2` <- mergedms2_object
       }
       if (!is.null(this_object$`ms2Spectra`)) {
-        self$`ms2Spectra` <- ApiClient$new()$deserializeObj(this_object$`ms2Spectra`, "array[AnnotatedSpectrum]", loadNamespace("RSirius"))
+        self$`ms2Spectra` <- ApiClient$new()$deserializeObj(this_object$`ms2Spectra`, "array[AnnotatedSpectrum]", loadNamespace("Rsirius"))
       }
       if (!is.null(this_object$`ms1Spectra`)) {
-        self$`ms1Spectra` <- ApiClient$new()$deserializeObj(this_object$`ms1Spectra`, "array[AnnotatedSpectrum]", loadNamespace("RSirius"))
+        self$`ms1Spectra` <- ApiClient$new()$deserializeObj(this_object$`ms1Spectra`, "array[AnnotatedSpectrum]", loadNamespace("Rsirius"))
       }
       self
     },
@@ -164,8 +164,8 @@ MsData <- R6::R6Class(
       this_object <- jsonlite::fromJSON(input_json)
       self$`mergedMs1` <- AnnotatedSpectrum$new()$fromJSON(jsonlite::toJSON(this_object$mergedMs1, auto_unbox = TRUE, digits = NA))
       self$`mergedMs2` <- AnnotatedSpectrum$new()$fromJSON(jsonlite::toJSON(this_object$mergedMs2, auto_unbox = TRUE, digits = NA))
-      self$`ms2Spectra` <- ApiClient$new()$deserializeObj(this_object$`ms2Spectra`, "array[AnnotatedSpectrum]", loadNamespace("RSirius"))
-      self$`ms1Spectra` <- ApiClient$new()$deserializeObj(this_object$`ms1Spectra`, "array[AnnotatedSpectrum]", loadNamespace("RSirius"))
+      self$`ms2Spectra` <- ApiClient$new()$deserializeObj(this_object$`ms2Spectra`, "array[AnnotatedSpectrum]", loadNamespace("Rsirius"))
+      self$`ms1Spectra` <- ApiClient$new()$deserializeObj(this_object$`ms1Spectra`, "array[AnnotatedSpectrum]", loadNamespace("Rsirius"))
       self
     },
     #' Validate JSON input with respect to MsData

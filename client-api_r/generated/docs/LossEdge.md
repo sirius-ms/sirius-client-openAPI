@@ -1,4 +1,4 @@
-# RSirius::LossEdge
+# Rsirius::LossEdge
 
 
 

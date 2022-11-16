@@ -1,4 +1,4 @@
-# RSirius::UseHeuristic
+# Rsirius::UseHeuristic
 
 
 

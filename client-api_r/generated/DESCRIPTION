@@ -1,4 +1,4 @@
-Package: RSirius
+Package: Rsirius
 Title: R Package Client for SIRIUS Nightsky API
 Version: 1.0.0
 Author: person("OpenAPI Generator community", email = "team@openapitools.org", role = c("aut", "cre"))
@@ -11,5 +11,5 @@ Encoding: UTF-8
 License: Unlicense
 LazyData: true
 Suggests: testthat
-Imports: jsonlite, httr2, R6, base64enc, stringr
+Imports: jsonlite, httr, R6, base64enc, stringr
 RoxygenNote: 7.2.1

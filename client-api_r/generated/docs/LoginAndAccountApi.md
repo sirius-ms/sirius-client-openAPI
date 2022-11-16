@@ -22,17 +22,17 @@ Get information about the account currently logged in. Fails if not logged in.
 
 ### Example
 ```R
-library(RSirius)
+library(Rsirius)
 
 # Get information about the account currently logged in.
 #
 # prepare function argument(s)
 var_include_subs <- FALSE # character | include available and active subscriptions in {@link AccountInfo AccountInfo}. (Optional)
 
-api_instance <- rsirius_api$new()
+api_instance <- LoginAndAccountApi$new()
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
 # result <- api_instance$GetAccountInfo(include_subs = var_include_subsdata_file = "result.txt")
-result <- api_instance$login_and_account_api$GetAccountInfo(include_subs = var_include_subs)
+result <- api_instance$GetAccountInfo(include_subs = var_include_subs)
 dput(result)
 ```
 
@@ -69,15 +69,15 @@ Get SignUp URL (For signUp via web browser)
 
 ### Example
 ```R
-library(RSirius)
+library(Rsirius)
 
 # Get SignUp URL (For signUp via web browser)
 #
 
-api_instance <- rsirius_api$new()
+api_instance <- LoginAndAccountApi$new()
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
 # result <- api_instance$GetSignUpURL(data_file = "result.txt")
-result <- api_instance$login_and_account_api$GetSignUpURL()
+result <- api_instance$GetSignUpURL()
 dput(result)
 ```
 
@@ -111,15 +111,15 @@ Get available subscriptions of the account currently logged in. Fails if not log
 
 ### Example
 ```R
-library(RSirius)
+library(Rsirius)
 
 # Get available subscriptions of the account currently logged in.
 #
 
-api_instance <- rsirius_api$new()
+api_instance <- LoginAndAccountApi$new()
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
 # result <- api_instance$GetSubscriptions(data_file = "result.txt")
-result <- api_instance$login_and_account_api$GetSubscriptions()
+result <- api_instance$GetSubscriptions()
 dput(result)
 ```
 
@@ -153,15 +153,15 @@ Check if a user is logged in.
 
 ### Example
 ```R
-library(RSirius)
+library(Rsirius)
 
 # Check if a user is logged in.
 #
 
-api_instance <- rsirius_api$new()
+api_instance <- LoginAndAccountApi$new()
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
 # result <- api_instance$IsLoggedIn(data_file = "result.txt")
-result <- api_instance$login_and_account_api$IsLoggedIn()
+result <- api_instance$IsLoggedIn()
 dput(result)
 ```
 
@@ -195,7 +195,7 @@ Login into SIRIUS web services.
 
 ### Example
 ```R
-library(RSirius)
+library(Rsirius)
 
 # Login into SIRIUS web services.
 #
@@ -205,10 +205,10 @@ var_account_credentials <- AccountCredentials$new("username_example", "password_
 var_fail_when_logged_in <- FALSE # character | if true request fails if an active login already exists. (Optional)
 var_include_subs <- FALSE # character | include available and active subscriptions in {@link AccountInfo AccountInfo}. (Optional)
 
-api_instance <- rsirius_api$new()
+api_instance <- LoginAndAccountApi$new()
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
 # result <- api_instance$Login(var_accept_terms, var_account_credentials, fail_when_logged_in = var_fail_when_logged_in, include_subs = var_include_subsdata_file = "result.txt")
-result <- api_instance$login_and_account_api$Login(var_accept_terms, var_account_credentials, fail_when_logged_in = var_fail_when_logged_in, include_subs = var_include_subs)
+result <- api_instance$Login(var_accept_terms, var_account_credentials, fail_when_logged_in = var_fail_when_logged_in, include_subs = var_include_subs)
 dput(result)
 ```
 
@@ -248,13 +248,13 @@ Logout from SIRIUS web services.
 
 ### Example
 ```R
-library(RSirius)
+library(Rsirius)
 
 # Logout from SIRIUS web services.
 #
 
-api_instance <- rsirius_api$new()
-api_instance$login_and_account_api$Logout()
+api_instance <- LoginAndAccountApi$new()
+api_instance$Logout()
 ```
 
 ### Parameters
@@ -287,15 +287,15 @@ Open SignUp window in system browser and return signUp link.
 
 ### Example
 ```R
-library(RSirius)
+library(Rsirius)
 
 # Open SignUp window in system browser and return signUp link.
 #
 
-api_instance <- rsirius_api$new()
+api_instance <- LoginAndAccountApi$new()
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
 # result <- api_instance$SignUp(data_file = "result.txt")
-result <- api_instance$login_and_account_api$SignUp()
+result <- api_instance$SignUp()
 dput(result)
 ```
 
