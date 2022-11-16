@@ -26,7 +26,7 @@
 #' @field project_spaces_api an instance of ProjectSpacesApi
 #' @field version_info_controller_api an instance of VersionInfoControllerApi
 #' @export
-rsirius_api <- R6::R6Class(
+RsiriusApi <- R6::R6Class(
   classname = "RsiriusApi",
   inherit = ApiClient,
   public = list(
