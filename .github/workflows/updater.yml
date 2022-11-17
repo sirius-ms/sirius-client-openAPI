@@ -72,8 +72,8 @@ jobs:
         echo "from PySirius.sirius_api import SiriusAPI" >> client-api_python/generated/PySirius/__init__.py
     - name: Copy R wrapper class
       run: |
-        cp client-api_r/api_classes/SiriusApi.R  client-api_r/generated/R/SiriusApi.R
-        echo "export(SiriusApi)" >>  client-api_r/generated/NAMESPACE
+        cp client-api_r/api_classes/ririus_api.R  client-api_r/generated/R/rsirius_api.R
+        echo "export(RsiriusApi)" >> client-api_r/generated/NAMESPACE
         
     - name: Remove Sirius Rest Api
       run: |
