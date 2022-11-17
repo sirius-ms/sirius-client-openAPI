@@ -49,7 +49,7 @@ import JSirius.JSON;
  * 
  */
 @ApiModel(description = "")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-11-17T07:35:40.345480Z[Etc/UTC]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-11-17T07:52:44.843561Z[Etc/UTC]")
 public class CollisionEnergy {
   public static final String SERIALIZED_NAME_MIN_ENERGY = "minEnergy";
   @SerializedName(SERIALIZED_NAME_MIN_ENERGY)
