@@ -14,13 +14,13 @@ Method | HTTP request | Description
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 
-api_instance <- VersionInfoControllerApi$new()
+api_instance <- rsirius_api$new()
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
 # result <- api_instance$GetVersionInfo(data_file = "result.txt")
-result <- api_instance$GetVersionInfo()
+result <- api_instance$version_info_controller_api$GetVersionInfo()
 dput(result)
 ```
 

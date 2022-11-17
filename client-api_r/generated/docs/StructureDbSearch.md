@@ -1,4 +1,4 @@
-# Rsirius::StructureDbSearch
+# RSirius::StructureDbSearch
 
 User/developer friendly parameter subset for the CSI:FingerID structure db search tool.
 

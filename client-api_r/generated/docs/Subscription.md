@@ -1,4 +1,4 @@
-# Rsirius::Subscription
+# RSirius::Subscription
 
 
 

@@ -1,4 +1,4 @@
-# Rsirius::FingerprintPrediction
+# RSirius::FingerprintPrediction
 
 User/developer friendly parameter subset for the CSI:FingerID Fingerprint tool
 

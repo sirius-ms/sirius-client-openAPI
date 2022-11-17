@@ -50,7 +50,7 @@ import JSirius.JSON;
  * 
  */
 @ApiModel(description = "")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-11-17T07:52:44.843561Z[Etc/UTC]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-11-17T10:27:24.207994Z[Etc/UTC]")
 public class Subscription {
   public static final String SERIALIZED_NAME_SID = "sid";
   @SerializedName(SERIALIZED_NAME_SID)

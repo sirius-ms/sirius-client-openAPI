@@ -208,13 +208,13 @@ StructureCandidate <- R6::R6Class(
         self$`inchiKey` <- this_object$`inchiKey`
       }
       if (!is.null(this_object$`fpBitsSet`)) {
-        self$`fpBitsSet` <- ApiClient$new()$deserializeObj(this_object$`fpBitsSet`, "array[integer]", loadNamespace("Rsirius"))
+        self$`fpBitsSet` <- ApiClient$new()$deserializeObj(this_object$`fpBitsSet`, "array[integer]", loadNamespace("RSirius"))
       }
       if (!is.null(this_object$`dbLinks`)) {
-        self$`dbLinks` <- ApiClient$new()$deserializeObj(this_object$`dbLinks`, "array[DBLink]", loadNamespace("Rsirius"))
+        self$`dbLinks` <- ApiClient$new()$deserializeObj(this_object$`dbLinks`, "array[DBLink]", loadNamespace("RSirius"))
       }
       if (!is.null(this_object$`pubmedIds`)) {
-        self$`pubmedIds` <- ApiClient$new()$deserializeObj(this_object$`pubmedIds`, "array[integer]", loadNamespace("Rsirius"))
+        self$`pubmedIds` <- ApiClient$new()$deserializeObj(this_object$`pubmedIds`, "array[integer]", loadNamespace("RSirius"))
       }
       self
     },
@@ -337,9 +337,9 @@ StructureCandidate <- R6::R6Class(
       self$`numOfPubMedIds` <- this_object$`numOfPubMedIds`
       self$`xlogP` <- this_object$`xlogP`
       self$`inchiKey` <- this_object$`inchiKey`
-      self$`fpBitsSet` <- ApiClient$new()$deserializeObj(this_object$`fpBitsSet`, "array[integer]", loadNamespace("Rsirius"))
-      self$`dbLinks` <- ApiClient$new()$deserializeObj(this_object$`dbLinks`, "array[DBLink]", loadNamespace("Rsirius"))
-      self$`pubmedIds` <- ApiClient$new()$deserializeObj(this_object$`pubmedIds`, "array[integer]", loadNamespace("Rsirius"))
+      self$`fpBitsSet` <- ApiClient$new()$deserializeObj(this_object$`fpBitsSet`, "array[integer]", loadNamespace("RSirius"))
+      self$`dbLinks` <- ApiClient$new()$deserializeObj(this_object$`dbLinks`, "array[DBLink]", loadNamespace("RSirius"))
+      self$`pubmedIds` <- ApiClient$new()$deserializeObj(this_object$`pubmedIds`, "array[integer]", loadNamespace("RSirius"))
       self
     },
     #' Validate JSON input with respect to StructureCandidate

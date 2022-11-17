@@ -34,13 +34,13 @@
 #' \dontrun{
 #' ####################  GetVersionInfo  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #'
-#' api_instance <- VersionInfoControllerApi$new()
+#' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
 #' # result <- api_instance$GetVersionInfo(data_file = "result.txt")
-#' result <- api_instance$GetVersionInfo()
+#' result <- api_instance$version_info_controller_api$GetVersionInfo()
 #' dput(result)
 #'
 #'
@@ -134,7 +134,7 @@ VersionInfoControllerApi <- R6::R6Class(
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response, "character", loadNamespace("Rsirius")),
+          self$api_client$deserialize(local_var_resp$response, "character", loadNamespace("RSirius")),
           error = function(e) {
             stop("Failed to deserialize response")
           }

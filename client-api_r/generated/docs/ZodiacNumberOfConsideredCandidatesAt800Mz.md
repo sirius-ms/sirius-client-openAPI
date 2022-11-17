@@ -1,4 +1,4 @@
-# Rsirius::ZodiacNumberOfConsideredCandidatesAt800Mz
+# RSirius::ZodiacNumberOfConsideredCandidatesAt800Mz
 
 
 

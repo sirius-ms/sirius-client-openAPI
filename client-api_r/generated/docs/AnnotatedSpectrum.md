@@ -1,4 +1,4 @@
-# Rsirius::AnnotatedSpectrum
+# RSirius::AnnotatedSpectrum
 
 
 

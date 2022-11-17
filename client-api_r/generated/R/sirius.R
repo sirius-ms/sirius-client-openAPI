@@ -224,7 +224,7 @@ Sirius <- R6::R6Class(
         self$`isotopeMs2Settings` <- this_object$`isotopeMs2Settings`
       }
       if (!is.null(this_object$`formulaSearchDBs`)) {
-        self$`formulaSearchDBs` <- ApiClient$new()$deserializeObj(this_object$`formulaSearchDBs`, "array[character]", loadNamespace("Rsirius"))
+        self$`formulaSearchDBs` <- ApiClient$new()$deserializeObj(this_object$`formulaSearchDBs`, "array[character]", loadNamespace("RSirius"))
       }
       if (!is.null(this_object$`enforcedFormulaConstraints`)) {
         self$`enforcedFormulaConstraints` <- this_object$`enforcedFormulaConstraints`
@@ -233,7 +233,7 @@ Sirius <- R6::R6Class(
         self$`fallbackFormulaConstraints` <- this_object$`fallbackFormulaConstraints`
       }
       if (!is.null(this_object$`detectableElements`)) {
-        self$`detectableElements` <- ApiClient$new()$deserializeObj(this_object$`detectableElements`, "array[character]", loadNamespace("Rsirius"))
+        self$`detectableElements` <- ApiClient$new()$deserializeObj(this_object$`detectableElements`, "array[character]", loadNamespace("RSirius"))
       }
       if (!is.null(this_object$`ilpTimeout`)) {
         ilptimeout_object <- Timeout$new()
@@ -378,10 +378,10 @@ Sirius <- R6::R6Class(
         stop(paste("Error! \"", this_object$`isotopeMs2Settings`, "\" cannot be assigned to `isotopeMs2Settings`. Must be \"IGNORE\", \"FILTER\", \"SCORE\".", sep = ""))
       }
       self$`isotopeMs2Settings` <- this_object$`isotopeMs2Settings`
-      self$`formulaSearchDBs` <- ApiClient$new()$deserializeObj(this_object$`formulaSearchDBs`, "array[character]", loadNamespace("Rsirius"))
+      self$`formulaSearchDBs` <- ApiClient$new()$deserializeObj(this_object$`formulaSearchDBs`, "array[character]", loadNamespace("RSirius"))
       self$`enforcedFormulaConstraints` <- this_object$`enforcedFormulaConstraints`
       self$`fallbackFormulaConstraints` <- this_object$`fallbackFormulaConstraints`
-      self$`detectableElements` <- ApiClient$new()$deserializeObj(this_object$`detectableElements`, "array[character]", loadNamespace("Rsirius"))
+      self$`detectableElements` <- ApiClient$new()$deserializeObj(this_object$`detectableElements`, "array[character]", loadNamespace("RSirius"))
       self$`ilpTimeout` <- Timeout$new()$fromJSON(jsonlite::toJSON(this_object$ilpTimeout, auto_unbox = TRUE, digits = NA))
       self$`useHeuristic` <- UseHeuristic$new()$fromJSON(jsonlite::toJSON(this_object$useHeuristic, auto_unbox = TRUE, digits = NA))
       self

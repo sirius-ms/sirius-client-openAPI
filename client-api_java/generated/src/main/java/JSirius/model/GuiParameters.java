@@ -49,7 +49,7 @@ import JSirius.JSON;
  * Parameters to \&quot;remote control\&quot; the SIRIUS GUI.
  */
 @ApiModel(description = "Parameters to \"remote control\" the SIRIUS GUI.")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-11-17T07:52:44.843561Z[Etc/UTC]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-11-17T10:27:24.207994Z[Etc/UTC]")
 public class GuiParameters {
   /**
    * Selected Result ab.

@@ -1,4 +1,4 @@
-# Rsirius::FormulaCandidate
+# RSirius::FormulaCandidate
 
 
 

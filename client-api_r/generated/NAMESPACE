@@ -3,10 +3,12 @@
 
 import(R6)
 import(jsonlite)
-import(httr)
+import(httr2)
 import(base64enc)
 import(stringr)
 
+# Wrapper
+export(rsirius_api)
 
 # Core
 export(ApiClient)

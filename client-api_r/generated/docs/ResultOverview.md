@@ -1,4 +1,4 @@
-# Rsirius::ResultOverview
+# RSirius::ResultOverview
 
 Results that are available for a {@link FormulaResultContainer FormulaResultContainer} represented as boolean or numeric score (if available).  NULL scores indicate that the corresponding result is not available.
 
