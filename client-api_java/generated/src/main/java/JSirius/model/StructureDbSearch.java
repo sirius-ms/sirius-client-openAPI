@@ -51,7 +51,7 @@ import JSirius.JSON;
  * User/developer friendly parameter subset for the CSI:FingerID structure db search tool.
  */
 @ApiModel(description = "User/developer friendly parameter subset for the CSI:FingerID structure db search tool.")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-11-16T21:08:39.612262Z[Etc/UTC]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-11-17T07:35:40.345480Z[Etc/UTC]")
 public class StructureDbSearch {
   public static final String SERIALIZED_NAME_ENABLED = "enabled";
   @SerializedName(SERIALIZED_NAME_ENABLED)

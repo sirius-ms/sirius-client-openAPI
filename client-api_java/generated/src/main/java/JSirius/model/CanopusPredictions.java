@@ -52,7 +52,7 @@ import JSirius.JSON;
  * Container class that holds the CANOPUS compound class predictions for alle predictable compound classes.  This is the full CANOPUS result.
  */
 @ApiModel(description = "Container class that holds the CANOPUS compound class predictions for alle predictable compound classes.  This is the full CANOPUS result.")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-11-16T21:08:39.612262Z[Etc/UTC]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-11-17T07:35:40.345480Z[Etc/UTC]")
 public class CanopusPredictions {
   public static final String SERIALIZED_NAME_CLASSY_FIRE_CLASSES = "classyFireClasses";
   @SerializedName(SERIALIZED_NAME_CLASSY_FIRE_CLASSES)

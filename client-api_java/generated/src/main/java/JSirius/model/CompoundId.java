@@ -51,7 +51,7 @@ import JSirius.JSON;
  * The CompoundId contains the ID of a compound together with some read-only information that might be displayed in  some summary view.
  */
 @ApiModel(description = "The CompoundId contains the ID of a compound together with some read-only information that might be displayed in  some summary view.")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-11-16T21:08:39.612262Z[Etc/UTC]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-11-17T07:35:40.345480Z[Etc/UTC]")
 public class CompoundId {
   public static final String SERIALIZED_NAME_ID = "id";
   @SerializedName(SERIALIZED_NAME_ID)
