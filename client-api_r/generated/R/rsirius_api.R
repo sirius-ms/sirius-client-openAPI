@@ -136,9 +136,12 @@ RsiriusApi <- R6::R6Class(
       tryCatch(
         {
           resp <- httr2::GET(paste(self$basePath,"/actuator/health", sep = ""))
-          
+          print(resp)
+	  print(httr2::status_code(resp))
           if(httr2::status_code(resp) >= 200 && httr2::status_code(resp) <= 299){
             content <- httr2::content(resp)
+	    print(content)
+	    print(content$status)
             if(content$status == "UP"){
               return(TRUE)
             }else{
