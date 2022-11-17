@@ -53,7 +53,7 @@ import JSirius.JSON;
  * User/developer friendly parameter subset for the Formula/SIRIUS tool
  */
 @ApiModel(description = "User/developer friendly parameter subset for the Formula/SIRIUS tool")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-11-17T10:27:24.207994Z[Etc/UTC]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-11-17T10:35:06.123516Z[Etc/UTC]")
 public class Sirius {
   public static final String SERIALIZED_NAME_ENABLED = "enabled";
   @SerializedName(SERIALIZED_NAME_ENABLED)

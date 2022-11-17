@@ -22,7 +22,7 @@ Get information about the account currently logged in. Fails if not logged in.
 
 ### Example
 ```R
-library(RSirius)
+library(Rsirius)
 
 # Get information about the account currently logged in.
 #
@@ -69,7 +69,7 @@ Get SignUp URL (For signUp via web browser)
 
 ### Example
 ```R
-library(RSirius)
+library(Rsirius)
 
 # Get SignUp URL (For signUp via web browser)
 #
@@ -111,7 +111,7 @@ Get available subscriptions of the account currently logged in. Fails if not log
 
 ### Example
 ```R
-library(RSirius)
+library(Rsirius)
 
 # Get available subscriptions of the account currently logged in.
 #
@@ -153,7 +153,7 @@ Check if a user is logged in.
 
 ### Example
 ```R
-library(RSirius)
+library(Rsirius)
 
 # Check if a user is logged in.
 #
@@ -195,7 +195,7 @@ Login into SIRIUS web services.
 
 ### Example
 ```R
-library(RSirius)
+library(Rsirius)
 
 # Login into SIRIUS web services.
 #
@@ -248,7 +248,7 @@ Logout from SIRIUS web services.
 
 ### Example
 ```R
-library(RSirius)
+library(Rsirius)
 
 # Logout from SIRIUS web services.
 #
@@ -287,7 +287,7 @@ Open SignUp window in system browser and return signUp link.
 
 ### Example
 ```R
-library(RSirius)
+library(Rsirius)
 
 # Open SignUp window in system browser and return signUp link.
 #

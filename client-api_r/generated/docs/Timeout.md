@@ -1,4 +1,4 @@
-# RSirius::Timeout
+# Rsirius::Timeout
 
 
 

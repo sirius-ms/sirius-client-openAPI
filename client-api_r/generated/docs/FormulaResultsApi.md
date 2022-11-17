@@ -24,7 +24,7 @@ Best matching compound classes,  Set of the highest scoring compound classes CAN
 
 ### Example
 ```R
-library(RSirius)
+library(Rsirius)
 
 # Best matching compound classes,  Set of the highest scoring compound classes CANOPUS) on each hierarchy level of  the ClassyFire and NPC ontology,
 #
@@ -75,7 +75,7 @@ All predicted compound classes (CANOPUS) from ClassyFire and NPC and their proba
 
 ### Example
 ```R
-library(RSirius)
+library(Rsirius)
 
 # All predicted compound classes (CANOPUS) from ClassyFire and NPC and their probabilities,
 #
@@ -126,7 +126,7 @@ Returns predicted fingerprint (CSI:FingerID) for the given formula result identi
 
 ### Example
 ```R
-library(RSirius)
+library(Rsirius)
 
 # Returns predicted fingerprint (CSI:FingerID) for the given formula result identifier  This fingerprint is used to perfom structure database search and predict compound classes.
 #
@@ -177,7 +177,7 @@ List of all FormulaResultContainers available for this compound/feature with min
 
 ### Example
 ```R
-library(RSirius)
+library(Rsirius)
 
 # List of all FormulaResultContainers available for this compound/feature with minimal information.
 #
@@ -230,7 +230,7 @@ FormulaResultContainers for the given 'formulaId' with minimal information.  Can
 
 ### Example
 ```R
-library(RSirius)
+library(Rsirius)
 
 # FormulaResultContainers for the given 'formulaId' with minimal information.
 #
@@ -285,7 +285,7 @@ Returns fragmentation tree (SIRIUS) for the given formula result identifier  Thi
 
 ### Example
 ```R
-library(RSirius)
+library(Rsirius)
 
 # Returns fragmentation tree (SIRIUS) for the given formula result identifier  This tree is used to rank formula candidates (treeScore).
 #
@@ -336,7 +336,7 @@ Returns simulated isotope pattern (SIRIUS) for the given formula result identifi
 
 ### Example
 ```R
-library(RSirius)
+library(Rsirius)
 
 # Returns simulated isotope pattern (SIRIUS) for the given formula result identifier.
 #
@@ -387,7 +387,7 @@ List of StructureCandidates the given 'formulaId' with minimal information.  Str
 
 ### Example
 ```R
-library(RSirius)
+library(Rsirius)
 
 # List of StructureCandidates the given 'formulaId' with minimal information.
 #
@@ -446,7 +446,7 @@ Best Scoring StructureCandidate over all molecular formular resutls that belong 
 
 ### Example
 ```R
-library(RSirius)
+library(Rsirius)
 
 # Best Scoring StructureCandidate over all molecular formular resutls that belong to the specified  compound/feature (compoundId).
 #

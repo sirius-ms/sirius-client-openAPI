@@ -70,7 +70,7 @@
 #' \dontrun{
 #' ####################  ApplyToGui  ####################
 #'
-#' library(RSirius)
+#' library(Rsirius)
 #' var_project_id <- "project_id_example" # character | of project-space the GUI instance is connected to.
 #' var_gui_parameters <- GuiParameters$new("FORMULAS", "cid_example", "fid_example", "structureCandidateInChIKey_example", "bringToFront_example") # GuiParameters | parameters that should be applied.
 #'
@@ -82,7 +82,7 @@
 #'
 #' ####################  CloseGui  ####################
 #'
-#' library(RSirius)
+#' library(Rsirius)
 #' var_project_id <- "project_id_example" # character | if project-space the GUI instance is connected to.
 #'
 #' #Close GUI instance of given project-space if available.
@@ -93,7 +93,7 @@
 #'
 #' ####################  OpenGui  ####################
 #'
-#' library(RSirius)
+#' library(Rsirius)
 #' var_project_id <- "project_id_example" # character | of project-space the GUI instance will connect to.
 #' var_read_only <- TRUE # character | open in read-only mode. (Optional)
 #'

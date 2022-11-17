@@ -1,4 +1,4 @@
-# RSirius::CollisionEnergy
+# Rsirius::CollisionEnergy
 
 
 

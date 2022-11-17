@@ -1,4 +1,4 @@
-# RSirius::JobId
+# Rsirius::JobId
 
 Identifier created by the SIRIUS Nightsky API for a newly created Job.  Object can be enriched with Job status/progress information ({@link JobProgress JobProgress}) and/or Job command information.
 

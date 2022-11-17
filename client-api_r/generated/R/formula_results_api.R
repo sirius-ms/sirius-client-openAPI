@@ -199,7 +199,7 @@
 #' \dontrun{
 #' ####################  GetBestMatchingCanopusPredictions  ####################
 #'
-#' library(RSirius)
+#' library(Rsirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_compound_id <- "compound_id_example" # character | compound/feature the formula result belongs to.
 #' var_formula_id <- "formula_id_example" # character | identifier of the requested formula result
@@ -215,7 +215,7 @@
 #'
 #' ####################  GetCanopusPredictions  ####################
 #'
-#' library(RSirius)
+#' library(Rsirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_compound_id <- "compound_id_example" # character | compound/feature the formula result belongs to.
 #' var_formula_id <- "formula_id_example" # character | identifier of the requested formula result
@@ -231,7 +231,7 @@
 #'
 #' ####################  GetFingerprintPrediction  ####################
 #'
-#' library(RSirius)
+#' library(Rsirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_compound_id <- "compound_id_example" # character | compound/feature the formula result belongs to.
 #' var_formula_id <- "formula_id_example" # character | identifier of the requested formula result
@@ -247,7 +247,7 @@
 #'
 #' ####################  GetFormulaIds  ####################
 #'
-#' library(RSirius)
+#' library(Rsirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_compound_id <- "compound_id_example" # character | compound/feature the formula result belongs to.
 #' var_result_overview <- TRUE # character | add ResultOverview to the FormulaResultContainers (Optional)
@@ -264,7 +264,7 @@
 #'
 #' ####################  GetFormulaResult  ####################
 #'
-#' library(RSirius)
+#' library(Rsirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_compound_id <- "compound_id_example" # character | compound/feature the formula result belongs to.
 #' var_formula_id <- "formula_id_example" # character | identifier of the requested formula result
@@ -282,7 +282,7 @@
 #'
 #' ####################  GetFragTree  ####################
 #'
-#' library(RSirius)
+#' library(Rsirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_compound_id <- "compound_id_example" # character | compound/feature the formula result belongs to.
 #' var_formula_id <- "formula_id_example" # character | identifier of the requested formula result
@@ -298,7 +298,7 @@
 #'
 #' ####################  GetSimulatedIsotopePattern  ####################
 #'
-#' library(RSirius)
+#' library(Rsirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_compound_id <- "compound_id_example" # character | compound/feature the formula result belongs to.
 #' var_formula_id <- "formula_id_example" # character | identifier of the requested formula result
@@ -314,7 +314,7 @@
 #'
 #' ####################  GetStructureCandidates  ####################
 #'
-#' library(RSirius)
+#' library(Rsirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_compound_id <- "compound_id_example" # character | compound/feature the formula result belongs to.
 #' var_formula_id <- "formula_id_example" # character | identifier of the requested formula result
@@ -334,7 +334,7 @@
 #'
 #' ####################  GetTopStructureCandidate  ####################
 #'
-#' library(RSirius)
+#' library(Rsirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_compound_id <- "compound_id_example" # character | compound/feature the formula result belongs to.
 #' var_fingerprint <- FALSE # character | add molecular fingerprint to StructureCandidates (Optional)
@@ -473,7 +473,7 @@ FormulaResultsApi <- R6::R6Class(
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response, "CompoundClasses", loadNamespace("RSirius")),
+          self$api_client$deserialize(local_var_resp$response, "CompoundClasses", loadNamespace("Rsirius")),
           error = function(e) {
             stop("Failed to deserialize response")
           }
@@ -592,7 +592,7 @@ FormulaResultsApi <- R6::R6Class(
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response, "CanopusPredictions", loadNamespace("RSirius")),
+          self$api_client$deserialize(local_var_resp$response, "CanopusPredictions", loadNamespace("Rsirius")),
           error = function(e) {
             stop("Failed to deserialize response")
           }
@@ -711,7 +711,7 @@ FormulaResultsApi <- R6::R6Class(
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response, "array[numeric]", loadNamespace("RSirius")),
+          self$api_client$deserialize(local_var_resp$response, "array[numeric]", loadNamespace("Rsirius")),
           error = function(e) {
             stop("Failed to deserialize response")
           }
@@ -829,7 +829,7 @@ FormulaResultsApi <- R6::R6Class(
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response, "array[FormulaResultContainer]", loadNamespace("RSirius")),
+          self$api_client$deserialize(local_var_resp$response, "array[FormulaResultContainer]", loadNamespace("Rsirius")),
           error = function(e) {
             stop("Failed to deserialize response")
           }
@@ -958,7 +958,7 @@ FormulaResultsApi <- R6::R6Class(
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response, "FormulaResultContainer", loadNamespace("RSirius")),
+          self$api_client$deserialize(local_var_resp$response, "FormulaResultContainer", loadNamespace("Rsirius")),
           error = function(e) {
             stop("Failed to deserialize response")
           }
@@ -1077,7 +1077,7 @@ FormulaResultsApi <- R6::R6Class(
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response, "FragmentationTree", loadNamespace("RSirius")),
+          self$api_client$deserialize(local_var_resp$response, "FragmentationTree", loadNamespace("Rsirius")),
           error = function(e) {
             stop("Failed to deserialize response")
           }
@@ -1196,7 +1196,7 @@ FormulaResultsApi <- R6::R6Class(
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response, "AnnotatedSpectrum", loadNamespace("RSirius")),
+          self$api_client$deserialize(local_var_resp$response, "AnnotatedSpectrum", loadNamespace("Rsirius")),
           error = function(e) {
             stop("Failed to deserialize response")
           }
@@ -1335,7 +1335,7 @@ FormulaResultsApi <- R6::R6Class(
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response, "array[StructureCandidate]", loadNamespace("RSirius")),
+          self$api_client$deserialize(local_var_resp$response, "array[StructureCandidate]", loadNamespace("Rsirius")),
           error = function(e) {
             stop("Failed to deserialize response")
           }
@@ -1458,7 +1458,7 @@ FormulaResultsApi <- R6::R6Class(
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response, "StructureCandidate", loadNamespace("RSirius")),
+          self$api_client$deserialize(local_var_resp$response, "StructureCandidate", loadNamespace("Rsirius")),
           error = function(e) {
             stop("Failed to deserialize response")
           }

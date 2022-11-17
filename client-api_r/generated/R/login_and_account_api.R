@@ -133,7 +133,7 @@
 #' \dontrun{
 #' ####################  GetAccountInfo  ####################
 #'
-#' library(RSirius)
+#' library(Rsirius)
 #' var_include_subs <- FALSE # character | include available and active subscriptions in {@link AccountInfo AccountInfo}. (Optional)
 #'
 #' #Get information about the account currently logged in.
@@ -147,7 +147,7 @@
 #'
 #' ####################  GetSignUpURL  ####################
 #'
-#' library(RSirius)
+#' library(Rsirius)
 #'
 #' #Get SignUp URL (For signUp via web browser)
 #' api_instance <- rsirius_api$new()
@@ -160,7 +160,7 @@
 #'
 #' ####################  GetSubscriptions  ####################
 #'
-#' library(RSirius)
+#' library(Rsirius)
 #'
 #' #Get available subscriptions of the account currently logged in.
 #' api_instance <- rsirius_api$new()
@@ -173,7 +173,7 @@
 #'
 #' ####################  IsLoggedIn  ####################
 #'
-#' library(RSirius)
+#' library(Rsirius)
 #'
 #' #Check if a user is logged in.
 #' api_instance <- rsirius_api$new()
@@ -186,7 +186,7 @@
 #'
 #' ####################  Login  ####################
 #'
-#' library(RSirius)
+#' library(Rsirius)
 #' var_accept_terms <- "accept_terms_example" # character | 
 #' var_account_credentials <- AccountCredentials$new("username_example", "password_example", "refreshToken_example") # AccountCredentials | used to log in.
 #' var_fail_when_logged_in <- FALSE # character | if true request fails if an active login already exists. (Optional)
@@ -203,7 +203,7 @@
 #'
 #' ####################  Logout  ####################
 #'
-#' library(RSirius)
+#' library(Rsirius)
 #'
 #' #Logout from SIRIUS web services.
 #' api_instance <- rsirius_api$new()
@@ -213,7 +213,7 @@
 #'
 #' ####################  SignUp  ####################
 #'
-#' library(RSirius)
+#' library(Rsirius)
 #'
 #' #Open SignUp window in system browser and return signUp link.
 #' api_instance <- rsirius_api$new()
@@ -319,7 +319,7 @@ LoginAndAccountApi <- R6::R6Class(
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response, "AccountInfo", loadNamespace("RSirius")),
+          self$api_client$deserialize(local_var_resp$response, "AccountInfo", loadNamespace("Rsirius")),
           error = function(e) {
             stop("Failed to deserialize response")
           }
@@ -405,7 +405,7 @@ LoginAndAccountApi <- R6::R6Class(
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response, "character", loadNamespace("RSirius")),
+          self$api_client$deserialize(local_var_resp$response, "character", loadNamespace("Rsirius")),
           error = function(e) {
             stop("Failed to deserialize response")
           }
@@ -491,7 +491,7 @@ LoginAndAccountApi <- R6::R6Class(
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response, "array[Subscription]", loadNamespace("RSirius")),
+          self$api_client$deserialize(local_var_resp$response, "array[Subscription]", loadNamespace("Rsirius")),
           error = function(e) {
             stop("Failed to deserialize response")
           }
@@ -577,7 +577,7 @@ LoginAndAccountApi <- R6::R6Class(
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response, "character", loadNamespace("RSirius")),
+          self$api_client$deserialize(local_var_resp$response, "character", loadNamespace("Rsirius")),
           error = function(e) {
             stop("Failed to deserialize response")
           }
@@ -695,7 +695,7 @@ LoginAndAccountApi <- R6::R6Class(
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response, "AccountInfo", loadNamespace("RSirius")),
+          self$api_client$deserialize(local_var_resp$response, "AccountInfo", loadNamespace("Rsirius")),
           error = function(e) {
             stop("Failed to deserialize response")
           }
@@ -854,7 +854,7 @@ LoginAndAccountApi <- R6::R6Class(
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response, "character", loadNamespace("RSirius")),
+          self$api_client$deserialize(local_var_resp$response, "character", loadNamespace("Rsirius")),
           error = function(e) {
             stop("Failed to deserialize response")
           }

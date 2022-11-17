@@ -2,7 +2,7 @@
 
 SIRIUS Nightsky API
 - API version: v0.9 on SIRIUS 5.6.3-SNAPSHOT
-  - Build date: 2022-11-17T10:27:24.207994Z[Etc/UTC]
+  - Build date: 2022-11-17T10:35:06.123516Z[Etc/UTC]
 
 REST API that provides the full functionality of SIRIUS and its web services as background service. It is intended as entry-point for scripting languages and software integration SDKs.
 

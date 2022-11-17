@@ -1,4 +1,4 @@
-# RSirius::Sirius
+# Rsirius::Sirius
 
 User/developer friendly parameter subset for the Formula/SIRIUS tool
 

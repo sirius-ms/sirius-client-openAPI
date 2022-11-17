@@ -25,7 +25,7 @@ Delete job. Specify how to behave for running jobs.
 
 ### Example
 ```R
-library(RSirius)
+library(Rsirius)
 
 # Delete job.
 #
@@ -75,7 +75,7 @@ Delete job configuration with given name.
 
 ### Example
 ```R
-library(RSirius)
+library(Rsirius)
 
 # Delete job configuration with given name.
 #
@@ -119,7 +119,7 @@ Request default job configuration
 
 ### Example
 ```R
-library(RSirius)
+library(Rsirius)
 
 # Request default job configuration
 #
@@ -166,7 +166,7 @@ Get job information and its current state and progress (if available).
 
 ### Example
 ```R
-library(RSirius)
+library(Rsirius)
 
 # Get job information and its current state and progress (if available).
 #
@@ -221,7 +221,7 @@ Request job configuration with given name.
 
 ### Example
 ```R
-library(RSirius)
+library(Rsirius)
 
 # Request job configuration with given name.
 #
@@ -270,7 +270,7 @@ Request all available job configurations
 
 ### Example
 ```R
-library(RSirius)
+library(Rsirius)
 
 # Request all available job configurations
 #
@@ -317,7 +317,7 @@ Get job information and its current state and progress (if available).
 
 ### Example
 ```R
-library(RSirius)
+library(Rsirius)
 
 # Get job information and its current state and progress (if available).
 #
@@ -370,7 +370,7 @@ Add new job configuration with given name.
 
 ### Example
 ```R
-library(RSirius)
+library(Rsirius)
 
 # Add new job configuration with given name.
 #
@@ -421,7 +421,7 @@ Start computation for given compounds and with given parameters.
 
 ### Example
 ```R
-library(RSirius)
+library(Rsirius)
 
 # Start computation for given compounds and with given parameters.
 #
@@ -476,7 +476,7 @@ Start computation for given compounds and with parameters from a stored job-conf
 
 ### Example
 ```R
-library(RSirius)
+library(Rsirius)
 
 # Start computation for given compounds and with parameters from a stored job-config.
 #

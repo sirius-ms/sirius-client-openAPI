@@ -14,7 +14,7 @@ Method | HTTP request | Description
 
 ### Example
 ```R
-library(RSirius)
+library(Rsirius)
 
 
 api_instance <- rsirius_api$new()

@@ -20,7 +20,7 @@ Delete compound/feature with the given identifier from the specified project-spa
 
 ### Example
 ```R
-library(RSirius)
+library(Rsirius)
 
 # Delete compound/feature with the given identifier from the specified project-space.
 #
@@ -66,7 +66,7 @@ Get compound/feature with the given identifier from the specified project-space.
 
 ### Example
 ```R
-library(RSirius)
+library(Rsirius)
 
 # Get compound/feature with the given identifier from the specified project-space.
 #
@@ -119,7 +119,7 @@ Get all available compounds/features in the given project-space.
 
 ### Example
 ```R
-library(RSirius)
+library(Rsirius)
 
 # Get all available compounds/features in the given project-space.
 #
@@ -170,7 +170,7 @@ Import ms/ms data in given format from local filesystem into the specified proje
 
 ### Example
 ```R
-library(RSirius)
+library(Rsirius)
 
 # Import ms/ms data in given format from local filesystem into the specified project-space
 #
@@ -225,7 +225,7 @@ Import ms/ms data from the given format into the specified project-space  Possib
 
 ### Example
 ```R
-library(RSirius)
+library(Rsirius)
 
 # Import ms/ms data from the given format into the specified project-space  Possible formats (ms, mgf, cef, msp, mzML, mzXML)
 #

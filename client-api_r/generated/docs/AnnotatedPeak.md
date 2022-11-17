@@ -1,4 +1,4 @@
-# RSirius::AnnotatedPeak
+# Rsirius::AnnotatedPeak
 
 
 

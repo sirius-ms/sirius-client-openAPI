@@ -117,7 +117,7 @@
 #' \dontrun{
 #' ####################  DeleteCompound  ####################
 #'
-#' library(RSirius)
+#' library(Rsirius)
 #' var_project_id <- "project_id_example" # character | project-space to delete from.
 #' var_cid <- "cid_example" # character | identifier of compound to delete.
 #'
@@ -129,7 +129,7 @@
 #'
 #' ####################  GetCompound  ####################
 #'
-#' library(RSirius)
+#' library(Rsirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_cid <- "cid_example" # character | identifier of compound to access.
 #' var_top_annotation <- FALSE # character | include the top annotation of this feature into the output (if available). (Optional)
@@ -146,7 +146,7 @@
 #'
 #' ####################  GetCompounds  ####################
 #'
-#' library(RSirius)
+#' library(Rsirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_top_annotation <- FALSE # character | include the top annotation of this feature into the output (if available). (Optional)
 #' var_ms_data <- FALSE # character | include corresponding source data (MS and MS/MS) into the output. (Optional)
@@ -162,7 +162,7 @@
 #'
 #' ####################  ImportCompounds  ####################
 #'
-#' library(RSirius)
+#' library(Rsirius)
 #' var_project_id <- "project_id_example" # character | project-space to import into.
 #' var_request_body <- c("property_example") # array[character] | List of file and directory paths to import
 #' var_align_lcms_runs <- FALSE # character | If true, multiple LCMS Runs (mzML, mzXML) will be aligned during import/feature finding (Optional)
@@ -180,7 +180,7 @@
 #'
 #' ####################  ImportCompoundsFromString  ####################
 #'
-#' library(RSirius)
+#' library(Rsirius)
 #' var_project_id <- "project_id_example" # character | project-space to import into.
 #' var_format <- "format_example" # character | data format specified by the usual file extension of the format (without [.])
 #' var_body <- "body_example" # character | data content in specified format
@@ -412,7 +412,7 @@ CompoundsApi <- R6::R6Class(
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response, "CompoundId", loadNamespace("RSirius")),
+          self$api_client$deserialize(local_var_resp$response, "CompoundId", loadNamespace("Rsirius")),
           error = function(e) {
             stop("Failed to deserialize response")
           }
@@ -519,7 +519,7 @@ CompoundsApi <- R6::R6Class(
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response, "array[CompoundId]", loadNamespace("RSirius")),
+          self$api_client$deserialize(local_var_resp$response, "array[CompoundId]", loadNamespace("Rsirius")),
           error = function(e) {
             stop("Failed to deserialize response")
           }
@@ -647,7 +647,7 @@ CompoundsApi <- R6::R6Class(
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response, "JobId", loadNamespace("RSirius")),
+          self$api_client$deserialize(local_var_resp$response, "JobId", loadNamespace("Rsirius")),
           error = function(e) {
             stop("Failed to deserialize response")
           }
@@ -771,7 +771,7 @@ CompoundsApi <- R6::R6Class(
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response, "array[CompoundId]", loadNamespace("RSirius")),
+          self$api_client$deserialize(local_var_resp$response, "array[CompoundId]", loadNamespace("Rsirius")),
           error = function(e) {
             stop("Failed to deserialize response")
           }

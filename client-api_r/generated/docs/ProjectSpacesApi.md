@@ -20,7 +20,7 @@ Close project-space and remove it from application. Project-space will NOT be de
 
 ### Example
 ```R
-library(RSirius)
+library(Rsirius)
 
 # Close project-space and remove it from application.
 #
@@ -64,7 +64,7 @@ Create and open a new project-space at given location and make it accessible via
 
 ### Example
 ```R
-library(RSirius)
+library(Rsirius)
 
 # Create and open a new project-space at given location and make it accessible via the given projectId.
 #
@@ -117,7 +117,7 @@ Get project space info by its projectId.
 
 ### Example
 ```R
-library(RSirius)
+library(Rsirius)
 
 # Get project space info by its projectId.
 #
@@ -164,7 +164,7 @@ List all opened project spaces.
 
 ### Example
 ```R
-library(RSirius)
+library(Rsirius)
 
 # List all opened project spaces.
 #
@@ -206,7 +206,7 @@ Open an existing project-space and make it accessible via the given projectId.
 
 ### Example
 ```R
-library(RSirius)
+library(Rsirius)
 
 # Open an existing project-space and make it accessible via the given projectId.
 #

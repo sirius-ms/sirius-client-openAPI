@@ -1,4 +1,4 @@
-# RSirius::Deviation
+# Rsirius::Deviation
 
 
 

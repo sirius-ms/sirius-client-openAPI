@@ -34,7 +34,7 @@
 #' \dontrun{
 #' ####################  GetVersionInfo  ####################
 #'
-#' library(RSirius)
+#' library(Rsirius)
 #'
 #' api_instance <- rsirius_api$new()
 #'
@@ -134,7 +134,7 @@ VersionInfoControllerApi <- R6::R6Class(
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response, "character", loadNamespace("RSirius")),
+          self$api_client$deserialize(local_var_resp$response, "character", loadNamespace("Rsirius")),
           error = function(e) {
             stop("Failed to deserialize response")
           }

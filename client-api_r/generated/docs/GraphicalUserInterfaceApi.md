@@ -18,7 +18,7 @@ Apply given changes to the running GUI instance.
 
 ### Example
 ```R
-library(RSirius)
+library(Rsirius)
 
 # Apply given changes to the running GUI instance.
 #
@@ -64,7 +64,7 @@ Close GUI instance of given project-space if available.
 
 ### Example
 ```R
-library(RSirius)
+library(Rsirius)
 
 # Close GUI instance of given project-space if available.
 #
@@ -108,7 +108,7 @@ Open GUI instance on specified project-space and bring the GUI window to foregro
 
 ### Example
 ```R
-library(RSirius)
+library(Rsirius)
 
 # Open GUI instance on specified project-space and bring the GUI window to foreground.
 #

@@ -16,5 +16,5 @@
 ^\.openapi-generator$
 ^docs$
 ^git_push\.sh$
-^RSirius\.Rcheck$
+^Rsirius\.Rcheck$
 ^\.\.Rcheck$

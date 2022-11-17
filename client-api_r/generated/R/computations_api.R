@@ -210,7 +210,7 @@
 #' \dontrun{
 #' ####################  DeleteJob  ####################
 #'
-#' library(RSirius)
+#' library(Rsirius)
 #' var_project_id <- "project_id_example" # character | project-space to run jobs on
 #' var_job_id <- "job_id_example" # character | of the job to be deleted
 #' var_cancel_if_running <- TRUE # character | If true job will be canceled if it is not finished. Otherwise,                         deletion will fail for running jobs or request will block until job has finished. (Optional)
@@ -224,7 +224,7 @@
 #'
 #' ####################  DeleteJobConfig  ####################
 #'
-#' library(RSirius)
+#' library(Rsirius)
 #' var_name <- "name_example" # character | name of the job-config to delete
 #'
 #' #Delete job configuration with given name.
@@ -235,7 +235,7 @@
 #'
 #' ####################  GetDefaultJobConfig  ####################
 #'
-#' library(RSirius)
+#' library(Rsirius)
 #' var_include_config_map <- FALSE # character | if true, generic configmap with-defaults will be included (Optional)
 #'
 #' #Request default job configuration
@@ -249,7 +249,7 @@
 #'
 #' ####################  GetJob  ####################
 #'
-#' library(RSirius)
+#' library(Rsirius)
 #' var_project_id <- "project_id_example" # character | project-space to run jobs on
 #' var_job_id <- "job_id_example" # character | of the job to be returned
 #' var_include_state <- TRUE # character | include {@link de.unijena.bioinf.ms.middleware.compute.model.JobProgress de.unijena.bioinf.ms.middleware.compute.model.JobProgress} state. (Optional)
@@ -267,7 +267,7 @@
 #'
 #' ####################  GetJobConfig  ####################
 #'
-#' library(RSirius)
+#' library(Rsirius)
 #' var_name <- "name_example" # character | name of the job-config to return
 #' var_include_config_map <- FALSE # character | if true the generic configmap will be part of the output (Optional)
 #'
@@ -282,7 +282,7 @@
 #'
 #' ####################  GetJobConfigs  ####################
 #'
-#' library(RSirius)
+#' library(Rsirius)
 #' var_include_config_map <- FALSE # character | if true the generic configmap will be part of the output (Optional)
 #'
 #' #Request all available job configurations
@@ -296,7 +296,7 @@
 #'
 #' ####################  GetJobs  ####################
 #'
-#' library(RSirius)
+#' library(Rsirius)
 #' var_project_id <- "project_id_example" # character | project-space to run jobs on
 #' var_include_state <- FALSE # character | include {@link de.unijena.bioinf.ms.middleware.compute.model.JobProgress de.unijena.bioinf.ms.middleware.compute.model.JobProgress} states. (Optional)
 #' var_include_command <- FALSE # character | include job commands. (Optional)
@@ -313,7 +313,7 @@
 #'
 #' ####################  PostJobConfig  ####################
 #'
-#' library(RSirius)
+#' library(Rsirius)
 #' var_name <- "name_example" # character | name of the job-config to add
 #' var_job_submission <- JobSubmission$new(c("compoundIds_example"), c("fallbackAdducts_example"), c("enforcedAdducts_example"), c("detectableAdducts_example"), "recompute_example", Sirius$new("enabled_example", "QTOF", 123, 123, 123, "IGNORE", c("ALL"), "enforcedFormulaConstraints_example", "fallbackFormulaConstraints_example", c("detectableElements_example"), Timeout$new(123, 123, "identifier_example"), UseHeuristic$new(123, 123, "identifier_example")), Zodiac$new("enabled_example", ZodiacNumberOfConsideredCandidatesAt300Mz$new(123, "identifier_example"), ZodiacNumberOfConsideredCandidatesAt800Mz$new(123, "identifier_example"), ZodiacRunInTwoSteps$new("value_example", "identifier_example"), ZodiacEdgeFilterThresholds$new(123, 123, 123, "identifier_example"), ZodiacEpochs$new(123, 123, 123, "identifier_example")), FingerprintPrediction$new("enabled_example", "useScoreThreshold_example"), StructureDbSearch$new("enabled_example", c("ALL"), "tagLipids_example"), Canopus$new("enabled_example"), c(key = "inner_example")) # JobSubmission | to add
 #' var_override_existing <- FALSE # character |  (Optional)
@@ -329,7 +329,7 @@
 #'
 #' ####################  StartJob  ####################
 #'
-#' library(RSirius)
+#' library(Rsirius)
 #' var_project_id <- "project_id_example" # character | project-space to run jobs on
 #' var_job_submission <- JobSubmission$new(c("compoundIds_example"), c("fallbackAdducts_example"), c("enforcedAdducts_example"), c("detectableAdducts_example"), "recompute_example", Sirius$new("enabled_example", "QTOF", 123, 123, 123, "IGNORE", c("ALL"), "enforcedFormulaConstraints_example", "fallbackFormulaConstraints_example", c("detectableElements_example"), Timeout$new(123, 123, "identifier_example"), UseHeuristic$new(123, 123, "identifier_example")), Zodiac$new("enabled_example", ZodiacNumberOfConsideredCandidatesAt300Mz$new(123, "identifier_example"), ZodiacNumberOfConsideredCandidatesAt800Mz$new(123, "identifier_example"), ZodiacRunInTwoSteps$new("value_example", "identifier_example"), ZodiacEdgeFilterThresholds$new(123, 123, 123, "identifier_example"), ZodiacEpochs$new(123, 123, 123, "identifier_example")), FingerprintPrediction$new("enabled_example", "useScoreThreshold_example"), StructureDbSearch$new("enabled_example", c("ALL"), "tagLipids_example"), Canopus$new("enabled_example"), c(key = "inner_example")) # JobSubmission | configuration of the job that will be submitted of the job to be returned
 #' var_include_state <- TRUE # character | include {@link de.unijena.bioinf.ms.middleware.compute.model.JobProgress de.unijena.bioinf.ms.middleware.compute.model.JobProgress} state. (Optional)
@@ -347,7 +347,7 @@
 #'
 #' ####################  StartJobFromConfig  ####################
 #'
-#' library(RSirius)
+#' library(Rsirius)
 #' var_project_id <- "project_id_example" # character | project-space to run jobs on
 #' var_job_config_name <- "job_config_name_example" # character | name if the config to be used
 #' var_request_body <- c("property_example") # array[character] | compound ids to be computed
@@ -649,7 +649,7 @@ ComputationsApi <- R6::R6Class(
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response, "JobSubmission", loadNamespace("RSirius")),
+          self$api_client$deserialize(local_var_resp$response, "JobSubmission", loadNamespace("Rsirius")),
           error = function(e) {
             stop("Failed to deserialize response")
           }
@@ -772,7 +772,7 @@ ComputationsApi <- R6::R6Class(
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response, "JobId", loadNamespace("RSirius")),
+          self$api_client$deserialize(local_var_resp$response, "JobId", loadNamespace("Rsirius")),
           error = function(e) {
             stop("Failed to deserialize response")
           }
@@ -874,7 +874,7 @@ ComputationsApi <- R6::R6Class(
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response, "JobSubmission", loadNamespace("RSirius")),
+          self$api_client$deserialize(local_var_resp$response, "JobSubmission", loadNamespace("Rsirius")),
           error = function(e) {
             stop("Failed to deserialize response")
           }
@@ -965,7 +965,7 @@ ComputationsApi <- R6::R6Class(
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response, "array[JobSubmission]", loadNamespace("RSirius")),
+          self$api_client$deserialize(local_var_resp$response, "array[JobSubmission]", loadNamespace("Rsirius")),
           error = function(e) {
             stop("Failed to deserialize response")
           }
@@ -1077,7 +1077,7 @@ ComputationsApi <- R6::R6Class(
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response, "array[JobId]", loadNamespace("RSirius")),
+          self$api_client$deserialize(local_var_resp$response, "array[JobId]", loadNamespace("Rsirius")),
           error = function(e) {
             stop("Failed to deserialize response")
           }
@@ -1192,7 +1192,7 @@ ComputationsApi <- R6::R6Class(
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response, "character", loadNamespace("RSirius")),
+          self$api_client$deserialize(local_var_resp$response, "character", loadNamespace("Rsirius")),
           error = function(e) {
             stop("Failed to deserialize response")
           }
@@ -1317,7 +1317,7 @@ ComputationsApi <- R6::R6Class(
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response, "JobId", loadNamespace("RSirius")),
+          self$api_client$deserialize(local_var_resp$response, "JobId", loadNamespace("Rsirius")),
           error = function(e) {
             stop("Failed to deserialize response")
           }
@@ -1459,7 +1459,7 @@ ComputationsApi <- R6::R6Class(
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response, "JobId", loadNamespace("RSirius")),
+          self$api_client$deserialize(local_var_resp$response, "JobId", loadNamespace("Rsirius")),
           error = function(e) {
             stop("Failed to deserialize response")
           }

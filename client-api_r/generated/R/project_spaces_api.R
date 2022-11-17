@@ -107,7 +107,7 @@
 #' \dontrun{
 #' ####################  CloseProjectSpace  ####################
 #'
-#' library(RSirius)
+#' library(Rsirius)
 #' var_project_id <- "project_id_example" # character | unique name/identifier of the  project-space to be closed.
 #'
 #' #Close project-space and remove it from application.
@@ -118,7 +118,7 @@
 #'
 #' ####################  CreateProjectSpace  ####################
 #'
-#' library(RSirius)
+#' library(Rsirius)
 #' var_project_id <- "project_id_example" # character | unique name/identifier that shall be used to access the newly created project-space.
 #' var_path_to_project <- "path_to_project_example" # character | 
 #' var_path_to_source_project <- "path_to_source_project_example" # character |  (Optional)
@@ -135,7 +135,7 @@
 #'
 #' ####################  GetProjectSpace  ####################
 #'
-#' library(RSirius)
+#' library(Rsirius)
 #' var_project_id <- "project_id_example" # character | unique name/identifier tof the project-space to be accessed.
 #'
 #' #Get project space info by its projectId.
@@ -149,7 +149,7 @@
 #'
 #' ####################  GetProjectSpaces  ####################
 #'
-#' library(RSirius)
+#' library(Rsirius)
 #'
 #' #List all opened project spaces.
 #' api_instance <- rsirius_api$new()
@@ -162,7 +162,7 @@
 #'
 #' ####################  OpenProjectSpace  ####################
 #'
-#' library(RSirius)
+#' library(Rsirius)
 #' var_project_id <- "project_id_example" # character | unique name/identifier that shall be used to access the opened project-space.
 #' var_path_to_project <- "path_to_project_example" # character | 
 #'
@@ -379,7 +379,7 @@ ProjectSpacesApi <- R6::R6Class(
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response, "ProjectSpaceId", loadNamespace("RSirius")),
+          self$api_client$deserialize(local_var_resp$response, "ProjectSpaceId", loadNamespace("Rsirius")),
           error = function(e) {
             stop("Failed to deserialize response")
           }
@@ -476,7 +476,7 @@ ProjectSpacesApi <- R6::R6Class(
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response, "ProjectSpaceId", loadNamespace("RSirius")),
+          self$api_client$deserialize(local_var_resp$response, "ProjectSpaceId", loadNamespace("Rsirius")),
           error = function(e) {
             stop("Failed to deserialize response")
           }
@@ -562,7 +562,7 @@ ProjectSpacesApi <- R6::R6Class(
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response, "array[ProjectSpaceId]", loadNamespace("RSirius")),
+          self$api_client$deserialize(local_var_resp$response, "array[ProjectSpaceId]", loadNamespace("Rsirius")),
           error = function(e) {
             stop("Failed to deserialize response")
           }
@@ -668,7 +668,7 @@ ProjectSpacesApi <- R6::R6Class(
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response, "ProjectSpaceId", loadNamespace("RSirius")),
+          self$api_client$deserialize(local_var_resp$response, "ProjectSpaceId", loadNamespace("Rsirius")),
           error = function(e) {
             stop("Failed to deserialize response")
           }
