@@ -15,7 +15,7 @@ from PySirius.apis.tags import login_and_account_api
 from PySirius.apis.tags import project_spaces_api
 from PySirius.apis.tags import version_info_controller_api
 
-class SiriusAPI:
+class PySiriusAPI:
 
     def __init__(self, project_space, sirius_executable, port=8080):
         self.port = str(port)
