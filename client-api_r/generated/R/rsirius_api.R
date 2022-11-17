@@ -125,7 +125,7 @@ RsiriusApi <- R6::R6Class(
     
     shutdown = function(){
       if(self$is_active()){
-        httr2::POST(paste(self$basePath,"/actuator/shutdown",sep = ""))
+        httr::POST(paste(self$basePath,"/actuator/shutdown",sep = ""))
         print("The SIRIUS REST service ended successfully. ")
       }else{
         print("SIRIUS does not run as REST service at this moment.")
@@ -135,11 +135,11 @@ RsiriusApi <- R6::R6Class(
     is_active = function(){
       tryCatch(
         {
-          resp <- httr2::GET(paste(self$basePath,"/actuator/health", sep = ""))
+          resp <- httr::GET(paste(self$basePath,"/actuator/health", sep = ""))
           message(resp)
-	  message(httr2::status_code(resp))
-          if(httr2::status_code(resp) >= 200 && httr2::status_code(resp) <= 299){
-            content <- httr2::content(resp)
+	  message(httr::status_code(resp))
+          if(httr::status_code(resp) >= 200 && httr::status_code(resp) <= 299){
+            content <- httr::content(resp)
 	    message(content)
 	    message(content$status)
             if(content$status == "UP"){
