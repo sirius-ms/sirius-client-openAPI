@@ -17,79 +17,23 @@ from PySirius.apis.tags import version_info_controller_api
 
 class PySiriusAPI:
 
-    def __init__(self, project_space, sirius_executable, port=8080):
+    def __init__(self, address="http://localhost", port=8080):
         self.port = str(port)
-        self.project_space = project_space
-        self.sirius_executable = sirius_executable
-        self.base_path = "http://localhost:" + self.port
-        self.configuration = PySirius.Configuration(host = self.base_path)
-
-    def start_sirius(self):
-        is_up = False
-        http = urllib3.PoolManager()
-
-
-        # add windows and mac
-        executable_exist = os.path.exists(self.sirius_executable)
-        project_space_exist = os.path.exists(self.project_space)
-
-        if executable_exist and project_space_exist:
-            # run_command = "java -jar " + self.sirius_executable + " --output " + self.project_space + " REST  -p " + self.port + " -s" + "> log.txt 2>&1"
-            run_command = self.sirius_executable + " --output " + self.project_space + " REST  -p " + self.port + " -s" + "> log.txt 2>&1"
-            subprocess.Popen([run_command], shell=True)
-
-            while not is_up:
-                time.sleep(0.5)
-                try:
-                    resp = http.request('GET', self.base_path + "/actuator/health")
-                    if resp.status == 200:
-                        resp_data = json.loads(resp.data.decode('utf-8'))
-                        is_up = resp_data["status"] == "UP"
-                        if is_up:
-                            print("Sirius started succesully on the port " + self.port)
-                except:
-                    pass
-        else:
-            print("Wrong path to project space or executable")
-            return None
-
-    def shutdown(self):
-        try:
-            loop = asyncio.new_event_loop()
-            loop.run_until_complete(self.__shutdown())
-            loop.close()
-        except:
-            print("Sirius is down")
-
-    async def __shutdown(self):
-        http = urllib3.PoolManager()
-        resp = http.request('POST', self.base_path + "/actuator/shutdown")
-        if resp.status == 200:
-            print("Sirius wash shut down succesfully")
-        else:
-
-            # add for windows and mac
-            os.system("fuser -k " + self.port + "/tcp > /dev/null 2>&1")
-            print("Sirius was shut down forcibly")
+        base_path = address + ":" + self.port
+        configuration = PySirius.Configuration(host = base_path)
+        self.api_client = PySirius.ApiClient(configuration)
     
     def get_CompoundsApi(self):
-        with PySirius.ApiClient(self.configuration) as api_client:
-            return compounds_api.CompoundsApi(api_client)
+        return compounds_api.CompoundsApi(self.api_client)
     def get_ComputationsApi(self):
-        with PySirius.ApiClient(self.configuration) as api_client:
-            return computations_api.ComputationsApi(api_client)
+        return computations_api.ComputationsApi(self.api_client)
     def get_FormulaResultsApi(self):
-        with PySirius.ApiClient(self.configuration) as api_client:
-            return formula_results_api.FormulaResultsApi(api_client)
+        return formula_results_api.FormulaResultsApi(self.api_client)
     def get_GraphicalUserInterfaceApi(self):
-        with PySirius.ApiClient(self.configuration) as api_client:
-            return graphical_user_interface_api.GraphicalUserInterfaceApi(api_client)
+        return graphical_user_interface_api.GraphicalUserInterfaceApi(self.api_client)
     def get_LoginAndAccountApi(self):
-        with PySirius.ApiClient(self.configuration) as api_client:
-            return login_and_account_api.LoginAndAccountApi(api_client)
+        return login_and_account_api.LoginAndAccountApi(self.api_client)
     def get_ProjectSpacesApi(self):
-        with PySirius.ApiClient(self.configuration) as api_client:
-            return project_spaces_api.ProjectSpacesApi(api_client)
+        return project_spaces_api.ProjectSpacesApi(self.api_client)
     def get_VersionInfoControllerApi(self):
-        with PySirius.ApiClient(self.configuration) as api_client:
-            return version_info_controller_api.VersionInfoControllerApi(api_client)
+        return version_info_controller_api.VersionInfoControllerApi(self.api_client)
