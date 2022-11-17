@@ -74,7 +74,6 @@ jobs:
       run: |
         rm client-api_r/generated/R/rsirius_api.R
         cp client-api_r/api_classes/rsirius_api.R  client-api_r/generated/R/rsirius_api.R
-        echo "export(RsiriusApi)" >> client-api_r/generated/NAMESPACE
         
     - name: Remove Sirius Rest Api
       run: |
