@@ -17,7 +17,7 @@ class RealSirius:
         http = urllib3.PoolManager()
 
         if self.process is not None:
-            print("Sirius has already been started with PID: "+self.process.pid
+            print("Sirius has already been started with PID: "+str(self.process.pid))
         
         self.port = port
         
