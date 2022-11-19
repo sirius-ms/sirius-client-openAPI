@@ -27,3 +27,4 @@ from PySirius.exceptions import ApiValueError
 from PySirius.exceptions import ApiKeyError
 from PySirius.exceptions import ApiException
 from PySirius.sirius_api import SiriusAPI
+from PySirius.sirius_api import RealSirius
