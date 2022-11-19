@@ -69,7 +69,12 @@ jobs:
         echo removed
         rm client-api_python/generated/PySirius/sirius_api.py
         cp client-api_python/sirius_api.py client-api_python/generated/PySirius
+        rm client-api_python/generated/PySirius/Sirius.py
+        cp client-api_python/Sirius.py client-api_python/generated/PySirius
+        
         echo "from PySirius.sirius_api import SiriusAPI" >> client-api_python/generated/PySirius/__init__.py
+        echo "from PySirius.sirius_api import RealSirius" >> client-api_python/generated/PySirius/__init__.py
+        
     - name: Copy R wrapper class
       run: |
         rm client-api_r/generated/R/rsirius_api.R
