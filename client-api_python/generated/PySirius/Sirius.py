@@ -16,10 +16,10 @@ class RealSirius:
         is_up = False
         http = urllib3.PoolManager()
 
-        if self.process is not None:
-            print("Sirius has already been started with PID: "+str(self.process.pid))
+        if RealSirius.process is not None:
+            print("Sirius has already been started with PID: "+str(RealSirius.process.pid))
         
-        self.port = port
+        RealSirius.port = port
         
         # add windows and mac
         executable_exist = os.path.exists(sirius_executable)
@@ -28,7 +28,7 @@ class RealSirius:
         if executable_exist and project_space_exist:
             # run_command = "java -jar " + sirius_executable + " --output " + project_space + " REST  -p " + port + " -s" + "> log.txt 2>&1"
             run_command = sirius_executable + " --output " + project_space + " REST  -p " + str(port) + " -s" + "> log.txt 2>&1"
-            self.process = subprocess.Popen([run_command])
+            RealSirius.process = subprocess.Popen([run_command])
 
             while not is_up:
                 time.sleep(0.5)
@@ -39,7 +39,7 @@ class RealSirius:
                         is_up = resp_data["status"] == "UP"
                         if is_up:
                             print("Sirius started succesully on the port " + str(port))
-                            return PySirius.PySiriusAPI(address="http://localhost", port=port)
+                            return PySirius.PySiriusAPI(address="http://localhost", port=RealSirius.port)
                 except:
                     pass
         else:
@@ -47,7 +47,7 @@ class RealSirius:
             return None
 
     def shutdown():
-        if self.process is None:
+        if RealSirius.process is None:
             print("Sirius has not been started yet...")
             return
         try:
@@ -59,19 +59,19 @@ class RealSirius:
 
     async def __shutdown():
         http = urllib3.PoolManager()
-        resp = http.request('POST', "http://localhost:" + str(self.port) + "/actuator/shutdown")
+        resp = http.request('POST', "http://localhost:" + str(RealSirius.port) + "/actuator/shutdown")
         if resp.status == 200:
             # terminated via Rest Call
             print("Sirius wash shut down succesfully")
             return
         # Terminate via SIGTERM
-        self.process.terminate()
-        if self.process.poll() is not None:
+        RealSirius.process.terminate()
+        if RealSirius.process.poll() is not None:
             print("Sirius was shut down forcibly")
             return
         # Terminate via SIGKILL
-        self.process.kill()
-        if self.process.poll() is not None:
+        RealSirius.process.kill()
+        if RealSirius.process.poll() is not None:
             print("Sirius has been shut down...")
             return
         print("Unable to kill process...")
