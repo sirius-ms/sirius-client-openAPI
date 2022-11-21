@@ -43,7 +43,7 @@ import PySirius
 
 ## Getting Started
 
-Please follow the [installation procedure](#installation--usage) and then run the following:
+Please follow the [installation procedure](#installation--usage) and then run the following (while replacing the Strings for project_space and sirius_executable):
 
 ```python
 from PySirius import RealSirius
