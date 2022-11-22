@@ -47,11 +47,10 @@ Please follow the [installation procedure](#installation--usage) and then run th
 
 ```python
 from PySirius import RealSirius
-project_space = "PATH_TO_EMPTY_OR_PROJECT_FOLDER"
-sirius_executable = "PATH_TO_THE_SIRIUS_EXECUTEABLE"
+project_space = "PATH_TO_EMPTY_OR_PROJECT_FOLDER"           # Please use the absolute path
+sirius_executable = "PATH_TO_THE_SIRIUS_EXECUTEABLE"        # Please use the absolute path
 api = RealSirius.start(project_space, sirius_executable)
 print(api.get_ComputationsApi().get_default_job_config())
-print(api.get_VersionInfoControllerApi().get_version_info())
 print(api.get_ProjectSpacesApi().get_project_spaces())
 ```
 
