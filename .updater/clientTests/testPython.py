@@ -1,13 +1,12 @@
-from __future__ import print_function
-import time
-from PySirius import SiriusAPI
+from PySirius import RealSirius
 
 
 
 path_to_sirius = ".updater/api/sirius/bin/sirius"
+path_to_project = ".updater/api/sirius/bin/temp"
 
 
-api = SiriusAPI(None, path_to_sirius)
+api = RealSirius.start(path_to_project, path_to_sirius)
 
 
 # get config
@@ -16,9 +15,6 @@ print("Config Loaded Successfull!")
 print()
 
 # test basic stuff
-print("Version:")
-print(api.get_VersionInfoControllerApi()) # check for version
-print()
 print("Project Spaces")
 print(api.get_ProjectSpacesApi()) # check for project spaces
 print()
