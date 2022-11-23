@@ -18,6 +18,7 @@ class RealSirius:
 
         if RealSirius.process is not None:
             print("Sirius has already been started with PID: "+str(RealSirius.process.pid))
+            return
         
         RealSirius.port = port
         
@@ -47,17 +48,6 @@ class RealSirius:
             return None
 
     def shutdown():
-        if RealSirius.process is None:
-            print("Sirius has not been started yet...")
-            return
-        try:
-            loop = asyncio.new_event_loop()
-            loop.run_until_complete(__shutdown())
-            loop.close()
-        except:
-            print("Sirius is down")
-
-    async def __shutdown():
         http = urllib3.PoolManager()
         resp = http.request('POST', "http://localhost:" + str(RealSirius.port) + "/actuator/shutdown")
         if resp.status == 200:
@@ -75,4 +65,3 @@ class RealSirius:
             print("Sirius has been shut down...")
             return
         print("Unable to kill process...")
-        
