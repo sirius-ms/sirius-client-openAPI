@@ -53,15 +53,15 @@ class RealSirius:
         if resp.status == 200:
             # terminated via Rest Call
             print("Sirius wash shut down succesfully")
+            RealSirius.process = None
             return
         # Terminate via SIGTERM
         RealSirius.process.terminate()
         if RealSirius.process.poll() is not None:
             print("Sirius was shut down forcibly")
+            RealSirius.process = None
             return
         # Terminate via SIGKILL
         RealSirius.process.kill()
-        if RealSirius.process.poll() is not None:
-            print("Sirius has been shut down...")
-            return
-        print("Unable to kill process...")
+        RealSirius.process = None
+        print("Sirius has been shut down...")
