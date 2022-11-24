@@ -28,7 +28,7 @@ class RealSirius:
 
         if executable_exist and project_space_exist:
             # run_command = "java -jar " + sirius_executable + " --output " + project_space + " REST  -p " + port"
-            run_command = run_command = [sirius_executable, "--output", project_space, "REST", "-p", str(port)]
+            run_command = [sirius_executable, "--output", project_space, "REST", "-p", str(port), "-s"]
             RealSirius.process = subprocess.Popen(run_command)
 
             while not is_up:
