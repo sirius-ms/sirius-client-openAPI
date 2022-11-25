@@ -54,6 +54,19 @@ print(api.get_ComputationsApi().get_default_job_config())
 print(api.get_ProjectSpacesApi().get_project_spaces())
 ```
 
+## For remote Endpoints
+
+Please follow the [installation procedure](#installation--usage) and then run the following (while replacing address and port with the Remote adress specifications):
+
+```python
+from PySirius import PySiriusAPI
+address = "http://localhost"
+port = 8080
+api = PySiriusAPI(address=address, port=port)
+print(api.get_ComputationsApi().get_default_job_config())
+print(api.get_ProjectSpacesApi().get_project_spaces())
+```
+
 ## Documentation for API Endpoints
 
 All URIs are relative to *http://localhost:8080*
