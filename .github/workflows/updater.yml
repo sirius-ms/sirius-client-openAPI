@@ -75,12 +75,12 @@ jobs:
         echo "from PySirius.sirius_api import PySiriusAPI" >> client-api_python/generated/PySirius/__init__.py
         echo "from PySirius.Sirius import RealSirius" >> client-api_python/generated/PySirius/__init__.py
         
-    - name: Copy R wrapper class
+    - name: Copy Sirius.R class
       run: |
-        rm client-api_r/generated/R/rsirius_api.R
-        cp client-api_r/api_classes/rsirius_api.R  client-api_r/generated/R/rsirius_api.R
-        echo "export(RsiriusApi)" >> client-api_r/generated/NAMESPACE
-        sed -i '/export(rsirius_api)/d' client-api_r/generated/NAMESPACE
+        cp client-api_r/Sirius.R  client-api_r/generated/R/Sirius.R
+        echo >> client-api_r/generated/NAMESPACE
+        echo "# Singleton" >> client-api_r/generated/NAMESPACE
+        echo "export(Sirius)" >> client-api_r/generated/NAMESPACE
         
     - name: Remove Sirius Rest Api
       run: |
