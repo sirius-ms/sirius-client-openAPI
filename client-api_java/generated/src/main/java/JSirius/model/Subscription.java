@@ -50,7 +50,7 @@ import JSirius.JSON;
  * 
  */
 @ApiModel(description = "")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-11-19T15:41:49.916868Z[Etc/UTC]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-12-06T19:33:15.226093Z[Etc/UTC]")
 public class Subscription {
   public static final String SERIALIZED_NAME_SID = "sid";
   @SerializedName(SERIALIZED_NAME_SID)
@@ -67,6 +67,10 @@ public class Subscription {
   public static final String SERIALIZED_NAME_EXPIRATION_DATE = "expirationDate";
   @SerializedName(SERIALIZED_NAME_EXPIRATION_DATE)
   private OffsetDateTime expirationDate;
+
+  public static final String SERIALIZED_NAME_START_DATE = "startDate";
+  @SerializedName(SERIALIZED_NAME_START_DATE)
+  private OffsetDateTime startDate;
 
   public static final String SERIALIZED_NAME_COUNT_QUERIES = "countQueries";
   @SerializedName(SERIALIZED_NAME_COUNT_QUERIES)
@@ -200,6 +204,29 @@ public class Subscription {
 
   public void setExpirationDate(OffsetDateTime expirationDate) {
     this.expirationDate = expirationDate;
+  }
+
+
+  public Subscription startDate(OffsetDateTime startDate) {
+    
+    this.startDate = startDate;
+    return this;
+  }
+
+   /**
+   * Get startDate
+   * @return startDate
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public OffsetDateTime getStartDate() {
+    return startDate;
+  }
+
+
+  public void setStartDate(OffsetDateTime startDate) {
+    this.startDate = startDate;
   }
 
 
@@ -447,6 +474,7 @@ public class Subscription {
         Objects.equals(this.subscriberId, subscription.subscriberId) &&
         Objects.equals(this.subscriberName, subscription.subscriberName) &&
         Objects.equals(this.expirationDate, subscription.expirationDate) &&
+        Objects.equals(this.startDate, subscription.startDate) &&
         Objects.equals(this.countQueries, subscription.countQueries) &&
         Objects.equals(this.compoundLimit, subscription.compoundLimit) &&
         Objects.equals(this.compoundHashRecordingTime, subscription.compoundHashRecordingTime) &&
@@ -461,7 +489,7 @@ public class Subscription {
 
   @Override
   public int hashCode() {
-    return Objects.hash(sid, subscriberId, subscriberName, expirationDate, countQueries, compoundLimit, compoundHashRecordingTime, maxQueriesPerCompound, maxUserAccounts, serviceUrl, description, name, tos, pp);
+    return Objects.hash(sid, subscriberId, subscriberName, expirationDate, startDate, countQueries, compoundLimit, compoundHashRecordingTime, maxQueriesPerCompound, maxUserAccounts, serviceUrl, description, name, tos, pp);
   }
 
   @Override
@@ -472,6 +500,7 @@ public class Subscription {
     sb.append("    subscriberId: ").append(toIndentedString(subscriberId)).append("\n");
     sb.append("    subscriberName: ").append(toIndentedString(subscriberName)).append("\n");
     sb.append("    expirationDate: ").append(toIndentedString(expirationDate)).append("\n");
+    sb.append("    startDate: ").append(toIndentedString(startDate)).append("\n");
     sb.append("    countQueries: ").append(toIndentedString(countQueries)).append("\n");
     sb.append("    compoundLimit: ").append(toIndentedString(compoundLimit)).append("\n");
     sb.append("    compoundHashRecordingTime: ").append(toIndentedString(compoundHashRecordingTime)).append("\n");
@@ -508,6 +537,7 @@ public class Subscription {
     openapiFields.add("subscriberId");
     openapiFields.add("subscriberName");
     openapiFields.add("expirationDate");
+    openapiFields.add("startDate");
     openapiFields.add("countQueries");
     openapiFields.add("compoundLimit");
     openapiFields.add("compoundHashRecordingTime");

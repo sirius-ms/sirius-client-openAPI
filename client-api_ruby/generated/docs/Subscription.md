@@ -8,6 +8,7 @@
 | **subscriber_id** | **String** |  | [optional] |
 | **subscriber_name** | **String** |  | [optional] |
 | **expiration_date** | **Time** |  | [optional] |
+| **start_date** | **Time** |  | [optional] |
 | **count_queries** | **Boolean** |  | [optional] |
 | **compound_limit** | **Integer** |  | [optional] |
 | **compound_hash_recording_time** | **Integer** |  | [optional] |
@@ -29,6 +30,7 @@ instance = RubySirius::Subscription.new(
   subscriber_id: null,
   subscriber_name: null,
   expiration_date: null,
+  start_date: null,
   count_queries: null,
   compound_limit: null,
   compound_hash_recording_time: null,

@@ -8,6 +8,7 @@ import(base64enc)
 import(stringr)
 
 # Wrapper
+export(rsirius_api)
 
 # Core
 export(ApiClient)
@@ -61,4 +62,6 @@ export(GraphicalUserInterfaceApi)
 export(LoginAndAccountApi)
 export(ProjectSpacesApi)
 export(VersionInfoControllerApi)
-export(RsiriusApi)
+
+# Singleton
+export(Sirius)

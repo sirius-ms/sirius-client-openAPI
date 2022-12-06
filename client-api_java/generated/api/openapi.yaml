@@ -2929,6 +2929,7 @@ components:
           subscriberName: subscriberName
           name: name
           tos: tos
+          startDate: 2000-01-23T04:56:07.000+00:00
           expirationDate: 2000-01-23T04:56:07.000+00:00
         - pp: pp
           maxQueriesPerCompound: 1
@@ -2943,6 +2944,7 @@ components:
           subscriberName: subscriberName
           name: name
           tos: tos
+          startDate: 2000-01-23T04:56:07.000+00:00
           expirationDate: 2000-01-23T04:56:07.000+00:00
         userEmail: userEmail
         activeSubscriptionId: activeSubscriptionId
@@ -2980,6 +2982,7 @@ components:
         subscriberName: subscriberName
         name: name
         tos: tos
+        startDate: 2000-01-23T04:56:07.000+00:00
         expirationDate: 2000-01-23T04:56:07.000+00:00
       properties:
         sid:
@@ -2989,6 +2992,9 @@ components:
         subscriberName:
           type: string
         expirationDate:
+          format: date-time
+          type: string
+        startDate:
           format: date-time
           type: string
         countQueries:

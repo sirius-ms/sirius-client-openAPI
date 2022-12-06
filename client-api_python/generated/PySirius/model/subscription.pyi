@@ -40,6 +40,7 @@ class Subscription(
             subscriberId = schemas.StrSchema
             subscriberName = schemas.StrSchema
             expirationDate = schemas.DateTimeSchema
+            startDate = schemas.DateTimeSchema
             countQueries = schemas.BoolSchema
             compoundLimit = schemas.Int32Schema
             compoundHashRecordingTime = schemas.Int32Schema
@@ -55,6 +56,7 @@ class Subscription(
                 "subscriberId": subscriberId,
                 "subscriberName": subscriberName,
                 "expirationDate": expirationDate,
+                "startDate": startDate,
                 "countQueries": countQueries,
                 "compoundLimit": compoundLimit,
                 "compoundHashRecordingTime": compoundHashRecordingTime,
@@ -78,6 +80,9 @@ class Subscription(
     
     @typing.overload
     def __getitem__(self, name: typing_extensions.Literal["expirationDate"]) -> MetaOapg.properties.expirationDate: ...
+    
+    @typing.overload
+    def __getitem__(self, name: typing_extensions.Literal["startDate"]) -> MetaOapg.properties.startDate: ...
     
     @typing.overload
     def __getitem__(self, name: typing_extensions.Literal["countQueries"]) -> MetaOapg.properties.countQueries: ...
@@ -112,7 +117,7 @@ class Subscription(
     @typing.overload
     def __getitem__(self, name: str) -> schemas.UnsetAnyTypeSchema: ...
     
-    def __getitem__(self, name: typing.Union[typing_extensions.Literal["sid", "subscriberId", "subscriberName", "expirationDate", "countQueries", "compoundLimit", "compoundHashRecordingTime", "maxQueriesPerCompound", "maxUserAccounts", "serviceUrl", "description", "name", "tos", "pp", ], str]):
+    def __getitem__(self, name: typing.Union[typing_extensions.Literal["sid", "subscriberId", "subscriberName", "expirationDate", "startDate", "countQueries", "compoundLimit", "compoundHashRecordingTime", "maxQueriesPerCompound", "maxUserAccounts", "serviceUrl", "description", "name", "tos", "pp", ], str]):
         # dict_instance[name] accessor
         return super().__getitem__(name)
     
@@ -128,6 +133,9 @@ class Subscription(
     
     @typing.overload
     def get_item_oapg(self, name: typing_extensions.Literal["expirationDate"]) -> typing.Union[MetaOapg.properties.expirationDate, schemas.Unset]: ...
+    
+    @typing.overload
+    def get_item_oapg(self, name: typing_extensions.Literal["startDate"]) -> typing.Union[MetaOapg.properties.startDate, schemas.Unset]: ...
     
     @typing.overload
     def get_item_oapg(self, name: typing_extensions.Literal["countQueries"]) -> typing.Union[MetaOapg.properties.countQueries, schemas.Unset]: ...
@@ -162,7 +170,7 @@ class Subscription(
     @typing.overload
     def get_item_oapg(self, name: str) -> typing.Union[schemas.UnsetAnyTypeSchema, schemas.Unset]: ...
     
-    def get_item_oapg(self, name: typing.Union[typing_extensions.Literal["sid", "subscriberId", "subscriberName", "expirationDate", "countQueries", "compoundLimit", "compoundHashRecordingTime", "maxQueriesPerCompound", "maxUserAccounts", "serviceUrl", "description", "name", "tos", "pp", ], str]):
+    def get_item_oapg(self, name: typing.Union[typing_extensions.Literal["sid", "subscriberId", "subscriberName", "expirationDate", "startDate", "countQueries", "compoundLimit", "compoundHashRecordingTime", "maxQueriesPerCompound", "maxUserAccounts", "serviceUrl", "description", "name", "tos", "pp", ], str]):
         return super().get_item_oapg(name)
     
 
@@ -173,6 +181,7 @@ class Subscription(
         subscriberId: typing.Union[MetaOapg.properties.subscriberId, str, schemas.Unset] = schemas.unset,
         subscriberName: typing.Union[MetaOapg.properties.subscriberName, str, schemas.Unset] = schemas.unset,
         expirationDate: typing.Union[MetaOapg.properties.expirationDate, str, datetime, schemas.Unset] = schemas.unset,
+        startDate: typing.Union[MetaOapg.properties.startDate, str, datetime, schemas.Unset] = schemas.unset,
         countQueries: typing.Union[MetaOapg.properties.countQueries, bool, schemas.Unset] = schemas.unset,
         compoundLimit: typing.Union[MetaOapg.properties.compoundLimit, decimal.Decimal, int, schemas.Unset] = schemas.unset,
         compoundHashRecordingTime: typing.Union[MetaOapg.properties.compoundHashRecordingTime, decimal.Decimal, int, schemas.Unset] = schemas.unset,
@@ -193,6 +202,7 @@ class Subscription(
             subscriberId=subscriberId,
             subscriberName=subscriberName,
             expirationDate=expirationDate,
+            startDate=startDate,
             countQueries=countQueries,
             compoundLimit=compoundLimit,
             compoundHashRecordingTime=compoundHashRecordingTime,

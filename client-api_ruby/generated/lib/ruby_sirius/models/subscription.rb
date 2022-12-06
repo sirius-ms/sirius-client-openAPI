@@ -24,6 +24,8 @@ module RubySirius
 
     attr_accessor :expiration_date
 
+    attr_accessor :start_date
+
     attr_accessor :count_queries
 
     attr_accessor :compound_limit
@@ -51,6 +53,7 @@ module RubySirius
         :'subscriber_id' => :'subscriberId',
         :'subscriber_name' => :'subscriberName',
         :'expiration_date' => :'expirationDate',
+        :'start_date' => :'startDate',
         :'count_queries' => :'countQueries',
         :'compound_limit' => :'compoundLimit',
         :'compound_hash_recording_time' => :'compoundHashRecordingTime',
@@ -76,6 +79,7 @@ module RubySirius
         :'subscriber_id' => :'String',
         :'subscriber_name' => :'String',
         :'expiration_date' => :'Time',
+        :'start_date' => :'Time',
         :'count_queries' => :'Boolean',
         :'compound_limit' => :'Integer',
         :'compound_hash_recording_time' => :'Integer',
@@ -124,6 +128,10 @@ module RubySirius
 
       if attributes.key?(:'expiration_date')
         self.expiration_date = attributes[:'expiration_date']
+      end
+
+      if attributes.key?(:'start_date')
+        self.start_date = attributes[:'start_date']
       end
 
       if attributes.key?(:'count_queries')
@@ -189,6 +197,7 @@ module RubySirius
           subscriber_id == o.subscriber_id &&
           subscriber_name == o.subscriber_name &&
           expiration_date == o.expiration_date &&
+          start_date == o.start_date &&
           count_queries == o.count_queries &&
           compound_limit == o.compound_limit &&
           compound_hash_recording_time == o.compound_hash_recording_time &&
@@ -210,7 +219,7 @@ module RubySirius
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [sid, subscriber_id, subscriber_name, expiration_date, count_queries, compound_limit, compound_hash_recording_time, max_queries_per_compound, max_user_accounts, service_url, description, name, tos, pp].hash
+      [sid, subscriber_id, subscriber_name, expiration_date, start_date, count_queries, compound_limit, compound_hash_recording_time, max_queries_per_compound, max_user_accounts, service_url, description, name, tos, pp].hash
     end
 
     # Builds the object from hash

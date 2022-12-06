@@ -12,6 +12,7 @@
 |**subscriberId** | **String** |  |  [optional] |
 |**subscriberName** | **String** |  |  [optional] |
 |**expirationDate** | **OffsetDateTime** |  |  [optional] |
+|**startDate** | **OffsetDateTime** |  |  [optional] |
 |**countQueries** | **Boolean** |  |  [optional] |
 |**compoundLimit** | **Integer** |  |  [optional] |
 |**compoundHashRecordingTime** | **Integer** |  |  [optional] |

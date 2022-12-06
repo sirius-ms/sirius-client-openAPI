@@ -11,6 +11,7 @@
 #' @field subscriberId  character [optional]
 #' @field subscriberName  character [optional]
 #' @field expirationDate  character [optional]
+#' @field startDate  character [optional]
 #' @field countQueries  character [optional]
 #' @field compoundLimit  integer [optional]
 #' @field compoundHashRecordingTime  integer [optional]
@@ -31,6 +32,7 @@ Subscription <- R6::R6Class(
     `subscriberId` = NULL,
     `subscriberName` = NULL,
     `expirationDate` = NULL,
+    `startDate` = NULL,
     `countQueries` = NULL,
     `compoundLimit` = NULL,
     `compoundHashRecordingTime` = NULL,
@@ -50,6 +52,7 @@ Subscription <- R6::R6Class(
     #' @param subscriberId subscriberId
     #' @param subscriberName subscriberName
     #' @param expirationDate expirationDate
+    #' @param startDate startDate
     #' @param countQueries countQueries
     #' @param compoundLimit compoundLimit
     #' @param compoundHashRecordingTime compoundHashRecordingTime
@@ -62,7 +65,7 @@ Subscription <- R6::R6Class(
     #' @param pp pp
     #' @param ... Other optional arguments.
     #' @export
-    initialize = function(`sid` = NULL, `subscriberId` = NULL, `subscriberName` = NULL, `expirationDate` = NULL, `countQueries` = NULL, `compoundLimit` = NULL, `compoundHashRecordingTime` = NULL, `maxQueriesPerCompound` = NULL, `maxUserAccounts` = NULL, `serviceUrl` = NULL, `description` = NULL, `name` = NULL, `tos` = NULL, `pp` = NULL, ...) {
+    initialize = function(`sid` = NULL, `subscriberId` = NULL, `subscriberName` = NULL, `expirationDate` = NULL, `startDate` = NULL, `countQueries` = NULL, `compoundLimit` = NULL, `compoundHashRecordingTime` = NULL, `maxQueriesPerCompound` = NULL, `maxUserAccounts` = NULL, `serviceUrl` = NULL, `description` = NULL, `name` = NULL, `tos` = NULL, `pp` = NULL, ...) {
       if (!is.null(`sid`)) {
         if (!(is.character(`sid`) && length(`sid`) == 1)) {
           stop(paste("Error! Invalid data for `sid`. Must be a string:", `sid`))
@@ -86,6 +89,12 @@ Subscription <- R6::R6Class(
           stop(paste("Error! Invalid data for `expirationDate`. Must be a string:", `expirationDate`))
         }
         self$`expirationDate` <- `expirationDate`
+      }
+      if (!is.null(`startDate`)) {
+        if (!is.character(`startDate`)) {
+          stop(paste("Error! Invalid data for `startDate`. Must be a string:", `startDate`))
+        }
+        self$`startDate` <- `startDate`
       }
       if (!is.null(`countQueries`)) {
         if (!(is.logical(`countQueries`) && length(`countQueries`) == 1)) {
@@ -173,6 +182,10 @@ Subscription <- R6::R6Class(
         SubscriptionObject[["expirationDate"]] <-
           self$`expirationDate`
       }
+      if (!is.null(self$`startDate`)) {
+        SubscriptionObject[["startDate"]] <-
+          self$`startDate`
+      }
       if (!is.null(self$`countQueries`)) {
         SubscriptionObject[["countQueries"]] <-
           self$`countQueries`
@@ -236,6 +249,9 @@ Subscription <- R6::R6Class(
       }
       if (!is.null(this_object$`expirationDate`)) {
         self$`expirationDate` <- this_object$`expirationDate`
+      }
+      if (!is.null(this_object$`startDate`)) {
+        self$`startDate` <- this_object$`startDate`
       }
       if (!is.null(this_object$`countQueries`)) {
         self$`countQueries` <- this_object$`countQueries`
@@ -308,6 +324,14 @@ Subscription <- R6::R6Class(
             "%s"
                     ',
           self$`expirationDate`
+          )
+        },
+        if (!is.null(self$`startDate`)) {
+          sprintf(
+          '"startDate":
+            "%s"
+                    ',
+          self$`startDate`
           )
         },
         if (!is.null(self$`countQueries`)) {
@@ -408,6 +432,7 @@ Subscription <- R6::R6Class(
       self$`subscriberId` <- this_object$`subscriberId`
       self$`subscriberName` <- this_object$`subscriberName`
       self$`expirationDate` <- this_object$`expirationDate`
+      self$`startDate` <- this_object$`startDate`
       self$`countQueries` <- this_object$`countQueries`
       self$`compoundLimit` <- this_object$`compoundLimit`
       self$`compoundHashRecordingTime` <- this_object$`compoundHashRecordingTime`

@@ -12,6 +12,7 @@ Key | Input Type | Accessed Type | Description | Notes
 **subscriberId** | str,  | str,  |  | [optional] 
 **subscriberName** | str,  | str,  |  | [optional] 
 **expirationDate** | str, datetime,  | str,  |  | [optional] value must conform to RFC-3339 date-time
+**startDate** | str, datetime,  | str,  |  | [optional] value must conform to RFC-3339 date-time
 **countQueries** | bool,  | BoolClass,  |  | [optional] 
 **compoundLimit** | decimal.Decimal, int,  | decimal.Decimal,  |  | [optional] value must be a 32 bit integer
 **compoundHashRecordingTime** | decimal.Decimal, int,  | decimal.Decimal,  |  | [optional] value must be a 32 bit integer

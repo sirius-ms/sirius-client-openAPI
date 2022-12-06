@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **subscriberId** | **character** |  | [optional] 
 **subscriberName** | **character** |  | [optional] 
 **expirationDate** | **character** |  | [optional] 
+**startDate** | **character** |  | [optional] 
 **countQueries** | **character** |  | [optional] 
 **compoundLimit** | **integer** |  | [optional] 
 **compoundHashRecordingTime** | **integer** |  | [optional] 

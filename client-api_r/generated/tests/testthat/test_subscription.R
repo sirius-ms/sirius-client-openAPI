@@ -33,6 +33,13 @@ test_that("expirationDate", {
   #expect_equal(model.instance$`expirationDate`, "EXPECTED_RESULT")
 })
 
+test_that("startDate", {
+  # tests for the property `startDate` (character)
+
+  # uncomment below to test the property
+  #expect_equal(model.instance$`startDate`, "EXPECTED_RESULT")
+})
+
 test_that("countQueries", {
   # tests for the property `countQueries` (character)
 
