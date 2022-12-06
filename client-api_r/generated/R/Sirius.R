@@ -1,10 +1,3 @@
-library(R6)
-library(R6P)
-library(ps)
-library(tools)
-library(httr2)
-library(dplyr)
-
 Sirius = R6::R6Class(
   classname = "Sirius",
   inherit = R6P::Singleton,
