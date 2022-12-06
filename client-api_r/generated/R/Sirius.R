@@ -107,44 +107,44 @@ Sirius = R6::R6Class(
           self$pid=NULL
         } else {
           print("SIRIUS REST service seems not to have shut down as intended.")
-        }
-        
-        if(Sys.info()['sysname']=="Linux"){
-          print("Trying to end Sirius via SIGTERM...")
-          pskill(PID, SIGTERM)
-          Sys.sleep(5)
           
-          if(file.exists(PID.FILE)){
-            print("SIGTERM did not work. Trying to end Sirius via SIGKILL...")
-            pskill(PID, SIGKILL)
-            Sys.sleep(5)
-            
-            if(file.exists(PID.FILE)){
-              print("SIGKILL did not work. Please shut down your Port running Sirius and delete the PID.FILE.")
-            } else {
-              print("The SIRIUS REST service ended successfully. ")
-            }
-          } else {
-            print("The SIRIUS REST service ended successfully. ")
-          }
-          
-        } else {
-          print("Trying to end Sirius via SIGINT...")
-          pskill(PID, SIGINT)
-          Sys.sleep(5)
-          
-          if(file.exists(PID.FILE)){
-            print("SIGINT did not work. Trying to end Sirius via SIGTERM...")
+          if(Sys.info()['sysname']=="Linux"){
+            print("Trying to end Sirius via SIGTERM...")
             pskill(PID, SIGTERM)
             Sys.sleep(5)
             
             if(file.exists(PID.FILE)){
-              print("SIGTERM did not work. Please shut down your Port running Sirius and delete the PID.FILE.")
+              print("SIGTERM did not work. Trying to end Sirius via SIGKILL...")
+              pskill(PID, SIGKILL)
+              Sys.sleep(5)
+              
+              if(file.exists(PID.FILE)){
+                print("SIGKILL did not work. Please shut down your Port running Sirius and delete the PID.FILE.")
+              } else {
+                print("The SIRIUS REST service ended successfully. ")
+              }
             } else {
               print("The SIRIUS REST service ended successfully. ")
             }
+            
           } else {
-            print("The SIRIUS REST service ended successfully. ")
+            print("Trying to end Sirius via SIGINT...")
+            pskill(PID, SIGINT)
+            Sys.sleep(5)
+            
+            if(file.exists(PID.FILE)){
+              print("SIGINT did not work. Trying to end Sirius via SIGTERM...")
+              pskill(PID, SIGTERM)
+              Sys.sleep(5)
+              
+              if(file.exists(PID.FILE)){
+                print("SIGTERM did not work. Please shut down your Port running Sirius and delete the PID.FILE.")
+              } else {
+                print("The SIRIUS REST service ended successfully. ")
+              }
+            } else {
+              print("The SIRIUS REST service ended successfully. ")
+            }
           }
         }
       }else{
