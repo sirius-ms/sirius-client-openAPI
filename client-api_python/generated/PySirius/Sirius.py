@@ -12,13 +12,13 @@ class RealSirius:
     process = None
     port = None
     
-    def start(project_space, sirius_executable, port=8080):
+    def start(project_space, sirius_executable, port=8080, forceStart=False):
         is_up = False
         http = urllib3.PoolManager()
 
-        if RealSirius.process is not None:
+        if (RealSirius.process is not None) and not forceStart:
             print("Sirius has already been started with PID: "+str(RealSirius.process.pid))
-            return
+            return None
         
         RealSirius.port = port
         
@@ -26,7 +26,7 @@ class RealSirius:
         executable_exist = os.path.exists(sirius_executable)
         project_space_exist = os.path.exists(project_space)
 
-        if executable_exist and project_space_exist:
+        if  (executable_exist and project_space_exist) or forceStart:
             path_to_executable = os.path.abspath(sirius_executable)
             path_to_project = os.path.abspath(project_space)
             # run_command = "java -jar " + sirius_executable + " --output " + project_space + " REST  -p " + port + " -s"
