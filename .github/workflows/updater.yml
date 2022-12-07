@@ -81,6 +81,22 @@ jobs:
         echo >> client-api_r/generated/NAMESPACE
         echo "# Singleton" >> client-api_r/generated/NAMESPACE
         echo "export(Sirius)" >> client-api_r/generated/NAMESPACE
+       
+    - name: Add missing R imports to DECRIPTION file
+      run: |
+        reqs=("tools" "R6P" "ps")
+        imps="$(sed -n -e '/^Imports/p' client-api_r/generated/DESCRIPTION)"
+        IFS=', ' read -r -a array <<< "$imps"
+        array=${array[@]:1}
+        res=""
+        for element in "${reqs[@]}"
+        do
+            if ! [[ " ${array[*]} " =~ " ${element} " ]]; then
+            str=", ${element}"
+            res="${res}${str}"
+          fi
+        done
+        sed -i "s/Imports.*/&${res}/g" client-api_r/generated/DESCRIPTION
         
     - name: Remove Sirius Rest Api
       run: |
