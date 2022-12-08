@@ -1,10 +1,3 @@
-library(R6)
-library(R6P)
-library(ps)
-library(tools)
-library(httr2)
-library(dplyr)
-
 Sirius = R6::R6Class(
   classname = "Sirius",
   inherit = R6P::Singleton,
@@ -13,6 +6,7 @@ Sirius = R6::R6Class(
     pid = NULL,
     port = NULL,
     host = NULL,
+    pidFile = NULL,
     basePath = NULL,
     
     start = function(host = "http://localhost:", port = 8080, pathToSirius, projectSpace = ""){
@@ -25,8 +19,8 @@ Sirius = R6::R6Class(
         if(is.numeric(port)){
           self$port <- as.integer(port)
           self$host <- host
-          
           self$basePath <- paste(self$host,self$port, sep = "")
+          self$pidFile <- paste("~/.",SIRIUSVERSION,"/sirius.pid",sep = "") 
         }else{
           stop("The given parameter \"port\" has to be an integer value.")
         }
@@ -37,17 +31,17 @@ Sirius = R6::R6Class(
       
       if(all(is.character(pathToSirius),length(pathToSirius) == 1)){
         if(all(file.exists(pathToSirius),!dir.exists(pathToSirius))){
-
+          
           sirius <- basename(pathToSirius) # the file which has to be executed
           dir_sirius <- dirname(pathToSirius)
           # Change working directory to the directory which contains SIRIUS.
           # This has to be done in the case that pathToSirius contains at least one whitespace.
           wd <- getwd()
           setwd(dir_sirius)
-            
+          
           # It is also possible that inputData and projectSpace contain at least one whitespace:
           sirius_call <- paste("./",sirius, sep = "")
-            
+          
           if(!missing(projectSpace)){
             if(all(is.character(projectSpace),length(projectSpace) == 1)){
               if(file.exists(projectSpace)){
@@ -63,19 +57,14 @@ Sirius = R6::R6Class(
           print(sirius_call)
           # Call SIRIUS as background service in commando line:
           system(sirius_call, wait=FALSE)
-          print  
           Sys.sleep(10) #delete later 
-          # MAY NEED TO CHANGE WD
-          #for (i in 1:6){
-          #  Sys.sleep(5)
-          #  if(file.exists(PID.FILE)){
-          #    self$pid <- PID.FROM.FILE
-          #    break
-          #  }
-          #}
-          #todo: SET PID HERE
-          setwd(wd)
-          #return(ApiClient(self$basePath))
+          for (i in 1:30){
+            Sys.sleep(1)
+            if(file.exists(self$pidFile)){
+              self$pid <- strtoi(readLines(self$pidFile, warn=FALSE))
+              break
+            }
+          }
         }else{
           stop("The given string \"pathToSirius\" should represent a valid path to the executable SIRIUS file.")
         }
@@ -84,7 +73,7 @@ Sirius = R6::R6Class(
 		            It has to be a character vector of length 1.")
       }
     },
-  
+    
     is_active = function(){
       tryCatch(
         {
@@ -110,48 +99,47 @@ Sirius = R6::R6Class(
         req_shutdown = req_method(request(paste(self$basePath,"/actuator/shutdown",sep = "")), "POST")
         resp_shutdown = req_perform(req_shutdown)
         if(resp_body_json(resp_shutdown)=="Shutting down SpringBootApp and SIRIUS afterward, bye..."){
-          print("The SIRIUS REST service ended successfully. ")
-          self$pid=NULL
+          terminationResponse()
         } else {
           print("SIRIUS REST service seems not to have shut down as intended.")
         }
         
         if(Sys.info()['sysname']=="Linux"){
           print("Trying to end Sirius via SIGTERM...")
-          pskill(PID, SIGTERM)
+          pskill(self$pid, SIGTERM)
           Sys.sleep(5)
           
-          if(file.exists(PID.FILE)){
+          if(file.exists(self$pidFile)){
             print("SIGTERM did not work. Trying to end Sirius via SIGKILL...")
-            pskill(PID, SIGKILL)
+            pskill(self$pid, SIGKILL)
             Sys.sleep(5)
             
-            if(file.exists(PID.FILE)){
-              print("SIGKILL did not work. Please shut down your Port running Sirius and delete the PID.FILE.")
+            if(file.exists(self$pidFile)){
+              print("SIGKILL did not work. Please shut down your Port running Sirius and delete the sirius.pid file")
             } else {
-              print("The SIRIUS REST service ended successfully. ")
+              terminationResponse()
             }
           } else {
-            print("The SIRIUS REST service ended successfully. ")
+            terminationResponse()
           }
           
         } else {
-          print("Trying to end Sirius via SIGINT...")
-          pskill(PID, SIGINT)
+          print("Trying to end Sirius via SIGTERM...")
+          pskill(self$pid, SIGTERM)
           Sys.sleep(5)
           
-          if(file.exists(PID.FILE)){
-            print("SIGINT did not work. Trying to end Sirius via SIGTERM...")
-            pskill(PID, SIGTERM)
+          if(file.exists(self$pidFile)){
+            print("SIGTERM did not work. Trying to end Sirius via taskkill...")
+            system(paste("taskkill /pid ",self$pid," /f", sep = ""))
             Sys.sleep(5)
             
-            if(file.exists(PID.FILE)){
-              print("SIGTERM did not work. Please shut down your Port running Sirius and delete the PID.FILE.")
+            if(file.exists(self$pidFile)){
+              print("Taskkill did not work. Please shut down your Port running Sirius and delete the sirius.pid file")
             } else {
-              print("The SIRIUS REST service ended successfully. ")
+              terminationResponse()
             }
           } else {
-            print("The SIRIUS REST service ended successfully. ")
+            terminationResponse()
           }
         }
       }else{
@@ -161,6 +149,14 @@ Sirius = R6::R6Class(
     
     getApiClient = function(host = self$host, port = self$port){
       return(ApiClient$new(paste(host,port, sep = "")))
+    },
+    
+    terminationResponse <- function(){
+      print("The SIRIUS REST service ended successfully. ")
+      file.remove(self$pidFile)
+      # TODO
+      file.remove(paste("~/.",SIRIUSVERSION,"/sirius.port",sep = "") )
+      self$pid=NULL
     }
   )
 )
