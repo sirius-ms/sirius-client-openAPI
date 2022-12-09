@@ -3,11 +3,11 @@ Sirius = R6::R6Class(
   inherit = R6P::Singleton,
   public = list(
     
-    pid = NULL,
-    port = NULL,
-    host = NULL,
-    pidFile = NULL,
-    basePath = NULL,
+    pid <- NULL,
+    port <- NULL,
+    host <- NULL,
+    pidFile <- NULL,
+    basePath <- NULL,
     
     start = function(host = "http://localhost:", port = 8080, pathToSirius, projectSpace = ""){
       
@@ -20,7 +20,10 @@ Sirius = R6::R6Class(
           self$port <- as.integer(port)
           self$host <- host
           self$basePath <- paste(self$host,self$port, sep = "")
-          self$pidFile <- paste("~/.",SIRIUSVERSION,"/sirius.pid",sep = "") 
+          # TODO read in file
+          # TODO get line containing version as string
+          num = as.numeric(gsub("\\D", "", str))
+          self$pidFile <- paste("~/.sirius-",substr(num, 1, 1),".",substr(num, 2, 2),".","/sirius.pid",sep = "") 
         }else{
           stop("The given parameter \"port\" has to be an integer value.")
         }
@@ -31,8 +34,8 @@ Sirius = R6::R6Class(
       
       if(all(is.character(pathToSirius),length(pathToSirius) == 1)){
         if(all(file.exists(pathToSirius),!dir.exists(pathToSirius))){
-          
-          sirius <- basename(pathToSirius) # the file which has to be executed
+          # the file which has to be executed
+          sirius <- basename(pathToSirius) 
           dir_sirius <- dirname(pathToSirius)
           # Change working directory to the directory which contains SIRIUS.
           # This has to be done in the case that pathToSirius contains at least one whitespace.
@@ -57,12 +60,11 @@ Sirius = R6::R6Class(
           print(sirius_call)
           # Call SIRIUS as background service in commando line:
           system(sirius_call, wait=FALSE)
-          Sys.sleep(10) #delete later 
           for (i in 1:30){
             Sys.sleep(1)
             if(file.exists(self$pidFile)){
               self$pid <- strtoi(readLines(self$pidFile, warn=FALSE))
-              break
+              return(ApiClient$new(base_path = paste(self$host,self$port, sep = "")))
             }
           }
         }else{
@@ -89,16 +91,16 @@ Sirius = R6::R6Class(
             print("The request was not completely successfull.")
             return(FALSE)
           }
-        },error = function(e){
+        },error <- function(e){
           return(FALSE)
         })
     },
     
     shutdown = function(){
       if(self$is_active()){
-        req_shutdown = req_method(request(paste(self$basePath,"/actuator/shutdown",sep = "")), "POST")
-        resp_shutdown = req_perform(req_shutdown)
-        if(resp_body_json(resp_shutdown)=="Shutting down SpringBootApp and SIRIUS afterward, bye..."){
+        req_shutdown <- req_method(request(paste(self$basePath,"/actuator/shutdown",sep = "")), "POST")
+        resp_shutdown <- req_perform(req_shutdown)
+        if(resp_status(resp_shutdown) == 200){
           terminationResponse()
         } else {
           print("SIRIUS REST service seems not to have shut down as intended.")
@@ -106,18 +108,20 @@ Sirius = R6::R6Class(
         
         if(Sys.info()['sysname']=="Linux"){
           print("Trying to end Sirius via SIGTERM...")
-          pskill(self$pid, SIGTERM)
-          Sys.sleep(5)
+          # resp is either TRUE (success) or FALSE (failure)
+          resp <- pskill(self$pid, SIGTERM)
+          Sys.sleep(2)
           
-          if(file.exists(self$pidFile)){
+          if(!resp){
             print("SIGTERM did not work. Trying to end Sirius via SIGKILL...")
-            pskill(self$pid, SIGKILL)
-            Sys.sleep(5)
+            # resp is either TRUE (success) or FALSE (failure)
+            resp <- pskill(self$pid, SIGKILL)
+            Sys.sleep(2)
             
-            if(file.exists(self$pidFile)){
+            if(!resp){
               print("SIGKILL did not work. Please shut down your Port running Sirius and delete the sirius.pid file")
             } else {
-              terminationResponse()
+              terminationResponse(killed = TRUE)
             }
           } else {
             terminationResponse()
@@ -125,18 +129,20 @@ Sirius = R6::R6Class(
           
         } else {
           print("Trying to end Sirius via SIGTERM...")
-          pskill(self$pid, SIGTERM)
-          Sys.sleep(5)
+          # resp is either TRUE (success) or FALSE (failure)
+          resp <- pskill(self$pid, SIGTERM)
+          Sys.sleep(2)
           
-          if(file.exists(self$pidFile)){
+          if(!resp){
             print("SIGTERM did not work. Trying to end Sirius via taskkill...")
-            system(paste("taskkill /pid ",self$pid," /f", sep = ""))
-            Sys.sleep(5)
+            # resp is either 0 (success), 1 (access denied) or 128 (no such process)
+            resp <- system(paste("taskkill /pid ",self$pid," /f", sep = ""))
+            Sys.sleep(2)
             
-            if(file.exists(self$pidFile)){
+            if(!resp){
               print("Taskkill did not work. Please shut down your Port running Sirius and delete the sirius.pid file")
             } else {
-              terminationResponse()
+              terminationResponse(killed = TRUE)
             }
           } else {
             terminationResponse()
@@ -147,16 +153,15 @@ Sirius = R6::R6Class(
       }
     },
     
-    getApiClient = function(host = self$host, port = self$port){
-      return(ApiClient$new(paste(host,port, sep = "")))
-    },
-    
-    terminationResponse <- function(){
+    terminationResponse = function(killed = FALSE){
       print("The SIRIUS REST service ended successfully. ")
-      file.remove(self$pidFile)
-      # TODO
-      file.remove(paste("~/.",SIRIUSVERSION,"/sirius.port",sep = "") )
-      self$pid=NULL
+      if (kill){
+        file.remove(self$pidFile)
+        # TODO
+        file.remove(paste("~/.",SIRIUSVERSION,"/sirius.port",sep = "") )
+        self$pid <- NULL
+        self$pidFile <- NULL
+      }
     }
   )
 )
