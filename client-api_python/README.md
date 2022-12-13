@@ -46,10 +46,10 @@ import PySirius
 Please follow the [installation procedure](#installation--usage) and then run the following (while replacing the Strings for project_space and sirius_executable):
 
 ```python
-from PySirius import RealSirius
+from PySirius import SiriusSDK
 project_space = "PATH_TO_EMPTY_OR_PROJECT_FOLDER"
 sirius_executable = "PATH_TO_THE_SIRIUS_EXECUTEABLE"
-api = RealSirius.start(project_space, sirius_executable)
+api = SiriusSDK.start(project_space, sirius_executable)
 print(api.get_ComputationsApi().get_default_job_config())
 print(api.get_ProjectSpacesApi().get_project_spaces())
 ```
