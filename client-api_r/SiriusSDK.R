@@ -1,5 +1,5 @@
-Sirius = R6::R6Class(
-  classname = "Sirius",
+SiriusSDK = R6::R6Class(
+  classname = "SiriusSDK",
   inherit = R6P::Singleton,
   public = list(
     
@@ -7,23 +7,33 @@ Sirius = R6::R6Class(
     port <- NULL,
     host <- NULL,
     pidFile <- NULL,
+    portFile <- NULL,
     basePath <- NULL,
     
-    start = function(host = "http://localhost:", port = 8080, pathToSirius, projectSpace = ""){
+    start = function(host = "http://localhost:", port = 8080, pathToSirius, projectSpace = "", force=FALSE){
+      
+      if(all(file.exists(self$pidFile),!force)){
+        stop("Found existing sirius.pid file. If you are sure no instance of Sirius is currently running on your computer,
+             call start again using the 'force=TRUE' parameter.")
+      }
       
       if(!is.null(self$pid)){
         stop(paste("Sirius has already been started with PID: ",self$pid, sep = ""))
       }
       
-      if(is.character(host) && length(host) == 1){
+      if(all(is.character(host),length(host) == 1)){
         if(is.numeric(port)){
           self$port <- as.integer(port)
           self$host <- host
           self$basePath <- paste(self$host,self$port, sep = "")
           # TODO read in file
           # TODO get line containing version as string
+          # TODO different home directory calls for OS
+          # Linux and Mac: cd ~
+          # Windows: cd %HOMEPATH%
           num = as.numeric(gsub("\\D", "", str))
-          self$pidFile <- paste("~/.sirius-",substr(num, 1, 1),".",substr(num, 2, 2),".","/sirius.pid",sep = "") 
+          self$pidFile <- paste("~/.sirius-",substr(num, 1, 1),".",substr(num, 2, 2),".","/sirius.pid",sep = "")
+          self$portFile <- paste("~/.sirius-",substr(num, 1, 1),".",substr(num, 2, 2),".","/sirius.port",sep = "")
         }else{
           stop("The given parameter \"port\" has to be an integer value.")
         }
@@ -97,6 +107,87 @@ Sirius = R6::R6Class(
     },
     
     shutdown = function(){
+      
+      terminationResponse = function(killed = FALSE){
+        print("The SIRIUS REST service ended successfully. ")
+        if (killed){
+          file.remove(self$pidFile)
+          file.remove(self$portFile)
+          self$pid <- NULL
+          self$pidFile <- NULL
+          self$portFile <- NULL
+        }
+      }
+      
+      linuxShutdown = function(){
+        print("Trying to end Sirius via SIGTERM...")
+        # resp is either TRUE (success) or FALSE (failure)
+        resp <- pskill(self$pid, SIGTERM)
+        Sys.sleep(2)
+        
+        if(!resp){
+          print("SIGTERM did not work. Trying to end Sirius via SIGKILL...")
+          # resp is either TRUE (success) or FALSE (failure)
+          resp <- pskill(self$pid, SIGKILL)
+          Sys.sleep(2)
+          
+          if(!resp){
+            print("SIGKILL did not work. Please shut down your Port running Sirius and delete the sirius.pid file")
+          } else {
+            terminationResponse(killed = TRUE)
+          }
+        } else {
+          terminationResponse()
+        }
+      }
+      
+      macShutdown = function(){
+        # kill defaults to signal value 15: TERM, Termination signal - allow an orderly shutdown; equiv. SIGTERM
+        print("Trying to end Sirius via kill...")
+        # TODO find response codes
+        resp <- system(paste("kill", self$pid, sep = ""))
+        Sys.sleep(2)
+        
+        if(!resp){
+          # singal value 9: KILL,	Kill signal; equiv. SIGSTOP
+          print("kill did not work. Trying to end Sirius via 'kill -9'...")
+          # resp should be 0 on success, otherwise -1, according to 
+          # https://developer.apple.com/library/archive/documentation/System/Conceptual/ManPages_iPhoneOS/man2/kill.2.html
+          resp <- system(paste("kill -9 ", self$pid, sep = ""))
+          Sys.sleep(2)
+          
+          if(!resp){
+            print("'kill -9' did not work. Please shut down your Port running Sirius and delete the sirius.pid file")
+          } else {
+            terminationResponse(killed = TRUE)
+          }
+        } else {
+          terminationResponse()
+        }
+      }
+      
+      windowsShutdown = function(){
+        print("Trying to end Sirius via SIGTERM...")
+        # resp is either TRUE (success) or FALSE (failure)
+        resp <- pskill(self$pid, SIGTERM)
+        Sys.sleep(2)
+        
+        if(!resp){
+          print("SIGTERM did not work. Trying to end Sirius via taskkill...")
+          # resp is either 0 (success), 1 (access denied) or 128 (no such process)
+          resp <- system(paste("taskkill /pid ", self$pid, " /f", sep = ""))
+          Sys.sleep(2)
+          
+          if(!resp){
+            print("taskkill did not work. Please shut down your Port running Sirius and delete the sirius.pid file")
+          } else {
+            terminationResponse(killed = TRUE)
+          }
+        } else {
+          terminationResponse()
+        }
+      }
+      
       if(self$is_active()){
         req_shutdown <- req_method(request(paste(self$basePath,"/actuator/shutdown",sep = "")), "POST")
         resp_shutdown <- req_perform(req_shutdown)
@@ -107,60 +198,15 @@ Sirius = R6::R6Class(
         }
         
         if(Sys.info()['sysname']=="Linux"){
-          print("Trying to end Sirius via SIGTERM...")
-          # resp is either TRUE (success) or FALSE (failure)
-          resp <- pskill(self$pid, SIGTERM)
-          Sys.sleep(2)
-          
-          if(!resp){
-            print("SIGTERM did not work. Trying to end Sirius via SIGKILL...")
-            # resp is either TRUE (success) or FALSE (failure)
-            resp <- pskill(self$pid, SIGKILL)
-            Sys.sleep(2)
-            
-            if(!resp){
-              print("SIGKILL did not work. Please shut down your Port running Sirius and delete the sirius.pid file")
-            } else {
-              terminationResponse(killed = TRUE)
-            }
-          } else {
-            terminationResponse()
-          }
-          
+          linuxShutdown()
+        } else if (Sys.info()['sysname']=="macOS"){
+          macShutdown()
         } else {
-          print("Trying to end Sirius via SIGTERM...")
-          # resp is either TRUE (success) or FALSE (failure)
-          resp <- pskill(self$pid, SIGTERM)
-          Sys.sleep(2)
-          
-          if(!resp){
-            print("SIGTERM did not work. Trying to end Sirius via taskkill...")
-            # resp is either 0 (success), 1 (access denied) or 128 (no such process)
-            resp <- system(paste("taskkill /pid ",self$pid," /f", sep = ""))
-            Sys.sleep(2)
-            
-            if(!resp){
-              print("Taskkill did not work. Please shut down your Port running Sirius and delete the sirius.pid file")
-            } else {
-              terminationResponse(killed = TRUE)
-            }
-          } else {
-            terminationResponse()
-          }
+          windowsShutdown()
         }
+        
       }else{
         print("SIRIUS does not run as REST service at this moment.")
-      }
-    },
-    
-    terminationResponse = function(killed = FALSE){
-      print("The SIRIUS REST service ended successfully. ")
-      if (kill){
-        file.remove(self$pidFile)
-        # TODO
-        file.remove(paste("~/.",SIRIUSVERSION,"/sirius.port",sep = "") )
-        self$pid <- NULL
-        self$pidFile <- NULL
       }
     }
   )
