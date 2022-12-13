@@ -16,11 +16,11 @@ class SiriusSDK:
         is_up = False
         http = urllib3.PoolManager()
 
-        if (RealSirius.process is not None) and not forceStart:
-            print("Sirius has already been started with PID: "+str(RealSirius.process.pid))
+        if (SiriusSDK.process is not None) and not forceStart:
+            print("Sirius has already been started with PID: "+str(SiriusSDK.process.pid))
             return None
         
-        RealSirius.port = port
+        SiriusSDK.port = port
         
         # add windows and mac
         executable_exist = os.path.exists(sirius_executable)
@@ -31,7 +31,7 @@ class SiriusSDK:
             path_to_project = os.path.abspath(project_space)
             # run_command = "java -jar " + sirius_executable + " --output " + project_space + " REST  -p " + port + " -s"
             run_command = [path_to_executable, "--output", path_to_project, "REST", "-p", str(port), "-s"]
-            RealSirius.process = subprocess.Popen(run_command)
+            SiriusSDK.process = subprocess.Popen(run_command)
 
             while not is_up:
                 time.sleep(0.5)
@@ -42,7 +42,7 @@ class SiriusSDK:
                         is_up = resp_data["status"] == "UP"
                         if is_up:
                             print("Sirius started succesully on the port " + str(port))
-                            return PySirius.PySiriusAPI(address="http://localhost", port=RealSirius.port)
+                            return PySirius.PySiriusAPI(address="http://localhost", port=SiriusSDK.port)
                 except:
                     pass
         else:
@@ -51,19 +51,25 @@ class SiriusSDK:
 
     def shutdown():
         http = urllib3.PoolManager()
-        resp = http.request('POST', "http://localhost:" + str(RealSirius.port) + "/actuator/shutdown")
+        resp = http.request('POST', "http://localhost:" + str(SiriusSDK.port) + "/actuator/shutdown")
         if resp.status == 200:
             # terminated via Rest Call
             print("Sirius wash shut down succesfully")
-            RealSirius.process = None
-            return
+            SiriusSDK.process = None
+            return 0
         # Terminate via SIGTERM
-        RealSirius.process.terminate()
-        if RealSirius.process.poll() is not None:
+        SiriusSDK.process.terminate()
+        if SiriusSDK.process.poll() is not None:
             print("Sirius was shut down forcibly")
-            RealSirius.process = None
-            return
+            SiriusSDK.process = None
+            return 0
         # Terminate via SIGKILL
-        RealSirius.process.kill()
-        RealSirius.process = None
-        print("Sirius has been shut down...")
+        SiriusSDK.process.kill()
+        if SiriusSDK.process.poll() is not None:
+            print("Sirius has been shut down...")
+            SiriusSDK.process = None
+            return 0
+        # Termination not successful!
+        print("Unable to stop Sirius! - Please manually terminate the process with PID "+ str(SiriusSDK.process.pid))
+        SiriusSDK.process = None
+        return 1
