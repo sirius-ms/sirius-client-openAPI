@@ -35,11 +35,11 @@ SiriusSDK = R6::R6Class(
           self$pidFile <- paste("~/.sirius-",substr(num, 1, 1),".",substr(num, 2, 2),".","/sirius.pid",sep = "")
           self$portFile <- paste("~/.sirius-",substr(num, 1, 1),".",substr(num, 2, 2),".","/sirius.port",sep = "")
         }else{
-          stop("The given parameter \"port\" has to be an integer value.")
+          stop("The given parameter 'port' has to be an integer value.")
         }
       }else{
-        stop("The given parameter \"host\" has to be a valid domain name.
-                \"host\" has to be a character vector of length one.")
+        stop("The given parameter 'host' has to be a valid domain name.
+                'host' has to be a character vector of length one.")
       }
       
       if(all(is.character(pathToSirius),length(pathToSirius) == 1)){
@@ -60,10 +60,10 @@ SiriusSDK = R6::R6Class(
               if(file.exists(projectSpace)){
                 sirius_call <- paste(sirius_call," --project-space=","\"",projectSpace,"\"",sep = "")
               }else{
-                stop("The string \"projectSpace\" should represent a valid path to your project space.")
+                stop("The string 'projectSpace' should represent a valid path to your project space.")
               }
             }else{
-              stop("The given parameter \"projectSpace\" has to be a character vector of length 1.")
+              stop("The given parameter 'projectSpace' has to be a character vector of length 1.")
             }
           }
           sirius_call <- paste(sirius_call," rest -s -p ",self$port,sep = "")
@@ -78,10 +78,10 @@ SiriusSDK = R6::R6Class(
             }
           }
         }else{
-          stop("The given string \"pathToSirius\" should represent a valid path to the executable SIRIUS file.")
+          stop("The given string 'pathToSirius' should represent a valid path to the executable SIRIUS file.")
         }
       }else{
-        stop("The parameter \"pathToSirius\" does not meet the requirements.
+        stop("The parameter 'pathToSirius' does not meet the requirements.
 		            It has to be a character vector of length 1.")
       }
     },
@@ -120,19 +120,19 @@ SiriusSDK = R6::R6Class(
       }
       
       linuxShutdown = function(){
-        print("Trying to end Sirius via SIGTERM...")
+        print("Trying to end Sirius via 'SIGTERM' ...")
         # resp is either TRUE (success) or FALSE (failure)
         resp <- pskill(self$pid, SIGTERM)
         Sys.sleep(2)
         
         if(!resp){
-          print("SIGTERM did not work. Trying to end Sirius via SIGKILL...")
+          print("'SIGTERM' did not work. Trying to end Sirius via 'SIGKILL' ...")
           # resp is either TRUE (success) or FALSE (failure)
           resp <- pskill(self$pid, SIGKILL)
           Sys.sleep(2)
           
           if(!resp){
-            print("SIGKILL did not work. Please shut down your Port running Sirius and delete the sirius.pid file")
+            print("'SIGKILL' did not work. Please shut down your Port running Sirius and delete the sirius.pid file")
           } else {
             terminationResponse(killed = TRUE)
           }
@@ -143,14 +143,14 @@ SiriusSDK = R6::R6Class(
       
       macShutdown = function(){
         # kill defaults to signal value 15: TERM, Termination signal - allow an orderly shutdown; equiv. SIGTERM
-        print("Trying to end Sirius via kill...")
+        print("Trying to end Sirius via 'kill' ...")
         # TODO find response codes
         resp <- system(paste("kill", self$pid, sep = ""))
         Sys.sleep(2)
         
         if(!resp){
           # singal value 9: KILL,	Kill signal; equiv. SIGSTOP
-          print("kill did not work. Trying to end Sirius via 'kill -9'...")
+          print("'kill' did not work. Trying to end Sirius via 'kill -9' ...")
           # resp should be 0 on success, otherwise -1, according to 
           # https://developer.apple.com/library/archive/documentation/System/Conceptual/ManPages_iPhoneOS/man2/kill.2.html
           resp <- system(paste("kill -9 ", self$pid, sep = ""))
@@ -167,19 +167,19 @@ SiriusSDK = R6::R6Class(
       }
       
       windowsShutdown = function(){
-        print("Trying to end Sirius via SIGTERM...")
+        print("Trying to end Sirius via 'SIGTERM' ...")
         # resp is either TRUE (success) or FALSE (failure)
         resp <- pskill(self$pid, SIGTERM)
         Sys.sleep(2)
         
         if(!resp){
-          print("SIGTERM did not work. Trying to end Sirius via taskkill...")
+          print("'SIGTERM' did not work. Trying to end Sirius via 'taskkill' ...")
           # resp is either 0 (success), 1 (access denied) or 128 (no such process)
           resp <- system(paste("taskkill /pid ", self$pid, " /f", sep = ""))
           Sys.sleep(2)
           
           if(!resp){
-            print("taskkill did not work. Please shut down your Port running Sirius and delete the sirius.pid file")
+            print("'taskkill' did not work. Please shut down your Port running Sirius and delete the sirius.pid file")
           } else {
             terminationResponse(killed = TRUE)
           }
