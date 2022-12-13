@@ -7,7 +7,7 @@ import json
 import urllib3
 import PySirius
 
-class RealSirius:
+class SiriusSDK:
     
     process = None
     port = None
