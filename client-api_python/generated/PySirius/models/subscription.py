@@ -32,6 +32,7 @@ class Subscription(object):
         'subscriber_id': 'str',
         'subscriber_name': 'str',
         'expiration_date': 'datetime',
+        'start_date': 'datetime',
         'count_queries': 'bool',
         'compound_limit': 'int',
         'compound_hash_recording_time': 'int',
@@ -49,6 +50,7 @@ class Subscription(object):
         'subscriber_id': 'subscriberId',
         'subscriber_name': 'subscriberName',
         'expiration_date': 'expirationDate',
+        'start_date': 'startDate',
         'count_queries': 'countQueries',
         'compound_limit': 'compoundLimit',
         'compound_hash_recording_time': 'compoundHashRecordingTime',
@@ -61,12 +63,13 @@ class Subscription(object):
         'pp': 'pp'
     }
 
-    def __init__(self, sid=None, subscriber_id=None, subscriber_name=None, expiration_date=None, count_queries=None, compound_limit=None, compound_hash_recording_time=None, max_queries_per_compound=None, max_user_accounts=None, service_url=None, description=None, name=None, tos=None, pp=None):  # noqa: E501
+    def __init__(self, sid=None, subscriber_id=None, subscriber_name=None, expiration_date=None, start_date=None, count_queries=None, compound_limit=None, compound_hash_recording_time=None, max_queries_per_compound=None, max_user_accounts=None, service_url=None, description=None, name=None, tos=None, pp=None):  # noqa: E501
         """Subscription - a model defined in Swagger"""  # noqa: E501
         self._sid = None
         self._subscriber_id = None
         self._subscriber_name = None
         self._expiration_date = None
+        self._start_date = None
         self._count_queries = None
         self._compound_limit = None
         self._compound_hash_recording_time = None
@@ -86,6 +89,8 @@ class Subscription(object):
             self.subscriber_name = subscriber_name
         if expiration_date is not None:
             self.expiration_date = expiration_date
+        if start_date is not None:
+            self.start_date = start_date
         if count_queries is not None:
             self.count_queries = count_queries
         if compound_limit is not None:
@@ -190,6 +195,27 @@ class Subscription(object):
         """
 
         self._expiration_date = expiration_date
+
+    @property
+    def start_date(self):
+        """Gets the start_date of this Subscription.  # noqa: E501
+
+
+        :return: The start_date of this Subscription.  # noqa: E501
+        :rtype: datetime
+        """
+        return self._start_date
+
+    @start_date.setter
+    def start_date(self, start_date):
+        """Sets the start_date of this Subscription.
+
+
+        :param start_date: The start_date of this Subscription.  # noqa: E501
+        :type: datetime
+        """
+
+        self._start_date = start_date
 
     @property
     def count_queries(self):

@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **subscriber_id** | **str** |  | [optional] 
 **subscriber_name** | **str** |  | [optional] 
 **expiration_date** | **datetime** |  | [optional] 
+**start_date** | **datetime** |  | [optional] 
 **count_queries** | **bool** |  | [optional] 
 **compound_limit** | **int** |  | [optional] 
 **compound_hash_recording_time** | **int** |  | [optional] 
