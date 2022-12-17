@@ -6,11 +6,62 @@ SiriusSDK = R6::R6Class(
     pid <- NULL,
     port <- NULL,
     host <- NULL,
-    pidFile <- NULL,
-    portFile <- NULL,
-    basePath <- NULL,
+    pidFile <- "",
+    portFile <- "",
+    basePath <- "",
     
     start = function(host = "http://localhost:", port = 8080, pathToSirius, projectSpace = NULL, workSpace = NULL, force=FALSE){
+      
+      # extract the (major) version of Sirius from the .jar file
+      getVersion <- function(){
+        wd <- getwd()
+        setwd(pathToSirius)
+        if(Sys.info()['sysname']=="Linux"){
+          setwd("../lib/app")
+        } else if (Sys.info()['sysname'] %in% c("Windows","Darwin")){
+          setwd("../app")
+        } else {
+          # reset working directory
+          setwd(wd)
+          stop("Unsupported operating system.")
+        }
+        file <- Sys.glob(file.path('*.jar'))
+        numbers <- regmatches(file, gregexpr("\\d+", file))[[1]]
+        # reset working directory
+        setwd(wd)
+        if (length(numbers<2)){
+          stop("Could not find .jar file to get Sirius version from.")
+        }
+        return(paste(numbers[1], numbers[2], sep = "."))
+      }
+      
+      
+      # get the path to the sirius.pid and sirius.port files to extract the PID
+      # and to display them to the user in case he needs to delete them manually
+      getPidPortFiles <- function(compliant_workSpace=FALSE){
+        sirius_version <- getVersion()
+        if (compliant_workSpace){
+          wd <- getwd()
+          # workspace may be total or relative path, so use setwd and then getwd 
+          setwd(workSpace)
+          workSpace_path = getwd()
+          # reset working directory
+          setwd(wd)
+          self$pidFile <- paste(workSpace_path,"/.sirius-",sirius_version,"/sirius.pid",sep = "")
+          self$portFile <- paste(workSpace_path,"/.sirius-",sirius_version,"/sirius.port",sep = "")
+        } else {
+          if(Sys.info()['sysname']=="Windows"){
+            home = "%HOMEPATH%"
+          } else if (Sys.info()['sysname'] %in% c("Linux","Darwin")){
+            home = "~"
+          } else {
+            stop("Unsupported operating system.")
+          } 
+          self$pidFile <- paste(home,"/.sirius-",sirius_version,"/sirius.pid",sep = "")
+          self$portFile <- paste(home,"/.sirius-",sirius_version,"/sirius.port",sep = "")
+        }
+      }
+      
       
       if(all(file.exists(self$pidFile),!force)){
         stop("Found existing sirius.pid file. If you are sure no instance of Sirius is currently running on your computer,
@@ -18,7 +69,7 @@ SiriusSDK = R6::R6Class(
       }
       
       if(!is.null(self$pid)){
-        stop(paste("Sirius has already been started with PID: ",self$pid, sep = ""))
+        stop(paste("Sirius has already been started with PID: ", self$pid, sep = ""))
       }
       
       if(all(is.character(host),length(host) == 1)){
@@ -26,14 +77,6 @@ SiriusSDK = R6::R6Class(
           self$port <- as.integer(port)
           self$host <- host
           self$basePath <- paste(self$host,self$port, sep = "")
-          # TODO read in file
-          # TODO get line containing version as string
-          # TODO different home directory calls for OS
-          # Linux and Mac: cd ~
-          # Windows: cd %HOMEPATH%
-          num = as.numeric(gsub("\\D", "", str))
-          self$pidFile <- paste("~/.sirius-",substr(num, 1, 1),".",substr(num, 2, 2),".","/sirius.pid",sep = "")
-          self$portFile <- paste("~/.sirius-",substr(num, 1, 1),".",substr(num, 2, 2),".","/sirius.port",sep = "")
         }else{
           stop("The given parameter 'port' has to be an integer value.")
         }
@@ -49,7 +92,6 @@ SiriusSDK = R6::R6Class(
           dir_sirius <- dirname(pathToSirius)
           # Change working directory to the directory which contains SIRIUS.
           # This has to be done in the case that pathToSirius contains at least one whitespace.
-          wd <- getwd()
           setwd(dir_sirius)
           
           # It is also possible that inputData and projectSpace contain at least one whitespace:
@@ -67,10 +109,12 @@ SiriusSDK = R6::R6Class(
             }
           }
           
+          compliant = FALSE
           if(!is.null(workSpace)){
             if(all(is.character(workSpace),length(workSpace) == 1)){
               if(file.exists(workSpace)){
-                sirius_call <- paste(sirius_call," -workspace=","\"",workSpace,"\"",sep = "")
+                compliant = TRUE
+                sirius_call <- paste(sirius_call," --workspace=","\"",workSpace,"\"",sep = "")
               }else{
                 stop("The string 'workSpace' should represent a valid path to your work space.")
               }
@@ -78,6 +122,7 @@ SiriusSDK = R6::R6Class(
               stop("The given parameter 'workSpace' has to be a character vector of length 1.")
             }
           }
+          getPidPortFiles(compliant)
           
           sirius_call <- paste(sirius_call," rest -s -p ",self$port,sep = "")
           print(sirius_call)
