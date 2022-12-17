@@ -34,6 +34,9 @@ class SiriusSDK:
             # run_command = "java -jar " + sirius_executable + " --output " + project_space + " REST  -p " + port + " -s"
             run_command = [path_to_executable, "--output", path_to_project, "REST", "-p", str(port), "-s"]
             if workspace is not None:
+                if not os.path.exists(workspace) and not forceStart:
+                    print("Wrong path to workspace")
+                    return None
                 print("\033[93m [WARNING] Overriding workspace location [NOT RECOMMENDED] \033[0m")
                 run_command.insert(3, "--workspace")
                 run_command.insert(4, workspace)
@@ -52,7 +55,11 @@ class SiriusSDK:
                 except:
                     pass
         else:
-            print("Wrong path to project space or executable")
+            if not executable_exist: 
+                print("Wrong path to executable")
+            if not project_space_exist:
+                print("Wrong path to project space")
+            print("Please enter the correct path to the projectspace / executeable")
             return None
 
     def shutdown():
