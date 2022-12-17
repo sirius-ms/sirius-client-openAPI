@@ -119,44 +119,22 @@ SiriusSDK = R6::R6Class(
         }
       }
       
-      linuxShutdown = function(){
-        print("Trying to end Sirius via 'SIGTERM' ...")
-        # resp is either TRUE (success) or FALSE (failure)
-        resp <- pskill(self$pid, SIGTERM)
-        Sys.sleep(2)
-        
-        if(!resp){
-          print("'SIGTERM' did not work. Trying to end Sirius via 'SIGKILL' ...")
-          # resp is either TRUE (success) or FALSE (failure)
-          resp <- pskill(self$pid, SIGKILL)
-          Sys.sleep(2)
-          
-          if(!resp){
-            print("'SIGKILL' did not work. Please shut down your Port running Sirius and delete the sirius.pid file")
-          } else {
-            terminationResponse(killed = TRUE)
-          }
-        } else {
-          terminationResponse()
-        }
-      }
-      
-      macShutdown = function(){
+      darwinLinuxShutdown = function(){
         # kill defaults to signal value 15: TERM, Termination signal - allow an orderly shutdown; equiv. SIGTERM
         print("Trying to end Sirius via 'kill' ...")
-        # TODO find response codes
-        resp <- system(paste("kill", self$pid, sep = ""))
+        # resp should be 0 on success, otherwise for Mac -1, according to
+        # https://developer.apple.com/library/archive/documentation/System/Conceptual/ManPages_iPhoneOS/man2/kill.2.html
+        # and 1 in Linux
+        resp <- system(paste("kill ", self$pid, sep = ""))
         Sys.sleep(2)
         
-        if(!resp){
+        if(resp!=0){
           # singal value 9: KILL,	Kill signal; equiv. SIGSTOP
-          print("'kill' did not work. Trying to end Sirius via 'kill -9' ...")
-          # resp should be 0 on success, otherwise -1, according to 
-          # https://developer.apple.com/library/archive/documentation/System/Conceptual/ManPages_iPhoneOS/man2/kill.2.html
+          print("'kill' did not work. Trying to end Sirius forcefully via 'kill -9' ...")
           resp <- system(paste("kill -9 ", self$pid, sep = ""))
           Sys.sleep(2)
           
-          if(!resp){
+          if(resp!=0){
             print("'kill -9' did not work. Please shut down your Port running Sirius and delete the sirius.pid file")
           } else {
             terminationResponse(killed = TRUE)
@@ -167,18 +145,17 @@ SiriusSDK = R6::R6Class(
       }
       
       windowsShutdown = function(){
-        print("Trying to end Sirius via 'SIGTERM' ...")
-        # resp is either TRUE (success) or FALSE (failure)
-        resp <- pskill(self$pid, SIGTERM)
+        print("Trying to end Sirius via 'taskkill' ...")
+        # resp is either 0 (success), 1 (access denied) or 128 (no such process)
+        resp <- system(paste("taskkill /pid ", self$pid, sep = ""))
         Sys.sleep(2)
         
-        if(!resp){
-          print("'SIGTERM' did not work. Trying to end Sirius via 'taskkill' ...")
-          # resp is either 0 (success), 1 (access denied) or 128 (no such process)
+        if(resp!=0){
+          print("'taskkill' did not work. Trying to end Sirius forcefully via 'taskkill /f' ...")
           resp <- system(paste("taskkill /pid ", self$pid, " /f", sep = ""))
           Sys.sleep(2)
           
-          if(!resp){
+          if(resp!=0){
             print("'taskkill' did not work. Please shut down your Port running Sirius and delete the sirius.pid file")
           } else {
             terminationResponse(killed = TRUE)
@@ -197,12 +174,12 @@ SiriusSDK = R6::R6Class(
           print("SIRIUS REST service seems not to have shut down as intended.")
         }
         
-        if(Sys.info()['sysname']=="Linux"){
-          linuxShutdown()
-        } else if (Sys.info()['sysname']=="macOS"){
-          macShutdown()
-        } else {
+        if(Sys.info()['sysname'] %in% c("Linux","Darwin")){
+          darwinLinuxShutdown()
+        } else if (Sys.info()['sysname']=="Windows"){
           windowsShutdown()
+        } else {
+          stop("Unsupported operating system.")
         }
         
       }else{
