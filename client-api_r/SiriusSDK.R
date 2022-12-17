@@ -72,7 +72,7 @@ SiriusSDK = R6::R6Class(
               if(file.exists(workSpace)){
                 sirius_call <- paste(sirius_call," -workspace=","\"",workSpace,"\"",sep = "")
               }else{
-                stop("The string 'workSpace' should represent a valid path to your project space.")
+                stop("The string 'workSpace' should represent a valid path to your work space.")
               }
             }else{
               stop("The given parameter 'workSpace' has to be a character vector of length 1.")
