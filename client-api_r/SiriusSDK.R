@@ -29,8 +29,8 @@ SiriusSDK = R6::R6Class(
         numbers <- regmatches(file, gregexpr("\\d+", file))[[1]]
         # reset working directory
         setwd(wd)
-        if (length(numbers<2)){
-          stop("Could not find .jar file to get Sirius version from.")
+        if (length(numbers) < 2){
+          stop("Could not find .jar file to get Sirius version from or found faulty .jar file name.")
         }
         return(paste(numbers[1], numbers[2], sep = "."))
       }
@@ -51,14 +51,14 @@ SiriusSDK = R6::R6Class(
           self$portFile <- paste(workSpace_path,"/.sirius-",sirius_version,"/sirius.port",sep = "")
         } else {
           if(Sys.info()['sysname']=="Windows"){
-            home = "%HOMEPATH%"
+            home_path = "%HOMEPATH%"
           } else if (Sys.info()['sysname'] %in% c("Linux","Darwin")){
-            home = "~"
+            home_path = "~"
           } else {
             stop("Unsupported operating system.")
           } 
-          self$pidFile <- paste(home,"/.sirius-",sirius_version,"/sirius.pid",sep = "")
-          self$portFile <- paste(home,"/.sirius-",sirius_version,"/sirius.port",sep = "")
+          self$pidFile <- paste(home_path,"/.sirius-",sirius_version,"/sirius.pid",sep = "")
+          self$portFile <- paste(home_path,"/.sirius-",sirius_version,"/sirius.port",sep = "")
         }
       }
       
