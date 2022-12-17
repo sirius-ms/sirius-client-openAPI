@@ -11,9 +11,11 @@ class SiriusSDK:
     
     process = None
     port = None
+    workspace = None
     
-    def start(project_space, sirius_executable, port=8080, forceStart=False):
+    def start(project_space, sirius_executable, override_workspace_location=None ,port=8080, forceStart=False, ):
         is_up = False
+        workspace = override_workspace_location
         http = urllib3.PoolManager()
 
         if (SiriusSDK.process is not None) and not forceStart:
@@ -31,6 +33,10 @@ class SiriusSDK:
             path_to_project = os.path.abspath(project_space)
             # run_command = "java -jar " + sirius_executable + " --output " + project_space + " REST  -p " + port + " -s"
             run_command = [path_to_executable, "--output", path_to_project, "REST", "-p", str(port), "-s"]
+            if workspace is not None:
+                print("\033[93m [WARNING] Overriding workspace location [NOT RECOMMENDED] \033[0m")
+                run_command.insert(3, "--workspace")
+                run_command.insert(4, workspace)
             SiriusSDK.process = subprocess.Popen(run_command)
 
             while not is_up:
