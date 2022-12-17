@@ -10,7 +10,7 @@ SiriusSDK = R6::R6Class(
     portFile <- NULL,
     basePath <- NULL,
     
-    start = function(host = "http://localhost:", port = 8080, pathToSirius, projectSpace = "", force=FALSE){
+    start = function(host = "http://localhost:", port = 8080, pathToSirius, projectSpace = NULL, workSpace = NULL, force=FALSE){
       
       if(all(file.exists(self$pidFile),!force)){
         stop("Found existing sirius.pid file. If you are sure no instance of Sirius is currently running on your computer,
@@ -55,7 +55,7 @@ SiriusSDK = R6::R6Class(
           # It is also possible that inputData and projectSpace contain at least one whitespace:
           sirius_call <- paste("./",sirius, sep = "")
           
-          if(!missing(projectSpace)){
+          if(!is.null(projectSpace)){
             if(all(is.character(projectSpace),length(projectSpace) == 1)){
               if(file.exists(projectSpace)){
                 sirius_call <- paste(sirius_call," --project-space=","\"",projectSpace,"\"",sep = "")
@@ -66,6 +66,19 @@ SiriusSDK = R6::R6Class(
               stop("The given parameter 'projectSpace' has to be a character vector of length 1.")
             }
           }
+          
+          if(!is.null(workSpace)){
+            if(all(is.character(workSpace),length(workSpace) == 1)){
+              if(file.exists(workSpace)){
+                sirius_call <- paste(sirius_call," -workspace=","\"",workSpace,"\"",sep = "")
+              }else{
+                stop("The string 'workSpace' should represent a valid path to your project space.")
+              }
+            }else{
+              stop("The given parameter 'workSpace' has to be a character vector of length 1.")
+            }
+          }
+          
           sirius_call <- paste(sirius_call," rest -s -p ",self$port,sep = "")
           print(sirius_call)
           # Call SIRIUS as background service in commando line:
