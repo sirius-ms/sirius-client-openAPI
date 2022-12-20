@@ -163,6 +163,8 @@ SiriusSDK = R6::R6Class(
           }
         },error <- function(e){
           return(FALSE)
+        },warning <- function(w){
+          return(FALSE)
         })
     },
     
