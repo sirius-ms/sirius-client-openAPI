@@ -49,7 +49,7 @@ import JSirius.JSON;
  * Progress information of a computation job that has already been submitted to SIRIUS.  if  currentProgress &#x3D;&#x3D; maxProgress job is finished and should change to state done soon.  if a job is DONE all results can be accessed via the Project-Spaces api.
  */
 @ApiModel(description = "Progress information of a computation job that has already been submitted to SIRIUS.  if  currentProgress == maxProgress job is finished and should change to state done soon.  if a job is DONE all results can be accessed via the Project-Spaces api.")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-12-06T19:33:15.226093Z[Etc/UTC]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-12-20T21:57:08.029346Z[Etc/UTC]")
 public class JobProgress {
   public static final String SERIALIZED_NAME_INDETERMINATE = "indeterminate";
   @SerializedName(SERIALIZED_NAME_INDETERMINATE)

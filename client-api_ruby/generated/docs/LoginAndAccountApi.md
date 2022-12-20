@@ -137,7 +137,7 @@ No authorization required
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: text/plain
+- **Accept**: text/plain;charset=UTF-8
 
 
 ## get_subscriptions
@@ -452,5 +452,5 @@ No authorization required
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: text/plain
+- **Accept**: text/plain;charset=UTF-8
 

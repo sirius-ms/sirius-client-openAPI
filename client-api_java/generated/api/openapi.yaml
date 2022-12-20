@@ -1522,14 +1522,14 @@ paths:
       responses:
         "200":
           content:
-            text/plain:
+            text/plain;charset=UTF-8:
               schema:
                 type: string
           description: OK
       summary: Open SignUp window in system browser and return signUp link.
       tags:
       - Login and Account
-      x-accepts: text/plain
+      x-accepts: text/plain;charset=UTF-8
   /api/account/signUpURL:
     get:
       description: Get SignUp URL (For signUp via web browser)
@@ -1537,14 +1537,14 @@ paths:
       responses:
         "200":
           content:
-            text/plain:
+            text/plain;charset=UTF-8:
               schema:
                 type: string
           description: OK
       summary: Get SignUp URL (For signUp via web browser)
       tags:
       - Login and Account
-      x-accepts: text/plain
+      x-accepts: text/plain;charset=UTF-8
   /api/account/isLoggedIn:
     get:
       description: Check if a user is logged in.

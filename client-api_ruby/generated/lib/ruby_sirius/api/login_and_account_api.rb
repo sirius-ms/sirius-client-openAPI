@@ -105,7 +105,7 @@ module RubySirius
       # header parameters
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['text/plain'])
+      header_params['Accept'] = @api_client.select_header_accept(['text/plain;charset=UTF-8'])
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -412,7 +412,7 @@ module RubySirius
       # header parameters
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['text/plain'])
+      header_params['Accept'] = @api_client.select_header_accept(['text/plain;charset=UTF-8'])
 
       # form parameters
       form_params = opts[:form_params] || {}

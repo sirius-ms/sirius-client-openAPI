@@ -95,7 +95,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: text/plain
+ - **Accept**: text/plain;charset=UTF-8
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -313,7 +313,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: text/plain
+ - **Accept**: text/plain;charset=UTF-8
 
 ### HTTP response details
 | Status code | Description | Response headers |

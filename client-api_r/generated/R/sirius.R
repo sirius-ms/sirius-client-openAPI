@@ -22,8 +22,8 @@
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
 #' @export
-oldSirius <- R6::R6Class(
-  "oldSirius",
+Sirius <- R6::R6Class(
+  "Sirius",
   public = list(
     `enabled` = NULL,
     `profile` = NULL,

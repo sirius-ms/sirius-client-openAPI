@@ -380,7 +380,7 @@ LoginAndAccountApi <- R6::R6Class(
       local_var_url_path <- "/api/account/signUpURL"
 
       # The Accept request HTTP header
-      local_var_accepts <- list("text/plain")
+      local_var_accepts <- list("text/plain;charset=UTF-8")
 
       # The Content-Type representation header
       local_var_content_types <- list()
@@ -829,7 +829,7 @@ LoginAndAccountApi <- R6::R6Class(
       local_var_url_path <- "/api/account/signUp"
 
       # The Accept request HTTP header
-      local_var_accepts <- list("text/plain")
+      local_var_accepts <- list("text/plain;charset=UTF-8")
 
       # The Content-Type representation header
       local_var_content_types <- list()

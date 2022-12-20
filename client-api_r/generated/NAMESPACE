@@ -41,7 +41,7 @@ export(LossEdge)
 export(MsData)
 export(ProjectSpaceId)
 export(ResultOverview)
-export(oldSirius)
+export(Sirius)
 export(StructureCandidate)
 export(StructureDbSearch)
 export(Subscription)
@@ -63,5 +63,5 @@ export(LoginAndAccountApi)
 export(ProjectSpacesApi)
 export(VersionInfoControllerApi)
 
-# Singleton
-export(Sirius)
+# SDK
+export(SiriusSDK)

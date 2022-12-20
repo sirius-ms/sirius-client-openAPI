@@ -54,7 +54,7 @@ import JSirius.JSON;
  * User/developer friendly parameter subset for the ZODIAC tool (Network base molecular formula re-ranking).
  */
 @ApiModel(description = "User/developer friendly parameter subset for the ZODIAC tool (Network base molecular formula re-ranking).")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-12-06T19:33:15.226093Z[Etc/UTC]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-12-20T21:57:08.029346Z[Etc/UTC]")
 public class Zodiac {
   public static final String SERIALIZED_NAME_ENABLED = "enabled";
   @SerializedName(SERIALIZED_NAME_ENABLED)
