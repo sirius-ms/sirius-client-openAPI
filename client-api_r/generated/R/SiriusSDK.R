@@ -172,12 +172,13 @@ SiriusSDK = R6::R6Class(
       
       terminationResponse = function(killed = FALSE){
         print("The SIRIUS REST service ended successfully. ")
-        if (!killed){
+        self$pid <- NULL
+        self$port <- NULL
+        self$pidFile <- NULL
+        self$portFile <- NULL
+        if (killed){
           file.remove(self$pidFile)
           file.remove(self$portFile)
-          self$pid <- NULL
-          self$pidFile <- NULL
-          self$portFile <- NULL
         }
       }
       
