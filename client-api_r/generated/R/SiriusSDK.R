@@ -161,9 +161,9 @@ SiriusSDK = R6::R6Class(
             print("The request was not completely successfull.")
             return(FALSE)
           }
-        },error <- function(e){
+        },error = function(e){
           return(FALSE)
-        },warning <- function(w){
+        },warning = function(w){
           return(FALSE)
         })
     },
