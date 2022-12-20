@@ -1,6 +1,6 @@
 SiriusSDK = R6::R6Class(
   classname = "SiriusSDK",
-  inherit = R6P::Singleton,
+  #inherit = R6P::Singleton,
   public = list(
     
     pid = NULL,
