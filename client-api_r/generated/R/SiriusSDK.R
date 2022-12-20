@@ -15,7 +15,7 @@ SiriusSDK = R6::R6Class(
       # extract the (major) version of Sirius from the .jar file
       getVersion <- function(){
         wd <- getwd()
-        setwd(pathToSirius)
+        setwd(dirname(pathToSirius))
         if(Sys.info()['sysname']=="Linux"){
           setwd("../lib/app")
         } else if (Sys.info()['sysname'] %in% c("Windows","Darwin")){
