@@ -63,14 +63,10 @@ SiriusSDK = R6::R6Class(
       }
       
       
-      if(all(file.exists(self$pidFile),!force)){
-        stop("Found existing sirius.pid file. If you are sure no instance of Sirius is currently running on your computer,
-             call start again using the 'force=TRUE' parameter.")
-      }
-      
       if(!is.null(self$pid)){
         stop(paste("Sirius has already been started with PID: ", self$pid, sep = ""))
       }
+      
       
       if(all(is.character(host),length(host) == 1)){
         if(is.numeric(port)){
@@ -84,6 +80,7 @@ SiriusSDK = R6::R6Class(
         stop("The given parameter 'host' has to be a valid domain name.
                 'host' has to be a character vector of length one.")
       }
+      
       
       if(all(is.character(pathToSirius),length(pathToSirius) == 1)){
         if(all(file.exists(pathToSirius),!dir.exists(pathToSirius))){
@@ -123,6 +120,11 @@ SiriusSDK = R6::R6Class(
             }
           }
           getPidPortFiles(compliant)
+          
+          if(all(file.exists(self$pidFile),!force)){
+            stop("Found existing sirius.pid file. If you are sure no instance of Sirius is currently running on your computer,
+             call start again using the 'force=TRUE' parameter.")
+          }
           
           sirius_call <- paste(sirius_call," rest -s -p ",self$port,sep = "")
           print(sirius_call)
