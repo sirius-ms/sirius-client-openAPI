@@ -161,9 +161,9 @@ SiriusSDK = R6::R6Class(
             print("The request was not completely successfull.")
             return(FALSE)
           }
-        },error = function(e){
+        },error <- function(e){
           return(FALSE)
-        },warning = function(w){
+        },warning <- function(w){
           return(FALSE)
         })
     },
@@ -172,7 +172,7 @@ SiriusSDK = R6::R6Class(
       
       terminationResponse = function(killed = FALSE){
         print("The SIRIUS REST service ended successfully. ")
-        if (killed){
+        if (!killed){
           file.remove(self$pidFile)
           file.remove(self$portFile)
           self$pid <- NULL
@@ -227,21 +227,25 @@ SiriusSDK = R6::R6Class(
         }
       }
       
+      
       if(self$is_active()){
         req_shutdown <- req_method(request(paste(self$basePath,"/actuator/shutdown",sep = "")), "POST")
         resp_shutdown <- req_perform(req_shutdown)
+        Sys.sleep(2)
+        
         if(resp_status(resp_shutdown) == 200){
           terminationResponse()
+          
         } else {
           print("SIRIUS REST service seems not to have shut down as intended.")
-        }
-        
-        if(Sys.info()['sysname'] %in% c("Linux","Darwin")){
-          darwinLinuxShutdown()
-        } else if (Sys.info()['sysname']=="Windows"){
-          windowsShutdown()
-        } else {
-          stop("Unsupported operating system.")
+          
+          if(Sys.info()['sysname'] %in% c("Linux","Darwin")){
+            darwinLinuxShutdown()
+          } else if (Sys.info()['sysname']=="Windows"){
+            windowsShutdown()
+          } else {
+            stop("Unsupported operating system.")
+          }
         }
         
       }else{
