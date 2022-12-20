@@ -79,12 +79,12 @@ jobs:
       run: |
         cp client-api_r/SiriusSDK.R  client-api_r/generated/R/SiriusSDK.R
         echo >> client-api_r/generated/NAMESPACE
-        echo "# SDK Singleton" >> client-api_r/generated/NAMESPACE
+        echo "# SDK" >> client-api_r/generated/NAMESPACE
         echo "export(SiriusSDK)" >> client-api_r/generated/NAMESPACE
        
     - name: Add missing R imports to DESCRIPTION file
       run: |
-        reqs=("tools" "R6P")
+        reqs=("R6P")
         imps="$(sed -n -e '/^Imports/p' client-api_r/generated/DESCRIPTION)"
         IFS=', ' read -r -a array <<< "$imps"
         array=${array[@]:1}
