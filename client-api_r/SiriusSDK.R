@@ -1,6 +1,6 @@
 SiriusSDK = R6::R6Class(
   classname = "SiriusSDK",
-  inherit = R6P::Singleton,
+  #inherit = R6P::Singleton,
   public = list(
     
     pid = NULL,
@@ -15,7 +15,7 @@ SiriusSDK = R6::R6Class(
       # extract the (major) version of Sirius from the .jar file
       getVersion <- function(){
         wd <- getwd()
-        setwd(pathToSirius)
+        setwd(dirname(pathToSirius))
         if(Sys.info()['sysname']=="Linux"){
           setwd("../lib/app")
         } else if (Sys.info()['sysname'] %in% c("Windows","Darwin")){
@@ -63,14 +63,10 @@ SiriusSDK = R6::R6Class(
       }
       
       
-      if(all(file.exists(self$pidFile),!force)){
-        stop("Found existing sirius.pid file. If you are sure no instance of Sirius is currently running on your computer,
-             call start again using the 'force=TRUE' parameter.")
-      }
-      
       if(!is.null(self$pid)){
         stop(paste("Sirius has already been started with PID: ", self$pid, sep = ""))
       }
+      
       
       if(all(is.character(host),length(host) == 1)){
         if(is.numeric(port)){
@@ -84,6 +80,7 @@ SiriusSDK = R6::R6Class(
         stop("The given parameter 'host' has to be a valid domain name.
                 'host' has to be a character vector of length one.")
       }
+      
       
       if(all(is.character(pathToSirius),length(pathToSirius) == 1)){
         if(all(file.exists(pathToSirius),!dir.exists(pathToSirius))){
@@ -124,6 +121,11 @@ SiriusSDK = R6::R6Class(
           }
           getPidPortFiles(compliant)
           
+          if(all(file.exists(self$pidFile),!force)){
+            stop("Found existing sirius.pid file. If you are sure no instance of Sirius is currently running on your computer,
+             call start again using the 'force=TRUE' parameter.")
+          }
+          
           sirius_call <- paste(sirius_call," rest -s -p ",self$port,sep = "")
           print(sirius_call)
           # Call SIRIUS as background service in commando line:
@@ -161,6 +163,8 @@ SiriusSDK = R6::R6Class(
           }
         },error <- function(e){
           return(FALSE)
+        },warning <- function(w){
+          return(FALSE)
         })
     },
     
@@ -168,7 +172,7 @@ SiriusSDK = R6::R6Class(
       
       terminationResponse = function(killed = FALSE){
         print("The SIRIUS REST service ended successfully. ")
-        if (killed){
+        if (!killed){
           file.remove(self$pidFile)
           file.remove(self$portFile)
           self$pid <- NULL
@@ -223,21 +227,25 @@ SiriusSDK = R6::R6Class(
         }
       }
       
+      
       if(self$is_active()){
         req_shutdown <- req_method(request(paste(self$basePath,"/actuator/shutdown",sep = "")), "POST")
         resp_shutdown <- req_perform(req_shutdown)
+        Sys.sleep(2)
+        
         if(resp_status(resp_shutdown) == 200){
           terminationResponse()
+          
         } else {
           print("SIRIUS REST service seems not to have shut down as intended.")
-        }
-        
-        if(Sys.info()['sysname'] %in% c("Linux","Darwin")){
-          darwinLinuxShutdown()
-        } else if (Sys.info()['sysname']=="Windows"){
-          windowsShutdown()
-        } else {
-          stop("Unsupported operating system.")
+          
+          if(Sys.info()['sysname'] %in% c("Linux","Darwin")){
+            darwinLinuxShutdown()
+          } else if (Sys.info()['sysname']=="Windows"){
+            windowsShutdown()
+          } else {
+            stop("Unsupported operating system.")
+          }
         }
         
       }else{
