@@ -3,12 +3,12 @@ SiriusSDK = R6::R6Class(
   inherit = R6P::Singleton,
   public = list(
     
-    pid <- NULL,
-    port <- NULL,
-    host <- NULL,
-    pidFile <- "",
-    portFile <- "",
-    basePath <- "",
+    pid = NULL,
+    port = NULL,
+    host = NULL,
+    pidFile = "",
+    portFile = "",
+    basePath = "",
     
     start = function(host = "http://localhost:", port = 8080, pathToSirius, projectSpace = NULL, workSpace = NULL, force=FALSE){
       
