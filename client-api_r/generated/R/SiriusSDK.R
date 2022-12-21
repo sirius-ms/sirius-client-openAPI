@@ -134,7 +134,7 @@ SiriusSDK = R6::R6Class(
             Sys.sleep(1)
             if(file.exists(self$pidFile)){
               self$pid <- strtoi(readLines(self$pidFile, warn=FALSE))
-              return(rsirius_api$new(api_client = ApiClient$new(base_path = self$basePath))
+              return(rsirius_api$new(api_client = ApiClient$new(base_path = self$basePath)))
             }
           }
         }else{
