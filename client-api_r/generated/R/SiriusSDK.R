@@ -134,7 +134,7 @@ SiriusSDK = R6::R6Class(
             Sys.sleep(1)
             if(file.exists(self$pidFile)){
               self$pid <- strtoi(readLines(self$pidFile, warn=FALSE))
-              return(ApiClient$new(base_path = paste(self$host,self$port, sep = "")))
+              return(rsirius_api(api_client = ApiClient$new(base_path = self$basePath)))
             }
           }
         }else{
@@ -176,6 +176,8 @@ SiriusSDK = R6::R6Class(
         self$port <- NULL
         self$pidFile <- NULL
         self$portFile <- NULL
+        self$basePath <- ""
+        self$host <- NULL
         if (killed){
           file.remove(self$pidFile)
           file.remove(self$portFile)
