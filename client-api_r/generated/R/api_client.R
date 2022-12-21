@@ -256,8 +256,8 @@ ApiClient  <- R6::R6Class(
           req_error(is_error = function(resp) FALSE) %>%
           req_perform()
         
-        cat(content(resp, 'text'))
-        
+        print(resp)
+        resp
         # return ApiResponse
         api_response <- ApiResponse$new()
         api_response$status_code <- resp %>% resp_status()
