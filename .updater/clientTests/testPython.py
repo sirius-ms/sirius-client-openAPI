@@ -9,23 +9,31 @@ path_to_project = ".updater/api/temp"
 api = SiriusSDK.start(path_to_project, path_to_sirius)
 
 
-# get config
-api.get_ComputationsApi()
-print("Config Loaded Successfull!")
-print()
 
-# test basic stuff
-print("Project Spaces")
-print(api.get_ProjectSpacesApi()) # check for project spaces
-print()
+def TestComputations():
+  api.get_ComputationsApi()
+  assert True
 
-print("Testing user specific stuff")
-print("Account Info")
-#print(api.get_account_info())
-print()
-print("Subscriptions")
-#print(api.get_subscriptions())
-print()
+def TestProjectSpaces():
+  api.get_ProjectSpacesApi()
+  assert True
 
-# starting test with demo data
-print("Starting Test!")
+def TestLoginAndAccounts():
+  api.get_LoginAndAccountApi()
+  assert True
+
+def TestFormulaResults():
+  api.get_FormulaResultsApi()
+  assert True
+
+def TestCompounds():
+  api.get_CompoundsApi()
+  assert True
+  
+def TestVersionController():
+  api.get_VersionInfoControllerApi()
+  assert True
+  
+def TestGUI():
+  api.get_GraphicalUserInterfaceApi()
+  assert True
