@@ -31,6 +31,13 @@ jobs:
         pip install git+https://github.com/LukasScholz/sirius-client-openAPI#subdirectory=client-api_python/generated
         pip install -e ./client-api_python/generated
         echo "Finished Installing"
+    - name: Download latest Sirius Release
+      run: |
+        cd .updater/api
+        curl -s  https://api.github.com/repos/boecker-lab/sirius/releases | grep 'browser_download_url.*linux64-service.zip\"' | sort | tac | head -n 1 | cut -d : -f 2,3 | tr -d \" | wget -i -
+        echo "Download Complete"
+        unzip *.zip
+        echo "Api Ready"
     - name: Run Rest Api
       run: |
         bash .updater/api/sirius/bin/sirius REST -p 8080 &
