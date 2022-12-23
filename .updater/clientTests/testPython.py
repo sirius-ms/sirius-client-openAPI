@@ -10,30 +10,30 @@ api = SiriusSDK.start(path_to_project, path_to_sirius)
 
 
 
-def TestComputations():
+def test_Computations():
   api.get_ComputationsApi()
   assert True
 
-def TestProjectSpaces():
+def test_ProjectSpaces():
   api.get_ProjectSpacesApi()
   assert True
 
-def TestLoginAndAccounts():
+def test_LoginAndAccounts():
   api.get_LoginAndAccountApi()
   assert True
 
-def TestFormulaResults():
+def test_FormulaResults():
   api.get_FormulaResultsApi()
   assert True
 
-def TestCompounds():
+def test_Compounds():
   api.get_CompoundsApi()
   assert True
   
-def TestVersionController():
+def test_VersionController():
   api.get_VersionInfoControllerApi()
   assert True
   
-def TestGUI():
+def test_GUI():
   api.get_GraphicalUserInterfaceApi()
   assert True
