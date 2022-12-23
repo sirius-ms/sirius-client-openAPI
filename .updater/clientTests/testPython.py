@@ -3,7 +3,7 @@ from PySirius import SiriusSDK
 
 
 path_to_sirius = ".updater/api/sirius/bin/sirius"
-path_to_project = ".updater/api/sirius/bin/temp"
+path_to_project = ".updater/api/temp"
 
 
 api = SiriusSDK.start(path_to_project, path_to_sirius)
