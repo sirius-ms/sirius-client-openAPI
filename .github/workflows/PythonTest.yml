@@ -31,6 +31,10 @@ jobs:
         pip install git+https://github.com/LukasScholz/sirius-client-openAPI#subdirectory=client-api_python/generated
         pip install -e ./client-api_python/generated
         echo "Finished Installing"
+    - name: Run Rest Api
+      run: |
+        bash .updater/api/sirius/bin/sirius REST -p 8080 &
+        while ! nc -z localhost 8080; do sleep 0.1; done
     - name: Lint with flake8
       run: |
         # stop the build if there are Python syntax errors or undefined names
