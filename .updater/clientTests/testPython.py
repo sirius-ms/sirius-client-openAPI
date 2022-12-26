@@ -5,8 +5,14 @@ path_to_sirius = ".updater/api/sirius/bin/sirius"
 path_to_project = ".updater/api/temp"
 
 api = SiriusSDK.start(path_to_project, path_to_sirius)
-# global login
-api.get_LoginAndAccountApi().login(credentials, True)
+
+
+def setup_module():
+  api.get_LoginAndAccountApi().login(credentials, True)
+
+def teardown_module():
+  api.get_LoginAndAccountApi().logout()
+    
 
 
 def test_Computations():
@@ -48,6 +54,3 @@ def test_GUI():
   # test.open_gui()
   # test.close_gui()
   assert True
-  
-# global logout
-api.get_LoginAndAccountApi().logout()
