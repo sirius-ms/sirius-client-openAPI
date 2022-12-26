@@ -11,29 +11,34 @@ api = SiriusSDK.start(path_to_project, path_to_sirius)
 
 
 def test_Computations():
-  api.get_ComputationsApi()
+  test = api.get_ComputationsApi()
   assert True
 
 def test_ProjectSpaces():
-  api.get_ProjectSpacesApi()
+  test = api.get_ProjectSpacesApi()
   assert True
 
 def test_LoginAndAccounts():
-  api.get_LoginAndAccountApi()
+  test = api.get_LoginAndAccountApi()
+  test.login({"username":"lukas.scholz@uni-jena.de", "password":"Lukas2000sh"}, True)
+  test.is_logged_in()
+  test.is_logged_in_with_http_info()
   assert True
 
 def test_FormulaResults():
-  api.get_FormulaResultsApi()
+  test = api.get_FormulaResultsApi()
   assert True
 
 def test_Compounds():
-  api.get_CompoundsApi()
+  test = api.get_CompoundsApi()
   assert True
   
 def test_VersionController():
-  api.get_VersionInfoControllerApi()
+  test = api.get_VersionInfoControllerApi()
+  test.get_version_info()
+  test.get_version_info_with_http_info()
   assert True
   
 def test_GUI():
-  api.get_GraphicalUserInterfaceApi()
+  test = api.get_GraphicalUserInterfaceApi()
   assert True
