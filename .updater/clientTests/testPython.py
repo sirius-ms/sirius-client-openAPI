@@ -9,15 +9,11 @@ api = SiriusSDK.start(path_to_project, path_to_sirius)
 
 
 def test_Computations():
-  api.get_LoginAndAccountApi().login(credentials, True)
   test = api.get_ComputationsApi()
-  api.get_LoginAndAccountApi().logout()
   assert True
 
 def test_ProjectSpaces():
-  api.get_LoginAndAccountApi().login(credentials, True)
   test = api.get_ProjectSpacesApi()
-  api.get_LoginAndAccountApi().logout()
   assert True
 
 def test_LoginAndAccounts():
@@ -35,29 +31,21 @@ def test_LoginAndAccounts():
   assert True
 
 def test_FormulaResults():
-  api.get_LoginAndAccountApi().login(credentials, True)
   test = api.get_FormulaResultsApi()
-  api.get_LoginAndAccountApi().logout()
   assert True
 
 def test_Compounds():
-  api.get_LoginAndAccountApi().login(credentials, True)
   test = api.get_CompoundsApi()
-  api.get_LoginAndAccountApi().logout()
   assert True
   
 def test_VersionController():
-  api.get_LoginAndAccountApi().login(credentials, True)
   test = api.get_VersionInfoControllerApi()
   test.get_version_info()
   test.get_version_info_with_http_info()
-  api.get_LoginAndAccountApi().logout()
   assert True
   
 def test_GUI():
-  api.get_LoginAndAccountApi().login(credentials, True)
   test = api.get_GraphicalUserInterfaceApi()
   # test.open_gui()
   # test.close_gui()
-  api.get_LoginAndAccountApi().logout()
   assert True
