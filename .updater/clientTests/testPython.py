@@ -5,7 +5,8 @@ path_to_sirius = ".updater/api/sirius/bin/sirius"
 path_to_project = ".updater/api/temp"
 
 api = SiriusSDK.start(path_to_project, path_to_sirius)
-
+# global login
+api.get_LoginAndAccountApi().login(credentials, True)
 
 
 def test_Computations():
@@ -18,7 +19,6 @@ def test_ProjectSpaces():
 
 def test_LoginAndAccounts():
   test = api.get_LoginAndAccountApi()
-  test.login_with_http_info(credentials, True)
   assert test.is_logged_in()
   assert test.is_logged_in_with_http_info()
   test.get_subscriptions()
@@ -27,7 +27,6 @@ def test_LoginAndAccounts():
   test.get_sign_up_url_with_http_info()
   # test.sign_up()
   # test.sign_up_with_http_info()
-  test.logout_with_http_info()
   assert True
 
 def test_FormulaResults():
@@ -49,3 +48,6 @@ def test_GUI():
   # test.open_gui()
   # test.close_gui()
   assert True
+  
+# global logout
+api.get_LoginAndAccountApi().logout()
