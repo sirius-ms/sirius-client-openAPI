@@ -1,8 +1,10 @@
 from PySirius import SiriusSDK
+import PySirius.models as models
 
 credentials = {"username":"lukas.scholz@uni-jena.de", "password":"Lukas2000sh"}
 path_to_sirius = ".updater/api/sirius/bin/sirius"
 path_to_project = ".updater/api/temp"
+path_to_demo_data = ".updater/examples"
 
 api = SiriusSDK.start(path_to_project, path_to_sirius)
 
@@ -41,6 +43,7 @@ def test_FormulaResults():
 
 def test_Compounds():
   test = api.get_CompoundsApi()
+  test.get_compounds("temp")
   assert True
   
 def test_VersionController():
@@ -54,3 +57,14 @@ def test_GUI():
   # test.open_gui()
   # test.close_gui()
   assert True
+  
+def test_Workflow():
+  api.get_CompoundsApi().import_compounds([path_to_demo_data+"/ms/Bicuculline.ms", path_to_demo_data+"/ms/Kaempferol.ms" ], "temp")
+  fallback_adducts = ["[M+H]+","[M]+,[M+K]+","[M+Na]+","[M+H-H2O]+","[M+Na2-H]+","[M+2K-H]+","[M+NH4]+","[M+H3O]+","[M+MeOH+H]+"]
+  detectable_adducts = ["[M+H]+","[M]+,[M+K]+","[M+Na]+","[M+H-H2O]+","[M+Na2-H]+","[M+2K-H]+","[M+NH4]+","[M+H3O]+","[M+MeOH+H]+"]
+  formula_id_paras = models.Sirius(True)
+  job = models.JobSubmission(["1_Bicuculline_Bicuculline", "2_Kaempferol_Kaempferol"], fallback_adducts, None, detectable_adducts, True, formula_id_paras)
+  compute.start_job(job)
+  assert True
+  
+    
