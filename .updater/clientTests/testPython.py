@@ -5,8 +5,8 @@ credentials = {"username":"lukas.scholz@uni-jena.de", "password":"Lukas2000sh"}
 path_to_sirius = ".updater/api/sirius/bin/sirius"
 path_to_project = ".updater/api/temp"
 path_to_demo_data = ".updater/examples"
-
 api = SiriusSDK.start(path_to_project, path_to_sirius)
+ps_name = api.get_ProjectSpacesApi().get_project_spaces()[0].name
 
 
 def setup_module():
@@ -44,7 +44,7 @@ def test_FormulaResults():
 
 def test_Compounds():
   test = api.get_CompoundsApi()
-  #test.get_compounds("temp")
+  test.get_compounds(ps_name)
   assert True
   
 def test_VersionController():
@@ -60,7 +60,7 @@ def test_GUI():
   assert True
   
 def test_Workflow():
-  api.get_CompoundsApi().import_compounds([path_to_demo_data+"/ms/Bicuculline.ms", path_to_demo_data+"/ms/Kaempferol.ms" ], "temp")
+  api.get_CompoundsApi().import_compounds([path_to_demo_data+"/ms/Bicuculline.ms", path_to_demo_data+"/ms/Kaempferol.ms" ], ps_name)
   fallback_adducts = ["[M+H]+","[M]+,[M+K]+","[M+Na]+","[M+H-H2O]+","[M+Na2-H]+","[M+2K-H]+","[M+NH4]+","[M+H3O]+","[M+MeOH+H]+"]
   detectable_adducts = ["[M+H]+","[M]+,[M+K]+","[M+Na]+","[M+H-H2O]+","[M+Na2-H]+","[M+2K-H]+","[M+NH4]+","[M+H3O]+","[M+MeOH+H]+"]
   formula_id_paras = models.Sirius(True)
