@@ -65,7 +65,7 @@ def test_Workflow():
   detectable_adducts = ["[M+H]+","[M]+,[M+K]+","[M+Na]+","[M+H-H2O]+","[M+Na2-H]+","[M+2K-H]+","[M+NH4]+","[M+H3O]+","[M+MeOH+H]+"]
   formula_id_paras = models.Sirius(True)
   job = models.JobSubmission(["1_Bicuculline_Bicuculline", "2_Kaempferol_Kaempferol"], fallback_adducts, None, detectable_adducts, True, formula_id_paras)
-  api.get_ComputationsApi().start_job(job)
+  api.get_ComputationsApi().start_job(job, ps_name)
   assert True
   
     
