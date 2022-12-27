@@ -23,6 +23,7 @@ def test_Computations():
 
 def test_ProjectSpaces():
   test = api.get_ProjectSpacesApi()
+  print(test.get_project_spaces())
   assert True
 
 def test_LoginAndAccounts():
@@ -43,7 +44,7 @@ def test_FormulaResults():
 
 def test_Compounds():
   test = api.get_CompoundsApi()
-  test.get_compounds("temp")
+  #test.get_compounds("temp")
   assert True
   
 def test_VersionController():
