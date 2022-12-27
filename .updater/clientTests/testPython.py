@@ -61,10 +61,11 @@ def test_GUI():
   
 def test_Workflow():
   api.get_CompoundsApi().import_compounds([path_to_demo_data+"/ms/Bicuculline.ms", path_to_demo_data+"/ms/Kaempferol.ms" ], ps_name)
+  print(api.get_CompoundsApi().get_compounds(ps_name))
   fallback_adducts = ["[M+H]+","[M]+,[M+K]+","[M+Na]+","[M+H-H2O]+","[M+Na2-H]+","[M+2K-H]+","[M+NH4]+","[M+H3O]+","[M+MeOH+H]+"]
   detectable_adducts = ["[M+H]+","[M]+,[M+K]+","[M+Na]+","[M+H-H2O]+","[M+Na2-H]+","[M+2K-H]+","[M+NH4]+","[M+H3O]+","[M+MeOH+H]+"]
   formula_id_paras = models.Sirius(True)
-  job = models.JobSubmission(["1_Bicuculline_Bicuculline", "2_Kaempferol_Kaempferol"], fallback_adducts, None, detectable_adducts, True, formula_id_paras)
+  job = models.JobSubmission([api.get_CompoundsApi().get_compounds(ps_name)[0].id, api.get_CompoundsApi().get_compounds(ps_name)[1].id], fallback_adducts, None, detectable_adducts, True, formula_id_paras)
   api.get_ComputationsApi().start_job(job, ps_name)
   assert True
   
