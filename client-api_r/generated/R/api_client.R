@@ -262,7 +262,11 @@ ApiClient  <- R6::R6Class(
         api_response <- ApiResponse$new()
         api_response$status_code <- resp %>% resp_status()
         api_response$status_code_desc <- resp %>% resp_status_desc()
-        api_response$response <- resp %>% resp_body_string()
+        if (length(resp$body) == 0) {
+          api_response$response <- "empty"
+        } else {
+          api_response$response <- resp %>% resp_body_string()
+        }
         api_response$headers <- resp %>% resp_headers()
         
         api_response
