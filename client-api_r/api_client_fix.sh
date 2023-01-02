@@ -19,7 +19,8 @@ if [ ! -f $1 ]; then
 fi
 
 # Replace the specified line in the input file
-# fix: allow empty response body
-sed -i "s/^\([[:blank:]]*\)api_response\$response <- resp %>% resp_body_string()/\1if (length(resp\$body) == 0) {\n\1  api_response\$response <- \"empty\"\n\1} else {\n\1  api_response\$response <- resp %>% resp_body_string()\n\1}/" $1
-# fix: allow response being a URL
-sed -i "s/^\([[:blank:]]*\)resp_obj <- jsonlite::fromJSON(raw_response)/\1if (grepl('^(http|https)://', raw_response)) {\n\1  resp_obj <- raw_response\n\1} else {\n\1  resp_obj <- jsonlite::fromJSON(raw_response)\n\1}/" $1
+# seperate two sed commands by `;` at end of line
+# first line: allow empty response body
+# second line: allow response being a URL
+sed -i "s/^\([[:blank:]]*\)api_response\$response <- resp %>% resp_body_string()/\1if (length(resp\$body) == 0) {\n\1  api_response\$response <- \"empty\"\n\1} else {\n\1  api_response\$response <- resp %>% resp_body_string()\n\1}/; 
+s/^\([[:blank:]]*\)resp_obj <- jsonlite::fromJSON(raw_response)/\1if (grepl('^(http|https)://', raw_response)) {\n\1  resp_obj <- raw_response\n\1} else {\n\1  resp_obj <- jsonlite::fromJSON(raw_response)\n\1}/" $1
