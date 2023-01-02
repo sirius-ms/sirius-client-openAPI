@@ -122,8 +122,10 @@ SiriusSDK = R6::R6Class(
           getPidPortFiles(compliant)
           
           if(all(file.exists(self$pidFile),!force)){
-            stop("Found existing sirius.pid file. If you are sure no instance of Sirius is currently running on your computer,
-             call start again using the 'force=TRUE' parameter.")
+            stop(paste("Found existing sirius.pid file (", self$pidFile, ") with PID ",
+                       self$pid, " and sirius.port file (", self$portFile, ") with PORT ",
+                       self$port,". If you are sure no instance of Sirius is currently running on your computer, 
+                       call start again using the 'force=TRUE' parameter.", sep=""))
           }
           
           sirius_call <- paste(sirius_call," rest -s -p ",self$port,sep = "")
@@ -200,7 +202,9 @@ SiriusSDK = R6::R6Class(
           Sys.sleep(2)
           
           if(resp!=0){
-            print("'kill -9' did not work. Please shut down your Port running Sirius and delete the sirius.pid file")
+            print(paste("'kill -9' did not work. Please shut down your running Sirius and delete the sirius.pid and sirius.port files: 
+                        sirius.pid file (", self$pidFile, ") with PID ",self$pid,
+                        " and sirius.port file (", self$portFile, ") with PORT ", self$port,sep=""))
           } else {
             terminationResponse(killed = TRUE)
           }
@@ -221,7 +225,9 @@ SiriusSDK = R6::R6Class(
           Sys.sleep(2)
           
           if(resp!=0){
-            print("'taskkill' did not work. Please shut down your Port running Sirius and delete the sirius.pid file")
+            print(paste("'taskkill /f' did not work. Please shut down your running Sirius and delete the sirius.pid and sirius.port files: 
+                        sirius.pid file (", self$pidFile, ") with PID ",self$pid,
+                        " and sirius.port file (", self$portFile, ") with PORT ", self$port,sep=""))
           } else {
             terminationResponse(killed = TRUE)
           }

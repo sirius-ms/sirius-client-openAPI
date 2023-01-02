@@ -49,7 +49,7 @@ import JSirius.JSON;
  * Predicted compound class with name, probability and id if available.  (ClassyFire and NPC). This can be seen as the set of classes a compound most likely belongs to
  */
 @ApiModel(description = "Predicted compound class with name, probability and id if available.  (ClassyFire and NPC). This can be seen as the set of classes a compound most likely belongs to")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-12-20T21:57:08.029346Z[Etc/UTC]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-02T19:31:00.073865Z[Etc/UTC]")
 public class CompoundClass {
   /**
    * Specifies the classification ontology the CompoundClass belongs to.

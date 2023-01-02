@@ -80,45 +80,45 @@ ApiClient  <- R6::R6Class(
       if (!is.null(base_path)) {
         self$base_path <- base_path
       }
-      
+
       if (!is.null(default_headers)) {
         self$default_headers <- default_headers
       }
-      
+
       if (!is.null(username)) {
         self$username <- username
       }
-      
+
       if (!is.null(password)) {
         self$password <- password
       }
-      
+
       if (!is.null(access_token)) {
         self$access_token <- access_token
       }
-      
+
       if (!is.null(bearer_token)) {
         self$bearer_token <- bearer_token
       }
-      
+
       if (!is.null(api_keys)) {
         self$api_keys <- api_keys
       } else {
         self$api_keys <- list()
       }
-      
+
       if (!is.null(user_agent)) {
         self$`user_agent` <- user_agent
       }
-      
+
       if (!is.null(timeout)) {
         self$timeout <- timeout
       }
-      
+
       if (!is.null(retry_status_codes)) {
         self$retry_status_codes <- retry_status_codes
       }
-      
+
       if (!is.null(max_retry_attempts)) {
         self$max_retry_attempts <- max_retry_attempts
       }
@@ -146,10 +146,10 @@ ApiClient  <- R6::R6Class(
     CallApi = function(url, method, query_params, header_params, form_params,
                        file_params, accepts, content_types, body,
                        is_oauth = FALSE, oauth_scopes = NULL, stream_callback = NULL, ...) {
-      
+
       # set the URL
       req <- request(url)
-      
+
       resp <- self$Execute(req, method, query_params, header_params, form_params,
                            file_params, accepts, content_types, body, is_oauth = is_oauth,
                            oauth_scopes = oauth_scopes, stream_callback = stream_callback, ...)
@@ -177,25 +177,25 @@ ApiClient  <- R6::R6Class(
     Execute = function(req, method, query_params, header_params, form_params,
                        file_params, accepts, content_types, body,
                        is_oauth = FALSE, oauth_scopes = NULL, stream_callback = NULL, ...) {
-      
+
       ## add headers
       req <- req %>% req_headers(!!!header_params)
-      
+
       ## add default headers
       req <- req %>% req_headers(!!!self$default_headers)
-      
+
       # set HTTP accept header
       accept <- self$select_header(accepts)
       if (!is.null(accept)) {
         req <- req %>% req_headers("Accept" = accept)
       }
-      
+
       # set HTTP content-type header
       content_type <- self$select_header(content_types)
       if (!is.null(content_type)) {
         req <- req %>% req_headers("Content-Type" = content_type)
       }
-      
+
       ## add query parameters
       for (query_param in names(query_params)) {
         if (typeof(query_params[[query_param]]) == "list") {
@@ -207,11 +207,11 @@ ApiClient  <- R6::R6Class(
           req <- req %>% req_url_query(!!!tmp)
         }
       }
-      
+
       # has file upload?
       if (!is.null(file_params) && length(file_params) != 0) {
         req <- req %>% req_body_multipart(!!!file_params)
-        
+
         # add form parameters via req_body_multipart
         if (!is.null(form_params) && length(form_params) != 0) {
           req <- req %>% req_body_multipart(!!!form_params)
@@ -222,31 +222,31 @@ ApiClient  <- R6::R6Class(
           req <- req %>% req_body_form(!!!form_params)
         }
       }
-      
+
       # add body parameters
       if (!is.null(body)) {
         req <- req %>% req_body_raw(body)
       }
-      
+
       # set timeout
       if (!is.null(self$timeout)) {
         req <- req %>% req_timeout(self$timeout)
       }
-      
+
       # set retry
       if (!is.null(self$max_retry_attempts)) {
         req <- req %>% retry_max_tries(self$timeout)
         req <- req %>% retry_max_seconds(self$timeout)
       }
-      
+
       # set user agent
       if (!is.null(self$user_agent)) {
         req <- req %>% req_user_agent(self$user_agent)
       }
-      
+
       # set HTTP verb
       req <- req %>% req_method(method)
-      
+
       # stream data
       if (typeof(stream_callback) == "closure") {
         req %>% req_stream(stream_callback)
@@ -255,9 +255,7 @@ ApiClient  <- R6::R6Class(
         resp <- req %>%
           req_error(is_error = function(resp) FALSE) %>%
           req_perform()
-        
-        print(resp)
-        resp
+
         # return ApiResponse
         api_response <- ApiResponse$new()
         api_response$status_code <- resp %>% resp_status()
@@ -268,7 +266,7 @@ ApiClient  <- R6::R6Class(
           api_response$response <- resp %>% resp_body_string()
         }
         api_response$headers <- resp %>% resp_headers()
-        
+
         api_response
       }
     },
@@ -301,7 +299,7 @@ ApiClient  <- R6::R6Class(
     deserializeObj = function(obj, return_type, pkg_env) {
       return_obj <- NULL
       primitive_types <- c("character", "numeric", "integer", "logical", "complex")
-      
+
       # To handle the "map" type
       if (startsWith(return_type, "map(")) {
         inner_return_type <- regmatches(return_type,
@@ -378,7 +376,7 @@ ApiClient  <- R6::R6Class(
             return(header)
           }
         }
-        
+
         # not json mime type, simply return the first one
         return(headers[1])
       }

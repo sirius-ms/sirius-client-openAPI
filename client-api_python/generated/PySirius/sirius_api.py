@@ -1,10 +1,3 @@
-import os
-import time
-import subprocess
-import asyncio
-import json
-
-import urllib3
 import PySirius
 
 class PySiriusAPI:
@@ -30,3 +23,5 @@ class PySiriusAPI:
         return PySirius.ProjectSpacesApi(self.api_client)
     def get_VersionInfoControllerApi(self):
         return PySirius.VersionInfoControllerApi(self.api_client)
+    def get_models(self):
+        return PySirius.models

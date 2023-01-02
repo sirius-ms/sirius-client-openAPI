@@ -1,4 +1,3 @@
-#' SIRIUS Nightsky API
 #'
 #' REST API that provides the full functionality of SIRIUS and its web services as background service. It is intended as entry-point for scripting languages and software integration SDKs.
 #'
@@ -39,11 +38,24 @@ ApiResponse <- R6::R6Class(
                           status_code = NULL,
                           status_code_desc = NULL,
                           headers = NULL) {
-      self$content <- content
-      self$response <- response
-      self$status_code <- status_code
-      self$status_code_desc <- status_code_desc
-      self$headers <- headers
+      
+      # allow initialization of type $new("string", api_response_class)
+      # that is used in the *_api.R classes
+      if (typeof(response) == "environment"){
+        self$content <- content
+        self$response <- response$response
+        self$status_code <- response$status_code
+        self$status_code_desc <- response$status_code_desc
+        self$headers <- response$headers
+        
+      # standard initialization
+      } else {
+        self$content <- content
+        self$response <- response
+        self$status_code <- status_code
+        self$status_code_desc <- status_code_desc
+        self$headers <- headers
+      }
     }
   )
 )

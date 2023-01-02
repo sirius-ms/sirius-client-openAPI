@@ -287,37 +287,37 @@ LoginAndAccountApi <- R6::R6Class(
       local_var_body <- NULL
       oauth_scopes <- NULL
       is_oauth <- FALSE
-      
-      
+
+
       query_params[["includeSubs"]] <- `include_subs`
-      
+
       local_var_url_path <- "/api/account/"
-      
+
       # The Accept request HTTP header
       local_var_accepts <- list("application/json")
-      
+
       # The Content-Type representation header
       local_var_content_types <- list()
-      
+
       local_var_resp <- self$api_client$CallApi(url = paste0(self$api_client$base_path, local_var_url_path),
-                                                method = "GET",
-                                                query_params = query_params,
-                                                header_params = header_params,
-                                                form_params = form_params,
-                                                file_params = file_params,
-                                                accepts = local_var_accepts,
-                                                content_types = local_var_content_types,
-                                                body = local_var_body,
-                                                is_oauth = is_oauth,
-                                                oauth_scopes = oauth_scopes,
-                                                ...)
-      
+                                 method = "GET",
+                                 query_params = query_params,
+                                 header_params = header_params,
+                                 form_params = form_params,
+                                 file_params = file_params,
+                                 accepts = local_var_accepts,
+                                 content_types = local_var_content_types,
+                                 body = local_var_body,
+                                 is_oauth = is_oauth,
+                                 oauth_scopes = oauth_scopes,
+                                 ...)
+
       if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
         # save response in a file
         if (!is.null(data_file)) {
           write(local_var_resp$response, data_file)
         }
-        
+
         deserialized_resp_obj <- tryCatch(
           self$api_client$deserialize(local_var_resp$response, "AccountInfo", loadNamespace("Rsirius")),
           error = function(e) {
@@ -376,34 +376,34 @@ LoginAndAccountApi <- R6::R6Class(
       local_var_body <- NULL
       oauth_scopes <- NULL
       is_oauth <- FALSE
-      
+
       local_var_url_path <- "/api/account/signUpURL"
-      
+
       # The Accept request HTTP header
       local_var_accepts <- list("text/plain;charset=UTF-8")
-      
+
       # The Content-Type representation header
       local_var_content_types <- list()
-      
+
       local_var_resp <- self$api_client$CallApi(url = paste0(self$api_client$base_path, local_var_url_path),
-                                                method = "GET",
-                                                query_params = query_params,
-                                                header_params = header_params,
-                                                form_params = form_params,
-                                                file_params = file_params,
-                                                accepts = local_var_accepts,
-                                                content_types = local_var_content_types,
-                                                body = local_var_body,
-                                                is_oauth = is_oauth,
-                                                oauth_scopes = oauth_scopes,
-                                                ...)
-      
+                                 method = "GET",
+                                 query_params = query_params,
+                                 header_params = header_params,
+                                 form_params = form_params,
+                                 file_params = file_params,
+                                 accepts = local_var_accepts,
+                                 content_types = local_var_content_types,
+                                 body = local_var_body,
+                                 is_oauth = is_oauth,
+                                 oauth_scopes = oauth_scopes,
+                                 ...)
+
       if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
         # save response in a file
         if (!is.null(data_file)) {
           write(local_var_resp$response, data_file)
         }
-        
+
         deserialized_resp_obj <- tryCatch(
           self$api_client$deserialize(local_var_resp$response, "character", loadNamespace("Rsirius")),
           error = function(e) {
@@ -462,34 +462,34 @@ LoginAndAccountApi <- R6::R6Class(
       local_var_body <- NULL
       oauth_scopes <- NULL
       is_oauth <- FALSE
-      
+
       local_var_url_path <- "/api/account/subscriptions"
-      
+
       # The Accept request HTTP header
       local_var_accepts <- list("application/json")
-      
+
       # The Content-Type representation header
       local_var_content_types <- list()
-      
+
       local_var_resp <- self$api_client$CallApi(url = paste0(self$api_client$base_path, local_var_url_path),
-                                                method = "GET",
-                                                query_params = query_params,
-                                                header_params = header_params,
-                                                form_params = form_params,
-                                                file_params = file_params,
-                                                accepts = local_var_accepts,
-                                                content_types = local_var_content_types,
-                                                body = local_var_body,
-                                                is_oauth = is_oauth,
-                                                oauth_scopes = oauth_scopes,
-                                                ...)
-      
+                                 method = "GET",
+                                 query_params = query_params,
+                                 header_params = header_params,
+                                 form_params = form_params,
+                                 file_params = file_params,
+                                 accepts = local_var_accepts,
+                                 content_types = local_var_content_types,
+                                 body = local_var_body,
+                                 is_oauth = is_oauth,
+                                 oauth_scopes = oauth_scopes,
+                                 ...)
+
       if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
         # save response in a file
         if (!is.null(data_file)) {
           write(local_var_resp$response, data_file)
         }
-        
+
         deserialized_resp_obj <- tryCatch(
           self$api_client$deserialize(local_var_resp$response, "array[Subscription]", loadNamespace("Rsirius")),
           error = function(e) {
@@ -548,34 +548,34 @@ LoginAndAccountApi <- R6::R6Class(
       local_var_body <- NULL
       oauth_scopes <- NULL
       is_oauth <- FALSE
-      
+
       local_var_url_path <- "/api/account/isLoggedIn"
-      
+
       # The Accept request HTTP header
       local_var_accepts <- list("application/json")
-      
+
       # The Content-Type representation header
       local_var_content_types <- list()
-      
+
       local_var_resp <- self$api_client$CallApi(url = paste0(self$api_client$base_path, local_var_url_path),
-                                                method = "GET",
-                                                query_params = query_params,
-                                                header_params = header_params,
-                                                form_params = form_params,
-                                                file_params = file_params,
-                                                accepts = local_var_accepts,
-                                                content_types = local_var_content_types,
-                                                body = local_var_body,
-                                                is_oauth = is_oauth,
-                                                oauth_scopes = oauth_scopes,
-                                                ...)
-      
+                                 method = "GET",
+                                 query_params = query_params,
+                                 header_params = header_params,
+                                 form_params = form_params,
+                                 file_params = file_params,
+                                 accepts = local_var_accepts,
+                                 content_types = local_var_content_types,
+                                 body = local_var_body,
+                                 is_oauth = is_oauth,
+                                 oauth_scopes = oauth_scopes,
+                                 ...)
+
       if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
         # save response in a file
         if (!is.null(data_file)) {
           write(local_var_resp$response, data_file)
         }
-        
+
         deserialized_resp_obj <- tryCatch(
           self$api_client$deserialize(local_var_resp$response, "character", loadNamespace("Rsirius")),
           error = function(e) {
@@ -642,58 +642,58 @@ LoginAndAccountApi <- R6::R6Class(
       local_var_body <- NULL
       oauth_scopes <- NULL
       is_oauth <- FALSE
-      
+
       if (missing(`accept_terms`)) {
         stop("Missing required parameter `accept_terms`.")
       }
-      
+
       if (missing(`account_credentials`)) {
         stop("Missing required parameter `account_credentials`.")
       }
-      
-      
-      
-      
-      
+
+
+
+
+
       query_params[["acceptTerms"]] <- `accept_terms`
-      
+
       query_params[["failWhenLoggedIn"]] <- `fail_when_logged_in`
-      
+
       query_params[["includeSubs"]] <- `include_subs`
-      
+
       if (!is.null(`account_credentials`)) {
         local_var_body <- `account_credentials`$toJSONString()
       } else {
         body <- NULL
       }
-      
+
       local_var_url_path <- "/api/account/login"
-      
+
       # The Accept request HTTP header
       local_var_accepts <- list("application/json")
-      
+
       # The Content-Type representation header
       local_var_content_types <- list("application/json")
-      
+
       local_var_resp <- self$api_client$CallApi(url = paste0(self$api_client$base_path, local_var_url_path),
-                                                method = "POST",
-                                                query_params = query_params,
-                                                header_params = header_params,
-                                                form_params = form_params,
-                                                file_params = file_params,
-                                                accepts = local_var_accepts,
-                                                content_types = local_var_content_types,
-                                                body = local_var_body,
-                                                is_oauth = is_oauth,
-                                                oauth_scopes = oauth_scopes,
-                                                ...)
-      
+                                 method = "POST",
+                                 query_params = query_params,
+                                 header_params = header_params,
+                                 form_params = form_params,
+                                 file_params = file_params,
+                                 accepts = local_var_accepts,
+                                 content_types = local_var_content_types,
+                                 body = local_var_body,
+                                 is_oauth = is_oauth,
+                                 oauth_scopes = oauth_scopes,
+                                 ...)
+
       if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
         # save response in a file
         if (!is.null(data_file)) {
           write(local_var_resp$response, data_file)
         }
-        
+
         deserialized_resp_obj <- tryCatch(
           self$api_client$deserialize(local_var_resp$response, "AccountInfo", loadNamespace("Rsirius")),
           error = function(e) {
@@ -705,10 +705,7 @@ LoginAndAccountApi <- R6::R6Class(
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
-        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
-          local_var_resp$response <- "API client error"
-        }
-        local_var_resp
+        ApiResponse$new("API client error", local_var_resp)
       } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
         if (is.null(local_var_resp$response) || local_var_resp$response == "") {
           local_var_resp$response <- "API server error"
@@ -753,28 +750,28 @@ LoginAndAccountApi <- R6::R6Class(
       local_var_body <- NULL
       oauth_scopes <- NULL
       is_oauth <- FALSE
-      
+
       local_var_url_path <- "/api/account/logout"
-      
+
       # The Accept request HTTP header
       local_var_accepts <- list()
-      
+
       # The Content-Type representation header
       local_var_content_types <- list()
-      
+
       local_var_resp <- self$api_client$CallApi(url = paste0(self$api_client$base_path, local_var_url_path),
-                                                method = "POST",
-                                                query_params = query_params,
-                                                header_params = header_params,
-                                                form_params = form_params,
-                                                file_params = file_params,
-                                                accepts = local_var_accepts,
-                                                content_types = local_var_content_types,
-                                                body = local_var_body,
-                                                is_oauth = is_oauth,
-                                                oauth_scopes = oauth_scopes,
-                                                ...)
-      
+                                 method = "POST",
+                                 query_params = query_params,
+                                 header_params = header_params,
+                                 form_params = form_params,
+                                 file_params = file_params,
+                                 accepts = local_var_accepts,
+                                 content_types = local_var_content_types,
+                                 body = local_var_body,
+                                 is_oauth = is_oauth,
+                                 oauth_scopes = oauth_scopes,
+                                 ...)
+
       if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
         local_var_resp$content <- NULL
         local_var_resp
@@ -828,34 +825,34 @@ LoginAndAccountApi <- R6::R6Class(
       local_var_body <- NULL
       oauth_scopes <- NULL
       is_oauth <- FALSE
-      
+
       local_var_url_path <- "/api/account/signUp"
-      
+
       # The Accept request HTTP header
       local_var_accepts <- list("text/plain;charset=UTF-8")
-      
+
       # The Content-Type representation header
       local_var_content_types <- list()
-      
+
       local_var_resp <- self$api_client$CallApi(url = paste0(self$api_client$base_path, local_var_url_path),
-                                                method = "GET",
-                                                query_params = query_params,
-                                                header_params = header_params,
-                                                form_params = form_params,
-                                                file_params = file_params,
-                                                accepts = local_var_accepts,
-                                                content_types = local_var_content_types,
-                                                body = local_var_body,
-                                                is_oauth = is_oauth,
-                                                oauth_scopes = oauth_scopes,
-                                                ...)
-      
+                                 method = "GET",
+                                 query_params = query_params,
+                                 header_params = header_params,
+                                 form_params = form_params,
+                                 file_params = file_params,
+                                 accepts = local_var_accepts,
+                                 content_types = local_var_content_types,
+                                 body = local_var_body,
+                                 is_oauth = is_oauth,
+                                 oauth_scopes = oauth_scopes,
+                                 ...)
+
       if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
         # save response in a file
         if (!is.null(data_file)) {
           write(local_var_resp$response, data_file)
         }
-        
+
         deserialized_resp_obj <- tryCatch(
           self$api_client$deserialize(local_var_resp$response, "character", loadNamespace("Rsirius")),
           error = function(e) {
