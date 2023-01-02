@@ -1,7 +1,6 @@
 import os
 import time
 import subprocess
-import asyncio
 import json
 
 import urllib3

@@ -1,10 +1,3 @@
-import os
-import time
-import subprocess
-import asyncio
-import json
-
-import urllib3
 import PySirius
 
 class PySiriusAPI:
