@@ -30,3 +30,5 @@ class PySiriusAPI:
         return PySirius.ProjectSpacesApi(self.api_client)
     def get_VersionInfoControllerApi(self):
         return PySirius.VersionInfoControllerApi(self.api_client)
+    def get_models(self):
+        return PySirius.models
