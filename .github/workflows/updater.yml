@@ -74,30 +74,18 @@ jobs:
         
         echo "from PySirius.sirius_api import PySiriusAPI" >> client-api_python/generated/PySirius/__init__.py
         echo "from PySirius.Sirius import SiriusSDK" >> client-api_python/generated/PySirius/__init__.py
-        
-    - name: Copy SiriusSDK.R class
+    - name: Format R package
       run: |
         cp client-api_r/SiriusSDK.R  client-api_r/generated/R/SiriusSDK.R
         echo >> client-api_r/generated/NAMESPACE
         echo "# SDK" >> client-api_r/generated/NAMESPACE
         echo "export(SiriusSDK)" >> client-api_r/generated/NAMESPACE
-       
-    - name: Add missing R imports to DESCRIPTION file
-      run: |
-        reqs=("R6P")
-        imps="$(sed -n -e '/^Imports/p' client-api_r/generated/DESCRIPTION)"
-        IFS=', ' read -r -a array <<< "$imps"
-        array=${array[@]:1}
-        res=""
-        for element in "${reqs[@]}"
-        do
-            if ! [[ " ${array[*]} " =~ " ${element} " ]]; then
-            str=", ${element}"
-            res="${res}${str}"
-          fi
-        done
-        sed -i "s/Imports.*/&${res}/g" client-api_r/generated/DESCRIPTION
         
+        cp client-api_r/api_response_fix.R  client-api_r/generated/R/api_response.R
+        
+        chmod +x ./client-api_r/api_client_fix.sh
+        ./client-api_r/api_client_fix.sh
+      shell: bash
     - name: Remove Sirius Rest Api
       run: |
         cd .updater/api
