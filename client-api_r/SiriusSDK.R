@@ -2,16 +2,17 @@ SiriusSDK = R6::R6Class(
   classname = "SiriusSDK",
   #inherit = R6P::Singleton,
   public = list(
-    
+          	
     pid = NULL,
     port = NULL,
     host = NULL,
     pidFile = "",
     portFile = "",
     basePath = "",
+    baseDirectory = "",
     
-    start = function(host = "http://localhost:", port = 8080, pathToSirius, projectSpace = NULL, workSpace = NULL, force=FALSE){
-      
+    start = function(host = "http://localhost:", port = 8080, pathToSirius, projectSpace = NULL, workSpace = NULL, force=FALSE){    
+
       # extract the (major) version of Sirius from the .jar file
       getVersion <- function(){
         wd <- getwd()
@@ -61,7 +62,8 @@ SiriusSDK = R6::R6Class(
           self$portFile <- paste(home_path,"/.sirius-",sirius_version,"/sirius.port",sep = "")
         }
       }
-      
+
+      self$baseDirectory = getwd()
       
       if(!is.null(self$pid)){
         stop(paste("Sirius has already been started with PID: ", self$pid, sep = ""))
@@ -86,18 +88,12 @@ SiriusSDK = R6::R6Class(
         if(all(file.exists(pathToSirius),!dir.exists(pathToSirius))){
           # the file which has to be executed
           sirius <- basename(pathToSirius) 
-          dir_sirius <- dirname(pathToSirius)
-          # Change working directory to the directory which contains SIRIUS.
-          # This has to be done in the case that pathToSirius contains at least one whitespace.
-          setwd(dir_sirius)
-          
-          # It is also possible that inputData and projectSpace contain at least one whitespace:
           sirius_call <- paste("./",sirius, sep = "")
           
           if(!is.null(projectSpace)){
             if(all(is.character(projectSpace),length(projectSpace) == 1)){
               if(file.exists(projectSpace)){
-                sirius_call <- paste(sirius_call," --project-space=","\"",projectSpace,"\"",sep = "")
+                sirius_call <- paste(sirius_call," --output ","\"",projectSpace,"\"",sep = "")
               }else{
                 stop("The string 'projectSpace' should represent a valid path to your project space.")
               }
@@ -111,7 +107,7 @@ SiriusSDK = R6::R6Class(
             if(all(is.character(workSpace),length(workSpace) == 1)){
               if(file.exists(workSpace)){
                 compliant = TRUE
-                sirius_call <- paste(sirius_call," --workspace=","\"",workSpace,"\"",sep = "")
+                sirius_call <- paste(sirius_call," --workspace ","\"",workSpace,"\"",sep = "")
               }else{
                 stop("The string 'workSpace' should represent a valid path to your work space.")
               }
@@ -129,8 +125,12 @@ SiriusSDK = R6::R6Class(
           }
           
           sirius_call <- paste(sirius_call," rest -s -p ",self$port,sep = "")
-          print(sirius_call)
-          # Call SIRIUS as background service in commando line:
+          
+	  dir_sirius <- dirname(pathToSirius)
+          # Change working directory to the directory which contains SIRIUS.
+          setwd(dir_sirius)
+          
+	  # Call SIRIUS as background service in commando line:
           system(sirius_call, wait=FALSE)
           for (i in 1:30){
             Sys.sleep(1)
@@ -180,10 +180,11 @@ SiriusSDK = R6::R6Class(
         self$portFile <- NULL
         self$basePath <- ""
         self$host <- NULL
-        if (killed){
+	if (killed){
           file.remove(self$pidFile)
           file.remove(self$portFile)
         }
+	setwd(self$baseDirectory)
       }
       
       darwinLinuxShutdown = function(){
