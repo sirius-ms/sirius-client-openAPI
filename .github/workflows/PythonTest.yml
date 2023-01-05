@@ -35,11 +35,11 @@ jobs:
       run: |
         cd .updater/api
         curl -s  https://api.github.com/repos/boecker-lab/sirius/releases | grep 'browser_download_url.*linux64-service.zip\"' | sort | tac | head -n 1 | cut -d : -f 2,3 | tr -d \" | wget -i -
-        if [ $? -ne 0 ]; do !!; fi
-        if [ $? -ne 0 ]; do !!; fi
-        if [ $? -ne 0 ]; do !!; fi
-        if [ $? -ne 0 ]; do !!; fi
-        if [ $? -ne 0 ]; do echo Download Failed 5x; exit 1; fi
+        if [ $? -ne 0 ]; then !!; fi
+        if [ $? -ne 0 ]; then !!; fi
+        if [ $? -ne 0 ]; then !!; fi
+        if [ $? -ne 0 ]; then !!; fi
+        if [ $? -ne 0 ]; then echo Download Failed 5x; exit 1; fi
         echo "Download Complete"
         unzip *.zip
         mkdir temp
