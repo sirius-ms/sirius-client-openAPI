@@ -18,8 +18,8 @@ jobs:
       matrix:
         python-version: ["3.8", "3.9", "3.10"]
     env: 
-        EMAIL: ${{ secrets.TEST_EMAIL }}
-        PASSWORD: ${{ secrets.TEST_PASSWORD }}
+        SIRIUS_USER: ${{ secrets.SIRIUS_USER }}
+        SIRIUS_PW: ${{ secrets.SIRIUS_PW }}
     steps:
     - uses: actions/checkout@v3
     - name: Set up Python ${{ matrix.python-version }}
@@ -58,4 +58,4 @@ jobs:
         flake8 ./client-api_python --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test with pytest
       run: |
-        pytest .updater/clientTests/testPython.py EMAIL PASSWORD
+        pytest .updater/clientTests/testPython.py SIRIUS_USER SIRIUS_PW
