@@ -1,5 +1,6 @@
 from PySirius import SiriusSDK
 import PySirius.models as models
+import time
 
 credentials = {"username":"lukas.scholz@uni-jena.de", "password":"Lukas2000sh"}
 path_to_sirius = ".updater/api/sirius/bin/sirius"
@@ -65,8 +66,10 @@ def test_Workflow():
   fallback_adducts = ["[M+H]+","[M]+,[M+K]+","[M+Na]+","[M+H-H2O]+","[M+Na2-H]+","[M+2K-H]+","[M+NH4]+","[M+H3O]+","[M+MeOH+H]+"]
   detectable_adducts = ["[M+H]+","[M]+,[M+K]+","[M+Na]+","[M+H-H2O]+","[M+Na2-H]+","[M+2K-H]+","[M+NH4]+","[M+H3O]+","[M+MeOH+H]+"]
   formula_id_paras = models.Sirius(True)
-  #job = models.JobSubmission([api.get_CompoundsApi().get_compounds(ps_name)[0].id, api.get_CompoundsApi().get_compounds(ps_name)[1].id], fallback_adducts, None, detectable_adducts, True, formula_id_paras)
-  #api.get_ComputationsApi().start_job(job, ps_name)
+  time.sleep(2)
+  job = models.JobSubmission([api.get_CompoundsApi().get_compounds(ps_name)[0].id, api.get_CompoundsApi().get_compounds(ps_name)[1].id], fallback_adducts, None, detectable_adducts, True, formula_id_paras)
+  time.sleep(2)
+  api.get_ComputationsApi().start_job(job, ps_name)
   assert True
   
     
