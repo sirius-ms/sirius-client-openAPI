@@ -2,7 +2,7 @@ from PySirius import SiriusSDK
 import PySirius.models as models
 import time
 import sys
-credentials = {"username":sys.argv[1], "password":sys.argv[2]}
+credentials = {"username":str(sys.argv[1]), "password":str(sys.argv[2])}
 
 path_to_sirius = ".updater/api/sirius/bin/sirius"
 path_to_project = ".updater/api/temp"
