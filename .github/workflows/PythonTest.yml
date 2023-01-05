@@ -55,5 +55,8 @@ jobs:
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8 ./client-api_python --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test with pytest
+    env: 
+      EMAIL: ${{ secrets.TEST_EMAIL }}
+      PASSWORD: ${{ secrets.TEST_PASSWORD }}
       run: |
-        pytest .updater/clientTests/testPython.py
+        pytest .updater/clientTests/testPython.py $EMAIL $PASSWORD
