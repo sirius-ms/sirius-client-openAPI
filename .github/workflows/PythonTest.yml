@@ -59,4 +59,4 @@ jobs:
         EMAIL: ${{ secrets.TEST_EMAIL }}
         PASSWORD: ${{ secrets.TEST_PASSWORD }}
       run: |
-        pytest .updater/clientTests/testPython.py $EMAIL $PASSWORD
+        pytest .updater/clientTests/testPython.py EMAIL PASSWORD
