@@ -57,4 +57,4 @@ jobs:
       run: |
         echo secrets.SIRIUS_USER
         echo secrets.SIRIUS_PW
-        pytest -s .updater/clientTests/testPython.py ${{ secrets.SIRIUS_USER }} ${{ secrets.SIRIUS_PW }}
+        python .updater/clientTests/testPython.py ${{ secrets.SIRIUS_USER }} ${{ secrets.SIRIUS_PW }}
