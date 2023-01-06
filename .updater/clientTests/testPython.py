@@ -30,7 +30,7 @@ def setup_module():
 
 def teardown_module():
   time.sleep(2)
-  api.get_ComputationsApi().start_job(job, ps_name)
+  api.get_LoginAndAccountApi().logout()
   assert True
     
 def test_Computations():
