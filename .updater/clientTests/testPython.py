@@ -4,19 +4,6 @@ import time
 import pytest
 import sys
 
-path_to_sirius = ".updater/api/sirius/bin/sirius"
-path_to_project = ".updater/api/temp"
-path_to_demo_data = ".updater/examples"
-api = SiriusSDK.start(path_to_project, path_to_sirius)
-ps_name = api.get_ProjectSpacesApi().get_project_spaces()[0].name
-
-  
-from PySirius import SiriusSDK
-import PySirius.models as models
-import time
-import pytest
-import sys
-
 credentials = {"username":str(sys.argv[1]), "password":str(sys.argv[2])}
 path_to_sirius = ".updater/api/sirius/bin/sirius"
 path_to_project = ".updater/api/temp"
