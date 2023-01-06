@@ -4,35 +4,43 @@ import time
 import pytest
 import sys
 
+credentials = {"username":str(sys.argv[1]), "password":str(sys.argv[2])}
 path_to_sirius = ".updater/api/sirius/bin/sirius"
 path_to_project = ".updater/api/temp"
 path_to_demo_data = ".updater/examples"
 api = SiriusSDK.start(path_to_project, path_to_sirius)
 ps_name = api.get_ProjectSpacesApi().get_project_spaces()[0].name
 
+def main():
+  # temporary without pytest
+  setup_module()
+  test_Computations()
+  test_ProjectSpaces()
+  test_LoginAndAccounts()
+  test_FormulaResults()
+  test_Compounds()
+  test_VersionController()
+  test_GUI()
+  test_Workflow()
+  teardown_module()
+
   
-def init(command_line_args):
-  credentials = {"username":str(command_line_args[0]), "password":str(command_line_args[1])}
+def setup_module():
   api.get_LoginAndAccountApi().login(credentials, True)
 
-def end():
+def teardown_module():
   api.get_LoginAndAccountApi().logout()
     
-def test_Computations(command_line_args):
-  init(command_line_args)
+def test_Computations():
   test = api.get_ComputationsApi()
-  end()
   assert True
 
-def test_ProjectSpaces(command_line_args):
-  init(command_line_args)
+def test_ProjectSpaces():
   test = api.get_ProjectSpacesApi()
   test.get_project_spaces()
-  end()
   assert True
 
-def test_LoginAndAccounts(command_line_args):
-  init(command_line_args)
+def test_LoginAndAccounts():
   test = api.get_LoginAndAccountApi()
   assert test.is_logged_in()
   assert test.is_logged_in_with_http_info()
@@ -42,40 +50,30 @@ def test_LoginAndAccounts(command_line_args):
   test.get_sign_up_url_with_http_info()
   # test.sign_up()
   # test.sign_up_with_http_info()
-  end()
   assert True
 
-def test_FormulaResults(command_line_args):
-  init(command_line_args)
+def test_FormulaResults():
   test = api.get_FormulaResultsApi()
-  end()
   assert True
 
-def test_Compounds(command_line_args):
-  init(command_line_args)
+def test_Compounds():
   test = api.get_CompoundsApi()
   test.get_compounds(ps_name)
-  end()
   assert True
   
-def test_VersionController(command_line_args):
-  init(command_line_args)
+def test_VersionController():
   test = api.get_VersionInfoControllerApi()
   test.get_version_info()
   test.get_version_info_with_http_info()
-  end()
   assert True
   
-def test_GUI(command_line_args):
-  init(command_line_args)
+def test_GUI():
   test = api.get_GraphicalUserInterfaceApi()
   # test.open_gui()
   # test.close_gui()
-  end()
   assert True
   
-def test_Workflow(command_line_args):
-  init(command_line_args)
+def test_Workflow():
   api.get_CompoundsApi().import_compounds([path_to_demo_data+"/ms/Bicuculline.ms", path_to_demo_data+"/ms/Kaempferol.ms" ], ps_name)
   print(api.get_CompoundsApi().get_compounds(ps_name))  # TODO: Compounds not imported??
   fallback_adducts = ["[M+H]+","[M]+,[M+K]+","[M+Na]+","[M+H-H2O]+","[M+Na2-H]+","[M+2K-H]+","[M+NH4]+","[M+H3O]+","[M+MeOH+H]+"]
@@ -85,5 +83,6 @@ def test_Workflow(command_line_args):
   job = models.JobSubmission([api.get_CompoundsApi().get_compounds(ps_name)[0].id, api.get_CompoundsApi().get_compounds(ps_name)[1].id], fallback_adducts, None, detectable_adducts, True, formula_id_paras)
   time.sleep(2)
   api.get_ComputationsApi().start_job(job, ps_name)
-  end()
   assert True
+
+main()
