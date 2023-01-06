@@ -1,8 +1,6 @@
 from PySirius import SiriusSDK
 import PySirius.models as models
 import time
-import sys
-credentials = {"username":str(sys.argv[1]), "password":str(sys.argv[2])}
 
 path_to_sirius = ".updater/api/sirius/bin/sirius"
 path_to_project = ".updater/api/temp"
@@ -10,28 +8,13 @@ path_to_demo_data = ".updater/examples"
 api = SiriusSDK.start(path_to_project, path_to_sirius)
 ps_name = api.get_ProjectSpacesApi().get_project_spaces()[0].name
 
-def main():
-  # temporary without pytest
-  setup_module()
-  test_Computations()
-  test_ProjectSpaces()
-  test_LoginAndAccounts()
-  test_FormulaResults()
-  test_Compounds()
-  test_VersionController()
-  test_GUI()
-  test_Workflow()
-  teardown_module()
-
-
-def setup_module():
+def setup_module(name, passw):
+  credentials = {"username":str(name), "password":str(passw)}
   api.get_LoginAndAccountApi().login(credentials, True)
 
 def teardown_module():
   api.get_LoginAndAccountApi().logout()
     
-
-
 def test_Computations():
   test = api.get_ComputationsApi()
   assert True
@@ -85,5 +68,3 @@ def test_Workflow():
   time.sleep(2)
   api.get_ComputationsApi().start_job(job, ps_name)
   assert True
-  
-main()
