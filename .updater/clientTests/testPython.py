@@ -12,7 +12,7 @@ ps_name = api.get_ProjectSpacesApi().get_project_spaces()[0].name
 
   
 def setup_module(command_line_args):
-print(command_line_args)
+  print(command_line_args)
   credentials = {"username":str(command_line_args[0]), "password":str(command_line_args[1])}
   api.get_LoginAndAccountApi().login(credentials, True)
 
