@@ -10,7 +10,7 @@ path_to_demo_data = ".updater/examples"
 api = SiriusSDK.start(path_to_project, path_to_sirius)
 ps_name = api.get_ProjectSpacesApi().get_project_spaces()[0].name
 
-def main()
+def main():
   # temporary without pytest
   setup_module()
   test_Computations()
