@@ -56,7 +56,6 @@ def test_LoginAndAccounts():
 
 def test_FormulaResults():
   test = api.get_FormulaResultsApi()
-  end()
   assert True
 
 def test_Compounds():
