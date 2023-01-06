@@ -3,8 +3,9 @@
 
 name: PythonTest
 
-on:
-  [push, pull_request, workflow_dispatch ]
+
+on: [push, pull_request, workflow_dispatch]
+
 
 jobs:
   build:
@@ -15,6 +16,9 @@ jobs:
       matrix:
         python-version: ["3.10"]
         #python-version: ["3.8", "3.9", "3.10"]
+    env:
+      SIRIUS_USER: ${{ secrets.SIRIUS_USER }}
+      SIRIUS_PW: ${{ secrets.SIRIUS_PW }}
     steps:
     - uses: actions/checkout@v3
     - name: Set up Python ${{ matrix.python-version }}
@@ -32,11 +36,6 @@ jobs:
       run: |
         cd .updater/api
         curl -s  https://api.github.com/repos/boecker-lab/sirius/releases | grep 'browser_download_url.*linux64-service.zip\"' | sort | tac | head -n 1 | cut -d : -f 2,3 | tr -d \" | wget -i -
-        if [ $? -ne 0 ]; then !!; fi
-        if [ $? -ne 0 ]; then !!; fi
-        if [ $? -ne 0 ]; then !!; fi
-        if [ $? -ne 0 ]; then !!; fi
-        if [ $? -ne 0 ]; then echo Download Failed 5x; exit 1; fi
         echo "Download Complete"
         unzip *.zip
         mkdir temp
@@ -49,4 +48,4 @@ jobs:
         flake8 ./client-api_python --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test with pytest
       run: |
-        python .updater/clientTests/testPython.py ${{ secrets.SIRIUS_USER }} ${{ secrets.SIRIUS_PW }} 
+        pytest .updater/clientTests/testPython.py
