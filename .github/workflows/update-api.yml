@@ -10,7 +10,7 @@ jobs:
       id: cache-sirius
       uses: actions/cache@v3
       with:
-        path: .updater/api
+        path: .updater/api/sirius
         key: sirius
     - name: Check if cache is Empty
       if: steps.cache-sirius.outputs.cache-hit != 'true'
@@ -19,7 +19,7 @@ jobs:
         max_attempts: 5
         timeout_minutes: 2
         command: |
-            cd .updater/api/temp
+            cd .updater/api
             curl -s  https://api.github.com/repos/boecker-lab/sirius/releases | grep 'browser_download_url.*linux64-service.zip\"' | sort | tac | head -n 1 | cut -d : -f 2,3 | tr -d \" | wget -i -
             echo "Download Complete"
             unzip *.zip
