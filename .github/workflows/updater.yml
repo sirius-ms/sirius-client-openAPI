@@ -127,6 +127,7 @@ jobs:
         commit_message: Auto-Updated Swagger Clients
         
   RunPythonTest:
+    needs: UpdateClients
     uses: ./.github/workflows/PythonTest.yml
         
   RunJavaTest:
