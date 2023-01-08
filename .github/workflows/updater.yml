@@ -216,10 +216,10 @@ jobs:
         echo "TODO" 
 
   Cleanup:
-  timeout-minutes: 10
     needs: [RunRubyTest, RunRTest, RunJavaTest, RunPythonTest]
     if: ${{ failure() }}
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps: 
       - name: Checkout
         uses: actions/checkout@v3.1.0
