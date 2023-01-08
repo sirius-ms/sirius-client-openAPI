@@ -83,35 +83,35 @@ jobs:
         echo "generating Python Code"
         #java -jar .updater/openapi_generator/openapi-generator-cli.jar generate -i .updater/api/api-docs.json -c .updater/config/Python/config.json -g python -o client-api_python/generated
         
-        echo "generating R Code"
-        rm -r client-api_r/generated/*
-        java -jar .updater/openapi_generator/openapi-generator-cli.jar generate -i .updater/api/api-docs.json -c .updater/config/R/config.json -g r -o client-api_r/generated
+        #echo "generating R Code"
+        #rm -r client-api_r/generated/*
+        #java -jar .updater/openapi_generator/openapi-generator-cli.jar generate -i .updater/api/api-docs.json -c .updater/config/R/config.json -g r -o client-api_r/generated
         
         echo "generating Ruby Code"
         java -jar .updater/openapi_generator/openapi-generator-cli.jar generate -i .updater/api/api-docs.json -c .updater/config/Ruby/config.json -g ruby -o client-api_ruby/generated
         echo "generating Finished!"
-    - name: Format Python Package
-      run: |
-        echo removed
-        rm client-api_python/generated/PySirius/sirius_api.py
-        cp client-api_python/sirius_api.py client-api_python/generated/PySirius
-        rm client-api_python/generated/PySirius/Sirius.py
-        cp client-api_python/Sirius.py client-api_python/generated/PySirius
+   # - name: Format Python Package
+    #  run: |
+    #    echo removed
+        #rm client-api_python/generated/PySirius/sirius_api.py
+        #cp client-api_python/sirius_api.py client-api_python/generated/PySirius
+        #rm client-api_python/generated/PySirius/Sirius.py
+        #cp client-api_python/Sirius.py client-api_python/generated/PySirius
         
-        echo "from PySirius.sirius_api import PySiriusAPI" >> client-api_python/generated/PySirius/__init__.py
-        echo "from PySirius.Sirius import SiriusSDK" >> client-api_python/generated/PySirius/__init__.py
-    - name: Format R package
-      run: |
-        cp client-api_r/SiriusSDK.R  client-api_r/generated/R/SiriusSDK.R
-        echo >> client-api_r/generated/NAMESPACE
-        echo "# SDK" >> client-api_r/generated/NAMESPACE
-        echo "export(SiriusSDK)" >> client-api_r/generated/NAMESPACE
+        #echo "from PySirius.sirius_api import PySiriusAPI" >> client-api_python/generated/PySirius/__init__.py
+        #echo "from PySirius.Sirius import SiriusSDK" >> client-api_python/generated/PySirius/__init__.py
+    #- name: Format R package
+    #  run: |
+        #cp client-api_r/SiriusSDK.R  client-api_r/generated/R/SiriusSDK.R
+        #echo >> client-api_r/generated/NAMESPACE
+        #echo "# SDK" >> client-api_r/generated/NAMESPACE
+        #echo "export(SiriusSDK)" >> client-api_r/generated/NAMESPACE
         
-        cp client-api_r/api_response_fix.R  client-api_r/generated/R/api_response.R
+        #cp client-api_r/api_response_fix.R  client-api_r/generated/R/api_response.R
         
-        chmod +x ./client-api_r/api_client_fix.sh
-        ./client-api_r/api_client_fix.sh ./client-api_r/generated/R/api_client.R
-      shell: bash
+        #chmod +x ./client-api_r/api_client_fix.sh
+        #./client-api_r/api_client_fix.sh ./client-api_r/generated/R/api_client.R
+    #  shell: bash
     - name: Remove Sirius Rest Api
       run: |
         cd .updater/api
@@ -127,7 +127,6 @@ jobs:
         commit_message: Auto-Updated Swagger Clients
         
   RunPythonTest:
-    timeout-minutes: 10
     needs: UpdateClients
     uses: ./.github/workflows/PythonTest.yml
         
