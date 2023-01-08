@@ -35,7 +35,8 @@ jobs:
     - name: Download latest Sirius Release
       run: |
         cd .updater/api
-        curl -s  https://api.github.com/repos/boecker-lab/sirius/releases | grep 'browser_download_url.*linux64-service.zip\"' | sort | tac | head -n 1 | cut -d : -f 2,3 | tr -d \" | wget -i -
+        command="curl -s  https://api.github.com/repos/boecker-lab/sirius/releases | grep 'browser_download_url.*linux64-service.zip\"' | sort | tac | head -n 1 | cut -d : -f 2,3 | tr -d \" | wget -i -"
+        for i in {1..5}; do $command && break || sleep 3; done
         echo "Download Complete"
         unzip *.zip
         mkdir temp
