@@ -33,29 +33,7 @@ jobs:
         cd .updater/openapi_generator
         wget https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/6.2.1/openapi-generator-cli-6.2.1.jar -O openapi-generator-cli.jar
         java -jar openapi-generator-cli.jar version > version
-    - name: Cache Sirius Release
-      id: cache-sirius
-      uses: actions/cache@v3
-      with:
-        path: .updater/api/sirius
-        key: sirius
-    - name: Check cached version
-      uses: nick-fields/retry@v2
-      with:
-        max_attempts: 5
-        timeout_minutes: 2
-        command: |
-            currVersion=$(cat .updater/api/api.version)
-            newVersion=$(curl -s  https://api.github.com/repos/boecker-lab/sirius/releases | grep 'browser_download_url.*linux64-service.zip\"' | sort | tac | head -n 1 | cut -d : -f 2,3 | tr -d \" | egrep -o "([0-9]{1,}\.)+[0-9]{1,}" | head -1)
-            cd .updater/api
-            if [ "$currVersion" != "$newVersion" ]; then
-            sleep 1
-            curl -s  https://api.github.com/repos/boecker-lab/sirius/releases | grep 'browser_download_url.*linux64-service.zip\"' | sort | tac | head -n 1 | cut -d : -f 2,3 | tr -d \" | wget -i -
-            unzip *.zip
-            echo $newVersion > api.version
-            fi
     - name: Download latest Sirius Release
-      if: steps.cache-sirius.outputs.cache-hit != 'true'
       uses: nick-fields/retry@v2
       with:
         max_attempts: 5
@@ -125,15 +103,17 @@ jobs:
       uses: stefanzweifel/git-auto-commit-action@v4.15.2
       with:
         commit_message: Auto-Updated Swagger Clients
-        
-  RunPythonTest:
+  UpdateCache:
     needs: UpdateClients
+    uses: ./.github/workflows/update-api.yml
+  RunPythonTest:
+    needs: UpdateCache
     uses: ./.github/workflows/PythonTest.yml
         
   RunJavaTest:
     timeout-minutes: 10
     # Add dependency for Test
-    needs: UpdateClients
+    needs: UpdateCache
     
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
@@ -161,7 +141,7 @@ jobs:
   RunRTest:
     timeout-minutes: 10
     # Add dependency for Test
-    needs: UpdateClients
+    needs: UpdateCache
     
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
@@ -189,7 +169,7 @@ jobs:
   RunRubyTest:
     timeout-minutes: 10
     # Add dependency for Test
-    needs: UpdateClients
+    needs: UpdateCache
     
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
