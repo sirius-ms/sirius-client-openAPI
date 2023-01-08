@@ -44,11 +44,11 @@ jobs:
         command: |
             currVersion=$(cat .updater/api/sirius.version)
             newVersion=$(curl -s  https://api.github.com/repos/boecker-lab/sirius/releases | grep 'browser_download_url.*linux64-service.zip\"' | sort | tac | head -n 1 | cut -d : -f 2,3 | tr -d \" | egrep -o "([0-9]{1,}\.)+[0-9]{1,}" | head -1)
+            cd .updater/api
             if [ "$currVersion" != "$newVersion" ]; then
             sleep 1
             curl -s  https://api.github.com/repos/boecker-lab/sirius/releases | grep 'browser_download_url.*linux64-service.zip\"' | sort | tac | head -n 1 | cut -d : -f 2,3 | tr -d \" | wget -i -
-            unzip *.zip
-            mkdir temp; fi
+            unzip *.zip; fi
     - name: Download latest Sirius Release
       if: steps.cache-sirius.outputs.cache-hit != 'true'
       uses: nick-fields/retry@v2
@@ -56,11 +56,10 @@ jobs:
         max_attempts: 5
         timeout_minutes: 2
         command: |
-            cd .updater/api
+            cd .updater/api/temp
             curl -s  https://api.github.com/repos/boecker-lab/sirius/releases | grep 'browser_download_url.*linux64-service.zip\"' | sort | tac | head -n 1 | cut -d : -f 2,3 | tr -d \" | wget -i -
             echo "Download Complete"
             unzip *.zip
-            mkdir temp
             echo "Api Ready"
     - name: Lint with flake8
       run: |
@@ -70,4 +69,5 @@ jobs:
         flake8 ./client-api_python --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test with pytest
       run: |
+        mkdir .updater/api/temp
         pytest .updater/clientTests/testPython.py
