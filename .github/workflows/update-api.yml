@@ -1,5 +1,5 @@
 name: UpdateApi
-on: workflow_call
+on: [workflow_call, workflow_dispatch]
 jobs:
   build:
     runs-on: ubuntu-latest
