@@ -48,7 +48,9 @@ jobs:
             if [ "$currVersion" != "$newVersion" ]; then
             sleep 1
             curl -s  https://api.github.com/repos/boecker-lab/sirius/releases | grep 'browser_download_url.*linux64-service.zip\"' | sort | tac | head -n 1 | cut -d : -f 2,3 | tr -d \" | wget -i -
-            unzip *.zip; fi
+            unzip *.zip
+            echo $newVersion > sirius.version
+            fi
     - name: Download latest Sirius Release
       if: steps.cache-sirius.outputs.cache-hit != 'true'
       uses: nick-fields/retry@v2
