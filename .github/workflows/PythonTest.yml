@@ -31,10 +31,34 @@ jobs:
         pip install git+https://github.com/LukasScholz/sirius-client-openAPI#subdirectory=client-api_python/generated
         pip install -e ./client-api_python/generated
         echo "Finished Installing"
+    - name: Cache Sirius Release
+      id: cache-sirius
+      uses: actions/cache@v3
+      with:
+        path: .updater/api/sirius
+        key: sirius
+    - name: Check cached version
+      uses: nick-fields/retry@v2
+      with:
+        max_attempts: 5
+        timeout_minutes: 2
+      command: |
+      currVersion=$(cat .updater/api/sirius.version)
+      newVersion=$(curl -s  https://api.github.com/repos/boecker-lab/sirius/releases | grep 'browser_download_url.*linux64-service.zip\"' | sort | tac | head -n 1 | cut -d : -f 2,3 | tr -d \" | egrep -o "([0-9]{1,}\.)+[0-9]{1,}" | head -1)
+      if [ "$currVersion" != "$newVersion" ]; then
+      sleep 1
+      curl -s  https://api.github.com/repos/boecker-lab/sirius/releases | grep 'browser_download_url.*linux64-service.zip\"' | sort | tac | head -n 1 | cut -d : -f 2,3 | tr -d \" | wget -i -
+      unzip *.zip
+      mkdir temp; fi
     - name: Download latest Sirius Release
-      run: |
+      if: steps.cache-sirius.outputs.cache-hit != 'true'
+      uses: nick-fields/retry@v2
+      with:
+        max_attempts: 5
+        timeout_minutes: 2
+      command: |
         cd .updater/api
-        for i in {1..5}; do curl -s  https://api.github.com/repos/boecker-lab/sirius/releases | grep 'browser_download_url.*linux64-service.zip\"' | sort | tac | head -n 1 | cut -d : -f 2,3 | tr -d \" | wget -i - && break || sleep 3; done
+        curl -s  https://api.github.com/repos/boecker-lab/sirius/releases | grep 'browser_download_url.*linux64-service.zip\"' | sort | tac | head -n 1 | cut -d : -f 2,3 | tr -d \" | wget -i -
         echo "Download Complete"
         unzip *.zip
         mkdir temp
