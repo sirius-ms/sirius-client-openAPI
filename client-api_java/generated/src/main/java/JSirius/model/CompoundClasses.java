@@ -50,7 +50,7 @@ import JSirius.JSON;
  * Container class that holds the best matching compound class for different levels of each ontology for a  certain compound/feature/predicted fingerprint.
  */
 @ApiModel(description = "Container class that holds the best matching compound class for different levels of each ontology for a  certain compound/feature/predicted fingerprint.")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-02T22:10:58.538381Z[Etc/UTC]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-08T15:09:34.430352Z[Etc/UTC]")
 public class CompoundClasses {
   public static final String SERIALIZED_NAME_NPC_PATHWAY = "npcPathway";
   @SerializedName(SERIALIZED_NAME_NPC_PATHWAY)
