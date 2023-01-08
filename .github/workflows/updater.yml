@@ -22,7 +22,7 @@ jobs:
   UpdateClients:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
-
+    timeout_minutes: 10
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     # Runs using the runners shell
@@ -127,10 +127,12 @@ jobs:
         commit_message: Auto-Updated Swagger Clients
         
   RunPythonTest:
+    timeout_minutes: 10
     needs: UpdateClients
     uses: ./.github/workflows/PythonTest.yml
         
   RunJavaTest:
+    timeout_minutes: 10
     # Add dependency for Test
     needs: UpdateClients
     
@@ -158,6 +160,7 @@ jobs:
         echo "TODO" 
 
   RunRTest:
+    timeout_minutes: 10
     # Add dependency for Test
     needs: UpdateClients
     
@@ -185,6 +188,7 @@ jobs:
         echo "TODO" 
 
   RunRubyTest:
+    timeout_minutes: 10
     # Add dependency for Test
     needs: UpdateClients
     
@@ -212,6 +216,7 @@ jobs:
         echo "TODO" 
 
   Cleanup:
+  timeout_minutes: 10
     needs: [RunRubyTest, RunRTest, RunJavaTest, RunPythonTest]
     if: ${{ failure() }}
     runs-on: ubuntu-latest
