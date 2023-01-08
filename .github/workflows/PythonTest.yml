@@ -32,13 +32,13 @@ jobs:
         pip install -e ./client-api_python/generated
         echo "Finished Installing"
     - name: Cache Sirius Release
-      id: cache-sirius
+      id: cache-sirius-2
       uses: actions/cache@v3
       with:
         path: .updater/api/sirius
         key: sirius
     - name: Download latest Sirius Release
-      if: steps.cache-sirius.outputs.cache-hit != 'true'
+      if: steps.cache-sirius-2.outputs.cache-hit != 'true'
       uses: nick-fields/retry@v2
       with:
         max_attempts: 5
