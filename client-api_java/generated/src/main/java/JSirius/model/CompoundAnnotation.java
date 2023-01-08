@@ -52,7 +52,7 @@ import JSirius.JSON;
  * Summary of the results of a Compound. Can be added to a CompoundId.  It is not null within a CompoundId if it was not requested und non null otherwise  The different summary fields within this summary are null if the corresponding  compound does not contain the represented results. The content of  non NULL  summary field id the result was computed but is empty.
  */
 @ApiModel(description = "Summary of the results of a Compound. Can be added to a CompoundId.  It is not null within a CompoundId if it was not requested und non null otherwise  The different summary fields within this summary are null if the corresponding  compound does not contain the represented results. The content of  non NULL  summary field id the result was computed but is empty.")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-08T15:09:34.430352Z[Etc/UTC]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-08T15:23:14.296111Z[Etc/UTC]")
 public class CompoundAnnotation {
   public static final String SERIALIZED_NAME_FORMULA_ANNOTATION = "formulaAnnotation";
   @SerializedName(SERIALIZED_NAME_FORMULA_ANNOTATION)

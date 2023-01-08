@@ -75,3 +75,5 @@ from PySirius.sirius_api import PySiriusAPI
 from PySirius.Sirius import SiriusSDK
 from PySirius.sirius_api import PySiriusAPI
 from PySirius.Sirius import SiriusSDK
+from PySirius.sirius_api import PySiriusAPI
+from PySirius.Sirius import SiriusSDK

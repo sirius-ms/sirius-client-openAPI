@@ -50,7 +50,7 @@ import JSirius.JSON;
  * 
  */
 @ApiModel(description = "")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-08T15:09:34.430352Z[Etc/UTC]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-08T15:23:14.296111Z[Etc/UTC]")
 public class FormulaCandidate {
   public static final String SERIALIZED_NAME_SIRIUS_SCORE = "siriusScore";
   @SerializedName(SERIALIZED_NAME_SIRIUS_SCORE)
