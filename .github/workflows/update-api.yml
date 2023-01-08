@@ -10,7 +10,7 @@ jobs:
       id: cache-sirius
       uses: actions/cache@v3
       with:
-        path: .updater/api/sirius
+        path: .updater/api
         key: sirius
     - name: Check if cache is Empty
       if: steps.cache-sirius.outputs.cache-hit != 'true'
