@@ -5,6 +5,7 @@ import pytest
 import os
 
 credentials = {"username":str(os.getenv('SIRIUS_USER')), "password":str(os.getenv('SIRIUS_PW'))}
+print(credentials)
 path_to_sirius = ".updater/api/sirius/bin/sirius"
 path_to_project = ".updater/api/temp"
 path_to_demo_data = ".updater/examples"
