@@ -16,8 +16,8 @@ def setup_module():
   api.get_LoginAndAccountApi().login(credentials, True)
 
 def teardown_module():
-  time.sleep(2)
   api.get_LoginAndAccountApi().logout()
+  SiriusSDK.shutdown()
   assert True
     
 def test_Computations():

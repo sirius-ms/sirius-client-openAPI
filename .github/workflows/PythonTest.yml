@@ -4,18 +4,17 @@
 name: PythonTest
 
 
-on: [push, pull_request, workflow_dispatch]
+on: [push, pull_request, workflow_dispatch, workflow_call]
 
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.10"]
-        #python-version: ["3.8", "3.9", "3.10"]
+        python-version: ["3.8", "3.9", "3.10", "3.11"]
     env:
       SIRIUS_USER: ${{ secrets.SIRIUS_USER }}
       SIRIUS_PW: ${{ secrets.SIRIUS_PW }}
@@ -32,14 +31,24 @@ jobs:
         pip install git+https://github.com/LukasScholz/sirius-client-openAPI#subdirectory=client-api_python/generated
         pip install -e ./client-api_python/generated
         echo "Finished Installing"
+    - name: Cache Sirius Release
+      id: cache-sirius
+      uses: actions/cache@v3
+      with:
+        path: .updater/api/sirius
+        key: sirius
     - name: Download latest Sirius Release
-      run: |
-        cd .updater/api
-        curl -s  https://api.github.com/repos/boecker-lab/sirius/releases | grep 'browser_download_url.*linux64-service.zip\"' | sort | tac | head -n 1 | cut -d : -f 2,3 | tr -d \" | wget -i -
-        echo "Download Complete"
-        unzip *.zip
-        mkdir temp
-        echo "Api Ready"
+      if: steps.cache-sirius.outputs.cache-hit != 'true'
+      uses: nick-fields/retry@v2
+      with:
+        max_attempts: 5
+        timeout_minutes: 2
+        command: |
+            cd .updater/api/temp
+            curl -s  https://api.github.com/repos/boecker-lab/sirius/releases | grep 'browser_download_url.*linux64-service.zip\"' | sort | tac | head -n 1 | cut -d : -f 2,3 | tr -d \" | wget -i -
+            echo "Download Complete"
+            unzip *.zip
+            echo "Api Ready"
     - name: Lint with flake8
       run: |
         # stop the build if there are Python syntax errors or undefined names
@@ -48,4 +57,5 @@ jobs:
         flake8 ./client-api_python --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test with pytest
       run: |
+        mkdir .updater/api/temp
         pytest .updater/clientTests/testPython.py

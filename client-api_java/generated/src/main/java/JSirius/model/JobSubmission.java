@@ -58,7 +58,7 @@ import JSirius.JSON;
  * Object to submit a job to be executed by SIRIUS
  */
 @ApiModel(description = "Object to submit a job to be executed by SIRIUS")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-02T22:10:58.538381Z[Etc/UTC]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-08T15:09:34.430352Z[Etc/UTC]")
 public class JobSubmission {
   public static final String SERIALIZED_NAME_COMPOUND_IDS = "compoundIds";
   @SerializedName(SERIALIZED_NAME_COMPOUND_IDS)

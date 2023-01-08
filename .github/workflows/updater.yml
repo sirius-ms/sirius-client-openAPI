@@ -22,7 +22,7 @@ jobs:
   UpdateClients:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
-
+    timeout-minutes: 10
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     # Runs using the runners shell
@@ -33,13 +33,39 @@ jobs:
         cd .updater/openapi_generator
         wget https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/6.2.1/openapi-generator-cli-6.2.1.jar -O openapi-generator-cli.jar
         java -jar openapi-generator-cli.jar version > version
+    - name: Cache Sirius Release
+      id: cache-sirius
+      uses: actions/cache@v3
+      with:
+        path: .updater/api/sirius
+        key: sirius
+    - name: Check cached version
+      uses: nick-fields/retry@v2
+      with:
+        max_attempts: 5
+        timeout_minutes: 2
+        command: |
+            currVersion=$(cat .updater/api/api.version)
+            newVersion=$(curl -s  https://api.github.com/repos/boecker-lab/sirius/releases | grep 'browser_download_url.*linux64-service.zip\"' | sort | tac | head -n 1 | cut -d : -f 2,3 | tr -d \" | egrep -o "([0-9]{1,}\.)+[0-9]{1,}" | head -1)
+            cd .updater/api
+            if [ "$currVersion" != "$newVersion" ]; then
+            sleep 1
+            curl -s  https://api.github.com/repos/boecker-lab/sirius/releases | grep 'browser_download_url.*linux64-service.zip\"' | sort | tac | head -n 1 | cut -d : -f 2,3 | tr -d \" | wget -i -
+            unzip *.zip
+            echo $newVersion > api.version
+            fi
     - name: Download latest Sirius Release
-      run: |
-        cd .updater/api
-        curl -s  https://api.github.com/repos/boecker-lab/sirius/releases | grep 'browser_download_url.*linux64-service.zip\"' | sort | tac | head -n 1 | cut -d : -f 2,3 | tr -d \" | wget -i -
-        echo "Download Complete"
-        unzip *.zip
-        echo "Api Ready"
+      if: steps.cache-sirius.outputs.cache-hit != 'true'
+      uses: nick-fields/retry@v2
+      with:
+        max_attempts: 5
+        timeout_minutes: 2
+        command: |
+            cd .updater/api/temp
+            curl -s  https://api.github.com/repos/boecker-lab/sirius/releases | grep 'browser_download_url.*linux64-service.zip\"' | sort | tac | head -n 1 | cut -d : -f 2,3 | tr -d \" | wget -i -
+            echo "Download Complete"
+            unzip *.zip
+            echo "Api Ready"
     - name: Run Rest Api
       run: |
         bash .updater/api/sirius/bin/sirius REST -p 8080 &
@@ -101,33 +127,12 @@ jobs:
         commit_message: Auto-Updated Swagger Clients
         
   RunPythonTest:
+    timeout-minutes: 10
     needs: UpdateClients
-    
-    runs-on: ubuntu-latest
-
-    steps:
-    # Runs using the runners shell
-    - name: checkout repo
-      uses: actions/checkout@v3.1.0
-    - name: Download latest Sirius Release
-      run: |
-        cd .updater/api
-        curl -s  https://api.github.com/repos/boecker-lab/sirius/releases | grep 'browser_download_url.*linux64-service.zip\"' | sort | tac | head -n 1 | cut -d : -f 2,3 | tr -d \" | wget -i -
-        echo "Download Complete"
-        unzip *.zip
-        echo "Api Ready"
-    - name: Run Rest Api
-      run: |
-        bash .updater/api/sirius/bin/sirius REST -p 8080 &
-        while ! nc -z localhost 8080; do sleep 0.1; done
-    - name: execute Python script # run the run.py to get the latest data
-      run: |
-        #pip install git+https://github.com/LukasScholz/sirius-client-openAPI#subdirectory=client-api_python/generated
-        #pip install -e ./client-api_python/generated
-        echo "Finished Installing"
-        #python .updater/clientTests/testPython.py
+    uses: ./.github/workflows/PythonTest.yml
         
   RunJavaTest:
+    timeout-minutes: 10
     # Add dependency for Test
     needs: UpdateClients
     
@@ -155,6 +160,7 @@ jobs:
         echo "TODO" 
 
   RunRTest:
+    timeout-minutes: 10
     # Add dependency for Test
     needs: UpdateClients
     
@@ -182,6 +188,7 @@ jobs:
         echo "TODO" 
 
   RunRubyTest:
+    timeout-minutes: 10
     # Add dependency for Test
     needs: UpdateClients
     
@@ -212,6 +219,7 @@ jobs:
     needs: [RunRubyTest, RunRTest, RunJavaTest, RunPythonTest]
     if: ${{ failure() }}
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps: 
       - name: Checkout
         uses: actions/checkout@v3.1.0

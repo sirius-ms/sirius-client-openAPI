@@ -67,9 +67,3 @@ from PySirius.models.zodiac_number_of_considered_candidates_at800_mz import Zodi
 from PySirius.models.zodiac_run_in_two_steps import ZodiacRunInTwoSteps
 from PySirius.Sirius import SiriusSDK
 from PySirius.sirius_api import PySiriusAPI
-from PySirius.sirius_api import PySiriusAPI
-from PySirius.Sirius import SiriusSDK
-from PySirius.sirius_api import PySiriusAPI
-from PySirius.Sirius import SiriusSDK
-from PySirius.sirius_api import PySiriusAPI
-from PySirius.Sirius import SiriusSDK
