@@ -127,31 +127,7 @@ jobs:
         commit_message: Auto-Updated Swagger Clients
         
   RunPythonTest:
-    needs: UpdateClients
-    
-    runs-on: ubuntu-latest
-
-    steps:
-    # Runs using the runners shell
-    - name: checkout repo
-      uses: actions/checkout@v3.1.0
-    - name: Download latest Sirius Release
-      run: |
-        cd .updater/api
-        curl -s  https://api.github.com/repos/boecker-lab/sirius/releases | grep 'browser_download_url.*linux64-service.zip\"' | sort | tac | head -n 1 | cut -d : -f 2,3 | tr -d \" | wget -i -
-        echo "Download Complete"
-        unzip *.zip
-        echo "Api Ready"
-    - name: Run Rest Api
-      run: |
-        bash .updater/api/sirius/bin/sirius REST -p 8080 &
-        while ! nc -z localhost 8080; do sleep 0.1; done
-    - name: execute Python script # run the run.py to get the latest data
-      run: |
-        #pip install git+https://github.com/LukasScholz/sirius-client-openAPI#subdirectory=client-api_python/generated
-        #pip install -e ./client-api_python/generated
-        echo "Finished Installing"
-        #python .updater/clientTests/testPython.py
+    uses: ./.github/workflows/PythonTest.yml
         
   RunJavaTest:
     # Add dependency for Test
