@@ -11,7 +11,7 @@ SiriusSDK = R6::R6Class(
     basePath = "",
     baseDirectory = "",
     
-    start = function(host = "http://localhost:", port = 8080, pathToSirius, projectSpace = NULL, workSpace = NULL, force=FALSE){    
+    start = function(pathToSirius, projectSpace = NULL, host = "http://localhost:", port = 8080, workSpace = NULL, force=FALSE){    
 
       # extract the (major) version of Sirius from the .jar file
       getVersion <- function(){
