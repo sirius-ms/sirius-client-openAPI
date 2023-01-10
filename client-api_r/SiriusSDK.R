@@ -132,7 +132,8 @@ SiriusSDK = R6::R6Class(
           
 	  # Call SIRIUS as background service in commando line:
           system(sirius_call, wait=FALSE)
-          for (i in 1:30){
+          setwd(self$baseDirectory)
+	  for (i in 1:30){
             Sys.sleep(1)
             if(file.exists(self$pidFile)){
               self$pid <- strtoi(readLines(self$pidFile, warn=FALSE))
