@@ -14,7 +14,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        r-version: ["3.3.0", "3.4.0", "3.5.0", "3.6.0", "4.0.0", "4.1.0", "4.2.0"]
+        r-version: ["3.4.0", "3.5.0", "3.6.0", "4.0.0", "4.1.0", "4.2.0"]
     env:
       SIRIUS_USER: ${{ secrets.SIRIUS_USER }}
       SIRIUS_PW: ${{ secrets.SIRIUS_PW }}
@@ -27,6 +27,8 @@ jobs:
     - name: Install dependencies
       uses: r-lib/actions/setup-r-dependencies@v2
       with:
+        extra-packages: |
+          any::devtools
         working-directory: ./client-api_r/generated
     - name: Cache Sirius Release
       id: cache-sirius
