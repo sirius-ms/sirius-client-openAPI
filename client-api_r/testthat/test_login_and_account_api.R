@@ -3,7 +3,25 @@
 
 context("Test LoginAndAccountApi")
 
+user <- toString(Sys.getenv('SIRIUS_USER'))
+pw <- toString(Sys.getenv('SIRIUS_PW'))
 api_instance <- LoginAndAccountApi$new()
+
+test_that("Login", {
+  # tests for Login
+  # base path: http://localhost:8080
+  # Login into SIRIUS web services.
+  # Login into SIRIUS web services.
+  # @param accept_terms character
+  # @param account_credentials AccountCredentials used to log in.
+  # @param fail_when_logged_in character if true request fails if an active login already exists. (optional)
+  # @param include_subs character include available and active subscriptions in {@link AccountInfo AccountInfo}. (optional)
+  # @return [AccountInfo]
+
+  resp <- api_instance$Login(TRUE, AccountCredentials$new(user, pw), TRUE, TRUE)
+
+  expect_equal(is.character(resp$activeSubscriptionId), TRUE)
+})
 
 test_that("GetAccountInfo", {
   # tests for GetAccountInfo
@@ -12,14 +30,11 @@ test_that("GetAccountInfo", {
   # Get information about the account currently logged in. Fails if not logged in.
   # @param include_subs character include available and active subscriptions in {@link AccountInfo AccountInfo}. (optional)
   # @return [AccountInfo]
-  if (!api_instance$IsLoggedIn()) {
-    api_instance$Login(TRUE, AccountCredentials$new(toString(Sys.getenv('SIRIUS_USR')), toString(Sys.getenv('SIRIUS_PW'))), TRUE)
-  }
-  resp <- api_instance$GetAccountInfo(TRUE)
-  api$instance$Logout()
 
-  expect_equal(resp$username, toString(Sys.genenv('SIRIUS_USR')))
-  expect_equal(nchar(resp$subscriptions[[1]]$sid) > 0, TRUE)
+  resp <- api_instance$GetAccountInfo(TRUE)
+
+  expect_equal(resp$username, user)
+  expect_equal(is.character(resp$subscriptions[[1]]$sid), TRUE)
 })
 
 test_that("GetSignUpURL", {
@@ -28,6 +43,7 @@ test_that("GetSignUpURL", {
   # Get SignUp URL (For signUp via web browser)
   # Get SignUp URL (For signUp via web browser)
   # @return [character]
+
   resp <- api_instance$GetSignUpURL()
   
   expect_equal(is.character(resp), TRUE)
@@ -39,13 +55,10 @@ test_that("GetSubscriptions", {
   # Get available subscriptions of the account currently logged in.
   # Get available subscriptions of the account currently logged in. Fails if not logged in.
   # @return [array[Subscription]]
-  if (!api_instance$IsLoggedIn()) {
-    api_instance$Login(TRUE, AccountCredentials$new(toString(Sys.getenv('SIRIUS_USR')), toString(Sys.getenv('SIRIUS_PW'))), TRUE)
-  }
-  resp <- api_instance$GetSubscriptions()
-  api$instance$Logout()
 
-  expect_equal(is.character(resp$subscriptions[[1]]$sid), TRUE)
+  resp <- api_instance$GetSubscriptions()
+
+  expect_equal(is.character(resp[[1]]$sid), TRUE)
 })
 
 test_that("IsLoggedIn", {
@@ -54,25 +67,10 @@ test_that("IsLoggedIn", {
   # Check if a user is logged in.
   # Check if a user is logged in.
   # @return [character]
+
   resp <- api_instance$IsLoggedIn()
 
   expect_equal(is.logical(resp), TRUE)
-})
-
-test_that("Login", {
-  # tests for Login
-  # base path: http://localhost:8080
-  # Login into SIRIUS web services.
-  # Login into SIRIUS web services.
-  # @param accept_terms character 
-  # @param account_credentials AccountCredentials used to log in.
-  # @param fail_when_logged_in character if true request fails if an active login already exists. (optional)
-  # @param include_subs character include available and active subscriptions in {@link AccountInfo AccountInfo}. (optional)
-  # @return [AccountInfo]
-  resp <- api_instance$Login(TRUE, AccountCredentials$new(toString(Sys.getenv('SIRIUS_USR')), toString(Sys.getenv('SIRIUS_PW'))), TRUE, TRUE)
-  api_instance$Logout()
-
-  expect_equal(is.character(resp$activeSubscriptionId), TRUE)
 })
 
 test_that("Logout", {
@@ -81,6 +79,7 @@ test_that("Logout", {
   # Logout from SIRIUS web services.
   # Logout from SIRIUS web services.
   # @return [Void]
+
   resp <- api_instance$Logout()
   
   expect_equal(resp, NULL)
