@@ -33,10 +33,6 @@ jobs:
     - name: Build Rsirius
       run: |
         R CMD build ./client-api_r/generated
-    - name: Run Rest Api
-      run: |
-        .updater/api/sirius/bin/sirius REST -s -p 8080 &
-        while ! nc -z localhost 8080; do sleep 0.1; done
     - name: Test using devtools and testthat
       run: devtools::test("./client-api_r/generated/tests")
       shell: Rscript {0}  
