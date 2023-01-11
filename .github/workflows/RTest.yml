@@ -1,0 +1,42 @@
+# This workflow will install Python dependencies, run tests and lint with a variety of Python versions
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
+
+name: RTest
+
+
+on: [push, pull_request, workflow_dispatch, workflow_call]
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        r-version: ["3.3.0", "3.4.0", "3.5.0", "3.6.0", "4.0.0", "4.1.0", "4.2.0"]
+    env:
+      SIRIUS_USER: ${{ secrets.SIRIUS_USER }}
+      SIRIUS_PW: ${{ secrets.SIRIUS_PW }}
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up R ${{ matrix.r-version }}
+      uses: r-lib/actions/setup-r@v2
+      with:
+        r-version: ${{ matrix.r-version }}
+    - name: Install dependencies
+      uses: r-lib/actions/setup-r-dependencies@v2
+      with:
+        working-directory: ./client-api_r/generated
+    - name: Cache Sirius Release
+      id: cache-sirius
+      uses: actions/cache@v3
+      with:
+        path: .updater/api/sirius
+        key: sirius
+    - name: Build Rsirius
+      run: |
+        R CMD build ./client-api_r/generated
+    - name: Test using devtools and testthat
+      run: devtools::test("./client-api_r/generated/tests")
+      shell: Rscript {0}  
