@@ -4,7 +4,8 @@
 context("Test LoginAndAccountApi")
 
 sdk <- SiriusSDK$new()
-sdk$start(paste(toString(Sys.getenv('GITHUB_WORKSPACE')), ".updater/api/sirius/bin/sirius", sep = ''))
+print(paste("current directory: ",toString(getwd()), sep='')
+sdk$start(paste("/home/runner/work/sirius-client-openAPI/sirius-client-openAPI/.updater/api/sirius/bin/sirius", sep = ''))
 user <- toString(Sys.getenv('SIRIUS_USER'))
 pw <- toString(Sys.getenv('SIRIUS_PW'))
 api_instance <- LoginAndAccountApi$new()
