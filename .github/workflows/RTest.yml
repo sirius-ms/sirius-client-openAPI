@@ -4,13 +4,13 @@
 name: RTest
 
 
-on: [push, pull_request, workflow_dispatch, workflow_call]
+on: [workflow_dispatch, workflow_call]
 
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 30
     strategy:
       fail-fast: false
       matrix:
@@ -30,15 +30,13 @@ jobs:
         extra-packages: |
           any::devtools
         working-directory: ./client-api_r/generated
-    - name: Cache Sirius Release
-      id: cache-sirius
-      uses: actions/cache@v3
-      with:
-        path: .updater/api/sirius
-        key: sirius
     - name: Build Rsirius
       run: |
         R CMD build ./client-api_r/generated
+    - name: Run Rest Api
+      run: |
+        .updater/api/sirius/bin/sirius REST -s -p 8080 &
+        while ! nc -z localhost 8080; do sleep 0.1; done
     - name: Test using devtools and testthat
       run: devtools::test("./client-api_r/generated/tests")
       shell: Rscript {0}  
