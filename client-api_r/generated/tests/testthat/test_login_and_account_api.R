@@ -3,8 +3,6 @@
 
 context("Test LoginAndAccountApi")
 
-sdk <- SiriusSDK$new()
-sdk$start("./.updater/api/sirius/bin/sirius")
 user <- toString(Sys.getenv('SIRIUS_USER'))
 pw <- toString(Sys.getenv('SIRIUS_PW'))
 api_instance <- LoginAndAccountApi$new()
