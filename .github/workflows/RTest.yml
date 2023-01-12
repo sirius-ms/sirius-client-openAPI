@@ -40,6 +40,10 @@ jobs:
     - name: Build Rsirius
       run: |
         R CMD build ./client-api_r/generated
+    - name: Run Sirius
+      run: |
+        .updater/api/sirius/bin/sirius REST -s -p 8080 &
+        sleep 10
     - name: Test Rsirius using testthat
       run: |
         R CMD check Rsirius_1.0.0.tar.gz --no-manual
