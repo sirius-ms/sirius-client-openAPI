@@ -95,5 +95,3 @@ test_that("SignUp", {
   # uncomment below to test the operation
   #expect_equal(result, "EXPECTED_RESULT")
 })
-
-sdk$shutdown()
