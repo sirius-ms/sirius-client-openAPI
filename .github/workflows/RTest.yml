@@ -1,5 +1,5 @@
-# This workflow will install Python dependencies, run tests and lint with a variety of Python versions
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
+# This workflow will install R, Rsirius dependencies and test the Rsirius package using testthat
+# For more information see: https://github.com/r-lib/actions
 
 name: RTest
 
@@ -14,7 +14,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        r-version: ["3.4.0", "3.5.0", "3.6.0", "4.0.0", "4.1.0", "4.2.0"]
+        # 3.4.0 purrr error, 3.3.0 not supported by action
+        r-version: ["3.5.0", "3.6.0", "4.0.0", "4.1.0", "4.2.0"]
     env:
       SIRIUS_USER: ${{ secrets.SIRIUS_USER }}
       SIRIUS_PW: ${{ secrets.SIRIUS_PW }}
