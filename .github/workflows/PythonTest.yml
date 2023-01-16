@@ -53,5 +53,6 @@ jobs:
     - name: Test with unittest
       run: |
         mkdir .updater/api/temp
+        bash .updater/clientTests/PythonTests/PythonTestAutoFix.sh
         cd client-api_python/generated/test
         python -m unittest
