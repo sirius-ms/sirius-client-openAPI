@@ -23,7 +23,11 @@ class TestLoginAndAccountApi(unittest.TestCase):
     """LoginAndAccountApi unit test stubs"""
 
     def setUp(self):
-        self.api = LoginAndAccountApi()  # noqa: E501
+        address = "http://localhost"
+        port = 8080
+        self.api = PySiriusAPI(address=address, port=port)
+        credentials = {"username":str(os.getenv('SIRIUS_USER')), "password":str(os.getenv('SIRIUS_PW'))}
+        self.api.get_LoginAndAccountApi().login(credentials, True)
 
     def tearDown(self):
         pass
@@ -33,49 +37,43 @@ class TestLoginAndAccountApi(unittest.TestCase):
 
         Get information about the account currently logged in.  # noqa: E501
         """
-        pass
+        api.get_LoginAndAccountApi().get_account_info()
 
     def test_get_sign_up_url(self):
         """Test case for get_sign_up_url
 
         Get SignUp URL (For signUp via web browser)  # noqa: E501
         """
-        pass
+        api.get_LoginAndAccountApi().get_sign_up_url()
 
     def test_get_subscriptions(self):
         """Test case for get_subscriptions
 
         Get available subscriptions of the account currently logged in.  # noqa: E501
         """
-        pass
+        api.get_LoginAndAccountApi().get_subscriptions()
 
     def test_is_logged_in(self):
         """Test case for is_logged_in
 
         Check if a user is logged in.  # noqa: E501
         """
-        pass
+        self.assertIsNotNone(self.api.get_LoginAndAccountApi().is_logged_in())
+        
 
-    def test_login(self):
-        """Test case for login
-
-        Login into SIRIUS web services.  # noqa: E501
+    def test_logout_and_login(self):
         """
-        pass
-
-    def test_logout(self):
-        """Test case for logout
-
-        Logout from SIRIUS web services.  # noqa: E501
+        Logs out the user and logs him back in for future testing purposes
         """
-        pass
+        self.assertIsNotNone(self.api.get_LoginAndAccountApi().logout())
+        self.assertIsNotNone(self.api.get_LoginAndAccountApi().login(credentials, True))
+        
 
     def test_sign_up(self):
         """Test case for sign_up
-
-        Open SignUp window in system browser and return signUp link.  # noqa: E501
+        Cant automatically open sign up window in pipeline -> skipping
         """
-        pass
+        self.assertTrue(True)
 
 
 if __name__ == '__main__':
