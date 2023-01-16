@@ -14,9 +14,7 @@ from __future__ import absolute_import
 
 import unittest
 
-import PySirius
-from PySirius.api.login_and_account_api import LoginAndAccountApi  # noqa: E501
-from PySirius.rest import ApiException
+from PySirius import PySiriusAPI
 
 
 class TestLoginAndAccountApi(unittest.TestCase):
