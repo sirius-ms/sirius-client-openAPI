@@ -15,6 +15,7 @@ from __future__ import absolute_import
 import unittest
 
 from PySirius import PySiriusAPI
+import os
 
 
 class TestLoginAndAccountApi(unittest.TestCase):
