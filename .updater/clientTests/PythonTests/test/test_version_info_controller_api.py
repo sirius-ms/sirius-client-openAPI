@@ -14,24 +14,22 @@ from __future__ import absolute_import
 
 import unittest
 
-import PySirius
-from PySirius.api.version_info_controller_api import VersionInfoControllerApi  # noqa: E501
-from PySirius.rest import ApiException
+from PySirius import PySiriusAPI
 
 
 class TestVersionInfoControllerApi(unittest.TestCase):
     """VersionInfoControllerApi unit test stubs"""
 
     def setUp(self):
-        self.api = VersionInfoControllerApi()  # noqa: E501
+        address = "http://localhost"
+        port = 8080
+        self.api = PySiriusAPI(address=address, port=port)
 
     def tearDown(self):
         pass
 
     def test_get_version_info(self):
-        """Test case for get_version_info
-
-        """
+        self.assertIsNotNone(self.api.get_VersionInfoControllerApi().get_version_info())
         pass
 
 
