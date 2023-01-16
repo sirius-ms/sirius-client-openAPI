@@ -36,3 +36,4 @@ def is_empty_function(f):
             f.__code__.co_code == empty_lambda_with_docstring.__code__.co_code and
             constants(f) == constants(empty_lambda_with_docstring)
         )
+        
