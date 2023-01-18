@@ -20,7 +20,10 @@ fi
 
 
 # fix simple local_var_body
+sed -i 's/^\([[:blank:]]*\)local_var_body <- `body`$toJSONString()/\1local_var_body <- jsonlite::toJSON(body)/' $1
 sed -i 's/^\([[:blank:]]*\)local_var_body <- `job_submission`$toJSONString()/\1local_var_body <- jsonlite::toJSON(job_submission)/' $1
+sed -i 's/^\([[:blank:]]*\)local_var_body <- `gui_parameters`$toJSONString()/\1local_var_body <- jsonlite::toJSON(gui_parameters)/' $1
+sed -i 's/^\([[:blank:]]*\)local_var_body <- `account_credentials`$toJSONString()/\1local_var_body <- jsonlite::toJSON(account_credentials)/' $1
 
 ## fix multi-row if statement
 # delete lines
