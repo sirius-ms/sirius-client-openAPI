@@ -20,10 +20,12 @@ from PySirius.rest import ApiException
 
 
 class TestGraphicalUserInterfaceApi(unittest.TestCase):
-    """GraphicalUserInterfaceApi unit test stubs"""
+    """GraphicalUserInterfaceApi unit test stubs currently not possible in workflow"""
 
     def setUp(self):
-        self.api = GraphicalUserInterfaceApi()  # noqa: E501
+        address = "http://localhost"
+        port = 8080
+        self.api = PySiriusAPI(address=address, port=port)
 
     def tearDown(self):
         pass
@@ -33,21 +35,21 @@ class TestGraphicalUserInterfaceApi(unittest.TestCase):
 
         Apply given changes to the running GUI instance.  # noqa: E501
         """
-        pass
+        self.assertTrue(True)
 
     def test_close_gui(self):
         """Test case for close_gui
 
         Close GUI instance of given project-space if available.  # noqa: E501
         """
-        pass
+        self.assertTrue(True)
 
     def test_open_gui(self):
         """Test case for open_gui
 
         Open GUI instance on specified project-space and bring the GUI window to foreground.  # noqa: E501
         """
-        pass
+        self.assertTrue(True)
 
 
 if __name__ == '__main__':
