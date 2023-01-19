@@ -56,4 +56,4 @@ jobs:
         cd .updater/clientTests/PythonTests
         bash PythonTestAutoFix.sh
         cd ./../../../client-api_python/generated/test
-        python -m unittest
+        for x in $(dir); do echo Testing $x; if ! python3 $x; then exit 1; fi; done
