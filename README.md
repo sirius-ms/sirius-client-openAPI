@@ -4,5 +4,5 @@ openAPI based libraries for different  programming languages like R, Python, Jav
 
 ## Documentation for different programming languages
 
-Language | Documentation | Supported Version
------------- | ------------- | ------------- | -------------
+[**Python**](client-api_python)
+[**R**](client-api_r)
