@@ -50,7 +50,6 @@ jobs:
     - name: Wait for Api to start
       run: |
         while ! nc -z localhost 8080; do sleep 0.1; done
-        bash .updater/api/sirius/bin/sirius login --user-env=${{ secrets.SIRIUS_USER }} --password-env=${{ secrets.SIRIUS_PW }}
     - name: Test with unittest
       run: |
         mkdir .updater/api/temp
