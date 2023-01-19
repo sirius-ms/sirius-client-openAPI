@@ -46,7 +46,7 @@ jobs:
     
     - name: Run Rest Api
       run: |
-        bash .updater/api/sirius/bin/sirius login -u ${{ secrets.SIRIUS_USER }} -p ${{ secrets.SIRIUS_PW }}
+        bash .updater/api/sirius/bin/sirius login --user-env=${{ secrets.SIRIUS_USER }} --password-env=${{ secrets.SIRIUS_PW }}
         bash .updater/api/sirius/bin/sirius REST -p 8080 -s &
     - name: Wait for Api to start
       run: |
