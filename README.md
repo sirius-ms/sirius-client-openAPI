@@ -2,7 +2,7 @@
 
 openAPI based libraries for different  programming languages like R, Python, Java and Ruby
 
-## SDKs for different programming languages
+## Libraries for different programming languages
 
 [**Python**](client-api_python)  
 [**R**](client-api_r)  
