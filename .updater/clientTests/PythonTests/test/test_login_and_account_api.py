@@ -35,21 +35,21 @@ class TestLoginAndAccountApi(unittest.TestCase):
 
         Get information about the account currently logged in.  # noqa: E501
         """
-        api.get_LoginAndAccountApi().get_account_info()
+        self.api.get_LoginAndAccountApi().get_account_info()
 
     def test_get_sign_up_url(self):
         """Test case for get_sign_up_url
 
         Get SignUp URL (For signUp via web browser)  # noqa: E501
         """
-        api.get_LoginAndAccountApi().get_sign_up_url()
+        self.api.get_LoginAndAccountApi().get_sign_up_url()
 
     def test_get_subscriptions(self):
         """Test case for get_subscriptions
 
         Get available subscriptions of the account currently logged in.  # noqa: E501
         """
-        api.get_LoginAndAccountApi().get_subscriptions()
+        self.api.get_LoginAndAccountApi().get_subscriptions()
 
     def test_is_logged_in(self):
         """Test case for is_logged_in
