@@ -26,7 +26,6 @@ class TestLoginAndAccountApi(unittest.TestCase):
         port = 8080
         self.api = PySiriusAPI(address=address, port=port)
         credentials = {"username":str(os.getenv('SIRIUS_USER')), "password":str(os.getenv('SIRIUS_PW'))}
-        self.api.get_LoginAndAccountApi().login(credentials, True)
 
     def tearDown(self):
         pass
