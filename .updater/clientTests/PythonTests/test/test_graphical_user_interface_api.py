@@ -14,7 +14,7 @@ from __future__ import absolute_import
 
 import unittest
 
-import PySirius
+import from PySirius import PySiriusAPI
 from PySirius.api.graphical_user_interface_api import GraphicalUserInterfaceApi  # noqa: E501
 from PySirius.rest import ApiException
 
