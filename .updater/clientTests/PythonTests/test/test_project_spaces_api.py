@@ -19,22 +19,22 @@ import PySirius
 from PySirius.api.project_spaces_api import ProjectSpacesApi  # noqa: E501
 from PySirius.rest import ApiException
 
+os.makedirs("temp_1")
+os.makedirs("temp_2")
+address = "http://localhost"
+port = 8080
+self.api = PySiriusAPI(address=address, port=port)
+self.api.get_ProjectSpacesApi().create_project_space("temp1","temp_1")
+self.api.get_ProjectSpacesApi().create_project_space("temp2","temp_2")
 
 class TestProjectSpacesApi(unittest.TestCase):
     """ProjectSpacesApi unit test stubs"""
 
     def setUp(self):
-        address = "http://localhost"
-        port = 8080
-        os.makedirs("temp_1")
-        os.makedirs("temp_2")
-        self.api = PySiriusAPI(address=address, port=port)
-        self.api.get_ProjectSpacesApi().create_project_space("temp1","temp_1")
-        self.api.get_ProjectSpacesApi().create_project_space("temp2","temp_2")
+        pass
         
     def tearDown(self):
-        shutil.rmtree("temp_1")
-        shutil.rmtree("temp_2")
+        pass
 
     def test_close_project_space(self):
         """Test case for close_project_space
@@ -71,3 +71,6 @@ class TestProjectSpacesApi(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+shutil.rmtree("temp_1")
+shutil.rmtree("temp_2")
