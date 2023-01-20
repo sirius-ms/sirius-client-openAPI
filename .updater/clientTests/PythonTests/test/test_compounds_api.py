@@ -26,8 +26,8 @@ address = "http://localhost"
 port = 8080
 api = PySiriusAPI(address=address, port=port)
 path_to_demo_data = "./../../../.updater/examples"
-os.makedirs("temp_1")
-api.get_ProjectSpacesApi().create_project_space("temp1","temp_1")
+os.makedirs("temp_0")
+api.get_ProjectSpacesApi().create_project_space("temp1","temp_0")
 api.get_CompoundsApi().import_compounds([path_to_demo_data+"/ms/Bicuculline.ms", path_to_demo_data+"/ms/Kaempferol.ms" ], "temp1")
 #cid = api.get_CompoundsApi().get_compounds("temp1")[0].id
 
@@ -78,4 +78,4 @@ class TestCompoundsApi(unittest.TestCase):
 if __name__ == '__main__':
     unittest.main()
 
-shutil.rmtree("temp_1")
+shutil.rmtree("temp_0")
