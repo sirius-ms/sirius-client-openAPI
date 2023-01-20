@@ -72,3 +72,5 @@ class TestCompoundsApi(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+shutil.rmtree("temp_1")
