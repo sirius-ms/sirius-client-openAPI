@@ -15,7 +15,7 @@ from __future__ import absolute_import
 import unittest
 import os
 import shutil
-import PySirius
+from PySirius import PySiriusAPI
 from PySirius.api.project_spaces_api import ProjectSpacesApi  # noqa: E501
 from PySirius.rest import ApiException
 
