@@ -17,6 +17,7 @@ import os
 import shutil
 from PySirius import PySiriusAPI
 from PySirius.rest import ApiException
+import time
 
 
 address = "http://localhost"
@@ -25,7 +26,9 @@ api = PySiriusAPI(address=address, port=port)
 path_to_demo_data = "./../../../.updater/examples"
 os.makedirs("temp_1")
 api.get_ProjectSpacesApi().create_project_space("temp1","temp_1")
+time.sleep(2)
 api.get_CompoundsApi().import_compounds([path_to_demo_data+"/ms/Bicuculline.ms", path_to_demo_data+"/ms/Kaempferol.ms" ], "temp1")
+time.sleep(2)
 cid = api.get_CompoundsApi().get_compounds("temp1")[0].id
 
 class TestCompoundsApi(unittest.TestCase):
