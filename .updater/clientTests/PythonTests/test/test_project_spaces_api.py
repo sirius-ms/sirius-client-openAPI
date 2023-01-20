@@ -16,7 +16,6 @@ import unittest
 import os
 import shutil
 from PySirius import PySiriusAPI
-from PySirius.api.project_spaces_api import ProjectSpacesApi  # noqa: E501
 from PySirius.rest import ApiException
 
 os.makedirs("temp_1")

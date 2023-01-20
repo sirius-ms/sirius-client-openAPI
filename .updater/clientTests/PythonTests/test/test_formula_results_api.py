@@ -13,17 +13,21 @@
 from __future__ import absolute_import
 
 import unittest
-
-import PySirius
-from PySirius.api.formula_results_api import FormulaResultsApi  # noqa: E501
+import os
+import shutil
+from PySirius import PySiriusAPI
 from PySirius.rest import ApiException
 
+
+address = "http://localhost"
+port = 8080
+api = PySiriusAPI(address=address, port=port)
 
 class TestFormulaResultsApi(unittest.TestCase):
     """FormulaResultsApi unit test stubs"""
 
     def setUp(self):
-        self.api = FormulaResultsApi()  # noqa: E501
+        pass
 
     def tearDown(self):
         pass
