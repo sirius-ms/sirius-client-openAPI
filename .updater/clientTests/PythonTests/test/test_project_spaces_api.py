@@ -13,7 +13,8 @@
 from __future__ import absolute_import
 
 import unittest
-
+import os
+import shutil
 import PySirius
 from PySirius.api.project_spaces_api import ProjectSpacesApi  # noqa: E501
 from PySirius.rest import ApiException
@@ -23,45 +24,49 @@ class TestProjectSpacesApi(unittest.TestCase):
     """ProjectSpacesApi unit test stubs"""
 
     def setUp(self):
-        self.api = ProjectSpacesApi()  # noqa: E501
-
+        address = "http://localhost"
+        port = 8080
+        os.makedirs("temp_1")
+        os.makedirs("temp_2")
+        self.api = PySiriusAPI(address=address, port=port)
+        self.api.get_ProjectSpacesApi().create_project_space("temp1","temp_1")
+        self.api.get_ProjectSpacesApi().create_project_space("temp2","temp_2")
+        
     def tearDown(self):
-        pass
+        shutil.rmtree("temp_1")
+        shutil.rmtree("temp_2")
 
     def test_close_project_space(self):
         """Test case for close_project_space
 
         Close project-space and remove it from application.  # noqa: E501
         """
-        pass
+        self.api.get_ProjectSpacesApi().close_project_space("temp2")
 
     def test_create_project_space(self):
-        """Test case for create_project_space
-
-        Create and open a new project-space at given location and make it accessible via the given projectId.  # noqa: E501
-        """
-        pass
+        """Already tested in setUp"""
+        self.assertTrue(True)
 
     def test_get_project_space(self):
         """Test case for get_project_space
 
         Get project space info by its projectId.  # noqa: E501
         """
-        pass
+        self.api.get_ProjectSpacesApi().get_project_space("temp1")
 
     def test_get_project_spaces(self):
         """Test case for get_project_spaces
 
         List all opened project spaces.  # noqa: E501
         """
-        pass
+        self.api.get_ProjectSpacesApi().get_project_spaces()
 
     def test_open_project_space(self):
         """Test case for open_project_space
 
         Open an existing project-space and make it accessible via the given projectId.  # noqa: E501
         """
-        pass
+        self.api.get_ProjectSpacesApi().open_project_space("temp3","temp_1")
 
 
 if __name__ == '__main__':

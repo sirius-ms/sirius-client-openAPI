@@ -57,16 +57,6 @@ class TestLoginAndAccountApi(unittest.TestCase):
         """
         self.assertIsNotNone(self.api.get_LoginAndAccountApi().is_logged_in())
         
-
-    def test_logout_and_login(self):
-        """
-        Logs out the user and logs him back in for future testing purposes
-        # TODO: results in infinite loop
-        """
-        #self.assertIsNotNone(self.api.get_LoginAndAccountApi().logout())
-        #self.assertIsNotNone(self.api.get_LoginAndAccountApi().login(credentials, True))
-        
-
     def test_sign_up(self):
         """Test case for sign_up
         Cant automatically open sign up window in pipeline -> skipping
