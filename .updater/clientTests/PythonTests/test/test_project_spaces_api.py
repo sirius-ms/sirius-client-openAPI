@@ -23,9 +23,9 @@ os.makedirs("temp_1")
 os.makedirs("temp_2")
 address = "http://localhost"
 port = 8080
-self.api = PySiriusAPI(address=address, port=port)
-self.api.get_ProjectSpacesApi().create_project_space("temp1","temp_1")
-self.api.get_ProjectSpacesApi().create_project_space("temp2","temp_2")
+api = PySiriusAPI(address=address, port=port)
+api.get_ProjectSpacesApi().create_project_space("temp1","temp_1")
+api.get_ProjectSpacesApi().create_project_space("temp2","temp_2")
 
 class TestProjectSpacesApi(unittest.TestCase):
     """ProjectSpacesApi unit test stubs"""
@@ -41,7 +41,7 @@ class TestProjectSpacesApi(unittest.TestCase):
 
         Close project-space and remove it from application.  # noqa: E501
         """
-        self.api.get_ProjectSpacesApi().close_project_space("temp2")
+        api.get_ProjectSpacesApi().close_project_space("temp2")
 
     def test_create_project_space(self):
         """Already tested in setUp"""
@@ -52,21 +52,21 @@ class TestProjectSpacesApi(unittest.TestCase):
 
         Get project space info by its projectId.  # noqa: E501
         """
-        self.api.get_ProjectSpacesApi().get_project_space("temp1")
+        api.get_ProjectSpacesApi().get_project_space("temp1")
 
     def test_get_project_spaces(self):
         """Test case for get_project_spaces
 
         List all opened project spaces.  # noqa: E501
         """
-        self.api.get_ProjectSpacesApi().get_project_spaces()
+        api.get_ProjectSpacesApi().get_project_spaces()
 
     def test_open_project_space(self):
         """Test case for open_project_space
 
         Open an existing project-space and make it accessible via the given projectId.  # noqa: E501
         """
-        self.api.get_ProjectSpacesApi().open_project_space("temp3","temp_1")
+        api.get_ProjectSpacesApi().open_project_space("temp3","temp_1")
 
 
 if __name__ == '__main__':
