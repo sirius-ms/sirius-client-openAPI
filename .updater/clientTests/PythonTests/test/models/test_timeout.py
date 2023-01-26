@@ -14,22 +14,24 @@ from __future__ import absolute_import
 
 import unittest
 
-from PySirius import PySiriusAPI
+import PySirius
+from PySirius.models.timeout import Timeout  # noqa: E501
+from PySirius.rest import ApiException
 
 
-class TestVersionInfoControllerApi(unittest.TestCase):
-    """VersionInfoControllerApi unit test stubs"""
+class TestTimeout(unittest.TestCase):
+    """Timeout unit test stubs"""
 
     def setUp(self):
-        address = "http://localhost"
-        port = 8080
-        self.api = PySiriusAPI(address=address, port=port)
+        pass
 
     def tearDown(self):
         pass
 
-    def test_get_version_info(self):
-        self.assertIsNotNone(self.api.get_VersionInfoControllerApi().get_version_info())
+    def testTimeout(self):
+        """Test Timeout"""
+        # FIXME: construct object with mandatory attributes with example values
+        # model = PySirius.models.timeout.Timeout()  # noqa: E501
         pass
 
 

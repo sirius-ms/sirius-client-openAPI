@@ -14,22 +14,24 @@ from __future__ import absolute_import
 
 import unittest
 
-from PySirius import PySiriusAPI
+import PySirius
+from PySirius.models.job_submission import JobSubmission  # noqa: E501
+from PySirius.rest import ApiException
 
 
-class TestVersionInfoControllerApi(unittest.TestCase):
-    """VersionInfoControllerApi unit test stubs"""
+class TestJobSubmission(unittest.TestCase):
+    """JobSubmission unit test stubs"""
 
     def setUp(self):
-        address = "http://localhost"
-        port = 8080
-        self.api = PySiriusAPI(address=address, port=port)
+        pass
 
     def tearDown(self):
         pass
 
-    def test_get_version_info(self):
-        self.assertIsNotNone(self.api.get_VersionInfoControllerApi().get_version_info())
+    def testJobSubmission(self):
+        """Test JobSubmission"""
+        # FIXME: construct object with mandatory attributes with example values
+        # model = PySirius.models.job_submission.JobSubmission()  # noqa: E501
         pass
 
 

@@ -14,22 +14,24 @@ from __future__ import absolute_import
 
 import unittest
 
-from PySirius import PySiriusAPI
+import PySirius
+from PySirius.models.db_link import DBLink  # noqa: E501
+from PySirius.rest import ApiException
 
 
-class TestVersionInfoControllerApi(unittest.TestCase):
-    """VersionInfoControllerApi unit test stubs"""
+class TestDBLink(unittest.TestCase):
+    """DBLink unit test stubs"""
 
     def setUp(self):
-        address = "http://localhost"
-        port = 8080
-        self.api = PySiriusAPI(address=address, port=port)
+        pass
 
     def tearDown(self):
         pass
 
-    def test_get_version_info(self):
-        self.assertIsNotNone(self.api.get_VersionInfoControllerApi().get_version_info())
+    def testDBLink(self):
+        """Test DBLink"""
+        # FIXME: construct object with mandatory attributes with example values
+        # model = PySirius.models.db_link.DBLink()  # noqa: E501
         pass
 
 

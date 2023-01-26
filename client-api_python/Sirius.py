@@ -7,12 +7,14 @@ import urllib3
 import PySirius
 
 class SiriusSDK:
+    """entry point for running the Sirius Rest service from a new instance"""
     
     process = None
     port = None
     workspace = None
     
     def start(project_space, sirius_executable, override_workspace_location=None ,port=8080, forceStart=False, ):
+        """starts the Sirius rest service and returns an API instance that allows access to the API endpoints"""
         is_up = False
         workspace = override_workspace_location
         http = urllib3.PoolManager()
@@ -62,6 +64,7 @@ class SiriusSDK:
             return None
 
     def shutdown():
+        """shuts down the via the start function started sirius rest application"""
         http = urllib3.PoolManager()
         resp = http.request('POST', "http://localhost:" + str(SiriusSDK.port) + "/actuator/shutdown")
         if resp.status == 200:
