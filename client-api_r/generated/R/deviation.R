@@ -105,7 +105,7 @@ Deviation <- R6::R6Class(
         if (!is.null(self$`ppm`)) {
           sprintf(
           '"ppm":
-            %d
+            %f
                     ',
           self$`ppm`
           )
@@ -113,7 +113,7 @@ Deviation <- R6::R6Class(
         if (!is.null(self$`absolute`)) {
           sprintf(
           '"absolute":
-            %d
+            %f
                     ',
           self$`absolute`
           )
@@ -203,7 +203,7 @@ Deviation <- R6::R6Class(
 ## Uncomment below to unlock the class to allow modifications of the method or field
 # Deviation$unlock()
 #
-## Below is an example to define the print fnuction
+## Below is an example to define the print function
 # Deviation$set("public", "print", function(...) {
 #   print(jsonlite::prettify(self$toJSONString()))
 #   invisible(self)

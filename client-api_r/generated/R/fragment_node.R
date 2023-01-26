@@ -185,7 +185,7 @@ FragmentNode <- R6::R6Class(
         if (!is.null(self$`id`)) {
           sprintf(
           '"id":
-            %d
+            %f
                     ',
           self$`id`
           )
@@ -209,7 +209,7 @@ FragmentNode <- R6::R6Class(
         if (!is.null(self$`massDeviationDa`)) {
           sprintf(
           '"massDeviationDa":
-            %d
+            %f
                     ',
           self$`massDeviationDa`
           )
@@ -217,7 +217,7 @@ FragmentNode <- R6::R6Class(
         if (!is.null(self$`massErrorPpm`)) {
           sprintf(
           '"massErrorPpm":
-            %d
+            %f
                     ',
           self$`massErrorPpm`
           )
@@ -225,7 +225,7 @@ FragmentNode <- R6::R6Class(
         if (!is.null(self$`score`)) {
           sprintf(
           '"score":
-            %d
+            %f
                     ',
           self$`score`
           )
@@ -233,7 +233,7 @@ FragmentNode <- R6::R6Class(
         if (!is.null(self$`intensity`)) {
           sprintf(
           '"intensity":
-            %d
+            %f
                     ',
           self$`intensity`
           )
@@ -241,7 +241,7 @@ FragmentNode <- R6::R6Class(
         if (!is.null(self$`mz`)) {
           sprintf(
           '"mz":
-            %d
+            %f
                     ',
           self$`mz`
           )
@@ -328,7 +328,7 @@ FragmentNode <- R6::R6Class(
 ## Uncomment below to unlock the class to allow modifications of the method or field
 # FragmentNode$unlock()
 #
-## Below is an example to define the print fnuction
+## Below is an example to define the print function
 # FragmentNode$set("public", "print", function(...) {
 #   print(jsonlite::prettify(self$toJSONString()))
 #   invisible(self)

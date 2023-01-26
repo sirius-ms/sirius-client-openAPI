@@ -121,7 +121,7 @@ ZodiacEdgeFilterThresholds <- R6::R6Class(
         if (!is.null(self$`thresholdFilter`)) {
           sprintf(
           '"thresholdFilter":
-            %d
+            %f
                     ',
           self$`thresholdFilter`
           )
@@ -129,7 +129,7 @@ ZodiacEdgeFilterThresholds <- R6::R6Class(
         if (!is.null(self$`minLocalCandidates`)) {
           sprintf(
           '"minLocalCandidates":
-            %d
+            %f
                     ',
           self$`minLocalCandidates`
           )
@@ -137,7 +137,7 @@ ZodiacEdgeFilterThresholds <- R6::R6Class(
         if (!is.null(self$`minLocalConnections`)) {
           sprintf(
           '"minLocalConnections":
-            %d
+            %f
                     ',
           self$`minLocalConnections`
           )
@@ -228,7 +228,7 @@ ZodiacEdgeFilterThresholds <- R6::R6Class(
 ## Uncomment below to unlock the class to allow modifications of the method or field
 # ZodiacEdgeFilterThresholds$unlock()
 #
-## Below is an example to define the print fnuction
+## Below is an example to define the print function
 # ZodiacEdgeFilterThresholds$set("public", "print", function(...) {
 #   print(jsonlite::prettify(self$toJSONString()))
 #   invisible(self)

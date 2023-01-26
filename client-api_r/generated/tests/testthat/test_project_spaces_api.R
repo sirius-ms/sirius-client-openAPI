@@ -12,9 +12,19 @@ test_that("CloseProjectSpace", {
   # Close project-space and remove it from application. Project-space will NOT be deleted from disk.
   # @param project_id character unique name/identifier of the  project-space to be closed.
   # @return [Void]
+  
+  pid <- 1
+  dir <- "dir1"
+  api_instance$CreateProjectSpace(pid, dir)
+  resp <- api_instance$GetProjectSpace(pid)
+  api_instance$CloseProjectSpace(pid)
+  resp2 <- api_instance$GetProjectSpace(pid)
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  expect_equal(resp$name, toString(pid))
+  expect_equal(resp2$status_code, 404)
+  
+  withr::defer(api_instance$CloseProjectSpace(pid))
+  withr::defer(unlink(dir, recursive = TRUE))
 })
 
 test_that("CreateProjectSpace", {
@@ -27,9 +37,15 @@ test_that("CreateProjectSpace", {
   # @param path_to_source_project character  (optional)
   # @param await_import character  (optional)
   # @return [ProjectSpaceId]
+  
+  pid <- 2
+  dir <- "dir2"
+  resp <- api_instance$CreateProjectSpace(pid, dir)
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  expect_equal(resp$name, toString(pid))
+  
+  withr::defer(api_instance$CloseProjectSpace(pid))
+  withr::defer(unlink(dir, recursive = TRUE))
 })
 
 test_that("GetProjectSpace", {
@@ -39,9 +55,16 @@ test_that("GetProjectSpace", {
   # Get project space info by its projectId.
   # @param project_id character unique name/identifier tof the project-space to be accessed.
   # @return [ProjectSpaceId]
+  
+  pid <- 3
+  dir <- "dir3"
+  api_instance$CreateProjectSpace(pid, dir)
+  resp <- api_instance$GetProjectSpace(pid)
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  expect_equal(resp$name, toString(pid))
+  
+  withr::defer(api_instance$CloseProjectSpace(pid))
+  withr::defer(unlink(dir, recursive = TRUE))
 })
 
 test_that("GetProjectSpaces", {
@@ -50,9 +73,10 @@ test_that("GetProjectSpaces", {
   # List all opened project spaces.
   # List all opened project spaces.
   # @return [array[ProjectSpaceId]]
+  
+  resp <- api_instance$GetProjectSpaces()
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  expect_equal(is.list(resp) || is.null(resp), TRUE)
 })
 
 test_that("OpenProjectSpace", {
@@ -63,7 +87,15 @@ test_that("OpenProjectSpace", {
   # @param project_id character unique name/identifier that shall be used to access the opened project-space.
   # @param path_to_project character 
   # @return [ProjectSpaceId]
+  
+  pid <- 4
+  dir <- "dir4"
+  api_instance$CreateProjectSpace(pid, dir)
+  api_instance$CloseProjectSpace(pid)
+  resp <- api_instance$OpenProjectSpace(pid, dir)
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  expect_equal(resp$name, toString(pid))
+  
+  withr::defer(api_instance$CloseProjectSpace(pid))
+  withr::defer(unlink(dir, recursive = TRUE))
 })

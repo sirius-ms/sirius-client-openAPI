@@ -105,7 +105,7 @@ CollisionEnergy <- R6::R6Class(
         if (!is.null(self$`minEnergy`)) {
           sprintf(
           '"minEnergy":
-            %d
+            %f
                     ',
           self$`minEnergy`
           )
@@ -113,7 +113,7 @@ CollisionEnergy <- R6::R6Class(
         if (!is.null(self$`maxEnergy`)) {
           sprintf(
           '"maxEnergy":
-            %d
+            %f
                     ',
           self$`maxEnergy`
           )
@@ -203,7 +203,7 @@ CollisionEnergy <- R6::R6Class(
 ## Uncomment below to unlock the class to allow modifications of the method or field
 # CollisionEnergy$unlock()
 #
-## Below is an example to define the print fnuction
+## Below is an example to define the print function
 # CollisionEnergy$set("public", "print", function(...) {
 #   print(jsonlite::prettify(self$toJSONString()))
 #   invisible(self)

@@ -233,7 +233,7 @@ CompoundId <- R6::R6Class(
         if (!is.null(self$`index`)) {
           sprintf(
           '"index":
-            %d
+            %f
                     ',
           self$`index`
           )
@@ -241,7 +241,7 @@ CompoundId <- R6::R6Class(
         if (!is.null(self$`ionMass`)) {
           sprintf(
           '"ionMass":
-            %d
+            %f
                     ',
           self$`ionMass`
           )
@@ -257,7 +257,7 @@ CompoundId <- R6::R6Class(
         if (!is.null(self$`rtStartSeconds`)) {
           sprintf(
           '"rtStartSeconds":
-            %d
+            %f
                     ',
           self$`rtStartSeconds`
           )
@@ -265,7 +265,7 @@ CompoundId <- R6::R6Class(
         if (!is.null(self$`rtEndSeconds`)) {
           sprintf(
           '"rtEndSeconds":
-            %d
+            %f
                     ',
           self$`rtEndSeconds`
           )
@@ -378,7 +378,7 @@ CompoundId <- R6::R6Class(
 ## Uncomment below to unlock the class to allow modifications of the method or field
 # CompoundId$unlock()
 #
-## Below is an example to define the print fnuction
+## Below is an example to define the print function
 # CompoundId$set("public", "print", function(...) {
 #   print(jsonlite::prettify(self$toJSONString()))
 #   invisible(self)

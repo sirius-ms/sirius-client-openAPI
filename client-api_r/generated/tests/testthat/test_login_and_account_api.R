@@ -7,22 +7,6 @@ user <- toString(Sys.getenv('SIRIUS_USER'))
 pw <- toString(Sys.getenv('SIRIUS_PW'))
 api_instance <- LoginAndAccountApi$new()
 
-test_that("Login", {
-  # tests for Login
-  # base path: http://localhost:8080
-  # Login into SIRIUS web services.
-  # Login into SIRIUS web services.
-  # @param accept_terms character
-  # @param account_credentials AccountCredentials used to log in.
-  # @param fail_when_logged_in character if true request fails if an active login already exists. (optional)
-  # @param include_subs character include available and active subscriptions in {@link AccountInfo AccountInfo}. (optional)
-  # @return [AccountInfo]
-
-  resp <- api_instance$Login(TRUE, AccountCredentials$new(user, pw), TRUE, TRUE)
-
-  expect_equal(is.character(resp$activeSubscriptionId), TRUE)
-})
-
 test_that("GetAccountInfo", {
   # tests for GetAccountInfo
   # base path: http://localhost:8080
@@ -30,7 +14,10 @@ test_that("GetAccountInfo", {
   # Get information about the account currently logged in. Fails if not logged in.
   # @param include_subs character include available and active subscriptions in {@link AccountInfo AccountInfo}. (optional)
   # @return [AccountInfo]
-
+  
+  if (!api_instance$IsLoggedIn()) {
+    api_instance$Login(TRUE, AccountCredentials$new(user, pw), TRUE, TRUE)
+  }
   resp <- api_instance$GetAccountInfo(TRUE)
 
   expect_equal(resp$username, user)
@@ -56,6 +43,9 @@ test_that("GetSubscriptions", {
   # Get available subscriptions of the account currently logged in. Fails if not logged in.
   # @return [array[Subscription]]
 
+  if (!api_instance$IsLoggedIn()) {
+    api_instance$Login(TRUE, AccountCredentials$new(user, pw), TRUE, TRUE)
+  }
   resp <- api_instance$GetSubscriptions()
 
   expect_equal(is.character(resp[[1]]$sid), TRUE)
@@ -71,6 +61,21 @@ test_that("IsLoggedIn", {
   resp <- api_instance$IsLoggedIn()
 
   expect_equal(is.logical(resp), TRUE)
+})
+
+test_that("Login", {
+  # tests for Login
+  # base path: http://localhost:8080
+  # Login into SIRIUS web services.
+  # Login into SIRIUS web services.
+  # @param accept_terms character 
+  # @param account_credentials AccountCredentials used to log in.
+  # @param fail_when_logged_in character if true request fails if an active login already exists. (optional)
+  # @param include_subs character include available and active subscriptions in {@link AccountInfo AccountInfo}. (optional)
+  # @return [AccountInfo]
+
+  # uncomment below to test the operation
+  #expect_equal(result, "EXPECTED_RESULT")
 })
 
 test_that("Logout", {

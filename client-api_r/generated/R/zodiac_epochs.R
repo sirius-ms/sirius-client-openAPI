@@ -121,7 +121,7 @@ ZodiacEpochs <- R6::R6Class(
         if (!is.null(self$`iterations`)) {
           sprintf(
           '"iterations":
-            %d
+            %f
                     ',
           self$`iterations`
           )
@@ -129,7 +129,7 @@ ZodiacEpochs <- R6::R6Class(
         if (!is.null(self$`burnInPeriod`)) {
           sprintf(
           '"burnInPeriod":
-            %d
+            %f
                     ',
           self$`burnInPeriod`
           )
@@ -137,7 +137,7 @@ ZodiacEpochs <- R6::R6Class(
         if (!is.null(self$`numberOfMarkovChains`)) {
           sprintf(
           '"numberOfMarkovChains":
-            %d
+            %f
                     ',
           self$`numberOfMarkovChains`
           )
@@ -228,7 +228,7 @@ ZodiacEpochs <- R6::R6Class(
 ## Uncomment below to unlock the class to allow modifications of the method or field
 # ZodiacEpochs$unlock()
 #
-## Below is an example to define the print fnuction
+## Below is an example to define the print function
 # ZodiacEpochs$set("public", "print", function(...) {
 #   print(jsonlite::prettify(self$toJSONString()))
 #   invisible(self)

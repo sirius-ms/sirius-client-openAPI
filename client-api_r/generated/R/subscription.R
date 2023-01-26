@@ -345,7 +345,7 @@ Subscription <- R6::R6Class(
         if (!is.null(self$`compoundLimit`)) {
           sprintf(
           '"compoundLimit":
-            %d
+            %f
                     ',
           self$`compoundLimit`
           )
@@ -353,7 +353,7 @@ Subscription <- R6::R6Class(
         if (!is.null(self$`compoundHashRecordingTime`)) {
           sprintf(
           '"compoundHashRecordingTime":
-            %d
+            %f
                     ',
           self$`compoundHashRecordingTime`
           )
@@ -361,7 +361,7 @@ Subscription <- R6::R6Class(
         if (!is.null(self$`maxQueriesPerCompound`)) {
           sprintf(
           '"maxQueriesPerCompound":
-            %d
+            %f
                     ',
           self$`maxQueriesPerCompound`
           )
@@ -369,7 +369,7 @@ Subscription <- R6::R6Class(
         if (!is.null(self$`maxUserAccounts`)) {
           sprintf(
           '"maxUserAccounts":
-            %d
+            %f
                     ',
           self$`maxUserAccounts`
           )
@@ -503,7 +503,7 @@ Subscription <- R6::R6Class(
 ## Uncomment below to unlock the class to allow modifications of the method or field
 # Subscription$unlock()
 #
-## Below is an example to define the print fnuction
+## Below is an example to define the print function
 # Subscription$set("public", "print", function(...) {
 #   print(jsonlite::prettify(self$toJSONString()))
 #   invisible(self)

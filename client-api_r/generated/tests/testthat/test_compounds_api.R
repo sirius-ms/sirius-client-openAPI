@@ -4,6 +4,9 @@
 context("Test CompoundsApi")
 
 api_instance <- CompoundsApi$new()
+request_body <- c("/home/runner/work/sirius-client-openAPI/sirius-client-openAPI/.updater/examples/ms/Bicuculline.ms", "/home/runner/work/sirius-client-openAPI/sirius-client-openAPI/.updater/examples/ms/Kaempferol.ms")
+ps_api <- ProjectSpacesApi$new()
+
 
 test_that("DeleteCompound", {
   # tests for DeleteCompound
@@ -13,9 +16,29 @@ test_that("DeleteCompound", {
   # @param project_id character project-space to delete from.
   # @param cid character identifier of compound to delete.
   # @return [Void]
-
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  
+  pid <- "compounds1"
+  dir <- "./compoundsDir1"
+  ps_api$CreateProjectSpace(pid, dir)
+    
+  api_instance$ImportCompounds(pid, request_body)
+  Sys.sleep(1)
+  resp <- api_instance$GetCompounds(pid)
+  
+  expect_equal(is.list(resp), TRUE)
+  expect_equal(length(resp), 2)
+  
+  api_instance$DeleteCompound(pid, "1_Bicuculline_Bicuculline")
+  Sys.sleep(1)
+  resp <- api_instance$GetCompounds(pid)
+  
+  expect_equal(is.list(resp), TRUE)
+  expect_equal(length(resp), 1)
+    
+  api_instance$DeleteCompound(pid, "1_Bicuculline_Bicuculline")
+  api_instance$DeleteCompound(pid, "2_Kaempferol_Kaempferol")
+  ps_api$CloseProjectSpace(pid)
+  unlink(dir, recursive = TRUE)  
 })
 
 test_that("GetCompound", {
@@ -28,9 +51,27 @@ test_that("GetCompound", {
   # @param top_annotation character include the top annotation of this feature into the output (if available). (optional)
   # @param ms_data character include corresponding source data (MS and MS/MS) into the output. (optional)
   # @return [CompoundId]
-
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  
+  pid <- "compounds2"
+  dir <- "./compoundsDir2"
+  ps_api$CreateProjectSpace(pid, dir)
+    
+  api_instance$ImportCompounds(pid, request_body)
+  Sys.sleep(1)
+  resp <- api_instance$GetCompound(pid, "1_Bicuculline_Bicuculline")
+  
+  expect_equal(resp$name, "Bicuculline_Bicuculline")
+  expect_equal(is.null(resp$topAnnotation$formulaAnnotation), TRUE)
+  
+  resp <- api_instance$GetCompound(pid, "1_Bicuculline_Bicuculline", TRUE)
+  
+  expect_equal(resp$name, "Bicuculline_Bicuculline")
+  expect_equal(is.null(resp$topAnnotation$formulaAnnotation), FALSE)
+    
+  api_instance$DeleteCompound(pid, "1_Bicuculline_Bicuculline")
+  api_instance$DeleteCompound(pid, "2_Kaempferol_Kaempferol")
+  ps_api$CloseProjectSpace(pid)
+  unlink(dir, recursive = TRUE)
 })
 
 test_that("GetCompounds", {
@@ -43,8 +84,21 @@ test_that("GetCompounds", {
   # @param ms_data character include corresponding source data (MS and MS/MS) into the output. (optional)
   # @return [array[CompoundId]]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  pid <- "compounds3"
+  dir <- "./compoundsDir3"
+  ps_api$CreateProjectSpace(pid, dir)
+    
+  api_instance$ImportCompounds(pid, request_body)
+  Sys.sleep(1)
+  resp <- api_instance$GetCompounds(pid)
+  
+  expect_equal(is.list(resp), TRUE)
+  expect_equal(length(resp), 2)
+    
+  api_instance$DeleteCompound(pid, "1_Bicuculline_Bicuculline")
+  api_instance$DeleteCompound(pid, "2_Kaempferol_Kaempferol")
+  ps_api$CloseProjectSpace(pid)
+  unlink(dir, recursive = TRUE) 
 })
 
 test_that("ImportCompounds", {
@@ -59,8 +113,18 @@ test_that("ImportCompounds", {
   # @param ignore_formulas character  (optional)
   # @return [JobId]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  pid <- "compounds4"
+  dir <- "./compoundsDir4"
+  ps_api$CreateProjectSpace(pid, dir)
+    
+  resp <- api_instance$ImportCompounds(pid, request_body)
+  
+  expect_equal(!is.na(as.numeric(resp$id)), TRUE)
+    
+  api_instance$DeleteCompound(pid, "1_Bicuculline_Bicuculline")
+  api_instance$DeleteCompound(pid, "2_Kaempferol_Kaempferol")
+  ps_api$CloseProjectSpace(pid)
+  unlink(dir, recursive = TRUE) 
 })
 
 test_that("ImportCompoundsFromString", {

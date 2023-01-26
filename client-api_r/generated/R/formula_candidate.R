@@ -217,7 +217,7 @@ FormulaCandidate <- R6::R6Class(
         if (!is.null(self$`siriusScore`)) {
           sprintf(
           '"siriusScore":
-            %d
+            %f
                     ',
           self$`siriusScore`
           )
@@ -225,7 +225,7 @@ FormulaCandidate <- R6::R6Class(
         if (!is.null(self$`isotopeScore`)) {
           sprintf(
           '"isotopeScore":
-            %d
+            %f
                     ',
           self$`isotopeScore`
           )
@@ -233,7 +233,7 @@ FormulaCandidate <- R6::R6Class(
         if (!is.null(self$`treeScore`)) {
           sprintf(
           '"treeScore":
-            %d
+            %f
                     ',
           self$`treeScore`
           )
@@ -241,7 +241,7 @@ FormulaCandidate <- R6::R6Class(
         if (!is.null(self$`zodiacScore`)) {
           sprintf(
           '"zodiacScore":
-            %d
+            %f
                     ',
           self$`zodiacScore`
           )
@@ -265,7 +265,7 @@ FormulaCandidate <- R6::R6Class(
         if (!is.null(self$`numOfexplainedPeaks`)) {
           sprintf(
           '"numOfexplainedPeaks":
-            %d
+            %f
                     ',
           self$`numOfexplainedPeaks`
           )
@@ -273,7 +273,7 @@ FormulaCandidate <- R6::R6Class(
         if (!is.null(self$`numOfexplainablePeaks`)) {
           sprintf(
           '"numOfexplainablePeaks":
-            %d
+            %f
                     ',
           self$`numOfexplainablePeaks`
           )
@@ -281,7 +281,7 @@ FormulaCandidate <- R6::R6Class(
         if (!is.null(self$`totalExplainedIntensity`)) {
           sprintf(
           '"totalExplainedIntensity":
-            %d
+            %f
                     ',
           self$`totalExplainedIntensity`
           )
@@ -378,7 +378,7 @@ FormulaCandidate <- R6::R6Class(
 ## Uncomment below to unlock the class to allow modifications of the method or field
 # FormulaCandidate$unlock()
 #
-## Below is an example to define the print fnuction
+## Below is an example to define the print function
 # FormulaCandidate$set("public", "print", function(...) {
 #   print(jsonlite::prettify(self$toJSONString()))
 #   invisible(self)

@@ -246,7 +246,7 @@ StructureCandidate <- R6::R6Class(
         if (!is.null(self$`csiScore`)) {
           sprintf(
           '"csiScore":
-            %d
+            %f
                     ',
           self$`csiScore`
           )
@@ -254,7 +254,7 @@ StructureCandidate <- R6::R6Class(
         if (!is.null(self$`tanimotoSimilarity`)) {
           sprintf(
           '"tanimotoSimilarity":
-            %d
+            %f
                     ',
           self$`tanimotoSimilarity`
           )
@@ -262,7 +262,7 @@ StructureCandidate <- R6::R6Class(
         if (!is.null(self$`confidenceScore`)) {
           sprintf(
           '"confidenceScore":
-            %d
+            %f
                     ',
           self$`confidenceScore`
           )
@@ -270,7 +270,7 @@ StructureCandidate <- R6::R6Class(
         if (!is.null(self$`numOfPubMedIds`)) {
           sprintf(
           '"numOfPubMedIds":
-            %d
+            %f
                     ',
           self$`numOfPubMedIds`
           )
@@ -278,7 +278,7 @@ StructureCandidate <- R6::R6Class(
         if (!is.null(self$`xlogP`)) {
           sprintf(
           '"xlogP":
-            %d
+            %f
                     ',
           self$`xlogP`
           )
@@ -400,7 +400,7 @@ StructureCandidate <- R6::R6Class(
 ## Uncomment below to unlock the class to allow modifications of the method or field
 # StructureCandidate$unlock()
 #
-## Below is an example to define the print fnuction
+## Below is an example to define the print function
 # StructureCandidate$set("public", "print", function(...) {
 #   print(jsonlite::prettify(self$toJSONString()))
 #   invisible(self)

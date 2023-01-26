@@ -135,7 +135,7 @@ FragmentationTree <- R6::R6Class(
         if (!is.null(self$`treeScore`)) {
           sprintf(
           '"treeScore":
-            %d
+            %f
                     ',
           self$`treeScore`
           )
@@ -226,7 +226,7 @@ FragmentationTree <- R6::R6Class(
 ## Uncomment below to unlock the class to allow modifications of the method or field
 # FragmentationTree$unlock()
 #
-## Below is an example to define the print fnuction
+## Below is an example to define the print function
 # FragmentationTree$set("public", "print", function(...) {
 #   print(jsonlite::prettify(self$toJSONString()))
 #   invisible(self)

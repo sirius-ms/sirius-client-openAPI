@@ -4,6 +4,9 @@
 context("Test ComputationsApi")
 
 api_instance <- ComputationsApi$new()
+data <- "/home/runner/work/sirius-client-openAPI/sirius-client-openAPI/.updater/examples/ms/Kaempferol.ms"
+ps_api <- ProjectSpacesApi$new()
+compounds_api <- CompoundsApi$new()
 
 test_that("DeleteJob", {
   # tests for DeleteJob
@@ -16,8 +19,18 @@ test_that("DeleteJob", {
   # @param await_deletion character If true request will block until deletion succeeded or failed.                         If the job is still running the request will wait until the job has finished. (optional)
   # @return [Void]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  pid <- "computations1"
+  dir <- "./computationsDir1"
+  ps_api$CreateProjectSpace(pid, dir)
+    
+  job <- compounds_api$ImportCompounds(pid, data)
+  resp <- api_instance$DeleteJobWithHttpInfo(pid, job$id, TRUE, TRUE)
+  
+  expect_equal(resp$status_code, 202)
+    
+  compounds_api$DeleteCompound(pid, "1_Kaempferol_Kaempferol")
+  ps_api$CloseProjectSpace(pid)
+  unlink(dir, recursive = TRUE)  
 })
 
 test_that("DeleteJobConfig", {
@@ -28,8 +41,23 @@ test_that("DeleteJobConfig", {
   # @param name character name of the job-config to delete
   # @return [Void]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  pid <- "computations2"
+  dir <- "./computationsDir2"
+  ps_api$CreateProjectSpace(pid, dir)
+  
+  sub <- JobSubmission$new(canopusParas = Canopus$new(enabled=FALSE))
+  api_instance$PostJobConfig("canopusConfig", sub)
+  resp <- api_instance$GetJobConfig("canopusConfig")
+  
+  expect_equal(resp$canopusParas$enabled, FALSE)
+  
+  api_instance$DeleteJobConfig("canopusConfig")
+  resp <- api_instance$GetJobConfig("canopusConfig")
+  
+  expect_equal(resp$status_code, 404)
+  
+  ps_api$CloseProjectSpace(pid)
+  unlink(dir, recursive = TRUE) 
 })
 
 test_that("GetDefaultJobConfig", {
@@ -40,8 +68,18 @@ test_that("GetDefaultJobConfig", {
   # @param include_config_map character if true, generic configmap with-defaults will be included (optional)
   # @return [JobSubmission]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  pid <- "computations3"
+  dir <- "./computationsDir3"
+  ps_api$CreateProjectSpace(pid, dir)
+    
+  compounds_api$ImportCompounds(pid, data)
+  resp <- api_instance$GetDefaultJobConfig()
+  
+  expect_equal(is.logical(resp$recompute), TRUE)
+    
+  compounds_api$DeleteCompound(pid, "1_Kaempferol_Kaempferol")
+  ps_api$CloseProjectSpace(pid)
+  unlink(dir, recursive = TRUE) 
 })
 
 test_that("GetJob", {
@@ -69,8 +107,19 @@ test_that("GetJobConfig", {
   # @param include_config_map character if true the generic configmap will be part of the output (optional)
   # @return [JobSubmission]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  pid <- "computations5"
+  dir <- "./computationsDir5"
+  ps_api$CreateProjectSpace(pid, dir)
+  
+  sub <- JobSubmission$new(fallbackAdducts = c("[M+H]+","[M]+"))
+  api_instance$PostJobConfig("adductConfig", sub)
+  resp <- api_instance$GetJobConfig("adductConfig")
+  
+  expect_equal(is.list(resp$fallbackAdducts), TRUE)
+  
+  api_instance$DeleteJobConfig("adductConfig") 
+  ps_api$CloseProjectSpace(pid)
+  unlink(dir, recursive = TRUE)
 })
 
 test_that("GetJobConfigs", {
@@ -81,8 +130,19 @@ test_that("GetJobConfigs", {
   # @param include_config_map character if true the generic configmap will be part of the output (optional)
   # @return [array[JobSubmission]]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  pid <- "computations6"
+  dir <- "./computationsDir6"
+  ps_api$CreateProjectSpace(pid, dir)
+  
+  sub <- JobSubmission$new()
+  api_instance$PostJobConfig("emptyConfig", sub)
+  resp <- api_instance$GetJobConfigs()
+  
+  expect_equal(is.list(resp), TRUE)
+  
+  api_instance$DeleteJobConfig("emptyConfig") 
+  ps_api$CloseProjectSpace(pid)
+  unlink(dir, recursive = TRUE)
 })
 
 test_that("GetJobs", {
@@ -96,8 +156,17 @@ test_that("GetJobs", {
   # @param include_affected_compounds character include list of compound ids affected by this job (if available) (optional)
   # @return [array[JobId]]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  pid <- "computations7"
+  dir <- "./computationsDir7"
+  ps_api$CreateProjectSpace(pid, dir)
+  
+  resp <- api_instance$GetJobsWithHttpInfo(pid)
+  
+  expect_equal(is.null(resp$response), FALSE)
+  expect_equal(resp$status_code, 200)
+  
+  ps_api$CloseProjectSpace(pid)
+  unlink(dir, recursive = TRUE)
 })
 
 test_that("PostJobConfig", {
@@ -110,8 +179,19 @@ test_that("PostJobConfig", {
   # @param override_existing character  (optional)
   # @return [character]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  pid <- "computations8"
+  dir <- "./computationsDir8"
+  ps_api$CreateProjectSpace(pid, dir)
+  
+  sub <- JobSubmission$new(zodiacParas = Zodiac$new(enabled=FALSE))
+  api_instance$PostJobConfig("zodiacConfig", sub)
+  resp <- api_instance$GetJobConfig("zodiacConfig")
+  
+  expect_equal(resp$zodiacParas$enabled, FALSE)
+  
+  api_instance$DeleteJobConfig("zodiacConfig") 
+  ps_api$CloseProjectSpace(pid)
+  unlink(dir, recursive = TRUE)
 })
 
 test_that("StartJob", {

@@ -137,7 +137,7 @@ ResultOverview <- R6::R6Class(
         if (!is.null(self$`siriusScore`)) {
           sprintf(
           '"siriusScore":
-            %d
+            %f
                     ',
           self$`siriusScore`
           )
@@ -145,7 +145,7 @@ ResultOverview <- R6::R6Class(
         if (!is.null(self$`zodiacScore`)) {
           sprintf(
           '"zodiacScore":
-            %d
+            %f
                     ',
           self$`zodiacScore`
           )
@@ -153,7 +153,7 @@ ResultOverview <- R6::R6Class(
         if (!is.null(self$`topCSIScore`)) {
           sprintf(
           '"topCSIScore":
-            %d
+            %f
                     ',
           self$`topCSIScore`
           )
@@ -161,7 +161,7 @@ ResultOverview <- R6::R6Class(
         if (!is.null(self$`confidenceScore`)) {
           sprintf(
           '"confidenceScore":
-            %d
+            %f
                     ',
           self$`confidenceScore`
           )
@@ -253,7 +253,7 @@ ResultOverview <- R6::R6Class(
 ## Uncomment below to unlock the class to allow modifications of the method or field
 # ResultOverview$unlock()
 #
-## Below is an example to define the print fnuction
+## Below is an example to define the print function
 # ResultOverview$set("public", "print", function(...) {
 #   print(jsonlite::prettify(self$toJSONString()))
 #   invisible(self)
