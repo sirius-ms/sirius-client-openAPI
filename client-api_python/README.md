@@ -43,7 +43,7 @@ import PySirius
 
 ## Getting Started
 
-### For local endpoints  
+### Local Endpoint
 Please follow the [installation procedure](#installation--usage) and then run the following (while replacing the Strings for project_space and sirius_executable):
 
 ```python
@@ -55,7 +55,7 @@ print(api.get_ComputationsApi().get_default_job_config())
 print(api.get_ProjectSpacesApi().get_project_spaces())
 ```
 
-### For remote Endpoints
+### Remote Endpoint
 
 Please follow the [installation procedure](#installation--usage) and then run the following (while replacing address and port with the Remote adress specifications):
 
