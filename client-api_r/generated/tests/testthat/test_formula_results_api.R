@@ -103,7 +103,7 @@ test_that("GetFragTree", {
   computations_api$PostJobConfig("formRes6", sub, TRUE)
   Sys.sleep(1)
   computations_api$StartJobFromConfig(pid_dir[1], "formRes6", compoundId, TRUE, FALSE, FALSE, FALSE)
-  Sys.sleep(1)
+  Sys.sleep(3)
   resp <- api_instance$GetFragTree(pid_dir[1], compoundId, formulaId)
   
   expect_equal(is.list(resp$fragments), TRUE)
