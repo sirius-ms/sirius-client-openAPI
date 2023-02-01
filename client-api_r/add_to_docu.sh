@@ -21,4 +21,4 @@ fi
 # add comment to ImportCompoundsFromString, as generating var_body is not really intuitive
 sed -i '/var_body <- "body_example" # character | data content in specified format/a\
 # tip: use the following line to generate the var_body string from a file "MyFile.ms"\
-# var_body <- paste(readLines("MyFile.ms", warn=FALSE), collapse="\n")' $1
+# var_body <- paste(readLines("MyFile.ms", warn=FALSE), collapse="\\n")' $1
