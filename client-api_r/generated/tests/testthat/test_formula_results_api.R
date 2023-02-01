@@ -4,6 +4,10 @@
 context("Test FormulaResultsApi")
 
 api_instance <- FormulaResultsApi$new()
+compounds_api <- CompoundsApi$new()
+data <- "/home/runner/work/sirius-client-openAPI/sirius-client-openAPI/.updater/examples/ms/Bicuculline.ms"
+compoundId <- "1_Bicuculline_Bicuculline"
+formulaId <- "C20H17NO6_[M+H]+"
 
 test_that("GetBestMatchingCanopusPredictions", {
   # tests for GetBestMatchingCanopusPredictions
@@ -88,8 +92,15 @@ test_that("GetFragTree", {
   # @param formula_id character identifier of the requested formula result
   # @return [FragmentationTree]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  pid_dir <- new_ps("formRes6", "formResDir6")
+    
+  compounds_api$ImportCompounds(pid_dir[1], data)
+  Sys.sleep(1)
+  resp <- api_instance$GetFragTree(pid_dir[1], compoundId, formulaId)
+  
+  expect_equal(is.list(resp$fragments), TRUE)
+  
+  withr::defer(formula_results_td(pid_dir))
 })
 
 test_that("GetSimulatedIsotopePattern", {
