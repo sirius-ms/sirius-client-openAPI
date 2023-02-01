@@ -85,8 +85,18 @@ test_that("GetJob", {
   # @param include_affected_compounds character include list of compound ids affected by this job (if available) (optional)
   # @return [JobId]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  pid_dir <- new_ps("computations4", "computationsDir4")
+  
+  sub <- api_instance$GetDefaultJobConfig()
+  sub$zodiacParas <- NULL
+  sub$recompute <- TRUE
+  job <- api_instance$StartJob(pid_dir[1], sub, FALSE, FALSE, FALSE)
+  resp <- api_instance$GetJob(pid_dir[1], job$id)
+  
+  expect_equal(is.character(resp$progress$state), TRUE)
+  
+  withr::defer(api_instance$DeleteJob(pid_dir[1], job$id))
+  withr::defer(computations_td(pid_dir)) 
 })
 
 test_that("GetJobConfig", {
@@ -185,8 +195,21 @@ test_that("StartJob", {
   # @param include_affected_compounds character include list of compound ids affected by this job (if available) (optional)
   # @return [JobId]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  pid_dir <- new_ps("computations9", "computationsDir9")
+  
+  sub <- api_instance$GetDefaultJobConfig()
+  sub$zodiacParas <- NULL
+  sub$recompute <- TRUE
+  job <- api_instance$StartJob(pid_dir[1], sub, FALSE, FALSE, FALSE)
+  
+  expect_equal(grepl("^[0-9]+$", job$id), TRUE)
+  
+  jobs <- api_instance$GetJobs(pid_dir[1])
+  
+  expect_equal(is.list(jobs), TRUE)
+  
+  withr::defer(api_instance$DeleteJob(pid_dir[1], job$id)) 
+  withr::defer(computations_td(pid_dir)) 
 })
 
 test_that("StartJobFromConfig", {
@@ -203,6 +226,27 @@ test_that("StartJobFromConfig", {
   # @param include_affected_compounds character include list of compound ids affected by this job (if available) (optional)
   # @return [JobId]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  pid_dir <- new_ps("computations10", "computationsDir10")
+  
+  sub <- api_instance$GetDefaultJobConfig()
+  sub$zodiacParas <- NULL
+  sub$recompute <- TRUE
+  config <- api_instance$PostJobConfig("startJobConfig", sub, TRUE)
+  request_body <- c("/home/runner/work/sirius-client-openAPI/sirius-client-openAPI/.updater/examples/ms/Bicuculline.ms", 
+                    "/home/runner/work/sirius-client-openAPI/sirius-client-openAPI/.updater/examples/ms/Kaempferol.ms")
+  compounds_api$ImportCompounds(pid_dir[1], request_body)
+  Sys.sleep(1)
+  comps <- compounds_api$GetCompounds(pid_dir[1])
+  comps <- c(comps[[1]]$id, comps[[2]]$id) 
+  job <- api_instance$StartJobFromConfig(pid_dir[1], "startJobConfig", comps, TRUE, FALSE, FALSE, FALSE)
+  
+  expect_equal(grepl("^[0-9]+$", job$id), TRUE)
+  
+  jobs <- api_instance$GetJobs(pid_dir[1])
+  
+  expect_equal(is.list(jobs), TRUE)
+  
+  withr::defer(api_instance$DeleteJob(pid_dir[1], job$id))
+  withr::defer(api_instance$DeleteJobConfig("startJobConfig"))
+  withr::defer(compounds_td(pid_dir))
 })

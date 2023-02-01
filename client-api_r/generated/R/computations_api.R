@@ -1419,10 +1419,7 @@ ComputationsApi <- R6::R6Class(
       query_params[["includeAffectedCompounds"]] <- `include_affected_compounds`
 
       if (!is.null(`request_body`)) {
-        body.items <- paste(unlist(lapply(`request_body`, function(param) {
-                                                             param$toJSONString()
-                                                         })), collapse = ",")
-        local_var_body <- paste0("[", body.items, "]")
+        local_var_body <- jsonlite::toJSON(`request_body`)
       } else {
         body <- NULL
       }
