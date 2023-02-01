@@ -102,6 +102,8 @@ test_that("GetFragTree", {
   resp <- api_instance$GetFragTree(pid_dir[1], compoundId, formulaId)
   
   expect_equal(is.list(resp$fragments), TRUE)
+  expect_equal(is.list(resp$losses), TRUE)
+  expect_equal(is.numeric(resp$treeScore), TRUE)
   
   withr::defer(formula_results_td(pid_dir))
 })
