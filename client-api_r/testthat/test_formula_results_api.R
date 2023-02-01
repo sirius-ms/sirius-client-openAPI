@@ -97,8 +97,11 @@ test_that("GetFragTree", {
     
   compounds_api$ImportCompounds(pid_dir[1], data)
   Sys.sleep(1)
-  ComputationsApi$new()$StartJobFromConfig(pid_dir[1], "formRes6", compoundId, TRUE, FALSE, FALSE, FALSE)
-  Sys.sleep(1)
+  sub <- computations_api$GetDefaultJobConfig()
+  sub$zodiacParas <- NULL
+  sub$recompute <- TRUE
+  computations_api$PostJobConfig("formRes6", sub, TRUE)
+  computations_api$StartJobFromConfig(pid_dir[1], "formRes6", compoundId, TRUE, FALSE, FALSE, FALSE)
   resp <- api_instance$GetFragTree(pid_dir[1], compoundId, formulaId)
   
   expect_equal(is.list(resp$fragments), TRUE)
