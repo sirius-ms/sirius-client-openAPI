@@ -5,6 +5,7 @@ context("Test FormulaResultsApi")
 
 api_instance <- FormulaResultsApi$new()
 compounds_api <- CompoundsApi$new()
+computations_api <- ComputationsApi$new()
 data <- "/home/runner/work/sirius-client-openAPI/sirius-client-openAPI/.updater/examples/ms/Bicuculline.ms"
 compoundId <- "1_Bicuculline_Bicuculline"
 formulaId <- "C20H17NO6_[M+H]+"
@@ -95,6 +96,8 @@ test_that("GetFragTree", {
   pid_dir <- new_ps("formRes6", "formResDir6")
     
   compounds_api$ImportCompounds(pid_dir[1], data)
+  Sys.sleep(1)
+  ComputationsApi$new()$StartJobFromConfig(pid_dir[1], "formRes6", compoundId, TRUE, FALSE, FALSE, FALSE)
   Sys.sleep(1)
   resp <- api_instance$GetFragTree(pid_dir[1], compoundId, formulaId)
   
