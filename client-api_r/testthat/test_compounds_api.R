@@ -3,9 +3,9 @@
 
 context("Test CompoundsApi")
 
+source("additional_test_functions.R")
 api_instance <- CompoundsApi$new()
 request_body <- c("/home/runner/work/sirius-client-openAPI/sirius-client-openAPI/.updater/examples/ms/Bicuculline.ms", "/home/runner/work/sirius-client-openAPI/sirius-client-openAPI/.updater/examples/ms/Kaempferol.ms")
-ps_api <- ProjectSpacesApi$new()
 
 
 test_that("DeleteCompound", {
@@ -17,28 +17,23 @@ test_that("DeleteCompound", {
   # @param cid character identifier of compound to delete.
   # @return [Void]
   
-  pid <- "compounds1"
-  dir <- "./compoundsDir1"
-  ps_api$CreateProjectSpace(pid, dir)
+  pid_dir <- new_ps("compounds1", "compoundsDir1")
     
-  api_instance$ImportCompounds(pid, request_body)
+  api_instance$ImportCompounds(pid_dir[1], request_body)
   Sys.sleep(1)
-  resp <- api_instance$GetCompounds(pid)
+  resp <- api_instance$GetCompounds(pid_dir[1])
   
   expect_equal(is.list(resp), TRUE)
   expect_equal(length(resp), 2)
   
-  api_instance$DeleteCompound(pid, "1_Bicuculline_Bicuculline")
+  api_instance$DeleteCompound(pid_dir[1], "1_Bicuculline_Bicuculline")
   Sys.sleep(1)
-  resp <- api_instance$GetCompounds(pid)
+  resp <- api_instance$GetCompounds(pid_dir[1])
   
   expect_equal(is.list(resp), TRUE)
   expect_equal(length(resp), 1)
     
-  api_instance$DeleteCompound(pid, "1_Bicuculline_Bicuculline")
-  api_instance$DeleteCompound(pid, "2_Kaempferol_Kaempferol")
-  ps_api$CloseProjectSpace(pid)
-  unlink(dir, recursive = TRUE)  
+  withr::defer(compounds_td(pid_dir))  
 })
 
 test_that("GetCompound", {
@@ -52,26 +47,21 @@ test_that("GetCompound", {
   # @param ms_data character include corresponding source data (MS and MS/MS) into the output. (optional)
   # @return [CompoundId]
   
-  pid <- "compounds2"
-  dir <- "./compoundsDir2"
-  ps_api$CreateProjectSpace(pid, dir)
+  pid_dir <- new_ps("compounds2", "compoundsDir2")
     
-  api_instance$ImportCompounds(pid, request_body)
+  api_instance$ImportCompounds(pid_dir[1], request_body)
   Sys.sleep(1)
-  resp <- api_instance$GetCompound(pid, "1_Bicuculline_Bicuculline")
+  resp <- api_instance$GetCompound(pid_dir[1], "1_Bicuculline_Bicuculline")
   
   expect_equal(resp$name, "Bicuculline_Bicuculline")
   expect_equal(is.null(resp$topAnnotation$formulaAnnotation), TRUE)
   
-  resp <- api_instance$GetCompound(pid, "1_Bicuculline_Bicuculline", TRUE)
+  resp <- api_instance$GetCompound(pid_dir[1], "1_Bicuculline_Bicuculline", TRUE)
   
   expect_equal(resp$name, "Bicuculline_Bicuculline")
   expect_equal(is.null(resp$topAnnotation$formulaAnnotation), FALSE)
     
-  api_instance$DeleteCompound(pid, "1_Bicuculline_Bicuculline")
-  api_instance$DeleteCompound(pid, "2_Kaempferol_Kaempferol")
-  ps_api$CloseProjectSpace(pid)
-  unlink(dir, recursive = TRUE)
+  withr::defer(compounds_td(pid_dir)) 
 })
 
 test_that("GetCompounds", {
@@ -84,21 +74,16 @@ test_that("GetCompounds", {
   # @param ms_data character include corresponding source data (MS and MS/MS) into the output. (optional)
   # @return [array[CompoundId]]
 
-  pid <- "compounds3"
-  dir <- "./compoundsDir3"
-  ps_api$CreateProjectSpace(pid, dir)
+  pid_dir <- new_ps("compounds3", "compoundsDir3")
     
-  api_instance$ImportCompounds(pid, request_body)
+  api_instance$ImportCompounds(pid_dir[1], request_body)
   Sys.sleep(1)
-  resp <- api_instance$GetCompounds(pid)
+  resp <- api_instance$GetCompounds(pid_dir[1])
   
   expect_equal(is.list(resp), TRUE)
   expect_equal(length(resp), 2)
     
-  api_instance$DeleteCompound(pid, "1_Bicuculline_Bicuculline")
-  api_instance$DeleteCompound(pid, "2_Kaempferol_Kaempferol")
-  ps_api$CloseProjectSpace(pid)
-  unlink(dir, recursive = TRUE) 
+  withr::defer(compounds_td(pid_dir)) 
 })
 
 test_that("ImportCompounds", {
@@ -113,18 +98,13 @@ test_that("ImportCompounds", {
   # @param ignore_formulas character  (optional)
   # @return [JobId]
 
-  pid <- "compounds4"
-  dir <- "./compoundsDir4"
-  ps_api$CreateProjectSpace(pid, dir)
+  pid_dir <- new_ps("compounds4", "compoundsDir4")
     
-  resp <- api_instance$ImportCompounds(pid, request_body)
+  resp <- api_instance$ImportCompounds(pid_dir[1], request_body)
   
   expect_equal(!is.na(as.numeric(resp$id)), TRUE)
     
-  api_instance$DeleteCompound(pid, "1_Bicuculline_Bicuculline")
-  api_instance$DeleteCompound(pid, "2_Kaempferol_Kaempferol")
-  ps_api$CloseProjectSpace(pid)
-  unlink(dir, recursive = TRUE) 
+  withr::defer(compounds_td(pid_dir)) 
 })
 
 test_that("ImportCompoundsFromString", {
@@ -138,6 +118,17 @@ test_that("ImportCompoundsFromString", {
   # @param source_name character name that specifies the data source. Can e.g. be a file path or just a name. (optional)
   # @return [array[CompoundId]]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  pid_dir <- new_ps("compounds5", "compoundsDir5")
+  
+  resp <- api_instance$ImportCompoundsFromString(pid_dir[1], "ms", paste(readLines("/home/runner/work/sirius-client-openAPI/sirius-client-openAPI/.updater/clientTests/Data/Kaempferol.ms", warn=FALSE), collapse="\n"), "msfile")
+  
+  expect_equal(is.list(resp), TRUE)
+  
+  resp <- api_instance$ImportCompoundsFromString(pid_dir[1], "mgf", paste(readLines("/home/runner/work/sirius-client-openAPI/sirius-client-openAPI/.updater/clientTests/Data/laudanosine.mgf", warn=FALSE), collapse="\n"), "mgffile")
+  
+  expect_equal(is.list(resp), TRUE)
+  
+  withr::defer(api_instance$DeleteCompound(pid_dir[1], "1_msfile_Kaempferol"))
+  withr::defer(api_instance$DeleteCompound(pid_dir[1], "1_mgffile_FEATURE_1"))
+  withr::defer(project_spaces_td(pid_dir))
 })

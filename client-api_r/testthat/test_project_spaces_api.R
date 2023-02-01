@@ -13,18 +13,16 @@ test_that("CloseProjectSpace", {
   # @param project_id character unique name/identifier of the  project-space to be closed.
   # @return [Void]
   
-  pid <- 1
-  dir <- "dir1"
-  api_instance$CreateProjectSpace(pid, dir)
-  resp <- api_instance$GetProjectSpace(pid)
-  api_instance$CloseProjectSpace(pid)
-  resp2 <- api_instance$GetProjectSpace(pid)
+  pid_dir <- new_ps("ps1", "psDir1")
+  
+  resp <- api_instance$GetProjectSpace(pid_dir[1])
+  api_instance$CloseProjectSpace(pid_dir[1])
+  resp2 <- api_instance$GetProjectSpace(pid_dir[1])
 
-  expect_equal(resp$name, toString(pid))
+  expect_equal(resp$name, toString(pid_dir[1]))
   expect_equal(resp2$status_code, 404)
   
-  withr::defer(api_instance$CloseProjectSpace(pid))
-  withr::defer(unlink(dir, recursive = TRUE))
+  withr::defer(project_spaces_td(pid_dir))
 })
 
 test_that("CreateProjectSpace", {
@@ -38,14 +36,13 @@ test_that("CreateProjectSpace", {
   # @param await_import character  (optional)
   # @return [ProjectSpaceId]
   
-  pid <- 2
-  dir <- "dir2"
+  pid <- "ps2"
+  dir <- "psDir2"
   resp <- api_instance$CreateProjectSpace(pid, dir)
 
   expect_equal(resp$name, toString(pid))
   
-  withr::defer(api_instance$CloseProjectSpace(pid))
-  withr::defer(unlink(dir, recursive = TRUE))
+  withr::defer(project_spaces_td(c(pid, dir)))
 })
 
 test_that("GetProjectSpace", {
@@ -56,15 +53,13 @@ test_that("GetProjectSpace", {
   # @param project_id character unique name/identifier tof the project-space to be accessed.
   # @return [ProjectSpaceId]
   
-  pid <- 3
-  dir <- "dir3"
-  api_instance$CreateProjectSpace(pid, dir)
-  resp <- api_instance$GetProjectSpace(pid)
-
-  expect_equal(resp$name, toString(pid))
+  pid_dir <- new_ps("ps3", "psDir3")
   
-  withr::defer(api_instance$CloseProjectSpace(pid))
-  withr::defer(unlink(dir, recursive = TRUE))
+  resp <- api_instance$GetProjectSpace(pid_dir[1])
+
+  expect_equal(resp$name, toString(pid_dir[1]))
+  
+  withr::defer(project_spaces_td(pid_dir))
 })
 
 test_that("GetProjectSpaces", {
@@ -88,14 +83,12 @@ test_that("OpenProjectSpace", {
   # @param path_to_project character 
   # @return [ProjectSpaceId]
   
-  pid <- 4
-  dir <- "dir4"
-  api_instance$CreateProjectSpace(pid, dir)
-  api_instance$CloseProjectSpace(pid)
-  resp <- api_instance$OpenProjectSpace(pid, dir)
-
-  expect_equal(resp$name, toString(pid))
+  pid_dir <- new_ps("ps4", "psDir4")
   
-  withr::defer(api_instance$CloseProjectSpace(pid))
-  withr::defer(unlink(dir, recursive = TRUE))
+  api_instance$CloseProjectSpace(pid_dir[1])
+  resp <- api_instance$OpenProjectSpace(pid_dir[1], pid_dir[2])
+
+  expect_equal(resp$name, toString(pid_dir[1]))
+  
+  withr::defer(project_spaces_td(pid_dir))
 })
