@@ -607,7 +607,7 @@ CompoundsApi <- R6::R6Class(
       query_params[["ignoreFormulas"]] <- `ignore_formulas`
 
       if (!is.null(`request_body`)) {
-        local_var_body <- jsonlite::toJSON(request_body)
+        local_var_body <- jsonlite::toJSON(`request_body`)
       } else {
         body <- NULL
       }
@@ -731,7 +731,7 @@ CompoundsApi <- R6::R6Class(
       query_params[["sourceName"]] <- `source_name`
 
       if (!is.null(`body`)) {
-        local_var_body <- `body`$toJSONString()
+        local_var_body <- `body`
       } else {
         body <- NULL
       }
