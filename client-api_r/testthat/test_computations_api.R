@@ -5,8 +5,8 @@ context("Test ComputationsApi")
 
 source("additional_test_functions.R")
 api_instance <- ComputationsApi$new()
-data <- "/home/runner/work/sirius-client-openAPI/sirius-client-openAPI/.updater/examples/ms/Kaempferol.ms"
 compounds_api <- CompoundsApi$new()
+data <- "/home/runner/work/sirius-client-openAPI/sirius-client-openAPI/.updater/examples/ms/Kaempferol.ms"
 
 test_that("DeleteJob", {
   # tests for DeleteJob
