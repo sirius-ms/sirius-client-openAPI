@@ -26,3 +26,9 @@ compounds_td <- function(pid_dir) {
 computations_td <- function(pid_dir) {
    project_spaces_td(pid_dir)
 }
+
+# teardown for formula_results test
+formula_results_td <- function(pid_dir) {
+   CompoundsApi$new()$DeleteCompound(pid_dir[1], "1_Bicuculline_Bicuculline")
+   project_spaces_td(pid_dir)
+}
