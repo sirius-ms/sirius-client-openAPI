@@ -35,10 +35,10 @@ class TestComputationsApi(unittest.TestCase):
         pass
 
     def test_delete_job(self):
-        os.makedirs("temp_3")
-        psid = api.get_ProjectSpacesApi().create_project_space("temp3","temp_3")
+        os.makedirs("temp_4")
+        psid = api.get_ProjectSpacesApi().create_project_space("temp4","temp_4")
         #jobid = api.get_CompoundsApi().import_compounds(psid.path, data)
-        #api.get_ComputationsApi().delete_job("temp3",jobid)
+        #api.get_ComputationsApi().delete_job("temp4",jobid)
         # TODO: ERR 400 - Bad Request
 
     def test_delete_job_config(self):
