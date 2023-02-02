@@ -42,7 +42,7 @@ class TestComputationsApi(unittest.TestCase):
 
     def test_delete_job_config(self):
         api_instance = api.get_ComputationsApi()
-        pid_dir = new_ps("computations2", "computationsDir2")
+        pid_dir = api.get_ProjectSpacesApi().create_project_space("computations2", "computationsDir2")
         sub = api.get_models().JobSubmission(canopusParas = api.get_models().Canopus(enabled=FALSE))
         api_instance.post_job_config("canopusConfig", sub)
         api_instance.get_job_config("canopusConfig")
