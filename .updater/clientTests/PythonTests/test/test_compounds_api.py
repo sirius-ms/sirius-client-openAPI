@@ -72,6 +72,8 @@ class TestCompoundsApi(unittest.TestCase):
 
         Import ms/ms data from the given format into the specified project-space  Possible formats (ms, mgf, cef, msp, mzML, mzXML)  # noqa: E501
         """
+        # Already done in setup
+        self.assertTrue(True)
         pass
 
 

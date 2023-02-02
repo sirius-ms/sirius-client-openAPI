@@ -22,6 +22,7 @@ from PySirius.rest import ApiException
 address = "http://localhost"
 port = 8080
 api = PySiriusAPI(address=address, port=port)
+data = "/home/runner/work/sirius-client-openAPI/sirius-client-openAPI/.updater/examples/ms/Kaempferol.ms"
 
 
 class TestComputationsApi(unittest.TestCase):
@@ -34,17 +35,18 @@ class TestComputationsApi(unittest.TestCase):
         pass
 
     def test_delete_job(self):
-        """Test case for delete_job
-
-        Delete job.  # noqa: E501
-        """
-        pass
+        os.makedirs("temp_0")
+        psid = api.get_ProjectSpacesApi().create_project_space("temp1","temp_0")
+        jobid = api.get_CompoundsApi().import_compounds(psid[1], data)
+        api.get_ComputationsApi().delete_job("temp1",jobid)
 
     def test_delete_job_config(self):
-        """Test case for delete_job_config
-
-        Delete job configuration with given name.  # noqa: E501
-        """
+        api_instance = api.get_ComputationsApi()
+        pid_dir = new_ps("computations2", "computationsDir2")
+        sub = api.get_models().JobSubmission(canopusParas = api.get_models().Canopus(enabled=FALSE))
+        api_instance.post_job_config("canopusConfig", sub)
+        api_instance.get_job_config("canopusConfig")
+        api_instance.delete_job_config("canopusConfig")
         pass
 
     def test_get_default_job_config(self):
@@ -62,10 +64,8 @@ class TestComputationsApi(unittest.TestCase):
         pass
 
     def test_get_job_config(self):
-        """Test case for get_job_config
-
-        Request job configuration with given name.  # noqa: E501
-        """
+        """Already done in setup"""
+        self.assertTrue(True)
         pass
 
     def test_get_job_configs(self):
@@ -83,10 +83,8 @@ class TestComputationsApi(unittest.TestCase):
         pass
 
     def test_post_job_config(self):
-        """Test case for post_job_config
-
-        Add new job configuration with given name.  # noqa: E501
-        """
+        """Already done in setup"""
+        self.assertTrue(True)
         pass
 
     def test_start_job(self):
