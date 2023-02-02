@@ -4,7 +4,7 @@
 name: PythonTest
 
 
-on: [workflow_dispatch, workflow_call]
+on: [workflow_dispatch, workflow_call, push]
 
 
 jobs:
