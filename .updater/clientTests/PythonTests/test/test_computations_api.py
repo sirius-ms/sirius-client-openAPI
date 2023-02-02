@@ -35,8 +35,8 @@ class TestComputationsApi(unittest.TestCase):
         pass
 
     def test_delete_job(self):
-        os.makedirs("temp_0")
-        psid = api.get_ProjectSpacesApi().create_project_space("temp1","temp_0")
+        os.makedirs("temp_3")
+        psid = api.get_ProjectSpacesApi().create_project_space("temp3","temp_3")
         jobid = api.get_CompoundsApi().import_compounds(psid[1], data)
         api.get_ComputationsApi().delete_job("temp1",jobid)
 
