@@ -49,59 +49,46 @@ class TestComputationsApi(unittest.TestCase):
         #api_instance.get_job_config("canopusConfig")
         #api_instance.delete_job_config("canopusConfig")
         # TODO: ERR 400 - Bad Request
-        pass
 
     def test_get_default_job_config(self):
-        """Test case for get_default_job_config
-
-        Request default job configuration  # noqa: E501
-        """
-        pass
+        api_instance = api.get_ComputationsApi()
+        api_instance.get_default_job_config()
 
     def test_get_job(self):
-        """Test case for get_job
-
-        Get job information and its current state and progress (if available).  # noqa: E501
-        """
-        pass
+        psid = api.get_ProjectSpacesApi().create_project_space("temp8","temp_8")
+        api_instance = api.get_ComputationsApi()
+        sub = api.get_models().JobSubmission(canopus_paras = api.get_models().Canopus(enabled=False))
+        job = api_instance.start_job(sub, "temp8")
+        api_instance.get_jobs("temp8", job.id)
 
     def test_get_job_config(self):
         """Already done in setup"""
         self.assertTrue(True)
-        pass
-
+        
     def test_get_job_configs(self):
-        """Test case for get_job_configs
-
-        Request all available job configurations  # noqa: E501
-        """
-        pass
+        api_instance = api.get_ComputationsApi()
+        api_instance.get_job_configs()
 
     def test_get_jobs(self):
-        """Test case for get_jobs
-
-        Get job information and its current state and progress (if available).  # noqa: E501
-        """
-        pass
+        psid = api.get_ProjectSpacesApi().create_project_space("temp7","temp_7")
+        api_instance = api.get_ComputationsApi()
+        api_instance.get_jobs("temp7")
 
     def test_post_job_config(self):
         """Already done in setup"""
         self.assertTrue(True)
-        pass
 
     def test_start_job(self):
-        """Test case for start_job
-
-        Start computation for given compounds and with given parameters.  # noqa: E501
-        """
-        pass
-
+        api_instance = api.get_ComputationsApi()
+        sub = api.get_models().JobSubmission(canopus_paras = api.get_models().Canopus(enabled=False))
+        psid = api.get_ProjectSpacesApi().create_project_space("temp5","temp_5")
+        api_instance.start_job(sub, "temp5")
+        
     def test_start_job_from_config(self):
-        """Test case for start_job_from_config
-
-        Start computation for given compounds and with parameters from a stored job-config.  # noqa: E501
-        """
-        pass
+        api_instance = api.get_ComputationsApi()
+        sub = api.get_models().JobSubmission(canopus_paras = api.get_models().Canopus(enabled=False))
+        psid = api.get_ProjectSpacesApi().create_project_space("temp6","temp_6")
+        api_instance.start_job_from_config(sub, "startJobConfig", "temp6")
 
 
 if __name__ == '__main__':
