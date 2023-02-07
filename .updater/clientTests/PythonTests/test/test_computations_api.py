@@ -23,6 +23,11 @@ address = "http://localhost"
 port = 8080
 api = PySiriusAPI(address=address, port=port)
 data = "/home/runner/work/sirius-client-openAPI/sirius-client-openAPI/.updater/examples/ms/Kaempferol.ms"
+os.makedirs("temp_8")
+os.makedirs("temp_4")
+os.makedirs("temp_7")
+os.makedirs("temp_5")
+os.makedirs("temp_6")
 
 
 class TestComputationsApi(unittest.TestCase):
@@ -83,7 +88,7 @@ class TestComputationsApi(unittest.TestCase):
         api_instance = api.get_ComputationsApi()
         sub = api.get_models().JobSubmission(canopus_paras = api.get_models().Canopus(enabled=False))
         psid = api.get_ProjectSpacesApi().create_project_space("temp5","temp_5")
-        #api_instance.start_job(sub, "temp5")
+        api_instance.start_job(sub, "temp5")
         
     def test_start_job_from_config(self):
         api_instance = api.get_ComputationsApi()
