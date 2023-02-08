@@ -38,7 +38,13 @@ formula_id_paras = api.get_models().Sirius(True)
 time.sleep(2)
 job = api.get_models().JobSubmission([api.get_CompoundsApi().get_compounds(ps_name)[0].id, api.get_CompoundsApi().get_compounds(ps_name)[1].id], fallback_adducts, None, detectable_adducts, True, formula_id_paras)
 time.sleep(2)
-api.get_ComputationsApi().start_job(job, ps_name)
+job_id = api.get_ComputationsApi().start_job(job, ps_name)
+# wait max 30 secs
+for i in range(6):
+    time.sleep(5)
+    resp = api.get_ComputationsApi().get_job(project_id, job_id.id)
+    if resp.progress.state == "DONE":
+        break
 compound_id = api.get_CompoundsApi().get_compounds(ps_name)[0].id
 formula_id = api_instance.get_formula_ids(ps_name, compound_id)
 
