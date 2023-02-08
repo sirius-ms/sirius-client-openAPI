@@ -47,8 +47,8 @@ for i in range(6):
         break
 compound_id = api.get_CompoundsApi().get_compounds(ps_name)[0].id
 formula_id = api_instance.get_formula_ids(ps_name, compound_id)
-print("CID: "+compound_id)
-print("FID: "+formula_id)
+print("CID: "+str(compound_id))
+print("FID: "+str(formula_id))
 
 class TestFormulaResultsApi(unittest.TestCase):
     """FormulaResultsApi unit test stubs"""
