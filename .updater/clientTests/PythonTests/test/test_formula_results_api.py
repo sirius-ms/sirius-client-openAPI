@@ -44,6 +44,7 @@ for i in range(6):
     time.sleep(5)
     resp = api.get_ComputationsApi().get_job(project_id, job_id.id)
     if resp.progress.state == "DONE":
+        print("DONE!!!")
         break
 compound_id = api.get_CompoundsApi().get_compounds(ps_name)[0].id
 formula_id = api_instance.get_formula_ids(ps_name, compound_id)
