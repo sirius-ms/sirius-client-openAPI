@@ -22,6 +22,21 @@ from PySirius.rest import ApiException
 address = "http://localhost"
 port = 8080
 api = PySiriusAPI(address=address, port=port)
+api_instance = api.get_FormulaResultsApi()
+
+psid = api.get_ProjectSpacesApi().create_project_space("temp9","temp_9")
+ps_name = "temp9"
+path_to_demo_data = "/home/runner/work/sirius-client-openAPI/sirius-client-openAPI/.updater/examples"
+#Basic workflow to get results from
+api.get_CompoundsApi().import_compounds([path_to_demo_data+"/ms/Bicuculline.ms", path_to_demo_data+"/ms/Kaempferol.ms" ], ps_name)
+fallback_adducts = ["[M+H]+","[M]+,[M+K]+","[M+Na]+","[M+H-H2O]+","[M+Na2-H]+","[M+2K-H]+","[M+NH4]+","[M+H3O]+","[M+MeOH+H]+"]
+detectable_adducts = ["[M+H]+","[M]+,[M+K]+","[M+Na]+","[M+H-H2O]+","[M+Na2-H]+","[M+2K-H]+","[M+NH4]+","[M+H3O]+","[M+MeOH+H]+"]
+formula_id_paras = api.get_models().Sirius(True)
+time.sleep(2)
+job = api.get_models().JobSubmission([api.get_CompoundsApi().get_compounds(ps_name)[0].id, api.get_CompoundsApi().get_compounds(ps_name)[1].id], fallback_adducts, None, detectable_adducts, True, formula_id_paras)
+time.sleep(2)
+api.get_ComputationsApi().start_job(job, ps_name)
+
 
 class TestFormulaResultsApi(unittest.TestCase):
     """FormulaResultsApi unit test stubs"""
