@@ -13,6 +13,7 @@
 from __future__ import absolute_import
 
 import unittest
+import time
 import os
 import shutil
 from PySirius import PySiriusAPI
@@ -22,7 +23,7 @@ from PySirius.rest import ApiException
 address = "http://localhost"
 port = 8080
 api = PySiriusAPI(address=address, port=port)
-data = "/home/runner/work/sirius-client-openAPI/sirius-client-openAPI/.updater/examples/ms/Kaempferol.ms"
+path_to_demo_data = "/home/runner/work/sirius-client-openAPI/sirius-client-openAPI/.updater/examples"
 os.makedirs("temp_8")
 os.makedirs("temp_4")
 os.makedirs("temp_7")
@@ -41,9 +42,9 @@ class TestComputationsApi(unittest.TestCase):
 
     def test_delete_job(self):
         psid = api.get_ProjectSpacesApi().create_project_space("temp4","temp_4")
-        #jobid = api.get_CompoundsApi().import_compounds(psid.path, data)
-        #api.get_ComputationsApi().delete_job("temp4",jobid)
-        # TODO: ERR 400 - Bad Request
+        jobid = api.get_CompoundsApi().import_compounds([path_to_demo_data+"/ms/Bicuculline.ms", path_to_demo_data+"/ms/Kaempferol.ms" ], "temp4")
+        api.get_ComputationsApi().delete_job("temp4",jobid.id)
+        
 
     def test_delete_job_config(self):
         api_instance = api.get_ComputationsApi()
@@ -60,9 +61,14 @@ class TestComputationsApi(unittest.TestCase):
 
     def test_get_job(self):
         psid = api.get_ProjectSpacesApi().create_project_space("temp8","temp_8")
-        api.get_CompoundsApi().import_compounds([data], "temp8")
-        api_instance = api.get_ComputationsApi()
-        sub = api.get_models().JobSubmission(canopus_paras = api.get_models().Canopus(enabled=False))
+        ps_name = "temp8"
+        api.get_CompoundsApi().import_compounds([path_to_demo_data+"/ms/Bicuculline.ms", path_to_demo_data+"/ms/Kaempferol.ms" ], ps_name)
+        fallback_adducts = ["[M+H]+","[M]+,[M+K]+","[M+Na]+","[M+H-H2O]+","[M+Na2-H]+","[M+2K-H]+","[M+NH4]+","[M+H3O]+","[M+MeOH+H]+"]
+        detectable_adducts = ["[M+H]+","[M]+,[M+K]+","[M+Na]+","[M+H-H2O]+","[M+Na2-H]+","[M+2K-H]+","[M+NH4]+","[M+H3O]+","[M+MeOH+H]+"]
+        time.sleep(2)
+        job = api.get_models().JobSubmission([api.get_CompoundsApi().get_compounds(ps_name)[0].id, api.get_CompoundsApi().get_compounds(ps_name)[1].id], fallback_adducts, None, detectable_adducts, True, formula_id_paras)
+        time.sleep(2)
+        job_id = api.get_ComputationsApi().start_job_from_config(job, "startJobConfig", ps_name)
         #job = api_instance.start_job(sub, "temp8")
         #api_instance.get_jobs("temp8", job.id)
 
@@ -84,16 +90,20 @@ class TestComputationsApi(unittest.TestCase):
         self.assertTrue(True)
 
     def test_start_job(self):
-        api_instance = api.get_ComputationsApi()
-        sub = api.get_models().JobSubmission(canopus_paras = api.get_models().Canopus(enabled=False))
-        psid = api.get_ProjectSpacesApi().create_project_space("temp5","temp_5")
-        #api_instance.start_job(sub, "temp5")
+        """Already done in formula_results"""
+        self.assertTrue(True)
         
     def test_start_job_from_config(self):
         api_instance = api.get_ComputationsApi()
-        sub = api.get_models().JobSubmission(canopus_paras = api.get_models().Canopus(enabled=False))
         psid = api.get_ProjectSpacesApi().create_project_space("temp6","temp_6")
-        #api_instance.start_job_from_config(sub, "startJobConfig", "temp6")
+        ps_name = "temp6"
+        api.get_CompoundsApi().import_compounds([path_to_demo_data+"/ms/Bicuculline.ms", path_to_demo_data+"/ms/Kaempferol.ms" ], ps_name)
+        fallback_adducts = ["[M+H]+","[M]+,[M+K]+","[M+Na]+","[M+H-H2O]+","[M+Na2-H]+","[M+2K-H]+","[M+NH4]+","[M+H3O]+","[M+MeOH+H]+"]
+        detectable_adducts = ["[M+H]+","[M]+,[M+K]+","[M+Na]+","[M+H-H2O]+","[M+Na2-H]+","[M+2K-H]+","[M+NH4]+","[M+H3O]+","[M+MeOH+H]+"]
+        time.sleep(2)
+        job = api.get_models().JobSubmission([api.get_CompoundsApi().get_compounds(ps_name)[0].id, api.get_CompoundsApi().get_compounds(ps_name)[1].id], fallback_adducts, None, detectable_adducts, True, formula_id_paras)
+        time.sleep(2)
+        job_id = api.get_ComputationsApi().start_job_from_config(job, "startJobConfig", ps_name)
 
 
 if __name__ == '__main__':
