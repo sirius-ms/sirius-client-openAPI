@@ -46,7 +46,7 @@ for i in range(6):
     if resp.progress.state == "DONE":
         break
 compound_id = api.get_CompoundsApi().get_compounds(ps_name)[0].id
-formula_id = api_instance.get_formula_ids(ps_name, compound_id)
+formula_id = api_instance.get_formula_ids(ps_name, compound_id)[0].id
 
 ### TODO: FID not found?
 print("CID: "+str(compound_id))
