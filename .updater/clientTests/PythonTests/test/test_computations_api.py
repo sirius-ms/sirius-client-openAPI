@@ -24,6 +24,7 @@ address = "http://localhost"
 port = 8080
 api = PySiriusAPI(address=address, port=port)
 path_to_demo_data = "/home/runner/work/sirius-client-openAPI/sirius-client-openAPI/.updater/examples"
+formula_id_paras = api.get_models().Sirius(True)
 os.makedirs("temp_8")
 os.makedirs("temp_4")
 os.makedirs("temp_7")
