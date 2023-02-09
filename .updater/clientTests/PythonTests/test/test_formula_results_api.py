@@ -12,6 +12,7 @@
 
 from __future__ import absolute_import
 
+import time
 import unittest
 import os
 import shutil
@@ -22,6 +23,34 @@ from PySirius.rest import ApiException
 address = "http://localhost"
 port = 8080
 api = PySiriusAPI(address=address, port=port)
+api_instance = api.get_FormulaResultsApi()
+
+
+psid = api.get_ProjectSpacesApi().create_project_space("temp9","temp_9")
+ps_name = "temp9"
+project_id = ps_name
+path_to_demo_data = "/home/runner/work/sirius-client-openAPI/sirius-client-openAPI/.updater/examples"
+#Basic workflow to get results from
+api.get_CompoundsApi().import_compounds([path_to_demo_data+"/ms/Bicuculline.ms", path_to_demo_data+"/ms/Kaempferol.ms" ], ps_name)
+fallback_adducts = ["[M+H]+","[M]+,[M+K]+","[M+Na]+","[M+H-H2O]+","[M+Na2-H]+","[M+2K-H]+","[M+NH4]+","[M+H3O]+","[M+MeOH+H]+"]
+detectable_adducts = ["[M+H]+","[M]+,[M+K]+","[M+Na]+","[M+H-H2O]+","[M+Na2-H]+","[M+2K-H]+","[M+NH4]+","[M+H3O]+","[M+MeOH+H]+"]
+formula_id_paras = api.get_models().Sirius(True)
+time.sleep(2)
+job = api.get_models().JobSubmission([api.get_CompoundsApi().get_compounds(ps_name)[0].id, api.get_CompoundsApi().get_compounds(ps_name)[1].id], fallback_adducts, None, detectable_adducts, True, formula_id_paras)
+time.sleep(2)
+job_id = api.get_ComputationsApi().start_job(job, ps_name)
+# wait max 30 secs
+for i in range(6):
+    time.sleep(5)
+    resp = api.get_ComputationsApi().get_job(project_id, job_id.id)
+    if resp.progress.state == "DONE":
+        break
+compound_id = api.get_CompoundsApi().get_compounds(ps_name)[0].id
+formula_id = api_instance.get_formula_ids(ps_name, compound_id)[0].id
+
+### TODO: FID not found?
+print("CID: "+str(compound_id))
+print("FID: "+str(formula_id))
 
 class TestFormulaResultsApi(unittest.TestCase):
     """FormulaResultsApi unit test stubs"""
@@ -33,66 +62,35 @@ class TestFormulaResultsApi(unittest.TestCase):
         pass
 
     def test_get_best_matching_canopus_predictions(self):
-        """Test case for get_best_matching_canopus_predictions
-
-        Best matching compound classes,  Set of the highest scoring compound classes CANOPUS) on each hierarchy level of  the ClassyFire and NPC ontology,  # noqa: E501
-        """
+        #api_instance.get_best_matching_canopus_predictions(project_id, compound_id, formula_id)
         pass
 
     def test_get_canopus_predictions(self):
-        """Test case for get_canopus_predictions
-
-        All predicted compound classes (CANOPUS) from ClassyFire and NPC and their probabilities,  # noqa: E501
-        """
+        #api_instance.get_canopus_predictions(project_id, compound_id, formula_id)
         pass
 
     def test_get_fingerprint_prediction(self):
-        """Test case for get_fingerprint_prediction
-
-        Returns predicted fingerprint (CSI:FingerID) for the given formula result identifier  This fingerprint is used to perfom structure database search and predict compound classes.  # noqa: E501
-        """
+        #api_instance.get_fingerprint_prediction(project_id, compound_id, formula_id)
         pass
 
     def test_get_formula_ids(self):
-        """Test case for get_formula_ids
-
-        List of all FormulaResultContainers available for this compound/feature with minimal information.  # noqa: E501
-        """
-        pass
+        """Already done in setup"""
+        self.assertTrue(True)
 
     def test_get_formula_result(self):
-        """Test case for get_formula_result
-
-        FormulaResultContainers for the given 'formulaId' with minimal information.  # noqa: E501
-        """
-        pass
+        api_instance.get_formula_result(project_id, compound_id, formula_id)
 
     def test_get_frag_tree(self):
-        """Test case for get_frag_tree
-
-        Returns fragmentation tree (SIRIUS) for the given formula result identifier  This tree is used to rank formula candidates (treeScore).  # noqa: E501
-        """
-        pass
+        api_instance.get_frag_tree(project_id, compound_id, formula_id)
 
     def test_get_simulated_isotope_pattern(self):
-        """Test case for get_simulated_isotope_pattern
-
-        Returns simulated isotope pattern (SIRIUS) for the given formula result identifier.  # noqa: E501
-        """
-        pass
+        api_instance.get_simulated_isotope_pattern(project_id, compound_id, formula_id)
 
     def test_get_structure_candidates(self):
-        """Test case for get_structure_candidates
-
-        List of StructureCandidates the given 'formulaId' with minimal information.  # noqa: E501
-        """
-        pass
+        api_instance.get_structure_candidates(project_id, compound_id, formula_id)
 
     def test_get_top_structure_candidate(self):
-        """Test case for get_top_structure_candidate
-
-        Best Scoring StructureCandidate over all molecular formular resutls that belong to the specified  compound/feature (compoundId).  # noqa: E501
-        """
+        #api_instance.get_top_structure_candidate(project_id, compound_id)
         pass
 
 
