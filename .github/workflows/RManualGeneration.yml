@@ -1,0 +1,45 @@
+# This workflow will autogenerate a manual for usage of Rsirius
+# For more information see: https://cran.r-project.org/web/packages/roxygen2/vignettes/roxygen2.html
+
+name: RManualGeneration
+
+
+on: [workflow_dispatch, workflow_call]
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        r-version: ["4.2.0"]
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up R ${{ matrix.r-version }}
+      uses: r-lib/actions/setup-r@v2
+      with:
+        r-version: ${{ matrix.r-version }}
+    - name: Install libcurl4
+      run: |
+        sudo apt-get update -y
+        sudo apt-get install -y libcurl4-openssl-dev
+    - name: Install curl
+      run: install.packages("curl")
+      shell: Rscript {0}
+    - name: Install httr2
+      run: install.packages("httr2")
+      shell: Rscript {0}
+    - name: Install jsonlite
+      run: install.packages("jsonlite")
+      shell: Rscript {0}
+    - name: Install base64enc
+      run: install.packages("base64enc")
+      shell: Rscript {0}
+    - name: Install roxygen2
+      run: install.packages("roxygen2")
+      shell: Rscript {0}
+    - name: Generate Rsirius Manual
+      run: roxygen2::roxygenize("client-api_r/generated", roclets = NULL, load_code = NULL, clean = FALSE)
+      shell: Rscript {0}

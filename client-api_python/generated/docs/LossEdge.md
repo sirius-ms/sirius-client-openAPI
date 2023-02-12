@@ -1,0 +1,12 @@
+# LossEdge
+
+## Properties
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**source_fragment** | [**FragmentNode**](FragmentNode.md) |  | [optional] 
+**target_fragment** | [**FragmentNode**](FragmentNode.md) |  | [optional] 
+**molecular_formula** | **str** |  | [optional] 
+**score** | **float** |  | [optional] 
+
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+
