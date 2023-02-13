@@ -57,7 +57,7 @@ print(api.get_ProjectSpacesApi().get_project_spaces())
 
 ### Remote Endpoint
 
-Please follow the [installation procedure](#installation--usage) and then run the following (while replacing address and port with the Remote adress specifications):
+Please follow the [installation procedure](#installation--usage) and then run the following (while replacing address and port with the Remote address specifications):
 
 ```python
 from PySirius import PySiriusAPI
