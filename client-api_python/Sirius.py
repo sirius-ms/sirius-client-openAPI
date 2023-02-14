@@ -2,7 +2,7 @@ import os
 import time
 import subprocess
 import json
-
+import platform
 import urllib3
 import PySirius
 
@@ -12,7 +12,6 @@ class SiriusSDK:
     process = None
     port = None
     workspace = None
-    executable_environment = None #TODO: REPLACE THIS NONE WITH THE COORECT NAME!!!
     
     def start(sirius_executable=None, project_space=None, override_workspace_location=None ,port=8080, forceStart=False):
         """starts the Sirius rest service and returns an API instance that allows access to the API endpoints"""
@@ -47,7 +46,10 @@ class SiriusSDK:
             path_to_executable = os.path.abspath(sirius_executable)
         else:
             try:
-                path_to_executable = str(os.getenv(executable_environment))
+                spacing = "/"
+                if platform.system() == "Windows":
+                    spacing = "\\"
+                path_to_executable = str(os.getenv('PATH')) + spacing + str(os.getenv('PKG_NAME'))
             except:
                 print("Please provide a path to the sirius executable if no environment variable is set!")
                 return None
