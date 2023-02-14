@@ -83,7 +83,7 @@ class SiriusSDK:
                         print("Sirius started succesully on the port " + str(port))
                         return PySirius.PySiriusAPI(address="http://localhost", port=SiriusSDK.port)
             except Exception as e:
-                print("An Exception occured while interacting with the Api! ["+e+"] ... Proceeding")
+                print("An Exception occured while interacting with the Api! ["+str(e)+"] ... Proceeding")
 
     def shutdown():
         """shuts down the via the start function started sirius rest application, returns the exit code of the shutdown order"""
