@@ -5,6 +5,7 @@ context("Test CompoundsApi")
 
 source("additional_test_functions.R")
 api_instance <- CompoundsApi$new()
+computations_api <- ComputationsApi$new()
 request_body <- c("/home/runner/work/sirius-client-openAPI/sirius-client-openAPI/.updater/examples/ms/Bicuculline.ms", "/home/runner/work/sirius-client-openAPI/sirius-client-openAPI/.updater/examples/ms/Kaempferol.ms")
 
 
@@ -19,15 +20,14 @@ test_that("DeleteCompound", {
   
   pid_dir <- new_ps("compounds1", "compoundsDir1")
     
-  api_instance$ImportCompounds(pid_dir[1], request_body)
-  Sys.sleep(1)
+  job <- api_instance$ImportCompounds(pid_dir[1], request_body)
+  wait_for_job(pid_dir[1], job)
   resp <- api_instance$GetCompounds(pid_dir[1])
   
   expect_equal(is.list(resp), TRUE)
   expect_equal(length(resp), 2)
   
   api_instance$DeleteCompound(pid_dir[1], "1_Bicuculline_Bicuculline")
-  Sys.sleep(1)
   resp <- api_instance$GetCompounds(pid_dir[1])
   
   expect_equal(is.list(resp), TRUE)
@@ -49,17 +49,20 @@ test_that("GetCompound", {
   
   pid_dir <- new_ps("compounds2", "compoundsDir2")
     
-  api_instance$ImportCompounds(pid_dir[1], request_body)
-  Sys.sleep(1)
-  resp <- api_instance$GetCompound(pid_dir[1], "1_Bicuculline_Bicuculline")
+  job <- api_instance$ImportCompounds(pid_dir[1], request_body)
+  wait_for_job(pid_dir[1], job)
   
-  expect_equal(resp$name, "Bicuculline_Bicuculline")
-  expect_equal(is.null(resp$topAnnotation$formulaAnnotation), TRUE)
+  resp <- api_instance$GetCompound(pid_dir[1], "1_Bicuculline_Bicuculline")
+  expect_true(inherits(resp, "CompoundId"))
   
   resp <- api_instance$GetCompound(pid_dir[1], "1_Bicuculline_Bicuculline", TRUE)
+  expect_true(inherits(resp, "CompoundId"))
   
-  expect_equal(resp$name, "Bicuculline_Bicuculline")
-  expect_equal(is.null(resp$topAnnotation$formulaAnnotation), FALSE)
+  resp <- api_instance$GetCompound(pid_dir[1], "1_Bicuculline_Bicuculline", FALSE, TRUE)
+  expect_true(inherits(resp, "CompoundId"))
+  
+  resp <- api_instance$GetCompound(pid_dir[1], "1_Bicuculline_Bicuculline", TRUE, TRUE)
+  expect_true(inherits(resp, "CompoundId"))
     
   withr::defer(compounds_td(pid_dir)) 
 })
@@ -100,9 +103,15 @@ test_that("ImportCompounds", {
 
   pid_dir <- new_ps("compounds4", "compoundsDir4")
     
-  resp <- api_instance$ImportCompounds(pid_dir[1], request_body)
+  job <- api_instance$ImportCompounds(pid_dir[1], request_body)
+  wait_for_job(pid_dir[1], job)
+  cids <- api_instance$GetCompounds(pid_dir[1])
   
-  expect_equal(!is.na(as.numeric(resp$id)), TRUE)
+  for (cid in cids) {
+    compound <- api_instance$GetCompound(pid_dir[1], cid$id)
+    # project-space contains inserted compound
+    expect_true(inherits(compound, "CompoundId"))
+  }
     
   withr::defer(compounds_td(pid_dir)) 
 })
@@ -122,11 +131,13 @@ test_that("ImportCompoundsFromString", {
   
   resp <- api_instance$ImportCompoundsFromString(pid_dir[1], "ms", paste(readLines("/home/runner/work/sirius-client-openAPI/sirius-client-openAPI/.updater/clientTests/Data/Kaempferol.ms", warn=FALSE), collapse="\n"), "msfile")
   
-  expect_equal(is.list(resp), TRUE)
+  compound <- api_instance$GetCompound(pid_dir[1], resp[[1]]$id)
+  expect_true(inherits(compound, "CompoundId"))
   
   resp <- api_instance$ImportCompoundsFromString(pid_dir[1], "mgf", paste(readLines("/home/runner/work/sirius-client-openAPI/sirius-client-openAPI/.updater/clientTests/Data/laudanosine.mgf", warn=FALSE), collapse="\n"), "mgffile")
   
-  expect_equal(is.list(resp), TRUE)
+  compound <- api_instance$GetCompound(pid_dir[1], resp[[1]]$id)
+  expect_true(inherits(compound, "CompoundId"))
   
   withr::defer(api_instance$DeleteCompound(pid_dir[1], "1_msfile_Kaempferol"))
   withr::defer(api_instance$DeleteCompound(pid_dir[1], "1_mgffile_FEATURE_1"))
