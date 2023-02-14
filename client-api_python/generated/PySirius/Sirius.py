@@ -45,12 +45,11 @@ class SiriusSDK:
         if executable_exist:
             path_to_executable = os.path.abspath(sirius_executable)
         else:
-            try:
-                spacing = "/"
-                if platform.system() == "Windows":
-                    spacing = "\\"
-                path_to_executable = str(os.getenv('PATH')) + spacing + str(os.getenv('PKG_NAME'))
-            except:
+            spacing = "/"
+            if platform.system() == "Windows":
+                spacing = "\\"
+            path_to_executable = str(os.getenv('PATH')) + spacing + str(os.getenv('PKG_NAME'))
+            if os.getenv('PATH') is None or os.getenv('PKG_NAME') is None:
                 print("Please provide a path to the sirius executable if no environment variable is set!")
                 return None
             
