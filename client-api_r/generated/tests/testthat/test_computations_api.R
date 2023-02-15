@@ -65,7 +65,7 @@ test_that("GetDefaultJobConfig", {
   pid_dir <- new_ps("computations3", "computationsDir3")
     
   compounds_api$ImportCompounds(pid_dir[1], data)
-  resp <- api_instance$GetDefaultJobConfig()
+  resp <- api_instance$GetDefaultJobConfig(TRUE)
   
   expect_equal(is.logical(resp$recompute), TRUE)
     

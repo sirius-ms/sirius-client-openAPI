@@ -21,7 +21,7 @@ test_that("GetAccountInfo", {
   resp <- api_instance$GetAccountInfo(TRUE)
 
   expect_equal(resp$username, user)
-  expect_equal(is.character(resp$subscriptions[[1]]$sid), TRUE)
+  expect_true(is.character(resp$subscriptions[[1]]$sid))
 })
 
 test_that("GetSignUpURL", {
@@ -33,7 +33,7 @@ test_that("GetSignUpURL", {
 
   resp <- api_instance$GetSignUpURL()
   
-  expect_equal(is.character(resp), TRUE)
+  expect_true(is.character(resp))
 })
 
 test_that("GetSubscriptions", {
@@ -48,7 +48,7 @@ test_that("GetSubscriptions", {
   }
   resp <- api_instance$GetSubscriptions()
 
-  expect_equal(is.character(resp[[1]]$sid), TRUE)
+  expect_true(is.character(resp[[1]]$sid))
 })
 
 test_that("IsLoggedIn", {
@@ -60,7 +60,7 @@ test_that("IsLoggedIn", {
 
   resp <- api_instance$IsLoggedIn()
 
-  expect_equal(is.logical(resp), TRUE)
+  expect_true(is.logical(resp))
 })
 
 test_that("Login", {

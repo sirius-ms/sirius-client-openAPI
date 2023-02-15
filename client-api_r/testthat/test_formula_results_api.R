@@ -72,7 +72,7 @@ test_that("GetFormulaIds", {
   for (i in c(TRUE, FALSE)) {
     for (j in c(TRUE, FALSE)) {
       resp <- api_instance$GetFormulaIds(pid, compoundId, i, j)
-      # response is list of FormulaResultContainer instances
+      # response is array[FormulaResultContainer]
       expect_true(is.list(resp) && all(sapply(resp, function(x) {inherits(x, "FormulaResultContainer")})))
       
       if (i) { expect_true(is.list(resp) && all(sapply(resp, function(x) {inherits(x$resultOverview, "ResultOverview")}))) }
@@ -151,18 +151,18 @@ test_that("GetStructureCandidates", {
   # @param top_k integer retrieve only the top k StructureCandidates (optional)
   # @return [array[StructureCandidate]]
 
-#   for (i in c(TRUE, FALSE)) {
-#     for (j in c(TRUE, FALSE)) {
-#       for (k in c(TRUE, FALSE)) {
-#         resp <- api_instance$GetStructureCandidates(pid, compoundId, formulaId, i, j, k, num)
-#         # response is FormulaResultContainer
-#         expect_true(inherits(resp, "FormulaResultContainer"))
-
-#         if (i) { expect_true(inherits(resp$resultOverview, "ResultOverview")) }
-#         if (j) { expect_true(inherits(resp$candidate, "FormulaCandidate")) }
-#       }
-#     }
-#   }
+  count = 0
+  num = c(-1,70,60,50,40,30,20,10)
+  for (i in c(TRUE, FALSE)) {
+    for (j in c(TRUE, FALSE)) {
+      for (k in c(TRUE, FALSE)) {
+        count = count + 1
+        resp <- api_instance$GetStructureCandidates(pid, compoundId, formulaId, i, j, k, num[count])
+        # response is array[StructureCandidate]
+        expect_true(is.list(resp) && all(sapply(resp, function(x) {inherits(x, "StructureCandidate")})))
+      }
+    }
+  }
 })
 
 test_that("GetTopStructureCandidate", {
