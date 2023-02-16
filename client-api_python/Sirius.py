@@ -31,12 +31,12 @@ class SiriusSDK:
         executable_exist = False
         if sirius_executable is not None:
             executable_exist = os.path.exists(sirius_executable)
-            if not executable_exist:
+            if not executable_exist and not forceStart:
                 print("Wrong path to executable")
                 return None
         if project_space is not None:
             project_space_exist = os.path.exists(project_space)
-            if not project_space_exist:
+            if not project_space_exist and not forceStart:
                 print("Wrong path to project space")
                 return None
 
@@ -45,12 +45,9 @@ class SiriusSDK:
         if executable_exist:
             path_to_executable = os.path.abspath(sirius_executable)
         else:
-            spacing = "/"
-            if platform.system() == "Windows":
-                spacing = "\\"
-            path_to_executable = str(os.getenv('PATH')) + spacing + str(os.getenv('PKG_NAME'))
-            if os.getenv('PATH') is None or os.getenv('PKG_NAME') is None:
-                print("Please provide a path to the sirius executable if no environment variable is set!")
+            path_to_executable = "sirius"
+            if os.getenv("PATH").find("sirius") == -1 and not forceStart:
+                print("Please provide a path to the sirius executable if not declared in PATH!")
                 return None
             
         # run_command = "java -jar " + sirius_executable + " --output " + project_space + " REST  -p " + port + " -s"
