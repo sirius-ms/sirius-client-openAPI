@@ -44,7 +44,7 @@ test_that("DeleteJobConfig", {
   api_instance$PostJobConfig("canopusConfig", sub)
   resp <- api_instance$GetJobConfig("canopusConfig")
   
-  expect_equal(resp$canopusParas$enabled, FALSE)
+  expect_false(resp$canopusParas$enabled)
   
   api_instance$DeleteJobConfig("canopusConfig")
   resp <- api_instance$GetJobConfig("canopusConfig")
@@ -67,7 +67,7 @@ test_that("GetDefaultJobConfig", {
   compounds_api$ImportCompounds(pid_dir[1], data)
   resp <- api_instance$GetDefaultJobConfig(TRUE)
   
-  expect_equal(is.logical(resp$recompute), TRUE)
+  expect_true(is.logical(resp$recompute))
     
   withr::defer(compounds_api$DeleteCompound(pid_dir[1], "1_Kaempferol_Kaempferol"))
   withr::defer(computations_td(pid_dir))  
@@ -93,7 +93,7 @@ test_that("GetJob", {
   job <- api_instance$StartJob(pid_dir[1], sub, FALSE, FALSE, FALSE)
   resp <- api_instance$GetJob(pid_dir[1], job$id)
   
-  expect_equal(is.character(resp$progress$state), TRUE)
+  expect_true(is.character(resp$progress$state))
   
   withr::defer(api_instance$DeleteJob(pid_dir[1], job$id))
   withr::defer(computations_td(pid_dir)) 
@@ -114,7 +114,7 @@ test_that("GetJobConfig", {
   api_instance$PostJobConfig("adductConfig", sub)
   resp <- api_instance$GetJobConfig("adductConfig")
   
-  expect_equal(is.list(resp$fallbackAdducts), TRUE)
+  expect_true(is.list(resp$fallbackAdducts))
   
   withr::defer(api_instance$DeleteJobConfig("adductConfig")) 
   withr::defer(computations_td(pid_dir)) 
@@ -134,7 +134,7 @@ test_that("GetJobConfigs", {
   api_instance$PostJobConfig("emptyConfig", sub)
   resp <- api_instance$GetJobConfigs()
   
-  expect_equal(is.list(resp), TRUE)
+  expect_true(is.list(resp))
   
   withr::defer(api_instance$DeleteJobConfig("emptyConfig"))
   withr::defer(computations_td(pid_dir)) 
@@ -155,7 +155,7 @@ test_that("GetJobs", {
   
   resp <- api_instance$GetJobsWithHttpInfo(pid_dir[1])
   
-  expect_equal(is.null(resp$response), FALSE)
+  expect_false(is.null(resp$response))
   expect_equal(resp$status_code, 200)
   
   withr::defer(computations_td(pid_dir)) 
@@ -177,7 +177,7 @@ test_that("PostJobConfig", {
   api_instance$PostJobConfig("zodiacConfig", sub)
   resp <- api_instance$GetJobConfig("zodiacConfig")
   
-  expect_equal(resp$zodiacParas$enabled, FALSE)
+  expect_false(resp$zodiacParas$enabled)
   
   withr::defer(api_instance$DeleteJobConfig("zodiacConfig")) 
   withr::defer(computations_td(pid_dir)) 
@@ -202,11 +202,11 @@ test_that("StartJob", {
   sub$recompute <- TRUE
   job <- api_instance$StartJob(pid_dir[1], sub, FALSE, FALSE, FALSE)
   
-  expect_equal(grepl("^[0-9]+$", job$id), TRUE)
+  expect_true(grepl("^[0-9]+$", job$id))
   
   jobs <- api_instance$GetJobs(pid_dir[1])
   
-  expect_equal(is.list(jobs), TRUE)
+  expect_true(is.list(jobs))
   
   withr::defer(api_instance$DeleteJob(pid_dir[1], job$id)) 
   withr::defer(computations_td(pid_dir)) 
@@ -240,11 +240,11 @@ test_that("StartJobFromConfig", {
   comps <- c(comps[[1]]$id, comps[[2]]$id) 
   job <- api_instance$StartJobFromConfig(pid_dir[1], "startJobConfig", comps, TRUE, FALSE, FALSE, FALSE)
   
-  expect_equal(grepl("^[0-9]+$", job$id), TRUE)
+  expect_true(grepl("^[0-9]+$", job$id))
   
   jobs <- api_instance$GetJobs(pid_dir[1])
   
-  expect_equal(is.list(jobs), TRUE)
+  expect_true(is.list(jobs))
   
   withr::defer(api_instance$DeleteJob(pid_dir[1], job$id))
   withr::defer(api_instance$DeleteJobConfig("startJobConfig"))

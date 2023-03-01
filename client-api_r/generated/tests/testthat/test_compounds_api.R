@@ -23,14 +23,16 @@ test_that("DeleteCompound", {
   job <- api_instance$ImportCompounds(pid_dir[1], request_body)
   wait_for_job(pid_dir[1], job)
   resp <- api_instance$GetCompounds(pid_dir[1])
+  resp
   
-  expect_equal(is.list(resp), TRUE)
+  expect_true(is.list(resp))
   expect_equal(length(resp), 2)
   
   api_instance$DeleteCompound(pid_dir[1], "1_Bicuculline_Bicuculline")
   resp <- api_instance$GetCompounds(pid_dir[1])
+  resp
   
-  expect_equal(is.list(resp), TRUE)
+  expect_true(is.list(resp))
   expect_equal(length(resp), 1)
     
   withr::defer(compounds_td(pid_dir))  
@@ -53,15 +55,19 @@ test_that("GetCompound", {
   wait_for_job(pid_dir[1], job)
   
   resp <- api_instance$GetCompound(pid_dir[1], "1_Bicuculline_Bicuculline")
+  resp
   expect_true(inherits(resp, "CompoundId"))
   
   resp <- api_instance$GetCompound(pid_dir[1], "1_Bicuculline_Bicuculline", TRUE)
+  resp
   expect_true(inherits(resp, "CompoundId"))
   
   resp <- api_instance$GetCompound(pid_dir[1], "1_Bicuculline_Bicuculline", FALSE, TRUE)
+  resp
   expect_true(inherits(resp, "CompoundId"))
   
   resp <- api_instance$GetCompound(pid_dir[1], "1_Bicuculline_Bicuculline", TRUE, TRUE)
+  resp
   expect_true(inherits(resp, "CompoundId"))
     
   withr::defer(compounds_td(pid_dir)) 
@@ -79,11 +85,12 @@ test_that("GetCompounds", {
 
   pid_dir <- new_ps("compounds3", "compoundsDir3")
     
-  api_instance$ImportCompounds(pid_dir[1], request_body)
-  Sys.sleep(1)
+  job <- api_instance$ImportCompounds(pid_dir[1], request_body)
+  wait_for_job(pid_dir[1], job)
   resp <- api_instance$GetCompounds(pid_dir[1])
+  resp
   
-  expect_equal(is.list(resp), TRUE)
+  expect_true(is.list(resp))
   expect_equal(length(resp), 2)
     
   withr::defer(compounds_td(pid_dir)) 
@@ -109,7 +116,7 @@ test_that("ImportCompounds", {
   
   for (cid in cids) {
     compound <- api_instance$GetCompound(pid_dir[1], cid$id)
-    # project-space contains inserted compound
+    compound
     expect_true(inherits(compound, "CompoundId"))
   }
     
@@ -132,11 +139,13 @@ test_that("ImportCompoundsFromString", {
   resp <- api_instance$ImportCompoundsFromString(pid_dir[1], "ms", paste(readLines("/home/runner/work/sirius-client-openAPI/sirius-client-openAPI/.updater/clientTests/Data/Kaempferol.ms", warn=FALSE), collapse="\n"), "msfile")
   
   compound <- api_instance$GetCompound(pid_dir[1], resp[[1]]$id)
+  compound
   expect_true(inherits(compound, "CompoundId"))
   
   resp <- api_instance$ImportCompoundsFromString(pid_dir[1], "mgf", paste(readLines("/home/runner/work/sirius-client-openAPI/sirius-client-openAPI/.updater/clientTests/Data/laudanosine.mgf", warn=FALSE), collapse="\n"), "mgffile")
   
   compound <- api_instance$GetCompound(pid_dir[1], resp[[1]]$id)
+  compound
   expect_true(inherits(compound, "CompoundId"))
   
   withr::defer(api_instance$DeleteCompound(pid_dir[1], "1_msfile_Kaempferol"))

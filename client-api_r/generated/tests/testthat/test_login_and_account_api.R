@@ -87,7 +87,7 @@ test_that("Logout", {
 
   resp <- api_instance$Logout()
   
-  expect_equal(resp, NULL)
+  expect_null(resp)
 })
 
 test_that("SignUp", {

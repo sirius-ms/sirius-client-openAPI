@@ -12,5 +12,5 @@ test_that("GetVersionInfo", {
 
   resp <- api_instance$GetVersionInfo()
   
-  expect_equal(is.character(resp$sirius_version), TRUE)
+  expect_true(is.character(resp$sirius_version))
 })

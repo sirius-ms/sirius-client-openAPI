@@ -19,7 +19,7 @@ test_that("CloseProjectSpace", {
   api_instance$CloseProjectSpace(pid_dir[1])
   resp2 <- api_instance$GetProjectSpace(pid_dir[1])
 
-  expect_equal(resp$name, toString(pid_dir[1]))
+  expect_equal(resp$name, pid_dir[1])
   expect_equal(resp2$status_code, 404)
   
   withr::defer(project_spaces_td(pid_dir))
@@ -40,7 +40,7 @@ test_that("CreateProjectSpace", {
   dir <- "psDir2"
   resp <- api_instance$CreateProjectSpace(pid, dir)
 
-  expect_equal(resp$name, toString(pid))
+  expect_equal(resp$name, pid)
   
   withr::defer(project_spaces_td(c(pid, dir)))
 })
@@ -57,7 +57,7 @@ test_that("GetProjectSpace", {
   
   resp <- api_instance$GetProjectSpace(pid_dir[1])
 
-  expect_equal(resp$name, toString(pid_dir[1]))
+  expect_equal(resp$name, pid_dir[1])
   
   withr::defer(project_spaces_td(pid_dir))
 })
@@ -71,7 +71,7 @@ test_that("GetProjectSpaces", {
   
   resp <- api_instance$GetProjectSpaces()
 
-  expect_equal(is.list(resp) || is.null(resp), TRUE)
+  expect_true(is.list(resp) || is.null(resp))
 })
 
 test_that("OpenProjectSpace", {
@@ -88,7 +88,7 @@ test_that("OpenProjectSpace", {
   api_instance$CloseProjectSpace(pid_dir[1])
   resp <- api_instance$OpenProjectSpace(pid_dir[1], pid_dir[2])
 
-  expect_equal(resp$name, toString(pid_dir[1]))
+  expect_equal(resp$name, pid_dir[1])
   
   withr::defer(project_spaces_td(pid_dir))
 })

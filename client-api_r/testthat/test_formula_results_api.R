@@ -21,6 +21,7 @@ test_that("GetBestMatchingCanopusPredictions", {
   # @return [CompoundClasses]
 
   resp <- api_instance$GetBestMatchingCanopusPredictions(pid, compoundId, formulaId)
+  resp
   
   # response is CompoundClasses instance
   expect_true(inherits(resp, "CompoundClasses"))
@@ -37,6 +38,7 @@ test_that("GetCanopusPredictions", {
   # @return [CanopusPredictions]
 
   resp <- api_instance$GetCanopusPredictions(pid, compoundId, formulaId)
+  resp
   
   # response is CanopusPredictions instance
   expect_true(inherits(resp, "CanopusPredictions"))
@@ -72,6 +74,7 @@ test_that("GetFormulaIds", {
   for (i in c(TRUE, FALSE)) {
     for (j in c(TRUE, FALSE)) {
       resp <- api_instance$GetFormulaIds(pid, compoundId, i, j)
+      resp
       # response is array[FormulaResultContainer]
       expect_true(is.list(resp) && all(sapply(resp, function(x) {inherits(x, "FormulaResultContainer")})))
       
@@ -96,6 +99,7 @@ test_that("GetFormulaResult", {
   for (i in c(TRUE, FALSE)) {
     for (j in c(TRUE, FALSE)) {
       resp <- api_instance$GetFormulaResult(pid, compoundId, formulaId, i, j)
+      resp
       # response is FormulaResultContainer instance
       expect_true(inherits(resp, "FormulaResultContainer"))
       
@@ -116,6 +120,7 @@ test_that("GetFragTree", {
   # @return [FragmentationTree]
 
   resp <- api_instance$GetFragTree(pid, compoundId, formulaId)
+  resp
   
   # response is FragmentationTree instance
   expect_true(inherits(resp, "FragmentationTree"))
@@ -132,6 +137,7 @@ test_that("GetSimulatedIsotopePattern", {
   # @return [AnnotatedSpectrum]
 
   resp <- api_instance$GetSimulatedIsotopePattern(pid, compoundId, formulaId)
+  resp
   
   # response is AnnotatedSpectrum instance
   expect_true(inherits(resp, "AnnotatedSpectrum"))
@@ -158,6 +164,7 @@ test_that("GetStructureCandidates", {
       for (k in c(TRUE, FALSE)) {
         count = count + 1
         resp <- api_instance$GetStructureCandidates(pid, compoundId, formulaId, i, j, k, num[count])
+        resp
         # response is array[StructureCandidate]
         expect_true(is.list(resp) && all(sapply(resp, function(x) {inherits(x, "StructureCandidate")})))
       }
@@ -181,6 +188,7 @@ test_that("GetTopStructureCandidate", {
     for (j in c(TRUE, FALSE)) {
       for (k in c(TRUE, FALSE)) {
         resp <- api_instance$GetTopStructureCandidate(pid, compoundId, i, j, k)
+        resp
         # response is StructureCandidate instance
         expect_true(inherits(resp, "StructureCandidate"))
 
