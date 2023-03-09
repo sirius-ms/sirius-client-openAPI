@@ -330,7 +330,7 @@
           {{/isArray}}
           {{#isMap}}
           {{#isPrimitiveType}}
-            {{#isNumeric}}%f{{/isNumeric}}{{^isNumeric}}{{^isBoolean}}"{{/isBoolean}}%s{{^isBoolean}}"{{/isBoolean}}{{/isNumeric}}
+            {{#isNumeric}}%f{{/isNumeric}}{{^isNumeric}}{{^isBoolean}}{{/isBoolean}}%s{{^isBoolean}}{{/isBoolean}}{{/isNumeric}}
           {{/isPrimitiveType}}
           {{^isPrimitiveType}}%s
           {{/isPrimitiveType}}
