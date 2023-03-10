@@ -5,7 +5,7 @@ name: Client_Updater
 # Controls when the action will run. Workflow runs when manually triggered using the UI
 # or API.
 on:
-  workflow_dispatch:
+  [workflow_dispatch, create]
     # Inputs the workflow accepts.
 #    inputs:
  #     name:
@@ -20,6 +20,7 @@ on:
 jobs:
   # does not run on the temp branch itself
   CreateTempBranch:
+    if: ${GITHUB_REF##*/} != 'Updates'
     runs-on: ubuntu-latest
     steps:
     - name: Create Branch
@@ -31,10 +32,12 @@ jobs:
     - name: Trigger Actions on sirius-client-openAPI
       run: |
         echo running on branch ${GITHUB_REF##*/}
-        #run: curl -X POST -H "Authorization:Bearer ${{ secrets.CLIENT_API_REPO_TOKEN }}" -H "Accept:application/vnd.github.v3+json" ${{ secrets.CLIENT_API_REPO_URL }} -d '{"ref":"master"}'
+        run: curl -X POST -H "Authorization:Bearer ${{ secrets.CLIENT_API_REPO_TOKEN }}" -H "Accept:application/vnd.github.v3+json" ${{ secrets.CLIENT_API_REPO_URL }} -d '{"ref":"Updates"}'
   UpdateCache:
+    if: ${GITHUB_REF##*/} == 'Updates'
     uses: ./.github/workflows/update-api.yml
   UpdateClients:
+    if: ${GITHUB_REF##*/} == 'Updates'
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     timeout-minutes: 10
@@ -129,7 +132,7 @@ jobs:
     - name: update file and create pull request
       uses: repo-sync/pull-request@v2
       with:
-          destination_branch: "master"
+          destination_branch: "Versioning"
           github_token: ${{ secrets.GITHUB_TOKEN }}
           pr_label: "feature, automated pr"
           pr_title: "Auto-Updated OpenAPI Clients"
