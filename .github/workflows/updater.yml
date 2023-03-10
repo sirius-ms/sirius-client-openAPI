@@ -20,7 +20,6 @@ on:
 jobs:
   # This workflow contains a single job called "greet"
   UpdateCache:
-    needs: UpdateClients
     uses: ./.github/workflows/update-api.yml
   UpdateClients:
     # The type of runner that the job will run on
