@@ -35,4 +35,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Update
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: gh workflow run NewUpdate --ref "Updates"
