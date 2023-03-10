@@ -116,7 +116,7 @@ jobs:
     - name: update file and create pull request
       uses: repo-sync/pull-request@v2
       with:
-          destination_branch: ${GITHUB_REF##*/}
+          destination_branch: "Versioning"
           github_token: ${{ secrets.GITHUB_TOKEN }}
           pr_label: "feature, automated pr"
           pr_title: "Auto-Updated OpenAPI Clients"
