@@ -3,3 +3,108 @@ name: NewUpdate
 on:
   [workflow_dispatch, repository_dispatch]
   
+jobs:
+  UpdateClients:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Runs using the runners shell
+    - name: checkout repo
+      uses: actions/checkout@v3.1.0
+    - name: Download latest openapi-generator
+      run: |
+        cd .updater/openapi_generator
+        wget https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/6.2.1/openapi-generator-cli-6.2.1.jar -O openapi-generator-cli.jar
+        java -jar openapi-generator-cli.jar version > version
+    - name: Download latest Sirius Release
+      uses: nick-fields/retry@v2
+      with:
+        max_attempts: 5
+        timeout_minutes: 2
+        command: |
+            cd .updater/api
+            curl -s  https://api.github.com/repos/boecker-lab/sirius/releases | grep 'browser_download_url.*linux64-service.zip\"' | sort | tac | head -n 1 | cut -d : -f 2,3 | tr -d \" | wget -i -
+            echo "Download Complete"
+            unzip *.zip
+            echo "Api Ready"
+    - name: Run Rest Api
+      run: |
+        bash .updater/api/sirius/bin/sirius REST -p 8080 -s &
+    - name: Update api-docs.json
+      run: |
+        while ! nc -z localhost 8080; do sleep 0.1; done
+        cd .updater/api
+        wget http://localhost:8080/v3/api-docs
+        mv api-docs api-docs.json
+    - name: Update Clients
+      run: |
+        #echo "generating Java Code"
+        #java -jar .updater/openapi_generator/openapi-generator-cli.jar generate -i .updater/api/api-docs.json -c .updater/config/Java/config.json -g java -o client-api_java/generated
+        
+        #echo "generating Python Code"
+        #java -jar .updater/openapi_generator/openapi-generator-cli.jar generate -i .updater/api/api-docs.json -c .updater/config/Python/config.json -g python -o client-api_python/generated
+        
+        echo "generating R Code"
+        rm -r client-api_r/generated/*
+        java -jar .updater/openapi_generator/openapi-generator-cli.jar generate -i .updater/api/api-docs.json -c .updater/config/R/config.json -g r -o client-api_r/generated -t client-api_r/templates/r
+        
+        #echo "generating Ruby Code"
+        #java -jar .updater/openapi_generator/openapi-generator-cli.jar generate -i .updater/api/api-docs.json -c .updater/config/Ruby/config.json -g ruby -o client-api_ruby/generated
+        echo "generating Finished!"
+#    - name: Format Python Package
+#      run: |
+#        echo removed
+#         rm client-api_python/generated/PySirius/sirius_api.py
+#         cp client-api_python/sirius_api.py client-api_python/generated/PySirius
+#         rm client-api_python/generated/PySirius/Sirius.py
+#         cp client-api_python/Sirius.py client-api_python/generated/PySirius
+        
+#         echo "from PySirius.sirius_api import PySiriusAPI" >> client-api_python/generated/PySirius/__init__.py
+#         echo "from PySirius.Sirius import SiriusSDK" >> client-api_python/generated/PySirius/__init__.py
+    - name: Format R package
+      run: |
+        cp client-api_r/SiriusSDK.R  client-api_r/generated/R/SiriusSDK.R
+        echo >> client-api_r/generated/NAMESPACE
+        echo "# SDK" >> client-api_r/generated/NAMESPACE
+        echo "export(SiriusSDK)" >> client-api_r/generated/NAMESPACE
+        
+        cp -r client-api_r/testthat client-api_r/generated/tests
+        
+        chmod +x ./client-api_r/api_response_fix.sh
+        ./client-api_r/api_response_fix.sh ./client-api_r/generated/R/api_response.R
+        
+        chmod +x ./client-api_r/api_client_fix.sh
+        ./client-api_r/api_client_fix.sh ./client-api_r/generated/R/api_client.R
+        
+        chmod +x ./client-api_r/compounds_api_fix.sh
+        ./client-api_r/compounds_api_fix.sh ./client-api_r/generated/R/compounds_api.R
+        
+        chmod +x ./client-api_r/computations_api_fix.sh
+        ./client-api_r/computations_api_fix.sh ./client-api_r/generated/R/computations_api.R
+        
+        chmod +x ./client-api_r/add_to_docu.sh
+        ./client-api_r/add_to_docu.sh ./client-api_r/generated/docs/CompoundsApi.md
+    - name: Remove Sirius Rest Api
+      run: |
+        cd .updater/api
+        rm -rf *sirius*
+        echo "Done"
+    - name: Remove Openapi Generator Files
+      run: |
+        rm .updater/openapi_generator/openapi-generator-cli.jar
+        ls ./.github/workflows
+        echo "Done"
+    - name: update file and push to remote
+      uses: stefanzweifel/git-auto-commit-action@v4.15.2
+      with:
+        commit_message: Auto-Updated OpenAPI Clients
+    - name: update file and create pull request
+      uses: repo-sync/pull-request@v2
+      with:
+          destination_branch: "Versioning"
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          pr_label: "feature, automated pr"
+          pr_title: "Auto-Updated OpenAPI Clients"
+          pr_allow_empty: true
