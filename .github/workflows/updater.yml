@@ -34,6 +34,9 @@ jobs:
     needs: CreateTempBranch
     runs-on: ubuntu-latest
     steps:
-      - run: gh workflow run NewUpdate --ref "Updates"
+      - name: checkout repo
+        uses: actions/checkout@v3.1.0
+      - name: Call Workflow
+        run: gh workflow run NewUpdate --ref "Updates"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
