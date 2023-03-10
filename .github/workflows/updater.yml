@@ -110,6 +110,8 @@ jobs:
       run: |
         rm .updater/openapi_generator/openapi-generator-cli.jar
         echo "Done"
+    - name: UpdateCache
+      uses: ./.github/workflows/update-api.yml
     - name: update file and create pull request
       uses: repo-sync/pull-request@v2
       with:
