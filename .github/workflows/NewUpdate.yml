@@ -1,7 +1,11 @@
 name: NewUpdate
 
 on:
-  [workflow_dispatch, repository_dispatch]
+  workflow_dispatch:
+    inputs:
+      target_branch:
+        type: string
+        required: true
   
 jobs:
   UpdateClients:
@@ -103,7 +107,7 @@ jobs:
     - name: update file and create pull request
       uses: repo-sync/pull-request@v2
       with:
-          destination_branch: "Versioning"
+          destination_branch: ${{ inputs.target_branch }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
           pr_label: "feature, automated pr"
           pr_title: "Auto-Updated OpenAPI Clients"
