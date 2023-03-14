@@ -27,6 +27,6 @@ jobs:
       - name: checkout repo
         uses: actions/checkout@v3.1.0
       - name: Call Workflow
-        run: gh workflow run SetupBranch.yml -f target_branch=$(date +"%Y%m%d%H%M%S%N")
+        run: gh workflow run SetupBranch.yml --ref ${GITHUB_REF##*/} -f target_branch=$(date +"%Y%m%d%H%M%S%N")
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
