@@ -112,3 +112,5 @@ jobs:
           pr_label: "feature, automated pr"
           pr_title: "Auto-Updated OpenAPI Clients"
           pr_allow_empty: true
+    - name: check if request has been created
+      run: echo ${{steps.open-pr.outputs.pr_created}}
