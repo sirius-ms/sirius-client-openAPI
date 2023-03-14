@@ -109,8 +109,8 @@ jobs:
       with:
           destination_branch: ${{ inputs.target_branch }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          pr_label: "feature, automated pr"
-          pr_title: "Auto-Updated OpenAPI Clients"
+          pr_label: "Feature"
+          pr_title: "AutoUpdated"
           pr_allow_empty: true
     - name: check if request has been created
       run: echo ${{steps.open-pr.outputs.pr_created}}
