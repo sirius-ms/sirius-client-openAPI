@@ -37,6 +37,6 @@ jobs:
       - name: checkout repo
         uses: actions/checkout@v3.1.0
       - name: Call Workflow
-        run: gh workflow run NewUpdate.yml --ref "Updates"
+        run: gh workflow run NewUpdate.yml --ref "Updates" -f target_branch=${GITHUB_REF##*/}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
