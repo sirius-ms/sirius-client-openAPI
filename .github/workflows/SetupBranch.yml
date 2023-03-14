@@ -31,6 +31,3 @@ jobs:
         run: gh workflow run NewUpdate.yml --ref ${{ inputs.target_branch }} -f target_branch=${GITHUB_REF##*/}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-
-$(date +"%Y%m%d%H%M%S%N")
