@@ -7,7 +7,7 @@ conda install -c conda-forge r-base r-remotes
 ## Getting RSirius
 ```R
 library(remotes)
-install_github(repo = "LukasScholz/sirius-client-openAPI", subdir = "client-api_r/generated", ref = "master", build = TRUE)
+install_github(repo = "boecker-lab/sirius-client-openAPI", subdir = "client-api_r/generated", ref = "master", build = TRUE)
 ```
 After installation, simply import RSirius as
 ```R
