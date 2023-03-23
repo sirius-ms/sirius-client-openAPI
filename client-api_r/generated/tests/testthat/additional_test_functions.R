@@ -1,3 +1,10 @@
+# wait for job to finish
+wait_for_job <- function(pid, job) {
+  while (!(ComputationsApi$new()$GetJob(pid, job$id)$progress$state == "DONE")) {
+    Sys.sleep(1)
+  }
+}
+  
 # create new project space with specified id and directory
 new_ps <- function(id, dir) {
   ProjectSpacesApi$new()$CreateProjectSpace(id, dir)

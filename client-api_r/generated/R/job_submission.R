@@ -308,7 +308,7 @@ JobSubmission <- R6::R6Class(
         if (!is.null(self$`configMap`)) {
           sprintf(
           '"configMap":
-            "%s"
+            %s
           ',
           jsonlite::toJSON(lapply(self$`configMap`, function(x){ x }), auto_unbox = TRUE, digits = NA)
           )

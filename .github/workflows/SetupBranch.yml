@@ -1,0 +1,33 @@
+
+name: SetupBranch
+
+# Controls when the action will run. Workflow runs when manually triggered using the UI
+# or API.
+on:
+  workflow_dispatch:
+    inputs:
+      target_branch:
+        type: string
+        required: true
+  
+  
+jobs:
+  CreateTempBranch:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Create Branch
+      uses: peterjgrainger/action-create-branch@v2.2.0
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        branch: ${{ inputs.target_branch }}
+  UpdateOnNewBranch:
+    needs: CreateTempBranch
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v3.1.0
+      - name: Call Workflow
+        run: gh workflow run NewUpdate.yml --ref ${{ inputs.target_branch }} -f target_branch=${GITHUB_REF##*/}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

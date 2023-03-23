@@ -1,0 +1,100 @@
+name: RDebug
+
+
+on: [workflow_dispatch, workflow_call]
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        # 3.4.0 purrr error, 3.3.0 not supported by action
+        r-version: ["4.2.0"]
+    env:
+      SIRIUS_USER: ${{ secrets.SIRIUS_USER }}
+      SIRIUS_PW: ${{ secrets.SIRIUS_PW }}
+    steps:
+    - name: Cache Sirius Release
+      id: cache-sirius
+      uses: actions/cache@v3
+      with:
+        path: .updater/api/sirius
+        key: sirius
+    - name: Run Sirius
+      run: |
+        ./.updater/api/sirius/bin/sirius REST -s -p 8080 &
+        sleep 10
+    - uses: actions/checkout@v3
+    - name: Set up R ${{ matrix.r-version }}
+      uses: r-lib/actions/setup-r@v2
+      with:
+        r-version: ${{ matrix.r-version }}
+    - name: Install Rsirius dependencies
+      uses: r-lib/actions/setup-r-dependencies@v2
+      with:
+        cache-version: 1
+        extra-packages: |
+          any::devtools
+        working-directory: ./client-api_r/generated
+    - name: Build Rsirius
+      run: |
+        R CMD build ./client-api_r/generated
+    - name: Install Rsirius
+      run: |
+        R CMD INSTALL --preclean Rsirius_1.0.0.tar.gz
+    - name: Run Rsirius
+      run: library(Rsirius);
+        api_instance <- FormulaResultsApi$new();
+        compoundId <- "1_Bicuculline_Bicuculline";
+        formulaId <- "C20H17NO6_[M+H]+";
+        pid <- "formRes";
+        dir <- "formResDir";
+        ProjectSpacesApi$new()$CreateProjectSpace(pid, dir, "/home/runner/work/sirius-client-openAPI/sirius-client-openAPI/.updater/clientTests/Data/test-project-results", TRUE);
+        resp <- api_instance$GetStructureCandidates(pid, compoundId, formulaId, TRUE, TRUE, TRUE, 10);
+        resp1 <- api_instance$GetTopStructureCandidate(pid, compoundId, TRUE, TRUE, TRUE);
+        print("### RESP 1");
+        resp1;
+        print("after resp1");
+        resp2http <- api_instance$GetTopStructureCandidateWithHttpInfo(pid, compoundId, FALSE, TRUE, TRUE);
+        print("### RESP 2 HTTP");
+        resp2http$response;
+        resp2 <- api_instance$GetTopStructureCandidate(pid, compoundId, FALSE, TRUE, TRUE);
+        print("### RESP 2");
+        resp2;
+        resp3 <- api_instance$GetTopStructureCandidate(pid, compoundId, TRUE, FALSE, TRUE);
+        print("### RESP 3");
+        resp3;
+        resp4 <- api_instance$GetTopStructureCandidate(pid, compoundId, TRUE, TRUE, FALSE);
+        print("### RESP 4");
+        resp4;
+        resp5 <- api_instance$GetTopStructureCandidate(pid, compoundId, FALSE, FALSE, TRUE);
+        print("### RESP 5");
+        resp5;
+        resp6 <- api_instance$GetTopStructureCandidate(pid, compoundId, FALSE, TRUE, FALSE);
+        print("### RESP 6");
+        resp6;
+        resp7 <- api_instance$GetTopStructureCandidate(pid, compoundId, TRUE, FALSE, FALSE);
+        print("### RESP 7");
+        resp7;
+        resp8 <- api_instance$GetTopStructureCandidate(pid, compoundId, FALSE, FALSE, FALSE);
+        print("### RESP 8");
+        resp8;
+        
+        isTRUE(is.list(resp));
+        sapply(resp, function(x) {print(x)});
+        isTRUE(all(sapply(resp, function(x) {inherits(x, "StructureCandidate")})));
+        isTRUE(is.list(resp) && all(sapply(resp, function(x) {inherits(x, "StructureCandidate")})));
+        resp
+#         resp2 <- api_instance$GetStructureCandidatesWithHttpInfo(pid, compoundId, formulaId, FALSE, TRUE, FALSE, 10);
+#         resp2$response;
+#         resp2 <- api_instance$GetStructureCandidates(pid, compoundId, formulaId, FALSE, TRUE, FALSE, 10);
+#         resp2;
+      shell: Rscript {0}
+      
+    - name: Traceback
+      if: always() 
+      run: traceback()
+      shell: Rscript {0}

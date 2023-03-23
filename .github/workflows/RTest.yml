@@ -48,7 +48,3 @@ jobs:
     - name: Test Rsirius using testthat
       run: |
         R CMD check Rsirius_1.0.0.tar.gz --no-manual
-    - name: Check log file
-      if: always()
-      run: |
-        cat Rsirius.Rcheck/00check.log

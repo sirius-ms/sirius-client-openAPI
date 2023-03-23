@@ -50,14 +50,14 @@ Please follow the [installation procedure](#installation--usage) and then run th
 from PySirius import SiriusSDK
 project_space = "PATH_TO_EMPTY_OR_PROJECT_FOLDER"
 sirius_executable = "PATH_TO_THE_SIRIUS_EXECUTEABLE"
-api = SiriusSDK.start(project_space, sirius_executable)
+api = SiriusSDK.start(sirius_executable=sirius_executable, project_space=project_space)
 print(api.get_ComputationsApi().get_default_job_config())
 print(api.get_ProjectSpacesApi().get_project_spaces())
 ```
 
 ### Remote Endpoint
 
-Please follow the [installation procedure](#installation--usage) and then run the following (while replacing address and port with the Remote adress specifications):
+Please follow the [installation procedure](#installation--usage) and then run the following (while replacing address and port with the Remote address specifications):
 
 ```python
 from PySirius import PySiriusAPI

@@ -316,11 +316,21 @@ ApiClient  <- R6::R6Class(
         # To handle the "array" type
         inner_return_type <- regmatches(return_type,
                                         regexec(pattern = "array\\[(.*)\\]", return_type))[[1]][2]
+
         if (c(inner_return_type) %in% primitive_types) {
-          return_obj <- vector("list", length = length(obj))
-          if (length(obj) > 0) {
-            for (row in 1:length(obj)) {
-              return_obj[[row]] <- self$deserializeObj(obj[row], inner_return_type, pkg_env)
+          if (inner_return_type == "integer" && is.list(obj) && length(obj)>0 && exists("obj"[[1]])) {
+            return_obj <- vector("list", length = length(obj[[1]]))
+            if (length(obj[[1]]) > 0) {
+              for (row in 1:length(obj[[1]])) {
+                return_obj[[row]] <- self$deserializeObj(obj[[1]][row], inner_return_type, pkg_env)
+              }
+            }
+          } else {
+            return_obj <- vector("list", length = length(obj))
+            if (length(obj) > 0) {
+              for (row in 1:length(obj)) {
+                return_obj[[row]] <- self$deserializeObj(obj[row], inner_return_type, pkg_env)
+              }
             }
           }
         } else {

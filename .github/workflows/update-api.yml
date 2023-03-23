@@ -22,7 +22,7 @@ jobs:
             cd .updater/api
             curl -s  https://api.github.com/repos/boecker-lab/sirius/releases | grep 'browser_download_url.*linux64-service.zip\"' | sort | tac | head -n 1 | cut -d : -f 2,3 | tr -d \" | wget -i -
             echo "Download Complete"
-            unzip *.zip
+            unzip -o *.zip
             echo "Api Ready"
     - name: Check cached version
       uses: nick-fields/retry@v2
@@ -30,12 +30,14 @@ jobs:
         max_attempts: 5
         timeout_minutes: 2
         command: |
-            currVersion=$(cat .updater/api/api.version)
-            newVersion=$(curl -s  https://api.github.com/repos/boecker-lab/sirius/releases | grep 'browser_download_url.*linux64-service.zip\"' | sort | tac | head -n 1 | cut -d : -f 2,3 | tr -d \" | egrep -o "([0-9]{1,}\.)+[0-9]{1,}" | head -1)
             cd .updater/api
+            currVersion=$(cat ./sirius/HashCode)
+            curl -s https://api.github.com/repos/boecker-lab/sirius/releases | grep 'browser_download_url.*linux64-service.zip.sha256\"' | sort | tac | head -n 1 | cut -d : -f 2,3 | tr -d \" | wget -i -
+            newVersion=$(cat *.sha256 | cut -d " " -f 1)
+            echo New Version is $newVersion
             if [ "$currVersion" != "$newVersion" ]; then
             sleep 1
             curl -s  https://api.github.com/repos/boecker-lab/sirius/releases | grep 'browser_download_url.*linux64-service.zip\"' | sort | tac | head -n 1 | cut -d : -f 2,3 | tr -d \" | wget -i -
-            unzip *.zip
-            echo $newVersion > api.version
+            unzip -o *.zip
+            echo $newVersion > ./sirius/HashCode
             fi
