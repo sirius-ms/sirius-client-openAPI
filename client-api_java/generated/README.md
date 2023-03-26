@@ -1,8 +1,8 @@
 # openapi-java-client
 
 SIRIUS Nightsky API
-- API version: v0.9 on SIRIUS 5.6.3-SNAPSHOT
-  - Build date: 2023-01-08T15:09:34.430352Z[Etc/UTC]
+- API version: v0.9 on SIRIUS 5.6.4-SNAPSHOT
+  - Build date: 2023-03-26T19:58:17.564906Z[Etc/UTC]
 
 REST API that provides the full functionality of SIRIUS and its web services as background service. It is intended as entry-point for scripting languages and software integration SDKs.
 
@@ -40,7 +40,7 @@ Add this dependency to your project's POM:
 <dependency>
   <groupId>org.openapitools</groupId>
   <artifactId>openapi-java-client</artifactId>
-  <version>v0.9 on SIRIUS 5.6.3-SNAPSHOT</version>
+  <version>v0.9 on SIRIUS 5.6.4-SNAPSHOT</version>
   <scope>compile</scope>
 </dependency>
 ```
@@ -56,7 +56,7 @@ Add this dependency to your project's build file:
   }
 
   dependencies {
-     implementation "org.openapitools:openapi-java-client:v0.9 on SIRIUS 5.6.3-SNAPSHOT"
+     implementation "org.openapitools:openapi-java-client:v0.9 on SIRIUS 5.6.4-SNAPSHOT"
   }
 ```
 
@@ -70,7 +70,7 @@ mvn clean package
 
 Then manually install the following JARs:
 
-* `target/openapi-java-client-v0.9 on SIRIUS 5.6.3-SNAPSHOT.jar`
+* `target/openapi-java-client-v0.9 on SIRIUS 5.6.4-SNAPSHOT.jar`
 * `target/lib/*.jar`
 
 ## Getting Started
