@@ -109,18 +109,12 @@ jobs:
       uses: repo-sync/pull-request@v2
       with:
           destination_branch: ${{ inputs.target_branch }}
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.BOT_PAT }}
           pr_label: "Feature"
           pr_title: "AutoUpdated"
           pr_allow_empty: true
     - name: check if request has been created
       run: echo ${{steps.open-pr.outputs.pr_created}}
-    - name: generate app token
-      uses: tibdex/github-app-token@v1
-      id: generate-token
-      with:
-          app_id: ${{ secrets.APP_ID }}
-          private_key: ${{ secrets.APP_PRIVATE_KEY }}
     - name: lock pull request
       uses: sudo-bot/action-pull-request-lock@v1.1.0
       with:
