@@ -114,12 +114,15 @@ jobs:
           pr_allow_empty: true
     - name: check if request has been created
       run: echo ${{steps.open-pr.outputs.pr_created}}
-    - name: Add additional commit to activate Tests
-      run: |
-        cd .updater
-        echo "." > .ignoreMe
-        echo "Done"
     - name: update file and push to remote
       uses: stefanzweifel/git-auto-commit-action@v4.15.2
       with:
         commit_message: Veriefied Auto Update
+    - name: start Python Test
+      run: gh workflow run PythonTest.yml
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: start R Test
+      run: gh workflow run RTest.yml
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
