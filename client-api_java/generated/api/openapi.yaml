@@ -4,7 +4,7 @@ info:
     services as background service. It is intended as entry-point for scripting languages
     and software integration SDKs.
   title: SIRIUS Nightsky API
-  version: v0.9 on SIRIUS 5.6.3-SNAPSHOT
+  version: v0.9 on SIRIUS 5.6.4-SNAPSHOT
 servers:
 - description: Generated server url
   url: http://localhost:8080
