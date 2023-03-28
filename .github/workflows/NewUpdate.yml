@@ -115,9 +115,15 @@ jobs:
           pr_allow_empty: true
     - name: check if request has been created
       run: echo ${{steps.open-pr.outputs.pr_created}}
+    - name: generate app token
+    - uses: tibdex/github-app-token@v1
+      id: generate-token
+      with:
+          app_id: ${{ secrets.APP_ID }}
+          private_key: ${{ secrets.APP_PRIVATE_KEY }}
     - name: lock pull request
       uses: sudo-bot/action-pull-request-lock@v1.1.0
       with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
+        github-token: ${{ steps.generate-token.outputs.token }}
         number: ${{steps.open-pr.outputs.pr_number}}
         lock-reason: resolved
