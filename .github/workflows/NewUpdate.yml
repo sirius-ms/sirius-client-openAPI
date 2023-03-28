@@ -120,4 +120,4 @@ jobs:
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         number: ${{steps.open-pr.outputs.pr_number}}
-        lock-reason: Automated
+        lock-reason: resolved
