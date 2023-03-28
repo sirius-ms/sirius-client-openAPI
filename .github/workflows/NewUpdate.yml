@@ -105,6 +105,7 @@ jobs:
       with:
         commit_message: Auto-Updated OpenAPI Clients
     - name: update file and create pull request
+      id: open-pr
       uses: repo-sync/pull-request@v2
       with:
           destination_branch: ${{ inputs.target_branch }}
@@ -114,15 +115,9 @@ jobs:
           pr_allow_empty: true
     - name: check if request has been created
       run: echo ${{steps.open-pr.outputs.pr_created}}
-    - name: update file and push to remote
-      uses: stefanzweifel/git-auto-commit-action@v4.15.2
+    - name: lock pull request
+      uses: sudo-bot/action-pull-request-lock@v1.1.0
       with:
-        commit_message: Veriefied Auto Update
-    - name: start Python Test
-      run: gh workflow run PythonTest.yml --ref ${GITHUB_REF##*/}
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    - name: start R Test
-      run: gh workflow run RTest.yml --ref ${GITHUB_REF##*/}
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        number: ${{steps.open-pr.outputs.pr_number}}
+        lock-reason: Automated
