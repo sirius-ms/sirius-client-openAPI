@@ -124,6 +124,6 @@ jobs:
     - name: lock pull request
       uses: sudo-bot/action-pull-request-lock@v1.1.0
       with:
-        github-token: ${{ steps.generate-token.outputs.token }}
+        github-token: ${{ secrets.BOT_PAT }}
         number: ${{steps.open-pr.outputs.pr_number}}
         lock-reason: resolved
