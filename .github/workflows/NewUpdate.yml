@@ -116,7 +116,7 @@ jobs:
     - name: check if request has been created
       run: echo ${{steps.open-pr.outputs.pr_created}}
     - name: generate app token
-    - uses: tibdex/github-app-token@v1
+      uses: tibdex/github-app-token@v1
       id: generate-token
       with:
           app_id: ${{ secrets.APP_ID }}
