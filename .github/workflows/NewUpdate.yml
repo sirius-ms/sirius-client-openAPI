@@ -119,10 +119,10 @@ jobs:
       with:
         commit_message: Veriefied Auto Update
     - name: start Python Test
-      run: gh workflow run PythonTest.yml
+      run: gh workflow run PythonTest.yml --ref ${GITHUB_REF##*/}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: start R Test
-      run: gh workflow run RTest.yml
+      run: gh workflow run RTest.yml --ref ${GITHUB_REF##*/}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
