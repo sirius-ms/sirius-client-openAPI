@@ -4,7 +4,7 @@
 name: RTest
 
 
-on: [push, workflow_dispatch, workflow_call, pull_request]
+on: [workflow_dispatch, workflow_call, pull_request]
 
 
 jobs:
