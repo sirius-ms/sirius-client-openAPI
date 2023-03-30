@@ -109,7 +109,7 @@ jobs:
       uses: repo-sync/pull-request@v2
       with:
           destination_branch: ${{ inputs.target_branch }}
-          github_token: ${{ secrets.BOT_PAT }}
+          github_token: ${{ secrets.MERGE_REQUEST_TOKEN }}
           pr_label: "Feature"
           pr_title: "AutoUpdated"
           pr_allow_empty: true
@@ -118,6 +118,6 @@ jobs:
     - name: lock pull request
       uses: sudo-bot/action-pull-request-lock@v1.1.0
       with:
-        github-token: ${{ secrets.BOT_PAT }}
+        github-token: ${{ secrets.MERGE_REQUEST_TOKEN }}
         number: ${{steps.open-pr.outputs.pr_number}}
         lock-reason: resolved
