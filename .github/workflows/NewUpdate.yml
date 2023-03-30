@@ -68,6 +68,13 @@ jobs:
         
          echo "from PySirius.sirius_api import PySiriusAPI" >> client-api_python/generated/PySirius/__init__.py
          echo "from PySirius.Sirius import SiriusSDK" >> client-api_python/generated/PySirius/__init__.py
+         
+         cd client-api_python/generated
+         sed '/## Installation & Usage/Q' README.md > tempor
+         echo "## Documentation for API Endpoints" >> tempor
+         sed '1,/## Documentation for API Endpoints/d' README.md >> tempor
+         cat tempor > README.md
+         rm tempor
     - name: Format R package
       run: |
         cp client-api_r/SiriusSDK.R  client-api_r/generated/R/SiriusSDK.R
