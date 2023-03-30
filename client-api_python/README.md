@@ -69,9 +69,7 @@ print(api.get_ProjectSpacesApi().get_project_spaces())
 ```
 
 ## Documentation for API Endpoints
-
-All URIs are relative to *http://localhost:8080*
-
-Please click here(generated/README.md## Documentation for API Endpoints)
+Please click [here](generated/README.md#documentation-for-api-endpoints)
 
 ## Documentation For Models
+Please click [here](generated/README.md#documentation-for-models)
