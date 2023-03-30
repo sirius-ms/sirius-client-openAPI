@@ -22,7 +22,7 @@ jobs:
         cd .updater/openapi_generator
         wget https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/6.2.1/openapi-generator-cli-6.2.1.jar -O openapi-generator-cli.jar
         java -jar openapi-generator-cli.jar version > version
-        cd .updater/swagger
+        cd ./../swagger
         wget https://repo1.maven.org/maven2/io/swagger/codegen/v3/swagger-codegen-cli/3.0.35/swagger-codegen-cli-3.0.35.jar -O swagger-codegen-cli.jar
         java -jar swagger-codegen-cli.jar version > version
     - name: Download latest Sirius Release
