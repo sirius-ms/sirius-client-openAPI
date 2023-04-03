@@ -50,7 +50,7 @@ SiriusSDK = R6::R6Class(
         } else if (Sys.info()['sysname']=="Windows"){
           setwd("./app")
 	  file <- Sys.glob(file.path("sirius_cli*.jar"))
-	} else if (Sys.info()['sysname']=="Darwin" {
+	} else if (Sys.info()['sysname']=="Darwin"){
 	  setwd("../app")
 	  file <- Sys.glob(file.path("sirius_cli*.jar"))
         } else {
