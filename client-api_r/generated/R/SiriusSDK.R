@@ -10,7 +10,7 @@ SiriusSDK = R6::R6Class(
     basePath = "",
     baseDirectory = "",
 
-    start = function(pathToSirius = "sirius", projectSpace = NULL, host = "http://localhost:", port = 8080, workSpace = NULL, force=FALSE){
+    start = function(pathToSirius = "sirius_from_path", projectSpace = NULL, host = "http://localhost:", port = 8080, workSpace = NULL, force=FALSE){
 
       # reset SDK params to default when failing on early stage, i.e. when providing a port as non integer
       resetSDK <- function(){
@@ -27,7 +27,7 @@ SiriusSDK = R6::R6Class(
       getVersion <- function(){
 
 	# try to get Sirius from PATH
-        if(pathToSirius == "sirius"){
+        if(pathToSirius == "sirius_from_path"){
           tryCatch({
             out <- system("sirius --version", intern=TRUE, show.output.on.console=FALSE)
             numbers <- regmatches(out[1], gregexpr("\\d+", out[1]))[[1]]
@@ -46,15 +46,19 @@ SiriusSDK = R6::R6Class(
         setwd(dirname(pathToSirius))
         if(Sys.info()['sysname']=="Linux"){
           setwd("../lib/app")
-        } else if (Sys.info()['sysname'] %in% c("Windows","Darwin")){
-          setwd("../app")
+	  file <- Sys.glob(file.path('*.jar'))
+        } else if (Sys.info()['sysname']=="Windows"){
+          setwd("./app")
+	  file <- Sys.glob(file.path("sirius_cli*.jar"))
+	} else if (Sys.info()['sysname']=="Darwin"){
+	  setwd("../app")
+	  file <- Sys.glob(file.path("sirius_cli*.jar"))
         } else {
           # reset working directory
           setwd(wd)
           resetSDK()
           stop("Unsupported operating system.")
         }
-        file <- Sys.glob(file.path('*.jar'))
         numbers <- regmatches(file, gregexpr("\\d+", file))[[1]]
         # reset working directory
         setwd(wd)
