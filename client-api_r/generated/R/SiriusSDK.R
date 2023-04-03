@@ -10,7 +10,7 @@ SiriusSDK = R6::R6Class(
     basePath = "",
     baseDirectory = "",
 
-    start = function(pathToSirius = "sirius_ms", projectSpace = NULL, host = "http://localhost:", port = 8080, workSpace = NULL, force=FALSE){
+    start = function(pathToSirius = "sirius-ms", projectSpace = NULL, host = "http://localhost:", port = 8080, workSpace = NULL, force=FALSE){
 
       # reset SDK params to default when failing on early stage, i.e. when providing a port as non integer
       resetSDK <- function(){
@@ -27,7 +27,7 @@ SiriusSDK = R6::R6Class(
       getVersion <- function(){
 
 	# try to get Sirius from PATH
-        if(pathToSirius == "sirius_ms"){
+        if(pathToSirius == "sirius-ms"){
           tryCatch({
 	    if (Sys.info()['sysname'] %in% c("Linux","Darwin")){
               out <- system("sirius --version", intern=TRUE, show.output.on.console=FALSE)
@@ -39,6 +39,7 @@ SiriusSDK = R6::R6Class(
 	      setwd(dirname(matching_file))
 	      out <- system("sirius.bat --version", intern=TRUE, show.output.on.console=FALSE)
 	      setwd(wd)
+	      pathToSirius <- matching_file
 	    } else {
 	      stop("Your OS is currently not supported for automatically getting Sirius from PATH or from a sirius-ms installation. Please call start() again and specify the total path to Sirius.")
             }
@@ -136,10 +137,10 @@ SiriusSDK = R6::R6Class(
 
 
       if(all(is.character(pathToSirius),length(pathToSirius) == 1)){
-        if(all(file.exists(pathToSirius),!dir.exists(pathToSirius)) || pathToSirius == "sirius"){
+        if(all(file.exists(pathToSirius),!dir.exists(pathToSirius)) || pathToSirius == "sirius-ms"){
           # the file which has to be executed
           sirius <- basename(pathToSirius)
-          if(!(pathToSirius == "sirius")) {
+          if(!(pathToSirius == "sirius-ms")) {
             sirius_call <- paste("./",sirius, sep = "")
           } else {
             sirius_call <- paste(sirius, sep = "")
