@@ -61,7 +61,7 @@ SiriusSDK = R6::R6Class(
         # try to get Sirius from PATH
         if(pathToSirius == "sirius"){
           tryCatch({
-            if (Sys.info()['sysname'] %in% c("Linux","Darwin")){
+            if (Sys.info()['sysname'] %in% c("Linux","Darwin", "Windows")){
               out <- system("sirius --version", intern=TRUE, show.output.on.console=FALSE)
               numbers <- regmatches(out[1], gregexpr("\\d+", out[1]))[[1]]
               return(paste(numbers[1], numbers[2], sep = "."))
