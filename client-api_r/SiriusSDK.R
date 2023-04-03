@@ -10,7 +10,7 @@ SiriusSDK = R6::R6Class(
     basePath = "",
     baseDirectory = "",
 
-    start = function(pathToSirius = "sirius_from_path", projectSpace = NULL, host = "http://localhost:", port = 8080, workSpace = NULL, force=FALSE){
+    start = function(pathToSirius = "sirius-ms", projectSpace = NULL, host = "http://localhost:", port = 8080, workSpace = NULL, force=FALSE){
 
       # reset SDK params to default when failing on early stage, i.e. when providing a port as non integer
       resetSDK <- function(){
@@ -22,44 +22,54 @@ SiriusSDK = R6::R6Class(
         self$basePath = ""
         self$baseDirectory = ""
       }
+	    
+      # if Sirius is installed via sirius-ms conda package under Windows,
+      # find executable and use path as pathToSirius
+      if(all(pathToSirius=="sirius-ms", Sys.info()['sysname']=="Windows")){
+        tryCatch({
+	  root_dir <- file.path(Sys.getenv("USERPROFILE"), "*conda*")
+	  file_pattern <- file.path("envs", "*", "bin", "sirius.bat")
+	  matching_file <- Sys.glob(file.path(root_dir, file_pattern))
+	  pathToSirius <- matching_file
+	}, error = function(e){
+	  resetSDK()
+	  stop("The 'sirius-ms' package seems not to be installed in any conda environment. Please install the package using 'conda install -c conda-forge sirius-ms' or provide a valid path to your own Sirius executable.")
+	})
+      }
 
       # extract the (major) version of Sirius from the .jar file
       getVersion <- function(){
 
 	# try to get Sirius from PATH
-        if(pathToSirius == "sirius_from_path"){
+        if(pathToSirius == "sirius-ms"){
           tryCatch({
-            out <- system("sirius --version", intern=TRUE, show.output.on.console=FALSE)
-            numbers <- regmatches(out[1], gregexpr("\\d+", out[1]))[[1]]
-            return(paste(numbers[1], numbers[2], sep = "."))
-          },error = function(e){
+	    if (Sys.info()['sysname'] %in% c("Linux","Darwin")){
+              out <- system("sirius --version", intern=TRUE, show.output.on.console=FALSE)
+	      numbers <- regmatches(out[1], gregexpr("\\d+", out[1]))[[1]]
+              return(paste(numbers[1], numbers[2], sep = "."))
+	    } else {
+	      stop("Your OS is currently not supported for automatically getting Sirius from PATH or from a sirius-ms installation. Please call start() again and specify the total path to Sirius.")
+            }
+	  },error = function(e){
             resetSDK()
             stop("Could not find Sirius in PATH. The 'sirius-ms' package seems not to be installed in this environment. Please install the package using 'conda install -c conda-forge sirius-ms' or privide a valid path to your own Sirius executable.")
           })
-          out <- system("sirius --version", intern=TRUE, show.output.on.console=FALSE)
-          numbers <- regmatches(out[1], gregexpr("\\d+", out[1]))[[1]]
-          return(paste(numbers[1], numbers[2], sep = "."))
         }
 
 	# get Sirius from given directory
         wd <- getwd()
         setwd(dirname(pathToSirius))
-        if(Sys.info()['sysname']=="Linux"){
-          setwd("../lib/app")
-	  file <- Sys.glob(file.path('*.jar'))
-        } else if (Sys.info()['sysname']=="Windows"){
-          setwd("./app")
-	  file <- Sys.glob(file.path("sirius_cli*.jar"))
-	} else if (Sys.info()['sysname']=="Darwin"){
-	  setwd("../app")
-	  file <- Sys.glob(file.path("sirius_cli*.jar"))
+        if(Sys.info()['sysname'] %in% c("Linux","Darwin")){
+          out <- system("sirius --version", intern=TRUE, show.output.on.console=FALSE)
+	} else if (Sys.info()['sysname'] == "Windows"){
+	  out <- system("sirius.bat --version", intern=TRUE, show.output.on.console=FALSE)
         } else {
           # reset working directory
           setwd(wd)
           resetSDK()
           stop("Unsupported operating system.")
         }
-        numbers <- regmatches(file, gregexpr("\\d+", file))[[1]]
+        numbers <- regmatches(out[1], gregexpr("\\d+", out[1]))[[1]]
         # reset working directory
         setwd(wd)
         if (length(numbers) < 2){
@@ -84,9 +94,9 @@ SiriusSDK = R6::R6Class(
           self$portFile <- paste(workSpace_path,"/.sirius-",sirius_version,"/sirius.port",sep = "")
         } else {
           if(Sys.info()['sysname']=="Windows"){
-            home_path = "%HOMEPATH%"
+            home_path = Sys.getenv("USERPROFILE")
           } else if (Sys.info()['sysname'] %in% c("Linux","Darwin")){
-            home_path = "~"
+            home_path = Sys.getenv("HOME")
           } else {
             resetSDK()
             stop("Unsupported operating system.")
@@ -119,10 +129,10 @@ SiriusSDK = R6::R6Class(
 
 
       if(all(is.character(pathToSirius),length(pathToSirius) == 1)){
-        if(all(file.exists(pathToSirius),!dir.exists(pathToSirius)) || pathToSirius == "sirius"){
+        if(all(file.exists(pathToSirius),!dir.exists(pathToSirius)) || pathToSirius == "sirius-ms"){
           # the file which has to be executed
           sirius <- basename(pathToSirius)
-          if(!(pathToSirius == "sirius")) {
+          if(!(pathToSirius == "sirius-ms")) {
             sirius_call <- paste("./",sirius, sep = "")
           } else {
             sirius_call <- paste(sirius, sep = "")
