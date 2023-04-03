@@ -51,14 +51,14 @@ SiriusSDK = R6::R6Class(
           setwd("./app")
 	  file <- Sys.glob(file.path("sirius_cli*.jar"))
 	  # service versions have different files in app
-	  if (!file.exists(file)) {
+	  if (length(file)==0) {
 	    file <- Sys.glob(file.path("sirius_rest_service*.jar"))
 	  }
 	} else if (Sys.info()['sysname']=="Darwin"){
 	  setwd("../app")
 	  file <- Sys.glob(file.path("sirius_cli*.jar"))
 	  # service versions have different files in app
-	  if (!file.exists(file)) {
+	  if (length(file)==0) {
 	    file <- Sys.glob(file.path("sirius_rest_service*.jar"))
 	  }
         } else {
