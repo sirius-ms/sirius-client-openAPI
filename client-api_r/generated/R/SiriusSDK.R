@@ -23,6 +23,8 @@ SiriusSDK = R6::R6Class(
         self$baseDirectory = ""
       }
 	    
+      # if Sirius is installed via sirius-ms conda package under Windows,
+      # find executable and use path as pathToSirius
       if(all(pathToSirius=="sirius-ms", Sys.info()['sysname']=="Windows"){
         tryCatch({
 	  root_dir <- file.path(Sys.getenv("USERPROFILE"), "*conda*")
@@ -32,7 +34,7 @@ SiriusSDK = R6::R6Class(
 	}, error = function(e){
 	  resetSDK()
 	  stop("The 'sirius-ms' package seems not to be installed in any conda environment. Please install the package using 'conda install -c conda-forge sirius-ms' or provide a valid path to your own Sirius executable.")
-	}
+	})
 
       # extract the (major) version of Sirius from the .jar file
       getVersion <- function(){
@@ -56,30 +58,17 @@ SiriusSDK = R6::R6Class(
 	# get Sirius from given directory
         wd <- getwd()
         setwd(dirname(pathToSirius))
-        if(Sys.info()['sysname']=="Linux"){
-          setwd("../lib/app")
-	  file <- Sys.glob(file.path('*.jar'))
-        } else if (Sys.info()['sysname']=="Windows"){
-          setwd("./app")
-	  file <- Sys.glob(file.path("sirius_cli*.jar"))
-	  # service versions have different files in app
-	  if (length(file)==0) {
-	    file <- Sys.glob(file.path("sirius_rest_service*.jar"))
-	  }
-	} else if (Sys.info()['sysname']=="Darwin"){
-	  setwd("../app")
-	  file <- Sys.glob(file.path("sirius_cli*.jar"))
-	  # service versions have different files in app
-	  if (length(file)==0) {
-	    file <- Sys.glob(file.path("sirius_rest_service*.jar"))
-	  }
+        if(Sys.info()['sysname'] %in% ("Linux", "Darwin")){
+          out <- system("sirius --version", intern=TRUE, show.output.on.console=FALSE)
+	} else if (Sys.info()['sysname'] == "Windows"){
+	  out <- system("sirius.bat --version", intern=TRUE, show.output.on.console=FALSE)
         } else {
           # reset working directory
           setwd(wd)
           resetSDK()
           stop("Unsupported operating system.")
         }
-        numbers <- regmatches(file, gregexpr("\\d+", file))[[1]]
+        numbers <- regmatches(out[1], gregexpr("\\d+", out[1]))[[1]]
         # reset working directory
         setwd(wd)
         if (length(numbers) < 2){
