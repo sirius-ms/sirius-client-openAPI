@@ -92,9 +92,9 @@ SiriusSDK = R6::R6Class(
           self$portFile <- paste(workSpace_path,"/.sirius-",sirius_version,"/sirius.port",sep = "")
         } else {
           if(Sys.info()['sysname']=="Windows"){
-            home_path = "%HOMEPATH%"
+            home_path = Sys.getenv("USERPROFILE")
           } else if (Sys.info()['sysname'] %in% c("Linux","Darwin")){
-            home_path = "~"
+            home_path = Sys.getenv("HOME")
           } else {
             resetSDK()
             stop("Unsupported operating system.")
