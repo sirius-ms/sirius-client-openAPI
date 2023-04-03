@@ -35,6 +35,7 @@ SiriusSDK = R6::R6Class(
 	  resetSDK()
 	  stop("The 'sirius-ms' package seems not to be installed in any conda environment. Please install the package using 'conda install -c conda-forge sirius-ms' or provide a valid path to your own Sirius executable.")
 	})
+      }
 
       # extract the (major) version of Sirius from the .jar file
       getVersion <- function(){
