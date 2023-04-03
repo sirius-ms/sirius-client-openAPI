@@ -10,7 +10,7 @@ SiriusSDK = R6::R6Class(
     basePath = "",
     baseDirectory = "",
 
-    start = function(pathToSirius = "sirius_from_path", projectSpace = NULL, host = "http://localhost:", port = 8080, workSpace = NULL, force=FALSE){
+    start = function(pathToSirius = "sirius_ms", projectSpace = NULL, host = "http://localhost:", port = 8080, workSpace = NULL, force=FALSE){
 
       # reset SDK params to default when failing on early stage, i.e. when providing a port as non integer
       resetSDK <- function(){
@@ -27,18 +27,27 @@ SiriusSDK = R6::R6Class(
       getVersion <- function(){
 
 	# try to get Sirius from PATH
-        if(pathToSirius == "sirius_from_path"){
+        if(pathToSirius == "sirius_ms"){
           tryCatch({
-            out <- system("sirius --version", intern=TRUE, show.output.on.console=FALSE)
-            numbers <- regmatches(out[1], gregexpr("\\d+", out[1]))[[1]]
+	    if (Sys.info()['sysname'] %in% c("Linux","Darwin")){
+              out <- system("sirius --version", intern=TRUE, show.output.on.console=FALSE)
+	    } else if (Sys.info()['sysname']=="Windows"){
+	      root_dir <- file.path(Sys.getenv("USERPROFILE"), "*conda*")
+	      file_pattern <- file.path("envs", "*", "bin", "sirius.bat")
+	      matching_file <- Sys.glob(file.path(root_dir, file_pattern))
+	      wd <- getwd()
+	      setwd(dirname(matching_file))
+	      out <- system("sirius.bat --version", intern=TRUE, show.output.on.console=FALSE)
+	      setwd(wd)
+	    } else {
+	      stop("Your OS is currently not supported for automatically getting Sirius from PATH or from a sirius-ms installation. Please call start() again and specify the total path to Sirius.")
+            }
+	    numbers <- regmatches(out[1], gregexpr("\\d+", out[1]))[[1]]
             return(paste(numbers[1], numbers[2], sep = "."))
-          },error = function(e){
+	  },error = function(e){
             resetSDK()
             stop("Could not find Sirius in PATH. The 'sirius-ms' package seems not to be installed in this environment. Please install the package using 'conda install -c conda-forge sirius-ms' or privide a valid path to your own Sirius executable.")
           })
-          out <- system("sirius --version", intern=TRUE, show.output.on.console=FALSE)
-          numbers <- regmatches(out[1], gregexpr("\\d+", out[1]))[[1]]
-          return(paste(numbers[1], numbers[2], sep = "."))
         }
 
 	# get Sirius from given directory
