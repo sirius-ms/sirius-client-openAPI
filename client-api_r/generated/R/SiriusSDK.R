@@ -22,6 +22,17 @@ SiriusSDK = R6::R6Class(
         self$basePath = ""
         self$baseDirectory = ""
       }
+	    
+      if(all(pathToSirius=="sirius-ms", Sys.info()['sysname']=="Windows"){
+        tryCatch({
+	  root_dir <- file.path(Sys.getenv("USERPROFILE"), "*conda*")
+	  file_pattern <- file.path("envs", "*", "bin", "sirius.bat")
+	  matching_file <- Sys.glob(file.path(root_dir, file_pattern))
+	  pathToSirius <- matching_file
+	}, error = function(e){
+	  resetSDK()
+	  stop("The 'sirius-ms' package seems not to be installed in any conda environment. Please install the package using 'conda install -c conda-forge sirius-ms' or provide a valid path to your own Sirius executable.")
+	}
 
       # extract the (major) version of Sirius from the .jar file
       getVersion <- function(){
@@ -31,20 +42,11 @@ SiriusSDK = R6::R6Class(
           tryCatch({
 	    if (Sys.info()['sysname'] %in% c("Linux","Darwin")){
               out <- system("sirius --version", intern=TRUE, show.output.on.console=FALSE)
-	    } else if (Sys.info()['sysname']=="Windows"){
-	      root_dir <- file.path(Sys.getenv("USERPROFILE"), "*conda*")
-	      file_pattern <- file.path("envs", "*", "bin", "sirius.bat")
-	      matching_file <- Sys.glob(file.path(root_dir, file_pattern))
-	      wd <- getwd()
-	      setwd(dirname(matching_file))
-	      out <- system("sirius.bat --version", intern=TRUE, show.output.on.console=FALSE)
-	      setwd(wd)
-	      pathToSirius <- matching_file
+	      numbers <- regmatches(out[1], gregexpr("\\d+", out[1]))[[1]]
+              return(paste(numbers[1], numbers[2], sep = "."))
 	    } else {
 	      stop("Your OS is currently not supported for automatically getting Sirius from PATH or from a sirius-ms installation. Please call start() again and specify the total path to Sirius.")
             }
-	    numbers <- regmatches(out[1], gregexpr("\\d+", out[1]))[[1]]
-            return(paste(numbers[1], numbers[2], sep = "."))
 	  },error = function(e){
             resetSDK()
             stop("Could not find Sirius in PATH. The 'sirius-ms' package seems not to be installed in this environment. Please install the package using 'conda install -c conda-forge sirius-ms' or privide a valid path to your own Sirius executable.")
