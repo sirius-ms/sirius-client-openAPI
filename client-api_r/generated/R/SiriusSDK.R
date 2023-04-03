@@ -25,7 +25,7 @@ SiriusSDK = R6::R6Class(
 	    
       # if Sirius is installed via sirius-ms conda package under Windows,
       # find executable and use path as pathToSirius
-      if(all(pathToSirius=="sirius-ms", Sys.info()['sysname']=="Windows"){
+      if(all(pathToSirius=="sirius-ms", Sys.info()['sysname']=="Windows")){
         tryCatch({
 	  root_dir <- file.path(Sys.getenv("USERPROFILE"), "*conda*")
 	  file_pattern <- file.path("envs", "*", "bin", "sirius.bat")
