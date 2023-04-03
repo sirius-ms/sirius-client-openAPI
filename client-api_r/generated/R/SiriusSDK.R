@@ -50,9 +50,17 @@ SiriusSDK = R6::R6Class(
         } else if (Sys.info()['sysname']=="Windows"){
           setwd("./app")
 	  file <- Sys.glob(file.path("sirius_cli*.jar"))
+	  # service versions have different files in app
+	  if (!file.exists(file)) {
+	    file <- Sys.glob(file.path("sirius_rest_service*.jar"))
+	  }
 	} else if (Sys.info()['sysname']=="Darwin"){
 	  setwd("../app")
 	  file <- Sys.glob(file.path("sirius_cli*.jar"))
+	  # service versions have different files in app
+	  if (!file.exists(file)) {
+	    file <- Sys.glob(file.path("sirius_rest_service*.jar"))
+	  }
         } else {
           # reset working directory
           setwd(wd)
