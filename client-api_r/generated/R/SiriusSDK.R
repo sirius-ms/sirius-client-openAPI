@@ -58,7 +58,7 @@ SiriusSDK = R6::R6Class(
 	# get Sirius from given directory
         wd <- getwd()
         setwd(dirname(pathToSirius))
-        if(Sys.info()['sysname'] %in% ("Linux", "Darwin")){
+        if(Sys.info()['sysname'] %in% c("Linux","Darwin")){
           out <- system("sirius --version", intern=TRUE, show.output.on.console=FALSE)
 	} else if (Sys.info()['sysname'] == "Windows"){
 	  out <- system("sirius.bat --version", intern=TRUE, show.output.on.console=FALSE)
