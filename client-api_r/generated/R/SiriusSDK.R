@@ -27,31 +27,26 @@ SiriusSDK = R6::R6Class(
       # find executable and use path as pathToSirius
       if(all(pathToSirius=="sirius", Sys.info()['sysname']=="Windows")){
         tryCatch({
-          # conda-forge build
-          if(Sys.getenv("PREFIX")!=""){
-            root_dir <- file.path(Sys.getenv("PREFIX"))
-            file_pattern <- file.path("sirius.bat")
-            # home computer
-          } else {
-            root_dir <- file.path(Sys.getenv("USERPROFILE"), "*conda*")
-            file_pattern <- file.path("envs", "*", "bin", "sirius.bat")
-          }
+          # average home computer path
+          root_dir <- file.path(Sys.getenv("USERPROFILE"), "*conda*")
+          file_pattern <- file.path("envs", "*", "bin", "sirius.bat")
           matching_file <- Sys.glob(file.path(root_dir, file_pattern))
           # most trivial try
           if(length(matching_file)==0){
-            root_dir <- file.path(Sys.getenv("USERPROFILE"))
-            file_pattern <- file.path("sirius.bat")
+            root_dir <- Sys.getenv("USERPROFILE")
+            file_pattern <- "sirius.bat"
             matching_file <- Sys.glob(file.path(root_dir, file_pattern))
           }
           pathToSirius <- matching_file
           # default back to "sirius" if nothing found
           # will work if user is in env directory
+          # works for conda-forge checks
           if(length(matching_file)==0){
             pathToSirius <- "sirius"
           }
         }, error = function(e){
           resetSDK()
-          stop("The 'sirius-ms' package seems not to be installed in any conda environment. Please install the package using 'conda install -c conda-forge sirius-ms' or provide a valid path to your own Sirius executable.")
+          stop("Could not find sirius from 'sirius-ms' package in any conda environment. Please install the package using 'conda install -c conda-forge sirius-ms' or provide a valid path to your own Sirius executable.")
         })
       }
       
