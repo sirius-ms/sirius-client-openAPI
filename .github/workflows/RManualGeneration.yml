@@ -43,3 +43,7 @@ jobs:
     - name: Generate Rsirius Manual
       run: roxygen2::roxygenize("client-api_r/generated", roclets = NULL, load_code = NULL, clean = FALSE)
       shell: Rscript {0}
+    - name: update files and push to remote
+      uses: stefanzweifel/git-auto-commit-action@v4.15.2
+      with:
+        commit_message: Auto-Generated RSirius Manual
