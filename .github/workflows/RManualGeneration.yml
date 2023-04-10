@@ -3,13 +3,16 @@
 
 name: RManualGeneration
 
-
-on: [workflow_dispatch, workflow_call]
-
+on:
+  pull_request:
+    types: [closed]
+  workflow_dispatch:
+  workflow_call:
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch' || github.event_name == 'workflow_call' || github.event_name == 'pull_request' && github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'master'
     timeout-minutes: 30
     strategy:
       fail-fast: false
