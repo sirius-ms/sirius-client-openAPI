@@ -21,8 +21,6 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,8 +49,7 @@ import JSirius.JSON;
 /**
  * Identifier created by the SIRIUS Nightsky API for a newly created Job.  Object can be enriched with Job status/progress information ({@link JobProgress JobProgress}) and/or Job command information.
  */
-@ApiModel(description = "Identifier created by the SIRIUS Nightsky API for a newly created Job.  Object can be enriched with Job status/progress information ({@link JobProgress JobProgress}) and/or Job command information.")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-03-30T13:54:10.963050Z[Etc/UTC]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class JobId {
   public static final String SERIALIZED_NAME_ID = "id";
   @SerializedName(SERIALIZED_NAME_ID)
@@ -68,7 +65,7 @@ public class JobId {
 
   public static final String SERIALIZED_NAME_AFFECTED_COMPOUND_IDS = "affectedCompoundIds";
   @SerializedName(SERIALIZED_NAME_AFFECTED_COMPOUND_IDS)
-  private List<String> affectedCompoundIds = null;
+  private List<String> affectedCompoundIds;
 
   public JobId() {
   }
@@ -84,7 +81,6 @@ public class JobId {
    * @return id
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Unique identifier to access the job via the API")
 
   public String getId() {
     return id;
@@ -107,7 +103,6 @@ public class JobId {
    * @return command
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Command string of the executed Task")
 
   public String getCommand() {
     return command;
@@ -130,7 +125,6 @@ public class JobId {
    * @return progress
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public JobProgress getProgress() {
     return progress;
@@ -161,7 +155,6 @@ public class JobId {
    * @return affectedCompoundIds
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "List of compound ids that are affected by this job.  If this job is creating compounds (e.g. data import jobs) this value will be NULL until the jobs has finished")
 
   public List<String> getAffectedCompoundIds() {
     return affectedCompoundIds;

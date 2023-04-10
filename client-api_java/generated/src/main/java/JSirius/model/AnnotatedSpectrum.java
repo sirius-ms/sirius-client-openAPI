@@ -22,8 +22,6 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,8 +50,7 @@ import JSirius.JSON;
 /**
  * 
  */
-@ApiModel(description = "")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-03-30T13:54:10.963050Z[Etc/UTC]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class AnnotatedSpectrum {
   public static final String SERIALIZED_NAME_MS_LEVEL = "msLevel";
   @SerializedName(SERIALIZED_NAME_MS_LEVEL)
@@ -65,7 +62,7 @@ public class AnnotatedSpectrum {
 
   public static final String SERIALIZED_NAME_PEAKS = "peaks";
   @SerializedName(SERIALIZED_NAME_PEAKS)
-  private List<AnnotatedPeak> peaks = null;
+  private List<AnnotatedPeak> peaks;
 
   public AnnotatedSpectrum() {
   }
@@ -81,7 +78,6 @@ public class AnnotatedSpectrum {
    * @return msLevel
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "MS level of the measured spectrum.  Artificial spectra with no msLevel (e.g. Simulated Isotope patterns) use 0")
 
   public Integer getMsLevel() {
     return msLevel;
@@ -104,7 +100,6 @@ public class AnnotatedSpectrum {
    * @return collisionEnergy
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public CollisionEnergy getCollisionEnergy() {
     return collisionEnergy;
@@ -135,7 +130,6 @@ public class AnnotatedSpectrum {
    * @return peaks
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<AnnotatedPeak> getPeaks() {
     return peaks;

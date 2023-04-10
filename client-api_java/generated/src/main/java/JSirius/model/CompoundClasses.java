@@ -21,8 +21,6 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 
 import com.google.gson.Gson;
@@ -49,8 +47,7 @@ import JSirius.JSON;
 /**
  * Container class that holds the best matching compound class for different levels of each ontology for a  certain compound/feature/predicted fingerprint.
  */
-@ApiModel(description = "Container class that holds the best matching compound class for different levels of each ontology for a  certain compound/feature/predicted fingerprint.")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-03-30T13:54:10.963050Z[Etc/UTC]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class CompoundClasses {
   public static final String SERIALIZED_NAME_NPC_PATHWAY = "npcPathway";
   @SerializedName(SERIALIZED_NAME_NPC_PATHWAY)
@@ -98,7 +95,6 @@ public class CompoundClasses {
    * @return npcPathway
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public CompoundClass getNpcPathway() {
     return npcPathway;
@@ -121,7 +117,6 @@ public class CompoundClasses {
    * @return npcSuperclass
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public CompoundClass getNpcSuperclass() {
     return npcSuperclass;
@@ -144,7 +139,6 @@ public class CompoundClasses {
    * @return npcClass
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public CompoundClass getNpcClass() {
     return npcClass;
@@ -167,7 +161,6 @@ public class CompoundClasses {
    * @return classyFireMostSpecific
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public CompoundClass getClassyFireMostSpecific() {
     return classyFireMostSpecific;
@@ -190,7 +183,6 @@ public class CompoundClasses {
    * @return classyFireLevel5
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public CompoundClass getClassyFireLevel5() {
     return classyFireLevel5;
@@ -213,7 +205,6 @@ public class CompoundClasses {
    * @return classyFireClass
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public CompoundClass getClassyFireClass() {
     return classyFireClass;
@@ -236,7 +227,6 @@ public class CompoundClasses {
    * @return classyFireSubClass
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public CompoundClass getClassyFireSubClass() {
     return classyFireSubClass;
@@ -259,7 +249,6 @@ public class CompoundClasses {
    * @return classyFireSuperClass
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public CompoundClass getClassyFireSuperClass() {
     return classyFireSuperClass;

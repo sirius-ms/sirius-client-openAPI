@@ -20,8 +20,6 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,8 +48,7 @@ import JSirius.JSON;
 /**
  * User/developer friendly parameter subset for the CSI:FingerID structure db search tool.
  */
-@ApiModel(description = "User/developer friendly parameter subset for the CSI:FingerID structure db search tool.")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-03-30T13:54:10.963050Z[Etc/UTC]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class StructureDbSearch {
   public static final String SERIALIZED_NAME_ENABLED = "enabled";
   @SerializedName(SERIALIZED_NAME_ENABLED)
@@ -164,7 +161,7 @@ public class StructureDbSearch {
 
   public static final String SERIALIZED_NAME_STRUCTURE_SEARCH_D_BS = "structureSearchDBs";
   @SerializedName(SERIALIZED_NAME_STRUCTURE_SEARCH_D_BS)
-  private List<StructureSearchDBsEnum> structureSearchDBs = null;
+  private List<StructureSearchDBsEnum> structureSearchDBs;
 
   public static final String SERIALIZED_NAME_TAG_LIPIDS = "tagLipids";
   @SerializedName(SERIALIZED_NAME_TAG_LIPIDS)
@@ -184,7 +181,6 @@ public class StructureDbSearch {
    * @return enabled
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "tags whether the tool is enabled")
 
   public Boolean getEnabled() {
     return enabled;
@@ -215,7 +211,6 @@ public class StructureDbSearch {
    * @return structureSearchDBs
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Structure databases to search in")
 
   public List<StructureSearchDBsEnum> getStructureSearchDBs() {
     return structureSearchDBs;
@@ -238,7 +233,6 @@ public class StructureDbSearch {
    * @return tagLipids
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Candidates matching the lipid class estimated by El Gordo will be tagged.  The lipid class will only be available if El Gordo predicts that the MS/MS is a lipid spectrum.  If this parameter is set to 'false' El Gordo will still be executed and e.g. improve the fragmentation  tree, but the matching structure candidates will not be tagged if they match lipid class.")
 
   public Boolean getTagLipids() {
     return tagLipids;

@@ -21,8 +21,6 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,16 +49,15 @@ import JSirius.JSON;
 /**
  * Container class that holds the CANOPUS compound class predictions for alle predictable compound classes.  This is the full CANOPUS result.
  */
-@ApiModel(description = "Container class that holds the CANOPUS compound class predictions for alle predictable compound classes.  This is the full CANOPUS result.")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-03-30T13:54:10.963050Z[Etc/UTC]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class CanopusPredictions {
   public static final String SERIALIZED_NAME_CLASSY_FIRE_CLASSES = "classyFireClasses";
   @SerializedName(SERIALIZED_NAME_CLASSY_FIRE_CLASSES)
-  private List<CompoundClass> classyFireClasses = null;
+  private List<CompoundClass> classyFireClasses;
 
   public static final String SERIALIZED_NAME_NPC_CLASSES = "npcClasses";
   @SerializedName(SERIALIZED_NAME_NPC_CLASSES)
-  private List<CompoundClass> npcClasses = null;
+  private List<CompoundClass> npcClasses;
 
   public CanopusPredictions() {
   }
@@ -84,7 +81,6 @@ public class CanopusPredictions {
    * @return classyFireClasses
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "All predicted ClassyFire classes")
 
   public List<CompoundClass> getClassyFireClasses() {
     return classyFireClasses;
@@ -115,7 +111,6 @@ public class CanopusPredictions {
    * @return npcClasses
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "All predicted NPC classes")
 
   public List<CompoundClass> getNpcClasses() {
     return npcClasses;

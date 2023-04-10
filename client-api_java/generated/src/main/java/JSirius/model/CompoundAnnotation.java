@@ -23,8 +23,6 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 
 import com.google.gson.Gson;
@@ -51,8 +49,7 @@ import JSirius.JSON;
 /**
  * Summary of the results of a Compound. Can be added to a CompoundId.  It is not null within a CompoundId if it was not requested und non null otherwise  The different summary fields within this summary are null if the corresponding  compound does not contain the represented results. The content of  non NULL  summary field id the result was computed but is empty.
  */
-@ApiModel(description = "Summary of the results of a Compound. Can be added to a CompoundId.  It is not null within a CompoundId if it was not requested und non null otherwise  The different summary fields within this summary are null if the corresponding  compound does not contain the represented results. The content of  non NULL  summary field id the result was computed but is empty.")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-03-30T13:54:10.963050Z[Etc/UTC]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class CompoundAnnotation {
   public static final String SERIALIZED_NAME_FORMULA_ANNOTATION = "formulaAnnotation";
   @SerializedName(SERIALIZED_NAME_FORMULA_ANNOTATION)
@@ -80,7 +77,6 @@ public class CompoundAnnotation {
    * @return formulaAnnotation
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public FormulaCandidate getFormulaAnnotation() {
     return formulaAnnotation;
@@ -103,7 +99,6 @@ public class CompoundAnnotation {
    * @return structureAnnotation
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public StructureCandidate getStructureAnnotation() {
     return structureAnnotation;
@@ -126,7 +121,6 @@ public class CompoundAnnotation {
    * @return compoundClassAnnotation
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public CompoundClasses getCompoundClassAnnotation() {
     return compoundClassAnnotation;

@@ -20,8 +20,6 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 
 import com.google.gson.Gson;
@@ -48,8 +46,7 @@ import JSirius.JSON;
 /**
  * User/developer friendly parameter subset for the CSI:FingerID Fingerprint tool
  */
-@ApiModel(description = "User/developer friendly parameter subset for the CSI:FingerID Fingerprint tool")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-03-30T13:54:10.963050Z[Etc/UTC]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class FingerprintPrediction {
   public static final String SERIALIZED_NAME_ENABLED = "enabled";
   @SerializedName(SERIALIZED_NAME_ENABLED)
@@ -73,7 +70,6 @@ public class FingerprintPrediction {
    * @return enabled
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "tags whether the tool is enabled")
 
   public Boolean getEnabled() {
     return enabled;
@@ -96,7 +92,6 @@ public class FingerprintPrediction {
    * @return useScoreThreshold
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "If true, an adaptive soft threshold will be applied to only compute Fingerprints for promising formula candidates  Enabling is highly recommended.")
 
   public Boolean getUseScoreThreshold() {
     return useScoreThreshold;

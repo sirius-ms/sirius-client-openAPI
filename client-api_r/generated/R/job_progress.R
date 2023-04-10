@@ -46,6 +46,9 @@ JobProgress <- R6::R6Class(
         self$`indeterminate` <- `indeterminate`
       }
       if (!is.null(`state`)) {
+        if (!(`state` %in% c("WAITING", "READY", "QUEUED", "SUBMITTED", "RUNNING", "CANCELED", "FAILED", "DONE"))) {
+          stop(paste("Error! \"", `state`, "\" cannot be assigned to `state`. Must be \"WAITING\", \"READY\", \"QUEUED\", \"SUBMITTED\", \"RUNNING\", \"CANCELED\", \"FAILED\", \"DONE\".", sep = ""))
+        }
         if (!(is.character(`state`) && length(`state`) == 1)) {
           stop(paste("Error! Invalid data for `state`. Must be a string:", `state`))
         }
@@ -125,6 +128,9 @@ JobProgress <- R6::R6Class(
         self$`indeterminate` <- this_object$`indeterminate`
       }
       if (!is.null(this_object$`state`)) {
+        if (!is.null(this_object$`state`) && !(this_object$`state` %in% c("WAITING", "READY", "QUEUED", "SUBMITTED", "RUNNING", "CANCELED", "FAILED", "DONE"))) {
+          stop(paste("Error! \"", this_object$`state`, "\" cannot be assigned to `state`. Must be \"WAITING\", \"READY\", \"QUEUED\", \"SUBMITTED\", \"RUNNING\", \"CANCELED\", \"FAILED\", \"DONE\".", sep = ""))
+        }
         self$`state` <- this_object$`state`
       }
       if (!is.null(this_object$`currentProgress`)) {
@@ -213,6 +219,9 @@ JobProgress <- R6::R6Class(
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       self$`indeterminate` <- this_object$`indeterminate`
+      if (!is.null(this_object$`state`) && !(this_object$`state` %in% c("WAITING", "READY", "QUEUED", "SUBMITTED", "RUNNING", "CANCELED", "FAILED", "DONE"))) {
+        stop(paste("Error! \"", this_object$`state`, "\" cannot be assigned to `state`. Must be \"WAITING\", \"READY\", \"QUEUED\", \"SUBMITTED\", \"RUNNING\", \"CANCELED\", \"FAILED\", \"DONE\".", sep = ""))
+      }
       self$`state` <- this_object$`state`
       self$`currentProgress` <- this_object$`currentProgress`
       self$`maxProgress` <- this_object$`maxProgress`

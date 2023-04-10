@@ -20,8 +20,6 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 
 import com.google.gson.Gson;
@@ -48,8 +46,7 @@ import JSirius.JSON;
 /**
  * 
  */
-@ApiModel(description = "")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-03-30T13:54:10.963050Z[Etc/UTC]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class ZodiacEpochs {
   public static final String SERIALIZED_NAME_ITERATIONS = "iterations";
   @SerializedName(SERIALIZED_NAME_ITERATIONS)
@@ -81,7 +78,6 @@ public class ZodiacEpochs {
    * @return iterations
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Integer getIterations() {
     return iterations;
@@ -104,7 +100,6 @@ public class ZodiacEpochs {
    * @return burnInPeriod
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Integer getBurnInPeriod() {
     return burnInPeriod;
@@ -127,7 +122,6 @@ public class ZodiacEpochs {
    * @return numberOfMarkovChains
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Integer getNumberOfMarkovChains() {
     return numberOfMarkovChains;
@@ -150,7 +144,6 @@ public class ZodiacEpochs {
    * @return identifier
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getIdentifier() {
     return identifier;

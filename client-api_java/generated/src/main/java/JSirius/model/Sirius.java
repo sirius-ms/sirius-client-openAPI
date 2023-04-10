@@ -22,8 +22,6 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,8 +50,7 @@ import JSirius.JSON;
 /**
  * User/developer friendly parameter subset for the Formula/SIRIUS tool
  */
-@ApiModel(description = "User/developer friendly parameter subset for the Formula/SIRIUS tool")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-03-30T13:54:10.963050Z[Etc/UTC]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class Sirius {
   public static final String SERIALIZED_NAME_ENABLED = "enabled";
   @SerializedName(SERIALIZED_NAME_ENABLED)
@@ -284,7 +281,7 @@ public class Sirius {
 
   public static final String SERIALIZED_NAME_FORMULA_SEARCH_D_BS = "formulaSearchDBs";
   @SerializedName(SERIALIZED_NAME_FORMULA_SEARCH_D_BS)
-  private List<FormulaSearchDBsEnum> formulaSearchDBs = null;
+  private List<FormulaSearchDBsEnum> formulaSearchDBs;
 
   public static final String SERIALIZED_NAME_ENFORCED_FORMULA_CONSTRAINTS = "enforcedFormulaConstraints";
   @SerializedName(SERIALIZED_NAME_ENFORCED_FORMULA_CONSTRAINTS)
@@ -296,7 +293,7 @@ public class Sirius {
 
   public static final String SERIALIZED_NAME_DETECTABLE_ELEMENTS = "detectableElements";
   @SerializedName(SERIALIZED_NAME_DETECTABLE_ELEMENTS)
-  private List<String> detectableElements = null;
+  private List<String> detectableElements;
 
   public static final String SERIALIZED_NAME_ILP_TIMEOUT = "ilpTimeout";
   @SerializedName(SERIALIZED_NAME_ILP_TIMEOUT)
@@ -320,7 +317,6 @@ public class Sirius {
    * @return enabled
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "tags whether the tool is enabled")
 
   public Boolean getEnabled() {
     return enabled;
@@ -343,7 +339,6 @@ public class Sirius {
    * @return profile
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Instrument specific profile for internal algorithms  Just select what comes closest to the instrument that was used for measuring the data.")
 
   public ProfileEnum getProfile() {
     return profile;
@@ -366,7 +361,6 @@ public class Sirius {
    * @return numberOfCandidates
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Number of formula candidates to keep as result list (Formula Candidates).")
 
   public Integer getNumberOfCandidates() {
     return numberOfCandidates;
@@ -389,7 +383,6 @@ public class Sirius {
    * @return numberOfCandidatesPerIon
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Use this parameter if you want to force SIRIUS to report at least  NumberOfCandidatesPerIon results per ionization.  if <= 0, this parameter will have no effect and just the top  NumberOfCandidates results will be reported.")
 
   public Integer getNumberOfCandidatesPerIon() {
     return numberOfCandidatesPerIon;
@@ -412,7 +405,6 @@ public class Sirius {
    * @return massAccuracyMS2ppm
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Maximum allowed mass accuracy. Only molecular formulas within this mass window are considered.")
 
   public Double getMassAccuracyMS2ppm() {
     return massAccuracyMS2ppm;
@@ -435,7 +427,6 @@ public class Sirius {
    * @return isotopeMs2Settings
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Specify how isotope patterns in MS/MS should be handled.  <p>  FILTER: When filtering is enabled, molecular formulas are excluded if their  theoretical isotope pattern does not match the theoretical one, even if their MS/MS pattern has high score.  <p>  SCORE: Use them for SCORING. To use this the instrument should produce clear MS/MS isotope patterns  <p>  IGNORE: Ignore that there might be isotope patterns in MS/MS")
 
   public IsotopeMs2SettingsEnum getIsotopeMs2Settings() {
     return isotopeMs2Settings;
@@ -466,7 +457,6 @@ public class Sirius {
    * @return formulaSearchDBs
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "List Structure database to extract molecular formulas from to reduce formula search space.  SIRIUS is quite good at de novo formula annotation, so only enable if you have a good reason.")
 
   public List<FormulaSearchDBsEnum> getFormulaSearchDBs() {
     return formulaSearchDBs;
@@ -489,7 +479,6 @@ public class Sirius {
    * @return enforcedFormulaConstraints
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "These configurations hold the information how to autodetect elements based on the given formula constraints.  Note: If the compound is already assigned to a specific molecular formula, this annotation is ignored.  <p>  Enforced: Enforced elements are always considered")
 
   public String getEnforcedFormulaConstraints() {
     return enforcedFormulaConstraints;
@@ -512,7 +501,6 @@ public class Sirius {
    * @return fallbackFormulaConstraints
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "These configurations hold the information how to autodetect elements based on the given formula constraints.  Note: If the compound is already assigned to a specific molecular formula, this annotation is ignored.  <p>  Fallback: Fallback elements are used, if the auto-detection fails (e.g. no isotope pattern available)")
 
   public String getFallbackFormulaConstraints() {
     return fallbackFormulaConstraints;
@@ -543,7 +531,6 @@ public class Sirius {
    * @return detectableElements
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "These configurations hold the information how to autodetect elements based on the given formula constraints.  Note: If the compound is already assigned to a specific molecular formula, this annotation is ignored.  <p>  Detectable: Detectable elements are added to the chemical alphabet, if there are indications for them (e.g. in isotope pattern)")
 
   public List<String> getDetectableElements() {
     return detectableElements;
@@ -566,7 +553,6 @@ public class Sirius {
    * @return ilpTimeout
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Timeout getIlpTimeout() {
     return ilpTimeout;
@@ -589,7 +575,6 @@ public class Sirius {
    * @return useHeuristic
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public UseHeuristic getUseHeuristic() {
     return useHeuristic;

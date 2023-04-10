@@ -25,8 +25,6 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -57,24 +55,23 @@ import JSirius.JSON;
 /**
  * Object to submit a job to be executed by SIRIUS
  */
-@ApiModel(description = "Object to submit a job to be executed by SIRIUS")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-03-30T13:54:10.963050Z[Etc/UTC]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class JobSubmission {
   public static final String SERIALIZED_NAME_COMPOUND_IDS = "compoundIds";
   @SerializedName(SERIALIZED_NAME_COMPOUND_IDS)
-  private List<String> compoundIds = null;
+  private List<String> compoundIds;
 
   public static final String SERIALIZED_NAME_FALLBACK_ADDUCTS = "fallbackAdducts";
   @SerializedName(SERIALIZED_NAME_FALLBACK_ADDUCTS)
-  private List<String> fallbackAdducts = null;
+  private List<String> fallbackAdducts;
 
   public static final String SERIALIZED_NAME_ENFORCED_ADDUCTS = "enforcedAdducts";
   @SerializedName(SERIALIZED_NAME_ENFORCED_ADDUCTS)
-  private List<String> enforcedAdducts = null;
+  private List<String> enforcedAdducts;
 
   public static final String SERIALIZED_NAME_DETECTABLE_ADDUCTS = "detectableAdducts";
   @SerializedName(SERIALIZED_NAME_DETECTABLE_ADDUCTS)
-  private List<String> detectableAdducts = null;
+  private List<String> detectableAdducts;
 
   public static final String SERIALIZED_NAME_RECOMPUTE = "recompute";
   @SerializedName(SERIALIZED_NAME_RECOMPUTE)
@@ -102,7 +99,7 @@ public class JobSubmission {
 
   public static final String SERIALIZED_NAME_CONFIG_MAP = "configMap";
   @SerializedName(SERIALIZED_NAME_CONFIG_MAP)
-  private Map<String, String> configMap = null;
+  private Map<String, String> configMap = new HashMap<>();
 
   public JobSubmission() {
   }
@@ -126,7 +123,6 @@ public class JobSubmission {
    * @return compoundIds
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Compounds that should be the input for this Job")
 
   public List<String> getCompoundIds() {
     return compoundIds;
@@ -157,7 +153,6 @@ public class JobSubmission {
    * @return fallbackAdducts
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Describes how to deal with Adducts: Fallback adducts are considered if the auto detection did not find any indication for an ion mode.  Pos Examples: [M+H]+,[M]+,[M+K]+,[M+Na]+,[M+H-H2O]+,[M+Na2-H]+,[M+2K-H]+,[M+NH4]+,[M+H3O]+,[M+MeOH+H]+,[M+ACN+H]+,[M+2ACN+H]+,[M+IPA+H]+,[M+ACN+Na]+,[M+DMSO+H]+  Neg Examples: [M-H]-,[M]-,[M+K-2H]-,[M+Cl]-,[M-H2O-H]-,[M+Na-2H]-,M+FA-H]-,[M+Br]-,[M+HAc-H]-,[M+TFA-H]-,[M+ACN-H]-")
 
   public List<String> getFallbackAdducts() {
     return fallbackAdducts;
@@ -188,7 +183,6 @@ public class JobSubmission {
    * @return enforcedAdducts
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Describes how to deal with Adducts:  Enforced adducts that are always considered.  Pos Examples: [M+H]+,[M]+,[M+K]+,[M+Na]+,[M+H-H2O]+,[M+Na2-H]+,[M+2K-H]+,[M+NH4]+,[M+H3O]+,[M+MeOH+H]+,[M+ACN+H]+,[M+2ACN+H]+,[M+IPA+H]+,[M+ACN+Na]+,[M+DMSO+H]+  Neg Examples: [M-H]-,[M]-,[M+K-2H]-,[M+Cl]-,[M-H2O-H]-,[M+Na-2H]-,M+FA-H]-,[M+Br]-,[M+HAc-H]-,[M+TFA-H]-,[M+ACN-H]-")
 
   public List<String> getEnforcedAdducts() {
     return enforcedAdducts;
@@ -219,7 +213,6 @@ public class JobSubmission {
    * @return detectableAdducts
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Describes how to deal with Adducts: Detectable adducts which are only considered if there is an indication in the MS1 scan (e.g. correct mass delta).  Pos Examples: [M+H]+,[M]+,[M+K]+,[M+Na]+,[M+H-H2O]+,[M+Na2-H]+,[M+2K-H]+,[M+NH4]+,[M+H3O]+,[M+MeOH+H]+,[M+ACN+H]+,[M+2ACN+H]+,[M+IPA+H]+,[M+ACN+Na]+,[M+DMSO+H]+  Neg Examples: [M-H]-,[M]-,[M+K-2H]-,[M+Cl]-,[M-H2O-H]-,[M+Na-2H]-,M+FA-H]-,[M+Br]-,[M+HAc-H]-,[M+TFA-H]-,[M+ACN-H]-")
 
   public List<String> getDetectableAdducts() {
     return detectableAdducts;
@@ -242,7 +235,6 @@ public class JobSubmission {
    * @return recompute
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Indicate if already existing result for a tool to be executed should be overwritten or not.")
 
   public Boolean getRecompute() {
     return recompute;
@@ -265,7 +257,6 @@ public class JobSubmission {
    * @return formulaIdParas
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Sirius getFormulaIdParas() {
     return formulaIdParas;
@@ -288,7 +279,6 @@ public class JobSubmission {
    * @return zodiacParas
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Zodiac getZodiacParas() {
     return zodiacParas;
@@ -311,7 +301,6 @@ public class JobSubmission {
    * @return fingerprintPredictionParas
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public FingerprintPrediction getFingerprintPredictionParas() {
     return fingerprintPredictionParas;
@@ -334,7 +323,6 @@ public class JobSubmission {
    * @return structureDbSearchParas
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public StructureDbSearch getStructureDbSearchParas() {
     return structureDbSearchParas;
@@ -357,7 +345,6 @@ public class JobSubmission {
    * @return canopusParas
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Canopus getCanopusParas() {
     return canopusParas;
@@ -388,7 +375,6 @@ public class JobSubmission {
    * @return configMap
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "As an alternative to the object based parameters, this map allows to store key value pairs  of ALL SIRIUS parameters. All possible parameters can be retrieved from SIRIUS via the respective endpoint.")
 
   public Map<String, String> getConfigMap() {
     return configMap;
