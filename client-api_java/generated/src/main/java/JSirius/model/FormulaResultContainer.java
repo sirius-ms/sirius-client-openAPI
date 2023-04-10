@@ -22,8 +22,6 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 
 import com.google.gson.Gson;
@@ -50,8 +48,7 @@ import JSirius.JSON;
 /**
  * Container for formula level results that holds a unique identifier (molecular formula + adduct).  It can be extended/annotated with a list of results that are available for this formula candidate and their scores.  It can further be extended/annotated with the action formula candidate results.
  */
-@ApiModel(description = "Container for formula level results that holds a unique identifier (molecular formula + adduct).  It can be extended/annotated with a list of results that are available for this formula candidate and their scores.  It can further be extended/annotated with the action formula candidate results.")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-03-30T13:54:10.963050Z[Etc/UTC]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class FormulaResultContainer {
   public static final String SERIALIZED_NAME_ID = "id";
   @SerializedName(SERIALIZED_NAME_ID)
@@ -87,7 +84,6 @@ public class FormulaResultContainer {
    * @return id
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Unique identifier of this formula candidate")
 
   public String getId() {
     return id;
@@ -110,7 +106,6 @@ public class FormulaResultContainer {
    * @return molecularFormula
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "molecular formula of this formula candidate")
 
   public String getMolecularFormula() {
     return molecularFormula;
@@ -133,7 +128,6 @@ public class FormulaResultContainer {
    * @return adduct
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Adduct of this formula candidate")
 
   public String getAdduct() {
     return adduct;
@@ -156,7 +150,6 @@ public class FormulaResultContainer {
    * @return resultOverview
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public ResultOverview getResultOverview() {
     return resultOverview;
@@ -179,7 +172,6 @@ public class FormulaResultContainer {
    * @return candidate
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public FormulaCandidate getCandidate() {
     return candidate;

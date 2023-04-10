@@ -64,6 +64,9 @@ Sirius <- R6::R6Class(
         self$`enabled` <- `enabled`
       }
       if (!is.null(`profile`)) {
+        if (!(`profile` %in% c("QTOF", "ORBI", "FTICR"))) {
+          stop(paste("Error! \"", `profile`, "\" cannot be assigned to `profile`. Must be \"QTOF\", \"ORBI\", \"FTICR\".", sep = ""))
+        }
         if (!(is.character(`profile`) && length(`profile`) == 1)) {
           stop(paste("Error! Invalid data for `profile`. Must be a string:", `profile`))
         }
@@ -88,6 +91,9 @@ Sirius <- R6::R6Class(
         self$`massAccuracyMS2ppm` <- `massAccuracyMS2ppm`
       }
       if (!is.null(`isotopeMs2Settings`)) {
+        if (!(`isotopeMs2Settings` %in% c("IGNORE", "FILTER", "SCORE"))) {
+          stop(paste("Error! \"", `isotopeMs2Settings`, "\" cannot be assigned to `isotopeMs2Settings`. Must be \"IGNORE\", \"FILTER\", \"SCORE\".", sep = ""))
+        }
         if (!(is.character(`isotopeMs2Settings`) && length(`isotopeMs2Settings`) == 1)) {
           stop(paste("Error! Invalid data for `isotopeMs2Settings`. Must be a string:", `isotopeMs2Settings`))
         }
@@ -197,6 +203,9 @@ Sirius <- R6::R6Class(
         self$`enabled` <- this_object$`enabled`
       }
       if (!is.null(this_object$`profile`)) {
+        if (!is.null(this_object$`profile`) && !(this_object$`profile` %in% c("QTOF", "ORBI", "FTICR"))) {
+          stop(paste("Error! \"", this_object$`profile`, "\" cannot be assigned to `profile`. Must be \"QTOF\", \"ORBI\", \"FTICR\".", sep = ""))
+        }
         self$`profile` <- this_object$`profile`
       }
       if (!is.null(this_object$`numberOfCandidates`)) {
@@ -209,6 +218,9 @@ Sirius <- R6::R6Class(
         self$`massAccuracyMS2ppm` <- this_object$`massAccuracyMS2ppm`
       }
       if (!is.null(this_object$`isotopeMs2Settings`)) {
+        if (!is.null(this_object$`isotopeMs2Settings`) && !(this_object$`isotopeMs2Settings` %in% c("IGNORE", "FILTER", "SCORE"))) {
+          stop(paste("Error! \"", this_object$`isotopeMs2Settings`, "\" cannot be assigned to `isotopeMs2Settings`. Must be \"IGNORE\", \"FILTER\", \"SCORE\".", sep = ""))
+        }
         self$`isotopeMs2Settings` <- this_object$`isotopeMs2Settings`
       }
       if (!is.null(this_object$`formulaSearchDBs`)) {
@@ -355,10 +367,16 @@ Sirius <- R6::R6Class(
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       self$`enabled` <- this_object$`enabled`
+      if (!is.null(this_object$`profile`) && !(this_object$`profile` %in% c("QTOF", "ORBI", "FTICR"))) {
+        stop(paste("Error! \"", this_object$`profile`, "\" cannot be assigned to `profile`. Must be \"QTOF\", \"ORBI\", \"FTICR\".", sep = ""))
+      }
       self$`profile` <- this_object$`profile`
       self$`numberOfCandidates` <- this_object$`numberOfCandidates`
       self$`numberOfCandidatesPerIon` <- this_object$`numberOfCandidatesPerIon`
       self$`massAccuracyMS2ppm` <- this_object$`massAccuracyMS2ppm`
+      if (!is.null(this_object$`isotopeMs2Settings`) && !(this_object$`isotopeMs2Settings` %in% c("IGNORE", "FILTER", "SCORE"))) {
+        stop(paste("Error! \"", this_object$`isotopeMs2Settings`, "\" cannot be assigned to `isotopeMs2Settings`. Must be \"IGNORE\", \"FILTER\", \"SCORE\".", sep = ""))
+      }
       self$`isotopeMs2Settings` <- this_object$`isotopeMs2Settings`
       self$`formulaSearchDBs` <- ApiClient$new()$deserializeObj(this_object$`formulaSearchDBs`, "array[character]", loadNamespace("Rsirius"))
       self$`enforcedFormulaConstraints` <- this_object$`enforcedFormulaConstraints`

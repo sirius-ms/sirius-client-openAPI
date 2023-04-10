@@ -21,8 +21,6 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,8 +49,7 @@ import JSirius.JSON;
 /**
  * The MsData wraps all spectral input data belonging to a compound.   Each compound has:  - One merged MS/MS spectrum (optional)  - One merged MS spectrum (optional)  - many MS/MS spectra  - many MS spectra   Each non-merged spectrum has an index which can be used to access the spectrum.   In the future we might add some additional information like chromatographic peak or something similar
  */
-@ApiModel(description = "The MsData wraps all spectral input data belonging to a compound.   Each compound has:  - One merged MS/MS spectrum (optional)  - One merged MS spectrum (optional)  - many MS/MS spectra  - many MS spectra   Each non-merged spectrum has an index which can be used to access the spectrum.   In the future we might add some additional information like chromatographic peak or something similar")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-03-30T13:54:10.963050Z[Etc/UTC]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class MsData {
   public static final String SERIALIZED_NAME_MERGED_MS1 = "mergedMs1";
   @SerializedName(SERIALIZED_NAME_MERGED_MS1)
@@ -64,11 +61,11 @@ public class MsData {
 
   public static final String SERIALIZED_NAME_MS2_SPECTRA = "ms2Spectra";
   @SerializedName(SERIALIZED_NAME_MS2_SPECTRA)
-  private List<AnnotatedSpectrum> ms2Spectra = null;
+  private List<AnnotatedSpectrum> ms2Spectra;
 
   public static final String SERIALIZED_NAME_MS1_SPECTRA = "ms1Spectra";
   @SerializedName(SERIALIZED_NAME_MS1_SPECTRA)
-  private List<AnnotatedSpectrum> ms1Spectra = null;
+  private List<AnnotatedSpectrum> ms1Spectra;
 
   public MsData() {
   }
@@ -84,7 +81,6 @@ public class MsData {
    * @return mergedMs1
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public AnnotatedSpectrum getMergedMs1() {
     return mergedMs1;
@@ -107,7 +103,6 @@ public class MsData {
    * @return mergedMs2
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public AnnotatedSpectrum getMergedMs2() {
     return mergedMs2;
@@ -138,7 +133,6 @@ public class MsData {
    * @return ms2Spectra
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<AnnotatedSpectrum> getMs2Spectra() {
     return ms2Spectra;
@@ -169,7 +163,6 @@ public class MsData {
    * @return ms1Spectra
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<AnnotatedSpectrum> getMs1Spectra() {
     return ms1Spectra;

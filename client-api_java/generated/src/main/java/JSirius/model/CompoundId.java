@@ -22,8 +22,6 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 
 import com.google.gson.Gson;
@@ -50,8 +48,7 @@ import JSirius.JSON;
 /**
  * The CompoundId contains the ID of a compound together with some read-only information that might be displayed in  some summary view.
  */
-@ApiModel(description = "The CompoundId contains the ID of a compound together with some read-only information that might be displayed in  some summary view.")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-03-30T13:54:10.963050Z[Etc/UTC]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class CompoundId {
   public static final String SERIALIZED_NAME_ID = "id";
   @SerializedName(SERIALIZED_NAME_ID)
@@ -107,7 +104,6 @@ public class CompoundId {
    * @return id
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getId() {
     return id;
@@ -130,7 +126,6 @@ public class CompoundId {
    * @return name
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getName() {
     return name;
@@ -153,7 +148,6 @@ public class CompoundId {
    * @return index
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Long getIndex() {
     return index;
@@ -176,7 +170,6 @@ public class CompoundId {
    * @return ionMass
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Double getIonMass() {
     return ionMass;
@@ -199,7 +192,6 @@ public class CompoundId {
    * @return ionType
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getIonType() {
     return ionType;
@@ -222,7 +214,6 @@ public class CompoundId {
    * @return rtStartSeconds
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Double getRtStartSeconds() {
     return rtStartSeconds;
@@ -245,7 +236,6 @@ public class CompoundId {
    * @return rtEndSeconds
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Double getRtEndSeconds() {
     return rtEndSeconds;
@@ -268,7 +258,6 @@ public class CompoundId {
    * @return topAnnotation
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public CompoundAnnotation getTopAnnotation() {
     return topAnnotation;
@@ -291,7 +280,6 @@ public class CompoundId {
    * @return msData
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public MsData getMsData() {
     return msData;
@@ -314,7 +302,6 @@ public class CompoundId {
    * @return computing
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getComputing() {
     return computing;

@@ -21,8 +21,6 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 
 import com.google.gson.Gson;
@@ -49,8 +47,7 @@ import JSirius.JSON;
 /**
  * 
  */
-@ApiModel(description = "")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-03-30T13:54:10.963050Z[Etc/UTC]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class LossEdge {
   public static final String SERIALIZED_NAME_SOURCE_FRAGMENT = "sourceFragment";
   @SerializedName(SERIALIZED_NAME_SOURCE_FRAGMENT)
@@ -82,7 +79,6 @@ public class LossEdge {
    * @return sourceFragment
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public FragmentNode getSourceFragment() {
     return sourceFragment;
@@ -105,7 +101,6 @@ public class LossEdge {
    * @return targetFragment
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public FragmentNode getTargetFragment() {
     return targetFragment;
@@ -128,7 +123,6 @@ public class LossEdge {
    * @return molecularFormula
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getMolecularFormula() {
     return molecularFormula;
@@ -151,7 +145,6 @@ public class LossEdge {
    * @return score
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Double getScore() {
     return score;

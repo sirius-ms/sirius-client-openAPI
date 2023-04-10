@@ -20,8 +20,6 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 
 import com.google.gson.Gson;
@@ -48,8 +46,7 @@ import JSirius.JSON;
 /**
  * Results that are available for a {@link FormulaResultContainer FormulaResultContainer} represented as boolean or numeric score (if available).  NULL scores indicate that the corresponding result is not available.
  */
-@ApiModel(description = "Results that are available for a {@link FormulaResultContainer FormulaResultContainer} represented as boolean or numeric score (if available).  NULL scores indicate that the corresponding result is not available.")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-03-30T13:54:10.963050Z[Etc/UTC]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class ResultOverview {
   public static final String SERIALIZED_NAME_SIRIUS_SCORE = "siriusScore";
   @SerializedName(SERIALIZED_NAME_SIRIUS_SCORE)
@@ -85,7 +82,6 @@ public class ResultOverview {
    * @return siriusScore
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Sirius Score (isotope + tree score) of the formula candidate.  If NULL result is not available")
 
   public Double getSiriusScore() {
     return siriusScore;
@@ -108,7 +104,6 @@ public class ResultOverview {
    * @return zodiacScore
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Zodiac Score of the formula candidate.  If NULL result is not available")
 
   public Double getZodiacScore() {
     return zodiacScore;
@@ -131,7 +126,6 @@ public class ResultOverview {
    * @return topCSIScore
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "CSI:FingerID Score of the top ranking structure candidate of the structure database search  performed for this formula candidate.  If NULL structure database result is not available or the structure candidate list is empty.")
 
   public Double getTopCSIScore() {
     return topCSIScore;
@@ -154,7 +148,6 @@ public class ResultOverview {
    * @return confidenceScore
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Confidence Score of the  IF NULL structure database result not available a structure candidate hit of another formula candidate is  the top ranking structure candidate.")
 
   public Double getConfidenceScore() {
     return confidenceScore;
@@ -177,7 +170,6 @@ public class ResultOverview {
    * @return canopusResult
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "True if Canopus compound class prediction results are available.")
 
   public Boolean getCanopusResult() {
     return canopusResult;

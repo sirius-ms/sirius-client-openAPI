@@ -37,6 +37,9 @@ CompoundClass <- R6::R6Class(
     #' @export
     initialize = function(`type` = NULL, `name` = NULL, `description` = NULL, `id` = NULL, `probability` = NULL, ...) {
       if (!is.null(`type`)) {
+        if (!(`type` %in% c("ClassyFire", "NPC"))) {
+          stop(paste("Error! \"", `type`, "\" cannot be assigned to `type`. Must be \"ClassyFire\", \"NPC\".", sep = ""))
+        }
         if (!(is.character(`type`) && length(`type`) == 1)) {
           stop(paste("Error! Invalid data for `type`. Must be a string:", `type`))
         }
@@ -109,6 +112,9 @@ CompoundClass <- R6::R6Class(
     fromJSON = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       if (!is.null(this_object$`type`)) {
+        if (!is.null(this_object$`type`) && !(this_object$`type` %in% c("ClassyFire", "NPC"))) {
+          stop(paste("Error! \"", this_object$`type`, "\" cannot be assigned to `type`. Must be \"ClassyFire\", \"NPC\".", sep = ""))
+        }
         self$`type` <- this_object$`type`
       }
       if (!is.null(this_object$`name`)) {
@@ -188,6 +194,9 @@ CompoundClass <- R6::R6Class(
     #' @export
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
+      if (!is.null(this_object$`type`) && !(this_object$`type` %in% c("ClassyFire", "NPC"))) {
+        stop(paste("Error! \"", this_object$`type`, "\" cannot be assigned to `type`. Must be \"ClassyFire\", \"NPC\".", sep = ""))
+      }
       self$`type` <- this_object$`type`
       self$`name` <- this_object$`name`
       self$`description` <- this_object$`description`

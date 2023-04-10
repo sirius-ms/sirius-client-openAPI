@@ -22,8 +22,6 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,16 +50,15 @@ import JSirius.JSON;
 /**
  * 
  */
-@ApiModel(description = "")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-03-30T13:54:10.963050Z[Etc/UTC]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class FragmentationTree {
   public static final String SERIALIZED_NAME_FRAGMENTS = "fragments";
   @SerializedName(SERIALIZED_NAME_FRAGMENTS)
-  private List<FragmentNode> fragments = null;
+  private List<FragmentNode> fragments;
 
   public static final String SERIALIZED_NAME_LOSSES = "losses";
   @SerializedName(SERIALIZED_NAME_LOSSES)
-  private List<LossEdge> losses = null;
+  private List<LossEdge> losses;
 
   public static final String SERIALIZED_NAME_TREE_SCORE = "treeScore";
   @SerializedName(SERIALIZED_NAME_TREE_SCORE)
@@ -93,7 +90,6 @@ public class FragmentationTree {
    * @return fragments
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<FragmentNode> getFragments() {
     return fragments;
@@ -124,7 +120,6 @@ public class FragmentationTree {
    * @return losses
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<LossEdge> getLosses() {
     return losses;
@@ -147,7 +142,6 @@ public class FragmentationTree {
    * @return treeScore
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Double getTreeScore() {
     return treeScore;
@@ -170,7 +164,6 @@ public class FragmentationTree {
    * @return root
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public FragmentNode getRoot() {
     return root;

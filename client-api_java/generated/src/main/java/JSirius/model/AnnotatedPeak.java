@@ -20,8 +20,6 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 
 import com.google.gson.Gson;
@@ -48,8 +46,7 @@ import JSirius.JSON;
 /**
  * 
  */
-@ApiModel(description = "")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-03-30T13:54:10.963050Z[Etc/UTC]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class AnnotatedPeak {
   public static final String SERIALIZED_NAME_MASS = "mass";
   @SerializedName(SERIALIZED_NAME_MASS)
@@ -77,7 +74,6 @@ public class AnnotatedPeak {
    * @return mass
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Double getMass() {
     return mass;
@@ -100,7 +96,6 @@ public class AnnotatedPeak {
    * @return intensity
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Double getIntensity() {
     return intensity;
@@ -123,7 +118,6 @@ public class AnnotatedPeak {
    * @return peakAnnotation
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Object getPeakAnnotation() {
     return peakAnnotation;

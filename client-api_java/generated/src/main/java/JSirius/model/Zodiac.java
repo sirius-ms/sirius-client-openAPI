@@ -25,8 +25,6 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 
 import com.google.gson.Gson;
@@ -53,8 +51,7 @@ import JSirius.JSON;
 /**
  * User/developer friendly parameter subset for the ZODIAC tool (Network base molecular formula re-ranking).
  */
-@ApiModel(description = "User/developer friendly parameter subset for the ZODIAC tool (Network base molecular formula re-ranking).")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-03-30T13:54:10.963050Z[Etc/UTC]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class Zodiac {
   public static final String SERIALIZED_NAME_ENABLED = "enabled";
   @SerializedName(SERIALIZED_NAME_ENABLED)
@@ -94,7 +91,6 @@ public class Zodiac {
    * @return enabled
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "tags whether the tool is enabled")
 
   public Boolean getEnabled() {
     return enabled;
@@ -117,7 +113,6 @@ public class Zodiac {
    * @return consideredCandidatesAt300Mz
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public ZodiacNumberOfConsideredCandidatesAt300Mz getConsideredCandidatesAt300Mz() {
     return consideredCandidatesAt300Mz;
@@ -140,7 +135,6 @@ public class Zodiac {
    * @return consideredCandidatesAt800Mz
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public ZodiacNumberOfConsideredCandidatesAt800Mz getConsideredCandidatesAt800Mz() {
     return consideredCandidatesAt800Mz;
@@ -163,7 +157,6 @@ public class Zodiac {
    * @return runInTwoSteps
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public ZodiacRunInTwoSteps getRunInTwoSteps() {
     return runInTwoSteps;
@@ -186,7 +179,6 @@ public class Zodiac {
    * @return edgeFilterThresholds
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public ZodiacEdgeFilterThresholds getEdgeFilterThresholds() {
     return edgeFilterThresholds;
@@ -209,7 +201,6 @@ public class Zodiac {
    * @return gibbsSamplerParameters
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public ZodiacEpochs getGibbsSamplerParameters() {
     return gibbsSamplerParameters;

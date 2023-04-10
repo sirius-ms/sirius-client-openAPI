@@ -20,8 +20,6 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 
 import com.google.gson.Gson;
@@ -48,8 +46,7 @@ import JSirius.JSON;
 /**
  * Parameters to \&quot;remote control\&quot; the SIRIUS GUI.
  */
-@ApiModel(description = "Parameters to \"remote control\" the SIRIUS GUI.")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-03-30T13:54:10.963050Z[Etc/UTC]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class GuiParameters {
   /**
    * Selected Result ab.
@@ -142,7 +139,6 @@ public class GuiParameters {
    * @return selectedTab
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Selected Result ab.")
 
   public SelectedTabEnum getSelectedTab() {
     return selectedTab;
@@ -165,7 +161,6 @@ public class GuiParameters {
    * @return cid
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "ID of Selected compound.")
 
   public String getCid() {
     return cid;
@@ -188,7 +183,6 @@ public class GuiParameters {
    * @return fid
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "ID of Selected Formula candidate of the selected compound.")
 
   public String getFid() {
     return fid;
@@ -211,7 +205,6 @@ public class GuiParameters {
    * @return structureCandidateInChIKey
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "InChIKey of selected structure candidate of selected formula candidate.")
 
   public String getStructureCandidateInChIKey() {
     return structureCandidateInChIKey;
@@ -234,7 +227,6 @@ public class GuiParameters {
    * @return bringToFront
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "If true bring SIRIUS GUI window to foreground.")
 
   public Boolean getBringToFront() {
     return bringToFront;

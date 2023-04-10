@@ -21,8 +21,6 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,8 +49,7 @@ import JSirius.JSON;
 /**
  * 
  */
-@ApiModel(description = "")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-03-30T13:54:10.963050Z[Etc/UTC]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class AccountInfo {
   public static final String SERIALIZED_NAME_USER_I_D = "userID";
   @SerializedName(SERIALIZED_NAME_USER_I_D)
@@ -72,7 +69,7 @@ public class AccountInfo {
 
   public static final String SERIALIZED_NAME_SUBSCRIPTIONS = "subscriptions";
   @SerializedName(SERIALIZED_NAME_SUBSCRIPTIONS)
-  private List<Subscription> subscriptions = null;
+  private List<Subscription> subscriptions;
 
   public static final String SERIALIZED_NAME_ACTIVE_SUBSCRIPTION_ID = "activeSubscriptionId";
   @SerializedName(SERIALIZED_NAME_ACTIVE_SUBSCRIPTION_ID)
@@ -92,7 +89,6 @@ public class AccountInfo {
    * @return userID
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getUserID() {
     return userID;
@@ -115,7 +111,6 @@ public class AccountInfo {
    * @return username
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getUsername() {
     return username;
@@ -138,7 +133,6 @@ public class AccountInfo {
    * @return userEmail
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getUserEmail() {
     return userEmail;
@@ -161,7 +155,6 @@ public class AccountInfo {
    * @return gravatarURL
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getGravatarURL() {
     return gravatarURL;
@@ -192,7 +185,6 @@ public class AccountInfo {
    * @return subscriptions
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public List<Subscription> getSubscriptions() {
     return subscriptions;
@@ -215,7 +207,6 @@ public class AccountInfo {
    * @return activeSubscriptionId
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getActiveSubscriptionId() {
     return activeSubscriptionId;

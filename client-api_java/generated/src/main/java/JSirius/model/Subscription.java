@@ -20,8 +20,6 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 import java.time.OffsetDateTime;
 
@@ -49,8 +47,7 @@ import JSirius.JSON;
 /**
  * 
  */
-@ApiModel(description = "")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-03-30T13:54:10.963050Z[Etc/UTC]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class Subscription {
   public static final String SERIALIZED_NAME_SID = "sid";
   @SerializedName(SERIALIZED_NAME_SID)
@@ -126,7 +123,6 @@ public class Subscription {
    * @return sid
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getSid() {
     return sid;
@@ -149,7 +145,6 @@ public class Subscription {
    * @return subscriberId
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getSubscriberId() {
     return subscriberId;
@@ -172,7 +167,6 @@ public class Subscription {
    * @return subscriberName
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getSubscriberName() {
     return subscriberName;
@@ -195,7 +189,6 @@ public class Subscription {
    * @return expirationDate
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public OffsetDateTime getExpirationDate() {
     return expirationDate;
@@ -218,7 +211,6 @@ public class Subscription {
    * @return startDate
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public OffsetDateTime getStartDate() {
     return startDate;
@@ -241,7 +233,6 @@ public class Subscription {
    * @return countQueries
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Boolean getCountQueries() {
     return countQueries;
@@ -264,7 +255,6 @@ public class Subscription {
    * @return compoundLimit
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Integer getCompoundLimit() {
     return compoundLimit;
@@ -287,7 +277,6 @@ public class Subscription {
    * @return compoundHashRecordingTime
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Integer getCompoundHashRecordingTime() {
     return compoundHashRecordingTime;
@@ -310,7 +299,6 @@ public class Subscription {
    * @return maxQueriesPerCompound
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Integer getMaxQueriesPerCompound() {
     return maxQueriesPerCompound;
@@ -333,7 +321,6 @@ public class Subscription {
    * @return maxUserAccounts
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Integer getMaxUserAccounts() {
     return maxUserAccounts;
@@ -356,7 +343,6 @@ public class Subscription {
    * @return serviceUrl
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getServiceUrl() {
     return serviceUrl;
@@ -379,7 +365,6 @@ public class Subscription {
    * @return description
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getDescription() {
     return description;
@@ -402,7 +387,6 @@ public class Subscription {
    * @return name
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getName() {
     return name;
@@ -425,7 +409,6 @@ public class Subscription {
    * @return tos
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getTos() {
     return tos;
@@ -448,7 +431,6 @@ public class Subscription {
    * @return pp
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getPp() {
     return pp;

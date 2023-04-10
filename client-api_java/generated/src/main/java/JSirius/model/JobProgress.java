@@ -20,8 +20,6 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 
 import com.google.gson.Gson;
@@ -48,8 +46,7 @@ import JSirius.JSON;
 /**
  * Progress information of a computation job that has already been submitted to SIRIUS.  if  currentProgress &#x3D;&#x3D; maxProgress job is finished and should change to state done soon.  if a job is DONE all results can be accessed via the Project-Spaces api.
  */
-@ApiModel(description = "Progress information of a computation job that has already been submitted to SIRIUS.  if  currentProgress == maxProgress job is finished and should change to state done soon.  if a job is DONE all results can be accessed via the Project-Spaces api.")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-03-30T13:54:10.963050Z[Etc/UTC]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class JobProgress {
   public static final String SERIALIZED_NAME_INDETERMINATE = "indeterminate";
   @SerializedName(SERIALIZED_NAME_INDETERMINATE)
@@ -148,7 +145,6 @@ public class JobProgress {
    * @return indeterminate
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Is the progress indeterminate or not")
 
   public Boolean getIndeterminate() {
     return indeterminate;
@@ -171,7 +167,6 @@ public class JobProgress {
    * @return state
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Current state of the Jobs in the SIRIUS internal Job scheduler           WAITING: Waiting for submission to ExecutorService (e.g. due to dependent jobs)          READY: Ready for submission but not yet enqueued for submission to ExecutorService.          QUEUED: Enqueued for submission to ExecutorService.          SUBMITTED: Submitted and waiting to be executed.          RUNNING: Job is running.          CANCELED: Jobs is finished due to cancellation by suer or dependent jobs.          FAILED: Job is finished but failed.          DONE: Job finished successfully.")
 
   public StateEnum getState() {
     return state;
@@ -194,7 +189,6 @@ public class JobProgress {
    * @return currentProgress
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Current progress value of the job.")
 
   public Long getCurrentProgress() {
     return currentProgress;
@@ -217,7 +211,6 @@ public class JobProgress {
    * @return maxProgress
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Progress value to reach (might also change during execution)")
 
   public Long getMaxProgress() {
     return maxProgress;
@@ -240,7 +233,6 @@ public class JobProgress {
    * @return message
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Progress information and warnings.")
 
   public String getMessage() {
     return message;
@@ -263,7 +255,6 @@ public class JobProgress {
    * @return errorMessage
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Error message if the job did not finish successfully failed.")
 
   public String getErrorMessage() {
     return errorMessage;

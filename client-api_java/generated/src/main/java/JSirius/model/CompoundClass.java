@@ -20,8 +20,6 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 
 import com.google.gson.Gson;
@@ -48,8 +46,7 @@ import JSirius.JSON;
 /**
  * Predicted compound class with name, probability and id if available.  (ClassyFire and NPC). This can be seen as the set of classes a compound most likely belongs to
  */
-@ApiModel(description = "Predicted compound class with name, probability and id if available.  (ClassyFire and NPC). This can be seen as the set of classes a compound most likely belongs to")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-03-30T13:54:10.963050Z[Etc/UTC]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class CompoundClass {
   /**
    * Specifies the classification ontology the CompoundClass belongs to.
@@ -132,7 +129,6 @@ public class CompoundClass {
    * @return type
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Specifies the classification ontology the CompoundClass belongs to.")
 
   public TypeEnum getType() {
     return type;
@@ -155,7 +151,6 @@ public class CompoundClass {
    * @return name
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Name of the compound class.")
 
   public String getName() {
     return name;
@@ -178,7 +173,6 @@ public class CompoundClass {
    * @return description
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Description of the compound class.")
 
   public String getDescription() {
     return description;
@@ -201,7 +195,6 @@ public class CompoundClass {
    * @return id
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Unique id of the class. Might be undefined for certain classification ontologies.")
 
   public Integer getId() {
     return id;
@@ -224,7 +217,6 @@ public class CompoundClass {
    * @return probability
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "prediction probability")
 
   public Double getProbability() {
     return probability;

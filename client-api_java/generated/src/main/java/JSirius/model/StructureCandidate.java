@@ -21,8 +21,6 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,8 +49,7 @@ import JSirius.JSON;
 /**
  * 
  */
-@ApiModel(description = "")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-03-30T13:54:10.963050Z[Etc/UTC]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class StructureCandidate {
   public static final String SERIALIZED_NAME_STRUCTURE_NAME = "structureName";
   @SerializedName(SERIALIZED_NAME_STRUCTURE_NAME)
@@ -88,15 +85,15 @@ public class StructureCandidate {
 
   public static final String SERIALIZED_NAME_FP_BITS_SET = "fpBitsSet";
   @SerializedName(SERIALIZED_NAME_FP_BITS_SET)
-  private List<Integer> fpBitsSet = null;
+  private List<Integer> fpBitsSet;
 
   public static final String SERIALIZED_NAME_DB_LINKS = "dbLinks";
   @SerializedName(SERIALIZED_NAME_DB_LINKS)
-  private List<DBLink> dbLinks = null;
+  private List<DBLink> dbLinks;
 
   public static final String SERIALIZED_NAME_PUBMED_IDS = "pubmedIds";
   @SerializedName(SERIALIZED_NAME_PUBMED_IDS)
-  private List<Integer> pubmedIds = null;
+  private List<Integer> pubmedIds;
 
   public StructureCandidate() {
   }
@@ -112,7 +109,6 @@ public class StructureCandidate {
    * @return structureName
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getStructureName() {
     return structureName;
@@ -135,7 +131,6 @@ public class StructureCandidate {
    * @return smiles
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getSmiles() {
     return smiles;
@@ -158,7 +153,6 @@ public class StructureCandidate {
    * @return csiScore
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Double getCsiScore() {
     return csiScore;
@@ -181,7 +175,6 @@ public class StructureCandidate {
    * @return tanimotoSimilarity
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Double getTanimotoSimilarity() {
     return tanimotoSimilarity;
@@ -204,7 +197,6 @@ public class StructureCandidate {
    * @return confidenceScore
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Double getConfidenceScore() {
     return confidenceScore;
@@ -227,7 +219,6 @@ public class StructureCandidate {
    * @return numOfPubMedIds
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Integer getNumOfPubMedIds() {
     return numOfPubMedIds;
@@ -250,7 +241,6 @@ public class StructureCandidate {
    * @return xlogP
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Double getXlogP() {
     return xlogP;
@@ -273,7 +263,6 @@ public class StructureCandidate {
    * @return inchiKey
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getInchiKey() {
     return inchiKey;
@@ -304,7 +293,6 @@ public class StructureCandidate {
    * @return fpBitsSet
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Array containing the indices of the molecular fingerprint that are available in the structure (1)  OPTIONAL: needs to be added by parameter")
 
   public List<Integer> getFpBitsSet() {
     return fpBitsSet;
@@ -335,7 +323,6 @@ public class StructureCandidate {
    * @return dbLinks
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "List of structure database links belonging to this structure candidate  OPTIONAL: needs to be added by parameter")
 
   public List<DBLink> getDbLinks() {
     return dbLinks;
@@ -366,7 +353,6 @@ public class StructureCandidate {
    * @return pubmedIds
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "PubMed IDs belonging to this structure candidate  OPTIONAL: needs to be added by parameter")
 
   public List<Integer> getPubmedIds() {
     return pubmedIds;

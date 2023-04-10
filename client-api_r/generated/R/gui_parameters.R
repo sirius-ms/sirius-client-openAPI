@@ -37,6 +37,9 @@ GuiParameters <- R6::R6Class(
     #' @export
     initialize = function(`selectedTab` = NULL, `cid` = NULL, `fid` = NULL, `structureCandidateInChIKey` = NULL, `bringToFront` = NULL, ...) {
       if (!is.null(`selectedTab`)) {
+        if (!(`selectedTab` %in% c("FORMULAS", "SPECTRA", "TREES", "PREDICTED_FINGERPRINT", "STRUCTURES", "STRUCTURE_ANNOTATION", "COMPOUND_CLASSES"))) {
+          stop(paste("Error! \"", `selectedTab`, "\" cannot be assigned to `selectedTab`. Must be \"FORMULAS\", \"SPECTRA\", \"TREES\", \"PREDICTED_FINGERPRINT\", \"STRUCTURES\", \"STRUCTURE_ANNOTATION\", \"COMPOUND_CLASSES\".", sep = ""))
+        }
         if (!(is.character(`selectedTab`) && length(`selectedTab`) == 1)) {
           stop(paste("Error! Invalid data for `selectedTab`. Must be a string:", `selectedTab`))
         }
@@ -109,6 +112,9 @@ GuiParameters <- R6::R6Class(
     fromJSON = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       if (!is.null(this_object$`selectedTab`)) {
+        if (!is.null(this_object$`selectedTab`) && !(this_object$`selectedTab` %in% c("FORMULAS", "SPECTRA", "TREES", "PREDICTED_FINGERPRINT", "STRUCTURES", "STRUCTURE_ANNOTATION", "COMPOUND_CLASSES"))) {
+          stop(paste("Error! \"", this_object$`selectedTab`, "\" cannot be assigned to `selectedTab`. Must be \"FORMULAS\", \"SPECTRA\", \"TREES\", \"PREDICTED_FINGERPRINT\", \"STRUCTURES\", \"STRUCTURE_ANNOTATION\", \"COMPOUND_CLASSES\".", sep = ""))
+        }
         self$`selectedTab` <- this_object$`selectedTab`
       }
       if (!is.null(this_object$`cid`)) {
@@ -188,6 +194,9 @@ GuiParameters <- R6::R6Class(
     #' @export
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
+      if (!is.null(this_object$`selectedTab`) && !(this_object$`selectedTab` %in% c("FORMULAS", "SPECTRA", "TREES", "PREDICTED_FINGERPRINT", "STRUCTURES", "STRUCTURE_ANNOTATION", "COMPOUND_CLASSES"))) {
+        stop(paste("Error! \"", this_object$`selectedTab`, "\" cannot be assigned to `selectedTab`. Must be \"FORMULAS\", \"SPECTRA\", \"TREES\", \"PREDICTED_FINGERPRINT\", \"STRUCTURES\", \"STRUCTURE_ANNOTATION\", \"COMPOUND_CLASSES\".", sep = ""))
+      }
       self$`selectedTab` <- this_object$`selectedTab`
       self$`cid` <- this_object$`cid`
       self$`fid` <- this_object$`fid`

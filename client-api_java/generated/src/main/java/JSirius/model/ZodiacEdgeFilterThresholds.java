@@ -20,8 +20,6 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 
 import com.google.gson.Gson;
@@ -48,8 +46,7 @@ import JSirius.JSON;
 /**
  * 
  */
-@ApiModel(description = "")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-03-30T13:54:10.963050Z[Etc/UTC]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class ZodiacEdgeFilterThresholds {
   public static final String SERIALIZED_NAME_THRESHOLD_FILTER = "thresholdFilter";
   @SerializedName(SERIALIZED_NAME_THRESHOLD_FILTER)
@@ -81,7 +78,6 @@ public class ZodiacEdgeFilterThresholds {
    * @return thresholdFilter
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Double getThresholdFilter() {
     return thresholdFilter;
@@ -104,7 +100,6 @@ public class ZodiacEdgeFilterThresholds {
    * @return minLocalCandidates
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Integer getMinLocalCandidates() {
     return minLocalCandidates;
@@ -127,7 +122,6 @@ public class ZodiacEdgeFilterThresholds {
    * @return minLocalConnections
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public Integer getMinLocalConnections() {
     return minLocalConnections;
@@ -150,7 +144,6 @@ public class ZodiacEdgeFilterThresholds {
    * @return identifier
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
 
   public String getIdentifier() {
     return identifier;
