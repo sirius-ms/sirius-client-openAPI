@@ -116,16 +116,13 @@ jobs:
       run: |
         gh workflow run RManualGeneration.yml --ref ${GITHUB_REF##*/}
         echo "dispatched workflow"
-        echo "sleeping for 20s to make sure it started"
-        sleep 20
+        echo "sleeping for 30s to make sure it started"
+        sleep 30
         list=$(gh run list --workflow RManualGeneration --branch ${GITHUB_REF##*/})
-        echo $list
-        test=$(echo $list | grep -oP 'in_progress RManualGeneration RManualGeneration r_manual workflow_dispatch \K\d+')
-        echo $test
         id=$(echo $list | grep -oP 'in_progress RManualGeneration RManualGeneration [^ ]* workflow_dispatch \K\d+')
-        echo $id
+        echo "run ID of RManualGeneration is: $id"
         gh run watch $id --exit-status
-        echo "Generation done!"
+        echo "generation done!"
       env:
         GH_TOKEN: ${{ github.token }}
     - name: update file and create pull request
