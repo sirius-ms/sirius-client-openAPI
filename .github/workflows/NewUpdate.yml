@@ -129,7 +129,7 @@ jobs:
           | jq -r '.state')
         while true; do
           echo $state
-          if [ $state = "completed" ]; then
+          if [ $state eq "completed" ]; then
             break
           else
             sleep 10
