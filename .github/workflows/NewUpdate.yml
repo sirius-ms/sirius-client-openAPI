@@ -115,10 +115,9 @@ jobs:
     - name: Dispatch RManualGeneration
       run: |
         gh workflow run RManualGeneration.yml
-        view=$(gh workflow view RManualGeneration)
-        id=$(echo $view | grep -o 'ID: [0-9]*' | grep -o '[0-9]*$')
-        echo $id
-        gh run watch $id --exit-status && notify-send "run is done!"
+        list=$(gh run list --workflow RManualGeneration)
+        echo $list
+        exit 1
       env:
         GH_TOKEN: ${{ github.token }}
     - name: update file and create pull request
