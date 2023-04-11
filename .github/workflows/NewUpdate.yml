@@ -115,10 +115,10 @@ jobs:
     - name: generate RSirius manual
       run: |
         echo ${{ github.repository }}
-        run_id=$(gh workflow run RManualGeneration.yml | jq -r '.id')
+        run_id=$(gh workflow run RManualGeneration.yml | jq "id")
         echo $run_id
         while true; do
-          status=$(gh api -X GET /repos/${{ github.repository }}/actions/workflows/$run_id | jq -r '.status')
+          status=$(gh api -X GET "https://api.github.com/repos/${{ github.repository }}/actions/workflows/$run_id" | jq "status")
           echo $status
           if [ $status = "completed" ]; then
             break
