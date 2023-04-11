@@ -115,14 +115,12 @@ jobs:
     - name: Dispatch RManualGeneration
       run: |
         run=$(gh workflow run RManualGeneration.yml)
-        sleep 10
         echo $run
         list=$(gh workflow list)
         echo $list
-        view=$(gh workflow view)
+        echo $list | grep -o 'RManualGeneration active [0-9]*' | grep -o '[0-9]*$'
+        view=$(gh workflow view RManualGeneration)
         echo $view
-        detailed_view=$(gh workflow view RManualGeneration)
-        echo $detailed_view
         exit 1
       env:
         GH_TOKEN: ${{ github.token }}
