@@ -113,7 +113,16 @@ jobs:
       with:
         commit_message: Auto-Updated OpenAPI Clients
     - name: generate RSirius manual
-      run: gh workflow run RManualGeneration.yml --wait
+      run: |
+        run_id=$(gh workflow run RManualGeneration.yml | jq -r '.id')
+        while true; do
+          status=$(gh api -X GET /repos/{owner}/{repo}/actions/runs/$run_id | jq -r '.status')
+          if [ $status = "completed" ]; then
+            break
+          else
+            sleep 10
+          fi
+        done
       env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: update file and create pull request
