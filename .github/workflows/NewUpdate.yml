@@ -118,9 +118,11 @@ jobs:
         echo $run
         list=$(gh workflow list)
         echo $list
-        echo $list | grep -o 'RManualGeneration active [0-9]*' | grep -o '[0-9]*$'
+        id=$(echo $list | grep -o 'RManualGeneration active [0-9]*' | grep -o '[0-9]*$')
+        echo $id
         view=$(gh workflow view RManualGeneration)
-        echo $view
+        id=$(echo $view | grep -o 'ID: [0-9]*' | grep -o '[0-9]*$')
+        echo $id
         exit 1
       env:
         GH_TOKEN: ${{ github.token }}
