@@ -118,7 +118,7 @@ jobs:
         echo "dispatched workflow"
         echo "sleeping for 20s to make sure it started"
         sleep 20
-        list=$(gh run list --workflow RManualGeneration --status in_progress --branch ${GITHUB_REF##*/})
+        list=$(gh run list --workflow RManualGeneration --branch ${GITHUB_REF##*/})
         echo $list
         id=$(echo $list | grep -oP 'in_progress RManualGeneration RManualGeneration master workflow_dispatch \K\d+')
         echo $id
