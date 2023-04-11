@@ -112,15 +112,32 @@ jobs:
       uses: stefanzweifel/git-auto-commit-action@v4.15.2
       with:
         commit_message: Auto-Updated OpenAPI Clients
-    - name: Trigger RManualGeneration Workflow
-      uses: peter-evans/workflow-dispatch@v1
-      with:
-        workflow: RManualGeneration.yaml
-    - name: Wait for RManualGeneration Workflow to complete
-      uses: styfle/wait-for-workflow@v0.8.0
-      with:
-        workflow: RManualGeneration.yaml
-        token: ${{ secrets.GITHUB_TOKEN }}
+    - name: Call RManualGeneration workflow
+      run: |
+        curl \
+        -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+        -X POST \
+        -H "Accept: application/vnd.github.v3+json" \
+        https://api.github.com/repos/${{ github.repository }}/actions/workflows/RManualGeneration.yaml/dispatches \
+        -d '{"ref":"${{ github.ref }}"}'
+      id: call-workflow
+    - name: Wait for RManualGeneration workflow to complete
+      run: |
+        workflow_id=$(echo ${{ steps.call-workflow.outputs.response }} | jq -r '.id')
+        while true; do
+            status=$(curl \
+                    -H "Authorization: Bearer ${{ github.token }}" \
+                    -H "Accept: application/vnd.github.v3+json" \
+                    https://api.github.com/repos/${{ github.repository }}/actions/runs/$workflow_id \
+                    | jq -r '.conclusion')
+            if [ "$status" = "success" ]; then
+                break
+            elif [ "$status" = "failure" ]; then
+                echo "Workflow failed"
+                exit 1
+            fi
+            sleep 10
+        done
     - name: update file and create pull request
       id: open-pr
       uses: repo-sync/pull-request@v2
