@@ -11,7 +11,7 @@ jobs:
   UpdateClients:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     # Runs using the runners shell
@@ -112,6 +112,17 @@ jobs:
       uses: stefanzweifel/git-auto-commit-action@v4.15.2
       with:
         commit_message: Auto-Updated OpenAPI Clients
+    - name: Dispatch RManualGeneration
+      run: |
+        gh workflow run RManualGeneration.yml
+        sleep 20
+        list=$(gh run list --workflow RManualGeneration)
+        id=$(echo $list | grep -oP 'in_progress RManualGeneration RManualGeneration master workflow_dispatch \K\d+')
+        echo $id
+        gh run watch $id --exit-status
+        echo "Generation done!"
+      env:
+        GH_TOKEN: ${{ github.token }}
     - name: update file and create pull request
       id: open-pr
       uses: repo-sync/pull-request@v2
