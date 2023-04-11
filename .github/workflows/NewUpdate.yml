@@ -114,7 +114,7 @@ jobs:
         commit_message: Auto-Updated OpenAPI Clients
     - name: Dispatch RManualGeneration
       run: |
-        gh workflow run RManualGeneration.yml
+        gh workflow run RManualGeneration.yml --ref ${GITHUB_REF##*/}
         sleep 20
         list=$(gh run list --workflow RManualGeneration)
         id=$(echo $list | grep -oP 'in_progress RManualGeneration RManualGeneration master workflow_dispatch \K\d+')
