@@ -115,6 +115,7 @@ jobs:
     - name: Dispatch RManualGeneration
       run: |
         gh workflow run RManualGeneration.yml
+        sleep 30
         id=$(gh api \ 
           -H "Accept: application/vnd.github+json" \
           -H "X-GitHub-Api-Version: 2022-11-28" \
