@@ -12,4 +12,4 @@ License: Unlicense
 LazyData: true
 Suggests: testthat
 Imports: jsonlite, httr2, R6, base64enc, stringr
-RoxygenNote: 7.2.3
+RoxygenNote: 7.2.1
