@@ -114,27 +114,16 @@ jobs:
         commit_message: Auto-Updated OpenAPI Clients
     - name: Dispatch RManualGeneration
       run: |
-        gh workflow run RManualGeneration.yml
-        sleep 30
-        id=$(gh api \ 
-          -H "Accept: application/vnd.github+json" \
-          -H "X-GitHub-Api-Version: 2022-11-28" \
-          /repos/${{ github.repository }}/actions/workflows \
-          | jq -r '.workflows[] | select(.name=="RManualGeneration.yml") | .id')
-        echo $id
-        state=$(gh api \
-          -H "Accept: application/vnd.github+json" \
-          -H "X-GitHub-Api-Version: 2022-11-28" \
-          /repos/${{ github.repository }}/actions/workflows/$id \
-          | jq -r '.state')
-        while true; do
-          echo $state
-          if [ $state eq "completed" ]; then
-            break
-          else
-            sleep 10
-          fi
-        done
+        run=$(gh workflow run RManualGeneration.yml)
+        sleep 10
+        echo $run
+        list=$(gh workflow list)
+        echo $list
+        view=$(gh workflow view)
+        echo $view
+        detailed_view=$(gh workflow view RManualGeneration)
+        echo $detailed_view
+        exit 1
       env:
         GH_TOKEN: ${{ github.token }}
     - name: update file and create pull request
