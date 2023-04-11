@@ -114,9 +114,10 @@ jobs:
         commit_message: Auto-Updated OpenAPI Clients
     - name: generate RSirius manual
       run: |
+        echo ${{ github.repository }}
         run_id=$(gh workflow run RManualGeneration.yml | jq -r '.id')
         while true; do
-          status=$(gh api -X GET /repos/{owner}/{repo}/actions/runs/$run_id | jq -r '.status')
+          status=$(gh api -X GET /repos/${{ github.repository }}/actions/runs/$run_id | jq -r '.status')
           if [ $status = "completed" ]; then
             break
           else
