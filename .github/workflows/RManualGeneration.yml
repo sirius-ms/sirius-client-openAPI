@@ -41,8 +41,7 @@ jobs:
     - name: Extract RoxygenNote version
       id: roxygen_version
       run: |
-        roxygen_note=$(grep "^RoxygenNote: " client-api_r/generated/DESCRIPTION | awk '{print $2}')
-        echo "::set-output name=roxygen_note::$roxygen_note"
+        echo "{roxygen_note}={(grep "^RoxygenNote: " client-api_r/generated/DESCRIPTION | awk '{print $2}')}" >> $GITHUB_OUTPUT
     - name: Install roxygen2
       run: library(remotes); install_version("roxygen2", version = "${{ steps.roxygen_version.outputs.roxygen_note }}")
       shell: Rscript {0}
