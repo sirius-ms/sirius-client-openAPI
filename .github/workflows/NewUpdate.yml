@@ -115,10 +115,11 @@ jobs:
     - name: Dispatch RManualGeneration
       run: |
         gh workflow run RManualGeneration.yml
-        sleep 30
+        sleep 20
         list=$(gh run list --workflow RManualGeneration)
-        echo $list
-        exit 1
+        id=$(echo $list | grep -oP 'in_progress RManualGeneration RManualGeneration master workflow_dispatch \K\d+')
+        echo $id
+        gh run watch $id --exit-status && notify-send "run is done!"
       env:
         GH_TOKEN: ${{ github.token }}
     - name: update file and create pull request
