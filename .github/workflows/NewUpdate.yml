@@ -114,11 +114,15 @@ jobs:
         commit_message: Auto-Updated OpenAPI Clients
     - name: Dispatch RManualGeneration
       run: |
-        gh workflow run RManualGeneration.yml
-        view=$(gh workflow view RManualGeneration)
+        run=$(gh workflow run RManualGeneration.yml)
+        sleep 10
+        echo $run
+        list=$(gh workflow list)
+        echo $list
+        view=$(gh workflow view)
         echo $view
-        id=$($view | grep -o 'ID: [0-9]*' | grep -o '[0-9]*$')
-        echo $id
+        detailed_view=$(gh workflow view RManualGeneration)
+        echo $detailed_view
         exit 1
       env:
         GH_TOKEN: ${{ github.token }}
