@@ -113,7 +113,7 @@ jobs:
       with:
         commit_message: Auto-Updated OpenAPI Clients
     - name: generate RSirius manual
-      run: gh workflow run RManualGeneration.yml
+      run: gh workflow run RManualGeneration.yml --wait
       env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: update file and create pull request
