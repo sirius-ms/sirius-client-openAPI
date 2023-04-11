@@ -113,28 +113,29 @@ jobs:
       with:
         commit_message: Auto-Updated OpenAPI Clients
     - name: Dispatch RManualGeneration
-      run: gh workflow run RManualGeneration.yml
-      env:
-        GH_TOKEN: ${{ github.token }}
-    - name: Get RManualGeneration ID
-      id: return_dispatch
       run: |
-        echo $(gh api -H "Accept: application/vnd.github+json" \
+        gh workflow run RManualGeneration.yml
+        id=$(gh api \ 
+          -H "Accept: application/vnd.github+json" \
           -H "X-GitHub-Api-Version: 2022-11-28" \
           /repos/${{ github.repository }}/actions/workflows \
           | jq -r '.workflows[] | select(.name=="RManualGeneration.yml") | .id')
-        echo "{run_id}={gh api -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" /repos/${{ github.repository }}/actions/workflows | jq -r '.workflows[] | select(.name=="RManualGeneration.yml") | .id'}" >> $GITHUB_OUTPUT
+        echo $id
+        state=$(gh api \
+          -H "Accept: application/vnd.github+json" \
+          -H "X-GitHub-Api-Version: 2022-11-28" \
+          /repos/${{ github.repository }}/actions/workflows/$id \
+          | jq -r '.state')
+        while true; do
+          echo $state
+          if [ $state = "completed" ]; then
+            break
+          else
+            sleep 10
+          fi
+        done
       env:
-          GH_TOKEN: ${{ github.token }}
-    - name: Wait for RManualGeneration
-      uses: Codex-/await-remote-run@v1.0.0
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        repo: sirius-client-openAPI
-        owner: boecker-lab
-        run_id: ${{ steps.return_dispatch.outputs.run_id }}
-        run_timeout_seconds: 900 # Optional
-        poll_interval_ms: 5000 # Optional
+        GH_TOKEN: ${{ github.token }}
     - name: update file and create pull request
       id: open-pr
       uses: repo-sync/pull-request@v2
