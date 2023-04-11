@@ -11,7 +11,7 @@ jobs:
   UpdateClients:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     # Runs using the runners shell
@@ -115,6 +115,7 @@ jobs:
     - name: Dispatch RManualGeneration
       run: |
         gh workflow run RManualGeneration.yml
+        sleep 30
         list=$(gh run list --workflow RManualGeneration)
         echo $list
         exit 1
