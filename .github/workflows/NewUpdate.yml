@@ -116,8 +116,10 @@ jobs:
       run: |
         echo ${{ github.repository }}
         run_id=$(gh workflow run RManualGeneration.yml | jq -r '.id')
+        echo $run_id
         while true; do
-          status=$(gh api -X GET /repos/${{ github.repository }}/actions/runs/$run_id | jq -r '.status')
+          status=$(gh api -X GET /repos/${{ github.repository }}/actions/workflows/$run_id | jq -r '.status')
+          echo $status
           if [ $status = "completed" ]; then
             break
           else
