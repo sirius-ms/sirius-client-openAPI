@@ -112,32 +112,23 @@ jobs:
       uses: stefanzweifel/git-auto-commit-action@v4.15.2
       with:
         commit_message: Auto-Updated OpenAPI Clients
-    - name: Call RManualGeneration workflow
-      run: |
-        curl \
-        -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-        -X POST \
-        -H "Accept: application/vnd.github.v3+json" \
-        https://api.github.com/repos/${{ github.repository }}/actions/workflows/RManualGeneration.yaml/dispatches \
-        -d '{"ref":"${{ github.ref }}"}'
-      id: call-workflow
-    - name: Wait for RManualGeneration workflow to complete
-      run: |
-        workflow_id=$(echo ${{ steps.call-workflow.outputs.response }} | jq -r '.id')
-        while true; do
-            status=$(curl \
-                    -H "Authorization: Bearer ${{ github.token }}" \
-                    -H "Accept: application/vnd.github.v3+json" \
-                    https://api.github.com/repos/${{ github.repository }}/actions/runs/$workflow_id \
-                    | jq -r '.conclusion')
-            if [ "$status" = "success" ]; then
-                break
-            elif [ "$status" = "failure" ]; then
-                echo "Workflow failed"
-                exit 1
-            fi
-            sleep 10
-        done
+    - name: Dispatch RManualGeneration
+      uses: codex-/return-dispatch@v1
+      id: return_dispatch
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        repo: sirius-client-openAPI
+        owner: boecker-lab
+        workflow: RManualGeneration.yml
+    - name: Wait for RManualGeneration
+      uses: Codex-/await-remote-run@v1.0.0
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        repo: sirius-client-openAPI
+        owner: boecker-lab
+        run_id: ${{ steps.return_dispatch.outputs.run_id }}
+        run_timeout_seconds: 900 # Optional
+        poll_interval_ms: 5000 # Optional
     - name: update file and create pull request
       id: open-pr
       uses: repo-sync/pull-request@v2
