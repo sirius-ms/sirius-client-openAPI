@@ -112,6 +112,8 @@ jobs:
       uses: stefanzweifel/git-auto-commit-action@v4.15.2
       with:
         commit_message: Auto-Updated OpenAPI Clients
+    - name: generate RSirius manual
+      run: gh workflow run RManualGeneration.yml
     - name: update file and create pull request
       id: open-pr
       uses: repo-sync/pull-request@v2
