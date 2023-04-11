@@ -114,6 +114,8 @@ jobs:
         commit_message: Auto-Updated OpenAPI Clients
     - name: generate RSirius manual
       run: gh workflow run RManualGeneration.yml
+      env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: update file and create pull request
       id: open-pr
       uses: repo-sync/pull-request@v2
