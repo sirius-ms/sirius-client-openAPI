@@ -115,12 +115,10 @@ jobs:
     - name: Dispatch RManualGeneration
       run: |
         gh workflow run RManualGeneration.yml
-        list=$(gh workflow list)
-        echo $list
-        id=$($list | grep -o 'RManualGeneration active [0-9]*' | grep -o '[0-9]*$')
+        view=$(gh workflow view RManualGeneration)
+        echo $view
+        id=$($view | grep -o 'ID: [0-9]*' | grep -o '[0-9]*$')
         echo $id
-        gh run watch $id --exit-status && notify-send "Manual generatoin finished!"
-        echo "DONE"
         exit 1
       env:
         GH_TOKEN: ${{ github.token }}
