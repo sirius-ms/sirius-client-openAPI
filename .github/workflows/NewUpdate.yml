@@ -112,11 +112,14 @@ jobs:
       uses: stefanzweifel/git-auto-commit-action@v4.15.2
       with:
         commit_message: Auto-Updated OpenAPI Clients
-    - name: Dispatch RManualGeneration
+    - name: Run RManualGeneration
       run: |
         gh workflow run RManualGeneration.yml --ref ${GITHUB_REF##*/}
+        echo "dispatched workflow"
+        echo "sleeping for 20s to make sure it started"
         sleep 20
-        list=$(gh run list --workflow RManualGeneration)
+        list=$(gh run list --workflow RManualGeneration --status in_progress --branch ${GITHUB_REF##*/})
+        echo $list
         id=$(echo $list | grep -oP 'in_progress RManualGeneration RManualGeneration master workflow_dispatch \K\d+')
         echo $id
         gh run watch $id --exit-status
