@@ -1,10 +1,14 @@
 openapi: 3.0.1
 info:
-  description: REST API that provides the full functionality of SIRIUS and its web
-    services as background service. It is intended as entry-point for scripting languages
-    and software integration SDKs.
+  description: OpenAPI REST API that provides the full functionality of SIRIUS and
+    its web services as background service. It is intended as entry-point for scripting
+    languages and software integration SDKs.The provided OpenAPI specification allows
+    to autogenerate clients for different programming languages.
+  license:
+    name: GNU Affero General Public License v3.0
+    url: https://www.gnu.org/licenses/agpl-3.0.txt
   title: SIRIUS Nightsky API
-  version: v0.9 on SIRIUS 5.6.4-SNAPSHOT
+  version: "0.9"
 servers:
 - description: Generated server url
   url: http://localhost:8080
