@@ -107,7 +107,7 @@ jobs:
         chmod +x ./client-api_r/add_to_docu.sh
         ./client-api_r/add_to_docu.sh ./client-api_r/generated/docs/CompoundsApi.md
         
-        echo "removing sirius.R
+        echo "removing sirius.R"
         rm ./client-api_r/generated/R/sirius.R
     - name: Remove Sirius Rest Api
       run: |
