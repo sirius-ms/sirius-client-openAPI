@@ -1,0 +1,24 @@
+# This workflow will start all individual Tests
+
+name: RunTests
+
+
+on: [workflow_dispatch, workflow_call, pull_request]
+
+
+jobs:
+  RTest:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Run RTest
+        uses: ./.github/workflows/RTest.yml
+
+  PythonTest:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Run PythonTest
+        uses: ./.github/workflows/PythonTest.yml
