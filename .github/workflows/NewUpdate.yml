@@ -106,6 +106,9 @@ jobs:
         
         chmod +x ./client-api_r/add_to_docu.sh
         ./client-api_r/add_to_docu.sh ./client-api_r/generated/docs/CompoundsApi.md
+        
+        echo "removing sirius.R
+        rm ./client-api_r/generated/R/sirius.R
     - name: Remove Sirius Rest Api
       run: |
         cd .updater/api
@@ -131,6 +134,8 @@ jobs:
         echo "run ID of RManualGeneration is: $id"
         gh run watch $id --exit-status --interval 30
         echo "generation done!"
+        echo "looking into the man folder"
+        ls ./client-api_r/generated/man
       env:
         GH_TOKEN: ${{ github.token }}
     - name: update file and create pull request
