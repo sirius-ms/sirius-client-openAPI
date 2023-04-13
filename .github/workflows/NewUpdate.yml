@@ -48,17 +48,25 @@ jobs:
     - name: Update Clients
       run: |
         echo "generating Java Code"
+        rm -rf client-api_java/generated/*
         java -jar .updater/openapi_generator/openapi-generator-cli.jar generate -i .updater/api/api-docs.json -c .updater/config/Java/config.json -g java -o client-api_java/generated
         
         echo "generating Python Code"
         rm -rf client-api_python/generated/*
         java -jar .updater/swagger/swagger-codegen-cli.jar generate -i .updater/api/api-docs.json -c .updater/config/Python/config.json -l python -o client-api_python/generated
         
+        echo "temporarily move R manual folder"
+        mv client-api_r/generated/man/ client-api_r/
+        
         echo "generating R Code"
-        rm -r client-api_r/generated/*
+        rm -rf client-api_r/generated/*
         java -jar .updater/openapi_generator/openapi-generator-cli.jar generate -i .updater/api/api-docs.json -c .updater/config/R/config.json -g r -o client-api_r/generated -t client-api_r/templates/r
         
+        echo "recover R manual folder"
+        mv client-api_r/man/ client-api_r/generated/
+        
         #echo "generating Ruby Code"
+        #rm -rf client-api_ruby/generated/*
         #java -jar .updater/openapi_generator/openapi-generator-cli.jar generate -i .updater/api/api-docs.json -c .updater/config/Ruby/config.json -g ruby -o client-api_ruby/generated
         echo "generating Finished!"
     - name: Format Python Package
