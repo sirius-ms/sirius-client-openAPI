@@ -13,7 +13,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
       - name: Run RTest
-        uses: ./.github/workflows/RTest.yml
+        uses: ./.github/workflows/RTest
 
   PythonTest:
     runs-on: ubuntu-latest
@@ -21,4 +21,4 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
       - name: Run PythonTest
-        uses: ./.github/workflows/PythonTest.yml
+        uses: ./.github/workflows/PythonTest
