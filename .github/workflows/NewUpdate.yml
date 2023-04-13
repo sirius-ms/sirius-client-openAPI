@@ -48,7 +48,7 @@ jobs:
     - name: Update Clients
       run: |
         echo "generating Java Code"
-        #rm -rf client-api_java/generated/*
+        rm -rf client-api_java/generated/*
         java -jar .updater/openapi_generator/openapi-generator-cli.jar generate -i .updater/api/api-docs.json -c .updater/config/Java/config.json -g java -o client-api_java/generated
         
         echo "generating Python Code"
