@@ -155,5 +155,4 @@ jobs:
     - name: Run tests if no changes occure
       if: steps.lockpull.outcome == 'failure'
       run: |
-        gh workflow run RTest.yml --ref ${GITHUB_REF##*/}
-        gh workflow run PythonTest.yml --ref ${GITHUB_REF##*/}
+        gh workflow run RunTests.yml --ref ${GITHUB_REF##*/}
