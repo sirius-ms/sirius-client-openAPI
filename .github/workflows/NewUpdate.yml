@@ -145,8 +145,15 @@ jobs:
     - name: check if request has been created
       run: echo ${{steps.open-pr.outputs.pr_created}}
     - name: lock pull request
+      continue-on-error: true
+      id: lockpull
       uses: sudo-bot/action-pull-request-lock@v1.1.0
       with:
         github-token: ${{ secrets.MERGE_REQUEST_TOKEN }}
         number: ${{steps.open-pr.outputs.pr_number}}
         lock-reason: resolved
+    - name: Run tests if no changes occure
+      if: steps.lockpull.outcome == 'failure'
+      run: |
+        gh workflow run RTest.yml --ref ${GITHUB_REF##*/}
+        gh workflow run PythonTest.yml --ref ${GITHUB_REF##*/}
