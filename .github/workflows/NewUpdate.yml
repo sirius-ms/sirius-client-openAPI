@@ -153,6 +153,8 @@ jobs:
         number: ${{steps.open-pr.outputs.pr_number}}
         lock-reason: resolved
     - name: Run tests if no changes occure
+      env:
+        GH_TOKEN: ${{ github.token }}
       if: steps.lockpull.outcome == 'failure'
       run: |
         gh workflow run RunTests.yml --ref ${GITHUB_REF##*/}
