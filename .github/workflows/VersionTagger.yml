@@ -1,0 +1,3 @@
+name: VersionTagger
+
+on: pull_request
