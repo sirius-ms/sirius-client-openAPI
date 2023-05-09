@@ -17,6 +17,7 @@ jobs:
           echo "VER=$VER" >> $GITHUB_OUTPUT
           
       - name: Check Release
+        id: "wrong_exit"
         run: |
           echo ${{steps.check_release.outputs.STR}}
           if [[ "${{steps.check_release.outputs.STR}}" == *"${{steps.check_release.outputs.SUB}}"* ]]; then exit 1; fi
@@ -25,4 +26,6 @@ jobs:
         with:
           tag: ${{steps.check_release.outputs.VER}}
           tag_exists_error: true
-          
+      - name: Finish Up
+        if: steps.wrong_exit.outcome == 'failure'
+        run: exit 0;
