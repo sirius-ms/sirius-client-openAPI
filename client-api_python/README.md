@@ -3,11 +3,15 @@ REST API that provides the full functionality of SIRIUS and its web services as 
 
 ## Installation & Usage
 ### pip install
-
-If the python package is hosted on Github, you can install directly from Github
+#### Latest (unstable) Version
 
 ```sh
 pip install git+https://github.com/boecker-lab/sirius-client-openAPI#subdirectory=client-api_python/generated
+```
+#### Specific Version
+Replace v0.0.0 with your sirius version
+```sh
+pip install git+https://github.com/boecker-lab/sirius-client-openAPI@v0.0.0#subdirectory=client-api_python/generated
 ```
 (you may need to run `pip` with root permission: `sudo pip install git+https://github.com/boecker-lab/sirius-client-openAPI#subdirectory=client-api_python/generated`)
 
@@ -15,6 +19,8 @@ Then import the package:
 ```python
 import PySirius 
 ```
+
+
 
 ### Setuptools
 
