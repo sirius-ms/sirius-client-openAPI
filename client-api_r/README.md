@@ -5,7 +5,7 @@ This is a short introduction on Rsirius. Go to [**generated**](generated) to fin
 conda install -c conda-forge r-base r-remotes
 ```
 ## Getting RSirius
-Replace v0.0.0 with your sirius version
+Replace v0.0.0 with your api version
 ```R
 library(remotes)
 install_github(repo = "boecker-lab/sirius-client-openAPI@v0.0.0", subdir = "client-api_r/generated", ref = "master", build = TRUE)
