@@ -5,7 +5,7 @@ REST API that provides the full functionality of SIRIUS and its web services as 
 ### pip install
 
 #### Specific Version
-Replace v0.0.0 with your sirius version
+Replace v0.0.0 with your api version
 ```sh
 pip install git+https://github.com/boecker-lab/sirius-client-openAPI@v0.0.0#subdirectory=client-api_python/generated
 ```
