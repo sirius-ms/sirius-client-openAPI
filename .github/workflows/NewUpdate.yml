@@ -11,7 +11,7 @@ jobs:
   UpdateClients:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 90
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     # Runs using the runners shell
@@ -29,7 +29,7 @@ jobs:
       uses: nick-fields/retry@v2
       with:
         max_attempts: 5
-        timeout_minutes: 2
+        timeout_minutes: 5
         command: |
             cd .updater/api
             curl -s  https://api.github.com/repos/boecker-lab/sirius/releases | grep 'browser_download_url.*linux64-service.zip\"' | sort | tac | head -n 1 | cut -d : -f 2,3 | tr -d \" | wget -i -
@@ -158,3 +158,11 @@ jobs:
       if: steps.lockpull.outcome == 'failure'
       run: |
         gh workflow run RunTests.yml --ref ${GITHUB_REF##*/}
+        echo "sleeping for 30min before temp branch removal"
+        sleep 1800
+    - name: Delete temp branches
+      uses: dawidd6/action-delete-branch@v3
+      with:
+        github_token: ${{github.token}}
+        prefix: temp_
+        soft_fail: true
