@@ -17,6 +17,6 @@ jobs:
         with:
           tag: ${{steps.check_release.outputs.VER}}
           tag_exists_error: false
-          message: "Version: ${{steps.check_release.outputs.VER}}"
+          message: "Api-Version: ${{steps.check_release.outputs.VER}}"
       - run: |
           echo "Tag already present: ${{ steps.tag_create.outputs.tag_exists }}"
