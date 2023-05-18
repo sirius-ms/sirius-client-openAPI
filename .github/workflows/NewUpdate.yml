@@ -160,7 +160,8 @@ jobs:
         gh workflow run RunTests.yml --ref ${GITHUB_REF##*/}
         echo "sleeping for 30min before temp branch removal"
         sleep 1800
-    - name: Delete temp branches
+    - name: Delete temp branches if no changes occure
+      if: steps.lockpull.outcome == 'failure'
       uses: dawidd6/action-delete-branch@v3
       with:
         github_token: ${{github.token}}
