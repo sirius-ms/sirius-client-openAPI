@@ -32,7 +32,7 @@ jobs:
         timeout_minutes: 5
         command: |
             cd .updater/api
-            curl -s  https://api.github.com/repos/boecker-lab/sirius/releases | grep 'browser_download_url.*linux64-service.zip\"' | sort | tac | head -n 1 | cut -d : -f 2,3 | tr -d \" | wget -i -
+            curl -s  https://api.github.com/repos/boecker-lab/sirius/releases | grep 'browser_download_url.*linux64.zip\"' | sort | tac | head -n 1 | cut -d : -f 2,3 | tr -d \" | wget -i -
             echo "Download Complete"
             unzip *.zip
             echo "Api Ready"
