@@ -37,6 +37,7 @@ class CompoundId(object):
         'rt_end_seconds': 'float',
         'top_annotation': 'CompoundAnnotation',
         'ms_data': 'MsData',
+        'quality_flags': 'list[str]',
         'computing': 'bool'
     }
 
@@ -50,10 +51,11 @@ class CompoundId(object):
         'rt_end_seconds': 'rtEndSeconds',
         'top_annotation': 'topAnnotation',
         'ms_data': 'msData',
+        'quality_flags': 'qualityFlags',
         'computing': 'computing'
     }
 
-    def __init__(self, id=None, name=None, index=None, ion_mass=None, ion_type=None, rt_start_seconds=None, rt_end_seconds=None, top_annotation=None, ms_data=None, computing=None):  # noqa: E501
+    def __init__(self, id=None, name=None, index=None, ion_mass=None, ion_type=None, rt_start_seconds=None, rt_end_seconds=None, top_annotation=None, ms_data=None, quality_flags=None, computing=None):  # noqa: E501
         """CompoundId - a model defined in Swagger"""  # noqa: E501
         self._id = None
         self._name = None
@@ -64,6 +66,7 @@ class CompoundId(object):
         self._rt_end_seconds = None
         self._top_annotation = None
         self._ms_data = None
+        self._quality_flags = None
         self._computing = None
         self.discriminator = None
         if id is not None:
@@ -84,6 +87,8 @@ class CompoundId(object):
             self.top_annotation = top_annotation
         if ms_data is not None:
             self.ms_data = ms_data
+        if quality_flags is not None:
+            self.quality_flags = quality_flags
         if computing is not None:
             self.computing = computing
 
@@ -275,6 +280,36 @@ class CompoundId(object):
         """
 
         self._ms_data = ms_data
+
+    @property
+    def quality_flags(self):
+        """Gets the quality_flags of this CompoundId.  # noqa: E501
+
+        Contains all pre-computation quality information that belong to  this compound, such as information about the quality of the peak shape, MS2 spectrum etc.,  see ({@link CompoundQuality.CompoundQualityFlag CompoundQuality.CompoundQualityFlag})  <p>  Each Compound has a Set of Quality assessment flags.  # noqa: E501
+
+        :return: The quality_flags of this CompoundId.  # noqa: E501
+        :rtype: list[str]
+        """
+        return self._quality_flags
+
+    @quality_flags.setter
+    def quality_flags(self, quality_flags):
+        """Sets the quality_flags of this CompoundId.
+
+        Contains all pre-computation quality information that belong to  this compound, such as information about the quality of the peak shape, MS2 spectrum etc.,  see ({@link CompoundQuality.CompoundQualityFlag CompoundQuality.CompoundQualityFlag})  <p>  Each Compound has a Set of Quality assessment flags.  # noqa: E501
+
+        :param quality_flags: The quality_flags of this CompoundId.  # noqa: E501
+        :type: list[str]
+        """
+        allowed_values = ["Good", "LowIntensity", "NoMS1Peak", "FewPeaks", "Chimeric", "NotMonoisotopicPeak", "PoorlyExplained", "UNKNOWN", "BadIsotopePattern", "BadPeakShape"]  # noqa: E501
+        if not set(quality_flags).issubset(set(allowed_values)):
+            raise ValueError(
+                "Invalid values for `quality_flags` [{0}], must be a subset of [{1}]"  # noqa: E501
+                .format(", ".join(map(str, set(quality_flags) - set(allowed_values))),  # noqa: E501
+                        ", ".join(map(str, allowed_values)))
+            )
+
+        self._quality_flags = quality_flags
 
     @property
     def computing(self):
