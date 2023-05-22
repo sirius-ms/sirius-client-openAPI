@@ -60,7 +60,8 @@ public class CompoundsApiTest {
         String cid = null;
         Boolean topAnnotation = null;
         Boolean msData = null;
-        CompoundId response = api.getCompound(projectId, cid, topAnnotation, msData);
+        Boolean msQuality = null;
+        CompoundId response = api.getCompound(projectId, cid, topAnnotation, msData, msQuality);
         // TODO: test validations
     }
 
@@ -76,7 +77,8 @@ public class CompoundsApiTest {
         String projectId = null;
         Boolean topAnnotation = null;
         Boolean msData = null;
-        List<CompoundId> response = api.getCompounds(projectId, topAnnotation, msData);
+        Boolean msQuality = null;
+        List<CompoundId> response = api.getCompounds(projectId, topAnnotation, msData, msQuality);
         // TODO: test validations
     }
 

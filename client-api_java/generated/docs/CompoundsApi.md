@@ -76,7 +76,7 @@ No authorization required
 
 <a name="getCompound"></a>
 # **getCompound**
-> CompoundId getCompound(projectId, cid, topAnnotation, msData)
+> CompoundId getCompound(projectId, cid, topAnnotation, msData, msQuality)
 
 Get compound/feature with the given identifier from the specified project-space.
 
@@ -101,8 +101,9 @@ public class Example {
     String cid = "cid_example"; // String | identifier of compound to access.
     Boolean topAnnotation = false; // Boolean | include the top annotation of this feature into the output (if available).
     Boolean msData = false; // Boolean | include corresponding source data (MS and MS/MS) into the output.
+    Boolean msQuality = false; // Boolean | 
     try {
-      CompoundId result = apiInstance.getCompound(projectId, cid, topAnnotation, msData);
+      CompoundId result = apiInstance.getCompound(projectId, cid, topAnnotation, msData, msQuality);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling CompoundsApi#getCompound");
@@ -123,6 +124,7 @@ public class Example {
 | **cid** | **String**| identifier of compound to access. | |
 | **topAnnotation** | **Boolean**| include the top annotation of this feature into the output (if available). | [optional] [default to false] |
 | **msData** | **Boolean**| include corresponding source data (MS and MS/MS) into the output. | [optional] [default to false] |
+| **msQuality** | **Boolean**|  | [optional] [default to false] |
 
 ### Return type
 
@@ -144,7 +146,7 @@ No authorization required
 
 <a name="getCompounds"></a>
 # **getCompounds**
-> List&lt;CompoundId&gt; getCompounds(projectId, topAnnotation, msData)
+> List&lt;CompoundId&gt; getCompounds(projectId, topAnnotation, msData, msQuality)
 
 Get all available compounds/features in the given project-space.
 
@@ -168,8 +170,9 @@ public class Example {
     String projectId = "projectId_example"; // String | project-space to read from.
     Boolean topAnnotation = false; // Boolean | include the top annotation of this feature into the output (if available).
     Boolean msData = false; // Boolean | include corresponding source data (MS and MS/MS) into the output.
+    Boolean msQuality = false; // Boolean | 
     try {
-      List<CompoundId> result = apiInstance.getCompounds(projectId, topAnnotation, msData);
+      List<CompoundId> result = apiInstance.getCompounds(projectId, topAnnotation, msData, msQuality);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling CompoundsApi#getCompounds");
@@ -189,6 +192,7 @@ public class Example {
 | **projectId** | **String**| project-space to read from. | |
 | **topAnnotation** | **Boolean**| include the top annotation of this feature into the output (if available). | [optional] [default to false] |
 | **msData** | **Boolean**| include corresponding source data (MS and MS/MS) into the output. | [optional] [default to false] |
+| **msQuality** | **Boolean**|  | [optional] [default to false] |
 
 ### Return type
 

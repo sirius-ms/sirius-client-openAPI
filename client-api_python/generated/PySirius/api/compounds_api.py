@@ -145,6 +145,7 @@ class CompoundsApi(object):
         :param str cid: identifier of compound to access. (required)
         :param bool top_annotation: include the top annotation of this feature into the output (if available).
         :param bool ms_data: include corresponding source data (MS and MS/MS) into the output.
+        :param bool ms_quality:
         :return: CompoundId
                  If the method is called asynchronously,
                  returns the request thread.
@@ -170,12 +171,13 @@ class CompoundsApi(object):
         :param str cid: identifier of compound to access. (required)
         :param bool top_annotation: include the top annotation of this feature into the output (if available).
         :param bool ms_data: include corresponding source data (MS and MS/MS) into the output.
+        :param bool ms_quality:
         :return: CompoundId
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['project_id', 'cid', 'top_annotation', 'ms_data']  # noqa: E501
+        all_params = ['project_id', 'cid', 'top_annotation', 'ms_data', 'ms_quality']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -212,6 +214,8 @@ class CompoundsApi(object):
             query_params.append(('topAnnotation', params['top_annotation']))  # noqa: E501
         if 'ms_data' in params:
             query_params.append(('msData', params['ms_data']))  # noqa: E501
+        if 'ms_quality' in params:
+            query_params.append(('msQuality', params['ms_quality']))  # noqa: E501
 
         header_params = {}
 
@@ -255,6 +259,7 @@ class CompoundsApi(object):
         :param str project_id: project-space to read from. (required)
         :param bool top_annotation: include the top annotation of this feature into the output (if available).
         :param bool ms_data: include corresponding source data (MS and MS/MS) into the output.
+        :param bool ms_quality:
         :return: list[CompoundId]
                  If the method is called asynchronously,
                  returns the request thread.
@@ -279,12 +284,13 @@ class CompoundsApi(object):
         :param str project_id: project-space to read from. (required)
         :param bool top_annotation: include the top annotation of this feature into the output (if available).
         :param bool ms_data: include corresponding source data (MS and MS/MS) into the output.
+        :param bool ms_quality:
         :return: list[CompoundId]
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['project_id', 'top_annotation', 'ms_data']  # noqa: E501
+        all_params = ['project_id', 'top_annotation', 'ms_data', 'ms_quality']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -315,6 +321,8 @@ class CompoundsApi(object):
             query_params.append(('topAnnotation', params['top_annotation']))  # noqa: E501
         if 'ms_data' in params:
             query_params.append(('msData', params['ms_data']))  # noqa: E501
+        if 'ms_quality' in params:
+            query_params.append(('msQuality', params['ms_quality']))  # noqa: E501
 
         header_params = {}
 
