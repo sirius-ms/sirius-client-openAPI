@@ -281,7 +281,7 @@ ApiClient  <- R6::R6Class(
     #' @return Deserialized object.
     #' @export
     deserialize = function(raw_response, return_type, pkg_env) {
-      if (startsWith(raw_response, "https://auth0.bright-giant.com")) {
+      if (startsWith(raw_response, "https://portal.bright-giant.com/auth/register/")) {
         resp_obj <- raw_response
       } else {
         resp_obj <- jsonlite::fromJSON(raw_response)
