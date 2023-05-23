@@ -73,7 +73,7 @@ SiriusSDK = R6::R6Class(
         wd <- getwd()
         setwd(dirname(pathToSirius))
         if(Sys.info()['sysname'] %in% c("Linux","Darwin")){
-          out <- system("./sirius --version", intern=TRUE, show.output.on.console=FALSE)
+          out <- system("./sirius --version", intern=TRUE)
         } else if (Sys.info()['sysname'] == "Windows"){
           out <- system("sirius.bat --version", intern=TRUE, show.output.on.console=FALSE)
         } else {
@@ -82,9 +82,9 @@ SiriusSDK = R6::R6Class(
           resetSDK()
           stop("Unsupported operating system.")
         }
-	# --version command has different output depending on OS
-	# on Linux: [1] "SIRIUS 5.6.4-SNAPSHOT"
-	# on Windows: [13] "SIRIUS 5.6.3" 
+	# --version command has different output formatting depending on OS
+	# on Linux: [1] "SIRIUS X.X.X"
+	# on Windows: [13] "SIRIUS X.X.X" 
 	if (Sys.info()['sysname'] == "Windows"){
           numbers <- regmatches(out[13], gregexpr("\\d+", out[13]))[[1]]
         } else {
