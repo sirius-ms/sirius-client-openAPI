@@ -38,6 +38,7 @@
 #' \item \emph{ @param } cid character
 #' \item \emph{ @param } top_annotation character
 #' \item \emph{ @param } ms_data character
+#' \item \emph{ @param } ms_quality character
 #' \item \emph{ @returnType } \link{CompoundId} \cr
 #'
 #'
@@ -57,6 +58,7 @@
 #' \item \emph{ @param } project_id character
 #' \item \emph{ @param } top_annotation character
 #' \item \emph{ @param } ms_data character
+#' \item \emph{ @param } ms_quality character
 #' \item \emph{ @returnType } list( \link{CompoundId} ) \cr
 #'
 #'
@@ -134,13 +136,14 @@
 #' var_cid <- "cid_example" # character | identifier of compound to access.
 #' var_top_annotation <- FALSE # character | include the top annotation of this feature into the output (if available). (Optional)
 #' var_ms_data <- FALSE # character | include corresponding source data (MS and MS/MS) into the output. (Optional)
+#' var_ms_quality <- FALSE # character |  (Optional)
 #'
 #' #Get compound/feature with the given identifier from the specified project-space.
 #' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-#' # result <- api_instance$GetCompound(var_project_id, var_cid, top_annotation = var_top_annotation, ms_data = var_ms_datadata_file = "result.txt")
-#' result <- api_instance$compounds_api$GetCompound(var_project_id, var_cid, top_annotation = var_top_annotation, ms_data = var_ms_data)
+#' # result <- api_instance$GetCompound(var_project_id, var_cid, top_annotation = var_top_annotation, ms_data = var_ms_data, ms_quality = var_ms_qualitydata_file = "result.txt")
+#' result <- api_instance$compounds_api$GetCompound(var_project_id, var_cid, top_annotation = var_top_annotation, ms_data = var_ms_data, ms_quality = var_ms_quality)
 #' dput(result)
 #'
 #'
@@ -150,13 +153,14 @@
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_top_annotation <- FALSE # character | include the top annotation of this feature into the output (if available). (Optional)
 #' var_ms_data <- FALSE # character | include corresponding source data (MS and MS/MS) into the output. (Optional)
+#' var_ms_quality <- FALSE # character |  (Optional)
 #'
 #' #Get all available compounds/features in the given project-space.
 #' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-#' # result <- api_instance$GetCompounds(var_project_id, top_annotation = var_top_annotation, ms_data = var_ms_datadata_file = "result.txt")
-#' result <- api_instance$compounds_api$GetCompounds(var_project_id, top_annotation = var_top_annotation, ms_data = var_ms_data)
+#' # result <- api_instance$GetCompounds(var_project_id, top_annotation = var_top_annotation, ms_data = var_ms_data, ms_quality = var_ms_qualitydata_file = "result.txt")
+#' result <- api_instance$compounds_api$GetCompounds(var_project_id, top_annotation = var_top_annotation, ms_data = var_ms_data, ms_quality = var_ms_quality)
 #' dput(result)
 #'
 #'
@@ -321,12 +325,13 @@ CompoundsApi <- R6::R6Class(
     #' @param cid identifier of compound to access.
     #' @param top_annotation (optional) include the top annotation of this feature into the output (if available). (default value: FALSE)
     #' @param ms_data (optional) include corresponding source data (MS and MS/MS) into the output. (default value: FALSE)
+    #' @param ms_quality (optional) No description (default value: FALSE)
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #' @return CompoundId
     #' @export
-    GetCompound = function(project_id, cid, top_annotation = FALSE, ms_data = FALSE, data_file = NULL, ...) {
-      local_var_response <- self$GetCompoundWithHttpInfo(project_id, cid, top_annotation, ms_data, data_file = data_file, ...)
+    GetCompound = function(project_id, cid, top_annotation = FALSE, ms_data = FALSE, ms_quality = FALSE, data_file = NULL, ...) {
+      local_var_response <- self$GetCompoundWithHttpInfo(project_id, cid, top_annotation, ms_data, ms_quality, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
@@ -346,11 +351,12 @@ CompoundsApi <- R6::R6Class(
     #' @param cid identifier of compound to access.
     #' @param top_annotation (optional) include the top annotation of this feature into the output (if available). (default value: FALSE)
     #' @param ms_data (optional) include corresponding source data (MS and MS/MS) into the output. (default value: FALSE)
+    #' @param ms_quality (optional) No description (default value: FALSE)
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #' @return API response (CompoundId) with additional information such as HTTP status code, headers
     #' @export
-    GetCompoundWithHttpInfo = function(project_id, cid, top_annotation = FALSE, ms_data = FALSE, data_file = NULL, ...) {
+    GetCompoundWithHttpInfo = function(project_id, cid, top_annotation = FALSE, ms_data = FALSE, ms_quality = FALSE, data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -372,9 +378,12 @@ CompoundsApi <- R6::R6Class(
 
 
 
+
       query_params[["topAnnotation"]] <- `top_annotation`
 
       query_params[["msData"]] <- `ms_data`
+
+      query_params[["msQuality"]] <- `ms_quality`
 
       local_var_url_path <- "/api/projects/{projectId}/compounds/{cid}"
       if (!missing(`project_id`)) {
@@ -438,12 +447,13 @@ CompoundsApi <- R6::R6Class(
     #' @param project_id project-space to read from.
     #' @param top_annotation (optional) include the top annotation of this feature into the output (if available). (default value: FALSE)
     #' @param ms_data (optional) include corresponding source data (MS and MS/MS) into the output. (default value: FALSE)
+    #' @param ms_quality (optional) No description (default value: FALSE)
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #' @return array[CompoundId]
     #' @export
-    GetCompounds = function(project_id, top_annotation = FALSE, ms_data = FALSE, data_file = NULL, ...) {
-      local_var_response <- self$GetCompoundsWithHttpInfo(project_id, top_annotation, ms_data, data_file = data_file, ...)
+    GetCompounds = function(project_id, top_annotation = FALSE, ms_data = FALSE, ms_quality = FALSE, data_file = NULL, ...) {
+      local_var_response <- self$GetCompoundsWithHttpInfo(project_id, top_annotation, ms_data, ms_quality, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
@@ -462,11 +472,12 @@ CompoundsApi <- R6::R6Class(
     #' @param project_id project-space to read from.
     #' @param top_annotation (optional) include the top annotation of this feature into the output (if available). (default value: FALSE)
     #' @param ms_data (optional) include corresponding source data (MS and MS/MS) into the output. (default value: FALSE)
+    #' @param ms_quality (optional) No description (default value: FALSE)
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #' @return API response (array[CompoundId]) with additional information such as HTTP status code, headers
     #' @export
-    GetCompoundsWithHttpInfo = function(project_id, top_annotation = FALSE, ms_data = FALSE, data_file = NULL, ...) {
+    GetCompoundsWithHttpInfo = function(project_id, top_annotation = FALSE, ms_data = FALSE, ms_quality = FALSE, data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -483,9 +494,12 @@ CompoundsApi <- R6::R6Class(
 
 
 
+
       query_params[["topAnnotation"]] <- `top_annotation`
 
       query_params[["msData"]] <- `ms_data`
+
+      query_params[["msQuality"]] <- `ms_quality`
 
       local_var_url_path <- "/api/projects/{projectId}/compounds"
       if (!missing(`project_id`)) {

@@ -208,6 +208,7 @@ public class CompoundsApi {
      * @param cid identifier of compound to access. (required)
      * @param topAnnotation include the top annotation of this feature into the output (if available). (optional, default to false)
      * @param msData include corresponding source data (MS and MS/MS) into the output. (optional, default to false)
+     * @param msQuality  (optional, default to false)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -217,7 +218,7 @@ public class CompoundsApi {
         <tr><td> 200 </td><td> CompoundId with additional annotations and MS/MS data (if specified). </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getCompoundCall(String projectId, String cid, Boolean topAnnotation, Boolean msData, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call getCompoundCall(String projectId, String cid, Boolean topAnnotation, Boolean msData, Boolean msQuality, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -252,6 +253,10 @@ public class CompoundsApi {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("msData", msData));
         }
 
+        if (msQuality != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("msQuality", msQuality));
+        }
+
         final String[] localVarAccepts = {
             "application/json"
         };
@@ -272,7 +277,7 @@ public class CompoundsApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call getCompoundValidateBeforeCall(String projectId, String cid, Boolean topAnnotation, Boolean msData, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call getCompoundValidateBeforeCall(String projectId, String cid, Boolean topAnnotation, Boolean msData, Boolean msQuality, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'projectId' is set
         if (projectId == null) {
             throw new ApiException("Missing the required parameter 'projectId' when calling getCompound(Async)");
@@ -283,7 +288,7 @@ public class CompoundsApi {
             throw new ApiException("Missing the required parameter 'cid' when calling getCompound(Async)");
         }
 
-        return getCompoundCall(projectId, cid, topAnnotation, msData, _callback);
+        return getCompoundCall(projectId, cid, topAnnotation, msData, msQuality, _callback);
 
     }
 
@@ -294,6 +299,7 @@ public class CompoundsApi {
      * @param cid identifier of compound to access. (required)
      * @param topAnnotation include the top annotation of this feature into the output (if available). (optional, default to false)
      * @param msData include corresponding source data (MS and MS/MS) into the output. (optional, default to false)
+     * @param msQuality  (optional, default to false)
      * @return CompoundId
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -302,8 +308,8 @@ public class CompoundsApi {
         <tr><td> 200 </td><td> CompoundId with additional annotations and MS/MS data (if specified). </td><td>  -  </td></tr>
      </table>
      */
-    public CompoundId getCompound(String projectId, String cid, Boolean topAnnotation, Boolean msData) throws ApiException {
-        ApiResponse<CompoundId> localVarResp = getCompoundWithHttpInfo(projectId, cid, topAnnotation, msData);
+    public CompoundId getCompound(String projectId, String cid, Boolean topAnnotation, Boolean msData, Boolean msQuality) throws ApiException {
+        ApiResponse<CompoundId> localVarResp = getCompoundWithHttpInfo(projectId, cid, topAnnotation, msData, msQuality);
         return localVarResp.getData();
     }
 
@@ -314,6 +320,7 @@ public class CompoundsApi {
      * @param cid identifier of compound to access. (required)
      * @param topAnnotation include the top annotation of this feature into the output (if available). (optional, default to false)
      * @param msData include corresponding source data (MS and MS/MS) into the output. (optional, default to false)
+     * @param msQuality  (optional, default to false)
      * @return ApiResponse&lt;CompoundId&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -322,8 +329,8 @@ public class CompoundsApi {
         <tr><td> 200 </td><td> CompoundId with additional annotations and MS/MS data (if specified). </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<CompoundId> getCompoundWithHttpInfo(String projectId, String cid, Boolean topAnnotation, Boolean msData) throws ApiException {
-        okhttp3.Call localVarCall = getCompoundValidateBeforeCall(projectId, cid, topAnnotation, msData, null);
+    public ApiResponse<CompoundId> getCompoundWithHttpInfo(String projectId, String cid, Boolean topAnnotation, Boolean msData, Boolean msQuality) throws ApiException {
+        okhttp3.Call localVarCall = getCompoundValidateBeforeCall(projectId, cid, topAnnotation, msData, msQuality, null);
         Type localVarReturnType = new TypeToken<CompoundId>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -335,6 +342,7 @@ public class CompoundsApi {
      * @param cid identifier of compound to access. (required)
      * @param topAnnotation include the top annotation of this feature into the output (if available). (optional, default to false)
      * @param msData include corresponding source data (MS and MS/MS) into the output. (optional, default to false)
+     * @param msQuality  (optional, default to false)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -344,9 +352,9 @@ public class CompoundsApi {
         <tr><td> 200 </td><td> CompoundId with additional annotations and MS/MS data (if specified). </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getCompoundAsync(String projectId, String cid, Boolean topAnnotation, Boolean msData, final ApiCallback<CompoundId> _callback) throws ApiException {
+    public okhttp3.Call getCompoundAsync(String projectId, String cid, Boolean topAnnotation, Boolean msData, Boolean msQuality, final ApiCallback<CompoundId> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = getCompoundValidateBeforeCall(projectId, cid, topAnnotation, msData, _callback);
+        okhttp3.Call localVarCall = getCompoundValidateBeforeCall(projectId, cid, topAnnotation, msData, msQuality, _callback);
         Type localVarReturnType = new TypeToken<CompoundId>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -356,6 +364,7 @@ public class CompoundsApi {
      * @param projectId project-space to read from. (required)
      * @param topAnnotation include the top annotation of this feature into the output (if available). (optional, default to false)
      * @param msData include corresponding source data (MS and MS/MS) into the output. (optional, default to false)
+     * @param msQuality  (optional, default to false)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -365,7 +374,7 @@ public class CompoundsApi {
         <tr><td> 200 </td><td> CompoundIds with additional annotations and MS/MS data (if specified). </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getCompoundsCall(String projectId, Boolean topAnnotation, Boolean msData, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call getCompoundsCall(String projectId, Boolean topAnnotation, Boolean msData, Boolean msQuality, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -399,6 +408,10 @@ public class CompoundsApi {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("msData", msData));
         }
 
+        if (msQuality != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("msQuality", msQuality));
+        }
+
         final String[] localVarAccepts = {
             "application/json"
         };
@@ -419,13 +432,13 @@ public class CompoundsApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call getCompoundsValidateBeforeCall(String projectId, Boolean topAnnotation, Boolean msData, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call getCompoundsValidateBeforeCall(String projectId, Boolean topAnnotation, Boolean msData, Boolean msQuality, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'projectId' is set
         if (projectId == null) {
             throw new ApiException("Missing the required parameter 'projectId' when calling getCompounds(Async)");
         }
 
-        return getCompoundsCall(projectId, topAnnotation, msData, _callback);
+        return getCompoundsCall(projectId, topAnnotation, msData, msQuality, _callback);
 
     }
 
@@ -435,6 +448,7 @@ public class CompoundsApi {
      * @param projectId project-space to read from. (required)
      * @param topAnnotation include the top annotation of this feature into the output (if available). (optional, default to false)
      * @param msData include corresponding source data (MS and MS/MS) into the output. (optional, default to false)
+     * @param msQuality  (optional, default to false)
      * @return List&lt;CompoundId&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -443,8 +457,8 @@ public class CompoundsApi {
         <tr><td> 200 </td><td> CompoundIds with additional annotations and MS/MS data (if specified). </td><td>  -  </td></tr>
      </table>
      */
-    public List<CompoundId> getCompounds(String projectId, Boolean topAnnotation, Boolean msData) throws ApiException {
-        ApiResponse<List<CompoundId>> localVarResp = getCompoundsWithHttpInfo(projectId, topAnnotation, msData);
+    public List<CompoundId> getCompounds(String projectId, Boolean topAnnotation, Boolean msData, Boolean msQuality) throws ApiException {
+        ApiResponse<List<CompoundId>> localVarResp = getCompoundsWithHttpInfo(projectId, topAnnotation, msData, msQuality);
         return localVarResp.getData();
     }
 
@@ -454,6 +468,7 @@ public class CompoundsApi {
      * @param projectId project-space to read from. (required)
      * @param topAnnotation include the top annotation of this feature into the output (if available). (optional, default to false)
      * @param msData include corresponding source data (MS and MS/MS) into the output. (optional, default to false)
+     * @param msQuality  (optional, default to false)
      * @return ApiResponse&lt;List&lt;CompoundId&gt;&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -462,8 +477,8 @@ public class CompoundsApi {
         <tr><td> 200 </td><td> CompoundIds with additional annotations and MS/MS data (if specified). </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<List<CompoundId>> getCompoundsWithHttpInfo(String projectId, Boolean topAnnotation, Boolean msData) throws ApiException {
-        okhttp3.Call localVarCall = getCompoundsValidateBeforeCall(projectId, topAnnotation, msData, null);
+    public ApiResponse<List<CompoundId>> getCompoundsWithHttpInfo(String projectId, Boolean topAnnotation, Boolean msData, Boolean msQuality) throws ApiException {
+        okhttp3.Call localVarCall = getCompoundsValidateBeforeCall(projectId, topAnnotation, msData, msQuality, null);
         Type localVarReturnType = new TypeToken<List<CompoundId>>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -474,6 +489,7 @@ public class CompoundsApi {
      * @param projectId project-space to read from. (required)
      * @param topAnnotation include the top annotation of this feature into the output (if available). (optional, default to false)
      * @param msData include corresponding source data (MS and MS/MS) into the output. (optional, default to false)
+     * @param msQuality  (optional, default to false)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -483,9 +499,9 @@ public class CompoundsApi {
         <tr><td> 200 </td><td> CompoundIds with additional annotations and MS/MS data (if specified). </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getCompoundsAsync(String projectId, Boolean topAnnotation, Boolean msData, final ApiCallback<List<CompoundId>> _callback) throws ApiException {
+    public okhttp3.Call getCompoundsAsync(String projectId, Boolean topAnnotation, Boolean msData, Boolean msQuality, final ApiCallback<List<CompoundId>> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = getCompoundsValidateBeforeCall(projectId, topAnnotation, msData, _callback);
+        okhttp3.Call localVarCall = getCompoundsValidateBeforeCall(projectId, topAnnotation, msData, msQuality, _callback);
         Type localVarReturnType = new TypeToken<List<CompoundId>>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;

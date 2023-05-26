@@ -58,7 +58,7 @@ No authorization required
 | **200** | OK |  -  |
 
 # **GetCompound**
-> CompoundId GetCompound(project_id, cid, top_annotation = FALSE, ms_data = FALSE)
+> CompoundId GetCompound(project_id, cid, top_annotation = FALSE, ms_data = FALSE, ms_quality = FALSE)
 
 Get compound/feature with the given identifier from the specified project-space.
 
@@ -75,11 +75,12 @@ var_project_id <- "project_id_example" # character | project-space to read from.
 var_cid <- "cid_example" # character | identifier of compound to access.
 var_top_annotation <- FALSE # character | include the top annotation of this feature into the output (if available). (Optional)
 var_ms_data <- FALSE # character | include corresponding source data (MS and MS/MS) into the output. (Optional)
+var_ms_quality <- FALSE # character |  (Optional)
 
 api_instance <- rsirius_api$new()
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$GetCompound(var_project_id, var_cid, top_annotation = var_top_annotation, ms_data = var_ms_datadata_file = "result.txt")
-result <- api_instance$compounds_api$GetCompound(var_project_id, var_cid, top_annotation = var_top_annotation, ms_data = var_ms_data)
+# result <- api_instance$GetCompound(var_project_id, var_cid, top_annotation = var_top_annotation, ms_data = var_ms_data, ms_quality = var_ms_qualitydata_file = "result.txt")
+result <- api_instance$compounds_api$GetCompound(var_project_id, var_cid, top_annotation = var_top_annotation, ms_data = var_ms_data, ms_quality = var_ms_quality)
 dput(result)
 ```
 
@@ -91,6 +92,7 @@ Name | Type | Description  | Notes
  **cid** | **character**| identifier of compound to access. | 
  **top_annotation** | **character**| include the top annotation of this feature into the output (if available). | [optional] [default to FALSE]
  **ms_data** | **character**| include corresponding source data (MS and MS/MS) into the output. | [optional] [default to FALSE]
+ **ms_quality** | **character**|  | [optional] [default to FALSE]
 
 ### Return type
 
@@ -111,7 +113,7 @@ No authorization required
 | **200** | CompoundId with additional annotations and MS/MS data (if specified). |  -  |
 
 # **GetCompounds**
-> array[CompoundId] GetCompounds(project_id, top_annotation = FALSE, ms_data = FALSE)
+> array[CompoundId] GetCompounds(project_id, top_annotation = FALSE, ms_data = FALSE, ms_quality = FALSE)
 
 Get all available compounds/features in the given project-space.
 
@@ -127,11 +129,12 @@ library(Rsirius)
 var_project_id <- "project_id_example" # character | project-space to read from.
 var_top_annotation <- FALSE # character | include the top annotation of this feature into the output (if available). (Optional)
 var_ms_data <- FALSE # character | include corresponding source data (MS and MS/MS) into the output. (Optional)
+var_ms_quality <- FALSE # character |  (Optional)
 
 api_instance <- rsirius_api$new()
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$GetCompounds(var_project_id, top_annotation = var_top_annotation, ms_data = var_ms_datadata_file = "result.txt")
-result <- api_instance$compounds_api$GetCompounds(var_project_id, top_annotation = var_top_annotation, ms_data = var_ms_data)
+# result <- api_instance$GetCompounds(var_project_id, top_annotation = var_top_annotation, ms_data = var_ms_data, ms_quality = var_ms_qualitydata_file = "result.txt")
+result <- api_instance$compounds_api$GetCompounds(var_project_id, top_annotation = var_top_annotation, ms_data = var_ms_data, ms_quality = var_ms_quality)
 dput(result)
 ```
 
@@ -142,6 +145,7 @@ Name | Type | Description  | Notes
  **project_id** | **character**| project-space to read from. | 
  **top_annotation** | **character**| include the top annotation of this feature into the output (if available). | [optional] [default to FALSE]
  **ms_data** | **character**| include corresponding source data (MS and MS/MS) into the output. | [optional] [default to FALSE]
+ **ms_quality** | **character**|  | [optional] [default to FALSE]
 
 ### Return type
 
