@@ -1058,7 +1058,7 @@ public class ComputationsApi {
         }
 
         final String[] localVarAccepts = {
-            "text/plain"
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {

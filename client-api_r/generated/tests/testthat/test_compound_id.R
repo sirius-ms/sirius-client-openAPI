@@ -68,6 +68,14 @@ test_that("msData", {
   #expect_equal(model.instance$`msData`, "EXPECTED_RESULT")
 })
 
+test_that("qualityFlags", {
+  # tests for the property `qualityFlags` (array[character])
+  # Contains all pre-computation quality information that belong to  this compound, such as information about the quality of the peak shape, MS2 spectrum etc.,  see ({@link CompoundQuality.CompoundQualityFlag CompoundQuality.CompoundQualityFlag})  &lt;p&gt;  Each Compound has a Set of Quality assessment flags.
+
+  # uncomment below to test the property
+  #expect_equal(model.instance$`qualityFlags`, "EXPECTED_RESULT")
+})
+
 test_that("computing", {
   # tests for the property `computing` (character)
 

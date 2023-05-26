@@ -23,6 +23,8 @@ import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -85,6 +87,73 @@ public class CompoundId {
   public static final String SERIALIZED_NAME_MS_DATA = "msData";
   @SerializedName(SERIALIZED_NAME_MS_DATA)
   private MsData msData;
+
+  /**
+   * Gets or Sets qualityFlags
+   */
+  @JsonAdapter(QualityFlagsEnum.Adapter.class)
+  public enum QualityFlagsEnum {
+    GOOD("Good"),
+    
+    LOWINTENSITY("LowIntensity"),
+    
+    NOMS1PEAK("NoMS1Peak"),
+    
+    FEWPEAKS("FewPeaks"),
+    
+    CHIMERIC("Chimeric"),
+    
+    NOTMONOISOTOPICPEAK("NotMonoisotopicPeak"),
+    
+    POORLYEXPLAINED("PoorlyExplained"),
+    
+    UNKNOWN("UNKNOWN"),
+    
+    BADISOTOPEPATTERN("BadIsotopePattern"),
+    
+    BADPEAKSHAPE("BadPeakShape");
+
+    private String value;
+
+    QualityFlagsEnum(String value) {
+      this.value = value;
+    }
+
+    public String getValue() {
+      return value;
+    }
+
+    @Override
+    public String toString() {
+      return String.valueOf(value);
+    }
+
+    public static QualityFlagsEnum fromValue(String value) {
+      for (QualityFlagsEnum b : QualityFlagsEnum.values()) {
+        if (b.value.equals(value)) {
+          return b;
+        }
+      }
+      throw new IllegalArgumentException("Unexpected value '" + value + "'");
+    }
+
+    public static class Adapter extends TypeAdapter<QualityFlagsEnum> {
+      @Override
+      public void write(final JsonWriter jsonWriter, final QualityFlagsEnum enumeration) throws IOException {
+        jsonWriter.value(enumeration.getValue());
+      }
+
+      @Override
+      public QualityFlagsEnum read(final JsonReader jsonReader) throws IOException {
+        String value =  jsonReader.nextString();
+        return QualityFlagsEnum.fromValue(value);
+      }
+    }
+  }
+
+  public static final String SERIALIZED_NAME_QUALITY_FLAGS = "qualityFlags";
+  @SerializedName(SERIALIZED_NAME_QUALITY_FLAGS)
+  private List<QualityFlagsEnum> qualityFlags;
 
   public static final String SERIALIZED_NAME_COMPUTING = "computing";
   @SerializedName(SERIALIZED_NAME_COMPUTING)
@@ -291,6 +360,36 @@ public class CompoundId {
   }
 
 
+  public CompoundId qualityFlags(List<QualityFlagsEnum> qualityFlags) {
+    
+    this.qualityFlags = qualityFlags;
+    return this;
+  }
+
+  public CompoundId addQualityFlagsItem(QualityFlagsEnum qualityFlagsItem) {
+    if (this.qualityFlags == null) {
+      this.qualityFlags = new ArrayList<>();
+    }
+    this.qualityFlags.add(qualityFlagsItem);
+    return this;
+  }
+
+   /**
+   * Contains all pre-computation quality information that belong to  this compound, such as information about the quality of the peak shape, MS2 spectrum etc.,  see ({@link CompoundQuality.CompoundQualityFlag CompoundQuality.CompoundQualityFlag})  &lt;p&gt;  Each Compound has a Set of Quality assessment flags.
+   * @return qualityFlags
+  **/
+  @javax.annotation.Nullable
+
+  public List<QualityFlagsEnum> getQualityFlags() {
+    return qualityFlags;
+  }
+
+
+  public void setQualityFlags(List<QualityFlagsEnum> qualityFlags) {
+    this.qualityFlags = qualityFlags;
+  }
+
+
   public CompoundId computing(Boolean computing) {
     
     this.computing = computing;
@@ -332,12 +431,13 @@ public class CompoundId {
         Objects.equals(this.rtEndSeconds, compoundId.rtEndSeconds) &&
         Objects.equals(this.topAnnotation, compoundId.topAnnotation) &&
         Objects.equals(this.msData, compoundId.msData) &&
+        Objects.equals(this.qualityFlags, compoundId.qualityFlags) &&
         Objects.equals(this.computing, compoundId.computing);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name, index, ionMass, ionType, rtStartSeconds, rtEndSeconds, topAnnotation, msData, computing);
+    return Objects.hash(id, name, index, ionMass, ionType, rtStartSeconds, rtEndSeconds, topAnnotation, msData, qualityFlags, computing);
   }
 
   @Override
@@ -353,6 +453,7 @@ public class CompoundId {
     sb.append("    rtEndSeconds: ").append(toIndentedString(rtEndSeconds)).append("\n");
     sb.append("    topAnnotation: ").append(toIndentedString(topAnnotation)).append("\n");
     sb.append("    msData: ").append(toIndentedString(msData)).append("\n");
+    sb.append("    qualityFlags: ").append(toIndentedString(qualityFlags)).append("\n");
     sb.append("    computing: ").append(toIndentedString(computing)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -385,6 +486,7 @@ public class CompoundId {
     openapiFields.add("rtEndSeconds");
     openapiFields.add("topAnnotation");
     openapiFields.add("msData");
+    openapiFields.add("qualityFlags");
     openapiFields.add("computing");
 
     // a set of required properties/fields (JSON key names)
@@ -427,6 +529,10 @@ public class CompoundId {
       // validate the optional field `msData`
       if (jsonObj.get("msData") != null && !jsonObj.get("msData").isJsonNull()) {
         MsData.validateJsonObject(jsonObj.getAsJsonObject("msData"));
+      }
+      // ensure the optional json data is an array if present
+      if (jsonObj.get("qualityFlags") != null && !jsonObj.get("qualityFlags").isJsonArray()) {
+        throw new IllegalArgumentException(String.format("Expected the field `qualityFlags` to be an array in the JSON string but got `%s`", jsonObj.get("qualityFlags").toString()));
       }
   }
 

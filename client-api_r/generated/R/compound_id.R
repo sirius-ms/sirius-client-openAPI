@@ -16,6 +16,7 @@
 #' @field rtEndSeconds  numeric [optional]
 #' @field topAnnotation  \link{CompoundAnnotation} [optional]
 #' @field msData  \link{MsData} [optional]
+#' @field qualityFlags Contains all pre-computation quality information that belong to  this compound, such as information about the quality of the peak shape, MS2 spectrum etc.,  see ({@link CompoundQuality.CompoundQualityFlag CompoundQuality.CompoundQualityFlag})  <p>  Each Compound has a Set of Quality assessment flags. list(character) [optional]
 #' @field computing  character [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
@@ -32,6 +33,7 @@ CompoundId <- R6::R6Class(
     `rtEndSeconds` = NULL,
     `topAnnotation` = NULL,
     `msData` = NULL,
+    `qualityFlags` = NULL,
     `computing` = NULL,
     #' Initialize a new CompoundId class.
     #'
@@ -47,10 +49,11 @@ CompoundId <- R6::R6Class(
     #' @param rtEndSeconds rtEndSeconds
     #' @param topAnnotation topAnnotation
     #' @param msData msData
+    #' @param qualityFlags Contains all pre-computation quality information that belong to  this compound, such as information about the quality of the peak shape, MS2 spectrum etc.,  see ({@link CompoundQuality.CompoundQualityFlag CompoundQuality.CompoundQualityFlag})  <p>  Each Compound has a Set of Quality assessment flags.
     #' @param computing computing
     #' @param ... Other optional arguments.
     #' @export
-    initialize = function(`id` = NULL, `name` = NULL, `index` = NULL, `ionMass` = NULL, `ionType` = NULL, `rtStartSeconds` = NULL, `rtEndSeconds` = NULL, `topAnnotation` = NULL, `msData` = NULL, `computing` = NULL, ...) {
+    initialize = function(`id` = NULL, `name` = NULL, `index` = NULL, `ionMass` = NULL, `ionType` = NULL, `rtStartSeconds` = NULL, `rtEndSeconds` = NULL, `topAnnotation` = NULL, `msData` = NULL, `qualityFlags` = NULL, `computing` = NULL, ...) {
       if (!is.null(`id`)) {
         if (!(is.character(`id`) && length(`id`) == 1)) {
           stop(paste("Error! Invalid data for `id`. Must be a string:", `id`))
@@ -100,6 +103,11 @@ CompoundId <- R6::R6Class(
       if (!is.null(`msData`)) {
         stopifnot(R6::is.R6(`msData`))
         self$`msData` <- `msData`
+      }
+      if (!is.null(`qualityFlags`)) {
+        stopifnot(is.vector(`qualityFlags`), length(`qualityFlags`) != 0)
+        sapply(`qualityFlags`, function(x) stopifnot(is.character(x)))
+        self$`qualityFlags` <- `qualityFlags`
       }
       if (!is.null(`computing`)) {
         if (!(is.logical(`computing`) && length(`computing`) == 1)) {
@@ -153,6 +161,10 @@ CompoundId <- R6::R6Class(
         CompoundIdObject[["msData"]] <-
           self$`msData`$toJSON()
       }
+      if (!is.null(self$`qualityFlags`)) {
+        CompoundIdObject[["qualityFlags"]] <-
+          self$`qualityFlags`
+      }
       if (!is.null(self$`computing`)) {
         CompoundIdObject[["computing"]] <-
           self$`computing`
@@ -199,6 +211,9 @@ CompoundId <- R6::R6Class(
         msdata_object <- MsData$new()
         msdata_object$fromJSON(jsonlite::toJSON(this_object$msData, auto_unbox = TRUE, digits = NA))
         self$`msData` <- msdata_object
+      }
+      if (!is.null(this_object$`qualityFlags`)) {
+        self$`qualityFlags` <- ApiClient$new()$deserializeObj(this_object$`qualityFlags`, "array[character]", loadNamespace("Rsirius"))
       }
       if (!is.null(this_object$`computing`)) {
         self$`computing` <- this_object$`computing`
@@ -286,6 +301,14 @@ CompoundId <- R6::R6Class(
           jsonlite::toJSON(self$`msData`$toJSON(), auto_unbox = TRUE, digits = NA)
           )
         },
+        if (!is.null(self$`qualityFlags`)) {
+          sprintf(
+          '"qualityFlags":
+             [%s]
+          ',
+          paste(unlist(lapply(self$`qualityFlags`, function(x) paste0('"', x, '"'))), collapse = ",")
+          )
+        },
         if (!is.null(self$`computing`)) {
           sprintf(
           '"computing":
@@ -317,6 +340,7 @@ CompoundId <- R6::R6Class(
       self$`rtEndSeconds` <- this_object$`rtEndSeconds`
       self$`topAnnotation` <- CompoundAnnotation$new()$fromJSON(jsonlite::toJSON(this_object$topAnnotation, auto_unbox = TRUE, digits = NA))
       self$`msData` <- MsData$new()$fromJSON(jsonlite::toJSON(this_object$msData, auto_unbox = TRUE, digits = NA))
+      self$`qualityFlags` <- ApiClient$new()$deserializeObj(this_object$`qualityFlags`, "array[character]", loadNamespace("Rsirius"))
       self$`computing` <- this_object$`computing`
       self
     },
