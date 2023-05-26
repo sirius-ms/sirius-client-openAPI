@@ -46,6 +46,7 @@ Get compound/feature with the given identifier from the specified project-space.
 \item \emph{ @param } cid character
 \item \emph{ @param } top_annotation character
 \item \emph{ @param } ms_data character
+\item \emph{ @param } ms_quality character
 \item \emph{ @returnType } \link{CompoundId} \cr
 
 
@@ -65,6 +66,7 @@ Get all available compounds/features in the given project-space.
 \item \emph{ @param } project_id character
 \item \emph{ @param } top_annotation character
 \item \emph{ @param } ms_data character
+\item \emph{ @param } ms_quality character
 \item \emph{ @returnType } list( \link{CompoundId} ) \cr
 
 
@@ -142,13 +144,14 @@ var_project_id <- "project_id_example" # character | project-space to read from.
 var_cid <- "cid_example" # character | identifier of compound to access.
 var_top_annotation <- FALSE # character | include the top annotation of this feature into the output (if available). (Optional)
 var_ms_data <- FALSE # character | include corresponding source data (MS and MS/MS) into the output. (Optional)
+var_ms_quality <- FALSE # character |  (Optional)
 
 #Get compound/feature with the given identifier from the specified project-space.
 api_instance <- rsirius_api$new()
 
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$GetCompound(var_project_id, var_cid, top_annotation = var_top_annotation, ms_data = var_ms_datadata_file = "result.txt")
-result <- api_instance$compounds_api$GetCompound(var_project_id, var_cid, top_annotation = var_top_annotation, ms_data = var_ms_data)
+# result <- api_instance$GetCompound(var_project_id, var_cid, top_annotation = var_top_annotation, ms_data = var_ms_data, ms_quality = var_ms_qualitydata_file = "result.txt")
+result <- api_instance$compounds_api$GetCompound(var_project_id, var_cid, top_annotation = var_top_annotation, ms_data = var_ms_data, ms_quality = var_ms_quality)
 dput(result)
 
 
@@ -158,13 +161,14 @@ library(Rsirius)
 var_project_id <- "project_id_example" # character | project-space to read from.
 var_top_annotation <- FALSE # character | include the top annotation of this feature into the output (if available). (Optional)
 var_ms_data <- FALSE # character | include corresponding source data (MS and MS/MS) into the output. (Optional)
+var_ms_quality <- FALSE # character |  (Optional)
 
 #Get all available compounds/features in the given project-space.
 api_instance <- rsirius_api$new()
 
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$GetCompounds(var_project_id, top_annotation = var_top_annotation, ms_data = var_ms_datadata_file = "result.txt")
-result <- api_instance$compounds_api$GetCompounds(var_project_id, top_annotation = var_top_annotation, ms_data = var_ms_data)
+# result <- api_instance$GetCompounds(var_project_id, top_annotation = var_top_annotation, ms_data = var_ms_data, ms_quality = var_ms_qualitydata_file = "result.txt")
+result <- api_instance$compounds_api$GetCompounds(var_project_id, top_annotation = var_top_annotation, ms_data = var_ms_data, ms_quality = var_ms_quality)
 dput(result)
 
 
@@ -305,6 +309,7 @@ Get compound/feature with the given identifier from the specified project-space.
   cid,
   top_annotation = FALSE,
   ms_data = FALSE,
+  ms_quality = FALSE,
   data_file = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -320,6 +325,8 @@ Get compound/feature with the given identifier from the specified project-space.
 \item{\code{top_annotation}}{(optional) include the top annotation of this feature into the output (if available). (default value: FALSE)}
 
 \item{\code{ms_data}}{(optional) include corresponding source data (MS and MS/MS) into the output. (default value: FALSE)}
+
+\item{\code{ms_quality}}{(optional) No description (default value: FALSE)}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 
@@ -342,6 +349,7 @@ Get compound/feature with the given identifier from the specified project-space.
   cid,
   top_annotation = FALSE,
   ms_data = FALSE,
+  ms_quality = FALSE,
   data_file = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -357,6 +365,8 @@ Get compound/feature with the given identifier from the specified project-space.
 \item{\code{top_annotation}}{(optional) include the top annotation of this feature into the output (if available). (default value: FALSE)}
 
 \item{\code{ms_data}}{(optional) include corresponding source data (MS and MS/MS) into the output. (default value: FALSE)}
+
+\item{\code{ms_quality}}{(optional) No description (default value: FALSE)}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 
@@ -378,6 +388,7 @@ Get all available compounds/features in the given project-space.
   project_id,
   top_annotation = FALSE,
   ms_data = FALSE,
+  ms_quality = FALSE,
   data_file = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -391,6 +402,8 @@ Get all available compounds/features in the given project-space.
 \item{\code{top_annotation}}{(optional) include the top annotation of this feature into the output (if available). (default value: FALSE)}
 
 \item{\code{ms_data}}{(optional) include corresponding source data (MS and MS/MS) into the output. (default value: FALSE)}
+
+\item{\code{ms_quality}}{(optional) No description (default value: FALSE)}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 
@@ -412,6 +425,7 @@ Get all available compounds/features in the given project-space.
   project_id,
   top_annotation = FALSE,
   ms_data = FALSE,
+  ms_quality = FALSE,
   data_file = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -425,6 +439,8 @@ Get all available compounds/features in the given project-space.
 \item{\code{top_annotation}}{(optional) include the top annotation of this feature into the output (if available). (default value: FALSE)}
 
 \item{\code{ms_data}}{(optional) include corresponding source data (MS and MS/MS) into the output. (default value: FALSE)}
+
+\item{\code{ms_quality}}{(optional) No description (default value: FALSE)}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 
