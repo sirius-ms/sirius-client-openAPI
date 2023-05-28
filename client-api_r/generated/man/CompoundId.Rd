@@ -36,6 +36,8 @@ Create a new CompoundId
 
 \item{\code{msData}}{\link{MsData} [optional]}
 
+\item{\code{qualityFlags}}{Contains all pre-computation quality information that belong to  this compound, such as information about the quality of the peak shape, MS2 spectrum etc.,  see ({@link CompoundQuality.CompoundQualityFlag CompoundQuality.CompoundQualityFlag})  <p>  Each Compound has a Set of Quality assessment flags. list(character) [optional]}
+
 \item{\code{computing}}{character [optional]}
 }
 \if{html}{\out{</div>}}
@@ -72,6 +74,7 @@ Initialize a new CompoundId class.
   rtEndSeconds = NULL,
   topAnnotation = NULL,
   msData = NULL,
+  qualityFlags = NULL,
   computing = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -97,6 +100,8 @@ Initialize a new CompoundId class.
 \item{\code{topAnnotation}}{topAnnotation}
 
 \item{\code{msData}}{msData}
+
+\item{\code{qualityFlags}}{Contains all pre-computation quality information that belong to  this compound, such as information about the quality of the peak shape, MS2 spectrum etc.,  see ({@link CompoundQuality.CompoundQualityFlag CompoundQuality.CompoundQualityFlag})  <p>  Each Compound has a Set of Quality assessment flags.}
 
 \item{\code{computing}}{computing}
 
