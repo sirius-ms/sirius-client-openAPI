@@ -15,12 +15,12 @@ from __future__ import absolute_import
 import unittest
 
 import PySirius
-from PySirius.models.zodiac_epochs import ZodiacEpochs  # noqa: E501
+from PySirius.models.lcms_quality_check import LCMSQualityCheck  # noqa: E501
 from PySirius.rest import ApiException
 
 
-class TestZodiacEpochs(unittest.TestCase):
-    """ZodiacEpochs unit test stubs"""
+class TestLCMSQualityCheck(unittest.TestCase):
+    """LCMSQualityCheck unit test stubs"""
 
     def setUp(self):
         pass
@@ -28,10 +28,10 @@ class TestZodiacEpochs(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def testZodiacEpochs(self):
-        """Test ZodiacEpochs"""
+    def testLCMSQualityCheck(self):
+        """Test LCMSQualityCheck"""
         # FIXME: construct object with mandatory attributes with example values
-        # model = PySirius.models.zodiac_epochs.ZodiacEpochs()  # noqa: E501
+        # model = PySirius.models.lcms_quality_check.LCMSQualityCheck()  # noqa: E501
         pass
 
 
