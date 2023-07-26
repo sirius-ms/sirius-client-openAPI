@@ -33,6 +33,9 @@ R/gui_parameters.R
 R/job_id.R
 R/job_progress.R
 R/job_submission.R
+R/lcms_feature_summary_quality_data.R
+R/lcms_quality_check.R
+R/lcms_quality_check_result.R
 R/login_and_account_api.R
 R/loss_edge.R
 R/ms_data.R
@@ -80,6 +83,9 @@ docs/GuiParameters.md
 docs/JobId.md
 docs/JobProgress.md
 docs/JobSubmission.md
+docs/LCMSFeatureSummaryQualityData.md
+docs/LCMSQualityCheck.md
+docs/LCMSQualityCheckResult.md
 docs/LoginAndAccountApi.md
 docs/LossEdge.md
 docs/MsData.md
@@ -127,6 +133,9 @@ tests/testthat/test_gui_parameters.R
 tests/testthat/test_job_id.R
 tests/testthat/test_job_progress.R
 tests/testthat/test_job_submission.R
+tests/testthat/test_lcms_feature_summary_quality_data.R
+tests/testthat/test_lcms_quality_check.R
+tests/testthat/test_lcms_quality_check_result.R
 tests/testthat/test_login_and_account_api.R
 tests/testthat/test_loss_edge.R
 tests/testthat/test_ms_data.R

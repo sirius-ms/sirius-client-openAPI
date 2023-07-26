@@ -31,6 +31,9 @@ docs/GuiParameters.md
 docs/JobId.md
 docs/JobProgress.md
 docs/JobSubmission.md
+docs/LCMSFeatureSummaryQualityData.md
+docs/LCMSQualityCheck.md
+docs/LCMSQualityCheckResult.md
 docs/LoginAndAccountApi.md
 docs/LossEdge.md
 docs/MsData.md
@@ -106,6 +109,9 @@ src/main/java/JSirius/model/GuiParameters.java
 src/main/java/JSirius/model/JobId.java
 src/main/java/JSirius/model/JobProgress.java
 src/main/java/JSirius/model/JobSubmission.java
+src/main/java/JSirius/model/LCMSFeatureSummaryQualityData.java
+src/main/java/JSirius/model/LCMSQualityCheck.java
+src/main/java/JSirius/model/LCMSQualityCheckResult.java
 src/main/java/JSirius/model/LossEdge.java
 src/main/java/JSirius/model/MsData.java
 src/main/java/JSirius/model/ProjectSpaceId.java
@@ -151,6 +157,9 @@ src/test/java/JSirius/model/GuiParametersTest.java
 src/test/java/JSirius/model/JobIdTest.java
 src/test/java/JSirius/model/JobProgressTest.java
 src/test/java/JSirius/model/JobSubmissionTest.java
+src/test/java/JSirius/model/LCMSFeatureSummaryQualityDataTest.java
+src/test/java/JSirius/model/LCMSQualityCheckResultTest.java
+src/test/java/JSirius/model/LCMSQualityCheckTest.java
 src/test/java/JSirius/model/LossEdgeTest.java
 src/test/java/JSirius/model/MsDataTest.java
 src/test/java/JSirius/model/ProjectSpaceIdTest.java

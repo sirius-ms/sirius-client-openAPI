@@ -1,14 +1,10 @@
 openapi: 3.0.1
 info:
-  description: OpenAPI REST API that provides the full functionality of SIRIUS and
-    its web services as background service. It is intended as entry-point for scripting
-    languages and software integration SDKs.The provided OpenAPI specification allows
-    to autogenerate clients for different programming languages.
-  license:
-    name: GNU Affero General Public License v3.0
-    url: https://www.gnu.org/licenses/agpl-3.0.txt
+  description: REST API that provides the full functionality of SIRIUS and its web
+    services as background service. It is intended as entry-point for scripting languages
+    and software integration SDKs.
   title: SIRIUS Nightsky API
-  version: "0.9"
+  version: v0.9 on SIRIUS 6.0.0-SNAPSHOT
 servers:
 - description: Generated server url
   url: http://localhost:8080
@@ -461,6 +457,14 @@ paths:
         style: form
       - explode: true
         in: query
+        name: lcmsFeatureQuality
+        required: false
+        schema:
+          default: false
+          type: boolean
+        style: form
+      - explode: true
+        in: query
         name: msQuality
         required: false
         schema:
@@ -683,7 +687,7 @@ paths:
       responses:
         "200":
           content:
-            application/json:
+            text/plain:
               schema:
                 type: string
           description: Probably modified name of the config (to ensure filesystem
@@ -692,7 +696,7 @@ paths:
       tags:
       - Computations
       x-content-type: application/json
-      x-accepts: application/json
+      x-accepts: text/plain
   /api/account/logout:
     post:
       description: Logout from SIRIUS web services.
@@ -706,7 +710,8 @@ paths:
       x-accepts: application/json
   /api/account/login:
     post:
-      description: Login into SIRIUS web services.
+      description: Login into SIRIUS web services and activate default subscription
+        if available.
       operationId: login
       parameters:
       - explode: true
@@ -750,7 +755,8 @@ paths:
                 $ref: '#/components/schemas/AccountInfo'
           description: Basic information about the account that has been logged in
             and its subscriptions.
-      summary: Login into SIRIUS web services.
+      summary: Login into SIRIUS web services and activate default subscription if
+        available.
       tags:
       - Login and Account
       x-content-type: application/json
@@ -1447,6 +1453,14 @@ paths:
         style: form
       - explode: true
         in: query
+        name: lcmsFeatureQuality
+        required: false
+        schema:
+          default: false
+          type: boolean
+        style: form
+      - explode: true
+        in: query
         name: msQuality
         required: false
         schema:
@@ -1565,6 +1579,18 @@ paths:
       tags:
       - Login and Account
       x-accepts: text/plain;charset=UTF-8
+  /api/account/openPortal:
+    get:
+      description: Open User portal in browser. If user is logged in SIRIUS tries
+        to transfer the login state to the browser.
+      operationId: openPortal
+      responses:
+        "200":
+          description: OK
+      summary: Open User portal in browser.
+      tags:
+      - Login and Account
+      x-accepts: application/json
   /api/account/isLoggedIn:
     get:
       description: Check if a user is logged in.
@@ -1853,13 +1879,13 @@ components:
             enum:
             - ALL
             - ALL_BUT_INSILICO
+            - BIO
             - PUBCHEM
             - MESH
             - HMDB
             - KNAPSACK
             - CHEBI
             - PUBMED
-            - BIO
             - KEGG
             - HSDB
             - MACONDA
@@ -1867,21 +1893,28 @@ components:
             - GNPS
             - ZINCBIO
             - TRAIN
-            - UNDP
             - YMDB
             - PLANTCYC
             - NORMAN
             - ADDITIONAL
             - SUPERNATURAL
             - COCONUT
+            - BloodExposome
+            - TeroMol
             - PUBCHEMANNOTATIONBIO
             - PUBCHEMANNOTATIONDRUG
             - PUBCHEMANNOTATIONSAFETYANDTOXIC
             - PUBCHEMANNOTATIONFOOD
+            - LOTUS
+            - FooDB
+            - MiMeDB
+            - LIPIDMAPS
             - LIPID
             - KEGGMINE
             - ECOCYCMINE
             - YMDBMINE
+            - MASSBANK
+            - DSSTox
             type: string
           type: array
         enforcedFormulaConstraints:
@@ -1931,13 +1964,13 @@ components:
             enum:
             - ALL
             - ALL_BUT_INSILICO
+            - BIO
             - PUBCHEM
             - MESH
             - HMDB
             - KNAPSACK
             - CHEBI
             - PUBMED
-            - BIO
             - KEGG
             - HSDB
             - MACONDA
@@ -1945,21 +1978,28 @@ components:
             - GNPS
             - ZINCBIO
             - TRAIN
-            - UNDP
             - YMDB
             - PLANTCYC
             - NORMAN
             - ADDITIONAL
             - SUPERNATURAL
             - COCONUT
+            - BloodExposome
+            - TeroMol
             - PUBCHEMANNOTATIONBIO
             - PUBCHEMANNOTATIONDRUG
             - PUBCHEMANNOTATIONSAFETYANDTOXIC
             - PUBCHEMANNOTATIONFOOD
+            - LOTUS
+            - FooDB
+            - MiMeDB
+            - LIPIDMAPS
             - LIPID
             - KEGGMINE
             - ECOCYCMINE
             - YMDBMINE
+            - MASSBANK
+            - DSSTox
             type: string
           type: array
         tagLipids:
@@ -2561,6 +2601,35 @@ components:
               ppm: 7.386281948385884
             zodiacScore: 9.301444243932576
         computing: true
+        lcmsCompoundSummaryQualityData:
+          ms2QualityResult:
+            checks:
+            - description: description
+              quality: LOW
+            - description: description
+              quality: LOW
+            quality: LOW
+          peakQualityResult:
+            checks:
+            - description: description
+              quality: LOW
+            - description: description
+              quality: LOW
+            quality: LOW
+          adductQualityResult:
+            checks:
+            - description: description
+              quality: LOW
+            - description: description
+              quality: LOW
+            quality: LOW
+          isotopeQualityResult:
+            checks:
+            - description: description
+              quality: LOW
+            - description: description
+              quality: LOW
+            quality: LOW
         msData:
           mergedMs2:
             msLevel: 6
@@ -2689,6 +2758,8 @@ components:
             - BadPeakShape
             type: string
           type: array
+        lcmsCompoundSummaryQualityData:
+          $ref: '#/components/schemas/LCMSFeatureSummaryQualityData'
         computing:
           type: boolean
       type: object
@@ -2763,6 +2834,89 @@ components:
           type: number
         medianMassDeviation:
           $ref: '#/components/schemas/Deviation'
+      type: object
+    LCMSFeatureSummaryQualityData:
+      description: |-
+        This quality information is available for LC-MS data and includes quality measures for
+         - the chromatographic peak
+         - isotope peaks
+         - detected adducts
+         - MS/MS peaks
+         This information is the same as provided in the LCMS-view in the GUI
+      example:
+        ms2QualityResult:
+          checks:
+          - description: description
+            quality: LOW
+          - description: description
+            quality: LOW
+          quality: LOW
+        peakQualityResult:
+          checks:
+          - description: description
+            quality: LOW
+          - description: description
+            quality: LOW
+          quality: LOW
+        adductQualityResult:
+          checks:
+          - description: description
+            quality: LOW
+          - description: description
+            quality: LOW
+          quality: LOW
+        isotopeQualityResult:
+          checks:
+          - description: description
+            quality: LOW
+          - description: description
+            quality: LOW
+          quality: LOW
+      properties:
+        peakQualityResult:
+          $ref: '#/components/schemas/LCMSQualityCheckResult'
+        isotopeQualityResult:
+          $ref: '#/components/schemas/LCMSQualityCheckResult'
+        adductQualityResult:
+          $ref: '#/components/schemas/LCMSQualityCheckResult'
+        ms2QualityResult:
+          $ref: '#/components/schemas/LCMSQualityCheckResult'
+      type: object
+    LCMSQualityCheck:
+      description: ""
+      example:
+        description: description
+        quality: LOW
+      properties:
+        quality:
+          enum:
+          - LOW
+          - MEDIUM
+          - GOOD
+          type: string
+        description:
+          type: string
+      type: object
+    LCMSQualityCheckResult:
+      description: ""
+      example:
+        checks:
+        - description: description
+          quality: LOW
+        - description: description
+          quality: LOW
+        quality: LOW
+      properties:
+        checks:
+          items:
+            $ref: '#/components/schemas/LCMSQualityCheck'
+          type: array
+        quality:
+          enum:
+          - LOW
+          - MEDIUM
+          - GOOD
+          type: string
       type: object
     MsData:
       description: |-

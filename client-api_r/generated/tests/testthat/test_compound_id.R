@@ -76,6 +76,13 @@ test_that("qualityFlags", {
   #expect_equal(model.instance$`qualityFlags`, "EXPECTED_RESULT")
 })
 
+test_that("lcmsCompoundSummaryQualityData", {
+  # tests for the property `lcmsCompoundSummaryQualityData` (LCMSFeatureSummaryQualityData)
+
+  # uncomment below to test the property
+  #expect_equal(model.instance$`lcmsCompoundSummaryQualityData`, "EXPECTED_RESULT")
+})
+
 test_that("computing", {
   # tests for the property `computing` (character)
 

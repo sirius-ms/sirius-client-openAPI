@@ -8,8 +8,9 @@ All URIs are relative to *http://localhost:8080*
 | [**getSignUpURL**](LoginAndAccountApi.md#getSignUpURL) | **GET** /api/account/signUpURL | Get SignUp URL (For signUp via web browser) |
 | [**getSubscriptions**](LoginAndAccountApi.md#getSubscriptions) | **GET** /api/account/subscriptions | Get available subscriptions of the account currently logged in. |
 | [**isLoggedIn**](LoginAndAccountApi.md#isLoggedIn) | **GET** /api/account/isLoggedIn | Check if a user is logged in. |
-| [**login**](LoginAndAccountApi.md#login) | **POST** /api/account/login | Login into SIRIUS web services. |
+| [**login**](LoginAndAccountApi.md#login) | **POST** /api/account/login | Login into SIRIUS web services and activate default subscription if available. |
 | [**logout**](LoginAndAccountApi.md#logout) | **POST** /api/account/logout | Logout from SIRIUS web services. |
+| [**openPortal**](LoginAndAccountApi.md#openPortal) | **GET** /api/account/openPortal | Open User portal in browser. |
 | [**signUp**](LoginAndAccountApi.md#signUp) | **GET** /api/account/signUp | Open SignUp window in system browser and return signUp link. |
 
 
@@ -253,9 +254,9 @@ No authorization required
 # **login**
 > AccountInfo login(acceptTerms, accountCredentials, failWhenLoggedIn, includeSubs)
 
-Login into SIRIUS web services.
+Login into SIRIUS web services and activate default subscription if available.
 
-Login into SIRIUS web services.
+Login into SIRIUS web services and activate default subscription if available.
 
 ### Example
 ```java
@@ -344,6 +345,63 @@ public class Example {
       apiInstance.logout();
     } catch (ApiException e) {
       System.err.println("Exception when calling LoginAndAccountApi#logout");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
+}
+```
+
+### Parameters
+This endpoint does not need any parameter.
+
+### Return type
+
+null (empty response body)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: Not defined
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | OK |  -  |
+
+<a name="openPortal"></a>
+# **openPortal**
+> openPortal()
+
+Open User portal in browser.
+
+Open User portal in browser. If user is logged in SIRIUS tries to transfer the login state to the browser.
+
+### Example
+```java
+// Import classes:
+import JSirius.ApiClient;
+import JSirius.ApiException;
+import JSirius.Configuration;
+import JSirius.models.*;
+import JSirius.api.LoginAndAccountApi;
+
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost:8080");
+
+    LoginAndAccountApi apiInstance = new LoginAndAccountApi(defaultClient);
+    try {
+      apiInstance.openPortal();
+    } catch (ApiException e) {
+      System.err.println("Exception when calling LoginAndAccountApi#openPortal");
       System.err.println("Status code: " + e.getCode());
       System.err.println("Reason: " + e.getResponseBody());
       System.err.println("Response headers: " + e.getResponseHeaders());
