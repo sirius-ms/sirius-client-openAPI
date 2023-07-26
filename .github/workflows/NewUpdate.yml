@@ -25,14 +25,14 @@ jobs:
         cd ./../swagger
         wget https://repo1.maven.org/maven2/io/swagger/codegen/v3/swagger-codegen-cli/3.0.35/swagger-codegen-cli-3.0.35.jar -O swagger-codegen-cli.jar
         java -jar swagger-codegen-cli.jar version > version
-    - name: Download latest Sirius Release
+    - name: Download Sirius from master
       uses: nick-fields/retry@v2
       with:
         max_attempts: 5
         timeout_minutes: 5
         command: |
             cd .updater/api
-            curl -s  https://api.github.com/repos/boecker-lab/sirius/releases | grep 'browser_download_url.*linux64.zip\"' | sort | tac | head -n 1 | cut -d : -f 2,3 | tr -d \" | wget -i -
+            wget https://upload.uni-jena.de/data/64c12f5f7cbd15.80236087/sirius_gui_dist-sirius.zip
             echo "Download Complete"
             unzip *.zip
             echo "Api Ready"
