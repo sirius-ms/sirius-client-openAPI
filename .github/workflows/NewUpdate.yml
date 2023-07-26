@@ -39,6 +39,7 @@ jobs:
             echo "Api Ready"
     - name: Run Rest Api
       run: |
+        export JAVA_TOOL_OPTIONS="-XX:+UnlockExperimentalVMOptions -XX:+UseZGC"
         bash .updater/api/sirius/bin/sirius REST -p 8080 -s &
     - name: Update api-docs.json
       run: |
