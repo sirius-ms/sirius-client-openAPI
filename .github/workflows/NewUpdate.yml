@@ -54,23 +54,23 @@ jobs:
         mv api-docs api-docs.json
     - name: Update Clients
       run: |
-        echo "generating Java Code"
-        rm -rf client-api_java/generated/*
-        java -jar .updater/openapi_generator/openapi-generator-cli.jar generate -i .updater/api/api-docs.json -c .updater/config/Java/config.json -g java -o client-api_java/generated
+        #echo "generating Java Code"
+        #rm -rf client-api_java/generated/*
+        #java -jar .updater/openapi_generator/openapi-generator-cli.jar generate -i .updater/api/api-docs.json -c .updater/config/Java/config.json -g java -o client-api_java/generated
         
         echo "generating Python Code"
         rm -rf client-api_python/generated/*
         java -jar .updater/swagger/swagger-codegen-cli.jar generate -i .updater/api/api-docs.json -c .updater/config/Python/config.json -l python -o client-api_python/generated
         
-        echo "temporarily move R manual folder"
-        mv client-api_r/generated/man/ client-api_r/
+        #echo "temporarily move R manual folder"
+        #mv client-api_r/generated/man/ client-api_r/
         
-        echo "generating R Code"
-        rm -rf client-api_r/generated/*
-        java -jar .updater/openapi_generator/openapi-generator-cli.jar generate -i .updater/api/api-docs.json -c .updater/config/R/config.json -g r -o client-api_r/generated -t client-api_r/templates/r
+        #echo "generating R Code"
+        #rm -rf client-api_r/generated/*
+        #java -jar .updater/openapi_generator/openapi-generator-cli.jar generate -i .updater/api/api-docs.json -c .updater/config/R/config.json -g r -o client-api_r/generated -t client-api_r/templates/r
         
-        echo "recover R manual folder"
-        mv client-api_r/man/ client-api_r/generated/
+        #echo "recover R manual folder"
+        #mv client-api_r/man/ client-api_r/generated/
         
         #echo "generating Ruby Code"
         #rm -rf client-api_ruby/generated/*
@@ -90,29 +90,29 @@ jobs:
          sed '1,/## Documentation for API Endpoints/d' README.md >> tempor
          cat tempor > README.md
          rm tempor
-    - name: Format R package
-      run: |
-        cp client-api_r/SiriusSDK.R  client-api_r/generated/R/SiriusSDK.R
-        echo >> client-api_r/generated/NAMESPACE
-        echo "# SDK" >> client-api_r/generated/NAMESPACE
-        echo "export(SiriusSDK)" >> client-api_r/generated/NAMESPACE
+#     - name: Format R package
+#       run: |
+#         cp client-api_r/SiriusSDK.R  client-api_r/generated/R/SiriusSDK.R
+#         echo >> client-api_r/generated/NAMESPACE
+#         echo "# SDK" >> client-api_r/generated/NAMESPACE
+#         echo "export(SiriusSDK)" >> client-api_r/generated/NAMESPACE
         
-        cp -r client-api_r/testthat client-api_r/generated/tests
+#         cp -r client-api_r/testthat client-api_r/generated/tests
         
-        chmod +x ./client-api_r/api_response_fix.sh
-        ./client-api_r/api_response_fix.sh ./client-api_r/generated/R/api_response.R
+#         chmod +x ./client-api_r/api_response_fix.sh
+#         ./client-api_r/api_response_fix.sh ./client-api_r/generated/R/api_response.R
         
-        chmod +x ./client-api_r/api_client_fix.sh
-        ./client-api_r/api_client_fix.sh ./client-api_r/generated/R/api_client.R
+#         chmod +x ./client-api_r/api_client_fix.sh
+#         ./client-api_r/api_client_fix.sh ./client-api_r/generated/R/api_client.R
         
-        chmod +x ./client-api_r/compounds_api_fix.sh
-        ./client-api_r/compounds_api_fix.sh ./client-api_r/generated/R/compounds_api.R
+#         chmod +x ./client-api_r/compounds_api_fix.sh
+#         ./client-api_r/compounds_api_fix.sh ./client-api_r/generated/R/compounds_api.R
         
-        chmod +x ./client-api_r/computations_api_fix.sh
-        ./client-api_r/computations_api_fix.sh ./client-api_r/generated/R/computations_api.R
+#         chmod +x ./client-api_r/computations_api_fix.sh
+#         ./client-api_r/computations_api_fix.sh ./client-api_r/generated/R/computations_api.R
         
-        chmod +x ./client-api_r/add_to_docu.sh
-        ./client-api_r/add_to_docu.sh ./client-api_r/generated/docs/CompoundsApi.md
+#         chmod +x ./client-api_r/add_to_docu.sh
+#         ./client-api_r/add_to_docu.sh ./client-api_r/generated/docs/CompoundsApi.md
     - name: Remove Sirius Rest Api
       run: |
         cd .updater/api
@@ -127,19 +127,19 @@ jobs:
       uses: stefanzweifel/git-auto-commit-action@v4.15.2
       with:
         commit_message: Auto-Updated OpenAPI Clients
-    - name: Run RManualGeneration
-      run: |
-        gh workflow run RManualGeneration.yml --ref ${GITHUB_REF##*/}
-        echo "dispatched workflow"
-        echo "sleeping for 30s to make sure it started"
-        sleep 30
-        list=$(gh run list --workflow RManualGeneration --branch ${GITHUB_REF##*/})
-        id=$(echo $list | grep -oP 'in_progress RManualGeneration RManualGeneration [^ ]* workflow_dispatch \K\d+')
-        echo "run ID of RManualGeneration is: $id"
-        gh run watch $id --exit-status --interval 30
-        echo "generation done!"
-      env:
-        GH_TOKEN: ${{ github.token }}
+#     - name: Run RManualGeneration
+#       run: |
+#         gh workflow run RManualGeneration.yml --ref ${GITHUB_REF##*/}
+#         echo "dispatched workflow"
+#         echo "sleeping for 30s to make sure it started"
+#         sleep 30
+#         list=$(gh run list --workflow RManualGeneration --branch ${GITHUB_REF##*/})
+#         id=$(echo $list | grep -oP 'in_progress RManualGeneration RManualGeneration [^ ]* workflow_dispatch \K\d+')
+#         echo "run ID of RManualGeneration is: $id"
+#         gh run watch $id --exit-status --interval 30
+#         echo "generation done!"
+#       env:
+#         GH_TOKEN: ${{ github.token }}
     - name: update file and create pull request
       id: open-pr
       uses: repo-sync/pull-request@v2
