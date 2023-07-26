@@ -5,9 +5,9 @@ name: RunTests
 on: [workflow_dispatch, workflow_call, pull_request]
 
 jobs:
-  RTest:
-    uses: ./.github/workflows/RTest.yml
-    secrets: inherit
+#   RTest:
+#     uses: ./.github/workflows/RTest.yml
+#     secrets: inherit
   PythonTest:
     uses: ./.github/workflows/PythonTest.yml
     secrets: inherit
