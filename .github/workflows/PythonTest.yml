@@ -48,8 +48,14 @@ jobs:
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8 ./client-api_python --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     
+    - name: Use Zulu OpenJDK 17
+      uses: actions/setup-java@v3
+      with:
+        distribution: 'zulu'
+        java-version: '17'
     - name: Run Rest Api
       run: |
+        export JAVA_TOOL_OPTIONS="-XX:+UnlockExperimentalVMOptions -XX:+UseZGC"
         bash .updater/api/sirius/bin/sirius REST -p 8080 -s &
     - name: Wait for Api to start
       run: |
