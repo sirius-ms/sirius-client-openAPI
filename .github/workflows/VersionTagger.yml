@@ -1,6 +1,13 @@
 name: VersionTagger
-on:
-  [workflow_dispatch, repository_dispatch, push]
+on: 
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+  repository_dispatch:
+    branches:
+      - master
+  
 jobs:
   TagRelease:
     runs-on: ubuntu-latest
