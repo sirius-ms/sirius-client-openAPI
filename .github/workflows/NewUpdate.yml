@@ -37,6 +37,11 @@ jobs:
             unzip *.zip
             mv sirius_gui_dist-sirius sirius
             echo "Api Ready"
+    - name: Use Zulu OpenJDK 17
+      uses: actions/setup-java@v3
+      with:
+        distribution: 'zulu'
+        java-version: '17'
     - name: Run Rest Api
       run: |
         export JAVA_TOOL_OPTIONS="-XX:+UnlockExperimentalVMOptions -XX:+UseZGC"
