@@ -35,6 +35,7 @@ jobs:
             wget https://upload.uni-jena.de/data/64c12f5f7cbd15.80236087/sirius_gui_dist-sirius.zip
             echo "Download Complete"
             unzip *.zip
+            mv sirius_gui_dist-sirius sirius
             echo "Api Ready"
     - name: Run Rest Api
       run: |
