@@ -15,6 +15,7 @@ Name | Type | Description | Notes
 **topAnnotation** | [**CompoundAnnotation**](CompoundAnnotation.md) |  | [optional] 
 **msData** | [**MsData**](MsData.md) |  | [optional] 
 **qualityFlags** | **array[character]** | Contains all pre-computation quality information that belong to  this compound, such as information about the quality of the peak shape, MS2 spectrum etc.,  see ({@link CompoundQuality.CompoundQualityFlag CompoundQuality.CompoundQualityFlag})  &lt;p&gt;  Each Compound has a Set of Quality assessment flags. | [optional] [Enum: ] 
+**lcmsCompoundSummaryQualityData** | [**LCMSFeatureSummaryQualityData**](LCMSFeatureSummaryQualityData.md) |  | [optional] 
 **computing** | **character** |  | [optional] 
 
 

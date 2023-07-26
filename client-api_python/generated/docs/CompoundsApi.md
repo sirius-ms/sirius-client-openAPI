@@ -60,7 +60,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_compound**
-> CompoundId get_compound(project_id, cid, top_annotation=top_annotation, ms_data=ms_data, ms_quality=ms_quality)
+> CompoundId get_compound(project_id, cid, top_annotation=top_annotation, ms_data=ms_data, lcms_feature_quality=lcms_feature_quality, ms_quality=ms_quality)
 
 Get compound/feature with the given identifier from the specified project-space.
 
@@ -80,11 +80,12 @@ project_id = 'project_id_example' # str | project-space to read from.
 cid = 'cid_example' # str | identifier of compound to access.
 top_annotation = false # bool | include the top annotation of this feature into the output (if available). (optional) (default to false)
 ms_data = false # bool | include corresponding source data (MS and MS/MS) into the output. (optional) (default to false)
+lcms_feature_quality = false # bool |  (optional) (default to false)
 ms_quality = false # bool |  (optional) (default to false)
 
 try:
     # Get compound/feature with the given identifier from the specified project-space.
-    api_response = api_instance.get_compound(project_id, cid, top_annotation=top_annotation, ms_data=ms_data, ms_quality=ms_quality)
+    api_response = api_instance.get_compound(project_id, cid, top_annotation=top_annotation, ms_data=ms_data, lcms_feature_quality=lcms_feature_quality, ms_quality=ms_quality)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling CompoundsApi->get_compound: %s\n" % e)
@@ -98,6 +99,7 @@ Name | Type | Description  | Notes
  **cid** | **str**| identifier of compound to access. | 
  **top_annotation** | **bool**| include the top annotation of this feature into the output (if available). | [optional] [default to false]
  **ms_data** | **bool**| include corresponding source data (MS and MS/MS) into the output. | [optional] [default to false]
+ **lcms_feature_quality** | **bool**|  | [optional] [default to false]
  **ms_quality** | **bool**|  | [optional] [default to false]
 
 ### Return type
@@ -116,7 +118,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_compounds**
-> list[CompoundId] get_compounds(project_id, top_annotation=top_annotation, ms_data=ms_data, ms_quality=ms_quality)
+> list[CompoundId] get_compounds(project_id, top_annotation=top_annotation, ms_data=ms_data, lcms_feature_quality=lcms_feature_quality, ms_quality=ms_quality)
 
 Get all available compounds/features in the given project-space.
 
@@ -135,11 +137,12 @@ api_instance = PySirius.CompoundsApi()
 project_id = 'project_id_example' # str | project-space to read from.
 top_annotation = false # bool | include the top annotation of this feature into the output (if available). (optional) (default to false)
 ms_data = false # bool | include corresponding source data (MS and MS/MS) into the output. (optional) (default to false)
+lcms_feature_quality = false # bool |  (optional) (default to false)
 ms_quality = false # bool |  (optional) (default to false)
 
 try:
     # Get all available compounds/features in the given project-space.
-    api_response = api_instance.get_compounds(project_id, top_annotation=top_annotation, ms_data=ms_data, ms_quality=ms_quality)
+    api_response = api_instance.get_compounds(project_id, top_annotation=top_annotation, ms_data=ms_data, lcms_feature_quality=lcms_feature_quality, ms_quality=ms_quality)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling CompoundsApi->get_compounds: %s\n" % e)
@@ -152,6 +155,7 @@ Name | Type | Description  | Notes
  **project_id** | **str**| project-space to read from. | 
  **top_annotation** | **bool**| include the top annotation of this feature into the output (if available). | [optional] [default to false]
  **ms_data** | **bool**| include corresponding source data (MS and MS/MS) into the output. | [optional] [default to false]
+ **lcms_feature_quality** | **bool**|  | [optional] [default to false]
  **ms_quality** | **bool**|  | [optional] [default to false]
 
 ### Return type

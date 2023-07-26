@@ -18,6 +18,7 @@ The CompoundId contains the ID of a compound together with some read-only inform
 |**topAnnotation** | [**CompoundAnnotation**](CompoundAnnotation.md) |  |  [optional] |
 |**msData** | [**MsData**](MsData.md) |  |  [optional] |
 |**qualityFlags** | [**List&lt;QualityFlagsEnum&gt;**](#List&lt;QualityFlagsEnum&gt;) | Contains all pre-computation quality information that belong to  this compound, such as information about the quality of the peak shape, MS2 spectrum etc.,  see ({@link CompoundQuality.CompoundQualityFlag CompoundQuality.CompoundQualityFlag})  &lt;p&gt;  Each Compound has a Set of Quality assessment flags. |  [optional] |
+|**lcmsCompoundSummaryQualityData** | [**LCMSFeatureSummaryQualityData**](LCMSFeatureSummaryQualityData.md) |  |  [optional] |
 |**computing** | **Boolean** |  |  [optional] |
 
 

@@ -20,13 +20,13 @@ User/developer friendly parameter subset for the CSI:FingerID structure db searc
 |---- | -----|
 | ALL | &quot;ALL&quot; |
 | ALL_BUT_INSILICO | &quot;ALL_BUT_INSILICO&quot; |
+| BIO | &quot;BIO&quot; |
 | PUBCHEM | &quot;PUBCHEM&quot; |
 | MESH | &quot;MESH&quot; |
 | HMDB | &quot;HMDB&quot; |
 | KNAPSACK | &quot;KNAPSACK&quot; |
 | CHEBI | &quot;CHEBI&quot; |
 | PUBMED | &quot;PUBMED&quot; |
-| BIO | &quot;BIO&quot; |
 | KEGG | &quot;KEGG&quot; |
 | HSDB | &quot;HSDB&quot; |
 | MACONDA | &quot;MACONDA&quot; |
@@ -34,21 +34,28 @@ User/developer friendly parameter subset for the CSI:FingerID structure db searc
 | GNPS | &quot;GNPS&quot; |
 | ZINCBIO | &quot;ZINCBIO&quot; |
 | TRAIN | &quot;TRAIN&quot; |
-| UNDP | &quot;UNDP&quot; |
 | YMDB | &quot;YMDB&quot; |
 | PLANTCYC | &quot;PLANTCYC&quot; |
 | NORMAN | &quot;NORMAN&quot; |
 | ADDITIONAL | &quot;ADDITIONAL&quot; |
 | SUPERNATURAL | &quot;SUPERNATURAL&quot; |
 | COCONUT | &quot;COCONUT&quot; |
+| BLOODEXPOSOME | &quot;BloodExposome&quot; |
+| TEROMOL | &quot;TeroMol&quot; |
 | PUBCHEMANNOTATIONBIO | &quot;PUBCHEMANNOTATIONBIO&quot; |
 | PUBCHEMANNOTATIONDRUG | &quot;PUBCHEMANNOTATIONDRUG&quot; |
 | PUBCHEMANNOTATIONSAFETYANDTOXIC | &quot;PUBCHEMANNOTATIONSAFETYANDTOXIC&quot; |
 | PUBCHEMANNOTATIONFOOD | &quot;PUBCHEMANNOTATIONFOOD&quot; |
+| LOTUS | &quot;LOTUS&quot; |
+| FOODB | &quot;FooDB&quot; |
+| MIMEDB | &quot;MiMeDB&quot; |
+| LIPIDMAPS | &quot;LIPIDMAPS&quot; |
 | LIPID | &quot;LIPID&quot; |
 | KEGGMINE | &quot;KEGGMINE&quot; |
 | ECOCYCMINE | &quot;ECOCYCMINE&quot; |
 | YMDBMINE | &quot;YMDBMINE&quot; |
+| MASSBANK | &quot;MASSBANK&quot; |
+| DSSTOX | &quot;DSSTox&quot; |
 
 
 
