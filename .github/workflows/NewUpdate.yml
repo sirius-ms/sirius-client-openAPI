@@ -35,7 +35,7 @@ jobs:
             wget https://upload.uni-jena.de/data/64c27daa25ce66.74446221/sirius-6.0.0-SNAPSHOT-linux64.zip
             echo "Download Complete"
             unzip *.zip
-            mv sirius-6.0.0-SNAPSHOT-linux64.zip sirius.zip
+            mv sirius-6.0.0-SNAPSHOT-linux64 sirius
             echo "Api Ready"
     - name: Use Zulu OpenJDK 17
       uses: actions/setup-java@v3
