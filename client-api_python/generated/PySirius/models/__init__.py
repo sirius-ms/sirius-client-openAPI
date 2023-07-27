@@ -36,11 +36,12 @@ from PySirius.models.gui_parameters import GuiParameters
 from PySirius.models.job_id import JobId
 from PySirius.models.job_progress import JobProgress
 from PySirius.models.job_submission import JobSubmission
-from PySirius.models.lcms_feature_summary_quality_data import LCMSFeatureSummaryQualityData
+from PySirius.models.lcms_feature_quality import LCMSFeatureQuality
 from PySirius.models.lcms_quality_check import LCMSQualityCheck
 from PySirius.models.lcms_quality_check_result import LCMSQualityCheckResult
 from PySirius.models.loss_edge import LossEdge
 from PySirius.models.ms_data import MsData
+from PySirius.models.parameter_value import ParameterValue
 from PySirius.models.peak_annotation import PeakAnnotation
 from PySirius.models.project_space_id import ProjectSpaceId
 from PySirius.models.result_overview import ResultOverview

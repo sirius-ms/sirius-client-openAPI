@@ -15,12 +15,12 @@ from __future__ import absolute_import
 import unittest
 
 import PySirius
-from PySirius.models.lcms_feature_summary_quality_data import LCMSFeatureSummaryQualityData  # noqa: E501
+from PySirius.models.parameter_value import ParameterValue  # noqa: E501
 from PySirius.rest import ApiException
 
 
-class TestLCMSFeatureSummaryQualityData(unittest.TestCase):
-    """LCMSFeatureSummaryQualityData unit test stubs"""
+class TestParameterValue(unittest.TestCase):
+    """ParameterValue unit test stubs"""
 
     def setUp(self):
         pass
@@ -28,10 +28,10 @@ class TestLCMSFeatureSummaryQualityData(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def testLCMSFeatureSummaryQualityData(self):
-        """Test LCMSFeatureSummaryQualityData"""
+    def testParameterValue(self):
+        """Test ParameterValue"""
         # FIXME: construct object with mandatory attributes with example values
-        # model = PySirius.models.lcms_feature_summary_quality_data.LCMSFeatureSummaryQualityData()  # noqa: E501
+        # model = PySirius.models.parameter_value.ParameterValue()  # noqa: E501
         pass
 
 

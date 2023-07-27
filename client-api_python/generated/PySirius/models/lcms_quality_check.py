@@ -29,21 +29,26 @@ class LCMSQualityCheck(object):
     """
     swagger_types = {
         'quality': 'str',
+        'parameter_values': 'list[ParameterValue]',
         'description': 'str'
     }
 
     attribute_map = {
         'quality': 'quality',
+        'parameter_values': 'parameterValues',
         'description': 'description'
     }
 
-    def __init__(self, quality=None, description=None):  # noqa: E501
+    def __init__(self, quality=None, parameter_values=None, description=None):  # noqa: E501
         """LCMSQualityCheck - a model defined in Swagger"""  # noqa: E501
         self._quality = None
+        self._parameter_values = None
         self._description = None
         self.discriminator = None
         if quality is not None:
             self.quality = quality
+        if parameter_values is not None:
+            self.parameter_values = parameter_values
         if description is not None:
             self.description = description
 
@@ -73,6 +78,27 @@ class LCMSQualityCheck(object):
             )
 
         self._quality = quality
+
+    @property
+    def parameter_values(self):
+        """Gets the parameter_values of this LCMSQualityCheck.  # noqa: E501
+
+
+        :return: The parameter_values of this LCMSQualityCheck.  # noqa: E501
+        :rtype: list[ParameterValue]
+        """
+        return self._parameter_values
+
+    @parameter_values.setter
+    def parameter_values(self, parameter_values):
+        """Sets the parameter_values of this LCMSQualityCheck.
+
+
+        :param parameter_values: The parameter_values of this LCMSQualityCheck.  # noqa: E501
+        :type: list[ParameterValue]
+        """
+
+        self._parameter_values = parameter_values
 
     @property
     def description(self):

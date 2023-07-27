@@ -38,7 +38,7 @@ class CompoundId(object):
         'top_annotation': 'CompoundAnnotation',
         'ms_data': 'MsData',
         'quality_flags': 'list[str]',
-        'lcms_compound_summary_quality_data': 'LCMSFeatureSummaryQualityData',
+        'lcms_feature_quality': 'LCMSFeatureQuality',
         'computing': 'bool'
     }
 
@@ -53,11 +53,11 @@ class CompoundId(object):
         'top_annotation': 'topAnnotation',
         'ms_data': 'msData',
         'quality_flags': 'qualityFlags',
-        'lcms_compound_summary_quality_data': 'lcmsCompoundSummaryQualityData',
+        'lcms_feature_quality': 'lcmsFeatureQuality',
         'computing': 'computing'
     }
 
-    def __init__(self, id=None, name=None, index=None, ion_mass=None, ion_type=None, rt_start_seconds=None, rt_end_seconds=None, top_annotation=None, ms_data=None, quality_flags=None, lcms_compound_summary_quality_data=None, computing=None):  # noqa: E501
+    def __init__(self, id=None, name=None, index=None, ion_mass=None, ion_type=None, rt_start_seconds=None, rt_end_seconds=None, top_annotation=None, ms_data=None, quality_flags=None, lcms_feature_quality=None, computing=None):  # noqa: E501
         """CompoundId - a model defined in Swagger"""  # noqa: E501
         self._id = None
         self._name = None
@@ -69,7 +69,7 @@ class CompoundId(object):
         self._top_annotation = None
         self._ms_data = None
         self._quality_flags = None
-        self._lcms_compound_summary_quality_data = None
+        self._lcms_feature_quality = None
         self._computing = None
         self.discriminator = None
         if id is not None:
@@ -92,8 +92,8 @@ class CompoundId(object):
             self.ms_data = ms_data
         if quality_flags is not None:
             self.quality_flags = quality_flags
-        if lcms_compound_summary_quality_data is not None:
-            self.lcms_compound_summary_quality_data = lcms_compound_summary_quality_data
+        if lcms_feature_quality is not None:
+            self.lcms_feature_quality = lcms_feature_quality
         if computing is not None:
             self.computing = computing
 
@@ -317,25 +317,25 @@ class CompoundId(object):
         self._quality_flags = quality_flags
 
     @property
-    def lcms_compound_summary_quality_data(self):
-        """Gets the lcms_compound_summary_quality_data of this CompoundId.  # noqa: E501
+    def lcms_feature_quality(self):
+        """Gets the lcms_feature_quality of this CompoundId.  # noqa: E501
 
 
-        :return: The lcms_compound_summary_quality_data of this CompoundId.  # noqa: E501
-        :rtype: LCMSFeatureSummaryQualityData
+        :return: The lcms_feature_quality of this CompoundId.  # noqa: E501
+        :rtype: LCMSFeatureQuality
         """
-        return self._lcms_compound_summary_quality_data
+        return self._lcms_feature_quality
 
-    @lcms_compound_summary_quality_data.setter
-    def lcms_compound_summary_quality_data(self, lcms_compound_summary_quality_data):
-        """Sets the lcms_compound_summary_quality_data of this CompoundId.
+    @lcms_feature_quality.setter
+    def lcms_feature_quality(self, lcms_feature_quality):
+        """Sets the lcms_feature_quality of this CompoundId.
 
 
-        :param lcms_compound_summary_quality_data: The lcms_compound_summary_quality_data of this CompoundId.  # noqa: E501
-        :type: LCMSFeatureSummaryQualityData
+        :param lcms_feature_quality: The lcms_feature_quality of this CompoundId.  # noqa: E501
+        :type: LCMSFeatureQuality
         """
 
-        self._lcms_compound_summary_quality_data = lcms_compound_summary_quality_data
+        self._lcms_feature_quality = lcms_feature_quality
 
     @property
     def computing(self):
