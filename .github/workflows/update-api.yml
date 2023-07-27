@@ -20,10 +20,10 @@ jobs:
         timeout_minutes: 2
         command: |
             cd .updater/api
-            wget https://upload.uni-jena.de/data/64c12f5f7cbd15.80236087/sirius_gui_dist-sirius.zip
+            wget https://github.com/boecker-lab/sirius/suites/14613760420/artifacts/828424520
             echo "Download Complete"
-            unzip -o *.zip
-            mv sirius_gui_dist-sirius sirius
+            mv *.zip sirius.zip
+            unzip *.zip
             echo "Api Ready"
 #     - name: Check cached version
 #       uses: nick-fields/retry@v2
