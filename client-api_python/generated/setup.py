@@ -31,7 +31,7 @@ setup(
     url="",
     keywords=["Swagger", "SIRIUS Nightsky API"],
     install_requires=REQUIRES,
-    packages=find_packages(exclude=["test", "test.*"]),
+    packages=find_packages(),
     include_package_data=True,
     long_description="""\
     OpenAPI REST API that provides the full functionality of SIRIUS and its web services as background service. It is intended as entry-point for scripting languages and software integration SDKs.The provided OpenAPI specification allows to autogenerate clients for different programming languages.  # noqa: E501
