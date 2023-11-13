@@ -15,7 +15,8 @@ jobs:
       fail-fast: false
       matrix:
         # 3.4.0 purrr error, 3.3.0 not supported by action
-        r-version: ["3.5.0", "3.6.0", "4.0.0", "4.1.0", "4.2.0"]
+        # new: testthat requires R >= 3.6.0
+        r-version: ["3.6.0", "4.0.0", "4.1.0", "4.2.0"]
     env:
       SIRIUS_USER: ${{ secrets.SIRIUS_USER }}
       SIRIUS_PW: ${{ secrets.SIRIUS_PW }}
