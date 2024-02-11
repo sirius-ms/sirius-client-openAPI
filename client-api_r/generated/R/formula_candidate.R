@@ -199,9 +199,9 @@ FormulaCandidate <- R6::R6Class(
         self$`totalExplainedIntensity` <- this_object$`totalExplainedIntensity`
       }
       if (!is.null(this_object$`medianMassDeviation`)) {
-        medianmassdeviation_object <- Deviation$new()
-        medianmassdeviation_object$fromJSON(jsonlite::toJSON(this_object$medianMassDeviation, auto_unbox = TRUE, digits = NA))
-        self$`medianMassDeviation` <- medianmassdeviation_object
+        `medianmassdeviation_object` <- Deviation$new()
+        `medianmassdeviation_object`$fromJSON(jsonlite::toJSON(this_object$`medianMassDeviation`, auto_unbox = TRUE, digits = NA))
+        self$`medianMassDeviation` <- `medianmassdeviation_object`
       }
       self
     },
@@ -217,7 +217,7 @@ FormulaCandidate <- R6::R6Class(
         if (!is.null(self$`siriusScore`)) {
           sprintf(
           '"siriusScore":
-            %f
+            %d
                     ',
           self$`siriusScore`
           )
@@ -225,7 +225,7 @@ FormulaCandidate <- R6::R6Class(
         if (!is.null(self$`isotopeScore`)) {
           sprintf(
           '"isotopeScore":
-            %f
+            %d
                     ',
           self$`isotopeScore`
           )
@@ -233,7 +233,7 @@ FormulaCandidate <- R6::R6Class(
         if (!is.null(self$`treeScore`)) {
           sprintf(
           '"treeScore":
-            %f
+            %d
                     ',
           self$`treeScore`
           )
@@ -241,7 +241,7 @@ FormulaCandidate <- R6::R6Class(
         if (!is.null(self$`zodiacScore`)) {
           sprintf(
           '"zodiacScore":
-            %f
+            %d
                     ',
           self$`zodiacScore`
           )
@@ -265,7 +265,7 @@ FormulaCandidate <- R6::R6Class(
         if (!is.null(self$`numOfexplainedPeaks`)) {
           sprintf(
           '"numOfexplainedPeaks":
-            %f
+            %d
                     ',
           self$`numOfexplainedPeaks`
           )
@@ -273,7 +273,7 @@ FormulaCandidate <- R6::R6Class(
         if (!is.null(self$`numOfexplainablePeaks`)) {
           sprintf(
           '"numOfexplainablePeaks":
-            %f
+            %d
                     ',
           self$`numOfexplainablePeaks`
           )
@@ -281,7 +281,7 @@ FormulaCandidate <- R6::R6Class(
         if (!is.null(self$`totalExplainedIntensity`)) {
           sprintf(
           '"totalExplainedIntensity":
-            %f
+            %d
                     ',
           self$`totalExplainedIntensity`
           )
@@ -317,7 +317,7 @@ FormulaCandidate <- R6::R6Class(
       self$`numOfexplainedPeaks` <- this_object$`numOfexplainedPeaks`
       self$`numOfexplainablePeaks` <- this_object$`numOfexplainablePeaks`
       self$`totalExplainedIntensity` <- this_object$`totalExplainedIntensity`
-      self$`medianMassDeviation` <- Deviation$new()$fromJSON(jsonlite::toJSON(this_object$medianMassDeviation, auto_unbox = TRUE, digits = NA))
+      self$`medianMassDeviation` <- Deviation$new()$fromJSON(jsonlite::toJSON(this_object$`medianMassDeviation`, auto_unbox = TRUE, digits = NA))
       self
     },
     #' Validate JSON input with respect to FormulaCandidate

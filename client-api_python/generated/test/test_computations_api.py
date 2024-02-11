@@ -15,7 +15,7 @@ from __future__ import absolute_import
 import unittest
 
 import PySirius
-from PySirius.api.computations_api import ComputationsApi  # noqa: E501
+from api.computations_api import ComputationsApi  # noqa: E501
 from PySirius.rest import ApiException
 
 
@@ -23,7 +23,7 @@ class TestComputationsApi(unittest.TestCase):
     """ComputationsApi unit test stubs"""
 
     def setUp(self):
-        self.api = ComputationsApi()  # noqa: E501
+        self.api = api.computations_api.ComputationsApi()  # noqa: E501
 
     def tearDown(self):
         pass

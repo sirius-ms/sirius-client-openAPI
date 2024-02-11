@@ -101,9 +101,9 @@ FragmentationTree <- R6::R6Class(
         self$`treeScore` <- this_object$`treeScore`
       }
       if (!is.null(this_object$`root`)) {
-        root_object <- FragmentNode$new()
-        root_object$fromJSON(jsonlite::toJSON(this_object$root, auto_unbox = TRUE, digits = NA))
-        self$`root` <- root_object
+        `root_object` <- FragmentNode$new()
+        `root_object`$fromJSON(jsonlite::toJSON(this_object$`root`, auto_unbox = TRUE, digits = NA))
+        self$`root` <- `root_object`
       }
       self
     },
@@ -135,7 +135,7 @@ FragmentationTree <- R6::R6Class(
         if (!is.null(self$`treeScore`)) {
           sprintf(
           '"treeScore":
-            %f
+            %d
                     ',
           self$`treeScore`
           )
@@ -165,7 +165,7 @@ FragmentationTree <- R6::R6Class(
       self$`fragments` <- ApiClient$new()$deserializeObj(this_object$`fragments`, "array[FragmentNode]", loadNamespace("Rsirius"))
       self$`losses` <- ApiClient$new()$deserializeObj(this_object$`losses`, "array[LossEdge]", loadNamespace("Rsirius"))
       self$`treeScore` <- this_object$`treeScore`
-      self$`root` <- FragmentNode$new()$fromJSON(jsonlite::toJSON(this_object$root, auto_unbox = TRUE, digits = NA))
+      self$`root` <- FragmentNode$new()$fromJSON(jsonlite::toJSON(this_object$`root`, auto_unbox = TRUE, digits = NA))
       self
     },
     #' Validate JSON input with respect to FragmentationTree

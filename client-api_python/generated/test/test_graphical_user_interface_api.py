@@ -15,7 +15,7 @@ from __future__ import absolute_import
 import unittest
 
 import PySirius
-from PySirius.api.graphical_user_interface_api import GraphicalUserInterfaceApi  # noqa: E501
+from api.graphical_user_interface_api import GraphicalUserInterfaceApi  # noqa: E501
 from PySirius.rest import ApiException
 
 
@@ -23,7 +23,7 @@ class TestGraphicalUserInterfaceApi(unittest.TestCase):
     """GraphicalUserInterfaceApi unit test stubs"""
 
     def setUp(self):
-        self.api = GraphicalUserInterfaceApi()  # noqa: E501
+        self.api = api.graphical_user_interface_api.GraphicalUserInterfaceApi()  # noqa: E501
 
     def tearDown(self):
         pass

@@ -137,7 +137,7 @@ ResultOverview <- R6::R6Class(
         if (!is.null(self$`siriusScore`)) {
           sprintf(
           '"siriusScore":
-            %f
+            %d
                     ',
           self$`siriusScore`
           )
@@ -145,7 +145,7 @@ ResultOverview <- R6::R6Class(
         if (!is.null(self$`zodiacScore`)) {
           sprintf(
           '"zodiacScore":
-            %f
+            %d
                     ',
           self$`zodiacScore`
           )
@@ -153,7 +153,7 @@ ResultOverview <- R6::R6Class(
         if (!is.null(self$`topCSIScore`)) {
           sprintf(
           '"topCSIScore":
-            %f
+            %d
                     ',
           self$`topCSIScore`
           )
@@ -161,7 +161,7 @@ ResultOverview <- R6::R6Class(
         if (!is.null(self$`confidenceScore`)) {
           sprintf(
           '"confidenceScore":
-            %f
+            %d
                     ',
           self$`confidenceScore`
           )

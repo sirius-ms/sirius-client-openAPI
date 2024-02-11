@@ -99,9 +99,9 @@ JobId <- R6::R6Class(
         self$`command` <- this_object$`command`
       }
       if (!is.null(this_object$`progress`)) {
-        progress_object <- JobProgress$new()
-        progress_object$fromJSON(jsonlite::toJSON(this_object$progress, auto_unbox = TRUE, digits = NA))
-        self$`progress` <- progress_object
+        `progress_object` <- JobProgress$new()
+        `progress_object`$fromJSON(jsonlite::toJSON(this_object$`progress`, auto_unbox = TRUE, digits = NA))
+        self$`progress` <- `progress_object`
       }
       if (!is.null(this_object$`affectedCompoundIds`)) {
         self$`affectedCompoundIds` <- ApiClient$new()$deserializeObj(this_object$`affectedCompoundIds`, "array[character]", loadNamespace("Rsirius"))
@@ -165,7 +165,7 @@ JobId <- R6::R6Class(
       this_object <- jsonlite::fromJSON(input_json)
       self$`id` <- this_object$`id`
       self$`command` <- this_object$`command`
-      self$`progress` <- JobProgress$new()$fromJSON(jsonlite::toJSON(this_object$progress, auto_unbox = TRUE, digits = NA))
+      self$`progress` <- JobProgress$new()$fromJSON(jsonlite::toJSON(this_object$`progress`, auto_unbox = TRUE, digits = NA))
       self$`affectedCompoundIds` <- ApiClient$new()$deserializeObj(this_object$`affectedCompoundIds`, "array[character]", loadNamespace("Rsirius"))
       self
     },
