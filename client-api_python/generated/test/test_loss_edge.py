@@ -15,7 +15,7 @@ from __future__ import absolute_import
 import unittest
 
 import PySirius
-from PySirius.models.loss_edge import LossEdge  # noqa: E501
+from models.loss_edge import LossEdge  # noqa: E501
 from PySirius.rest import ApiException
 
 

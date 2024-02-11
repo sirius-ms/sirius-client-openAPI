@@ -83,9 +83,9 @@ AnnotatedSpectrum <- R6::R6Class(
         self$`msLevel` <- this_object$`msLevel`
       }
       if (!is.null(this_object$`collisionEnergy`)) {
-        collisionenergy_object <- CollisionEnergy$new()
-        collisionenergy_object$fromJSON(jsonlite::toJSON(this_object$collisionEnergy, auto_unbox = TRUE, digits = NA))
-        self$`collisionEnergy` <- collisionenergy_object
+        `collisionenergy_object` <- CollisionEnergy$new()
+        `collisionenergy_object`$fromJSON(jsonlite::toJSON(this_object$`collisionEnergy`, auto_unbox = TRUE, digits = NA))
+        self$`collisionEnergy` <- `collisionenergy_object`
       }
       if (!is.null(this_object$`peaks`)) {
         self$`peaks` <- ApiClient$new()$deserializeObj(this_object$`peaks`, "array[AnnotatedPeak]", loadNamespace("Rsirius"))
@@ -104,7 +104,7 @@ AnnotatedSpectrum <- R6::R6Class(
         if (!is.null(self$`msLevel`)) {
           sprintf(
           '"msLevel":
-            %f
+            %d
                     ',
           self$`msLevel`
           )
@@ -140,7 +140,7 @@ AnnotatedSpectrum <- R6::R6Class(
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       self$`msLevel` <- this_object$`msLevel`
-      self$`collisionEnergy` <- CollisionEnergy$new()$fromJSON(jsonlite::toJSON(this_object$collisionEnergy, auto_unbox = TRUE, digits = NA))
+      self$`collisionEnergy` <- CollisionEnergy$new()$fromJSON(jsonlite::toJSON(this_object$`collisionEnergy`, auto_unbox = TRUE, digits = NA))
       self$`peaks` <- ApiClient$new()$deserializeObj(this_object$`peaks`, "array[AnnotatedPeak]", loadNamespace("Rsirius"))
       self
     },

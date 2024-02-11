@@ -89,7 +89,7 @@ ZodiacNumberOfConsideredCandidatesAt800Mz <- R6::R6Class(
         if (!is.null(self$`value`)) {
           sprintf(
           '"value":
-            %f
+            %d
                     ',
           self$`value`
           )

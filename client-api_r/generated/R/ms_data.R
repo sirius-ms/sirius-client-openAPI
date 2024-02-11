@@ -90,14 +90,14 @@ MsData <- R6::R6Class(
     fromJSON = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       if (!is.null(this_object$`mergedMs1`)) {
-        mergedms1_object <- AnnotatedSpectrum$new()
-        mergedms1_object$fromJSON(jsonlite::toJSON(this_object$mergedMs1, auto_unbox = TRUE, digits = NA))
-        self$`mergedMs1` <- mergedms1_object
+        `mergedms1_object` <- AnnotatedSpectrum$new()
+        `mergedms1_object`$fromJSON(jsonlite::toJSON(this_object$`mergedMs1`, auto_unbox = TRUE, digits = NA))
+        self$`mergedMs1` <- `mergedms1_object`
       }
       if (!is.null(this_object$`mergedMs2`)) {
-        mergedms2_object <- AnnotatedSpectrum$new()
-        mergedms2_object$fromJSON(jsonlite::toJSON(this_object$mergedMs2, auto_unbox = TRUE, digits = NA))
-        self$`mergedMs2` <- mergedms2_object
+        `mergedms2_object` <- AnnotatedSpectrum$new()
+        `mergedms2_object`$fromJSON(jsonlite::toJSON(this_object$`mergedMs2`, auto_unbox = TRUE, digits = NA))
+        self$`mergedMs2` <- `mergedms2_object`
       }
       if (!is.null(this_object$`ms2Spectra`)) {
         self$`ms2Spectra` <- ApiClient$new()$deserializeObj(this_object$`ms2Spectra`, "array[AnnotatedSpectrum]", loadNamespace("Rsirius"))
@@ -162,8 +162,8 @@ MsData <- R6::R6Class(
     #' @export
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
-      self$`mergedMs1` <- AnnotatedSpectrum$new()$fromJSON(jsonlite::toJSON(this_object$mergedMs1, auto_unbox = TRUE, digits = NA))
-      self$`mergedMs2` <- AnnotatedSpectrum$new()$fromJSON(jsonlite::toJSON(this_object$mergedMs2, auto_unbox = TRUE, digits = NA))
+      self$`mergedMs1` <- AnnotatedSpectrum$new()$fromJSON(jsonlite::toJSON(this_object$`mergedMs1`, auto_unbox = TRUE, digits = NA))
+      self$`mergedMs2` <- AnnotatedSpectrum$new()$fromJSON(jsonlite::toJSON(this_object$`mergedMs2`, auto_unbox = TRUE, digits = NA))
       self$`ms2Spectra` <- ApiClient$new()$deserializeObj(this_object$`ms2Spectra`, "array[AnnotatedSpectrum]", loadNamespace("Rsirius"))
       self$`ms1Spectra` <- ApiClient$new()$deserializeObj(this_object$`ms1Spectra`, "array[AnnotatedSpectrum]", loadNamespace("Rsirius"))
       self

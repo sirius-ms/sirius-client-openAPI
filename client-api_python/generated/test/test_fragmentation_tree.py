@@ -15,7 +15,7 @@ from __future__ import absolute_import
 import unittest
 
 import PySirius
-from PySirius.models.fragmentation_tree import FragmentationTree  # noqa: E501
+from models.fragmentation_tree import FragmentationTree  # noqa: E501
 from PySirius.rest import ApiException
 
 

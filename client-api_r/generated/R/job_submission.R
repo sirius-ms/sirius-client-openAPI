@@ -187,29 +187,29 @@ JobSubmission <- R6::R6Class(
         self$`recompute` <- this_object$`recompute`
       }
       if (!is.null(this_object$`formulaIdParas`)) {
-        formulaidparas_object <- Sirius$new()
-        formulaidparas_object$fromJSON(jsonlite::toJSON(this_object$formulaIdParas, auto_unbox = TRUE, digits = NA))
-        self$`formulaIdParas` <- formulaidparas_object
+        `formulaidparas_object` <- Sirius$new()
+        `formulaidparas_object`$fromJSON(jsonlite::toJSON(this_object$`formulaIdParas`, auto_unbox = TRUE, digits = NA))
+        self$`formulaIdParas` <- `formulaidparas_object`
       }
       if (!is.null(this_object$`zodiacParas`)) {
-        zodiacparas_object <- Zodiac$new()
-        zodiacparas_object$fromJSON(jsonlite::toJSON(this_object$zodiacParas, auto_unbox = TRUE, digits = NA))
-        self$`zodiacParas` <- zodiacparas_object
+        `zodiacparas_object` <- Zodiac$new()
+        `zodiacparas_object`$fromJSON(jsonlite::toJSON(this_object$`zodiacParas`, auto_unbox = TRUE, digits = NA))
+        self$`zodiacParas` <- `zodiacparas_object`
       }
       if (!is.null(this_object$`fingerprintPredictionParas`)) {
-        fingerprintpredictionparas_object <- FingerprintPrediction$new()
-        fingerprintpredictionparas_object$fromJSON(jsonlite::toJSON(this_object$fingerprintPredictionParas, auto_unbox = TRUE, digits = NA))
-        self$`fingerprintPredictionParas` <- fingerprintpredictionparas_object
+        `fingerprintpredictionparas_object` <- FingerprintPrediction$new()
+        `fingerprintpredictionparas_object`$fromJSON(jsonlite::toJSON(this_object$`fingerprintPredictionParas`, auto_unbox = TRUE, digits = NA))
+        self$`fingerprintPredictionParas` <- `fingerprintpredictionparas_object`
       }
       if (!is.null(this_object$`structureDbSearchParas`)) {
-        structuredbsearchparas_object <- StructureDbSearch$new()
-        structuredbsearchparas_object$fromJSON(jsonlite::toJSON(this_object$structureDbSearchParas, auto_unbox = TRUE, digits = NA))
-        self$`structureDbSearchParas` <- structuredbsearchparas_object
+        `structuredbsearchparas_object` <- StructureDbSearch$new()
+        `structuredbsearchparas_object`$fromJSON(jsonlite::toJSON(this_object$`structureDbSearchParas`, auto_unbox = TRUE, digits = NA))
+        self$`structureDbSearchParas` <- `structuredbsearchparas_object`
       }
       if (!is.null(this_object$`canopusParas`)) {
-        canopusparas_object <- Canopus$new()
-        canopusparas_object$fromJSON(jsonlite::toJSON(this_object$canopusParas, auto_unbox = TRUE, digits = NA))
-        self$`canopusParas` <- canopusparas_object
+        `canopusparas_object` <- Canopus$new()
+        `canopusparas_object`$fromJSON(jsonlite::toJSON(this_object$`canopusParas`, auto_unbox = TRUE, digits = NA))
+        self$`canopusParas` <- `canopusparas_object`
       }
       if (!is.null(this_object$`configMap`)) {
         self$`configMap` <- ApiClient$new()$deserializeObj(this_object$`configMap`, "map(character)", loadNamespace("Rsirius"))
@@ -308,7 +308,7 @@ JobSubmission <- R6::R6Class(
         if (!is.null(self$`configMap`)) {
           sprintf(
           '"configMap":
-            %s
+            "%s"
           ',
           jsonlite::toJSON(lapply(self$`configMap`, function(x){ x }), auto_unbox = TRUE, digits = NA)
           )
@@ -332,11 +332,11 @@ JobSubmission <- R6::R6Class(
       self$`enforcedAdducts` <- ApiClient$new()$deserializeObj(this_object$`enforcedAdducts`, "array[character]", loadNamespace("Rsirius"))
       self$`detectableAdducts` <- ApiClient$new()$deserializeObj(this_object$`detectableAdducts`, "array[character]", loadNamespace("Rsirius"))
       self$`recompute` <- this_object$`recompute`
-      self$`formulaIdParas` <- Sirius$new()$fromJSON(jsonlite::toJSON(this_object$formulaIdParas, auto_unbox = TRUE, digits = NA))
-      self$`zodiacParas` <- Zodiac$new()$fromJSON(jsonlite::toJSON(this_object$zodiacParas, auto_unbox = TRUE, digits = NA))
-      self$`fingerprintPredictionParas` <- FingerprintPrediction$new()$fromJSON(jsonlite::toJSON(this_object$fingerprintPredictionParas, auto_unbox = TRUE, digits = NA))
-      self$`structureDbSearchParas` <- StructureDbSearch$new()$fromJSON(jsonlite::toJSON(this_object$structureDbSearchParas, auto_unbox = TRUE, digits = NA))
-      self$`canopusParas` <- Canopus$new()$fromJSON(jsonlite::toJSON(this_object$canopusParas, auto_unbox = TRUE, digits = NA))
+      self$`formulaIdParas` <- Sirius$new()$fromJSON(jsonlite::toJSON(this_object$`formulaIdParas`, auto_unbox = TRUE, digits = NA))
+      self$`zodiacParas` <- Zodiac$new()$fromJSON(jsonlite::toJSON(this_object$`zodiacParas`, auto_unbox = TRUE, digits = NA))
+      self$`fingerprintPredictionParas` <- FingerprintPrediction$new()$fromJSON(jsonlite::toJSON(this_object$`fingerprintPredictionParas`, auto_unbox = TRUE, digits = NA))
+      self$`structureDbSearchParas` <- StructureDbSearch$new()$fromJSON(jsonlite::toJSON(this_object$`structureDbSearchParas`, auto_unbox = TRUE, digits = NA))
+      self$`canopusParas` <- Canopus$new()$fromJSON(jsonlite::toJSON(this_object$`canopusParas`, auto_unbox = TRUE, digits = NA))
       self$`configMap` <- ApiClient$new()$deserializeObj(this_object$`configMap`, "map(character)", loadNamespace("Rsirius"))
       self
     },

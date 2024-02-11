@@ -236,14 +236,14 @@ Sirius <- R6::R6Class(
         self$`detectableElements` <- ApiClient$new()$deserializeObj(this_object$`detectableElements`, "array[character]", loadNamespace("Rsirius"))
       }
       if (!is.null(this_object$`ilpTimeout`)) {
-        ilptimeout_object <- Timeout$new()
-        ilptimeout_object$fromJSON(jsonlite::toJSON(this_object$ilpTimeout, auto_unbox = TRUE, digits = NA))
-        self$`ilpTimeout` <- ilptimeout_object
+        `ilptimeout_object` <- Timeout$new()
+        `ilptimeout_object`$fromJSON(jsonlite::toJSON(this_object$`ilpTimeout`, auto_unbox = TRUE, digits = NA))
+        self$`ilpTimeout` <- `ilptimeout_object`
       }
       if (!is.null(this_object$`useHeuristic`)) {
-        useheuristic_object <- UseHeuristic$new()
-        useheuristic_object$fromJSON(jsonlite::toJSON(this_object$useHeuristic, auto_unbox = TRUE, digits = NA))
-        self$`useHeuristic` <- useheuristic_object
+        `useheuristic_object` <- UseHeuristic$new()
+        `useheuristic_object`$fromJSON(jsonlite::toJSON(this_object$`useHeuristic`, auto_unbox = TRUE, digits = NA))
+        self$`useHeuristic` <- `useheuristic_object`
       }
       self
     },
@@ -275,7 +275,7 @@ Sirius <- R6::R6Class(
         if (!is.null(self$`numberOfCandidates`)) {
           sprintf(
           '"numberOfCandidates":
-            %f
+            %d
                     ',
           self$`numberOfCandidates`
           )
@@ -283,7 +283,7 @@ Sirius <- R6::R6Class(
         if (!is.null(self$`numberOfCandidatesPerIon`)) {
           sprintf(
           '"numberOfCandidatesPerIon":
-            %f
+            %d
                     ',
           self$`numberOfCandidatesPerIon`
           )
@@ -291,7 +291,7 @@ Sirius <- R6::R6Class(
         if (!is.null(self$`massAccuracyMS2ppm`)) {
           sprintf(
           '"massAccuracyMS2ppm":
-            %f
+            %d
                     ',
           self$`massAccuracyMS2ppm`
           )
@@ -382,8 +382,8 @@ Sirius <- R6::R6Class(
       self$`enforcedFormulaConstraints` <- this_object$`enforcedFormulaConstraints`
       self$`fallbackFormulaConstraints` <- this_object$`fallbackFormulaConstraints`
       self$`detectableElements` <- ApiClient$new()$deserializeObj(this_object$`detectableElements`, "array[character]", loadNamespace("Rsirius"))
-      self$`ilpTimeout` <- Timeout$new()$fromJSON(jsonlite::toJSON(this_object$ilpTimeout, auto_unbox = TRUE, digits = NA))
-      self$`useHeuristic` <- UseHeuristic$new()$fromJSON(jsonlite::toJSON(this_object$useHeuristic, auto_unbox = TRUE, digits = NA))
+      self$`ilpTimeout` <- Timeout$new()$fromJSON(jsonlite::toJSON(this_object$`ilpTimeout`, auto_unbox = TRUE, digits = NA))
+      self$`useHeuristic` <- UseHeuristic$new()$fromJSON(jsonlite::toJSON(this_object$`useHeuristic`, auto_unbox = TRUE, digits = NA))
       self
     },
     #' Validate JSON input with respect to Sirius

@@ -105,7 +105,7 @@ CollisionEnergy <- R6::R6Class(
         if (!is.null(self$`minEnergy`)) {
           sprintf(
           '"minEnergy":
-            %f
+            %d
                     ',
           self$`minEnergy`
           )
@@ -113,7 +113,7 @@ CollisionEnergy <- R6::R6Class(
         if (!is.null(self$`maxEnergy`)) {
           sprintf(
           '"maxEnergy":
-            %f
+            %d
                     ',
           self$`maxEnergy`
           )

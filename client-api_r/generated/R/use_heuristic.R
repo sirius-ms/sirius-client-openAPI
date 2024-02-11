@@ -105,7 +105,7 @@ UseHeuristic <- R6::R6Class(
         if (!is.null(self$`mzToUseHeuristic`)) {
           sprintf(
           '"mzToUseHeuristic":
-            %f
+            %d
                     ',
           self$`mzToUseHeuristic`
           )
@@ -113,7 +113,7 @@ UseHeuristic <- R6::R6Class(
         if (!is.null(self$`mzToUseHeuristicOnly`)) {
           sprintf(
           '"mzToUseHeuristicOnly":
-            %f
+            %d
                     ',
           self$`mzToUseHeuristicOnly`
           )

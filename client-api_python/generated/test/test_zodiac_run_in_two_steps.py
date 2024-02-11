@@ -15,7 +15,7 @@ from __future__ import absolute_import
 import unittest
 
 import PySirius
-from PySirius.models.zodiac_run_in_two_steps import ZodiacRunInTwoSteps  # noqa: E501
+from models.zodiac_run_in_two_steps import ZodiacRunInTwoSteps  # noqa: E501
 from PySirius.rest import ApiException
 
 

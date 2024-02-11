@@ -15,7 +15,7 @@ from __future__ import absolute_import
 import unittest
 
 import PySirius
-from PySirius.api.formula_results_api import FormulaResultsApi  # noqa: E501
+from api.formula_results_api import FormulaResultsApi  # noqa: E501
 from PySirius.rest import ApiException
 
 
@@ -23,7 +23,7 @@ class TestFormulaResultsApi(unittest.TestCase):
     """FormulaResultsApi unit test stubs"""
 
     def setUp(self):
-        self.api = FormulaResultsApi()  # noqa: E501
+        self.api = api.formula_results_api.FormulaResultsApi()  # noqa: E501
 
     def tearDown(self):
         pass

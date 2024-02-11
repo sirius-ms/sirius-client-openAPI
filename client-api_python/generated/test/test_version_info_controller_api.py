@@ -15,7 +15,7 @@ from __future__ import absolute_import
 import unittest
 
 import PySirius
-from PySirius.api.version_info_controller_api import VersionInfoControllerApi  # noqa: E501
+from api.version_info_controller_api import VersionInfoControllerApi  # noqa: E501
 from PySirius.rest import ApiException
 
 
@@ -23,7 +23,7 @@ class TestVersionInfoControllerApi(unittest.TestCase):
     """VersionInfoControllerApi unit test stubs"""
 
     def setUp(self):
-        self.api = VersionInfoControllerApi()  # noqa: E501
+        self.api = api.version_info_controller_api.VersionInfoControllerApi()  # noqa: E501
 
     def tearDown(self):
         pass
