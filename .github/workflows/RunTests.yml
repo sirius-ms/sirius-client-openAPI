@@ -1,13 +1,13 @@
-# # This workflow will start all individual Tests
+# This workflow will start all individual Tests
 
-# name: RunTests
+name: RunTests
 
-# on: [workflow_dispatch, workflow_call, pull_request]
+on: [workflow_dispatch, workflow_call]
 
-# jobs:
-#   RTest:
-#     uses: ./.github/workflows/RTest.yml
-#     secrets: inherit
-#   PythonTest:
-#     uses: ./.github/workflows/PythonTest.yml
-#     secrets: inherit
+jobs:
+  RTest:
+    uses: ./.github/workflows/RTest.yml
+    secrets: inherit
+  PythonTest:
+    uses: ./.github/workflows/PythonTest.yml
+    secrets: inherit
