@@ -92,14 +92,14 @@ LossEdge <- R6::R6Class(
     fromJSON = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       if (!is.null(this_object$`sourceFragment`)) {
-        sourcefragment_object <- FragmentNode$new()
-        sourcefragment_object$fromJSON(jsonlite::toJSON(this_object$sourceFragment, auto_unbox = TRUE, digits = NA))
-        self$`sourceFragment` <- sourcefragment_object
+        `sourcefragment_object` <- FragmentNode$new()
+        `sourcefragment_object`$fromJSON(jsonlite::toJSON(this_object$`sourceFragment`, auto_unbox = TRUE, digits = NA))
+        self$`sourceFragment` <- `sourcefragment_object`
       }
       if (!is.null(this_object$`targetFragment`)) {
-        targetfragment_object <- FragmentNode$new()
-        targetfragment_object$fromJSON(jsonlite::toJSON(this_object$targetFragment, auto_unbox = TRUE, digits = NA))
-        self$`targetFragment` <- targetfragment_object
+        `targetfragment_object` <- FragmentNode$new()
+        `targetfragment_object`$fromJSON(jsonlite::toJSON(this_object$`targetFragment`, auto_unbox = TRUE, digits = NA))
+        self$`targetFragment` <- `targetfragment_object`
       }
       if (!is.null(this_object$`molecularFormula`)) {
         self$`molecularFormula` <- this_object$`molecularFormula`
@@ -145,7 +145,7 @@ LossEdge <- R6::R6Class(
         if (!is.null(self$`score`)) {
           sprintf(
           '"score":
-            %f
+            %d
                     ',
           self$`score`
           )
@@ -164,8 +164,8 @@ LossEdge <- R6::R6Class(
     #' @export
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
-      self$`sourceFragment` <- FragmentNode$new()$fromJSON(jsonlite::toJSON(this_object$sourceFragment, auto_unbox = TRUE, digits = NA))
-      self$`targetFragment` <- FragmentNode$new()$fromJSON(jsonlite::toJSON(this_object$targetFragment, auto_unbox = TRUE, digits = NA))
+      self$`sourceFragment` <- FragmentNode$new()$fromJSON(jsonlite::toJSON(this_object$`sourceFragment`, auto_unbox = TRUE, digits = NA))
+      self$`targetFragment` <- FragmentNode$new()$fromJSON(jsonlite::toJSON(this_object$`targetFragment`, auto_unbox = TRUE, digits = NA))
       self$`molecularFormula` <- this_object$`molecularFormula`
       self$`score` <- this_object$`score`
       self

@@ -15,7 +15,7 @@ from __future__ import absolute_import
 import unittest
 
 import PySirius
-from PySirius.api.project_spaces_api import ProjectSpacesApi  # noqa: E501
+from api.project_spaces_api import ProjectSpacesApi  # noqa: E501
 from PySirius.rest import ApiException
 
 
@@ -23,7 +23,7 @@ class TestProjectSpacesApi(unittest.TestCase):
     """ProjectSpacesApi unit test stubs"""
 
     def setUp(self):
-        self.api = ProjectSpacesApi()  # noqa: E501
+        self.api = api.project_spaces_api.ProjectSpacesApi()  # noqa: E501
 
     def tearDown(self):
         pass

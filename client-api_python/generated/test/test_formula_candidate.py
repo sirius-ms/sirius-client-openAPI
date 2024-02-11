@@ -15,7 +15,7 @@ from __future__ import absolute_import
 import unittest
 
 import PySirius
-from PySirius.models.formula_candidate import FormulaCandidate  # noqa: E501
+from models.formula_candidate import FormulaCandidate  # noqa: E501
 from PySirius.rest import ApiException
 
 

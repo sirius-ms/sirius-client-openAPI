@@ -115,29 +115,29 @@ Zodiac <- R6::R6Class(
         self$`enabled` <- this_object$`enabled`
       }
       if (!is.null(this_object$`consideredCandidatesAt300Mz`)) {
-        consideredcandidatesat300mz_object <- ZodiacNumberOfConsideredCandidatesAt300Mz$new()
-        consideredcandidatesat300mz_object$fromJSON(jsonlite::toJSON(this_object$consideredCandidatesAt300Mz, auto_unbox = TRUE, digits = NA))
-        self$`consideredCandidatesAt300Mz` <- consideredcandidatesat300mz_object
+        `consideredcandidatesat300mz_object` <- ZodiacNumberOfConsideredCandidatesAt300Mz$new()
+        `consideredcandidatesat300mz_object`$fromJSON(jsonlite::toJSON(this_object$`consideredCandidatesAt300Mz`, auto_unbox = TRUE, digits = NA))
+        self$`consideredCandidatesAt300Mz` <- `consideredcandidatesat300mz_object`
       }
       if (!is.null(this_object$`consideredCandidatesAt800Mz`)) {
-        consideredcandidatesat800mz_object <- ZodiacNumberOfConsideredCandidatesAt800Mz$new()
-        consideredcandidatesat800mz_object$fromJSON(jsonlite::toJSON(this_object$consideredCandidatesAt800Mz, auto_unbox = TRUE, digits = NA))
-        self$`consideredCandidatesAt800Mz` <- consideredcandidatesat800mz_object
+        `consideredcandidatesat800mz_object` <- ZodiacNumberOfConsideredCandidatesAt800Mz$new()
+        `consideredcandidatesat800mz_object`$fromJSON(jsonlite::toJSON(this_object$`consideredCandidatesAt800Mz`, auto_unbox = TRUE, digits = NA))
+        self$`consideredCandidatesAt800Mz` <- `consideredcandidatesat800mz_object`
       }
       if (!is.null(this_object$`runInTwoSteps`)) {
-        runintwosteps_object <- ZodiacRunInTwoSteps$new()
-        runintwosteps_object$fromJSON(jsonlite::toJSON(this_object$runInTwoSteps, auto_unbox = TRUE, digits = NA))
-        self$`runInTwoSteps` <- runintwosteps_object
+        `runintwosteps_object` <- ZodiacRunInTwoSteps$new()
+        `runintwosteps_object`$fromJSON(jsonlite::toJSON(this_object$`runInTwoSteps`, auto_unbox = TRUE, digits = NA))
+        self$`runInTwoSteps` <- `runintwosteps_object`
       }
       if (!is.null(this_object$`edgeFilterThresholds`)) {
-        edgefilterthresholds_object <- ZodiacEdgeFilterThresholds$new()
-        edgefilterthresholds_object$fromJSON(jsonlite::toJSON(this_object$edgeFilterThresholds, auto_unbox = TRUE, digits = NA))
-        self$`edgeFilterThresholds` <- edgefilterthresholds_object
+        `edgefilterthresholds_object` <- ZodiacEdgeFilterThresholds$new()
+        `edgefilterthresholds_object`$fromJSON(jsonlite::toJSON(this_object$`edgeFilterThresholds`, auto_unbox = TRUE, digits = NA))
+        self$`edgeFilterThresholds` <- `edgefilterthresholds_object`
       }
       if (!is.null(this_object$`gibbsSamplerParameters`)) {
-        gibbssamplerparameters_object <- ZodiacEpochs$new()
-        gibbssamplerparameters_object$fromJSON(jsonlite::toJSON(this_object$gibbsSamplerParameters, auto_unbox = TRUE, digits = NA))
-        self$`gibbsSamplerParameters` <- gibbssamplerparameters_object
+        `gibbssamplerparameters_object` <- ZodiacEpochs$new()
+        `gibbssamplerparameters_object`$fromJSON(jsonlite::toJSON(this_object$`gibbsSamplerParameters`, auto_unbox = TRUE, digits = NA))
+        self$`gibbsSamplerParameters` <- `gibbssamplerparameters_object`
       }
       self
     },
@@ -213,11 +213,11 @@ Zodiac <- R6::R6Class(
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       self$`enabled` <- this_object$`enabled`
-      self$`consideredCandidatesAt300Mz` <- ZodiacNumberOfConsideredCandidatesAt300Mz$new()$fromJSON(jsonlite::toJSON(this_object$consideredCandidatesAt300Mz, auto_unbox = TRUE, digits = NA))
-      self$`consideredCandidatesAt800Mz` <- ZodiacNumberOfConsideredCandidatesAt800Mz$new()$fromJSON(jsonlite::toJSON(this_object$consideredCandidatesAt800Mz, auto_unbox = TRUE, digits = NA))
-      self$`runInTwoSteps` <- ZodiacRunInTwoSteps$new()$fromJSON(jsonlite::toJSON(this_object$runInTwoSteps, auto_unbox = TRUE, digits = NA))
-      self$`edgeFilterThresholds` <- ZodiacEdgeFilterThresholds$new()$fromJSON(jsonlite::toJSON(this_object$edgeFilterThresholds, auto_unbox = TRUE, digits = NA))
-      self$`gibbsSamplerParameters` <- ZodiacEpochs$new()$fromJSON(jsonlite::toJSON(this_object$gibbsSamplerParameters, auto_unbox = TRUE, digits = NA))
+      self$`consideredCandidatesAt300Mz` <- ZodiacNumberOfConsideredCandidatesAt300Mz$new()$fromJSON(jsonlite::toJSON(this_object$`consideredCandidatesAt300Mz`, auto_unbox = TRUE, digits = NA))
+      self$`consideredCandidatesAt800Mz` <- ZodiacNumberOfConsideredCandidatesAt800Mz$new()$fromJSON(jsonlite::toJSON(this_object$`consideredCandidatesAt800Mz`, auto_unbox = TRUE, digits = NA))
+      self$`runInTwoSteps` <- ZodiacRunInTwoSteps$new()$fromJSON(jsonlite::toJSON(this_object$`runInTwoSteps`, auto_unbox = TRUE, digits = NA))
+      self$`edgeFilterThresholds` <- ZodiacEdgeFilterThresholds$new()$fromJSON(jsonlite::toJSON(this_object$`edgeFilterThresholds`, auto_unbox = TRUE, digits = NA))
+      self$`gibbsSamplerParameters` <- ZodiacEpochs$new()$fromJSON(jsonlite::toJSON(this_object$`gibbsSamplerParameters`, auto_unbox = TRUE, digits = NA))
       self
     },
     #' Validate JSON input with respect to Zodiac

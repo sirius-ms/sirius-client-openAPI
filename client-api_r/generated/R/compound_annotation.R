@@ -77,19 +77,19 @@ CompoundAnnotation <- R6::R6Class(
     fromJSON = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       if (!is.null(this_object$`formulaAnnotation`)) {
-        formulaannotation_object <- FormulaCandidate$new()
-        formulaannotation_object$fromJSON(jsonlite::toJSON(this_object$formulaAnnotation, auto_unbox = TRUE, digits = NA))
-        self$`formulaAnnotation` <- formulaannotation_object
+        `formulaannotation_object` <- FormulaCandidate$new()
+        `formulaannotation_object`$fromJSON(jsonlite::toJSON(this_object$`formulaAnnotation`, auto_unbox = TRUE, digits = NA))
+        self$`formulaAnnotation` <- `formulaannotation_object`
       }
       if (!is.null(this_object$`structureAnnotation`)) {
-        structureannotation_object <- StructureCandidate$new()
-        structureannotation_object$fromJSON(jsonlite::toJSON(this_object$structureAnnotation, auto_unbox = TRUE, digits = NA))
-        self$`structureAnnotation` <- structureannotation_object
+        `structureannotation_object` <- StructureCandidate$new()
+        `structureannotation_object`$fromJSON(jsonlite::toJSON(this_object$`structureAnnotation`, auto_unbox = TRUE, digits = NA))
+        self$`structureAnnotation` <- `structureannotation_object`
       }
       if (!is.null(this_object$`compoundClassAnnotation`)) {
-        compoundclassannotation_object <- CompoundClasses$new()
-        compoundclassannotation_object$fromJSON(jsonlite::toJSON(this_object$compoundClassAnnotation, auto_unbox = TRUE, digits = NA))
-        self$`compoundClassAnnotation` <- compoundclassannotation_object
+        `compoundclassannotation_object` <- CompoundClasses$new()
+        `compoundclassannotation_object`$fromJSON(jsonlite::toJSON(this_object$`compoundClassAnnotation`, auto_unbox = TRUE, digits = NA))
+        self$`compoundClassAnnotation` <- `compoundclassannotation_object`
       }
       self
     },
@@ -140,9 +140,9 @@ CompoundAnnotation <- R6::R6Class(
     #' @export
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
-      self$`formulaAnnotation` <- FormulaCandidate$new()$fromJSON(jsonlite::toJSON(this_object$formulaAnnotation, auto_unbox = TRUE, digits = NA))
-      self$`structureAnnotation` <- StructureCandidate$new()$fromJSON(jsonlite::toJSON(this_object$structureAnnotation, auto_unbox = TRUE, digits = NA))
-      self$`compoundClassAnnotation` <- CompoundClasses$new()$fromJSON(jsonlite::toJSON(this_object$compoundClassAnnotation, auto_unbox = TRUE, digits = NA))
+      self$`formulaAnnotation` <- FormulaCandidate$new()$fromJSON(jsonlite::toJSON(this_object$`formulaAnnotation`, auto_unbox = TRUE, digits = NA))
+      self$`structureAnnotation` <- StructureCandidate$new()$fromJSON(jsonlite::toJSON(this_object$`structureAnnotation`, auto_unbox = TRUE, digits = NA))
+      self$`compoundClassAnnotation` <- CompoundClasses$new()$fromJSON(jsonlite::toJSON(this_object$`compoundClassAnnotation`, auto_unbox = TRUE, digits = NA))
       self
     },
     #' Validate JSON input with respect to CompoundAnnotation

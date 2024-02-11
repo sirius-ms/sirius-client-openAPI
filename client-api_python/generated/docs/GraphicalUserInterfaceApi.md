@@ -122,7 +122,7 @@ from pprint import pprint
 # create an instance of the API class
 api_instance = PySirius.GraphicalUserInterfaceApi()
 project_id = 'project_id_example' # str | of project-space the GUI instance will connect to.
-read_only = true # bool | open in read-only mode. (optional) (default to true)
+read_only = true # bool | open in read-only mode. (optional)
 
 try:
     # Open GUI instance on specified project-space and bring the GUI window to foreground.
@@ -136,7 +136,7 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **str**| of project-space the GUI instance will connect to. | 
- **read_only** | **bool**| open in read-only mode. | [optional] [default to true]
+ **read_only** | **bool**| open in read-only mode. | [optional] 
 
 ### Return type
 

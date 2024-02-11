@@ -189,8 +189,8 @@ from pprint import pprint
 api_instance = PySirius.FormulaResultsApi()
 project_id = 'project_id_example' # str | project-space to read from.
 compound_id = 'compound_id_example' # str | compound/feature the formula result belongs to.
-result_overview = true # bool | add ResultOverview to the FormulaResultContainers (optional) (default to true)
-formula_candidate = false # bool | add extended formula candidate information to the FormulaResultContainers (optional) (default to false)
+result_overview = true # bool | add ResultOverview to the FormulaResultContainers (optional)
+formula_candidate = true # bool | add extended formula candidate information to the FormulaResultContainers (optional)
 
 try:
     # List of all FormulaResultContainers available for this compound/feature with minimal information.
@@ -206,8 +206,8 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **str**| project-space to read from. | 
  **compound_id** | **str**| compound/feature the formula result belongs to. | 
- **result_overview** | **bool**| add ResultOverview to the FormulaResultContainers | [optional] [default to true]
- **formula_candidate** | **bool**| add extended formula candidate information to the FormulaResultContainers | [optional] [default to false]
+ **result_overview** | **bool**| add ResultOverview to the FormulaResultContainers | [optional] 
+ **formula_candidate** | **bool**| add extended formula candidate information to the FormulaResultContainers | [optional] 
 
 ### Return type
 
@@ -244,8 +244,8 @@ api_instance = PySirius.FormulaResultsApi()
 project_id = 'project_id_example' # str | project-space to read from.
 compound_id = 'compound_id_example' # str | compound/feature the formula result belongs to.
 formula_id = 'formula_id_example' # str | identifier of the requested formula result
-result_overview = true # bool | add ResultOverview to the FormulaResultContainer (optional) (default to true)
-formula_candidate = true # bool | add extended formula candidate information to the FormulaResultContainer (optional) (default to true)
+result_overview = true # bool | add ResultOverview to the FormulaResultContainer (optional)
+formula_candidate = true # bool | add extended formula candidate information to the FormulaResultContainer (optional)
 
 try:
     # FormulaResultContainers for the given 'formulaId' with minimal information.
@@ -262,8 +262,8 @@ Name | Type | Description  | Notes
  **project_id** | **str**| project-space to read from. | 
  **compound_id** | **str**| compound/feature the formula result belongs to. | 
  **formula_id** | **str**| identifier of the requested formula result | 
- **result_overview** | **bool**| add ResultOverview to the FormulaResultContainer | [optional] [default to true]
- **formula_candidate** | **bool**| add extended formula candidate information to the FormulaResultContainer | [optional] [default to true]
+ **result_overview** | **bool**| add ResultOverview to the FormulaResultContainer | [optional] 
+ **formula_candidate** | **bool**| add extended formula candidate information to the FormulaResultContainer | [optional] 
 
 ### Return type
 
@@ -404,10 +404,10 @@ api_instance = PySirius.FormulaResultsApi()
 project_id = 'project_id_example' # str | project-space to read from.
 compound_id = 'compound_id_example' # str | compound/feature the formula result belongs to.
 formula_id = 'formula_id_example' # str | identifier of the requested formula result
-fingerprint = false # bool | add molecular fingerprint to StructureCandidates (optional) (default to false)
-db_links = false # bool | add dbLinks to StructureCandidates (optional) (default to false)
-pub_med_ids = false # bool | add PubMedIds (citation count) to StructureCandidates (optional) (default to false)
-top_k = -1 # int | retrieve only the top k StructureCandidates (optional) (default to -1)
+fingerprint = true # bool | add molecular fingerprint to StructureCandidates (optional)
+db_links = true # bool | add dbLinks to StructureCandidates (optional)
+pub_med_ids = true # bool | add PubMedIds (citation count) to StructureCandidates (optional)
+top_k = 56 # int | retrieve only the top k StructureCandidates (optional)
 
 try:
     # List of StructureCandidates the given 'formulaId' with minimal information.
@@ -424,10 +424,10 @@ Name | Type | Description  | Notes
  **project_id** | **str**| project-space to read from. | 
  **compound_id** | **str**| compound/feature the formula result belongs to. | 
  **formula_id** | **str**| identifier of the requested formula result | 
- **fingerprint** | **bool**| add molecular fingerprint to StructureCandidates | [optional] [default to false]
- **db_links** | **bool**| add dbLinks to StructureCandidates | [optional] [default to false]
- **pub_med_ids** | **bool**| add PubMedIds (citation count) to StructureCandidates | [optional] [default to false]
- **top_k** | **int**| retrieve only the top k StructureCandidates | [optional] [default to -1]
+ **fingerprint** | **bool**| add molecular fingerprint to StructureCandidates | [optional] 
+ **db_links** | **bool**| add dbLinks to StructureCandidates | [optional] 
+ **pub_med_ids** | **bool**| add PubMedIds (citation count) to StructureCandidates | [optional] 
+ **top_k** | **int**| retrieve only the top k StructureCandidates | [optional] 
 
 ### Return type
 
@@ -463,9 +463,9 @@ from pprint import pprint
 api_instance = PySirius.FormulaResultsApi()
 project_id = 'project_id_example' # str | project-space to read from.
 compound_id = 'compound_id_example' # str | compound/feature the formula result belongs to.
-fingerprint = false # bool | add molecular fingerprint to StructureCandidates (optional) (default to false)
-db_links = false # bool | add dbLinks to StructureCandidates (optional) (default to false)
-pub_med_ids = false # bool | add PubMedIds (citation count) to StructureCandidates (optional) (default to false)
+fingerprint = true # bool | add molecular fingerprint to StructureCandidates (optional)
+db_links = true # bool | add dbLinks to StructureCandidates (optional)
+pub_med_ids = true # bool | add PubMedIds (citation count) to StructureCandidates (optional)
 
 try:
     # Best Scoring StructureCandidate over all molecular formular resutls that belong to the specified  compound/feature (compoundId).
@@ -481,9 +481,9 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **str**| project-space to read from. | 
  **compound_id** | **str**| compound/feature the formula result belongs to. | 
- **fingerprint** | **bool**| add molecular fingerprint to StructureCandidates | [optional] [default to false]
- **db_links** | **bool**| add dbLinks to StructureCandidates | [optional] [default to false]
- **pub_med_ids** | **bool**| add PubMedIds (citation count) to StructureCandidates | [optional] [default to false]
+ **fingerprint** | **bool**| add molecular fingerprint to StructureCandidates | [optional] 
+ **db_links** | **bool**| add dbLinks to StructureCandidates | [optional] 
+ **pub_med_ids** | **bool**| add PubMedIds (citation count) to StructureCandidates | [optional] 
 
 ### Return type
 

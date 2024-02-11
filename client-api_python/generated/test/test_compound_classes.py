@@ -15,7 +15,7 @@ from __future__ import absolute_import
 import unittest
 
 import PySirius
-from PySirius.models.compound_classes import CompoundClasses  # noqa: E501
+from models.compound_classes import CompoundClasses  # noqa: E501
 from PySirius.rest import ApiException
 
 
