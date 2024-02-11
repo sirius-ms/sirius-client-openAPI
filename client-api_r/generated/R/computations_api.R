@@ -649,7 +649,7 @@ ComputationsApi <- R6::R6Class(
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response, "JobSubmission", loadNamespace("Rsirius")),
+          self$api_client$deserialize(local_var_resp$response_as_text(), "JobSubmission", loadNamespace("Rsirius")),
           error = function(e) {
             stop("Failed to deserialize response")
           }
@@ -772,7 +772,7 @@ ComputationsApi <- R6::R6Class(
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response, "JobId", loadNamespace("Rsirius")),
+          self$api_client$deserialize(local_var_resp$response_as_text(), "JobId", loadNamespace("Rsirius")),
           error = function(e) {
             stop("Failed to deserialize response")
           }
@@ -874,7 +874,7 @@ ComputationsApi <- R6::R6Class(
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response, "JobSubmission", loadNamespace("Rsirius")),
+          self$api_client$deserialize(local_var_resp$response_as_text(), "JobSubmission", loadNamespace("Rsirius")),
           error = function(e) {
             stop("Failed to deserialize response")
           }
@@ -965,7 +965,7 @@ ComputationsApi <- R6::R6Class(
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response, "array[JobSubmission]", loadNamespace("Rsirius")),
+          self$api_client$deserialize(local_var_resp$response_as_text(), "array[JobSubmission]", loadNamespace("Rsirius")),
           error = function(e) {
             stop("Failed to deserialize response")
           }
@@ -1077,7 +1077,7 @@ ComputationsApi <- R6::R6Class(
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response, "array[JobId]", loadNamespace("Rsirius")),
+          self$api_client$deserialize(local_var_resp$response_as_text(), "array[JobId]", loadNamespace("Rsirius")),
           error = function(e) {
             stop("Failed to deserialize response")
           }
@@ -1192,7 +1192,7 @@ ComputationsApi <- R6::R6Class(
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(jsonlite::toJSON(local_var_resp$response), "character", loadNamespace("Rsirius")),
+          self$api_client$deserialize(local_var_resp$response_as_text(), "character", loadNamespace("Rsirius")),
           error = function(e) {
             stop("Failed to deserialize response")
           }
@@ -1317,7 +1317,7 @@ ComputationsApi <- R6::R6Class(
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response, "JobId", loadNamespace("Rsirius")),
+          self$api_client$deserialize(local_var_resp$response_as_text(), "JobId", loadNamespace("Rsirius")),
           error = function(e) {
             stop("Failed to deserialize response")
           }
@@ -1419,7 +1419,10 @@ ComputationsApi <- R6::R6Class(
       query_params[["includeAffectedCompounds"]] <- `include_affected_compounds`
 
       if (!is.null(`request_body`)) {
-        local_var_body <- jsonlite::toJSON(`request_body`)
+        body.items <- paste(unlist(lapply(`request_body`, function(param) {
+                                                             param$toJSONString()
+                                                         })), collapse = ",")
+        local_var_body <- paste0("[", body.items, "]")
       } else {
         body <- NULL
       }
@@ -1456,7 +1459,7 @@ ComputationsApi <- R6::R6Class(
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response, "JobId", loadNamespace("Rsirius")),
+          self$api_client$deserialize(local_var_resp$response_as_text(), "JobId", loadNamespace("Rsirius")),
           error = function(e) {
             stop("Failed to deserialize response")
           }

@@ -15,7 +15,7 @@ from __future__ import absolute_import
 import unittest
 
 import PySirius
-from PySirius.models.gui_parameters import GuiParameters  # noqa: E501
+from models.gui_parameters import GuiParameters  # noqa: E501
 from PySirius.rest import ApiException
 
 

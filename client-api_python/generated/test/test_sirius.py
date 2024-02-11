@@ -15,7 +15,7 @@ from __future__ import absolute_import
 import unittest
 
 import PySirius
-from PySirius.models.sirius import Sirius  # noqa: E501
+from models.sirius import Sirius  # noqa: E501
 from PySirius.rest import ApiException
 
 

@@ -15,7 +15,7 @@ from __future__ import absolute_import
 import unittest
 
 import PySirius
-from PySirius.models.peak_annotation import PeakAnnotation  # noqa: E501
+from models.peak_annotation import PeakAnnotation  # noqa: E501
 from PySirius.rest import ApiException
 
 

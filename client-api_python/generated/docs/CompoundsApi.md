@@ -78,9 +78,9 @@ from pprint import pprint
 api_instance = PySirius.CompoundsApi()
 project_id = 'project_id_example' # str | project-space to read from.
 cid = 'cid_example' # str | identifier of compound to access.
-top_annotation = false # bool | include the top annotation of this feature into the output (if available). (optional) (default to false)
-ms_data = false # bool | include corresponding source data (MS and MS/MS) into the output. (optional) (default to false)
-ms_quality = false # bool |  (optional) (default to false)
+top_annotation = true # bool | include the top annotation of this feature into the output (if available). (optional)
+ms_data = true # bool | include corresponding source data (MS and MS/MS) into the output. (optional)
+ms_quality = true # bool |  (optional)
 
 try:
     # Get compound/feature with the given identifier from the specified project-space.
@@ -96,9 +96,9 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **str**| project-space to read from. | 
  **cid** | **str**| identifier of compound to access. | 
- **top_annotation** | **bool**| include the top annotation of this feature into the output (if available). | [optional] [default to false]
- **ms_data** | **bool**| include corresponding source data (MS and MS/MS) into the output. | [optional] [default to false]
- **ms_quality** | **bool**|  | [optional] [default to false]
+ **top_annotation** | **bool**| include the top annotation of this feature into the output (if available). | [optional] 
+ **ms_data** | **bool**| include corresponding source data (MS and MS/MS) into the output. | [optional] 
+ **ms_quality** | **bool**|  | [optional] 
 
 ### Return type
 
@@ -133,9 +133,9 @@ from pprint import pprint
 # create an instance of the API class
 api_instance = PySirius.CompoundsApi()
 project_id = 'project_id_example' # str | project-space to read from.
-top_annotation = false # bool | include the top annotation of this feature into the output (if available). (optional) (default to false)
-ms_data = false # bool | include corresponding source data (MS and MS/MS) into the output. (optional) (default to false)
-ms_quality = false # bool |  (optional) (default to false)
+top_annotation = true # bool | include the top annotation of this feature into the output (if available). (optional)
+ms_data = true # bool | include corresponding source data (MS and MS/MS) into the output. (optional)
+ms_quality = true # bool |  (optional)
 
 try:
     # Get all available compounds/features in the given project-space.
@@ -150,9 +150,9 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **str**| project-space to read from. | 
- **top_annotation** | **bool**| include the top annotation of this feature into the output (if available). | [optional] [default to false]
- **ms_data** | **bool**| include corresponding source data (MS and MS/MS) into the output. | [optional] [default to false]
- **ms_quality** | **bool**|  | [optional] [default to false]
+ **top_annotation** | **bool**| include the top annotation of this feature into the output (if available). | [optional] 
+ **ms_data** | **bool**| include corresponding source data (MS and MS/MS) into the output. | [optional] 
+ **ms_quality** | **bool**|  | [optional] 
 
 ### Return type
 
@@ -188,9 +188,9 @@ from pprint import pprint
 api_instance = PySirius.CompoundsApi()
 body = ['body_example'] # list[str] | List of file and directory paths to import
 project_id = 'project_id_example' # str | project-space to import into.
-align_lcms_runs = false # bool | If true, multiple LCMS Runs (mzML, mzXML) will be aligned during import/feature finding (optional) (default to false)
-allow_ms1_only_data = true # bool |  (optional) (default to true)
-ignore_formulas = false # bool |  (optional) (default to false)
+align_lcms_runs = true # bool | If true, multiple LCMS Runs (mzML, mzXML) will be aligned during import/feature finding (optional)
+allow_ms1_only_data = true # bool |  (optional)
+ignore_formulas = true # bool |  (optional)
 
 try:
     # Import ms/ms data in given format from local filesystem into the specified project-space
@@ -206,9 +206,9 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **body** | [**list[str]**](str.md)| List of file and directory paths to import | 
  **project_id** | **str**| project-space to import into. | 
- **align_lcms_runs** | **bool**| If true, multiple LCMS Runs (mzML, mzXML) will be aligned during import/feature finding | [optional] [default to false]
- **allow_ms1_only_data** | **bool**|  | [optional] [default to true]
- **ignore_formulas** | **bool**|  | [optional] [default to false]
+ **align_lcms_runs** | **bool**| If true, multiple LCMS Runs (mzML, mzXML) will be aligned during import/feature finding | [optional] 
+ **allow_ms1_only_data** | **bool**|  | [optional] 
+ **ignore_formulas** | **bool**|  | [optional] 
 
 ### Return type
 

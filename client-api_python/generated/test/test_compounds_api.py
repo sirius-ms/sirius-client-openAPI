@@ -15,7 +15,7 @@ from __future__ import absolute_import
 import unittest
 
 import PySirius
-from PySirius.api.compounds_api import CompoundsApi  # noqa: E501
+from api.compounds_api import CompoundsApi  # noqa: E501
 from PySirius.rest import ApiException
 
 
@@ -23,7 +23,7 @@ class TestCompoundsApi(unittest.TestCase):
     """CompoundsApi unit test stubs"""
 
     def setUp(self):
-        self.api = CompoundsApi()  # noqa: E501
+        self.api = api.compounds_api.CompoundsApi()  # noqa: E501
 
     def tearDown(self):
         pass

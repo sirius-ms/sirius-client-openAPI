@@ -15,7 +15,7 @@ from __future__ import absolute_import
 import unittest
 
 import PySirius
-from PySirius.models.project_space_id import ProjectSpaceId  # noqa: E501
+from models.project_space_id import ProjectSpaceId  # noqa: E501
 from PySirius.rest import ApiException
 
 

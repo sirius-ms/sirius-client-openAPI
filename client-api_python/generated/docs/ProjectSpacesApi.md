@@ -77,7 +77,7 @@ api_instance = PySirius.ProjectSpacesApi()
 project_id = 'project_id_example' # str | unique name/identifier that shall be used to access the newly created project-space.
 path_to_project = 'path_to_project_example' # str | 
 path_to_source_project = 'path_to_source_project_example' # str |  (optional)
-await_import = true # bool |  (optional) (default to true)
+await_import = true # bool |  (optional)
 
 try:
     # Create and open a new project-space at given location and make it accessible via the given projectId.
@@ -94,7 +94,7 @@ Name | Type | Description  | Notes
  **project_id** | **str**| unique name/identifier that shall be used to access the newly created project-space. | 
  **path_to_project** | **str**|  | 
  **path_to_source_project** | **str**|  | [optional] 
- **await_import** | **bool**|  | [optional] [default to true]
+ **await_import** | **bool**|  | [optional] 
 
 ### Return type
 

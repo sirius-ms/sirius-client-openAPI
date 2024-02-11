@@ -237,8 +237,6 @@ library(Rsirius)
 var_project_id <- "project_id_example" # character | project-space to import into.
 var_format <- "format_example" # character | data format specified by the usual file extension of the format (without [.])
 var_body <- "body_example" # character | data content in specified format
-# tip: use the following line to generate the var_body string from a file "MyFile.ms"
-# var_body <- paste(readLines("MyFile.ms", warn=FALSE), collapse="\n")
 var_source_name <- "source_name_example" # character | name that specifies the data source. Can e.g. be a file path or just a name. (Optional)
 
 api_instance <- rsirius_api$new()

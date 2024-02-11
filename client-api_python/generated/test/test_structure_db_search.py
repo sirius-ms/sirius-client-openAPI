@@ -15,7 +15,7 @@ from __future__ import absolute_import
 import unittest
 
 import PySirius
-from PySirius.models.structure_db_search import StructureDbSearch  # noqa: E501
+from models.structure_db_search import StructureDbSearch  # noqa: E501
 from PySirius.rest import ApiException
 
 

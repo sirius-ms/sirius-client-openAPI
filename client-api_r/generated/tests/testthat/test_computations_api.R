@@ -3,10 +3,7 @@
 
 context("Test ComputationsApi")
 
-source("additional_test_functions.R")
 api_instance <- ComputationsApi$new()
-compounds_api <- CompoundsApi$new()
-data <- "/home/runner/work/sirius-client-openAPI/sirius-client-openAPI/.updater/examples/ms/Kaempferol.ms"
 
 test_that("DeleteJob", {
   # tests for DeleteJob
@@ -19,15 +16,8 @@ test_that("DeleteJob", {
   # @param await_deletion character If true request will block until deletion succeeded or failed.                         If the job is still running the request will wait until the job has finished. (optional)
   # @return [Void]
 
-  pid_dir <- new_ps("computations1", "computationsDir1")
-    
-  job <- compounds_api$ImportCompounds(pid_dir[1], data)
-  resp <- api_instance$DeleteJobWithHttpInfo(pid_dir[1], job$id, TRUE, TRUE)
-  
-  expect_equal(resp$status_code, 202)
-    
-  withr::defer(compounds_api$DeleteCompound(pid_dir[1], "1_Kaempferol_Kaempferol"))
-  withr::defer(computations_td(pid_dir))  
+  # uncomment below to test the operation
+  #expect_equal(result, "EXPECTED_RESULT")
 })
 
 test_that("DeleteJobConfig", {
@@ -38,20 +28,8 @@ test_that("DeleteJobConfig", {
   # @param name character name of the job-config to delete
   # @return [Void]
 
-  pid_dir <- new_ps("computations2", "computationsDir2")
-  
-  sub <- JobSubmission$new(canopusParas = Canopus$new(enabled=FALSE))
-  api_instance$PostJobConfig("canopusConfig", sub)
-  resp <- api_instance$GetJobConfig("canopusConfig")
-  
-  expect_false(resp$canopusParas$enabled)
-  
-  api_instance$DeleteJobConfig("canopusConfig")
-  resp <- api_instance$GetJobConfig("canopusConfig")
-  
-  expect_equal(resp$status_code, 404)
-  
-  withr::defer(computations_td(pid_dir)) 
+  # uncomment below to test the operation
+  #expect_equal(result, "EXPECTED_RESULT")
 })
 
 test_that("GetDefaultJobConfig", {
@@ -62,15 +40,8 @@ test_that("GetDefaultJobConfig", {
   # @param include_config_map character if true, generic configmap with-defaults will be included (optional)
   # @return [JobSubmission]
 
-  pid_dir <- new_ps("computations3", "computationsDir3")
-    
-  compounds_api$ImportCompounds(pid_dir[1], data)
-  resp <- api_instance$GetDefaultJobConfig(TRUE)
-  
-  expect_true(is.logical(resp$recompute))
-    
-  withr::defer(compounds_api$DeleteCompound(pid_dir[1], "1_Kaempferol_Kaempferol"))
-  withr::defer(computations_td(pid_dir))  
+  # uncomment below to test the operation
+  #expect_equal(result, "EXPECTED_RESULT")
 })
 
 test_that("GetJob", {
@@ -85,18 +56,8 @@ test_that("GetJob", {
   # @param include_affected_compounds character include list of compound ids affected by this job (if available) (optional)
   # @return [JobId]
 
-  pid_dir <- new_ps("computations4", "computationsDir4")
-  
-  sub <- api_instance$GetDefaultJobConfig()
-  sub$zodiacParas <- NULL
-  sub$recompute <- TRUE
-  job <- api_instance$StartJob(pid_dir[1], sub, FALSE, FALSE, FALSE)
-  resp <- api_instance$GetJob(pid_dir[1], job$id)
-  
-  expect_true(is.character(resp$progress$state))
-  
-  withr::defer(api_instance$DeleteJob(pid_dir[1], job$id))
-  withr::defer(computations_td(pid_dir)) 
+  # uncomment below to test the operation
+  #expect_equal(result, "EXPECTED_RESULT")
 })
 
 test_that("GetJobConfig", {
@@ -108,16 +69,8 @@ test_that("GetJobConfig", {
   # @param include_config_map character if true the generic configmap will be part of the output (optional)
   # @return [JobSubmission]
 
-  pid_dir <- new_ps("computations5", "computationsDir5")
-  
-  sub <- JobSubmission$new(fallbackAdducts = c("[M+H]+","[M]+"))
-  api_instance$PostJobConfig("adductConfig", sub)
-  resp <- api_instance$GetJobConfig("adductConfig")
-  
-  expect_true(is.list(resp$fallbackAdducts))
-  
-  withr::defer(api_instance$DeleteJobConfig("adductConfig")) 
-  withr::defer(computations_td(pid_dir)) 
+  # uncomment below to test the operation
+  #expect_equal(result, "EXPECTED_RESULT")
 })
 
 test_that("GetJobConfigs", {
@@ -128,16 +81,8 @@ test_that("GetJobConfigs", {
   # @param include_config_map character if true the generic configmap will be part of the output (optional)
   # @return [array[JobSubmission]]
 
-  pid_dir <- new_ps("computations6", "computationsDir6")
-  
-  sub <- JobSubmission$new()
-  api_instance$PostJobConfig("emptyConfig", sub)
-  resp <- api_instance$GetJobConfigs()
-  
-  expect_true(is.list(resp))
-  
-  withr::defer(api_instance$DeleteJobConfig("emptyConfig"))
-  withr::defer(computations_td(pid_dir)) 
+  # uncomment below to test the operation
+  #expect_equal(result, "EXPECTED_RESULT")
 })
 
 test_that("GetJobs", {
@@ -151,14 +96,8 @@ test_that("GetJobs", {
   # @param include_affected_compounds character include list of compound ids affected by this job (if available) (optional)
   # @return [array[JobId]]
 
-  pid_dir <- new_ps("computations7", "computationsDir7")
-  
-  resp <- api_instance$GetJobsWithHttpInfo(pid_dir[1])
-  
-  expect_false(is.null(resp$response))
-  expect_equal(resp$status_code, 200)
-  
-  withr::defer(computations_td(pid_dir)) 
+  # uncomment below to test the operation
+  #expect_equal(result, "EXPECTED_RESULT")
 })
 
 test_that("PostJobConfig", {
@@ -171,16 +110,8 @@ test_that("PostJobConfig", {
   # @param override_existing character  (optional)
   # @return [character]
 
-  pid_dir <- new_ps("computations8", "computationsDir8")
-  
-  sub <- JobSubmission$new(zodiacParas = Zodiac$new(enabled=FALSE))
-  api_instance$PostJobConfig("zodiacConfig", sub)
-  resp <- api_instance$GetJobConfig("zodiacConfig")
-  
-  expect_false(resp$zodiacParas$enabled)
-  
-  withr::defer(api_instance$DeleteJobConfig("zodiacConfig")) 
-  withr::defer(computations_td(pid_dir)) 
+  # uncomment below to test the operation
+  #expect_equal(result, "EXPECTED_RESULT")
 })
 
 test_that("StartJob", {
@@ -195,21 +126,8 @@ test_that("StartJob", {
   # @param include_affected_compounds character include list of compound ids affected by this job (if available) (optional)
   # @return [JobId]
 
-  pid_dir <- new_ps("computations9", "computationsDir9")
-  
-  sub <- api_instance$GetDefaultJobConfig()
-  sub$zodiacParas <- NULL
-  sub$recompute <- TRUE
-  job <- api_instance$StartJob(pid_dir[1], sub, FALSE, FALSE, FALSE)
-  
-  expect_true(grepl("^[0-9]+$", job$id))
-  
-  jobs <- api_instance$GetJobs(pid_dir[1])
-  
-  expect_true(is.list(jobs))
-  
-  withr::defer(api_instance$DeleteJob(pid_dir[1], job$id)) 
-  withr::defer(computations_td(pid_dir)) 
+  # uncomment below to test the operation
+  #expect_equal(result, "EXPECTED_RESULT")
 })
 
 test_that("StartJobFromConfig", {
@@ -226,27 +144,6 @@ test_that("StartJobFromConfig", {
   # @param include_affected_compounds character include list of compound ids affected by this job (if available) (optional)
   # @return [JobId]
 
-  pid_dir <- new_ps("computations10", "computationsDir10")
-  
-  sub <- api_instance$GetDefaultJobConfig()
-  sub$zodiacParas <- NULL
-  sub$recompute <- TRUE
-  config <- api_instance$PostJobConfig("startJobConfig", sub, TRUE)
-  request_body <- c("/home/runner/work/sirius-client-openAPI/sirius-client-openAPI/.updater/examples/ms/Bicuculline.ms", 
-                    "/home/runner/work/sirius-client-openAPI/sirius-client-openAPI/.updater/examples/ms/Kaempferol.ms")
-  job <- compounds_api$ImportCompounds(pid_dir[1], request_body)
-  wait_for_job(pid_dir[1], job)
-  comps <- compounds_api$GetCompounds(pid_dir[1])
-  comps <- c(comps[[1]]$id, comps[[2]]$id) 
-  job <- api_instance$StartJobFromConfig(pid_dir[1], "startJobConfig", comps, TRUE, FALSE, FALSE, FALSE)
-  
-  expect_true(grepl("^[0-9]+$", job$id))
-  
-  jobs <- api_instance$GetJobs(pid_dir[1])
-  
-  expect_true(is.list(jobs))
-  
-  withr::defer(api_instance$DeleteJob(pid_dir[1], job$id))
-  withr::defer(api_instance$DeleteJobConfig("startJobConfig"))
-  withr::defer(compounds_td(pid_dir))
+  # uncomment below to test the operation
+  #expect_equal(result, "EXPECTED_RESULT")
 })

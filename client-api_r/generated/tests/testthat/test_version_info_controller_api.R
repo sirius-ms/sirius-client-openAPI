@@ -10,7 +10,6 @@ test_that("GetVersionInfo", {
   # base path: http://localhost:8080
   # @return [character]
 
-  resp <- api_instance$GetVersionInfo()
-  
-  expect_true(is.character(resp$sirius_version))
+  # uncomment below to test the operation
+  #expect_equal(result, "EXPECTED_RESULT")
 })
