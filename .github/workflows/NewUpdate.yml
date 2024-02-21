@@ -43,7 +43,7 @@ jobs:
       run: |
         # while ! nc -z localhost 8080; do sleep 0.1; done
         # cd .updater/api
-        wget https://upload.uni-jena.de/data/65c8d9632bf757.13230267/openapi-spec.json
+        wget https://upload.uni-jena.de/data/65d5cb3483a367.57043595/openapi-spec.json
         mv openapi-spec.json api-docs.json
     - name: Update Clients
       run: |
@@ -53,7 +53,7 @@ jobs:
         
         echo "generating Python Code"
         rm -rf client-api_python/generated/*
-        java -jar .updater/swagger/swagger-codegen-cli.jar generate -i .updater/api/api-docs.json -c .updater/config/Python/config.json -l python -o client-api_python/generated
+        java -jar .updater/openapi_generator/openapi-generator-cli.jar generate -i .updater/api/api-docs.json -c .updater/config/Python/config.json -g python -o client-api_python/generated
         
         echo "temporarily move R manual folder"
         mv client-api_r/generated/man/ client-api_r/
@@ -69,13 +69,13 @@ jobs:
         # rm -rf client-api_ruby/generated/*
         # java -jar .updater/openapi_generator/openapi-generator-cli.jar generate -i .updater/api/api-docs.json -c .updater/config/Ruby/config.json -g ruby -o client-api_ruby/generated
         echo "generating Finished!"
-    # - name: Format Python Package
-    #   run: |
-    #      cp client-api_python/sirius_api.py client-api_python/generated/PySirius
-    #      cp client-api_python/Sirius.py client-api_python/generated/PySirius
+    - name: Format Python Package
+      run: |
+         cp client-api_python/sirius_api.py client-api_python/generated/PySirius
+         cp client-api_python/Sirius.py client-api_python/generated/PySirius
 
-    #      echo "from PySirius.sirius_api import PySiriusAPI" >> client-api_python/generated/PySirius/__init__.py
-    #      echo "from PySirius.Sirius import SiriusSDK" >> client-api_python/generated/PySirius/__init__.py
+         echo "from PySirius.sirius_api import PySiriusAPI" >> client-api_python/generated/PySirius/__init__.py
+         echo "from PySirius.Sirius import SiriusSDK" >> client-api_python/generated/PySirius/__init__.py
 
     #      cd client-api_python/generated
     #      sed '/## Installation & Usage/Q' README.md > tempor
@@ -83,12 +83,12 @@ jobs:
     #      sed '1,/## Documentation for API Endpoints/d' README.md >> tempor
     #      cat tempor > README.md
     #      rm tempor
-    # - name: Format R package
-    #   run: |
-    #     cp client-api_r/SiriusSDK.R  client-api_r/generated/R/SiriusSDK.R
-    #     echo >> client-api_r/generated/NAMESPACE
-    #     echo "# SDK" >> client-api_r/generated/NAMESPACE
-    #     echo "export(SiriusSDK)" >> client-api_r/generated/NAMESPACE
+    - name: Format R package
+      run: |
+        cp client-api_r/SiriusSDK.R  client-api_r/generated/R/SiriusSDK.R
+        echo >> client-api_r/generated/NAMESPACE
+        echo "# SDK" >> client-api_r/generated/NAMESPACE
+        echo "export(SiriusSDK)" >> client-api_r/generated/NAMESPACE
 
     #     cp -r client-api_r/testthat client-api_r/generated/tests
 
