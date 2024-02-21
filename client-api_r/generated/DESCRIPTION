@@ -1,6 +1,6 @@
 Package: Rsirius
 Title: R Package Client for SIRIUS Nightsky API
-Version: 1.0.0
+Version: 0.9
 Author: person("OpenAPI Generator community", email = "team@openapitools.org", role = c("aut", "cre"))
 Maintainer: OpenAPI Generator community <team@openapitools.org>
 Description: OpenAPI REST API that provides the full functionality of SIRIUS and its web services as background service. It is intended as entry-point for scripting languages and software integration SDKs.The provided OpenAPI specification allows to autogenerate clients for different programming languages.

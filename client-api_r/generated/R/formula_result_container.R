@@ -114,14 +114,14 @@ FormulaResultContainer <- R6::R6Class(
         self$`adduct` <- this_object$`adduct`
       }
       if (!is.null(this_object$`resultOverview`)) {
-        resultoverview_object <- ResultOverview$new()
-        resultoverview_object$fromJSON(jsonlite::toJSON(this_object$resultOverview, auto_unbox = TRUE, digits = NA))
-        self$`resultOverview` <- resultoverview_object
+        `resultoverview_object` <- ResultOverview$new()
+        `resultoverview_object`$fromJSON(jsonlite::toJSON(this_object$`resultOverview`, auto_unbox = TRUE, digits = NA))
+        self$`resultOverview` <- `resultoverview_object`
       }
       if (!is.null(this_object$`candidate`)) {
-        candidate_object <- FormulaCandidate$new()
-        candidate_object$fromJSON(jsonlite::toJSON(this_object$candidate, auto_unbox = TRUE, digits = NA))
-        self$`candidate` <- candidate_object
+        `candidate_object` <- FormulaCandidate$new()
+        `candidate_object`$fromJSON(jsonlite::toJSON(this_object$`candidate`, auto_unbox = TRUE, digits = NA))
+        self$`candidate` <- `candidate_object`
       }
       self
     },
@@ -191,8 +191,8 @@ FormulaResultContainer <- R6::R6Class(
       self$`id` <- this_object$`id`
       self$`molecularFormula` <- this_object$`molecularFormula`
       self$`adduct` <- this_object$`adduct`
-      self$`resultOverview` <- ResultOverview$new()$fromJSON(jsonlite::toJSON(this_object$resultOverview, auto_unbox = TRUE, digits = NA))
-      self$`candidate` <- FormulaCandidate$new()$fromJSON(jsonlite::toJSON(this_object$candidate, auto_unbox = TRUE, digits = NA))
+      self$`resultOverview` <- ResultOverview$new()$fromJSON(jsonlite::toJSON(this_object$`resultOverview`, auto_unbox = TRUE, digits = NA))
+      self$`candidate` <- FormulaCandidate$new()$fromJSON(jsonlite::toJSON(this_object$`candidate`, auto_unbox = TRUE, digits = NA))
       self
     },
     #' Validate JSON input with respect to FormulaResultContainer

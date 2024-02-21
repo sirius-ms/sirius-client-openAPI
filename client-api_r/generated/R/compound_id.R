@@ -203,14 +203,14 @@ CompoundId <- R6::R6Class(
         self$`rtEndSeconds` <- this_object$`rtEndSeconds`
       }
       if (!is.null(this_object$`topAnnotation`)) {
-        topannotation_object <- CompoundAnnotation$new()
-        topannotation_object$fromJSON(jsonlite::toJSON(this_object$topAnnotation, auto_unbox = TRUE, digits = NA))
-        self$`topAnnotation` <- topannotation_object
+        `topannotation_object` <- CompoundAnnotation$new()
+        `topannotation_object`$fromJSON(jsonlite::toJSON(this_object$`topAnnotation`, auto_unbox = TRUE, digits = NA))
+        self$`topAnnotation` <- `topannotation_object`
       }
       if (!is.null(this_object$`msData`)) {
-        msdata_object <- MsData$new()
-        msdata_object$fromJSON(jsonlite::toJSON(this_object$msData, auto_unbox = TRUE, digits = NA))
-        self$`msData` <- msdata_object
+        `msdata_object` <- MsData$new()
+        `msdata_object`$fromJSON(jsonlite::toJSON(this_object$`msData`, auto_unbox = TRUE, digits = NA))
+        self$`msData` <- `msdata_object`
       }
       if (!is.null(this_object$`qualityFlags`)) {
         self$`qualityFlags` <- ApiClient$new()$deserializeObj(this_object$`qualityFlags`, "array[character]", loadNamespace("Rsirius"))
@@ -248,7 +248,7 @@ CompoundId <- R6::R6Class(
         if (!is.null(self$`index`)) {
           sprintf(
           '"index":
-            %f
+            %d
                     ',
           self$`index`
           )
@@ -256,7 +256,7 @@ CompoundId <- R6::R6Class(
         if (!is.null(self$`ionMass`)) {
           sprintf(
           '"ionMass":
-            %f
+            %d
                     ',
           self$`ionMass`
           )
@@ -272,7 +272,7 @@ CompoundId <- R6::R6Class(
         if (!is.null(self$`rtStartSeconds`)) {
           sprintf(
           '"rtStartSeconds":
-            %f
+            %d
                     ',
           self$`rtStartSeconds`
           )
@@ -280,7 +280,7 @@ CompoundId <- R6::R6Class(
         if (!is.null(self$`rtEndSeconds`)) {
           sprintf(
           '"rtEndSeconds":
-            %f
+            %d
                     ',
           self$`rtEndSeconds`
           )
@@ -338,8 +338,8 @@ CompoundId <- R6::R6Class(
       self$`ionType` <- this_object$`ionType`
       self$`rtStartSeconds` <- this_object$`rtStartSeconds`
       self$`rtEndSeconds` <- this_object$`rtEndSeconds`
-      self$`topAnnotation` <- CompoundAnnotation$new()$fromJSON(jsonlite::toJSON(this_object$topAnnotation, auto_unbox = TRUE, digits = NA))
-      self$`msData` <- MsData$new()$fromJSON(jsonlite::toJSON(this_object$msData, auto_unbox = TRUE, digits = NA))
+      self$`topAnnotation` <- CompoundAnnotation$new()$fromJSON(jsonlite::toJSON(this_object$`topAnnotation`, auto_unbox = TRUE, digits = NA))
+      self$`msData` <- MsData$new()$fromJSON(jsonlite::toJSON(this_object$`msData`, auto_unbox = TRUE, digits = NA))
       self$`qualityFlags` <- ApiClient$new()$deserializeObj(this_object$`qualityFlags`, "array[character]", loadNamespace("Rsirius"))
       self$`computing` <- this_object$`computing`
       self

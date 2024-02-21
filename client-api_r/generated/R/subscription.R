@@ -345,7 +345,7 @@ Subscription <- R6::R6Class(
         if (!is.null(self$`compoundLimit`)) {
           sprintf(
           '"compoundLimit":
-            %f
+            %d
                     ',
           self$`compoundLimit`
           )
@@ -353,7 +353,7 @@ Subscription <- R6::R6Class(
         if (!is.null(self$`compoundHashRecordingTime`)) {
           sprintf(
           '"compoundHashRecordingTime":
-            %f
+            %d
                     ',
           self$`compoundHashRecordingTime`
           )
@@ -361,7 +361,7 @@ Subscription <- R6::R6Class(
         if (!is.null(self$`maxQueriesPerCompound`)) {
           sprintf(
           '"maxQueriesPerCompound":
-            %f
+            %d
                     ',
           self$`maxQueriesPerCompound`
           )
@@ -369,7 +369,7 @@ Subscription <- R6::R6Class(
         if (!is.null(self$`maxUserAccounts`)) {
           sprintf(
           '"maxUserAccounts":
-            %f
+            %d
                     ',
           self$`maxUserAccounts`
           )

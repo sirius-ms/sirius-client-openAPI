@@ -167,7 +167,7 @@ CompoundClass <- R6::R6Class(
         if (!is.null(self$`id`)) {
           sprintf(
           '"id":
-            %f
+            %d
                     ',
           self$`id`
           )
@@ -175,7 +175,7 @@ CompoundClass <- R6::R6Class(
         if (!is.null(self$`probability`)) {
           sprintf(
           '"probability":
-            %f
+            %d
                     ',
           self$`probability`
           )

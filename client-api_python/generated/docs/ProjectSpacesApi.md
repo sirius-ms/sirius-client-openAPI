@@ -10,6 +10,7 @@ Method | HTTP request | Description
 [**get_project_spaces**](ProjectSpacesApi.md#get_project_spaces) | **GET** /api/projects | List all opened project spaces.
 [**open_project_space**](ProjectSpacesApi.md#open_project_space) | **PUT** /api/projects/{projectId} | Open an existing project-space and make it accessible via the given projectId.
 
+
 # **close_project_space**
 > close_project_space(project_id)
 
@@ -18,25 +19,37 @@ Close project-space and remove it from application.
 Close project-space and remove it from application. Project-space will NOT be deleted from disk.
 
 ### Example
+
+
 ```python
-from __future__ import print_function
-import time
 import PySirius
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# create an instance of the API class
-api_instance = PySirius.ProjectSpacesApi()
-project_id = 'project_id_example' # str | unique name/identifier of the  project-space to be closed.
+# Defining the host is optional and defaults to http://localhost:8080
+# See configuration.py for a list of all supported configuration parameters.
+configuration = PySirius.Configuration(
+    host = "http://localhost:8080"
+)
 
-try:
-    # Close project-space and remove it from application.
-    api_instance.close_project_space(project_id)
-except ApiException as e:
-    print("Exception when calling ProjectSpacesApi->close_project_space: %s\n" % e)
+
+# Enter a context with an instance of the API client
+with PySirius.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = PySirius.ProjectSpacesApi(api_client)
+    project_id = 'project_id_example' # str | unique name/identifier of the  project-space to be closed.
+
+    try:
+        # Close project-space and remove it from application.
+        api_instance.close_project_space(project_id)
+    except Exception as e:
+        print("Exception when calling ProjectSpacesApi->close_project_space: %s\n" % e)
 ```
 
+
+
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -55,6 +68,12 @@ No authorization required
  - **Content-Type**: Not defined
  - **Accept**: Not defined
 
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **create_project_space**
@@ -65,36 +84,50 @@ Create and open a new project-space at given location and make it accessible via
 Create and open a new project-space at given location and make it accessible via the given projectId.
 
 ### Example
+
+
 ```python
-from __future__ import print_function
-import time
 import PySirius
+from PySirius.models.project_space_id import ProjectSpaceId
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# create an instance of the API class
-api_instance = PySirius.ProjectSpacesApi()
-project_id = 'project_id_example' # str | unique name/identifier that shall be used to access the newly created project-space.
-path_to_project = 'path_to_project_example' # str | 
-path_to_source_project = 'path_to_source_project_example' # str |  (optional)
-await_import = true # bool |  (optional) (default to true)
+# Defining the host is optional and defaults to http://localhost:8080
+# See configuration.py for a list of all supported configuration parameters.
+configuration = PySirius.Configuration(
+    host = "http://localhost:8080"
+)
 
-try:
-    # Create and open a new project-space at given location and make it accessible via the given projectId.
-    api_response = api_instance.create_project_space(project_id, path_to_project, path_to_source_project=path_to_source_project, await_import=await_import)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling ProjectSpacesApi->create_project_space: %s\n" % e)
+
+# Enter a context with an instance of the API client
+with PySirius.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = PySirius.ProjectSpacesApi(api_client)
+    project_id = 'project_id_example' # str | unique name/identifier that shall be used to access the newly created project-space.
+    path_to_project = 'path_to_project_example' # str | 
+    path_to_source_project = 'path_to_source_project_example' # str |  (optional)
+    await_import = True # bool |  (optional) (default to True)
+
+    try:
+        # Create and open a new project-space at given location and make it accessible via the given projectId.
+        api_response = api_instance.create_project_space(project_id, path_to_project, path_to_source_project=path_to_source_project, await_import=await_import)
+        print("The response of ProjectSpacesApi->create_project_space:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling ProjectSpacesApi->create_project_space: %s\n" % e)
 ```
 
+
+
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **str**| unique name/identifier that shall be used to access the newly created project-space. | 
  **path_to_project** | **str**|  | 
  **path_to_source_project** | **str**|  | [optional] 
- **await_import** | **bool**|  | [optional] [default to true]
+ **await_import** | **bool**|  | [optional] [default to True]
 
 ### Return type
 
@@ -109,6 +142,12 @@ No authorization required
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_project_space**
@@ -119,26 +158,40 @@ Get project space info by its projectId.
 Get project space info by its projectId.
 
 ### Example
+
+
 ```python
-from __future__ import print_function
-import time
 import PySirius
+from PySirius.models.project_space_id import ProjectSpaceId
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# create an instance of the API class
-api_instance = PySirius.ProjectSpacesApi()
-project_id = 'project_id_example' # str | unique name/identifier tof the project-space to be accessed.
+# Defining the host is optional and defaults to http://localhost:8080
+# See configuration.py for a list of all supported configuration parameters.
+configuration = PySirius.Configuration(
+    host = "http://localhost:8080"
+)
 
-try:
-    # Get project space info by its projectId.
-    api_response = api_instance.get_project_space(project_id)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling ProjectSpacesApi->get_project_space: %s\n" % e)
+
+# Enter a context with an instance of the API client
+with PySirius.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = PySirius.ProjectSpacesApi(api_client)
+    project_id = 'project_id_example' # str | unique name/identifier tof the project-space to be accessed.
+
+    try:
+        # Get project space info by its projectId.
+        api_response = api_instance.get_project_space(project_id)
+        print("The response of ProjectSpacesApi->get_project_space:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling ProjectSpacesApi->get_project_space: %s\n" % e)
 ```
 
+
+
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -157,40 +210,60 @@ No authorization required
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_project_spaces**
-> list[ProjectSpaceId] get_project_spaces()
+> List[ProjectSpaceId] get_project_spaces()
 
 List all opened project spaces.
 
 List all opened project spaces.
 
 ### Example
+
+
 ```python
-from __future__ import print_function
-import time
 import PySirius
+from PySirius.models.project_space_id import ProjectSpaceId
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# create an instance of the API class
-api_instance = PySirius.ProjectSpacesApi()
+# Defining the host is optional and defaults to http://localhost:8080
+# See configuration.py for a list of all supported configuration parameters.
+configuration = PySirius.Configuration(
+    host = "http://localhost:8080"
+)
 
-try:
-    # List all opened project spaces.
-    api_response = api_instance.get_project_spaces()
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling ProjectSpacesApi->get_project_spaces: %s\n" % e)
+
+# Enter a context with an instance of the API client
+with PySirius.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = PySirius.ProjectSpacesApi(api_client)
+
+    try:
+        # List all opened project spaces.
+        api_response = api_instance.get_project_spaces()
+        print("The response of ProjectSpacesApi->get_project_spaces:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling ProjectSpacesApi->get_project_spaces: %s\n" % e)
 ```
 
+
+
 ### Parameters
+
 This endpoint does not need any parameter.
 
 ### Return type
 
-[**list[ProjectSpaceId]**](ProjectSpaceId.md)
+[**List[ProjectSpaceId]**](ProjectSpaceId.md)
 
 ### Authorization
 
@@ -200,6 +273,12 @@ No authorization required
 
  - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -211,27 +290,41 @@ Open an existing project-space and make it accessible via the given projectId.
 Open an existing project-space and make it accessible via the given projectId.
 
 ### Example
+
+
 ```python
-from __future__ import print_function
-import time
 import PySirius
+from PySirius.models.project_space_id import ProjectSpaceId
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# create an instance of the API class
-api_instance = PySirius.ProjectSpacesApi()
-project_id = 'project_id_example' # str | unique name/identifier that shall be used to access the opened project-space.
-path_to_project = 'path_to_project_example' # str | 
+# Defining the host is optional and defaults to http://localhost:8080
+# See configuration.py for a list of all supported configuration parameters.
+configuration = PySirius.Configuration(
+    host = "http://localhost:8080"
+)
 
-try:
-    # Open an existing project-space and make it accessible via the given projectId.
-    api_response = api_instance.open_project_space(project_id, path_to_project)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling ProjectSpacesApi->open_project_space: %s\n" % e)
+
+# Enter a context with an instance of the API client
+with PySirius.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = PySirius.ProjectSpacesApi(api_client)
+    project_id = 'project_id_example' # str | unique name/identifier that shall be used to access the opened project-space.
+    path_to_project = 'path_to_project_example' # str | 
+
+    try:
+        # Open an existing project-space and make it accessible via the given projectId.
+        api_response = api_instance.open_project_space(project_id, path_to_project)
+        print("The response of ProjectSpacesApi->open_project_space:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling ProjectSpacesApi->open_project_space: %s\n" % e)
 ```
 
+
+
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -250,6 +343,12 @@ No authorization required
 
  - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
