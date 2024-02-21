@@ -379,7 +379,7 @@ ProjectSpacesApi <- R6::R6Class(
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response, "ProjectSpaceId", loadNamespace("Rsirius")),
+          self$api_client$deserialize(local_var_resp$response_as_text(), "ProjectSpaceId", loadNamespace("Rsirius")),
           error = function(e) {
             stop("Failed to deserialize response")
           }
@@ -476,7 +476,7 @@ ProjectSpacesApi <- R6::R6Class(
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response, "ProjectSpaceId", loadNamespace("Rsirius")),
+          self$api_client$deserialize(local_var_resp$response_as_text(), "ProjectSpaceId", loadNamespace("Rsirius")),
           error = function(e) {
             stop("Failed to deserialize response")
           }
@@ -562,7 +562,7 @@ ProjectSpacesApi <- R6::R6Class(
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response, "array[ProjectSpaceId]", loadNamespace("Rsirius")),
+          self$api_client$deserialize(local_var_resp$response_as_text(), "array[ProjectSpaceId]", loadNamespace("Rsirius")),
           error = function(e) {
             stop("Failed to deserialize response")
           }
@@ -668,7 +668,7 @@ ProjectSpacesApi <- R6::R6Class(
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response, "ProjectSpaceId", loadNamespace("Rsirius")),
+          self$api_client$deserialize(local_var_resp$response_as_text(), "ProjectSpaceId", loadNamespace("Rsirius")),
           error = function(e) {
             stop("Failed to deserialize response")
           }

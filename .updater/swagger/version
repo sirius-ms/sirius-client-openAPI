@@ -1,1 +1,3 @@
-3.0.35
+12:21:38.230 [main] DEBUG io.swagger.codegen.v3.cli.SwaggerCodegen - there are not options for command 'langs'
+12:21:38.232 [main] DEBUG io.swagger.codegen.v3.cli.SwaggerCodegen - there are not options for command 'version'
+3.0.9

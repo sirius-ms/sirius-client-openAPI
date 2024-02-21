@@ -132,44 +132,44 @@ CompoundClasses <- R6::R6Class(
     fromJSON = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       if (!is.null(this_object$`npcPathway`)) {
-        npcpathway_object <- CompoundClass$new()
-        npcpathway_object$fromJSON(jsonlite::toJSON(this_object$npcPathway, auto_unbox = TRUE, digits = NA))
-        self$`npcPathway` <- npcpathway_object
+        `npcpathway_object` <- CompoundClass$new()
+        `npcpathway_object`$fromJSON(jsonlite::toJSON(this_object$`npcPathway`, auto_unbox = TRUE, digits = NA))
+        self$`npcPathway` <- `npcpathway_object`
       }
       if (!is.null(this_object$`npcSuperclass`)) {
-        npcsuperclass_object <- CompoundClass$new()
-        npcsuperclass_object$fromJSON(jsonlite::toJSON(this_object$npcSuperclass, auto_unbox = TRUE, digits = NA))
-        self$`npcSuperclass` <- npcsuperclass_object
+        `npcsuperclass_object` <- CompoundClass$new()
+        `npcsuperclass_object`$fromJSON(jsonlite::toJSON(this_object$`npcSuperclass`, auto_unbox = TRUE, digits = NA))
+        self$`npcSuperclass` <- `npcsuperclass_object`
       }
       if (!is.null(this_object$`npcClass`)) {
-        npcclass_object <- CompoundClass$new()
-        npcclass_object$fromJSON(jsonlite::toJSON(this_object$npcClass, auto_unbox = TRUE, digits = NA))
-        self$`npcClass` <- npcclass_object
+        `npcclass_object` <- CompoundClass$new()
+        `npcclass_object`$fromJSON(jsonlite::toJSON(this_object$`npcClass`, auto_unbox = TRUE, digits = NA))
+        self$`npcClass` <- `npcclass_object`
       }
       if (!is.null(this_object$`classyFireMostSpecific`)) {
-        classyfiremostspecific_object <- CompoundClass$new()
-        classyfiremostspecific_object$fromJSON(jsonlite::toJSON(this_object$classyFireMostSpecific, auto_unbox = TRUE, digits = NA))
-        self$`classyFireMostSpecific` <- classyfiremostspecific_object
+        `classyfiremostspecific_object` <- CompoundClass$new()
+        `classyfiremostspecific_object`$fromJSON(jsonlite::toJSON(this_object$`classyFireMostSpecific`, auto_unbox = TRUE, digits = NA))
+        self$`classyFireMostSpecific` <- `classyfiremostspecific_object`
       }
       if (!is.null(this_object$`classyFireLevel5`)) {
-        classyfirelevel5_object <- CompoundClass$new()
-        classyfirelevel5_object$fromJSON(jsonlite::toJSON(this_object$classyFireLevel5, auto_unbox = TRUE, digits = NA))
-        self$`classyFireLevel5` <- classyfirelevel5_object
+        `classyfirelevel5_object` <- CompoundClass$new()
+        `classyfirelevel5_object`$fromJSON(jsonlite::toJSON(this_object$`classyFireLevel5`, auto_unbox = TRUE, digits = NA))
+        self$`classyFireLevel5` <- `classyfirelevel5_object`
       }
       if (!is.null(this_object$`classyFireClass`)) {
-        classyfireclass_object <- CompoundClass$new()
-        classyfireclass_object$fromJSON(jsonlite::toJSON(this_object$classyFireClass, auto_unbox = TRUE, digits = NA))
-        self$`classyFireClass` <- classyfireclass_object
+        `classyfireclass_object` <- CompoundClass$new()
+        `classyfireclass_object`$fromJSON(jsonlite::toJSON(this_object$`classyFireClass`, auto_unbox = TRUE, digits = NA))
+        self$`classyFireClass` <- `classyfireclass_object`
       }
       if (!is.null(this_object$`classyFireSubClass`)) {
-        classyfiresubclass_object <- CompoundClass$new()
-        classyfiresubclass_object$fromJSON(jsonlite::toJSON(this_object$classyFireSubClass, auto_unbox = TRUE, digits = NA))
-        self$`classyFireSubClass` <- classyfiresubclass_object
+        `classyfiresubclass_object` <- CompoundClass$new()
+        `classyfiresubclass_object`$fromJSON(jsonlite::toJSON(this_object$`classyFireSubClass`, auto_unbox = TRUE, digits = NA))
+        self$`classyFireSubClass` <- `classyfiresubclass_object`
       }
       if (!is.null(this_object$`classyFireSuperClass`)) {
-        classyfiresuperclass_object <- CompoundClass$new()
-        classyfiresuperclass_object$fromJSON(jsonlite::toJSON(this_object$classyFireSuperClass, auto_unbox = TRUE, digits = NA))
-        self$`classyFireSuperClass` <- classyfiresuperclass_object
+        `classyfiresuperclass_object` <- CompoundClass$new()
+        `classyfiresuperclass_object`$fromJSON(jsonlite::toJSON(this_object$`classyFireSuperClass`, auto_unbox = TRUE, digits = NA))
+        self$`classyFireSuperClass` <- `classyfiresuperclass_object`
       }
       self
     },
@@ -260,14 +260,14 @@ CompoundClasses <- R6::R6Class(
     #' @export
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
-      self$`npcPathway` <- CompoundClass$new()$fromJSON(jsonlite::toJSON(this_object$npcPathway, auto_unbox = TRUE, digits = NA))
-      self$`npcSuperclass` <- CompoundClass$new()$fromJSON(jsonlite::toJSON(this_object$npcSuperclass, auto_unbox = TRUE, digits = NA))
-      self$`npcClass` <- CompoundClass$new()$fromJSON(jsonlite::toJSON(this_object$npcClass, auto_unbox = TRUE, digits = NA))
-      self$`classyFireMostSpecific` <- CompoundClass$new()$fromJSON(jsonlite::toJSON(this_object$classyFireMostSpecific, auto_unbox = TRUE, digits = NA))
-      self$`classyFireLevel5` <- CompoundClass$new()$fromJSON(jsonlite::toJSON(this_object$classyFireLevel5, auto_unbox = TRUE, digits = NA))
-      self$`classyFireClass` <- CompoundClass$new()$fromJSON(jsonlite::toJSON(this_object$classyFireClass, auto_unbox = TRUE, digits = NA))
-      self$`classyFireSubClass` <- CompoundClass$new()$fromJSON(jsonlite::toJSON(this_object$classyFireSubClass, auto_unbox = TRUE, digits = NA))
-      self$`classyFireSuperClass` <- CompoundClass$new()$fromJSON(jsonlite::toJSON(this_object$classyFireSuperClass, auto_unbox = TRUE, digits = NA))
+      self$`npcPathway` <- CompoundClass$new()$fromJSON(jsonlite::toJSON(this_object$`npcPathway`, auto_unbox = TRUE, digits = NA))
+      self$`npcSuperclass` <- CompoundClass$new()$fromJSON(jsonlite::toJSON(this_object$`npcSuperclass`, auto_unbox = TRUE, digits = NA))
+      self$`npcClass` <- CompoundClass$new()$fromJSON(jsonlite::toJSON(this_object$`npcClass`, auto_unbox = TRUE, digits = NA))
+      self$`classyFireMostSpecific` <- CompoundClass$new()$fromJSON(jsonlite::toJSON(this_object$`classyFireMostSpecific`, auto_unbox = TRUE, digits = NA))
+      self$`classyFireLevel5` <- CompoundClass$new()$fromJSON(jsonlite::toJSON(this_object$`classyFireLevel5`, auto_unbox = TRUE, digits = NA))
+      self$`classyFireClass` <- CompoundClass$new()$fromJSON(jsonlite::toJSON(this_object$`classyFireClass`, auto_unbox = TRUE, digits = NA))
+      self$`classyFireSubClass` <- CompoundClass$new()$fromJSON(jsonlite::toJSON(this_object$`classyFireSubClass`, auto_unbox = TRUE, digits = NA))
+      self$`classyFireSuperClass` <- CompoundClass$new()$fromJSON(jsonlite::toJSON(this_object$`classyFireSuperClass`, auto_unbox = TRUE, digits = NA))
       self
     },
     #' Validate JSON input with respect to CompoundClasses

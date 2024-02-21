@@ -185,7 +185,7 @@ FragmentNode <- R6::R6Class(
         if (!is.null(self$`id`)) {
           sprintf(
           '"id":
-            %f
+            %d
                     ',
           self$`id`
           )
@@ -209,7 +209,7 @@ FragmentNode <- R6::R6Class(
         if (!is.null(self$`massDeviationDa`)) {
           sprintf(
           '"massDeviationDa":
-            %f
+            %d
                     ',
           self$`massDeviationDa`
           )
@@ -217,7 +217,7 @@ FragmentNode <- R6::R6Class(
         if (!is.null(self$`massErrorPpm`)) {
           sprintf(
           '"massErrorPpm":
-            %f
+            %d
                     ',
           self$`massErrorPpm`
           )
@@ -225,7 +225,7 @@ FragmentNode <- R6::R6Class(
         if (!is.null(self$`score`)) {
           sprintf(
           '"score":
-            %f
+            %d
                     ',
           self$`score`
           )
@@ -233,7 +233,7 @@ FragmentNode <- R6::R6Class(
         if (!is.null(self$`intensity`)) {
           sprintf(
           '"intensity":
-            %f
+            %d
                     ',
           self$`intensity`
           )
@@ -241,7 +241,7 @@ FragmentNode <- R6::R6Class(
         if (!is.null(self$`mz`)) {
           sprintf(
           '"mz":
-            %f
+            %d
                     ',
           self$`mz`
           )

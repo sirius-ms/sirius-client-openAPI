@@ -473,7 +473,7 @@ FormulaResultsApi <- R6::R6Class(
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response, "CompoundClasses", loadNamespace("Rsirius")),
+          self$api_client$deserialize(local_var_resp$response_as_text(), "CompoundClasses", loadNamespace("Rsirius")),
           error = function(e) {
             stop("Failed to deserialize response")
           }
@@ -592,7 +592,7 @@ FormulaResultsApi <- R6::R6Class(
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response, "CanopusPredictions", loadNamespace("Rsirius")),
+          self$api_client$deserialize(local_var_resp$response_as_text(), "CanopusPredictions", loadNamespace("Rsirius")),
           error = function(e) {
             stop("Failed to deserialize response")
           }
@@ -711,7 +711,7 @@ FormulaResultsApi <- R6::R6Class(
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response, "array[numeric]", loadNamespace("Rsirius")),
+          self$api_client$deserialize(local_var_resp$response_as_text(), "array[numeric]", loadNamespace("Rsirius")),
           error = function(e) {
             stop("Failed to deserialize response")
           }
@@ -829,7 +829,7 @@ FormulaResultsApi <- R6::R6Class(
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response, "array[FormulaResultContainer]", loadNamespace("Rsirius")),
+          self$api_client$deserialize(local_var_resp$response_as_text(), "array[FormulaResultContainer]", loadNamespace("Rsirius")),
           error = function(e) {
             stop("Failed to deserialize response")
           }
@@ -958,7 +958,7 @@ FormulaResultsApi <- R6::R6Class(
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response, "FormulaResultContainer", loadNamespace("Rsirius")),
+          self$api_client$deserialize(local_var_resp$response_as_text(), "FormulaResultContainer", loadNamespace("Rsirius")),
           error = function(e) {
             stop("Failed to deserialize response")
           }
@@ -1077,7 +1077,7 @@ FormulaResultsApi <- R6::R6Class(
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response, "FragmentationTree", loadNamespace("Rsirius")),
+          self$api_client$deserialize(local_var_resp$response_as_text(), "FragmentationTree", loadNamespace("Rsirius")),
           error = function(e) {
             stop("Failed to deserialize response")
           }
@@ -1196,7 +1196,7 @@ FormulaResultsApi <- R6::R6Class(
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response, "AnnotatedSpectrum", loadNamespace("Rsirius")),
+          self$api_client$deserialize(local_var_resp$response_as_text(), "AnnotatedSpectrum", loadNamespace("Rsirius")),
           error = function(e) {
             stop("Failed to deserialize response")
           }
@@ -1335,7 +1335,7 @@ FormulaResultsApi <- R6::R6Class(
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response, "array[StructureCandidate]", loadNamespace("Rsirius")),
+          self$api_client$deserialize(local_var_resp$response_as_text(), "array[StructureCandidate]", loadNamespace("Rsirius")),
           error = function(e) {
             stop("Failed to deserialize response")
           }
@@ -1458,7 +1458,7 @@ FormulaResultsApi <- R6::R6Class(
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response, "StructureCandidate", loadNamespace("Rsirius")),
+          self$api_client$deserialize(local_var_resp$response_as_text(), "StructureCandidate", loadNamespace("Rsirius")),
           error = function(e) {
             stop("Failed to deserialize response")
           }

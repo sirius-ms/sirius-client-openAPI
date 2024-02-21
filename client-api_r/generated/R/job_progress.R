@@ -175,7 +175,7 @@ JobProgress <- R6::R6Class(
         if (!is.null(self$`currentProgress`)) {
           sprintf(
           '"currentProgress":
-            %f
+            %d
                     ',
           self$`currentProgress`
           )
@@ -183,7 +183,7 @@ JobProgress <- R6::R6Class(
         if (!is.null(self$`maxProgress`)) {
           sprintf(
           '"maxProgress":
-            %f
+            %d
                     ',
           self$`maxProgress`
           )

@@ -246,7 +246,7 @@ StructureCandidate <- R6::R6Class(
         if (!is.null(self$`csiScore`)) {
           sprintf(
           '"csiScore":
-            %f
+            %d
                     ',
           self$`csiScore`
           )
@@ -254,7 +254,7 @@ StructureCandidate <- R6::R6Class(
         if (!is.null(self$`tanimotoSimilarity`)) {
           sprintf(
           '"tanimotoSimilarity":
-            %f
+            %d
                     ',
           self$`tanimotoSimilarity`
           )
@@ -262,7 +262,7 @@ StructureCandidate <- R6::R6Class(
         if (!is.null(self$`confidenceScore`)) {
           sprintf(
           '"confidenceScore":
-            %f
+            %d
                     ',
           self$`confidenceScore`
           )
@@ -270,7 +270,7 @@ StructureCandidate <- R6::R6Class(
         if (!is.null(self$`numOfPubMedIds`)) {
           sprintf(
           '"numOfPubMedIds":
-            %f
+            %d
                     ',
           self$`numOfPubMedIds`
           )
@@ -278,7 +278,7 @@ StructureCandidate <- R6::R6Class(
         if (!is.null(self$`xlogP`)) {
           sprintf(
           '"xlogP":
-            %f
+            %d
                     ',
           self$`xlogP`
           )

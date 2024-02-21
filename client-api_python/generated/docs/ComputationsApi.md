@@ -15,6 +15,7 @@ Method | HTTP request | Description
 [**start_job**](ComputationsApi.md#start_job) | **POST** /api/projects/{projectId}/jobs | Start computation for given compounds and with given parameters.
 [**start_job_from_config**](ComputationsApi.md#start_job_from_config) | **POST** /api/projects/{projectId}/jobs-from-config | Start computation for given compounds and with parameters from a stored job-config.
 
+
 # **delete_job**
 > delete_job(project_id, job_id, cancel_if_running=cancel_if_running, await_deletion=await_deletion)
 
@@ -23,35 +24,47 @@ Delete job.
 Delete job. Specify how to behave for running jobs.
 
 ### Example
+
+
 ```python
-from __future__ import print_function
-import time
 import PySirius
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# create an instance of the API class
-api_instance = PySirius.ComputationsApi()
-project_id = 'project_id_example' # str | project-space to run jobs on
-job_id = 'job_id_example' # str | of the job to be deleted
-cancel_if_running = true # bool | If true job will be canceled if it is not finished. Otherwise,                         deletion will fail for running jobs or request will block until job has finished. (optional) (default to true)
-await_deletion = true # bool | If true request will block until deletion succeeded or failed.                         If the job is still running the request will wait until the job has finished. (optional) (default to true)
+# Defining the host is optional and defaults to http://localhost:8080
+# See configuration.py for a list of all supported configuration parameters.
+configuration = PySirius.Configuration(
+    host = "http://localhost:8080"
+)
 
-try:
-    # Delete job.
-    api_instance.delete_job(project_id, job_id, cancel_if_running=cancel_if_running, await_deletion=await_deletion)
-except ApiException as e:
-    print("Exception when calling ComputationsApi->delete_job: %s\n" % e)
+
+# Enter a context with an instance of the API client
+with PySirius.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = PySirius.ComputationsApi(api_client)
+    project_id = 'project_id_example' # str | project-space to run jobs on
+    job_id = 'job_id_example' # str | of the job to be deleted
+    cancel_if_running = True # bool | If true job will be canceled if it is not finished. Otherwise,                         deletion will fail for running jobs or request will block until job has finished. (optional) (default to True)
+    await_deletion = True # bool | If true request will block until deletion succeeded or failed.                         If the job is still running the request will wait until the job has finished. (optional) (default to True)
+
+    try:
+        # Delete job.
+        api_instance.delete_job(project_id, job_id, cancel_if_running=cancel_if_running, await_deletion=await_deletion)
+    except Exception as e:
+        print("Exception when calling ComputationsApi->delete_job: %s\n" % e)
 ```
 
+
+
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **str**| project-space to run jobs on | 
  **job_id** | **str**| of the job to be deleted | 
- **cancel_if_running** | **bool**| If true job will be canceled if it is not finished. Otherwise,                         deletion will fail for running jobs or request will block until job has finished. | [optional] [default to true]
- **await_deletion** | **bool**| If true request will block until deletion succeeded or failed.                         If the job is still running the request will wait until the job has finished. | [optional] [default to true]
+ **cancel_if_running** | **bool**| If true job will be canceled if it is not finished. Otherwise,                         deletion will fail for running jobs or request will block until job has finished. | [optional] [default to True]
+ **await_deletion** | **bool**| If true request will block until deletion succeeded or failed.                         If the job is still running the request will wait until the job has finished. | [optional] [default to True]
 
 ### Return type
 
@@ -66,6 +79,12 @@ No authorization required
  - **Content-Type**: Not defined
  - **Accept**: Not defined
 
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**202** | Accepted |  -  |
+
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **delete_job_config**
@@ -76,25 +95,37 @@ Delete job configuration with given name.
 Delete job configuration with given name.
 
 ### Example
+
+
 ```python
-from __future__ import print_function
-import time
 import PySirius
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# create an instance of the API class
-api_instance = PySirius.ComputationsApi()
-name = 'name_example' # str | name of the job-config to delete
+# Defining the host is optional and defaults to http://localhost:8080
+# See configuration.py for a list of all supported configuration parameters.
+configuration = PySirius.Configuration(
+    host = "http://localhost:8080"
+)
 
-try:
-    # Delete job configuration with given name.
-    api_instance.delete_job_config(name)
-except ApiException as e:
-    print("Exception when calling ComputationsApi->delete_job_config: %s\n" % e)
+
+# Enter a context with an instance of the API client
+with PySirius.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = PySirius.ComputationsApi(api_client)
+    name = 'name_example' # str | name of the job-config to delete
+
+    try:
+        # Delete job configuration with given name.
+        api_instance.delete_job_config(name)
+    except Exception as e:
+        print("Exception when calling ComputationsApi->delete_job_config: %s\n" % e)
 ```
 
+
+
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -113,6 +144,12 @@ No authorization required
  - **Content-Type**: Not defined
  - **Accept**: Not defined
 
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**202** | Accepted |  -  |
+
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_default_job_config**
@@ -123,30 +160,44 @@ Request default job configuration
 Request default job configuration
 
 ### Example
+
+
 ```python
-from __future__ import print_function
-import time
 import PySirius
+from PySirius.models.job_submission import JobSubmission
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# create an instance of the API class
-api_instance = PySirius.ComputationsApi()
-include_config_map = false # bool | if true, generic configmap with-defaults will be included (optional) (default to false)
+# Defining the host is optional and defaults to http://localhost:8080
+# See configuration.py for a list of all supported configuration parameters.
+configuration = PySirius.Configuration(
+    host = "http://localhost:8080"
+)
 
-try:
-    # Request default job configuration
-    api_response = api_instance.get_default_job_config(include_config_map=include_config_map)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling ComputationsApi->get_default_job_config: %s\n" % e)
+
+# Enter a context with an instance of the API client
+with PySirius.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = PySirius.ComputationsApi(api_client)
+    include_config_map = False # bool | if true, generic configmap with-defaults will be included (optional) (default to False)
+
+    try:
+        # Request default job configuration
+        api_response = api_instance.get_default_job_config(include_config_map=include_config_map)
+        print("The response of ComputationsApi->get_default_job_config:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling ComputationsApi->get_default_job_config: %s\n" % e)
 ```
+
+
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **include_config_map** | **bool**| if true, generic configmap with-defaults will be included | [optional] [default to false]
+ **include_config_map** | **bool**| if true, generic configmap with-defaults will be included | [optional] [default to False]
 
 ### Return type
 
@@ -161,6 +212,12 @@ No authorization required
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | {@link JobSubmission JobSubmission} with all parameters set to default values. |  -  |
+
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_job**
@@ -171,38 +228,52 @@ Get job information and its current state and progress (if available).
 Get job information and its current state and progress (if available).
 
 ### Example
+
+
 ```python
-from __future__ import print_function
-import time
 import PySirius
+from PySirius.models.job_id import JobId
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# create an instance of the API class
-api_instance = PySirius.ComputationsApi()
-project_id = 'project_id_example' # str | project-space to run jobs on
-job_id = 'job_id_example' # str | of the job to be returned
-include_state = true # bool | include {@link de.unijena.bioinf.ms.middleware.compute.model.JobProgress de.unijena.bioinf.ms.middleware.compute.model.JobProgress} state. (optional) (default to true)
-include_command = false # bool | include job command. (optional) (default to false)
-include_affected_compounds = false # bool | include list of compound ids affected by this job (if available) (optional) (default to false)
+# Defining the host is optional and defaults to http://localhost:8080
+# See configuration.py for a list of all supported configuration parameters.
+configuration = PySirius.Configuration(
+    host = "http://localhost:8080"
+)
 
-try:
-    # Get job information and its current state and progress (if available).
-    api_response = api_instance.get_job(project_id, job_id, include_state=include_state, include_command=include_command, include_affected_compounds=include_affected_compounds)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling ComputationsApi->get_job: %s\n" % e)
+
+# Enter a context with an instance of the API client
+with PySirius.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = PySirius.ComputationsApi(api_client)
+    project_id = 'project_id_example' # str | project-space to run jobs on
+    job_id = 'job_id_example' # str | of the job to be returned
+    include_state = True # bool | include {@link de.unijena.bioinf.ms.middleware.compute.model.JobProgress de.unijena.bioinf.ms.middleware.compute.model.JobProgress} state. (optional) (default to True)
+    include_command = False # bool | include job command. (optional) (default to False)
+    include_affected_compounds = False # bool | include list of compound ids affected by this job (if available) (optional) (default to False)
+
+    try:
+        # Get job information and its current state and progress (if available).
+        api_response = api_instance.get_job(project_id, job_id, include_state=include_state, include_command=include_command, include_affected_compounds=include_affected_compounds)
+        print("The response of ComputationsApi->get_job:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling ComputationsApi->get_job: %s\n" % e)
 ```
 
+
+
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **str**| project-space to run jobs on | 
  **job_id** | **str**| of the job to be returned | 
- **include_state** | **bool**| include {@link de.unijena.bioinf.ms.middleware.compute.model.JobProgress de.unijena.bioinf.ms.middleware.compute.model.JobProgress} state. | [optional] [default to true]
- **include_command** | **bool**| include job command. | [optional] [default to false]
- **include_affected_compounds** | **bool**| include list of compound ids affected by this job (if available) | [optional] [default to false]
+ **include_state** | **bool**| include {@link de.unijena.bioinf.ms.middleware.compute.model.JobProgress de.unijena.bioinf.ms.middleware.compute.model.JobProgress} state. | [optional] [default to True]
+ **include_command** | **bool**| include job command. | [optional] [default to False]
+ **include_affected_compounds** | **bool**| include list of compound ids affected by this job (if available) | [optional] [default to False]
 
 ### Return type
 
@@ -217,6 +288,12 @@ No authorization required
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_job_config**
@@ -227,32 +304,46 @@ Request job configuration with given name.
 Request job configuration with given name.
 
 ### Example
+
+
 ```python
-from __future__ import print_function
-import time
 import PySirius
+from PySirius.models.job_submission import JobSubmission
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# create an instance of the API class
-api_instance = PySirius.ComputationsApi()
-name = 'name_example' # str | name of the job-config to return
-include_config_map = false # bool | if true the generic configmap will be part of the output (optional) (default to false)
+# Defining the host is optional and defaults to http://localhost:8080
+# See configuration.py for a list of all supported configuration parameters.
+configuration = PySirius.Configuration(
+    host = "http://localhost:8080"
+)
 
-try:
-    # Request job configuration with given name.
-    api_response = api_instance.get_job_config(name, include_config_map=include_config_map)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling ComputationsApi->get_job_config: %s\n" % e)
+
+# Enter a context with an instance of the API client
+with PySirius.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = PySirius.ComputationsApi(api_client)
+    name = 'name_example' # str | name of the job-config to return
+    include_config_map = False # bool | if true the generic configmap will be part of the output (optional) (default to False)
+
+    try:
+        # Request job configuration with given name.
+        api_response = api_instance.get_job_config(name, include_config_map=include_config_map)
+        print("The response of ComputationsApi->get_job_config:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling ComputationsApi->get_job_config: %s\n" % e)
 ```
 
+
+
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **name** | **str**| name of the job-config to return | 
- **include_config_map** | **bool**| if true the generic configmap will be part of the output | [optional] [default to false]
+ **include_config_map** | **bool**| if true the generic configmap will be part of the output | [optional] [default to False]
 
 ### Return type
 
@@ -267,44 +358,64 @@ No authorization required
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | {@link JobSubmission JobSubmission} for given name. |  -  |
+
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_job_configs**
-> list[JobSubmission] get_job_configs(include_config_map=include_config_map)
+> List[JobSubmission] get_job_configs(include_config_map=include_config_map)
 
 Request all available job configurations
 
 Request all available job configurations
 
 ### Example
+
+
 ```python
-from __future__ import print_function
-import time
 import PySirius
+from PySirius.models.job_submission import JobSubmission
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# create an instance of the API class
-api_instance = PySirius.ComputationsApi()
-include_config_map = false # bool | if true the generic configmap will be part of the output (optional) (default to false)
+# Defining the host is optional and defaults to http://localhost:8080
+# See configuration.py for a list of all supported configuration parameters.
+configuration = PySirius.Configuration(
+    host = "http://localhost:8080"
+)
 
-try:
-    # Request all available job configurations
-    api_response = api_instance.get_job_configs(include_config_map=include_config_map)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling ComputationsApi->get_job_configs: %s\n" % e)
+
+# Enter a context with an instance of the API client
+with PySirius.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = PySirius.ComputationsApi(api_client)
+    include_config_map = False # bool | if true the generic configmap will be part of the output (optional) (default to False)
+
+    try:
+        # Request all available job configurations
+        api_response = api_instance.get_job_configs(include_config_map=include_config_map)
+        print("The response of ComputationsApi->get_job_configs:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling ComputationsApi->get_job_configs: %s\n" % e)
 ```
+
+
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **include_config_map** | **bool**| if true the generic configmap will be part of the output | [optional] [default to false]
+ **include_config_map** | **bool**| if true the generic configmap will be part of the output | [optional] [default to False]
 
 ### Return type
 
-[**list[JobSubmission]**](JobSubmission.md)
+[**List[JobSubmission]**](JobSubmission.md)
 
 ### Authorization
 
@@ -314,51 +425,71 @@ No authorization required
 
  - **Content-Type**: Not defined
  - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | list of available {@link JobSubmission JobSubmission}s |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_jobs**
-> list[JobId] get_jobs(project_id, include_state=include_state, include_command=include_command, include_affected_compounds=include_affected_compounds)
+> List[JobId] get_jobs(project_id, include_state=include_state, include_command=include_command, include_affected_compounds=include_affected_compounds)
 
 Get job information and its current state and progress (if available).
 
 Get job information and its current state and progress (if available).
 
 ### Example
+
+
 ```python
-from __future__ import print_function
-import time
 import PySirius
+from PySirius.models.job_id import JobId
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# create an instance of the API class
-api_instance = PySirius.ComputationsApi()
-project_id = 'project_id_example' # str | project-space to run jobs on
-include_state = false # bool | include {@link de.unijena.bioinf.ms.middleware.compute.model.JobProgress de.unijena.bioinf.ms.middleware.compute.model.JobProgress} states. (optional) (default to false)
-include_command = false # bool | include job commands. (optional) (default to false)
-include_affected_compounds = false # bool | include list of compound ids affected by this job (if available) (optional) (default to false)
+# Defining the host is optional and defaults to http://localhost:8080
+# See configuration.py for a list of all supported configuration parameters.
+configuration = PySirius.Configuration(
+    host = "http://localhost:8080"
+)
 
-try:
-    # Get job information and its current state and progress (if available).
-    api_response = api_instance.get_jobs(project_id, include_state=include_state, include_command=include_command, include_affected_compounds=include_affected_compounds)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling ComputationsApi->get_jobs: %s\n" % e)
+
+# Enter a context with an instance of the API client
+with PySirius.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = PySirius.ComputationsApi(api_client)
+    project_id = 'project_id_example' # str | project-space to run jobs on
+    include_state = False # bool | include {@link de.unijena.bioinf.ms.middleware.compute.model.JobProgress de.unijena.bioinf.ms.middleware.compute.model.JobProgress} states. (optional) (default to False)
+    include_command = False # bool | include job commands. (optional) (default to False)
+    include_affected_compounds = False # bool | include list of compound ids affected by this job (if available) (optional) (default to False)
+
+    try:
+        # Get job information and its current state and progress (if available).
+        api_response = api_instance.get_jobs(project_id, include_state=include_state, include_command=include_command, include_affected_compounds=include_affected_compounds)
+        print("The response of ComputationsApi->get_jobs:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling ComputationsApi->get_jobs: %s\n" % e)
 ```
 
+
+
 ### Parameters
+
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **str**| project-space to run jobs on | 
- **include_state** | **bool**| include {@link de.unijena.bioinf.ms.middleware.compute.model.JobProgress de.unijena.bioinf.ms.middleware.compute.model.JobProgress} states. | [optional] [default to false]
- **include_command** | **bool**| include job commands. | [optional] [default to false]
- **include_affected_compounds** | **bool**| include list of compound ids affected by this job (if available) | [optional] [default to false]
+ **include_state** | **bool**| include {@link de.unijena.bioinf.ms.middleware.compute.model.JobProgress de.unijena.bioinf.ms.middleware.compute.model.JobProgress} states. | [optional] [default to False]
+ **include_command** | **bool**| include job commands. | [optional] [default to False]
+ **include_affected_compounds** | **bool**| include list of compound ids affected by this job (if available) | [optional] [default to False]
 
 ### Return type
 
-[**list[JobId]**](JobId.md)
+[**List[JobId]**](JobId.md)
 
 ### Authorization
 
@@ -369,44 +500,64 @@ No authorization required
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **post_job_config**
-> str post_job_config(body, name, override_existing=override_existing)
+> str post_job_config(name, job_submission, override_existing=override_existing)
 
 Add new job configuration with given name.
 
 Add new job configuration with given name.
 
 ### Example
+
+
 ```python
-from __future__ import print_function
-import time
 import PySirius
+from PySirius.models.job_submission import JobSubmission
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# create an instance of the API class
-api_instance = PySirius.ComputationsApi()
-body = PySirius.JobSubmission() # JobSubmission | to add
-name = 'name_example' # str | name of the job-config to add
-override_existing = false # bool |  (optional) (default to false)
+# Defining the host is optional and defaults to http://localhost:8080
+# See configuration.py for a list of all supported configuration parameters.
+configuration = PySirius.Configuration(
+    host = "http://localhost:8080"
+)
 
-try:
-    # Add new job configuration with given name.
-    api_response = api_instance.post_job_config(body, name, override_existing=override_existing)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling ComputationsApi->post_job_config: %s\n" % e)
+
+# Enter a context with an instance of the API client
+with PySirius.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = PySirius.ComputationsApi(api_client)
+    name = 'name_example' # str | name of the job-config to add
+    job_submission = PySirius.JobSubmission() # JobSubmission | to add
+    override_existing = False # bool |  (optional) (default to False)
+
+    try:
+        # Add new job configuration with given name.
+        api_response = api_instance.post_job_config(name, job_submission, override_existing=override_existing)
+        print("The response of ComputationsApi->post_job_config:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling ComputationsApi->post_job_config: %s\n" % e)
 ```
+
+
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**JobSubmission**](JobSubmission.md)| to add | 
  **name** | **str**| name of the job-config to add | 
- **override_existing** | **bool**|  | [optional] [default to false]
+ **job_submission** | [**JobSubmission**](JobSubmission.md)| to add | 
+ **override_existing** | **bool**|  | [optional] [default to False]
 
 ### Return type
 
@@ -421,48 +572,69 @@ No authorization required
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Probably modified name of the config (to ensure filesystem path compatibility). |  -  |
+
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **start_job**
-> JobId start_job(body, project_id, include_state=include_state, include_command=include_command, include_affected_compounds=include_affected_compounds)
+> JobId start_job(project_id, job_submission, include_state=include_state, include_command=include_command, include_affected_compounds=include_affected_compounds)
 
 Start computation for given compounds and with given parameters.
 
 Start computation for given compounds and with given parameters.
 
 ### Example
+
+
 ```python
-from __future__ import print_function
-import time
 import PySirius
+from PySirius.models.job_id import JobId
+from PySirius.models.job_submission import JobSubmission
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# create an instance of the API class
-api_instance = PySirius.ComputationsApi()
-body = PySirius.JobSubmission() # JobSubmission | configuration of the job that will be submitted of the job to be returned
-project_id = 'project_id_example' # str | project-space to run jobs on
-include_state = true # bool | include {@link de.unijena.bioinf.ms.middleware.compute.model.JobProgress de.unijena.bioinf.ms.middleware.compute.model.JobProgress} state. (optional) (default to true)
-include_command = true # bool | include job command. (optional) (default to true)
-include_affected_compounds = false # bool | include list of compound ids affected by this job (if available) (optional) (default to false)
+# Defining the host is optional and defaults to http://localhost:8080
+# See configuration.py for a list of all supported configuration parameters.
+configuration = PySirius.Configuration(
+    host = "http://localhost:8080"
+)
 
-try:
-    # Start computation for given compounds and with given parameters.
-    api_response = api_instance.start_job(body, project_id, include_state=include_state, include_command=include_command, include_affected_compounds=include_affected_compounds)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling ComputationsApi->start_job: %s\n" % e)
+
+# Enter a context with an instance of the API client
+with PySirius.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = PySirius.ComputationsApi(api_client)
+    project_id = 'project_id_example' # str | project-space to run jobs on
+    job_submission = PySirius.JobSubmission() # JobSubmission | configuration of the job that will be submitted of the job to be returned
+    include_state = True # bool | include {@link de.unijena.bioinf.ms.middleware.compute.model.JobProgress de.unijena.bioinf.ms.middleware.compute.model.JobProgress} state. (optional) (default to True)
+    include_command = True # bool | include job command. (optional) (default to True)
+    include_affected_compounds = False # bool | include list of compound ids affected by this job (if available) (optional) (default to False)
+
+    try:
+        # Start computation for given compounds and with given parameters.
+        api_response = api_instance.start_job(project_id, job_submission, include_state=include_state, include_command=include_command, include_affected_compounds=include_affected_compounds)
+        print("The response of ComputationsApi->start_job:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling ComputationsApi->start_job: %s\n" % e)
 ```
+
+
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**JobSubmission**](JobSubmission.md)| configuration of the job that will be submitted of the job to be returned | 
  **project_id** | **str**| project-space to run jobs on | 
- **include_state** | **bool**| include {@link de.unijena.bioinf.ms.middleware.compute.model.JobProgress de.unijena.bioinf.ms.middleware.compute.model.JobProgress} state. | [optional] [default to true]
- **include_command** | **bool**| include job command. | [optional] [default to true]
- **include_affected_compounds** | **bool**| include list of compound ids affected by this job (if available) | [optional] [default to false]
+ **job_submission** | [**JobSubmission**](JobSubmission.md)| configuration of the job that will be submitted of the job to be returned | 
+ **include_state** | **bool**| include {@link de.unijena.bioinf.ms.middleware.compute.model.JobProgress de.unijena.bioinf.ms.middleware.compute.model.JobProgress} state. | [optional] [default to True]
+ **include_command** | **bool**| include job command. | [optional] [default to True]
+ **include_affected_compounds** | **bool**| include list of compound ids affected by this job (if available) | [optional] [default to False]
 
 ### Return type
 
@@ -476,53 +648,73 @@ No authorization required
 
  - **Content-Type**: application/json
  - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**202** | Accepted |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **start_job_from_config**
-> JobId start_job_from_config(body, job_config_name, project_id, recompute=recompute, include_state=include_state, include_command=include_command, include_affected_compounds=include_affected_compounds)
+> JobId start_job_from_config(project_id, job_config_name, request_body, recompute=recompute, include_state=include_state, include_command=include_command, include_affected_compounds=include_affected_compounds)
 
 Start computation for given compounds and with parameters from a stored job-config.
 
 Start computation for given compounds and with parameters from a stored job-config.
 
 ### Example
+
+
 ```python
-from __future__ import print_function
-import time
 import PySirius
+from PySirius.models.job_id import JobId
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# create an instance of the API class
-api_instance = PySirius.ComputationsApi()
-body = ['body_example'] # list[str] | compound ids to be computed
-job_config_name = 'job_config_name_example' # str | name if the config to be used
-project_id = 'project_id_example' # str | project-space to run jobs on
-recompute = true # bool | enable or disable recompute. If null the stored value will be used. (optional)
-include_state = true # bool | include {@link de.unijena.bioinf.ms.middleware.compute.model.JobProgress de.unijena.bioinf.ms.middleware.compute.model.JobProgress} state. (optional) (default to true)
-include_command = true # bool | include job command. (optional) (default to true)
-include_affected_compounds = false # bool | include list of compound ids affected by this job (if available) (optional) (default to false)
+# Defining the host is optional and defaults to http://localhost:8080
+# See configuration.py for a list of all supported configuration parameters.
+configuration = PySirius.Configuration(
+    host = "http://localhost:8080"
+)
 
-try:
-    # Start computation for given compounds and with parameters from a stored job-config.
-    api_response = api_instance.start_job_from_config(body, job_config_name, project_id, recompute=recompute, include_state=include_state, include_command=include_command, include_affected_compounds=include_affected_compounds)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling ComputationsApi->start_job_from_config: %s\n" % e)
+
+# Enter a context with an instance of the API client
+with PySirius.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = PySirius.ComputationsApi(api_client)
+    project_id = 'project_id_example' # str | project-space to run jobs on
+    job_config_name = 'job_config_name_example' # str | name if the config to be used
+    request_body = ['request_body_example'] # List[str] | compound ids to be computed
+    recompute = True # bool | enable or disable recompute. If null the stored value will be used. (optional)
+    include_state = True # bool | include {@link de.unijena.bioinf.ms.middleware.compute.model.JobProgress de.unijena.bioinf.ms.middleware.compute.model.JobProgress} state. (optional) (default to True)
+    include_command = True # bool | include job command. (optional) (default to True)
+    include_affected_compounds = False # bool | include list of compound ids affected by this job (if available) (optional) (default to False)
+
+    try:
+        # Start computation for given compounds and with parameters from a stored job-config.
+        api_response = api_instance.start_job_from_config(project_id, job_config_name, request_body, recompute=recompute, include_state=include_state, include_command=include_command, include_affected_compounds=include_affected_compounds)
+        print("The response of ComputationsApi->start_job_from_config:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling ComputationsApi->start_job_from_config: %s\n" % e)
 ```
+
+
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**list[str]**](str.md)| compound ids to be computed | 
- **job_config_name** | **str**| name if the config to be used | 
  **project_id** | **str**| project-space to run jobs on | 
+ **job_config_name** | **str**| name if the config to be used | 
+ **request_body** | [**List[str]**](str.md)| compound ids to be computed | 
  **recompute** | **bool**| enable or disable recompute. If null the stored value will be used. | [optional] 
- **include_state** | **bool**| include {@link de.unijena.bioinf.ms.middleware.compute.model.JobProgress de.unijena.bioinf.ms.middleware.compute.model.JobProgress} state. | [optional] [default to true]
- **include_command** | **bool**| include job command. | [optional] [default to true]
- **include_affected_compounds** | **bool**| include list of compound ids affected by this job (if available) | [optional] [default to false]
+ **include_state** | **bool**| include {@link de.unijena.bioinf.ms.middleware.compute.model.JobProgress de.unijena.bioinf.ms.middleware.compute.model.JobProgress} state. | [optional] [default to True]
+ **include_command** | **bool**| include job command. | [optional] [default to True]
+ **include_affected_compounds** | **bool**| include list of compound ids affected by this job (if available) | [optional] [default to False]
 
 ### Return type
 
@@ -536,6 +728,12 @@ No authorization required
 
  - **Content-Type**: application/json
  - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**202** | Accepted |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
