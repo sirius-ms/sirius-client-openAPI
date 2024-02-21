@@ -20,3 +20,11 @@ test_that("useScoreThreshold", {
   # uncomment below to test the property
   #expect_equal(model.instance$`useScoreThreshold`, "EXPECTED_RESULT")
 })
+
+test_that("alwaysPredictHighRefMatches", {
+  # tests for the property `alwaysPredictHighRefMatches` (character)
+  # If true Fingerprint/Classes/Structures will be predicted for formulas candidates with  reference spectrum similarity &gt; Sirius.minReferenceMatchScoreToInject will be predicted no matter which  score threshold rules apply.  If NULL default value will be used.
+
+  # uncomment below to test the property
+  #expect_equal(model.instance$`alwaysPredictHighRefMatches`, "EXPECTED_RESULT")
+})

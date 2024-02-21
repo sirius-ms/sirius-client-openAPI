@@ -5,11 +5,11 @@ context("Test StructureCandidate")
 
 model_instance <- StructureCandidate$new()
 
-test_that("structureName", {
-  # tests for the property `structureName` (character)
+test_that("inchiKey", {
+  # tests for the property `inchiKey` (character)
 
   # uncomment below to test the property
-  #expect_equal(model.instance$`structureName`, "EXPECTED_RESULT")
+  #expect_equal(model.instance$`inchiKey`, "EXPECTED_RESULT")
 })
 
 test_that("smiles", {
@@ -19,32 +19,11 @@ test_that("smiles", {
   #expect_equal(model.instance$`smiles`, "EXPECTED_RESULT")
 })
 
-test_that("csiScore", {
-  # tests for the property `csiScore` (numeric)
+test_that("structureName", {
+  # tests for the property `structureName` (character)
 
   # uncomment below to test the property
-  #expect_equal(model.instance$`csiScore`, "EXPECTED_RESULT")
-})
-
-test_that("tanimotoSimilarity", {
-  # tests for the property `tanimotoSimilarity` (numeric)
-
-  # uncomment below to test the property
-  #expect_equal(model.instance$`tanimotoSimilarity`, "EXPECTED_RESULT")
-})
-
-test_that("confidenceScore", {
-  # tests for the property `confidenceScore` (numeric)
-
-  # uncomment below to test the property
-  #expect_equal(model.instance$`confidenceScore`, "EXPECTED_RESULT")
-})
-
-test_that("numOfPubMedIds", {
-  # tests for the property `numOfPubMedIds` (integer)
-
-  # uncomment below to test the property
-  #expect_equal(model.instance$`numOfPubMedIds`, "EXPECTED_RESULT")
+  #expect_equal(model.instance$`structureName`, "EXPECTED_RESULT")
 })
 
 test_that("xlogP", {
@@ -52,21 +31,6 @@ test_that("xlogP", {
 
   # uncomment below to test the property
   #expect_equal(model.instance$`xlogP`, "EXPECTED_RESULT")
-})
-
-test_that("inchiKey", {
-  # tests for the property `inchiKey` (character)
-
-  # uncomment below to test the property
-  #expect_equal(model.instance$`inchiKey`, "EXPECTED_RESULT")
-})
-
-test_that("fpBitsSet", {
-  # tests for the property `fpBitsSet` (array[integer])
-  # Array containing the indices of the molecular fingerprint that are available in the structure (1)  OPTIONAL: needs to be added by parameter
-
-  # uncomment below to test the property
-  #expect_equal(model.instance$`fpBitsSet`, "EXPECTED_RESULT")
 })
 
 test_that("dbLinks", {
@@ -77,10 +41,10 @@ test_that("dbLinks", {
   #expect_equal(model.instance$`dbLinks`, "EXPECTED_RESULT")
 })
 
-test_that("pubmedIds", {
-  # tests for the property `pubmedIds` (array[integer])
-  # PubMed IDs belonging to this structure candidate  OPTIONAL: needs to be added by parameter
+test_that("refSpectraLinks", {
+  # tests for the property `refSpectraLinks` (array[DBLink])
+  # List of spectral library links belonging to this structure candidate  OPTIONAL: needs to be added by parameter
 
   # uncomment below to test the property
-  #expect_equal(model.instance$`pubmedIds`, "EXPECTED_RESULT")
+  #expect_equal(model.instance$`refSpectraLinks`, "EXPECTED_RESULT")
 })

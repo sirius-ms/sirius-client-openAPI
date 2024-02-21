@@ -25,10 +25,3 @@ test_that("treeScore", {
   # uncomment below to test the property
   #expect_equal(model.instance$`treeScore`, "EXPECTED_RESULT")
 })
-
-test_that("root", {
-  # tests for the property `root` (FragmentNode)
-
-  # uncomment below to test the property
-  #expect_equal(model.instance$`root`, "EXPECTED_RESULT")
-})

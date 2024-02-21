@@ -5,11 +5,11 @@ context("Test FragmentNode")
 
 model_instance <- FragmentNode$new()
 
-test_that("id", {
-  # tests for the property `id` (integer)
+test_that("fragmentId", {
+  # tests for the property `fragmentId` (integer)
 
   # uncomment below to test the property
-  #expect_equal(model.instance$`id`, "EXPECTED_RESULT")
+  #expect_equal(model.instance$`fragmentId`, "EXPECTED_RESULT")
 })
 
 test_that("molecularFormula", {
@@ -33,11 +33,11 @@ test_that("massDeviationDa", {
   #expect_equal(model.instance$`massDeviationDa`, "EXPECTED_RESULT")
 })
 
-test_that("massErrorPpm", {
-  # tests for the property `massErrorPpm` (numeric)
+test_that("massDeviationPpm", {
+  # tests for the property `massDeviationPpm` (numeric)
 
   # uncomment below to test the property
-  #expect_equal(model.instance$`massErrorPpm`, "EXPECTED_RESULT")
+  #expect_equal(model.instance$`massDeviationPpm`, "EXPECTED_RESULT")
 })
 
 test_that("score", {

@@ -9,7 +9,6 @@
 #' @format An \code{R6Class} generator object
 #' @field mzToUseHeuristic  integer [optional]
 #' @field mzToUseHeuristicOnly  integer [optional]
-#' @field identifier  character [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
 #' @export
@@ -18,7 +17,6 @@ UseHeuristic <- R6::R6Class(
   public = list(
     `mzToUseHeuristic` = NULL,
     `mzToUseHeuristicOnly` = NULL,
-    `identifier` = NULL,
     #' Initialize a new UseHeuristic class.
     #'
     #' @description
@@ -26,10 +24,9 @@ UseHeuristic <- R6::R6Class(
     #'
     #' @param mzToUseHeuristic mzToUseHeuristic
     #' @param mzToUseHeuristicOnly mzToUseHeuristicOnly
-    #' @param identifier identifier
     #' @param ... Other optional arguments.
     #' @export
-    initialize = function(`mzToUseHeuristic` = NULL, `mzToUseHeuristicOnly` = NULL, `identifier` = NULL, ...) {
+    initialize = function(`mzToUseHeuristic` = NULL, `mzToUseHeuristicOnly` = NULL, ...) {
       if (!is.null(`mzToUseHeuristic`)) {
         if (!(is.numeric(`mzToUseHeuristic`) && length(`mzToUseHeuristic`) == 1)) {
           stop(paste("Error! Invalid data for `mzToUseHeuristic`. Must be an integer:", `mzToUseHeuristic`))
@@ -41,12 +38,6 @@ UseHeuristic <- R6::R6Class(
           stop(paste("Error! Invalid data for `mzToUseHeuristicOnly`. Must be an integer:", `mzToUseHeuristicOnly`))
         }
         self$`mzToUseHeuristicOnly` <- `mzToUseHeuristicOnly`
-      }
-      if (!is.null(`identifier`)) {
-        if (!(is.character(`identifier`) && length(`identifier`) == 1)) {
-          stop(paste("Error! Invalid data for `identifier`. Must be a string:", `identifier`))
-        }
-        self$`identifier` <- `identifier`
       }
     },
     #' To JSON string
@@ -66,10 +57,6 @@ UseHeuristic <- R6::R6Class(
         UseHeuristicObject[["mzToUseHeuristicOnly"]] <-
           self$`mzToUseHeuristicOnly`
       }
-      if (!is.null(self$`identifier`)) {
-        UseHeuristicObject[["identifier"]] <-
-          self$`identifier`
-      }
       UseHeuristicObject
     },
     #' Deserialize JSON string into an instance of UseHeuristic
@@ -88,9 +75,6 @@ UseHeuristic <- R6::R6Class(
       if (!is.null(this_object$`mzToUseHeuristicOnly`)) {
         self$`mzToUseHeuristicOnly` <- this_object$`mzToUseHeuristicOnly`
       }
-      if (!is.null(this_object$`identifier`)) {
-        self$`identifier` <- this_object$`identifier`
-      }
       self
     },
     #' To JSON string
@@ -105,7 +89,7 @@ UseHeuristic <- R6::R6Class(
         if (!is.null(self$`mzToUseHeuristic`)) {
           sprintf(
           '"mzToUseHeuristic":
-            %f
+            %d
                     ',
           self$`mzToUseHeuristic`
           )
@@ -113,17 +97,9 @@ UseHeuristic <- R6::R6Class(
         if (!is.null(self$`mzToUseHeuristicOnly`)) {
           sprintf(
           '"mzToUseHeuristicOnly":
-            %f
+            %d
                     ',
           self$`mzToUseHeuristicOnly`
-          )
-        },
-        if (!is.null(self$`identifier`)) {
-          sprintf(
-          '"identifier":
-            "%s"
-                    ',
-          self$`identifier`
           )
         }
       )
@@ -142,7 +118,6 @@ UseHeuristic <- R6::R6Class(
       this_object <- jsonlite::fromJSON(input_json)
       self$`mzToUseHeuristic` <- this_object$`mzToUseHeuristic`
       self$`mzToUseHeuristicOnly` <- this_object$`mzToUseHeuristicOnly`
-      self$`identifier` <- this_object$`identifier`
       self
     },
     #' Validate JSON input with respect to UseHeuristic

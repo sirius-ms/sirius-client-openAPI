@@ -18,10 +18,3 @@ test_that("mzToUseHeuristicOnly", {
   # uncomment below to test the property
   #expect_equal(model.instance$`mzToUseHeuristicOnly`, "EXPECTED_RESULT")
 })
-
-test_that("identifier", {
-  # tests for the property `identifier` (character)
-
-  # uncomment below to test the property
-  #expect_equal(model.instance$`identifier`, "EXPECTED_RESULT")
-})

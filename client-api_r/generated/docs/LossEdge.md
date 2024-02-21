@@ -5,8 +5,8 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**sourceFragment** | [**FragmentNode**](FragmentNode.md) |  | [optional] 
-**targetFragment** | [**FragmentNode**](FragmentNode.md) |  | [optional] 
+**sourceFragmentIdx** | **integer** |  | [optional] 
+**targetFragmentIdx** | **integer** |  | [optional] 
 **molecularFormula** | **character** |  | [optional] 
 **score** | **numeric** |  | [optional] 
 

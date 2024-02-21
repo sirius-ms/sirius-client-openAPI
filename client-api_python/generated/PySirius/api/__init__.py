@@ -1,12 +1,12 @@
-from __future__ import absolute_import
-
 # flake8: noqa
 
 # import apis into api package
+from PySirius.api.actuator_api import ActuatorApi
 from PySirius.api.compounds_api import CompoundsApi
-from PySirius.api.computations_api import ComputationsApi
-from PySirius.api.formula_results_api import FormulaResultsApi
-from PySirius.api.graphical_user_interface_api import GraphicalUserInterfaceApi
+from PySirius.api.features_api import FeaturesApi
+from PySirius.api.info_api import InfoApi
+from PySirius.api.jobs_api import JobsApi
 from PySirius.api.login_and_account_api import LoginAndAccountApi
-from PySirius.api.project_spaces_api import ProjectSpacesApi
-from PySirius.api.version_info_controller_api import VersionInfoControllerApi
+from PySirius.api.projects_api import ProjectsApi
+from PySirius.api.experimental_gui_api import ExperimentalGUIApi
+

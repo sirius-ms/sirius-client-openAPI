@@ -1,14 +1,14 @@
 # Rsirius::Zodiac
 
-User/developer friendly parameter subset for the ZODIAC tool (Network base molecular formula re-ranking).
+User/developer friendly parameter subset for the ZODIAC tool (Network base molecular formula re-ranking).  Needs results from Formula/SIRIUS Tool
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **enabled** | **character** | tags whether the tool is enabled | [optional] 
-**consideredCandidatesAt300Mz** | [**ZodiacNumberOfConsideredCandidatesAt300Mz**](ZodiacNumberOfConsideredCandidatesAt300Mz.md) |  | [optional] 
-**consideredCandidatesAt800Mz** | [**ZodiacNumberOfConsideredCandidatesAt800Mz**](ZodiacNumberOfConsideredCandidatesAt800Mz.md) |  | [optional] 
-**runInTwoSteps** | [**ZodiacRunInTwoSteps**](ZodiacRunInTwoSteps.md) |  | [optional] 
+**consideredCandidatesAt300Mz** | **integer** | Maximum number of candidate molecular formulas (fragmentation trees computed by SIRIUS) per compound which are considered by ZODIAC for compounds below 300 m/z. | [optional] 
+**consideredCandidatesAt800Mz** | **integer** | Maximum number of candidate molecular formulas (fragmentation trees computed by SIRIUS) per compound which are considered by ZODIAC for compounds above 800 m/z. | [optional] 
+**runInTwoSteps** | **character** | As default ZODIAC runs a 2-step approach. First running &#39;good quality compounds&#39; only, and afterwards including the remaining. | [optional] 
 **edgeFilterThresholds** | [**ZodiacEdgeFilterThresholds**](ZodiacEdgeFilterThresholds.md) |  | [optional] 
 **gibbsSamplerParameters** | [**ZodiacEpochs**](ZodiacEpochs.md) |  | [optional] 
 

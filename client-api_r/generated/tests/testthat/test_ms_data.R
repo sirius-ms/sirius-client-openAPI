@@ -6,29 +6,29 @@ context("Test MsData")
 model_instance <- MsData$new()
 
 test_that("mergedMs1", {
-  # tests for the property `mergedMs1` (AnnotatedSpectrum)
+  # tests for the property `mergedMs1` (BasicSpectrum)
 
   # uncomment below to test the property
   #expect_equal(model.instance$`mergedMs1`, "EXPECTED_RESULT")
 })
 
 test_that("mergedMs2", {
-  # tests for the property `mergedMs2` (AnnotatedSpectrum)
+  # tests for the property `mergedMs2` (BasicSpectrum)
 
   # uncomment below to test the property
   #expect_equal(model.instance$`mergedMs2`, "EXPECTED_RESULT")
 })
 
-test_that("ms2Spectra", {
-  # tests for the property `ms2Spectra` (array[AnnotatedSpectrum])
-
-  # uncomment below to test the property
-  #expect_equal(model.instance$`ms2Spectra`, "EXPECTED_RESULT")
-})
-
 test_that("ms1Spectra", {
-  # tests for the property `ms1Spectra` (array[AnnotatedSpectrum])
+  # tests for the property `ms1Spectra` (array[BasicSpectrum])
 
   # uncomment below to test the property
   #expect_equal(model.instance$`ms1Spectra`, "EXPECTED_RESULT")
+})
+
+test_that("ms2Spectra", {
+  # tests for the property `ms2Spectra` (array[BasicSpectrum])
+
+  # uncomment below to test the property
+  #expect_equal(model.instance$`ms2Spectra`, "EXPECTED_RESULT")
 })

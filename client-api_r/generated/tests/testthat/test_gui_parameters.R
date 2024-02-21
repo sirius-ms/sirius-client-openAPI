@@ -6,8 +6,7 @@ context("Test GuiParameters")
 model_instance <- GuiParameters$new()
 
 test_that("selectedTab", {
-  # tests for the property `selectedTab` (character)
-  # Selected Result ab.
+  # tests for the property `selectedTab` (GuiResultTab)
 
   # uncomment below to test the property
   #expect_equal(model.instance$`selectedTab`, "EXPECTED_RESULT")

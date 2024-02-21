@@ -7,15 +7,15 @@
 #' @title Subscription
 #' @description Subscription Class
 #' @format An \code{R6Class} generator object
-#' @field sid  character [optional]
-#' @field subscriberId  character [optional]
-#' @field subscriberName  character [optional]
+#' @field sid Unique identifier of this subscription character [optional]
+#' @field subscriberId ID of the owner of the subscription.  This can be the ID of any SubscriptionOwner (e.g.  Group or  User)  depending on the level on which a subscription should be is valid. character [optional]
+#' @field subscriberName Optional name of the owner of this subscription character [optional]
 #' @field expirationDate  character [optional]
 #' @field startDate  character [optional]
 #' @field countQueries  character [optional]
-#' @field compoundLimit  integer [optional]
-#' @field compoundHashRecordingTime  integer [optional]
-#' @field maxQueriesPerCompound  integer [optional]
+#' @field instanceLimit Limit of instances (features) that can be computed with this subscription integer [optional]
+#' @field instanceHashRecordingTime Hash is used to allow recomputing identical data without increasing counted instances (features).  The recording time is the amount of time an instance is memorized is integer [optional]
+#' @field maxQueriesPerInstance Maximum number of queries (e.g. prediction) that can be performed  for one instance before it is counted another time. integer [optional]
 #' @field maxUserAccounts  integer [optional]
 #' @field serviceUrl  character [optional]
 #' @field description  character [optional]
@@ -34,9 +34,9 @@ Subscription <- R6::R6Class(
     `expirationDate` = NULL,
     `startDate` = NULL,
     `countQueries` = NULL,
-    `compoundLimit` = NULL,
-    `compoundHashRecordingTime` = NULL,
-    `maxQueriesPerCompound` = NULL,
+    `instanceLimit` = NULL,
+    `instanceHashRecordingTime` = NULL,
+    `maxQueriesPerInstance` = NULL,
     `maxUserAccounts` = NULL,
     `serviceUrl` = NULL,
     `description` = NULL,
@@ -48,15 +48,15 @@ Subscription <- R6::R6Class(
     #' @description
     #' Initialize a new Subscription class.
     #'
-    #' @param sid sid
-    #' @param subscriberId subscriberId
-    #' @param subscriberName subscriberName
+    #' @param sid Unique identifier of this subscription
+    #' @param subscriberId ID of the owner of the subscription.  This can be the ID of any SubscriptionOwner (e.g.  Group or  User)  depending on the level on which a subscription should be is valid.
+    #' @param subscriberName Optional name of the owner of this subscription
     #' @param expirationDate expirationDate
     #' @param startDate startDate
     #' @param countQueries countQueries
-    #' @param compoundLimit compoundLimit
-    #' @param compoundHashRecordingTime compoundHashRecordingTime
-    #' @param maxQueriesPerCompound maxQueriesPerCompound
+    #' @param instanceLimit Limit of instances (features) that can be computed with this subscription
+    #' @param instanceHashRecordingTime Hash is used to allow recomputing identical data without increasing counted instances (features).  The recording time is the amount of time an instance is memorized is
+    #' @param maxQueriesPerInstance Maximum number of queries (e.g. prediction) that can be performed  for one instance before it is counted another time.
     #' @param maxUserAccounts maxUserAccounts
     #' @param serviceUrl serviceUrl
     #' @param description description
@@ -65,7 +65,7 @@ Subscription <- R6::R6Class(
     #' @param pp pp
     #' @param ... Other optional arguments.
     #' @export
-    initialize = function(`sid` = NULL, `subscriberId` = NULL, `subscriberName` = NULL, `expirationDate` = NULL, `startDate` = NULL, `countQueries` = NULL, `compoundLimit` = NULL, `compoundHashRecordingTime` = NULL, `maxQueriesPerCompound` = NULL, `maxUserAccounts` = NULL, `serviceUrl` = NULL, `description` = NULL, `name` = NULL, `tos` = NULL, `pp` = NULL, ...) {
+    initialize = function(`sid` = NULL, `subscriberId` = NULL, `subscriberName` = NULL, `expirationDate` = NULL, `startDate` = NULL, `countQueries` = NULL, `instanceLimit` = NULL, `instanceHashRecordingTime` = NULL, `maxQueriesPerInstance` = NULL, `maxUserAccounts` = NULL, `serviceUrl` = NULL, `description` = NULL, `name` = NULL, `tos` = NULL, `pp` = NULL, ...) {
       if (!is.null(`sid`)) {
         if (!(is.character(`sid`) && length(`sid`) == 1)) {
           stop(paste("Error! Invalid data for `sid`. Must be a string:", `sid`))
@@ -102,23 +102,23 @@ Subscription <- R6::R6Class(
         }
         self$`countQueries` <- `countQueries`
       }
-      if (!is.null(`compoundLimit`)) {
-        if (!(is.numeric(`compoundLimit`) && length(`compoundLimit`) == 1)) {
-          stop(paste("Error! Invalid data for `compoundLimit`. Must be an integer:", `compoundLimit`))
+      if (!is.null(`instanceLimit`)) {
+        if (!(is.numeric(`instanceLimit`) && length(`instanceLimit`) == 1)) {
+          stop(paste("Error! Invalid data for `instanceLimit`. Must be an integer:", `instanceLimit`))
         }
-        self$`compoundLimit` <- `compoundLimit`
+        self$`instanceLimit` <- `instanceLimit`
       }
-      if (!is.null(`compoundHashRecordingTime`)) {
-        if (!(is.numeric(`compoundHashRecordingTime`) && length(`compoundHashRecordingTime`) == 1)) {
-          stop(paste("Error! Invalid data for `compoundHashRecordingTime`. Must be an integer:", `compoundHashRecordingTime`))
+      if (!is.null(`instanceHashRecordingTime`)) {
+        if (!(is.numeric(`instanceHashRecordingTime`) && length(`instanceHashRecordingTime`) == 1)) {
+          stop(paste("Error! Invalid data for `instanceHashRecordingTime`. Must be an integer:", `instanceHashRecordingTime`))
         }
-        self$`compoundHashRecordingTime` <- `compoundHashRecordingTime`
+        self$`instanceHashRecordingTime` <- `instanceHashRecordingTime`
       }
-      if (!is.null(`maxQueriesPerCompound`)) {
-        if (!(is.numeric(`maxQueriesPerCompound`) && length(`maxQueriesPerCompound`) == 1)) {
-          stop(paste("Error! Invalid data for `maxQueriesPerCompound`. Must be an integer:", `maxQueriesPerCompound`))
+      if (!is.null(`maxQueriesPerInstance`)) {
+        if (!(is.numeric(`maxQueriesPerInstance`) && length(`maxQueriesPerInstance`) == 1)) {
+          stop(paste("Error! Invalid data for `maxQueriesPerInstance`. Must be an integer:", `maxQueriesPerInstance`))
         }
-        self$`maxQueriesPerCompound` <- `maxQueriesPerCompound`
+        self$`maxQueriesPerInstance` <- `maxQueriesPerInstance`
       }
       if (!is.null(`maxUserAccounts`)) {
         if (!(is.numeric(`maxUserAccounts`) && length(`maxUserAccounts`) == 1)) {
@@ -190,17 +190,17 @@ Subscription <- R6::R6Class(
         SubscriptionObject[["countQueries"]] <-
           self$`countQueries`
       }
-      if (!is.null(self$`compoundLimit`)) {
-        SubscriptionObject[["compoundLimit"]] <-
-          self$`compoundLimit`
+      if (!is.null(self$`instanceLimit`)) {
+        SubscriptionObject[["instanceLimit"]] <-
+          self$`instanceLimit`
       }
-      if (!is.null(self$`compoundHashRecordingTime`)) {
-        SubscriptionObject[["compoundHashRecordingTime"]] <-
-          self$`compoundHashRecordingTime`
+      if (!is.null(self$`instanceHashRecordingTime`)) {
+        SubscriptionObject[["instanceHashRecordingTime"]] <-
+          self$`instanceHashRecordingTime`
       }
-      if (!is.null(self$`maxQueriesPerCompound`)) {
-        SubscriptionObject[["maxQueriesPerCompound"]] <-
-          self$`maxQueriesPerCompound`
+      if (!is.null(self$`maxQueriesPerInstance`)) {
+        SubscriptionObject[["maxQueriesPerInstance"]] <-
+          self$`maxQueriesPerInstance`
       }
       if (!is.null(self$`maxUserAccounts`)) {
         SubscriptionObject[["maxUserAccounts"]] <-
@@ -256,14 +256,14 @@ Subscription <- R6::R6Class(
       if (!is.null(this_object$`countQueries`)) {
         self$`countQueries` <- this_object$`countQueries`
       }
-      if (!is.null(this_object$`compoundLimit`)) {
-        self$`compoundLimit` <- this_object$`compoundLimit`
+      if (!is.null(this_object$`instanceLimit`)) {
+        self$`instanceLimit` <- this_object$`instanceLimit`
       }
-      if (!is.null(this_object$`compoundHashRecordingTime`)) {
-        self$`compoundHashRecordingTime` <- this_object$`compoundHashRecordingTime`
+      if (!is.null(this_object$`instanceHashRecordingTime`)) {
+        self$`instanceHashRecordingTime` <- this_object$`instanceHashRecordingTime`
       }
-      if (!is.null(this_object$`maxQueriesPerCompound`)) {
-        self$`maxQueriesPerCompound` <- this_object$`maxQueriesPerCompound`
+      if (!is.null(this_object$`maxQueriesPerInstance`)) {
+        self$`maxQueriesPerInstance` <- this_object$`maxQueriesPerInstance`
       }
       if (!is.null(this_object$`maxUserAccounts`)) {
         self$`maxUserAccounts` <- this_object$`maxUserAccounts`
@@ -342,34 +342,34 @@ Subscription <- R6::R6Class(
           tolower(self$`countQueries`)
           )
         },
-        if (!is.null(self$`compoundLimit`)) {
+        if (!is.null(self$`instanceLimit`)) {
           sprintf(
-          '"compoundLimit":
-            %f
+          '"instanceLimit":
+            %d
                     ',
-          self$`compoundLimit`
+          self$`instanceLimit`
           )
         },
-        if (!is.null(self$`compoundHashRecordingTime`)) {
+        if (!is.null(self$`instanceHashRecordingTime`)) {
           sprintf(
-          '"compoundHashRecordingTime":
-            %f
+          '"instanceHashRecordingTime":
+            %d
                     ',
-          self$`compoundHashRecordingTime`
+          self$`instanceHashRecordingTime`
           )
         },
-        if (!is.null(self$`maxQueriesPerCompound`)) {
+        if (!is.null(self$`maxQueriesPerInstance`)) {
           sprintf(
-          '"maxQueriesPerCompound":
-            %f
+          '"maxQueriesPerInstance":
+            %d
                     ',
-          self$`maxQueriesPerCompound`
+          self$`maxQueriesPerInstance`
           )
         },
         if (!is.null(self$`maxUserAccounts`)) {
           sprintf(
           '"maxUserAccounts":
-            %f
+            %d
                     ',
           self$`maxUserAccounts`
           )
@@ -434,9 +434,9 @@ Subscription <- R6::R6Class(
       self$`expirationDate` <- this_object$`expirationDate`
       self$`startDate` <- this_object$`startDate`
       self$`countQueries` <- this_object$`countQueries`
-      self$`compoundLimit` <- this_object$`compoundLimit`
-      self$`compoundHashRecordingTime` <- this_object$`compoundHashRecordingTime`
-      self$`maxQueriesPerCompound` <- this_object$`maxQueriesPerCompound`
+      self$`instanceLimit` <- this_object$`instanceLimit`
+      self$`instanceHashRecordingTime` <- this_object$`instanceHashRecordingTime`
+      self$`maxQueriesPerInstance` <- this_object$`maxQueriesPerInstance`
       self$`maxUserAccounts` <- this_object$`maxUserAccounts`
       self$`serviceUrl` <- this_object$`serviceUrl`
       self$`description` <- this_object$`description`

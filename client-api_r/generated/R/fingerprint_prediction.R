@@ -1,7 +1,7 @@
 #' Create a new FingerprintPrediction
 #'
 #' @description
-#' User/developer friendly parameter subset for the CSI:FingerID Fingerprint tool
+#' User/developer friendly parameter subset for the CSI:FingerID Fingerprint tool  Needs results from Formula/SIRIUS Tool
 #'
 #' @docType class
 #' @title FingerprintPrediction
@@ -9,6 +9,7 @@
 #' @format An \code{R6Class} generator object
 #' @field enabled tags whether the tool is enabled character [optional]
 #' @field useScoreThreshold If true, an adaptive soft threshold will be applied to only compute Fingerprints for promising formula candidates  Enabling is highly recommended. character [optional]
+#' @field alwaysPredictHighRefMatches If true Fingerprint/Classes/Structures will be predicted for formulas candidates with  reference spectrum similarity > Sirius.minReferenceMatchScoreToInject will be predicted no matter which  score threshold rules apply.  If NULL default value will be used. character [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
 #' @export
@@ -17,6 +18,7 @@ FingerprintPrediction <- R6::R6Class(
   public = list(
     `enabled` = NULL,
     `useScoreThreshold` = NULL,
+    `alwaysPredictHighRefMatches` = NULL,
     #' Initialize a new FingerprintPrediction class.
     #'
     #' @description
@@ -24,9 +26,10 @@ FingerprintPrediction <- R6::R6Class(
     #'
     #' @param enabled tags whether the tool is enabled
     #' @param useScoreThreshold If true, an adaptive soft threshold will be applied to only compute Fingerprints for promising formula candidates  Enabling is highly recommended.
+    #' @param alwaysPredictHighRefMatches If true Fingerprint/Classes/Structures will be predicted for formulas candidates with  reference spectrum similarity > Sirius.minReferenceMatchScoreToInject will be predicted no matter which  score threshold rules apply.  If NULL default value will be used.
     #' @param ... Other optional arguments.
     #' @export
-    initialize = function(`enabled` = NULL, `useScoreThreshold` = NULL, ...) {
+    initialize = function(`enabled` = NULL, `useScoreThreshold` = NULL, `alwaysPredictHighRefMatches` = NULL, ...) {
       if (!is.null(`enabled`)) {
         if (!(is.logical(`enabled`) && length(`enabled`) == 1)) {
           stop(paste("Error! Invalid data for `enabled`. Must be a boolean:", `enabled`))
@@ -38,6 +41,12 @@ FingerprintPrediction <- R6::R6Class(
           stop(paste("Error! Invalid data for `useScoreThreshold`. Must be a boolean:", `useScoreThreshold`))
         }
         self$`useScoreThreshold` <- `useScoreThreshold`
+      }
+      if (!is.null(`alwaysPredictHighRefMatches`)) {
+        if (!(is.logical(`alwaysPredictHighRefMatches`) && length(`alwaysPredictHighRefMatches`) == 1)) {
+          stop(paste("Error! Invalid data for `alwaysPredictHighRefMatches`. Must be a boolean:", `alwaysPredictHighRefMatches`))
+        }
+        self$`alwaysPredictHighRefMatches` <- `alwaysPredictHighRefMatches`
       }
     },
     #' To JSON string
@@ -57,6 +66,10 @@ FingerprintPrediction <- R6::R6Class(
         FingerprintPredictionObject[["useScoreThreshold"]] <-
           self$`useScoreThreshold`
       }
+      if (!is.null(self$`alwaysPredictHighRefMatches`)) {
+        FingerprintPredictionObject[["alwaysPredictHighRefMatches"]] <-
+          self$`alwaysPredictHighRefMatches`
+      }
       FingerprintPredictionObject
     },
     #' Deserialize JSON string into an instance of FingerprintPrediction
@@ -74,6 +87,9 @@ FingerprintPrediction <- R6::R6Class(
       }
       if (!is.null(this_object$`useScoreThreshold`)) {
         self$`useScoreThreshold` <- this_object$`useScoreThreshold`
+      }
+      if (!is.null(this_object$`alwaysPredictHighRefMatches`)) {
+        self$`alwaysPredictHighRefMatches` <- this_object$`alwaysPredictHighRefMatches`
       }
       self
     },
@@ -101,6 +117,14 @@ FingerprintPrediction <- R6::R6Class(
                     ',
           tolower(self$`useScoreThreshold`)
           )
+        },
+        if (!is.null(self$`alwaysPredictHighRefMatches`)) {
+          sprintf(
+          '"alwaysPredictHighRefMatches":
+            %s
+                    ',
+          tolower(self$`alwaysPredictHighRefMatches`)
+          )
         }
       )
       jsoncontent <- paste(jsoncontent, collapse = ",")
@@ -118,6 +142,7 @@ FingerprintPrediction <- R6::R6Class(
       this_object <- jsonlite::fromJSON(input_json)
       self$`enabled` <- this_object$`enabled`
       self$`useScoreThreshold` <- this_object$`useScoreThreshold`
+      self$`alwaysPredictHighRefMatches` <- this_object$`alwaysPredictHighRefMatches`
       self
     },
     #' Validate JSON input with respect to FingerprintPrediction
