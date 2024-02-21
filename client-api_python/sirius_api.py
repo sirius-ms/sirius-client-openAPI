@@ -21,9 +21,6 @@ class PySiriusAPI:
     def get_FeaturesApi(self):
         """returns API endpoint of the FeaturesApi"""
         return PySirius.FeaturesApi(self.api_client)
-    def get_CompoundsApi(self):
-        """returns API endpoint of the CompoundsApi"""
-        return PySirius.CompoundsApi(self.api_client)
     def get_ExperimentalGUIApi(self):
         """returns API endpoint of the ExperimentalGUIApi"""
         return PySirius.ExperimentalGUIApi(self.api_client)
