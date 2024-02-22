@@ -14,12 +14,10 @@
 
 import unittest
 
-import PySirius
-from PySirius import PySiriusAPI
+from PySirius.models.account_credentials import AccountCredentials
 from PySirius.api.login_and_account_api import LoginAndAccountApi
-
-
-api= PySiriusAPI(PySirius.ApiClient())
+from PySirius.models.account_info import AccountInfo
+from PySirius.models.gui_info import GuiInfo
 
 class TestLoginAndAccountApi(unittest.TestCase):
     """LoginAndAccountApi unit test stubs"""
@@ -35,34 +33,42 @@ class TestLoginAndAccountApi(unittest.TestCase):
 
         Get information about the account currently logged in.
         """
-        pass
+        response = self.api.get_account_info()
+        self.assertIsInstance(response, AccountInfo)
 
     def test_get_sign_up_url(self) -> None:
         """Test case for get_sign_up_url
 
         Get SignUp URL (For signUp via web browser)
         """
-        pass
+        response = self.api.get_sign_up_url()
+        self.assertIn(response, 'https://portal.bright-giant.com/auth/register/')
 
     def test_get_subscriptions(self) -> None:
         """Test case for get_subscriptions
 
         Get available subscriptions of the account currently logged in.
         """
-        pass
+        response = self.api.get_subscriptions()
+        self.assertIsInstance(response, list)
 
     def test_is_logged_in(self) -> None:
         """Test case for is_logged_in
 
         Check if a user is logged in.
         """
-        pass
+        response = self.api.is_logged_in()
+        self.assertIsInstance(response, bool)
 
     def test_login(self) -> None:
         """Test case for login
 
         Login into SIRIUS web services and activate default subscription if available.
         """
+        # TODO need project secrets 'myUserMail' and 'myPassword'
+        # credentials = AccountCredentials.from_json('{"username": "myUserMail", "password": "myPassword"}')
+        # response = self.api.login(True, credentials)
+        # self.assertIsInstance(response, AccountInfo)
         pass
 
     def test_logout(self) -> None:
@@ -84,6 +90,9 @@ class TestLoginAndAccountApi(unittest.TestCase):
 
         Select a subscription as active subscription to be used for computations.
         """
+        # TODO need project secret 'mySubsciption'
+        # response = self.api.select_subscription("mySubsciption")
+        # self.assertIsInstance(response, AccountInfo)
         pass
 
     def test_sign_up(self) -> None:
