@@ -156,26 +156,36 @@ class TestJobsApi(unittest.TestCase):
         Start computation for given compounds and with given parameters.
         """
         path_to_demo_data = "../../../.updater/clientTests/Data"
-        os.makedirs("temp_0")
+        os.makedirs("temp_1")
         projectID = "tempProject"
         api.get_ProjectsApi().create_project_space(project_id=projectID,
-                                                   path_to_project="../../../../client-api_python/generated/test/temp_0")
+                                                   path_to_project="../../../../client-api_python/generated/test/temp_1")
         api.get_JobsApi().start_import_from_path_job(project_id=projectID,
                                                      import_local_files_submission=PySirius.ImportLocalFilesSubmission.from_dict(
                                                          {
                                                              "allowMs1OnlyData": True,
                                                              "ignoreFormulas": True,
                                                              "inputPaths": [
-                                                                 abspath(path_to_demo_data + "/ms/Bicuculline.ms"),
-                                                                 abspath(path_to_demo_data + "/ms/laudanosine.mgf")]
+                                                                 abspath(path_to_demo_data + "/Kaempferol.ms.ms"),
+                                                                 abspath(path_to_demo_data + "/laudanosine.mgf")]
                                                          }))
 
         time.sleep(1)
 
+        id = api.get_FeaturesApi().get_aligned_features(project_id=projectID).content[0].aligned_feature_id
 
+        jobConfig["alignedFeatureIds"]=[id]
 
         api.get_JobsApi().start_job(project_id=projectID,job_submission=jobConfig)
-        pass
+
+        time.sleep(3)
+
+
+        self.assertTrue(os.path.exists("temp_1/"+id+"/scores"))
+
+        shutil.rmtree("temp_1")
+        api.get_ProjectsApi().close_project_space(project_id=projectID)
+
 
     def test_start_job_from_config(self) -> None:
         """Test case for start_job_from_config
