@@ -4,15 +4,15 @@ import pytest
 import os
 
 credentials = {"username":str(os.getenv('SIRIUS_USER')), "password":str(os.getenv('SIRIUS_PW'))}
-path_to_sirius = ".updater/api/sirius/bin/sirius"
-path_to_project = ".updater/api/temp"
+path_to_sirius = "/home/martin/software/sirius_600/sirius_gui_dist-sirius-6.0.0-SNAPSHOT/bin/sirius"#".updater/api/sirius/bin/sirius"
+path_to_project ="/home/martin/internal/tmpPythonTest" #".updater/api/temp"
 path_to_demo_data = ".updater/examples"
-api = SiriusSDK.start(path_to_project, path_to_sirius)
-ps_name = api.get_ProjectSpacesApi().get_project_spaces()[0].name
+api = SiriusSDK.start(path_to_sirius,path_to_project,port=8081)
+ps_name = api.get_ProjectsApi().get_project_spaces().content[0].project_id
 
 
 def setup_module():
-  api.get_LoginAndAccountApi().login(credentials, True)
+  api.get_LoginAndAccountApi().login(True,credentials)
 
 def teardown_module():
   api.get_LoginAndAccountApi().logout()
@@ -23,8 +23,8 @@ def test_Computations():
   test = api.get_ComputationsApi()
   assert True
 
-def test_ProjectSpaces():
-  test = api.get_ProjectSpacesApi()
+def test_Projects():
+  test = api.get_ProjectsApi()
   test.get_project_spaces()
   assert True
 
