@@ -19,7 +19,7 @@ class SiriusSDK:
     api_client = None
 
 
-    def reset():
+    def reset(self):
         SiriusSDK.port = None
         SiriusSDK.host = None
         SiriusSDK.configuration = None
