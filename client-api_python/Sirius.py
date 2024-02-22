@@ -19,7 +19,7 @@ class SiriusSDK:
     api_client = None
 
 
-    def reset(self):
+    def reset_sdk_class(self):
         SiriusSDK.port = None
         SiriusSDK.host = None
         SiriusSDK.configuration = None
@@ -30,6 +30,10 @@ class SiriusSDK:
         SiriusSDK.process_id = None
         SiriusSDK.api_client = None
         SiriusSDK.run_command = None
+
+    
+    def reset_sdk_process(self):
+        SiriusSDK.process = None
 
 
     def reconnect(self):
@@ -56,12 +60,12 @@ class SiriusSDK:
                     else: 
                         print("The SIRIUS process seems to have exited during startup. Please investigate this error.")
                         print(f"Exit code provided by the process: {SiriusSDK.process.poll()}")
-                        SiriusSDK.reset()
+                        SiriusSDK.reset_sdk_class()
                 except Exception as e:
                     pass
 
             print("SIRIUS seems to have problems starting. Resetting SiriusSDK...")
-            SiriusSDK.reset()
+            SiriusSDK.reset_sdk_class()
             return None
         print("Could not attempt REST restart, run_command, process or api_client are None.")
         return None
@@ -72,10 +76,11 @@ class SiriusSDK:
 
         # Fail if started already
         if (SiriusSDK.process is not None) and not forceStart:
-            print("Sirius seems to have already been started with PID: " + str(SiriusSDK.process.pid))
-            print("Use reconnect() to get a new API instance or shutdown() and start() to restart SIRIUS.")
-            print("If you are sure the process is not running anymore, reset as SiriusSDK.process=None or reset the complete SDK using SiriusSDK.reset().")
-            print("[NOT RECOMMENDED] Use start with forceStart=True to skip this warning and start a second service.")
+            print(f"\033[93m Sirius seems to have already been started with PID: {str(SiriusSDK.process.pid)}.")
+            print("\033[93m Use reconnect() to get a new API instance for your current SIRIUS.")
+            print("\033[93m Use shutdown() and then start() to restart SIRIUS and get a new API instance.")
+            print("\033[93m If you are sure the process is not running anymore, use reset_sdk_process() or reset the complete SDK using reset_sdk_class() before calling start() again.")
+            print("\033[93m [NOT RECOMMENDED] Use start with forceStart=True to skip this warning and start a second service. \033[0m")
             return None
         
         SiriusSDK.port = port
@@ -91,13 +96,13 @@ class SiriusSDK:
         if sirius_path is not None:
             if not os.path.exists(sirius_path):
                 print("Wrong path to executable.")
-                SiriusSDK.reset()
+                SiriusSDK.reset_sdk_class()
                 return None
             SiriusSDK.sirius_path = os.path.abspath(sirius_path)
         else:
             if os.getenv("PATH").find("sirius") == -1:
                 print("Please provide a path to the sirius executable if not declared in PATH!")
-                SiriusSDK.reset()
+                SiriusSDK.reset_sdk_class()
                 return None
             print("Found SIRIUS in PATH! Using this information to start the application.")
             SiriusSDK.sirius_path = 'sirius'
@@ -106,7 +111,7 @@ class SiriusSDK:
         if projectspace is not None:
             if not os.path.exists(projectspace):
                 print("Wrong path to project space.")
-                SiriusSDK.reset()
+                SiriusSDK.reset_sdk_class()
                 return None
             SiriusSDK.projectspace = os.path.abspath(projectspace)
             run_command = [SiriusSDK.sirius_path, "--output", SiriusSDK.projectspace, "REST", "-p", str(port), "-s"]
@@ -116,7 +121,7 @@ class SiriusSDK:
         if workspace is not None:
             if not os.path.exists(workspace):
                 print("Wrong path to workspace")
-                SiriusSDK.reset()
+                SiriusSDK.reset_sdk_class()
                 return None
             print("\033[93m [WARNING] Overwriting workspace location [NOT RECOMMENDED] \033[0m")
             SiriusSDK.workspace = os.path.abspath(workspace)
@@ -138,12 +143,12 @@ class SiriusSDK:
                 else: 
                     print("The SIRIUS process seems to have exited during startup. Please investigate this error.")
                     print(f"Exit code provided by the process: {SiriusSDK.process.poll()}")
-                    SiriusSDK.reset()
+                    SiriusSDK.reset_sdk_class()
             except Exception as e:
                 print(str(e))
 
         print("SIRIUS seems to have problems starting. Resetting SiriusSDK...")
-        SiriusSDK.reset()
+        SiriusSDK.reset_sdk_class()
         return None
 
 
