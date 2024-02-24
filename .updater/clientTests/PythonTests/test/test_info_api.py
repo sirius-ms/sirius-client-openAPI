@@ -15,6 +15,8 @@
 import unittest
 
 from PySirius.api.info_api import InfoApi
+from PySirius.models.info import Info
+from PySirius.models.connection_check import ConnectionCheck
 
 
 class TestInfoApi(unittest.TestCase):
@@ -30,13 +32,16 @@ class TestInfoApi(unittest.TestCase):
         """Test case for get_connection_check
 
         """
-        pass
+        # TODO seems buggy, try testing on newer build
+        # response = self.api.get_connection_check()
+        # self.assertIsInstance(response, ConnectionCheck)
 
     def test_get_info(self) -> None:
         """Test case for get_info
 
         """
-        pass
+        response = self.api.get_info()
+        self.assertIsInstance(response, Info)
 
 
 if __name__ == '__main__':
