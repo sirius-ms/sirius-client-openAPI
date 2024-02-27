@@ -9,7 +9,6 @@
 #' @format An \code{R6Class} generator object
 #' @field numberOfSecondsPerDecomposition  integer [optional]
 #' @field numberOfSecondsPerInstance  integer [optional]
-#' @field identifier  character [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
 #' @export
@@ -18,7 +17,6 @@ Timeout <- R6::R6Class(
   public = list(
     `numberOfSecondsPerDecomposition` = NULL,
     `numberOfSecondsPerInstance` = NULL,
-    `identifier` = NULL,
     #' Initialize a new Timeout class.
     #'
     #' @description
@@ -26,10 +24,9 @@ Timeout <- R6::R6Class(
     #'
     #' @param numberOfSecondsPerDecomposition numberOfSecondsPerDecomposition
     #' @param numberOfSecondsPerInstance numberOfSecondsPerInstance
-    #' @param identifier identifier
     #' @param ... Other optional arguments.
     #' @export
-    initialize = function(`numberOfSecondsPerDecomposition` = NULL, `numberOfSecondsPerInstance` = NULL, `identifier` = NULL, ...) {
+    initialize = function(`numberOfSecondsPerDecomposition` = NULL, `numberOfSecondsPerInstance` = NULL, ...) {
       if (!is.null(`numberOfSecondsPerDecomposition`)) {
         if (!(is.numeric(`numberOfSecondsPerDecomposition`) && length(`numberOfSecondsPerDecomposition`) == 1)) {
           stop(paste("Error! Invalid data for `numberOfSecondsPerDecomposition`. Must be an integer:", `numberOfSecondsPerDecomposition`))
@@ -41,12 +38,6 @@ Timeout <- R6::R6Class(
           stop(paste("Error! Invalid data for `numberOfSecondsPerInstance`. Must be an integer:", `numberOfSecondsPerInstance`))
         }
         self$`numberOfSecondsPerInstance` <- `numberOfSecondsPerInstance`
-      }
-      if (!is.null(`identifier`)) {
-        if (!(is.character(`identifier`) && length(`identifier`) == 1)) {
-          stop(paste("Error! Invalid data for `identifier`. Must be a string:", `identifier`))
-        }
-        self$`identifier` <- `identifier`
       }
     },
     #' To JSON string
@@ -66,10 +57,6 @@ Timeout <- R6::R6Class(
         TimeoutObject[["numberOfSecondsPerInstance"]] <-
           self$`numberOfSecondsPerInstance`
       }
-      if (!is.null(self$`identifier`)) {
-        TimeoutObject[["identifier"]] <-
-          self$`identifier`
-      }
       TimeoutObject
     },
     #' Deserialize JSON string into an instance of Timeout
@@ -88,9 +75,6 @@ Timeout <- R6::R6Class(
       if (!is.null(this_object$`numberOfSecondsPerInstance`)) {
         self$`numberOfSecondsPerInstance` <- this_object$`numberOfSecondsPerInstance`
       }
-      if (!is.null(this_object$`identifier`)) {
-        self$`identifier` <- this_object$`identifier`
-      }
       self
     },
     #' To JSON string
@@ -105,7 +89,7 @@ Timeout <- R6::R6Class(
         if (!is.null(self$`numberOfSecondsPerDecomposition`)) {
           sprintf(
           '"numberOfSecondsPerDecomposition":
-            %f
+            %d
                     ',
           self$`numberOfSecondsPerDecomposition`
           )
@@ -113,17 +97,9 @@ Timeout <- R6::R6Class(
         if (!is.null(self$`numberOfSecondsPerInstance`)) {
           sprintf(
           '"numberOfSecondsPerInstance":
-            %f
+            %d
                     ',
           self$`numberOfSecondsPerInstance`
-          )
-        },
-        if (!is.null(self$`identifier`)) {
-          sprintf(
-          '"identifier":
-            "%s"
-                    ',
-          self$`identifier`
           )
         }
       )
@@ -142,7 +118,6 @@ Timeout <- R6::R6Class(
       this_object <- jsonlite::fromJSON(input_json)
       self$`numberOfSecondsPerDecomposition` <- this_object$`numberOfSecondsPerDecomposition`
       self$`numberOfSecondsPerInstance` <- this_object$`numberOfSecondsPerInstance`
-      self$`identifier` <- this_object$`identifier`
       self
     },
     #' Validate JSON input with respect to Timeout

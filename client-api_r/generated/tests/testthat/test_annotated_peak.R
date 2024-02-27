@@ -5,11 +5,11 @@ context("Test AnnotatedPeak")
 
 model_instance <- AnnotatedPeak$new()
 
-test_that("mass", {
-  # tests for the property `mass` (numeric)
+test_that("mz", {
+  # tests for the property `mz` (numeric)
 
   # uncomment below to test the property
-  #expect_equal(model.instance$`mass`, "EXPECTED_RESULT")
+  #expect_equal(model.instance$`mz`, "EXPECTED_RESULT")
 })
 
 test_that("intensity", {
@@ -20,7 +20,7 @@ test_that("intensity", {
 })
 
 test_that("peakAnnotation", {
-  # tests for the property `peakAnnotation` (object)
+  # tests for the property `peakAnnotation` (PeakAnnotation)
 
   # uncomment below to test the property
   #expect_equal(model.instance$`peakAnnotation`, "EXPECTED_RESULT")

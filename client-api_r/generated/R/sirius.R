@@ -8,10 +8,10 @@
 #' @description Sirius Class
 #' @format An \code{R6Class} generator object
 #' @field enabled tags whether the tool is enabled character [optional]
-#' @field profile Instrument specific profile for internal algorithms  Just select what comes closest to the instrument that was used for measuring the data. character [optional]
+#' @field profile  \link{Instrument} [optional]
 #' @field numberOfCandidates Number of formula candidates to keep as result list (Formula Candidates). integer [optional]
 #' @field numberOfCandidatesPerIon Use this parameter if you want to force SIRIUS to report at least  NumberOfCandidatesPerIon results per ionization.  if <= 0, this parameter will have no effect and just the top  NumberOfCandidates results will be reported. integer [optional]
-#' @field massAccuracyMS2ppm Maximum allowed mass accuracy. Only molecular formulas within this mass window are considered. numeric [optional]
+#' @field massAccuracyMS2ppm Maximum allowed mass deviation. Only molecular formulas within this mass window are considered. numeric [optional]
 #' @field isotopeMs2Settings Specify how isotope patterns in MS/MS should be handled.  <p>  FILTER: When filtering is enabled, molecular formulas are excluded if their  theoretical isotope pattern does not match the theoretical one, even if their MS/MS pattern has high score.  <p>  SCORE: Use them for SCORING. To use this the instrument should produce clear MS/MS isotope patterns  <p>  IGNORE: Ignore that there might be isotope patterns in MS/MS character [optional]
 #' @field formulaSearchDBs List Structure database to extract molecular formulas from to reduce formula search space.  SIRIUS is quite good at de novo formula annotation, so only enable if you have a good reason. list(character) [optional]
 #' @field enforcedFormulaConstraints These configurations hold the information how to autodetect elements based on the given formula constraints.  Note: If the compound is already assigned to a specific molecular formula, this annotation is ignored.  <p>  Enforced: Enforced elements are always considered character [optional]
@@ -19,6 +19,7 @@
 #' @field detectableElements These configurations hold the information how to autodetect elements based on the given formula constraints.  Note: If the compound is already assigned to a specific molecular formula, this annotation is ignored.  <p>  Detectable: Detectable elements are added to the chemical alphabet, if there are indications for them (e.g. in isotope pattern) list(character) [optional]
 #' @field ilpTimeout  \link{Timeout} [optional]
 #' @field useHeuristic  \link{UseHeuristic} [optional]
+#' @field minRefMatchScoreToInject Similarity Threshold to inject formula candidates no matter which score/rank they have or which filter settings are applied.  If threshold >= 0 formulas candidates with reference spectrum similarity above the threshold will be injected.  If NULL injection is disables. numeric [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
 #' @export
@@ -37,16 +38,17 @@ Sirius <- R6::R6Class(
     `detectableElements` = NULL,
     `ilpTimeout` = NULL,
     `useHeuristic` = NULL,
+    `minRefMatchScoreToInject` = NULL,
     #' Initialize a new Sirius class.
     #'
     #' @description
     #' Initialize a new Sirius class.
     #'
     #' @param enabled tags whether the tool is enabled
-    #' @param profile Instrument specific profile for internal algorithms  Just select what comes closest to the instrument that was used for measuring the data.
+    #' @param profile profile
     #' @param numberOfCandidates Number of formula candidates to keep as result list (Formula Candidates).
     #' @param numberOfCandidatesPerIon Use this parameter if you want to force SIRIUS to report at least  NumberOfCandidatesPerIon results per ionization.  if <= 0, this parameter will have no effect and just the top  NumberOfCandidates results will be reported.
-    #' @param massAccuracyMS2ppm Maximum allowed mass accuracy. Only molecular formulas within this mass window are considered.
+    #' @param massAccuracyMS2ppm Maximum allowed mass deviation. Only molecular formulas within this mass window are considered.
     #' @param isotopeMs2Settings Specify how isotope patterns in MS/MS should be handled.  <p>  FILTER: When filtering is enabled, molecular formulas are excluded if their  theoretical isotope pattern does not match the theoretical one, even if their MS/MS pattern has high score.  <p>  SCORE: Use them for SCORING. To use this the instrument should produce clear MS/MS isotope patterns  <p>  IGNORE: Ignore that there might be isotope patterns in MS/MS
     #' @param formulaSearchDBs List Structure database to extract molecular formulas from to reduce formula search space.  SIRIUS is quite good at de novo formula annotation, so only enable if you have a good reason.
     #' @param enforcedFormulaConstraints These configurations hold the information how to autodetect elements based on the given formula constraints.  Note: If the compound is already assigned to a specific molecular formula, this annotation is ignored.  <p>  Enforced: Enforced elements are always considered
@@ -54,9 +56,10 @@ Sirius <- R6::R6Class(
     #' @param detectableElements These configurations hold the information how to autodetect elements based on the given formula constraints.  Note: If the compound is already assigned to a specific molecular formula, this annotation is ignored.  <p>  Detectable: Detectable elements are added to the chemical alphabet, if there are indications for them (e.g. in isotope pattern)
     #' @param ilpTimeout ilpTimeout
     #' @param useHeuristic useHeuristic
+    #' @param minRefMatchScoreToInject Similarity Threshold to inject formula candidates no matter which score/rank they have or which filter settings are applied.  If threshold >= 0 formulas candidates with reference spectrum similarity above the threshold will be injected.  If NULL injection is disables.
     #' @param ... Other optional arguments.
     #' @export
-    initialize = function(`enabled` = NULL, `profile` = NULL, `numberOfCandidates` = NULL, `numberOfCandidatesPerIon` = NULL, `massAccuracyMS2ppm` = NULL, `isotopeMs2Settings` = NULL, `formulaSearchDBs` = NULL, `enforcedFormulaConstraints` = NULL, `fallbackFormulaConstraints` = NULL, `detectableElements` = NULL, `ilpTimeout` = NULL, `useHeuristic` = NULL, ...) {
+    initialize = function(`enabled` = NULL, `profile` = NULL, `numberOfCandidates` = NULL, `numberOfCandidatesPerIon` = NULL, `massAccuracyMS2ppm` = NULL, `isotopeMs2Settings` = NULL, `formulaSearchDBs` = NULL, `enforcedFormulaConstraints` = NULL, `fallbackFormulaConstraints` = NULL, `detectableElements` = NULL, `ilpTimeout` = NULL, `useHeuristic` = NULL, `minRefMatchScoreToInject` = NULL, ...) {
       if (!is.null(`enabled`)) {
         if (!(is.logical(`enabled`) && length(`enabled`) == 1)) {
           stop(paste("Error! Invalid data for `enabled`. Must be a boolean:", `enabled`))
@@ -64,12 +67,10 @@ Sirius <- R6::R6Class(
         self$`enabled` <- `enabled`
       }
       if (!is.null(`profile`)) {
-        if (!(`profile` %in% c("QTOF", "ORBI", "FTICR"))) {
-          stop(paste("Error! \"", `profile`, "\" cannot be assigned to `profile`. Must be \"QTOF\", \"ORBI\", \"FTICR\".", sep = ""))
+        if (!(`profile` %in% c())) {
+          stop(paste("Error! \"", `profile`, "\" cannot be assigned to `profile`. Must be .", sep = ""))
         }
-        if (!(is.character(`profile`) && length(`profile`) == 1)) {
-          stop(paste("Error! Invalid data for `profile`. Must be a string:", `profile`))
-        }
+        stopifnot(R6::is.R6(`profile`))
         self$`profile` <- `profile`
       }
       if (!is.null(`numberOfCandidates`)) {
@@ -129,6 +130,12 @@ Sirius <- R6::R6Class(
         stopifnot(R6::is.R6(`useHeuristic`))
         self$`useHeuristic` <- `useHeuristic`
       }
+      if (!is.null(`minRefMatchScoreToInject`)) {
+        if (!(is.numeric(`minRefMatchScoreToInject`) && length(`minRefMatchScoreToInject`) == 1)) {
+          stop(paste("Error! Invalid data for `minRefMatchScoreToInject`. Must be a number:", `minRefMatchScoreToInject`))
+        }
+        self$`minRefMatchScoreToInject` <- `minRefMatchScoreToInject`
+      }
     },
     #' To JSON string
     #'
@@ -145,7 +152,7 @@ Sirius <- R6::R6Class(
       }
       if (!is.null(self$`profile`)) {
         SiriusObject[["profile"]] <-
-          self$`profile`
+          self$`profile`$toJSON()
       }
       if (!is.null(self$`numberOfCandidates`)) {
         SiriusObject[["numberOfCandidates"]] <-
@@ -187,6 +194,10 @@ Sirius <- R6::R6Class(
         SiriusObject[["useHeuristic"]] <-
           self$`useHeuristic`$toJSON()
       }
+      if (!is.null(self$`minRefMatchScoreToInject`)) {
+        SiriusObject[["minRefMatchScoreToInject"]] <-
+          self$`minRefMatchScoreToInject`
+      }
       SiriusObject
     },
     #' Deserialize JSON string into an instance of Sirius
@@ -203,10 +214,9 @@ Sirius <- R6::R6Class(
         self$`enabled` <- this_object$`enabled`
       }
       if (!is.null(this_object$`profile`)) {
-        if (!is.null(this_object$`profile`) && !(this_object$`profile` %in% c("QTOF", "ORBI", "FTICR"))) {
-          stop(paste("Error! \"", this_object$`profile`, "\" cannot be assigned to `profile`. Must be \"QTOF\", \"ORBI\", \"FTICR\".", sep = ""))
-        }
-        self$`profile` <- this_object$`profile`
+        `profile_object` <- Instrument$new()
+        `profile_object`$fromJSON(jsonlite::toJSON(this_object$`profile`, auto_unbox = TRUE, digits = NA))
+        self$`profile` <- `profile_object`
       }
       if (!is.null(this_object$`numberOfCandidates`)) {
         self$`numberOfCandidates` <- this_object$`numberOfCandidates`
@@ -236,14 +246,17 @@ Sirius <- R6::R6Class(
         self$`detectableElements` <- ApiClient$new()$deserializeObj(this_object$`detectableElements`, "array[character]", loadNamespace("Rsirius"))
       }
       if (!is.null(this_object$`ilpTimeout`)) {
-        ilptimeout_object <- Timeout$new()
-        ilptimeout_object$fromJSON(jsonlite::toJSON(this_object$ilpTimeout, auto_unbox = TRUE, digits = NA))
-        self$`ilpTimeout` <- ilptimeout_object
+        `ilptimeout_object` <- Timeout$new()
+        `ilptimeout_object`$fromJSON(jsonlite::toJSON(this_object$`ilpTimeout`, auto_unbox = TRUE, digits = NA))
+        self$`ilpTimeout` <- `ilptimeout_object`
       }
       if (!is.null(this_object$`useHeuristic`)) {
-        useheuristic_object <- UseHeuristic$new()
-        useheuristic_object$fromJSON(jsonlite::toJSON(this_object$useHeuristic, auto_unbox = TRUE, digits = NA))
-        self$`useHeuristic` <- useheuristic_object
+        `useheuristic_object` <- UseHeuristic$new()
+        `useheuristic_object`$fromJSON(jsonlite::toJSON(this_object$`useHeuristic`, auto_unbox = TRUE, digits = NA))
+        self$`useHeuristic` <- `useheuristic_object`
+      }
+      if (!is.null(this_object$`minRefMatchScoreToInject`)) {
+        self$`minRefMatchScoreToInject` <- this_object$`minRefMatchScoreToInject`
       }
       self
     },
@@ -267,15 +280,15 @@ Sirius <- R6::R6Class(
         if (!is.null(self$`profile`)) {
           sprintf(
           '"profile":
-            "%s"
-                    ',
-          self$`profile`
+          %s
+          ',
+          jsonlite::toJSON(self$`profile`$toJSON(), auto_unbox = TRUE, digits = NA)
           )
         },
         if (!is.null(self$`numberOfCandidates`)) {
           sprintf(
           '"numberOfCandidates":
-            %f
+            %d
                     ',
           self$`numberOfCandidates`
           )
@@ -283,7 +296,7 @@ Sirius <- R6::R6Class(
         if (!is.null(self$`numberOfCandidatesPerIon`)) {
           sprintf(
           '"numberOfCandidatesPerIon":
-            %f
+            %d
                     ',
           self$`numberOfCandidatesPerIon`
           )
@@ -291,7 +304,7 @@ Sirius <- R6::R6Class(
         if (!is.null(self$`massAccuracyMS2ppm`)) {
           sprintf(
           '"massAccuracyMS2ppm":
-            %f
+            %d
                     ',
           self$`massAccuracyMS2ppm`
           )
@@ -351,6 +364,14 @@ Sirius <- R6::R6Class(
           ',
           jsonlite::toJSON(self$`useHeuristic`$toJSON(), auto_unbox = TRUE, digits = NA)
           )
+        },
+        if (!is.null(self$`minRefMatchScoreToInject`)) {
+          sprintf(
+          '"minRefMatchScoreToInject":
+            %d
+                    ',
+          self$`minRefMatchScoreToInject`
+          )
         }
       )
       jsoncontent <- paste(jsoncontent, collapse = ",")
@@ -367,10 +388,7 @@ Sirius <- R6::R6Class(
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       self$`enabled` <- this_object$`enabled`
-      if (!is.null(this_object$`profile`) && !(this_object$`profile` %in% c("QTOF", "ORBI", "FTICR"))) {
-        stop(paste("Error! \"", this_object$`profile`, "\" cannot be assigned to `profile`. Must be \"QTOF\", \"ORBI\", \"FTICR\".", sep = ""))
-      }
-      self$`profile` <- this_object$`profile`
+      self$`profile` <- Instrument$new()$fromJSON(jsonlite::toJSON(this_object$`profile`, auto_unbox = TRUE, digits = NA))
       self$`numberOfCandidates` <- this_object$`numberOfCandidates`
       self$`numberOfCandidatesPerIon` <- this_object$`numberOfCandidatesPerIon`
       self$`massAccuracyMS2ppm` <- this_object$`massAccuracyMS2ppm`
@@ -382,8 +400,9 @@ Sirius <- R6::R6Class(
       self$`enforcedFormulaConstraints` <- this_object$`enforcedFormulaConstraints`
       self$`fallbackFormulaConstraints` <- this_object$`fallbackFormulaConstraints`
       self$`detectableElements` <- ApiClient$new()$deserializeObj(this_object$`detectableElements`, "array[character]", loadNamespace("Rsirius"))
-      self$`ilpTimeout` <- Timeout$new()$fromJSON(jsonlite::toJSON(this_object$ilpTimeout, auto_unbox = TRUE, digits = NA))
-      self$`useHeuristic` <- UseHeuristic$new()$fromJSON(jsonlite::toJSON(this_object$useHeuristic, auto_unbox = TRUE, digits = NA))
+      self$`ilpTimeout` <- Timeout$new()$fromJSON(jsonlite::toJSON(this_object$`ilpTimeout`, auto_unbox = TRUE, digits = NA))
+      self$`useHeuristic` <- UseHeuristic$new()$fromJSON(jsonlite::toJSON(this_object$`useHeuristic`, auto_unbox = TRUE, digits = NA))
+      self$`minRefMatchScoreToInject` <- this_object$`minRefMatchScoreToInject`
       self
     },
     #' Validate JSON input with respect to Sirius

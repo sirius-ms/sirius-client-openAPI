@@ -6,11 +6,18 @@ context("Test CompoundClass")
 model_instance <- CompoundClass$new()
 
 test_that("type", {
-  # tests for the property `type` (character)
-  # Specifies the classification ontology the CompoundClass belongs to.
+  # tests for the property `type` (CompoundClassType)
 
   # uncomment below to test the property
   #expect_equal(model.instance$`type`, "EXPECTED_RESULT")
+})
+
+test_that("level", {
+  # tests for the property `level` (character)
+  # Name of the level this compound class belongs to
+
+  # uncomment below to test the property
+  #expect_equal(model.instance$`level`, "EXPECTED_RESULT")
 })
 
 test_that("name", {
@@ -43,4 +50,12 @@ test_that("probability", {
 
   # uncomment below to test the property
   #expect_equal(model.instance$`probability`, "EXPECTED_RESULT")
+})
+
+test_that("index", {
+  # tests for the property `index` (integer)
+  # Absolute index of this property in the predicted vector/embedding
+
+  # uncomment below to test the property
+  #expect_equal(model.instance$`index`, "EXPECTED_RESULT")
 })

@@ -26,37 +26,18 @@ test_that("npcClass", {
   #expect_equal(model.instance$`npcClass`, "EXPECTED_RESULT")
 })
 
-test_that("classyFireMostSpecific", {
-  # tests for the property `classyFireMostSpecific` (CompoundClass)
+test_that("classyFireLineage", {
+  # tests for the property `classyFireLineage` (array[CompoundClass])
+  # Most likely ClassyFire lineage from ordered from least specific to most specific class  classyFireLineage.get(classyFireLineage.size() - 1) gives the most specific ClassyFire compound class annotation
 
   # uncomment below to test the property
-  #expect_equal(model.instance$`classyFireMostSpecific`, "EXPECTED_RESULT")
+  #expect_equal(model.instance$`classyFireLineage`, "EXPECTED_RESULT")
 })
 
-test_that("classyFireLevel5", {
-  # tests for the property `classyFireLevel5` (CompoundClass)
+test_that("classyFireAlternatives", {
+  # tests for the property `classyFireAlternatives` (array[CompoundClass])
+  # Alternative ClassyFire classes with high probability that do not fit into the linage
 
   # uncomment below to test the property
-  #expect_equal(model.instance$`classyFireLevel5`, "EXPECTED_RESULT")
-})
-
-test_that("classyFireClass", {
-  # tests for the property `classyFireClass` (CompoundClass)
-
-  # uncomment below to test the property
-  #expect_equal(model.instance$`classyFireClass`, "EXPECTED_RESULT")
-})
-
-test_that("classyFireSubClass", {
-  # tests for the property `classyFireSubClass` (CompoundClass)
-
-  # uncomment below to test the property
-  #expect_equal(model.instance$`classyFireSubClass`, "EXPECTED_RESULT")
-})
-
-test_that("classyFireSuperClass", {
-  # tests for the property `classyFireSuperClass` (CompoundClass)
-
-  # uncomment below to test the property
-  #expect_equal(model.instance$`classyFireSuperClass`, "EXPECTED_RESULT")
+  #expect_equal(model.instance$`classyFireAlternatives`, "EXPECTED_RESULT")
 })

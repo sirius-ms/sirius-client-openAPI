@@ -1,12 +1,12 @@
-#THIS FILE IS NOT AUTO GENERATED AND MIGHT NEED TO BE CHANGED WHEN API ENDPOINTS CHANGE
+# THIS FILE IS NOT AUTO GENERATED AND MIGHT NEED TO BE CHANGED WHEN API ENDPOINTS CHANGE
 
 import PySirius
 
+
 class PySiriusAPI:
-    """allows accession of API endpoints and model classes"""
+    """allows access to API endpoints and model classes"""
 
     def __init__(self, api_client):
-
         self.api_client = api_client
     
     def get_CompoundsApi(self):

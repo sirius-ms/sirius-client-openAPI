@@ -7,6 +7,5 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **numberOfSecondsPerDecomposition** | **integer** |  | [optional] 
 **numberOfSecondsPerInstance** | **integer** |  | [optional] 
-**identifier** | **character** |  | [optional] 
 
 

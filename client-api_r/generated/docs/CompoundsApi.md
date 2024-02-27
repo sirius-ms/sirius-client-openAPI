@@ -4,32 +4,80 @@ All URIs are relative to *http://localhost:8080*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**DeleteCompound**](CompoundsApi.md#DeleteCompound) | **DELETE** /api/projects/{projectId}/compounds/{cid} | Delete compound/feature with the given identifier from the specified project-space.
-[**GetCompound**](CompoundsApi.md#GetCompound) | **GET** /api/projects/{projectId}/compounds/{cid} | Get compound/feature with the given identifier from the specified project-space.
-[**GetCompounds**](CompoundsApi.md#GetCompounds) | **GET** /api/projects/{projectId}/compounds | Get all available compounds/features in the given project-space.
-[**ImportCompounds**](CompoundsApi.md#ImportCompounds) | **POST** /api/projects/{projectId}/compounds | Import ms/ms data in given format from local filesystem into the specified project-space
-[**ImportCompoundsFromString**](CompoundsApi.md#ImportCompoundsFromString) | **POST** /api/projects/{projectId}/compounds/import-from-string | Import ms/ms data from the given format into the specified project-space  Possible formats (ms, mgf, cef, msp, mzML, mzXML)
+[**AddCompounds**](CompoundsApi.md#AddCompounds) | **POST** /api/projects/{projectId}/compounds | 
+[**DeleteCompound**](CompoundsApi.md#DeleteCompound) | **DELETE** /api/projects/{projectId}/compounds/{compoundId} | Delete compound (group of ion identities) with the given identifier (and the included features) from the  specified project-space.
+[**GetCompound**](CompoundsApi.md#GetCompound) | **GET** /api/projects/{projectId}/compounds/{compoundId} | Get compound (group of ion identities) with the given identifier from the specified project-space.
+[**GetCompounds**](CompoundsApi.md#GetCompounds) | **GET** /api/projects/{projectId}/compounds | Get all available compounds (group of ion identities) in the given project-space.
 
 
-# **DeleteCompound**
-> DeleteCompound(project_id, cid)
+# **AddCompounds**
+> array[Compound] AddCompounds(project_id, compound_import, opt_fields = [], opt_fields_features = [])
 
-Delete compound/feature with the given identifier from the specified project-space.
 
-Delete compound/feature with the given identifier from the specified project-space.
 
 ### Example
 ```R
 library(Rsirius)
 
-# Delete compound/feature with the given identifier from the specified project-space.
+# prepare function argument(s)
+var_project_id <- "project_id_example" # character | project-space to import into.
+var_compound_import <- c(CompoundImport$new(c(FeatureImport$new(123, "adduct_example", c(BasicSpectrum$new(c(SimplePeak$new(..., ...)), "name_example", 123, "collisionEnergy_example", 123, 123, 123)), c(BasicSpectrum$new(c(SimplePeak$new(..., ...)), "name_example", 123, "collisionEnergy_example", 123, 123, 123)), "name_example", "featureId_example", 123, 123, BasicSpectrum$new(c(SimplePeak$new(123, 123)), "name_example", 123, "collisionEnergy_example", 123, 123, 123))), "name_example")) # array[CompoundImport] | the compound data to be imported
+var_opt_fields <- c(CompoundOptField$new()) # array[CompoundOptField] | set of optional fields to be included. Use 'none' to override defaults. (Optional)
+var_opt_fields_features <- c(AlignedFeatureOptField$new()) # array[AlignedFeatureOptField] | set of optional fields of the nested features to be included. Use 'none' to override defaults. (Optional)
+
+api_instance <- rsirius_api$new()
+# to save the result into a file, simply add the optional `data_file` parameter, e.g.
+# result <- api_instance$AddCompounds(var_project_id, var_compound_import, opt_fields = var_opt_fields, opt_fields_features = var_opt_fields_featuresdata_file = "result.txt")
+result <- api_instance$compounds_api$AddCompounds(var_project_id, var_compound_import, opt_fields = var_opt_fields, opt_fields_features = var_opt_fields_features)
+dput(result)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **project_id** | **character**| project-space to import into. | 
+ **compound_import** | list( [**CompoundImport**](CompoundImport.md) )| the compound data to be imported | 
+ **opt_fields** | list( [**CompoundOptField**](CompoundOptField.md) )| set of optional fields to be included. Use &#39;none&#39; to override defaults. | [optional] [default to []]
+ **opt_fields_features** | list( [**AlignedFeatureOptField**](AlignedFeatureOptField.md) )| set of optional fields of the nested features to be included. Use &#39;none&#39; to override defaults. | [optional] [default to []]
+
+### Return type
+
+[**array[Compound]**](Compound.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | the Compounds that have been imported with specified optional fields |  -  |
+
+# **DeleteCompound**
+> DeleteCompound(project_id, compound_id)
+
+Delete compound (group of ion identities) with the given identifier (and the included features) from the  specified project-space.
+
+Delete compound (group of ion identities) with the given identifier (and the included features) from the  specified project-space.
+
+### Example
+```R
+library(Rsirius)
+
+# Delete compound (group of ion identities) with the given identifier (and the included features) from the  specified project-space.
 #
 # prepare function argument(s)
 var_project_id <- "project_id_example" # character | project-space to delete from.
-var_cid <- "cid_example" # character | identifier of compound to delete.
+var_compound_id <- "compound_id_example" # character | identifier of the compound to delete.
 
 api_instance <- rsirius_api$new()
-api_instance$compounds_api$DeleteCompound(var_project_id, var_cid)
+api_instance$compounds_api$DeleteCompound(var_project_id, var_compound_id)
 ```
 
 ### Parameters
@@ -37,7 +85,7 @@ api_instance$compounds_api$DeleteCompound(var_project_id, var_cid)
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **character**| project-space to delete from. | 
- **cid** | **character**| identifier of compound to delete. | 
+ **compound_id** | **character**| identifier of the compound to delete. | 
 
 ### Return type
 
@@ -58,29 +106,28 @@ No authorization required
 | **200** | OK |  -  |
 
 # **GetCompound**
-> CompoundId GetCompound(project_id, cid, top_annotation = FALSE, ms_data = FALSE, ms_quality = FALSE)
+> Compound GetCompound(project_id, compound_id, opt_fields = [], opt_fields_features = [])
 
-Get compound/feature with the given identifier from the specified project-space.
+Get compound (group of ion identities) with the given identifier from the specified project-space.
 
-Get compound/feature with the given identifier from the specified project-space.
+Get compound (group of ion identities) with the given identifier from the specified project-space.
 
 ### Example
 ```R
 library(Rsirius)
 
-# Get compound/feature with the given identifier from the specified project-space.
+# Get compound (group of ion identities) with the given identifier from the specified project-space.
 #
 # prepare function argument(s)
 var_project_id <- "project_id_example" # character | project-space to read from.
-var_cid <- "cid_example" # character | identifier of compound to access.
-var_top_annotation <- FALSE # character | include the top annotation of this feature into the output (if available). (Optional)
-var_ms_data <- FALSE # character | include corresponding source data (MS and MS/MS) into the output. (Optional)
-var_ms_quality <- FALSE # character |  (Optional)
+var_compound_id <- "compound_id_example" # character | identifier of the compound (group of ion identities) to access.
+var_opt_fields <- c(CompoundOptField$new()) # array[CompoundOptField] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
+var_opt_fields_features <- c(AlignedFeatureOptField$new()) # array[AlignedFeatureOptField] |  (Optional)
 
 api_instance <- rsirius_api$new()
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$GetCompound(var_project_id, var_cid, top_annotation = var_top_annotation, ms_data = var_ms_data, ms_quality = var_ms_qualitydata_file = "result.txt")
-result <- api_instance$compounds_api$GetCompound(var_project_id, var_cid, top_annotation = var_top_annotation, ms_data = var_ms_data, ms_quality = var_ms_quality)
+# result <- api_instance$GetCompound(var_project_id, var_compound_id, opt_fields = var_opt_fields, opt_fields_features = var_opt_fields_featuresdata_file = "result.txt")
+result <- api_instance$compounds_api$GetCompound(var_project_id, var_compound_id, opt_fields = var_opt_fields, opt_fields_features = var_opt_fields_features)
 dput(result)
 ```
 
@@ -89,14 +136,13 @@ dput(result)
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **character**| project-space to read from. | 
- **cid** | **character**| identifier of compound to access. | 
- **top_annotation** | **character**| include the top annotation of this feature into the output (if available). | [optional] [default to FALSE]
- **ms_data** | **character**| include corresponding source data (MS and MS/MS) into the output. | [optional] [default to FALSE]
- **ms_quality** | **character**|  | [optional] [default to FALSE]
+ **compound_id** | **character**| identifier of the compound (group of ion identities) to access. | 
+ **opt_fields** | list( [**CompoundOptField**](CompoundOptField.md) )| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to []]
+ **opt_fields_features** | list( [**AlignedFeatureOptField**](AlignedFeatureOptField.md) )|  | [optional] [default to []]
 
 ### Return type
 
-[**CompoundId**](CompoundId.md)
+[**Compound**](Compound.md)
 
 ### Authorization
 
@@ -110,31 +156,35 @@ No authorization required
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** | CompoundId with additional annotations and MS/MS data (if specified). |  -  |
+| **200** | Compounds with additional optional fields (if specified). |  -  |
 
 # **GetCompounds**
-> array[CompoundId] GetCompounds(project_id, top_annotation = FALSE, ms_data = FALSE, ms_quality = FALSE)
+> PageCompound GetCompounds(project_id, page = 0, size = 20, sort = var.sort, search_query = var.search_query, query_syntax = var.query_syntax, opt_fields = [], opt_fields_features = [])
 
-Get all available compounds/features in the given project-space.
+Get all available compounds (group of ion identities) in the given project-space.
 
-Get all available compounds/features in the given project-space.
+Get all available compounds (group of ion identities) in the given project-space.
 
 ### Example
 ```R
 library(Rsirius)
 
-# Get all available compounds/features in the given project-space.
+# Get all available compounds (group of ion identities) in the given project-space.
 #
 # prepare function argument(s)
 var_project_id <- "project_id_example" # character | project-space to read from.
-var_top_annotation <- FALSE # character | include the top annotation of this feature into the output (if available). (Optional)
-var_ms_data <- FALSE # character | include corresponding source data (MS and MS/MS) into the output. (Optional)
-var_ms_quality <- FALSE # character |  (Optional)
+var_page <- 0 # integer | Zero-based page index (0..N) (Optional)
+var_size <- 20 # integer | The size of the page to be returned (Optional)
+var_sort <- c("inner_example") # array[character] | Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (Optional)
+var_search_query <- "search_query_example" # character | optional search query in specified format (Optional)
+var_query_syntax <- SearchQueryType$new() # SearchQueryType | query syntax used fpr searchQuery (Optional)
+var_opt_fields <- c(CompoundOptField$new()) # array[CompoundOptField] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
+var_opt_fields_features <- c(AlignedFeatureOptField$new()) # array[AlignedFeatureOptField] |  (Optional)
 
 api_instance <- rsirius_api$new()
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$GetCompounds(var_project_id, top_annotation = var_top_annotation, ms_data = var_ms_data, ms_quality = var_ms_qualitydata_file = "result.txt")
-result <- api_instance$compounds_api$GetCompounds(var_project_id, top_annotation = var_top_annotation, ms_data = var_ms_data, ms_quality = var_ms_quality)
+# result <- api_instance$GetCompounds(var_project_id, page = var_page, size = var_size, sort = var_sort, search_query = var_search_query, query_syntax = var_query_syntax, opt_fields = var_opt_fields, opt_fields_features = var_opt_fields_featuresdata_file = "result.txt")
+result <- api_instance$compounds_api$GetCompounds(var_project_id, page = var_page, size = var_size, sort = var_sort, search_query = var_search_query, query_syntax = var_query_syntax, opt_fields = var_opt_fields, opt_fields_features = var_opt_fields_features)
 dput(result)
 ```
 
@@ -143,13 +193,17 @@ dput(result)
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **character**| project-space to read from. | 
- **top_annotation** | **character**| include the top annotation of this feature into the output (if available). | [optional] [default to FALSE]
- **ms_data** | **character**| include corresponding source data (MS and MS/MS) into the output. | [optional] [default to FALSE]
- **ms_quality** | **character**|  | [optional] [default to FALSE]
+ **page** | **integer**| Zero-based page index (0..N) | [optional] [default to 0]
+ **size** | **integer**| The size of the page to be returned | [optional] [default to 20]
+ **sort** | list( **character** )| Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. | [optional] 
+ **search_query** | **character**| optional search query in specified format | [optional] 
+ **query_syntax** | [**SearchQueryType**](.md)| query syntax used fpr searchQuery | [optional] 
+ **opt_fields** | list( [**CompoundOptField**](CompoundOptField.md) )| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to []]
+ **opt_fields_features** | list( [**AlignedFeatureOptField**](AlignedFeatureOptField.md) )|  | [optional] [default to []]
 
 ### Return type
 
-[**array[CompoundId]**](CompoundId.md)
+[**PageCompound**](PageCompound.md)
 
 ### Authorization
 
@@ -163,115 +217,5 @@ No authorization required
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** | CompoundIds with additional annotations and MS/MS data (if specified). |  -  |
-
-# **ImportCompounds**
-> JobId ImportCompounds(project_id, request_body, align_lcms_runs = FALSE, allow_ms1_only_data = TRUE, ignore_formulas = FALSE)
-
-Import ms/ms data in given format from local filesystem into the specified project-space
-
-Import ms/ms data in given format from local filesystem into the specified project-space.  The import will run in a background job  Possible formats (ms, mgf, cef, msp, mzML, mzXML, project-space)  <p>
-
-### Example
-```R
-library(Rsirius)
-
-# Import ms/ms data in given format from local filesystem into the specified project-space
-#
-# prepare function argument(s)
-var_project_id <- "project_id_example" # character | project-space to import into.
-var_request_body <- c("property_example") # array[character] | List of file and directory paths to import
-var_align_lcms_runs <- FALSE # character | If true, multiple LCMS Runs (mzML, mzXML) will be aligned during import/feature finding (Optional)
-var_allow_ms1_only_data <- TRUE # character |  (Optional)
-var_ignore_formulas <- FALSE # character |  (Optional)
-
-api_instance <- rsirius_api$new()
-# to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$ImportCompounds(var_project_id, var_request_body, align_lcms_runs = var_align_lcms_runs, allow_ms1_only_data = var_allow_ms1_only_data, ignore_formulas = var_ignore_formulasdata_file = "result.txt")
-result <- api_instance$compounds_api$ImportCompounds(var_project_id, var_request_body, align_lcms_runs = var_align_lcms_runs, allow_ms1_only_data = var_allow_ms1_only_data, ignore_formulas = var_ignore_formulas)
-dput(result)
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **project_id** | **character**| project-space to import into. | 
- **request_body** | list( **character** )| List of file and directory paths to import | 
- **align_lcms_runs** | **character**| If true, multiple LCMS Runs (mzML, mzXML) will be aligned during import/feature finding | [optional] [default to FALSE]
- **allow_ms1_only_data** | **character**|  | [optional] [default to TRUE]
- **ignore_formulas** | **character**|  | [optional] [default to FALSE]
-
-### Return type
-
-[**JobId**](JobId.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **200** | JobId background job that imports given compounds/features. |  -  |
-
-# **ImportCompoundsFromString**
-> array[CompoundId] ImportCompoundsFromString(project_id, format, body, source_name = var.source_name)
-
-Import ms/ms data from the given format into the specified project-space  Possible formats (ms, mgf, cef, msp, mzML, mzXML)
-
-Import ms/ms data from the given format into the specified project-space  Possible formats (ms, mgf, cef, msp, mzML, mzXML)
-
-### Example
-```R
-library(Rsirius)
-
-# Import ms/ms data from the given format into the specified project-space  Possible formats (ms, mgf, cef, msp, mzML, mzXML)
-#
-# prepare function argument(s)
-var_project_id <- "project_id_example" # character | project-space to import into.
-var_format <- "format_example" # character | data format specified by the usual file extension of the format (without [.])
-var_body <- "body_example" # character | data content in specified format
-# tip: use the following line to generate the var_body string from a file "MyFile.ms"
-# var_body <- paste(readLines("MyFile.ms", warn=FALSE), collapse="\n")
-var_source_name <- "source_name_example" # character | name that specifies the data source. Can e.g. be a file path or just a name. (Optional)
-
-api_instance <- rsirius_api$new()
-# to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$ImportCompoundsFromString(var_project_id, var_format, var_body, source_name = var_source_namedata_file = "result.txt")
-result <- api_instance$compounds_api$ImportCompoundsFromString(var_project_id, var_format, var_body, source_name = var_source_name)
-dput(result)
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **project_id** | **character**| project-space to import into. | 
- **format** | **character**| data format specified by the usual file extension of the format (without [.]) | 
- **body** | **character**| data content in specified format | 
- **source_name** | **character**| name that specifies the data source. Can e.g. be a file path or just a name. | [optional] 
-
-### Return type
-
-[**array[CompoundId]**](CompoundId.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: text/plain
- - **Accept**: application/json
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **200** | CompoundIds of the imported compounds/features. |  -  |
+| **200** | Compounds with additional optional fields (if specified). |  -  |
 

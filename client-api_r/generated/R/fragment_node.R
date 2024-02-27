@@ -7,11 +7,11 @@
 #' @title FragmentNode
 #' @description FragmentNode Class
 #' @format An \code{R6Class} generator object
-#' @field id  integer [optional]
+#' @field fragmentId  integer [optional]
 #' @field molecularFormula  character [optional]
 #' @field ionType  character [optional]
 #' @field massDeviationDa  numeric [optional]
-#' @field massErrorPpm  numeric [optional]
+#' @field massDeviationPpm  numeric [optional]
 #' @field score  numeric [optional]
 #' @field intensity  numeric [optional]
 #' @field mz  numeric [optional]
@@ -21,11 +21,11 @@
 FragmentNode <- R6::R6Class(
   "FragmentNode",
   public = list(
-    `id` = NULL,
+    `fragmentId` = NULL,
     `molecularFormula` = NULL,
     `ionType` = NULL,
     `massDeviationDa` = NULL,
-    `massErrorPpm` = NULL,
+    `massDeviationPpm` = NULL,
     `score` = NULL,
     `intensity` = NULL,
     `mz` = NULL,
@@ -34,22 +34,22 @@ FragmentNode <- R6::R6Class(
     #' @description
     #' Initialize a new FragmentNode class.
     #'
-    #' @param id id
+    #' @param fragmentId fragmentId
     #' @param molecularFormula molecularFormula
     #' @param ionType ionType
     #' @param massDeviationDa massDeviationDa
-    #' @param massErrorPpm massErrorPpm
+    #' @param massDeviationPpm massDeviationPpm
     #' @param score score
     #' @param intensity intensity
     #' @param mz mz
     #' @param ... Other optional arguments.
     #' @export
-    initialize = function(`id` = NULL, `molecularFormula` = NULL, `ionType` = NULL, `massDeviationDa` = NULL, `massErrorPpm` = NULL, `score` = NULL, `intensity` = NULL, `mz` = NULL, ...) {
-      if (!is.null(`id`)) {
-        if (!(is.numeric(`id`) && length(`id`) == 1)) {
-          stop(paste("Error! Invalid data for `id`. Must be an integer:", `id`))
+    initialize = function(`fragmentId` = NULL, `molecularFormula` = NULL, `ionType` = NULL, `massDeviationDa` = NULL, `massDeviationPpm` = NULL, `score` = NULL, `intensity` = NULL, `mz` = NULL, ...) {
+      if (!is.null(`fragmentId`)) {
+        if (!(is.numeric(`fragmentId`) && length(`fragmentId`) == 1)) {
+          stop(paste("Error! Invalid data for `fragmentId`. Must be an integer:", `fragmentId`))
         }
-        self$`id` <- `id`
+        self$`fragmentId` <- `fragmentId`
       }
       if (!is.null(`molecularFormula`)) {
         if (!(is.character(`molecularFormula`) && length(`molecularFormula`) == 1)) {
@@ -69,11 +69,11 @@ FragmentNode <- R6::R6Class(
         }
         self$`massDeviationDa` <- `massDeviationDa`
       }
-      if (!is.null(`massErrorPpm`)) {
-        if (!(is.numeric(`massErrorPpm`) && length(`massErrorPpm`) == 1)) {
-          stop(paste("Error! Invalid data for `massErrorPpm`. Must be a number:", `massErrorPpm`))
+      if (!is.null(`massDeviationPpm`)) {
+        if (!(is.numeric(`massDeviationPpm`) && length(`massDeviationPpm`) == 1)) {
+          stop(paste("Error! Invalid data for `massDeviationPpm`. Must be a number:", `massDeviationPpm`))
         }
-        self$`massErrorPpm` <- `massErrorPpm`
+        self$`massDeviationPpm` <- `massDeviationPpm`
       }
       if (!is.null(`score`)) {
         if (!(is.numeric(`score`) && length(`score`) == 1)) {
@@ -103,9 +103,9 @@ FragmentNode <- R6::R6Class(
     #' @export
     toJSON = function() {
       FragmentNodeObject <- list()
-      if (!is.null(self$`id`)) {
-        FragmentNodeObject[["id"]] <-
-          self$`id`
+      if (!is.null(self$`fragmentId`)) {
+        FragmentNodeObject[["fragmentId"]] <-
+          self$`fragmentId`
       }
       if (!is.null(self$`molecularFormula`)) {
         FragmentNodeObject[["molecularFormula"]] <-
@@ -119,9 +119,9 @@ FragmentNode <- R6::R6Class(
         FragmentNodeObject[["massDeviationDa"]] <-
           self$`massDeviationDa`
       }
-      if (!is.null(self$`massErrorPpm`)) {
-        FragmentNodeObject[["massErrorPpm"]] <-
-          self$`massErrorPpm`
+      if (!is.null(self$`massDeviationPpm`)) {
+        FragmentNodeObject[["massDeviationPpm"]] <-
+          self$`massDeviationPpm`
       }
       if (!is.null(self$`score`)) {
         FragmentNodeObject[["score"]] <-
@@ -147,8 +147,8 @@ FragmentNode <- R6::R6Class(
     #' @export
     fromJSON = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
-      if (!is.null(this_object$`id`)) {
-        self$`id` <- this_object$`id`
+      if (!is.null(this_object$`fragmentId`)) {
+        self$`fragmentId` <- this_object$`fragmentId`
       }
       if (!is.null(this_object$`molecularFormula`)) {
         self$`molecularFormula` <- this_object$`molecularFormula`
@@ -159,8 +159,8 @@ FragmentNode <- R6::R6Class(
       if (!is.null(this_object$`massDeviationDa`)) {
         self$`massDeviationDa` <- this_object$`massDeviationDa`
       }
-      if (!is.null(this_object$`massErrorPpm`)) {
-        self$`massErrorPpm` <- this_object$`massErrorPpm`
+      if (!is.null(this_object$`massDeviationPpm`)) {
+        self$`massDeviationPpm` <- this_object$`massDeviationPpm`
       }
       if (!is.null(this_object$`score`)) {
         self$`score` <- this_object$`score`
@@ -182,12 +182,12 @@ FragmentNode <- R6::R6Class(
     #' @export
     toJSONString = function() {
       jsoncontent <- c(
-        if (!is.null(self$`id`)) {
+        if (!is.null(self$`fragmentId`)) {
           sprintf(
-          '"id":
-            %f
+          '"fragmentId":
+            %d
                     ',
-          self$`id`
+          self$`fragmentId`
           )
         },
         if (!is.null(self$`molecularFormula`)) {
@@ -209,23 +209,23 @@ FragmentNode <- R6::R6Class(
         if (!is.null(self$`massDeviationDa`)) {
           sprintf(
           '"massDeviationDa":
-            %f
+            %d
                     ',
           self$`massDeviationDa`
           )
         },
-        if (!is.null(self$`massErrorPpm`)) {
+        if (!is.null(self$`massDeviationPpm`)) {
           sprintf(
-          '"massErrorPpm":
-            %f
+          '"massDeviationPpm":
+            %d
                     ',
-          self$`massErrorPpm`
+          self$`massDeviationPpm`
           )
         },
         if (!is.null(self$`score`)) {
           sprintf(
           '"score":
-            %f
+            %d
                     ',
           self$`score`
           )
@@ -233,7 +233,7 @@ FragmentNode <- R6::R6Class(
         if (!is.null(self$`intensity`)) {
           sprintf(
           '"intensity":
-            %f
+            %d
                     ',
           self$`intensity`
           )
@@ -241,7 +241,7 @@ FragmentNode <- R6::R6Class(
         if (!is.null(self$`mz`)) {
           sprintf(
           '"mz":
-            %f
+            %d
                     ',
           self$`mz`
           )
@@ -260,11 +260,11 @@ FragmentNode <- R6::R6Class(
     #' @export
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
-      self$`id` <- this_object$`id`
+      self$`fragmentId` <- this_object$`fragmentId`
       self$`molecularFormula` <- this_object$`molecularFormula`
       self$`ionType` <- this_object$`ionType`
       self$`massDeviationDa` <- this_object$`massDeviationDa`
-      self$`massErrorPpm` <- this_object$`massErrorPpm`
+      self$`massDeviationPpm` <- this_object$`massDeviationPpm`
       self$`score` <- this_object$`score`
       self$`intensity` <- this_object$`intensity`
       self$`mz` <- this_object$`mz`

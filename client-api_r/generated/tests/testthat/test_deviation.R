@@ -18,10 +18,3 @@ test_that("absolute", {
   # uncomment below to test the property
   #expect_equal(model.instance$`absolute`, "EXPECTED_RESULT")
 })
-
-test_that("identifier", {
-  # tests for the property `identifier` (character)
-
-  # uncomment below to test the property
-  #expect_equal(model.instance$`identifier`, "EXPECTED_RESULT")
-})

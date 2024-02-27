@@ -1,16 +1,16 @@
 #' Create a new Zodiac
 #'
 #' @description
-#' User/developer friendly parameter subset for the ZODIAC tool (Network base molecular formula re-ranking).
+#' User/developer friendly parameter subset for the ZODIAC tool (Network base molecular formula re-ranking).  Needs results from Formula/SIRIUS Tool
 #'
 #' @docType class
 #' @title Zodiac
 #' @description Zodiac Class
 #' @format An \code{R6Class} generator object
 #' @field enabled tags whether the tool is enabled character [optional]
-#' @field consideredCandidatesAt300Mz  \link{ZodiacNumberOfConsideredCandidatesAt300Mz} [optional]
-#' @field consideredCandidatesAt800Mz  \link{ZodiacNumberOfConsideredCandidatesAt800Mz} [optional]
-#' @field runInTwoSteps  \link{ZodiacRunInTwoSteps} [optional]
+#' @field consideredCandidatesAt300Mz Maximum number of candidate molecular formulas (fragmentation trees computed by SIRIUS) per compound which are considered by ZODIAC for compounds below 300 m/z. integer [optional]
+#' @field consideredCandidatesAt800Mz Maximum number of candidate molecular formulas (fragmentation trees computed by SIRIUS) per compound which are considered by ZODIAC for compounds above 800 m/z. integer [optional]
+#' @field runInTwoSteps As default ZODIAC runs a 2-step approach. First running 'good quality compounds' only, and afterwards including the remaining. character [optional]
 #' @field edgeFilterThresholds  \link{ZodiacEdgeFilterThresholds} [optional]
 #' @field gibbsSamplerParameters  \link{ZodiacEpochs} [optional]
 #' @importFrom R6 R6Class
@@ -31,9 +31,9 @@ Zodiac <- R6::R6Class(
     #' Initialize a new Zodiac class.
     #'
     #' @param enabled tags whether the tool is enabled
-    #' @param consideredCandidatesAt300Mz consideredCandidatesAt300Mz
-    #' @param consideredCandidatesAt800Mz consideredCandidatesAt800Mz
-    #' @param runInTwoSteps runInTwoSteps
+    #' @param consideredCandidatesAt300Mz Maximum number of candidate molecular formulas (fragmentation trees computed by SIRIUS) per compound which are considered by ZODIAC for compounds below 300 m/z.
+    #' @param consideredCandidatesAt800Mz Maximum number of candidate molecular formulas (fragmentation trees computed by SIRIUS) per compound which are considered by ZODIAC for compounds above 800 m/z.
+    #' @param runInTwoSteps As default ZODIAC runs a 2-step approach. First running 'good quality compounds' only, and afterwards including the remaining.
     #' @param edgeFilterThresholds edgeFilterThresholds
     #' @param gibbsSamplerParameters gibbsSamplerParameters
     #' @param ... Other optional arguments.
@@ -46,15 +46,21 @@ Zodiac <- R6::R6Class(
         self$`enabled` <- `enabled`
       }
       if (!is.null(`consideredCandidatesAt300Mz`)) {
-        stopifnot(R6::is.R6(`consideredCandidatesAt300Mz`))
+        if (!(is.numeric(`consideredCandidatesAt300Mz`) && length(`consideredCandidatesAt300Mz`) == 1)) {
+          stop(paste("Error! Invalid data for `consideredCandidatesAt300Mz`. Must be an integer:", `consideredCandidatesAt300Mz`))
+        }
         self$`consideredCandidatesAt300Mz` <- `consideredCandidatesAt300Mz`
       }
       if (!is.null(`consideredCandidatesAt800Mz`)) {
-        stopifnot(R6::is.R6(`consideredCandidatesAt800Mz`))
+        if (!(is.numeric(`consideredCandidatesAt800Mz`) && length(`consideredCandidatesAt800Mz`) == 1)) {
+          stop(paste("Error! Invalid data for `consideredCandidatesAt800Mz`. Must be an integer:", `consideredCandidatesAt800Mz`))
+        }
         self$`consideredCandidatesAt800Mz` <- `consideredCandidatesAt800Mz`
       }
       if (!is.null(`runInTwoSteps`)) {
-        stopifnot(R6::is.R6(`runInTwoSteps`))
+        if (!(is.logical(`runInTwoSteps`) && length(`runInTwoSteps`) == 1)) {
+          stop(paste("Error! Invalid data for `runInTwoSteps`. Must be a boolean:", `runInTwoSteps`))
+        }
         self$`runInTwoSteps` <- `runInTwoSteps`
       }
       if (!is.null(`edgeFilterThresholds`)) {
@@ -81,15 +87,15 @@ Zodiac <- R6::R6Class(
       }
       if (!is.null(self$`consideredCandidatesAt300Mz`)) {
         ZodiacObject[["consideredCandidatesAt300Mz"]] <-
-          self$`consideredCandidatesAt300Mz`$toJSON()
+          self$`consideredCandidatesAt300Mz`
       }
       if (!is.null(self$`consideredCandidatesAt800Mz`)) {
         ZodiacObject[["consideredCandidatesAt800Mz"]] <-
-          self$`consideredCandidatesAt800Mz`$toJSON()
+          self$`consideredCandidatesAt800Mz`
       }
       if (!is.null(self$`runInTwoSteps`)) {
         ZodiacObject[["runInTwoSteps"]] <-
-          self$`runInTwoSteps`$toJSON()
+          self$`runInTwoSteps`
       }
       if (!is.null(self$`edgeFilterThresholds`)) {
         ZodiacObject[["edgeFilterThresholds"]] <-
@@ -115,29 +121,23 @@ Zodiac <- R6::R6Class(
         self$`enabled` <- this_object$`enabled`
       }
       if (!is.null(this_object$`consideredCandidatesAt300Mz`)) {
-        consideredcandidatesat300mz_object <- ZodiacNumberOfConsideredCandidatesAt300Mz$new()
-        consideredcandidatesat300mz_object$fromJSON(jsonlite::toJSON(this_object$consideredCandidatesAt300Mz, auto_unbox = TRUE, digits = NA))
-        self$`consideredCandidatesAt300Mz` <- consideredcandidatesat300mz_object
+        self$`consideredCandidatesAt300Mz` <- this_object$`consideredCandidatesAt300Mz`
       }
       if (!is.null(this_object$`consideredCandidatesAt800Mz`)) {
-        consideredcandidatesat800mz_object <- ZodiacNumberOfConsideredCandidatesAt800Mz$new()
-        consideredcandidatesat800mz_object$fromJSON(jsonlite::toJSON(this_object$consideredCandidatesAt800Mz, auto_unbox = TRUE, digits = NA))
-        self$`consideredCandidatesAt800Mz` <- consideredcandidatesat800mz_object
+        self$`consideredCandidatesAt800Mz` <- this_object$`consideredCandidatesAt800Mz`
       }
       if (!is.null(this_object$`runInTwoSteps`)) {
-        runintwosteps_object <- ZodiacRunInTwoSteps$new()
-        runintwosteps_object$fromJSON(jsonlite::toJSON(this_object$runInTwoSteps, auto_unbox = TRUE, digits = NA))
-        self$`runInTwoSteps` <- runintwosteps_object
+        self$`runInTwoSteps` <- this_object$`runInTwoSteps`
       }
       if (!is.null(this_object$`edgeFilterThresholds`)) {
-        edgefilterthresholds_object <- ZodiacEdgeFilterThresholds$new()
-        edgefilterthresholds_object$fromJSON(jsonlite::toJSON(this_object$edgeFilterThresholds, auto_unbox = TRUE, digits = NA))
-        self$`edgeFilterThresholds` <- edgefilterthresholds_object
+        `edgefilterthresholds_object` <- ZodiacEdgeFilterThresholds$new()
+        `edgefilterthresholds_object`$fromJSON(jsonlite::toJSON(this_object$`edgeFilterThresholds`, auto_unbox = TRUE, digits = NA))
+        self$`edgeFilterThresholds` <- `edgefilterthresholds_object`
       }
       if (!is.null(this_object$`gibbsSamplerParameters`)) {
-        gibbssamplerparameters_object <- ZodiacEpochs$new()
-        gibbssamplerparameters_object$fromJSON(jsonlite::toJSON(this_object$gibbsSamplerParameters, auto_unbox = TRUE, digits = NA))
-        self$`gibbsSamplerParameters` <- gibbssamplerparameters_object
+        `gibbssamplerparameters_object` <- ZodiacEpochs$new()
+        `gibbssamplerparameters_object`$fromJSON(jsonlite::toJSON(this_object$`gibbsSamplerParameters`, auto_unbox = TRUE, digits = NA))
+        self$`gibbsSamplerParameters` <- `gibbssamplerparameters_object`
       }
       self
     },
@@ -161,25 +161,25 @@ Zodiac <- R6::R6Class(
         if (!is.null(self$`consideredCandidatesAt300Mz`)) {
           sprintf(
           '"consideredCandidatesAt300Mz":
-          %s
-          ',
-          jsonlite::toJSON(self$`consideredCandidatesAt300Mz`$toJSON(), auto_unbox = TRUE, digits = NA)
+            %d
+                    ',
+          self$`consideredCandidatesAt300Mz`
           )
         },
         if (!is.null(self$`consideredCandidatesAt800Mz`)) {
           sprintf(
           '"consideredCandidatesAt800Mz":
-          %s
-          ',
-          jsonlite::toJSON(self$`consideredCandidatesAt800Mz`$toJSON(), auto_unbox = TRUE, digits = NA)
+            %d
+                    ',
+          self$`consideredCandidatesAt800Mz`
           )
         },
         if (!is.null(self$`runInTwoSteps`)) {
           sprintf(
           '"runInTwoSteps":
-          %s
-          ',
-          jsonlite::toJSON(self$`runInTwoSteps`$toJSON(), auto_unbox = TRUE, digits = NA)
+            %s
+                    ',
+          tolower(self$`runInTwoSteps`)
           )
         },
         if (!is.null(self$`edgeFilterThresholds`)) {
@@ -213,11 +213,11 @@ Zodiac <- R6::R6Class(
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       self$`enabled` <- this_object$`enabled`
-      self$`consideredCandidatesAt300Mz` <- ZodiacNumberOfConsideredCandidatesAt300Mz$new()$fromJSON(jsonlite::toJSON(this_object$consideredCandidatesAt300Mz, auto_unbox = TRUE, digits = NA))
-      self$`consideredCandidatesAt800Mz` <- ZodiacNumberOfConsideredCandidatesAt800Mz$new()$fromJSON(jsonlite::toJSON(this_object$consideredCandidatesAt800Mz, auto_unbox = TRUE, digits = NA))
-      self$`runInTwoSteps` <- ZodiacRunInTwoSteps$new()$fromJSON(jsonlite::toJSON(this_object$runInTwoSteps, auto_unbox = TRUE, digits = NA))
-      self$`edgeFilterThresholds` <- ZodiacEdgeFilterThresholds$new()$fromJSON(jsonlite::toJSON(this_object$edgeFilterThresholds, auto_unbox = TRUE, digits = NA))
-      self$`gibbsSamplerParameters` <- ZodiacEpochs$new()$fromJSON(jsonlite::toJSON(this_object$gibbsSamplerParameters, auto_unbox = TRUE, digits = NA))
+      self$`consideredCandidatesAt300Mz` <- this_object$`consideredCandidatesAt300Mz`
+      self$`consideredCandidatesAt800Mz` <- this_object$`consideredCandidatesAt800Mz`
+      self$`runInTwoSteps` <- this_object$`runInTwoSteps`
+      self$`edgeFilterThresholds` <- ZodiacEdgeFilterThresholds$new()$fromJSON(jsonlite::toJSON(this_object$`edgeFilterThresholds`, auto_unbox = TRUE, digits = NA))
+      self$`gibbsSamplerParameters` <- ZodiacEpochs$new()$fromJSON(jsonlite::toJSON(this_object$`gibbsSamplerParameters`, auto_unbox = TRUE, digits = NA))
       self
     },
     #' Validate JSON input with respect to Zodiac

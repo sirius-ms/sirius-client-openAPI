@@ -5,18 +5,18 @@ context("Test LossEdge")
 
 model_instance <- LossEdge$new()
 
-test_that("sourceFragment", {
-  # tests for the property `sourceFragment` (FragmentNode)
+test_that("sourceFragmentIdx", {
+  # tests for the property `sourceFragmentIdx` (integer)
 
   # uncomment below to test the property
-  #expect_equal(model.instance$`sourceFragment`, "EXPECTED_RESULT")
+  #expect_equal(model.instance$`sourceFragmentIdx`, "EXPECTED_RESULT")
 })
 
-test_that("targetFragment", {
-  # tests for the property `targetFragment` (FragmentNode)
+test_that("targetFragmentIdx", {
+  # tests for the property `targetFragmentIdx` (integer)
 
   # uncomment below to test the property
-  #expect_equal(model.instance$`targetFragment`, "EXPECTED_RESULT")
+  #expect_equal(model.instance$`targetFragmentIdx`, "EXPECTED_RESULT")
 })
 
 test_that("molecularFormula", {

@@ -3,152 +3,64 @@
 
 context("Test CompoundsApi")
 
-source("additional_test_functions.R")
 api_instance <- CompoundsApi$new()
-computations_api <- ComputationsApi$new()
-request_body <- c("/home/runner/work/sirius-client-openAPI/sirius-client-openAPI/.updater/examples/ms/Bicuculline.ms", "/home/runner/work/sirius-client-openAPI/sirius-client-openAPI/.updater/examples/ms/Kaempferol.ms")
 
+test_that("AddCompounds", {
+  # tests for AddCompounds
+  # base path: http://localhost:8080
+  # @param project_id character project-space to import into.
+  # @param compound_import array[CompoundImport] the compound data to be imported
+  # @param opt_fields array[CompoundOptField] set of optional fields to be included. Use 'none' to override defaults. (optional)
+  # @param opt_fields_features array[AlignedFeatureOptField] set of optional fields of the nested features to be included. Use 'none' to override defaults. (optional)
+  # @return [array[Compound]]
+
+  # uncomment below to test the operation
+  #expect_equal(result, "EXPECTED_RESULT")
+})
 
 test_that("DeleteCompound", {
   # tests for DeleteCompound
   # base path: http://localhost:8080
-  # Delete compound/feature with the given identifier from the specified project-space.
-  # Delete compound/feature with the given identifier from the specified project-space.
+  # Delete compound (group of ion identities) with the given identifier (and the included features) from the  specified project-space.
+  # Delete compound (group of ion identities) with the given identifier (and the included features) from the  specified project-space.
   # @param project_id character project-space to delete from.
-  # @param cid character identifier of compound to delete.
+  # @param compound_id character identifier of the compound to delete.
   # @return [Void]
-  
-  pid_dir <- new_ps("compounds1", "compoundsDir1")
-    
-  job <- api_instance$ImportCompounds(pid_dir[1], request_body)
-  wait_for_job(pid_dir[1], job)
-  resp <- api_instance$GetCompounds(pid_dir[1])
-  resp
-  
-  expect_true(is.list(resp))
-  expect_equal(length(resp), 2)
-  
-  api_instance$DeleteCompound(pid_dir[1], "1_Bicuculline_Bicuculline")
-  resp <- api_instance$GetCompounds(pid_dir[1])
-  resp
-  
-  expect_true(is.list(resp))
-  expect_equal(length(resp), 1)
-    
-  withr::defer(compounds_td(pid_dir))  
+
+  # uncomment below to test the operation
+  #expect_equal(result, "EXPECTED_RESULT")
 })
 
 test_that("GetCompound", {
   # tests for GetCompound
   # base path: http://localhost:8080
-  # Get compound/feature with the given identifier from the specified project-space.
-  # Get compound/feature with the given identifier from the specified project-space.
+  # Get compound (group of ion identities) with the given identifier from the specified project-space.
+  # Get compound (group of ion identities) with the given identifier from the specified project-space.
   # @param project_id character project-space to read from.
-  # @param cid character identifier of compound to access.
-  # @param top_annotation character include the top annotation of this feature into the output (if available). (optional)
-  # @param ms_data character include corresponding source data (MS and MS/MS) into the output. (optional)
-  # @return [CompoundId]
-  
-  pid_dir <- new_ps("compounds2", "compoundsDir2")
-    
-  job <- api_instance$ImportCompounds(pid_dir[1], request_body)
-  wait_for_job(pid_dir[1], job)
-  
-  resp <- api_instance$GetCompound(pid_dir[1], "1_Bicuculline_Bicuculline")
-  resp
-  expect_true(inherits(resp, "CompoundId"))
-  
-  resp <- api_instance$GetCompound(pid_dir[1], "1_Bicuculline_Bicuculline", TRUE)
-  resp
-  expect_true(inherits(resp, "CompoundId"))
-  
-  resp <- api_instance$GetCompound(pid_dir[1], "1_Bicuculline_Bicuculline", FALSE, TRUE)
-  resp
-  expect_true(inherits(resp, "CompoundId"))
-  
-  resp <- api_instance$GetCompound(pid_dir[1], "1_Bicuculline_Bicuculline", TRUE, TRUE)
-  resp
-  expect_true(inherits(resp, "CompoundId"))
-    
-  withr::defer(compounds_td(pid_dir)) 
+  # @param compound_id character identifier of the compound (group of ion identities) to access.
+  # @param opt_fields array[CompoundOptField] set of optional fields to be included. Use 'none' only to override defaults. (optional)
+  # @param opt_fields_features array[AlignedFeatureOptField]  (optional)
+  # @return [Compound]
+
+  # uncomment below to test the operation
+  #expect_equal(result, "EXPECTED_RESULT")
 })
 
 test_that("GetCompounds", {
   # tests for GetCompounds
   # base path: http://localhost:8080
-  # Get all available compounds/features in the given project-space.
-  # Get all available compounds/features in the given project-space.
+  # Get all available compounds (group of ion identities) in the given project-space.
+  # Get all available compounds (group of ion identities) in the given project-space.
   # @param project_id character project-space to read from.
-  # @param top_annotation character include the top annotation of this feature into the output (if available). (optional)
-  # @param ms_data character include corresponding source data (MS and MS/MS) into the output. (optional)
-  # @return [array[CompoundId]]
+  # @param page integer Zero-based page index (0..N) (optional)
+  # @param size integer The size of the page to be returned (optional)
+  # @param sort array[character] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (optional)
+  # @param search_query character optional search query in specified format (optional)
+  # @param query_syntax SearchQueryType query syntax used fpr searchQuery (optional)
+  # @param opt_fields array[CompoundOptField] set of optional fields to be included. Use 'none' only to override defaults. (optional)
+  # @param opt_fields_features array[AlignedFeatureOptField]  (optional)
+  # @return [PageCompound]
 
-  pid_dir <- new_ps("compounds3", "compoundsDir3")
-    
-  job <- api_instance$ImportCompounds(pid_dir[1], request_body)
-  wait_for_job(pid_dir[1], job)
-  resp <- api_instance$GetCompounds(pid_dir[1])
-  resp
-  
-  expect_true(is.list(resp))
-  expect_equal(length(resp), 2)
-    
-  withr::defer(compounds_td(pid_dir)) 
-})
-
-test_that("ImportCompounds", {
-  # tests for ImportCompounds
-  # base path: http://localhost:8080
-  # Import ms/ms data in given format from local filesystem into the specified project-space
-  # Import ms/ms data in given format from local filesystem into the specified project-space.  The import will run in a background job  Possible formats (ms, mgf, cef, msp, mzML, mzXML, project-space)  &lt;p&gt;
-  # @param project_id character project-space to import into.
-  # @param request_body array[character] List of file and directory paths to import
-  # @param align_lcms_runs character If true, multiple LCMS Runs (mzML, mzXML) will be aligned during import/feature finding (optional)
-  # @param allow_ms1_only_data character  (optional)
-  # @param ignore_formulas character  (optional)
-  # @return [JobId]
-
-  pid_dir <- new_ps("compounds4", "compoundsDir4")
-    
-  job <- api_instance$ImportCompounds(pid_dir[1], request_body)
-  wait_for_job(pid_dir[1], job)
-  cids <- api_instance$GetCompounds(pid_dir[1])
-  
-  for (cid in cids) {
-    compound <- api_instance$GetCompound(pid_dir[1], cid$id)
-    compound
-    expect_true(inherits(compound, "CompoundId"))
-  }
-    
-  withr::defer(compounds_td(pid_dir)) 
-})
-
-test_that("ImportCompoundsFromString", {
-  # tests for ImportCompoundsFromString
-  # base path: http://localhost:8080
-  # Import ms/ms data from the given format into the specified project-space  Possible formats (ms, mgf, cef, msp, mzML, mzXML)
-  # Import ms/ms data from the given format into the specified project-space  Possible formats (ms, mgf, cef, msp, mzML, mzXML)
-  # @param project_id character project-space to import into.
-  # @param format character data format specified by the usual file extension of the format (without [.])
-  # @param body character data content in specified format
-  # @param source_name character name that specifies the data source. Can e.g. be a file path or just a name. (optional)
-  # @return [array[CompoundId]]
-
-  pid_dir <- new_ps("compounds5", "compoundsDir5")
-  
-  resp <- api_instance$ImportCompoundsFromString(pid_dir[1], "ms", paste(readLines("/home/runner/work/sirius-client-openAPI/sirius-client-openAPI/.updater/clientTests/Data/Kaempferol.ms", warn=FALSE), collapse="\n"), "msfile")
-  
-  compound <- api_instance$GetCompound(pid_dir[1], resp[[1]]$id)
-  compound
-  expect_true(inherits(compound, "CompoundId"))
-  
-  resp <- api_instance$ImportCompoundsFromString(pid_dir[1], "mgf", paste(readLines("/home/runner/work/sirius-client-openAPI/sirius-client-openAPI/.updater/clientTests/Data/laudanosine.mgf", warn=FALSE), collapse="\n"), "mgffile")
-  
-  compound <- api_instance$GetCompound(pid_dir[1], resp[[1]]$id)
-  compound
-  expect_true(inherits(compound, "CompoundId"))
-  
-  withr::defer(api_instance$DeleteCompound(pid_dir[1], "1_msfile_Kaempferol"))
-  withr::defer(api_instance$DeleteCompound(pid_dir[1], "1_mgffile_FEATURE_1"))
-  withr::defer(project_spaces_td(pid_dir))
+  # uncomment below to test the operation
+  #expect_equal(result, "EXPECTED_RESULT")
 })

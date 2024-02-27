@@ -9,7 +9,6 @@
 #' @format An \code{R6Class} generator object
 #' @field ppm  numeric [optional]
 #' @field absolute  numeric [optional]
-#' @field identifier  character [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
 #' @export
@@ -18,7 +17,6 @@ Deviation <- R6::R6Class(
   public = list(
     `ppm` = NULL,
     `absolute` = NULL,
-    `identifier` = NULL,
     #' Initialize a new Deviation class.
     #'
     #' @description
@@ -26,10 +24,9 @@ Deviation <- R6::R6Class(
     #'
     #' @param ppm ppm
     #' @param absolute absolute
-    #' @param identifier identifier
     #' @param ... Other optional arguments.
     #' @export
-    initialize = function(`ppm` = NULL, `absolute` = NULL, `identifier` = NULL, ...) {
+    initialize = function(`ppm` = NULL, `absolute` = NULL, ...) {
       if (!is.null(`ppm`)) {
         if (!(is.numeric(`ppm`) && length(`ppm`) == 1)) {
           stop(paste("Error! Invalid data for `ppm`. Must be a number:", `ppm`))
@@ -41,12 +38,6 @@ Deviation <- R6::R6Class(
           stop(paste("Error! Invalid data for `absolute`. Must be a number:", `absolute`))
         }
         self$`absolute` <- `absolute`
-      }
-      if (!is.null(`identifier`)) {
-        if (!(is.character(`identifier`) && length(`identifier`) == 1)) {
-          stop(paste("Error! Invalid data for `identifier`. Must be a string:", `identifier`))
-        }
-        self$`identifier` <- `identifier`
       }
     },
     #' To JSON string
@@ -66,10 +57,6 @@ Deviation <- R6::R6Class(
         DeviationObject[["absolute"]] <-
           self$`absolute`
       }
-      if (!is.null(self$`identifier`)) {
-        DeviationObject[["identifier"]] <-
-          self$`identifier`
-      }
       DeviationObject
     },
     #' Deserialize JSON string into an instance of Deviation
@@ -88,9 +75,6 @@ Deviation <- R6::R6Class(
       if (!is.null(this_object$`absolute`)) {
         self$`absolute` <- this_object$`absolute`
       }
-      if (!is.null(this_object$`identifier`)) {
-        self$`identifier` <- this_object$`identifier`
-      }
       self
     },
     #' To JSON string
@@ -105,7 +89,7 @@ Deviation <- R6::R6Class(
         if (!is.null(self$`ppm`)) {
           sprintf(
           '"ppm":
-            %f
+            %d
                     ',
           self$`ppm`
           )
@@ -113,17 +97,9 @@ Deviation <- R6::R6Class(
         if (!is.null(self$`absolute`)) {
           sprintf(
           '"absolute":
-            %f
+            %d
                     ',
           self$`absolute`
-          )
-        },
-        if (!is.null(self$`identifier`)) {
-          sprintf(
-          '"identifier":
-            "%s"
-                    ',
-          self$`identifier`
           )
         }
       )
@@ -142,7 +118,6 @@ Deviation <- R6::R6Class(
       this_object <- jsonlite::fromJSON(input_json)
       self$`ppm` <- this_object$`ppm`
       self$`absolute` <- this_object$`absolute`
-      self$`identifier` <- this_object$`identifier`
       self
     },
     #' Validate JSON input with respect to Deviation

@@ -25,10 +25,3 @@ test_that("minLocalConnections", {
   # uncomment below to test the property
   #expect_equal(model.instance$`minLocalConnections`, "EXPECTED_RESULT")
 })
-
-test_that("identifier", {
-  # tests for the property `identifier` (character)
-
-  # uncomment below to test the property
-  #expect_equal(model.instance$`identifier`, "EXPECTED_RESULT")
-})

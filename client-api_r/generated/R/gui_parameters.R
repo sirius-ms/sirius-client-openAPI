@@ -7,7 +7,7 @@
 #' @title GuiParameters
 #' @description GuiParameters Class
 #' @format An \code{R6Class} generator object
-#' @field selectedTab Selected Result ab. character [optional]
+#' @field selectedTab  \link{GuiResultTab} [optional]
 #' @field cid ID of Selected compound. character [optional]
 #' @field fid ID of Selected Formula candidate of the selected compound. character [optional]
 #' @field structureCandidateInChIKey InChIKey of selected structure candidate of selected formula candidate. character [optional]
@@ -28,7 +28,7 @@ GuiParameters <- R6::R6Class(
     #' @description
     #' Initialize a new GuiParameters class.
     #'
-    #' @param selectedTab Selected Result ab.
+    #' @param selectedTab selectedTab
     #' @param cid ID of Selected compound.
     #' @param fid ID of Selected Formula candidate of the selected compound.
     #' @param structureCandidateInChIKey InChIKey of selected structure candidate of selected formula candidate.
@@ -37,12 +37,10 @@ GuiParameters <- R6::R6Class(
     #' @export
     initialize = function(`selectedTab` = NULL, `cid` = NULL, `fid` = NULL, `structureCandidateInChIKey` = NULL, `bringToFront` = NULL, ...) {
       if (!is.null(`selectedTab`)) {
-        if (!(`selectedTab` %in% c("FORMULAS", "SPECTRA", "TREES", "PREDICTED_FINGERPRINT", "STRUCTURES", "STRUCTURE_ANNOTATION", "COMPOUND_CLASSES"))) {
-          stop(paste("Error! \"", `selectedTab`, "\" cannot be assigned to `selectedTab`. Must be \"FORMULAS\", \"SPECTRA\", \"TREES\", \"PREDICTED_FINGERPRINT\", \"STRUCTURES\", \"STRUCTURE_ANNOTATION\", \"COMPOUND_CLASSES\".", sep = ""))
+        if (!(`selectedTab` %in% c())) {
+          stop(paste("Error! \"", `selectedTab`, "\" cannot be assigned to `selectedTab`. Must be .", sep = ""))
         }
-        if (!(is.character(`selectedTab`) && length(`selectedTab`) == 1)) {
-          stop(paste("Error! Invalid data for `selectedTab`. Must be a string:", `selectedTab`))
-        }
+        stopifnot(R6::is.R6(`selectedTab`))
         self$`selectedTab` <- `selectedTab`
       }
       if (!is.null(`cid`)) {
@@ -81,7 +79,7 @@ GuiParameters <- R6::R6Class(
       GuiParametersObject <- list()
       if (!is.null(self$`selectedTab`)) {
         GuiParametersObject[["selectedTab"]] <-
-          self$`selectedTab`
+          self$`selectedTab`$toJSON()
       }
       if (!is.null(self$`cid`)) {
         GuiParametersObject[["cid"]] <-
@@ -112,10 +110,9 @@ GuiParameters <- R6::R6Class(
     fromJSON = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       if (!is.null(this_object$`selectedTab`)) {
-        if (!is.null(this_object$`selectedTab`) && !(this_object$`selectedTab` %in% c("FORMULAS", "SPECTRA", "TREES", "PREDICTED_FINGERPRINT", "STRUCTURES", "STRUCTURE_ANNOTATION", "COMPOUND_CLASSES"))) {
-          stop(paste("Error! \"", this_object$`selectedTab`, "\" cannot be assigned to `selectedTab`. Must be \"FORMULAS\", \"SPECTRA\", \"TREES\", \"PREDICTED_FINGERPRINT\", \"STRUCTURES\", \"STRUCTURE_ANNOTATION\", \"COMPOUND_CLASSES\".", sep = ""))
-        }
-        self$`selectedTab` <- this_object$`selectedTab`
+        `selectedtab_object` <- GuiResultTab$new()
+        `selectedtab_object`$fromJSON(jsonlite::toJSON(this_object$`selectedTab`, auto_unbox = TRUE, digits = NA))
+        self$`selectedTab` <- `selectedtab_object`
       }
       if (!is.null(this_object$`cid`)) {
         self$`cid` <- this_object$`cid`
@@ -143,9 +140,9 @@ GuiParameters <- R6::R6Class(
         if (!is.null(self$`selectedTab`)) {
           sprintf(
           '"selectedTab":
-            "%s"
-                    ',
-          self$`selectedTab`
+          %s
+          ',
+          jsonlite::toJSON(self$`selectedTab`$toJSON(), auto_unbox = TRUE, digits = NA)
           )
         },
         if (!is.null(self$`cid`)) {
@@ -194,10 +191,7 @@ GuiParameters <- R6::R6Class(
     #' @export
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
-      if (!is.null(this_object$`selectedTab`) && !(this_object$`selectedTab` %in% c("FORMULAS", "SPECTRA", "TREES", "PREDICTED_FINGERPRINT", "STRUCTURES", "STRUCTURE_ANNOTATION", "COMPOUND_CLASSES"))) {
-        stop(paste("Error! \"", this_object$`selectedTab`, "\" cannot be assigned to `selectedTab`. Must be \"FORMULAS\", \"SPECTRA\", \"TREES\", \"PREDICTED_FINGERPRINT\", \"STRUCTURES\", \"STRUCTURE_ANNOTATION\", \"COMPOUND_CLASSES\".", sep = ""))
-      }
-      self$`selectedTab` <- this_object$`selectedTab`
+      self$`selectedTab` <- GuiResultTab$new()$fromJSON(jsonlite::toJSON(this_object$`selectedTab`, auto_unbox = TRUE, digits = NA))
       self$`cid` <- this_object$`cid`
       self$`fid` <- this_object$`fid`
       self$`structureCandidateInChIKey` <- this_object$`structureCandidateInChIKey`

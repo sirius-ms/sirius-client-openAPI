@@ -14,8 +14,7 @@ test_that("enabled", {
 })
 
 test_that("profile", {
-  # tests for the property `profile` (character)
-  # Instrument specific profile for internal algorithms  Just select what comes closest to the instrument that was used for measuring the data.
+  # tests for the property `profile` (Instrument)
 
   # uncomment below to test the property
   #expect_equal(model.instance$`profile`, "EXPECTED_RESULT")
@@ -39,7 +38,7 @@ test_that("numberOfCandidatesPerIon", {
 
 test_that("massAccuracyMS2ppm", {
   # tests for the property `massAccuracyMS2ppm` (numeric)
-  # Maximum allowed mass accuracy. Only molecular formulas within this mass window are considered.
+  # Maximum allowed mass deviation. Only molecular formulas within this mass window are considered.
 
   # uncomment below to test the property
   #expect_equal(model.instance$`massAccuracyMS2ppm`, "EXPECTED_RESULT")
@@ -97,4 +96,12 @@ test_that("useHeuristic", {
 
   # uncomment below to test the property
   #expect_equal(model.instance$`useHeuristic`, "EXPECTED_RESULT")
+})
+
+test_that("minRefMatchScoreToInject", {
+  # tests for the property `minRefMatchScoreToInject` (numeric)
+  # Similarity Threshold to inject formula candidates no matter which score/rank they have or which filter settings are applied.  If threshold &gt;&#x3D; 0 formulas candidates with reference spectrum similarity above the threshold will be injected.  If NULL injection is disables.
+
+  # uncomment below to test the property
+  #expect_equal(model.instance$`minRefMatchScoreToInject`, "EXPECTED_RESULT")
 })

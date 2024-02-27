@@ -1,15 +1,16 @@
 #' Create a new StructureDbSearch
 #'
 #' @description
-#' User/developer friendly parameter subset for the CSI:FingerID structure db search tool.
+#' User/developer friendly parameter subset for the CSI:FingerID structure db search tool.  Needs results from FingerprintPrediction and Canopus Tool
 #'
 #' @docType class
 #' @title StructureDbSearch
 #' @description StructureDbSearch Class
 #' @format An \code{R6Class} generator object
 #' @field enabled tags whether the tool is enabled character [optional]
-#' @field structureSearchDBs Structure databases to search in list(character) [optional]
-#' @field tagLipids Candidates matching the lipid class estimated by El Gordo will be tagged.  The lipid class will only be available if El Gordo predicts that the MS/MS is a lipid spectrum.  If this parameter is set to 'false' El Gordo will still be executed and e.g. improve the fragmentation  tree, but the matching structure candidates will not be tagged if they match lipid class. character [optional]
+#' @field structureSearchDBs Structure databases to search in, If expansive search is enabled this DB selection will be expanded to PubChem  if not high confidence hit was found in the selected databases.   Defaults to BIO + Custom Databases. Possible values are available to Database API. list(character)
+#' @field tagStructuresWithLipidClass Candidates matching the lipid class estimated by El Gordo will be tagged.  The lipid class will only be available if El Gordo predicts that the MS/MS is a lipid spectrum.  If this parameter is set to 'false' El Gordo will still be executed and e.g. improve the fragmentation  tree, but the matching structure candidates will not be tagged if they match lipid class. character [optional]
+#' @field expansiveSearchConfidenceMode  \link{Mode} [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
 #' @export
@@ -18,34 +19,43 @@ StructureDbSearch <- R6::R6Class(
   public = list(
     `enabled` = NULL,
     `structureSearchDBs` = NULL,
-    `tagLipids` = NULL,
+    `tagStructuresWithLipidClass` = NULL,
+    `expansiveSearchConfidenceMode` = NULL,
     #' Initialize a new StructureDbSearch class.
     #'
     #' @description
     #' Initialize a new StructureDbSearch class.
     #'
+    #' @param structureSearchDBs Structure databases to search in, If expansive search is enabled this DB selection will be expanded to PubChem  if not high confidence hit was found in the selected databases.   Defaults to BIO + Custom Databases. Possible values are available to Database API.
     #' @param enabled tags whether the tool is enabled
-    #' @param structureSearchDBs Structure databases to search in
-    #' @param tagLipids Candidates matching the lipid class estimated by El Gordo will be tagged.  The lipid class will only be available if El Gordo predicts that the MS/MS is a lipid spectrum.  If this parameter is set to 'false' El Gordo will still be executed and e.g. improve the fragmentation  tree, but the matching structure candidates will not be tagged if they match lipid class.
+    #' @param tagStructuresWithLipidClass Candidates matching the lipid class estimated by El Gordo will be tagged.  The lipid class will only be available if El Gordo predicts that the MS/MS is a lipid spectrum.  If this parameter is set to 'false' El Gordo will still be executed and e.g. improve the fragmentation  tree, but the matching structure candidates will not be tagged if they match lipid class.
+    #' @param expansiveSearchConfidenceMode expansiveSearchConfidenceMode
     #' @param ... Other optional arguments.
     #' @export
-    initialize = function(`enabled` = NULL, `structureSearchDBs` = NULL, `tagLipids` = NULL, ...) {
+    initialize = function(`structureSearchDBs`, `enabled` = NULL, `tagStructuresWithLipidClass` = NULL, `expansiveSearchConfidenceMode` = NULL, ...) {
+      if (!missing(`structureSearchDBs`)) {
+        stopifnot(is.vector(`structureSearchDBs`), length(`structureSearchDBs`) != 0)
+        sapply(`structureSearchDBs`, function(x) stopifnot(is.character(x)))
+        self$`structureSearchDBs` <- `structureSearchDBs`
+      }
       if (!is.null(`enabled`)) {
         if (!(is.logical(`enabled`) && length(`enabled`) == 1)) {
           stop(paste("Error! Invalid data for `enabled`. Must be a boolean:", `enabled`))
         }
         self$`enabled` <- `enabled`
       }
-      if (!is.null(`structureSearchDBs`)) {
-        stopifnot(is.vector(`structureSearchDBs`), length(`structureSearchDBs`) != 0)
-        sapply(`structureSearchDBs`, function(x) stopifnot(is.character(x)))
-        self$`structureSearchDBs` <- `structureSearchDBs`
-      }
-      if (!is.null(`tagLipids`)) {
-        if (!(is.logical(`tagLipids`) && length(`tagLipids`) == 1)) {
-          stop(paste("Error! Invalid data for `tagLipids`. Must be a boolean:", `tagLipids`))
+      if (!is.null(`tagStructuresWithLipidClass`)) {
+        if (!(is.logical(`tagStructuresWithLipidClass`) && length(`tagStructuresWithLipidClass`) == 1)) {
+          stop(paste("Error! Invalid data for `tagStructuresWithLipidClass`. Must be a boolean:", `tagStructuresWithLipidClass`))
         }
-        self$`tagLipids` <- `tagLipids`
+        self$`tagStructuresWithLipidClass` <- `tagStructuresWithLipidClass`
+      }
+      if (!is.null(`expansiveSearchConfidenceMode`)) {
+        if (!(`expansiveSearchConfidenceMode` %in% c())) {
+          stop(paste("Error! \"", `expansiveSearchConfidenceMode`, "\" cannot be assigned to `expansiveSearchConfidenceMode`. Must be .", sep = ""))
+        }
+        stopifnot(R6::is.R6(`expansiveSearchConfidenceMode`))
+        self$`expansiveSearchConfidenceMode` <- `expansiveSearchConfidenceMode`
       }
     },
     #' To JSON string
@@ -65,9 +75,13 @@ StructureDbSearch <- R6::R6Class(
         StructureDbSearchObject[["structureSearchDBs"]] <-
           self$`structureSearchDBs`
       }
-      if (!is.null(self$`tagLipids`)) {
-        StructureDbSearchObject[["tagLipids"]] <-
-          self$`tagLipids`
+      if (!is.null(self$`tagStructuresWithLipidClass`)) {
+        StructureDbSearchObject[["tagStructuresWithLipidClass"]] <-
+          self$`tagStructuresWithLipidClass`
+      }
+      if (!is.null(self$`expansiveSearchConfidenceMode`)) {
+        StructureDbSearchObject[["expansiveSearchConfidenceMode"]] <-
+          self$`expansiveSearchConfidenceMode`$toJSON()
       }
       StructureDbSearchObject
     },
@@ -87,8 +101,13 @@ StructureDbSearch <- R6::R6Class(
       if (!is.null(this_object$`structureSearchDBs`)) {
         self$`structureSearchDBs` <- ApiClient$new()$deserializeObj(this_object$`structureSearchDBs`, "array[character]", loadNamespace("Rsirius"))
       }
-      if (!is.null(this_object$`tagLipids`)) {
-        self$`tagLipids` <- this_object$`tagLipids`
+      if (!is.null(this_object$`tagStructuresWithLipidClass`)) {
+        self$`tagStructuresWithLipidClass` <- this_object$`tagStructuresWithLipidClass`
+      }
+      if (!is.null(this_object$`expansiveSearchConfidenceMode`)) {
+        `expansivesearchconfidencemode_object` <- Mode$new()
+        `expansivesearchconfidencemode_object`$fromJSON(jsonlite::toJSON(this_object$`expansiveSearchConfidenceMode`, auto_unbox = TRUE, digits = NA))
+        self$`expansiveSearchConfidenceMode` <- `expansivesearchconfidencemode_object`
       }
       self
     },
@@ -117,12 +136,20 @@ StructureDbSearch <- R6::R6Class(
           paste(unlist(lapply(self$`structureSearchDBs`, function(x) paste0('"', x, '"'))), collapse = ",")
           )
         },
-        if (!is.null(self$`tagLipids`)) {
+        if (!is.null(self$`tagStructuresWithLipidClass`)) {
           sprintf(
-          '"tagLipids":
+          '"tagStructuresWithLipidClass":
             %s
                     ',
-          tolower(self$`tagLipids`)
+          tolower(self$`tagStructuresWithLipidClass`)
+          )
+        },
+        if (!is.null(self$`expansiveSearchConfidenceMode`)) {
+          sprintf(
+          '"expansiveSearchConfidenceMode":
+          %s
+          ',
+          jsonlite::toJSON(self$`expansiveSearchConfidenceMode`$toJSON(), auto_unbox = TRUE, digits = NA)
           )
         }
       )
@@ -141,7 +168,8 @@ StructureDbSearch <- R6::R6Class(
       this_object <- jsonlite::fromJSON(input_json)
       self$`enabled` <- this_object$`enabled`
       self$`structureSearchDBs` <- ApiClient$new()$deserializeObj(this_object$`structureSearchDBs`, "array[character]", loadNamespace("Rsirius"))
-      self$`tagLipids` <- this_object$`tagLipids`
+      self$`tagStructuresWithLipidClass` <- this_object$`tagStructuresWithLipidClass`
+      self$`expansiveSearchConfidenceMode` <- Mode$new()$fromJSON(jsonlite::toJSON(this_object$`expansiveSearchConfidenceMode`, auto_unbox = TRUE, digits = NA))
       self
     },
     #' Validate JSON input with respect to StructureDbSearch
@@ -153,6 +181,13 @@ StructureDbSearch <- R6::R6Class(
     #' @export
     validateJSON = function(input) {
       input_json <- jsonlite::fromJSON(input)
+      # check the required field `structureSearchDBs`
+      if (!is.null(input_json$`structureSearchDBs`)) {
+        stopifnot(is.vector(input_json$`structureSearchDBs`), length(input_json$`structureSearchDBs`) != 0)
+        tmp <- sapply(input_json$`structureSearchDBs`, function(x) stopifnot(is.character(x)))
+      } else {
+        stop(paste("The JSON input `", input, "` is invalid for StructureDbSearch: the required field `structureSearchDBs` is missing."))
+      }
     },
     #' To string (JSON format)
     #'
@@ -172,6 +207,11 @@ StructureDbSearch <- R6::R6Class(
     #' @return true if the values in all fields are valid.
     #' @export
     isValid = function() {
+      # check if the required `structureSearchDBs` is null
+      if (is.null(self$`structureSearchDBs`)) {
+        return(FALSE)
+      }
+
       TRUE
     },
     #' Return a list of invalid fields (if any).
@@ -183,6 +223,11 @@ StructureDbSearch <- R6::R6Class(
     #' @export
     getInvalidFields = function() {
       invalid_fields <- list()
+      # check if the required `structureSearchDBs` is null
+      if (is.null(self$`structureSearchDBs`)) {
+        invalid_fields["structureSearchDBs"] <- "Non-nullable required field `structureSearchDBs` cannot be null."
+      }
+
       invalid_fields
     },
     #' Print the object
