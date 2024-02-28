@@ -10,33 +10,57 @@
 
     Do not edit the class manually.
 """  # noqa: E501
+
 import os
-import shutil
+import json
 import time
+import copy
+import shutil
 import unittest
-from os.path import abspath
 
 import PySirius
 from PySirius import PySiriusAPI
-from PySirius.api.jobs_api import JobsApi
-
-api = PySiriusAPI(PySirius.ApiClient())
-
-jobConfig= {"alignedFeatureIds": [
-    "string"
-  ],"formulaIdParams": {
-    "enabled": True,
-    "profile": "QTOF",
-  }}
+from PySirius.models.job import Job
+from PySirius.models.sirius import Sirius
+from PySirius.models.instrument import Instrument
+from PySirius.models.job_submission import JobSubmission
+from PySirius.models.command_submission import CommandSubmission
 
 
 class TestJobsApi(unittest.TestCase):
     """JobsApi unit test stubs"""
 
     def setUp(self) -> None:
-        pass
+        self.api = PySiriusAPI(PySirius.ApiClient())
+        self.path_to_demo_data = f"{os.environ.get('HOME')}/sirius-client-openAPI/.updater/clientTests/Data"
+
+        json_for_sirius = {
+            "enabled": True,
+            "profile": Instrument("QTOF")
+        }
+
+        self.job_submission = {
+            "alignedFeatureIds": [
+                "string"
+            ],
+            "formulaIdParams":
+                Sirius.from_json(json.dumps(json_for_sirius))
+        }
+
+        self.import_local_files_submission = PySirius.ImportLocalFilesSubmission.from_dict(
+            {
+                "allowMs1OnlyData": True,
+                "ignoreFormulas": True,
+                "inputPaths": [
+                    self.path_to_demo_data + "/Kaempferol.ms",
+                    self.path_to_demo_data + "/laudanosine.mgf"
+                ]
+            }
+        )
+
     def tearDown(self) -> None:
         pass
+
 
     def test_delete_job(self) -> None:
         """Test case for delete_job
@@ -45,12 +69,14 @@ class TestJobsApi(unittest.TestCase):
         """
         pass
 
+
     def test_delete_job_config(self) -> None:
         """Test case for delete_job_config
 
         Delete job configuration with given name.
         """
         pass
+
 
     def test_delete_jobs(self) -> None:
         """Test case for delete_jobs
@@ -59,12 +85,15 @@ class TestJobsApi(unittest.TestCase):
         """
         pass
 
+
     def test_get_default_job_config(self) -> None:
         """Test case for get_default_job_config
 
         Request default job configuration
         """
-        pass
+        response = self.api.get_JobsApi().get_default_job_config()
+        self.assertIsInstance(response, JobSubmission)
+
 
     def test_get_job(self) -> None:
         """Test case for get_job
@@ -73,6 +102,7 @@ class TestJobsApi(unittest.TestCase):
         """
         pass
 
+
     def test_get_job_config(self) -> None:
         """Test case for get_job_config
 
@@ -80,12 +110,22 @@ class TestJobsApi(unittest.TestCase):
         """
         pass
 
+
     def test_get_job_configs(self) -> None:
         """Test case for get_job_configs
 
         Request all available job configurations
         """
-        pass
+        config_name = "test_get_job_configs"
+        default_config = self.api.get_JobsApi().get_default_job_config()
+        self.api.get_JobsApi().post_job_config(config_name, default_config)
+
+        response = self.api.get_JobsApi().get_job_configs()
+        self.api.get_JobsApi().delete_job_config(config_name)
+
+        self.assertIsInstance(response, list)
+        self.assertIsInstance(response[0], JobSubmission)
+
 
     def test_get_jobs(self) -> None:
         """Test case for get_jobs
@@ -94,54 +134,80 @@ class TestJobsApi(unittest.TestCase):
         """
         pass
 
+
     def test_has_jobs(self) -> None:
         """Test case for has_jobs
 
         """
+        ## ENDPOINT MISSING
+        # project_id = "test_has_jobs"
+        # path_to_project = f"{os.environ.get('HOME')}/test_has_jobs_dir"
+        # self.api.get_ProjectsApi().create_project_space(project_id, path_to_project)
+
+        # response = self.api.get_JobsApi().has_jobs(project_id)
+        # self.api.get_ProjectsApi().close_project_space(project_id)
+        # shutil.rmtree(path_to_project)
+
+        # self.assertIsInstance(response, bool)
         pass
+
 
     def test_post_job_config(self) -> None:
         """Test case for post_job_config
 
         Add new job configuration with given name.
         """
-        pass
+        config_name = "test_post_job_config"
+        default_config = self.api.get_JobsApi().get_default_job_config()
+
+        response = self.api.get_JobsApi().post_job_config(config_name, default_config)
+        self.api.get_JobsApi().delete_job_config(config_name)
+
+        self.assertEqual(response, "test_post_job_config")
+
 
     def test_start_command(self) -> None:
         """Test case for start_command
 
         Start computation for given command and input.
         """
+        ## ENDPOINT MISSING
+        # project_id = "test_start_command"
+        # path_to_project = f"{os.environ.get('HOME')}/test_start_command_dir"
+        # self.api.get_ProjectsApi().create_project_space(project_id, path_to_project)
+        # json_for_command = {
+        #     "command": [
+        #         "--help"
+        #     ]
+        # }
+        # command_submission = CommandSubmission.from_json(json.dumps(json_for_command))
+
+        # response = self.api.get_JobsApi().start_command(project_id, command_submission)
+        # self.api.get_ProjectsApi().close_project_space(project_id)
+        # shutil.rmtree(path_to_project)
+
+        # self.assertIsInstance(response, Job)
         pass
+
 
     def test_start_import_from_path_job(self) -> None:
         """Test case for start_import_from_path_job
 
         Import ms/ms data in given format from local filesystem into the specified project
         """
+        project_id = "test_start_import_from_path_job"
+        path_to_project = f"{os.environ.get('HOME')}/test_start_import_from_path_job_dir"
+        self.api.get_ProjectsApi().create_project_space(project_id, path_to_project)
 
-        path_to_demo_data = "../../../.updater/clientTests/Data"
-        os.makedirs("temp_0")
-        projectID="tempProject"
-        api.get_ProjectsApi().create_project_space(project_id=projectID,
-                                               path_to_project="../../../../client-api_python/generated/test/temp_0")
+        self.api.get_JobsApi().start_import_from_path_job(project_id, self.import_local_files_submission)
+        time.sleep(1)
+        response = self.api.get_FeaturesApi().get_aligned_features(project_id)
 
-        api.get_JobsApi().start_import_from_path_job(project_id=projectID,
-                                                       import_local_files_submission=PySirius.ImportLocalFilesSubmission.from_dict(
-                                                           {
-                                                               "allowMs1OnlyData": True,
-                                                               "ignoreFormulas": True,
-                                                               "inputPaths": [
-                                                                   abspath(path_to_demo_data + "/Kaempferol.ms"),
-                                                                   abspath(path_to_demo_data + "/laudanosine.mgf")]
-                                                           }))
+        self.api.get_ProjectsApi().close_project_space(project_id)
+        shutil.rmtree(path_to_project)
 
-        time.sleep(3)
+        self.assertEqual(response.number_of_elements, 2)
 
-        nrFeatures = api.get_FeaturesApi().get_aligned_features(project_id=projectID).number_of_elements
-        shutil.rmtree("temp_0")
-        api.get_ProjectsApi().close_project_space(project_id=projectID)
-        self.assertEqual(nrFeatures,2)
 
     def test_start_import_from_string_job(self) -> None:
         """Test case for start_import_from_string_job
@@ -150,41 +216,29 @@ class TestJobsApi(unittest.TestCase):
         """
         pass
 
+
     def test_start_job(self) -> None:
         """Test case for start_job
 
         Start computation for given compounds and with given parameters.
         """
-        path_to_demo_data = "../../../.updater/clientTests/Data"
-        os.makedirs("temp_1")
-        projectID = "tempProject"
-        api.get_ProjectsApi().create_project_space(project_id=projectID,
-                                                   path_to_project="../../../../client-api_python/generated/test/temp_1")
-        api.get_JobsApi().start_import_from_path_job(project_id=projectID,
-                                                     import_local_files_submission=PySirius.ImportLocalFilesSubmission.from_dict(
-                                                         {
-                                                             "allowMs1OnlyData": True,
-                                                             "ignoreFormulas": True,
-                                                             "inputPaths": [
-                                                                 abspath(path_to_demo_data + "/Kaempferol.ms"),
-                                                                 abspath(path_to_demo_data + "/laudanosine.mgf")]
-                                                         }))
+        project_id = "test_start_job"
+        path_to_project = f"{os.environ.get('HOME')}/test_start_job_dir"
+        self.api.get_ProjectsApi().create_project_space(project_id, path_to_project)
 
+        self.api.get_JobsApi().start_import_from_path_job(project_id, self.import_local_files_submission)
         time.sleep(1)
-
-        id = api.get_FeaturesApi().get_aligned_features(project_id=projectID).content[0].aligned_feature_id
-
-        jobConfig["alignedFeatureIds"]=[id]
-
-        api.get_JobsApi().start_job(project_id=projectID,job_submission=jobConfig)
-
+        id = self.api.get_FeaturesApi().get_aligned_features(project_id).content[0].aligned_feature_id
+        job_submission = copy.deepcopy(self.job_submission)
+        job_submission["alignedFeatureIds"] = [id]
+        job = self.api.get_JobsApi().start_job(project_id, job_submission)
         time.sleep(3)
 
+        self.api.get_ProjectsApi().close_project_space(project_id)
 
-        self.assertTrue(os.path.exists("temp_1/"+id+"/scores"))
-
-        shutil.rmtree("temp_1")
-        api.get_ProjectsApi().close_project_space(project_id=projectID)
+        self.assertIsInstance(job, Job)
+        self.assertTrue(os.path.exists(path_to_project + id + "/scores"))
+        shutil.rmtree(path_to_project)
 
 
     def test_start_job_from_config(self) -> None:
