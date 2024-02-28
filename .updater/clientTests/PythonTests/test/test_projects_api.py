@@ -42,14 +42,13 @@ class TestProjectsApi(unittest.TestCase):
         self.api.create_project_space(project_id, path_to_project)
 
         response = self.api.close_project_space_with_http_info(project_id)
+        shutil.rmtree(path_to_project)
         self.assertIsInstance(response, ApiResponse)
         self.assertEqual(response.dict().get('status_code'), 200)
 
         response = self.api.close_project_space_with_http_info('invalid_id')
         self.assertIsInstance(response, ApiResponse)
         self.assertEqual(response.dict().get('status_code'), 204)
-
-        shutil.rmtree(path_to_project)
 
 
     def test_copy_project_space(self) -> None:
@@ -64,12 +63,13 @@ class TestProjectsApi(unittest.TestCase):
         copy_project_id = "test_copy_project_space_copied"
         copy_path_to_project = "test_copy_project_space_dir_copied"
         response = self.api.copy_project_space(project_id, copy_project_id, copy_path_to_project)
-        self.assertIsInstance(response, ProjectInfo)
 
         self.api.close_project_space(project_id)
         self.api.close_project_space(copy_project_id)
         shutil.rmtree(path_to_project)
         shutil.rmtree(copy_path_to_project)
+
+        self.assertIsInstance(response, ProjectInfo)
 
 
     def test_create_project_space(self) -> None:
@@ -81,10 +81,11 @@ class TestProjectsApi(unittest.TestCase):
         path_to_project = "test_create_project_space_dir"
 
         response = self.api.create_project_space(project_id, path_to_project)
-        self.assertIsInstance(response, ProjectInfo)
 
         self.api.close_project_space(project_id)
         shutil.rmtree(path_to_project)
+
+        self.assertIsInstance(response, ProjectInfo)
 
 
     def test_get_canopus_classy_fire_data(self) -> None:
@@ -97,10 +98,11 @@ class TestProjectsApi(unittest.TestCase):
         self.api.create_project_space(project_id, path_to_project)
 
         response = self.api.get_canopus_classy_fire_data(project_id, 0)
-        self.assertIsInstance(response, str)
 
         self.api.close_project_space(project_id)
         shutil.rmtree(path_to_project)
+
+        self.assertIsInstance(response, str)
 
 
     def test_get_canopus_npc_data(self) -> None:
@@ -113,10 +115,11 @@ class TestProjectsApi(unittest.TestCase):
         self.api.create_project_space(project_id, path_to_project)
 
         response = self.api.get_canopus_npc_data(project_id, 0)
-        self.assertIsInstance(response, str)
 
         self.api.close_project_space(project_id)
         shutil.rmtree(path_to_project)
+
+        self.assertIsInstance(response, str)
 
 
     def test_get_finger_id_data(self) -> None:
@@ -129,10 +132,11 @@ class TestProjectsApi(unittest.TestCase):
         self.api.create_project_space(project_id, path_to_project)
 
         response = self.api.get_finger_id_data(project_id, 0)
-        self.assertIsInstance(response, str)
 
         self.api.close_project_space(project_id)
         shutil.rmtree(path_to_project)
+
+        self.assertIsInstance(response, str)
 
 
     def test_get_project_space(self) -> None:
@@ -145,10 +149,11 @@ class TestProjectsApi(unittest.TestCase):
         self.api.create_project_space(project_id, path_to_project)
 
         response = self.api.get_project_space(project_id)
-        self.assertIsInstance(response, ProjectInfo)
 
         self.api.close_project_space(project_id)
         shutil.rmtree(path_to_project)
+
+        self.assertIsInstance(response, ProjectInfo)
 
 
     def test_get_project_spaces(self) -> None:
@@ -171,10 +176,11 @@ class TestProjectsApi(unittest.TestCase):
         self.api.close_project_space(project_id)
 
         response = self.api.open_project_space(project_id, path_to_project)
-        self.assertIsInstance(response, ProjectInfo)
 
         self.api.close_project_space(project_id)
         shutil.rmtree(path_to_project)
+
+        self.assertIsInstance(response, ProjectInfo)
 
 
 if __name__ == '__main__':
