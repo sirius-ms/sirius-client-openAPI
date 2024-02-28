@@ -166,7 +166,7 @@ class TestJobsApi(unittest.TestCase):
                                                              "allowMs1OnlyData": True,
                                                              "ignoreFormulas": True,
                                                              "inputPaths": [
-                                                                 abspath(path_to_demo_data + "/Kaempferol.ms.ms"),
+                                                                 abspath(path_to_demo_data + "/Kaempferol.ms"),
                                                                  abspath(path_to_demo_data + "/laudanosine.mgf")]
                                                          }))
 
