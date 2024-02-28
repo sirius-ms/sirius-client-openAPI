@@ -12,6 +12,7 @@
 """  # noqa: E501
 
 
+import os
 import unittest
 import shutil
 
@@ -38,7 +39,7 @@ class TestProjectsApi(unittest.TestCase):
         Close project-space and remove it from application.
         """
         project_id = "test_close_space_project"
-        path_to_project = "test_close_project_space_dir"
+        path_to_project = f"{os.environ.get('HOME')}/test_close_project_space_dir"
         self.api.create_project_space(project_id, path_to_project)
 
         response = self.api.close_project_space_with_http_info(project_id)
@@ -57,11 +58,11 @@ class TestProjectsApi(unittest.TestCase):
         Move an existing (opened) project-space to another location.
         """
         project_id = "test_copy_space_project"
-        path_to_project = "test_copy_project_space_dir"
+        path_to_project = f"{os.environ.get('HOME')}/test_copy_project_space_dir"
         self.api.create_project_space(project_id, path_to_project)
 
         copy_project_id = "test_copy_project_space_copied"
-        copy_path_to_project = "test_copy_project_space_dir_copied"
+        copy_path_to_project = f"{os.environ.get('HOME')}/test_copy_project_space_dir_copied"
         response = self.api.copy_project_space(project_id, copy_project_id, copy_path_to_project)
 
         self.api.close_project_space(project_id)
@@ -78,7 +79,7 @@ class TestProjectsApi(unittest.TestCase):
         Create and open a new project-space at given location and make it accessible via the given projectId.
         """
         project_id = "test_create_project_space"
-        path_to_project = "test_create_project_space_dir"
+        path_to_project = f"{os.environ.get('HOME')}/test_create_project_space_dir"
 
         response = self.api.create_project_space(project_id, path_to_project)
 
@@ -94,7 +95,7 @@ class TestProjectsApi(unittest.TestCase):
         Get CANOPUS prediction vector definition for ClassyFire classes
         """
         project_id = "test_get_canopus_classy_fire_data"
-        path_to_project = "test_get_canopus_classy_fire_data_dir"
+        path_to_project = f"{os.environ.get('HOME')}/test_get_canopus_classy_fire_data_dir"
         self.api.create_project_space(project_id, path_to_project)
 
         response = self.api.get_canopus_classy_fire_data(project_id, 0)
@@ -111,7 +112,7 @@ class TestProjectsApi(unittest.TestCase):
         Get CANOPUS prediction vector definition for NPC classes
         """
         project_id = "test_get_canopus_npc_data"
-        path_to_project = "test_get_canopus_npc_data_dir"
+        path_to_project = f"{os.environ.get('HOME')}/test_get_canopus_npc_data_dir"
         self.api.create_project_space(project_id, path_to_project)
 
         response = self.api.get_canopus_npc_data(project_id, 0)
@@ -128,7 +129,7 @@ class TestProjectsApi(unittest.TestCase):
         Get CSI:FingerID fingerprint (prediction vector) definition
         """
         project_id = "test_get_finger_id_data"
-        path_to_project = "test_get_finger_id_data_dir"
+        path_to_project = f"{os.environ.get('HOME')}/test_get_finger_id_data_dir"
         self.api.create_project_space(project_id, path_to_project)
 
         response = self.api.get_finger_id_data(project_id, 0)
@@ -145,7 +146,7 @@ class TestProjectsApi(unittest.TestCase):
         Get project space info by its projectId.
         """
         project_id = "test_get_project_space"
-        path_to_project = "test_get_project_space_dir"
+        path_to_project = f"{os.environ.get('HOME')}/test_get_project_space_dir"
         self.api.create_project_space(project_id, path_to_project)
 
         response = self.api.get_project_space(project_id)
@@ -171,7 +172,7 @@ class TestProjectsApi(unittest.TestCase):
         Open an existing project-space and make it accessible via the given projectId.
         """
         project_id = "test_open_project_space"
-        path_to_project = "test_open_project_space_dir"
+        path_to_project = f"{os.environ.get('HOME')}/test_open_project_space_dir"
         self.api.create_project_space(project_id, path_to_project)
         self.api.close_project_space(project_id)
 
