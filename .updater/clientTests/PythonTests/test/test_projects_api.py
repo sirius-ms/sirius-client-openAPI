@@ -19,7 +19,6 @@ import shutil
 from PySirius.api_response import ApiResponse
 from PySirius.api.projects_api import ProjectsApi
 from PySirius.models.project_info import ProjectInfo
-from PySirius.models.page_project_info import PageProjectInfo
 
 
 class TestProjectsApi(unittest.TestCase):
@@ -163,7 +162,7 @@ class TestProjectsApi(unittest.TestCase):
         List opened project spaces.
         """
         response = self.api.get_project_spaces()
-        self.assertIsInstance(response, PageProjectInfo)
+        self.assertIsInstance(response, list)
 
 
     def test_open_project_space(self) -> None:
