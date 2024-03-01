@@ -23,6 +23,7 @@ import PySirius
 from PySirius import PySiriusAPI
 from PySirius.models.job import Job
 from PySirius.models.sirius import Sirius
+from PySirius.models.page_job import PageJob
 from PySirius.models.instrument import Instrument
 from PySirius.models.job_submission import JobSubmission
 from PySirius.models.aligned_feature import AlignedFeature
@@ -205,6 +206,23 @@ class TestJobsApi(unittest.TestCase):
         self.assertIsInstance(response, list)
         self.assertIsInstance(response[0], Job)
 
+    def test_get_jobs_paged(self) -> None:
+        """Test case for get_jobs_paged
+
+        Get Page of jobs with information such as current state and progress (if available).
+        """
+        project_id = "test_get_jobs_paged"
+        path_to_project = f"{os.environ.get('HOME')}/test_get_jobs_paged_dir"
+        self.api.get_ProjectsApi().create_project_space(project_id, path_to_project)
+
+        self.api.get_JobsApi().start_import_from_path_job(project_id, self.import_local_files_submission)
+
+        response = self.api.get_JobsApi().get_jobs_paged(project_id)
+        self.api.get_ProjectsApi().close_project_space(project_id)
+        shutil.rmtree(path_to_project)
+
+        self.assertIsInstance(response, PageJob)
+
     def test_has_jobs(self) -> None:
         """Test case for has_jobs
 
@@ -256,6 +274,13 @@ class TestJobsApi(unittest.TestCase):
         # shutil.rmtree(path_to_project)
 
         # self.assertIsInstance(response, Job)
+
+    def test_start_database_import(self) -> None:
+        """Test case for start_database_import
+
+        Start import of structure and spectra files into the specified database.
+        """
+        pass
 
     def test_start_import_from_path_job(self) -> None:
         """Test case for start_import_from_path_job
@@ -323,7 +348,7 @@ class TestJobsApi(unittest.TestCase):
         self.api.get_ProjectsApi().close_project_space(project_id)
 
         self.assertIsInstance(response, Job)
-        self.assertTrue(os.path.exists(path_to_project+id+"/scores"))
+        self.assertTrue(os.path.exists(path_to_project + "/" + id + "/scores"))
         shutil.rmtree(path_to_project)
 
     def test_start_job_from_config(self) -> None:
