@@ -22,9 +22,6 @@ jobs:
         cd .updater/openapi_generator
         wget https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/7.3.0/openapi-generator-cli-7.3.0.jar -O openapi-generator-cli.jar
         java -jar openapi-generator-cli.jar version > version
-        cd ./../swagger
-        wget https://repo1.maven.org/maven2/io/swagger/codegen/v3/swagger-codegen-cli/3.0.9/swagger-codegen-cli-3.0.9.jar -O swagger-codegen-cli.jar
-        java -jar swagger-codegen-cli.jar version > version
     # - name: Download latest Sirius Release
     #   uses: nick-fields/retry@v2
     #   with:
@@ -43,7 +40,7 @@ jobs:
       run: |
         # while ! nc -z localhost 8080; do sleep 0.1; done
         cd .updater/api
-        wget https://upload.uni-jena.de/data/65d5ea78dc8849.55124050/api-docs
+        wget https://upload.uni-jena.de/data/65e1a1f5955394.23308051/api-docs
         mv api-docs api-docs.json
     - name: Update Clients
       run: |
@@ -55,8 +52,8 @@ jobs:
         rm -rf client-api_python/generated/*
         java -jar .updater/openapi_generator/openapi-generator-cli.jar generate -i .updater/api/api-docs.json -c .updater/config/Python/config.json -g python -o client-api_python/generated
         
-        echo "temporarily move R manual folder"
-        mv client-api_r/generated/man/ client-api_r/
+        # echo "temporarily move R manual folder"
+        # mv client-api_r/generated/man/ client-api_r/
         
         echo "generating R Code"
         rm -rf client-api_r/generated/*
