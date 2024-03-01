@@ -8,22 +8,28 @@ Method | HTTP request | Description
 [**delete_aligned_feature**](FeaturesApi.md#delete_aligned_feature) | **DELETE** /api/projects/{projectId}/aligned-features/{alignedFeatureId} | Delete feature (aligned over runs) with the given identifier from the specified project-space.
 [**get_aligned_feature**](FeaturesApi.md#get_aligned_feature) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId} | Get feature (aligned over runs) with the given identifier from the specified project-space.
 [**get_aligned_features**](FeaturesApi.md#get_aligned_features) | **GET** /api/projects/{projectId}/aligned-features | Get all available features (aligned over runs) in the given project-space.
+[**get_aligned_features_paged**](FeaturesApi.md#get_aligned_features_paged) | **GET** /api/projects/{projectId}/aligned-features/page | Get all available features (aligned over runs) in the given project-space.
 [**get_best_matching_compound_classes**](FeaturesApi.md#get_best_matching_compound_classes) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/best-compound-classes | Best matching compound classes,  Set of the highest scoring compound classes (CANOPUS) on each hierarchy level of  the ClassyFire and NPC ontology,
 [**get_canopus_prediction**](FeaturesApi.md#get_canopus_prediction) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/canopus-prediction | All predicted compound classes (CANOPUS) from ClassyFire and NPC and their probabilities,
 [**get_fingerprint_prediction**](FeaturesApi.md#get_fingerprint_prediction) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/fingerprint | Returns predicted fingerprint (CSI:FingerID) for the given formula result identifier  This fingerprint is used to perform structure database search and predict compound classes.
 [**get_formula_annotated_ms_ms_data**](FeaturesApi.md#get_formula_annotated_ms_ms_data) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/annotated-msmsdata | Returns MS/MS Spectrum (Merged MS/MS and measured MS/MS) which is annotated with fragments and losses  for the given formula result identifier  These annotations are only available if a fragmentation tree and the structure candidate are available.
 [**get_formula_annotated_spectrum**](FeaturesApi.md#get_formula_annotated_spectrum) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/annotated-spectrum | Returns a fragmentation spectrum (e.g. Merged MS/MS) which is annotated with fragments and losses for the given formula result identifier  These annotations are only available if a fragmentation tree is available.
 [**get_formula_candidate**](FeaturesApi.md#get_formula_candidate) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId} | FormulaResultContainers for the given &#39;formulaId&#39; with minimal information.
-[**get_formula_candidates**](FeaturesApi.md#get_formula_candidates) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas | List of all FormulaResultContainers available for this feature with minimal information.
+[**get_formula_candidates**](FeaturesApi.md#get_formula_candidates) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas | List of FormulaResultContainers available for this feature with minimal information.
+[**get_formula_candidates_paged**](FeaturesApi.md#get_formula_candidates_paged) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/page | Page of FormulaResultContainers available for this feature with minimal information.
 [**get_frag_tree**](FeaturesApi.md#get_frag_tree) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/tree | Returns fragmentation tree (SIRIUS) for the given formula result identifier  This tree is used to rank formula candidates (treeScore).
 [**get_isotope_pattern_annotation**](FeaturesApi.md#get_isotope_pattern_annotation) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/isotope-pattern | Returns Isotope pattern information (simulated isotope pattern, measured isotope pattern, isotope pattern highlighting)  for the given formula result identifier.
 [**get_lipid_annotation**](FeaturesApi.md#get_lipid_annotation) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/lipid-annotation | Returns Lipid annotation (ElGordo) for the given formula result identifier.
 [**get_ms_data**](FeaturesApi.md#get_ms_data) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/ms-data | Mass Spec data (input data) for the given &#39;alignedFeatureId&#39; .
 [**get_sirius_frag_tree**](FeaturesApi.md#get_sirius_frag_tree) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/sirius-tree | 
+[**get_spectral_library_matches**](FeaturesApi.md#get_spectral_library_matches) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/spectral-library-matches | List of spectral library matches for the given &#39;alignedFeatureId&#39;.
+[**get_spectral_library_matches_paged**](FeaturesApi.md#get_spectral_library_matches_paged) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/spectral-library-matches/page | Page of spectral library matches for the given &#39;alignedFeatureId&#39;.
 [**get_structure_annotated_ms_data**](FeaturesApi.md#get_structure_annotated_ms_data) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/structures/{inchiKey}/annotated-msmsdata | Returns MS/MS Data (Merged MS/MS and list of measured MS/MS ) which are annotated with fragments and losses  for the given formula result identifier and structure candidate inChIKey.
 [**get_structure_annotated_spectrum**](FeaturesApi.md#get_structure_annotated_spectrum) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/structures/{inchiKey}/annotated-spectrum | Returns a fragmentation spectrum (e.g. Merged MS/MS) which is annotated with fragments and losses for the given formula result identifier  These annotations are only available if a fragmentation tree is available.
 [**get_structure_candidates**](FeaturesApi.md#get_structure_candidates) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/structures | List of StructureCandidates for the given &#39;alignedFeatureId&#39; with minimal information.
 [**get_structure_candidates_by_formula**](FeaturesApi.md#get_structure_candidates_by_formula) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/structures | List of StructureCandidates the given &#39;formulaId&#39; with minimal information.
+[**get_structure_candidates_by_formula_paged**](FeaturesApi.md#get_structure_candidates_by_formula_paged) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/structures/page | Page of StructureCandidates the given &#39;formulaId&#39; with minimal information.
+[**get_structure_candidates_paged**](FeaturesApi.md#get_structure_candidates_paged) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/structures/page | Page of StructureCandidates for the given &#39;alignedFeatureId&#39; with minimal information.
 
 
 # **add_aligned_features**
@@ -238,7 +244,78 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_aligned_features**
-> PageAlignedFeature get_aligned_features(project_id, page=page, size=size, sort=sort, search_query=search_query, query_syntax=query_syntax, opt_fields=opt_fields)
+> List[AlignedFeature] get_aligned_features(project_id, opt_fields=opt_fields)
+
+Get all available features (aligned over runs) in the given project-space.
+
+Get all available features (aligned over runs) in the given project-space.
+
+### Example
+
+
+```python
+import PySirius
+from PySirius.models.aligned_feature import AlignedFeature
+from PySirius.models.aligned_feature_opt_field import AlignedFeatureOptField
+from PySirius.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to http://localhost:8080
+# See configuration.py for a list of all supported configuration parameters.
+configuration = PySirius.Configuration(
+    host = "http://localhost:8080"
+)
+
+
+# Enter a context with an instance of the API client
+with PySirius.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = PySirius.FeaturesApi(api_client)
+    project_id = 'project_id_example' # str | project-space to read from.
+    opt_fields = [] # List[AlignedFeatureOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to [])
+
+    try:
+        # Get all available features (aligned over runs) in the given project-space.
+        api_response = api_instance.get_aligned_features(project_id, opt_fields=opt_fields)
+        print("The response of FeaturesApi->get_aligned_features:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling FeaturesApi->get_aligned_features: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **project_id** | **str**| project-space to read from. | 
+ **opt_fields** | [**List[AlignedFeatureOptField]**](AlignedFeatureOptField.md)| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to []]
+
+### Return type
+
+[**List[AlignedFeature]**](AlignedFeature.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | AlignedFeatures with additional annotations and MS/MS data (if specified). |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **get_aligned_features_paged**
+> PageAlignedFeature get_aligned_features_paged(project_id, page=page, size=size, sort=sort, opt_fields=opt_fields)
 
 Get all available features (aligned over runs) in the given project-space.
 
@@ -251,7 +328,6 @@ Get all available features (aligned over runs) in the given project-space.
 import PySirius
 from PySirius.models.aligned_feature_opt_field import AlignedFeatureOptField
 from PySirius.models.page_aligned_feature import PageAlignedFeature
-from PySirius.models.search_query_type import SearchQueryType
 from PySirius.rest import ApiException
 from pprint import pprint
 
@@ -270,17 +346,15 @@ with PySirius.ApiClient(configuration) as api_client:
     page = 0 # int | Zero-based page index (0..N) (optional) (default to 0)
     size = 20 # int | The size of the page to be returned (optional) (default to 20)
     sort = ['sort_example'] # List[str] | Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (optional)
-    search_query = 'search_query_example' # str | optional search query in specified format (optional)
-    query_syntax = PySirius.SearchQueryType() # SearchQueryType | query syntax used fpr searchQuery (optional)
     opt_fields = [] # List[AlignedFeatureOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to [])
 
     try:
         # Get all available features (aligned over runs) in the given project-space.
-        api_response = api_instance.get_aligned_features(project_id, page=page, size=size, sort=sort, search_query=search_query, query_syntax=query_syntax, opt_fields=opt_fields)
-        print("The response of FeaturesApi->get_aligned_features:\n")
+        api_response = api_instance.get_aligned_features_paged(project_id, page=page, size=size, sort=sort, opt_fields=opt_fields)
+        print("The response of FeaturesApi->get_aligned_features_paged:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling FeaturesApi->get_aligned_features: %s\n" % e)
+        print("Exception when calling FeaturesApi->get_aligned_features_paged: %s\n" % e)
 ```
 
 
@@ -294,8 +368,6 @@ Name | Type | Description  | Notes
  **page** | **int**| Zero-based page index (0..N) | [optional] [default to 0]
  **size** | **int**| The size of the page to be returned | [optional] [default to 20]
  **sort** | [**List[str]**](str.md)| Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. | [optional] 
- **search_query** | **str**| optional search query in specified format | [optional] 
- **query_syntax** | [**SearchQueryType**](.md)| query syntax used fpr searchQuery | [optional] 
  **opt_fields** | [**List[AlignedFeatureOptField]**](AlignedFeatureOptField.md)| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to []]
 
 ### Return type
@@ -756,11 +828,84 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_formula_candidates**
-> PageFormulaCandidate get_formula_candidates(project_id, aligned_feature_id, page=page, size=size, sort=sort, search_query=search_query, query_syntax=query_syntax, opt_fields=opt_fields)
+> List[FormulaCandidate] get_formula_candidates(project_id, aligned_feature_id, opt_fields=opt_fields)
 
-List of all FormulaResultContainers available for this feature with minimal information.
+List of FormulaResultContainers available for this feature with minimal information.
 
-List of all FormulaResultContainers available for this feature with minimal information.  Can be enriched with an optional results overview.
+List of FormulaResultContainers available for this feature with minimal information.  Can be enriched with an optional results overview.
+
+### Example
+
+
+```python
+import PySirius
+from PySirius.models.formula_candidate import FormulaCandidate
+from PySirius.models.formula_candidate_opt_field import FormulaCandidateOptField
+from PySirius.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to http://localhost:8080
+# See configuration.py for a list of all supported configuration parameters.
+configuration = PySirius.Configuration(
+    host = "http://localhost:8080"
+)
+
+
+# Enter a context with an instance of the API client
+with PySirius.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = PySirius.FeaturesApi(api_client)
+    project_id = 'project_id_example' # str | project-space to read from.
+    aligned_feature_id = 'aligned_feature_id_example' # str | feature (aligned over runs) the formula result belongs to.
+    opt_fields = [] # List[FormulaCandidateOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to [])
+
+    try:
+        # List of FormulaResultContainers available for this feature with minimal information.
+        api_response = api_instance.get_formula_candidates(project_id, aligned_feature_id, opt_fields=opt_fields)
+        print("The response of FeaturesApi->get_formula_candidates:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling FeaturesApi->get_formula_candidates: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **project_id** | **str**| project-space to read from. | 
+ **aligned_feature_id** | **str**| feature (aligned over runs) the formula result belongs to. | 
+ **opt_fields** | [**List[FormulaCandidateOptField]**](FormulaCandidateOptField.md)| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to []]
+
+### Return type
+
+[**List[FormulaCandidate]**](FormulaCandidate.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | All FormulaCandidate of this feature with. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **get_formula_candidates_paged**
+> PageFormulaCandidate get_formula_candidates_paged(project_id, aligned_feature_id, page=page, size=size, sort=sort, opt_fields=opt_fields)
+
+Page of FormulaResultContainers available for this feature with minimal information.
+
+Page of FormulaResultContainers available for this feature with minimal information.  Can be enriched with an optional results overview.
 
 ### Example
 
@@ -769,7 +914,6 @@ List of all FormulaResultContainers available for this feature with minimal info
 import PySirius
 from PySirius.models.formula_candidate_opt_field import FormulaCandidateOptField
 from PySirius.models.page_formula_candidate import PageFormulaCandidate
-from PySirius.models.search_query_type import SearchQueryType
 from PySirius.rest import ApiException
 from pprint import pprint
 
@@ -789,17 +933,15 @@ with PySirius.ApiClient(configuration) as api_client:
     page = 0 # int | Zero-based page index (0..N) (optional) (default to 0)
     size = 20 # int | The size of the page to be returned (optional) (default to 20)
     sort = ['sort_example'] # List[str] | Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (optional)
-    search_query = 'search_query_example' # str | optional search query in specified format (optional)
-    query_syntax = PySirius.SearchQueryType() # SearchQueryType | query syntax used fpr searchQuery (optional)
     opt_fields = [] # List[FormulaCandidateOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to [])
 
     try:
-        # List of all FormulaResultContainers available for this feature with minimal information.
-        api_response = api_instance.get_formula_candidates(project_id, aligned_feature_id, page=page, size=size, sort=sort, search_query=search_query, query_syntax=query_syntax, opt_fields=opt_fields)
-        print("The response of FeaturesApi->get_formula_candidates:\n")
+        # Page of FormulaResultContainers available for this feature with minimal information.
+        api_response = api_instance.get_formula_candidates_paged(project_id, aligned_feature_id, page=page, size=size, sort=sort, opt_fields=opt_fields)
+        print("The response of FeaturesApi->get_formula_candidates_paged:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling FeaturesApi->get_formula_candidates: %s\n" % e)
+        print("Exception when calling FeaturesApi->get_formula_candidates_paged: %s\n" % e)
 ```
 
 
@@ -814,8 +956,6 @@ Name | Type | Description  | Notes
  **page** | **int**| Zero-based page index (0..N) | [optional] [default to 0]
  **size** | **int**| The size of the page to be returned | [optional] [default to 20]
  **sort** | [**List[str]**](str.md)| Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. | [optional] 
- **search_query** | **str**| optional search query in specified format | [optional] 
- **query_syntax** | [**SearchQueryType**](.md)| query syntax used fpr searchQuery | [optional] 
  **opt_fields** | [**List[FormulaCandidateOptField]**](FormulaCandidateOptField.md)| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to []]
 
 ### Return type
@@ -1193,6 +1333,158 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **get_spectral_library_matches**
+> List[SpectralLibraryMatch] get_spectral_library_matches(project_id, aligned_feature_id, opt_fields=opt_fields)
+
+List of spectral library matches for the given 'alignedFeatureId'.
+
+List of spectral library matches for the given 'alignedFeatureId'.
+
+### Example
+
+
+```python
+import PySirius
+from PySirius.models.spectral_library_match import SpectralLibraryMatch
+from PySirius.models.spectral_library_match_opt_field import SpectralLibraryMatchOptField
+from PySirius.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to http://localhost:8080
+# See configuration.py for a list of all supported configuration parameters.
+configuration = PySirius.Configuration(
+    host = "http://localhost:8080"
+)
+
+
+# Enter a context with an instance of the API client
+with PySirius.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = PySirius.FeaturesApi(api_client)
+    project_id = 'project_id_example' # str | project-space to read from.
+    aligned_feature_id = 'aligned_feature_id_example' # str | feature (aligned over runs) the structure candidates belong to.
+    opt_fields = [] # List[SpectralLibraryMatchOptField] |  (optional) (default to [])
+
+    try:
+        # List of spectral library matches for the given 'alignedFeatureId'.
+        api_response = api_instance.get_spectral_library_matches(project_id, aligned_feature_id, opt_fields=opt_fields)
+        print("The response of FeaturesApi->get_spectral_library_matches:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling FeaturesApi->get_spectral_library_matches: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **project_id** | **str**| project-space to read from. | 
+ **aligned_feature_id** | **str**| feature (aligned over runs) the structure candidates belong to. | 
+ **opt_fields** | [**List[SpectralLibraryMatchOptField]**](SpectralLibraryMatchOptField.md)|  | [optional] [default to []]
+
+### Return type
+
+[**List[SpectralLibraryMatch]**](SpectralLibraryMatch.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Spectral library matches of this feature (aligned over runs). |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **get_spectral_library_matches_paged**
+> PageSpectralLibraryMatch get_spectral_library_matches_paged(project_id, aligned_feature_id, page=page, size=size, sort=sort, opt_fields=opt_fields)
+
+Page of spectral library matches for the given 'alignedFeatureId'.
+
+Page of spectral library matches for the given 'alignedFeatureId'.
+
+### Example
+
+
+```python
+import PySirius
+from PySirius.models.page_spectral_library_match import PageSpectralLibraryMatch
+from PySirius.models.spectral_library_match_opt_field import SpectralLibraryMatchOptField
+from PySirius.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to http://localhost:8080
+# See configuration.py for a list of all supported configuration parameters.
+configuration = PySirius.Configuration(
+    host = "http://localhost:8080"
+)
+
+
+# Enter a context with an instance of the API client
+with PySirius.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = PySirius.FeaturesApi(api_client)
+    project_id = 'project_id_example' # str | project-space to read from.
+    aligned_feature_id = 'aligned_feature_id_example' # str | feature (aligned over runs) the structure candidates belong to.
+    page = 0 # int | Zero-based page index (0..N) (optional) (default to 0)
+    size = 20 # int | The size of the page to be returned (optional) (default to 20)
+    sort = ['sort_example'] # List[str] | Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (optional)
+    opt_fields = [] # List[SpectralLibraryMatchOptField] |  (optional) (default to [])
+
+    try:
+        # Page of spectral library matches for the given 'alignedFeatureId'.
+        api_response = api_instance.get_spectral_library_matches_paged(project_id, aligned_feature_id, page=page, size=size, sort=sort, opt_fields=opt_fields)
+        print("The response of FeaturesApi->get_spectral_library_matches_paged:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling FeaturesApi->get_spectral_library_matches_paged: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **project_id** | **str**| project-space to read from. | 
+ **aligned_feature_id** | **str**| feature (aligned over runs) the structure candidates belong to. | 
+ **page** | **int**| Zero-based page index (0..N) | [optional] [default to 0]
+ **size** | **int**| The size of the page to be returned | [optional] [default to 20]
+ **sort** | [**List[str]**](str.md)| Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. | [optional] 
+ **opt_fields** | [**List[SpectralLibraryMatchOptField]**](SpectralLibraryMatchOptField.md)|  | [optional] [default to []]
+
+### Return type
+
+[**PageSpectralLibraryMatch**](PageSpectralLibraryMatch.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Spectral library matches of this feature (aligned over runs). |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **get_structure_annotated_ms_data**
 > AnnotatedMsMsData get_structure_annotated_ms_data(project_id, aligned_feature_id, formula_id, inchi_key)
 
@@ -1344,7 +1636,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_structure_candidates**
-> PageStructureCandidateFormula get_structure_candidates(project_id, aligned_feature_id, page=page, size=size, sort=sort, search_query=search_query, query_syntax=query_syntax, opt_fields=opt_fields)
+> List[StructureCandidateFormula] get_structure_candidates(project_id, aligned_feature_id, opt_fields=opt_fields)
 
 List of StructureCandidates for the given 'alignedFeatureId' with minimal information.
 
@@ -1355,8 +1647,7 @@ List of StructureCandidates for the given 'alignedFeatureId' with minimal inform
 
 ```python
 import PySirius
-from PySirius.models.page_structure_candidate_formula import PageStructureCandidateFormula
-from PySirius.models.search_query_type import SearchQueryType
+from PySirius.models.structure_candidate_formula import StructureCandidateFormula
 from PySirius.models.structure_candidate_opt_field import StructureCandidateOptField
 from PySirius.rest import ApiException
 from pprint import pprint
@@ -1374,16 +1665,11 @@ with PySirius.ApiClient(configuration) as api_client:
     api_instance = PySirius.FeaturesApi(api_client)
     project_id = 'project_id_example' # str | project-space to read from.
     aligned_feature_id = 'aligned_feature_id_example' # str | feature (aligned over runs) the structure candidates belong to.
-    page = 0 # int | Zero-based page index (0..N) (optional) (default to 0)
-    size = 20 # int | The size of the page to be returned (optional) (default to 20)
-    sort = ['sort_example'] # List[str] | Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (optional)
-    search_query = 'search_query_example' # str | optional search query in specified format (optional)
-    query_syntax = PySirius.SearchQueryType() # SearchQueryType | query syntax used fpr searchQuery (optional)
     opt_fields = [] # List[StructureCandidateOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to [])
 
     try:
         # List of StructureCandidates for the given 'alignedFeatureId' with minimal information.
-        api_response = api_instance.get_structure_candidates(project_id, aligned_feature_id, page=page, size=size, sort=sort, search_query=search_query, query_syntax=query_syntax, opt_fields=opt_fields)
+        api_response = api_instance.get_structure_candidates(project_id, aligned_feature_id, opt_fields=opt_fields)
         print("The response of FeaturesApi->get_structure_candidates:\n")
         pprint(api_response)
     except Exception as e:
@@ -1399,16 +1685,11 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **str**| project-space to read from. | 
  **aligned_feature_id** | **str**| feature (aligned over runs) the structure candidates belong to. | 
- **page** | **int**| Zero-based page index (0..N) | [optional] [default to 0]
- **size** | **int**| The size of the page to be returned | [optional] [default to 20]
- **sort** | [**List[str]**](str.md)| Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. | [optional] 
- **search_query** | **str**| optional search query in specified format | [optional] 
- **query_syntax** | [**SearchQueryType**](.md)| query syntax used fpr searchQuery | [optional] 
  **opt_fields** | [**List[StructureCandidateOptField]**](StructureCandidateOptField.md)| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to []]
 
 ### Return type
 
-[**PageStructureCandidateFormula**](PageStructureCandidateFormula.md)
+[**List[StructureCandidateFormula]**](StructureCandidateFormula.md)
 
 ### Authorization
 
@@ -1428,7 +1709,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_structure_candidates_by_formula**
-> PageStructureCandidateScored get_structure_candidates_by_formula(project_id, aligned_feature_id, formula_id, page=page, size=size, sort=sort, search_query=search_query, query_syntax=query_syntax, opt_fields=opt_fields)
+> List[StructureCandidateScored] get_structure_candidates_by_formula(project_id, aligned_feature_id, formula_id, opt_fields=opt_fields)
 
 List of StructureCandidates the given 'formulaId' with minimal information.
 
@@ -1439,8 +1720,82 @@ List of StructureCandidates the given 'formulaId' with minimal information.  Str
 
 ```python
 import PySirius
+from PySirius.models.structure_candidate_opt_field import StructureCandidateOptField
+from PySirius.models.structure_candidate_scored import StructureCandidateScored
+from PySirius.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to http://localhost:8080
+# See configuration.py for a list of all supported configuration parameters.
+configuration = PySirius.Configuration(
+    host = "http://localhost:8080"
+)
+
+
+# Enter a context with an instance of the API client
+with PySirius.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = PySirius.FeaturesApi(api_client)
+    project_id = 'project_id_example' # str | project-space to read from.
+    aligned_feature_id = 'aligned_feature_id_example' # str | feature (aligned over runs) the formula result belongs to.
+    formula_id = 'formula_id_example' # str | identifier of the requested formula result
+    opt_fields = [] # List[StructureCandidateOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to [])
+
+    try:
+        # List of StructureCandidates the given 'formulaId' with minimal information.
+        api_response = api_instance.get_structure_candidates_by_formula(project_id, aligned_feature_id, formula_id, opt_fields=opt_fields)
+        print("The response of FeaturesApi->get_structure_candidates_by_formula:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling FeaturesApi->get_structure_candidates_by_formula: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **project_id** | **str**| project-space to read from. | 
+ **aligned_feature_id** | **str**| feature (aligned over runs) the formula result belongs to. | 
+ **formula_id** | **str**| identifier of the requested formula result | 
+ **opt_fields** | [**List[StructureCandidateOptField]**](StructureCandidateOptField.md)| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to []]
+
+### Return type
+
+[**List[StructureCandidateScored]**](StructureCandidateScored.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | StructureCandidate of this formula candidate with specified optional fields. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **get_structure_candidates_by_formula_paged**
+> PageStructureCandidateScored get_structure_candidates_by_formula_paged(project_id, aligned_feature_id, formula_id, page=page, size=size, sort=sort, opt_fields=opt_fields)
+
+Page of StructureCandidates the given 'formulaId' with minimal information.
+
+Page of StructureCandidates the given 'formulaId' with minimal information.  StructureCandidates can be enriched with molecular fingerprint, structure database links.
+
+### Example
+
+
+```python
+import PySirius
 from PySirius.models.page_structure_candidate_scored import PageStructureCandidateScored
-from PySirius.models.search_query_type import SearchQueryType
 from PySirius.models.structure_candidate_opt_field import StructureCandidateOptField
 from PySirius.rest import ApiException
 from pprint import pprint
@@ -1462,17 +1817,15 @@ with PySirius.ApiClient(configuration) as api_client:
     page = 0 # int | Zero-based page index (0..N) (optional) (default to 0)
     size = 20 # int | The size of the page to be returned (optional) (default to 20)
     sort = ['sort_example'] # List[str] | Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (optional)
-    search_query = 'search_query_example' # str | optional search query in specified format (optional)
-    query_syntax = PySirius.SearchQueryType() # SearchQueryType | query syntax used fpr searchQuery (optional)
     opt_fields = [] # List[StructureCandidateOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to [])
 
     try:
-        # List of StructureCandidates the given 'formulaId' with minimal information.
-        api_response = api_instance.get_structure_candidates_by_formula(project_id, aligned_feature_id, formula_id, page=page, size=size, sort=sort, search_query=search_query, query_syntax=query_syntax, opt_fields=opt_fields)
-        print("The response of FeaturesApi->get_structure_candidates_by_formula:\n")
+        # Page of StructureCandidates the given 'formulaId' with minimal information.
+        api_response = api_instance.get_structure_candidates_by_formula_paged(project_id, aligned_feature_id, formula_id, page=page, size=size, sort=sort, opt_fields=opt_fields)
+        print("The response of FeaturesApi->get_structure_candidates_by_formula_paged:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling FeaturesApi->get_structure_candidates_by_formula: %s\n" % e)
+        print("Exception when calling FeaturesApi->get_structure_candidates_by_formula_paged: %s\n" % e)
 ```
 
 
@@ -1488,8 +1841,6 @@ Name | Type | Description  | Notes
  **page** | **int**| Zero-based page index (0..N) | [optional] [default to 0]
  **size** | **int**| The size of the page to be returned | [optional] [default to 20]
  **sort** | [**List[str]**](str.md)| Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. | [optional] 
- **search_query** | **str**| optional search query in specified format | [optional] 
- **query_syntax** | [**SearchQueryType**](.md)| query syntax used fpr searchQuery | [optional] 
  **opt_fields** | [**List[StructureCandidateOptField]**](StructureCandidateOptField.md)| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to []]
 
 ### Return type
@@ -1510,6 +1861,85 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | StructureCandidate of this formula candidate with specified optional fields. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **get_structure_candidates_paged**
+> PageStructureCandidateFormula get_structure_candidates_paged(project_id, aligned_feature_id, page=page, size=size, sort=sort, opt_fields=opt_fields)
+
+Page of StructureCandidates for the given 'alignedFeatureId' with minimal information.
+
+Page of StructureCandidates for the given 'alignedFeatureId' with minimal information.  StructureCandidates can be enriched with molecular fingerprint, structure database links.
+
+### Example
+
+
+```python
+import PySirius
+from PySirius.models.page_structure_candidate_formula import PageStructureCandidateFormula
+from PySirius.models.structure_candidate_opt_field import StructureCandidateOptField
+from PySirius.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to http://localhost:8080
+# See configuration.py for a list of all supported configuration parameters.
+configuration = PySirius.Configuration(
+    host = "http://localhost:8080"
+)
+
+
+# Enter a context with an instance of the API client
+with PySirius.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = PySirius.FeaturesApi(api_client)
+    project_id = 'project_id_example' # str | project-space to read from.
+    aligned_feature_id = 'aligned_feature_id_example' # str | feature (aligned over runs) the structure candidates belong to.
+    page = 0 # int | Zero-based page index (0..N) (optional) (default to 0)
+    size = 20 # int | The size of the page to be returned (optional) (default to 20)
+    sort = ['sort_example'] # List[str] | Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (optional)
+    opt_fields = [] # List[StructureCandidateOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to [])
+
+    try:
+        # Page of StructureCandidates for the given 'alignedFeatureId' with minimal information.
+        api_response = api_instance.get_structure_candidates_paged(project_id, aligned_feature_id, page=page, size=size, sort=sort, opt_fields=opt_fields)
+        print("The response of FeaturesApi->get_structure_candidates_paged:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling FeaturesApi->get_structure_candidates_paged: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **project_id** | **str**| project-space to read from. | 
+ **aligned_feature_id** | **str**| feature (aligned over runs) the structure candidates belong to. | 
+ **page** | **int**| Zero-based page index (0..N) | [optional] [default to 0]
+ **size** | **int**| The size of the page to be returned | [optional] [default to 20]
+ **sort** | [**List[str]**](str.md)| Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. | [optional] 
+ **opt_fields** | [**List[StructureCandidateOptField]**](StructureCandidateOptField.md)| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to []]
+
+### Return type
+
+[**PageStructureCandidateFormula**](PageStructureCandidateFormula.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | StructureCandidate of this feature (aligned over runs) candidate with specified optional fields. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

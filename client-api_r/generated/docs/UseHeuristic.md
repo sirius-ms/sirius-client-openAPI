@@ -5,7 +5,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**mzToUseHeuristic** | **integer** |  | [optional] 
-**mzToUseHeuristicOnly** | **integer** |  | [optional] 
+**useHeuristicAboveMz** | **integer** |  | [optional] 
+**useOnlyHeuristicAboveMz** | **integer** |  | [optional] 
 
 

@@ -50,11 +50,22 @@ test_that("GetAlignedFeatures", {
   # Get all available features (aligned over runs) in the given project-space.
   # Get all available features (aligned over runs) in the given project-space.
   # @param project_id character project-space to read from.
+  # @param opt_fields array[AlignedFeatureOptField] set of optional fields to be included. Use 'none' only to override defaults. (optional)
+  # @return [array[AlignedFeature]]
+
+  # uncomment below to test the operation
+  #expect_equal(result, "EXPECTED_RESULT")
+})
+
+test_that("GetAlignedFeaturesPaged", {
+  # tests for GetAlignedFeaturesPaged
+  # base path: http://localhost:8080
+  # Get all available features (aligned over runs) in the given project-space.
+  # Get all available features (aligned over runs) in the given project-space.
+  # @param project_id character project-space to read from.
   # @param page integer Zero-based page index (0..N) (optional)
   # @param size integer The size of the page to be returned (optional)
   # @param sort array[character] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (optional)
-  # @param search_query character optional search query in specified format (optional)
-  # @param query_syntax SearchQueryType query syntax used fpr searchQuery (optional)
   # @param opt_fields array[AlignedFeatureOptField] set of optional fields to be included. Use 'none' only to override defaults. (optional)
   # @return [PageAlignedFeature]
 
@@ -151,15 +162,27 @@ test_that("GetFormulaCandidate", {
 test_that("GetFormulaCandidates", {
   # tests for GetFormulaCandidates
   # base path: http://localhost:8080
-  # List of all FormulaResultContainers available for this feature with minimal information.
-  # List of all FormulaResultContainers available for this feature with minimal information.  Can be enriched with an optional results overview.
+  # List of FormulaResultContainers available for this feature with minimal information.
+  # List of FormulaResultContainers available for this feature with minimal information.  Can be enriched with an optional results overview.
+  # @param project_id character project-space to read from.
+  # @param aligned_feature_id character feature (aligned over runs) the formula result belongs to.
+  # @param opt_fields array[FormulaCandidateOptField] set of optional fields to be included. Use 'none' only to override defaults. (optional)
+  # @return [array[FormulaCandidate]]
+
+  # uncomment below to test the operation
+  #expect_equal(result, "EXPECTED_RESULT")
+})
+
+test_that("GetFormulaCandidatesPaged", {
+  # tests for GetFormulaCandidatesPaged
+  # base path: http://localhost:8080
+  # Page of FormulaResultContainers available for this feature with minimal information.
+  # Page of FormulaResultContainers available for this feature with minimal information.  Can be enriched with an optional results overview.
   # @param project_id character project-space to read from.
   # @param aligned_feature_id character feature (aligned over runs) the formula result belongs to.
   # @param page integer Zero-based page index (0..N) (optional)
   # @param size integer The size of the page to be returned (optional)
   # @param sort array[character] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (optional)
-  # @param search_query character optional search query in specified format (optional)
-  # @param query_syntax SearchQueryType query syntax used fpr searchQuery (optional)
   # @param opt_fields array[FormulaCandidateOptField] set of optional fields to be included. Use 'none' only to override defaults. (optional)
   # @return [PageFormulaCandidate]
 
@@ -234,6 +257,37 @@ test_that("GetSiriusFragTree", {
   #expect_equal(result, "EXPECTED_RESULT")
 })
 
+test_that("GetSpectralLibraryMatches", {
+  # tests for GetSpectralLibraryMatches
+  # base path: http://localhost:8080
+  # List of spectral library matches for the given &#39;alignedFeatureId&#39;.
+  # List of spectral library matches for the given &#39;alignedFeatureId&#39;.
+  # @param project_id character project-space to read from.
+  # @param aligned_feature_id character feature (aligned over runs) the structure candidates belong to.
+  # @param opt_fields array[SpectralLibraryMatchOptField]  (optional)
+  # @return [array[SpectralLibraryMatch]]
+
+  # uncomment below to test the operation
+  #expect_equal(result, "EXPECTED_RESULT")
+})
+
+test_that("GetSpectralLibraryMatchesPaged", {
+  # tests for GetSpectralLibraryMatchesPaged
+  # base path: http://localhost:8080
+  # Page of spectral library matches for the given &#39;alignedFeatureId&#39;.
+  # Page of spectral library matches for the given &#39;alignedFeatureId&#39;.
+  # @param project_id character project-space to read from.
+  # @param aligned_feature_id character feature (aligned over runs) the structure candidates belong to.
+  # @param page integer Zero-based page index (0..N) (optional)
+  # @param size integer The size of the page to be returned (optional)
+  # @param sort array[character] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (optional)
+  # @param opt_fields array[SpectralLibraryMatchOptField]  (optional)
+  # @return [PageSpectralLibraryMatch]
+
+  # uncomment below to test the operation
+  #expect_equal(result, "EXPECTED_RESULT")
+})
+
 test_that("GetStructureAnnotatedMsData", {
   # tests for GetStructureAnnotatedMsData
   # base path: http://localhost:8080
@@ -272,13 +326,8 @@ test_that("GetStructureCandidates", {
   # List of StructureCandidates for the given &#39;alignedFeatureId&#39; with minimal information.  StructureCandidates can be enriched with molecular fingerprint, structure database links.
   # @param project_id character project-space to read from.
   # @param aligned_feature_id character feature (aligned over runs) the structure candidates belong to.
-  # @param page integer Zero-based page index (0..N) (optional)
-  # @param size integer The size of the page to be returned (optional)
-  # @param sort array[character] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (optional)
-  # @param search_query character optional search query in specified format (optional)
-  # @param query_syntax SearchQueryType query syntax used fpr searchQuery (optional)
   # @param opt_fields array[StructureCandidateOptField] set of optional fields to be included. Use 'none' only to override defaults. (optional)
-  # @return [PageStructureCandidateFormula]
+  # @return [array[StructureCandidateFormula]]
 
   # uncomment below to test the operation
   #expect_equal(result, "EXPECTED_RESULT")
@@ -292,13 +341,43 @@ test_that("GetStructureCandidatesByFormula", {
   # @param project_id character project-space to read from.
   # @param aligned_feature_id character feature (aligned over runs) the formula result belongs to.
   # @param formula_id character identifier of the requested formula result
+  # @param opt_fields array[StructureCandidateOptField] set of optional fields to be included. Use 'none' only to override defaults. (optional)
+  # @return [array[StructureCandidateScored]]
+
+  # uncomment below to test the operation
+  #expect_equal(result, "EXPECTED_RESULT")
+})
+
+test_that("GetStructureCandidatesByFormulaPaged", {
+  # tests for GetStructureCandidatesByFormulaPaged
+  # base path: http://localhost:8080
+  # Page of StructureCandidates the given &#39;formulaId&#39; with minimal information.
+  # Page of StructureCandidates the given &#39;formulaId&#39; with minimal information.  StructureCandidates can be enriched with molecular fingerprint, structure database links.
+  # @param project_id character project-space to read from.
+  # @param aligned_feature_id character feature (aligned over runs) the formula result belongs to.
+  # @param formula_id character identifier of the requested formula result
   # @param page integer Zero-based page index (0..N) (optional)
   # @param size integer The size of the page to be returned (optional)
   # @param sort array[character] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (optional)
-  # @param search_query character optional search query in specified format (optional)
-  # @param query_syntax SearchQueryType query syntax used fpr searchQuery (optional)
   # @param opt_fields array[StructureCandidateOptField] set of optional fields to be included. Use 'none' only to override defaults. (optional)
   # @return [PageStructureCandidateScored]
+
+  # uncomment below to test the operation
+  #expect_equal(result, "EXPECTED_RESULT")
+})
+
+test_that("GetStructureCandidatesPaged", {
+  # tests for GetStructureCandidatesPaged
+  # base path: http://localhost:8080
+  # Page of StructureCandidates for the given &#39;alignedFeatureId&#39; with minimal information.
+  # Page of StructureCandidates for the given &#39;alignedFeatureId&#39; with minimal information.  StructureCandidates can be enriched with molecular fingerprint, structure database links.
+  # @param project_id character project-space to read from.
+  # @param aligned_feature_id character feature (aligned over runs) the structure candidates belong to.
+  # @param page integer Zero-based page index (0..N) (optional)
+  # @param size integer The size of the page to be returned (optional)
+  # @param sort array[character] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (optional)
+  # @param opt_fields array[StructureCandidateOptField] set of optional fields to be included. Use 'none' only to override defaults. (optional)
+  # @return [PageStructureCandidateFormula]
 
   # uncomment below to test the operation
   #expect_equal(result, "EXPECTED_RESULT")

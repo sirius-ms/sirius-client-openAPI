@@ -40,6 +40,7 @@ from PySirius.models.consensus_annotations_de_novo import ConsensusAnnotationsDe
 from PySirius.models.consensus_criterion_csi import ConsensusCriterionCSI
 from PySirius.models.consensus_criterion_de_novo import ConsensusCriterionDeNovo
 from PySirius.models.db_link import DBLink
+from PySirius.models.database_import_submission import DatabaseImportSubmission
 from PySirius.models.deviation import Deviation
 from PySirius.models.feature_annotations import FeatureAnnotations
 from PySirius.models.feature_import import FeatureImport
@@ -49,8 +50,6 @@ from PySirius.models.formula_candidate_opt_field import FormulaCandidateOptField
 from PySirius.models.fragment_node import FragmentNode
 from PySirius.models.fragmentation_tree import FragmentationTree
 from PySirius.models.gui_info import GuiInfo
-from PySirius.models.gui_parameters import GuiParameters
-from PySirius.models.gui_result_tab import GuiResultTab
 from PySirius.models.import_format import ImportFormat
 from PySirius.models.import_local_files_submission import ImportLocalFilesSubmission
 from PySirius.models.import_string_submission import ImportStringSubmission
@@ -70,9 +69,8 @@ from PySirius.models.ms_novelist import MsNovelist
 from PySirius.models.page_aligned_feature import PageAlignedFeature
 from PySirius.models.page_compound import PageCompound
 from PySirius.models.page_formula_candidate import PageFormulaCandidate
-from PySirius.models.page_gui_info import PageGuiInfo
 from PySirius.models.page_job import PageJob
-from PySirius.models.page_project_info import PageProjectInfo
+from PySirius.models.page_spectral_library_match import PageSpectralLibraryMatch
 from PySirius.models.page_structure_candidate_formula import PageStructureCandidateFormula
 from PySirius.models.page_structure_candidate_scored import PageStructureCandidateScored
 from PySirius.models.pageable_object import PageableObject
@@ -81,10 +79,14 @@ from PySirius.models.peak_annotation import PeakAnnotation
 from PySirius.models.project_change_event import ProjectChangeEvent
 from PySirius.models.project_info import ProjectInfo
 from PySirius.models.project_info_opt_field import ProjectInfoOptField
-from PySirius.models.search_query_type import SearchQueryType
+from PySirius.models.searchable_database import SearchableDatabase
+from PySirius.models.searchable_database_parameters import SearchableDatabaseParameters
 from PySirius.models.simple_peak import SimplePeak
 from PySirius.models.sirius import Sirius
 from PySirius.models.sort_object import SortObject
+from PySirius.models.spectral_alignment_type import SpectralAlignmentType
+from PySirius.models.spectral_library_match import SpectralLibraryMatch
+from PySirius.models.spectral_library_match_opt_field import SpectralLibraryMatchOptField
 from PySirius.models.spectral_library_search import SpectralLibrarySearch
 from PySirius.models.spectrum_annotation import SpectrumAnnotation
 from PySirius.models.structure_candidate import StructureCandidate

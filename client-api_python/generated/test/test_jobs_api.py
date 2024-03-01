@@ -10,31 +10,19 @@
 
     Do not edit the class manually.
 """  # noqa: E501
-import os
-import shutil
-import time
+
+
 import unittest
-from os.path import abspath
 
-import PySirius
-from PySirius import PySiriusAPI
 from PySirius.api.jobs_api import JobsApi
-
-api = PySiriusAPI(PySirius.ApiClient())
-
-jobConfig= {"alignedFeatureIds": [
-    "string"
-  ],"formulaIdParams": {
-    "enabled": True,
-    "profile": "QTOF",
-  }}
 
 
 class TestJobsApi(unittest.TestCase):
     """JobsApi unit test stubs"""
 
     def setUp(self) -> None:
-        pass
+        self.api = JobsApi()
+
     def tearDown(self) -> None:
         pass
 
@@ -90,7 +78,14 @@ class TestJobsApi(unittest.TestCase):
     def test_get_jobs(self) -> None:
         """Test case for get_jobs
 
-        Get job information and its current state and progress (if available).
+        Get List of all available jobs with information such as current state and progress (if available).
+        """
+        pass
+
+    def test_get_jobs_paged(self) -> None:
+        """Test case for get_jobs_paged
+
+        Get Page of jobs with information such as current state and progress (if available).
         """
         pass
 
@@ -114,34 +109,19 @@ class TestJobsApi(unittest.TestCase):
         """
         pass
 
+    def test_start_database_import(self) -> None:
+        """Test case for start_database_import
+
+        Start import of structure and spectra files into the specified database.
+        """
+        pass
+
     def test_start_import_from_path_job(self) -> None:
         """Test case for start_import_from_path_job
 
         Import ms/ms data in given format from local filesystem into the specified project
         """
-
-        path_to_demo_data = "../../../.updater/clientTests/Data"
-        os.makedirs("temp_0")
-        projectID="tempProject"
-        api.get_ProjectsApi().create_project_space(project_id=projectID,
-                                               path_to_project="../../../../client-api_python/generated/test/temp_0")
-
-        api.get_JobsApi().start_import_from_path_job(project_id=projectID,
-                                                       import_local_files_submission=PySirius.ImportLocalFilesSubmission.from_dict(
-                                                           {
-                                                               "allowMs1OnlyData": True,
-                                                               "ignoreFormulas": True,
-                                                               "inputPaths": [
-                                                                   abspath(path_to_demo_data + "/Kaempferol.ms"),
-                                                                   abspath(path_to_demo_data + "/laudanosine.mgf")]
-                                                           }))
-
-        time.sleep(3)
-
-        nrFeatures = api.get_FeaturesApi().get_aligned_features(project_id=projectID).number_of_elements
-        shutil.rmtree("temp_0")
-        api.get_ProjectsApi().close_project_space(project_id=projectID)
-        self.assertEqual(nrFeatures,2)
+        pass
 
     def test_start_import_from_string_job(self) -> None:
         """Test case for start_import_from_string_job
@@ -155,37 +135,7 @@ class TestJobsApi(unittest.TestCase):
 
         Start computation for given compounds and with given parameters.
         """
-        path_to_demo_data = "../../../.updater/clientTests/Data"
-        os.makedirs("temp_1")
-        projectID = "tempProject"
-        api.get_ProjectsApi().create_project_space(project_id=projectID,
-                                                   path_to_project="../../../../client-api_python/generated/test/temp_1")
-        api.get_JobsApi().start_import_from_path_job(project_id=projectID,
-                                                     import_local_files_submission=PySirius.ImportLocalFilesSubmission.from_dict(
-                                                         {
-                                                             "allowMs1OnlyData": True,
-                                                             "ignoreFormulas": True,
-                                                             "inputPaths": [
-                                                                 abspath(path_to_demo_data + "/Kaempferol.ms.ms"),
-                                                                 abspath(path_to_demo_data + "/laudanosine.mgf")]
-                                                         }))
-
-        time.sleep(1)
-
-        id = api.get_FeaturesApi().get_aligned_features(project_id=projectID).content[0].aligned_feature_id
-
-        jobConfig["alignedFeatureIds"]=[id]
-
-        api.get_JobsApi().start_job(project_id=projectID,job_submission=jobConfig)
-
-        time.sleep(3)
-
-
-        self.assertTrue(os.path.exists("temp_1/"+id+"/scores"))
-
-        shutil.rmtree("temp_1")
-        api.get_ProjectsApi().close_project_space(project_id=projectID)
-
+        pass
 
     def test_start_job_from_config(self) -> None:
         """Test case for start_job_from_config

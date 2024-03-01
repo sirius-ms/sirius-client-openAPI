@@ -82,7 +82,7 @@ Instrument <- R6::R6Class(
 
 # add to utils.R
 .parse_Instrument <- function(vals) {
-  res <- gsub("^\\[|\\]$", "", "[QTOF, ORBI, FTICR]")
+  res <- gsub("^\\[|\\]$", "", "[QTOF, ORBITRAP]")
   unlist(strsplit(res, ", "))
 }
 

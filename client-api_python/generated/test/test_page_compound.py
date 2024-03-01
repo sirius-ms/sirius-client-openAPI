@@ -217,10 +217,21 @@ class TestPageCompound(unittest.TestCase):
                                                 name = '', 
                                                 id = '', )
                                             ], 
-                                        ref_spectra_links = [
-                                            PySirius.models.db_link.DBLink(
-                                                name = '', 
-                                                id = '', )
+                                        spectral_library_matches = [
+                                            PySirius.models.spectral_library_match.SpectralLibraryMatch(
+                                                similarity = 1.337, 
+                                                shared_peaks = 56, 
+                                                query_spectrum_index = 56, 
+                                                db_name = '', 
+                                                db_id = '', 
+                                                uuid = '', 
+                                                splash = '', 
+                                                molecular_formula = '', 
+                                                adduct = '', 
+                                                exact_mass = '', 
+                                                smiles = '', 
+                                                candidate_in_chi_key = '', 
+                                                reference_spectrum = , )
                                             ], 
                                         csi_score = 1.337, 
                                         tanimoto_similarity = 1.337, 

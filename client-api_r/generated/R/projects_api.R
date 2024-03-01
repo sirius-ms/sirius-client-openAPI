@@ -139,17 +139,12 @@
 #' List opened project spaces.
 #'
 #' \itemize{
-#' \item \emph{ @param } page integer
-#' \item \emph{ @param } size integer
-#' \item \emph{ @param } sort list( character )
-#' \item \emph{ @param } search_query character
-#' \item \emph{ @param } query_syntax \link{SearchQueryType}
-#' \item \emph{ @returnType } \link{PageProjectInfo} \cr
+#' \item \emph{ @returnType } list( \link{ProjectInfo} ) \cr
 #'
 #'
 #' \item status code : 200 | OK
 #'
-#' \item return type : PageProjectInfo
+#' \item return type : array[ProjectInfo]
 #' \item response headers :
 #'
 #' \tabular{ll}{
@@ -288,18 +283,13 @@
 #' ####################  GetProjectSpaces  ####################
 #'
 #' library(Rsirius)
-#' var_page <- 0 # integer | Zero-based page index (0..N) (Optional)
-#' var_size <- 20 # integer | The size of the page to be returned (Optional)
-#' var_sort <- c("inner_example") # array[character] | Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (Optional)
-#' var_search_query <- "search_query_example" # character | optional search query in specified format (Optional)
-#' var_query_syntax <- SearchQueryType$new() # SearchQueryType | query syntax used fpr searchQuery (Optional)
 #'
 #' #List opened project spaces.
 #' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-#' # result <- api_instance$GetProjectSpaces(page = var_page, size = var_size, sort = var_sort, search_query = var_search_query, query_syntax = var_query_syntaxdata_file = "result.txt")
-#' result <- api_instance$projects_api$GetProjectSpaces(page = var_page, size = var_size, sort = var_sort, search_query = var_search_query, query_syntax = var_query_syntax)
+#' # result <- api_instance$GetProjectSpaces(data_file = "result.txt")
+#' result <- api_instance$projects_api$GetProjectSpaces()
 #' dput(result)
 #'
 #'
@@ -1088,17 +1078,12 @@ ProjectsApi <- R6::R6Class(
     #' @description
     #' List opened project spaces.
     #'
-    #' @param page (optional) Zero-based page index (0..N) (default value: 0)
-    #' @param size (optional) The size of the page to be returned (default value: 20)
-    #' @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
-    #' @param search_query (optional) optional search query in specified format
-    #' @param query_syntax (optional) query syntax used fpr searchQuery
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
-    #' @return PageProjectInfo
+    #' @return array[ProjectInfo]
     #' @export
-    GetProjectSpaces = function(page = 0, size = 20, sort = NULL, search_query = NULL, query_syntax = NULL, data_file = NULL, ...) {
-      local_var_response <- self$GetProjectSpacesWithHttpInfo(page, size, sort, search_query, query_syntax, data_file = data_file, ...)
+    GetProjectSpaces = function(data_file = NULL, ...) {
+      local_var_response <- self$GetProjectSpacesWithHttpInfo(data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
@@ -1114,16 +1099,11 @@ ProjectsApi <- R6::R6Class(
     #' @description
     #' List opened project spaces.
     #'
-    #' @param page (optional) Zero-based page index (0..N) (default value: 0)
-    #' @param size (optional) The size of the page to be returned (default value: 20)
-    #' @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
-    #' @param search_query (optional) optional search query in specified format
-    #' @param query_syntax (optional) query syntax used fpr searchQuery
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
-    #' @return API response (PageProjectInfo) with additional information such as HTTP status code, headers
+    #' @return API response (array[ProjectInfo]) with additional information such as HTTP status code, headers
     #' @export
-    GetProjectSpacesWithHttpInfo = function(page = 0, size = 20, sort = NULL, search_query = NULL, query_syntax = NULL, data_file = NULL, ...) {
+    GetProjectSpacesWithHttpInfo = function(data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -1132,30 +1112,6 @@ ProjectsApi <- R6::R6Class(
       local_var_body <- NULL
       oauth_scopes <- NULL
       is_oauth <- FALSE
-
-      if (`page` < 0) {
-        stop("Invalid value for `page` when calling ProjectsApi$GetProjectSpaces, must be bigger than or equal to 0.")
-      }
-
-      if (`size` < 1) {
-        stop("Invalid value for `size` when calling ProjectsApi$GetProjectSpaces, must be bigger than or equal to 1.")
-      }
-
-
-
-
-      query_params[["page"]] <- `page`
-
-      query_params[["size"]] <- `size`
-
-      # explore
-      for (query_item in `sort`) {
-        query_params[["sort"]] <- c(query_params[["sort"]], list(`sort` = query_item))
-      }
-
-      query_params[["searchQuery"]] <- `search_query`
-
-      query_params[["querySyntax"]] <- `query_syntax`
 
       local_var_url_path <- "/api/projects"
 
@@ -1185,7 +1141,7 @@ ProjectsApi <- R6::R6Class(
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "PageProjectInfo", loadNamespace("Rsirius")),
+          self$api_client$deserialize(local_var_resp$response_as_text(), "array[ProjectInfo]", loadNamespace("Rsirius")),
           error = function(e) {
             stop("Failed to deserialize response")
           }

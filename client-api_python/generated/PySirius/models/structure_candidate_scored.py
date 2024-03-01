@@ -21,6 +21,7 @@ from pydantic import BaseModel, Field, StrictFloat, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional, Union
 from PySirius.models.binary_fingerprint import BinaryFingerprint
 from PySirius.models.db_link import DBLink
+from PySirius.models.spectral_library_match import SpectralLibraryMatch
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -33,13 +34,13 @@ class StructureCandidateScored(BaseModel):
     structure_name: Optional[StrictStr] = Field(default=None, alias="structureName")
     xlog_p: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="xlogP")
     db_links: Optional[List[Optional[DBLink]]] = Field(default=None, description="List of structure database links belonging to this structure candidate  OPTIONAL: needs to be added by parameter", alias="dbLinks")
-    ref_spectra_links: Optional[List[Optional[DBLink]]] = Field(default=None, description="List of spectral library links belonging to this structure candidate  OPTIONAL: needs to be added by parameter", alias="refSpectraLinks")
+    spectral_library_matches: Optional[List[Optional[SpectralLibraryMatch]]] = Field(default=None, description="List of spectral library matches belonging to this structure candidate  OPTIONAL: needs to be added by parameter", alias="spectralLibraryMatches")
     csi_score: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="csiScore")
     tanimoto_similarity: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="tanimotoSimilarity")
     confidence_exact_match: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="confidenceExactMatch")
     confidence_approx_match: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="confidenceApproxMatch")
     fingerprint: Optional[BinaryFingerprint] = None
-    __properties: ClassVar[List[str]] = ["inchiKey", "smiles", "structureName", "xlogP", "dbLinks", "refSpectraLinks", "csiScore", "tanimotoSimilarity", "confidenceExactMatch", "confidenceApproxMatch", "fingerprint"]
+    __properties: ClassVar[List[str]] = ["inchiKey", "smiles", "structureName", "xlogP", "dbLinks", "spectralLibraryMatches", "csiScore", "tanimotoSimilarity", "confidenceExactMatch", "confidenceApproxMatch", "fingerprint"]
 
     model_config = {
         "populate_by_name": True,
@@ -87,13 +88,13 @@ class StructureCandidateScored(BaseModel):
                 if _item:
                     _items.append(_item.to_dict())
             _dict['dbLinks'] = _items
-        # override the default output from pydantic by calling `to_dict()` of each item in ref_spectra_links (list)
+        # override the default output from pydantic by calling `to_dict()` of each item in spectral_library_matches (list)
         _items = []
-        if self.ref_spectra_links:
-            for _item in self.ref_spectra_links:
+        if self.spectral_library_matches:
+            for _item in self.spectral_library_matches:
                 if _item:
                     _items.append(_item.to_dict())
-            _dict['refSpectraLinks'] = _items
+            _dict['spectralLibraryMatches'] = _items
         # override the default output from pydantic by calling `to_dict()` of fingerprint
         if self.fingerprint:
             _dict['fingerprint'] = self.fingerprint.to_dict()
@@ -112,10 +113,10 @@ class StructureCandidateScored(BaseModel):
         if self.db_links is None and "db_links" in self.model_fields_set:
             _dict['dbLinks'] = None
 
-        # set to None if ref_spectra_links (nullable) is None
+        # set to None if spectral_library_matches (nullable) is None
         # and model_fields_set contains the field
-        if self.ref_spectra_links is None and "ref_spectra_links" in self.model_fields_set:
-            _dict['refSpectraLinks'] = None
+        if self.spectral_library_matches is None and "spectral_library_matches" in self.model_fields_set:
+            _dict['spectralLibraryMatches'] = None
 
         # set to None if tanimoto_similarity (nullable) is None
         # and model_fields_set contains the field
@@ -154,7 +155,7 @@ class StructureCandidateScored(BaseModel):
             "structureName": obj.get("structureName"),
             "xlogP": obj.get("xlogP"),
             "dbLinks": [DBLink.from_dict(_item) for _item in obj["dbLinks"]] if obj.get("dbLinks") is not None else None,
-            "refSpectraLinks": [DBLink.from_dict(_item) for _item in obj["refSpectraLinks"]] if obj.get("refSpectraLinks") is not None else None,
+            "spectralLibraryMatches": [SpectralLibraryMatch.from_dict(_item) for _item in obj["spectralLibraryMatches"]] if obj.get("spectralLibraryMatches") is not None else None,
             "csiScore": obj.get("csiScore"),
             "tanimotoSimilarity": obj.get("tanimotoSimilarity"),
             "confidenceExactMatch": obj.get("confidenceExactMatch"),

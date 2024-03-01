@@ -49,14 +49,26 @@ test_that("GetCompound", {
 test_that("GetCompounds", {
   # tests for GetCompounds
   # base path: http://localhost:8080
-  # Get all available compounds (group of ion identities) in the given project-space.
-  # Get all available compounds (group of ion identities) in the given project-space.
+  # List of all available compounds (group of ion identities) in the given project-space.
+  # List of all available compounds (group of ion identities) in the given project-space.
+  # @param project_id character project-space to read from.
+  # @param opt_fields array[CompoundOptField] set of optional fields to be included. Use 'none' only to override defaults. (optional)
+  # @param opt_fields_features array[AlignedFeatureOptField]  (optional)
+  # @return [array[Compound]]
+
+  # uncomment below to test the operation
+  #expect_equal(result, "EXPECTED_RESULT")
+})
+
+test_that("GetCompoundsPaged", {
+  # tests for GetCompoundsPaged
+  # base path: http://localhost:8080
+  # Page of available compounds (group of ion identities) in the given project-space.
+  # Page of available compounds (group of ion identities) in the given project-space.
   # @param project_id character project-space to read from.
   # @param page integer Zero-based page index (0..N) (optional)
   # @param size integer The size of the page to be returned (optional)
   # @param sort array[character] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (optional)
-  # @param search_query character optional search query in specified format (optional)
-  # @param query_syntax SearchQueryType query syntax used fpr searchQuery (optional)
   # @param opt_fields array[CompoundOptField] set of optional fields to be included. Use 'none' only to override defaults. (optional)
   # @param opt_fields_features array[AlignedFeatureOptField]  (optional)
   # @return [PageCompound]

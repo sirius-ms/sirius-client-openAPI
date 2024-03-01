@@ -82,7 +82,7 @@ StructureCandidateOptField <- R6::R6Class(
 
 # add to utils.R
 .parse_StructureCandidateOptField <- function(vals) {
-  res <- gsub("^\\[|\\]$", "", "[none, fingerprint, dbLinks, refSpectraLinks]")
+  res <- gsub("^\\[|\\]$", "", "[none, fingerprint, dbLinks, libraryMatches]")
   unlist(strsplit(res, ", "))
 }
 

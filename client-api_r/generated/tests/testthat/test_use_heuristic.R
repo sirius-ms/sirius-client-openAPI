@@ -5,16 +5,16 @@ context("Test UseHeuristic")
 
 model_instance <- UseHeuristic$new()
 
-test_that("mzToUseHeuristic", {
-  # tests for the property `mzToUseHeuristic` (integer)
+test_that("useHeuristicAboveMz", {
+  # tests for the property `useHeuristicAboveMz` (integer)
 
   # uncomment below to test the property
-  #expect_equal(model.instance$`mzToUseHeuristic`, "EXPECTED_RESULT")
+  #expect_equal(model.instance$`useHeuristicAboveMz`, "EXPECTED_RESULT")
 })
 
-test_that("mzToUseHeuristicOnly", {
-  # tests for the property `mzToUseHeuristicOnly` (integer)
+test_that("useOnlyHeuristicAboveMz", {
+  # tests for the property `useOnlyHeuristicAboveMz` (integer)
 
   # uncomment below to test the property
-  #expect_equal(model.instance$`mzToUseHeuristicOnly`, "EXPECTED_RESULT")
+  #expect_equal(model.instance$`useOnlyHeuristicAboveMz`, "EXPECTED_RESULT")
 })

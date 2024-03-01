@@ -101,12 +101,7 @@ test_that("GetProjectSpaces", {
   # base path: http://localhost:8080
   # List opened project spaces.
   # List opened project spaces.
-  # @param page integer Zero-based page index (0..N) (optional)
-  # @param size integer The size of the page to be returned (optional)
-  # @param sort array[character] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (optional)
-  # @param search_query character optional search query in specified format (optional)
-  # @param query_syntax SearchQueryType query syntax used fpr searchQuery (optional)
-  # @return [PageProjectInfo]
+  # @return [array[ProjectInfo]]
 
   # uncomment below to test the operation
   #expect_equal(result, "EXPECTED_RESULT")

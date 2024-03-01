@@ -11,7 +11,7 @@ Name | Type | Description | Notes
 **structure_name** | **str** |  | [optional] 
 **xlog_p** | **float** |  | [optional] 
 **db_links** | [**List[DBLink]**](DBLink.md) | List of structure database links belonging to this structure candidate  OPTIONAL: needs to be added by parameter | [optional] 
-**ref_spectra_links** | [**List[DBLink]**](DBLink.md) | List of spectral library links belonging to this structure candidate  OPTIONAL: needs to be added by parameter | [optional] 
+**spectral_library_matches** | [**List[SpectralLibraryMatch]**](SpectralLibraryMatch.md) | List of spectral library matches belonging to this structure candidate  OPTIONAL: needs to be added by parameter | [optional] 
 **csi_score** | **float** |  | [optional] 
 **tanimoto_similarity** | **float** |  | [optional] 
 **confidence_exact_match** | **float** |  | [optional] 

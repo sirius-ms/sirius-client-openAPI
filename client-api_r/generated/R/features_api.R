@@ -72,11 +72,27 @@
 #'
 #' \itemize{
 #' \item \emph{ @param } project_id character
+#' \item \emph{ @param } opt_fields list( \link{AlignedFeatureOptField} )
+#' \item \emph{ @returnType } list( \link{AlignedFeature} ) \cr
+#'
+#'
+#' \item status code : 200 | AlignedFeatures with additional annotations and MS/MS data (if specified).
+#'
+#' \item return type : array[AlignedFeature]
+#' \item response headers :
+#'
+#' \tabular{ll}{
+#' }
+#' }
+#'
+#' \strong{ GetAlignedFeaturesPaged } \emph{ Get all available features (aligned over runs) in the given project-space. }
+#' Get all available features (aligned over runs) in the given project-space.
+#'
+#' \itemize{
+#' \item \emph{ @param } project_id character
 #' \item \emph{ @param } page integer
 #' \item \emph{ @param } size integer
 #' \item \emph{ @param } sort list( character )
-#' \item \emph{ @param } search_query character
-#' \item \emph{ @param } query_syntax \link{SearchQueryType}
 #' \item \emph{ @param } opt_fields list( \link{AlignedFeatureOptField} )
 #' \item \emph{ @returnType } \link{PageAlignedFeature} \cr
 #'
@@ -205,8 +221,27 @@
 #' }
 #' }
 #'
-#' \strong{ GetFormulaCandidates } \emph{ List of all FormulaResultContainers available for this feature with minimal information. }
-#' List of all FormulaResultContainers available for this feature with minimal information.  Can be enriched with an optional results overview.
+#' \strong{ GetFormulaCandidates } \emph{ List of FormulaResultContainers available for this feature with minimal information. }
+#' List of FormulaResultContainers available for this feature with minimal information.  Can be enriched with an optional results overview.
+#'
+#' \itemize{
+#' \item \emph{ @param } project_id character
+#' \item \emph{ @param } aligned_feature_id character
+#' \item \emph{ @param } opt_fields list( \link{FormulaCandidateOptField} )
+#' \item \emph{ @returnType } list( \link{FormulaCandidate} ) \cr
+#'
+#'
+#' \item status code : 200 | All FormulaCandidate of this feature with.
+#'
+#' \item return type : array[FormulaCandidate]
+#' \item response headers :
+#'
+#' \tabular{ll}{
+#' }
+#' }
+#'
+#' \strong{ GetFormulaCandidatesPaged } \emph{ Page of FormulaResultContainers available for this feature with minimal information. }
+#' Page of FormulaResultContainers available for this feature with minimal information.  Can be enriched with an optional results overview.
 #'
 #' \itemize{
 #' \item \emph{ @param } project_id character
@@ -214,8 +249,6 @@
 #' \item \emph{ @param } page integer
 #' \item \emph{ @param } size integer
 #' \item \emph{ @param } sort list( character )
-#' \item \emph{ @param } search_query character
-#' \item \emph{ @param } query_syntax \link{SearchQueryType}
 #' \item \emph{ @param } opt_fields list( \link{FormulaCandidateOptField} )
 #' \item \emph{ @returnType } \link{PageFormulaCandidate} \cr
 #'
@@ -321,6 +354,47 @@
 #' }
 #' }
 #'
+#' \strong{ GetSpectralLibraryMatches } \emph{ List of spectral library matches for the given &#39;alignedFeatureId&#39;. }
+#' List of spectral library matches for the given 'alignedFeatureId'.
+#'
+#' \itemize{
+#' \item \emph{ @param } project_id character
+#' \item \emph{ @param } aligned_feature_id character
+#' \item \emph{ @param } opt_fields list( \link{SpectralLibraryMatchOptField} )
+#' \item \emph{ @returnType } list( \link{SpectralLibraryMatch} ) \cr
+#'
+#'
+#' \item status code : 200 | Spectral library matches of this feature (aligned over runs).
+#'
+#' \item return type : array[SpectralLibraryMatch]
+#' \item response headers :
+#'
+#' \tabular{ll}{
+#' }
+#' }
+#'
+#' \strong{ GetSpectralLibraryMatchesPaged } \emph{ Page of spectral library matches for the given &#39;alignedFeatureId&#39;. }
+#' Page of spectral library matches for the given 'alignedFeatureId'.
+#'
+#' \itemize{
+#' \item \emph{ @param } project_id character
+#' \item \emph{ @param } aligned_feature_id character
+#' \item \emph{ @param } page integer
+#' \item \emph{ @param } size integer
+#' \item \emph{ @param } sort list( character )
+#' \item \emph{ @param } opt_fields list( \link{SpectralLibraryMatchOptField} )
+#' \item \emph{ @returnType } \link{PageSpectralLibraryMatch} \cr
+#'
+#'
+#' \item status code : 200 | Spectral library matches of this feature (aligned over runs).
+#'
+#' \item return type : PageSpectralLibraryMatch
+#' \item response headers :
+#'
+#' \tabular{ll}{
+#' }
+#' }
+#'
 #' \strong{ GetStructureAnnotatedMsData } \emph{ Returns MS/MS Data (Merged MS/MS and list of measured MS/MS ) which are annotated with fragments and losses  for the given formula result identifier and structure candidate inChIKey. }
 #' Returns MS/MS Data (Merged MS/MS and list of measured MS/MS ) which are annotated with fragments and losses  for the given formula result identifier and structure candidate inChIKey.  These annotations are only available if a fragmentation tree and the structure candidate are available.
 #'
@@ -368,18 +442,13 @@
 #' \itemize{
 #' \item \emph{ @param } project_id character
 #' \item \emph{ @param } aligned_feature_id character
-#' \item \emph{ @param } page integer
-#' \item \emph{ @param } size integer
-#' \item \emph{ @param } sort list( character )
-#' \item \emph{ @param } search_query character
-#' \item \emph{ @param } query_syntax \link{SearchQueryType}
 #' \item \emph{ @param } opt_fields list( \link{StructureCandidateOptField} )
-#' \item \emph{ @returnType } \link{PageStructureCandidateFormula} \cr
+#' \item \emph{ @returnType } list( \link{StructureCandidateFormula} ) \cr
 #'
 #'
 #' \item status code : 200 | StructureCandidate of this feature (aligned over runs) candidate with specified optional fields.
 #'
-#' \item return type : PageStructureCandidateFormula
+#' \item return type : array[StructureCandidateFormula]
 #' \item response headers :
 #'
 #' \tabular{ll}{
@@ -393,11 +462,29 @@
 #' \item \emph{ @param } project_id character
 #' \item \emph{ @param } aligned_feature_id character
 #' \item \emph{ @param } formula_id character
+#' \item \emph{ @param } opt_fields list( \link{StructureCandidateOptField} )
+#' \item \emph{ @returnType } list( \link{StructureCandidateScored} ) \cr
+#'
+#'
+#' \item status code : 200 | StructureCandidate of this formula candidate with specified optional fields.
+#'
+#' \item return type : array[StructureCandidateScored]
+#' \item response headers :
+#'
+#' \tabular{ll}{
+#' }
+#' }
+#'
+#' \strong{ GetStructureCandidatesByFormulaPaged } \emph{ Page of StructureCandidates the given &#39;formulaId&#39; with minimal information. }
+#' Page of StructureCandidates the given 'formulaId' with minimal information.  StructureCandidates can be enriched with molecular fingerprint, structure database links.
+#'
+#' \itemize{
+#' \item \emph{ @param } project_id character
+#' \item \emph{ @param } aligned_feature_id character
+#' \item \emph{ @param } formula_id character
 #' \item \emph{ @param } page integer
 #' \item \emph{ @param } size integer
 #' \item \emph{ @param } sort list( character )
-#' \item \emph{ @param } search_query character
-#' \item \emph{ @param } query_syntax \link{SearchQueryType}
 #' \item \emph{ @param } opt_fields list( \link{StructureCandidateOptField} )
 #' \item \emph{ @returnType } \link{PageStructureCandidateScored} \cr
 #'
@@ -405,6 +492,28 @@
 #' \item status code : 200 | StructureCandidate of this formula candidate with specified optional fields.
 #'
 #' \item return type : PageStructureCandidateScored
+#' \item response headers :
+#'
+#' \tabular{ll}{
+#' }
+#' }
+#'
+#' \strong{ GetStructureCandidatesPaged } \emph{ Page of StructureCandidates for the given &#39;alignedFeatureId&#39; with minimal information. }
+#' Page of StructureCandidates for the given 'alignedFeatureId' with minimal information.  StructureCandidates can be enriched with molecular fingerprint, structure database links.
+#'
+#' \itemize{
+#' \item \emph{ @param } project_id character
+#' \item \emph{ @param } aligned_feature_id character
+#' \item \emph{ @param } page integer
+#' \item \emph{ @param } size integer
+#' \item \emph{ @param } sort list( character )
+#' \item \emph{ @param } opt_fields list( \link{StructureCandidateOptField} )
+#' \item \emph{ @returnType } \link{PageStructureCandidateFormula} \cr
+#'
+#'
+#' \item status code : 200 | StructureCandidate of this feature (aligned over runs) candidate with specified optional fields.
+#'
+#' \item return type : PageStructureCandidateFormula
 #' \item response headers :
 #'
 #' \tabular{ll}{
@@ -463,19 +572,32 @@
 #'
 #' library(Rsirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
-#' var_page <- 0 # integer | Zero-based page index (0..N) (Optional)
-#' var_size <- 20 # integer | The size of the page to be returned (Optional)
-#' var_sort <- c("inner_example") # array[character] | Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (Optional)
-#' var_search_query <- "search_query_example" # character | optional search query in specified format (Optional)
-#' var_query_syntax <- SearchQueryType$new() # SearchQueryType | query syntax used fpr searchQuery (Optional)
 #' var_opt_fields <- c(AlignedFeatureOptField$new()) # array[AlignedFeatureOptField] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
 #'
 #' #Get all available features (aligned over runs) in the given project-space.
 #' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-#' # result <- api_instance$GetAlignedFeatures(var_project_id, page = var_page, size = var_size, sort = var_sort, search_query = var_search_query, query_syntax = var_query_syntax, opt_fields = var_opt_fieldsdata_file = "result.txt")
-#' result <- api_instance$features_api$GetAlignedFeatures(var_project_id, page = var_page, size = var_size, sort = var_sort, search_query = var_search_query, query_syntax = var_query_syntax, opt_fields = var_opt_fields)
+#' # result <- api_instance$GetAlignedFeatures(var_project_id, opt_fields = var_opt_fieldsdata_file = "result.txt")
+#' result <- api_instance$features_api$GetAlignedFeatures(var_project_id, opt_fields = var_opt_fields)
+#' dput(result)
+#'
+#'
+#' ####################  GetAlignedFeaturesPaged  ####################
+#'
+#' library(Rsirius)
+#' var_project_id <- "project_id_example" # character | project-space to read from.
+#' var_page <- 0 # integer | Zero-based page index (0..N) (Optional)
+#' var_size <- 20 # integer | The size of the page to be returned (Optional)
+#' var_sort <- c("inner_example") # array[character] | Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (Optional)
+#' var_opt_fields <- c(AlignedFeatureOptField$new()) # array[AlignedFeatureOptField] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
+#'
+#' #Get all available features (aligned over runs) in the given project-space.
+#' api_instance <- rsirius_api$new()
+#'
+#' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
+#' # result <- api_instance$GetAlignedFeaturesPaged(var_project_id, page = var_page, size = var_size, sort = var_sort, opt_fields = var_opt_fieldsdata_file = "result.txt")
+#' result <- api_instance$features_api$GetAlignedFeaturesPaged(var_project_id, page = var_page, size = var_size, sort = var_sort, opt_fields = var_opt_fields)
 #' dput(result)
 #'
 #'
@@ -582,19 +704,33 @@
 #' library(Rsirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_aligned_feature_id <- "aligned_feature_id_example" # character | feature (aligned over runs) the formula result belongs to.
-#' var_page <- 0 # integer | Zero-based page index (0..N) (Optional)
-#' var_size <- 20 # integer | The size of the page to be returned (Optional)
-#' var_sort <- c("inner_example") # array[character] | Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (Optional)
-#' var_search_query <- "search_query_example" # character | optional search query in specified format (Optional)
-#' var_query_syntax <- SearchQueryType$new() # SearchQueryType | query syntax used fpr searchQuery (Optional)
 #' var_opt_fields <- c(FormulaCandidateOptField$new()) # array[FormulaCandidateOptField] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
 #'
-#' #List of all FormulaResultContainers available for this feature with minimal information.
+#' #List of FormulaResultContainers available for this feature with minimal information.
 #' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-#' # result <- api_instance$GetFormulaCandidates(var_project_id, var_aligned_feature_id, page = var_page, size = var_size, sort = var_sort, search_query = var_search_query, query_syntax = var_query_syntax, opt_fields = var_opt_fieldsdata_file = "result.txt")
-#' result <- api_instance$features_api$GetFormulaCandidates(var_project_id, var_aligned_feature_id, page = var_page, size = var_size, sort = var_sort, search_query = var_search_query, query_syntax = var_query_syntax, opt_fields = var_opt_fields)
+#' # result <- api_instance$GetFormulaCandidates(var_project_id, var_aligned_feature_id, opt_fields = var_opt_fieldsdata_file = "result.txt")
+#' result <- api_instance$features_api$GetFormulaCandidates(var_project_id, var_aligned_feature_id, opt_fields = var_opt_fields)
+#' dput(result)
+#'
+#'
+#' ####################  GetFormulaCandidatesPaged  ####################
+#'
+#' library(Rsirius)
+#' var_project_id <- "project_id_example" # character | project-space to read from.
+#' var_aligned_feature_id <- "aligned_feature_id_example" # character | feature (aligned over runs) the formula result belongs to.
+#' var_page <- 0 # integer | Zero-based page index (0..N) (Optional)
+#' var_size <- 20 # integer | The size of the page to be returned (Optional)
+#' var_sort <- c("inner_example") # array[character] | Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (Optional)
+#' var_opt_fields <- c(FormulaCandidateOptField$new()) # array[FormulaCandidateOptField] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
+#'
+#' #Page of FormulaResultContainers available for this feature with minimal information.
+#' api_instance <- rsirius_api$new()
+#'
+#' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
+#' # result <- api_instance$GetFormulaCandidatesPaged(var_project_id, var_aligned_feature_id, page = var_page, size = var_size, sort = var_sort, opt_fields = var_opt_fieldsdata_file = "result.txt")
+#' result <- api_instance$features_api$GetFormulaCandidatesPaged(var_project_id, var_aligned_feature_id, page = var_page, size = var_size, sort = var_sort, opt_fields = var_opt_fields)
 #' dput(result)
 #'
 #'
@@ -676,6 +812,41 @@
 #' dput(result)
 #'
 #'
+#' ####################  GetSpectralLibraryMatches  ####################
+#'
+#' library(Rsirius)
+#' var_project_id <- "project_id_example" # character | project-space to read from.
+#' var_aligned_feature_id <- "aligned_feature_id_example" # character | feature (aligned over runs) the structure candidates belong to.
+#' var_opt_fields <- c(SpectralLibraryMatchOptField$new()) # array[SpectralLibraryMatchOptField] |  (Optional)
+#'
+#' #List of spectral library matches for the given 'alignedFeatureId'.
+#' api_instance <- rsirius_api$new()
+#'
+#' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
+#' # result <- api_instance$GetSpectralLibraryMatches(var_project_id, var_aligned_feature_id, opt_fields = var_opt_fieldsdata_file = "result.txt")
+#' result <- api_instance$features_api$GetSpectralLibraryMatches(var_project_id, var_aligned_feature_id, opt_fields = var_opt_fields)
+#' dput(result)
+#'
+#'
+#' ####################  GetSpectralLibraryMatchesPaged  ####################
+#'
+#' library(Rsirius)
+#' var_project_id <- "project_id_example" # character | project-space to read from.
+#' var_aligned_feature_id <- "aligned_feature_id_example" # character | feature (aligned over runs) the structure candidates belong to.
+#' var_page <- 0 # integer | Zero-based page index (0..N) (Optional)
+#' var_size <- 20 # integer | The size of the page to be returned (Optional)
+#' var_sort <- c("inner_example") # array[character] | Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (Optional)
+#' var_opt_fields <- c(SpectralLibraryMatchOptField$new()) # array[SpectralLibraryMatchOptField] |  (Optional)
+#'
+#' #Page of spectral library matches for the given 'alignedFeatureId'.
+#' api_instance <- rsirius_api$new()
+#'
+#' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
+#' # result <- api_instance$GetSpectralLibraryMatchesPaged(var_project_id, var_aligned_feature_id, page = var_page, size = var_size, sort = var_sort, opt_fields = var_opt_fieldsdata_file = "result.txt")
+#' result <- api_instance$features_api$GetSpectralLibraryMatchesPaged(var_project_id, var_aligned_feature_id, page = var_page, size = var_size, sort = var_sort, opt_fields = var_opt_fields)
+#' dput(result)
+#'
+#'
 #' ####################  GetStructureAnnotatedMsData  ####################
 #'
 #' library(Rsirius)
@@ -716,19 +887,14 @@
 #' library(Rsirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_aligned_feature_id <- "aligned_feature_id_example" # character | feature (aligned over runs) the structure candidates belong to.
-#' var_page <- 0 # integer | Zero-based page index (0..N) (Optional)
-#' var_size <- 20 # integer | The size of the page to be returned (Optional)
-#' var_sort <- c("inner_example") # array[character] | Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (Optional)
-#' var_search_query <- "search_query_example" # character | optional search query in specified format (Optional)
-#' var_query_syntax <- SearchQueryType$new() # SearchQueryType | query syntax used fpr searchQuery (Optional)
 #' var_opt_fields <- c(StructureCandidateOptField$new()) # array[StructureCandidateOptField] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
 #'
 #' #List of StructureCandidates for the given 'alignedFeatureId' with minimal information.
 #' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-#' # result <- api_instance$GetStructureCandidates(var_project_id, var_aligned_feature_id, page = var_page, size = var_size, sort = var_sort, search_query = var_search_query, query_syntax = var_query_syntax, opt_fields = var_opt_fieldsdata_file = "result.txt")
-#' result <- api_instance$features_api$GetStructureCandidates(var_project_id, var_aligned_feature_id, page = var_page, size = var_size, sort = var_sort, search_query = var_search_query, query_syntax = var_query_syntax, opt_fields = var_opt_fields)
+#' # result <- api_instance$GetStructureCandidates(var_project_id, var_aligned_feature_id, opt_fields = var_opt_fieldsdata_file = "result.txt")
+#' result <- api_instance$features_api$GetStructureCandidates(var_project_id, var_aligned_feature_id, opt_fields = var_opt_fields)
 #' dput(result)
 #'
 #'
@@ -738,19 +904,53 @@
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_aligned_feature_id <- "aligned_feature_id_example" # character | feature (aligned over runs) the formula result belongs to.
 #' var_formula_id <- "formula_id_example" # character | identifier of the requested formula result
-#' var_page <- 0 # integer | Zero-based page index (0..N) (Optional)
-#' var_size <- 20 # integer | The size of the page to be returned (Optional)
-#' var_sort <- c("inner_example") # array[character] | Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (Optional)
-#' var_search_query <- "search_query_example" # character | optional search query in specified format (Optional)
-#' var_query_syntax <- SearchQueryType$new() # SearchQueryType | query syntax used fpr searchQuery (Optional)
 #' var_opt_fields <- c(StructureCandidateOptField$new()) # array[StructureCandidateOptField] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
 #'
 #' #List of StructureCandidates the given 'formulaId' with minimal information.
 #' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-#' # result <- api_instance$GetStructureCandidatesByFormula(var_project_id, var_aligned_feature_id, var_formula_id, page = var_page, size = var_size, sort = var_sort, search_query = var_search_query, query_syntax = var_query_syntax, opt_fields = var_opt_fieldsdata_file = "result.txt")
-#' result <- api_instance$features_api$GetStructureCandidatesByFormula(var_project_id, var_aligned_feature_id, var_formula_id, page = var_page, size = var_size, sort = var_sort, search_query = var_search_query, query_syntax = var_query_syntax, opt_fields = var_opt_fields)
+#' # result <- api_instance$GetStructureCandidatesByFormula(var_project_id, var_aligned_feature_id, var_formula_id, opt_fields = var_opt_fieldsdata_file = "result.txt")
+#' result <- api_instance$features_api$GetStructureCandidatesByFormula(var_project_id, var_aligned_feature_id, var_formula_id, opt_fields = var_opt_fields)
+#' dput(result)
+#'
+#'
+#' ####################  GetStructureCandidatesByFormulaPaged  ####################
+#'
+#' library(Rsirius)
+#' var_project_id <- "project_id_example" # character | project-space to read from.
+#' var_aligned_feature_id <- "aligned_feature_id_example" # character | feature (aligned over runs) the formula result belongs to.
+#' var_formula_id <- "formula_id_example" # character | identifier of the requested formula result
+#' var_page <- 0 # integer | Zero-based page index (0..N) (Optional)
+#' var_size <- 20 # integer | The size of the page to be returned (Optional)
+#' var_sort <- c("inner_example") # array[character] | Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (Optional)
+#' var_opt_fields <- c(StructureCandidateOptField$new()) # array[StructureCandidateOptField] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
+#'
+#' #Page of StructureCandidates the given 'formulaId' with minimal information.
+#' api_instance <- rsirius_api$new()
+#'
+#' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
+#' # result <- api_instance$GetStructureCandidatesByFormulaPaged(var_project_id, var_aligned_feature_id, var_formula_id, page = var_page, size = var_size, sort = var_sort, opt_fields = var_opt_fieldsdata_file = "result.txt")
+#' result <- api_instance$features_api$GetStructureCandidatesByFormulaPaged(var_project_id, var_aligned_feature_id, var_formula_id, page = var_page, size = var_size, sort = var_sort, opt_fields = var_opt_fields)
+#' dput(result)
+#'
+#'
+#' ####################  GetStructureCandidatesPaged  ####################
+#'
+#' library(Rsirius)
+#' var_project_id <- "project_id_example" # character | project-space to read from.
+#' var_aligned_feature_id <- "aligned_feature_id_example" # character | feature (aligned over runs) the structure candidates belong to.
+#' var_page <- 0 # integer | Zero-based page index (0..N) (Optional)
+#' var_size <- 20 # integer | The size of the page to be returned (Optional)
+#' var_sort <- c("inner_example") # array[character] | Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (Optional)
+#' var_opt_fields <- c(StructureCandidateOptField$new()) # array[StructureCandidateOptField] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
+#'
+#' #Page of StructureCandidates for the given 'alignedFeatureId' with minimal information.
+#' api_instance <- rsirius_api$new()
+#'
+#' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
+#' # result <- api_instance$GetStructureCandidatesPaged(var_project_id, var_aligned_feature_id, page = var_page, size = var_size, sort = var_sort, opt_fields = var_opt_fieldsdata_file = "result.txt")
+#' result <- api_instance$features_api$GetStructureCandidatesPaged(var_project_id, var_aligned_feature_id, page = var_page, size = var_size, sort = var_sort, opt_fields = var_opt_fields)
 #' dput(result)
 #'
 #'
@@ -1114,18 +1314,121 @@ FeaturesApi <- R6::R6Class(
     #' Get all available features (aligned over runs) in the given project-space.
     #'
     #' @param project_id project-space to read from.
+    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [])
+    #' @param data_file (optional) name of the data file to save the result
+    #' @param ... Other optional arguments
+    #' @return array[AlignedFeature]
+    #' @export
+    GetAlignedFeatures = function(project_id, opt_fields = [], data_file = NULL, ...) {
+      local_var_response <- self$GetAlignedFeaturesWithHttpInfo(project_id, opt_fields, data_file = data_file, ...)
+      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
+        local_var_response$content
+      } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
+        local_var_response
+      } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
+        local_var_response
+      } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
+        local_var_response
+      }
+    },
+    #' Get all available features (aligned over runs) in the given project-space.
+    #'
+    #' @description
+    #' Get all available features (aligned over runs) in the given project-space.
+    #'
+    #' @param project_id project-space to read from.
+    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [])
+    #' @param data_file (optional) name of the data file to save the result
+    #' @param ... Other optional arguments
+    #' @return API response (array[AlignedFeature]) with additional information such as HTTP status code, headers
+    #' @export
+    GetAlignedFeaturesWithHttpInfo = function(project_id, opt_fields = [], data_file = NULL, ...) {
+      args <- list(...)
+      query_params <- list()
+      header_params <- c()
+      form_params <- list()
+      file_params <- list()
+      local_var_body <- NULL
+      oauth_scopes <- NULL
+      is_oauth <- FALSE
+
+      if (missing(`project_id`)) {
+        stop("Missing required parameter `project_id`.")
+      }
+
+
+
+      # explore
+      for (query_item in `opt_fields`) {
+        query_params[["optFields"]] <- c(query_params[["optFields"]], list(`optFields` = query_item))
+      }
+
+      local_var_url_path <- "/api/projects/{projectId}/aligned-features"
+      if (!missing(`project_id`)) {
+        local_var_url_path <- gsub("\\{projectId\\}", URLencode(as.character(`project_id`), reserved = TRUE), local_var_url_path)
+      }
+
+
+      # The Accept request HTTP header
+      local_var_accepts <- list("application/json")
+
+      # The Content-Type representation header
+      local_var_content_types <- list()
+
+      local_var_resp <- self$api_client$CallApi(url = paste0(self$api_client$base_path, local_var_url_path),
+                                 method = "GET",
+                                 query_params = query_params,
+                                 header_params = header_params,
+                                 form_params = form_params,
+                                 file_params = file_params,
+                                 accepts = local_var_accepts,
+                                 content_types = local_var_content_types,
+                                 body = local_var_body,
+                                 is_oauth = is_oauth,
+                                 oauth_scopes = oauth_scopes,
+                                 ...)
+
+      if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
+        # save response in a file
+        if (!is.null(data_file)) {
+          write(local_var_resp$response, data_file)
+        }
+
+        deserialized_resp_obj <- tryCatch(
+          self$api_client$deserialize(local_var_resp$response_as_text(), "array[AlignedFeature]", loadNamespace("Rsirius")),
+          error = function(e) {
+            stop("Failed to deserialize response")
+          }
+        )
+        local_var_resp$content <- deserialized_resp_obj
+        local_var_resp
+      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
+      } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
+        ApiResponse$new("API client error", local_var_resp)
+      } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
+        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
+          local_var_resp$response <- "API server error"
+        }
+        local_var_resp
+      }
+    },
+    #' Get all available features (aligned over runs) in the given project-space.
+    #'
+    #' @description
+    #' Get all available features (aligned over runs) in the given project-space.
+    #'
+    #' @param project_id project-space to read from.
     #' @param page (optional) Zero-based page index (0..N) (default value: 0)
     #' @param size (optional) The size of the page to be returned (default value: 20)
     #' @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
-    #' @param search_query (optional) optional search query in specified format
-    #' @param query_syntax (optional) query syntax used fpr searchQuery
     #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [])
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #' @return PageAlignedFeature
     #' @export
-    GetAlignedFeatures = function(project_id, page = 0, size = 20, sort = NULL, search_query = NULL, query_syntax = NULL, opt_fields = [], data_file = NULL, ...) {
-      local_var_response <- self$GetAlignedFeaturesWithHttpInfo(project_id, page, size, sort, search_query, query_syntax, opt_fields, data_file = data_file, ...)
+    GetAlignedFeaturesPaged = function(project_id, page = 0, size = 20, sort = NULL, opt_fields = [], data_file = NULL, ...) {
+      local_var_response <- self$GetAlignedFeaturesPagedWithHttpInfo(project_id, page, size, sort, opt_fields, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
@@ -1145,14 +1448,12 @@ FeaturesApi <- R6::R6Class(
     #' @param page (optional) Zero-based page index (0..N) (default value: 0)
     #' @param size (optional) The size of the page to be returned (default value: 20)
     #' @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
-    #' @param search_query (optional) optional search query in specified format
-    #' @param query_syntax (optional) query syntax used fpr searchQuery
     #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [])
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #' @return API response (PageAlignedFeature) with additional information such as HTTP status code, headers
     #' @export
-    GetAlignedFeaturesWithHttpInfo = function(project_id, page = 0, size = 20, sort = NULL, search_query = NULL, query_syntax = NULL, opt_fields = [], data_file = NULL, ...) {
+    GetAlignedFeaturesPagedWithHttpInfo = function(project_id, page = 0, size = 20, sort = NULL, opt_fields = [], data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -1168,14 +1469,12 @@ FeaturesApi <- R6::R6Class(
 
 
       if (`page` < 0) {
-        stop("Invalid value for `page` when calling FeaturesApi$GetAlignedFeatures, must be bigger than or equal to 0.")
+        stop("Invalid value for `page` when calling FeaturesApi$GetAlignedFeaturesPaged, must be bigger than or equal to 0.")
       }
 
       if (`size` < 1) {
-        stop("Invalid value for `size` when calling FeaturesApi$GetAlignedFeatures, must be bigger than or equal to 1.")
+        stop("Invalid value for `size` when calling FeaturesApi$GetAlignedFeaturesPaged, must be bigger than or equal to 1.")
       }
-
-
 
 
 
@@ -1188,16 +1487,12 @@ FeaturesApi <- R6::R6Class(
         query_params[["sort"]] <- c(query_params[["sort"]], list(`sort` = query_item))
       }
 
-      query_params[["searchQuery"]] <- `search_query`
-
-      query_params[["querySyntax"]] <- `query_syntax`
-
       # explore
       for (query_item in `opt_fields`) {
         query_params[["optFields"]] <- c(query_params[["optFields"]], list(`optFields` = query_item))
       }
 
-      local_var_url_path <- "/api/projects/{projectId}/aligned-features"
+      local_var_url_path <- "/api/projects/{projectId}/aligned-features/page"
       if (!missing(`project_id`)) {
         local_var_url_path <- gsub("\\{projectId\\}", URLencode(as.character(`project_id`), reserved = TRUE), local_var_url_path)
       }
@@ -1974,25 +2269,20 @@ FeaturesApi <- R6::R6Class(
         local_var_resp
       }
     },
-    #' List of all FormulaResultContainers available for this feature with minimal information.
+    #' List of FormulaResultContainers available for this feature with minimal information.
     #'
     #' @description
-    #' List of all FormulaResultContainers available for this feature with minimal information.
+    #' List of FormulaResultContainers available for this feature with minimal information.
     #'
     #' @param project_id project-space to read from.
     #' @param aligned_feature_id feature (aligned over runs) the formula result belongs to.
-    #' @param page (optional) Zero-based page index (0..N) (default value: 0)
-    #' @param size (optional) The size of the page to be returned (default value: 20)
-    #' @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
-    #' @param search_query (optional) optional search query in specified format
-    #' @param query_syntax (optional) query syntax used fpr searchQuery
     #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [])
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
-    #' @return PageFormulaCandidate
+    #' @return array[FormulaCandidate]
     #' @export
-    GetFormulaCandidates = function(project_id, aligned_feature_id, page = 0, size = 20, sort = NULL, search_query = NULL, query_syntax = NULL, opt_fields = [], data_file = NULL, ...) {
-      local_var_response <- self$GetFormulaCandidatesWithHttpInfo(project_id, aligned_feature_id, page, size, sort, search_query, query_syntax, opt_fields, data_file = data_file, ...)
+    GetFormulaCandidates = function(project_id, aligned_feature_id, opt_fields = [], data_file = NULL, ...) {
+      local_var_response <- self$GetFormulaCandidatesWithHttpInfo(project_id, aligned_feature_id, opt_fields, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
@@ -2003,24 +2293,141 @@ FeaturesApi <- R6::R6Class(
         local_var_response
       }
     },
-    #' List of all FormulaResultContainers available for this feature with minimal information.
+    #' List of FormulaResultContainers available for this feature with minimal information.
     #'
     #' @description
-    #' List of all FormulaResultContainers available for this feature with minimal information.
+    #' List of FormulaResultContainers available for this feature with minimal information.
+    #'
+    #' @param project_id project-space to read from.
+    #' @param aligned_feature_id feature (aligned over runs) the formula result belongs to.
+    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [])
+    #' @param data_file (optional) name of the data file to save the result
+    #' @param ... Other optional arguments
+    #' @return API response (array[FormulaCandidate]) with additional information such as HTTP status code, headers
+    #' @export
+    GetFormulaCandidatesWithHttpInfo = function(project_id, aligned_feature_id, opt_fields = [], data_file = NULL, ...) {
+      args <- list(...)
+      query_params <- list()
+      header_params <- c()
+      form_params <- list()
+      file_params <- list()
+      local_var_body <- NULL
+      oauth_scopes <- NULL
+      is_oauth <- FALSE
+
+      if (missing(`project_id`)) {
+        stop("Missing required parameter `project_id`.")
+      }
+
+      if (missing(`aligned_feature_id`)) {
+        stop("Missing required parameter `aligned_feature_id`.")
+      }
+
+
+
+
+      # explore
+      for (query_item in `opt_fields`) {
+        query_params[["optFields"]] <- c(query_params[["optFields"]], list(`optFields` = query_item))
+      }
+
+      local_var_url_path <- "/api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas"
+      if (!missing(`project_id`)) {
+        local_var_url_path <- gsub("\\{projectId\\}", URLencode(as.character(`project_id`), reserved = TRUE), local_var_url_path)
+      }
+
+      if (!missing(`aligned_feature_id`)) {
+        local_var_url_path <- gsub("\\{alignedFeatureId\\}", URLencode(as.character(`aligned_feature_id`), reserved = TRUE), local_var_url_path)
+      }
+
+
+      # The Accept request HTTP header
+      local_var_accepts <- list("application/json")
+
+      # The Content-Type representation header
+      local_var_content_types <- list()
+
+      local_var_resp <- self$api_client$CallApi(url = paste0(self$api_client$base_path, local_var_url_path),
+                                 method = "GET",
+                                 query_params = query_params,
+                                 header_params = header_params,
+                                 form_params = form_params,
+                                 file_params = file_params,
+                                 accepts = local_var_accepts,
+                                 content_types = local_var_content_types,
+                                 body = local_var_body,
+                                 is_oauth = is_oauth,
+                                 oauth_scopes = oauth_scopes,
+                                 ...)
+
+      if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
+        # save response in a file
+        if (!is.null(data_file)) {
+          write(local_var_resp$response, data_file)
+        }
+
+        deserialized_resp_obj <- tryCatch(
+          self$api_client$deserialize(local_var_resp$response_as_text(), "array[FormulaCandidate]", loadNamespace("Rsirius")),
+          error = function(e) {
+            stop("Failed to deserialize response")
+          }
+        )
+        local_var_resp$content <- deserialized_resp_obj
+        local_var_resp
+      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
+      } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
+        ApiResponse$new("API client error", local_var_resp)
+      } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
+        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
+          local_var_resp$response <- "API server error"
+        }
+        local_var_resp
+      }
+    },
+    #' Page of FormulaResultContainers available for this feature with minimal information.
+    #'
+    #' @description
+    #' Page of FormulaResultContainers available for this feature with minimal information.
     #'
     #' @param project_id project-space to read from.
     #' @param aligned_feature_id feature (aligned over runs) the formula result belongs to.
     #' @param page (optional) Zero-based page index (0..N) (default value: 0)
     #' @param size (optional) The size of the page to be returned (default value: 20)
     #' @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
-    #' @param search_query (optional) optional search query in specified format
-    #' @param query_syntax (optional) query syntax used fpr searchQuery
+    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [])
+    #' @param data_file (optional) name of the data file to save the result
+    #' @param ... Other optional arguments
+    #' @return PageFormulaCandidate
+    #' @export
+    GetFormulaCandidatesPaged = function(project_id, aligned_feature_id, page = 0, size = 20, sort = NULL, opt_fields = [], data_file = NULL, ...) {
+      local_var_response <- self$GetFormulaCandidatesPagedWithHttpInfo(project_id, aligned_feature_id, page, size, sort, opt_fields, data_file = data_file, ...)
+      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
+        local_var_response$content
+      } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
+        local_var_response
+      } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
+        local_var_response
+      } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
+        local_var_response
+      }
+    },
+    #' Page of FormulaResultContainers available for this feature with minimal information.
+    #'
+    #' @description
+    #' Page of FormulaResultContainers available for this feature with minimal information.
+    #'
+    #' @param project_id project-space to read from.
+    #' @param aligned_feature_id feature (aligned over runs) the formula result belongs to.
+    #' @param page (optional) Zero-based page index (0..N) (default value: 0)
+    #' @param size (optional) The size of the page to be returned (default value: 20)
+    #' @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
     #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [])
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #' @return API response (PageFormulaCandidate) with additional information such as HTTP status code, headers
     #' @export
-    GetFormulaCandidatesWithHttpInfo = function(project_id, aligned_feature_id, page = 0, size = 20, sort = NULL, search_query = NULL, query_syntax = NULL, opt_fields = [], data_file = NULL, ...) {
+    GetFormulaCandidatesPagedWithHttpInfo = function(project_id, aligned_feature_id, page = 0, size = 20, sort = NULL, opt_fields = [], data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -2041,14 +2448,12 @@ FeaturesApi <- R6::R6Class(
 
 
       if (`page` < 0) {
-        stop("Invalid value for `page` when calling FeaturesApi$GetFormulaCandidates, must be bigger than or equal to 0.")
+        stop("Invalid value for `page` when calling FeaturesApi$GetFormulaCandidatesPaged, must be bigger than or equal to 0.")
       }
 
       if (`size` < 1) {
-        stop("Invalid value for `size` when calling FeaturesApi$GetFormulaCandidates, must be bigger than or equal to 1.")
+        stop("Invalid value for `size` when calling FeaturesApi$GetFormulaCandidatesPaged, must be bigger than or equal to 1.")
       }
-
-
 
 
 
@@ -2061,16 +2466,12 @@ FeaturesApi <- R6::R6Class(
         query_params[["sort"]] <- c(query_params[["sort"]], list(`sort` = query_item))
       }
 
-      query_params[["searchQuery"]] <- `search_query`
-
-      query_params[["querySyntax"]] <- `query_syntax`
-
       # explore
       for (query_item in `opt_fields`) {
         query_params[["optFields"]] <- c(query_params[["optFields"]], list(`optFields` = query_item))
       }
 
-      local_var_url_path <- "/api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas"
+      local_var_url_path <- "/api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/page"
       if (!missing(`project_id`)) {
         local_var_url_path <- gsub("\\{projectId\\}", URLencode(as.character(`project_id`), reserved = TRUE), local_var_url_path)
       }
@@ -2708,6 +3109,262 @@ FeaturesApi <- R6::R6Class(
         local_var_resp
       }
     },
+    #' List of spectral library matches for the given 'alignedFeatureId'.
+    #'
+    #' @description
+    #' List of spectral library matches for the given 'alignedFeatureId'.
+    #'
+    #' @param project_id project-space to read from.
+    #' @param aligned_feature_id feature (aligned over runs) the structure candidates belong to.
+    #' @param opt_fields (optional) No description (default value: [])
+    #' @param data_file (optional) name of the data file to save the result
+    #' @param ... Other optional arguments
+    #' @return array[SpectralLibraryMatch]
+    #' @export
+    GetSpectralLibraryMatches = function(project_id, aligned_feature_id, opt_fields = [], data_file = NULL, ...) {
+      local_var_response <- self$GetSpectralLibraryMatchesWithHttpInfo(project_id, aligned_feature_id, opt_fields, data_file = data_file, ...)
+      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
+        local_var_response$content
+      } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
+        local_var_response
+      } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
+        local_var_response
+      } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
+        local_var_response
+      }
+    },
+    #' List of spectral library matches for the given 'alignedFeatureId'.
+    #'
+    #' @description
+    #' List of spectral library matches for the given 'alignedFeatureId'.
+    #'
+    #' @param project_id project-space to read from.
+    #' @param aligned_feature_id feature (aligned over runs) the structure candidates belong to.
+    #' @param opt_fields (optional) No description (default value: [])
+    #' @param data_file (optional) name of the data file to save the result
+    #' @param ... Other optional arguments
+    #' @return API response (array[SpectralLibraryMatch]) with additional information such as HTTP status code, headers
+    #' @export
+    GetSpectralLibraryMatchesWithHttpInfo = function(project_id, aligned_feature_id, opt_fields = [], data_file = NULL, ...) {
+      args <- list(...)
+      query_params <- list()
+      header_params <- c()
+      form_params <- list()
+      file_params <- list()
+      local_var_body <- NULL
+      oauth_scopes <- NULL
+      is_oauth <- FALSE
+
+      if (missing(`project_id`)) {
+        stop("Missing required parameter `project_id`.")
+      }
+
+      if (missing(`aligned_feature_id`)) {
+        stop("Missing required parameter `aligned_feature_id`.")
+      }
+
+
+
+
+      # explore
+      for (query_item in `opt_fields`) {
+        query_params[["optFields"]] <- c(query_params[["optFields"]], list(`optFields` = query_item))
+      }
+
+      local_var_url_path <- "/api/projects/{projectId}/aligned-features/{alignedFeatureId}/spectral-library-matches"
+      if (!missing(`project_id`)) {
+        local_var_url_path <- gsub("\\{projectId\\}", URLencode(as.character(`project_id`), reserved = TRUE), local_var_url_path)
+      }
+
+      if (!missing(`aligned_feature_id`)) {
+        local_var_url_path <- gsub("\\{alignedFeatureId\\}", URLencode(as.character(`aligned_feature_id`), reserved = TRUE), local_var_url_path)
+      }
+
+
+      # The Accept request HTTP header
+      local_var_accepts <- list("application/json")
+
+      # The Content-Type representation header
+      local_var_content_types <- list()
+
+      local_var_resp <- self$api_client$CallApi(url = paste0(self$api_client$base_path, local_var_url_path),
+                                 method = "GET",
+                                 query_params = query_params,
+                                 header_params = header_params,
+                                 form_params = form_params,
+                                 file_params = file_params,
+                                 accepts = local_var_accepts,
+                                 content_types = local_var_content_types,
+                                 body = local_var_body,
+                                 is_oauth = is_oauth,
+                                 oauth_scopes = oauth_scopes,
+                                 ...)
+
+      if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
+        # save response in a file
+        if (!is.null(data_file)) {
+          write(local_var_resp$response, data_file)
+        }
+
+        deserialized_resp_obj <- tryCatch(
+          self$api_client$deserialize(local_var_resp$response_as_text(), "array[SpectralLibraryMatch]", loadNamespace("Rsirius")),
+          error = function(e) {
+            stop("Failed to deserialize response")
+          }
+        )
+        local_var_resp$content <- deserialized_resp_obj
+        local_var_resp
+      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
+      } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
+        ApiResponse$new("API client error", local_var_resp)
+      } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
+        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
+          local_var_resp$response <- "API server error"
+        }
+        local_var_resp
+      }
+    },
+    #' Page of spectral library matches for the given 'alignedFeatureId'.
+    #'
+    #' @description
+    #' Page of spectral library matches for the given 'alignedFeatureId'.
+    #'
+    #' @param project_id project-space to read from.
+    #' @param aligned_feature_id feature (aligned over runs) the structure candidates belong to.
+    #' @param page (optional) Zero-based page index (0..N) (default value: 0)
+    #' @param size (optional) The size of the page to be returned (default value: 20)
+    #' @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+    #' @param opt_fields (optional) No description (default value: [])
+    #' @param data_file (optional) name of the data file to save the result
+    #' @param ... Other optional arguments
+    #' @return PageSpectralLibraryMatch
+    #' @export
+    GetSpectralLibraryMatchesPaged = function(project_id, aligned_feature_id, page = 0, size = 20, sort = NULL, opt_fields = [], data_file = NULL, ...) {
+      local_var_response <- self$GetSpectralLibraryMatchesPagedWithHttpInfo(project_id, aligned_feature_id, page, size, sort, opt_fields, data_file = data_file, ...)
+      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
+        local_var_response$content
+      } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
+        local_var_response
+      } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
+        local_var_response
+      } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
+        local_var_response
+      }
+    },
+    #' Page of spectral library matches for the given 'alignedFeatureId'.
+    #'
+    #' @description
+    #' Page of spectral library matches for the given 'alignedFeatureId'.
+    #'
+    #' @param project_id project-space to read from.
+    #' @param aligned_feature_id feature (aligned over runs) the structure candidates belong to.
+    #' @param page (optional) Zero-based page index (0..N) (default value: 0)
+    #' @param size (optional) The size of the page to be returned (default value: 20)
+    #' @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+    #' @param opt_fields (optional) No description (default value: [])
+    #' @param data_file (optional) name of the data file to save the result
+    #' @param ... Other optional arguments
+    #' @return API response (PageSpectralLibraryMatch) with additional information such as HTTP status code, headers
+    #' @export
+    GetSpectralLibraryMatchesPagedWithHttpInfo = function(project_id, aligned_feature_id, page = 0, size = 20, sort = NULL, opt_fields = [], data_file = NULL, ...) {
+      args <- list(...)
+      query_params <- list()
+      header_params <- c()
+      form_params <- list()
+      file_params <- list()
+      local_var_body <- NULL
+      oauth_scopes <- NULL
+      is_oauth <- FALSE
+
+      if (missing(`project_id`)) {
+        stop("Missing required parameter `project_id`.")
+      }
+
+      if (missing(`aligned_feature_id`)) {
+        stop("Missing required parameter `aligned_feature_id`.")
+      }
+
+
+
+      if (`page` < 0) {
+        stop("Invalid value for `page` when calling FeaturesApi$GetSpectralLibraryMatchesPaged, must be bigger than or equal to 0.")
+      }
+
+      if (`size` < 1) {
+        stop("Invalid value for `size` when calling FeaturesApi$GetSpectralLibraryMatchesPaged, must be bigger than or equal to 1.")
+      }
+
+
+
+      query_params[["page"]] <- `page`
+
+      query_params[["size"]] <- `size`
+
+      # explore
+      for (query_item in `sort`) {
+        query_params[["sort"]] <- c(query_params[["sort"]], list(`sort` = query_item))
+      }
+
+      # explore
+      for (query_item in `opt_fields`) {
+        query_params[["optFields"]] <- c(query_params[["optFields"]], list(`optFields` = query_item))
+      }
+
+      local_var_url_path <- "/api/projects/{projectId}/aligned-features/{alignedFeatureId}/spectral-library-matches/page"
+      if (!missing(`project_id`)) {
+        local_var_url_path <- gsub("\\{projectId\\}", URLencode(as.character(`project_id`), reserved = TRUE), local_var_url_path)
+      }
+
+      if (!missing(`aligned_feature_id`)) {
+        local_var_url_path <- gsub("\\{alignedFeatureId\\}", URLencode(as.character(`aligned_feature_id`), reserved = TRUE), local_var_url_path)
+      }
+
+
+      # The Accept request HTTP header
+      local_var_accepts <- list("application/json")
+
+      # The Content-Type representation header
+      local_var_content_types <- list()
+
+      local_var_resp <- self$api_client$CallApi(url = paste0(self$api_client$base_path, local_var_url_path),
+                                 method = "GET",
+                                 query_params = query_params,
+                                 header_params = header_params,
+                                 form_params = form_params,
+                                 file_params = file_params,
+                                 accepts = local_var_accepts,
+                                 content_types = local_var_content_types,
+                                 body = local_var_body,
+                                 is_oauth = is_oauth,
+                                 oauth_scopes = oauth_scopes,
+                                 ...)
+
+      if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
+        # save response in a file
+        if (!is.null(data_file)) {
+          write(local_var_resp$response, data_file)
+        }
+
+        deserialized_resp_obj <- tryCatch(
+          self$api_client$deserialize(local_var_resp$response_as_text(), "PageSpectralLibraryMatch", loadNamespace("Rsirius")),
+          error = function(e) {
+            stop("Failed to deserialize response")
+          }
+        )
+        local_var_resp$content <- deserialized_resp_obj
+        local_var_resp
+      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
+      } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
+        ApiResponse$new("API client error", local_var_resp)
+      } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
+        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
+          local_var_resp$response <- "API server error"
+        }
+        local_var_resp
+      }
+    },
     #' Returns MS/MS Data (Merged MS/MS and list of measured MS/MS ) which are annotated with fragments and losses  for the given formula result identifier and structure candidate inChIKey.
     #'
     #' @description
@@ -2980,18 +3637,13 @@ FeaturesApi <- R6::R6Class(
     #'
     #' @param project_id project-space to read from.
     #' @param aligned_feature_id feature (aligned over runs) the structure candidates belong to.
-    #' @param page (optional) Zero-based page index (0..N) (default value: 0)
-    #' @param size (optional) The size of the page to be returned (default value: 20)
-    #' @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
-    #' @param search_query (optional) optional search query in specified format
-    #' @param query_syntax (optional) query syntax used fpr searchQuery
     #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [])
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
-    #' @return PageStructureCandidateFormula
+    #' @return array[StructureCandidateFormula]
     #' @export
-    GetStructureCandidates = function(project_id, aligned_feature_id, page = 0, size = 20, sort = NULL, search_query = NULL, query_syntax = NULL, opt_fields = [], data_file = NULL, ...) {
-      local_var_response <- self$GetStructureCandidatesWithHttpInfo(project_id, aligned_feature_id, page, size, sort, search_query, query_syntax, opt_fields, data_file = data_file, ...)
+    GetStructureCandidates = function(project_id, aligned_feature_id, opt_fields = [], data_file = NULL, ...) {
+      local_var_response <- self$GetStructureCandidatesWithHttpInfo(project_id, aligned_feature_id, opt_fields, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
@@ -3009,17 +3661,12 @@ FeaturesApi <- R6::R6Class(
     #'
     #' @param project_id project-space to read from.
     #' @param aligned_feature_id feature (aligned over runs) the structure candidates belong to.
-    #' @param page (optional) Zero-based page index (0..N) (default value: 0)
-    #' @param size (optional) The size of the page to be returned (default value: 20)
-    #' @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
-    #' @param search_query (optional) optional search query in specified format
-    #' @param query_syntax (optional) query syntax used fpr searchQuery
     #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [])
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
-    #' @return API response (PageStructureCandidateFormula) with additional information such as HTTP status code, headers
+    #' @return API response (array[StructureCandidateFormula]) with additional information such as HTTP status code, headers
     #' @export
-    GetStructureCandidatesWithHttpInfo = function(project_id, aligned_feature_id, page = 0, size = 20, sort = NULL, search_query = NULL, query_syntax = NULL, opt_fields = [], data_file = NULL, ...) {
+    GetStructureCandidatesWithHttpInfo = function(project_id, aligned_feature_id, opt_fields = [], data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -3039,30 +3686,6 @@ FeaturesApi <- R6::R6Class(
 
 
 
-      if (`page` < 0) {
-        stop("Invalid value for `page` when calling FeaturesApi$GetStructureCandidates, must be bigger than or equal to 0.")
-      }
-
-      if (`size` < 1) {
-        stop("Invalid value for `size` when calling FeaturesApi$GetStructureCandidates, must be bigger than or equal to 1.")
-      }
-
-
-
-
-
-      query_params[["page"]] <- `page`
-
-      query_params[["size"]] <- `size`
-
-      # explore
-      for (query_item in `sort`) {
-        query_params[["sort"]] <- c(query_params[["sort"]], list(`sort` = query_item))
-      }
-
-      query_params[["searchQuery"]] <- `search_query`
-
-      query_params[["querySyntax"]] <- `query_syntax`
 
       # explore
       for (query_item in `opt_fields`) {
@@ -3105,7 +3728,7 @@ FeaturesApi <- R6::R6Class(
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "PageStructureCandidateFormula", loadNamespace("Rsirius")),
+          self$api_client$deserialize(local_var_resp$response_as_text(), "array[StructureCandidateFormula]", loadNamespace("Rsirius")),
           error = function(e) {
             stop("Failed to deserialize response")
           }
@@ -3131,18 +3754,13 @@ FeaturesApi <- R6::R6Class(
     #' @param project_id project-space to read from.
     #' @param aligned_feature_id feature (aligned over runs) the formula result belongs to.
     #' @param formula_id identifier of the requested formula result
-    #' @param page (optional) Zero-based page index (0..N) (default value: 0)
-    #' @param size (optional) The size of the page to be returned (default value: 20)
-    #' @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
-    #' @param search_query (optional) optional search query in specified format
-    #' @param query_syntax (optional) query syntax used fpr searchQuery
     #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [])
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
-    #' @return PageStructureCandidateScored
+    #' @return array[StructureCandidateScored]
     #' @export
-    GetStructureCandidatesByFormula = function(project_id, aligned_feature_id, formula_id, page = 0, size = 20, sort = NULL, search_query = NULL, query_syntax = NULL, opt_fields = [], data_file = NULL, ...) {
-      local_var_response <- self$GetStructureCandidatesByFormulaWithHttpInfo(project_id, aligned_feature_id, formula_id, page, size, sort, search_query, query_syntax, opt_fields, data_file = data_file, ...)
+    GetStructureCandidatesByFormula = function(project_id, aligned_feature_id, formula_id, opt_fields = [], data_file = NULL, ...) {
+      local_var_response <- self$GetStructureCandidatesByFormulaWithHttpInfo(project_id, aligned_feature_id, formula_id, opt_fields, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
@@ -3161,17 +3779,12 @@ FeaturesApi <- R6::R6Class(
     #' @param project_id project-space to read from.
     #' @param aligned_feature_id feature (aligned over runs) the formula result belongs to.
     #' @param formula_id identifier of the requested formula result
-    #' @param page (optional) Zero-based page index (0..N) (default value: 0)
-    #' @param size (optional) The size of the page to be returned (default value: 20)
-    #' @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
-    #' @param search_query (optional) optional search query in specified format
-    #' @param query_syntax (optional) query syntax used fpr searchQuery
     #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [])
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
-    #' @return API response (PageStructureCandidateScored) with additional information such as HTTP status code, headers
+    #' @return API response (array[StructureCandidateScored]) with additional information such as HTTP status code, headers
     #' @export
-    GetStructureCandidatesByFormulaWithHttpInfo = function(project_id, aligned_feature_id, formula_id, page = 0, size = 20, sort = NULL, search_query = NULL, query_syntax = NULL, opt_fields = [], data_file = NULL, ...) {
+    GetStructureCandidatesByFormulaWithHttpInfo = function(project_id, aligned_feature_id, formula_id, opt_fields = [], data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -3196,30 +3809,6 @@ FeaturesApi <- R6::R6Class(
 
 
 
-      if (`page` < 0) {
-        stop("Invalid value for `page` when calling FeaturesApi$GetStructureCandidatesByFormula, must be bigger than or equal to 0.")
-      }
-
-      if (`size` < 1) {
-        stop("Invalid value for `size` when calling FeaturesApi$GetStructureCandidatesByFormula, must be bigger than or equal to 1.")
-      }
-
-
-
-
-
-      query_params[["page"]] <- `page`
-
-      query_params[["size"]] <- `size`
-
-      # explore
-      for (query_item in `sort`) {
-        query_params[["sort"]] <- c(query_params[["sort"]], list(`sort` = query_item))
-      }
-
-      query_params[["searchQuery"]] <- `search_query`
-
-      query_params[["querySyntax"]] <- `query_syntax`
 
       # explore
       for (query_item in `opt_fields`) {
@@ -3266,7 +3855,298 @@ FeaturesApi <- R6::R6Class(
         }
 
         deserialized_resp_obj <- tryCatch(
+          self$api_client$deserialize(local_var_resp$response_as_text(), "array[StructureCandidateScored]", loadNamespace("Rsirius")),
+          error = function(e) {
+            stop("Failed to deserialize response")
+          }
+        )
+        local_var_resp$content <- deserialized_resp_obj
+        local_var_resp
+      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
+      } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
+        ApiResponse$new("API client error", local_var_resp)
+      } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
+        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
+          local_var_resp$response <- "API server error"
+        }
+        local_var_resp
+      }
+    },
+    #' Page of StructureCandidates the given 'formulaId' with minimal information.
+    #'
+    #' @description
+    #' Page of StructureCandidates the given 'formulaId' with minimal information.
+    #'
+    #' @param project_id project-space to read from.
+    #' @param aligned_feature_id feature (aligned over runs) the formula result belongs to.
+    #' @param formula_id identifier of the requested formula result
+    #' @param page (optional) Zero-based page index (0..N) (default value: 0)
+    #' @param size (optional) The size of the page to be returned (default value: 20)
+    #' @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [])
+    #' @param data_file (optional) name of the data file to save the result
+    #' @param ... Other optional arguments
+    #' @return PageStructureCandidateScored
+    #' @export
+    GetStructureCandidatesByFormulaPaged = function(project_id, aligned_feature_id, formula_id, page = 0, size = 20, sort = NULL, opt_fields = [], data_file = NULL, ...) {
+      local_var_response <- self$GetStructureCandidatesByFormulaPagedWithHttpInfo(project_id, aligned_feature_id, formula_id, page, size, sort, opt_fields, data_file = data_file, ...)
+      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
+        local_var_response$content
+      } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
+        local_var_response
+      } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
+        local_var_response
+      } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
+        local_var_response
+      }
+    },
+    #' Page of StructureCandidates the given 'formulaId' with minimal information.
+    #'
+    #' @description
+    #' Page of StructureCandidates the given 'formulaId' with minimal information.
+    #'
+    #' @param project_id project-space to read from.
+    #' @param aligned_feature_id feature (aligned over runs) the formula result belongs to.
+    #' @param formula_id identifier of the requested formula result
+    #' @param page (optional) Zero-based page index (0..N) (default value: 0)
+    #' @param size (optional) The size of the page to be returned (default value: 20)
+    #' @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [])
+    #' @param data_file (optional) name of the data file to save the result
+    #' @param ... Other optional arguments
+    #' @return API response (PageStructureCandidateScored) with additional information such as HTTP status code, headers
+    #' @export
+    GetStructureCandidatesByFormulaPagedWithHttpInfo = function(project_id, aligned_feature_id, formula_id, page = 0, size = 20, sort = NULL, opt_fields = [], data_file = NULL, ...) {
+      args <- list(...)
+      query_params <- list()
+      header_params <- c()
+      form_params <- list()
+      file_params <- list()
+      local_var_body <- NULL
+      oauth_scopes <- NULL
+      is_oauth <- FALSE
+
+      if (missing(`project_id`)) {
+        stop("Missing required parameter `project_id`.")
+      }
+
+      if (missing(`aligned_feature_id`)) {
+        stop("Missing required parameter `aligned_feature_id`.")
+      }
+
+      if (missing(`formula_id`)) {
+        stop("Missing required parameter `formula_id`.")
+      }
+
+
+
+
+      if (`page` < 0) {
+        stop("Invalid value for `page` when calling FeaturesApi$GetStructureCandidatesByFormulaPaged, must be bigger than or equal to 0.")
+      }
+
+      if (`size` < 1) {
+        stop("Invalid value for `size` when calling FeaturesApi$GetStructureCandidatesByFormulaPaged, must be bigger than or equal to 1.")
+      }
+
+
+
+      query_params[["page"]] <- `page`
+
+      query_params[["size"]] <- `size`
+
+      # explore
+      for (query_item in `sort`) {
+        query_params[["sort"]] <- c(query_params[["sort"]], list(`sort` = query_item))
+      }
+
+      # explore
+      for (query_item in `opt_fields`) {
+        query_params[["optFields"]] <- c(query_params[["optFields"]], list(`optFields` = query_item))
+      }
+
+      local_var_url_path <- "/api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/structures/page"
+      if (!missing(`project_id`)) {
+        local_var_url_path <- gsub("\\{projectId\\}", URLencode(as.character(`project_id`), reserved = TRUE), local_var_url_path)
+      }
+
+      if (!missing(`aligned_feature_id`)) {
+        local_var_url_path <- gsub("\\{alignedFeatureId\\}", URLencode(as.character(`aligned_feature_id`), reserved = TRUE), local_var_url_path)
+      }
+
+      if (!missing(`formula_id`)) {
+        local_var_url_path <- gsub("\\{formulaId\\}", URLencode(as.character(`formula_id`), reserved = TRUE), local_var_url_path)
+      }
+
+
+      # The Accept request HTTP header
+      local_var_accepts <- list("application/json")
+
+      # The Content-Type representation header
+      local_var_content_types <- list()
+
+      local_var_resp <- self$api_client$CallApi(url = paste0(self$api_client$base_path, local_var_url_path),
+                                 method = "GET",
+                                 query_params = query_params,
+                                 header_params = header_params,
+                                 form_params = form_params,
+                                 file_params = file_params,
+                                 accepts = local_var_accepts,
+                                 content_types = local_var_content_types,
+                                 body = local_var_body,
+                                 is_oauth = is_oauth,
+                                 oauth_scopes = oauth_scopes,
+                                 ...)
+
+      if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
+        # save response in a file
+        if (!is.null(data_file)) {
+          write(local_var_resp$response, data_file)
+        }
+
+        deserialized_resp_obj <- tryCatch(
           self$api_client$deserialize(local_var_resp$response_as_text(), "PageStructureCandidateScored", loadNamespace("Rsirius")),
+          error = function(e) {
+            stop("Failed to deserialize response")
+          }
+        )
+        local_var_resp$content <- deserialized_resp_obj
+        local_var_resp
+      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
+      } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
+        ApiResponse$new("API client error", local_var_resp)
+      } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
+        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
+          local_var_resp$response <- "API server error"
+        }
+        local_var_resp
+      }
+    },
+    #' Page of StructureCandidates for the given 'alignedFeatureId' with minimal information.
+    #'
+    #' @description
+    #' Page of StructureCandidates for the given 'alignedFeatureId' with minimal information.
+    #'
+    #' @param project_id project-space to read from.
+    #' @param aligned_feature_id feature (aligned over runs) the structure candidates belong to.
+    #' @param page (optional) Zero-based page index (0..N) (default value: 0)
+    #' @param size (optional) The size of the page to be returned (default value: 20)
+    #' @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [])
+    #' @param data_file (optional) name of the data file to save the result
+    #' @param ... Other optional arguments
+    #' @return PageStructureCandidateFormula
+    #' @export
+    GetStructureCandidatesPaged = function(project_id, aligned_feature_id, page = 0, size = 20, sort = NULL, opt_fields = [], data_file = NULL, ...) {
+      local_var_response <- self$GetStructureCandidatesPagedWithHttpInfo(project_id, aligned_feature_id, page, size, sort, opt_fields, data_file = data_file, ...)
+      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
+        local_var_response$content
+      } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
+        local_var_response
+      } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
+        local_var_response
+      } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
+        local_var_response
+      }
+    },
+    #' Page of StructureCandidates for the given 'alignedFeatureId' with minimal information.
+    #'
+    #' @description
+    #' Page of StructureCandidates for the given 'alignedFeatureId' with minimal information.
+    #'
+    #' @param project_id project-space to read from.
+    #' @param aligned_feature_id feature (aligned over runs) the structure candidates belong to.
+    #' @param page (optional) Zero-based page index (0..N) (default value: 0)
+    #' @param size (optional) The size of the page to be returned (default value: 20)
+    #' @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [])
+    #' @param data_file (optional) name of the data file to save the result
+    #' @param ... Other optional arguments
+    #' @return API response (PageStructureCandidateFormula) with additional information such as HTTP status code, headers
+    #' @export
+    GetStructureCandidatesPagedWithHttpInfo = function(project_id, aligned_feature_id, page = 0, size = 20, sort = NULL, opt_fields = [], data_file = NULL, ...) {
+      args <- list(...)
+      query_params <- list()
+      header_params <- c()
+      form_params <- list()
+      file_params <- list()
+      local_var_body <- NULL
+      oauth_scopes <- NULL
+      is_oauth <- FALSE
+
+      if (missing(`project_id`)) {
+        stop("Missing required parameter `project_id`.")
+      }
+
+      if (missing(`aligned_feature_id`)) {
+        stop("Missing required parameter `aligned_feature_id`.")
+      }
+
+
+
+      if (`page` < 0) {
+        stop("Invalid value for `page` when calling FeaturesApi$GetStructureCandidatesPaged, must be bigger than or equal to 0.")
+      }
+
+      if (`size` < 1) {
+        stop("Invalid value for `size` when calling FeaturesApi$GetStructureCandidatesPaged, must be bigger than or equal to 1.")
+      }
+
+
+
+      query_params[["page"]] <- `page`
+
+      query_params[["size"]] <- `size`
+
+      # explore
+      for (query_item in `sort`) {
+        query_params[["sort"]] <- c(query_params[["sort"]], list(`sort` = query_item))
+      }
+
+      # explore
+      for (query_item in `opt_fields`) {
+        query_params[["optFields"]] <- c(query_params[["optFields"]], list(`optFields` = query_item))
+      }
+
+      local_var_url_path <- "/api/projects/{projectId}/aligned-features/{alignedFeatureId}/structures/page"
+      if (!missing(`project_id`)) {
+        local_var_url_path <- gsub("\\{projectId\\}", URLencode(as.character(`project_id`), reserved = TRUE), local_var_url_path)
+      }
+
+      if (!missing(`aligned_feature_id`)) {
+        local_var_url_path <- gsub("\\{alignedFeatureId\\}", URLencode(as.character(`aligned_feature_id`), reserved = TRUE), local_var_url_path)
+      }
+
+
+      # The Accept request HTTP header
+      local_var_accepts <- list("application/json")
+
+      # The Content-Type representation header
+      local_var_content_types <- list()
+
+      local_var_resp <- self$api_client$CallApi(url = paste0(self$api_client$base_path, local_var_url_path),
+                                 method = "GET",
+                                 query_params = query_params,
+                                 header_params = header_params,
+                                 form_params = form_params,
+                                 file_params = file_params,
+                                 accepts = local_var_accepts,
+                                 content_types = local_var_content_types,
+                                 body = local_var_body,
+                                 is_oauth = is_oauth,
+                                 oauth_scopes = oauth_scopes,
+                                 ...)
+
+      if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
+        # save response in a file
+        if (!is.null(data_file)) {
+          write(local_var_resp$response, data_file)
+        }
+
+        deserialized_resp_obj <- tryCatch(
+          self$api_client$deserialize(local_var_resp$response_as_text(), "PageStructureCandidateFormula", loadNamespace("Rsirius")),
           error = function(e) {
             stop("Failed to deserialize response")
           }

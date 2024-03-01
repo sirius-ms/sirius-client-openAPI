@@ -7,7 +7,8 @@ Method | HTTP request | Description
 [**AddCompounds**](CompoundsApi.md#AddCompounds) | **POST** /api/projects/{projectId}/compounds | 
 [**DeleteCompound**](CompoundsApi.md#DeleteCompound) | **DELETE** /api/projects/{projectId}/compounds/{compoundId} | Delete compound (group of ion identities) with the given identifier (and the included features) from the  specified project-space.
 [**GetCompound**](CompoundsApi.md#GetCompound) | **GET** /api/projects/{projectId}/compounds/{compoundId} | Get compound (group of ion identities) with the given identifier from the specified project-space.
-[**GetCompounds**](CompoundsApi.md#GetCompounds) | **GET** /api/projects/{projectId}/compounds | Get all available compounds (group of ion identities) in the given project-space.
+[**GetCompounds**](CompoundsApi.md#GetCompounds) | **GET** /api/projects/{projectId}/compounds | List of all available compounds (group of ion identities) in the given project-space.
+[**GetCompoundsPaged**](CompoundsApi.md#GetCompoundsPaged) | **GET** /api/projects/{projectId}/compounds/page | Page of available compounds (group of ion identities) in the given project-space.
 
 
 # **AddCompounds**
@@ -159,32 +160,81 @@ No authorization required
 | **200** | Compounds with additional optional fields (if specified). |  -  |
 
 # **GetCompounds**
-> PageCompound GetCompounds(project_id, page = 0, size = 20, sort = var.sort, search_query = var.search_query, query_syntax = var.query_syntax, opt_fields = [], opt_fields_features = [])
+> array[Compound] GetCompounds(project_id, opt_fields = [], opt_fields_features = [])
 
-Get all available compounds (group of ion identities) in the given project-space.
+List of all available compounds (group of ion identities) in the given project-space.
 
-Get all available compounds (group of ion identities) in the given project-space.
+List of all available compounds (group of ion identities) in the given project-space.
 
 ### Example
 ```R
 library(Rsirius)
 
-# Get all available compounds (group of ion identities) in the given project-space.
+# List of all available compounds (group of ion identities) in the given project-space.
+#
+# prepare function argument(s)
+var_project_id <- "project_id_example" # character | project-space to read from.
+var_opt_fields <- c(CompoundOptField$new()) # array[CompoundOptField] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
+var_opt_fields_features <- c(AlignedFeatureOptField$new()) # array[AlignedFeatureOptField] |  (Optional)
+
+api_instance <- rsirius_api$new()
+# to save the result into a file, simply add the optional `data_file` parameter, e.g.
+# result <- api_instance$GetCompounds(var_project_id, opt_fields = var_opt_fields, opt_fields_features = var_opt_fields_featuresdata_file = "result.txt")
+result <- api_instance$compounds_api$GetCompounds(var_project_id, opt_fields = var_opt_fields, opt_fields_features = var_opt_fields_features)
+dput(result)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **project_id** | **character**| project-space to read from. | 
+ **opt_fields** | list( [**CompoundOptField**](CompoundOptField.md) )| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to []]
+ **opt_fields_features** | list( [**AlignedFeatureOptField**](AlignedFeatureOptField.md) )|  | [optional] [default to []]
+
+### Return type
+
+[**array[Compound]**](Compound.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Compounds with additional optional fields (if specified). |  -  |
+
+# **GetCompoundsPaged**
+> PageCompound GetCompoundsPaged(project_id, page = 0, size = 20, sort = var.sort, opt_fields = [], opt_fields_features = [])
+
+Page of available compounds (group of ion identities) in the given project-space.
+
+Page of available compounds (group of ion identities) in the given project-space.
+
+### Example
+```R
+library(Rsirius)
+
+# Page of available compounds (group of ion identities) in the given project-space.
 #
 # prepare function argument(s)
 var_project_id <- "project_id_example" # character | project-space to read from.
 var_page <- 0 # integer | Zero-based page index (0..N) (Optional)
 var_size <- 20 # integer | The size of the page to be returned (Optional)
 var_sort <- c("inner_example") # array[character] | Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (Optional)
-var_search_query <- "search_query_example" # character | optional search query in specified format (Optional)
-var_query_syntax <- SearchQueryType$new() # SearchQueryType | query syntax used fpr searchQuery (Optional)
 var_opt_fields <- c(CompoundOptField$new()) # array[CompoundOptField] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
 var_opt_fields_features <- c(AlignedFeatureOptField$new()) # array[AlignedFeatureOptField] |  (Optional)
 
 api_instance <- rsirius_api$new()
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$GetCompounds(var_project_id, page = var_page, size = var_size, sort = var_sort, search_query = var_search_query, query_syntax = var_query_syntax, opt_fields = var_opt_fields, opt_fields_features = var_opt_fields_featuresdata_file = "result.txt")
-result <- api_instance$compounds_api$GetCompounds(var_project_id, page = var_page, size = var_size, sort = var_sort, search_query = var_search_query, query_syntax = var_query_syntax, opt_fields = var_opt_fields, opt_fields_features = var_opt_fields_features)
+# result <- api_instance$GetCompoundsPaged(var_project_id, page = var_page, size = var_size, sort = var_sort, opt_fields = var_opt_fields, opt_fields_features = var_opt_fields_featuresdata_file = "result.txt")
+result <- api_instance$compounds_api$GetCompoundsPaged(var_project_id, page = var_page, size = var_size, sort = var_sort, opt_fields = var_opt_fields, opt_fields_features = var_opt_fields_features)
 dput(result)
 ```
 
@@ -196,8 +246,6 @@ Name | Type | Description  | Notes
  **page** | **integer**| Zero-based page index (0..N) | [optional] [default to 0]
  **size** | **integer**| The size of the page to be returned | [optional] [default to 20]
  **sort** | list( **character** )| Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. | [optional] 
- **search_query** | **character**| optional search query in specified format | [optional] 
- **query_syntax** | [**SearchQueryType**](.md)| query syntax used fpr searchQuery | [optional] 
  **opt_fields** | list( [**CompoundOptField**](CompoundOptField.md) )| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to []]
  **opt_fields_features** | list( [**AlignedFeatureOptField**](AlignedFeatureOptField.md) )|  | [optional] [default to []]
 

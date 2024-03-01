@@ -7,37 +7,37 @@
 #' @title UseHeuristic
 #' @description UseHeuristic Class
 #' @format An \code{R6Class} generator object
-#' @field mzToUseHeuristic  integer [optional]
-#' @field mzToUseHeuristicOnly  integer [optional]
+#' @field useHeuristicAboveMz  integer [optional]
+#' @field useOnlyHeuristicAboveMz  integer [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
 #' @export
 UseHeuristic <- R6::R6Class(
   "UseHeuristic",
   public = list(
-    `mzToUseHeuristic` = NULL,
-    `mzToUseHeuristicOnly` = NULL,
+    `useHeuristicAboveMz` = NULL,
+    `useOnlyHeuristicAboveMz` = NULL,
     #' Initialize a new UseHeuristic class.
     #'
     #' @description
     #' Initialize a new UseHeuristic class.
     #'
-    #' @param mzToUseHeuristic mzToUseHeuristic
-    #' @param mzToUseHeuristicOnly mzToUseHeuristicOnly
+    #' @param useHeuristicAboveMz useHeuristicAboveMz
+    #' @param useOnlyHeuristicAboveMz useOnlyHeuristicAboveMz
     #' @param ... Other optional arguments.
     #' @export
-    initialize = function(`mzToUseHeuristic` = NULL, `mzToUseHeuristicOnly` = NULL, ...) {
-      if (!is.null(`mzToUseHeuristic`)) {
-        if (!(is.numeric(`mzToUseHeuristic`) && length(`mzToUseHeuristic`) == 1)) {
-          stop(paste("Error! Invalid data for `mzToUseHeuristic`. Must be an integer:", `mzToUseHeuristic`))
+    initialize = function(`useHeuristicAboveMz` = NULL, `useOnlyHeuristicAboveMz` = NULL, ...) {
+      if (!is.null(`useHeuristicAboveMz`)) {
+        if (!(is.numeric(`useHeuristicAboveMz`) && length(`useHeuristicAboveMz`) == 1)) {
+          stop(paste("Error! Invalid data for `useHeuristicAboveMz`. Must be an integer:", `useHeuristicAboveMz`))
         }
-        self$`mzToUseHeuristic` <- `mzToUseHeuristic`
+        self$`useHeuristicAboveMz` <- `useHeuristicAboveMz`
       }
-      if (!is.null(`mzToUseHeuristicOnly`)) {
-        if (!(is.numeric(`mzToUseHeuristicOnly`) && length(`mzToUseHeuristicOnly`) == 1)) {
-          stop(paste("Error! Invalid data for `mzToUseHeuristicOnly`. Must be an integer:", `mzToUseHeuristicOnly`))
+      if (!is.null(`useOnlyHeuristicAboveMz`)) {
+        if (!(is.numeric(`useOnlyHeuristicAboveMz`) && length(`useOnlyHeuristicAboveMz`) == 1)) {
+          stop(paste("Error! Invalid data for `useOnlyHeuristicAboveMz`. Must be an integer:", `useOnlyHeuristicAboveMz`))
         }
-        self$`mzToUseHeuristicOnly` <- `mzToUseHeuristicOnly`
+        self$`useOnlyHeuristicAboveMz` <- `useOnlyHeuristicAboveMz`
       }
     },
     #' To JSON string
@@ -49,13 +49,13 @@ UseHeuristic <- R6::R6Class(
     #' @export
     toJSON = function() {
       UseHeuristicObject <- list()
-      if (!is.null(self$`mzToUseHeuristic`)) {
-        UseHeuristicObject[["mzToUseHeuristic"]] <-
-          self$`mzToUseHeuristic`
+      if (!is.null(self$`useHeuristicAboveMz`)) {
+        UseHeuristicObject[["useHeuristicAboveMz"]] <-
+          self$`useHeuristicAboveMz`
       }
-      if (!is.null(self$`mzToUseHeuristicOnly`)) {
-        UseHeuristicObject[["mzToUseHeuristicOnly"]] <-
-          self$`mzToUseHeuristicOnly`
+      if (!is.null(self$`useOnlyHeuristicAboveMz`)) {
+        UseHeuristicObject[["useOnlyHeuristicAboveMz"]] <-
+          self$`useOnlyHeuristicAboveMz`
       }
       UseHeuristicObject
     },
@@ -69,11 +69,11 @@ UseHeuristic <- R6::R6Class(
     #' @export
     fromJSON = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
-      if (!is.null(this_object$`mzToUseHeuristic`)) {
-        self$`mzToUseHeuristic` <- this_object$`mzToUseHeuristic`
+      if (!is.null(this_object$`useHeuristicAboveMz`)) {
+        self$`useHeuristicAboveMz` <- this_object$`useHeuristicAboveMz`
       }
-      if (!is.null(this_object$`mzToUseHeuristicOnly`)) {
-        self$`mzToUseHeuristicOnly` <- this_object$`mzToUseHeuristicOnly`
+      if (!is.null(this_object$`useOnlyHeuristicAboveMz`)) {
+        self$`useOnlyHeuristicAboveMz` <- this_object$`useOnlyHeuristicAboveMz`
       }
       self
     },
@@ -86,20 +86,20 @@ UseHeuristic <- R6::R6Class(
     #' @export
     toJSONString = function() {
       jsoncontent <- c(
-        if (!is.null(self$`mzToUseHeuristic`)) {
+        if (!is.null(self$`useHeuristicAboveMz`)) {
           sprintf(
-          '"mzToUseHeuristic":
+          '"useHeuristicAboveMz":
             %d
                     ',
-          self$`mzToUseHeuristic`
+          self$`useHeuristicAboveMz`
           )
         },
-        if (!is.null(self$`mzToUseHeuristicOnly`)) {
+        if (!is.null(self$`useOnlyHeuristicAboveMz`)) {
           sprintf(
-          '"mzToUseHeuristicOnly":
+          '"useOnlyHeuristicAboveMz":
             %d
                     ',
-          self$`mzToUseHeuristicOnly`
+          self$`useOnlyHeuristicAboveMz`
           )
         }
       )
@@ -116,8 +116,8 @@ UseHeuristic <- R6::R6Class(
     #' @export
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
-      self$`mzToUseHeuristic` <- this_object$`mzToUseHeuristic`
-      self$`mzToUseHeuristicOnly` <- this_object$`mzToUseHeuristicOnly`
+      self$`useHeuristicAboveMz` <- this_object$`useHeuristicAboveMz`
+      self$`useOnlyHeuristicAboveMz` <- this_object$`useOnlyHeuristicAboveMz`
       self
     },
     #' Validate JSON input with respect to UseHeuristic

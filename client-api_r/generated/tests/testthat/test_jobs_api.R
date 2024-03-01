@@ -100,8 +100,21 @@ test_that("GetJobConfigs", {
 test_that("GetJobs", {
   # tests for GetJobs
   # base path: http://localhost:8080
-  # Get job information and its current state and progress (if available).
-  # Get job information and its current state and progress (if available).
+  # Get List of all available jobs with information such as current state and progress (if available).
+  # Get List of all available jobs with information such as current state and progress (if available).
+  # @param project_id character project-space to run jobs on
+  # @param opt_fields array[JobOptField] set of optional fields to be included. Use 'none' only to override defaults. (optional)
+  # @return [array[Job]]
+
+  # uncomment below to test the operation
+  #expect_equal(result, "EXPECTED_RESULT")
+})
+
+test_that("GetJobsPaged", {
+  # tests for GetJobsPaged
+  # base path: http://localhost:8080
+  # Get Page of jobs with information such as current state and progress (if available).
+  # Get Page of jobs with information such as current state and progress (if available).
   # @param project_id character project-space to run jobs on
   # @param page integer Zero-based page index (0..N) (optional)
   # @param size integer The size of the page to be returned (optional)
@@ -145,6 +158,20 @@ test_that("StartCommand", {
   # Start computation for given command and input.
   # @param project_id character project-space to perform the command for.
   # @param command_submission CommandSubmission the command and the input to be executed
+  # @param opt_fields array[JobOptField] set of optional fields to be included. Use 'none' only to override defaults. (optional)
+  # @return [Job]
+
+  # uncomment below to test the operation
+  #expect_equal(result, "EXPECTED_RESULT")
+})
+
+test_that("StartDatabaseImport", {
+  # tests for StartDatabaseImport
+  # base path: http://localhost:8080
+  # Start import of structure and spectra files into the specified database.
+  # Start import of structure and spectra files into the specified database.
+  # @param project_id character project-space to perform the command for.
+  # @param database_import_submission DatabaseImportSubmission the command and the input to be executed
   # @param opt_fields array[JobOptField] set of optional fields to be included. Use 'none' only to override defaults. (optional)
   # @return [Job]
 

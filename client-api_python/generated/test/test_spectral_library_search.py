@@ -35,10 +35,19 @@ class TestSpectralLibrarySearch(unittest.TestCase):
         model = SpectralLibrarySearch()
         if include_optional:
             return SpectralLibrarySearch(
-                enabled = True
+                enabled = True,
+                spectra_search_dbs = [
+                    ''
+                    ],
+                peak_deviation_ppm = 1.337,
+                precursor_deviation_ppm = 1.337,
+                scoring = 'INTENSITY'
             )
         else:
             return SpectralLibrarySearch(
+                spectra_search_dbs = [
+                    ''
+                    ],
         )
         """
 

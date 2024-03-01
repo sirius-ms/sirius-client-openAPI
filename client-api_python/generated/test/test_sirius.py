@@ -38,12 +38,17 @@ class TestSirius(unittest.TestCase):
                 enabled = True,
                 profile = 'QTOF',
                 number_of_candidates = 56,
-                number_of_candidates_per_ion = 56,
+                number_of_candidates_per_ionization = 56,
                 mass_accuracy_ms2ppm = 1.337,
                 isotope_ms2_settings = 'IGNORE',
+                filter_by_isotope_pattern = True,
+                enforce_el_gordo_formula = True,
+                perform_bottom_up_search = True,
+                perform_denovo_below_mz = 1.337,
                 formula_search_dbs = [
                     ''
                     ],
+                apply_formula_constraints_to_db_and_bottom_up_search = True,
                 enforced_formula_constraints = '',
                 fallback_formula_constraints = '',
                 detectable_elements = [
@@ -53,9 +58,9 @@ class TestSirius(unittest.TestCase):
                     number_of_seconds_per_decomposition = 56, 
                     number_of_seconds_per_instance = 56, ),
                 use_heuristic = PySirius.models.use_heuristic.UseHeuristic(
-                    mz_to_use_heuristic = 56, 
-                    mz_to_use_heuristic_only = 56, ),
-                min_ref_match_score_to_inject = 1.337
+                    use_heuristic_above_mz = 56, 
+                    use_only_heuristic_above_mz = 56, ),
+                min_score_to_inject_spec_lib_match = 1.337
             )
         else:
             return Sirius(

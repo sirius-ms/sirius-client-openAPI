@@ -7,7 +7,8 @@ Method | HTTP request | Description
 [**add_compounds**](CompoundsApi.md#add_compounds) | **POST** /api/projects/{projectId}/compounds | 
 [**delete_compound**](CompoundsApi.md#delete_compound) | **DELETE** /api/projects/{projectId}/compounds/{compoundId} | Delete compound (group of ion identities) with the given identifier (and the included features) from the  specified project-space.
 [**get_compound**](CompoundsApi.md#get_compound) | **GET** /api/projects/{projectId}/compounds/{compoundId} | Get compound (group of ion identities) with the given identifier from the specified project-space.
-[**get_compounds**](CompoundsApi.md#get_compounds) | **GET** /api/projects/{projectId}/compounds | Get all available compounds (group of ion identities) in the given project-space.
+[**get_compounds**](CompoundsApi.md#get_compounds) | **GET** /api/projects/{projectId}/compounds | List of all available compounds (group of ion identities) in the given project-space.
+[**get_compounds_paged**](CompoundsApi.md#get_compounds_paged) | **GET** /api/projects/{projectId}/compounds/page | Page of available compounds (group of ion identities) in the given project-space.
 
 
 # **add_compounds**
@@ -228,11 +229,85 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_compounds**
-> PageCompound get_compounds(project_id, page=page, size=size, sort=sort, search_query=search_query, query_syntax=query_syntax, opt_fields=opt_fields, opt_fields_features=opt_fields_features)
+> List[Compound] get_compounds(project_id, opt_fields=opt_fields, opt_fields_features=opt_fields_features)
 
-Get all available compounds (group of ion identities) in the given project-space.
+List of all available compounds (group of ion identities) in the given project-space.
 
-Get all available compounds (group of ion identities) in the given project-space.
+List of all available compounds (group of ion identities) in the given project-space.
+
+### Example
+
+
+```python
+import PySirius
+from PySirius.models.aligned_feature_opt_field import AlignedFeatureOptField
+from PySirius.models.compound import Compound
+from PySirius.models.compound_opt_field import CompoundOptField
+from PySirius.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to http://localhost:8080
+# See configuration.py for a list of all supported configuration parameters.
+configuration = PySirius.Configuration(
+    host = "http://localhost:8080"
+)
+
+
+# Enter a context with an instance of the API client
+with PySirius.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = PySirius.CompoundsApi(api_client)
+    project_id = 'project_id_example' # str | project-space to read from.
+    opt_fields = [] # List[CompoundOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to [])
+    opt_fields_features = [] # List[AlignedFeatureOptField] |  (optional) (default to [])
+
+    try:
+        # List of all available compounds (group of ion identities) in the given project-space.
+        api_response = api_instance.get_compounds(project_id, opt_fields=opt_fields, opt_fields_features=opt_fields_features)
+        print("The response of CompoundsApi->get_compounds:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling CompoundsApi->get_compounds: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **project_id** | **str**| project-space to read from. | 
+ **opt_fields** | [**List[CompoundOptField]**](CompoundOptField.md)| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to []]
+ **opt_fields_features** | [**List[AlignedFeatureOptField]**](AlignedFeatureOptField.md)|  | [optional] [default to []]
+
+### Return type
+
+[**List[Compound]**](Compound.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Compounds with additional optional fields (if specified). |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **get_compounds_paged**
+> PageCompound get_compounds_paged(project_id, page=page, size=size, sort=sort, opt_fields=opt_fields, opt_fields_features=opt_fields_features)
+
+Page of available compounds (group of ion identities) in the given project-space.
+
+Page of available compounds (group of ion identities) in the given project-space.
 
 ### Example
 
@@ -242,7 +317,6 @@ import PySirius
 from PySirius.models.aligned_feature_opt_field import AlignedFeatureOptField
 from PySirius.models.compound_opt_field import CompoundOptField
 from PySirius.models.page_compound import PageCompound
-from PySirius.models.search_query_type import SearchQueryType
 from PySirius.rest import ApiException
 from pprint import pprint
 
@@ -261,18 +335,16 @@ with PySirius.ApiClient(configuration) as api_client:
     page = 0 # int | Zero-based page index (0..N) (optional) (default to 0)
     size = 20 # int | The size of the page to be returned (optional) (default to 20)
     sort = ['sort_example'] # List[str] | Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (optional)
-    search_query = 'search_query_example' # str | optional search query in specified format (optional)
-    query_syntax = PySirius.SearchQueryType() # SearchQueryType | query syntax used fpr searchQuery (optional)
     opt_fields = [] # List[CompoundOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to [])
     opt_fields_features = [] # List[AlignedFeatureOptField] |  (optional) (default to [])
 
     try:
-        # Get all available compounds (group of ion identities) in the given project-space.
-        api_response = api_instance.get_compounds(project_id, page=page, size=size, sort=sort, search_query=search_query, query_syntax=query_syntax, opt_fields=opt_fields, opt_fields_features=opt_fields_features)
-        print("The response of CompoundsApi->get_compounds:\n")
+        # Page of available compounds (group of ion identities) in the given project-space.
+        api_response = api_instance.get_compounds_paged(project_id, page=page, size=size, sort=sort, opt_fields=opt_fields, opt_fields_features=opt_fields_features)
+        print("The response of CompoundsApi->get_compounds_paged:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling CompoundsApi->get_compounds: %s\n" % e)
+        print("Exception when calling CompoundsApi->get_compounds_paged: %s\n" % e)
 ```
 
 
@@ -286,8 +358,6 @@ Name | Type | Description  | Notes
  **page** | **int**| Zero-based page index (0..N) | [optional] [default to 0]
  **size** | **int**| The size of the page to be returned | [optional] [default to 20]
  **sort** | [**List[str]**](str.md)| Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. | [optional] 
- **search_query** | **str**| optional search query in specified format | [optional] 
- **query_syntax** | [**SearchQueryType**](.md)| query syntax used fpr searchQuery | [optional] 
  **opt_fields** | [**List[CompoundOptField]**](CompoundOptField.md)| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to []]
  **opt_fields_features** | [**List[AlignedFeatureOptField]**](AlignedFeatureOptField.md)|  | [optional] [default to []]
 

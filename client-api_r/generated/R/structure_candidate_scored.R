@@ -12,7 +12,7 @@
 #' @field structureName  character [optional]
 #' @field xlogP  numeric [optional]
 #' @field dbLinks List of structure database links belonging to this structure candidate  OPTIONAL: needs to be added by parameter list(\link{DBLink}) [optional]
-#' @field refSpectraLinks List of spectral library links belonging to this structure candidate  OPTIONAL: needs to be added by parameter list(\link{DBLink}) [optional]
+#' @field spectralLibraryMatches List of spectral library matches belonging to this structure candidate  OPTIONAL: needs to be added by parameter list(\link{SpectralLibraryMatch}) [optional]
 #' @field csiScore  numeric [optional]
 #' @field tanimotoSimilarity  numeric [optional]
 #' @field confidenceExactMatch  numeric [optional]
@@ -29,7 +29,7 @@ StructureCandidateScored <- R6::R6Class(
     `structureName` = NULL,
     `xlogP` = NULL,
     `dbLinks` = NULL,
-    `refSpectraLinks` = NULL,
+    `spectralLibraryMatches` = NULL,
     `csiScore` = NULL,
     `tanimotoSimilarity` = NULL,
     `confidenceExactMatch` = NULL,
@@ -45,7 +45,7 @@ StructureCandidateScored <- R6::R6Class(
     #' @param structureName structureName
     #' @param xlogP xlogP
     #' @param dbLinks List of structure database links belonging to this structure candidate  OPTIONAL: needs to be added by parameter
-    #' @param refSpectraLinks List of spectral library links belonging to this structure candidate  OPTIONAL: needs to be added by parameter
+    #' @param spectralLibraryMatches List of spectral library matches belonging to this structure candidate  OPTIONAL: needs to be added by parameter
     #' @param csiScore csiScore
     #' @param tanimotoSimilarity tanimotoSimilarity
     #' @param confidenceExactMatch confidenceExactMatch
@@ -53,7 +53,7 @@ StructureCandidateScored <- R6::R6Class(
     #' @param fingerprint fingerprint
     #' @param ... Other optional arguments.
     #' @export
-    initialize = function(`inchiKey` = NULL, `smiles` = NULL, `structureName` = NULL, `xlogP` = NULL, `dbLinks` = NULL, `refSpectraLinks` = NULL, `csiScore` = NULL, `tanimotoSimilarity` = NULL, `confidenceExactMatch` = NULL, `confidenceApproxMatch` = NULL, `fingerprint` = NULL, ...) {
+    initialize = function(`inchiKey` = NULL, `smiles` = NULL, `structureName` = NULL, `xlogP` = NULL, `dbLinks` = NULL, `spectralLibraryMatches` = NULL, `csiScore` = NULL, `tanimotoSimilarity` = NULL, `confidenceExactMatch` = NULL, `confidenceApproxMatch` = NULL, `fingerprint` = NULL, ...) {
       if (!is.null(`inchiKey`)) {
         if (!(is.character(`inchiKey`) && length(`inchiKey`) == 1)) {
           stop(paste("Error! Invalid data for `inchiKey`. Must be a string:", `inchiKey`))
@@ -83,10 +83,10 @@ StructureCandidateScored <- R6::R6Class(
         sapply(`dbLinks`, function(x) stopifnot(R6::is.R6(x)))
         self$`dbLinks` <- `dbLinks`
       }
-      if (!is.null(`refSpectraLinks`)) {
-        stopifnot(is.vector(`refSpectraLinks`), length(`refSpectraLinks`) != 0)
-        sapply(`refSpectraLinks`, function(x) stopifnot(R6::is.R6(x)))
-        self$`refSpectraLinks` <- `refSpectraLinks`
+      if (!is.null(`spectralLibraryMatches`)) {
+        stopifnot(is.vector(`spectralLibraryMatches`), length(`spectralLibraryMatches`) != 0)
+        sapply(`spectralLibraryMatches`, function(x) stopifnot(R6::is.R6(x)))
+        self$`spectralLibraryMatches` <- `spectralLibraryMatches`
       }
       if (!is.null(`csiScore`)) {
         if (!(is.numeric(`csiScore`) && length(`csiScore`) == 1)) {
@@ -146,9 +146,9 @@ StructureCandidateScored <- R6::R6Class(
         StructureCandidateScoredObject[["dbLinks"]] <-
           lapply(self$`dbLinks`, function(x) x$toJSON())
       }
-      if (!is.null(self$`refSpectraLinks`)) {
-        StructureCandidateScoredObject[["refSpectraLinks"]] <-
-          lapply(self$`refSpectraLinks`, function(x) x$toJSON())
+      if (!is.null(self$`spectralLibraryMatches`)) {
+        StructureCandidateScoredObject[["spectralLibraryMatches"]] <-
+          lapply(self$`spectralLibraryMatches`, function(x) x$toJSON())
       }
       if (!is.null(self$`csiScore`)) {
         StructureCandidateScoredObject[["csiScore"]] <-
@@ -197,8 +197,8 @@ StructureCandidateScored <- R6::R6Class(
       if (!is.null(this_object$`dbLinks`)) {
         self$`dbLinks` <- ApiClient$new()$deserializeObj(this_object$`dbLinks`, "array[DBLink]", loadNamespace("Rsirius"))
       }
-      if (!is.null(this_object$`refSpectraLinks`)) {
-        self$`refSpectraLinks` <- ApiClient$new()$deserializeObj(this_object$`refSpectraLinks`, "array[DBLink]", loadNamespace("Rsirius"))
+      if (!is.null(this_object$`spectralLibraryMatches`)) {
+        self$`spectralLibraryMatches` <- ApiClient$new()$deserializeObj(this_object$`spectralLibraryMatches`, "array[SpectralLibraryMatch]", loadNamespace("Rsirius"))
       }
       if (!is.null(this_object$`csiScore`)) {
         self$`csiScore` <- this_object$`csiScore`
@@ -268,12 +268,12 @@ StructureCandidateScored <- R6::R6Class(
           paste(sapply(self$`dbLinks`, function(x) jsonlite::toJSON(x$toJSON(), auto_unbox = TRUE, digits = NA)), collapse = ",")
           )
         },
-        if (!is.null(self$`refSpectraLinks`)) {
+        if (!is.null(self$`spectralLibraryMatches`)) {
           sprintf(
-          '"refSpectraLinks":
+          '"spectralLibraryMatches":
           [%s]
 ',
-          paste(sapply(self$`refSpectraLinks`, function(x) jsonlite::toJSON(x$toJSON(), auto_unbox = TRUE, digits = NA)), collapse = ",")
+          paste(sapply(self$`spectralLibraryMatches`, function(x) jsonlite::toJSON(x$toJSON(), auto_unbox = TRUE, digits = NA)), collapse = ",")
           )
         },
         if (!is.null(self$`csiScore`)) {
@@ -335,7 +335,7 @@ StructureCandidateScored <- R6::R6Class(
       self$`structureName` <- this_object$`structureName`
       self$`xlogP` <- this_object$`xlogP`
       self$`dbLinks` <- ApiClient$new()$deserializeObj(this_object$`dbLinks`, "array[DBLink]", loadNamespace("Rsirius"))
-      self$`refSpectraLinks` <- ApiClient$new()$deserializeObj(this_object$`refSpectraLinks`, "array[DBLink]", loadNamespace("Rsirius"))
+      self$`spectralLibraryMatches` <- ApiClient$new()$deserializeObj(this_object$`spectralLibraryMatches`, "array[SpectralLibraryMatch]", loadNamespace("Rsirius"))
       self$`csiScore` <- this_object$`csiScore`
       self$`tanimotoSimilarity` <- this_object$`tanimotoSimilarity`
       self$`confidenceExactMatch` <- this_object$`confidenceExactMatch`

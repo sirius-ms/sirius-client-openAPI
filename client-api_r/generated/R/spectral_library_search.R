@@ -1,13 +1,17 @@
 #' Create a new SpectralLibrarySearch
 #'
 #' @description
-#' 
+#' User/developer friendly parameter subset for the Spectral library search tool.
 #'
 #' @docType class
 #' @title SpectralLibrarySearch
 #' @description SpectralLibrarySearch Class
 #' @format An \code{R6Class} generator object
 #' @field enabled tags whether the tool is enabled character [optional]
+#' @field spectraSearchDBs Structure Databases with Reference spectra to search in.  <p>  Defaults to BIO + Custom Databases. Possible values are available to Database API. list(character)
+#' @field peakDeviationPpm Maximum allowed mass deviation in ppm for matching peaks. numeric [optional]
+#' @field precursorDeviationPpm Maximum allowed mass deviation in ppm for matching the precursor. If not specified, the same value as for the peaks is used. numeric [optional]
+#' @field scoring  \link{SpectralAlignmentType} [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
 #' @export
@@ -15,20 +19,52 @@ SpectralLibrarySearch <- R6::R6Class(
   "SpectralLibrarySearch",
   public = list(
     `enabled` = NULL,
+    `spectraSearchDBs` = NULL,
+    `peakDeviationPpm` = NULL,
+    `precursorDeviationPpm` = NULL,
+    `scoring` = NULL,
     #' Initialize a new SpectralLibrarySearch class.
     #'
     #' @description
     #' Initialize a new SpectralLibrarySearch class.
     #'
+    #' @param spectraSearchDBs Structure Databases with Reference spectra to search in.  <p>  Defaults to BIO + Custom Databases. Possible values are available to Database API.
     #' @param enabled tags whether the tool is enabled
+    #' @param peakDeviationPpm Maximum allowed mass deviation in ppm for matching peaks.
+    #' @param precursorDeviationPpm Maximum allowed mass deviation in ppm for matching the precursor. If not specified, the same value as for the peaks is used.
+    #' @param scoring scoring
     #' @param ... Other optional arguments.
     #' @export
-    initialize = function(`enabled` = NULL, ...) {
+    initialize = function(`spectraSearchDBs`, `enabled` = NULL, `peakDeviationPpm` = NULL, `precursorDeviationPpm` = NULL, `scoring` = NULL, ...) {
+      if (!missing(`spectraSearchDBs`)) {
+        stopifnot(is.vector(`spectraSearchDBs`), length(`spectraSearchDBs`) != 0)
+        sapply(`spectraSearchDBs`, function(x) stopifnot(is.character(x)))
+        self$`spectraSearchDBs` <- `spectraSearchDBs`
+      }
       if (!is.null(`enabled`)) {
         if (!(is.logical(`enabled`) && length(`enabled`) == 1)) {
           stop(paste("Error! Invalid data for `enabled`. Must be a boolean:", `enabled`))
         }
         self$`enabled` <- `enabled`
+      }
+      if (!is.null(`peakDeviationPpm`)) {
+        if (!(is.numeric(`peakDeviationPpm`) && length(`peakDeviationPpm`) == 1)) {
+          stop(paste("Error! Invalid data for `peakDeviationPpm`. Must be a number:", `peakDeviationPpm`))
+        }
+        self$`peakDeviationPpm` <- `peakDeviationPpm`
+      }
+      if (!is.null(`precursorDeviationPpm`)) {
+        if (!(is.numeric(`precursorDeviationPpm`) && length(`precursorDeviationPpm`) == 1)) {
+          stop(paste("Error! Invalid data for `precursorDeviationPpm`. Must be a number:", `precursorDeviationPpm`))
+        }
+        self$`precursorDeviationPpm` <- `precursorDeviationPpm`
+      }
+      if (!is.null(`scoring`)) {
+        if (!(`scoring` %in% c())) {
+          stop(paste("Error! \"", `scoring`, "\" cannot be assigned to `scoring`. Must be .", sep = ""))
+        }
+        stopifnot(R6::is.R6(`scoring`))
+        self$`scoring` <- `scoring`
       }
     },
     #' To JSON string
@@ -44,6 +80,22 @@ SpectralLibrarySearch <- R6::R6Class(
         SpectralLibrarySearchObject[["enabled"]] <-
           self$`enabled`
       }
+      if (!is.null(self$`spectraSearchDBs`)) {
+        SpectralLibrarySearchObject[["spectraSearchDBs"]] <-
+          self$`spectraSearchDBs`
+      }
+      if (!is.null(self$`peakDeviationPpm`)) {
+        SpectralLibrarySearchObject[["peakDeviationPpm"]] <-
+          self$`peakDeviationPpm`
+      }
+      if (!is.null(self$`precursorDeviationPpm`)) {
+        SpectralLibrarySearchObject[["precursorDeviationPpm"]] <-
+          self$`precursorDeviationPpm`
+      }
+      if (!is.null(self$`scoring`)) {
+        SpectralLibrarySearchObject[["scoring"]] <-
+          self$`scoring`$toJSON()
+      }
       SpectralLibrarySearchObject
     },
     #' Deserialize JSON string into an instance of SpectralLibrarySearch
@@ -58,6 +110,20 @@ SpectralLibrarySearch <- R6::R6Class(
       this_object <- jsonlite::fromJSON(input_json)
       if (!is.null(this_object$`enabled`)) {
         self$`enabled` <- this_object$`enabled`
+      }
+      if (!is.null(this_object$`spectraSearchDBs`)) {
+        self$`spectraSearchDBs` <- ApiClient$new()$deserializeObj(this_object$`spectraSearchDBs`, "array[character]", loadNamespace("Rsirius"))
+      }
+      if (!is.null(this_object$`peakDeviationPpm`)) {
+        self$`peakDeviationPpm` <- this_object$`peakDeviationPpm`
+      }
+      if (!is.null(this_object$`precursorDeviationPpm`)) {
+        self$`precursorDeviationPpm` <- this_object$`precursorDeviationPpm`
+      }
+      if (!is.null(this_object$`scoring`)) {
+        `scoring_object` <- SpectralAlignmentType$new()
+        `scoring_object`$fromJSON(jsonlite::toJSON(this_object$`scoring`, auto_unbox = TRUE, digits = NA))
+        self$`scoring` <- `scoring_object`
       }
       self
     },
@@ -77,6 +143,38 @@ SpectralLibrarySearch <- R6::R6Class(
                     ',
           tolower(self$`enabled`)
           )
+        },
+        if (!is.null(self$`spectraSearchDBs`)) {
+          sprintf(
+          '"spectraSearchDBs":
+             [%s]
+          ',
+          paste(unlist(lapply(self$`spectraSearchDBs`, function(x) paste0('"', x, '"'))), collapse = ",")
+          )
+        },
+        if (!is.null(self$`peakDeviationPpm`)) {
+          sprintf(
+          '"peakDeviationPpm":
+            %d
+                    ',
+          self$`peakDeviationPpm`
+          )
+        },
+        if (!is.null(self$`precursorDeviationPpm`)) {
+          sprintf(
+          '"precursorDeviationPpm":
+            %d
+                    ',
+          self$`precursorDeviationPpm`
+          )
+        },
+        if (!is.null(self$`scoring`)) {
+          sprintf(
+          '"scoring":
+          %s
+          ',
+          jsonlite::toJSON(self$`scoring`$toJSON(), auto_unbox = TRUE, digits = NA)
+          )
         }
       )
       jsoncontent <- paste(jsoncontent, collapse = ",")
@@ -93,6 +191,10 @@ SpectralLibrarySearch <- R6::R6Class(
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       self$`enabled` <- this_object$`enabled`
+      self$`spectraSearchDBs` <- ApiClient$new()$deserializeObj(this_object$`spectraSearchDBs`, "array[character]", loadNamespace("Rsirius"))
+      self$`peakDeviationPpm` <- this_object$`peakDeviationPpm`
+      self$`precursorDeviationPpm` <- this_object$`precursorDeviationPpm`
+      self$`scoring` <- SpectralAlignmentType$new()$fromJSON(jsonlite::toJSON(this_object$`scoring`, auto_unbox = TRUE, digits = NA))
       self
     },
     #' Validate JSON input with respect to SpectralLibrarySearch
@@ -104,6 +206,13 @@ SpectralLibrarySearch <- R6::R6Class(
     #' @export
     validateJSON = function(input) {
       input_json <- jsonlite::fromJSON(input)
+      # check the required field `spectraSearchDBs`
+      if (!is.null(input_json$`spectraSearchDBs`)) {
+        stopifnot(is.vector(input_json$`spectraSearchDBs`), length(input_json$`spectraSearchDBs`) != 0)
+        tmp <- sapply(input_json$`spectraSearchDBs`, function(x) stopifnot(is.character(x)))
+      } else {
+        stop(paste("The JSON input `", input, "` is invalid for SpectralLibrarySearch: the required field `spectraSearchDBs` is missing."))
+      }
     },
     #' To string (JSON format)
     #'
@@ -123,6 +232,11 @@ SpectralLibrarySearch <- R6::R6Class(
     #' @return true if the values in all fields are valid.
     #' @export
     isValid = function() {
+      # check if the required `spectraSearchDBs` is null
+      if (is.null(self$`spectraSearchDBs`)) {
+        return(FALSE)
+      }
+
       TRUE
     },
     #' Return a list of invalid fields (if any).
@@ -134,6 +248,11 @@ SpectralLibrarySearch <- R6::R6Class(
     #' @export
     getInvalidFields = function() {
       invalid_fields <- list()
+      # check if the required `spectraSearchDBs` is null
+      if (is.null(self$`spectraSearchDBs`)) {
+        invalid_fields["spectraSearchDBs"] <- "Non-nullable required field `spectraSearchDBs` cannot be null."
+      }
+
       invalid_fields
     },
     #' Print the object

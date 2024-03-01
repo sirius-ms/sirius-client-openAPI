@@ -27,8 +27,7 @@ class Instrument(str, Enum):
     allowed enum values
     """
     QTOF = 'QTOF'
-    ORBI = 'ORBI'
-    FTICR = 'FTICR'
+    ORBITRAP = 'ORBITRAP'
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:

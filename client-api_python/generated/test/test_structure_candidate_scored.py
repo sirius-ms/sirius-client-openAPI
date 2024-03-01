@@ -44,10 +44,32 @@ class TestStructureCandidateScored(unittest.TestCase):
                         name = '', 
                         id = '', )
                     ],
-                ref_spectra_links = [
-                    PySirius.models.db_link.DBLink(
-                        name = '', 
-                        id = '', )
+                spectral_library_matches = [
+                    PySirius.models.spectral_library_match.SpectralLibraryMatch(
+                        similarity = 1.337, 
+                        shared_peaks = 56, 
+                        query_spectrum_index = 56, 
+                        db_name = '', 
+                        db_id = '', 
+                        uuid = '', 
+                        splash = '', 
+                        molecular_formula = '', 
+                        adduct = '', 
+                        exact_mass = '', 
+                        smiles = '', 
+                        candidate_in_chi_key = '', 
+                        reference_spectrum = PySirius.models.basic_spectrum.BasicSpectrum(
+                            name = '', 
+                            ms_level = 56, 
+                            collision_energy = '', 
+                            precursor_mz = 1.337, 
+                            scan_number = 56, 
+                            peaks = [
+                                PySirius.models.simple_peak.SimplePeak(
+                                    mz = 1.337, 
+                                    intensity = 1.337, )
+                                ], 
+                            abs_intensity_factor = 1.337, ), )
                     ],
                 csi_score = 1.337,
                 tanimoto_similarity = 1.337,

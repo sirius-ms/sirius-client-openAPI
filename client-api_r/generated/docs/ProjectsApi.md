@@ -356,7 +356,7 @@ No authorization required
 | **200** | OK |  -  |
 
 # **GetProjectSpaces**
-> PageProjectInfo GetProjectSpaces(page = 0, size = 20, sort = var.sort, search_query = var.search_query, query_syntax = var.query_syntax)
+> array[ProjectInfo] GetProjectSpaces()
 
 List opened project spaces.
 
@@ -368,33 +368,20 @@ library(Rsirius)
 
 # List opened project spaces.
 #
-# prepare function argument(s)
-var_page <- 0 # integer | Zero-based page index (0..N) (Optional)
-var_size <- 20 # integer | The size of the page to be returned (Optional)
-var_sort <- c("inner_example") # array[character] | Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (Optional)
-var_search_query <- "search_query_example" # character | optional search query in specified format (Optional)
-var_query_syntax <- SearchQueryType$new() # SearchQueryType | query syntax used fpr searchQuery (Optional)
 
 api_instance <- rsirius_api$new()
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$GetProjectSpaces(page = var_page, size = var_size, sort = var_sort, search_query = var_search_query, query_syntax = var_query_syntaxdata_file = "result.txt")
-result <- api_instance$projects_api$GetProjectSpaces(page = var_page, size = var_size, sort = var_sort, search_query = var_search_query, query_syntax = var_query_syntax)
+# result <- api_instance$GetProjectSpaces(data_file = "result.txt")
+result <- api_instance$projects_api$GetProjectSpaces()
 dput(result)
 ```
 
 ### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **page** | **integer**| Zero-based page index (0..N) | [optional] [default to 0]
- **size** | **integer**| The size of the page to be returned | [optional] [default to 20]
- **sort** | list( **character** )| Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. | [optional] 
- **search_query** | **character**| optional search query in specified format | [optional] 
- **query_syntax** | [**SearchQueryType**](.md)| query syntax used fpr searchQuery | [optional] 
+This endpoint does not need any parameter.
 
 ### Return type
 
-[**PageProjectInfo**](PageProjectInfo.md)
+[**array[ProjectInfo]**](ProjectInfo.md)
 
 ### Authorization
 

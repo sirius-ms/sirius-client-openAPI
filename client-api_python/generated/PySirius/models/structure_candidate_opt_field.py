@@ -29,7 +29,7 @@ class StructureCandidateOptField(str, Enum):
     NONE = 'none'
     FINGERPRINT = 'fingerprint'
     DBLINKS = 'dbLinks'
-    REFSPECTRALINKS = 'refSpectraLinks'
+    LIBRARYMATCHES = 'libraryMatches'
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:

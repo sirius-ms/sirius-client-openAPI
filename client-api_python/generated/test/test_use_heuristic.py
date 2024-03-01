@@ -35,8 +35,8 @@ class TestUseHeuristic(unittest.TestCase):
         model = UseHeuristic()
         if include_optional:
             return UseHeuristic(
-                mz_to_use_heuristic = 56,
-                mz_to_use_heuristic_only = 56
+                use_heuristic_above_mz = 56,
+                use_only_heuristic_above_mz = 56
             )
         else:
             return UseHeuristic(

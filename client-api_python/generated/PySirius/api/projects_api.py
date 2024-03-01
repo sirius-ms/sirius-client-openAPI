@@ -19,10 +19,8 @@ from typing_extensions import Annotated
 from pydantic import Field, StrictBool, StrictInt, StrictStr
 from typing import List, Optional
 from typing_extensions import Annotated
-from PySirius.models.page_project_info import PageProjectInfo
 from PySirius.models.project_info import ProjectInfo
 from PySirius.models.project_info_opt_field import ProjectInfoOptField
-from PySirius.models.search_query_type import SearchQueryType
 
 from PySirius.api_client import ApiClient, RequestSerialized
 from PySirius.api_response import ApiResponse
@@ -2001,11 +1999,6 @@ class ProjectsApi:
     @validate_call
     def get_project_spaces(
         self,
-        page: Annotated[Optional[Annotated[int, Field(strict=True, ge=0)]], Field(description="Zero-based page index (0..N)")] = None,
-        size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
-        sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
-        search_query: Annotated[Optional[StrictStr], Field(description="optional search query in specified format")] = None,
-        query_syntax: Annotated[Optional[SearchQueryType], Field(description="query syntax used fpr searchQuery")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2018,21 +2011,11 @@ class ProjectsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> PageProjectInfo:
+    ) -> List[ProjectInfo]:
         """List opened project spaces.
 
         List opened project spaces.
 
-        :param page: Zero-based page index (0..N)
-        :type page: int
-        :param size: The size of the page to be returned
-        :type size: int
-        :param sort: Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
-        :type sort: List[str]
-        :param search_query: optional search query in specified format
-        :type search_query: str
-        :param query_syntax: query syntax used fpr searchQuery
-        :type query_syntax: SearchQueryType
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2056,11 +2039,6 @@ class ProjectsApi:
         """ # noqa: E501
 
         _param = self._get_project_spaces_serialize(
-            page=page,
-            size=size,
-            sort=sort,
-            search_query=search_query,
-            query_syntax=query_syntax,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2068,7 +2046,7 @@ class ProjectsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "PageProjectInfo",
+            '200': "List[ProjectInfo]",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2084,11 +2062,6 @@ class ProjectsApi:
     @validate_call
     def get_project_spaces_with_http_info(
         self,
-        page: Annotated[Optional[Annotated[int, Field(strict=True, ge=0)]], Field(description="Zero-based page index (0..N)")] = None,
-        size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
-        sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
-        search_query: Annotated[Optional[StrictStr], Field(description="optional search query in specified format")] = None,
-        query_syntax: Annotated[Optional[SearchQueryType], Field(description="query syntax used fpr searchQuery")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2101,21 +2074,11 @@ class ProjectsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[PageProjectInfo]:
+    ) -> ApiResponse[List[ProjectInfo]]:
         """List opened project spaces.
 
         List opened project spaces.
 
-        :param page: Zero-based page index (0..N)
-        :type page: int
-        :param size: The size of the page to be returned
-        :type size: int
-        :param sort: Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
-        :type sort: List[str]
-        :param search_query: optional search query in specified format
-        :type search_query: str
-        :param query_syntax: query syntax used fpr searchQuery
-        :type query_syntax: SearchQueryType
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2139,11 +2102,6 @@ class ProjectsApi:
         """ # noqa: E501
 
         _param = self._get_project_spaces_serialize(
-            page=page,
-            size=size,
-            sort=sort,
-            search_query=search_query,
-            query_syntax=query_syntax,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2151,7 +2109,7 @@ class ProjectsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "PageProjectInfo",
+            '200': "List[ProjectInfo]",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2167,11 +2125,6 @@ class ProjectsApi:
     @validate_call
     def get_project_spaces_without_preload_content(
         self,
-        page: Annotated[Optional[Annotated[int, Field(strict=True, ge=0)]], Field(description="Zero-based page index (0..N)")] = None,
-        size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
-        sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
-        search_query: Annotated[Optional[StrictStr], Field(description="optional search query in specified format")] = None,
-        query_syntax: Annotated[Optional[SearchQueryType], Field(description="query syntax used fpr searchQuery")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2189,16 +2142,6 @@ class ProjectsApi:
 
         List opened project spaces.
 
-        :param page: Zero-based page index (0..N)
-        :type page: int
-        :param size: The size of the page to be returned
-        :type size: int
-        :param sort: Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
-        :type sort: List[str]
-        :param search_query: optional search query in specified format
-        :type search_query: str
-        :param query_syntax: query syntax used fpr searchQuery
-        :type query_syntax: SearchQueryType
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2222,11 +2165,6 @@ class ProjectsApi:
         """ # noqa: E501
 
         _param = self._get_project_spaces_serialize(
-            page=page,
-            size=size,
-            sort=sort,
-            search_query=search_query,
-            query_syntax=query_syntax,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2234,7 +2172,7 @@ class ProjectsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "PageProjectInfo",
+            '200': "List[ProjectInfo]",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2245,11 +2183,6 @@ class ProjectsApi:
 
     def _get_project_spaces_serialize(
         self,
-        page,
-        size,
-        sort,
-        search_query,
-        query_syntax,
         _request_auth,
         _content_type,
         _headers,
@@ -2259,7 +2192,6 @@ class ProjectsApi:
         _host = None
 
         _collection_formats: Dict[str, str] = {
-            'sort': 'multi',
         }
 
         _path_params: Dict[str, str] = {}
@@ -2271,26 +2203,6 @@ class ProjectsApi:
 
         # process the path parameters
         # process the query parameters
-        if page is not None:
-            
-            _query_params.append(('page', page))
-            
-        if size is not None:
-            
-            _query_params.append(('size', size))
-            
-        if sort is not None:
-            
-            _query_params.append(('sort', sort))
-            
-        if search_query is not None:
-            
-            _query_params.append(('searchQuery', search_query))
-            
-        if query_syntax is not None:
-            
-            _query_params.append(('querySyntax', query_syntax.value))
-            
         # process the header parameters
         # process the form parameters
         # process the body parameter
