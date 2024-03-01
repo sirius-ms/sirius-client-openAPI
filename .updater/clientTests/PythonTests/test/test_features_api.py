@@ -10,43 +10,46 @@
 
     Do not edit the class manually.
 """  # noqa: E501
+
+
 import os
-import shutil
 import time
+import shutil
 import unittest
-from os.path import abspath
 
 import PySirius
 from PySirius import PySiriusAPI
-from PySirius.api.features_api import FeaturesApi
-
-projectID="tempPS"
-api = PySiriusAPI(PySirius.ApiClient())
-path_to_demo_data = "../../../.updater/examples"
+from PySirius.models.ms_data import MsData
+from PySirius.models.aligned_feature import AlignedFeature
+from PySirius.models.page_aligned_feature import PageAlignedFeature
 
 
 class TestFeaturesApi(unittest.TestCase):
     """FeaturesApi unit test stubs"""
 
     def setUp(self) -> None:
-        os.makedirs("temp_0")
-        api.get_ProjectsApi().create_project_space(project_id=projectID,
-                                                   path_to_project="../../../../client-api_python/generated/test/temp_0")
-        api.get_JobsApi().start_import_from_path_job(project_id=projectID, import_local_files_submission=PySirius.ImportLocalFilesSubmission.from_dict(
-                                                               {
-                                                                   "allowMs1OnlyData": True,
-                                                                   "ignoreFormulas": True,
-                                                                   "inputPaths": [abspath(
-                                                                       path_to_demo_data + "/ms/Bicuculline.ms"),
-                                                                                  abspath(
-                                                                                      path_to_demo_data + "/ms/Kaempferol.ms")]
-                                                               }))
+        self.api = PySiriusAPI(PySirius.ApiClient())
+        self.project_id = "test_features_api"
+        self.path_to_project = f"{os.environ.get('HOME')}/test_features_api_dir"
+        self.api.get_ProjectsApi().create_project_space(self.project_id, self.path_to_project)
 
+        path_to_demo_data = f"{os.environ.get('HOME')}/sirius-client-openAPI/.updater/clientTests/Data"
+        import_local_files_submission = PySirius.ImportLocalFilesSubmission.from_dict(
+            {
+                "allowMs1OnlyData": True,
+                "ignoreFormulas": True,
+                "inputPaths": [
+                    path_to_demo_data + "/Kaempferol.ms",
+                    path_to_demo_data + "/laudanosine.mgf"
+                ]
+            }
+        )
+        self.api.get_JobsApi().start_import_from_path_job(self.project_id, import_local_files_submission)
         time.sleep(1)
 
     def tearDown(self) -> None:
-        shutil.rmtree("temp_0")
-        api.get_ProjectsApi().close_project_space(project_id=projectID)
+        self.api.get_ProjectsApi().close_project_space(self.project_id)
+        shutil.rmtree(self.path_to_project)
 
     def test_add_aligned_features(self) -> None:
         """Test case for add_aligned_features
@@ -59,22 +62,52 @@ class TestFeaturesApi(unittest.TestCase):
 
         Delete feature (aligned over runs) with the given identifier from the specified project-space.
         """
-        pass
+        response_before = self.api.get_FeaturesApi().get_aligned_features(self.project_id)
+        aligned_feature_id = self.api.get_FeaturesApi().get_aligned_features(self.project_id)[0].aligned_feature_id
+        self.api.get_FeaturesApi().delete_aligned_feature(self.project_id, aligned_feature_id)
+        response_after = self.api.get_FeaturesApi().get_aligned_features(self.project_id)
+
+        self.assertEqual(len(response_before), 2)
+        self.assertIsInstance(response_before, list)
+        self.assertIsInstance(response_before[0], AlignedFeature)
+        self.assertIsInstance(response_before[1], AlignedFeature)
+
+        self.assertEqual(len(response_after), 1)
+        self.assertIsInstance(response_after, list)
+        self.assertIsInstance(response_after[0], AlignedFeature)
+
 
     def test_get_aligned_feature(self) -> None:
         """Test case for get_aligned_feature
 
         Get feature (aligned over runs) with the given identifier from the specified project-space.
         """
-        pass
+        aligned_feature_id = self.api.get_FeaturesApi().get_aligned_features(self.project_id)[0].aligned_feature_id
+        response = self.api.get_FeaturesApi().get_aligned_feature(self.project_id, aligned_feature_id)
+
+        self.assertIsInstance(response, AlignedFeature)
+
 
     def test_get_aligned_features(self) -> None:
         """Test case for get_aligned_features
 
         Get all available features (aligned over runs) in the given project-space.
         """
-        self.assertEqual(2,api.get_FeaturesApi().get_aligned_features(project_id=projectID).number_of_elements)
+        response = self.api.get_FeaturesApi().get_aligned_features(self.project_id)
 
+        self.assertEqual(len(response), 2)
+        self.assertIsInstance(response, list)
+        self.assertIsInstance(response[0], AlignedFeature)
+        self.assertIsInstance(response[1], AlignedFeature)
+
+    def test_get_aligned_features_paged(self) -> None:
+        """Test case for get_aligned_features_paged
+
+        Get all available features (aligned over runs) in the given project-space.
+        """
+        response = self.api.get_FeaturesApi().get_aligned_features_paged(self.project_id)
+
+        self.assertIsInstance(response, PageAlignedFeature)
 
     def test_get_best_matching_compound_classes(self) -> None:
         """Test case for get_best_matching_compound_classes
@@ -121,7 +154,14 @@ class TestFeaturesApi(unittest.TestCase):
     def test_get_formula_candidates(self) -> None:
         """Test case for get_formula_candidates
 
-        List of all FormulaResultContainers available for this feature with minimal information.
+        List of FormulaResultContainers available for this feature with minimal information.
+        """
+        pass
+
+    def test_get_formula_candidates_paged(self) -> None:
+        """Test case for get_formula_candidates_paged
+
+        Page of FormulaResultContainers available for this feature with minimal information.
         """
         pass
 
@@ -151,11 +191,28 @@ class TestFeaturesApi(unittest.TestCase):
 
         Mass Spec data (input data) for the given 'alignedFeatureId' .
         """
-        pass
+        aligned_feature_id = self.api.get_FeaturesApi().get_aligned_features(self.project_id)[0].aligned_feature_id
+        response = self.api.get_FeaturesApi().get_ms_data(self.project_id, aligned_feature_id)
+
+        self.assertIsInstance(response, MsData)
 
     def test_get_sirius_frag_tree(self) -> None:
         """Test case for get_sirius_frag_tree
 
+        """
+        pass
+
+    def test_get_spectral_library_matches(self) -> None:
+        """Test case for get_spectral_library_matches
+
+        List of spectral library matches for the given 'alignedFeatureId'.
+        """
+        pass
+
+    def test_get_spectral_library_matches_paged(self) -> None:
+        """Test case for get_spectral_library_matches_paged
+
+        Page of spectral library matches for the given 'alignedFeatureId'.
         """
         pass
 
@@ -184,6 +241,20 @@ class TestFeaturesApi(unittest.TestCase):
         """Test case for get_structure_candidates_by_formula
 
         List of StructureCandidates the given 'formulaId' with minimal information.
+        """
+        pass
+
+    def test_get_structure_candidates_by_formula_paged(self) -> None:
+        """Test case for get_structure_candidates_by_formula_paged
+
+        Page of StructureCandidates the given 'formulaId' with minimal information.
+        """
+        pass
+
+    def test_get_structure_candidates_paged(self) -> None:
+        """Test case for get_structure_candidates_paged
+
+        Page of StructureCandidates for the given 'alignedFeatureId' with minimal information.
         """
         pass
 
