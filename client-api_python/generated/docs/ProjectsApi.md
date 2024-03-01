@@ -502,7 +502,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_project_spaces**
-> PageProjectInfo get_project_spaces(page=page, size=size, sort=sort, search_query=search_query, query_syntax=query_syntax)
+> List[ProjectInfo] get_project_spaces()
 
 List opened project spaces.
 
@@ -513,8 +513,7 @@ List opened project spaces.
 
 ```python
 import PySirius
-from PySirius.models.page_project_info import PageProjectInfo
-from PySirius.models.search_query_type import SearchQueryType
+from PySirius.models.project_info import ProjectInfo
 from PySirius.rest import ApiException
 from pprint import pprint
 
@@ -529,15 +528,10 @@ configuration = PySirius.Configuration(
 with PySirius.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = PySirius.ProjectsApi(api_client)
-    page = 0 # int | Zero-based page index (0..N) (optional) (default to 0)
-    size = 20 # int | The size of the page to be returned (optional) (default to 20)
-    sort = ['sort_example'] # List[str] | Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (optional)
-    search_query = 'search_query_example' # str | optional search query in specified format (optional)
-    query_syntax = PySirius.SearchQueryType() # SearchQueryType | query syntax used fpr searchQuery (optional)
 
     try:
         # List opened project spaces.
-        api_response = api_instance.get_project_spaces(page=page, size=size, sort=sort, search_query=search_query, query_syntax=query_syntax)
+        api_response = api_instance.get_project_spaces()
         print("The response of ProjectsApi->get_project_spaces:\n")
         pprint(api_response)
     except Exception as e:
@@ -548,18 +542,11 @@ with PySirius.ApiClient(configuration) as api_client:
 
 ### Parameters
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **page** | **int**| Zero-based page index (0..N) | [optional] [default to 0]
- **size** | **int**| The size of the page to be returned | [optional] [default to 20]
- **sort** | [**List[str]**](str.md)| Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. | [optional] 
- **search_query** | **str**| optional search query in specified format | [optional] 
- **query_syntax** | [**SearchQueryType**](.md)| query syntax used fpr searchQuery | [optional] 
+This endpoint does not need any parameter.
 
 ### Return type
 
-[**PageProjectInfo**](PageProjectInfo.md)
+[**List[ProjectInfo]**](ProjectInfo.md)
 
 ### Authorization
 

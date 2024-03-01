@@ -88,27 +88,37 @@ Class | Method | HTTP request | Description
 *CompoundsApi* | [**add_compounds**](docs/CompoundsApi.md#add_compounds) | **POST** /api/projects/{projectId}/compounds | 
 *CompoundsApi* | [**delete_compound**](docs/CompoundsApi.md#delete_compound) | **DELETE** /api/projects/{projectId}/compounds/{compoundId} | Delete compound (group of ion identities) with the given identifier (and the included features) from the  specified project-space.
 *CompoundsApi* | [**get_compound**](docs/CompoundsApi.md#get_compound) | **GET** /api/projects/{projectId}/compounds/{compoundId} | Get compound (group of ion identities) with the given identifier from the specified project-space.
-*CompoundsApi* | [**get_compounds**](docs/CompoundsApi.md#get_compounds) | **GET** /api/projects/{projectId}/compounds | Get all available compounds (group of ion identities) in the given project-space.
+*CompoundsApi* | [**get_compounds**](docs/CompoundsApi.md#get_compounds) | **GET** /api/projects/{projectId}/compounds | List of all available compounds (group of ion identities) in the given project-space.
+*CompoundsApi* | [**get_compounds_paged**](docs/CompoundsApi.md#get_compounds_paged) | **GET** /api/projects/{projectId}/compounds/page | Page of available compounds (group of ion identities) in the given project-space.
 *FeaturesApi* | [**add_aligned_features**](docs/FeaturesApi.md#add_aligned_features) | **POST** /api/projects/{projectId}/aligned-features | 
 *FeaturesApi* | [**delete_aligned_feature**](docs/FeaturesApi.md#delete_aligned_feature) | **DELETE** /api/projects/{projectId}/aligned-features/{alignedFeatureId} | Delete feature (aligned over runs) with the given identifier from the specified project-space.
 *FeaturesApi* | [**get_aligned_feature**](docs/FeaturesApi.md#get_aligned_feature) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId} | Get feature (aligned over runs) with the given identifier from the specified project-space.
 *FeaturesApi* | [**get_aligned_features**](docs/FeaturesApi.md#get_aligned_features) | **GET** /api/projects/{projectId}/aligned-features | Get all available features (aligned over runs) in the given project-space.
+*FeaturesApi* | [**get_aligned_features_paged**](docs/FeaturesApi.md#get_aligned_features_paged) | **GET** /api/projects/{projectId}/aligned-features/page | Get all available features (aligned over runs) in the given project-space.
 *FeaturesApi* | [**get_best_matching_compound_classes**](docs/FeaturesApi.md#get_best_matching_compound_classes) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/best-compound-classes | Best matching compound classes,  Set of the highest scoring compound classes (CANOPUS) on each hierarchy level of  the ClassyFire and NPC ontology,
 *FeaturesApi* | [**get_canopus_prediction**](docs/FeaturesApi.md#get_canopus_prediction) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/canopus-prediction | All predicted compound classes (CANOPUS) from ClassyFire and NPC and their probabilities,
 *FeaturesApi* | [**get_fingerprint_prediction**](docs/FeaturesApi.md#get_fingerprint_prediction) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/fingerprint | Returns predicted fingerprint (CSI:FingerID) for the given formula result identifier  This fingerprint is used to perform structure database search and predict compound classes.
 *FeaturesApi* | [**get_formula_annotated_ms_ms_data**](docs/FeaturesApi.md#get_formula_annotated_ms_ms_data) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/annotated-msmsdata | Returns MS/MS Spectrum (Merged MS/MS and measured MS/MS) which is annotated with fragments and losses  for the given formula result identifier  These annotations are only available if a fragmentation tree and the structure candidate are available.
 *FeaturesApi* | [**get_formula_annotated_spectrum**](docs/FeaturesApi.md#get_formula_annotated_spectrum) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/annotated-spectrum | Returns a fragmentation spectrum (e.g. Merged MS/MS) which is annotated with fragments and losses for the given formula result identifier  These annotations are only available if a fragmentation tree is available.
 *FeaturesApi* | [**get_formula_candidate**](docs/FeaturesApi.md#get_formula_candidate) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId} | FormulaResultContainers for the given &#39;formulaId&#39; with minimal information.
-*FeaturesApi* | [**get_formula_candidates**](docs/FeaturesApi.md#get_formula_candidates) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas | List of all FormulaResultContainers available for this feature with minimal information.
+*FeaturesApi* | [**get_formula_candidates**](docs/FeaturesApi.md#get_formula_candidates) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas | List of FormulaResultContainers available for this feature with minimal information.
+*FeaturesApi* | [**get_formula_candidates_paged**](docs/FeaturesApi.md#get_formula_candidates_paged) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/page | Page of FormulaResultContainers available for this feature with minimal information.
 *FeaturesApi* | [**get_frag_tree**](docs/FeaturesApi.md#get_frag_tree) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/tree | Returns fragmentation tree (SIRIUS) for the given formula result identifier  This tree is used to rank formula candidates (treeScore).
 *FeaturesApi* | [**get_isotope_pattern_annotation**](docs/FeaturesApi.md#get_isotope_pattern_annotation) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/isotope-pattern | Returns Isotope pattern information (simulated isotope pattern, measured isotope pattern, isotope pattern highlighting)  for the given formula result identifier.
 *FeaturesApi* | [**get_lipid_annotation**](docs/FeaturesApi.md#get_lipid_annotation) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/lipid-annotation | Returns Lipid annotation (ElGordo) for the given formula result identifier.
 *FeaturesApi* | [**get_ms_data**](docs/FeaturesApi.md#get_ms_data) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/ms-data | Mass Spec data (input data) for the given &#39;alignedFeatureId&#39; .
 *FeaturesApi* | [**get_sirius_frag_tree**](docs/FeaturesApi.md#get_sirius_frag_tree) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/sirius-tree | 
+*FeaturesApi* | [**get_spectral_library_matches**](docs/FeaturesApi.md#get_spectral_library_matches) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/spectral-library-matches | List of spectral library matches for the given &#39;alignedFeatureId&#39;.
+*FeaturesApi* | [**get_spectral_library_matches_paged**](docs/FeaturesApi.md#get_spectral_library_matches_paged) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/spectral-library-matches/page | Page of spectral library matches for the given &#39;alignedFeatureId&#39;.
 *FeaturesApi* | [**get_structure_annotated_ms_data**](docs/FeaturesApi.md#get_structure_annotated_ms_data) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/structures/{inchiKey}/annotated-msmsdata | Returns MS/MS Data (Merged MS/MS and list of measured MS/MS ) which are annotated with fragments and losses  for the given formula result identifier and structure candidate inChIKey.
 *FeaturesApi* | [**get_structure_annotated_spectrum**](docs/FeaturesApi.md#get_structure_annotated_spectrum) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/structures/{inchiKey}/annotated-spectrum | Returns a fragmentation spectrum (e.g. Merged MS/MS) which is annotated with fragments and losses for the given formula result identifier  These annotations are only available if a fragmentation tree is available.
 *FeaturesApi* | [**get_structure_candidates**](docs/FeaturesApi.md#get_structure_candidates) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/structures | List of StructureCandidates for the given &#39;alignedFeatureId&#39; with minimal information.
 *FeaturesApi* | [**get_structure_candidates_by_formula**](docs/FeaturesApi.md#get_structure_candidates_by_formula) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/structures | List of StructureCandidates the given &#39;formulaId&#39; with minimal information.
+*FeaturesApi* | [**get_structure_candidates_by_formula_paged**](docs/FeaturesApi.md#get_structure_candidates_by_formula_paged) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/structures/page | Page of StructureCandidates the given &#39;formulaId&#39; with minimal information.
+*FeaturesApi* | [**get_structure_candidates_paged**](docs/FeaturesApi.md#get_structure_candidates_paged) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/structures/page | Page of StructureCandidates for the given &#39;alignedFeatureId&#39; with minimal information.
+*GUIApi* | [**close_gui**](docs/GUIApi.md#close_gui) | **DELETE** /api/projects/{projectId}/gui | Close GUI instance of given project-space if available.
+*GUIApi* | [**get_guis**](docs/GUIApi.md#get_guis) | **GET** /api/guis | Get list of currently running gui windows, managed by this SIRIUS instance.
+*GUIApi* | [**open_gui**](docs/GUIApi.md#open_gui) | **POST** /api/projects/{projectId}/gui | Open GUI instance on specified project-space and bring the GUI window to foreground.
 *InfoApi* | [**get_connection_check**](docs/InfoApi.md#get_connection_check) | **GET** /api/connection-status | 
 *InfoApi* | [**get_info**](docs/InfoApi.md#get_info) | **GET** /api/info | 
 *JobsApi* | [**delete_job**](docs/JobsApi.md#delete_job) | **DELETE** /api/projects/{projectId}/jobs/{jobId} | Delete job.
@@ -118,10 +128,12 @@ Class | Method | HTTP request | Description
 *JobsApi* | [**get_job**](docs/JobsApi.md#get_job) | **GET** /api/projects/{projectId}/jobs/{jobId} | Get job information and its current state and progress (if available).
 *JobsApi* | [**get_job_config**](docs/JobsApi.md#get_job_config) | **GET** /api/job-configs/{name} | Request job configuration with given name.
 *JobsApi* | [**get_job_configs**](docs/JobsApi.md#get_job_configs) | **GET** /api/job-configs | Request all available job configurations
-*JobsApi* | [**get_jobs**](docs/JobsApi.md#get_jobs) | **GET** /api/projects/{projectId}/jobs | Get job information and its current state and progress (if available).
+*JobsApi* | [**get_jobs**](docs/JobsApi.md#get_jobs) | **GET** /api/projects/{projectId}/jobs | Get List of all available jobs with information such as current state and progress (if available).
+*JobsApi* | [**get_jobs_paged**](docs/JobsApi.md#get_jobs_paged) | **GET** /api/projects/{projectId}/jobs/page | Get Page of jobs with information such as current state and progress (if available).
 *JobsApi* | [**has_jobs**](docs/JobsApi.md#has_jobs) | **GET** /api/projects/{projectId}/has-jobs | 
 *JobsApi* | [**post_job_config**](docs/JobsApi.md#post_job_config) | **POST** /api/job-configs/{name} | Add new job configuration with given name.
 *JobsApi* | [**start_command**](docs/JobsApi.md#start_command) | **POST** /api/{projectId}/jobs/run-command | Start computation for given command and input.
+*JobsApi* | [**start_database_import**](docs/JobsApi.md#start_database_import) | **POST** /api/{projectId}/jobs/import-db | Start import of structure and spectra files into the specified database.
 *JobsApi* | [**start_import_from_path_job**](docs/JobsApi.md#start_import_from_path_job) | **POST** /api/{projectId}/jobs/import-from-local-path | Import ms/ms data in given format from local filesystem into the specified project
 *JobsApi* | [**start_import_from_string_job**](docs/JobsApi.md#start_import_from_string_job) | **POST** /api/{projectId}/jobs/import-from-string | Import ms/ms data from the given format into the specified project-space  Possible formats (ms, mgf, cef, msp, mzML, mzXML)
 *JobsApi* | [**start_job**](docs/JobsApi.md#start_job) | **POST** /api/projects/{projectId}/jobs | Start computation for given compounds and with given parameters.
@@ -144,10 +156,14 @@ Class | Method | HTTP request | Description
 *ProjectsApi* | [**get_project_space**](docs/ProjectsApi.md#get_project_space) | **GET** /api/projects/{projectId} | Get project space info by its projectId.
 *ProjectsApi* | [**get_project_spaces**](docs/ProjectsApi.md#get_project_spaces) | **GET** /api/projects | List opened project spaces.
 *ProjectsApi* | [**open_project_space**](docs/ProjectsApi.md#open_project_space) | **PUT** /api/projects/{projectId} | Open an existing project-space and make it accessible via the given projectId.
-*ExperimentalGUIApi* | [**apply_to_gui**](docs/ExperimentalGUIApi.md#apply_to_gui) | **PATCH** /api/projects/{projectId}/gui | Apply given changes to the running GUI instance.
-*ExperimentalGUIApi* | [**close_gui**](docs/ExperimentalGUIApi.md#close_gui) | **DELETE** /api/projects/{projectId}/gui | Close GUI instance of given project-space if available.
-*ExperimentalGUIApi* | [**get_guis**](docs/ExperimentalGUIApi.md#get_guis) | **GET** /api/guis | Get list of currently running gui windows, managed by this SIRIUS instance.
-*ExperimentalGUIApi* | [**open_gui**](docs/ExperimentalGUIApi.md#open_gui) | **POST** /api/projects/{projectId}/gui | Open GUI instance on specified project-space and bring the GUI window to foreground.
+*SearchableDatabasesApi* | [**add_databases**](docs/SearchableDatabasesApi.md#add_databases) | **POST** /api/databases | 
+*SearchableDatabasesApi* | [**create_database**](docs/SearchableDatabasesApi.md#create_database) | **POST** /api/databases/{databaseId} | 
+*SearchableDatabasesApi* | [**get_custom_databases**](docs/SearchableDatabasesApi.md#get_custom_databases) | **GET** /api/databases/custom | 
+*SearchableDatabasesApi* | [**get_database**](docs/SearchableDatabasesApi.md#get_database) | **GET** /api/databases/{databaseId} | 
+*SearchableDatabasesApi* | [**get_databases**](docs/SearchableDatabasesApi.md#get_databases) | **GET** /api/databases | 
+*SearchableDatabasesApi* | [**get_included_databases**](docs/SearchableDatabasesApi.md#get_included_databases) | **GET** /api/databases/included | 
+*SearchableDatabasesApi* | [**remove_database**](docs/SearchableDatabasesApi.md#remove_database) | **DELETE** /api/databases/{databaseId} | 
+*SearchableDatabasesApi* | [**update_database**](docs/SearchableDatabasesApi.md#update_database) | **PUT** /api/databases/{databaseId} | 
 
 
 ## Documentation For Models
@@ -178,6 +194,7 @@ Class | Method | HTTP request | Description
  - [ConsensusCriterionCSI](docs/ConsensusCriterionCSI.md)
  - [ConsensusCriterionDeNovo](docs/ConsensusCriterionDeNovo.md)
  - [DBLink](docs/DBLink.md)
+ - [DatabaseImportSubmission](docs/DatabaseImportSubmission.md)
  - [Deviation](docs/Deviation.md)
  - [FeatureAnnotations](docs/FeatureAnnotations.md)
  - [FeatureImport](docs/FeatureImport.md)
@@ -187,8 +204,6 @@ Class | Method | HTTP request | Description
  - [FragmentNode](docs/FragmentNode.md)
  - [FragmentationTree](docs/FragmentationTree.md)
  - [GuiInfo](docs/GuiInfo.md)
- - [GuiParameters](docs/GuiParameters.md)
- - [GuiResultTab](docs/GuiResultTab.md)
  - [ImportFormat](docs/ImportFormat.md)
  - [ImportLocalFilesSubmission](docs/ImportLocalFilesSubmission.md)
  - [ImportStringSubmission](docs/ImportStringSubmission.md)
@@ -208,9 +223,8 @@ Class | Method | HTTP request | Description
  - [PageAlignedFeature](docs/PageAlignedFeature.md)
  - [PageCompound](docs/PageCompound.md)
  - [PageFormulaCandidate](docs/PageFormulaCandidate.md)
- - [PageGuiInfo](docs/PageGuiInfo.md)
  - [PageJob](docs/PageJob.md)
- - [PageProjectInfo](docs/PageProjectInfo.md)
+ - [PageSpectralLibraryMatch](docs/PageSpectralLibraryMatch.md)
  - [PageStructureCandidateFormula](docs/PageStructureCandidateFormula.md)
  - [PageStructureCandidateScored](docs/PageStructureCandidateScored.md)
  - [PageableObject](docs/PageableObject.md)
@@ -219,10 +233,14 @@ Class | Method | HTTP request | Description
  - [ProjectChangeEvent](docs/ProjectChangeEvent.md)
  - [ProjectInfo](docs/ProjectInfo.md)
  - [ProjectInfoOptField](docs/ProjectInfoOptField.md)
- - [SearchQueryType](docs/SearchQueryType.md)
+ - [SearchableDatabase](docs/SearchableDatabase.md)
+ - [SearchableDatabaseParameters](docs/SearchableDatabaseParameters.md)
  - [SimplePeak](docs/SimplePeak.md)
  - [Sirius](docs/Sirius.md)
  - [SortObject](docs/SortObject.md)
+ - [SpectralAlignmentType](docs/SpectralAlignmentType.md)
+ - [SpectralLibraryMatch](docs/SpectralLibraryMatch.md)
+ - [SpectralLibraryMatchOptField](docs/SpectralLibraryMatchOptField.md)
  - [SpectralLibrarySearch](docs/SpectralLibrarySearch.md)
  - [SpectrumAnnotation](docs/SpectrumAnnotation.md)
  - [StructureCandidate](docs/StructureCandidate.md)

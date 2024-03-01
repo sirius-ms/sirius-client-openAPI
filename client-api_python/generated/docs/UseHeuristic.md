@@ -6,8 +6,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**mz_to_use_heuristic** | **int** |  | [optional] 
-**mz_to_use_heuristic_only** | **int** |  | [optional] 
+**use_heuristic_above_mz** | **int** |  | [optional] 
+**use_only_heuristic_above_mz** | **int** |  | [optional] 
 
 ## Example
 

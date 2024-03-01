@@ -12,3 +12,34 @@ test_that("enabled", {
   # uncomment below to test the property
   #expect_equal(model.instance$`enabled`, "EXPECTED_RESULT")
 })
+
+test_that("spectraSearchDBs", {
+  # tests for the property `spectraSearchDBs` (array[character])
+  # Structure Databases with Reference spectra to search in.  &lt;p&gt;  Defaults to BIO + Custom Databases. Possible values are available to Database API.
+
+  # uncomment below to test the property
+  #expect_equal(model.instance$`spectraSearchDBs`, "EXPECTED_RESULT")
+})
+
+test_that("peakDeviationPpm", {
+  # tests for the property `peakDeviationPpm` (numeric)
+  # Maximum allowed mass deviation in ppm for matching peaks.
+
+  # uncomment below to test the property
+  #expect_equal(model.instance$`peakDeviationPpm`, "EXPECTED_RESULT")
+})
+
+test_that("precursorDeviationPpm", {
+  # tests for the property `precursorDeviationPpm` (numeric)
+  # Maximum allowed mass deviation in ppm for matching the precursor. If not specified, the same value as for the peaks is used.
+
+  # uncomment below to test the property
+  #expect_equal(model.instance$`precursorDeviationPpm`, "EXPECTED_RESULT")
+})
+
+test_that("scoring", {
+  # tests for the property `scoring` (SpectralAlignmentType)
+
+  # uncomment below to test the property
+  #expect_equal(model.instance$`scoring`, "EXPECTED_RESULT")
+})

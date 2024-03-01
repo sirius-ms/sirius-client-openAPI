@@ -69,16 +69,33 @@
 #' }
 #' }
 #'
-#' \strong{ GetCompounds } \emph{ Get all available compounds (group of ion identities) in the given project-space. }
-#' Get all available compounds (group of ion identities) in the given project-space.
+#' \strong{ GetCompounds } \emph{ List of all available compounds (group of ion identities) in the given project-space. }
+#' List of all available compounds (group of ion identities) in the given project-space.
+#'
+#' \itemize{
+#' \item \emph{ @param } project_id character
+#' \item \emph{ @param } opt_fields list( \link{CompoundOptField} )
+#' \item \emph{ @param } opt_fields_features list( \link{AlignedFeatureOptField} )
+#' \item \emph{ @returnType } list( \link{Compound} ) \cr
+#'
+#'
+#' \item status code : 200 | Compounds with additional optional fields (if specified).
+#'
+#' \item return type : array[Compound]
+#' \item response headers :
+#'
+#' \tabular{ll}{
+#' }
+#' }
+#'
+#' \strong{ GetCompoundsPaged } \emph{ Page of available compounds (group of ion identities) in the given project-space. }
+#' Page of available compounds (group of ion identities) in the given project-space.
 #'
 #' \itemize{
 #' \item \emph{ @param } project_id character
 #' \item \emph{ @param } page integer
 #' \item \emph{ @param } size integer
 #' \item \emph{ @param } sort list( character )
-#' \item \emph{ @param } search_query character
-#' \item \emph{ @param } query_syntax \link{SearchQueryType}
 #' \item \emph{ @param } opt_fields list( \link{CompoundOptField} )
 #' \item \emph{ @param } opt_fields_features list( \link{AlignedFeatureOptField} )
 #' \item \emph{ @returnType } \link{PageCompound} \cr
@@ -147,20 +164,34 @@
 #'
 #' library(Rsirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
-#' var_page <- 0 # integer | Zero-based page index (0..N) (Optional)
-#' var_size <- 20 # integer | The size of the page to be returned (Optional)
-#' var_sort <- c("inner_example") # array[character] | Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (Optional)
-#' var_search_query <- "search_query_example" # character | optional search query in specified format (Optional)
-#' var_query_syntax <- SearchQueryType$new() # SearchQueryType | query syntax used fpr searchQuery (Optional)
 #' var_opt_fields <- c(CompoundOptField$new()) # array[CompoundOptField] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
 #' var_opt_fields_features <- c(AlignedFeatureOptField$new()) # array[AlignedFeatureOptField] |  (Optional)
 #'
-#' #Get all available compounds (group of ion identities) in the given project-space.
+#' #List of all available compounds (group of ion identities) in the given project-space.
 #' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-#' # result <- api_instance$GetCompounds(var_project_id, page = var_page, size = var_size, sort = var_sort, search_query = var_search_query, query_syntax = var_query_syntax, opt_fields = var_opt_fields, opt_fields_features = var_opt_fields_featuresdata_file = "result.txt")
-#' result <- api_instance$compounds_api$GetCompounds(var_project_id, page = var_page, size = var_size, sort = var_sort, search_query = var_search_query, query_syntax = var_query_syntax, opt_fields = var_opt_fields, opt_fields_features = var_opt_fields_features)
+#' # result <- api_instance$GetCompounds(var_project_id, opt_fields = var_opt_fields, opt_fields_features = var_opt_fields_featuresdata_file = "result.txt")
+#' result <- api_instance$compounds_api$GetCompounds(var_project_id, opt_fields = var_opt_fields, opt_fields_features = var_opt_fields_features)
+#' dput(result)
+#'
+#'
+#' ####################  GetCompoundsPaged  ####################
+#'
+#' library(Rsirius)
+#' var_project_id <- "project_id_example" # character | project-space to read from.
+#' var_page <- 0 # integer | Zero-based page index (0..N) (Optional)
+#' var_size <- 20 # integer | The size of the page to be returned (Optional)
+#' var_sort <- c("inner_example") # array[character] | Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (Optional)
+#' var_opt_fields <- c(CompoundOptField$new()) # array[CompoundOptField] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
+#' var_opt_fields_features <- c(AlignedFeatureOptField$new()) # array[AlignedFeatureOptField] |  (Optional)
+#'
+#' #Page of available compounds (group of ion identities) in the given project-space.
+#' api_instance <- rsirius_api$new()
+#'
+#' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
+#' # result <- api_instance$GetCompoundsPaged(var_project_id, page = var_page, size = var_size, sort = var_sort, opt_fields = var_opt_fields, opt_fields_features = var_opt_fields_featuresdata_file = "result.txt")
+#' result <- api_instance$compounds_api$GetCompoundsPaged(var_project_id, page = var_page, size = var_size, sort = var_sort, opt_fields = var_opt_fields, opt_fields_features = var_opt_fields_features)
 #' dput(result)
 #'
 #'
@@ -534,25 +565,20 @@ CompoundsApi <- R6::R6Class(
         local_var_resp
       }
     },
-    #' Get all available compounds (group of ion identities) in the given project-space.
+    #' List of all available compounds (group of ion identities) in the given project-space.
     #'
     #' @description
-    #' Get all available compounds (group of ion identities) in the given project-space.
+    #' List of all available compounds (group of ion identities) in the given project-space.
     #'
     #' @param project_id project-space to read from.
-    #' @param page (optional) Zero-based page index (0..N) (default value: 0)
-    #' @param size (optional) The size of the page to be returned (default value: 20)
-    #' @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
-    #' @param search_query (optional) optional search query in specified format
-    #' @param query_syntax (optional) query syntax used fpr searchQuery
     #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [])
     #' @param opt_fields_features (optional) No description (default value: [])
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
-    #' @return PageCompound
+    #' @return array[Compound]
     #' @export
-    GetCompounds = function(project_id, page = 0, size = 20, sort = NULL, search_query = NULL, query_syntax = NULL, opt_fields = [], opt_fields_features = [], data_file = NULL, ...) {
-      local_var_response <- self$GetCompoundsWithHttpInfo(project_id, page, size, sort, search_query, query_syntax, opt_fields, opt_fields_features, data_file = data_file, ...)
+    GetCompounds = function(project_id, opt_fields = [], opt_fields_features = [], data_file = NULL, ...) {
+      local_var_response <- self$GetCompoundsWithHttpInfo(project_id, opt_fields, opt_fields_features, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
@@ -563,24 +589,138 @@ CompoundsApi <- R6::R6Class(
         local_var_response
       }
     },
-    #' Get all available compounds (group of ion identities) in the given project-space.
+    #' List of all available compounds (group of ion identities) in the given project-space.
     #'
     #' @description
-    #' Get all available compounds (group of ion identities) in the given project-space.
+    #' List of all available compounds (group of ion identities) in the given project-space.
+    #'
+    #' @param project_id project-space to read from.
+    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [])
+    #' @param opt_fields_features (optional) No description (default value: [])
+    #' @param data_file (optional) name of the data file to save the result
+    #' @param ... Other optional arguments
+    #' @return API response (array[Compound]) with additional information such as HTTP status code, headers
+    #' @export
+    GetCompoundsWithHttpInfo = function(project_id, opt_fields = [], opt_fields_features = [], data_file = NULL, ...) {
+      args <- list(...)
+      query_params <- list()
+      header_params <- c()
+      form_params <- list()
+      file_params <- list()
+      local_var_body <- NULL
+      oauth_scopes <- NULL
+      is_oauth <- FALSE
+
+      if (missing(`project_id`)) {
+        stop("Missing required parameter `project_id`.")
+      }
+
+
+
+
+      # explore
+      for (query_item in `opt_fields`) {
+        query_params[["optFields"]] <- c(query_params[["optFields"]], list(`optFields` = query_item))
+      }
+
+      # explore
+      for (query_item in `opt_fields_features`) {
+        query_params[["optFieldsFeatures"]] <- c(query_params[["optFieldsFeatures"]], list(`optFieldsFeatures` = query_item))
+      }
+
+      local_var_url_path <- "/api/projects/{projectId}/compounds"
+      if (!missing(`project_id`)) {
+        local_var_url_path <- gsub("\\{projectId\\}", URLencode(as.character(`project_id`), reserved = TRUE), local_var_url_path)
+      }
+
+
+      # The Accept request HTTP header
+      local_var_accepts <- list("application/json")
+
+      # The Content-Type representation header
+      local_var_content_types <- list()
+
+      local_var_resp <- self$api_client$CallApi(url = paste0(self$api_client$base_path, local_var_url_path),
+                                 method = "GET",
+                                 query_params = query_params,
+                                 header_params = header_params,
+                                 form_params = form_params,
+                                 file_params = file_params,
+                                 accepts = local_var_accepts,
+                                 content_types = local_var_content_types,
+                                 body = local_var_body,
+                                 is_oauth = is_oauth,
+                                 oauth_scopes = oauth_scopes,
+                                 ...)
+
+      if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
+        # save response in a file
+        if (!is.null(data_file)) {
+          write(local_var_resp$response, data_file)
+        }
+
+        deserialized_resp_obj <- tryCatch(
+          self$api_client$deserialize(local_var_resp$response_as_text(), "array[Compound]", loadNamespace("Rsirius")),
+          error = function(e) {
+            stop("Failed to deserialize response")
+          }
+        )
+        local_var_resp$content <- deserialized_resp_obj
+        local_var_resp
+      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
+      } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
+        ApiResponse$new("API client error", local_var_resp)
+      } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
+        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
+          local_var_resp$response <- "API server error"
+        }
+        local_var_resp
+      }
+    },
+    #' Page of available compounds (group of ion identities) in the given project-space.
+    #'
+    #' @description
+    #' Page of available compounds (group of ion identities) in the given project-space.
     #'
     #' @param project_id project-space to read from.
     #' @param page (optional) Zero-based page index (0..N) (default value: 0)
     #' @param size (optional) The size of the page to be returned (default value: 20)
     #' @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
-    #' @param search_query (optional) optional search query in specified format
-    #' @param query_syntax (optional) query syntax used fpr searchQuery
+    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [])
+    #' @param opt_fields_features (optional) No description (default value: [])
+    #' @param data_file (optional) name of the data file to save the result
+    #' @param ... Other optional arguments
+    #' @return PageCompound
+    #' @export
+    GetCompoundsPaged = function(project_id, page = 0, size = 20, sort = NULL, opt_fields = [], opt_fields_features = [], data_file = NULL, ...) {
+      local_var_response <- self$GetCompoundsPagedWithHttpInfo(project_id, page, size, sort, opt_fields, opt_fields_features, data_file = data_file, ...)
+      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
+        local_var_response$content
+      } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
+        local_var_response
+      } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
+        local_var_response
+      } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
+        local_var_response
+      }
+    },
+    #' Page of available compounds (group of ion identities) in the given project-space.
+    #'
+    #' @description
+    #' Page of available compounds (group of ion identities) in the given project-space.
+    #'
+    #' @param project_id project-space to read from.
+    #' @param page (optional) Zero-based page index (0..N) (default value: 0)
+    #' @param size (optional) The size of the page to be returned (default value: 20)
+    #' @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
     #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [])
     #' @param opt_fields_features (optional) No description (default value: [])
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #' @return API response (PageCompound) with additional information such as HTTP status code, headers
     #' @export
-    GetCompoundsWithHttpInfo = function(project_id, page = 0, size = 20, sort = NULL, search_query = NULL, query_syntax = NULL, opt_fields = [], opt_fields_features = [], data_file = NULL, ...) {
+    GetCompoundsPagedWithHttpInfo = function(project_id, page = 0, size = 20, sort = NULL, opt_fields = [], opt_fields_features = [], data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -596,14 +736,12 @@ CompoundsApi <- R6::R6Class(
 
 
       if (`page` < 0) {
-        stop("Invalid value for `page` when calling CompoundsApi$GetCompounds, must be bigger than or equal to 0.")
+        stop("Invalid value for `page` when calling CompoundsApi$GetCompoundsPaged, must be bigger than or equal to 0.")
       }
 
       if (`size` < 1) {
-        stop("Invalid value for `size` when calling CompoundsApi$GetCompounds, must be bigger than or equal to 1.")
+        stop("Invalid value for `size` when calling CompoundsApi$GetCompoundsPaged, must be bigger than or equal to 1.")
       }
-
-
 
 
 
@@ -617,10 +755,6 @@ CompoundsApi <- R6::R6Class(
         query_params[["sort"]] <- c(query_params[["sort"]], list(`sort` = query_item))
       }
 
-      query_params[["searchQuery"]] <- `search_query`
-
-      query_params[["querySyntax"]] <- `query_syntax`
-
       # explore
       for (query_item in `opt_fields`) {
         query_params[["optFields"]] <- c(query_params[["optFields"]], list(`optFields` = query_item))
@@ -631,7 +765,7 @@ CompoundsApi <- R6::R6Class(
         query_params[["optFieldsFeatures"]] <- c(query_params[["optFieldsFeatures"]], list(`optFieldsFeatures` = query_item))
       }
 
-      local_var_url_path <- "/api/projects/{projectId}/compounds"
+      local_var_url_path <- "/api/projects/{projectId}/compounds/page"
       if (!missing(`project_id`)) {
         local_var_url_path <- gsub("\\{projectId\\}", URLencode(as.character(`project_id`), reserved = TRUE), local_var_url_path)
       }

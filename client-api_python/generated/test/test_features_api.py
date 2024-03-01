@@ -10,43 +10,21 @@
 
     Do not edit the class manually.
 """  # noqa: E501
-import os
-import shutil
-import time
+
+
 import unittest
-from os.path import abspath
 
-import PySirius
-from PySirius import PySiriusAPI
 from PySirius.api.features_api import FeaturesApi
-
-projectID="tempPS"
-api = PySiriusAPI(PySirius.ApiClient())
-path_to_demo_data = "../../../.updater/examples"
 
 
 class TestFeaturesApi(unittest.TestCase):
     """FeaturesApi unit test stubs"""
 
     def setUp(self) -> None:
-        os.makedirs("temp_0")
-        api.get_ProjectsApi().create_project_space(project_id=projectID,
-                                                   path_to_project="../../../../client-api_python/generated/test/temp_0")
-        api.get_JobsApi().start_import_from_path_job(project_id=projectID, import_local_files_submission=PySirius.ImportLocalFilesSubmission.from_dict(
-                                                               {
-                                                                   "allowMs1OnlyData": True,
-                                                                   "ignoreFormulas": True,
-                                                                   "inputPaths": [abspath(
-                                                                       path_to_demo_data + "/ms/Bicuculline.ms"),
-                                                                                  abspath(
-                                                                                      path_to_demo_data + "/ms/Kaempferol.ms")]
-                                                               }))
-
-        time.sleep(1)
+        self.api = FeaturesApi()
 
     def tearDown(self) -> None:
-        shutil.rmtree("temp_0")
-        api.get_ProjectsApi().close_project_space(project_id=projectID)
+        pass
 
     def test_add_aligned_features(self) -> None:
         """Test case for add_aligned_features
@@ -73,8 +51,14 @@ class TestFeaturesApi(unittest.TestCase):
 
         Get all available features (aligned over runs) in the given project-space.
         """
-        self.assertEqual(2,api.get_FeaturesApi().get_aligned_features(project_id=projectID).number_of_elements)
+        pass
 
+    def test_get_aligned_features_paged(self) -> None:
+        """Test case for get_aligned_features_paged
+
+        Get all available features (aligned over runs) in the given project-space.
+        """
+        pass
 
     def test_get_best_matching_compound_classes(self) -> None:
         """Test case for get_best_matching_compound_classes
@@ -121,7 +105,14 @@ class TestFeaturesApi(unittest.TestCase):
     def test_get_formula_candidates(self) -> None:
         """Test case for get_formula_candidates
 
-        List of all FormulaResultContainers available for this feature with minimal information.
+        List of FormulaResultContainers available for this feature with minimal information.
+        """
+        pass
+
+    def test_get_formula_candidates_paged(self) -> None:
+        """Test case for get_formula_candidates_paged
+
+        Page of FormulaResultContainers available for this feature with minimal information.
         """
         pass
 
@@ -159,6 +150,20 @@ class TestFeaturesApi(unittest.TestCase):
         """
         pass
 
+    def test_get_spectral_library_matches(self) -> None:
+        """Test case for get_spectral_library_matches
+
+        List of spectral library matches for the given 'alignedFeatureId'.
+        """
+        pass
+
+    def test_get_spectral_library_matches_paged(self) -> None:
+        """Test case for get_spectral_library_matches_paged
+
+        Page of spectral library matches for the given 'alignedFeatureId'.
+        """
+        pass
+
     def test_get_structure_annotated_ms_data(self) -> None:
         """Test case for get_structure_annotated_ms_data
 
@@ -184,6 +189,20 @@ class TestFeaturesApi(unittest.TestCase):
         """Test case for get_structure_candidates_by_formula
 
         List of StructureCandidates the given 'formulaId' with minimal information.
+        """
+        pass
+
+    def test_get_structure_candidates_by_formula_paged(self) -> None:
+        """Test case for get_structure_candidates_by_formula_paged
+
+        Page of StructureCandidates the given 'formulaId' with minimal information.
+        """
+        pass
+
+    def test_get_structure_candidates_paged(self) -> None:
+        """Test case for get_structure_candidates_paged
+
+        Page of StructureCandidates for the given 'alignedFeatureId' with minimal information.
         """
         pass
 

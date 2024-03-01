@@ -20,12 +20,13 @@
 #' @field api_client API client
 #' @field actuator_api an instance of ActuatorApi
 #' @field compounds_api an instance of CompoundsApi
-#' @field experimental_gui_api an instance of ExperimentalGUIApi
 #' @field features_api an instance of FeaturesApi
+#' @field gui_api an instance of GUIApi
 #' @field info_api an instance of InfoApi
 #' @field jobs_api an instance of JobsApi
 #' @field login_and_account_api an instance of LoginAndAccountApi
 #' @field projects_api an instance of ProjectsApi
+#' @field searchable_databases_api an instance of SearchableDatabasesApi
 #' @export
 rsirius_api <- R6::R6Class(
   "rsirius_api",
@@ -33,12 +34,13 @@ rsirius_api <- R6::R6Class(
     api_client = NULL,
     actuator_api = NULL,
     compounds_api = NULL,
-    experimental_gui_api = NULL,
     features_api = NULL,
+    gui_api = NULL,
     info_api = NULL,
     jobs_api = NULL,
     login_and_account_api = NULL,
     projects_api = NULL,
+    searchable_databases_api = NULL,
     #' Initialize a new Rsirius API Class.
     #'
     #' @description
@@ -57,9 +59,9 @@ rsirius_api <- R6::R6Class(
 
       self$compounds_api <- CompoundsApi$new(self$api_client)
 
-      self$experimental_gui_api <- ExperimentalGUIApi$new(self$api_client)
-
       self$features_api <- FeaturesApi$new(self$api_client)
+
+      self$gui_api <- GUIApi$new(self$api_client)
 
       self$info_api <- InfoApi$new(self$api_client)
 
@@ -68,6 +70,8 @@ rsirius_api <- R6::R6Class(
       self$login_and_account_api <- LoginAndAccountApi$new(self$api_client)
 
       self$projects_api <- ProjectsApi$new(self$api_client)
+
+      self$searchable_databases_api <- SearchableDatabasesApi$new(self$api_client)
 
     }
   )

@@ -26,9 +26,9 @@ class UseHeuristic(BaseModel):
     """
     
     """ # noqa: E501
-    mz_to_use_heuristic: Optional[StrictInt] = Field(default=None, alias="mzToUseHeuristic")
-    mz_to_use_heuristic_only: Optional[StrictInt] = Field(default=None, alias="mzToUseHeuristicOnly")
-    __properties: ClassVar[List[str]] = ["mzToUseHeuristic", "mzToUseHeuristicOnly"]
+    use_heuristic_above_mz: Optional[StrictInt] = Field(default=None, alias="useHeuristicAboveMz")
+    use_only_heuristic_above_mz: Optional[StrictInt] = Field(default=None, alias="useOnlyHeuristicAboveMz")
+    __properties: ClassVar[List[str]] = ["useHeuristicAboveMz", "useOnlyHeuristicAboveMz"]
 
     model_config = {
         "populate_by_name": True,
@@ -81,8 +81,8 @@ class UseHeuristic(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "mzToUseHeuristic": obj.get("mzToUseHeuristic"),
-            "mzToUseHeuristicOnly": obj.get("mzToUseHeuristicOnly")
+            "useHeuristicAboveMz": obj.get("useHeuristicAboveMz"),
+            "useOnlyHeuristicAboveMz": obj.get("useOnlyHeuristicAboveMz")
         })
         return _obj
 

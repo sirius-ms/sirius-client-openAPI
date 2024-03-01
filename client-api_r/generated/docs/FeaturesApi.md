@@ -8,22 +8,28 @@ Method | HTTP request | Description
 [**DeleteAlignedFeature**](FeaturesApi.md#DeleteAlignedFeature) | **DELETE** /api/projects/{projectId}/aligned-features/{alignedFeatureId} | Delete feature (aligned over runs) with the given identifier from the specified project-space.
 [**GetAlignedFeature**](FeaturesApi.md#GetAlignedFeature) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId} | Get feature (aligned over runs) with the given identifier from the specified project-space.
 [**GetAlignedFeatures**](FeaturesApi.md#GetAlignedFeatures) | **GET** /api/projects/{projectId}/aligned-features | Get all available features (aligned over runs) in the given project-space.
+[**GetAlignedFeaturesPaged**](FeaturesApi.md#GetAlignedFeaturesPaged) | **GET** /api/projects/{projectId}/aligned-features/page | Get all available features (aligned over runs) in the given project-space.
 [**GetBestMatchingCompoundClasses**](FeaturesApi.md#GetBestMatchingCompoundClasses) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/best-compound-classes | Best matching compound classes,  Set of the highest scoring compound classes (CANOPUS) on each hierarchy level of  the ClassyFire and NPC ontology,
 [**GetCanopusPrediction**](FeaturesApi.md#GetCanopusPrediction) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/canopus-prediction | All predicted compound classes (CANOPUS) from ClassyFire and NPC and their probabilities,
 [**GetFingerprintPrediction**](FeaturesApi.md#GetFingerprintPrediction) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/fingerprint | Returns predicted fingerprint (CSI:FingerID) for the given formula result identifier  This fingerprint is used to perform structure database search and predict compound classes.
 [**GetFormulaAnnotatedMsMsData**](FeaturesApi.md#GetFormulaAnnotatedMsMsData) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/annotated-msmsdata | Returns MS/MS Spectrum (Merged MS/MS and measured MS/MS) which is annotated with fragments and losses  for the given formula result identifier  These annotations are only available if a fragmentation tree and the structure candidate are available.
 [**GetFormulaAnnotatedSpectrum**](FeaturesApi.md#GetFormulaAnnotatedSpectrum) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/annotated-spectrum | Returns a fragmentation spectrum (e.g. Merged MS/MS) which is annotated with fragments and losses for the given formula result identifier  These annotations are only available if a fragmentation tree is available.
 [**GetFormulaCandidate**](FeaturesApi.md#GetFormulaCandidate) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId} | FormulaResultContainers for the given &#39;formulaId&#39; with minimal information.
-[**GetFormulaCandidates**](FeaturesApi.md#GetFormulaCandidates) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas | List of all FormulaResultContainers available for this feature with minimal information.
+[**GetFormulaCandidates**](FeaturesApi.md#GetFormulaCandidates) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas | List of FormulaResultContainers available for this feature with minimal information.
+[**GetFormulaCandidatesPaged**](FeaturesApi.md#GetFormulaCandidatesPaged) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/page | Page of FormulaResultContainers available for this feature with minimal information.
 [**GetFragTree**](FeaturesApi.md#GetFragTree) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/tree | Returns fragmentation tree (SIRIUS) for the given formula result identifier  This tree is used to rank formula candidates (treeScore).
 [**GetIsotopePatternAnnotation**](FeaturesApi.md#GetIsotopePatternAnnotation) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/isotope-pattern | Returns Isotope pattern information (simulated isotope pattern, measured isotope pattern, isotope pattern highlighting)  for the given formula result identifier.
 [**GetLipidAnnotation**](FeaturesApi.md#GetLipidAnnotation) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/lipid-annotation | Returns Lipid annotation (ElGordo) for the given formula result identifier.
 [**GetMsData**](FeaturesApi.md#GetMsData) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/ms-data | Mass Spec data (input data) for the given &#39;alignedFeatureId&#39; .
 [**GetSiriusFragTree**](FeaturesApi.md#GetSiriusFragTree) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/sirius-tree | 
+[**GetSpectralLibraryMatches**](FeaturesApi.md#GetSpectralLibraryMatches) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/spectral-library-matches | List of spectral library matches for the given &#39;alignedFeatureId&#39;.
+[**GetSpectralLibraryMatchesPaged**](FeaturesApi.md#GetSpectralLibraryMatchesPaged) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/spectral-library-matches/page | Page of spectral library matches for the given &#39;alignedFeatureId&#39;.
 [**GetStructureAnnotatedMsData**](FeaturesApi.md#GetStructureAnnotatedMsData) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/structures/{inchiKey}/annotated-msmsdata | Returns MS/MS Data (Merged MS/MS and list of measured MS/MS ) which are annotated with fragments and losses  for the given formula result identifier and structure candidate inChIKey.
 [**GetStructureAnnotatedSpectrum**](FeaturesApi.md#GetStructureAnnotatedSpectrum) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/structures/{inchiKey}/annotated-spectrum | Returns a fragmentation spectrum (e.g. Merged MS/MS) which is annotated with fragments and losses for the given formula result identifier  These annotations are only available if a fragmentation tree is available.
 [**GetStructureCandidates**](FeaturesApi.md#GetStructureCandidates) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/structures | List of StructureCandidates for the given &#39;alignedFeatureId&#39; with minimal information.
 [**GetStructureCandidatesByFormula**](FeaturesApi.md#GetStructureCandidatesByFormula) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/structures | List of StructureCandidates the given &#39;formulaId&#39; with minimal information.
+[**GetStructureCandidatesByFormulaPaged**](FeaturesApi.md#GetStructureCandidatesByFormulaPaged) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/structures/page | Page of StructureCandidates the given &#39;formulaId&#39; with minimal information.
+[**GetStructureCandidatesPaged**](FeaturesApi.md#GetStructureCandidatesPaged) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/structures/page | Page of StructureCandidates for the given &#39;alignedFeatureId&#39; with minimal information.
 
 
 # **AddAlignedFeatures**
@@ -171,7 +177,56 @@ No authorization required
 | **200** | AlignedFeature with additional annotations and MS/MS data (if specified). |  -  |
 
 # **GetAlignedFeatures**
-> PageAlignedFeature GetAlignedFeatures(project_id, page = 0, size = 20, sort = var.sort, search_query = var.search_query, query_syntax = var.query_syntax, opt_fields = [])
+> array[AlignedFeature] GetAlignedFeatures(project_id, opt_fields = [])
+
+Get all available features (aligned over runs) in the given project-space.
+
+Get all available features (aligned over runs) in the given project-space.
+
+### Example
+```R
+library(Rsirius)
+
+# Get all available features (aligned over runs) in the given project-space.
+#
+# prepare function argument(s)
+var_project_id <- "project_id_example" # character | project-space to read from.
+var_opt_fields <- c(AlignedFeatureOptField$new()) # array[AlignedFeatureOptField] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
+
+api_instance <- rsirius_api$new()
+# to save the result into a file, simply add the optional `data_file` parameter, e.g.
+# result <- api_instance$GetAlignedFeatures(var_project_id, opt_fields = var_opt_fieldsdata_file = "result.txt")
+result <- api_instance$features_api$GetAlignedFeatures(var_project_id, opt_fields = var_opt_fields)
+dput(result)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **project_id** | **character**| project-space to read from. | 
+ **opt_fields** | list( [**AlignedFeatureOptField**](AlignedFeatureOptField.md) )| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to []]
+
+### Return type
+
+[**array[AlignedFeature]**](AlignedFeature.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | AlignedFeatures with additional annotations and MS/MS data (if specified). |  -  |
+
+# **GetAlignedFeaturesPaged**
+> PageAlignedFeature GetAlignedFeaturesPaged(project_id, page = 0, size = 20, sort = var.sort, opt_fields = [])
 
 Get all available features (aligned over runs) in the given project-space.
 
@@ -188,14 +243,12 @@ var_project_id <- "project_id_example" # character | project-space to read from.
 var_page <- 0 # integer | Zero-based page index (0..N) (Optional)
 var_size <- 20 # integer | The size of the page to be returned (Optional)
 var_sort <- c("inner_example") # array[character] | Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (Optional)
-var_search_query <- "search_query_example" # character | optional search query in specified format (Optional)
-var_query_syntax <- SearchQueryType$new() # SearchQueryType | query syntax used fpr searchQuery (Optional)
 var_opt_fields <- c(AlignedFeatureOptField$new()) # array[AlignedFeatureOptField] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
 
 api_instance <- rsirius_api$new()
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$GetAlignedFeatures(var_project_id, page = var_page, size = var_size, sort = var_sort, search_query = var_search_query, query_syntax = var_query_syntax, opt_fields = var_opt_fieldsdata_file = "result.txt")
-result <- api_instance$features_api$GetAlignedFeatures(var_project_id, page = var_page, size = var_size, sort = var_sort, search_query = var_search_query, query_syntax = var_query_syntax, opt_fields = var_opt_fields)
+# result <- api_instance$GetAlignedFeaturesPaged(var_project_id, page = var_page, size = var_size, sort = var_sort, opt_fields = var_opt_fieldsdata_file = "result.txt")
+result <- api_instance$features_api$GetAlignedFeaturesPaged(var_project_id, page = var_page, size = var_size, sort = var_sort, opt_fields = var_opt_fields)
 dput(result)
 ```
 
@@ -207,8 +260,6 @@ Name | Type | Description  | Notes
  **page** | **integer**| Zero-based page index (0..N) | [optional] [default to 0]
  **size** | **integer**| The size of the page to be returned | [optional] [default to 20]
  **sort** | list( **character** )| Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. | [optional] 
- **search_query** | **character**| optional search query in specified format | [optional] 
- **query_syntax** | [**SearchQueryType**](.md)| query syntax used fpr searchQuery | [optional] 
  **opt_fields** | list( [**AlignedFeatureOptField**](AlignedFeatureOptField.md) )| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to []]
 
 ### Return type
@@ -540,17 +591,68 @@ No authorization required
 | **200** | FormulaCandidate of this feature (aligned over runs) with. |  -  |
 
 # **GetFormulaCandidates**
-> PageFormulaCandidate GetFormulaCandidates(project_id, aligned_feature_id, page = 0, size = 20, sort = var.sort, search_query = var.search_query, query_syntax = var.query_syntax, opt_fields = [])
+> array[FormulaCandidate] GetFormulaCandidates(project_id, aligned_feature_id, opt_fields = [])
 
-List of all FormulaResultContainers available for this feature with minimal information.
+List of FormulaResultContainers available for this feature with minimal information.
 
-List of all FormulaResultContainers available for this feature with minimal information.  Can be enriched with an optional results overview.
+List of FormulaResultContainers available for this feature with minimal information.  Can be enriched with an optional results overview.
 
 ### Example
 ```R
 library(Rsirius)
 
-# List of all FormulaResultContainers available for this feature with minimal information.
+# List of FormulaResultContainers available for this feature with minimal information.
+#
+# prepare function argument(s)
+var_project_id <- "project_id_example" # character | project-space to read from.
+var_aligned_feature_id <- "aligned_feature_id_example" # character | feature (aligned over runs) the formula result belongs to.
+var_opt_fields <- c(FormulaCandidateOptField$new()) # array[FormulaCandidateOptField] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
+
+api_instance <- rsirius_api$new()
+# to save the result into a file, simply add the optional `data_file` parameter, e.g.
+# result <- api_instance$GetFormulaCandidates(var_project_id, var_aligned_feature_id, opt_fields = var_opt_fieldsdata_file = "result.txt")
+result <- api_instance$features_api$GetFormulaCandidates(var_project_id, var_aligned_feature_id, opt_fields = var_opt_fields)
+dput(result)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **project_id** | **character**| project-space to read from. | 
+ **aligned_feature_id** | **character**| feature (aligned over runs) the formula result belongs to. | 
+ **opt_fields** | list( [**FormulaCandidateOptField**](FormulaCandidateOptField.md) )| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to []]
+
+### Return type
+
+[**array[FormulaCandidate]**](FormulaCandidate.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | All FormulaCandidate of this feature with. |  -  |
+
+# **GetFormulaCandidatesPaged**
+> PageFormulaCandidate GetFormulaCandidatesPaged(project_id, aligned_feature_id, page = 0, size = 20, sort = var.sort, opt_fields = [])
+
+Page of FormulaResultContainers available for this feature with minimal information.
+
+Page of FormulaResultContainers available for this feature with minimal information.  Can be enriched with an optional results overview.
+
+### Example
+```R
+library(Rsirius)
+
+# Page of FormulaResultContainers available for this feature with minimal information.
 #
 # prepare function argument(s)
 var_project_id <- "project_id_example" # character | project-space to read from.
@@ -558,14 +660,12 @@ var_aligned_feature_id <- "aligned_feature_id_example" # character | feature (al
 var_page <- 0 # integer | Zero-based page index (0..N) (Optional)
 var_size <- 20 # integer | The size of the page to be returned (Optional)
 var_sort <- c("inner_example") # array[character] | Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (Optional)
-var_search_query <- "search_query_example" # character | optional search query in specified format (Optional)
-var_query_syntax <- SearchQueryType$new() # SearchQueryType | query syntax used fpr searchQuery (Optional)
 var_opt_fields <- c(FormulaCandidateOptField$new()) # array[FormulaCandidateOptField] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
 
 api_instance <- rsirius_api$new()
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$GetFormulaCandidates(var_project_id, var_aligned_feature_id, page = var_page, size = var_size, sort = var_sort, search_query = var_search_query, query_syntax = var_query_syntax, opt_fields = var_opt_fieldsdata_file = "result.txt")
-result <- api_instance$features_api$GetFormulaCandidates(var_project_id, var_aligned_feature_id, page = var_page, size = var_size, sort = var_sort, search_query = var_search_query, query_syntax = var_query_syntax, opt_fields = var_opt_fields)
+# result <- api_instance$GetFormulaCandidatesPaged(var_project_id, var_aligned_feature_id, page = var_page, size = var_size, sort = var_sort, opt_fields = var_opt_fieldsdata_file = "result.txt")
+result <- api_instance$features_api$GetFormulaCandidatesPaged(var_project_id, var_aligned_feature_id, page = var_page, size = var_size, sort = var_sort, opt_fields = var_opt_fields)
 dput(result)
 ```
 
@@ -578,8 +678,6 @@ Name | Type | Description  | Notes
  **page** | **integer**| Zero-based page index (0..N) | [optional] [default to 0]
  **size** | **integer**| The size of the page to be returned | [optional] [default to 20]
  **sort** | list( **character** )| Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. | [optional] 
- **search_query** | **character**| optional search query in specified format | [optional] 
- **query_syntax** | [**SearchQueryType**](.md)| query syntax used fpr searchQuery | [optional] 
  **opt_fields** | list( [**FormulaCandidateOptField**](FormulaCandidateOptField.md) )| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to []]
 
 ### Return type
@@ -849,6 +947,114 @@ No authorization required
 |-------------|-------------|------------------|
 | **200** | OK |  -  |
 
+# **GetSpectralLibraryMatches**
+> array[SpectralLibraryMatch] GetSpectralLibraryMatches(project_id, aligned_feature_id, opt_fields = [])
+
+List of spectral library matches for the given 'alignedFeatureId'.
+
+List of spectral library matches for the given 'alignedFeatureId'.
+
+### Example
+```R
+library(Rsirius)
+
+# List of spectral library matches for the given 'alignedFeatureId'.
+#
+# prepare function argument(s)
+var_project_id <- "project_id_example" # character | project-space to read from.
+var_aligned_feature_id <- "aligned_feature_id_example" # character | feature (aligned over runs) the structure candidates belong to.
+var_opt_fields <- c(SpectralLibraryMatchOptField$new()) # array[SpectralLibraryMatchOptField] |  (Optional)
+
+api_instance <- rsirius_api$new()
+# to save the result into a file, simply add the optional `data_file` parameter, e.g.
+# result <- api_instance$GetSpectralLibraryMatches(var_project_id, var_aligned_feature_id, opt_fields = var_opt_fieldsdata_file = "result.txt")
+result <- api_instance$features_api$GetSpectralLibraryMatches(var_project_id, var_aligned_feature_id, opt_fields = var_opt_fields)
+dput(result)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **project_id** | **character**| project-space to read from. | 
+ **aligned_feature_id** | **character**| feature (aligned over runs) the structure candidates belong to. | 
+ **opt_fields** | list( [**SpectralLibraryMatchOptField**](SpectralLibraryMatchOptField.md) )|  | [optional] [default to []]
+
+### Return type
+
+[**array[SpectralLibraryMatch]**](SpectralLibraryMatch.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Spectral library matches of this feature (aligned over runs). |  -  |
+
+# **GetSpectralLibraryMatchesPaged**
+> PageSpectralLibraryMatch GetSpectralLibraryMatchesPaged(project_id, aligned_feature_id, page = 0, size = 20, sort = var.sort, opt_fields = [])
+
+Page of spectral library matches for the given 'alignedFeatureId'.
+
+Page of spectral library matches for the given 'alignedFeatureId'.
+
+### Example
+```R
+library(Rsirius)
+
+# Page of spectral library matches for the given 'alignedFeatureId'.
+#
+# prepare function argument(s)
+var_project_id <- "project_id_example" # character | project-space to read from.
+var_aligned_feature_id <- "aligned_feature_id_example" # character | feature (aligned over runs) the structure candidates belong to.
+var_page <- 0 # integer | Zero-based page index (0..N) (Optional)
+var_size <- 20 # integer | The size of the page to be returned (Optional)
+var_sort <- c("inner_example") # array[character] | Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (Optional)
+var_opt_fields <- c(SpectralLibraryMatchOptField$new()) # array[SpectralLibraryMatchOptField] |  (Optional)
+
+api_instance <- rsirius_api$new()
+# to save the result into a file, simply add the optional `data_file` parameter, e.g.
+# result <- api_instance$GetSpectralLibraryMatchesPaged(var_project_id, var_aligned_feature_id, page = var_page, size = var_size, sort = var_sort, opt_fields = var_opt_fieldsdata_file = "result.txt")
+result <- api_instance$features_api$GetSpectralLibraryMatchesPaged(var_project_id, var_aligned_feature_id, page = var_page, size = var_size, sort = var_sort, opt_fields = var_opt_fields)
+dput(result)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **project_id** | **character**| project-space to read from. | 
+ **aligned_feature_id** | **character**| feature (aligned over runs) the structure candidates belong to. | 
+ **page** | **integer**| Zero-based page index (0..N) | [optional] [default to 0]
+ **size** | **integer**| The size of the page to be returned | [optional] [default to 20]
+ **sort** | list( **character** )| Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. | [optional] 
+ **opt_fields** | list( [**SpectralLibraryMatchOptField**](SpectralLibraryMatchOptField.md) )|  | [optional] [default to []]
+
+### Return type
+
+[**PageSpectralLibraryMatch**](PageSpectralLibraryMatch.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Spectral library matches of this feature (aligned over runs). |  -  |
+
 # **GetStructureAnnotatedMsData**
 > AnnotatedMsMsData GetStructureAnnotatedMsData(project_id, aligned_feature_id, formula_id, inchi_key)
 
@@ -958,7 +1164,7 @@ No authorization required
 | **200** | Fragmentation spectrum annotated with fragments and sub-structures. |  -  |
 
 # **GetStructureCandidates**
-> PageStructureCandidateFormula GetStructureCandidates(project_id, aligned_feature_id, page = 0, size = 20, sort = var.sort, search_query = var.search_query, query_syntax = var.query_syntax, opt_fields = [])
+> array[StructureCandidateFormula] GetStructureCandidates(project_id, aligned_feature_id, opt_fields = [])
 
 List of StructureCandidates for the given 'alignedFeatureId' with minimal information.
 
@@ -973,17 +1179,12 @@ library(Rsirius)
 # prepare function argument(s)
 var_project_id <- "project_id_example" # character | project-space to read from.
 var_aligned_feature_id <- "aligned_feature_id_example" # character | feature (aligned over runs) the structure candidates belong to.
-var_page <- 0 # integer | Zero-based page index (0..N) (Optional)
-var_size <- 20 # integer | The size of the page to be returned (Optional)
-var_sort <- c("inner_example") # array[character] | Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (Optional)
-var_search_query <- "search_query_example" # character | optional search query in specified format (Optional)
-var_query_syntax <- SearchQueryType$new() # SearchQueryType | query syntax used fpr searchQuery (Optional)
 var_opt_fields <- c(StructureCandidateOptField$new()) # array[StructureCandidateOptField] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
 
 api_instance <- rsirius_api$new()
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$GetStructureCandidates(var_project_id, var_aligned_feature_id, page = var_page, size = var_size, sort = var_sort, search_query = var_search_query, query_syntax = var_query_syntax, opt_fields = var_opt_fieldsdata_file = "result.txt")
-result <- api_instance$features_api$GetStructureCandidates(var_project_id, var_aligned_feature_id, page = var_page, size = var_size, sort = var_sort, search_query = var_search_query, query_syntax = var_query_syntax, opt_fields = var_opt_fields)
+# result <- api_instance$GetStructureCandidates(var_project_id, var_aligned_feature_id, opt_fields = var_opt_fieldsdata_file = "result.txt")
+result <- api_instance$features_api$GetStructureCandidates(var_project_id, var_aligned_feature_id, opt_fields = var_opt_fields)
 dput(result)
 ```
 
@@ -993,16 +1194,11 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **character**| project-space to read from. | 
  **aligned_feature_id** | **character**| feature (aligned over runs) the structure candidates belong to. | 
- **page** | **integer**| Zero-based page index (0..N) | [optional] [default to 0]
- **size** | **integer**| The size of the page to be returned | [optional] [default to 20]
- **sort** | list( **character** )| Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. | [optional] 
- **search_query** | **character**| optional search query in specified format | [optional] 
- **query_syntax** | [**SearchQueryType**](.md)| query syntax used fpr searchQuery | [optional] 
  **opt_fields** | list( [**StructureCandidateOptField**](StructureCandidateOptField.md) )| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to []]
 
 ### Return type
 
-[**PageStructureCandidateFormula**](PageStructureCandidateFormula.md)
+[**array[StructureCandidateFormula]**](StructureCandidateFormula.md)
 
 ### Authorization
 
@@ -1019,7 +1215,7 @@ No authorization required
 | **200** | StructureCandidate of this feature (aligned over runs) candidate with specified optional fields. |  -  |
 
 # **GetStructureCandidatesByFormula**
-> PageStructureCandidateScored GetStructureCandidatesByFormula(project_id, aligned_feature_id, formula_id, page = 0, size = 20, sort = var.sort, search_query = var.search_query, query_syntax = var.query_syntax, opt_fields = [])
+> array[StructureCandidateScored] GetStructureCandidatesByFormula(project_id, aligned_feature_id, formula_id, opt_fields = [])
 
 List of StructureCandidates the given 'formulaId' with minimal information.
 
@@ -1035,17 +1231,68 @@ library(Rsirius)
 var_project_id <- "project_id_example" # character | project-space to read from.
 var_aligned_feature_id <- "aligned_feature_id_example" # character | feature (aligned over runs) the formula result belongs to.
 var_formula_id <- "formula_id_example" # character | identifier of the requested formula result
-var_page <- 0 # integer | Zero-based page index (0..N) (Optional)
-var_size <- 20 # integer | The size of the page to be returned (Optional)
-var_sort <- c("inner_example") # array[character] | Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (Optional)
-var_search_query <- "search_query_example" # character | optional search query in specified format (Optional)
-var_query_syntax <- SearchQueryType$new() # SearchQueryType | query syntax used fpr searchQuery (Optional)
 var_opt_fields <- c(StructureCandidateOptField$new()) # array[StructureCandidateOptField] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
 
 api_instance <- rsirius_api$new()
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$GetStructureCandidatesByFormula(var_project_id, var_aligned_feature_id, var_formula_id, page = var_page, size = var_size, sort = var_sort, search_query = var_search_query, query_syntax = var_query_syntax, opt_fields = var_opt_fieldsdata_file = "result.txt")
-result <- api_instance$features_api$GetStructureCandidatesByFormula(var_project_id, var_aligned_feature_id, var_formula_id, page = var_page, size = var_size, sort = var_sort, search_query = var_search_query, query_syntax = var_query_syntax, opt_fields = var_opt_fields)
+# result <- api_instance$GetStructureCandidatesByFormula(var_project_id, var_aligned_feature_id, var_formula_id, opt_fields = var_opt_fieldsdata_file = "result.txt")
+result <- api_instance$features_api$GetStructureCandidatesByFormula(var_project_id, var_aligned_feature_id, var_formula_id, opt_fields = var_opt_fields)
+dput(result)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **project_id** | **character**| project-space to read from. | 
+ **aligned_feature_id** | **character**| feature (aligned over runs) the formula result belongs to. | 
+ **formula_id** | **character**| identifier of the requested formula result | 
+ **opt_fields** | list( [**StructureCandidateOptField**](StructureCandidateOptField.md) )| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to []]
+
+### Return type
+
+[**array[StructureCandidateScored]**](StructureCandidateScored.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | StructureCandidate of this formula candidate with specified optional fields. |  -  |
+
+# **GetStructureCandidatesByFormulaPaged**
+> PageStructureCandidateScored GetStructureCandidatesByFormulaPaged(project_id, aligned_feature_id, formula_id, page = 0, size = 20, sort = var.sort, opt_fields = [])
+
+Page of StructureCandidates the given 'formulaId' with minimal information.
+
+Page of StructureCandidates the given 'formulaId' with minimal information.  StructureCandidates can be enriched with molecular fingerprint, structure database links.
+
+### Example
+```R
+library(Rsirius)
+
+# Page of StructureCandidates the given 'formulaId' with minimal information.
+#
+# prepare function argument(s)
+var_project_id <- "project_id_example" # character | project-space to read from.
+var_aligned_feature_id <- "aligned_feature_id_example" # character | feature (aligned over runs) the formula result belongs to.
+var_formula_id <- "formula_id_example" # character | identifier of the requested formula result
+var_page <- 0 # integer | Zero-based page index (0..N) (Optional)
+var_size <- 20 # integer | The size of the page to be returned (Optional)
+var_sort <- c("inner_example") # array[character] | Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (Optional)
+var_opt_fields <- c(StructureCandidateOptField$new()) # array[StructureCandidateOptField] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
+
+api_instance <- rsirius_api$new()
+# to save the result into a file, simply add the optional `data_file` parameter, e.g.
+# result <- api_instance$GetStructureCandidatesByFormulaPaged(var_project_id, var_aligned_feature_id, var_formula_id, page = var_page, size = var_size, sort = var_sort, opt_fields = var_opt_fieldsdata_file = "result.txt")
+result <- api_instance$features_api$GetStructureCandidatesByFormulaPaged(var_project_id, var_aligned_feature_id, var_formula_id, page = var_page, size = var_size, sort = var_sort, opt_fields = var_opt_fields)
 dput(result)
 ```
 
@@ -1059,8 +1306,6 @@ Name | Type | Description  | Notes
  **page** | **integer**| Zero-based page index (0..N) | [optional] [default to 0]
  **size** | **integer**| The size of the page to be returned | [optional] [default to 20]
  **sort** | list( **character** )| Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. | [optional] 
- **search_query** | **character**| optional search query in specified format | [optional] 
- **query_syntax** | [**SearchQueryType**](.md)| query syntax used fpr searchQuery | [optional] 
  **opt_fields** | list( [**StructureCandidateOptField**](StructureCandidateOptField.md) )| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to []]
 
 ### Return type
@@ -1080,4 +1325,61 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | StructureCandidate of this formula candidate with specified optional fields. |  -  |
+
+# **GetStructureCandidatesPaged**
+> PageStructureCandidateFormula GetStructureCandidatesPaged(project_id, aligned_feature_id, page = 0, size = 20, sort = var.sort, opt_fields = [])
+
+Page of StructureCandidates for the given 'alignedFeatureId' with minimal information.
+
+Page of StructureCandidates for the given 'alignedFeatureId' with minimal information.  StructureCandidates can be enriched with molecular fingerprint, structure database links.
+
+### Example
+```R
+library(Rsirius)
+
+# Page of StructureCandidates for the given 'alignedFeatureId' with minimal information.
+#
+# prepare function argument(s)
+var_project_id <- "project_id_example" # character | project-space to read from.
+var_aligned_feature_id <- "aligned_feature_id_example" # character | feature (aligned over runs) the structure candidates belong to.
+var_page <- 0 # integer | Zero-based page index (0..N) (Optional)
+var_size <- 20 # integer | The size of the page to be returned (Optional)
+var_sort <- c("inner_example") # array[character] | Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (Optional)
+var_opt_fields <- c(StructureCandidateOptField$new()) # array[StructureCandidateOptField] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
+
+api_instance <- rsirius_api$new()
+# to save the result into a file, simply add the optional `data_file` parameter, e.g.
+# result <- api_instance$GetStructureCandidatesPaged(var_project_id, var_aligned_feature_id, page = var_page, size = var_size, sort = var_sort, opt_fields = var_opt_fieldsdata_file = "result.txt")
+result <- api_instance$features_api$GetStructureCandidatesPaged(var_project_id, var_aligned_feature_id, page = var_page, size = var_size, sort = var_sort, opt_fields = var_opt_fields)
+dput(result)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **project_id** | **character**| project-space to read from. | 
+ **aligned_feature_id** | **character**| feature (aligned over runs) the structure candidates belong to. | 
+ **page** | **integer**| Zero-based page index (0..N) | [optional] [default to 0]
+ **size** | **integer**| The size of the page to be returned | [optional] [default to 20]
+ **sort** | list( **character** )| Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. | [optional] 
+ **opt_fields** | list( [**StructureCandidateOptField**](StructureCandidateOptField.md) )| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to []]
+
+### Return type
+
+[**PageStructureCandidateFormula**](PageStructureCandidateFormula.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | StructureCandidate of this feature (aligned over runs) candidate with specified optional fields. |  -  |
 

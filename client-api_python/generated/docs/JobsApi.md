@@ -11,10 +11,12 @@ Method | HTTP request | Description
 [**get_job**](JobsApi.md#get_job) | **GET** /api/projects/{projectId}/jobs/{jobId} | Get job information and its current state and progress (if available).
 [**get_job_config**](JobsApi.md#get_job_config) | **GET** /api/job-configs/{name} | Request job configuration with given name.
 [**get_job_configs**](JobsApi.md#get_job_configs) | **GET** /api/job-configs | Request all available job configurations
-[**get_jobs**](JobsApi.md#get_jobs) | **GET** /api/projects/{projectId}/jobs | Get job information and its current state and progress (if available).
+[**get_jobs**](JobsApi.md#get_jobs) | **GET** /api/projects/{projectId}/jobs | Get List of all available jobs with information such as current state and progress (if available).
+[**get_jobs_paged**](JobsApi.md#get_jobs_paged) | **GET** /api/projects/{projectId}/jobs/page | Get Page of jobs with information such as current state and progress (if available).
 [**has_jobs**](JobsApi.md#has_jobs) | **GET** /api/projects/{projectId}/has-jobs | 
 [**post_job_config**](JobsApi.md#post_job_config) | **POST** /api/job-configs/{name} | Add new job configuration with given name.
 [**start_command**](JobsApi.md#start_command) | **POST** /api/{projectId}/jobs/run-command | Start computation for given command and input.
+[**start_database_import**](JobsApi.md#start_database_import) | **POST** /api/{projectId}/jobs/import-db | Start import of structure and spectra files into the specified database.
 [**start_import_from_path_job**](JobsApi.md#start_import_from_path_job) | **POST** /api/{projectId}/jobs/import-from-local-path | Import ms/ms data in given format from local filesystem into the specified project
 [**start_import_from_string_job**](JobsApi.md#start_import_from_string_job) | **POST** /api/{projectId}/jobs/import-from-string | Import ms/ms data from the given format into the specified project-space  Possible formats (ms, mgf, cef, msp, mzML, mzXML)
 [**start_job**](JobsApi.md#start_job) | **POST** /api/projects/{projectId}/jobs | Start computation for given compounds and with given parameters.
@@ -506,11 +508,82 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_jobs**
-> PageJob get_jobs(project_id, page=page, size=size, sort=sort, opt_fields=opt_fields)
+> List[Job] get_jobs(project_id, opt_fields=opt_fields)
 
-Get job information and its current state and progress (if available).
+Get List of all available jobs with information such as current state and progress (if available).
 
-Get job information and its current state and progress (if available).
+Get List of all available jobs with information such as current state and progress (if available).
+
+### Example
+
+
+```python
+import PySirius
+from PySirius.models.job import Job
+from PySirius.models.job_opt_field import JobOptField
+from PySirius.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to http://localhost:8080
+# See configuration.py for a list of all supported configuration parameters.
+configuration = PySirius.Configuration(
+    host = "http://localhost:8080"
+)
+
+
+# Enter a context with an instance of the API client
+with PySirius.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = PySirius.JobsApi(api_client)
+    project_id = 'project_id_example' # str | project-space to run jobs on
+    opt_fields = [] # List[JobOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to [])
+
+    try:
+        # Get List of all available jobs with information such as current state and progress (if available).
+        api_response = api_instance.get_jobs(project_id, opt_fields=opt_fields)
+        print("The response of JobsApi->get_jobs:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling JobsApi->get_jobs: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **project_id** | **str**| project-space to run jobs on | 
+ **opt_fields** | [**List[JobOptField]**](JobOptField.md)| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to []]
+
+### Return type
+
+[**List[Job]**](Job.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **get_jobs_paged**
+> PageJob get_jobs_paged(project_id, page=page, size=size, sort=sort, opt_fields=opt_fields)
+
+Get Page of jobs with information such as current state and progress (if available).
+
+Get Page of jobs with information such as current state and progress (if available).
 
 ### Example
 
@@ -540,12 +613,12 @@ with PySirius.ApiClient(configuration) as api_client:
     opt_fields = [] # List[JobOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to [])
 
     try:
-        # Get job information and its current state and progress (if available).
-        api_response = api_instance.get_jobs(project_id, page=page, size=size, sort=sort, opt_fields=opt_fields)
-        print("The response of JobsApi->get_jobs:\n")
+        # Get Page of jobs with information such as current state and progress (if available).
+        api_response = api_instance.get_jobs_paged(project_id, page=page, size=size, sort=sort, opt_fields=opt_fields)
+        print("The response of JobsApi->get_jobs_paged:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling JobsApi->get_jobs: %s\n" % e)
+        print("Exception when calling JobsApi->get_jobs_paged: %s\n" % e)
 ```
 
 
@@ -791,6 +864,80 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Job of the command to be executed. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **start_database_import**
+> Job start_database_import(project_id, database_import_submission, opt_fields=opt_fields)
+
+Start import of structure and spectra files into the specified database.
+
+Start import of structure and spectra files into the specified database.
+
+### Example
+
+
+```python
+import PySirius
+from PySirius.models.database_import_submission import DatabaseImportSubmission
+from PySirius.models.job import Job
+from PySirius.models.job_opt_field import JobOptField
+from PySirius.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to http://localhost:8080
+# See configuration.py for a list of all supported configuration parameters.
+configuration = PySirius.Configuration(
+    host = "http://localhost:8080"
+)
+
+
+# Enter a context with an instance of the API client
+with PySirius.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = PySirius.JobsApi(api_client)
+    project_id = 'project_id_example' # str | project-space to perform the command for.
+    database_import_submission = PySirius.DatabaseImportSubmission() # DatabaseImportSubmission | the command and the input to be executed
+    opt_fields = ["progress"] # List[JobOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to ["progress"])
+
+    try:
+        # Start import of structure and spectra files into the specified database.
+        api_response = api_instance.start_database_import(project_id, database_import_submission, opt_fields=opt_fields)
+        print("The response of JobsApi->start_database_import:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling JobsApi->start_database_import: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **project_id** | **str**| project-space to perform the command for. | 
+ **database_import_submission** | [**DatabaseImportSubmission**](DatabaseImportSubmission.md)| the command and the input to be executed | 
+ **opt_fields** | [**List[JobOptField]**](JobOptField.md)| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;progress&quot;]]
+
+### Return type
+
+[**Job**](Job.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Job of the import command to be executed. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

@@ -27,22 +27,27 @@ from typing_extensions import Self
 
 class Sirius(BaseModel):
     """
-    User/developer friendly parameter subset for the Formula/SIRIUS tool
+    User/developer friendly parameter subset for the Formula/SIRIUS tool  Can use results from Spectral library search tool.
     """ # noqa: E501
     enabled: Optional[StrictBool] = Field(default=None, description="tags whether the tool is enabled")
     profile: Optional[Instrument] = None
     number_of_candidates: Optional[StrictInt] = Field(default=None, description="Number of formula candidates to keep as result list (Formula Candidates).", alias="numberOfCandidates")
-    number_of_candidates_per_ion: Optional[StrictInt] = Field(default=None, description="Use this parameter if you want to force SIRIUS to report at least  NumberOfCandidatesPerIon results per ionization.  if <= 0, this parameter will have no effect and just the top  NumberOfCandidates results will be reported.", alias="numberOfCandidatesPerIon")
+    number_of_candidates_per_ionization: Optional[StrictInt] = Field(default=None, description="Use this parameter if you want to force SIRIUS to report at least  NumberOfCandidatesPerIonization results per ionization.  if <= 0, this parameter will have no effect and just the top  NumberOfCandidates results will be reported.", alias="numberOfCandidatesPerIonization")
     mass_accuracy_ms2ppm: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Maximum allowed mass deviation. Only molecular formulas within this mass window are considered.", alias="massAccuracyMS2ppm")
     isotope_ms2_settings: Optional[StrictStr] = Field(default=None, description="Specify how isotope patterns in MS/MS should be handled.  <p>  FILTER: When filtering is enabled, molecular formulas are excluded if their  theoretical isotope pattern does not match the theoretical one, even if their MS/MS pattern has high score.  <p>  SCORE: Use them for SCORING. To use this the instrument should produce clear MS/MS isotope patterns  <p>  IGNORE: Ignore that there might be isotope patterns in MS/MS", alias="isotopeMs2Settings")
+    filter_by_isotope_pattern: Optional[StrictBool] = Field(default=None, description="When filtering is enabled, molecular formulas are excluded if their theoretical isotope pattern does not match the theoretical one, even if their MS/MS pattern has high score.", alias="filterByIsotopePattern")
+    enforce_el_gordo_formula: Optional[StrictBool] = Field(default=None, description="El Gordo may predict that an MS/MS spectrum is a lipid spectrum. If enabled, the corresponding molecular formula will be enforeced as molecular formula candidate.", alias="enforceElGordoFormula")
+    perform_bottom_up_search: Optional[StrictBool] = Field(default=None, description="If true, molecular formula generation via bottom up search is enabled.", alias="performBottomUpSearch")
+    perform_denovo_below_mz: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Specifies the m/z below which de novo molecular formula generation is enabled. Set to 0 to disable de novo molecular formula generation.", alias="performDenovoBelowMz")
     formula_search_dbs: Optional[List[StrictStr]] = Field(default=None, description="List Structure database to extract molecular formulas from to reduce formula search space.  SIRIUS is quite good at de novo formula annotation, so only enable if you have a good reason.", alias="formulaSearchDBs")
+    apply_formula_constraints_to_db_and_bottom_up_search: Optional[StrictBool] = Field(default=None, description="By default, the formula (element) constraints are only applied to de novo molecular formula generation.  If true, the constraints are as well applied to database search and bottom up search.", alias="applyFormulaConstraintsToDBAndBottomUpSearch")
     enforced_formula_constraints: Optional[StrictStr] = Field(default=None, description="These configurations hold the information how to autodetect elements based on the given formula constraints.  Note: If the compound is already assigned to a specific molecular formula, this annotation is ignored.  <p>  Enforced: Enforced elements are always considered", alias="enforcedFormulaConstraints")
     fallback_formula_constraints: Optional[StrictStr] = Field(default=None, description="These configurations hold the information how to autodetect elements based on the given formula constraints.  Note: If the compound is already assigned to a specific molecular formula, this annotation is ignored.  <p>  Fallback: Fallback elements are used, if the auto-detection fails (e.g. no isotope pattern available)", alias="fallbackFormulaConstraints")
     detectable_elements: Optional[List[StrictStr]] = Field(default=None, description="These configurations hold the information how to autodetect elements based on the given formula constraints.  Note: If the compound is already assigned to a specific molecular formula, this annotation is ignored.  <p>  Detectable: Detectable elements are added to the chemical alphabet, if there are indications for them (e.g. in isotope pattern)", alias="detectableElements")
     ilp_timeout: Optional[Timeout] = Field(default=None, alias="ilpTimeout")
     use_heuristic: Optional[UseHeuristic] = Field(default=None, alias="useHeuristic")
-    min_ref_match_score_to_inject: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Similarity Threshold to inject formula candidates no matter which score/rank they have or which filter settings are applied.  If threshold >= 0 formulas candidates with reference spectrum similarity above the threshold will be injected.  If NULL injection is disables.", alias="minRefMatchScoreToInject")
-    __properties: ClassVar[List[str]] = ["enabled", "profile", "numberOfCandidates", "numberOfCandidatesPerIon", "massAccuracyMS2ppm", "isotopeMs2Settings", "formulaSearchDBs", "enforcedFormulaConstraints", "fallbackFormulaConstraints", "detectableElements", "ilpTimeout", "useHeuristic", "minRefMatchScoreToInject"]
+    min_score_to_inject_spec_lib_match: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Similarity Threshold to inject formula candidates no matter which score/rank they have or which filter settings are applied.  If threshold >= 0 formulas candidates with reference spectrum similarity above the threshold will be injected.  If NULL injection is disables.", alias="minScoreToInjectSpecLibMatch")
+    __properties: ClassVar[List[str]] = ["enabled", "profile", "numberOfCandidates", "numberOfCandidatesPerIonization", "massAccuracyMS2ppm", "isotopeMs2Settings", "filterByIsotopePattern", "enforceElGordoFormula", "performBottomUpSearch", "performDenovoBelowMz", "formulaSearchDBs", "applyFormulaConstraintsToDBAndBottomUpSearch", "enforcedFormulaConstraints", "fallbackFormulaConstraints", "detectableElements", "ilpTimeout", "useHeuristic", "minScoreToInjectSpecLibMatch"]
 
     @field_validator('isotope_ms2_settings')
     def isotope_ms2_settings_validate_enum(cls, value):
@@ -119,16 +124,21 @@ class Sirius(BaseModel):
             "enabled": obj.get("enabled"),
             "profile": obj.get("profile"),
             "numberOfCandidates": obj.get("numberOfCandidates"),
-            "numberOfCandidatesPerIon": obj.get("numberOfCandidatesPerIon"),
+            "numberOfCandidatesPerIonization": obj.get("numberOfCandidatesPerIonization"),
             "massAccuracyMS2ppm": obj.get("massAccuracyMS2ppm"),
             "isotopeMs2Settings": obj.get("isotopeMs2Settings"),
+            "filterByIsotopePattern": obj.get("filterByIsotopePattern"),
+            "enforceElGordoFormula": obj.get("enforceElGordoFormula"),
+            "performBottomUpSearch": obj.get("performBottomUpSearch"),
+            "performDenovoBelowMz": obj.get("performDenovoBelowMz"),
             "formulaSearchDBs": obj.get("formulaSearchDBs"),
+            "applyFormulaConstraintsToDBAndBottomUpSearch": obj.get("applyFormulaConstraintsToDBAndBottomUpSearch"),
             "enforcedFormulaConstraints": obj.get("enforcedFormulaConstraints"),
             "fallbackFormulaConstraints": obj.get("fallbackFormulaConstraints"),
             "detectableElements": obj.get("detectableElements"),
             "ilpTimeout": Timeout.from_dict(obj["ilpTimeout"]) if obj.get("ilpTimeout") is not None else None,
             "useHeuristic": UseHeuristic.from_dict(obj["useHeuristic"]) if obj.get("useHeuristic") is not None else None,
-            "minRefMatchScoreToInject": obj.get("minRefMatchScoreToInject")
+            "minScoreToInjectSpecLibMatch": obj.get("minScoreToInjectSpecLibMatch")
         })
         return _obj
 

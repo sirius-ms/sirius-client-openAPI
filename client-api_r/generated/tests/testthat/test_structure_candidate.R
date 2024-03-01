@@ -41,10 +41,10 @@ test_that("dbLinks", {
   #expect_equal(model.instance$`dbLinks`, "EXPECTED_RESULT")
 })
 
-test_that("refSpectraLinks", {
-  # tests for the property `refSpectraLinks` (array[DBLink])
-  # List of spectral library links belonging to this structure candidate  OPTIONAL: needs to be added by parameter
+test_that("spectralLibraryMatches", {
+  # tests for the property `spectralLibraryMatches` (array[SpectralLibraryMatch])
+  # List of spectral library matches belonging to this structure candidate  OPTIONAL: needs to be added by parameter
 
   # uncomment below to test the property
-  #expect_equal(model.instance$`refSpectraLinks`, "EXPECTED_RESULT")
+  #expect_equal(model.instance$`spectralLibraryMatches`, "EXPECTED_RESULT")
 })

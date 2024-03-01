@@ -24,7 +24,6 @@ from PySirius.models.compound import Compound
 from PySirius.models.compound_import import CompoundImport
 from PySirius.models.compound_opt_field import CompoundOptField
 from PySirius.models.page_compound import PageCompound
-from PySirius.models.search_query_type import SearchQueryType
 
 from PySirius.api_client import ApiClient, RequestSerialized
 from PySirius.api_response import ApiResponse
@@ -941,11 +940,6 @@ class CompoundsApi:
     def get_compounds(
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
-        page: Annotated[Optional[Annotated[int, Field(strict=True, ge=0)]], Field(description="Zero-based page index (0..N)")] = None,
-        size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
-        sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
-        search_query: Annotated[Optional[StrictStr], Field(description="optional search query in specified format")] = None,
-        query_syntax: Annotated[Optional[SearchQueryType], Field(description="query syntax used fpr searchQuery")] = None,
         opt_fields: Annotated[Optional[List[Optional[CompoundOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         opt_fields_features: Optional[List[Optional[AlignedFeatureOptField]]] = None,
         _request_timeout: Union[
@@ -960,23 +954,13 @@ class CompoundsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> PageCompound:
-        """Get all available compounds (group of ion identities) in the given project-space.
+    ) -> List[Compound]:
+        """List of all available compounds (group of ion identities) in the given project-space.
 
-        Get all available compounds (group of ion identities) in the given project-space.
+        List of all available compounds (group of ion identities) in the given project-space.
 
         :param project_id: project-space to read from. (required)
         :type project_id: str
-        :param page: Zero-based page index (0..N)
-        :type page: int
-        :param size: The size of the page to be returned
-        :type size: int
-        :param sort: Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
-        :type sort: List[str]
-        :param search_query: optional search query in specified format
-        :type search_query: str
-        :param query_syntax: query syntax used fpr searchQuery
-        :type query_syntax: SearchQueryType
         :param opt_fields: set of optional fields to be included. Use 'none' only to override defaults.
         :type opt_fields: List[CompoundOptField]
         :param opt_fields_features:
@@ -1005,11 +989,311 @@ class CompoundsApi:
 
         _param = self._get_compounds_serialize(
             project_id=project_id,
+            opt_fields=opt_fields,
+            opt_fields_features=opt_fields_features,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "List[Compound]",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def get_compounds_with_http_info(
+        self,
+        project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
+        opt_fields: Annotated[Optional[List[Optional[CompoundOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields_features: Optional[List[Optional[AlignedFeatureOptField]]] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[List[Compound]]:
+        """List of all available compounds (group of ion identities) in the given project-space.
+
+        List of all available compounds (group of ion identities) in the given project-space.
+
+        :param project_id: project-space to read from. (required)
+        :type project_id: str
+        :param opt_fields: set of optional fields to be included. Use 'none' only to override defaults.
+        :type opt_fields: List[CompoundOptField]
+        :param opt_fields_features:
+        :type opt_fields_features: List[AlignedFeatureOptField]
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_compounds_serialize(
+            project_id=project_id,
+            opt_fields=opt_fields,
+            opt_fields_features=opt_fields_features,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "List[Compound]",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def get_compounds_without_preload_content(
+        self,
+        project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
+        opt_fields: Annotated[Optional[List[Optional[CompoundOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields_features: Optional[List[Optional[AlignedFeatureOptField]]] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """List of all available compounds (group of ion identities) in the given project-space.
+
+        List of all available compounds (group of ion identities) in the given project-space.
+
+        :param project_id: project-space to read from. (required)
+        :type project_id: str
+        :param opt_fields: set of optional fields to be included. Use 'none' only to override defaults.
+        :type opt_fields: List[CompoundOptField]
+        :param opt_fields_features:
+        :type opt_fields_features: List[AlignedFeatureOptField]
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_compounds_serialize(
+            project_id=project_id,
+            opt_fields=opt_fields,
+            opt_fields_features=opt_fields_features,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "List[Compound]",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _get_compounds_serialize(
+        self,
+        project_id,
+        opt_fields,
+        opt_fields_features,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+            'optFields': 'multi',
+            'optFieldsFeatures': 'multi',
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[str, str] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if project_id is not None:
+            _path_params['projectId'] = project_id
+        # process the query parameters
+        if opt_fields is not None:
+            
+            _query_params.append(('optFields', opt_fields))
+            
+        if opt_fields_features is not None:
+            
+            _query_params.append(('optFieldsFeatures', opt_fields_features))
+            
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            [
+                'application/json'
+            ]
+        )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/api/projects/{projectId}/compounds',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def get_compounds_paged(
+        self,
+        project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
+        page: Annotated[Optional[Annotated[int, Field(strict=True, ge=0)]], Field(description="Zero-based page index (0..N)")] = None,
+        size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
+        sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[CompoundOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields_features: Optional[List[Optional[AlignedFeatureOptField]]] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> PageCompound:
+        """Page of available compounds (group of ion identities) in the given project-space.
+
+        Page of available compounds (group of ion identities) in the given project-space.
+
+        :param project_id: project-space to read from. (required)
+        :type project_id: str
+        :param page: Zero-based page index (0..N)
+        :type page: int
+        :param size: The size of the page to be returned
+        :type size: int
+        :param sort: Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+        :type sort: List[str]
+        :param opt_fields: set of optional fields to be included. Use 'none' only to override defaults.
+        :type opt_fields: List[CompoundOptField]
+        :param opt_fields_features:
+        :type opt_fields_features: List[AlignedFeatureOptField]
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_compounds_paged_serialize(
+            project_id=project_id,
             page=page,
             size=size,
             sort=sort,
-            search_query=search_query,
-            query_syntax=query_syntax,
             opt_fields=opt_fields,
             opt_fields_features=opt_fields_features,
             _request_auth=_request_auth,
@@ -1033,14 +1317,12 @@ class CompoundsApi:
 
 
     @validate_call
-    def get_compounds_with_http_info(
+    def get_compounds_paged_with_http_info(
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
         page: Annotated[Optional[Annotated[int, Field(strict=True, ge=0)]], Field(description="Zero-based page index (0..N)")] = None,
         size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
         sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
-        search_query: Annotated[Optional[StrictStr], Field(description="optional search query in specified format")] = None,
-        query_syntax: Annotated[Optional[SearchQueryType], Field(description="query syntax used fpr searchQuery")] = None,
         opt_fields: Annotated[Optional[List[Optional[CompoundOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         opt_fields_features: Optional[List[Optional[AlignedFeatureOptField]]] = None,
         _request_timeout: Union[
@@ -1056,9 +1338,9 @@ class CompoundsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[PageCompound]:
-        """Get all available compounds (group of ion identities) in the given project-space.
+        """Page of available compounds (group of ion identities) in the given project-space.
 
-        Get all available compounds (group of ion identities) in the given project-space.
+        Page of available compounds (group of ion identities) in the given project-space.
 
         :param project_id: project-space to read from. (required)
         :type project_id: str
@@ -1068,10 +1350,6 @@ class CompoundsApi:
         :type size: int
         :param sort: Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
         :type sort: List[str]
-        :param search_query: optional search query in specified format
-        :type search_query: str
-        :param query_syntax: query syntax used fpr searchQuery
-        :type query_syntax: SearchQueryType
         :param opt_fields: set of optional fields to be included. Use 'none' only to override defaults.
         :type opt_fields: List[CompoundOptField]
         :param opt_fields_features:
@@ -1098,13 +1376,11 @@ class CompoundsApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._get_compounds_serialize(
+        _param = self._get_compounds_paged_serialize(
             project_id=project_id,
             page=page,
             size=size,
             sort=sort,
-            search_query=search_query,
-            query_syntax=query_syntax,
             opt_fields=opt_fields,
             opt_fields_features=opt_fields_features,
             _request_auth=_request_auth,
@@ -1128,14 +1404,12 @@ class CompoundsApi:
 
 
     @validate_call
-    def get_compounds_without_preload_content(
+    def get_compounds_paged_without_preload_content(
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
         page: Annotated[Optional[Annotated[int, Field(strict=True, ge=0)]], Field(description="Zero-based page index (0..N)")] = None,
         size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
         sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
-        search_query: Annotated[Optional[StrictStr], Field(description="optional search query in specified format")] = None,
-        query_syntax: Annotated[Optional[SearchQueryType], Field(description="query syntax used fpr searchQuery")] = None,
         opt_fields: Annotated[Optional[List[Optional[CompoundOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         opt_fields_features: Optional[List[Optional[AlignedFeatureOptField]]] = None,
         _request_timeout: Union[
@@ -1151,9 +1425,9 @@ class CompoundsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get all available compounds (group of ion identities) in the given project-space.
+        """Page of available compounds (group of ion identities) in the given project-space.
 
-        Get all available compounds (group of ion identities) in the given project-space.
+        Page of available compounds (group of ion identities) in the given project-space.
 
         :param project_id: project-space to read from. (required)
         :type project_id: str
@@ -1163,10 +1437,6 @@ class CompoundsApi:
         :type size: int
         :param sort: Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
         :type sort: List[str]
-        :param search_query: optional search query in specified format
-        :type search_query: str
-        :param query_syntax: query syntax used fpr searchQuery
-        :type query_syntax: SearchQueryType
         :param opt_fields: set of optional fields to be included. Use 'none' only to override defaults.
         :type opt_fields: List[CompoundOptField]
         :param opt_fields_features:
@@ -1193,13 +1463,11 @@ class CompoundsApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._get_compounds_serialize(
+        _param = self._get_compounds_paged_serialize(
             project_id=project_id,
             page=page,
             size=size,
             sort=sort,
-            search_query=search_query,
-            query_syntax=query_syntax,
             opt_fields=opt_fields,
             opt_fields_features=opt_fields_features,
             _request_auth=_request_auth,
@@ -1218,14 +1486,12 @@ class CompoundsApi:
         return response_data.response
 
 
-    def _get_compounds_serialize(
+    def _get_compounds_paged_serialize(
         self,
         project_id,
         page,
         size,
         sort,
-        search_query,
-        query_syntax,
         opt_fields,
         opt_fields_features,
         _request_auth,
@@ -1265,14 +1531,6 @@ class CompoundsApi:
             
             _query_params.append(('sort', sort))
             
-        if search_query is not None:
-            
-            _query_params.append(('searchQuery', search_query))
-            
-        if query_syntax is not None:
-            
-            _query_params.append(('querySyntax', query_syntax.value))
-            
         if opt_fields is not None:
             
             _query_params.append(('optFields', opt_fields))
@@ -1300,7 +1558,7 @@ class CompoundsApi:
 
         return self.api_client.param_serialize(
             method='GET',
-            resource_path='/api/projects/{projectId}/compounds',
+            resource_path='/api/projects/{projectId}/compounds/page',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,

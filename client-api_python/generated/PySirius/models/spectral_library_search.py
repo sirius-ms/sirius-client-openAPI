@@ -17,17 +17,22 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, Field, StrictBool
-from typing import Any, ClassVar, Dict, List, Optional
+from pydantic import BaseModel, Field, StrictBool, StrictFloat, StrictInt, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional, Union
+from PySirius.models.spectral_alignment_type import SpectralAlignmentType
 from typing import Optional, Set
 from typing_extensions import Self
 
 class SpectralLibrarySearch(BaseModel):
     """
-    
+    User/developer friendly parameter subset for the Spectral library search tool.
     """ # noqa: E501
     enabled: Optional[StrictBool] = Field(default=None, description="tags whether the tool is enabled")
-    __properties: ClassVar[List[str]] = ["enabled"]
+    spectra_search_dbs: List[StrictStr] = Field(description="Structure Databases with Reference spectra to search in.  <p>  Defaults to BIO + Custom Databases. Possible values are available to Database API.", alias="spectraSearchDBs")
+    peak_deviation_ppm: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Maximum allowed mass deviation in ppm for matching peaks.", alias="peakDeviationPpm")
+    precursor_deviation_ppm: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Maximum allowed mass deviation in ppm for matching the precursor. If not specified, the same value as for the peaks is used.", alias="precursorDeviationPpm")
+    scoring: Optional[SpectralAlignmentType] = None
+    __properties: ClassVar[List[str]] = ["enabled", "spectraSearchDBs", "peakDeviationPpm", "precursorDeviationPpm", "scoring"]
 
     model_config = {
         "populate_by_name": True,
@@ -68,6 +73,21 @@ class SpectralLibrarySearch(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if peak_deviation_ppm (nullable) is None
+        # and model_fields_set contains the field
+        if self.peak_deviation_ppm is None and "peak_deviation_ppm" in self.model_fields_set:
+            _dict['peakDeviationPpm'] = None
+
+        # set to None if precursor_deviation_ppm (nullable) is None
+        # and model_fields_set contains the field
+        if self.precursor_deviation_ppm is None and "precursor_deviation_ppm" in self.model_fields_set:
+            _dict['precursorDeviationPpm'] = None
+
+        # set to None if scoring (nullable) is None
+        # and model_fields_set contains the field
+        if self.scoring is None and "scoring" in self.model_fields_set:
+            _dict['scoring'] = None
+
         return _dict
 
     @classmethod
@@ -80,7 +100,11 @@ class SpectralLibrarySearch(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "enabled": obj.get("enabled")
+            "enabled": obj.get("enabled"),
+            "spectraSearchDBs": obj.get("spectraSearchDBs"),
+            "peakDeviationPpm": obj.get("peakDeviationPpm"),
+            "precursorDeviationPpm": obj.get("precursorDeviationPpm"),
+            "scoring": obj.get("scoring")
         })
         return _obj
 

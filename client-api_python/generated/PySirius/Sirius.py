@@ -1,109 +1,191 @@
+#THIS FILE IS NOT AUTO GENERATED AND MIGHT NEED TO BE CHANGED WHEN API ENDPOINTS CHANGE
+
 import os
 import time
 import subprocess
-import json
-import platform
-import urllib3
 import PySirius
 
 class SiriusSDK:
     """entry point for running the Sirius Rest service from a new instance"""
     
-    process = None
     port = None
+    host = None
+    configuration = None
+    sirius_path = None
+    projectspace = None
     workspace = None
+    process = None
+    process_id = None
+    api_client = None
+
+
+    def reset_sdk_class(self):
+        SiriusSDK.port = None
+        SiriusSDK.host = None
+        SiriusSDK.configuration = None
+        SiriusSDK.sirius_path = None
+        SiriusSDK.projectspace = None
+        SiriusSDK.workspace = None
+        SiriusSDK.process = None
+        SiriusSDK.process_id = None
+        SiriusSDK.api_client = None
+        SiriusSDK.run_command = None
+
     
-    def start(sirius_executable=None, project_space=None, override_workspace_location=None ,port=8080, forceStart=False):
+    def reset_sdk_process(self):
+        SiriusSDK.process = None
+
+
+    def reconnect(self):
+        if None not in (SiriusSDK.api_client, SiriusSDK.process) and SiriusSDK.process.poll() is None:
+            return PySirius.PySiriusAPI(api_client=SiriusSDK.api_client)
+        print("Can not reconnect, api_client and/or process are None or process has terminated.")
+        return None
+
+
+    def restart_service_only(self):
+        if None not in (SiriusSDK.run_command, SiriusSDK.process, SiriusSDK.api_client):
+            if SiriusSDK.shutdown(self) == 1:
+                print("Shutdown seems to have gone wrong, aborting restart...")
+                return None
+            
+            SiriusSDK.process = subprocess.Popen(SiriusSDK.run_command)
+            for _ in range(60):
+                time.sleep(1)
+                try:
+                    if SiriusSDK.process.poll() is None:
+                        if PySirius.ActuatorApi(SiriusSDK.api_client).health().get('status') == 'UP':
+                            SiriusSDK.process_id = SiriusSDK.process.pid
+                            return None
+                    else: 
+                        print("The SIRIUS process seems to have exited during startup. Please investigate this error.")
+                        print(f"Exit code provided by the process: {SiriusSDK.process.poll()}")
+                        SiriusSDK.reset_sdk_class()
+                except Exception as e:
+                    pass
+
+            print("SIRIUS seems to have problems starting. Resetting SiriusSDK...")
+            SiriusSDK.reset_sdk_class()
+            return None
+        print("Could not attempt REST restart, run_command, process or api_client are None.")
+        return None
+
+            
+    def start(self, sirius_path=None, port=8080, projectspace=None, workspace=None, forceStart=False):
         """starts the Sirius rest service and returns an API instance that allows access to the API endpoints"""
-        is_up = False
-        workspace = override_workspace_location
-        http = urllib3.PoolManager()
 
         # Fail if started already
         if (SiriusSDK.process is not None) and not forceStart:
-            print("Sirius has already been started with PID: "+str(SiriusSDK.process.pid))
+            print(f"\033[93m Sirius seems to have already been started with PID: {str(SiriusSDK.process.pid)}.")
+            print("\033[93m Use reconnect() to get a new API instance for your current SIRIUS.")
+            print("\033[93m Use shutdown() and then start() to restart SIRIUS and get a new API instance.")
+            print("\033[93m If you are sure the process is not running anymore, use reset_sdk_process() or reset the complete SDK using reset_sdk_class() before calling start() again.")
+            print("\033[93m [NOT RECOMMENDED] Use start with forceStart=True to skip this warning and start a second service. \033[0m")
             return None
         
         SiriusSDK.port = port
+        SiriusSDK.host = f'http://localhost:{SiriusSDK.port}'
+        SiriusSDK.configuration = PySirius.Configuration(SiriusSDK.host)
+        SiriusSDK.workspace = workspace
+        SiriusSDK.api_client = PySirius.ApiClient(SiriusSDK.configuration)
         
-        # check for project Space and Sirius Executeable
-        project_space_exist = False
-        executable_exist = False
-        if sirius_executable is not None:
-            executable_exist = os.path.exists(sirius_executable)
-            if not executable_exist and not forceStart:
-                print("Wrong path to executable")
+        # check for SIRIUS executable
+        print(sirius_path)
+        print(port)
+        print(SiriusSDK.host)
+        if sirius_path is not None:
+            if not os.path.exists(sirius_path):
+                print("Wrong path to executable.")
+                SiriusSDK.reset_sdk_class()
                 return None
-        if project_space is not None:
-            project_space_exist = os.path.exists(project_space)
-            if not project_space_exist and not forceStart:
-                print("Wrong path to project space")
-                return None
-
-        path_to_executable = None
-        # Check Path for Sirius Executeable
-        if executable_exist:
-            path_to_executable = os.path.abspath(sirius_executable)
+            SiriusSDK.sirius_path = os.path.abspath(sirius_path)
         else:
-            path_to_executable = "sirius"
-            if os.getenv("PATH").find("sirius") == -1 and not forceStart:
+            if os.getenv("PATH").find("sirius") == -1:
                 print("Please provide a path to the sirius executable if not declared in PATH!")
+                SiriusSDK.reset_sdk_class()
                 return None
+            print("Found SIRIUS in PATH! Using this information to start the application.")
+            SiriusSDK.sirius_path = 'sirius'
+
+        # check for projectspace
+        if projectspace is not None:
+            if not os.path.exists(projectspace):
+                print("Wrong path to project space.")
+                SiriusSDK.reset_sdk_class()
+                return None
+            SiriusSDK.projectspace = os.path.abspath(projectspace)
+            run_command = [SiriusSDK.sirius_path, "--output", SiriusSDK.projectspace, "REST", "-p", str(port), "-s"]
+        run_command = [SiriusSDK.sirius_path, "REST", "-p", str(port), "-s"]
             
-        # run_command = "java -jar " + sirius_executable + " --output " + project_space + " REST  -p " + port + " -s"
-        if project_space is not None:
-            path_to_project = os.path.abspath(project_space)
-            run_command = [path_to_executable, "--output", path_to_project, "REST", "-p", str(port), "-s"]
-        else:
-            run_command = [path_to_executable, "REST", "-p", str(port), "-s"]
-            
-        # optional workspace parameter
+        # check for optional workspace parameter
         if workspace is not None:
-            if not os.path.exists(workspace) and not forceStart:
+            if not os.path.exists(workspace):
                 print("Wrong path to workspace")
+                SiriusSDK.reset_sdk_class()
                 return None
-            print("\033[93m [WARNING] Overriding workspace location [NOT RECOMMENDED] \033[0m")
+            print("\033[93m [WARNING] Overwriting workspace location [NOT RECOMMENDED] \033[0m")
+            SiriusSDK.workspace = os.path.abspath(workspace)
             run_command.insert(3, "--workspace")
             run_command.insert(4, workspace)
+        SiriusSDK.run_command = run_command
+
         # run Command
-        SiriusSDK.process = subprocess.Popen(run_command)
+        SiriusSDK.process = subprocess.Popen(SiriusSDK.run_command, stdin=None, stdout=None)
 
-        # Test if start was successfull
-        while not is_up:
-            time.sleep(0.5)
+        # test if start was successfull
+        for _ in range(60):
+            time.sleep(1)
             try:
-                resp = http.request('GET', "http://localhost:" + str(port) + "/actuator/health")
-                if resp.status == 200:
-                    resp_data = json.loads(resp.data.decode('utf-8'))
-                    is_up = resp_data["status"] == "UP"
-                    if is_up:
-                        print("Sirius started succesully on the port " + str(port))
-                        return PySirius.PySiriusAPI(address="http://localhost", port=SiriusSDK.port)
+                if SiriusSDK.process.poll() is None:
+                    if PySirius.ActuatorApi(SiriusSDK.api_client).health().get('status') == 'UP':
+                        SiriusSDK.process_id = SiriusSDK.process.pid
+                        return PySirius.PySiriusAPI(api_client=SiriusSDK.api_client)
+                else: 
+                    print("The SIRIUS process seems to have exited during startup. Please investigate this error.")
+                    print(f"Exit code provided by the process: {SiriusSDK.process.poll()}")
+                    SiriusSDK.reset_sdk_class()
             except Exception as e:
-                print("An Exception occured while interacting with the Api! ["+str(e)+"] ... Proceeding")
+                print(str(e))
 
-    def shutdown():
+        print("SIRIUS seems to have problems starting. Resetting SiriusSDK...")
+        SiriusSDK.reset_sdk_class()
+        return None
+
+
+    def shutdown(self):
         """shuts down the via the start function started sirius rest application, returns the exit code of the shutdown order"""
-        http = urllib3.PoolManager()
-        resp = http.request('POST', "http://localhost:" + str(SiriusSDK.port) + "/actuator/shutdown")
-        if resp.status == 200:
-            # terminated via Rest Call
-            print("Sirius wash shut down succesfully")
+        # terminated via Rest Call
+        try:
+            PySirius.ActuatorApi(SiriusSDK.api_client).shutdown()
+        except Exception as e:
+            print("An Exception occured while trying to gracefully shutdown SIRIUS!")
+            print(str(e))
+        time.sleep(3)
+        if SiriusSDK.process.poll() is not None:
+            print("Sirius was shut down succesfully")
             SiriusSDK.process = None
+            SiriusSDK.process_id = None
             return 0
+        
         # Terminate via SIGTERM
         SiriusSDK.process.terminate()
+        time.sleep(3)
         if SiriusSDK.process.poll() is not None:
-            print("Sirius was shut down forcibly")
+            print("Sirius process has been terminated.")
             SiriusSDK.process = None
+            SiriusSDK.process_id = None
             return 0
+        
         # Terminate via SIGKILL
         SiriusSDK.process.kill()
+        time.sleep(3)
         if SiriusSDK.process.poll() is not None:
-            print("Sirius has been shut down...")
+            print("Sirius process has been killed.")
             SiriusSDK.process = None
+            SiriusSDK.process_id = None
             return 0
+        
         # Termination not successful!
         print("Unable to stop Sirius! - Please manually terminate the process with PID "+ str(SiriusSDK.process.pid))
-        SiriusSDK.process = None
+        print("After terminating the process, use start() to start a new instance of SIRIUS.")
         return 1

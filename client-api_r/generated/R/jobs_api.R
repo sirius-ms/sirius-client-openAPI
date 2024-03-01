@@ -137,8 +137,26 @@
 #' }
 #' }
 #'
-#' \strong{ GetJobs } \emph{ Get job information and its current state and progress (if available). }
-#' Get job information and its current state and progress (if available).
+#' \strong{ GetJobs } \emph{ Get List of all available jobs with information such as current state and progress (if available). }
+#' Get List of all available jobs with information such as current state and progress (if available).
+#'
+#' \itemize{
+#' \item \emph{ @param } project_id character
+#' \item \emph{ @param } opt_fields list( \link{JobOptField} )
+#' \item \emph{ @returnType } list( \link{Job} ) \cr
+#'
+#'
+#' \item status code : 200 | OK
+#'
+#' \item return type : array[Job]
+#' \item response headers :
+#'
+#' \tabular{ll}{
+#' }
+#' }
+#'
+#' \strong{ GetJobsPaged } \emph{ Get Page of jobs with information such as current state and progress (if available). }
+#' Get Page of jobs with information such as current state and progress (if available).
 #'
 #' \itemize{
 #' \item \emph{ @param } project_id character
@@ -203,6 +221,25 @@
 #'
 #'
 #' \item status code : 200 | Job of the command to be executed.
+#'
+#' \item return type : Job
+#' \item response headers :
+#'
+#' \tabular{ll}{
+#' }
+#' }
+#'
+#' \strong{ StartDatabaseImport } \emph{ Start import of structure and spectra files into the specified database. }
+#' Start import of structure and spectra files into the specified database.
+#'
+#' \itemize{
+#' \item \emph{ @param } project_id character
+#' \item \emph{ @param } database_import_submission \link{DatabaseImportSubmission}
+#' \item \emph{ @param } opt_fields list( \link{JobOptField} )
+#' \item \emph{ @returnType } \link{Job} \cr
+#'
+#'
+#' \item status code : 200 | Job of the import command to be executed.
 #'
 #' \item return type : Job
 #' \item response headers :
@@ -395,17 +432,32 @@
 #'
 #' library(Rsirius)
 #' var_project_id <- "project_id_example" # character | project-space to run jobs on
+#' var_opt_fields <- c(JobOptField$new()) # array[JobOptField] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
+#'
+#' #Get List of all available jobs with information such as current state and progress (if available).
+#' api_instance <- rsirius_api$new()
+#'
+#' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
+#' # result <- api_instance$GetJobs(var_project_id, opt_fields = var_opt_fieldsdata_file = "result.txt")
+#' result <- api_instance$jobs_api$GetJobs(var_project_id, opt_fields = var_opt_fields)
+#' dput(result)
+#'
+#'
+#' ####################  GetJobsPaged  ####################
+#'
+#' library(Rsirius)
+#' var_project_id <- "project_id_example" # character | project-space to run jobs on
 #' var_page <- 0 # integer | Zero-based page index (0..N) (Optional)
 #' var_size <- 20 # integer | The size of the page to be returned (Optional)
 #' var_sort <- c("inner_example") # array[character] | Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (Optional)
 #' var_opt_fields <- c(JobOptField$new()) # array[JobOptField] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
 #'
-#' #Get job information and its current state and progress (if available).
+#' #Get Page of jobs with information such as current state and progress (if available).
 #' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-#' # result <- api_instance$GetJobs(var_project_id, page = var_page, size = var_size, sort = var_sort, opt_fields = var_opt_fieldsdata_file = "result.txt")
-#' result <- api_instance$jobs_api$GetJobs(var_project_id, page = var_page, size = var_size, sort = var_sort, opt_fields = var_opt_fields)
+#' # result <- api_instance$GetJobsPaged(var_project_id, page = var_page, size = var_size, sort = var_sort, opt_fields = var_opt_fieldsdata_file = "result.txt")
+#' result <- api_instance$jobs_api$GetJobsPaged(var_project_id, page = var_page, size = var_size, sort = var_sort, opt_fields = var_opt_fields)
 #' dput(result)
 #'
 #'
@@ -427,7 +479,7 @@
 #'
 #' library(Rsirius)
 #' var_name <- "name_example" # character | name of the job-config to add
-#' var_job_submission <- JobSubmission$new(c("compoundIds_example"), c("alignedFeatureIds_example"), c("fallbackAdducts_example"), c("enforcedAdducts_example"), c("detectableAdducts_example"), "recompute_example", SpectralLibrarySearch$new("enabled_example"), Sirius$new("enabled_example", Instrument$new(), 123, 123, 123, "IGNORE", c("formulaSearchDBs_example"), "enforcedFormulaConstraints_example", "fallbackFormulaConstraints_example", c("detectableElements_example"), Timeout$new(123, 123), UseHeuristic$new(123, 123), 123), Zodiac$new("enabled_example", 123, 123, "runInTwoSteps_example", ZodiacEdgeFilterThresholds$new(123, 123, 123), ZodiacEpochs$new(123, 123, 123)), FingerprintPrediction$new("enabled_example", "useScoreThreshold_example", "alwaysPredictHighRefMatches_example"), Canopus$new("enabled_example"), StructureDbSearch$new(c("structureSearchDBs_example"), "enabled_example", "tagStructuresWithLipidClass_example", Mode$new()), MsNovelist$new("enabled_example", 123), c(key = "inner_example")) # JobSubmission | to add
+#' var_job_submission <- JobSubmission$new(c("compoundIds_example"), c("alignedFeatureIds_example"), c("fallbackAdducts_example"), c("enforcedAdducts_example"), c("detectableAdducts_example"), "recompute_example", SpectralLibrarySearch$new(c("spectraSearchDBs_example"), "enabled_example", 123, 123, SpectralAlignmentType$new()), Sirius$new("enabled_example", Instrument$new(), 123, 123, 123, "IGNORE", "filterByIsotopePattern_example", "enforceElGordoFormula_example", "performBottomUpSearch_example", 123, c("formulaSearchDBs_example"), "applyFormulaConstraintsToDBAndBottomUpSearch_example", "enforcedFormulaConstraints_example", "fallbackFormulaConstraints_example", c("detectableElements_example"), Timeout$new(123, 123), UseHeuristic$new(123, 123), 123), Zodiac$new("enabled_example", 123, 123, "runInTwoSteps_example", ZodiacEdgeFilterThresholds$new(123, 123, 123), ZodiacEpochs$new(123, 123, 123)), FingerprintPrediction$new("enabled_example", "useScoreThreshold_example", "alwaysPredictHighRefMatches_example"), Canopus$new("enabled_example"), StructureDbSearch$new(c("structureSearchDBs_example"), "enabled_example", "tagStructuresWithLipidClass_example", Mode$new()), MsNovelist$new("enabled_example", 123), c(key = "inner_example")) # JobSubmission | to add
 #' var_override_existing <- FALSE # character |  (Optional)
 #'
 #' #Add new job configuration with given name.
@@ -452,6 +504,22 @@
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
 #' # result <- api_instance$StartCommand(var_project_id, var_command_submission, opt_fields = var_opt_fieldsdata_file = "result.txt")
 #' result <- api_instance$jobs_api$StartCommand(var_project_id, var_command_submission, opt_fields = var_opt_fields)
+#' dput(result)
+#'
+#'
+#' ####################  StartDatabaseImport  ####################
+#'
+#' library(Rsirius)
+#' var_project_id <- "project_id_example" # character | project-space to perform the command for.
+#' var_database_import_submission <- DatabaseImportSubmission$new("databaseId_example", c("filesToImport_example"), 123) # DatabaseImportSubmission | the command and the input to be executed
+#' var_opt_fields <- c(JobOptField$new()) # array[JobOptField] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
+#'
+#' #Start import of structure and spectra files into the specified database.
+#' api_instance <- rsirius_api$new()
+#'
+#' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
+#' # result <- api_instance$StartDatabaseImport(var_project_id, var_database_import_submission, opt_fields = var_opt_fieldsdata_file = "result.txt")
+#' result <- api_instance$jobs_api$StartDatabaseImport(var_project_id, var_database_import_submission, opt_fields = var_opt_fields)
 #' dput(result)
 #'
 #'
@@ -491,7 +559,7 @@
 #'
 #' library(Rsirius)
 #' var_project_id <- "project_id_example" # character | project-space to run jobs on
-#' var_job_submission <- JobSubmission$new(c("compoundIds_example"), c("alignedFeatureIds_example"), c("fallbackAdducts_example"), c("enforcedAdducts_example"), c("detectableAdducts_example"), "recompute_example", SpectralLibrarySearch$new("enabled_example"), Sirius$new("enabled_example", Instrument$new(), 123, 123, 123, "IGNORE", c("formulaSearchDBs_example"), "enforcedFormulaConstraints_example", "fallbackFormulaConstraints_example", c("detectableElements_example"), Timeout$new(123, 123), UseHeuristic$new(123, 123), 123), Zodiac$new("enabled_example", 123, 123, "runInTwoSteps_example", ZodiacEdgeFilterThresholds$new(123, 123, 123), ZodiacEpochs$new(123, 123, 123)), FingerprintPrediction$new("enabled_example", "useScoreThreshold_example", "alwaysPredictHighRefMatches_example"), Canopus$new("enabled_example"), StructureDbSearch$new(c("structureSearchDBs_example"), "enabled_example", "tagStructuresWithLipidClass_example", Mode$new()), MsNovelist$new("enabled_example", 123), c(key = "inner_example")) # JobSubmission | configuration of the job that will be submitted of the job to be returned
+#' var_job_submission <- JobSubmission$new(c("compoundIds_example"), c("alignedFeatureIds_example"), c("fallbackAdducts_example"), c("enforcedAdducts_example"), c("detectableAdducts_example"), "recompute_example", SpectralLibrarySearch$new(c("spectraSearchDBs_example"), "enabled_example", 123, 123, SpectralAlignmentType$new()), Sirius$new("enabled_example", Instrument$new(), 123, 123, 123, "IGNORE", "filterByIsotopePattern_example", "enforceElGordoFormula_example", "performBottomUpSearch_example", 123, c("formulaSearchDBs_example"), "applyFormulaConstraintsToDBAndBottomUpSearch_example", "enforcedFormulaConstraints_example", "fallbackFormulaConstraints_example", c("detectableElements_example"), Timeout$new(123, 123), UseHeuristic$new(123, 123), 123), Zodiac$new("enabled_example", 123, 123, "runInTwoSteps_example", ZodiacEdgeFilterThresholds$new(123, 123, 123), ZodiacEpochs$new(123, 123, 123)), FingerprintPrediction$new("enabled_example", "useScoreThreshold_example", "alwaysPredictHighRefMatches_example"), Canopus$new("enabled_example"), StructureDbSearch$new(c("structureSearchDBs_example"), "enabled_example", "tagStructuresWithLipidClass_example", Mode$new()), MsNovelist$new("enabled_example", 123), c(key = "inner_example")) # JobSubmission | configuration of the job that will be submitted of the job to be returned
 #' var_opt_fields <- c(JobOptField$new()) # array[JobOptField] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
 #'
 #' #Start computation for given compounds and with given parameters.
@@ -1226,22 +1294,19 @@ JobsApi <- R6::R6Class(
         local_var_resp
       }
     },
-    #' Get job information and its current state and progress (if available).
+    #' Get List of all available jobs with information such as current state and progress (if available).
     #'
     #' @description
-    #' Get job information and its current state and progress (if available).
+    #' Get List of all available jobs with information such as current state and progress (if available).
     #'
     #' @param project_id project-space to run jobs on
-    #' @param page (optional) Zero-based page index (0..N) (default value: 0)
-    #' @param size (optional) The size of the page to be returned (default value: 20)
-    #' @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
     #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [])
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
-    #' @return PageJob
+    #' @return array[Job]
     #' @export
-    GetJobs = function(project_id, page = 0, size = 20, sort = NULL, opt_fields = [], data_file = NULL, ...) {
-      local_var_response <- self$GetJobsWithHttpInfo(project_id, page, size, sort, opt_fields, data_file = data_file, ...)
+    GetJobs = function(project_id, opt_fields = [], data_file = NULL, ...) {
+      local_var_response <- self$GetJobsWithHttpInfo(project_id, opt_fields, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
@@ -1252,10 +1317,118 @@ JobsApi <- R6::R6Class(
         local_var_response
       }
     },
-    #' Get job information and its current state and progress (if available).
+    #' Get List of all available jobs with information such as current state and progress (if available).
     #'
     #' @description
-    #' Get job information and its current state and progress (if available).
+    #' Get List of all available jobs with information such as current state and progress (if available).
+    #'
+    #' @param project_id project-space to run jobs on
+    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [])
+    #' @param data_file (optional) name of the data file to save the result
+    #' @param ... Other optional arguments
+    #' @return API response (array[Job]) with additional information such as HTTP status code, headers
+    #' @export
+    GetJobsWithHttpInfo = function(project_id, opt_fields = [], data_file = NULL, ...) {
+      args <- list(...)
+      query_params <- list()
+      header_params <- c()
+      form_params <- list()
+      file_params <- list()
+      local_var_body <- NULL
+      oauth_scopes <- NULL
+      is_oauth <- FALSE
+
+      if (missing(`project_id`)) {
+        stop("Missing required parameter `project_id`.")
+      }
+
+
+
+      # explore
+      for (query_item in `opt_fields`) {
+        query_params[["optFields"]] <- c(query_params[["optFields"]], list(`optFields` = query_item))
+      }
+
+      local_var_url_path <- "/api/projects/{projectId}/jobs"
+      if (!missing(`project_id`)) {
+        local_var_url_path <- gsub("\\{projectId\\}", URLencode(as.character(`project_id`), reserved = TRUE), local_var_url_path)
+      }
+
+
+      # The Accept request HTTP header
+      local_var_accepts <- list("application/json")
+
+      # The Content-Type representation header
+      local_var_content_types <- list()
+
+      local_var_resp <- self$api_client$CallApi(url = paste0(self$api_client$base_path, local_var_url_path),
+                                 method = "GET",
+                                 query_params = query_params,
+                                 header_params = header_params,
+                                 form_params = form_params,
+                                 file_params = file_params,
+                                 accepts = local_var_accepts,
+                                 content_types = local_var_content_types,
+                                 body = local_var_body,
+                                 is_oauth = is_oauth,
+                                 oauth_scopes = oauth_scopes,
+                                 ...)
+
+      if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
+        # save response in a file
+        if (!is.null(data_file)) {
+          write(local_var_resp$response, data_file)
+        }
+
+        deserialized_resp_obj <- tryCatch(
+          self$api_client$deserialize(local_var_resp$response_as_text(), "array[Job]", loadNamespace("Rsirius")),
+          error = function(e) {
+            stop("Failed to deserialize response")
+          }
+        )
+        local_var_resp$content <- deserialized_resp_obj
+        local_var_resp
+      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
+      } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
+        ApiResponse$new("API client error", local_var_resp)
+      } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
+        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
+          local_var_resp$response <- "API server error"
+        }
+        local_var_resp
+      }
+    },
+    #' Get Page of jobs with information such as current state and progress (if available).
+    #'
+    #' @description
+    #' Get Page of jobs with information such as current state and progress (if available).
+    #'
+    #' @param project_id project-space to run jobs on
+    #' @param page (optional) Zero-based page index (0..N) (default value: 0)
+    #' @param size (optional) The size of the page to be returned (default value: 20)
+    #' @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [])
+    #' @param data_file (optional) name of the data file to save the result
+    #' @param ... Other optional arguments
+    #' @return PageJob
+    #' @export
+    GetJobsPaged = function(project_id, page = 0, size = 20, sort = NULL, opt_fields = [], data_file = NULL, ...) {
+      local_var_response <- self$GetJobsPagedWithHttpInfo(project_id, page, size, sort, opt_fields, data_file = data_file, ...)
+      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
+        local_var_response$content
+      } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
+        local_var_response
+      } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
+        local_var_response
+      } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
+        local_var_response
+      }
+    },
+    #' Get Page of jobs with information such as current state and progress (if available).
+    #'
+    #' @description
+    #' Get Page of jobs with information such as current state and progress (if available).
     #'
     #' @param project_id project-space to run jobs on
     #' @param page (optional) Zero-based page index (0..N) (default value: 0)
@@ -1266,7 +1439,7 @@ JobsApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #' @return API response (PageJob) with additional information such as HTTP status code, headers
     #' @export
-    GetJobsWithHttpInfo = function(project_id, page = 0, size = 20, sort = NULL, opt_fields = [], data_file = NULL, ...) {
+    GetJobsPagedWithHttpInfo = function(project_id, page = 0, size = 20, sort = NULL, opt_fields = [], data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -1282,11 +1455,11 @@ JobsApi <- R6::R6Class(
 
 
       if (`page` < 0) {
-        stop("Invalid value for `page` when calling JobsApi$GetJobs, must be bigger than or equal to 0.")
+        stop("Invalid value for `page` when calling JobsApi$GetJobsPaged, must be bigger than or equal to 0.")
       }
 
       if (`size` < 1) {
-        stop("Invalid value for `size` when calling JobsApi$GetJobs, must be bigger than or equal to 1.")
+        stop("Invalid value for `size` when calling JobsApi$GetJobsPaged, must be bigger than or equal to 1.")
       }
 
 
@@ -1305,7 +1478,7 @@ JobsApi <- R6::R6Class(
         query_params[["optFields"]] <- c(query_params[["optFields"]], list(`optFields` = query_item))
       }
 
-      local_var_url_path <- "/api/projects/{projectId}/jobs"
+      local_var_url_path <- "/api/projects/{projectId}/jobs/page"
       if (!missing(`project_id`)) {
         local_var_url_path <- gsub("\\{projectId\\}", URLencode(as.character(`project_id`), reserved = TRUE), local_var_url_path)
       }
@@ -1641,6 +1814,124 @@ JobsApi <- R6::R6Class(
       }
 
       local_var_url_path <- "/api/{projectId}/jobs/run-command"
+      if (!missing(`project_id`)) {
+        local_var_url_path <- gsub("\\{projectId\\}", URLencode(as.character(`project_id`), reserved = TRUE), local_var_url_path)
+      }
+
+
+      # The Accept request HTTP header
+      local_var_accepts <- list("application/json")
+
+      # The Content-Type representation header
+      local_var_content_types <- list("application/json")
+
+      local_var_resp <- self$api_client$CallApi(url = paste0(self$api_client$base_path, local_var_url_path),
+                                 method = "POST",
+                                 query_params = query_params,
+                                 header_params = header_params,
+                                 form_params = form_params,
+                                 file_params = file_params,
+                                 accepts = local_var_accepts,
+                                 content_types = local_var_content_types,
+                                 body = local_var_body,
+                                 is_oauth = is_oauth,
+                                 oauth_scopes = oauth_scopes,
+                                 ...)
+
+      if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
+        # save response in a file
+        if (!is.null(data_file)) {
+          write(local_var_resp$response, data_file)
+        }
+
+        deserialized_resp_obj <- tryCatch(
+          self$api_client$deserialize(local_var_resp$response_as_text(), "Job", loadNamespace("Rsirius")),
+          error = function(e) {
+            stop("Failed to deserialize response")
+          }
+        )
+        local_var_resp$content <- deserialized_resp_obj
+        local_var_resp
+      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
+      } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
+        ApiResponse$new("API client error", local_var_resp)
+      } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
+        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
+          local_var_resp$response <- "API server error"
+        }
+        local_var_resp
+      }
+    },
+    #' Start import of structure and spectra files into the specified database.
+    #'
+    #' @description
+    #' Start import of structure and spectra files into the specified database.
+    #'
+    #' @param project_id project-space to perform the command for.
+    #' @param database_import_submission the command and the input to be executed
+    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["progress"])
+    #' @param data_file (optional) name of the data file to save the result
+    #' @param ... Other optional arguments
+    #' @return Job
+    #' @export
+    StartDatabaseImport = function(project_id, database_import_submission, opt_fields = ["progress"], data_file = NULL, ...) {
+      local_var_response <- self$StartDatabaseImportWithHttpInfo(project_id, database_import_submission, opt_fields, data_file = data_file, ...)
+      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
+        local_var_response$content
+      } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
+        local_var_response
+      } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
+        local_var_response
+      } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
+        local_var_response
+      }
+    },
+    #' Start import of structure and spectra files into the specified database.
+    #'
+    #' @description
+    #' Start import of structure and spectra files into the specified database.
+    #'
+    #' @param project_id project-space to perform the command for.
+    #' @param database_import_submission the command and the input to be executed
+    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["progress"])
+    #' @param data_file (optional) name of the data file to save the result
+    #' @param ... Other optional arguments
+    #' @return API response (Job) with additional information such as HTTP status code, headers
+    #' @export
+    StartDatabaseImportWithHttpInfo = function(project_id, database_import_submission, opt_fields = ["progress"], data_file = NULL, ...) {
+      args <- list(...)
+      query_params <- list()
+      header_params <- c()
+      form_params <- list()
+      file_params <- list()
+      local_var_body <- NULL
+      oauth_scopes <- NULL
+      is_oauth <- FALSE
+
+      if (missing(`project_id`)) {
+        stop("Missing required parameter `project_id`.")
+      }
+
+      if (missing(`database_import_submission`)) {
+        stop("Missing required parameter `database_import_submission`.")
+      }
+
+
+
+
+      # explore
+      for (query_item in `opt_fields`) {
+        query_params[["optFields"]] <- c(query_params[["optFields"]], list(`optFields` = query_item))
+      }
+
+      if (!is.null(`database_import_submission`)) {
+        local_var_body <- `database_import_submission`$toJSONString()
+      } else {
+        body <- NULL
+      }
+
+      local_var_url_path <- "/api/{projectId}/jobs/import-db"
       if (!missing(`project_id`)) {
         local_var_url_path <- gsub("\\{projectId\\}", URLencode(as.character(`project_id`), reserved = TRUE), local_var_url_path)
       }

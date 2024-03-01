@@ -34,10 +34,14 @@ from PySirius.models.lipid_annotation import LipidAnnotation
 from PySirius.models.ms_data import MsData
 from PySirius.models.page_aligned_feature import PageAlignedFeature
 from PySirius.models.page_formula_candidate import PageFormulaCandidate
+from PySirius.models.page_spectral_library_match import PageSpectralLibraryMatch
 from PySirius.models.page_structure_candidate_formula import PageStructureCandidateFormula
 from PySirius.models.page_structure_candidate_scored import PageStructureCandidateScored
-from PySirius.models.search_query_type import SearchQueryType
+from PySirius.models.spectral_library_match import SpectralLibraryMatch
+from PySirius.models.spectral_library_match_opt_field import SpectralLibraryMatchOptField
+from PySirius.models.structure_candidate_formula import StructureCandidateFormula
 from PySirius.models.structure_candidate_opt_field import StructureCandidateOptField
+from PySirius.models.structure_candidate_scored import StructureCandidateScored
 
 from PySirius.api_client import ApiClient, RequestSerialized
 from PySirius.api_response import ApiResponse
@@ -918,11 +922,284 @@ class FeaturesApi:
     def get_aligned_features(
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
+        opt_fields: Annotated[Optional[List[Optional[AlignedFeatureOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> List[AlignedFeature]:
+        """Get all available features (aligned over runs) in the given project-space.
+
+        Get all available features (aligned over runs) in the given project-space.
+
+        :param project_id: project-space to read from. (required)
+        :type project_id: str
+        :param opt_fields: set of optional fields to be included. Use 'none' only to override defaults.
+        :type opt_fields: List[AlignedFeatureOptField]
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_aligned_features_serialize(
+            project_id=project_id,
+            opt_fields=opt_fields,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "List[AlignedFeature]",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def get_aligned_features_with_http_info(
+        self,
+        project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
+        opt_fields: Annotated[Optional[List[Optional[AlignedFeatureOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[List[AlignedFeature]]:
+        """Get all available features (aligned over runs) in the given project-space.
+
+        Get all available features (aligned over runs) in the given project-space.
+
+        :param project_id: project-space to read from. (required)
+        :type project_id: str
+        :param opt_fields: set of optional fields to be included. Use 'none' only to override defaults.
+        :type opt_fields: List[AlignedFeatureOptField]
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_aligned_features_serialize(
+            project_id=project_id,
+            opt_fields=opt_fields,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "List[AlignedFeature]",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def get_aligned_features_without_preload_content(
+        self,
+        project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
+        opt_fields: Annotated[Optional[List[Optional[AlignedFeatureOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Get all available features (aligned over runs) in the given project-space.
+
+        Get all available features (aligned over runs) in the given project-space.
+
+        :param project_id: project-space to read from. (required)
+        :type project_id: str
+        :param opt_fields: set of optional fields to be included. Use 'none' only to override defaults.
+        :type opt_fields: List[AlignedFeatureOptField]
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_aligned_features_serialize(
+            project_id=project_id,
+            opt_fields=opt_fields,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "List[AlignedFeature]",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _get_aligned_features_serialize(
+        self,
+        project_id,
+        opt_fields,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+            'optFields': 'multi',
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[str, str] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if project_id is not None:
+            _path_params['projectId'] = project_id
+        # process the query parameters
+        if opt_fields is not None:
+            
+            _query_params.append(('optFields', opt_fields))
+            
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            [
+                'application/json'
+            ]
+        )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/api/projects/{projectId}/aligned-features',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def get_aligned_features_paged(
+        self,
+        project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
         page: Annotated[Optional[Annotated[int, Field(strict=True, ge=0)]], Field(description="Zero-based page index (0..N)")] = None,
         size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
         sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
-        search_query: Annotated[Optional[StrictStr], Field(description="optional search query in specified format")] = None,
-        query_syntax: Annotated[Optional[SearchQueryType], Field(description="query syntax used fpr searchQuery")] = None,
         opt_fields: Annotated[Optional[List[Optional[AlignedFeatureOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
@@ -949,10 +1226,6 @@ class FeaturesApi:
         :type size: int
         :param sort: Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
         :type sort: List[str]
-        :param search_query: optional search query in specified format
-        :type search_query: str
-        :param query_syntax: query syntax used fpr searchQuery
-        :type query_syntax: SearchQueryType
         :param opt_fields: set of optional fields to be included. Use 'none' only to override defaults.
         :type opt_fields: List[AlignedFeatureOptField]
         :param _request_timeout: timeout setting for this request. If one
@@ -977,13 +1250,11 @@ class FeaturesApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._get_aligned_features_serialize(
+        _param = self._get_aligned_features_paged_serialize(
             project_id=project_id,
             page=page,
             size=size,
             sort=sort,
-            search_query=search_query,
-            query_syntax=query_syntax,
             opt_fields=opt_fields,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -1006,14 +1277,12 @@ class FeaturesApi:
 
 
     @validate_call
-    def get_aligned_features_with_http_info(
+    def get_aligned_features_paged_with_http_info(
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
         page: Annotated[Optional[Annotated[int, Field(strict=True, ge=0)]], Field(description="Zero-based page index (0..N)")] = None,
         size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
         sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
-        search_query: Annotated[Optional[StrictStr], Field(description="optional search query in specified format")] = None,
-        query_syntax: Annotated[Optional[SearchQueryType], Field(description="query syntax used fpr searchQuery")] = None,
         opt_fields: Annotated[Optional[List[Optional[AlignedFeatureOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
@@ -1040,10 +1309,6 @@ class FeaturesApi:
         :type size: int
         :param sort: Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
         :type sort: List[str]
-        :param search_query: optional search query in specified format
-        :type search_query: str
-        :param query_syntax: query syntax used fpr searchQuery
-        :type query_syntax: SearchQueryType
         :param opt_fields: set of optional fields to be included. Use 'none' only to override defaults.
         :type opt_fields: List[AlignedFeatureOptField]
         :param _request_timeout: timeout setting for this request. If one
@@ -1068,13 +1333,11 @@ class FeaturesApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._get_aligned_features_serialize(
+        _param = self._get_aligned_features_paged_serialize(
             project_id=project_id,
             page=page,
             size=size,
             sort=sort,
-            search_query=search_query,
-            query_syntax=query_syntax,
             opt_fields=opt_fields,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -1097,14 +1360,12 @@ class FeaturesApi:
 
 
     @validate_call
-    def get_aligned_features_without_preload_content(
+    def get_aligned_features_paged_without_preload_content(
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
         page: Annotated[Optional[Annotated[int, Field(strict=True, ge=0)]], Field(description="Zero-based page index (0..N)")] = None,
         size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
         sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
-        search_query: Annotated[Optional[StrictStr], Field(description="optional search query in specified format")] = None,
-        query_syntax: Annotated[Optional[SearchQueryType], Field(description="query syntax used fpr searchQuery")] = None,
         opt_fields: Annotated[Optional[List[Optional[AlignedFeatureOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
@@ -1131,10 +1392,6 @@ class FeaturesApi:
         :type size: int
         :param sort: Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
         :type sort: List[str]
-        :param search_query: optional search query in specified format
-        :type search_query: str
-        :param query_syntax: query syntax used fpr searchQuery
-        :type query_syntax: SearchQueryType
         :param opt_fields: set of optional fields to be included. Use 'none' only to override defaults.
         :type opt_fields: List[AlignedFeatureOptField]
         :param _request_timeout: timeout setting for this request. If one
@@ -1159,13 +1416,11 @@ class FeaturesApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._get_aligned_features_serialize(
+        _param = self._get_aligned_features_paged_serialize(
             project_id=project_id,
             page=page,
             size=size,
             sort=sort,
-            search_query=search_query,
-            query_syntax=query_syntax,
             opt_fields=opt_fields,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -1183,14 +1438,12 @@ class FeaturesApi:
         return response_data.response
 
 
-    def _get_aligned_features_serialize(
+    def _get_aligned_features_paged_serialize(
         self,
         project_id,
         page,
         size,
         sort,
-        search_query,
-        query_syntax,
         opt_fields,
         _request_auth,
         _content_type,
@@ -1228,14 +1481,6 @@ class FeaturesApi:
             
             _query_params.append(('sort', sort))
             
-        if search_query is not None:
-            
-            _query_params.append(('searchQuery', search_query))
-            
-        if query_syntax is not None:
-            
-            _query_params.append(('querySyntax', query_syntax.value))
-            
         if opt_fields is not None:
             
             _query_params.append(('optFields', opt_fields))
@@ -1259,7 +1504,7 @@ class FeaturesApi:
 
         return self.api_client.param_serialize(
             method='GET',
-            resource_path='/api/projects/{projectId}/aligned-features',
+            resource_path='/api/projects/{projectId}/aligned-features/page',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -3037,11 +3282,6 @@ class FeaturesApi:
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
         aligned_feature_id: Annotated[StrictStr, Field(description="feature (aligned over runs) the formula result belongs to.")],
-        page: Annotated[Optional[Annotated[int, Field(strict=True, ge=0)]], Field(description="Zero-based page index (0..N)")] = None,
-        size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
-        sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
-        search_query: Annotated[Optional[StrictStr], Field(description="optional search query in specified format")] = None,
-        query_syntax: Annotated[Optional[SearchQueryType], Field(description="query syntax used fpr searchQuery")] = None,
         opt_fields: Annotated[Optional[List[Optional[FormulaCandidateOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
@@ -3055,25 +3295,15 @@ class FeaturesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> PageFormulaCandidate:
-        """List of all FormulaResultContainers available for this feature with minimal information.
+    ) -> List[FormulaCandidate]:
+        """List of FormulaResultContainers available for this feature with minimal information.
 
-        List of all FormulaResultContainers available for this feature with minimal information.  Can be enriched with an optional results overview.
+        List of FormulaResultContainers available for this feature with minimal information.  Can be enriched with an optional results overview.
 
         :param project_id: project-space to read from. (required)
         :type project_id: str
         :param aligned_feature_id: feature (aligned over runs) the formula result belongs to. (required)
         :type aligned_feature_id: str
-        :param page: Zero-based page index (0..N)
-        :type page: int
-        :param size: The size of the page to be returned
-        :type size: int
-        :param sort: Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
-        :type sort: List[str]
-        :param search_query: optional search query in specified format
-        :type search_query: str
-        :param query_syntax: query syntax used fpr searchQuery
-        :type query_syntax: SearchQueryType
         :param opt_fields: set of optional fields to be included. Use 'none' only to override defaults.
         :type opt_fields: List[FormulaCandidateOptField]
         :param _request_timeout: timeout setting for this request. If one
@@ -3101,11 +3331,308 @@ class FeaturesApi:
         _param = self._get_formula_candidates_serialize(
             project_id=project_id,
             aligned_feature_id=aligned_feature_id,
+            opt_fields=opt_fields,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "List[FormulaCandidate]",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def get_formula_candidates_with_http_info(
+        self,
+        project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
+        aligned_feature_id: Annotated[StrictStr, Field(description="feature (aligned over runs) the formula result belongs to.")],
+        opt_fields: Annotated[Optional[List[Optional[FormulaCandidateOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[List[FormulaCandidate]]:
+        """List of FormulaResultContainers available for this feature with minimal information.
+
+        List of FormulaResultContainers available for this feature with minimal information.  Can be enriched with an optional results overview.
+
+        :param project_id: project-space to read from. (required)
+        :type project_id: str
+        :param aligned_feature_id: feature (aligned over runs) the formula result belongs to. (required)
+        :type aligned_feature_id: str
+        :param opt_fields: set of optional fields to be included. Use 'none' only to override defaults.
+        :type opt_fields: List[FormulaCandidateOptField]
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_formula_candidates_serialize(
+            project_id=project_id,
+            aligned_feature_id=aligned_feature_id,
+            opt_fields=opt_fields,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "List[FormulaCandidate]",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def get_formula_candidates_without_preload_content(
+        self,
+        project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
+        aligned_feature_id: Annotated[StrictStr, Field(description="feature (aligned over runs) the formula result belongs to.")],
+        opt_fields: Annotated[Optional[List[Optional[FormulaCandidateOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """List of FormulaResultContainers available for this feature with minimal information.
+
+        List of FormulaResultContainers available for this feature with minimal information.  Can be enriched with an optional results overview.
+
+        :param project_id: project-space to read from. (required)
+        :type project_id: str
+        :param aligned_feature_id: feature (aligned over runs) the formula result belongs to. (required)
+        :type aligned_feature_id: str
+        :param opt_fields: set of optional fields to be included. Use 'none' only to override defaults.
+        :type opt_fields: List[FormulaCandidateOptField]
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_formula_candidates_serialize(
+            project_id=project_id,
+            aligned_feature_id=aligned_feature_id,
+            opt_fields=opt_fields,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "List[FormulaCandidate]",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _get_formula_candidates_serialize(
+        self,
+        project_id,
+        aligned_feature_id,
+        opt_fields,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+            'optFields': 'multi',
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[str, str] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if project_id is not None:
+            _path_params['projectId'] = project_id
+        if aligned_feature_id is not None:
+            _path_params['alignedFeatureId'] = aligned_feature_id
+        # process the query parameters
+        if opt_fields is not None:
+            
+            _query_params.append(('optFields', opt_fields))
+            
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            [
+                'application/json'
+            ]
+        )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def get_formula_candidates_paged(
+        self,
+        project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
+        aligned_feature_id: Annotated[StrictStr, Field(description="feature (aligned over runs) the formula result belongs to.")],
+        page: Annotated[Optional[Annotated[int, Field(strict=True, ge=0)]], Field(description="Zero-based page index (0..N)")] = None,
+        size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
+        sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[FormulaCandidateOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> PageFormulaCandidate:
+        """Page of FormulaResultContainers available for this feature with minimal information.
+
+        Page of FormulaResultContainers available for this feature with minimal information.  Can be enriched with an optional results overview.
+
+        :param project_id: project-space to read from. (required)
+        :type project_id: str
+        :param aligned_feature_id: feature (aligned over runs) the formula result belongs to. (required)
+        :type aligned_feature_id: str
+        :param page: Zero-based page index (0..N)
+        :type page: int
+        :param size: The size of the page to be returned
+        :type size: int
+        :param sort: Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+        :type sort: List[str]
+        :param opt_fields: set of optional fields to be included. Use 'none' only to override defaults.
+        :type opt_fields: List[FormulaCandidateOptField]
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_formula_candidates_paged_serialize(
+            project_id=project_id,
+            aligned_feature_id=aligned_feature_id,
             page=page,
             size=size,
             sort=sort,
-            search_query=search_query,
-            query_syntax=query_syntax,
             opt_fields=opt_fields,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -3128,15 +3655,13 @@ class FeaturesApi:
 
 
     @validate_call
-    def get_formula_candidates_with_http_info(
+    def get_formula_candidates_paged_with_http_info(
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
         aligned_feature_id: Annotated[StrictStr, Field(description="feature (aligned over runs) the formula result belongs to.")],
         page: Annotated[Optional[Annotated[int, Field(strict=True, ge=0)]], Field(description="Zero-based page index (0..N)")] = None,
         size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
         sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
-        search_query: Annotated[Optional[StrictStr], Field(description="optional search query in specified format")] = None,
-        query_syntax: Annotated[Optional[SearchQueryType], Field(description="query syntax used fpr searchQuery")] = None,
         opt_fields: Annotated[Optional[List[Optional[FormulaCandidateOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
@@ -3151,9 +3676,9 @@ class FeaturesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[PageFormulaCandidate]:
-        """List of all FormulaResultContainers available for this feature with minimal information.
+        """Page of FormulaResultContainers available for this feature with minimal information.
 
-        List of all FormulaResultContainers available for this feature with minimal information.  Can be enriched with an optional results overview.
+        Page of FormulaResultContainers available for this feature with minimal information.  Can be enriched with an optional results overview.
 
         :param project_id: project-space to read from. (required)
         :type project_id: str
@@ -3165,10 +3690,6 @@ class FeaturesApi:
         :type size: int
         :param sort: Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
         :type sort: List[str]
-        :param search_query: optional search query in specified format
-        :type search_query: str
-        :param query_syntax: query syntax used fpr searchQuery
-        :type query_syntax: SearchQueryType
         :param opt_fields: set of optional fields to be included. Use 'none' only to override defaults.
         :type opt_fields: List[FormulaCandidateOptField]
         :param _request_timeout: timeout setting for this request. If one
@@ -3193,14 +3714,12 @@ class FeaturesApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._get_formula_candidates_serialize(
+        _param = self._get_formula_candidates_paged_serialize(
             project_id=project_id,
             aligned_feature_id=aligned_feature_id,
             page=page,
             size=size,
             sort=sort,
-            search_query=search_query,
-            query_syntax=query_syntax,
             opt_fields=opt_fields,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -3223,15 +3742,13 @@ class FeaturesApi:
 
 
     @validate_call
-    def get_formula_candidates_without_preload_content(
+    def get_formula_candidates_paged_without_preload_content(
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
         aligned_feature_id: Annotated[StrictStr, Field(description="feature (aligned over runs) the formula result belongs to.")],
         page: Annotated[Optional[Annotated[int, Field(strict=True, ge=0)]], Field(description="Zero-based page index (0..N)")] = None,
         size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
         sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
-        search_query: Annotated[Optional[StrictStr], Field(description="optional search query in specified format")] = None,
-        query_syntax: Annotated[Optional[SearchQueryType], Field(description="query syntax used fpr searchQuery")] = None,
         opt_fields: Annotated[Optional[List[Optional[FormulaCandidateOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
@@ -3246,9 +3763,9 @@ class FeaturesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """List of all FormulaResultContainers available for this feature with minimal information.
+        """Page of FormulaResultContainers available for this feature with minimal information.
 
-        List of all FormulaResultContainers available for this feature with minimal information.  Can be enriched with an optional results overview.
+        Page of FormulaResultContainers available for this feature with minimal information.  Can be enriched with an optional results overview.
 
         :param project_id: project-space to read from. (required)
         :type project_id: str
@@ -3260,10 +3777,6 @@ class FeaturesApi:
         :type size: int
         :param sort: Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
         :type sort: List[str]
-        :param search_query: optional search query in specified format
-        :type search_query: str
-        :param query_syntax: query syntax used fpr searchQuery
-        :type query_syntax: SearchQueryType
         :param opt_fields: set of optional fields to be included. Use 'none' only to override defaults.
         :type opt_fields: List[FormulaCandidateOptField]
         :param _request_timeout: timeout setting for this request. If one
@@ -3288,14 +3801,12 @@ class FeaturesApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._get_formula_candidates_serialize(
+        _param = self._get_formula_candidates_paged_serialize(
             project_id=project_id,
             aligned_feature_id=aligned_feature_id,
             page=page,
             size=size,
             sort=sort,
-            search_query=search_query,
-            query_syntax=query_syntax,
             opt_fields=opt_fields,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -3313,15 +3824,13 @@ class FeaturesApi:
         return response_data.response
 
 
-    def _get_formula_candidates_serialize(
+    def _get_formula_candidates_paged_serialize(
         self,
         project_id,
         aligned_feature_id,
         page,
         size,
         sort,
-        search_query,
-        query_syntax,
         opt_fields,
         _request_auth,
         _content_type,
@@ -3361,14 +3870,6 @@ class FeaturesApi:
             
             _query_params.append(('sort', sort))
             
-        if search_query is not None:
-            
-            _query_params.append(('searchQuery', search_query))
-            
-        if query_syntax is not None:
-            
-            _query_params.append(('querySyntax', query_syntax.value))
-            
         if opt_fields is not None:
             
             _query_params.append(('optFields', opt_fields))
@@ -3392,7 +3893,7 @@ class FeaturesApi:
 
         return self.api_client.param_serialize(
             method='GET',
-            resource_path='/api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas',
+            resource_path='/api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/page',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -4829,6 +5330,638 @@ class FeaturesApi:
 
 
     @validate_call
+    def get_spectral_library_matches(
+        self,
+        project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
+        aligned_feature_id: Annotated[StrictStr, Field(description="feature (aligned over runs) the structure candidates belong to.")],
+        opt_fields: Optional[List[Optional[SpectralLibraryMatchOptField]]] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> List[SpectralLibraryMatch]:
+        """List of spectral library matches for the given 'alignedFeatureId'.
+
+        List of spectral library matches for the given 'alignedFeatureId'.
+
+        :param project_id: project-space to read from. (required)
+        :type project_id: str
+        :param aligned_feature_id: feature (aligned over runs) the structure candidates belong to. (required)
+        :type aligned_feature_id: str
+        :param opt_fields:
+        :type opt_fields: List[SpectralLibraryMatchOptField]
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_spectral_library_matches_serialize(
+            project_id=project_id,
+            aligned_feature_id=aligned_feature_id,
+            opt_fields=opt_fields,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "List[SpectralLibraryMatch]",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def get_spectral_library_matches_with_http_info(
+        self,
+        project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
+        aligned_feature_id: Annotated[StrictStr, Field(description="feature (aligned over runs) the structure candidates belong to.")],
+        opt_fields: Optional[List[Optional[SpectralLibraryMatchOptField]]] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[List[SpectralLibraryMatch]]:
+        """List of spectral library matches for the given 'alignedFeatureId'.
+
+        List of spectral library matches for the given 'alignedFeatureId'.
+
+        :param project_id: project-space to read from. (required)
+        :type project_id: str
+        :param aligned_feature_id: feature (aligned over runs) the structure candidates belong to. (required)
+        :type aligned_feature_id: str
+        :param opt_fields:
+        :type opt_fields: List[SpectralLibraryMatchOptField]
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_spectral_library_matches_serialize(
+            project_id=project_id,
+            aligned_feature_id=aligned_feature_id,
+            opt_fields=opt_fields,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "List[SpectralLibraryMatch]",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def get_spectral_library_matches_without_preload_content(
+        self,
+        project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
+        aligned_feature_id: Annotated[StrictStr, Field(description="feature (aligned over runs) the structure candidates belong to.")],
+        opt_fields: Optional[List[Optional[SpectralLibraryMatchOptField]]] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """List of spectral library matches for the given 'alignedFeatureId'.
+
+        List of spectral library matches for the given 'alignedFeatureId'.
+
+        :param project_id: project-space to read from. (required)
+        :type project_id: str
+        :param aligned_feature_id: feature (aligned over runs) the structure candidates belong to. (required)
+        :type aligned_feature_id: str
+        :param opt_fields:
+        :type opt_fields: List[SpectralLibraryMatchOptField]
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_spectral_library_matches_serialize(
+            project_id=project_id,
+            aligned_feature_id=aligned_feature_id,
+            opt_fields=opt_fields,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "List[SpectralLibraryMatch]",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _get_spectral_library_matches_serialize(
+        self,
+        project_id,
+        aligned_feature_id,
+        opt_fields,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+            'optFields': 'multi',
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[str, str] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if project_id is not None:
+            _path_params['projectId'] = project_id
+        if aligned_feature_id is not None:
+            _path_params['alignedFeatureId'] = aligned_feature_id
+        # process the query parameters
+        if opt_fields is not None:
+            
+            _query_params.append(('optFields', opt_fields))
+            
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            [
+                'application/json'
+            ]
+        )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/api/projects/{projectId}/aligned-features/{alignedFeatureId}/spectral-library-matches',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def get_spectral_library_matches_paged(
+        self,
+        project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
+        aligned_feature_id: Annotated[StrictStr, Field(description="feature (aligned over runs) the structure candidates belong to.")],
+        page: Annotated[Optional[Annotated[int, Field(strict=True, ge=0)]], Field(description="Zero-based page index (0..N)")] = None,
+        size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
+        sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
+        opt_fields: Optional[List[Optional[SpectralLibraryMatchOptField]]] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> PageSpectralLibraryMatch:
+        """Page of spectral library matches for the given 'alignedFeatureId'.
+
+        Page of spectral library matches for the given 'alignedFeatureId'.
+
+        :param project_id: project-space to read from. (required)
+        :type project_id: str
+        :param aligned_feature_id: feature (aligned over runs) the structure candidates belong to. (required)
+        :type aligned_feature_id: str
+        :param page: Zero-based page index (0..N)
+        :type page: int
+        :param size: The size of the page to be returned
+        :type size: int
+        :param sort: Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+        :type sort: List[str]
+        :param opt_fields:
+        :type opt_fields: List[SpectralLibraryMatchOptField]
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_spectral_library_matches_paged_serialize(
+            project_id=project_id,
+            aligned_feature_id=aligned_feature_id,
+            page=page,
+            size=size,
+            sort=sort,
+            opt_fields=opt_fields,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PageSpectralLibraryMatch",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def get_spectral_library_matches_paged_with_http_info(
+        self,
+        project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
+        aligned_feature_id: Annotated[StrictStr, Field(description="feature (aligned over runs) the structure candidates belong to.")],
+        page: Annotated[Optional[Annotated[int, Field(strict=True, ge=0)]], Field(description="Zero-based page index (0..N)")] = None,
+        size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
+        sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
+        opt_fields: Optional[List[Optional[SpectralLibraryMatchOptField]]] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[PageSpectralLibraryMatch]:
+        """Page of spectral library matches for the given 'alignedFeatureId'.
+
+        Page of spectral library matches for the given 'alignedFeatureId'.
+
+        :param project_id: project-space to read from. (required)
+        :type project_id: str
+        :param aligned_feature_id: feature (aligned over runs) the structure candidates belong to. (required)
+        :type aligned_feature_id: str
+        :param page: Zero-based page index (0..N)
+        :type page: int
+        :param size: The size of the page to be returned
+        :type size: int
+        :param sort: Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+        :type sort: List[str]
+        :param opt_fields:
+        :type opt_fields: List[SpectralLibraryMatchOptField]
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_spectral_library_matches_paged_serialize(
+            project_id=project_id,
+            aligned_feature_id=aligned_feature_id,
+            page=page,
+            size=size,
+            sort=sort,
+            opt_fields=opt_fields,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PageSpectralLibraryMatch",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def get_spectral_library_matches_paged_without_preload_content(
+        self,
+        project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
+        aligned_feature_id: Annotated[StrictStr, Field(description="feature (aligned over runs) the structure candidates belong to.")],
+        page: Annotated[Optional[Annotated[int, Field(strict=True, ge=0)]], Field(description="Zero-based page index (0..N)")] = None,
+        size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
+        sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
+        opt_fields: Optional[List[Optional[SpectralLibraryMatchOptField]]] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Page of spectral library matches for the given 'alignedFeatureId'.
+
+        Page of spectral library matches for the given 'alignedFeatureId'.
+
+        :param project_id: project-space to read from. (required)
+        :type project_id: str
+        :param aligned_feature_id: feature (aligned over runs) the structure candidates belong to. (required)
+        :type aligned_feature_id: str
+        :param page: Zero-based page index (0..N)
+        :type page: int
+        :param size: The size of the page to be returned
+        :type size: int
+        :param sort: Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+        :type sort: List[str]
+        :param opt_fields:
+        :type opt_fields: List[SpectralLibraryMatchOptField]
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_spectral_library_matches_paged_serialize(
+            project_id=project_id,
+            aligned_feature_id=aligned_feature_id,
+            page=page,
+            size=size,
+            sort=sort,
+            opt_fields=opt_fields,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PageSpectralLibraryMatch",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _get_spectral_library_matches_paged_serialize(
+        self,
+        project_id,
+        aligned_feature_id,
+        page,
+        size,
+        sort,
+        opt_fields,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+            'sort': 'multi',
+            'optFields': 'multi',
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[str, str] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if project_id is not None:
+            _path_params['projectId'] = project_id
+        if aligned_feature_id is not None:
+            _path_params['alignedFeatureId'] = aligned_feature_id
+        # process the query parameters
+        if page is not None:
+            
+            _query_params.append(('page', page))
+            
+        if size is not None:
+            
+            _query_params.append(('size', size))
+            
+        if sort is not None:
+            
+            _query_params.append(('sort', sort))
+            
+        if opt_fields is not None:
+            
+            _query_params.append(('optFields', opt_fields))
+            
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            [
+                'application/json'
+            ]
+        )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/api/projects/{projectId}/aligned-features/{alignedFeatureId}/spectral-library-matches/page',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
     def get_structure_annotated_ms_data(
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
@@ -5454,11 +6587,6 @@ class FeaturesApi:
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
         aligned_feature_id: Annotated[StrictStr, Field(description="feature (aligned over runs) the structure candidates belong to.")],
-        page: Annotated[Optional[Annotated[int, Field(strict=True, ge=0)]], Field(description="Zero-based page index (0..N)")] = None,
-        size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
-        sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
-        search_query: Annotated[Optional[StrictStr], Field(description="optional search query in specified format")] = None,
-        query_syntax: Annotated[Optional[SearchQueryType], Field(description="query syntax used fpr searchQuery")] = None,
         opt_fields: Annotated[Optional[List[Optional[StructureCandidateOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
@@ -5472,7 +6600,7 @@ class FeaturesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> PageStructureCandidateFormula:
+    ) -> List[StructureCandidateFormula]:
         """List of StructureCandidates for the given 'alignedFeatureId' with minimal information.
 
         List of StructureCandidates for the given 'alignedFeatureId' with minimal information.  StructureCandidates can be enriched with molecular fingerprint, structure database links.
@@ -5481,16 +6609,6 @@ class FeaturesApi:
         :type project_id: str
         :param aligned_feature_id: feature (aligned over runs) the structure candidates belong to. (required)
         :type aligned_feature_id: str
-        :param page: Zero-based page index (0..N)
-        :type page: int
-        :param size: The size of the page to be returned
-        :type size: int
-        :param sort: Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
-        :type sort: List[str]
-        :param search_query: optional search query in specified format
-        :type search_query: str
-        :param query_syntax: query syntax used fpr searchQuery
-        :type query_syntax: SearchQueryType
         :param opt_fields: set of optional fields to be included. Use 'none' only to override defaults.
         :type opt_fields: List[StructureCandidateOptField]
         :param _request_timeout: timeout setting for this request. If one
@@ -5518,11 +6636,6 @@ class FeaturesApi:
         _param = self._get_structure_candidates_serialize(
             project_id=project_id,
             aligned_feature_id=aligned_feature_id,
-            page=page,
-            size=size,
-            sort=sort,
-            search_query=search_query,
-            query_syntax=query_syntax,
             opt_fields=opt_fields,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -5531,7 +6644,7 @@ class FeaturesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "PageStructureCandidateFormula",
+            '200': "List[StructureCandidateFormula]",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -5549,11 +6662,6 @@ class FeaturesApi:
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
         aligned_feature_id: Annotated[StrictStr, Field(description="feature (aligned over runs) the structure candidates belong to.")],
-        page: Annotated[Optional[Annotated[int, Field(strict=True, ge=0)]], Field(description="Zero-based page index (0..N)")] = None,
-        size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
-        sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
-        search_query: Annotated[Optional[StrictStr], Field(description="optional search query in specified format")] = None,
-        query_syntax: Annotated[Optional[SearchQueryType], Field(description="query syntax used fpr searchQuery")] = None,
         opt_fields: Annotated[Optional[List[Optional[StructureCandidateOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
@@ -5567,7 +6675,7 @@ class FeaturesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[PageStructureCandidateFormula]:
+    ) -> ApiResponse[List[StructureCandidateFormula]]:
         """List of StructureCandidates for the given 'alignedFeatureId' with minimal information.
 
         List of StructureCandidates for the given 'alignedFeatureId' with minimal information.  StructureCandidates can be enriched with molecular fingerprint, structure database links.
@@ -5576,16 +6684,6 @@ class FeaturesApi:
         :type project_id: str
         :param aligned_feature_id: feature (aligned over runs) the structure candidates belong to. (required)
         :type aligned_feature_id: str
-        :param page: Zero-based page index (0..N)
-        :type page: int
-        :param size: The size of the page to be returned
-        :type size: int
-        :param sort: Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
-        :type sort: List[str]
-        :param search_query: optional search query in specified format
-        :type search_query: str
-        :param query_syntax: query syntax used fpr searchQuery
-        :type query_syntax: SearchQueryType
         :param opt_fields: set of optional fields to be included. Use 'none' only to override defaults.
         :type opt_fields: List[StructureCandidateOptField]
         :param _request_timeout: timeout setting for this request. If one
@@ -5613,11 +6711,6 @@ class FeaturesApi:
         _param = self._get_structure_candidates_serialize(
             project_id=project_id,
             aligned_feature_id=aligned_feature_id,
-            page=page,
-            size=size,
-            sort=sort,
-            search_query=search_query,
-            query_syntax=query_syntax,
             opt_fields=opt_fields,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -5626,7 +6719,7 @@ class FeaturesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "PageStructureCandidateFormula",
+            '200': "List[StructureCandidateFormula]",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -5644,11 +6737,6 @@ class FeaturesApi:
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
         aligned_feature_id: Annotated[StrictStr, Field(description="feature (aligned over runs) the structure candidates belong to.")],
-        page: Annotated[Optional[Annotated[int, Field(strict=True, ge=0)]], Field(description="Zero-based page index (0..N)")] = None,
-        size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
-        sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
-        search_query: Annotated[Optional[StrictStr], Field(description="optional search query in specified format")] = None,
-        query_syntax: Annotated[Optional[SearchQueryType], Field(description="query syntax used fpr searchQuery")] = None,
         opt_fields: Annotated[Optional[List[Optional[StructureCandidateOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
@@ -5671,16 +6759,6 @@ class FeaturesApi:
         :type project_id: str
         :param aligned_feature_id: feature (aligned over runs) the structure candidates belong to. (required)
         :type aligned_feature_id: str
-        :param page: Zero-based page index (0..N)
-        :type page: int
-        :param size: The size of the page to be returned
-        :type size: int
-        :param sort: Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
-        :type sort: List[str]
-        :param search_query: optional search query in specified format
-        :type search_query: str
-        :param query_syntax: query syntax used fpr searchQuery
-        :type query_syntax: SearchQueryType
         :param opt_fields: set of optional fields to be included. Use 'none' only to override defaults.
         :type opt_fields: List[StructureCandidateOptField]
         :param _request_timeout: timeout setting for this request. If one
@@ -5708,11 +6786,6 @@ class FeaturesApi:
         _param = self._get_structure_candidates_serialize(
             project_id=project_id,
             aligned_feature_id=aligned_feature_id,
-            page=page,
-            size=size,
-            sort=sort,
-            search_query=search_query,
-            query_syntax=query_syntax,
             opt_fields=opt_fields,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -5721,7 +6794,7 @@ class FeaturesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "PageStructureCandidateFormula",
+            '200': "List[StructureCandidateFormula]",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -5734,11 +6807,6 @@ class FeaturesApi:
         self,
         project_id,
         aligned_feature_id,
-        page,
-        size,
-        sort,
-        search_query,
-        query_syntax,
         opt_fields,
         _request_auth,
         _content_type,
@@ -5749,7 +6817,6 @@ class FeaturesApi:
         _host = None
 
         _collection_formats: Dict[str, str] = {
-            'sort': 'multi',
             'optFields': 'multi',
         }
 
@@ -5766,26 +6833,6 @@ class FeaturesApi:
         if aligned_feature_id is not None:
             _path_params['alignedFeatureId'] = aligned_feature_id
         # process the query parameters
-        if page is not None:
-            
-            _query_params.append(('page', page))
-            
-        if size is not None:
-            
-            _query_params.append(('size', size))
-            
-        if sort is not None:
-            
-            _query_params.append(('sort', sort))
-            
-        if search_query is not None:
-            
-            _query_params.append(('searchQuery', search_query))
-            
-        if query_syntax is not None:
-            
-            _query_params.append(('querySyntax', query_syntax.value))
-            
         if opt_fields is not None:
             
             _query_params.append(('optFields', opt_fields))
@@ -5831,11 +6878,6 @@ class FeaturesApi:
         project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
         aligned_feature_id: Annotated[StrictStr, Field(description="feature (aligned over runs) the formula result belongs to.")],
         formula_id: Annotated[StrictStr, Field(description="identifier of the requested formula result")],
-        page: Annotated[Optional[Annotated[int, Field(strict=True, ge=0)]], Field(description="Zero-based page index (0..N)")] = None,
-        size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
-        sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
-        search_query: Annotated[Optional[StrictStr], Field(description="optional search query in specified format")] = None,
-        query_syntax: Annotated[Optional[SearchQueryType], Field(description="query syntax used fpr searchQuery")] = None,
         opt_fields: Annotated[Optional[List[Optional[StructureCandidateOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
@@ -5849,7 +6891,7 @@ class FeaturesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> PageStructureCandidateScored:
+    ) -> List[StructureCandidateScored]:
         """List of StructureCandidates the given 'formulaId' with minimal information.
 
         List of StructureCandidates the given 'formulaId' with minimal information.  StructureCandidates can be enriched with molecular fingerprint, structure database links.
@@ -5860,16 +6902,6 @@ class FeaturesApi:
         :type aligned_feature_id: str
         :param formula_id: identifier of the requested formula result (required)
         :type formula_id: str
-        :param page: Zero-based page index (0..N)
-        :type page: int
-        :param size: The size of the page to be returned
-        :type size: int
-        :param sort: Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
-        :type sort: List[str]
-        :param search_query: optional search query in specified format
-        :type search_query: str
-        :param query_syntax: query syntax used fpr searchQuery
-        :type query_syntax: SearchQueryType
         :param opt_fields: set of optional fields to be included. Use 'none' only to override defaults.
         :type opt_fields: List[StructureCandidateOptField]
         :param _request_timeout: timeout setting for this request. If one
@@ -5898,11 +6930,6 @@ class FeaturesApi:
             project_id=project_id,
             aligned_feature_id=aligned_feature_id,
             formula_id=formula_id,
-            page=page,
-            size=size,
-            sort=sort,
-            search_query=search_query,
-            query_syntax=query_syntax,
             opt_fields=opt_fields,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -5911,7 +6938,7 @@ class FeaturesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "PageStructureCandidateScored",
+            '200': "List[StructureCandidateScored]",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -5930,11 +6957,6 @@ class FeaturesApi:
         project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
         aligned_feature_id: Annotated[StrictStr, Field(description="feature (aligned over runs) the formula result belongs to.")],
         formula_id: Annotated[StrictStr, Field(description="identifier of the requested formula result")],
-        page: Annotated[Optional[Annotated[int, Field(strict=True, ge=0)]], Field(description="Zero-based page index (0..N)")] = None,
-        size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
-        sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
-        search_query: Annotated[Optional[StrictStr], Field(description="optional search query in specified format")] = None,
-        query_syntax: Annotated[Optional[SearchQueryType], Field(description="query syntax used fpr searchQuery")] = None,
         opt_fields: Annotated[Optional[List[Optional[StructureCandidateOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
@@ -5948,7 +6970,7 @@ class FeaturesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[PageStructureCandidateScored]:
+    ) -> ApiResponse[List[StructureCandidateScored]]:
         """List of StructureCandidates the given 'formulaId' with minimal information.
 
         List of StructureCandidates the given 'formulaId' with minimal information.  StructureCandidates can be enriched with molecular fingerprint, structure database links.
@@ -5959,16 +6981,6 @@ class FeaturesApi:
         :type aligned_feature_id: str
         :param formula_id: identifier of the requested formula result (required)
         :type formula_id: str
-        :param page: Zero-based page index (0..N)
-        :type page: int
-        :param size: The size of the page to be returned
-        :type size: int
-        :param sort: Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
-        :type sort: List[str]
-        :param search_query: optional search query in specified format
-        :type search_query: str
-        :param query_syntax: query syntax used fpr searchQuery
-        :type query_syntax: SearchQueryType
         :param opt_fields: set of optional fields to be included. Use 'none' only to override defaults.
         :type opt_fields: List[StructureCandidateOptField]
         :param _request_timeout: timeout setting for this request. If one
@@ -5997,11 +7009,6 @@ class FeaturesApi:
             project_id=project_id,
             aligned_feature_id=aligned_feature_id,
             formula_id=formula_id,
-            page=page,
-            size=size,
-            sort=sort,
-            search_query=search_query,
-            query_syntax=query_syntax,
             opt_fields=opt_fields,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -6010,7 +7017,7 @@ class FeaturesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "PageStructureCandidateScored",
+            '200': "List[StructureCandidateScored]",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -6029,11 +7036,6 @@ class FeaturesApi:
         project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
         aligned_feature_id: Annotated[StrictStr, Field(description="feature (aligned over runs) the formula result belongs to.")],
         formula_id: Annotated[StrictStr, Field(description="identifier of the requested formula result")],
-        page: Annotated[Optional[Annotated[int, Field(strict=True, ge=0)]], Field(description="Zero-based page index (0..N)")] = None,
-        size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
-        sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
-        search_query: Annotated[Optional[StrictStr], Field(description="optional search query in specified format")] = None,
-        query_syntax: Annotated[Optional[SearchQueryType], Field(description="query syntax used fpr searchQuery")] = None,
         opt_fields: Annotated[Optional[List[Optional[StructureCandidateOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
@@ -6058,16 +7060,6 @@ class FeaturesApi:
         :type aligned_feature_id: str
         :param formula_id: identifier of the requested formula result (required)
         :type formula_id: str
-        :param page: Zero-based page index (0..N)
-        :type page: int
-        :param size: The size of the page to be returned
-        :type size: int
-        :param sort: Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
-        :type sort: List[str]
-        :param search_query: optional search query in specified format
-        :type search_query: str
-        :param query_syntax: query syntax used fpr searchQuery
-        :type query_syntax: SearchQueryType
         :param opt_fields: set of optional fields to be included. Use 'none' only to override defaults.
         :type opt_fields: List[StructureCandidateOptField]
         :param _request_timeout: timeout setting for this request. If one
@@ -6096,11 +7088,347 @@ class FeaturesApi:
             project_id=project_id,
             aligned_feature_id=aligned_feature_id,
             formula_id=formula_id,
+            opt_fields=opt_fields,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "List[StructureCandidateScored]",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _get_structure_candidates_by_formula_serialize(
+        self,
+        project_id,
+        aligned_feature_id,
+        formula_id,
+        opt_fields,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+            'optFields': 'multi',
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[str, str] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if project_id is not None:
+            _path_params['projectId'] = project_id
+        if aligned_feature_id is not None:
+            _path_params['alignedFeatureId'] = aligned_feature_id
+        if formula_id is not None:
+            _path_params['formulaId'] = formula_id
+        # process the query parameters
+        if opt_fields is not None:
+            
+            _query_params.append(('optFields', opt_fields))
+            
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            [
+                'application/json'
+            ]
+        )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/structures',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def get_structure_candidates_by_formula_paged(
+        self,
+        project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
+        aligned_feature_id: Annotated[StrictStr, Field(description="feature (aligned over runs) the formula result belongs to.")],
+        formula_id: Annotated[StrictStr, Field(description="identifier of the requested formula result")],
+        page: Annotated[Optional[Annotated[int, Field(strict=True, ge=0)]], Field(description="Zero-based page index (0..N)")] = None,
+        size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
+        sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[StructureCandidateOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> PageStructureCandidateScored:
+        """Page of StructureCandidates the given 'formulaId' with minimal information.
+
+        Page of StructureCandidates the given 'formulaId' with minimal information.  StructureCandidates can be enriched with molecular fingerprint, structure database links.
+
+        :param project_id: project-space to read from. (required)
+        :type project_id: str
+        :param aligned_feature_id: feature (aligned over runs) the formula result belongs to. (required)
+        :type aligned_feature_id: str
+        :param formula_id: identifier of the requested formula result (required)
+        :type formula_id: str
+        :param page: Zero-based page index (0..N)
+        :type page: int
+        :param size: The size of the page to be returned
+        :type size: int
+        :param sort: Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+        :type sort: List[str]
+        :param opt_fields: set of optional fields to be included. Use 'none' only to override defaults.
+        :type opt_fields: List[StructureCandidateOptField]
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_structure_candidates_by_formula_paged_serialize(
+            project_id=project_id,
+            aligned_feature_id=aligned_feature_id,
+            formula_id=formula_id,
             page=page,
             size=size,
             sort=sort,
-            search_query=search_query,
-            query_syntax=query_syntax,
+            opt_fields=opt_fields,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PageStructureCandidateScored",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def get_structure_candidates_by_formula_paged_with_http_info(
+        self,
+        project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
+        aligned_feature_id: Annotated[StrictStr, Field(description="feature (aligned over runs) the formula result belongs to.")],
+        formula_id: Annotated[StrictStr, Field(description="identifier of the requested formula result")],
+        page: Annotated[Optional[Annotated[int, Field(strict=True, ge=0)]], Field(description="Zero-based page index (0..N)")] = None,
+        size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
+        sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[StructureCandidateOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[PageStructureCandidateScored]:
+        """Page of StructureCandidates the given 'formulaId' with minimal information.
+
+        Page of StructureCandidates the given 'formulaId' with minimal information.  StructureCandidates can be enriched with molecular fingerprint, structure database links.
+
+        :param project_id: project-space to read from. (required)
+        :type project_id: str
+        :param aligned_feature_id: feature (aligned over runs) the formula result belongs to. (required)
+        :type aligned_feature_id: str
+        :param formula_id: identifier of the requested formula result (required)
+        :type formula_id: str
+        :param page: Zero-based page index (0..N)
+        :type page: int
+        :param size: The size of the page to be returned
+        :type size: int
+        :param sort: Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+        :type sort: List[str]
+        :param opt_fields: set of optional fields to be included. Use 'none' only to override defaults.
+        :type opt_fields: List[StructureCandidateOptField]
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_structure_candidates_by_formula_paged_serialize(
+            project_id=project_id,
+            aligned_feature_id=aligned_feature_id,
+            formula_id=formula_id,
+            page=page,
+            size=size,
+            sort=sort,
+            opt_fields=opt_fields,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PageStructureCandidateScored",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def get_structure_candidates_by_formula_paged_without_preload_content(
+        self,
+        project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
+        aligned_feature_id: Annotated[StrictStr, Field(description="feature (aligned over runs) the formula result belongs to.")],
+        formula_id: Annotated[StrictStr, Field(description="identifier of the requested formula result")],
+        page: Annotated[Optional[Annotated[int, Field(strict=True, ge=0)]], Field(description="Zero-based page index (0..N)")] = None,
+        size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
+        sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[StructureCandidateOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Page of StructureCandidates the given 'formulaId' with minimal information.
+
+        Page of StructureCandidates the given 'formulaId' with minimal information.  StructureCandidates can be enriched with molecular fingerprint, structure database links.
+
+        :param project_id: project-space to read from. (required)
+        :type project_id: str
+        :param aligned_feature_id: feature (aligned over runs) the formula result belongs to. (required)
+        :type aligned_feature_id: str
+        :param formula_id: identifier of the requested formula result (required)
+        :type formula_id: str
+        :param page: Zero-based page index (0..N)
+        :type page: int
+        :param size: The size of the page to be returned
+        :type size: int
+        :param sort: Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+        :type sort: List[str]
+        :param opt_fields: set of optional fields to be included. Use 'none' only to override defaults.
+        :type opt_fields: List[StructureCandidateOptField]
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_structure_candidates_by_formula_paged_serialize(
+            project_id=project_id,
+            aligned_feature_id=aligned_feature_id,
+            formula_id=formula_id,
+            page=page,
+            size=size,
+            sort=sort,
             opt_fields=opt_fields,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -6118,7 +7446,7 @@ class FeaturesApi:
         return response_data.response
 
 
-    def _get_structure_candidates_by_formula_serialize(
+    def _get_structure_candidates_by_formula_paged_serialize(
         self,
         project_id,
         aligned_feature_id,
@@ -6126,8 +7454,6 @@ class FeaturesApi:
         page,
         size,
         sort,
-        search_query,
-        query_syntax,
         opt_fields,
         _request_auth,
         _content_type,
@@ -6169,13 +7495,347 @@ class FeaturesApi:
             
             _query_params.append(('sort', sort))
             
-        if search_query is not None:
+        if opt_fields is not None:
             
-            _query_params.append(('searchQuery', search_query))
+            _query_params.append(('optFields', opt_fields))
             
-        if query_syntax is not None:
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            [
+                'application/json'
+            ]
+        )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/structures/page',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def get_structure_candidates_paged(
+        self,
+        project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
+        aligned_feature_id: Annotated[StrictStr, Field(description="feature (aligned over runs) the structure candidates belong to.")],
+        page: Annotated[Optional[Annotated[int, Field(strict=True, ge=0)]], Field(description="Zero-based page index (0..N)")] = None,
+        size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
+        sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[StructureCandidateOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> PageStructureCandidateFormula:
+        """Page of StructureCandidates for the given 'alignedFeatureId' with minimal information.
+
+        Page of StructureCandidates for the given 'alignedFeatureId' with minimal information.  StructureCandidates can be enriched with molecular fingerprint, structure database links.
+
+        :param project_id: project-space to read from. (required)
+        :type project_id: str
+        :param aligned_feature_id: feature (aligned over runs) the structure candidates belong to. (required)
+        :type aligned_feature_id: str
+        :param page: Zero-based page index (0..N)
+        :type page: int
+        :param size: The size of the page to be returned
+        :type size: int
+        :param sort: Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+        :type sort: List[str]
+        :param opt_fields: set of optional fields to be included. Use 'none' only to override defaults.
+        :type opt_fields: List[StructureCandidateOptField]
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_structure_candidates_paged_serialize(
+            project_id=project_id,
+            aligned_feature_id=aligned_feature_id,
+            page=page,
+            size=size,
+            sort=sort,
+            opt_fields=opt_fields,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PageStructureCandidateFormula",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def get_structure_candidates_paged_with_http_info(
+        self,
+        project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
+        aligned_feature_id: Annotated[StrictStr, Field(description="feature (aligned over runs) the structure candidates belong to.")],
+        page: Annotated[Optional[Annotated[int, Field(strict=True, ge=0)]], Field(description="Zero-based page index (0..N)")] = None,
+        size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
+        sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[StructureCandidateOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[PageStructureCandidateFormula]:
+        """Page of StructureCandidates for the given 'alignedFeatureId' with minimal information.
+
+        Page of StructureCandidates for the given 'alignedFeatureId' with minimal information.  StructureCandidates can be enriched with molecular fingerprint, structure database links.
+
+        :param project_id: project-space to read from. (required)
+        :type project_id: str
+        :param aligned_feature_id: feature (aligned over runs) the structure candidates belong to. (required)
+        :type aligned_feature_id: str
+        :param page: Zero-based page index (0..N)
+        :type page: int
+        :param size: The size of the page to be returned
+        :type size: int
+        :param sort: Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+        :type sort: List[str]
+        :param opt_fields: set of optional fields to be included. Use 'none' only to override defaults.
+        :type opt_fields: List[StructureCandidateOptField]
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_structure_candidates_paged_serialize(
+            project_id=project_id,
+            aligned_feature_id=aligned_feature_id,
+            page=page,
+            size=size,
+            sort=sort,
+            opt_fields=opt_fields,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PageStructureCandidateFormula",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def get_structure_candidates_paged_without_preload_content(
+        self,
+        project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
+        aligned_feature_id: Annotated[StrictStr, Field(description="feature (aligned over runs) the structure candidates belong to.")],
+        page: Annotated[Optional[Annotated[int, Field(strict=True, ge=0)]], Field(description="Zero-based page index (0..N)")] = None,
+        size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
+        sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[StructureCandidateOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Page of StructureCandidates for the given 'alignedFeatureId' with minimal information.
+
+        Page of StructureCandidates for the given 'alignedFeatureId' with minimal information.  StructureCandidates can be enriched with molecular fingerprint, structure database links.
+
+        :param project_id: project-space to read from. (required)
+        :type project_id: str
+        :param aligned_feature_id: feature (aligned over runs) the structure candidates belong to. (required)
+        :type aligned_feature_id: str
+        :param page: Zero-based page index (0..N)
+        :type page: int
+        :param size: The size of the page to be returned
+        :type size: int
+        :param sort: Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+        :type sort: List[str]
+        :param opt_fields: set of optional fields to be included. Use 'none' only to override defaults.
+        :type opt_fields: List[StructureCandidateOptField]
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_structure_candidates_paged_serialize(
+            project_id=project_id,
+            aligned_feature_id=aligned_feature_id,
+            page=page,
+            size=size,
+            sort=sort,
+            opt_fields=opt_fields,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PageStructureCandidateFormula",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _get_structure_candidates_paged_serialize(
+        self,
+        project_id,
+        aligned_feature_id,
+        page,
+        size,
+        sort,
+        opt_fields,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+            'sort': 'multi',
+            'optFields': 'multi',
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[str, str] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if project_id is not None:
+            _path_params['projectId'] = project_id
+        if aligned_feature_id is not None:
+            _path_params['alignedFeatureId'] = aligned_feature_id
+        # process the query parameters
+        if page is not None:
             
-            _query_params.append(('querySyntax', query_syntax.value))
+            _query_params.append(('page', page))
+            
+        if size is not None:
+            
+            _query_params.append(('size', size))
+            
+        if sort is not None:
+            
+            _query_params.append(('sort', sort))
             
         if opt_fields is not None:
             
@@ -6200,7 +7860,7 @@ class FeaturesApi:
 
         return self.api_client.param_serialize(
             method='GET',
-            resource_path='/api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/structures',
+            resource_path='/api/projects/{projectId}/aligned-features/{alignedFeatureId}/structures/page',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
