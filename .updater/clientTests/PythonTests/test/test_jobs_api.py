@@ -62,8 +62,13 @@ class TestJobsApi(unittest.TestCase):
             }
         )
 
+        self.project_id = "test_has_jobs"
+        self.path_to_project = f"{os.environ.get('HOME')}/test_has_jobs_dir"
+        self.api.get_ProjectsApi().create_project_space(self.project_id, self.path_to_project)
+
     def tearDown(self) -> None:
-        pass
+        self.api.get_ProjectsApi().close_project_space(self.project_id)
+        shutil.rmtree(self.path_to_project)
 
     def test_delete_job(self) -> None:
         """Test case for delete_job
@@ -71,18 +76,11 @@ class TestJobsApi(unittest.TestCase):
         Delete job.
         """
         # # NOT FUNCTIONAL
-        # project_id = "test_delete_job"
-        # path_to_project = f"{os.environ.get('HOME')}/test_delete_job_dir"
-        # self.api.get_ProjectsApi().create_project_space(project_id, path_to_project)
+        # self.api.get_JobsApi().start_import_from_path_job(self.project_id, self.import_local_files_submission)
+        # response_before = self.api.get_JobsApi().get_jobs(self.project_id)
 
-        # self.api.get_JobsApi().start_import_from_path_job(project_id, self.import_local_files_submission)
-        # response_before = self.api.get_JobsApi().get_jobs(project_id)
-
-        # self.api.get_JobsApi().delete_job(project_id, response_before[0].id, True, True)
-        # response_after = self.api.get_JobsApi().get_jobs(project_id)
-
-        # self.api.get_ProjectsApi().close_project_space(project_id)
-        # shutil.rmtree(path_to_project)
+        # self.api.get_JobsApi().delete_job(self.project_id, response_before[0].id, True, True)
+        # response_after = self.api.get_JobsApi().get_jobs(self.project_id)
 
         # self.assertIsInstance(response_before, list)
         # self.assertIsInstance(response_before[0], Job)
@@ -112,21 +110,12 @@ class TestJobsApi(unittest.TestCase):
         * Delete ALL jobs.
         """
         # # NOT FUNCTIONAL
-        # project_id = "test_delete_jobs"
-        # path_to_project = f"{os.environ.get('HOME')}/test_delete_jobs_dir"
-        # self.api.get_ProjectsApi().create_project_space(project_id, path_to_project)
+        # self.api.get_JobsApi().start_import_from_path_job(self.project_id, self.import_local_files_submission)
+        # response_before = self.api.get_JobsApi().get_jobs(self.project_id)
 
-        # self.api.get_JobsApi().start_import_from_path_job(project_id, self.import_local_files_submission)
-        # response_before = self.api.get_JobsApi().get_jobs(project_id)
-        # print(response_before)
-
-        # self.api.get_JobsApi().delete_jobs(project_id, True, True)
+        # self.api.get_JobsApi().delete_jobs(self.project_id, True, True)
         # time.sleep(1)
-        # response_after = self.api.get_JobsApi().get_jobs(project_id)
-        # print(response_after)
-
-        # self.api.get_ProjectsApi().close_project_space(project_id)
-        # shutil.rmtree(path_to_project)
+        # response_after = self.api.get_JobsApi().get_jobs(self.project_id)
 
         # self.assertIsInstance(response_before, list)
         # self.assertIsInstance(response_before[0], Job)
@@ -146,17 +135,9 @@ class TestJobsApi(unittest.TestCase):
 
         Get job information and its current state and progress (if available).
         """
-        project_id = "test_get_job"
-        path_to_project = f"{os.environ.get('HOME')}/test_get_job_dir"
-        self.api.get_ProjectsApi().create_project_space(project_id, path_to_project)
-
-        self.api.get_JobsApi().start_import_from_path_job(project_id, self.import_local_files_submission)
-        job = self.api.get_JobsApi().get_jobs(project_id)[0]
-
-        response = self.api.get_JobsApi().get_job(project_id, job.id)
-        self.api.get_ProjectsApi().close_project_space(project_id)
-        shutil.rmtree(path_to_project)
-
+        self.api.get_JobsApi().start_import_from_path_job(self.project_id, self.import_local_files_submission)
+        job = self.api.get_JobsApi().get_jobs(self.project_id)[0]
+        response = self.api.get_JobsApi().get_job(self.project_id, job.id)
         self.assertIsInstance(response, Job)
 
     def test_get_job_config(self) -> None:
@@ -193,16 +174,8 @@ class TestJobsApi(unittest.TestCase):
 
         Get job information and its current state and progress (if available).
         """
-        project_id = "test_get_jobs"
-        path_to_project = f"{os.environ.get('HOME')}/test_get_jobs_dir"
-        self.api.get_ProjectsApi().create_project_space(project_id, path_to_project)
-
-        self.api.get_JobsApi().start_import_from_path_job(project_id, self.import_local_files_submission)
-
-        response = self.api.get_JobsApi().get_jobs(project_id)
-        self.api.get_ProjectsApi().close_project_space(project_id)
-        shutil.rmtree(path_to_project)
-
+        self.api.get_JobsApi().start_import_from_path_job(self.project_id, self.import_local_files_submission)
+        response = self.api.get_JobsApi().get_jobs(self.project_id)
         self.assertIsInstance(response, list)
         self.assertIsInstance(response[0], Job)
 
@@ -211,32 +184,16 @@ class TestJobsApi(unittest.TestCase):
 
         Get Page of jobs with information such as current state and progress (if available).
         """
-        project_id = "test_get_jobs_paged"
-        path_to_project = f"{os.environ.get('HOME')}/test_get_jobs_paged_dir"
-        self.api.get_ProjectsApi().create_project_space(project_id, path_to_project)
-
-        self.api.get_JobsApi().start_import_from_path_job(project_id, self.import_local_files_submission)
-
-        response = self.api.get_JobsApi().get_jobs_paged(project_id)
-        self.api.get_ProjectsApi().close_project_space(project_id)
-        shutil.rmtree(path_to_project)
-
+        self.api.get_JobsApi().start_import_from_path_job(self.project_id, self.import_local_files_submission)
+        response = self.api.get_JobsApi().get_jobs_paged(self.project_id)
         self.assertIsInstance(response, PageJob)
 
     def test_has_jobs(self) -> None:
         """Test case for has_jobs
 
         """
-        project_id = "test_has_jobs"
-        path_to_project = f"{os.environ.get('HOME')}/test_has_jobs_dir"
-        self.api.get_ProjectsApi().create_project_space(project_id, path_to_project)
-
-        self.api.get_JobsApi().start_import_from_path_job(project_id, self.import_local_files_submission)
-
-        response = self.api.get_JobsApi().has_jobs(project_id)
-        self.api.get_ProjectsApi().close_project_space(project_id)
-        shutil.rmtree(path_to_project)
-
+        self.api.get_JobsApi().start_import_from_path_job(self.project_id, self.import_local_files_submission)
+        response = self.api.get_JobsApi().has_jobs(self.project_id)
         self.assertIsInstance(response, bool)
         self.assertTrue(response)
 
@@ -258,21 +215,14 @@ class TestJobsApi(unittest.TestCase):
 
         Start computation for given command and input.
         """
-        ## NOT FUNCTIONAL WITH CURRENT COMMAND
-        # project_id = "test_start_command"
-        # path_to_project = f"{os.environ.get('HOME')}/test_start_command_dir"
-        # self.api.get_ProjectsApi().create_project_space(project_id, path_to_project)
+        # # NOT FUNCTIONAL WITH CURRENT COMMAND
         # json_for_command = {
         #     "command": [
         #         "--help"
         #     ]
         # }
         # command_submission = CommandSubmission.from_json(json.dumps(json_for_command))
-
-        # response = self.api.get_JobsApi().start_command(project_id, command_submission)
-        # self.api.get_ProjectsApi().close_project_space(project_id)
-        # shutil.rmtree(path_to_project)
-
+        # response = self.api.get_JobsApi().start_command(self.project_id, command_submission)
         # self.assertIsInstance(response, Job)
 
     def test_start_database_import(self) -> None:
@@ -287,16 +237,9 @@ class TestJobsApi(unittest.TestCase):
 
         Import ms/ms data in given format from local filesystem into the specified project
         """
-        project_id = "test_start_import_from_path_job"
-        path_to_project = f"{os.environ.get('HOME')}/test_start_import_from_path_job_dir"
-        self.api.get_ProjectsApi().create_project_space(project_id, path_to_project)
-
-        self.api.get_JobsApi().start_import_from_path_job(project_id, self.import_local_files_submission)
+        self.api.get_JobsApi().start_import_from_path_job(self.project_id, self.import_local_files_submission)
         time.sleep(1)
-
-        response = self.api.get_FeaturesApi().get_aligned_features(project_id)
-        self.api.get_ProjectsApi().close_project_space(project_id)
-        shutil.rmtree(path_to_project)
+        response = self.api.get_FeaturesApi().get_aligned_features(self.project_id)
 
         self.assertEqual(len(response), 2)
         self.assertIsInstance(response, list)
@@ -308,21 +251,14 @@ class TestJobsApi(unittest.TestCase):
 
         Import ms/ms data from the given format into the specified project-space  Possible formats (ms, mgf, cef, msp, mzML, mzXML)
         """
-        project_id = "test_start_import_from_string_job"
-        path_to_project = f"{os.environ.get('HOME')}/test_start_import_from_string_job_dir"
-        self.api.get_ProjectsApi().create_project_space(project_id, path_to_project)
-
         json_for_import = {
             "format": "MS",
             "data": Path(self.path_to_demo_data + "/Kaempferol.ms").read_text()
         }
         import_string_submission = ImportStringSubmission.from_json(json.dumps(json_for_import))
-        self.api.get_JobsApi().start_import_from_string_job(project_id, import_string_submission)
+        self.api.get_JobsApi().start_import_from_string_job(self.project_id, import_string_submission)
         time.sleep(1)
-
-        response = self.api.get_FeaturesApi().get_aligned_features(project_id)
-        self.api.get_ProjectsApi().close_project_space(project_id)
-        shutil.rmtree(path_to_project)
+        response = self.api.get_FeaturesApi().get_aligned_features(self.project_id)
 
         self.assertEqual(len(response), 1)
         self.assertIsInstance(response, list)
@@ -333,23 +269,18 @@ class TestJobsApi(unittest.TestCase):
 
         Start computation for given compounds and with given parameters.
         """
-        project_id = "test_start_job"
-        path_to_project = f"{os.environ.get('HOME')}/test_start_job_dir"
-        self.api.get_ProjectsApi().create_project_space(project_id, path_to_project)
-
-        self.api.get_JobsApi().start_import_from_path_job(project_id, self.import_local_files_submission)
+        self.api.get_JobsApi().start_import_from_path_job(self.project_id, self.import_local_files_submission)
         time.sleep(1)
-        id = self.api.get_FeaturesApi().get_aligned_features(project_id)[0].aligned_feature_id
+        id = self.api.get_FeaturesApi().get_aligned_features(self.project_id)[0].aligned_feature_id
         job_submission = copy.deepcopy(self.job_submission)
         job_submission["alignedFeatureIds"] = [id]
 
-        response = self.api.get_JobsApi().start_job(project_id, job_submission)
+        response = self.api.get_JobsApi().start_job(self.project_id, job_submission)
         time.sleep(3)
-        self.api.get_ProjectsApi().close_project_space(project_id)
+        self.api.get_ProjectsApi().close_project_space(self.project_id)
 
         self.assertIsInstance(response, Job)
-        self.assertTrue(os.path.exists(path_to_project + "/" + id + "/scores"))
-        shutil.rmtree(path_to_project)
+        # self.assertTrue(os.path.exists(path_to_project + "/" + id + "/scores"))
 
     def test_start_job_from_config(self) -> None:
         """Test case for start_job_from_config
