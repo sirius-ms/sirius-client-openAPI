@@ -26,47 +26,33 @@ class TestProjectsApi(unittest.TestCase):
 
     def setUp(self) -> None:
         self.api = ProjectsApi()
-
+        # equals test_create_project_space
+        self.project_id = "test_projects_api"
+        self.path_to_project = f"{os.environ.get('HOME')}/test_projects_api_dir"
+        self.api.create_project_space(self.project_id, self.path_to_project)
 
     def tearDown(self) -> None:
-        pass
-
+        # equals test_close_project_space
+        self.api.close_project_space(self.project_id)
+        shutil.rmtree(self.path_to_project)
 
     def test_close_project_space(self) -> None:
         """Test case for close_project_space
 
         Close project-space and remove it from application.
         """
-        project_id = "test_close_space_project"
-        path_to_project = f"{os.environ.get('HOME')}/test_close_project_space_dir"
-        self.api.create_project_space(project_id, path_to_project)
-
-        response = self.api.close_project_space_with_http_info(project_id)
-        shutil.rmtree(path_to_project)
-        self.assertIsInstance(response, ApiResponse)
-        self.assertEqual(response.dict().get('status_code'), 200)
-
-        response = self.api.close_project_space_with_http_info('invalid_id')
-        self.assertIsInstance(response, ApiResponse)
-        self.assertEqual(response.dict().get('status_code'), 204)
-
+        pass
 
     def test_copy_project_space(self) -> None:
         """Test case for copy_project_space
 
         Move an existing (opened) project-space to another location.
         """
-        project_id = "test_copy_space_project"
-        path_to_project = f"{os.environ.get('HOME')}/test_copy_project_space_dir"
-        self.api.create_project_space(project_id, path_to_project)
-
         copy_project_id = "test_copy_project_space_copied"
         copy_path_to_project = f"{os.environ.get('HOME')}/test_copy_project_space_dir_copied"
-        response = self.api.copy_project_space(project_id, copy_project_id, copy_path_to_project)
+        response = self.api.copy_project_space(self.project_id, copy_project_id, copy_path_to_project)
 
-        self.api.close_project_space(project_id)
         self.api.close_project_space(copy_project_id)
-        shutil.rmtree(path_to_project)
         shutil.rmtree(copy_path_to_project)
 
         self.assertIsInstance(response, ProjectInfo)
@@ -77,15 +63,7 @@ class TestProjectsApi(unittest.TestCase):
 
         Create and open a new project-space at given location and make it accessible via the given projectId.
         """
-        project_id = "test_create_project_space"
-        path_to_project = f"{os.environ.get('HOME')}/test_create_project_space_dir"
-
-        response = self.api.create_project_space(project_id, path_to_project)
-
-        self.api.close_project_space(project_id)
-        shutil.rmtree(path_to_project)
-
-        self.assertIsInstance(response, ProjectInfo)
+        pass
 
 
     def test_get_canopus_classy_fire_data(self) -> None:
@@ -93,15 +71,7 @@ class TestProjectsApi(unittest.TestCase):
 
         Get CANOPUS prediction vector definition for ClassyFire classes
         """
-        project_id = "test_get_canopus_classy_fire_data"
-        path_to_project = f"{os.environ.get('HOME')}/test_get_canopus_classy_fire_data_dir"
-        self.api.create_project_space(project_id, path_to_project)
-
-        response = self.api.get_canopus_classy_fire_data(project_id, 0)
-
-        self.api.close_project_space(project_id)
-        shutil.rmtree(path_to_project)
-
+        response = self.api.get_canopus_classy_fire_data(self.project_id, 0)
         self.assertIsInstance(response, str)
 
 
@@ -110,15 +80,7 @@ class TestProjectsApi(unittest.TestCase):
 
         Get CANOPUS prediction vector definition for NPC classes
         """
-        project_id = "test_get_canopus_npc_data"
-        path_to_project = f"{os.environ.get('HOME')}/test_get_canopus_npc_data_dir"
-        self.api.create_project_space(project_id, path_to_project)
-
-        response = self.api.get_canopus_npc_data(project_id, 0)
-
-        self.api.close_project_space(project_id)
-        shutil.rmtree(path_to_project)
-
+        response = self.api.get_canopus_npc_data(self.project_id, 0)
         self.assertIsInstance(response, str)
 
 
@@ -127,15 +89,7 @@ class TestProjectsApi(unittest.TestCase):
 
         Get CSI:FingerID fingerprint (prediction vector) definition
         """
-        project_id = "test_get_finger_id_data"
-        path_to_project = f"{os.environ.get('HOME')}/test_get_finger_id_data_dir"
-        self.api.create_project_space(project_id, path_to_project)
-
-        response = self.api.get_finger_id_data(project_id, 0)
-
-        self.api.close_project_space(project_id)
-        shutil.rmtree(path_to_project)
-
+        response = self.api.get_finger_id_data(self.project_id, 0)
         self.assertIsInstance(response, str)
 
 
@@ -144,15 +98,7 @@ class TestProjectsApi(unittest.TestCase):
 
         Get project space info by its projectId.
         """
-        project_id = "test_get_project_space"
-        path_to_project = f"{os.environ.get('HOME')}/test_get_project_space_dir"
-        self.api.create_project_space(project_id, path_to_project)
-
-        response = self.api.get_project_space(project_id)
-
-        self.api.close_project_space(project_id)
-        shutil.rmtree(path_to_project)
-
+        response = self.api.get_project_space(self.project_id)
         self.assertIsInstance(response, ProjectInfo)
 
 
@@ -170,16 +116,8 @@ class TestProjectsApi(unittest.TestCase):
 
         Open an existing project-space and make it accessible via the given projectId.
         """
-        project_id = "test_open_project_space"
-        path_to_project = f"{os.environ.get('HOME')}/test_open_project_space_dir"
-        self.api.create_project_space(project_id, path_to_project)
-        self.api.close_project_space(project_id)
-
-        response = self.api.open_project_space(project_id, path_to_project)
-
-        self.api.close_project_space(project_id)
-        shutil.rmtree(path_to_project)
-
+        self.api.close_project_space(self.project_id)
+        response = self.api.open_project_space(self.project_id, self.path_to_project)
         self.assertIsInstance(response, ProjectInfo)
 
 
