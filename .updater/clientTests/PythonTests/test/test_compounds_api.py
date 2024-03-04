@@ -34,6 +34,7 @@ class TestCompoundsApi(unittest.TestCase):
         self.path_to_project = f"{os.environ.get('HOME')}/test_compounds_api_dir"
         self.api.get_ProjectsApi().create_project_space(self.project_id, self.path_to_project)
 
+        # equals test_add_compounds
         simple_peak_json = {
             "mz": 1.23,
             "intensity": 1.23
