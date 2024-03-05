@@ -32,12 +32,12 @@ class ConnectionCheck(BaseModel):
     worker_info: Optional[WorkerList] = Field(default=None, alias="workerInfo")
     license_info: LicenseInfo = Field(alias="licenseInfo")
     errors: List[ConnectionError] = Field(description="List of errors ordered by significance. first error should be reported and addressed first.  Following errors might just be follow-up errors")
+    supports_pos_predictor_types: StrictBool = Field(alias="supportsPosPredictorTypes")
     supports_neg_predictor_types: StrictBool = Field(alias="supportsNegPredictorTypes")
     available_workers: List[StrictStr] = Field(alias="availableWorkers")
-    supports_pos_predictor_types: StrictBool = Field(alias="supportsPosPredictorTypes")
     un_available_workers: List[StrictStr] = Field(alias="unAvailableWorkers")
     supports_all_predictor_types: StrictBool = Field(alias="supportsAllPredictorTypes")
-    __properties: ClassVar[List[str]] = ["workerInfo", "licenseInfo", "errors", "supportsNegPredictorTypes", "availableWorkers", "supportsPosPredictorTypes", "unAvailableWorkers", "supportsAllPredictorTypes"]
+    __properties: ClassVar[List[str]] = ["workerInfo", "licenseInfo", "errors", "supportsPosPredictorTypes", "supportsNegPredictorTypes", "availableWorkers", "unAvailableWorkers", "supportsAllPredictorTypes"]
 
     model_config = {
         "populate_by_name": True,
@@ -111,9 +111,9 @@ class ConnectionCheck(BaseModel):
             "workerInfo": WorkerList.from_dict(obj["workerInfo"]) if obj.get("workerInfo") is not None else None,
             "licenseInfo": LicenseInfo.from_dict(obj["licenseInfo"]) if obj.get("licenseInfo") is not None else None,
             "errors": [ConnectionError.from_dict(_item) for _item in obj["errors"]] if obj.get("errors") is not None else None,
+            "supportsPosPredictorTypes": obj.get("supportsPosPredictorTypes"),
             "supportsNegPredictorTypes": obj.get("supportsNegPredictorTypes"),
             "availableWorkers": obj.get("availableWorkers"),
-            "supportsPosPredictorTypes": obj.get("supportsPosPredictorTypes"),
             "unAvailableWorkers": obj.get("unAvailableWorkers"),
             "supportsAllPredictorTypes": obj.get("supportsAllPredictorTypes")
         })

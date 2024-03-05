@@ -31,16 +31,16 @@ class PageSpectralLibraryMatch(BaseModel):
     """ # noqa: E501
     total_pages: Optional[StrictInt] = Field(default=None, alias="totalPages")
     total_elements: Optional[StrictInt] = Field(default=None, alias="totalElements")
+    last: Optional[StrictBool] = None
+    sort: Optional[SortObject] = None
+    first: Optional[StrictBool] = None
     size: Optional[StrictInt] = None
     content: Optional[List[Optional[SpectralLibraryMatch]]] = None
     number: Optional[StrictInt] = None
-    sort: Optional[SortObject] = None
-    first: Optional[StrictBool] = None
-    last: Optional[StrictBool] = None
     number_of_elements: Optional[StrictInt] = Field(default=None, alias="numberOfElements")
     pageable: Optional[PageableObject] = None
     empty: Optional[StrictBool] = None
-    __properties: ClassVar[List[str]] = ["totalPages", "totalElements", "size", "content", "number", "sort", "first", "last", "numberOfElements", "pageable", "empty"]
+    __properties: ClassVar[List[str]] = ["totalPages", "totalElements", "last", "sort", "first", "size", "content", "number", "numberOfElements", "pageable", "empty"]
 
     model_config = {
         "populate_by_name": True,
@@ -81,6 +81,9 @@ class PageSpectralLibraryMatch(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of sort
+        if self.sort:
+            _dict['sort'] = self.sort.to_dict()
         # override the default output from pydantic by calling `to_dict()` of each item in content (list)
         _items = []
         if self.content:
@@ -88,9 +91,6 @@ class PageSpectralLibraryMatch(BaseModel):
                 if _item:
                     _items.append(_item.to_dict())
             _dict['content'] = _items
-        # override the default output from pydantic by calling `to_dict()` of sort
-        if self.sort:
-            _dict['sort'] = self.sort.to_dict()
         # override the default output from pydantic by calling `to_dict()` of pageable
         if self.pageable:
             _dict['pageable'] = self.pageable.to_dict()
@@ -108,12 +108,12 @@ class PageSpectralLibraryMatch(BaseModel):
         _obj = cls.model_validate({
             "totalPages": obj.get("totalPages"),
             "totalElements": obj.get("totalElements"),
+            "last": obj.get("last"),
+            "sort": SortObject.from_dict(obj["sort"]) if obj.get("sort") is not None else None,
+            "first": obj.get("first"),
             "size": obj.get("size"),
             "content": [SpectralLibraryMatch.from_dict(_item) for _item in obj["content"]] if obj.get("content") is not None else None,
             "number": obj.get("number"),
-            "sort": SortObject.from_dict(obj["sort"]) if obj.get("sort") is not None else None,
-            "first": obj.get("first"),
-            "last": obj.get("last"),
             "numberOfElements": obj.get("numberOfElements"),
             "pageable": PageableObject.from_dict(obj["pageable"]) if obj.get("pageable") is not None else None,
             "empty": obj.get("empty")

@@ -88,11 +88,11 @@ class TestConnectionCheck(unittest.TestCase):
                         error = True, 
                         warning = True, )
                     ],
+                supports_pos_predictor_types = True,
                 supports_neg_predictor_types = True,
                 available_workers = [
                     ''
                     ],
-                supports_pos_predictor_types = True,
                 un_available_workers = [
                     ''
                     ],
@@ -137,11 +137,11 @@ class TestConnectionCheck(unittest.TestCase):
                         error = True, 
                         warning = True, )
                     ],
+                supports_pos_predictor_types = True,
                 supports_neg_predictor_types = True,
                 available_workers = [
                     ''
                     ],
-                supports_pos_predictor_types = True,
                 un_available_workers = [
                     ''
                     ],

@@ -33,6 +33,13 @@ class TestActuatorApi(unittest.TestCase):
         """
         pass
 
+    def test_shutdown(self) -> None:
+        """Test case for shutdown
+
+        Actuator web endpoint 'shutdown'
+        """
+        pass
+
 
 if __name__ == '__main__':
     unittest.main()
