@@ -35,13 +35,13 @@ class TestPageableObject(unittest.TestCase):
         model = PageableObject()
         if include_optional:
             return PageableObject(
-                offset = 56,
                 sort = PySirius.models.sort_object.SortObject(
                     empty = True, 
                     sorted = True, 
                     unsorted = True, ),
-                page_size = 56,
+                offset = 56,
                 page_number = 56,
+                page_size = 56,
                 paged = True,
                 unpaged = True
             )

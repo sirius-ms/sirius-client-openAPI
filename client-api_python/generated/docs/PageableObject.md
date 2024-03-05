@@ -5,10 +5,10 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**offset** | **int** |  | [optional] 
 **sort** | [**SortObject**](SortObject.md) |  | [optional] 
-**page_size** | **int** |  | [optional] 
+**offset** | **int** |  | [optional] 
 **page_number** | **int** |  | [optional] 
+**page_size** | **int** |  | [optional] 
 **paged** | **bool** |  | [optional] 
 **unpaged** | **bool** |  | [optional] 
 

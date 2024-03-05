@@ -14,3 +14,13 @@ test_that("Health", {
   # uncomment below to test the operation
   #expect_equal(result, "EXPECTED_RESULT")
 })
+
+test_that("Shutdown", {
+  # tests for Shutdown
+  # base path: http://localhost:8080
+  # Actuator web endpoint &#39;shutdown&#39;
+  # @return [object]
+
+  # uncomment below to test the operation
+  #expect_equal(result, "EXPECTED_RESULT")
+})

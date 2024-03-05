@@ -37,6 +37,12 @@ class TestPageCompound(unittest.TestCase):
             return PageCompound(
                 total_pages = 56,
                 total_elements = 56,
+                last = True,
+                sort = PySirius.models.sort_object.SortObject(
+                    empty = True, 
+                    sorted = True, 
+                    unsorted = True, ),
+                first = True,
                 size = 56,
                 content = [
                     PySirius.models.compound.Compound(
@@ -267,21 +273,15 @@ class TestPageCompound(unittest.TestCase):
                             confidence_approx_match = 1.337, ), )
                     ],
                 number = 56,
-                sort = PySirius.models.sort_object.SortObject(
-                    empty = True, 
-                    sorted = True, 
-                    unsorted = True, ),
-                first = True,
-                last = True,
                 number_of_elements = 56,
                 pageable = PySirius.models.pageable_object.PageableObject(
-                    offset = 56, 
                     sort = PySirius.models.sort_object.SortObject(
                         empty = True, 
                         sorted = True, 
                         unsorted = True, ), 
-                    page_size = 56, 
+                    offset = 56, 
                     page_number = 56, 
+                    page_size = 56, 
                     paged = True, 
                     unpaged = True, ),
                 empty = True

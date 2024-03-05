@@ -73,6 +73,7 @@ All URIs are relative to *http://localhost:8080*
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
 *ActuatorApi* | [**Health**](docs/ActuatorApi.md#Health) | **GET** /actuator/health | Actuator web endpoint 'health'
+*ActuatorApi* | [**Shutdown**](docs/ActuatorApi.md#Shutdown) | **POST** /actuator/shutdown | Actuator web endpoint 'shutdown'
 *CompoundsApi* | [**AddCompounds**](docs/CompoundsApi.md#AddCompounds) | **POST** /api/projects/{projectId}/compounds | Import Compounds and its contained features.
 *CompoundsApi* | [**DeleteCompound**](docs/CompoundsApi.md#DeleteCompound) | **DELETE** /api/projects/{projectId}/compounds/{compoundId} | Delete compound (group of ion identities) with the given identifier (and the included features) from the  specified project-space.
 *CompoundsApi* | [**GetCompound**](docs/CompoundsApi.md#GetCompound) | **GET** /api/projects/{projectId}/compounds/{compoundId} | Get compound (group of ion identities) with the given identifier from the specified project-space.

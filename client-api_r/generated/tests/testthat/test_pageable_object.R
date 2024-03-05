@@ -5,13 +5,6 @@ context("Test PageableObject")
 
 model_instance <- PageableObject$new()
 
-test_that("offset", {
-  # tests for the property `offset` (integer)
-
-  # uncomment below to test the property
-  #expect_equal(model.instance$`offset`, "EXPECTED_RESULT")
-})
-
 test_that("sort", {
   # tests for the property `sort` (SortObject)
 
@@ -19,11 +12,11 @@ test_that("sort", {
   #expect_equal(model.instance$`sort`, "EXPECTED_RESULT")
 })
 
-test_that("pageSize", {
-  # tests for the property `pageSize` (integer)
+test_that("offset", {
+  # tests for the property `offset` (integer)
 
   # uncomment below to test the property
-  #expect_equal(model.instance$`pageSize`, "EXPECTED_RESULT")
+  #expect_equal(model.instance$`offset`, "EXPECTED_RESULT")
 })
 
 test_that("pageNumber", {
@@ -31,6 +24,13 @@ test_that("pageNumber", {
 
   # uncomment below to test the property
   #expect_equal(model.instance$`pageNumber`, "EXPECTED_RESULT")
+})
+
+test_that("pageSize", {
+  # tests for the property `pageSize` (integer)
+
+  # uncomment below to test the property
+  #expect_equal(model.instance$`pageSize`, "EXPECTED_RESULT")
 })
 
 test_that("paged", {
