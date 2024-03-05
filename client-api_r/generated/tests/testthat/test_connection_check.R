@@ -41,13 +41,6 @@ test_that("supportsNegPredictorTypes", {
   #expect_equal(model.instance$`supportsNegPredictorTypes`, "EXPECTED_RESULT")
 })
 
-test_that("availableWorkers", {
-  # tests for the property `availableWorkers` (set[character])
-
-  # uncomment below to test the property
-  #expect_equal(model.instance$`availableWorkers`, "EXPECTED_RESULT")
-})
-
 test_that("unAvailableWorkers", {
   # tests for the property `unAvailableWorkers` (set[character])
 
@@ -60,4 +53,11 @@ test_that("supportsAllPredictorTypes", {
 
   # uncomment below to test the property
   #expect_equal(model.instance$`supportsAllPredictorTypes`, "EXPECTED_RESULT")
+})
+
+test_that("availableWorkers", {
+  # tests for the property `availableWorkers` (set[character])
+
+  # uncomment below to test the property
+  #expect_equal(model.instance$`availableWorkers`, "EXPECTED_RESULT")
 })

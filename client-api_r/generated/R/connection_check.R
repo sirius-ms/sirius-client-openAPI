@@ -12,9 +12,9 @@
 #' @field errors List of errors ordered by significance. first error should be reported and addressed first.  Following errors might just be follow-up errors list(\link{ConnectionError})
 #' @field supportsPosPredictorTypes  character
 #' @field supportsNegPredictorTypes  character
-#' @field availableWorkers  list(character)
 #' @field unAvailableWorkers  list(character)
 #' @field supportsAllPredictorTypes  character
+#' @field availableWorkers  list(character)
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
 #' @export
@@ -26,9 +26,9 @@ ConnectionCheck <- R6::R6Class(
     `errors` = NULL,
     `supportsPosPredictorTypes` = NULL,
     `supportsNegPredictorTypes` = NULL,
-    `availableWorkers` = NULL,
     `unAvailableWorkers` = NULL,
     `supportsAllPredictorTypes` = NULL,
+    `availableWorkers` = NULL,
     #' Initialize a new ConnectionCheck class.
     #'
     #' @description
@@ -38,13 +38,13 @@ ConnectionCheck <- R6::R6Class(
     #' @param errors List of errors ordered by significance. first error should be reported and addressed first.  Following errors might just be follow-up errors
     #' @param supportsPosPredictorTypes supportsPosPredictorTypes
     #' @param supportsNegPredictorTypes supportsNegPredictorTypes
-    #' @param availableWorkers availableWorkers
     #' @param unAvailableWorkers unAvailableWorkers
     #' @param supportsAllPredictorTypes supportsAllPredictorTypes
+    #' @param availableWorkers availableWorkers
     #' @param workerInfo workerInfo
     #' @param ... Other optional arguments.
     #' @export
-    initialize = function(`licenseInfo`, `errors`, `supportsPosPredictorTypes`, `supportsNegPredictorTypes`, `availableWorkers`, `unAvailableWorkers`, `supportsAllPredictorTypes`, `workerInfo` = NULL, ...) {
+    initialize = function(`licenseInfo`, `errors`, `supportsPosPredictorTypes`, `supportsNegPredictorTypes`, `unAvailableWorkers`, `supportsAllPredictorTypes`, `availableWorkers`, `workerInfo` = NULL, ...) {
       if (!missing(`licenseInfo`)) {
         stopifnot(R6::is.R6(`licenseInfo`))
         self$`licenseInfo` <- `licenseInfo`
@@ -66,14 +66,6 @@ ConnectionCheck <- R6::R6Class(
         }
         self$`supportsNegPredictorTypes` <- `supportsNegPredictorTypes`
       }
-      if (!missing(`availableWorkers`)) {
-        stopifnot(is.vector(`availableWorkers`), length(`availableWorkers`) != 0)
-        sapply(`availableWorkers`, function(x) stopifnot(is.character(x)))
-        if (!identical(`availableWorkers`, unique(`availableWorkers`))) {
-          stop("Error! Items in `availableWorkers` are not unique.")
-        }
-        self$`availableWorkers` <- `availableWorkers`
-      }
       if (!missing(`unAvailableWorkers`)) {
         stopifnot(is.vector(`unAvailableWorkers`), length(`unAvailableWorkers`) != 0)
         sapply(`unAvailableWorkers`, function(x) stopifnot(is.character(x)))
@@ -87,6 +79,14 @@ ConnectionCheck <- R6::R6Class(
           stop(paste("Error! Invalid data for `supportsAllPredictorTypes`. Must be a boolean:", `supportsAllPredictorTypes`))
         }
         self$`supportsAllPredictorTypes` <- `supportsAllPredictorTypes`
+      }
+      if (!missing(`availableWorkers`)) {
+        stopifnot(is.vector(`availableWorkers`), length(`availableWorkers`) != 0)
+        sapply(`availableWorkers`, function(x) stopifnot(is.character(x)))
+        if (!identical(`availableWorkers`, unique(`availableWorkers`))) {
+          stop("Error! Items in `availableWorkers` are not unique.")
+        }
+        self$`availableWorkers` <- `availableWorkers`
       }
       if (!is.null(`workerInfo`)) {
         stopifnot(R6::is.R6(`workerInfo`))
@@ -122,10 +122,6 @@ ConnectionCheck <- R6::R6Class(
         ConnectionCheckObject[["supportsNegPredictorTypes"]] <-
           self$`supportsNegPredictorTypes`
       }
-      if (!is.null(self$`availableWorkers`)) {
-        ConnectionCheckObject[["availableWorkers"]] <-
-          self$`availableWorkers`
-      }
       if (!is.null(self$`unAvailableWorkers`)) {
         ConnectionCheckObject[["unAvailableWorkers"]] <-
           self$`unAvailableWorkers`
@@ -133,6 +129,10 @@ ConnectionCheck <- R6::R6Class(
       if (!is.null(self$`supportsAllPredictorTypes`)) {
         ConnectionCheckObject[["supportsAllPredictorTypes"]] <-
           self$`supportsAllPredictorTypes`
+      }
+      if (!is.null(self$`availableWorkers`)) {
+        ConnectionCheckObject[["availableWorkers"]] <-
+          self$`availableWorkers`
       }
       ConnectionCheckObject
     },
@@ -165,12 +165,6 @@ ConnectionCheck <- R6::R6Class(
       if (!is.null(this_object$`supportsNegPredictorTypes`)) {
         self$`supportsNegPredictorTypes` <- this_object$`supportsNegPredictorTypes`
       }
-      if (!is.null(this_object$`availableWorkers`)) {
-        self$`availableWorkers` <- ApiClient$new()$deserializeObj(this_object$`availableWorkers`, "set[character]", loadNamespace("Rsirius"))
-        if (!identical(self$`availableWorkers`, unique(self$`availableWorkers`))) {
-          stop("Error! Items in `availableWorkers` are not unique.")
-        }
-      }
       if (!is.null(this_object$`unAvailableWorkers`)) {
         self$`unAvailableWorkers` <- ApiClient$new()$deserializeObj(this_object$`unAvailableWorkers`, "set[character]", loadNamespace("Rsirius"))
         if (!identical(self$`unAvailableWorkers`, unique(self$`unAvailableWorkers`))) {
@@ -179,6 +173,12 @@ ConnectionCheck <- R6::R6Class(
       }
       if (!is.null(this_object$`supportsAllPredictorTypes`)) {
         self$`supportsAllPredictorTypes` <- this_object$`supportsAllPredictorTypes`
+      }
+      if (!is.null(this_object$`availableWorkers`)) {
+        self$`availableWorkers` <- ApiClient$new()$deserializeObj(this_object$`availableWorkers`, "set[character]", loadNamespace("Rsirius"))
+        if (!identical(self$`availableWorkers`, unique(self$`availableWorkers`))) {
+          stop("Error! Items in `availableWorkers` are not unique.")
+        }
       }
       self
     },
@@ -231,14 +231,6 @@ ConnectionCheck <- R6::R6Class(
           tolower(self$`supportsNegPredictorTypes`)
           )
         },
-        if (!is.null(self$`availableWorkers`)) {
-          sprintf(
-          '"availableWorkers":
-             [%s]
-          ',
-          paste(unlist(lapply(self$`availableWorkers`, function(x) paste0('"', x, '"'))), collapse = ",")
-          )
-        },
         if (!is.null(self$`unAvailableWorkers`)) {
           sprintf(
           '"unAvailableWorkers":
@@ -253,6 +245,14 @@ ConnectionCheck <- R6::R6Class(
             %s
                     ',
           tolower(self$`supportsAllPredictorTypes`)
+          )
+        },
+        if (!is.null(self$`availableWorkers`)) {
+          sprintf(
+          '"availableWorkers":
+             [%s]
+          ',
+          paste(unlist(lapply(self$`availableWorkers`, function(x) paste0('"', x, '"'))), collapse = ",")
           )
         }
       )
@@ -274,15 +274,15 @@ ConnectionCheck <- R6::R6Class(
       self$`errors` <- ApiClient$new()$deserializeObj(this_object$`errors`, "array[ConnectionError]", loadNamespace("Rsirius"))
       self$`supportsPosPredictorTypes` <- this_object$`supportsPosPredictorTypes`
       self$`supportsNegPredictorTypes` <- this_object$`supportsNegPredictorTypes`
-      self$`availableWorkers` <- ApiClient$new()$deserializeObj(this_object$`availableWorkers`, "set[character]", loadNamespace("Rsirius"))
-      if (!identical(self$`availableWorkers`, unique(self$`availableWorkers`))) {
-        stop("Error! Items in `availableWorkers` are not unique.")
-      }
       self$`unAvailableWorkers` <- ApiClient$new()$deserializeObj(this_object$`unAvailableWorkers`, "set[character]", loadNamespace("Rsirius"))
       if (!identical(self$`unAvailableWorkers`, unique(self$`unAvailableWorkers`))) {
         stop("Error! Items in `unAvailableWorkers` are not unique.")
       }
       self$`supportsAllPredictorTypes` <- this_object$`supportsAllPredictorTypes`
+      self$`availableWorkers` <- ApiClient$new()$deserializeObj(this_object$`availableWorkers`, "set[character]", loadNamespace("Rsirius"))
+      if (!identical(self$`availableWorkers`, unique(self$`availableWorkers`))) {
+        stop("Error! Items in `availableWorkers` are not unique.")
+      }
       self
     },
     #' Validate JSON input with respect to ConnectionCheck
@@ -323,16 +323,6 @@ ConnectionCheck <- R6::R6Class(
       } else {
         stop(paste("The JSON input `", input, "` is invalid for ConnectionCheck: the required field `supportsNegPredictorTypes` is missing."))
       }
-      # check the required field `availableWorkers`
-      if (!is.null(input_json$`availableWorkers`)) {
-        stopifnot(is.vector(input_json$`availableWorkers`), length(input_json$`availableWorkers`) != 0)
-        if (!identical(input_json$`availableWorkers`, unique(input_json$`availableWorkers`))) {
-          stop("Error! Items in `availableWorkers` are not unique.")
-        }
-        tmp <- sapply(input_json$`availableWorkers`, function(x) stopifnot(is.character(x)))
-      } else {
-        stop(paste("The JSON input `", input, "` is invalid for ConnectionCheck: the required field `availableWorkers` is missing."))
-      }
       # check the required field `unAvailableWorkers`
       if (!is.null(input_json$`unAvailableWorkers`)) {
         stopifnot(is.vector(input_json$`unAvailableWorkers`), length(input_json$`unAvailableWorkers`) != 0)
@@ -350,6 +340,16 @@ ConnectionCheck <- R6::R6Class(
         }
       } else {
         stop(paste("The JSON input `", input, "` is invalid for ConnectionCheck: the required field `supportsAllPredictorTypes` is missing."))
+      }
+      # check the required field `availableWorkers`
+      if (!is.null(input_json$`availableWorkers`)) {
+        stopifnot(is.vector(input_json$`availableWorkers`), length(input_json$`availableWorkers`) != 0)
+        if (!identical(input_json$`availableWorkers`, unique(input_json$`availableWorkers`))) {
+          stop("Error! Items in `availableWorkers` are not unique.")
+        }
+        tmp <- sapply(input_json$`availableWorkers`, function(x) stopifnot(is.character(x)))
+      } else {
+        stop(paste("The JSON input `", input, "` is invalid for ConnectionCheck: the required field `availableWorkers` is missing."))
       }
     },
     #' To string (JSON format)
@@ -390,12 +390,6 @@ ConnectionCheck <- R6::R6Class(
         return(FALSE)
       }
 
-      # check if the required `availableWorkers` is null
-      if (is.null(self$`availableWorkers`)) {
-        return(FALSE)
-      }
-
-
       # check if the required `unAvailableWorkers` is null
       if (is.null(self$`unAvailableWorkers`)) {
         return(FALSE)
@@ -406,6 +400,12 @@ ConnectionCheck <- R6::R6Class(
       if (is.null(self$`supportsAllPredictorTypes`)) {
         return(FALSE)
       }
+
+      # check if the required `availableWorkers` is null
+      if (is.null(self$`availableWorkers`)) {
+        return(FALSE)
+      }
+
 
       TRUE
     },
@@ -438,12 +438,6 @@ ConnectionCheck <- R6::R6Class(
         invalid_fields["supportsNegPredictorTypes"] <- "Non-nullable required field `supportsNegPredictorTypes` cannot be null."
       }
 
-      # check if the required `availableWorkers` is null
-      if (is.null(self$`availableWorkers`)) {
-        invalid_fields["availableWorkers"] <- "Non-nullable required field `availableWorkers` cannot be null."
-      }
-
-
       # check if the required `unAvailableWorkers` is null
       if (is.null(self$`unAvailableWorkers`)) {
         invalid_fields["unAvailableWorkers"] <- "Non-nullable required field `unAvailableWorkers` cannot be null."
@@ -454,6 +448,12 @@ ConnectionCheck <- R6::R6Class(
       if (is.null(self$`supportsAllPredictorTypes`)) {
         invalid_fields["supportsAllPredictorTypes"] <- "Non-nullable required field `supportsAllPredictorTypes` cannot be null."
       }
+
+      # check if the required `availableWorkers` is null
+      if (is.null(self$`availableWorkers`)) {
+        invalid_fields["availableWorkers"] <- "Non-nullable required field `availableWorkers` cannot be null."
+      }
+
 
       invalid_fields
     },

@@ -34,10 +34,10 @@ class ConnectionCheck(BaseModel):
     errors: List[ConnectionError] = Field(description="List of errors ordered by significance. first error should be reported and addressed first.  Following errors might just be follow-up errors")
     supports_pos_predictor_types: StrictBool = Field(alias="supportsPosPredictorTypes")
     supports_neg_predictor_types: StrictBool = Field(alias="supportsNegPredictorTypes")
-    available_workers: List[StrictStr] = Field(alias="availableWorkers")
     un_available_workers: List[StrictStr] = Field(alias="unAvailableWorkers")
     supports_all_predictor_types: StrictBool = Field(alias="supportsAllPredictorTypes")
-    __properties: ClassVar[List[str]] = ["workerInfo", "licenseInfo", "errors", "supportsPosPredictorTypes", "supportsNegPredictorTypes", "availableWorkers", "unAvailableWorkers", "supportsAllPredictorTypes"]
+    available_workers: List[StrictStr] = Field(alias="availableWorkers")
+    __properties: ClassVar[List[str]] = ["workerInfo", "licenseInfo", "errors", "supportsPosPredictorTypes", "supportsNegPredictorTypes", "unAvailableWorkers", "supportsAllPredictorTypes", "availableWorkers"]
 
     model_config = {
         "populate_by_name": True,
@@ -113,9 +113,9 @@ class ConnectionCheck(BaseModel):
             "errors": [ConnectionError.from_dict(_item) for _item in obj["errors"]] if obj.get("errors") is not None else None,
             "supportsPosPredictorTypes": obj.get("supportsPosPredictorTypes"),
             "supportsNegPredictorTypes": obj.get("supportsNegPredictorTypes"),
-            "availableWorkers": obj.get("availableWorkers"),
             "unAvailableWorkers": obj.get("unAvailableWorkers"),
-            "supportsAllPredictorTypes": obj.get("supportsAllPredictorTypes")
+            "supportsAllPredictorTypes": obj.get("supportsAllPredictorTypes"),
+            "availableWorkers": obj.get("availableWorkers")
         })
         return _obj
 
