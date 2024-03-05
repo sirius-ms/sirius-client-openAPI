@@ -40,8 +40,8 @@ jobs:
       run: |
         # while ! nc -z localhost 8080; do sleep 0.1; done
         cd .updater/api
-        wget https://upload.uni-jena.de/data/65e6e5b4caa529.59192919/openapi-spec-s6-final.json
-        mv openapi-spec-s6-final.json api-docs.json
+        wget https://upload.uni-jena.de/data/65e75d6c0bcd43.31379011/s6_api_docs-final-martin.json
+        mv s6_api_docs-final-martin.json api-docs.json
     - name: Update Clients
       run: |
         # echo "generating Java Code"
