@@ -1,7 +1,6 @@
 # Rsirius::StructureCandidateFormula
 
 
-
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------

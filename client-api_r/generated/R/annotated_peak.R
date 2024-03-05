@@ -1,7 +1,7 @@
 #' Create a new AnnotatedPeak
 #'
 #' @description
-#' 
+#' AnnotatedPeak Class
 #'
 #' @docType class
 #' @title AnnotatedPeak

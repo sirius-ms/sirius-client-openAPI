@@ -1,7 +1,6 @@
 # ProjectInfo
 
 
-
 ## Properties
 
 Name | Type | Description | Notes

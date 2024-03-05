@@ -1,7 +1,7 @@
 #' Create a new LicenseInfo
 #'
 #' @description
-#' 
+#' LicenseInfo Class
 #'
 #' @docType class
 #' @title LicenseInfo

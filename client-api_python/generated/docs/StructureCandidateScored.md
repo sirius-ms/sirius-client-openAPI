@@ -1,7 +1,6 @@
 # StructureCandidateScored
 
 
-
 ## Properties
 
 Name | Type | Description | Notes

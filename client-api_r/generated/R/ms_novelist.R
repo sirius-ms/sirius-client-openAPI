@@ -1,7 +1,7 @@
 #' Create a new MsNovelist
 #'
 #' @description
-#' 
+#' MsNovelist Class
 #'
 #' @docType class
 #' @title MsNovelist

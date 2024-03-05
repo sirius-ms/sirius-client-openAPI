@@ -1,7 +1,7 @@
 #' Create a new ConsensusAnnotationsCSI
 #'
 #' @description
-#' 
+#' ConsensusAnnotationsCSI Class
 #'
 #' @docType class
 #' @title ConsensusAnnotationsCSI

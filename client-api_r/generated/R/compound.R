@@ -1,7 +1,7 @@
 #' Create a new Compound
 #'
 #' @description
-#' 
+#' Compound Class
 #'
 #' @docType class
 #' @title Compound

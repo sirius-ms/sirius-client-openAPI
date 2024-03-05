@@ -1,7 +1,7 @@
 #' Create a new DBLink
 #'
 #' @description
-#' 
+#' DBLink Class
 #'
 #' @docType class
 #' @title DBLink

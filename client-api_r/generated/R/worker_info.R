@@ -1,7 +1,7 @@
 #' Create a new WorkerInfo
 #'
 #' @description
-#' 
+#' WorkerInfo Class
 #'
 #' @docType class
 #' @title WorkerInfo

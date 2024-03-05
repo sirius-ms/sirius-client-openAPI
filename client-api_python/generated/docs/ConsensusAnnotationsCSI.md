@@ -1,7 +1,6 @@
 # ConsensusAnnotationsCSI
 
 
-
 ## Properties
 
 Name | Type | Description | Notes

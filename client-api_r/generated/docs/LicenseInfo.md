@@ -1,7 +1,6 @@
 # Rsirius::LicenseInfo
 
 
-
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------

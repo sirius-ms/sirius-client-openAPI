@@ -1,7 +1,6 @@
 # Rsirius::ConnectionError
 
 
-
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------

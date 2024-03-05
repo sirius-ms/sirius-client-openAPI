@@ -1,7 +1,6 @@
 # AnnotatedSpectrum
 
 
-
 ## Properties
 
 Name | Type | Description | Notes

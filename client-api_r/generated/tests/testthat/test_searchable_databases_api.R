@@ -67,6 +67,35 @@ test_that("GetIncludedDatabases", {
   #expect_equal(result, "EXPECTED_RESULT")
 })
 
+test_that("ImportIntoDatabase", {
+  # tests for ImportIntoDatabase
+  # base path: http://localhost:8080
+  # Start import of structure and spectra files into the specified database.
+  # Start import of structure and spectra files into the specified database.
+  # @param database_id character database to import into
+  # @param buffer_size integer  (optional)
+  # @param input_files array[data.frame]  (optional)
+  # @return [SearchableDatabase]
+
+  # uncomment below to test the operation
+  #expect_equal(result, "EXPECTED_RESULT")
+})
+
+test_that("ImportIntoDatabaseAsJob", {
+  # tests for ImportIntoDatabaseAsJob
+  # base path: http://localhost:8080
+  # Start import of structure and spectra files into the specified database.
+  # Start import of structure and spectra files into the specified database.
+  # @param database_id character database to import into
+  # @param buffer_size integer  (optional)
+  # @param opt_fields array[JobOptField] set of optional fields to be included. Use 'none' only to override defaults. (optional)
+  # @param input_files array[data.frame]  (optional)
+  # @return [Job]
+
+  # uncomment below to test the operation
+  #expect_equal(result, "EXPECTED_RESULT")
+})
+
 test_that("RemoveDatabase", {
   # tests for RemoveDatabase
   # base path: http://localhost:8080

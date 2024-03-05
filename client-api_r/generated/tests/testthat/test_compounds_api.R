@@ -8,6 +8,8 @@ api_instance <- CompoundsApi$new()
 test_that("AddCompounds", {
   # tests for AddCompounds
   # base path: http://localhost:8080
+  # Import Compounds and its contained features.
+  # Import Compounds and its contained features. Compounds and Features must not exist in the project.  Otherwise, they will exist twice.
   # @param project_id character project-space to import into.
   # @param compound_import array[CompoundImport] the compound data to be imported
   # @param opt_fields array[CompoundOptField] set of optional fields to be included. Use 'none' to override defaults. (optional)

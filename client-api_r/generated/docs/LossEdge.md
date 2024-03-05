@@ -1,7 +1,6 @@
 # Rsirius::LossEdge
 
 
-
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------

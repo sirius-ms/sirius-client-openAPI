@@ -6,8 +6,8 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **offset** | **integer** |  | [optional] 
 **sort** | [**SortObject**](SortObject.md) |  | [optional] 
-**pageNumber** | **integer** |  | [optional] 
 **pageSize** | **integer** |  | [optional] 
+**pageNumber** | **integer** |  | [optional] 
 **paged** | **character** |  | [optional] 
 **unpaged** | **character** |  | [optional] 
 

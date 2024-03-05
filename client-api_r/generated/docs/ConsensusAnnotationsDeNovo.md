@@ -1,7 +1,6 @@
 # Rsirius::ConsensusAnnotationsDeNovo
 
 
-
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------

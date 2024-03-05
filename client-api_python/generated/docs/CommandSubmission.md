@@ -1,7 +1,6 @@
 # CommandSubmission
 
 
-
 ## Properties
 
 Name | Type | Description | Notes

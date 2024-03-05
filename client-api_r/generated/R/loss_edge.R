@@ -1,7 +1,7 @@
 #' Create a new LossEdge
 #'
 #' @description
-#' 
+#' LossEdge Class
 #'
 #' @docType class
 #' @title LossEdge

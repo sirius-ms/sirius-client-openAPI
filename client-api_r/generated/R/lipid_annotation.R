@@ -1,7 +1,7 @@
 #' Create a new LipidAnnotation
 #'
 #' @description
-#' 
+#' LipidAnnotation Class
 #'
 #' @docType class
 #' @title LipidAnnotation

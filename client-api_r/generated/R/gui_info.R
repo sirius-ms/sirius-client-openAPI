@@ -1,7 +1,7 @@
 #' Create a new GuiInfo
 #'
 #' @description
-#' 
+#' GuiInfo Class
 #'
 #' @docType class
 #' @title GuiInfo

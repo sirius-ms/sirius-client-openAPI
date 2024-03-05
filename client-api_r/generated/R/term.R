@@ -1,7 +1,7 @@
 #' Create a new Term
 #'
 #' @description
-#' 
+#' Term Class
 #'
 #' @docType class
 #' @title Term

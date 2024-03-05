@@ -1,7 +1,7 @@
 #' Create a new FeatureImport
 #'
 #' @description
-#' 
+#' FeatureImport Class
 #'
 #' @docType class
 #' @title FeatureImport

@@ -1,7 +1,7 @@
 #' Create a new SpectrumAnnotation
 #'
 #' @description
-#' 
+#' SpectrumAnnotation Class
 #'
 #' @docType class
 #' @title SpectrumAnnotation

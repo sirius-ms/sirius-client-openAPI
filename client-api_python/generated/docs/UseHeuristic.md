@@ -1,7 +1,6 @@
 # UseHeuristic
 
 
-
 ## Properties
 
 Name | Type | Description | Notes

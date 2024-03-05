@@ -1,12 +1,12 @@
-# PySirius.GUIApi
+# PySirius.GuiApi
 
 All URIs are relative to *http://localhost:8080*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**close_gui**](GUIApi.md#close_gui) | **DELETE** /api/projects/{projectId}/gui | Close GUI instance of given project-space if available.
-[**get_guis**](GUIApi.md#get_guis) | **GET** /api/guis | Get list of currently running gui windows, managed by this SIRIUS instance.
-[**open_gui**](GUIApi.md#open_gui) | **POST** /api/projects/{projectId}/gui | Open GUI instance on specified project-space and bring the GUI window to foreground.
+[**close_gui**](GuiApi.md#close_gui) | **DELETE** /api/projects/{projectId}/gui | Close GUI instance of given project-space if available.
+[**get_guis**](GuiApi.md#get_guis) | **GET** /api/guis | Get list of currently running gui windows, managed by this SIRIUS instance.
+[**open_gui**](GuiApi.md#open_gui) | **POST** /api/projects/{projectId}/gui | Open GUI instance on specified project-space and bring the GUI window to foreground.
 
 
 # **close_gui**
@@ -34,17 +34,17 @@ configuration = PySirius.Configuration(
 # Enter a context with an instance of the API client
 with PySirius.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = PySirius.GUIApi(api_client)
+    api_instance = PySirius.GuiApi(api_client)
     project_id = 'project_id_example' # str | if project-space the GUI instance is connected to.
     close_project = True # bool |  (optional)
 
     try:
         # Close GUI instance of given project-space if available.
         api_response = api_instance.close_gui(project_id, close_project=close_project)
-        print("The response of GUIApi->close_gui:\n")
+        print("The response of GuiApi->close_gui:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling GUIApi->close_gui: %s\n" % e)
+        print("Exception when calling GuiApi->close_gui: %s\n" % e)
 ```
 
 
@@ -104,15 +104,15 @@ configuration = PySirius.Configuration(
 # Enter a context with an instance of the API client
 with PySirius.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = PySirius.GUIApi(api_client)
+    api_instance = PySirius.GuiApi(api_client)
 
     try:
         # Get list of currently running gui windows, managed by this SIRIUS instance.
         api_response = api_instance.get_guis()
-        print("The response of GUIApi->get_guis:\n")
+        print("The response of GuiApi->get_guis:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling GUIApi->get_guis: %s\n" % e)
+        print("Exception when calling GuiApi->get_guis: %s\n" % e)
 ```
 
 
@@ -167,14 +167,14 @@ configuration = PySirius.Configuration(
 # Enter a context with an instance of the API client
 with PySirius.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = PySirius.GUIApi(api_client)
+    api_instance = PySirius.GuiApi(api_client)
     project_id = 'project_id_example' # str | of project-space the GUI instance will connect to.
 
     try:
         # Open GUI instance on specified project-space and bring the GUI window to foreground.
         api_instance.open_gui(project_id)
     except Exception as e:
-        print("Exception when calling GUIApi->open_gui: %s\n" % e)
+        print("Exception when calling GuiApi->open_gui: %s\n" % e)
 ```
 
 

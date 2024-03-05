@@ -7,7 +7,7 @@ User/developer friendly parameter subset for the Spectral library search tool.
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **enabled** | **bool** | tags whether the tool is enabled | [optional] 
-**spectra_search_dbs** | **List[str]** | Structure Databases with Reference spectra to search in.  &lt;p&gt;  Defaults to BIO + Custom Databases. Possible values are available to Database API. | 
+**spectra_search_dbs** | **List[Optional[str]]** | Structure Databases with Reference spectra to search in.  &lt;p&gt;  Defaults to BIO + Custom Databases. Possible values are available to Database API. | [optional] 
 **peak_deviation_ppm** | **float** | Maximum allowed mass deviation in ppm for matching peaks. | [optional] 
 **precursor_deviation_ppm** | **float** | Maximum allowed mass deviation in ppm for matching the precursor. If not specified, the same value as for the peaks is used. | [optional] 
 **scoring** | [**SpectralAlignmentType**](SpectralAlignmentType.md) |  | [optional] 

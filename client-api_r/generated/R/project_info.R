@@ -1,7 +1,7 @@
 #' Create a new ProjectInfo
 #'
 #' @description
-#' 
+#' ProjectInfo Class
 #'
 #' @docType class
 #' @title ProjectInfo

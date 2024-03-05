@@ -1,7 +1,6 @@
 # Rsirius::AnnotatedPeak
 
 
-
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------

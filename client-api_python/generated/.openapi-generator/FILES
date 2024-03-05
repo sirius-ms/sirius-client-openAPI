@@ -43,7 +43,6 @@ PySirius/models/consensus_annotations_csi.py
 PySirius/models/consensus_annotations_de_novo.py
 PySirius/models/consensus_criterion_csi.py
 PySirius/models/consensus_criterion_de_novo.py
-PySirius/models/database_import_submission.py
 PySirius/models/db_link.py
 PySirius/models/deviation.py
 PySirius/models/feature_annotations.py
@@ -54,9 +53,7 @@ PySirius/models/formula_candidate_opt_field.py
 PySirius/models/fragment_node.py
 PySirius/models/fragmentation_tree.py
 PySirius/models/gui_info.py
-PySirius/models/import_format.py
-PySirius/models/import_local_files_submission.py
-PySirius/models/import_string_submission.py
+PySirius/models/import_result.py
 PySirius/models/info.py
 PySirius/models/instrument.py
 PySirius/models/isotope_pattern_annotation.py
@@ -139,7 +136,6 @@ docs/ConsensusAnnotationsDeNovo.md
 docs/ConsensusCriterionCSI.md
 docs/ConsensusCriterionDeNovo.md
 docs/DBLink.md
-docs/DatabaseImportSubmission.md
 docs/Deviation.md
 docs/FeatureAnnotations.md
 docs/FeatureImport.md
@@ -149,11 +145,9 @@ docs/FormulaCandidate.md
 docs/FormulaCandidateOptField.md
 docs/FragmentNode.md
 docs/FragmentationTree.md
-docs/GUIApi.md
+docs/GuiApi.md
 docs/GuiInfo.md
-docs/ImportFormat.md
-docs/ImportLocalFilesSubmission.md
-docs/ImportStringSubmission.md
+docs/ImportResult.md
 docs/Info.md
 docs/InfoApi.md
 docs/Instrument.md
@@ -244,7 +238,6 @@ test/test_consensus_annotations_csi.py
 test/test_consensus_annotations_de_novo.py
 test/test_consensus_criterion_csi.py
 test/test_consensus_criterion_de_novo.py
-test/test_database_import_submission.py
 test/test_db_link.py
 test/test_deviation.py
 test/test_feature_annotations.py
@@ -257,9 +250,7 @@ test/test_fragment_node.py
 test/test_fragmentation_tree.py
 test/test_gui_api.py
 test/test_gui_info.py
-test/test_import_format.py
-test/test_import_local_files_submission.py
-test/test_import_string_submission.py
+test/test_import_result.py
 test/test_info.py
 test/test_info_api.py
 test/test_instrument.py

@@ -4,7 +4,7 @@ All URIs are relative to *http://localhost:8080*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**AddCompounds**](CompoundsApi.md#AddCompounds) | **POST** /api/projects/{projectId}/compounds | 
+[**AddCompounds**](CompoundsApi.md#AddCompounds) | **POST** /api/projects/{projectId}/compounds | Import Compounds and its contained features.
 [**DeleteCompound**](CompoundsApi.md#DeleteCompound) | **DELETE** /api/projects/{projectId}/compounds/{compoundId} | Delete compound (group of ion identities) with the given identifier (and the included features) from the  specified project-space.
 [**GetCompound**](CompoundsApi.md#GetCompound) | **GET** /api/projects/{projectId}/compounds/{compoundId} | Get compound (group of ion identities) with the given identifier from the specified project-space.
 [**GetCompounds**](CompoundsApi.md#GetCompounds) | **GET** /api/projects/{projectId}/compounds | List of all available compounds (group of ion identities) in the given project-space.
@@ -14,12 +14,16 @@ Method | HTTP request | Description
 # **AddCompounds**
 > array[Compound] AddCompounds(project_id, compound_import, opt_fields = [], opt_fields_features = [])
 
+Import Compounds and its contained features.
 
+Import Compounds and its contained features. Compounds and Features must not exist in the project.  Otherwise, they will exist twice.
 
 ### Example
 ```R
 library(Rsirius)
 
+# Import Compounds and its contained features.
+#
 # prepare function argument(s)
 var_project_id <- "project_id_example" # character | project-space to import into.
 var_compound_import <- c(CompoundImport$new(c(FeatureImport$new(123, "adduct_example", c(BasicSpectrum$new(c(SimplePeak$new(..., ...)), "name_example", 123, "collisionEnergy_example", 123, 123, 123)), c(BasicSpectrum$new(c(SimplePeak$new(..., ...)), "name_example", 123, "collisionEnergy_example", 123, 123, 123)), "name_example", "featureId_example", 123, 123, BasicSpectrum$new(c(SimplePeak$new(123, 123)), "name_example", 123, "collisionEnergy_example", 123, 123, 123))), "name_example")) # array[CompoundImport] | the compound data to be imported

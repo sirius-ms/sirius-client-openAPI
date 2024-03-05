@@ -1,7 +1,7 @@
 #' Create a new ZodiacEpochs
 #'
 #' @description
-#' 
+#' ZodiacEpochs Class
 #'
 #' @docType class
 #' @title ZodiacEpochs

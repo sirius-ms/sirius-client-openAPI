@@ -20,3 +20,11 @@ test_that("location", {
   # uncomment below to test the property
   #expect_equal(model.instance$`location`, "EXPECTED_RESULT")
 })
+
+test_that("matchRtOfReferenceSpectra", {
+  # tests for the property `matchRtOfReferenceSpectra` (character)
+  # Indicates whether this database shall be used to use retention time information for library matching.  Typically used for in-house spectral libraries that have been measured on
+
+  # uncomment below to test the property
+  #expect_equal(model.instance$`matchRtOfReferenceSpectra`, "EXPECTED_RESULT")
+})

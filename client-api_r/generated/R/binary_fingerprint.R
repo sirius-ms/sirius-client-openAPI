@@ -1,7 +1,7 @@
 #' Create a new BinaryFingerprint
 #'
 #' @description
-#' 
+#' BinaryFingerprint Class
 #'
 #' @docType class
 #' @title BinaryFingerprint
