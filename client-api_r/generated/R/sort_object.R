@@ -1,7 +1,7 @@
 #' Create a new SortObject
 #'
 #' @description
-#' 
+#' SortObject Class
 #'
 #' @docType class
 #' @title SortObject

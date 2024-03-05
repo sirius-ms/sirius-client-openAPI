@@ -16,9 +16,6 @@ Method | HTTP request | Description
 [**HasJobs**](JobsApi.md#HasJobs) | **GET** /api/projects/{projectId}/has-jobs | 
 [**PostJobConfig**](JobsApi.md#PostJobConfig) | **POST** /api/job-configs/{name} | Add new job configuration with given name.
 [**StartCommand**](JobsApi.md#StartCommand) | **POST** /api/{projectId}/jobs/run-command | Start computation for given command and input.
-[**StartDatabaseImport**](JobsApi.md#StartDatabaseImport) | **POST** /api/{projectId}/jobs/import-db | Start import of structure and spectra files into the specified database.
-[**StartImportFromPathJob**](JobsApi.md#StartImportFromPathJob) | **POST** /api/{projectId}/jobs/import-from-local-path | Import ms/ms data in given format from local filesystem into the specified project
-[**StartImportFromStringJob**](JobsApi.md#StartImportFromStringJob) | **POST** /api/{projectId}/jobs/import-from-string | Import ms/ms data from the given format into the specified project-space  Possible formats (ms, mgf, cef, msp, mzML, mzXML)
 [**StartJob**](JobsApi.md#StartJob) | **POST** /api/projects/{projectId}/jobs | Start computation for given compounds and with given parameters.
 [**StartJobFromConfig**](JobsApi.md#StartJobFromConfig) | **POST** /api/projects/{projectId}/jobs/from-config | Start computation for given compounds and with parameters from a stored job-config.
 
@@ -523,7 +520,7 @@ library(Rsirius)
 #
 # prepare function argument(s)
 var_name <- "name_example" # character | name of the job-config to add
-var_job_submission <- JobSubmission$new(c("compoundIds_example"), c("alignedFeatureIds_example"), c("fallbackAdducts_example"), c("enforcedAdducts_example"), c("detectableAdducts_example"), "recompute_example", SpectralLibrarySearch$new(c("spectraSearchDBs_example"), "enabled_example", 123, 123, SpectralAlignmentType$new()), Sirius$new("enabled_example", Instrument$new(), 123, 123, 123, "IGNORE", "filterByIsotopePattern_example", "enforceElGordoFormula_example", "performBottomUpSearch_example", 123, c("formulaSearchDBs_example"), "applyFormulaConstraintsToDBAndBottomUpSearch_example", "enforcedFormulaConstraints_example", "fallbackFormulaConstraints_example", c("detectableElements_example"), Timeout$new(123, 123), UseHeuristic$new(123, 123), 123), Zodiac$new("enabled_example", 123, 123, "runInTwoSteps_example", ZodiacEdgeFilterThresholds$new(123, 123, 123), ZodiacEpochs$new(123, 123, 123)), FingerprintPrediction$new("enabled_example", "useScoreThreshold_example", "alwaysPredictHighRefMatches_example"), Canopus$new("enabled_example"), StructureDbSearch$new(c("structureSearchDBs_example"), "enabled_example", "tagStructuresWithLipidClass_example", Mode$new()), MsNovelist$new("enabled_example", 123), c(key = "inner_example")) # JobSubmission | to add
+var_job_submission <- JobSubmission$new(c("compoundIds_example"), c("alignedFeatureIds_example"), c("fallbackAdducts_example"), c("enforcedAdducts_example"), c("detectableAdducts_example"), "recompute_example", SpectralLibrarySearch$new("enabled_example", c("spectraSearchDBs_example"), 123, 123, SpectralAlignmentType$new()), Sirius$new("enabled_example", Instrument$new(), 123, 123, 123, "IGNORE", "filterByIsotopePattern_example", "enforceElGordoFormula_example", "performBottomUpSearch_example", 123, c("formulaSearchDBs_example"), "applyFormulaConstraintsToDBAndBottomUpSearch_example", "enforcedFormulaConstraints_example", "fallbackFormulaConstraints_example", c("detectableElements_example"), Timeout$new(123, 123), UseHeuristic$new(123, 123), 123), Zodiac$new("enabled_example", 123, 123, "runInTwoSteps_example", ZodiacEdgeFilterThresholds$new(123, 123, 123), ZodiacEpochs$new(123, 123, 123)), FingerprintPrediction$new("enabled_example", "useScoreThreshold_example", "alwaysPredictHighRefMatches_example"), Canopus$new("enabled_example"), StructureDbSearch$new("enabled_example", c("structureSearchDBs_example"), "tagStructuresWithLipidClass_example", Mode$new()), MsNovelist$new("enabled_example", 123), c(key = "inner_example")) # JobSubmission | to add
 var_override_existing <- FALSE # character |  (Optional)
 
 api_instance <- rsirius_api$new()
@@ -608,160 +605,7 @@ No authorization required
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** | Job of the command to be executed. |  -  |
-
-# **StartDatabaseImport**
-> Job StartDatabaseImport(project_id, database_import_submission, opt_fields = ["progress"])
-
-Start import of structure and spectra files into the specified database.
-
-Start import of structure and spectra files into the specified database.
-
-### Example
-```R
-library(Rsirius)
-
-# Start import of structure and spectra files into the specified database.
-#
-# prepare function argument(s)
-var_project_id <- "project_id_example" # character | project-space to perform the command for.
-var_database_import_submission <- DatabaseImportSubmission$new("databaseId_example", c("filesToImport_example"), 123) # DatabaseImportSubmission | the command and the input to be executed
-var_opt_fields <- c(JobOptField$new()) # array[JobOptField] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
-
-api_instance <- rsirius_api$new()
-# to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$StartDatabaseImport(var_project_id, var_database_import_submission, opt_fields = var_opt_fieldsdata_file = "result.txt")
-result <- api_instance$jobs_api$StartDatabaseImport(var_project_id, var_database_import_submission, opt_fields = var_opt_fields)
-dput(result)
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **project_id** | **character**| project-space to perform the command for. | 
- **database_import_submission** | [**DatabaseImportSubmission**](DatabaseImportSubmission.md)| the command and the input to be executed | 
- **opt_fields** | list( [**JobOptField**](JobOptField.md) )| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;progress&quot;]]
-
-### Return type
-
-[**Job**](Job.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **200** | Job of the import command to be executed. |  -  |
-
-# **StartImportFromPathJob**
-> Job StartImportFromPathJob(project_id, import_local_files_submission, opt_fields = ["command","progress"])
-
-Import ms/ms data in given format from local filesystem into the specified project
-
-Import ms/ms data in given format from local filesystem into the specified project.  The import will run in a background job  Possible formats (ms, mgf, cef, msp, mzML, mzXML, project-space)  <p>
-
-### Example
-```R
-library(Rsirius)
-
-# Import ms/ms data in given format from local filesystem into the specified project
-#
-# prepare function argument(s)
-var_project_id <- "project_id_example" # character | project-space to import into.
-var_import_local_files_submission <- ImportLocalFilesSubmission$new(c("inputPaths_example"), "allowMs1OnlyData_example", "ignoreFormulas_example", "alignLCMSRuns_example") # ImportLocalFilesSubmission | configuration of the job that will be submitted
-var_opt_fields <- c(JobOptField$new()) # array[JobOptField] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
-
-api_instance <- rsirius_api$new()
-# to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$StartImportFromPathJob(var_project_id, var_import_local_files_submission, opt_fields = var_opt_fieldsdata_file = "result.txt")
-result <- api_instance$jobs_api$StartImportFromPathJob(var_project_id, var_import_local_files_submission, opt_fields = var_opt_fields)
-dput(result)
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **project_id** | **character**| project-space to import into. | 
- **import_local_files_submission** | [**ImportLocalFilesSubmission**](ImportLocalFilesSubmission.md)| configuration of the job that will be submitted | 
- **opt_fields** | list( [**JobOptField**](JobOptField.md) )| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;command&quot;,&quot;progress&quot;]]
-
-### Return type
-
-[**Job**](Job.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **200** | JobId of background job that imports given run/compounds/features. |  -  |
-
-# **StartImportFromStringJob**
-> Job StartImportFromStringJob(project_id, import_string_submission, opt_fields = ["progress"])
-
-Import ms/ms data from the given format into the specified project-space  Possible formats (ms, mgf, cef, msp, mzML, mzXML)
-
-Import ms/ms data from the given format into the specified project-space  Possible formats (ms, mgf, cef, msp, mzML, mzXML)
-
-### Example
-```R
-library(Rsirius)
-
-# Import ms/ms data from the given format into the specified project-space  Possible formats (ms, mgf, cef, msp, mzML, mzXML)
-#
-# prepare function argument(s)
-var_project_id <- "project_id_example" # character | project-space to import into.
-var_import_string_submission <- ImportStringSubmission$new(ImportFormat$new(), "data_example", "allowMs1OnlyData_example", "ignoreFormulas_example", "alignLCMSRuns_example", "sourceName_example") # ImportStringSubmission | configuration of the job that will be submitted
-var_opt_fields <- c(JobOptField$new()) # array[JobOptField] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
-
-api_instance <- rsirius_api$new()
-# to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$StartImportFromStringJob(var_project_id, var_import_string_submission, opt_fields = var_opt_fieldsdata_file = "result.txt")
-result <- api_instance$jobs_api$StartImportFromStringJob(var_project_id, var_import_string_submission, opt_fields = var_opt_fields)
-dput(result)
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **project_id** | **character**| project-space to import into. | 
- **import_string_submission** | [**ImportStringSubmission**](ImportStringSubmission.md)| configuration of the job that will be submitted | 
- **opt_fields** | list( [**JobOptField**](JobOptField.md) )| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;progress&quot;]]
-
-### Return type
-
-[**Job**](Job.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **200** | the import job. |  -  |
+| **200** | Job of the command to be executed.   DEPRECATED: this endpoint is based on local file paths and will likely be removed in future versions of this API. |  -  |
 
 # **StartJob**
 > Job StartJob(project_id, job_submission, opt_fields = ["command","progress"])
@@ -778,7 +622,7 @@ library(Rsirius)
 #
 # prepare function argument(s)
 var_project_id <- "project_id_example" # character | project-space to run jobs on
-var_job_submission <- JobSubmission$new(c("compoundIds_example"), c("alignedFeatureIds_example"), c("fallbackAdducts_example"), c("enforcedAdducts_example"), c("detectableAdducts_example"), "recompute_example", SpectralLibrarySearch$new(c("spectraSearchDBs_example"), "enabled_example", 123, 123, SpectralAlignmentType$new()), Sirius$new("enabled_example", Instrument$new(), 123, 123, 123, "IGNORE", "filterByIsotopePattern_example", "enforceElGordoFormula_example", "performBottomUpSearch_example", 123, c("formulaSearchDBs_example"), "applyFormulaConstraintsToDBAndBottomUpSearch_example", "enforcedFormulaConstraints_example", "fallbackFormulaConstraints_example", c("detectableElements_example"), Timeout$new(123, 123), UseHeuristic$new(123, 123), 123), Zodiac$new("enabled_example", 123, 123, "runInTwoSteps_example", ZodiacEdgeFilterThresholds$new(123, 123, 123), ZodiacEpochs$new(123, 123, 123)), FingerprintPrediction$new("enabled_example", "useScoreThreshold_example", "alwaysPredictHighRefMatches_example"), Canopus$new("enabled_example"), StructureDbSearch$new(c("structureSearchDBs_example"), "enabled_example", "tagStructuresWithLipidClass_example", Mode$new()), MsNovelist$new("enabled_example", 123), c(key = "inner_example")) # JobSubmission | configuration of the job that will be submitted of the job to be returned
+var_job_submission <- JobSubmission$new(c("compoundIds_example"), c("alignedFeatureIds_example"), c("fallbackAdducts_example"), c("enforcedAdducts_example"), c("detectableAdducts_example"), "recompute_example", SpectralLibrarySearch$new("enabled_example", c("spectraSearchDBs_example"), 123, 123, SpectralAlignmentType$new()), Sirius$new("enabled_example", Instrument$new(), 123, 123, 123, "IGNORE", "filterByIsotopePattern_example", "enforceElGordoFormula_example", "performBottomUpSearch_example", 123, c("formulaSearchDBs_example"), "applyFormulaConstraintsToDBAndBottomUpSearch_example", "enforcedFormulaConstraints_example", "fallbackFormulaConstraints_example", c("detectableElements_example"), Timeout$new(123, 123), UseHeuristic$new(123, 123), 123), Zodiac$new("enabled_example", 123, 123, "runInTwoSteps_example", ZodiacEdgeFilterThresholds$new(123, 123, 123), ZodiacEpochs$new(123, 123, 123)), FingerprintPrediction$new("enabled_example", "useScoreThreshold_example", "alwaysPredictHighRefMatches_example"), Canopus$new("enabled_example"), StructureDbSearch$new("enabled_example", c("structureSearchDBs_example"), "tagStructuresWithLipidClass_example", Mode$new()), MsNovelist$new("enabled_example", 123), c(key = "inner_example")) # JobSubmission | configuration of the job that will be submitted of the job to be returned
 var_opt_fields <- c(JobOptField$new()) # array[JobOptField] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
 
 api_instance <- rsirius_api$new()

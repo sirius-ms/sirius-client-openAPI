@@ -1,7 +1,7 @@
 #' Create a new CompoundImport
 #'
 #' @description
-#' 
+#' CompoundImport Class
 #'
 #' @docType class
 #' @title CompoundImport

@@ -1,7 +1,7 @@
 #' Create a new AccountInfo
 #'
 #' @description
-#' 
+#' AccountInfo Class
 #'
 #' @docType class
 #' @title AccountInfo

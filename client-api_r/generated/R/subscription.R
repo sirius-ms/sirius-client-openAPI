@@ -1,7 +1,7 @@
 #' Create a new Subscription
 #'
 #' @description
-#' 
+#' Subscription Class
 #'
 #' @docType class
 #' @title Subscription

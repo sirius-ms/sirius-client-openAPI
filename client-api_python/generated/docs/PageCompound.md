@@ -11,10 +11,10 @@ Name | Type | Description | Notes
 **content** | [**List[Compound]**](Compound.md) |  | [optional] 
 **number** | **int** |  | [optional] 
 **sort** | [**SortObject**](SortObject.md) |  | [optional] 
-**number_of_elements** | **int** |  | [optional] 
-**pageable** | [**PageableObject**](PageableObject.md) |  | [optional] 
 **first** | **bool** |  | [optional] 
 **last** | **bool** |  | [optional] 
+**number_of_elements** | **int** |  | [optional] 
+**pageable** | [**PageableObject**](PageableObject.md) |  | [optional] 
 **empty** | **bool** |  | [optional] 
 
 ## Example

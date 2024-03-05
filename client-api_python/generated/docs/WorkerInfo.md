@@ -1,7 +1,6 @@
 # WorkerInfo
 
 
-
 ## Properties
 
 Name | Type | Description | Notes

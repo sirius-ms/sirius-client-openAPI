@@ -1,7 +1,7 @@
 #' Create a new ConsensusAnnotationsDeNovo
 #'
 #' @description
-#' 
+#' ConsensusAnnotationsDeNovo Class
 #'
 #' @docType class
 #' @title ConsensusAnnotationsDeNovo

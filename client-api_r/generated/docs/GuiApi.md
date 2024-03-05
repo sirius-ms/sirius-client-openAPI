@@ -1,12 +1,12 @@
-# GUIApi
+# GuiApi
 
 All URIs are relative to *http://localhost:8080*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**CloseGui**](GUIApi.md#CloseGui) | **DELETE** /api/projects/{projectId}/gui | Close GUI instance of given project-space if available.
-[**GetGuis**](GUIApi.md#GetGuis) | **GET** /api/guis | Get list of currently running gui windows, managed by this SIRIUS instance.
-[**OpenGui**](GUIApi.md#OpenGui) | **POST** /api/projects/{projectId}/gui | Open GUI instance on specified project-space and bring the GUI window to foreground.
+[**CloseGui**](GuiApi.md#CloseGui) | **DELETE** /api/projects/{projectId}/gui | Close GUI instance of given project-space if available.
+[**GetGuis**](GuiApi.md#GetGuis) | **GET** /api/guis | Get list of currently running gui windows, managed by this SIRIUS instance.
+[**OpenGui**](GuiApi.md#OpenGui) | **POST** /api/projects/{projectId}/gui | Open GUI instance on specified project-space and bring the GUI window to foreground.
 
 
 # **CloseGui**

@@ -8,7 +8,7 @@
 #' @description SpectralLibrarySearch Class
 #' @format An \code{R6Class} generator object
 #' @field enabled tags whether the tool is enabled character [optional]
-#' @field spectraSearchDBs Structure Databases with Reference spectra to search in.  <p>  Defaults to BIO + Custom Databases. Possible values are available to Database API. list(character)
+#' @field spectraSearchDBs Structure Databases with Reference spectra to search in.  <p>  Defaults to BIO + Custom Databases. Possible values are available to Database API. list(character) [optional]
 #' @field peakDeviationPpm Maximum allowed mass deviation in ppm for matching peaks. numeric [optional]
 #' @field precursorDeviationPpm Maximum allowed mass deviation in ppm for matching the precursor. If not specified, the same value as for the peaks is used. numeric [optional]
 #' @field scoring  \link{SpectralAlignmentType} [optional]
@@ -28,24 +28,24 @@ SpectralLibrarySearch <- R6::R6Class(
     #' @description
     #' Initialize a new SpectralLibrarySearch class.
     #'
-    #' @param spectraSearchDBs Structure Databases with Reference spectra to search in.  <p>  Defaults to BIO + Custom Databases. Possible values are available to Database API.
     #' @param enabled tags whether the tool is enabled
+    #' @param spectraSearchDBs Structure Databases with Reference spectra to search in.  <p>  Defaults to BIO + Custom Databases. Possible values are available to Database API.
     #' @param peakDeviationPpm Maximum allowed mass deviation in ppm for matching peaks.
     #' @param precursorDeviationPpm Maximum allowed mass deviation in ppm for matching the precursor. If not specified, the same value as for the peaks is used.
     #' @param scoring scoring
     #' @param ... Other optional arguments.
     #' @export
-    initialize = function(`spectraSearchDBs`, `enabled` = NULL, `peakDeviationPpm` = NULL, `precursorDeviationPpm` = NULL, `scoring` = NULL, ...) {
-      if (!missing(`spectraSearchDBs`)) {
-        stopifnot(is.vector(`spectraSearchDBs`), length(`spectraSearchDBs`) != 0)
-        sapply(`spectraSearchDBs`, function(x) stopifnot(is.character(x)))
-        self$`spectraSearchDBs` <- `spectraSearchDBs`
-      }
+    initialize = function(`enabled` = NULL, `spectraSearchDBs` = NULL, `peakDeviationPpm` = NULL, `precursorDeviationPpm` = NULL, `scoring` = NULL, ...) {
       if (!is.null(`enabled`)) {
         if (!(is.logical(`enabled`) && length(`enabled`) == 1)) {
           stop(paste("Error! Invalid data for `enabled`. Must be a boolean:", `enabled`))
         }
         self$`enabled` <- `enabled`
+      }
+      if (!is.null(`spectraSearchDBs`)) {
+        stopifnot(is.vector(`spectraSearchDBs`), length(`spectraSearchDBs`) != 0)
+        sapply(`spectraSearchDBs`, function(x) stopifnot(is.character(x)))
+        self$`spectraSearchDBs` <- `spectraSearchDBs`
       }
       if (!is.null(`peakDeviationPpm`)) {
         if (!(is.numeric(`peakDeviationPpm`) && length(`peakDeviationPpm`) == 1)) {
@@ -206,13 +206,6 @@ SpectralLibrarySearch <- R6::R6Class(
     #' @export
     validateJSON = function(input) {
       input_json <- jsonlite::fromJSON(input)
-      # check the required field `spectraSearchDBs`
-      if (!is.null(input_json$`spectraSearchDBs`)) {
-        stopifnot(is.vector(input_json$`spectraSearchDBs`), length(input_json$`spectraSearchDBs`) != 0)
-        tmp <- sapply(input_json$`spectraSearchDBs`, function(x) stopifnot(is.character(x)))
-      } else {
-        stop(paste("The JSON input `", input, "` is invalid for SpectralLibrarySearch: the required field `spectraSearchDBs` is missing."))
-      }
     },
     #' To string (JSON format)
     #'
@@ -232,11 +225,6 @@ SpectralLibrarySearch <- R6::R6Class(
     #' @return true if the values in all fields are valid.
     #' @export
     isValid = function() {
-      # check if the required `spectraSearchDBs` is null
-      if (is.null(self$`spectraSearchDBs`)) {
-        return(FALSE)
-      }
-
       TRUE
     },
     #' Return a list of invalid fields (if any).
@@ -248,11 +236,6 @@ SpectralLibrarySearch <- R6::R6Class(
     #' @export
     getInvalidFields = function() {
       invalid_fields <- list()
-      # check if the required `spectraSearchDBs` is null
-      if (is.null(self$`spectraSearchDBs`)) {
-        invalid_fields["spectraSearchDBs"] <- "Non-nullable required field `spectraSearchDBs` cannot be null."
-      }
-
       invalid_fields
     },
     #' Print the object

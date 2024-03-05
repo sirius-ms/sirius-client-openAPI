@@ -1,7 +1,7 @@
 #' Create a new Info
 #'
 #' @description
-#' 
+#' Info Class
 #'
 #' @docType class
 #' @title Info

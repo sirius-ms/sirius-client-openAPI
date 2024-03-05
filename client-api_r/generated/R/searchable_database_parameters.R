@@ -1,7 +1,7 @@
 #' Create a new SearchableDatabaseParameters
 #'
 #' @description
-#' 
+#' SearchableDatabaseParameters Class
 #'
 #' @docType class
 #' @title SearchableDatabaseParameters
@@ -9,6 +9,7 @@
 #' @format An \code{R6Class} generator object
 #' @field displayName display name of the database  Should be short character [optional]
 #' @field location Storage location of user database  Might be NULL for non-user databases or if default location is used. character [optional]
+#' @field matchRtOfReferenceSpectra Indicates whether this database shall be used to use retention time information for library matching.  Typically used for in-house spectral libraries that have been measured on character [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
 #' @export
@@ -17,6 +18,7 @@ SearchableDatabaseParameters <- R6::R6Class(
   public = list(
     `displayName` = NULL,
     `location` = NULL,
+    `matchRtOfReferenceSpectra` = NULL,
     #' Initialize a new SearchableDatabaseParameters class.
     #'
     #' @description
@@ -24,9 +26,10 @@ SearchableDatabaseParameters <- R6::R6Class(
     #'
     #' @param displayName display name of the database  Should be short
     #' @param location Storage location of user database  Might be NULL for non-user databases or if default location is used.
+    #' @param matchRtOfReferenceSpectra Indicates whether this database shall be used to use retention time information for library matching.  Typically used for in-house spectral libraries that have been measured on. Default to FALSE.
     #' @param ... Other optional arguments.
     #' @export
-    initialize = function(`displayName` = NULL, `location` = NULL, ...) {
+    initialize = function(`displayName` = NULL, `location` = NULL, `matchRtOfReferenceSpectra` = FALSE, ...) {
       if (!is.null(`displayName`)) {
         if (!(is.character(`displayName`) && length(`displayName`) == 1)) {
           stop(paste("Error! Invalid data for `displayName`. Must be a string:", `displayName`))
@@ -38,6 +41,12 @@ SearchableDatabaseParameters <- R6::R6Class(
           stop(paste("Error! Invalid data for `location`. Must be a string:", `location`))
         }
         self$`location` <- `location`
+      }
+      if (!is.null(`matchRtOfReferenceSpectra`)) {
+        if (!(is.logical(`matchRtOfReferenceSpectra`) && length(`matchRtOfReferenceSpectra`) == 1)) {
+          stop(paste("Error! Invalid data for `matchRtOfReferenceSpectra`. Must be a boolean:", `matchRtOfReferenceSpectra`))
+        }
+        self$`matchRtOfReferenceSpectra` <- `matchRtOfReferenceSpectra`
       }
     },
     #' To JSON string
@@ -57,6 +66,10 @@ SearchableDatabaseParameters <- R6::R6Class(
         SearchableDatabaseParametersObject[["location"]] <-
           self$`location`
       }
+      if (!is.null(self$`matchRtOfReferenceSpectra`)) {
+        SearchableDatabaseParametersObject[["matchRtOfReferenceSpectra"]] <-
+          self$`matchRtOfReferenceSpectra`
+      }
       SearchableDatabaseParametersObject
     },
     #' Deserialize JSON string into an instance of SearchableDatabaseParameters
@@ -74,6 +87,9 @@ SearchableDatabaseParameters <- R6::R6Class(
       }
       if (!is.null(this_object$`location`)) {
         self$`location` <- this_object$`location`
+      }
+      if (!is.null(this_object$`matchRtOfReferenceSpectra`)) {
+        self$`matchRtOfReferenceSpectra` <- this_object$`matchRtOfReferenceSpectra`
       }
       self
     },
@@ -101,6 +117,14 @@ SearchableDatabaseParameters <- R6::R6Class(
                     ',
           self$`location`
           )
+        },
+        if (!is.null(self$`matchRtOfReferenceSpectra`)) {
+          sprintf(
+          '"matchRtOfReferenceSpectra":
+            %s
+                    ',
+          tolower(self$`matchRtOfReferenceSpectra`)
+          )
         }
       )
       jsoncontent <- paste(jsoncontent, collapse = ",")
@@ -118,6 +142,7 @@ SearchableDatabaseParameters <- R6::R6Class(
       this_object <- jsonlite::fromJSON(input_json)
       self$`displayName` <- this_object$`displayName`
       self$`location` <- this_object$`location`
+      self$`matchRtOfReferenceSpectra` <- this_object$`matchRtOfReferenceSpectra`
       self
     },
     #' Validate JSON input with respect to SearchableDatabaseParameters

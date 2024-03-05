@@ -1,7 +1,6 @@
 # Rsirius::Timeout
 
 
-
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------

@@ -1,7 +1,7 @@
 #' Create a new StructureCandidateScored
 #'
 #' @description
-#' 
+#' StructureCandidateScored Class
 #'
 #' @docType class
 #' @title StructureCandidateScored

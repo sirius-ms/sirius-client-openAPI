@@ -1,7 +1,7 @@
 #' Create a new SubscriptionConsumables
 #'
 #' @description
-#' 
+#' SubscriptionConsumables Class
 #'
 #' @docType class
 #' @title SubscriptionConsumables

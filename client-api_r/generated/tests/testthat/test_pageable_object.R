@@ -19,18 +19,18 @@ test_that("sort", {
   #expect_equal(model.instance$`sort`, "EXPECTED_RESULT")
 })
 
-test_that("pageNumber", {
-  # tests for the property `pageNumber` (integer)
-
-  # uncomment below to test the property
-  #expect_equal(model.instance$`pageNumber`, "EXPECTED_RESULT")
-})
-
 test_that("pageSize", {
   # tests for the property `pageSize` (integer)
 
   # uncomment below to test the property
   #expect_equal(model.instance$`pageSize`, "EXPECTED_RESULT")
+})
+
+test_that("pageNumber", {
+  # tests for the property `pageNumber` (integer)
+
+  # uncomment below to test the property
+  #expect_equal(model.instance$`pageNumber`, "EXPECTED_RESULT")
 })
 
 test_that("paged", {

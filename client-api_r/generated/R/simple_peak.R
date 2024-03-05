@@ -1,7 +1,7 @@
 #' Create a new SimplePeak
 #'
 #' @description
-#' 
+#' SimplePeak Class
 #'
 #' @docType class
 #' @title SimplePeak

@@ -1,7 +1,7 @@
 #' Create a new UseHeuristic
 #'
 #' @description
-#' 
+#' UseHeuristic Class
 #'
 #' @docType class
 #' @title UseHeuristic

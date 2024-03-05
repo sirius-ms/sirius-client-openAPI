@@ -1,7 +1,7 @@
 #' Create a new Deviation
 #'
 #' @description
-#' 
+#' Deviation Class
 #'
 #' @docType class
 #' @title Deviation

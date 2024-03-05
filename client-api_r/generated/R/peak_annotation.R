@@ -1,7 +1,7 @@
 #' Create a new PeakAnnotation
 #'
 #' @description
-#' 
+#' PeakAnnotation Class
 #'
 #' @docType class
 #' @title PeakAnnotation

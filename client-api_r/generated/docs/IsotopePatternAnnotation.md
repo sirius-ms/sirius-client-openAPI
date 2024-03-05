@@ -1,7 +1,6 @@
 # Rsirius::IsotopePatternAnnotation
 
 
-
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------

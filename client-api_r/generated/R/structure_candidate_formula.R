@@ -1,7 +1,7 @@
 #' Create a new StructureCandidateFormula
 #'
 #' @description
-#' 
+#' StructureCandidateFormula Class
 #'
 #' @docType class
 #' @title StructureCandidateFormula

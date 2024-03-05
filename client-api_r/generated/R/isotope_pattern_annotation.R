@@ -1,7 +1,7 @@
 #' Create a new IsotopePatternAnnotation
 #'
 #' @description
-#' 
+#' IsotopePatternAnnotation Class
 #'
 #' @docType class
 #' @title IsotopePatternAnnotation

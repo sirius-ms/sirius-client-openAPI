@@ -4,7 +4,7 @@ All URIs are relative to *http://localhost:8080*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**add_compounds**](CompoundsApi.md#add_compounds) | **POST** /api/projects/{projectId}/compounds | 
+[**add_compounds**](CompoundsApi.md#add_compounds) | **POST** /api/projects/{projectId}/compounds | Import Compounds and its contained features.
 [**delete_compound**](CompoundsApi.md#delete_compound) | **DELETE** /api/projects/{projectId}/compounds/{compoundId} | Delete compound (group of ion identities) with the given identifier (and the included features) from the  specified project-space.
 [**get_compound**](CompoundsApi.md#get_compound) | **GET** /api/projects/{projectId}/compounds/{compoundId} | Get compound (group of ion identities) with the given identifier from the specified project-space.
 [**get_compounds**](CompoundsApi.md#get_compounds) | **GET** /api/projects/{projectId}/compounds | List of all available compounds (group of ion identities) in the given project-space.
@@ -14,7 +14,9 @@ Method | HTTP request | Description
 # **add_compounds**
 > List[Compound] add_compounds(project_id, compound_import, opt_fields=opt_fields, opt_fields_features=opt_fields_features)
 
+Import Compounds and its contained features.
 
+Import Compounds and its contained features. Compounds and Features must not exist in the project.  Otherwise, they will exist twice.
 
 ### Example
 
@@ -45,6 +47,7 @@ with PySirius.ApiClient(configuration) as api_client:
     opt_fields_features = [] # List[AlignedFeatureOptField] | set of optional fields of the nested features to be included. Use 'none' to override defaults. (optional) (default to [])
 
     try:
+        # Import Compounds and its contained features.
         api_response = api_instance.add_compounds(project_id, compound_import, opt_fields=opt_fields, opt_fields_features=opt_fields_features)
         print("The response of CompoundsApi->add_compounds:\n")
         pprint(api_response)

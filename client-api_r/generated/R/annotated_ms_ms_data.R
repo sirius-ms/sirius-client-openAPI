@@ -1,7 +1,7 @@
 #' Create a new AnnotatedMsMsData
 #'
 #' @description
-#' 
+#' AnnotatedMsMsData Class
 #'
 #' @docType class
 #' @title AnnotatedMsMsData

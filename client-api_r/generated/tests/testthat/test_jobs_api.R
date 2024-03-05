@@ -165,48 +165,6 @@ test_that("StartCommand", {
   #expect_equal(result, "EXPECTED_RESULT")
 })
 
-test_that("StartDatabaseImport", {
-  # tests for StartDatabaseImport
-  # base path: http://localhost:8080
-  # Start import of structure and spectra files into the specified database.
-  # Start import of structure and spectra files into the specified database.
-  # @param project_id character project-space to perform the command for.
-  # @param database_import_submission DatabaseImportSubmission the command and the input to be executed
-  # @param opt_fields array[JobOptField] set of optional fields to be included. Use 'none' only to override defaults. (optional)
-  # @return [Job]
-
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
-})
-
-test_that("StartImportFromPathJob", {
-  # tests for StartImportFromPathJob
-  # base path: http://localhost:8080
-  # Import ms/ms data in given format from local filesystem into the specified project
-  # Import ms/ms data in given format from local filesystem into the specified project.  The import will run in a background job  Possible formats (ms, mgf, cef, msp, mzML, mzXML, project-space)  &lt;p&gt;
-  # @param project_id character project-space to import into.
-  # @param import_local_files_submission ImportLocalFilesSubmission configuration of the job that will be submitted
-  # @param opt_fields array[JobOptField] set of optional fields to be included. Use 'none' only to override defaults. (optional)
-  # @return [Job]
-
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
-})
-
-test_that("StartImportFromStringJob", {
-  # tests for StartImportFromStringJob
-  # base path: http://localhost:8080
-  # Import ms/ms data from the given format into the specified project-space  Possible formats (ms, mgf, cef, msp, mzML, mzXML)
-  # Import ms/ms data from the given format into the specified project-space  Possible formats (ms, mgf, cef, msp, mzML, mzXML)
-  # @param project_id character project-space to import into.
-  # @param import_string_submission ImportStringSubmission configuration of the job that will be submitted
-  # @param opt_fields array[JobOptField] set of optional fields to be included. Use 'none' only to override defaults. (optional)
-  # @return [Job]
-
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
-})
-
 test_that("StartJob", {
   # tests for StartJob
   # base path: http://localhost:8080

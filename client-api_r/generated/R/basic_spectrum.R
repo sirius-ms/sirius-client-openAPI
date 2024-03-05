@@ -1,7 +1,7 @@
 #' Create a new BasicSpectrum
 #'
 #' @description
-#' 
+#' BasicSpectrum Class
 #'
 #' @docType class
 #' @title BasicSpectrum

@@ -1,7 +1,7 @@
 #' Create a new Timeout
 #'
 #' @description
-#' 
+#' Timeout Class
 #'
 #' @docType class
 #' @title Timeout

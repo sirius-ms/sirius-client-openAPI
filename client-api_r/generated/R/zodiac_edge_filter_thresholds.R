@@ -1,7 +1,7 @@
 #' Create a new ZodiacEdgeFilterThresholds
 #'
 #' @description
-#' 
+#' ZodiacEdgeFilterThresholds Class
 #'
 #' @docType class
 #' @title ZodiacEdgeFilterThresholds

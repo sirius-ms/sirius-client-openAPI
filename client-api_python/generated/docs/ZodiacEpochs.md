@@ -1,7 +1,6 @@
 # ZodiacEpochs
 
 
-
 ## Properties
 
 Name | Type | Description | Notes

@@ -1,7 +1,6 @@
 # Rsirius::BasicSpectrum
 
 
-
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------

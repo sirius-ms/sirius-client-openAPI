@@ -1,7 +1,6 @@
 # Rsirius::SortObject
 
 
-
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------

@@ -1,7 +1,7 @@
 #' Create a new CommandSubmission
 #'
 #' @description
-#' 
+#' CommandSubmission Class
 #'
 #' @docType class
 #' @title CommandSubmission

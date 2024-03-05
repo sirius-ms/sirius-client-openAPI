@@ -1,7 +1,7 @@
 #' Create a new ConnectionError
 #'
 #' @description
-#' 
+#' ConnectionError Class
 #'
 #' @docType class
 #' @title ConnectionError

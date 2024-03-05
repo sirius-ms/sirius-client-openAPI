@@ -34,7 +34,6 @@ R/consensus_annotations_csi.R
 R/consensus_annotations_de_novo.R
 R/consensus_criterion_csi.R
 R/consensus_criterion_de_novo.R
-R/database_import_submission.R
 R/db_link.R
 R/deviation.R
 R/feature_annotations.R
@@ -47,9 +46,7 @@ R/fragment_node.R
 R/fragmentation_tree.R
 R/gui_api.R
 R/gui_info.R
-R/import_format.R
-R/import_local_files_submission.R
-R/import_string_submission.R
+R/import_result.R
 R/info.R
 R/info_api.R
 R/instrument.R
@@ -136,7 +133,6 @@ docs/ConsensusAnnotationsDeNovo.md
 docs/ConsensusCriterionCSI.md
 docs/ConsensusCriterionDeNovo.md
 docs/DBLink.md
-docs/DatabaseImportSubmission.md
 docs/Deviation.md
 docs/FeatureAnnotations.md
 docs/FeatureImport.md
@@ -146,11 +142,9 @@ docs/FormulaCandidate.md
 docs/FormulaCandidateOptField.md
 docs/FragmentNode.md
 docs/FragmentationTree.md
-docs/GUIApi.md
+docs/GuiApi.md
 docs/GuiInfo.md
-docs/ImportFormat.md
-docs/ImportLocalFilesSubmission.md
-docs/ImportStringSubmission.md
+docs/ImportResult.md
 docs/Info.md
 docs/InfoApi.md
 docs/Instrument.md
@@ -236,7 +230,6 @@ tests/testthat/test_consensus_annotations_csi.R
 tests/testthat/test_consensus_annotations_de_novo.R
 tests/testthat/test_consensus_criterion_csi.R
 tests/testthat/test_consensus_criterion_de_novo.R
-tests/testthat/test_database_import_submission.R
 tests/testthat/test_db_link.R
 tests/testthat/test_deviation.R
 tests/testthat/test_feature_annotations.R
@@ -249,9 +242,7 @@ tests/testthat/test_fragment_node.R
 tests/testthat/test_fragmentation_tree.R
 tests/testthat/test_gui_api.R
 tests/testthat/test_gui_info.R
-tests/testthat/test_import_format.R
-tests/testthat/test_import_local_files_submission.R
-tests/testthat/test_import_string_submission.R
+tests/testthat/test_import_result.R
 tests/testthat/test_info.R
 tests/testthat/test_info_api.R
 tests/testthat/test_instrument.R

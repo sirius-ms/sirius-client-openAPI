@@ -1,7 +1,7 @@
 #' Create a new SpectralLibraryMatch
 #'
 #' @description
-#' 
+#' SpectralLibraryMatch Class
 #'
 #' @docType class
 #' @title SpectralLibraryMatch

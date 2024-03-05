@@ -1,7 +1,6 @@
 # Rsirius::Term
 
 
-
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------

@@ -1,7 +1,6 @@
 # Rsirius::CompoundImport
 
 
-
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------

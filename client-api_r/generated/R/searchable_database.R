@@ -1,7 +1,7 @@
 #' Create a new SearchableDatabase
 #'
 #' @description
-#' 
+#' SearchableDatabase Class
 #'
 #' @docType class
 #' @title SearchableDatabase
@@ -48,7 +48,7 @@ SearchableDatabase <- R6::R6Class(
     #' @param updateNeeded If true the database version is outdated and the database needs to be updated or re-imported before it can be used.
     #' @param displayName display name of the database  Should be short
     #' @param location Storage location of user database  Might be NULL for non-user databases or if default location is used.
-    #' @param matchRtOfReferenceSpectra Indicates whether this database shall be used to use retention time information for library matching.  Typically used for in-house spectral libraries that have been measured on
+    #' @param matchRtOfReferenceSpectra Indicates whether this database shall be used to use retention time information for library matching.  Typically used for in-house spectral libraries that have been measured on. Default to FALSE.
     #' @param dbDate Date on which the data was imported / database was created.
     #' @param dbVersion database schema version
     #' @param numberOfStructures Number of unique compounds available in this database.
@@ -56,7 +56,7 @@ SearchableDatabase <- R6::R6Class(
     #' @param numberOfReferenceSpectra Number of reference spectra available in this database
     #' @param ... Other optional arguments.
     #' @export
-    initialize = function(`databaseId`, `customDb`, `searchable`, `updateNeeded`, `displayName` = NULL, `location` = NULL, `matchRtOfReferenceSpectra` = NULL, `dbDate` = NULL, `dbVersion` = NULL, `numberOfStructures` = NULL, `numberOfFormulas` = NULL, `numberOfReferenceSpectra` = NULL, ...) {
+    initialize = function(`databaseId`, `customDb`, `searchable`, `updateNeeded`, `displayName` = NULL, `location` = NULL, `matchRtOfReferenceSpectra` = FALSE, `dbDate` = NULL, `dbVersion` = NULL, `numberOfStructures` = NULL, `numberOfFormulas` = NULL, `numberOfReferenceSpectra` = NULL, ...) {
       if (!missing(`databaseId`)) {
         if (!(is.character(`databaseId`) && length(`databaseId`) == 1)) {
           stop(paste("Error! Invalid data for `databaseId`. Must be a string:", `databaseId`))

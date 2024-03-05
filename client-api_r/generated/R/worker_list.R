@@ -1,7 +1,7 @@
 #' Create a new WorkerList
 #'
 #' @description
-#' 
+#' WorkerList Class
 #'
 #' @docType class
 #' @title WorkerList

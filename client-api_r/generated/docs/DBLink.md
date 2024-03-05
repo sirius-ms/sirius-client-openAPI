@@ -1,7 +1,6 @@
 # Rsirius::DBLink
 
 
-
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------

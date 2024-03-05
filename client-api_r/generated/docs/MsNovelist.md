@@ -1,7 +1,6 @@
 # Rsirius::MsNovelist
 
 
-
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------

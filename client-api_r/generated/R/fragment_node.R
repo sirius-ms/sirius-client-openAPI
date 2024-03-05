@@ -1,7 +1,7 @@
 #' Create a new FragmentNode
 #'
 #' @description
-#' 
+#' FragmentNode Class
 #'
 #' @docType class
 #' @title FragmentNode
