@@ -90,13 +90,13 @@ class TestConnectionCheck(unittest.TestCase):
                     ],
                 supports_pos_predictor_types = True,
                 supports_neg_predictor_types = True,
-                available_workers = [
-                    ''
-                    ],
                 un_available_workers = [
                     ''
                     ],
-                supports_all_predictor_types = True
+                supports_all_predictor_types = True,
+                available_workers = [
+                    ''
+                    ]
             )
         else:
             return ConnectionCheck(
@@ -139,13 +139,13 @@ class TestConnectionCheck(unittest.TestCase):
                     ],
                 supports_pos_predictor_types = True,
                 supports_neg_predictor_types = True,
-                available_workers = [
-                    ''
-                    ],
                 un_available_workers = [
                     ''
                     ],
                 supports_all_predictor_types = True,
+                available_workers = [
+                    ''
+                    ],
         )
         """
 
