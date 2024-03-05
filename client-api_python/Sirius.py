@@ -3,7 +3,6 @@
 import os
 import time
 import subprocess
-import urllib3
 import PySirius
 
 
@@ -152,10 +151,9 @@ class SiriusSDK:
 
     def shutdown(self):
         """shuts down the via the start function started sirius rest application, returns the exit code of the shutdown order"""
-        # terminated via Rest Call
-        http = urllib3.PoolManager()
+        # Terminate via Rest Call
         try:
-            http.request('POST', "http://localhost:" + str(SiriusSDK.port) + "/actuator/shutdown")
+            PySirius.ActuatorApi(SiriusSDK.api_client).shutdown()
             time.sleep(3)
             if SiriusSDK.process.poll() is not None:
                 print("Sirius was shut down succesfully")
