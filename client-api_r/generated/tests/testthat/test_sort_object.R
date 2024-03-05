@@ -12,16 +12,16 @@ test_that("empty", {
   #expect_equal(model.instance$`empty`, "EXPECTED_RESULT")
 })
 
-test_that("sorted", {
-  # tests for the property `sorted` (character)
-
-  # uncomment below to test the property
-  #expect_equal(model.instance$`sorted`, "EXPECTED_RESULT")
-})
-
 test_that("unsorted", {
   # tests for the property `unsorted` (character)
 
   # uncomment below to test the property
   #expect_equal(model.instance$`unsorted`, "EXPECTED_RESULT")
+})
+
+test_that("sorted", {
+  # tests for the property `sorted` (character)
+
+  # uncomment below to test the property
+  #expect_equal(model.instance$`sorted`, "EXPECTED_RESULT")
 })

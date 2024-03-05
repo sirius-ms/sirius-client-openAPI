@@ -8,8 +8,8 @@
 #' @description SortObject Class
 #' @format An \code{R6Class} generator object
 #' @field empty  character [optional]
-#' @field sorted  character [optional]
 #' @field unsorted  character [optional]
+#' @field sorted  character [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
 #' @export
@@ -17,36 +17,36 @@ SortObject <- R6::R6Class(
   "SortObject",
   public = list(
     `empty` = NULL,
-    `sorted` = NULL,
     `unsorted` = NULL,
+    `sorted` = NULL,
     #' Initialize a new SortObject class.
     #'
     #' @description
     #' Initialize a new SortObject class.
     #'
     #' @param empty empty
-    #' @param sorted sorted
     #' @param unsorted unsorted
+    #' @param sorted sorted
     #' @param ... Other optional arguments.
     #' @export
-    initialize = function(`empty` = NULL, `sorted` = NULL, `unsorted` = NULL, ...) {
+    initialize = function(`empty` = NULL, `unsorted` = NULL, `sorted` = NULL, ...) {
       if (!is.null(`empty`)) {
         if (!(is.logical(`empty`) && length(`empty`) == 1)) {
           stop(paste("Error! Invalid data for `empty`. Must be a boolean:", `empty`))
         }
         self$`empty` <- `empty`
       }
-      if (!is.null(`sorted`)) {
-        if (!(is.logical(`sorted`) && length(`sorted`) == 1)) {
-          stop(paste("Error! Invalid data for `sorted`. Must be a boolean:", `sorted`))
-        }
-        self$`sorted` <- `sorted`
-      }
       if (!is.null(`unsorted`)) {
         if (!(is.logical(`unsorted`) && length(`unsorted`) == 1)) {
           stop(paste("Error! Invalid data for `unsorted`. Must be a boolean:", `unsorted`))
         }
         self$`unsorted` <- `unsorted`
+      }
+      if (!is.null(`sorted`)) {
+        if (!(is.logical(`sorted`) && length(`sorted`) == 1)) {
+          stop(paste("Error! Invalid data for `sorted`. Must be a boolean:", `sorted`))
+        }
+        self$`sorted` <- `sorted`
       }
     },
     #' To JSON string
@@ -62,13 +62,13 @@ SortObject <- R6::R6Class(
         SortObjectObject[["empty"]] <-
           self$`empty`
       }
-      if (!is.null(self$`sorted`)) {
-        SortObjectObject[["sorted"]] <-
-          self$`sorted`
-      }
       if (!is.null(self$`unsorted`)) {
         SortObjectObject[["unsorted"]] <-
           self$`unsorted`
+      }
+      if (!is.null(self$`sorted`)) {
+        SortObjectObject[["sorted"]] <-
+          self$`sorted`
       }
       SortObjectObject
     },
@@ -85,11 +85,11 @@ SortObject <- R6::R6Class(
       if (!is.null(this_object$`empty`)) {
         self$`empty` <- this_object$`empty`
       }
-      if (!is.null(this_object$`sorted`)) {
-        self$`sorted` <- this_object$`sorted`
-      }
       if (!is.null(this_object$`unsorted`)) {
         self$`unsorted` <- this_object$`unsorted`
+      }
+      if (!is.null(this_object$`sorted`)) {
+        self$`sorted` <- this_object$`sorted`
       }
       self
     },
@@ -110,20 +110,20 @@ SortObject <- R6::R6Class(
           tolower(self$`empty`)
           )
         },
-        if (!is.null(self$`sorted`)) {
-          sprintf(
-          '"sorted":
-            %s
-                    ',
-          tolower(self$`sorted`)
-          )
-        },
         if (!is.null(self$`unsorted`)) {
           sprintf(
           '"unsorted":
             %s
                     ',
           tolower(self$`unsorted`)
+          )
+        },
+        if (!is.null(self$`sorted`)) {
+          sprintf(
+          '"sorted":
+            %s
+                    ',
+          tolower(self$`sorted`)
           )
         }
       )
@@ -141,8 +141,8 @@ SortObject <- R6::R6Class(
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       self$`empty` <- this_object$`empty`
-      self$`sorted` <- this_object$`sorted`
       self$`unsorted` <- this_object$`unsorted`
+      self$`sorted` <- this_object$`sorted`
       self
     },
     #' Validate JSON input with respect to SortObject

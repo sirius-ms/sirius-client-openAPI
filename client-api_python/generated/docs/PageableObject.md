@@ -5,12 +5,12 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**sort** | [**SortObject**](SortObject.md) |  | [optional] 
 **offset** | **int** |  | [optional] 
-**page_number** | **int** |  | [optional] 
-**page_size** | **int** |  | [optional] 
+**sort** | [**SortObject**](SortObject.md) |  | [optional] 
 **paged** | **bool** |  | [optional] 
 **unpaged** | **bool** |  | [optional] 
+**page_size** | **int** |  | [optional] 
+**page_number** | **int** |  | [optional] 
 
 ## Example
 

@@ -14,10 +14,10 @@
 
 import unittest
 
-from PySirius.models.sort_object import SortObject
+from PySirius.models.gui_parameters import GuiParameters
 
-class TestSortObject(unittest.TestCase):
-    """SortObject unit test stubs"""
+class TestGuiParameters(unittest.TestCase):
+    """GuiParameters unit test stubs"""
 
     def setUp(self):
         pass
@@ -25,27 +25,29 @@ class TestSortObject(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional) -> SortObject:
-        """Test SortObject
+    def make_instance(self, include_optional) -> GuiParameters:
+        """Test GuiParameters
             include_option is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `SortObject`
+        # uncomment below to create an instance of `GuiParameters`
         """
-        model = SortObject()
+        model = GuiParameters()
         if include_optional:
-            return SortObject(
-                empty = True,
-                unsorted = True,
-                sorted = True
+            return GuiParameters(
+                selected_tab = 'FORMULAS',
+                cid = '',
+                fid = '',
+                structure_candidate_in_ch_i_key = '',
+                bring_to_front = True
             )
         else:
-            return SortObject(
+            return GuiParameters(
         )
         """
 
-    def testSortObject(self):
-        """Test SortObject"""
+    def testGuiParameters(self):
+        """Test GuiParameters"""
         # inst_req_only = self.make_instance(include_optional=False)
         # inst_req_and_optional = self.make_instance(include_optional=True)
 

@@ -109,9 +109,10 @@ Class | Method | HTTP request | Description
 *FeaturesApi* | [**GetStructureCandidatesByFormula**](docs/FeaturesApi.md#GetStructureCandidatesByFormula) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/db-structures | List of CSI:FingerID structure database search candidates for the given 'formulaId' with minimal information.
 *FeaturesApi* | [**GetStructureCandidatesByFormulaPaged**](docs/FeaturesApi.md#GetStructureCandidatesByFormulaPaged) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/db-structures/page | Page of CSI:FingerID structure database search candidates for the given 'formulaId' with minimal information.
 *FeaturesApi* | [**GetStructureCandidatesPaged**](docs/FeaturesApi.md#GetStructureCandidatesPaged) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/db-structures/page | Page of structure database search candidates ranked by CSI:FingerID score for the given 'alignedFeatureId' with minimal information.
-*GuiApi* | [**CloseGui**](docs/GuiApi.md#CloseGui) | **DELETE** /api/projects/{projectId}/gui | Close GUI instance of given project-space if available.
-*GuiApi* | [**GetGuis**](docs/GuiApi.md#GetGuis) | **GET** /api/guis | Get list of currently running gui windows, managed by this SIRIUS instance.
-*GuiApi* | [**OpenGui**](docs/GuiApi.md#OpenGui) | **POST** /api/projects/{projectId}/gui | Open GUI instance on specified project-space and bring the GUI window to foreground.
+*GuiAdvancedApi* | [**ApplyToGui**](docs/GuiAdvancedApi.md#ApplyToGui) | **PATCH** /api/projects/{projectId}/gui | Apply given changes to the running GUI instance.
+*GuiAdvancedApi* | [**CloseGui**](docs/GuiAdvancedApi.md#CloseGui) | **DELETE** /api/projects/{projectId}/gui | Close GUI instance of given project-space if available.
+*GuiAdvancedApi* | [**GetGuis**](docs/GuiAdvancedApi.md#GetGuis) | **GET** /api/guis | Get list of currently running gui windows, managed by this SIRIUS instance.
+*GuiAdvancedApi* | [**OpenGui**](docs/GuiAdvancedApi.md#OpenGui) | **POST** /api/projects/{projectId}/gui | Open GUI instance on specified project-space and bring the GUI window to foreground.
 *InfoApi* | [**GetConnectionCheck**](docs/InfoApi.md#GetConnectionCheck) | **GET** /api/connection-status | 
 *InfoApi* | [**GetInfo**](docs/InfoApi.md#GetInfo) | **GET** /api/info | 
 *JobsApi* | [**DeleteJob**](docs/JobsApi.md#DeleteJob) | **DELETE** /api/projects/{projectId}/jobs/{jobId} | Delete job.
@@ -199,6 +200,8 @@ Class | Method | HTTP request | Description
  - [FragmentNode](docs/FragmentNode.md)
  - [FragmentationTree](docs/FragmentationTree.md)
  - [GuiInfo](docs/GuiInfo.md)
+ - [GuiParameters](docs/GuiParameters.md)
+ - [GuiResultTab](docs/GuiResultTab.md)
  - [ImportResult](docs/ImportResult.md)
  - [Info](docs/Info.md)
  - [Instrument](docs/Instrument.md)

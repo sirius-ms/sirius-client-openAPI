@@ -7,59 +7,47 @@
 #' @title PageableObject
 #' @description PageableObject Class
 #' @format An \code{R6Class} generator object
-#' @field sort  \link{SortObject} [optional]
 #' @field offset  integer [optional]
-#' @field pageNumber  integer [optional]
-#' @field pageSize  integer [optional]
+#' @field sort  \link{SortObject} [optional]
 #' @field paged  character [optional]
 #' @field unpaged  character [optional]
+#' @field pageSize  integer [optional]
+#' @field pageNumber  integer [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
 #' @export
 PageableObject <- R6::R6Class(
   "PageableObject",
   public = list(
-    `sort` = NULL,
     `offset` = NULL,
-    `pageNumber` = NULL,
-    `pageSize` = NULL,
+    `sort` = NULL,
     `paged` = NULL,
     `unpaged` = NULL,
+    `pageSize` = NULL,
+    `pageNumber` = NULL,
     #' Initialize a new PageableObject class.
     #'
     #' @description
     #' Initialize a new PageableObject class.
     #'
-    #' @param sort sort
     #' @param offset offset
-    #' @param pageNumber pageNumber
-    #' @param pageSize pageSize
+    #' @param sort sort
     #' @param paged paged
     #' @param unpaged unpaged
+    #' @param pageSize pageSize
+    #' @param pageNumber pageNumber
     #' @param ... Other optional arguments.
     #' @export
-    initialize = function(`sort` = NULL, `offset` = NULL, `pageNumber` = NULL, `pageSize` = NULL, `paged` = NULL, `unpaged` = NULL, ...) {
-      if (!is.null(`sort`)) {
-        stopifnot(R6::is.R6(`sort`))
-        self$`sort` <- `sort`
-      }
+    initialize = function(`offset` = NULL, `sort` = NULL, `paged` = NULL, `unpaged` = NULL, `pageSize` = NULL, `pageNumber` = NULL, ...) {
       if (!is.null(`offset`)) {
         if (!(is.numeric(`offset`) && length(`offset`) == 1)) {
           stop(paste("Error! Invalid data for `offset`. Must be an integer:", `offset`))
         }
         self$`offset` <- `offset`
       }
-      if (!is.null(`pageNumber`)) {
-        if (!(is.numeric(`pageNumber`) && length(`pageNumber`) == 1)) {
-          stop(paste("Error! Invalid data for `pageNumber`. Must be an integer:", `pageNumber`))
-        }
-        self$`pageNumber` <- `pageNumber`
-      }
-      if (!is.null(`pageSize`)) {
-        if (!(is.numeric(`pageSize`) && length(`pageSize`) == 1)) {
-          stop(paste("Error! Invalid data for `pageSize`. Must be an integer:", `pageSize`))
-        }
-        self$`pageSize` <- `pageSize`
+      if (!is.null(`sort`)) {
+        stopifnot(R6::is.R6(`sort`))
+        self$`sort` <- `sort`
       }
       if (!is.null(`paged`)) {
         if (!(is.logical(`paged`) && length(`paged`) == 1)) {
@@ -73,6 +61,18 @@ PageableObject <- R6::R6Class(
         }
         self$`unpaged` <- `unpaged`
       }
+      if (!is.null(`pageSize`)) {
+        if (!(is.numeric(`pageSize`) && length(`pageSize`) == 1)) {
+          stop(paste("Error! Invalid data for `pageSize`. Must be an integer:", `pageSize`))
+        }
+        self$`pageSize` <- `pageSize`
+      }
+      if (!is.null(`pageNumber`)) {
+        if (!(is.numeric(`pageNumber`) && length(`pageNumber`) == 1)) {
+          stop(paste("Error! Invalid data for `pageNumber`. Must be an integer:", `pageNumber`))
+        }
+        self$`pageNumber` <- `pageNumber`
+      }
     },
     #' To JSON string
     #'
@@ -83,21 +83,13 @@ PageableObject <- R6::R6Class(
     #' @export
     toJSON = function() {
       PageableObjectObject <- list()
-      if (!is.null(self$`sort`)) {
-        PageableObjectObject[["sort"]] <-
-          self$`sort`$toJSON()
-      }
       if (!is.null(self$`offset`)) {
         PageableObjectObject[["offset"]] <-
           self$`offset`
       }
-      if (!is.null(self$`pageNumber`)) {
-        PageableObjectObject[["pageNumber"]] <-
-          self$`pageNumber`
-      }
-      if (!is.null(self$`pageSize`)) {
-        PageableObjectObject[["pageSize"]] <-
-          self$`pageSize`
+      if (!is.null(self$`sort`)) {
+        PageableObjectObject[["sort"]] <-
+          self$`sort`$toJSON()
       }
       if (!is.null(self$`paged`)) {
         PageableObjectObject[["paged"]] <-
@@ -106,6 +98,14 @@ PageableObject <- R6::R6Class(
       if (!is.null(self$`unpaged`)) {
         PageableObjectObject[["unpaged"]] <-
           self$`unpaged`
+      }
+      if (!is.null(self$`pageSize`)) {
+        PageableObjectObject[["pageSize"]] <-
+          self$`pageSize`
+      }
+      if (!is.null(self$`pageNumber`)) {
+        PageableObjectObject[["pageNumber"]] <-
+          self$`pageNumber`
       }
       PageableObjectObject
     },
@@ -119,25 +119,25 @@ PageableObject <- R6::R6Class(
     #' @export
     fromJSON = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
+      if (!is.null(this_object$`offset`)) {
+        self$`offset` <- this_object$`offset`
+      }
       if (!is.null(this_object$`sort`)) {
         `sort_object` <- SortObject$new()
         `sort_object`$fromJSON(jsonlite::toJSON(this_object$`sort`, auto_unbox = TRUE, digits = NA))
         self$`sort` <- `sort_object`
-      }
-      if (!is.null(this_object$`offset`)) {
-        self$`offset` <- this_object$`offset`
-      }
-      if (!is.null(this_object$`pageNumber`)) {
-        self$`pageNumber` <- this_object$`pageNumber`
-      }
-      if (!is.null(this_object$`pageSize`)) {
-        self$`pageSize` <- this_object$`pageSize`
       }
       if (!is.null(this_object$`paged`)) {
         self$`paged` <- this_object$`paged`
       }
       if (!is.null(this_object$`unpaged`)) {
         self$`unpaged` <- this_object$`unpaged`
+      }
+      if (!is.null(this_object$`pageSize`)) {
+        self$`pageSize` <- this_object$`pageSize`
+      }
+      if (!is.null(this_object$`pageNumber`)) {
+        self$`pageNumber` <- this_object$`pageNumber`
       }
       self
     },
@@ -150,14 +150,6 @@ PageableObject <- R6::R6Class(
     #' @export
     toJSONString = function() {
       jsoncontent <- c(
-        if (!is.null(self$`sort`)) {
-          sprintf(
-          '"sort":
-          %s
-          ',
-          jsonlite::toJSON(self$`sort`$toJSON(), auto_unbox = TRUE, digits = NA)
-          )
-        },
         if (!is.null(self$`offset`)) {
           sprintf(
           '"offset":
@@ -166,20 +158,12 @@ PageableObject <- R6::R6Class(
           self$`offset`
           )
         },
-        if (!is.null(self$`pageNumber`)) {
+        if (!is.null(self$`sort`)) {
           sprintf(
-          '"pageNumber":
-            %d
-                    ',
-          self$`pageNumber`
-          )
-        },
-        if (!is.null(self$`pageSize`)) {
-          sprintf(
-          '"pageSize":
-            %d
-                    ',
-          self$`pageSize`
+          '"sort":
+          %s
+          ',
+          jsonlite::toJSON(self$`sort`$toJSON(), auto_unbox = TRUE, digits = NA)
           )
         },
         if (!is.null(self$`paged`)) {
@@ -197,6 +181,22 @@ PageableObject <- R6::R6Class(
                     ',
           tolower(self$`unpaged`)
           )
+        },
+        if (!is.null(self$`pageSize`)) {
+          sprintf(
+          '"pageSize":
+            %d
+                    ',
+          self$`pageSize`
+          )
+        },
+        if (!is.null(self$`pageNumber`)) {
+          sprintf(
+          '"pageNumber":
+            %d
+                    ',
+          self$`pageNumber`
+          )
         }
       )
       jsoncontent <- paste(jsoncontent, collapse = ",")
@@ -212,12 +212,12 @@ PageableObject <- R6::R6Class(
     #' @export
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
-      self$`sort` <- SortObject$new()$fromJSON(jsonlite::toJSON(this_object$`sort`, auto_unbox = TRUE, digits = NA))
       self$`offset` <- this_object$`offset`
-      self$`pageNumber` <- this_object$`pageNumber`
-      self$`pageSize` <- this_object$`pageSize`
+      self$`sort` <- SortObject$new()$fromJSON(jsonlite::toJSON(this_object$`sort`, auto_unbox = TRUE, digits = NA))
       self$`paged` <- this_object$`paged`
       self$`unpaged` <- this_object$`unpaged`
+      self$`pageSize` <- this_object$`pageSize`
+      self$`pageNumber` <- this_object$`pageNumber`
       self
     },
     #' Validate JSON input with respect to PageableObject

@@ -7,13 +7,13 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **total_pages** | **int** |  | [optional] 
 **total_elements** | **int** |  | [optional] 
-**last** | **bool** |  | [optional] 
-**sort** | [**SortObject**](SortObject.md) |  | [optional] 
-**first** | **bool** |  | [optional] 
 **size** | **int** |  | [optional] 
 **content** | [**List[FormulaCandidate]**](FormulaCandidate.md) |  | [optional] 
 **number** | **int** |  | [optional] 
+**sort** | [**SortObject**](SortObject.md) |  | [optional] 
+**last** | **bool** |  | [optional] 
 **number_of_elements** | **int** |  | [optional] 
+**first** | **bool** |  | [optional] 
 **pageable** | [**PageableObject**](PageableObject.md) |  | [optional] 
 **empty** | **bool** |  | [optional] 
 

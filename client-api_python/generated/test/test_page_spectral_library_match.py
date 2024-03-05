@@ -37,12 +37,6 @@ class TestPageSpectralLibraryMatch(unittest.TestCase):
             return PageSpectralLibraryMatch(
                 total_pages = 56,
                 total_elements = 56,
-                last = True,
-                sort = PySirius.models.sort_object.SortObject(
-                    empty = True, 
-                    sorted = True, 
-                    unsorted = True, ),
-                first = True,
                 size = 56,
                 content = [
                     PySirius.models.spectral_library_match.SpectralLibraryMatch(
@@ -72,17 +66,23 @@ class TestPageSpectralLibraryMatch(unittest.TestCase):
                             abs_intensity_factor = 1.337, ), )
                     ],
                 number = 56,
+                sort = PySirius.models.sort_object.SortObject(
+                    empty = True, 
+                    unsorted = True, 
+                    sorted = True, ),
+                last = True,
                 number_of_elements = 56,
+                first = True,
                 pageable = PySirius.models.pageable_object.PageableObject(
+                    offset = 56, 
                     sort = PySirius.models.sort_object.SortObject(
                         empty = True, 
-                        sorted = True, 
-                        unsorted = True, ), 
-                    offset = 56, 
-                    page_number = 56, 
-                    page_size = 56, 
+                        unsorted = True, 
+                        sorted = True, ), 
                     paged = True, 
-                    unpaged = True, ),
+                    unpaged = True, 
+                    page_size = 56, 
+                    page_number = 56, ),
                 empty = True
             )
         else:

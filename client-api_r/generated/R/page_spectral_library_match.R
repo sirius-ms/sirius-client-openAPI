@@ -9,13 +9,13 @@
 #' @format An \code{R6Class} generator object
 #' @field totalPages  integer [optional]
 #' @field totalElements  integer [optional]
-#' @field last  character [optional]
-#' @field sort  \link{SortObject} [optional]
-#' @field first  character [optional]
 #' @field size  integer [optional]
 #' @field content  list(\link{SpectralLibraryMatch}) [optional]
 #' @field number  integer [optional]
+#' @field sort  \link{SortObject} [optional]
+#' @field last  character [optional]
 #' @field numberOfElements  integer [optional]
+#' @field first  character [optional]
 #' @field pageable  \link{PageableObject} [optional]
 #' @field empty  character [optional]
 #' @importFrom R6 R6Class
@@ -26,13 +26,13 @@ PageSpectralLibraryMatch <- R6::R6Class(
   public = list(
     `totalPages` = NULL,
     `totalElements` = NULL,
-    `last` = NULL,
-    `sort` = NULL,
-    `first` = NULL,
     `size` = NULL,
     `content` = NULL,
     `number` = NULL,
+    `sort` = NULL,
+    `last` = NULL,
     `numberOfElements` = NULL,
+    `first` = NULL,
     `pageable` = NULL,
     `empty` = NULL,
     #' Initialize a new PageSpectralLibraryMatch class.
@@ -42,18 +42,18 @@ PageSpectralLibraryMatch <- R6::R6Class(
     #'
     #' @param totalPages totalPages
     #' @param totalElements totalElements
-    #' @param last last
-    #' @param sort sort
-    #' @param first first
     #' @param size size
     #' @param content content
     #' @param number number
+    #' @param sort sort
+    #' @param last last
     #' @param numberOfElements numberOfElements
+    #' @param first first
     #' @param pageable pageable
     #' @param empty empty
     #' @param ... Other optional arguments.
     #' @export
-    initialize = function(`totalPages` = NULL, `totalElements` = NULL, `last` = NULL, `sort` = NULL, `first` = NULL, `size` = NULL, `content` = NULL, `number` = NULL, `numberOfElements` = NULL, `pageable` = NULL, `empty` = NULL, ...) {
+    initialize = function(`totalPages` = NULL, `totalElements` = NULL, `size` = NULL, `content` = NULL, `number` = NULL, `sort` = NULL, `last` = NULL, `numberOfElements` = NULL, `first` = NULL, `pageable` = NULL, `empty` = NULL, ...) {
       if (!is.null(`totalPages`)) {
         if (!(is.numeric(`totalPages`) && length(`totalPages`) == 1)) {
           stop(paste("Error! Invalid data for `totalPages`. Must be an integer:", `totalPages`))
@@ -65,22 +65,6 @@ PageSpectralLibraryMatch <- R6::R6Class(
           stop(paste("Error! Invalid data for `totalElements`. Must be an integer:", `totalElements`))
         }
         self$`totalElements` <- `totalElements`
-      }
-      if (!is.null(`last`)) {
-        if (!(is.logical(`last`) && length(`last`) == 1)) {
-          stop(paste("Error! Invalid data for `last`. Must be a boolean:", `last`))
-        }
-        self$`last` <- `last`
-      }
-      if (!is.null(`sort`)) {
-        stopifnot(R6::is.R6(`sort`))
-        self$`sort` <- `sort`
-      }
-      if (!is.null(`first`)) {
-        if (!(is.logical(`first`) && length(`first`) == 1)) {
-          stop(paste("Error! Invalid data for `first`. Must be a boolean:", `first`))
-        }
-        self$`first` <- `first`
       }
       if (!is.null(`size`)) {
         if (!(is.numeric(`size`) && length(`size`) == 1)) {
@@ -99,11 +83,27 @@ PageSpectralLibraryMatch <- R6::R6Class(
         }
         self$`number` <- `number`
       }
+      if (!is.null(`sort`)) {
+        stopifnot(R6::is.R6(`sort`))
+        self$`sort` <- `sort`
+      }
+      if (!is.null(`last`)) {
+        if (!(is.logical(`last`) && length(`last`) == 1)) {
+          stop(paste("Error! Invalid data for `last`. Must be a boolean:", `last`))
+        }
+        self$`last` <- `last`
+      }
       if (!is.null(`numberOfElements`)) {
         if (!(is.numeric(`numberOfElements`) && length(`numberOfElements`) == 1)) {
           stop(paste("Error! Invalid data for `numberOfElements`. Must be an integer:", `numberOfElements`))
         }
         self$`numberOfElements` <- `numberOfElements`
+      }
+      if (!is.null(`first`)) {
+        if (!(is.logical(`first`) && length(`first`) == 1)) {
+          stop(paste("Error! Invalid data for `first`. Must be a boolean:", `first`))
+        }
+        self$`first` <- `first`
       }
       if (!is.null(`pageable`)) {
         stopifnot(R6::is.R6(`pageable`))
@@ -133,18 +133,6 @@ PageSpectralLibraryMatch <- R6::R6Class(
         PageSpectralLibraryMatchObject[["totalElements"]] <-
           self$`totalElements`
       }
-      if (!is.null(self$`last`)) {
-        PageSpectralLibraryMatchObject[["last"]] <-
-          self$`last`
-      }
-      if (!is.null(self$`sort`)) {
-        PageSpectralLibraryMatchObject[["sort"]] <-
-          self$`sort`$toJSON()
-      }
-      if (!is.null(self$`first`)) {
-        PageSpectralLibraryMatchObject[["first"]] <-
-          self$`first`
-      }
       if (!is.null(self$`size`)) {
         PageSpectralLibraryMatchObject[["size"]] <-
           self$`size`
@@ -157,9 +145,21 @@ PageSpectralLibraryMatch <- R6::R6Class(
         PageSpectralLibraryMatchObject[["number"]] <-
           self$`number`
       }
+      if (!is.null(self$`sort`)) {
+        PageSpectralLibraryMatchObject[["sort"]] <-
+          self$`sort`$toJSON()
+      }
+      if (!is.null(self$`last`)) {
+        PageSpectralLibraryMatchObject[["last"]] <-
+          self$`last`
+      }
       if (!is.null(self$`numberOfElements`)) {
         PageSpectralLibraryMatchObject[["numberOfElements"]] <-
           self$`numberOfElements`
+      }
+      if (!is.null(self$`first`)) {
+        PageSpectralLibraryMatchObject[["first"]] <-
+          self$`first`
       }
       if (!is.null(self$`pageable`)) {
         PageSpectralLibraryMatchObject[["pageable"]] <-
@@ -187,17 +187,6 @@ PageSpectralLibraryMatch <- R6::R6Class(
       if (!is.null(this_object$`totalElements`)) {
         self$`totalElements` <- this_object$`totalElements`
       }
-      if (!is.null(this_object$`last`)) {
-        self$`last` <- this_object$`last`
-      }
-      if (!is.null(this_object$`sort`)) {
-        `sort_object` <- SortObject$new()
-        `sort_object`$fromJSON(jsonlite::toJSON(this_object$`sort`, auto_unbox = TRUE, digits = NA))
-        self$`sort` <- `sort_object`
-      }
-      if (!is.null(this_object$`first`)) {
-        self$`first` <- this_object$`first`
-      }
       if (!is.null(this_object$`size`)) {
         self$`size` <- this_object$`size`
       }
@@ -207,8 +196,19 @@ PageSpectralLibraryMatch <- R6::R6Class(
       if (!is.null(this_object$`number`)) {
         self$`number` <- this_object$`number`
       }
+      if (!is.null(this_object$`sort`)) {
+        `sort_object` <- SortObject$new()
+        `sort_object`$fromJSON(jsonlite::toJSON(this_object$`sort`, auto_unbox = TRUE, digits = NA))
+        self$`sort` <- `sort_object`
+      }
+      if (!is.null(this_object$`last`)) {
+        self$`last` <- this_object$`last`
+      }
       if (!is.null(this_object$`numberOfElements`)) {
         self$`numberOfElements` <- this_object$`numberOfElements`
+      }
+      if (!is.null(this_object$`first`)) {
+        self$`first` <- this_object$`first`
       }
       if (!is.null(this_object$`pageable`)) {
         `pageable_object` <- PageableObject$new()
@@ -245,30 +245,6 @@ PageSpectralLibraryMatch <- R6::R6Class(
           self$`totalElements`
           )
         },
-        if (!is.null(self$`last`)) {
-          sprintf(
-          '"last":
-            %s
-                    ',
-          tolower(self$`last`)
-          )
-        },
-        if (!is.null(self$`sort`)) {
-          sprintf(
-          '"sort":
-          %s
-          ',
-          jsonlite::toJSON(self$`sort`$toJSON(), auto_unbox = TRUE, digits = NA)
-          )
-        },
-        if (!is.null(self$`first`)) {
-          sprintf(
-          '"first":
-            %s
-                    ',
-          tolower(self$`first`)
-          )
-        },
         if (!is.null(self$`size`)) {
           sprintf(
           '"size":
@@ -293,12 +269,36 @@ PageSpectralLibraryMatch <- R6::R6Class(
           self$`number`
           )
         },
+        if (!is.null(self$`sort`)) {
+          sprintf(
+          '"sort":
+          %s
+          ',
+          jsonlite::toJSON(self$`sort`$toJSON(), auto_unbox = TRUE, digits = NA)
+          )
+        },
+        if (!is.null(self$`last`)) {
+          sprintf(
+          '"last":
+            %s
+                    ',
+          tolower(self$`last`)
+          )
+        },
         if (!is.null(self$`numberOfElements`)) {
           sprintf(
           '"numberOfElements":
             %d
                     ',
           self$`numberOfElements`
+          )
+        },
+        if (!is.null(self$`first`)) {
+          sprintf(
+          '"first":
+            %s
+                    ',
+          tolower(self$`first`)
           )
         },
         if (!is.null(self$`pageable`)) {
@@ -333,13 +333,13 @@ PageSpectralLibraryMatch <- R6::R6Class(
       this_object <- jsonlite::fromJSON(input_json)
       self$`totalPages` <- this_object$`totalPages`
       self$`totalElements` <- this_object$`totalElements`
-      self$`last` <- this_object$`last`
-      self$`sort` <- SortObject$new()$fromJSON(jsonlite::toJSON(this_object$`sort`, auto_unbox = TRUE, digits = NA))
-      self$`first` <- this_object$`first`
       self$`size` <- this_object$`size`
       self$`content` <- ApiClient$new()$deserializeObj(this_object$`content`, "array[SpectralLibraryMatch]", loadNamespace("Rsirius"))
       self$`number` <- this_object$`number`
+      self$`sort` <- SortObject$new()$fromJSON(jsonlite::toJSON(this_object$`sort`, auto_unbox = TRUE, digits = NA))
+      self$`last` <- this_object$`last`
       self$`numberOfElements` <- this_object$`numberOfElements`
+      self$`first` <- this_object$`first`
       self$`pageable` <- PageableObject$new()$fromJSON(jsonlite::toJSON(this_object$`pageable`, auto_unbox = TRUE, digits = NA))
       self$`empty` <- this_object$`empty`
       self
