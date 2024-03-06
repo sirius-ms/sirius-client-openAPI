@@ -12,9 +12,12 @@
 """  # noqa: E501
 
 
+import os
 import unittest
 
 from PySirius.api.searchable_databases_api import SearchableDatabasesApi
+from PySirius.models.job import Job
+from PySirius.models.searchable_database import SearchableDatabase
 
 
 class TestSearchableDatabasesApi(unittest.TestCase):
@@ -22,59 +25,78 @@ class TestSearchableDatabasesApi(unittest.TestCase):
 
     def setUp(self) -> None:
         self.api = SearchableDatabasesApi()
+        self.database_id = 'create_database'
+        self.create_response = self.api.create_database(self.database_id)
+
+        path_to_demo_data = f"{os.environ.get('HOME')}/sirius-client-openAPI/.updater/clientTests/Data"
+        self.test_file = path_to_demo_data + "/Kaempferol.ms"
 
     def tearDown(self) -> None:
-        pass
+        self.api.remove_database(self.database_id)
 
     def test_add_databases(self) -> None:
         """Test case for add_databases
 
         """
+        # DEPRECATED
         pass
 
     def test_create_database(self) -> None:
         """Test case for create_database
 
         """
-        pass
+        self.assertIsInstance(self.create_response, SearchableDatabase)
 
     def test_get_custom_databases(self) -> None:
         """Test case for get_custom_databases
 
         """
-        pass
+        # # BUG Name too long
+        # response = self.api.get_custom_databases()
+        # self.assertIsInstance(response, list)
+        # self.assertIsInstance(response[0], SearchableDatabase)
 
     def test_get_database(self) -> None:
         """Test case for get_database
 
         """
-        pass
+        response = self.api.get_database(self.database_id)
+        self.assertIsInstance(response, SearchableDatabase)
 
     def test_get_databases(self) -> None:
         """Test case for get_databases
 
         """
-        pass
+        # # BUG Name too long
+        # response = self.api.get_databases()
+        # self.assertIsInstance(response, list)
+        # self.assertIsInstance(response[0], SearchableDatabase)
 
     def test_get_included_databases(self) -> None:
         """Test case for get_included_databases
 
         """
-        pass
+        # # BUG Name too long
+        # response = self.api.get_included_databases()
+        # self.assertIsInstance(response, list)
+        # self.assertIsInstance(response[0], SearchableDatabase)
 
     def test_import_into_database(self) -> None:
         """Test case for import_into_database
 
         Start import of structure and spectra files into the specified database.
         """
-        pass
+        response = self.api.import_into_database(self.database_id, input_files=[self.test_file])
+        self.assertIsInstance(response, SearchableDatabase)
 
     def test_import_into_database_as_job(self) -> None:
         """Test case for import_into_database_as_job
 
         Start import of structure and spectra files into the specified database.
         """
-        pass
+        # # TODO Async DB import not yet implemented
+        # response = self.api.import_into_database_as_job(self.database_id, input_files=[self.test_file])
+        # self.assertIsInstance(response, Job)
 
     def test_remove_database(self) -> None:
         """Test case for remove_database
@@ -86,7 +108,9 @@ class TestSearchableDatabasesApi(unittest.TestCase):
         """Test case for update_database
 
         """
-        pass
+        # # TODO Updating Custom databases is not yest supported
+        # response = self.api.update_database(self.database_id)
+        # self.assertIsInstance(response, SearchableDatabase)
 
 
 if __name__ == '__main__':
