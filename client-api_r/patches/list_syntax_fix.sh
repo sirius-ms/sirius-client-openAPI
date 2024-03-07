@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Specify the folder path
-folder_path="$PWD/../generated/R"
+folder_path="$HOME/sirius-client-openAPI/client-api_r/generated/R"
 
 # Change directory to the specified folder
 cd "$folder_path" || exit
