@@ -892,7 +892,7 @@ JobsApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #' @return Job
     #' @export
-    GetJob = function(project_id, job_id, opt_fields = ["progress"], data_file = NULL, ...) {
+    GetJob = function(project_id, job_id, opt_fields = list("progress"), data_file = NULL, ...) {
       local_var_response <- self$GetJobWithHttpInfo(project_id, job_id, opt_fields, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
@@ -916,7 +916,7 @@ JobsApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #' @return API response (Job) with additional information such as HTTP status code, headers
     #' @export
-    GetJobWithHttpInfo = function(project_id, job_id, opt_fields = ["progress"], data_file = NULL, ...) {
+    GetJobWithHttpInfo = function(project_id, job_id, opt_fields = list("progress"), data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -1200,7 +1200,7 @@ JobsApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #' @return array[Job]
     #' @export
-    GetJobs = function(project_id, opt_fields = [], data_file = NULL, ...) {
+    GetJobs = function(project_id, opt_fields = list(), data_file = NULL, ...) {
       local_var_response <- self$GetJobsWithHttpInfo(project_id, opt_fields, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
@@ -1223,7 +1223,7 @@ JobsApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #' @return API response (array[Job]) with additional information such as HTTP status code, headers
     #' @export
-    GetJobsWithHttpInfo = function(project_id, opt_fields = [], data_file = NULL, ...) {
+    GetJobsWithHttpInfo = function(project_id, opt_fields = list(), data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -1308,7 +1308,7 @@ JobsApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #' @return PageJob
     #' @export
-    GetJobsPaged = function(project_id, page = 0, size = 20, sort = NULL, opt_fields = [], data_file = NULL, ...) {
+    GetJobsPaged = function(project_id, page = 0, size = 20, sort = NULL, opt_fields = list(), data_file = NULL, ...) {
       local_var_response <- self$GetJobsPagedWithHttpInfo(project_id, page, size, sort, opt_fields, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
@@ -1334,7 +1334,7 @@ JobsApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #' @return API response (PageJob) with additional information such as HTTP status code, headers
     #' @export
-    GetJobsPagedWithHttpInfo = function(project_id, page = 0, size = 20, sort = NULL, opt_fields = [], data_file = NULL, ...) {
+    GetJobsPagedWithHttpInfo = function(project_id, page = 0, size = 20, sort = NULL, opt_fields = list(), data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -1652,7 +1652,7 @@ JobsApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #' @return Job
     #' @export
-    StartCommand = function(project_id, command_submission, opt_fields = ["progress"], data_file = NULL, ...) {
+    StartCommand = function(project_id, command_submission, opt_fields = list("progress"), data_file = NULL, ...) {
       local_var_response <- self$StartCommandWithHttpInfo(project_id, command_submission, opt_fields, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
@@ -1676,7 +1676,7 @@ JobsApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #' @return API response (Job) with additional information such as HTTP status code, headers
     #' @export
-    StartCommandWithHttpInfo = function(project_id, command_submission, opt_fields = ["progress"], data_file = NULL, ...) {
+    StartCommandWithHttpInfo = function(project_id, command_submission, opt_fields = list("progress"), data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -1770,7 +1770,7 @@ JobsApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #' @return Job
     #' @export
-    StartJob = function(project_id, job_submission, opt_fields = ["command","progress"], data_file = NULL, ...) {
+    StartJob = function(project_id, job_submission, opt_fields = list("command","progress"), data_file = NULL, ...) {
       local_var_response <- self$StartJobWithHttpInfo(project_id, job_submission, opt_fields, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
@@ -1794,7 +1794,7 @@ JobsApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #' @return API response (Job) with additional information such as HTTP status code, headers
     #' @export
-    StartJobWithHttpInfo = function(project_id, job_submission, opt_fields = ["command","progress"], data_file = NULL, ...) {
+    StartJobWithHttpInfo = function(project_id, job_submission, opt_fields = list("command","progress"), data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -1890,7 +1890,7 @@ JobsApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #' @return Job
     #' @export
-    StartJobFromConfig = function(project_id, job_config_name, request_body, recompute = NULL, opt_fields = ["command","progress"], data_file = NULL, ...) {
+    StartJobFromConfig = function(project_id, job_config_name, request_body, recompute = NULL, opt_fields = list("command","progress"), data_file = NULL, ...) {
       local_var_response <- self$StartJobFromConfigWithHttpInfo(project_id, job_config_name, request_body, recompute, opt_fields, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
@@ -1916,7 +1916,7 @@ JobsApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #' @return API response (Job) with additional information such as HTTP status code, headers
     #' @export
-    StartJobFromConfigWithHttpInfo = function(project_id, job_config_name, request_body, recompute = NULL, opt_fields = ["command","progress"], data_file = NULL, ...) {
+    StartJobFromConfigWithHttpInfo = function(project_id, job_config_name, request_body, recompute = NULL, opt_fields = list("command","progress"), data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()

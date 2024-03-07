@@ -263,7 +263,7 @@ Info <- R6::R6Class(
         if (!is.null(self$`supportedILPSolvers`)) {
           sprintf(
           '"supportedILPSolvers":
-            "%s"
+            %s
           ',
           jsonlite::toJSON(lapply(self$`supportedILPSolvers`, function(x){ x }), auto_unbox = TRUE, digits = NA)
           )

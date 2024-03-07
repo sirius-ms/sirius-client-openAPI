@@ -1050,7 +1050,7 @@ SearchableDatabasesApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #' @return Job
     #' @export
-    ImportIntoDatabaseAsJob = function(database_id, buffer_size = 1000, opt_fields = ["progress"], input_files = NULL, data_file = NULL, ...) {
+    ImportIntoDatabaseAsJob = function(database_id, buffer_size = 1000, opt_fields = list("progress"), input_files = NULL, data_file = NULL, ...) {
       local_var_response <- self$ImportIntoDatabaseAsJobWithHttpInfo(database_id, buffer_size, opt_fields, input_files, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
@@ -1075,7 +1075,7 @@ SearchableDatabasesApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #' @return API response (Job) with additional information such as HTTP status code, headers
     #' @export
-    ImportIntoDatabaseAsJobWithHttpInfo = function(database_id, buffer_size = 1000, opt_fields = ["progress"], input_files = NULL, data_file = NULL, ...) {
+    ImportIntoDatabaseAsJobWithHttpInfo = function(database_id, buffer_size = 1000, opt_fields = list("progress"), input_files = NULL, data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()

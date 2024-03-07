@@ -1148,7 +1148,7 @@ FeaturesApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #' @return array[AlignedFeature]
     #' @export
-    AddAlignedFeatures = function(project_id, feature_import, opt_fields = [], data_file = NULL, ...) {
+    AddAlignedFeatures = function(project_id, feature_import, opt_fields = list(), data_file = NULL, ...) {
       local_var_response <- self$AddAlignedFeaturesWithHttpInfo(project_id, feature_import, opt_fields, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
@@ -1172,7 +1172,7 @@ FeaturesApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #' @return API response (array[AlignedFeature]) with additional information such as HTTP status code, headers
     #' @export
-    AddAlignedFeaturesWithHttpInfo = function(project_id, feature_import, opt_fields = [], data_file = NULL, ...) {
+    AddAlignedFeaturesWithHttpInfo = function(project_id, feature_import, opt_fields = list(), data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -1364,7 +1364,7 @@ FeaturesApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #' @return AlignedFeature
     #' @export
-    GetAlignedFeature = function(project_id, aligned_feature_id, opt_fields = [], data_file = NULL, ...) {
+    GetAlignedFeature = function(project_id, aligned_feature_id, opt_fields = list(), data_file = NULL, ...) {
       local_var_response <- self$GetAlignedFeatureWithHttpInfo(project_id, aligned_feature_id, opt_fields, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
@@ -1388,7 +1388,7 @@ FeaturesApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #' @return API response (AlignedFeature) with additional information such as HTTP status code, headers
     #' @export
-    GetAlignedFeatureWithHttpInfo = function(project_id, aligned_feature_id, opt_fields = [], data_file = NULL, ...) {
+    GetAlignedFeatureWithHttpInfo = function(project_id, aligned_feature_id, opt_fields = list(), data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -1479,7 +1479,7 @@ FeaturesApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #' @return array[AlignedFeature]
     #' @export
-    GetAlignedFeatures = function(project_id, opt_fields = [], data_file = NULL, ...) {
+    GetAlignedFeatures = function(project_id, opt_fields = list(), data_file = NULL, ...) {
       local_var_response <- self$GetAlignedFeaturesWithHttpInfo(project_id, opt_fields, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
@@ -1502,7 +1502,7 @@ FeaturesApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #' @return API response (array[AlignedFeature]) with additional information such as HTTP status code, headers
     #' @export
-    GetAlignedFeaturesWithHttpInfo = function(project_id, opt_fields = [], data_file = NULL, ...) {
+    GetAlignedFeaturesWithHttpInfo = function(project_id, opt_fields = list(), data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -1587,7 +1587,7 @@ FeaturesApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #' @return PageAlignedFeature
     #' @export
-    GetAlignedFeaturesPaged = function(project_id, page = 0, size = 20, sort = NULL, opt_fields = [], data_file = NULL, ...) {
+    GetAlignedFeaturesPaged = function(project_id, page = 0, size = 20, sort = NULL, opt_fields = list(), data_file = NULL, ...) {
       local_var_response <- self$GetAlignedFeaturesPagedWithHttpInfo(project_id, page, size, sort, opt_fields, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
@@ -1613,7 +1613,7 @@ FeaturesApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #' @return API response (PageAlignedFeature) with additional information such as HTTP status code, headers
     #' @export
-    GetAlignedFeaturesPagedWithHttpInfo = function(project_id, page = 0, size = 20, sort = NULL, opt_fields = [], data_file = NULL, ...) {
+    GetAlignedFeaturesPagedWithHttpInfo = function(project_id, page = 0, size = 20, sort = NULL, opt_fields = list(), data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -1952,7 +1952,7 @@ FeaturesApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #' @return array[StructureCandidateFormula]
     #' @export
-    GetDeNovoStructureCandidates = function(project_id, aligned_feature_id, opt_fields = [], data_file = NULL, ...) {
+    GetDeNovoStructureCandidates = function(project_id, aligned_feature_id, opt_fields = list(), data_file = NULL, ...) {
       local_var_response <- self$GetDeNovoStructureCandidatesWithHttpInfo(project_id, aligned_feature_id, opt_fields, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
@@ -1976,7 +1976,7 @@ FeaturesApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #' @return API response (array[StructureCandidateFormula]) with additional information such as HTTP status code, headers
     #' @export
-    GetDeNovoStructureCandidatesWithHttpInfo = function(project_id, aligned_feature_id, opt_fields = [], data_file = NULL, ...) {
+    GetDeNovoStructureCandidatesWithHttpInfo = function(project_id, aligned_feature_id, opt_fields = list(), data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -2069,7 +2069,7 @@ FeaturesApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #' @return array[StructureCandidateScored]
     #' @export
-    GetDeNovoStructureCandidatesByFormula = function(project_id, aligned_feature_id, formula_id, opt_fields = [], data_file = NULL, ...) {
+    GetDeNovoStructureCandidatesByFormula = function(project_id, aligned_feature_id, formula_id, opt_fields = list(), data_file = NULL, ...) {
       local_var_response <- self$GetDeNovoStructureCandidatesByFormulaWithHttpInfo(project_id, aligned_feature_id, formula_id, opt_fields, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
@@ -2094,7 +2094,7 @@ FeaturesApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #' @return API response (array[StructureCandidateScored]) with additional information such as HTTP status code, headers
     #' @export
-    GetDeNovoStructureCandidatesByFormulaWithHttpInfo = function(project_id, aligned_feature_id, formula_id, opt_fields = [], data_file = NULL, ...) {
+    GetDeNovoStructureCandidatesByFormulaWithHttpInfo = function(project_id, aligned_feature_id, formula_id, opt_fields = list(), data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -2199,7 +2199,7 @@ FeaturesApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #' @return PageStructureCandidateScored
     #' @export
-    GetDeNovoStructureCandidatesByFormulaPaged = function(project_id, aligned_feature_id, formula_id, page = 0, size = 20, sort = NULL, opt_fields = [], data_file = NULL, ...) {
+    GetDeNovoStructureCandidatesByFormulaPaged = function(project_id, aligned_feature_id, formula_id, page = 0, size = 20, sort = NULL, opt_fields = list(), data_file = NULL, ...) {
       local_var_response <- self$GetDeNovoStructureCandidatesByFormulaPagedWithHttpInfo(project_id, aligned_feature_id, formula_id, page, size, sort, opt_fields, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
@@ -2227,7 +2227,7 @@ FeaturesApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #' @return API response (PageStructureCandidateScored) with additional information such as HTTP status code, headers
     #' @export
-    GetDeNovoStructureCandidatesByFormulaPagedWithHttpInfo = function(project_id, aligned_feature_id, formula_id, page = 0, size = 20, sort = NULL, opt_fields = [], data_file = NULL, ...) {
+    GetDeNovoStructureCandidatesByFormulaPagedWithHttpInfo = function(project_id, aligned_feature_id, formula_id, page = 0, size = 20, sort = NULL, opt_fields = list(), data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -2349,7 +2349,7 @@ FeaturesApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #' @return PageStructureCandidateFormula
     #' @export
-    GetDeNovoStructureCandidatesPaged = function(project_id, aligned_feature_id, page = 0, size = 20, sort = NULL, opt_fields = [], data_file = NULL, ...) {
+    GetDeNovoStructureCandidatesPaged = function(project_id, aligned_feature_id, page = 0, size = 20, sort = NULL, opt_fields = list(), data_file = NULL, ...) {
       local_var_response <- self$GetDeNovoStructureCandidatesPagedWithHttpInfo(project_id, aligned_feature_id, page, size, sort, opt_fields, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
@@ -2376,7 +2376,7 @@ FeaturesApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #' @return API response (PageStructureCandidateFormula) with additional information such as HTTP status code, headers
     #' @export
-    GetDeNovoStructureCandidatesPagedWithHttpInfo = function(project_id, aligned_feature_id, page = 0, size = 20, sort = NULL, opt_fields = [], data_file = NULL, ...) {
+    GetDeNovoStructureCandidatesPagedWithHttpInfo = function(project_id, aligned_feature_id, page = 0, size = 20, sort = NULL, opt_fields = list(), data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -2849,7 +2849,7 @@ FeaturesApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #' @return FormulaCandidate
     #' @export
-    GetFormulaCandidate = function(project_id, aligned_feature_id, formula_id, opt_fields = [], data_file = NULL, ...) {
+    GetFormulaCandidate = function(project_id, aligned_feature_id, formula_id, opt_fields = list(), data_file = NULL, ...) {
       local_var_response <- self$GetFormulaCandidateWithHttpInfo(project_id, aligned_feature_id, formula_id, opt_fields, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
@@ -2874,7 +2874,7 @@ FeaturesApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #' @return API response (FormulaCandidate) with additional information such as HTTP status code, headers
     #' @export
-    GetFormulaCandidateWithHttpInfo = function(project_id, aligned_feature_id, formula_id, opt_fields = [], data_file = NULL, ...) {
+    GetFormulaCandidateWithHttpInfo = function(project_id, aligned_feature_id, formula_id, opt_fields = list(), data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -2975,7 +2975,7 @@ FeaturesApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #' @return array[FormulaCandidate]
     #' @export
-    GetFormulaCandidates = function(project_id, aligned_feature_id, opt_fields = [], data_file = NULL, ...) {
+    GetFormulaCandidates = function(project_id, aligned_feature_id, opt_fields = list(), data_file = NULL, ...) {
       local_var_response <- self$GetFormulaCandidatesWithHttpInfo(project_id, aligned_feature_id, opt_fields, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
@@ -2999,7 +2999,7 @@ FeaturesApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #' @return API response (array[FormulaCandidate]) with additional information such as HTTP status code, headers
     #' @export
-    GetFormulaCandidatesWithHttpInfo = function(project_id, aligned_feature_id, opt_fields = [], data_file = NULL, ...) {
+    GetFormulaCandidatesWithHttpInfo = function(project_id, aligned_feature_id, opt_fields = list(), data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -3094,7 +3094,7 @@ FeaturesApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #' @return PageFormulaCandidate
     #' @export
-    GetFormulaCandidatesPaged = function(project_id, aligned_feature_id, page = 0, size = 20, sort = NULL, opt_fields = [], data_file = NULL, ...) {
+    GetFormulaCandidatesPaged = function(project_id, aligned_feature_id, page = 0, size = 20, sort = NULL, opt_fields = list(), data_file = NULL, ...) {
       local_var_response <- self$GetFormulaCandidatesPagedWithHttpInfo(project_id, aligned_feature_id, page, size, sort, opt_fields, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
@@ -3121,7 +3121,7 @@ FeaturesApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #' @return API response (PageFormulaCandidate) with additional information such as HTTP status code, headers
     #' @export
-    GetFormulaCandidatesPagedWithHttpInfo = function(project_id, aligned_feature_id, page = 0, size = 20, sort = NULL, opt_fields = [], data_file = NULL, ...) {
+    GetFormulaCandidatesPagedWithHttpInfo = function(project_id, aligned_feature_id, page = 0, size = 20, sort = NULL, opt_fields = list(), data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -3815,7 +3815,7 @@ FeaturesApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #' @return array[SpectralLibraryMatch]
     #' @export
-    GetSpectralLibraryMatches = function(project_id, aligned_feature_id, opt_fields = [], data_file = NULL, ...) {
+    GetSpectralLibraryMatches = function(project_id, aligned_feature_id, opt_fields = list(), data_file = NULL, ...) {
       local_var_response <- self$GetSpectralLibraryMatchesWithHttpInfo(project_id, aligned_feature_id, opt_fields, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
@@ -3839,7 +3839,7 @@ FeaturesApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #' @return API response (array[SpectralLibraryMatch]) with additional information such as HTTP status code, headers
     #' @export
-    GetSpectralLibraryMatchesWithHttpInfo = function(project_id, aligned_feature_id, opt_fields = [], data_file = NULL, ...) {
+    GetSpectralLibraryMatchesWithHttpInfo = function(project_id, aligned_feature_id, opt_fields = list(), data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -3934,7 +3934,7 @@ FeaturesApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #' @return PageSpectralLibraryMatch
     #' @export
-    GetSpectralLibraryMatchesPaged = function(project_id, aligned_feature_id, page = 0, size = 20, sort = NULL, opt_fields = [], data_file = NULL, ...) {
+    GetSpectralLibraryMatchesPaged = function(project_id, aligned_feature_id, page = 0, size = 20, sort = NULL, opt_fields = list(), data_file = NULL, ...) {
       local_var_response <- self$GetSpectralLibraryMatchesPagedWithHttpInfo(project_id, aligned_feature_id, page, size, sort, opt_fields, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
@@ -3961,7 +3961,7 @@ FeaturesApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #' @return API response (PageSpectralLibraryMatch) with additional information such as HTTP status code, headers
     #' @export
-    GetSpectralLibraryMatchesPagedWithHttpInfo = function(project_id, aligned_feature_id, page = 0, size = 20, sort = NULL, opt_fields = [], data_file = NULL, ...) {
+    GetSpectralLibraryMatchesPagedWithHttpInfo = function(project_id, aligned_feature_id, page = 0, size = 20, sort = NULL, opt_fields = list(), data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -4336,7 +4336,7 @@ FeaturesApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #' @return array[StructureCandidateFormula]
     #' @export
-    GetStructureCandidates = function(project_id, aligned_feature_id, opt_fields = [], data_file = NULL, ...) {
+    GetStructureCandidates = function(project_id, aligned_feature_id, opt_fields = list(), data_file = NULL, ...) {
       local_var_response <- self$GetStructureCandidatesWithHttpInfo(project_id, aligned_feature_id, opt_fields, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
@@ -4360,7 +4360,7 @@ FeaturesApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #' @return API response (array[StructureCandidateFormula]) with additional information such as HTTP status code, headers
     #' @export
-    GetStructureCandidatesWithHttpInfo = function(project_id, aligned_feature_id, opt_fields = [], data_file = NULL, ...) {
+    GetStructureCandidatesWithHttpInfo = function(project_id, aligned_feature_id, opt_fields = list(), data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -4453,7 +4453,7 @@ FeaturesApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #' @return array[StructureCandidateScored]
     #' @export
-    GetStructureCandidatesByFormula = function(project_id, aligned_feature_id, formula_id, opt_fields = [], data_file = NULL, ...) {
+    GetStructureCandidatesByFormula = function(project_id, aligned_feature_id, formula_id, opt_fields = list(), data_file = NULL, ...) {
       local_var_response <- self$GetStructureCandidatesByFormulaWithHttpInfo(project_id, aligned_feature_id, formula_id, opt_fields, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
@@ -4478,7 +4478,7 @@ FeaturesApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #' @return API response (array[StructureCandidateScored]) with additional information such as HTTP status code, headers
     #' @export
-    GetStructureCandidatesByFormulaWithHttpInfo = function(project_id, aligned_feature_id, formula_id, opt_fields = [], data_file = NULL, ...) {
+    GetStructureCandidatesByFormulaWithHttpInfo = function(project_id, aligned_feature_id, formula_id, opt_fields = list(), data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -4583,7 +4583,7 @@ FeaturesApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #' @return PageStructureCandidateScored
     #' @export
-    GetStructureCandidatesByFormulaPaged = function(project_id, aligned_feature_id, formula_id, page = 0, size = 20, sort = NULL, opt_fields = [], data_file = NULL, ...) {
+    GetStructureCandidatesByFormulaPaged = function(project_id, aligned_feature_id, formula_id, page = 0, size = 20, sort = NULL, opt_fields = list(), data_file = NULL, ...) {
       local_var_response <- self$GetStructureCandidatesByFormulaPagedWithHttpInfo(project_id, aligned_feature_id, formula_id, page, size, sort, opt_fields, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
@@ -4611,7 +4611,7 @@ FeaturesApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #' @return API response (PageStructureCandidateScored) with additional information such as HTTP status code, headers
     #' @export
-    GetStructureCandidatesByFormulaPagedWithHttpInfo = function(project_id, aligned_feature_id, formula_id, page = 0, size = 20, sort = NULL, opt_fields = [], data_file = NULL, ...) {
+    GetStructureCandidatesByFormulaPagedWithHttpInfo = function(project_id, aligned_feature_id, formula_id, page = 0, size = 20, sort = NULL, opt_fields = list(), data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -4733,7 +4733,7 @@ FeaturesApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #' @return PageStructureCandidateFormula
     #' @export
-    GetStructureCandidatesPaged = function(project_id, aligned_feature_id, page = 0, size = 20, sort = NULL, opt_fields = [], data_file = NULL, ...) {
+    GetStructureCandidatesPaged = function(project_id, aligned_feature_id, page = 0, size = 20, sort = NULL, opt_fields = list(), data_file = NULL, ...) {
       local_var_response <- self$GetStructureCandidatesPagedWithHttpInfo(project_id, aligned_feature_id, page, size, sort, opt_fields, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
@@ -4760,7 +4760,7 @@ FeaturesApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #' @return API response (PageStructureCandidateFormula) with additional information such as HTTP status code, headers
     #' @export
-    GetStructureCandidatesPagedWithHttpInfo = function(project_id, aligned_feature_id, page = 0, size = 20, sort = NULL, opt_fields = [], data_file = NULL, ...) {
+    GetStructureCandidatesPagedWithHttpInfo = function(project_id, aligned_feature_id, page = 0, size = 20, sort = NULL, opt_fields = list(), data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()

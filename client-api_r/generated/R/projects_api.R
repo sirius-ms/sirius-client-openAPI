@@ -576,7 +576,7 @@ ProjectsApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #' @return ProjectInfo
     #' @export
-    CopyProjectSpace = function(project_id, path_to_copied_project, copy_project_id = NULL, opt_fields = [], data_file = NULL, ...) {
+    CopyProjectSpace = function(project_id, path_to_copied_project, copy_project_id = NULL, opt_fields = list(), data_file = NULL, ...) {
       local_var_response <- self$CopyProjectSpaceWithHttpInfo(project_id, path_to_copied_project, copy_project_id, opt_fields, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
@@ -601,7 +601,7 @@ ProjectsApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #' @return API response (ProjectInfo) with additional information such as HTTP status code, headers
     #' @export
-    CopyProjectSpaceWithHttpInfo = function(project_id, path_to_copied_project, copy_project_id = NULL, opt_fields = [], data_file = NULL, ...) {
+    CopyProjectSpaceWithHttpInfo = function(project_id, path_to_copied_project, copy_project_id = NULL, opt_fields = list(), data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -1113,7 +1113,7 @@ ProjectsApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #' @return ProjectInfo
     #' @export
-    GetProjectSpace = function(project_id, opt_fields = [], data_file = NULL, ...) {
+    GetProjectSpace = function(project_id, opt_fields = list(), data_file = NULL, ...) {
       local_var_response <- self$GetProjectSpaceWithHttpInfo(project_id, opt_fields, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
@@ -1136,7 +1136,7 @@ ProjectsApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #' @return API response (ProjectInfo) with additional information such as HTTP status code, headers
     #' @export
-    GetProjectSpaceWithHttpInfo = function(project_id, opt_fields = [], data_file = NULL, ...) {
+    GetProjectSpaceWithHttpInfo = function(project_id, opt_fields = list(), data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -1418,7 +1418,7 @@ ProjectsApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #' @return Job
     #' @export
-    ImportMsRunDataAsJob = function(project_id, align_runs = TRUE, allow_ms1_only = TRUE, opt_fields = ["progress"], input_files = NULL, data_file = NULL, ...) {
+    ImportMsRunDataAsJob = function(project_id, align_runs = TRUE, allow_ms1_only = TRUE, opt_fields = list("progress"), input_files = NULL, data_file = NULL, ...) {
       local_var_response <- self$ImportMsRunDataAsJobWithHttpInfo(project_id, align_runs, allow_ms1_only, opt_fields, input_files, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
@@ -1444,7 +1444,7 @@ ProjectsApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #' @return API response (Job) with additional information such as HTTP status code, headers
     #' @export
-    ImportMsRunDataAsJobWithHttpInfo = function(project_id, align_runs = TRUE, allow_ms1_only = TRUE, opt_fields = ["progress"], input_files = NULL, data_file = NULL, ...) {
+    ImportMsRunDataAsJobWithHttpInfo = function(project_id, align_runs = TRUE, allow_ms1_only = TRUE, opt_fields = list("progress"), input_files = NULL, data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -1648,7 +1648,7 @@ ProjectsApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #' @return Job
     #' @export
-    ImportPreprocessedDataAsJob = function(project_id, ignore_formulas = FALSE, allow_ms1_only = TRUE, opt_fields = ["progress"], imput_files = NULL, data_file = NULL, ...) {
+    ImportPreprocessedDataAsJob = function(project_id, ignore_formulas = FALSE, allow_ms1_only = TRUE, opt_fields = list("progress"), imput_files = NULL, data_file = NULL, ...) {
       local_var_response <- self$ImportPreprocessedDataAsJobWithHttpInfo(project_id, ignore_formulas, allow_ms1_only, opt_fields, imput_files, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
@@ -1674,7 +1674,7 @@ ProjectsApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #' @return API response (Job) with additional information such as HTTP status code, headers
     #' @export
-    ImportPreprocessedDataAsJobWithHttpInfo = function(project_id, ignore_formulas = FALSE, allow_ms1_only = TRUE, opt_fields = ["progress"], imput_files = NULL, data_file = NULL, ...) {
+    ImportPreprocessedDataAsJobWithHttpInfo = function(project_id, ignore_formulas = FALSE, allow_ms1_only = TRUE, opt_fields = list("progress"), imput_files = NULL, data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -1765,7 +1765,7 @@ ProjectsApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #' @return ProjectInfo
     #' @export
-    OpenProjectSpace = function(project_id, path_to_project = NULL, opt_fields = [], data_file = NULL, ...) {
+    OpenProjectSpace = function(project_id, path_to_project = NULL, opt_fields = list(), data_file = NULL, ...) {
       local_var_response <- self$OpenProjectSpaceWithHttpInfo(project_id, path_to_project, opt_fields, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
@@ -1789,7 +1789,7 @@ ProjectsApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #' @return API response (ProjectInfo) with additional information such as HTTP status code, headers
     #' @export
-    OpenProjectSpaceWithHttpInfo = function(project_id, path_to_project = NULL, opt_fields = [], data_file = NULL, ...) {
+    OpenProjectSpaceWithHttpInfo = function(project_id, path_to_project = NULL, opt_fields = list(), data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
