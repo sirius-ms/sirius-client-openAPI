@@ -57,7 +57,7 @@ jobs:
         
         echo "generating R Code"
         rm -rf client-api_r/generated/*
-        java -jar .updater/openapi_generator/openapi-generator-cli.jar generate -i .updater/api/api-docs.json -c .updater/config/R/config.json -g r -o client-api_r/generated
+        java -jar .updater/openapi_generator/openapi-generator-cli.jar generate -i .updater/api/api-docs.json -c .updater/config/R/config.json -g r -o client-api_r/generated -t client-api_r/templates/r
         
         # echo "recover R manual folder"
         # mv client-api_r/man/ client-api_r/generated/
@@ -86,6 +86,9 @@ jobs:
         echo >> client-api_r/generated/NAMESPACE
         echo "# SDK" >> client-api_r/generated/NAMESPACE
         echo "export(SiriusSDK)" >> client-api_r/generated/NAMESPACE
+        
+        chmod +x ./client-api_r/patches/list_syntax_fix.sh
+        ./client-api_r/patches/list_syntax_fix.sh
 
     #     cp -r client-api_r/testthat client-api_r/generated/tests
 
