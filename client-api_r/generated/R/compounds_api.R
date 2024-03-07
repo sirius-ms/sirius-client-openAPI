@@ -232,7 +232,7 @@ CompoundsApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #' @return array[Compound]
     #' @export
-    AddCompounds = function(project_id, compound_import, opt_fields = [], opt_fields_features = [], data_file = NULL, ...) {
+    AddCompounds = function(project_id, compound_import, opt_fields = list(), opt_fields_features = list(), data_file = NULL, ...) {
       local_var_response <- self$AddCompoundsWithHttpInfo(project_id, compound_import, opt_fields, opt_fields_features, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
@@ -257,7 +257,7 @@ CompoundsApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #' @return API response (array[Compound]) with additional information such as HTTP status code, headers
     #' @export
-    AddCompoundsWithHttpInfo = function(project_id, compound_import, opt_fields = [], opt_fields_features = [], data_file = NULL, ...) {
+    AddCompoundsWithHttpInfo = function(project_id, compound_import, opt_fields = list(), opt_fields_features = list(), data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -456,7 +456,7 @@ CompoundsApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #' @return Compound
     #' @export
-    GetCompound = function(project_id, compound_id, opt_fields = [], opt_fields_features = [], data_file = NULL, ...) {
+    GetCompound = function(project_id, compound_id, opt_fields = list(), opt_fields_features = list(), data_file = NULL, ...) {
       local_var_response <- self$GetCompoundWithHttpInfo(project_id, compound_id, opt_fields, opt_fields_features, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
@@ -481,7 +481,7 @@ CompoundsApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #' @return API response (Compound) with additional information such as HTTP status code, headers
     #' @export
-    GetCompoundWithHttpInfo = function(project_id, compound_id, opt_fields = [], opt_fields_features = [], data_file = NULL, ...) {
+    GetCompoundWithHttpInfo = function(project_id, compound_id, opt_fields = list(), opt_fields_features = list(), data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -579,7 +579,7 @@ CompoundsApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #' @return array[Compound]
     #' @export
-    GetCompounds = function(project_id, opt_fields = [], opt_fields_features = [], data_file = NULL, ...) {
+    GetCompounds = function(project_id, opt_fields = list(), opt_fields_features = list(), data_file = NULL, ...) {
       local_var_response <- self$GetCompoundsWithHttpInfo(project_id, opt_fields, opt_fields_features, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
@@ -603,7 +603,7 @@ CompoundsApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #' @return API response (array[Compound]) with additional information such as HTTP status code, headers
     #' @export
-    GetCompoundsWithHttpInfo = function(project_id, opt_fields = [], opt_fields_features = [], data_file = NULL, ...) {
+    GetCompoundsWithHttpInfo = function(project_id, opt_fields = list(), opt_fields_features = list(), data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -695,7 +695,7 @@ CompoundsApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #' @return PageCompound
     #' @export
-    GetCompoundsPaged = function(project_id, page = 0, size = 20, sort = NULL, opt_fields = [], opt_fields_features = [], data_file = NULL, ...) {
+    GetCompoundsPaged = function(project_id, page = 0, size = 20, sort = NULL, opt_fields = list(), opt_fields_features = list(), data_file = NULL, ...) {
       local_var_response <- self$GetCompoundsPagedWithHttpInfo(project_id, page, size, sort, opt_fields, opt_fields_features, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
@@ -722,7 +722,7 @@ CompoundsApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #' @return API response (PageCompound) with additional information such as HTTP status code, headers
     #' @export
-    GetCompoundsPagedWithHttpInfo = function(project_id, page = 0, size = 20, sort = NULL, opt_fields = [], opt_fields_features = [], data_file = NULL, ...) {
+    GetCompoundsPagedWithHttpInfo = function(project_id, page = 0, size = 20, sort = NULL, opt_fields = list(), opt_fields_features = list(), data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()

@@ -33,9 +33,6 @@ class PySiriusAPI:
     def get_ActuatorApi(self):
         """returns API endpoint of the ActuatorApi"""
         return PySirius.ActuatorApi(self.api_client)
-    def get_SearchableDatabasesAPI(self):
-        """returns API endpoint of the SearchableDatabasesApi"""
-        return PySirius.SearchableDatabasesApi(self.api_client)
     def get_models(self):
         """returns the Superclass of all models"""
         return PySirius.models
