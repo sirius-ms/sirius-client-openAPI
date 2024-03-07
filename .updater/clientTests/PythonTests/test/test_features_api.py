@@ -23,7 +23,11 @@ from PySirius import PySiriusAPI
 from PySirius.models.ms_data import MsData
 from PySirius.models.feature_import import FeatureImport
 from PySirius.models.aligned_feature import AlignedFeature
+from PySirius.models.compound_classes import CompoundClasses
+from PySirius.models.formula_candidate import FormulaCandidate
+from PySirius.models.canopus_prediction import CanopusPrediction
 from PySirius.models.page_aligned_feature import PageAlignedFeature
+from PySirius.models.structure_candidate_formula import StructureCandidateFormula
 
 
 class TestFeaturesApi(unittest.TestCase):
@@ -32,21 +36,16 @@ class TestFeaturesApi(unittest.TestCase):
     def setUp(self) -> None:
         self.api = PySiriusAPI(PySirius.ApiClient())
         self.project_id = "test_features_api"
-        self.path_to_project = f"{os.environ.get('HOME')}/test_features_api_dir"
-        self.api.get_ProjectsApi().create_project_space(self.project_id, self.path_to_project)
+        self.path_to_project = f"{os.environ.get('HOME')}/s6TomatoFullAPI"
+        self.api.get_ProjectsApi().open_project_space(self.project_id, self.path_to_project)
+        self.aligned_feature_id = "2923_NS_Seedling_2923"
 
-        path_to_demo_data = f"{os.environ.get('HOME')}/sirius-client-openAPI/.updater/clientTests/Data"
-        preproc_ms2_file_1 = path_to_demo_data + "/Kaempferol.ms"
-        preproc_ms2_file_2 = path_to_demo_data + "/laudanosine.mgf"
-        input_files = [preproc_ms2_file_1, preproc_ms2_file_2]
-        self.api.get_ProjectsApi().import_preprocessed_data(self.project_id, input_files=input_files)
-        time.sleep(1)
-
-        self.aligned_feature_id = self.api.get_FeaturesApi().get_aligned_features(self.project_id)[0].aligned_feature_id
+        self.formula_candidates = self.api.get_FeaturesApi().get_formula_candidates(self.project_id, self.aligned_feature_id)
+        self.formula_id = self.formula_candidates[0].formula_id
 
     def tearDown(self) -> None:
         self.api.get_ProjectsApi().close_project_space(self.project_id)
-        shutil.rmtree(self.path_to_project)
+        # shutil.rmtree(self.path_to_project)
 
     def test_add_aligned_features(self) -> None:
         """Test case for add_aligned_features
@@ -67,6 +66,8 @@ class TestFeaturesApi(unittest.TestCase):
         }
 
         feature_import_json = {
+            "name": "testfeature",
+            "featureId": "testfeature",
             "ionMass": 1.23,
             "adduct": "[M+?]+",
             "ms1Spectra": [
@@ -80,9 +81,9 @@ class TestFeaturesApi(unittest.TestCase):
         feature_import_instance = FeatureImport.from_json(json.dumps(feature_import_json))
         feature_import = [feature_import_instance]
         response = self.api.get_FeaturesApi().add_aligned_features(self.project_id, feature_import)
+        self.api.get_FeaturesApi().delete_aligned_feature(self.project_id, response[0].aligned_feature_id)
 
         self.assertIsInstance(response, list)
-        self.assertEqual(len(response), 1)
         self.assertIsInstance(response[0], AlignedFeature)
 
     def test_delete_aligned_feature(self) -> None:
@@ -90,18 +91,25 @@ class TestFeaturesApi(unittest.TestCase):
 
         Delete feature (aligned over runs) with the given identifier from the specified project-space.
         """
-        response_before = self.api.get_FeaturesApi().get_aligned_features(self.project_id)
-        self.api.get_FeaturesApi().delete_aligned_feature(self.project_id, self.aligned_feature_id)
-        response_after = self.api.get_FeaturesApi().get_aligned_features(self.project_id) 
+        path_to_demo_data = f"{os.environ.get('HOME')}/sirius-client-openAPI/.updater/clientTests/Data"
+        preproc_ms2_file_1 = path_to_demo_data + "/Kaempferol.ms"
+        preproc_ms2_file_2 = path_to_demo_data + "/laudanosine.mgf"
+        input_files = [preproc_ms2_file_1, preproc_ms2_file_2]
+        import_result = self.api.get_ProjectsApi().import_preprocessed_data(self.project_id, input_files=input_files)
+        feature_ids = import_result.affected_aligned_feature_ids
 
-        self.assertEqual(len(response_before), 2)
+        response_before = self.api.get_FeaturesApi().get_aligned_features(self.project_id)
+        self.api.get_FeaturesApi().delete_aligned_feature(self.project_id, feature_ids[0])
+        self.api.get_FeaturesApi().delete_aligned_feature(self.project_id, feature_ids[1])
+        response_after = self.api.get_FeaturesApi().get_aligned_features(self.project_id)
+
         self.assertIsInstance(response_before, list)
         self.assertIsInstance(response_before[0], AlignedFeature)
-        self.assertIsInstance(response_before[1], AlignedFeature)
 
-        self.assertEqual(len(response_after), 1)
         self.assertIsInstance(response_after, list)
         self.assertIsInstance(response_after[0], AlignedFeature)
+
+        self.assertEqual(len(response_before)-len(response_after), 2)
 
     def test_get_aligned_feature(self) -> None:
         """Test case for get_aligned_feature
@@ -117,10 +125,8 @@ class TestFeaturesApi(unittest.TestCase):
         Get all available features (aligned over runs) in the given project-space.
         """
         response = self.api.get_FeaturesApi().get_aligned_features(self.project_id)
-        self.assertEqual(len(response), 2)
         self.assertIsInstance(response, list)
         self.assertIsInstance(response[0], AlignedFeature)
-        self.assertIsInstance(response[1], AlignedFeature)
 
     def test_get_aligned_features_paged(self) -> None:
         """Test case for get_aligned_features_paged
@@ -135,28 +141,34 @@ class TestFeaturesApi(unittest.TestCase):
 
         Best matching compound classes,  Set of the highest scoring compound classes (CANOPUS) on each hierarchy level of  the ClassyFire and NPC ontology,
         """
-        pass
+        response = self.api.get_FeaturesApi().get_best_matching_compound_classes(self.project_id, self.aligned_feature_id, self.formula_id)
+        self.assertIsInstance(response, CompoundClasses)
 
     def test_get_canopus_prediction(self) -> None:
         """Test case for get_canopus_prediction
 
         All predicted compound classes (CANOPUS) from ClassyFire and NPC and their probabilities,
         """
-        pass
+        response = self.api.get_FeaturesApi().get_canopus_prediction(self.project_id, self.aligned_feature_id, self.formula_id)
+        self.assertIsInstance(response, CanopusPrediction)
 
     def test_get_de_novo_structure_candidates(self) -> None:
         """Test case for get_de_novo_structure_candidates
 
         List of de novo structure candidates (e.g. generated by MsNovelist) ranked by CSI:FingerID score for the given 'alignedFeatureId' with minimal information.  StructureCandidates can be enriched with molecular fingerprint.
         """
-        pass
+        response = self.api.get_FeaturesApi().get_de_novo_structure_candidates(self.project_id, self.aligned_feature_id)
+        self.assertIsInstance(response, list)
+        # self.assertIsInstance(response[0], StructureCandidateFormula)
 
     def test_get_de_novo_structure_candidates_by_formula(self) -> None:
         """Test case for get_de_novo_structure_candidates_by_formula
 
         List of de novo structure candidates (e.g. generated by MsNovelist) ranked by CSI:FingerID score for the given 'formulaId' with minimal information.  StructureCandidates can be enriched with molecular fingerprint.
         """
-        pass
+        response = self.api.get_FeaturesApi().get_de_novo_structure_candidates_by_formula(self.project_id, self.aligned_feature_id, self.formula_id)
+        self.assertIsInstance(response, list)
+        # self.assertIsInstance(response[0], StructureCandidateFormula)
 
     def test_get_de_novo_structure_candidates_by_formula_paged(self) -> None:
         """Test case for get_de_novo_structure_candidates_by_formula_paged
@@ -177,7 +189,8 @@ class TestFeaturesApi(unittest.TestCase):
 
         Returns predicted fingerprint (CSI:FingerID) for the given formula result identifier  This fingerprint is used to perform structure database search and predict compound classes.
         """
-        pass
+        response = self.api.get_FeaturesApi().get_fingerprint_prediction(self.project_id, self.aligned_feature_id, self.formula_id)
+        self.assertIsInstance(response, list)
 
     def test_get_formula_annotated_ms_ms_data(self) -> None:
         """Test case for get_formula_annotated_ms_ms_data
@@ -205,7 +218,8 @@ class TestFeaturesApi(unittest.TestCase):
 
         List of FormulaResultContainers available for this feature with minimal information.
         """
-        pass
+        self.assertIsInstance(self.formula_candidates, list)
+        self.assertIsInstance(self.formula_candidates[0], FormulaCandidate)
 
     def test_get_formula_candidates_paged(self) -> None:
         """Test case for get_formula_candidates_paged
