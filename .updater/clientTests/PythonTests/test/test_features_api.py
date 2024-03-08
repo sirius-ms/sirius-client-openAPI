@@ -40,6 +40,8 @@ from PySirius.models.spectral_library_match import SpectralLibraryMatch
 from PySirius.models.page_spectral_library_match import PageSpectralLibraryMatch
 from PySirius.models.structure_candidate_formula import StructureCandidateFormula
 from PySirius.models.structure_candidate_scored import StructureCandidateScored
+from PySirius.models.page_structure_candidate_formula import PageStructureCandidateFormula
+from PySirius.models.page_structure_candidate_scored import PageStructureCandidateScored
 
 
 
@@ -285,8 +287,9 @@ class TestFeaturesApi(unittest.TestCase):
 
         Returns fragmentation tree (SIRIUS) for the given formula result identifier in SIRIUS' internal format.
         """
-        response = self.api.get_FeaturesApi().get_sirius_frag_tree(self.project_id, self.aligned_feature_id, self.formula_id)
-        self.assertIsInstance(response, str)
+        # # DEPRECATED
+        # response = self.api.get_FeaturesApi().get_sirius_frag_tree(self.project_id, self.aligned_feature_id, self.formula_id)
+        # self.assertIsInstance(response, str)
 
     def test_get_spectral_library_matches(self) -> None:
         """Test case for get_spectral_library_matches
@@ -333,21 +336,25 @@ class TestFeaturesApi(unittest.TestCase):
 
         List of CSI:FingerID structure database search candidates for the given 'formulaId' with minimal information.
         """
-        pass
+        response = self.api.get_FeaturesApi().get_structure_candidates_by_formula(self.project_id, self.aligned_feature_id, self.formula_id)
+        self.assertIsInstance(response, list)
+        self.assertIsInstance(response[0], StructureCandidateScored)
 
     def test_get_structure_candidates_by_formula_paged(self) -> None:
         """Test case for get_structure_candidates_by_formula_paged
 
         Page of CSI:FingerID structure database search candidates for the given 'formulaId' with minimal information.
         """
-        pass
+        response = self.api.get_FeaturesApi().get_structure_candidates_by_formula_paged(self.project_id, self.aligned_feature_id, self.formula_id)
+        self.assertIsInstance(response, PageStructureCandidateScored)
 
     def test_get_structure_candidates_paged(self) -> None:
         """Test case for get_structure_candidates_paged
 
         Page of structure database search candidates ranked by CSI:FingerID score for the given 'alignedFeatureId' with minimal information.
         """
-        pass
+        response = self.api.get_FeaturesApi().get_structure_candidates_paged(self.project_id, self.aligned_feature_id)
+        self.assertIsInstance(response, PageStructureCandidateFormula)
 
 
 if __name__ == '__main__':
