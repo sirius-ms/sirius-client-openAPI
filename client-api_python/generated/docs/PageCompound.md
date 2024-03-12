@@ -27,7 +27,7 @@ json = "{}"
 # create an instance of PageCompound from a JSON string
 page_compound_instance = PageCompound.from_json(json)
 # print the JSON string representation of the object
-print PageCompound.to_json()
+print(PageCompound.to_json())
 
 # convert the object into a dict
 page_compound_dict = page_compound_instance.to_dict()

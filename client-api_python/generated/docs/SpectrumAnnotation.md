@@ -23,7 +23,7 @@ json = "{}"
 # create an instance of SpectrumAnnotation from a JSON string
 spectrum_annotation_instance = SpectrumAnnotation.from_json(json)
 # print the JSON string representation of the object
-print SpectrumAnnotation.to_json()
+print(SpectrumAnnotation.to_json())
 
 # convert the object into a dict
 spectrum_annotation_dict = spectrum_annotation_instance.to_dict()

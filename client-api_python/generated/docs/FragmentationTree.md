@@ -20,7 +20,7 @@ json = "{}"
 # create an instance of FragmentationTree from a JSON string
 fragmentation_tree_instance = FragmentationTree.from_json(json)
 # print the JSON string representation of the object
-print FragmentationTree.to_json()
+print(FragmentationTree.to_json())
 
 # convert the object into a dict
 fragmentation_tree_dict = fragmentation_tree_instance.to_dict()

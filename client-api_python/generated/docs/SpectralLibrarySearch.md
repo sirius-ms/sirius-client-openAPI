@@ -22,7 +22,7 @@ json = "{}"
 # create an instance of SpectralLibrarySearch from a JSON string
 spectral_library_search_instance = SpectralLibrarySearch.from_json(json)
 # print the JSON string representation of the object
-print SpectralLibrarySearch.to_json()
+print(SpectralLibrarySearch.to_json())
 
 # convert the object into a dict
 spectral_library_search_dict = spectral_library_search_instance.to_dict()

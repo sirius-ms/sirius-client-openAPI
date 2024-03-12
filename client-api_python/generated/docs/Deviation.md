@@ -18,7 +18,7 @@ json = "{}"
 # create an instance of Deviation from a JSON string
 deviation_instance = Deviation.from_json(json)
 # print the JSON string representation of the object
-print Deviation.to_json()
+print(Deviation.to_json())
 
 # convert the object into a dict
 deviation_dict = deviation_instance.to_dict()

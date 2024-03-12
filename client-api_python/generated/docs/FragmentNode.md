@@ -24,7 +24,7 @@ json = "{}"
 # create an instance of FragmentNode from a JSON string
 fragment_node_instance = FragmentNode.from_json(json)
 # print the JSON string representation of the object
-print FragmentNode.to_json()
+print(FragmentNode.to_json())
 
 # convert the object into a dict
 fragment_node_dict = fragment_node_instance.to_dict()

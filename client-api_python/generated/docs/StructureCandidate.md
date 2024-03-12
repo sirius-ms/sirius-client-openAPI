@@ -22,7 +22,7 @@ json = "{}"
 # create an instance of StructureCandidate from a JSON string
 structure_candidate_instance = StructureCandidate.from_json(json)
 # print the JSON string representation of the object
-print StructureCandidate.to_json()
+print(StructureCandidate.to_json())
 
 # convert the object into a dict
 structure_candidate_dict = structure_candidate_instance.to_dict()

@@ -20,7 +20,7 @@ json = "{}"
 # create an instance of LossEdge from a JSON string
 loss_edge_instance = LossEdge.from_json(json)
 # print the JSON string representation of the object
-print LossEdge.to_json()
+print(LossEdge.to_json())
 
 # convert the object into a dict
 loss_edge_dict = loss_edge_instance.to_dict()

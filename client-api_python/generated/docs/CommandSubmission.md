@@ -20,7 +20,7 @@ json = "{}"
 # create an instance of CommandSubmission from a JSON string
 command_submission_instance = CommandSubmission.from_json(json)
 # print the JSON string representation of the object
-print CommandSubmission.to_json()
+print(CommandSubmission.to_json())
 
 # convert the object into a dict
 command_submission_dict = command_submission_instance.to_dict()

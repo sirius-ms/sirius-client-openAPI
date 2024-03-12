@@ -28,7 +28,7 @@ json = "{}"
 # create an instance of SearchableDatabase from a JSON string
 searchable_database_instance = SearchableDatabase.from_json(json)
 # print the JSON string representation of the object
-print SearchableDatabase.to_json()
+print(SearchableDatabase.to_json())
 
 # convert the object into a dict
 searchable_database_dict = searchable_database_instance.to_dict()

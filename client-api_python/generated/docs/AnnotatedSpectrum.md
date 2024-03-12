@@ -24,7 +24,7 @@ json = "{}"
 # create an instance of AnnotatedSpectrum from a JSON string
 annotated_spectrum_instance = AnnotatedSpectrum.from_json(json)
 # print the JSON string representation of the object
-print AnnotatedSpectrum.to_json()
+print(AnnotatedSpectrum.to_json())
 
 # convert the object into a dict
 annotated_spectrum_dict = annotated_spectrum_instance.to_dict()

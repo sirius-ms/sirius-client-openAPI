@@ -27,7 +27,7 @@ json = "{}"
 # create an instance of PageFormulaCandidate from a JSON string
 page_formula_candidate_instance = PageFormulaCandidate.from_json(json)
 # print the JSON string representation of the object
-print PageFormulaCandidate.to_json()
+print(PageFormulaCandidate.to_json())
 
 # convert the object into a dict
 page_formula_candidate_dict = page_formula_candidate_instance.to_dict()

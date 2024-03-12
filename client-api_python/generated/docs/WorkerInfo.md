@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **id** | **int** |  | 
 **type** | **str** |  | 
 **supported_predictors** | **List[str]** |  | 
-**version** | **str** |  | 
+**version** | **str** |  | [optional] 
 **host** | **str** |  | [optional] 
 **prefix** | **str** |  | [optional] 
 **state** | **int** |  | 
@@ -25,7 +25,7 @@ json = "{}"
 # create an instance of WorkerInfo from a JSON string
 worker_info_instance = WorkerInfo.from_json(json)
 # print the JSON string representation of the object
-print WorkerInfo.to_json()
+print(WorkerInfo.to_json())
 
 # convert the object into a dict
 worker_info_dict = worker_info_instance.to_dict()

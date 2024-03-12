@@ -19,7 +19,7 @@ json = "{}"
 # create an instance of ZodiacEdgeFilterThresholds from a JSON string
 zodiac_edge_filter_thresholds_instance = ZodiacEdgeFilterThresholds.from_json(json)
 # print the JSON string representation of the object
-print ZodiacEdgeFilterThresholds.to_json()
+print(ZodiacEdgeFilterThresholds.to_json())
 
 # convert the object into a dict
 zodiac_edge_filter_thresholds_dict = zodiac_edge_filter_thresholds_instance.to_dict()

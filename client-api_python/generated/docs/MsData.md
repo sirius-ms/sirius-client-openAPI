@@ -21,7 +21,7 @@ json = "{}"
 # create an instance of MsData from a JSON string
 ms_data_instance = MsData.from_json(json)
 # print the JSON string representation of the object
-print MsData.to_json()
+print(MsData.to_json())
 
 # convert the object into a dict
 ms_data_dict = ms_data_instance.to_dict()

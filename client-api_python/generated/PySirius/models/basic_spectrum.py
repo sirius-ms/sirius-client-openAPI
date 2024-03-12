@@ -17,7 +17,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, Field, StrictFloat, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional, Union
 from PySirius.models.simple_peak import SimplePeak
 from typing import Optional, Set
@@ -36,11 +36,11 @@ class BasicSpectrum(BaseModel):
     abs_intensity_factor: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Factor to convert relative intensities to absolute intensities.  Might be null or 1 for spectra where absolute intensities are not available (E.g. artificial or merged spectra)", alias="absIntensityFactor")
     __properties: ClassVar[List[str]] = ["name", "msLevel", "collisionEnergy", "precursorMz", "scanNumber", "peaks", "absIntensityFactor"]
 
-    model_config = {
-        "populate_by_name": True,
-        "validate_assignment": True,
-        "protected_namespaces": (),
-    }
+    model_config = ConfigDict(
+        populate_by_name=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
 
 
     def to_str(self) -> str:

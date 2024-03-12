@@ -18,7 +18,7 @@ json = "{}"
 # create an instance of AnnotatedMsMsData from a JSON string
 annotated_ms_ms_data_instance = AnnotatedMsMsData.from_json(json)
 # print the JSON string representation of the object
-print AnnotatedMsMsData.to_json()
+print(AnnotatedMsMsData.to_json())
 
 # convert the object into a dict
 annotated_ms_ms_data_dict = annotated_ms_ms_data_instance.to_dict()

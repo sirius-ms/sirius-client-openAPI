@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 **id** | **integer** |  | 
 **type** | **character** |  | [Enum: [FORMULA_ID, FINGER_ID, IOKR, CANOPUS, COVTREE]] 
 **supportedPredictors** | **array[character]** |  | [Enum: ] 
-**version** | **character** |  | 
+**version** | **character** |  | [optional] 
 **host** | **character** |  | [optional] 
 **prefix** | **character** |  | [optional] 
 **state** | **integer** |  | 

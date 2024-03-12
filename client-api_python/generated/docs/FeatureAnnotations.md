@@ -20,7 +20,7 @@ json = "{}"
 # create an instance of FeatureAnnotations from a JSON string
 feature_annotations_instance = FeatureAnnotations.from_json(json)
 # print the JSON string representation of the object
-print FeatureAnnotations.to_json()
+print(FeatureAnnotations.to_json())
 
 # convert the object into a dict
 feature_annotations_dict = feature_annotations_instance.to_dict()

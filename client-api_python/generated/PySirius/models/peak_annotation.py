@@ -17,7 +17,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, Field, StrictFloat, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional, Union
 from PySirius.models.parent_peak import ParentPeak
 from typing import Optional, Set
@@ -43,11 +43,11 @@ class PeakAnnotation(BaseModel):
     hydrogen_rearrangements: Optional[StrictInt] = Field(default=None, description="Number of hydrogens rearrangements needed to match the substructure to the fragment formula.   Null if substructure annotation not available or not requested.", alias="hydrogenRearrangements")
     __properties: ClassVar[List[str]] = ["fragmentId", "molecularFormula", "ionization", "exactMass", "massDeviationMz", "massDeviationPpm", "recalibratedMassDeviationMz", "recalibratedMassDeviationPpm", "parentPeak", "substructureAtoms", "substructureBonds", "substructureBondsCut", "substructureScore", "hydrogenRearrangements"]
 
-    model_config = {
-        "populate_by_name": True,
-        "validate_assignment": True,
-        "protected_namespaces": (),
-    }
+    model_config = ConfigDict(
+        populate_by_name=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
 
 
     def to_str(self) -> str:

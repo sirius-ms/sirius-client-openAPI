@@ -35,7 +35,7 @@ json = "{}"
 # create an instance of Sirius from a JSON string
 sirius_instance = Sirius.from_json(json)
 # print the JSON string representation of the object
-print Sirius.to_json()
+print(Sirius.to_json())
 
 # convert the object into a dict
 sirius_dict = sirius_instance.to_dict()
