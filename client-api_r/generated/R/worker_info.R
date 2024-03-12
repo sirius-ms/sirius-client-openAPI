@@ -10,7 +10,7 @@
 #' @field id  integer
 #' @field type  character
 #' @field supportedPredictors  list(character)
-#' @field version  character
+#' @field version  character [optional]
 #' @field host  character [optional]
 #' @field prefix  character [optional]
 #' @field state  integer
@@ -39,15 +39,15 @@ WorkerInfo <- R6::R6Class(
     #' @param id id
     #' @param type type
     #' @param supportedPredictors supportedPredictors
-    #' @param version version
     #' @param state state
     #' @param alive alive
     #' @param serverTime serverTime
+    #' @param version version
     #' @param host host
     #' @param prefix prefix
     #' @param ... Other optional arguments.
     #' @export
-    initialize = function(`id`, `type`, `supportedPredictors`, `version`, `state`, `alive`, `serverTime`, `host` = NULL, `prefix` = NULL, ...) {
+    initialize = function(`id`, `type`, `supportedPredictors`, `state`, `alive`, `serverTime`, `version` = NULL, `host` = NULL, `prefix` = NULL, ...) {
       if (!missing(`id`)) {
         if (!(is.numeric(`id`) && length(`id`) == 1)) {
           stop(paste("Error! Invalid data for `id`. Must be an integer:", `id`))
@@ -68,12 +68,6 @@ WorkerInfo <- R6::R6Class(
         sapply(`supportedPredictors`, function(x) stopifnot(is.character(x)))
         self$`supportedPredictors` <- `supportedPredictors`
       }
-      if (!missing(`version`)) {
-        if (!(is.character(`version`) && length(`version`) == 1)) {
-          stop(paste("Error! Invalid data for `version`. Must be a string:", `version`))
-        }
-        self$`version` <- `version`
-      }
       if (!missing(`state`)) {
         if (!(is.numeric(`state`) && length(`state`) == 1)) {
           stop(paste("Error! Invalid data for `state`. Must be an integer:", `state`))
@@ -91,6 +85,12 @@ WorkerInfo <- R6::R6Class(
           stop(paste("Error! Invalid data for `serverTime`. Must be an integer:", `serverTime`))
         }
         self$`serverTime` <- `serverTime`
+      }
+      if (!is.null(`version`)) {
+        if (!(is.character(`version`) && length(`version`) == 1)) {
+          stop(paste("Error! Invalid data for `version`. Must be a string:", `version`))
+        }
+        self$`version` <- `version`
       }
       if (!is.null(`host`)) {
         if (!(is.character(`host`) && length(`host`) == 1)) {
@@ -335,14 +335,6 @@ WorkerInfo <- R6::R6Class(
       } else {
         stop(paste("The JSON input `", input, "` is invalid for WorkerInfo: the required field `supportedPredictors` is missing."))
       }
-      # check the required field `version`
-      if (!is.null(input_json$`version`)) {
-        if (!(is.character(input_json$`version`) && length(input_json$`version`) == 1)) {
-          stop(paste("Error! Invalid data for `version`. Must be a string:", input_json$`version`))
-        }
-      } else {
-        stop(paste("The JSON input `", input, "` is invalid for WorkerInfo: the required field `version` is missing."))
-      }
       # check the required field `state`
       if (!is.null(input_json$`state`)) {
         if (!(is.numeric(input_json$`state`) && length(input_json$`state`) == 1)) {
@@ -401,11 +393,6 @@ WorkerInfo <- R6::R6Class(
         return(FALSE)
       }
 
-      # check if the required `version` is null
-      if (is.null(self$`version`)) {
-        return(FALSE)
-      }
-
       # check if the required `state` is null
       if (is.null(self$`state`)) {
         return(FALSE)
@@ -445,11 +432,6 @@ WorkerInfo <- R6::R6Class(
       # check if the required `supportedPredictors` is null
       if (is.null(self$`supportedPredictors`)) {
         invalid_fields["supportedPredictors"] <- "Non-nullable required field `supportedPredictors` cannot be null."
-      }
-
-      # check if the required `version` is null
-      if (is.null(self$`version`)) {
-        invalid_fields["version"] <- "Non-nullable required field `version` cannot be null."
       }
 
       # check if the required `state` is null

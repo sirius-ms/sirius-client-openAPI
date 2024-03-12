@@ -3195,7 +3195,7 @@ class ProjectsApi:
         ignore_formulas: Optional[StrictBool] = None,
         allow_ms1_only: Optional[StrictBool] = None,
         opt_fields: Annotated[Optional[List[Optional[JobOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
-        imput_files: Optional[List[Union[StrictBytes, StrictStr]]] = None,
+        input_files: Optional[List[Union[StrictBytes, StrictStr]]] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3221,8 +3221,8 @@ class ProjectsApi:
         :type allow_ms1_only: bool
         :param opt_fields: set of optional fields to be included. Use 'none' only to override defaults.
         :type opt_fields: List[JobOptField]
-        :param imput_files:
-        :type imput_files: List[bytearray]
+        :param input_files:
+        :type input_files: List[bytearray]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3250,7 +3250,7 @@ class ProjectsApi:
             ignore_formulas=ignore_formulas,
             allow_ms1_only=allow_ms1_only,
             opt_fields=opt_fields,
-            imput_files=imput_files,
+            input_files=input_files,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3278,7 +3278,7 @@ class ProjectsApi:
         ignore_formulas: Optional[StrictBool] = None,
         allow_ms1_only: Optional[StrictBool] = None,
         opt_fields: Annotated[Optional[List[Optional[JobOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
-        imput_files: Optional[List[Union[StrictBytes, StrictStr]]] = None,
+        input_files: Optional[List[Union[StrictBytes, StrictStr]]] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3304,8 +3304,8 @@ class ProjectsApi:
         :type allow_ms1_only: bool
         :param opt_fields: set of optional fields to be included. Use 'none' only to override defaults.
         :type opt_fields: List[JobOptField]
-        :param imput_files:
-        :type imput_files: List[bytearray]
+        :param input_files:
+        :type input_files: List[bytearray]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3333,7 +3333,7 @@ class ProjectsApi:
             ignore_formulas=ignore_formulas,
             allow_ms1_only=allow_ms1_only,
             opt_fields=opt_fields,
-            imput_files=imput_files,
+            input_files=input_files,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3361,7 +3361,7 @@ class ProjectsApi:
         ignore_formulas: Optional[StrictBool] = None,
         allow_ms1_only: Optional[StrictBool] = None,
         opt_fields: Annotated[Optional[List[Optional[JobOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
-        imput_files: Optional[List[Union[StrictBytes, StrictStr]]] = None,
+        input_files: Optional[List[Union[StrictBytes, StrictStr]]] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3387,8 +3387,8 @@ class ProjectsApi:
         :type allow_ms1_only: bool
         :param opt_fields: set of optional fields to be included. Use 'none' only to override defaults.
         :type opt_fields: List[JobOptField]
-        :param imput_files:
-        :type imput_files: List[bytearray]
+        :param input_files:
+        :type input_files: List[bytearray]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3416,7 +3416,7 @@ class ProjectsApi:
             ignore_formulas=ignore_formulas,
             allow_ms1_only=allow_ms1_only,
             opt_fields=opt_fields,
-            imput_files=imput_files,
+            input_files=input_files,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3439,7 +3439,7 @@ class ProjectsApi:
         ignore_formulas,
         allow_ms1_only,
         opt_fields,
-        imput_files,
+        input_files,
         _request_auth,
         _content_type,
         _headers,
@@ -3450,7 +3450,7 @@ class ProjectsApi:
 
         _collection_formats: Dict[str, str] = {
             'optFields': 'multi',
-            'imputFiles': 'csv',
+            'inputFiles': 'csv',
         }
 
         _path_params: Dict[str, str] = {}
@@ -3478,8 +3478,8 @@ class ProjectsApi:
             
         # process the header parameters
         # process the form parameters
-        if imput_files is not None:
-            _files['imputFiles'] = imput_files
+        if input_files is not None:
+            _files['inputFiles'] = input_files
         # process the body parameter
 
 

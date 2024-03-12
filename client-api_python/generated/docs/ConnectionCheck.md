@@ -10,9 +10,9 @@ Name | Type | Description | Notes
 **errors** | [**List[ConnectionError]**](ConnectionError.md) | List of errors ordered by significance. first error should be reported and addressed first.  Following errors might just be follow-up errors | 
 **supports_pos_predictor_types** | **bool** |  | 
 **supports_neg_predictor_types** | **bool** |  | 
+**available_workers** | **List[str]** |  | 
 **un_available_workers** | **List[str]** |  | 
 **supports_all_predictor_types** | **bool** |  | 
-**available_workers** | **List[str]** |  | 
 
 ## Example
 
@@ -24,7 +24,7 @@ json = "{}"
 # create an instance of ConnectionCheck from a JSON string
 connection_check_instance = ConnectionCheck.from_json(json)
 # print the JSON string representation of the object
-print ConnectionCheck.to_json()
+print(ConnectionCheck.to_json())
 
 # convert the object into a dict
 connection_check_dict = connection_check_instance.to_dict()

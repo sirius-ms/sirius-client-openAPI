@@ -23,7 +23,9 @@ Name | Type | Description | Notes
 **detectable_elements** | **List[Optional[str]]** | These configurations hold the information how to autodetect elements based on the given formula constraints.  Note: If the compound is already assigned to a specific molecular formula, this annotation is ignored.  &lt;p&gt;  Detectable: Detectable elements are added to the chemical alphabet, if there are indications for them (e.g. in isotope pattern) | [optional] 
 **ilp_timeout** | [**Timeout**](Timeout.md) |  | [optional] 
 **use_heuristic** | [**UseHeuristic**](UseHeuristic.md) |  | [optional] 
-**min_score_to_inject_spec_lib_match** | **float** | Similarity Threshold to inject formula candidates no matter which score/rank they have or which filter settings are applied.  If threshold &gt;&#x3D; 0 formulas candidates with reference spectrum similarity above the threshold will be injected.  If NULL injection is disables. | [optional] 
+**inject_spec_lib_match_formulas** | **bool** | If true formula candidates that belong to spectral library matches above a certain threshold will  we inject/preserved for further analyses no matter which score they have or which filter is applied | [optional] 
+**min_score_to_inject_spec_lib_match** | **float** | Similarity Threshold to inject formula candidates no matter which score/rank they have or which filter settings are applied.  If threshold &gt;&#x3D; 0 formulas candidates with reference spectrum similarity above the threshold will be injected. | [optional] 
+**min_peaks_to_inject_spec_lib_match** | **int** | Matching peaks threshold to inject formula candidates no matter which score they have or which filter is applied. | [optional] 
 
 ## Example
 
@@ -35,7 +37,7 @@ json = "{}"
 # create an instance of Sirius from a JSON string
 sirius_instance = Sirius.from_json(json)
 # print the JSON string representation of the object
-print Sirius.to_json()
+print(Sirius.to_json())
 
 # convert the object into a dict
 sirius_dict = sirius_instance.to_dict()

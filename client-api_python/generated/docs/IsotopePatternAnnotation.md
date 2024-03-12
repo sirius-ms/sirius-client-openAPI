@@ -18,7 +18,7 @@ json = "{}"
 # create an instance of IsotopePatternAnnotation from a JSON string
 isotope_pattern_annotation_instance = IsotopePatternAnnotation.from_json(json)
 # print the JSON string representation of the object
-print IsotopePatternAnnotation.to_json()
+print(IsotopePatternAnnotation.to_json())
 
 # convert the object into a dict
 isotope_pattern_annotation_dict = isotope_pattern_annotation_instance.to_dict()

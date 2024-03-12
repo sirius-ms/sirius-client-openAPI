@@ -17,7 +17,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 from typing import Any, ClassVar, Dict, List, Optional
 from PySirius.models.compound_class import CompoundClass
 from typing import Optional, Set
@@ -34,11 +34,11 @@ class CompoundClasses(BaseModel):
     classy_fire_alternatives: Optional[List[Optional[CompoundClass]]] = Field(default=None, description="Alternative ClassyFire classes with high probability that do not fit into the linage", alias="classyFireAlternatives")
     __properties: ClassVar[List[str]] = ["npcPathway", "npcSuperclass", "npcClass", "classyFireLineage", "classyFireAlternatives"]
 
-    model_config = {
-        "populate_by_name": True,
-        "validate_assignment": True,
-        "protected_namespaces": (),
-    }
+    model_config = ConfigDict(
+        populate_by_name=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
 
 
     def to_str(self) -> str:

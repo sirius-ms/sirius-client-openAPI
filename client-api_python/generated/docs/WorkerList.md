@@ -18,7 +18,7 @@ json = "{}"
 # create an instance of WorkerList from a JSON string
 worker_list_instance = WorkerList.from_json(json)
 # print the JSON string representation of the object
-print WorkerList.to_json()
+print(WorkerList.to_json())
 
 # convert the object into a dict
 worker_list_dict = worker_list_instance.to_dict()

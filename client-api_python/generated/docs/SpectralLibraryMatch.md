@@ -29,7 +29,7 @@ json = "{}"
 # create an instance of SpectralLibraryMatch from a JSON string
 spectral_library_match_instance = SpectralLibraryMatch.from_json(json)
 # print the JSON string representation of the object
-print SpectralLibraryMatch.to_json()
+print(SpectralLibraryMatch.to_json())
 
 # convert the object into a dict
 spectral_library_match_dict = spectral_library_match_instance.to_dict()

@@ -19,7 +19,7 @@ json = "{}"
 # create an instance of ZodiacEpochs from a JSON string
 zodiac_epochs_instance = ZodiacEpochs.from_json(json)
 # print the JSON string representation of the object
-print ZodiacEpochs.to_json()
+print(ZodiacEpochs.to_json())
 
 # convert the object into a dict
 zodiac_epochs_dict = zodiac_epochs_instance.to_dict()

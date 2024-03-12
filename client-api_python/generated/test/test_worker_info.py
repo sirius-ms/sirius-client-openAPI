@@ -54,7 +54,6 @@ class TestWorkerInfo(unittest.TestCase):
                 supported_predictors = [
                     'CSI_FINGERID_POSITIVE'
                     ],
-                version = '',
                 state = 56,
                 alive = 56,
                 server_time = 56,

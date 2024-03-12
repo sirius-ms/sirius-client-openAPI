@@ -20,7 +20,7 @@ json = "{}"
 # create an instance of AccountCredentials from a JSON string
 account_credentials_instance = AccountCredentials.from_json(json)
 # print the JSON string representation of the object
-print AccountCredentials.to_json()
+print(AccountCredentials.to_json())
 
 # convert the object into a dict
 account_credentials_dict = account_credentials_instance.to_dict()

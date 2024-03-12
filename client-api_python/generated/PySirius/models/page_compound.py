@@ -17,7 +17,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, Field, StrictBool, StrictInt
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt
 from typing import Any, ClassVar, Dict, List, Optional
 from PySirius.models.compound import Compound
 from PySirius.models.pageable_object import PageableObject
@@ -31,22 +31,22 @@ class PageCompound(BaseModel):
     """ # noqa: E501
     total_pages: Optional[StrictInt] = Field(default=None, alias="totalPages")
     total_elements: Optional[StrictInt] = Field(default=None, alias="totalElements")
+    first: Optional[StrictBool] = None
     size: Optional[StrictInt] = None
     content: Optional[List[Compound]] = None
     number: Optional[StrictInt] = None
     sort: Optional[SortObject] = None
-    first: Optional[StrictBool] = None
-    last: Optional[StrictBool] = None
     number_of_elements: Optional[StrictInt] = Field(default=None, alias="numberOfElements")
     pageable: Optional[PageableObject] = None
+    last: Optional[StrictBool] = None
     empty: Optional[StrictBool] = None
-    __properties: ClassVar[List[str]] = ["totalPages", "totalElements", "size", "content", "number", "sort", "first", "last", "numberOfElements", "pageable", "empty"]
+    __properties: ClassVar[List[str]] = ["totalPages", "totalElements", "first", "size", "content", "number", "sort", "numberOfElements", "pageable", "last", "empty"]
 
-    model_config = {
-        "populate_by_name": True,
-        "validate_assignment": True,
-        "protected_namespaces": (),
-    }
+    model_config = ConfigDict(
+        populate_by_name=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
 
 
     def to_str(self) -> str:
@@ -108,14 +108,14 @@ class PageCompound(BaseModel):
         _obj = cls.model_validate({
             "totalPages": obj.get("totalPages"),
             "totalElements": obj.get("totalElements"),
+            "first": obj.get("first"),
             "size": obj.get("size"),
             "content": [Compound.from_dict(_item) for _item in obj["content"]] if obj.get("content") is not None else None,
             "number": obj.get("number"),
             "sort": SortObject.from_dict(obj["sort"]) if obj.get("sort") is not None else None,
-            "first": obj.get("first"),
-            "last": obj.get("last"),
             "numberOfElements": obj.get("numberOfElements"),
             "pageable": PageableObject.from_dict(obj["pageable"]) if obj.get("pageable") is not None else None,
+            "last": obj.get("last"),
             "empty": obj.get("empty")
         })
         return _obj

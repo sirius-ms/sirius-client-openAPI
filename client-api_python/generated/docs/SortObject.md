@@ -19,7 +19,7 @@ json = "{}"
 # create an instance of SortObject from a JSON string
 sort_object_instance = SortObject.from_json(json)
 # print the JSON string representation of the object
-print SortObject.to_json()
+print(SortObject.to_json())
 
 # convert the object into a dict
 sort_object_dict = sort_object_instance.to_dict()

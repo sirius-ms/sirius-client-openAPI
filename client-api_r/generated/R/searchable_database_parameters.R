@@ -173,10 +173,6 @@ SearchableDatabaseParameters <- R6::R6Class(
     #' @return true if the values in all fields are valid.
     #' @export
     isValid = function() {
-      if (nchar(self$`displayName`) > 15) {
-        return(FALSE)
-      }
-
       TRUE
     },
     #' Return a list of invalid fields (if any).
@@ -188,10 +184,6 @@ SearchableDatabaseParameters <- R6::R6Class(
     #' @export
     getInvalidFields = function() {
       invalid_fields <- list()
-      if (nchar(self$`displayName`) > 15) {
-        invalid_fields["displayName"] <- "Invalid length for `displayName`, must be smaller than or equal to 15."
-      }
-
       invalid_fields
     },
     #' Print the object

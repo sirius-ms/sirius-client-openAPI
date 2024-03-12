@@ -23,7 +23,7 @@ json = "{}"
 # create an instance of ConsensusAnnotationsCSI from a JSON string
 consensus_annotations_csi_instance = ConsensusAnnotationsCSI.from_json(json)
 # print the JSON string representation of the object
-print ConsensusAnnotationsCSI.to_json()
+print(ConsensusAnnotationsCSI.to_json())
 
 # convert the object into a dict
 consensus_annotations_csi_dict = consensus_annotations_csi_instance.to_dict()

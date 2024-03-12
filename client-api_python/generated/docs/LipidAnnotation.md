@@ -21,7 +21,7 @@ json = "{}"
 # create an instance of LipidAnnotation from a JSON string
 lipid_annotation_instance = LipidAnnotation.from_json(json)
 # print the JSON string representation of the object
-print LipidAnnotation.to_json()
+print(LipidAnnotation.to_json())
 
 # convert the object into a dict
 lipid_annotation_dict = lipid_annotation_instance.to_dict()

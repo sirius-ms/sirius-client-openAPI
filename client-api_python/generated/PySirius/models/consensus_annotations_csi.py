@@ -17,7 +17,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, Field, StrictFloat, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional, Union
 from PySirius.models.compound_classes import CompoundClasses
 from PySirius.models.consensus_criterion_csi import ConsensusCriterionCSI
@@ -38,11 +38,11 @@ class ConsensusAnnotationsCSI(BaseModel):
     confidence_approx_match: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Confidence value that represents the certainty that the exact consensus structure or a very similar  structure (e.g. measured by Maximum Common Edge Subgraph Distance) is the measured one.  If multiple features support this consensus structure the maximum confidence is reported", alias="confidenceApproxMatch")
     __properties: ClassVar[List[str]] = ["molecularFormula", "compoundClasses", "supportingFeatureIds", "selectionCriterion", "csiFingerIdStructure", "confidenceExactMatch", "confidenceApproxMatch"]
 
-    model_config = {
-        "populate_by_name": True,
-        "validate_assignment": True,
-        "protected_namespaces": (),
-    }
+    model_config = ConfigDict(
+        populate_by_name=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
 
 
     def to_str(self) -> str:

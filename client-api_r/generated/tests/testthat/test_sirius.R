@@ -138,10 +138,26 @@ test_that("useHeuristic", {
   #expect_equal(model.instance$`useHeuristic`, "EXPECTED_RESULT")
 })
 
+test_that("injectSpecLibMatchFormulas", {
+  # tests for the property `injectSpecLibMatchFormulas` (character)
+  # If true formula candidates that belong to spectral library matches above a certain threshold will  we inject/preserved for further analyses no matter which score they have or which filter is applied
+
+  # uncomment below to test the property
+  #expect_equal(model.instance$`injectSpecLibMatchFormulas`, "EXPECTED_RESULT")
+})
+
 test_that("minScoreToInjectSpecLibMatch", {
   # tests for the property `minScoreToInjectSpecLibMatch` (numeric)
-  # Similarity Threshold to inject formula candidates no matter which score/rank they have or which filter settings are applied.  If threshold &gt;&#x3D; 0 formulas candidates with reference spectrum similarity above the threshold will be injected.  If NULL injection is disables.
+  # Similarity Threshold to inject formula candidates no matter which score/rank they have or which filter settings are applied.  If threshold &gt;&#x3D; 0 formulas candidates with reference spectrum similarity above the threshold will be injected.
 
   # uncomment below to test the property
   #expect_equal(model.instance$`minScoreToInjectSpecLibMatch`, "EXPECTED_RESULT")
+})
+
+test_that("minPeaksToInjectSpecLibMatch", {
+  # tests for the property `minPeaksToInjectSpecLibMatch` (integer)
+  # Matching peaks threshold to inject formula candidates no matter which score they have or which filter is applied.
+
+  # uncomment below to test the property
+  #expect_equal(model.instance$`minPeaksToInjectSpecLibMatch`, "EXPECTED_RESULT")
 })

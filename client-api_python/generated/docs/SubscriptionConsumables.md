@@ -17,7 +17,7 @@ json = "{}"
 # create an instance of SubscriptionConsumables from a JSON string
 subscription_consumables_instance = SubscriptionConsumables.from_json(json)
 # print the JSON string representation of the object
-print SubscriptionConsumables.to_json()
+print(SubscriptionConsumables.to_json())
 
 # convert the object into a dict
 subscription_consumables_dict = subscription_consumables_instance.to_dict()

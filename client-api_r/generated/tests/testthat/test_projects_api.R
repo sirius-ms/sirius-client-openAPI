@@ -160,7 +160,7 @@ test_that("ImportPreprocessedDataAsJob", {
   # @param ignore_formulas character  (optional)
   # @param allow_ms1_only character  (optional)
   # @param opt_fields array[JobOptField] set of optional fields to be included. Use 'none' only to override defaults. (optional)
-  # @param imput_files array[data.frame]  (optional)
+  # @param input_files array[data.frame]  (optional)
   # @return [Job]
 
   # uncomment below to test the operation

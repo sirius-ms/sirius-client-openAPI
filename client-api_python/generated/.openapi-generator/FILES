@@ -7,7 +7,7 @@ PySirius/api/__init__.py
 PySirius/api/actuator_api.py
 PySirius/api/compounds_api.py
 PySirius/api/features_api.py
-PySirius/api/gui_api.py
+PySirius/api/gui_advanced_api.py
 PySirius/api/info_api.py
 PySirius/api/jobs_api.py
 PySirius/api/login_and_account_api.py
@@ -53,6 +53,8 @@ PySirius/models/formula_candidate_opt_field.py
 PySirius/models/fragment_node.py
 PySirius/models/fragmentation_tree.py
 PySirius/models/gui_info.py
+PySirius/models/gui_parameters.py
+PySirius/models/gui_result_tab.py
 PySirius/models/import_result.py
 PySirius/models/info.py
 PySirius/models/instrument.py
@@ -145,8 +147,10 @@ docs/FormulaCandidate.md
 docs/FormulaCandidateOptField.md
 docs/FragmentNode.md
 docs/FragmentationTree.md
-docs/GuiApi.md
+docs/GuiAdvancedApi.md
 docs/GuiInfo.md
+docs/GuiParameters.md
+docs/GuiResultTab.md
 docs/ImportResult.md
 docs/Info.md
 docs/InfoApi.md
@@ -248,8 +252,10 @@ test/test_formula_candidate.py
 test/test_formula_candidate_opt_field.py
 test/test_fragment_node.py
 test/test_fragmentation_tree.py
-test/test_gui_api.py
+test/test_gui_advanced_api.py
 test/test_gui_info.py
+test/test_gui_parameters.py
+test/test_gui_result_tab.py
 test/test_import_result.py
 test/test_info.py
 test/test_info_api.py

@@ -7,10 +7,10 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **offset** | **int** |  | [optional] 
 **sort** | [**SortObject**](SortObject.md) |  | [optional] 
-**unpaged** | **bool** |  | [optional] 
-**paged** | **bool** |  | [optional] 
 **page_number** | **int** |  | [optional] 
 **page_size** | **int** |  | [optional] 
+**paged** | **bool** |  | [optional] 
+**unpaged** | **bool** |  | [optional] 
 
 ## Example
 
@@ -22,7 +22,7 @@ json = "{}"
 # create an instance of PageableObject from a JSON string
 pageable_object_instance = PageableObject.from_json(json)
 # print the JSON string representation of the object
-print PageableObject.to_json()
+print(PageableObject.to_json())
 
 # convert the object into a dict
 pageable_object_dict = pageable_object_instance.to_dict()

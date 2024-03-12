@@ -17,7 +17,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 from typing import Any, ClassVar, Dict, List, Optional
 from PySirius.models.basic_spectrum import BasicSpectrum
 from typing import Optional, Set
@@ -31,11 +31,11 @@ class IsotopePatternAnnotation(BaseModel):
     simulated_pattern: Optional[BasicSpectrum] = Field(default=None, alias="simulatedPattern")
     __properties: ClassVar[List[str]] = ["isotopePattern", "simulatedPattern"]
 
-    model_config = {
-        "populate_by_name": True,
-        "validate_assignment": True,
-        "protected_namespaces": (),
-    }
+    model_config = ConfigDict(
+        populate_by_name=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
 
 
     def to_str(self) -> str:

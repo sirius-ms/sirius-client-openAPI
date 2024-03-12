@@ -36,7 +36,7 @@ json = "{}"
 # create an instance of FormulaCandidate from a JSON string
 formula_candidate_instance = FormulaCandidate.from_json(json)
 # print the JSON string representation of the object
-print FormulaCandidate.to_json()
+print(FormulaCandidate.to_json())
 
 # convert the object into a dict
 formula_candidate_dict = formula_candidate_instance.to_dict()

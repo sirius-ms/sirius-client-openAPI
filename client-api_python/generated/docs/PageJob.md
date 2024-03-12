@@ -7,14 +7,14 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **total_pages** | **int** |  | [optional] 
 **total_elements** | **int** |  | [optional] 
+**first** | **bool** |  | [optional] 
 **size** | **int** |  | [optional] 
 **content** | [**List[Job]**](Job.md) |  | [optional] 
 **number** | **int** |  | [optional] 
 **sort** | [**SortObject**](SortObject.md) |  | [optional] 
-**first** | **bool** |  | [optional] 
-**last** | **bool** |  | [optional] 
 **number_of_elements** | **int** |  | [optional] 
 **pageable** | [**PageableObject**](PageableObject.md) |  | [optional] 
+**last** | **bool** |  | [optional] 
 **empty** | **bool** |  | [optional] 
 
 ## Example
@@ -27,7 +27,7 @@ json = "{}"
 # create an instance of PageJob from a JSON string
 page_job_instance = PageJob.from_json(json)
 # print the JSON string representation of the object
-print PageJob.to_json()
+print(PageJob.to_json())
 
 # convert the object into a dict
 page_job_dict = page_job_instance.to_dict()

@@ -7,14 +7,14 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **total_pages** | **int** |  | [optional] 
 **total_elements** | **int** |  | [optional] 
+**first** | **bool** |  | [optional] 
 **size** | **int** |  | [optional] 
 **content** | [**List[StructureCandidateScored]**](StructureCandidateScored.md) |  | [optional] 
 **number** | **int** |  | [optional] 
 **sort** | [**SortObject**](SortObject.md) |  | [optional] 
-**first** | **bool** |  | [optional] 
-**last** | **bool** |  | [optional] 
 **number_of_elements** | **int** |  | [optional] 
 **pageable** | [**PageableObject**](PageableObject.md) |  | [optional] 
+**last** | **bool** |  | [optional] 
 **empty** | **bool** |  | [optional] 
 
 ## Example
@@ -27,7 +27,7 @@ json = "{}"
 # create an instance of PageStructureCandidateScored from a JSON string
 page_structure_candidate_scored_instance = PageStructureCandidateScored.from_json(json)
 # print the JSON string representation of the object
-print PageStructureCandidateScored.to_json()
+print(PageStructureCandidateScored.to_json())
 
 # convert the object into a dict
 page_structure_candidate_scored_dict = page_structure_candidate_scored_instance.to_dict()

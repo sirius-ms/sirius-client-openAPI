@@ -20,7 +20,7 @@ json = "{}"
 # create an instance of ConsensusAnnotationsDeNovo from a JSON string
 consensus_annotations_de_novo_instance = ConsensusAnnotationsDeNovo.from_json(json)
 # print the JSON string representation of the object
-print ConsensusAnnotationsDeNovo.to_json()
+print(ConsensusAnnotationsDeNovo.to_json())
 
 # convert the object into a dict
 consensus_annotations_de_novo_dict = consensus_annotations_de_novo_instance.to_dict()

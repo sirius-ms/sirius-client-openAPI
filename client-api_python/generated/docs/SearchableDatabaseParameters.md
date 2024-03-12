@@ -19,7 +19,7 @@ json = "{}"
 # create an instance of SearchableDatabaseParameters from a JSON string
 searchable_database_parameters_instance = SearchableDatabaseParameters.from_json(json)
 # print the JSON string representation of the object
-print SearchableDatabaseParameters.to_json()
+print(SearchableDatabaseParameters.to_json())
 
 # convert the object into a dict
 searchable_database_parameters_dict = searchable_database_parameters_instance.to_dict()

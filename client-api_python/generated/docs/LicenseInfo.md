@@ -21,7 +21,7 @@ json = "{}"
 # create an instance of LicenseInfo from a JSON string
 license_info_instance = LicenseInfo.from_json(json)
 # print the JSON string representation of the object
-print LicenseInfo.to_json()
+print(LicenseInfo.to_json())
 
 # convert the object into a dict
 license_info_dict = license_info_instance.to_dict()

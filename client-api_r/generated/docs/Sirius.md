@@ -22,6 +22,8 @@ Name | Type | Description | Notes
 **detectableElements** | **array[character]** | These configurations hold the information how to autodetect elements based on the given formula constraints.  Note: If the compound is already assigned to a specific molecular formula, this annotation is ignored.  &lt;p&gt;  Detectable: Detectable elements are added to the chemical alphabet, if there are indications for them (e.g. in isotope pattern) | [optional] 
 **ilpTimeout** | [**Timeout**](Timeout.md) |  | [optional] 
 **useHeuristic** | [**UseHeuristic**](UseHeuristic.md) |  | [optional] 
-**minScoreToInjectSpecLibMatch** | **numeric** | Similarity Threshold to inject formula candidates no matter which score/rank they have or which filter settings are applied.  If threshold &gt;&#x3D; 0 formulas candidates with reference spectrum similarity above the threshold will be injected.  If NULL injection is disables. | [optional] 
+**injectSpecLibMatchFormulas** | **character** | If true formula candidates that belong to spectral library matches above a certain threshold will  we inject/preserved for further analyses no matter which score they have or which filter is applied | [optional] 
+**minScoreToInjectSpecLibMatch** | **numeric** | Similarity Threshold to inject formula candidates no matter which score/rank they have or which filter settings are applied.  If threshold &gt;&#x3D; 0 formulas candidates with reference spectrum similarity above the threshold will be injected. | [optional] 
+**minPeaksToInjectSpecLibMatch** | **integer** | Matching peaks threshold to inject formula candidates no matter which score they have or which filter is applied. | [optional] 
 
 

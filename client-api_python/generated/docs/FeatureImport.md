@@ -25,7 +25,7 @@ json = "{}"
 # create an instance of FeatureImport from a JSON string
 feature_import_instance = FeatureImport.from_json(json)
 # print the JSON string representation of the object
-print FeatureImport.to_json()
+print(FeatureImport.to_json())
 
 # convert the object into a dict
 feature_import_dict = feature_import_instance.to_dict()

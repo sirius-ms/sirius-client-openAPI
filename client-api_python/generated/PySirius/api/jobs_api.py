@@ -2835,7 +2835,7 @@ class JobsApi:
 
 
     @validate_call
-    def post_job_config(
+    def save_job_config(
         self,
         name: Annotated[StrictStr, Field(description="name of the job-config to add")],
         job_submission: Annotated[JobSubmission, Field(description="to add")],
@@ -2885,7 +2885,7 @@ class JobsApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._post_job_config_serialize(
+        _param = self._save_job_config_serialize(
             name=name,
             job_submission=job_submission,
             override_existing=override_existing,
@@ -2910,7 +2910,7 @@ class JobsApi:
 
 
     @validate_call
-    def post_job_config_with_http_info(
+    def save_job_config_with_http_info(
         self,
         name: Annotated[StrictStr, Field(description="name of the job-config to add")],
         job_submission: Annotated[JobSubmission, Field(description="to add")],
@@ -2960,7 +2960,7 @@ class JobsApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._post_job_config_serialize(
+        _param = self._save_job_config_serialize(
             name=name,
             job_submission=job_submission,
             override_existing=override_existing,
@@ -2985,7 +2985,7 @@ class JobsApi:
 
 
     @validate_call
-    def post_job_config_without_preload_content(
+    def save_job_config_without_preload_content(
         self,
         name: Annotated[StrictStr, Field(description="name of the job-config to add")],
         job_submission: Annotated[JobSubmission, Field(description="to add")],
@@ -3035,7 +3035,7 @@ class JobsApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._post_job_config_serialize(
+        _param = self._save_job_config_serialize(
             name=name,
             job_submission=job_submission,
             override_existing=override_existing,
@@ -3055,7 +3055,7 @@ class JobsApi:
         return response_data.response
 
 
-    def _post_job_config_serialize(
+    def _save_job_config_serialize(
         self,
         name,
         job_submission,
@@ -3750,7 +3750,7 @@ class JobsApi:
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to run jobs on")],
         job_config_name: Annotated[StrictStr, Field(description="name if the config to be used")],
-        request_body: Annotated[List[StrictStr], Field(description="compound ids to be computed")],
+        request_body: Annotated[List[StrictStr], Field(description="List of alignedFeatureIds to be computed")],
         recompute: Annotated[Optional[StrictBool], Field(description="enable or disable recompute. If null the stored value will be used.")] = None,
         opt_fields: Annotated[Optional[List[Optional[JobOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
@@ -3774,7 +3774,7 @@ class JobsApi:
         :type project_id: str
         :param job_config_name: name if the config to be used (required)
         :type job_config_name: str
-        :param request_body: compound ids to be computed (required)
+        :param request_body: List of alignedFeatureIds to be computed (required)
         :type request_body: List[str]
         :param recompute: enable or disable recompute. If null the stored value will be used.
         :type recompute: bool
@@ -3833,7 +3833,7 @@ class JobsApi:
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to run jobs on")],
         job_config_name: Annotated[StrictStr, Field(description="name if the config to be used")],
-        request_body: Annotated[List[StrictStr], Field(description="compound ids to be computed")],
+        request_body: Annotated[List[StrictStr], Field(description="List of alignedFeatureIds to be computed")],
         recompute: Annotated[Optional[StrictBool], Field(description="enable or disable recompute. If null the stored value will be used.")] = None,
         opt_fields: Annotated[Optional[List[Optional[JobOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
@@ -3857,7 +3857,7 @@ class JobsApi:
         :type project_id: str
         :param job_config_name: name if the config to be used (required)
         :type job_config_name: str
-        :param request_body: compound ids to be computed (required)
+        :param request_body: List of alignedFeatureIds to be computed (required)
         :type request_body: List[str]
         :param recompute: enable or disable recompute. If null the stored value will be used.
         :type recompute: bool
@@ -3916,7 +3916,7 @@ class JobsApi:
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to run jobs on")],
         job_config_name: Annotated[StrictStr, Field(description="name if the config to be used")],
-        request_body: Annotated[List[StrictStr], Field(description="compound ids to be computed")],
+        request_body: Annotated[List[StrictStr], Field(description="List of alignedFeatureIds to be computed")],
         recompute: Annotated[Optional[StrictBool], Field(description="enable or disable recompute. If null the stored value will be used.")] = None,
         opt_fields: Annotated[Optional[List[Optional[JobOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
@@ -3940,7 +3940,7 @@ class JobsApi:
         :type project_id: str
         :param job_config_name: name if the config to be used (required)
         :type job_config_name: str
-        :param request_body: compound ids to be computed (required)
+        :param request_body: List of alignedFeatureIds to be computed (required)
         :type request_body: List[str]
         :param recompute: enable or disable recompute. If null the stored value will be used.
         :type recompute: bool
