@@ -30,7 +30,7 @@ json = "{}"
 # create an instance of PeakAnnotation from a JSON string
 peak_annotation_instance = PeakAnnotation.from_json(json)
 # print the JSON string representation of the object
-print PeakAnnotation.to_json()
+print(PeakAnnotation.to_json())
 
 # convert the object into a dict
 peak_annotation_dict = peak_annotation_instance.to_dict()

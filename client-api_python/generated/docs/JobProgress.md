@@ -23,7 +23,7 @@ json = "{}"
 # create an instance of JobProgress from a JSON string
 job_progress_instance = JobProgress.from_json(json)
 # print the JSON string representation of the object
-print JobProgress.to_json()
+print(JobProgress.to_json())
 
 # convert the object into a dict
 job_progress_dict = job_progress_instance.to_dict()

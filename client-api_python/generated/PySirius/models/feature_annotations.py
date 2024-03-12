@@ -17,7 +17,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 from typing import Any, ClassVar, Dict, List, Optional
 from PySirius.models.compound_classes import CompoundClasses
 from PySirius.models.formula_candidate import FormulaCandidate
@@ -34,11 +34,11 @@ class FeatureAnnotations(BaseModel):
     compound_class_annotation: Optional[CompoundClasses] = Field(default=None, alias="compoundClassAnnotation")
     __properties: ClassVar[List[str]] = ["formulaAnnotation", "structureAnnotation", "compoundClassAnnotation"]
 
-    model_config = {
-        "populate_by_name": True,
-        "validate_assignment": True,
-        "protected_namespaces": (),
-    }
+    model_config = ConfigDict(
+        populate_by_name=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
 
 
     def to_str(self) -> str:

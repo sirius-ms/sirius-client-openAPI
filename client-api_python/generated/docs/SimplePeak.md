@@ -18,7 +18,7 @@ json = "{}"
 # create an instance of SimplePeak from a JSON string
 simple_peak_instance = SimplePeak.from_json(json)
 # print the JSON string representation of the object
-print SimplePeak.to_json()
+print(SimplePeak.to_json())
 
 # convert the object into a dict
 simple_peak_dict = simple_peak_instance.to_dict()

@@ -25,7 +25,7 @@ json = "{}"
 # create an instance of Compound from a JSON string
 compound_instance = Compound.from_json(json)
 # print the JSON string representation of the object
-print Compound.to_json()
+print(Compound.to_json())
 
 # convert the object into a dict
 compound_dict = compound_instance.to_dict()

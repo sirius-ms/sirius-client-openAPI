@@ -17,7 +17,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, Field, StrictBool, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
 from typing import Optional, Set
@@ -32,11 +32,11 @@ class SearchableDatabaseParameters(BaseModel):
     match_rt_of_reference_spectra: Optional[StrictBool] = Field(default=False, description="Indicates whether this database shall be used to use retention time information for library matching.  Typically used for in-house spectral libraries that have been measured on", alias="matchRtOfReferenceSpectra")
     __properties: ClassVar[List[str]] = ["displayName", "location", "matchRtOfReferenceSpectra"]
 
-    model_config = {
-        "populate_by_name": True,
-        "validate_assignment": True,
-        "protected_namespaces": (),
-    }
+    model_config = ConfigDict(
+        populate_by_name=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
 
 
     def to_str(self) -> str:

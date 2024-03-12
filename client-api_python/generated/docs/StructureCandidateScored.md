@@ -27,7 +27,7 @@ json = "{}"
 # create an instance of StructureCandidateScored from a JSON string
 structure_candidate_scored_instance = StructureCandidateScored.from_json(json)
 # print the JSON string representation of the object
-print StructureCandidateScored.to_json()
+print(StructureCandidateScored.to_json())
 
 # convert the object into a dict
 structure_candidate_scored_dict = structure_candidate_scored_instance.to_dict()

@@ -17,7 +17,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, Field, StrictFloat, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional, Union
 from PySirius.models.aligned_feature import AlignedFeature
 from PySirius.models.consensus_annotations_csi import ConsensusAnnotationsCSI
@@ -40,11 +40,11 @@ class Compound(BaseModel):
     custom_annotations: Optional[ConsensusAnnotationsCSI] = Field(default=None, alias="customAnnotations")
     __properties: ClassVar[List[str]] = ["compoundId", "name", "rtStartSeconds", "rtEndSeconds", "neutralMass", "features", "consensusAnnotations", "consensusAnnotationsDeNovo", "customAnnotations"]
 
-    model_config = {
-        "populate_by_name": True,
-        "validate_assignment": True,
-        "protected_namespaces": (),
-    }
+    model_config = ConfigDict(
+        populate_by_name=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
 
 
     def to_str(self) -> str:

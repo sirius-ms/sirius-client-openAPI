@@ -17,7 +17,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, Field, StrictInt, StrictStr, field_validator
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
@@ -29,7 +29,7 @@ class WorkerInfo(BaseModel):
     id: StrictInt
     type: StrictStr
     supported_predictors: List[StrictStr] = Field(alias="supportedPredictors")
-    version: StrictStr
+    version: Optional[StrictStr] = None
     host: Optional[StrictStr] = None
     prefix: Optional[StrictStr] = None
     state: StrictInt
@@ -52,11 +52,11 @@ class WorkerInfo(BaseModel):
                 raise ValueError("each list item must be one of ('CSI_FINGERID_POSITIVE', 'CSI_FINGERID_NEGATIVE')")
         return value
 
-    model_config = {
-        "populate_by_name": True,
-        "validate_assignment": True,
-        "protected_namespaces": (),
-    }
+    model_config = ConfigDict(
+        populate_by_name=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
 
 
     def to_str(self) -> str:
@@ -91,6 +91,11 @@ class WorkerInfo(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if version (nullable) is None
+        # and model_fields_set contains the field
+        if self.version is None and "version" in self.model_fields_set:
+            _dict['version'] = None
+
         # set to None if host (nullable) is None
         # and model_fields_set contains the field
         if self.host is None and "host" in self.model_fields_set:

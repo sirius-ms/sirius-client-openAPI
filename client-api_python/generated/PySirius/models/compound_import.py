@@ -17,7 +17,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, Field, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from PySirius.models.feature_import import FeatureImport
 from typing import Optional, Set
@@ -31,11 +31,11 @@ class CompoundImport(BaseModel):
     features: List[FeatureImport] = Field(description="The features this compound consists of.")
     __properties: ClassVar[List[str]] = ["name", "features"]
 
-    model_config = {
-        "populate_by_name": True,
-        "validate_assignment": True,
-        "protected_namespaces": (),
-    }
+    model_config = ConfigDict(
+        populate_by_name=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
 
 
     def to_str(self) -> str:

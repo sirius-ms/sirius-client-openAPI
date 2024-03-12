@@ -22,7 +22,7 @@ json = "{}"
 # create an instance of PageableObject from a JSON string
 pageable_object_instance = PageableObject.from_json(json)
 # print the JSON string representation of the object
-print PageableObject.to_json()
+print(PageableObject.to_json())
 
 # convert the object into a dict
 pageable_object_dict = pageable_object_instance.to_dict()

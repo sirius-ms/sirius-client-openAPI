@@ -21,7 +21,7 @@ json = "{}"
 # create an instance of StructureDbSearch from a JSON string
 structure_db_search_instance = StructureDbSearch.from_json(json)
 # print the JSON string representation of the object
-print StructureDbSearch.to_json()
+print(StructureDbSearch.to_json())
 
 # convert the object into a dict
 structure_db_search_dict = structure_db_search_instance.to_dict()

@@ -22,7 +22,7 @@ json = "{}"
 # create an instance of Job from a JSON string
 job_instance = Job.from_json(json)
 # print the JSON string representation of the object
-print Job.to_json()
+print(Job.to_json())
 
 # convert the object into a dict
 job_dict = job_instance.to_dict()

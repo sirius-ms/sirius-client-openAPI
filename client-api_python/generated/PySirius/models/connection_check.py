@@ -17,7 +17,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, Field, StrictBool, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from PySirius.models.connection_error import ConnectionError
 from PySirius.models.license_info import LicenseInfo
@@ -39,11 +39,11 @@ class ConnectionCheck(BaseModel):
     available_workers: List[StrictStr] = Field(alias="availableWorkers")
     __properties: ClassVar[List[str]] = ["workerInfo", "licenseInfo", "errors", "supportsPosPredictorTypes", "supportsNegPredictorTypes", "unAvailableWorkers", "supportsAllPredictorTypes", "availableWorkers"]
 
-    model_config = {
-        "populate_by_name": True,
-        "validate_assignment": True,
-        "protected_namespaces": (),
-    }
+    model_config = ConfigDict(
+        populate_by_name=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
 
 
     def to_str(self) -> str:

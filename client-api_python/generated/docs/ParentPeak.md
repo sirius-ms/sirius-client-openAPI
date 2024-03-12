@@ -20,7 +20,7 @@ json = "{}"
 # create an instance of ParentPeak from a JSON string
 parent_peak_instance = ParentPeak.from_json(json)
 # print the JSON string representation of the object
-print ParentPeak.to_json()
+print(ParentPeak.to_json())
 
 # convert the object into a dict
 parent_peak_dict = parent_peak_instance.to_dict()
