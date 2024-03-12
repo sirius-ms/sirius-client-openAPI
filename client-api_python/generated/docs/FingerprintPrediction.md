@@ -20,7 +20,7 @@ json = "{}"
 # create an instance of FingerprintPrediction from a JSON string
 fingerprint_prediction_instance = FingerprintPrediction.from_json(json)
 # print the JSON string representation of the object
-print FingerprintPrediction.to_json()
+print(FingerprintPrediction.to_json())
 
 # convert the object into a dict
 fingerprint_prediction_dict = fingerprint_prediction_instance.to_dict()

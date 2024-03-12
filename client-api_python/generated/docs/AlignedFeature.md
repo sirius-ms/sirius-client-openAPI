@@ -28,7 +28,7 @@ json = "{}"
 # create an instance of AlignedFeature from a JSON string
 aligned_feature_instance = AlignedFeature.from_json(json)
 # print the JSON string representation of the object
-print AlignedFeature.to_json()
+print(AlignedFeature.to_json())
 
 # convert the object into a dict
 aligned_feature_dict = aligned_feature_instance.to_dict()

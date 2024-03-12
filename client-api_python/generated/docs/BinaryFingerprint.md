@@ -18,7 +18,7 @@ json = "{}"
 # create an instance of BinaryFingerprint from a JSON string
 binary_fingerprint_instance = BinaryFingerprint.from_json(json)
 # print the JSON string representation of the object
-print BinaryFingerprint.to_json()
+print(BinaryFingerprint.to_json())
 
 # convert the object into a dict
 binary_fingerprint_dict = binary_fingerprint_instance.to_dict()

@@ -30,7 +30,7 @@ json = "{}"
 # create an instance of StructureCandidateFormula from a JSON string
 structure_candidate_formula_instance = StructureCandidateFormula.from_json(json)
 # print the JSON string representation of the object
-print StructureCandidateFormula.to_json()
+print(StructureCandidateFormula.to_json())
 
 # convert the object into a dict
 structure_candidate_formula_dict = structure_candidate_formula_instance.to_dict()

@@ -27,7 +27,7 @@ json = "{}"
 # create an instance of PageSpectralLibraryMatch from a JSON string
 page_spectral_library_match_instance = PageSpectralLibraryMatch.from_json(json)
 # print the JSON string representation of the object
-print PageSpectralLibraryMatch.to_json()
+print(PageSpectralLibraryMatch.to_json())
 
 # convert the object into a dict
 page_spectral_library_match_dict = page_spectral_library_match_instance.to_dict()

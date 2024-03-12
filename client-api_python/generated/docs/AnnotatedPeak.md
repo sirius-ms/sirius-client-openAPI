@@ -19,7 +19,7 @@ json = "{}"
 # create an instance of AnnotatedPeak from a JSON string
 annotated_peak_instance = AnnotatedPeak.from_json(json)
 # print the JSON string representation of the object
-print AnnotatedPeak.to_json()
+print(AnnotatedPeak.to_json())
 
 # convert the object into a dict
 annotated_peak_dict = annotated_peak_instance.to_dict()

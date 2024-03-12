@@ -27,7 +27,7 @@ json = "{}"
 # create an instance of PageJob from a JSON string
 page_job_instance = PageJob.from_json(json)
 # print the JSON string representation of the object
-print PageJob.to_json()
+print(PageJob.to_json())
 
 # convert the object into a dict
 page_job_dict = page_job_instance.to_dict()

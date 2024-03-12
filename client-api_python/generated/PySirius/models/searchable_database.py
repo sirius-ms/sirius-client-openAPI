@@ -17,7 +17,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, Field, StrictBool, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
 from typing import Optional, Set
@@ -41,11 +41,11 @@ class SearchableDatabase(BaseModel):
     number_of_reference_spectra: Optional[StrictInt] = Field(default=None, description="Number of reference spectra available in this database", alias="numberOfReferenceSpectra")
     __properties: ClassVar[List[str]] = ["displayName", "location", "matchRtOfReferenceSpectra", "databaseId", "customDb", "searchable", "dbDate", "dbVersion", "updateNeeded", "numberOfStructures", "numberOfFormulas", "numberOfReferenceSpectra"]
 
-    model_config = {
-        "populate_by_name": True,
-        "validate_assignment": True,
-        "protected_namespaces": (),
-    }
+    model_config = ConfigDict(
+        populate_by_name=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
 
 
     def to_str(self) -> str:

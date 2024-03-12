@@ -24,7 +24,7 @@ json = "{}"
 # create an instance of ConnectionError from a JSON string
 connection_error_instance = ConnectionError.from_json(json)
 # print the JSON string representation of the object
-print ConnectionError.to_json()
+print(ConnectionError.to_json())
 
 # convert the object into a dict
 connection_error_dict = connection_error_instance.to_dict()

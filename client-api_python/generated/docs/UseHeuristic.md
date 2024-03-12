@@ -18,7 +18,7 @@ json = "{}"
 # create an instance of UseHeuristic from a JSON string
 use_heuristic_instance = UseHeuristic.from_json(json)
 # print the JSON string representation of the object
-print UseHeuristic.to_json()
+print(UseHeuristic.to_json())
 
 # convert the object into a dict
 use_heuristic_dict = use_heuristic_instance.to_dict()

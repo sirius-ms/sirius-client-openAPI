@@ -23,7 +23,7 @@ json = "{}"
 # create an instance of BasicSpectrum from a JSON string
 basic_spectrum_instance = BasicSpectrum.from_json(json)
 # print the JSON string representation of the object
-print BasicSpectrum.to_json()
+print(BasicSpectrum.to_json())
 
 # convert the object into a dict
 basic_spectrum_dict = basic_spectrum_instance.to_dict()

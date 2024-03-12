@@ -31,7 +31,7 @@ json = "{}"
 # create an instance of JobSubmission from a JSON string
 job_submission_instance = JobSubmission.from_json(json)
 # print the JSON string representation of the object
-print JobSubmission.to_json()
+print(JobSubmission.to_json())
 
 # convert the object into a dict
 job_submission_dict = job_submission_instance.to_dict()

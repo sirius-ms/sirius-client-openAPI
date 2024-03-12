@@ -22,7 +22,7 @@ json = "{}"
 # create an instance of AccountInfo from a JSON string
 account_info_instance = AccountInfo.from_json(json)
 # print the JSON string representation of the object
-print AccountInfo.to_json()
+print(AccountInfo.to_json())
 
 # convert the object into a dict
 account_info_dict = account_info_instance.to_dict()

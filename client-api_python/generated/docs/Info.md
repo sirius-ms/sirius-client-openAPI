@@ -25,7 +25,7 @@ json = "{}"
 # create an instance of Info from a JSON string
 info_instance = Info.from_json(json)
 # print the JSON string representation of the object
-print Info.to_json()
+print(Info.to_json())
 
 # convert the object into a dict
 info_dict = info_instance.to_dict()

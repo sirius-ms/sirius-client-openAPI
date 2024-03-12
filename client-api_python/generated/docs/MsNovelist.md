@@ -18,7 +18,7 @@ json = "{}"
 # create an instance of MsNovelist from a JSON string
 ms_novelist_instance = MsNovelist.from_json(json)
 # print the JSON string representation of the object
-print MsNovelist.to_json()
+print(MsNovelist.to_json())
 
 # convert the object into a dict
 ms_novelist_dict = ms_novelist_instance.to_dict()

@@ -18,7 +18,7 @@ json = "{}"
 # create an instance of Canopus from a JSON string
 canopus_instance = Canopus.from_json(json)
 # print the JSON string representation of the object
-print Canopus.to_json()
+print(Canopus.to_json())
 
 # convert the object into a dict
 canopus_dict = canopus_instance.to_dict()

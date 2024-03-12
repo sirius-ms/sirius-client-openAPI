@@ -18,7 +18,7 @@ json = "{}"
 # create an instance of CompoundImport from a JSON string
 compound_import_instance = CompoundImport.from_json(json)
 # print the JSON string representation of the object
-print CompoundImport.to_json()
+print(CompoundImport.to_json())
 
 # convert the object into a dict
 compound_import_dict = compound_import_instance.to_dict()

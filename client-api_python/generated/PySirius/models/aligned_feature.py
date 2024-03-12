@@ -17,7 +17,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, Field, StrictBool, StrictFloat, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictFloat, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional, Union
 from PySirius.models.feature_annotations import FeatureAnnotations
 from PySirius.models.ms_data import MsData
@@ -41,11 +41,11 @@ class AlignedFeature(BaseModel):
     computing: Optional[StrictBool] = Field(default=None, description="Write lock for this feature. If the feature is locked no write operations are possible.  True if any computation is modifying this feature or its results")
     __properties: ClassVar[List[str]] = ["alignedFeatureId", "name", "index", "ionMass", "adduct", "rtStartSeconds", "rtEndSeconds", "msData", "topAnnotations", "topAnnotationsDeNovo", "computing"]
 
-    model_config = {
-        "populate_by_name": True,
-        "validate_assignment": True,
-        "protected_namespaces": (),
-    }
+    model_config = ConfigDict(
+        populate_by_name=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
 
 
     def to_str(self) -> str:

@@ -17,7 +17,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, Field, StrictFloat, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional, Union
 from PySirius.models.annotated_spectrum import AnnotatedSpectrum
 from PySirius.models.canopus_prediction import CanopusPrediction
@@ -54,11 +54,11 @@ class FormulaCandidate(BaseModel):
     canopus_prediction: Optional[CanopusPrediction] = Field(default=None, alias="canopusPrediction")
     __properties: ClassVar[List[str]] = ["formulaId", "molecularFormula", "adduct", "siriusScore", "isotopeScore", "treeScore", "zodiacScore", "numOfExplainedPeaks", "numOfExplainablePeaks", "totalExplainedIntensity", "medianMassDeviation", "topCSIScore", "fragmentationTree", "annotatedSpectrum", "isotopePatternAnnotation", "lipidAnnotation", "predictedFingerprint", "compoundClasses", "canopusPrediction"]
 
-    model_config = {
-        "populate_by_name": True,
-        "validate_assignment": True,
-        "protected_namespaces": (),
-    }
+    model_config = ConfigDict(
+        populate_by_name=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
 
 
     def to_str(self) -> str:

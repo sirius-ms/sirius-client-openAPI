@@ -19,7 +19,7 @@ json = "{}"
 # create an instance of CanopusPrediction from a JSON string
 canopus_prediction_instance = CanopusPrediction.from_json(json)
 # print the JSON string representation of the object
-print CanopusPrediction.to_json()
+print(CanopusPrediction.to_json())
 
 # convert the object into a dict
 canopus_prediction_dict = canopus_prediction_instance.to_dict()

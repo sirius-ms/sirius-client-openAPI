@@ -18,7 +18,7 @@ json = "{}"
 # create an instance of DBLink from a JSON string
 db_link_instance = DBLink.from_json(json)
 # print the JSON string representation of the object
-print DBLink.to_json()
+print(DBLink.to_json())
 
 # convert the object into a dict
 db_link_dict = db_link_instance.to_dict()

@@ -17,7 +17,7 @@ json = "{}"
 # create an instance of GuiInfo from a JSON string
 gui_info_instance = GuiInfo.from_json(json)
 # print the JSON string representation of the object
-print GuiInfo.to_json()
+print(GuiInfo.to_json())
 
 # convert the object into a dict
 gui_info_dict = gui_info_instance.to_dict()

@@ -17,7 +17,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, Field, StrictBool, StrictInt
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt
 from typing import Any, ClassVar, Dict, List, Optional
 from PySirius.models.sort_object import SortObject
 from typing import Optional, Set
@@ -35,11 +35,11 @@ class PageableObject(BaseModel):
     page_size: Optional[StrictInt] = Field(default=None, alias="pageSize")
     __properties: ClassVar[List[str]] = ["offset", "sort", "unpaged", "paged", "pageNumber", "pageSize"]
 
-    model_config = {
-        "populate_by_name": True,
-        "validate_assignment": True,
-        "protected_namespaces": (),
-    }
+    model_config = ConfigDict(
+        populate_by_name=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
 
 
     def to_str(self) -> str:
