@@ -20,7 +20,7 @@ jobs:
     - name: Download latest generator
       run: |
         cd .updater/openapi_generator
-        wget https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/7.3.0/openapi-generator-cli-7.3.0.jar -O openapi-generator-cli.jar
+        wget https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/7.4.0/openapi-generator-cli-7.4.0.jar -O openapi-generator-cli.jar
         java -jar openapi-generator-cli.jar version > version
     # - name: Download latest Sirius Release
     #   uses: nick-fields/retry@v2
@@ -40,8 +40,8 @@ jobs:
       run: |
         # while ! nc -z localhost 8080; do sleep 0.1; done
         cd .updater/api
-        wget https://upload.uni-jena.de/data/65e75f0eb2cb62.60507680/s6_api_docsfinal-final-martin.json
-        mv s6_api_docsfinal-final-martin.json api-docs.json
+        wget https://upload.uni-jena.de/data/65f05bc8ae9a23.33865557/api-docs-workerinfo-null.json
+        mv api-docs-workerinfo-null.json api-docs.json
     - name: Update Clients
       run: |
         # echo "generating Java Code"
