@@ -2,8 +2,10 @@
 # Please update as you see appropriate
 
 context("Test ProjectsApi")
+source("additional_test_functions.R")
 
 api_instance <- ProjectsApi$new()
+
 
 test_that("CloseProjectSpace", {
   # tests for CloseProjectSpace
@@ -41,44 +43,71 @@ test_that("CreateProjectSpace", {
   # @param path_to_project character local file path where the project will be created. If NULL, project will be stored by its projectId in default project location. DEPRECATED: This parameter relies on the local filesystem and will likely be removed in later versions of this API to allow for more flexible use cases. (optional)
   # @return [ProjectInfo]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  project_id <- "CreateProjectSpace"
+  project_dir <- paste(Sys.getenv("HOME"), "CreateProjectSpace", sep="/")
+
+  response <- api_instance$CreateProjectSpace(project_id, project_dir)
+  expect_true(inherits(response, "ProjectInfo"))
+
+  withr::defer(api_instance$CloseProjectSpace(project_id))
+  withr::defer(unlink(project_dir, recursive=TRUE))
 })
 
 test_that("GetCanopusClassyFireData", {
   # tests for GetCanopusClassyFireData
   # base path: http://localhost:8080
   # Get CANOPUS prediction vector definition for ClassyFire classes
-  # @param project_id character 
-  # @param charge integer 
+  # @param project_id character
+  # @param charge integer
   # @return [character]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  project_id <- "GetCanopusClassyFireData"
+  project_dir <- paste(Sys.getenv("HOME"), "s6TomatoFullAPI", sep="/")
+  api_instance$OpenProjectSpace(project_id, project_dir)
+
+  response <- api_instance$GetCanopusClassyFireData(project_id, 56)
+  expect_true(inherits(response, "character"))
+
+  withr::defer(api_instance$CloseProjectSpace(project_id))
+  # withr::defer(unlink(project_dir, recursive=TRUE))
 })
 
 test_that("GetCanopusNpcData", {
   # tests for GetCanopusNpcData
   # base path: http://localhost:8080
   # Get CANOPUS prediction vector definition for NPC classes
-  # @param project_id character 
-  # @param charge integer 
+  # @param project_id character
+  # @param charge integer
   # @return [character]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  project_id <- "GetCanopusNpcData"
+  project_dir <- paste(Sys.getenv("HOME"), "s6TomatoFullAPI", sep="/")
+  api_instance$OpenProjectSpace(project_id, project_dir)
+
+  response <- api_instance$GetCanopusNpcData(project_id, 56)
+  expect_true(inherits(response, "character"))
+
+  withr::defer(api_instance$CloseProjectSpace(project_id))
+  # withr::defer(unlink(project_dir, recursive=TRUE))
 })
 
 test_that("GetFingerIdData", {
   # tests for GetFingerIdData
   # base path: http://localhost:8080
   # Get CSI:FingerID fingerprint (prediction vector) definition
-  # @param project_id character 
-  # @param charge integer 
+  # @param project_id character
+  # @param charge integer
   # @return [character]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  project_id <- "GetFingerIdData"
+  project_dir <- paste(Sys.getenv("HOME"), "s6TomatoFullAPI", sep="/")
+  api_instance$OpenProjectSpace(project_id, project_dir)
+
+  response <- api_instance$GetFingerIdData(project_id, 56)
+  expect_true(inherits(response, "character"))
+
+  withr::defer(api_instance$CloseProjectSpace(project_id))
+  # withr::defer(unlink(project_dir, recursive=TRUE))
 })
 
 test_that("GetProjectSpace", {
@@ -90,8 +119,15 @@ test_that("GetProjectSpace", {
   # @param opt_fields array[ProjectInfoOptField]  (optional)
   # @return [ProjectInfo]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  project_id <- "GetProjectSpace"
+  project_dir <- paste(Sys.getenv("HOME"), "GetProjectSpace", sep="/")
+  api_instance$CreateProjectSpace(project_id, project_dir)
+
+  response <- api_instance$GetProjectSpace(project_id)
+  expect_true(inherits(response, "ProjectInfo"))
+
+  withr::defer(api_instance$CloseProjectSpace(project_id))
+  withr::defer(unlink(project_dir, recursive=TRUE))
 })
 
 test_that("GetProjectSpaces", {
@@ -101,8 +137,16 @@ test_that("GetProjectSpaces", {
   # List opened project spaces.
   # @return [array[ProjectInfo]]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  project_id <- "GetProjectSpaces"
+  project_dir <- paste(Sys.getenv("HOME"), "GetProjectSpaces", sep="/")
+  api_instance$CreateProjectSpace(project_id, project_dir)
+
+  response <- api_instance$GetProjectSpaces()
+  expect_true(inherits(response, "list"))
+  expect_true(inherits(response[[1]], "ProjectInfo"))
+
+  withr::defer(api_instance$CloseProjectSpace(project_id))
+  withr::defer(unlink(project_dir, recursive=TRUE))
 })
 
 test_that("ImportMsRunData", {
@@ -177,6 +221,11 @@ test_that("OpenProjectSpace", {
   # @param opt_fields array[ProjectInfoOptField]  (optional)
   # @return [ProjectInfo]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  project_id <- "OpenProjectSpace"
+  project_dir <- paste(Sys.getenv("HOME"), "s6TomatoFullAPI", sep="/")
+
+  response <- api_instance$OpenProjectSpace(project_id, project_dir)
+  expect_true(inherits(response, "ProjectInfo"))
+
+  withr::defer(api_instance$CloseProjectSpace(project_id))
 })
