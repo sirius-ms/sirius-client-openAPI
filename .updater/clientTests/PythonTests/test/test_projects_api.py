@@ -35,7 +35,7 @@ class TestProjectsApi(unittest.TestCase):
         # equals test_create_project_space
         self.project_id = "test_projects_api"
         self.path_to_project = f"{os.environ.get('HOME')}/test_projects_api_dir"
-        self.api.create_project_space(self.project_id, self.path_to_project)
+        self.create_response = self.api.create_project_space(self.project_id, self.path_to_project)
 
 
     def tearDown(self) -> None:
@@ -66,13 +66,12 @@ class TestProjectsApi(unittest.TestCase):
 
         self.assertIsInstance(response, ProjectInfo)
 
-
     def test_create_project_space(self) -> None:
         """Test case for create_project_space
 
         Create and open a new project-space at given location and make it accessible via the given projectId.
         """
-        pass
+        self.assertIsInstance(self.create_response, ProjectInfo)
 
     def test_get_canopus_classy_fire_data(self) -> None:
         """Test case for get_canopus_classy_fire_data
