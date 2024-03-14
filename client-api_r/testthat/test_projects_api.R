@@ -191,8 +191,19 @@ test_that("ImportPreprocessedData", {
   # @param input_files array[data.frame]  (optional)
   # @return [ImportResult]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  project_id <- "ImportPreprocessedData"
+  project_dir <- paste(Sys.getenv("HOME"), "ImportPreprocessedData", sep="/")
+  api_instance$CreateProjectSpace(project_id, project_dir)
+
+  var_input_files <- preproc_ms2_file_1
+  response_1 <- api_instance$ImportPreprocessedData(project_id, input_files=var_input_files)
+  var_input_files <- preproc_ms2_file_2
+  response_2 <- api_instance$ImportPreprocessedData(project_id, input_files=var_input_files)
+  expect_true(inherits(response_1, "ImportResult"))
+  expect_true(inherits(response_2, "ImportResult"))
+
+  withr::defer(api_instance$CloseProjectSpace(project_id))
+  withr::defer(unlink(project_dir, recursive=TRUE))
 })
 
 test_that("ImportPreprocessedDataAsJob", {
