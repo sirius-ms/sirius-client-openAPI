@@ -160,8 +160,17 @@ test_that("ImportMsRunData", {
   # @param input_files array[data.frame]  (optional)
   # @return [ImportResult]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  # # TODO LCMS import not implemented
+  # project_id <- "ImportMsRunData"
+  # project_dir <- paste(Sys.getenv("HOME"), "ImportMsRunData", sep="/")
+  # api_instance$CreateProjectSpace(project_id, project_dir)
+
+  # var_input_files <- full_ms_file
+  # response <- api_instance$ImportMsRunData(project_id, input_files=var_input_files)
+  # expect_true(inherits(response, "ImportResult"))
+
+  # withr::defer(api_instance$CloseProjectSpace(project_id))
+  # withr::defer(unlink(project_dir, recursive=TRUE))
 })
 
 test_that("ImportMsRunDataAsJob", {
