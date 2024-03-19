@@ -2,9 +2,12 @@
 # Please update as you see appropriate
 
 context("Test ProjectsApi")
-source("additional_test_functions.R")
 
 api_instance <- ProjectsApi$new()
+path_to_demo_data <- paste(Sys.getenv("HOME"), "sirius-client-openAPI/.updater/clientTests/Data", sep="/")
+preproc_ms2_file_1 = paste(path_to_demo_data, "Kaempferol.ms", sep="/")
+preproc_ms2_file_2 = paste(path_to_demo_data, "laudanosine.mgf", sep="/")
+full_ms_file = paste(path_to_demo_data, "SPF4_Eso3_GH6_01_22643.mzXML", sep="/")
 
 
 test_that("CloseProjectSpace", {
@@ -185,8 +188,17 @@ test_that("ImportMsRunDataAsJob", {
   # @param input_files array[data.frame]  (optional)
   # @return [Job]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  # # TODO LCMS import not implemented
+  # project_id <- "ImportMsRunDataAsJob"
+  # project_dir <- paste(Sys.getenv("HOME"), "ImportMsRunDataAsJob", sep="/")
+  # api_instance$CreateProjectSpace(project_id, project_dir)
+
+  # var_input_files <- full_ms_file
+  # response <- api_instance$ImportMsRunDataAsJob(project_id, input_files=var_input_files)
+  # expect_true(inherits(response, "Job"))
+
+  # withr::defer(api_instance$CloseProjectSpace(project_id))
+  # withr::defer(unlink(project_dir, recursive=TRUE))
 })
 
 test_that("ImportPreprocessedData", {
@@ -205,11 +217,8 @@ test_that("ImportPreprocessedData", {
   api_instance$CreateProjectSpace(project_id, project_dir)
 
   var_input_files <- preproc_ms2_file_1
-  response_1 <- api_instance$ImportPreprocessedData(project_id, input_files=var_input_files)
-  var_input_files <- preproc_ms2_file_2
-  response_2 <- api_instance$ImportPreprocessedData(project_id, input_files=var_input_files)
-  expect_true(inherits(response_1, "ImportResult"))
-  expect_true(inherits(response_2, "ImportResult"))
+  response <- api_instance$ImportPreprocessedData(project_id, input_files=var_input_files)
+  expect_true(inherits(response, "ImportResult"))
 
   withr::defer(api_instance$CloseProjectSpace(project_id))
   withr::defer(unlink(project_dir, recursive=TRUE))
@@ -227,8 +236,16 @@ test_that("ImportPreprocessedDataAsJob", {
   # @param imput_files array[data.frame]  (optional)
   # @return [Job]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  project_id <- "ImportPreprocessedDataAsJob"
+  project_dir <- paste(Sys.getenv("HOME"), "ImportPreprocessedDataAsJob", sep="/")
+  api_instance$CreateProjectSpace(project_id, project_dir)
+
+  var_input_files <- preproc_ms2_file_1
+  response <- api_instance$ImportPreprocessedDataAsJob(project_id, input_files=var_input_files)
+  expect_true(inherits(response, "Job"))
+
+  withr::defer(api_instance$CloseProjectSpace(project_id))
+  withr::defer(unlink(project_dir, recursive=TRUE))
 })
 
 test_that("OpenProjectSpace", {
