@@ -24,8 +24,8 @@ test_that("GetSignUpURL", {
   # Get SignUp URL (For signUp via web browser)
   # @return [character]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  response <- api_instance$GetSignUpURL()
+  expect_true(inherits(response, "character"))
 })
 
 test_that("GetSubscriptions", {
