@@ -49,6 +49,8 @@ from PySirius.models.formula_candidate_opt_field import FormulaCandidateOptField
 from PySirius.models.fragment_node import FragmentNode
 from PySirius.models.fragmentation_tree import FragmentationTree
 from PySirius.models.gui_info import GuiInfo
+from PySirius.models.gui_parameters import GuiParameters
+from PySirius.models.gui_result_tab import GuiResultTab
 from PySirius.models.import_result import ImportResult
 from PySirius.models.info import Info
 from PySirius.models.instrument import Instrument

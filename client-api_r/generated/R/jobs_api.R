@@ -192,7 +192,7 @@
 #' }
 #' }
 #'
-#' \strong{ PostJobConfig } \emph{ Add new job configuration with given name. }
+#' \strong{ SaveJobConfig } \emph{ Add new job configuration with given name. }
 #' Add new job configuration with given name.
 #'
 #' \itemize{
@@ -418,19 +418,19 @@
 #' dput(result)
 #'
 #'
-#' ####################  PostJobConfig  ####################
+#' ####################  SaveJobConfig  ####################
 #'
 #' library(Rsirius)
 #' var_name <- "name_example" # character | name of the job-config to add
-#' var_job_submission <- JobSubmission$new(c("compoundIds_example"), c("alignedFeatureIds_example"), c("fallbackAdducts_example"), c("enforcedAdducts_example"), c("detectableAdducts_example"), "recompute_example", SpectralLibrarySearch$new("enabled_example", c("spectraSearchDBs_example"), 123, 123, SpectralAlignmentType$new()), Sirius$new("enabled_example", Instrument$new(), 123, 123, 123, "IGNORE", "filterByIsotopePattern_example", "enforceElGordoFormula_example", "performBottomUpSearch_example", 123, c("formulaSearchDBs_example"), "applyFormulaConstraintsToDBAndBottomUpSearch_example", "enforcedFormulaConstraints_example", "fallbackFormulaConstraints_example", c("detectableElements_example"), Timeout$new(123, 123), UseHeuristic$new(123, 123), 123), Zodiac$new("enabled_example", 123, 123, "runInTwoSteps_example", ZodiacEdgeFilterThresholds$new(123, 123, 123), ZodiacEpochs$new(123, 123, 123)), FingerprintPrediction$new("enabled_example", "useScoreThreshold_example", "alwaysPredictHighRefMatches_example"), Canopus$new("enabled_example"), StructureDbSearch$new("enabled_example", c("structureSearchDBs_example"), "tagStructuresWithLipidClass_example", Mode$new()), MsNovelist$new("enabled_example", 123), c(key = "inner_example")) # JobSubmission | to add
+#' var_job_submission <- JobSubmission$new(c("compoundIds_example"), c("alignedFeatureIds_example"), c("fallbackAdducts_example"), c("enforcedAdducts_example"), c("detectableAdducts_example"), "recompute_example", SpectralLibrarySearch$new("enabled_example", c("spectraSearchDBs_example"), 123, 123, SpectralAlignmentType$new()), Sirius$new("enabled_example", Instrument$new(), 123, 123, 123, "IGNORE", "filterByIsotopePattern_example", "enforceElGordoFormula_example", "performBottomUpSearch_example", 123, c("formulaSearchDBs_example"), "applyFormulaConstraintsToDBAndBottomUpSearch_example", "enforcedFormulaConstraints_example", "fallbackFormulaConstraints_example", c("detectableElements_example"), Timeout$new(123, 123), UseHeuristic$new(123, 123), "injectSpecLibMatchFormulas_example", 123, 123), Zodiac$new("enabled_example", 123, 123, "runInTwoSteps_example", ZodiacEdgeFilterThresholds$new(123, 123, 123), ZodiacEpochs$new(123, 123, 123)), FingerprintPrediction$new("enabled_example", "useScoreThreshold_example", "alwaysPredictHighRefMatches_example"), Canopus$new("enabled_example"), StructureDbSearch$new("enabled_example", c("structureSearchDBs_example"), "tagStructuresWithLipidClass_example", Mode$new()), MsNovelist$new("enabled_example", 123), c(key = "inner_example")) # JobSubmission | to add
 #' var_override_existing <- FALSE # character |  (Optional)
 #'
 #' #Add new job configuration with given name.
 #' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-#' # result <- api_instance$PostJobConfig(var_name, var_job_submission, override_existing = var_override_existingdata_file = "result.txt")
-#' result <- api_instance$jobs_api$PostJobConfig(var_name, var_job_submission, override_existing = var_override_existing)
+#' # result <- api_instance$SaveJobConfig(var_name, var_job_submission, override_existing = var_override_existingdata_file = "result.txt")
+#' result <- api_instance$jobs_api$SaveJobConfig(var_name, var_job_submission, override_existing = var_override_existing)
 #' dput(result)
 #'
 #'
@@ -454,7 +454,7 @@
 #'
 #' library(Rsirius)
 #' var_project_id <- "project_id_example" # character | project-space to run jobs on
-#' var_job_submission <- JobSubmission$new(c("compoundIds_example"), c("alignedFeatureIds_example"), c("fallbackAdducts_example"), c("enforcedAdducts_example"), c("detectableAdducts_example"), "recompute_example", SpectralLibrarySearch$new("enabled_example", c("spectraSearchDBs_example"), 123, 123, SpectralAlignmentType$new()), Sirius$new("enabled_example", Instrument$new(), 123, 123, 123, "IGNORE", "filterByIsotopePattern_example", "enforceElGordoFormula_example", "performBottomUpSearch_example", 123, c("formulaSearchDBs_example"), "applyFormulaConstraintsToDBAndBottomUpSearch_example", "enforcedFormulaConstraints_example", "fallbackFormulaConstraints_example", c("detectableElements_example"), Timeout$new(123, 123), UseHeuristic$new(123, 123), 123), Zodiac$new("enabled_example", 123, 123, "runInTwoSteps_example", ZodiacEdgeFilterThresholds$new(123, 123, 123), ZodiacEpochs$new(123, 123, 123)), FingerprintPrediction$new("enabled_example", "useScoreThreshold_example", "alwaysPredictHighRefMatches_example"), Canopus$new("enabled_example"), StructureDbSearch$new("enabled_example", c("structureSearchDBs_example"), "tagStructuresWithLipidClass_example", Mode$new()), MsNovelist$new("enabled_example", 123), c(key = "inner_example")) # JobSubmission | configuration of the job that will be submitted of the job to be returned
+#' var_job_submission <- JobSubmission$new(c("compoundIds_example"), c("alignedFeatureIds_example"), c("fallbackAdducts_example"), c("enforcedAdducts_example"), c("detectableAdducts_example"), "recompute_example", SpectralLibrarySearch$new("enabled_example", c("spectraSearchDBs_example"), 123, 123, SpectralAlignmentType$new()), Sirius$new("enabled_example", Instrument$new(), 123, 123, 123, "IGNORE", "filterByIsotopePattern_example", "enforceElGordoFormula_example", "performBottomUpSearch_example", 123, c("formulaSearchDBs_example"), "applyFormulaConstraintsToDBAndBottomUpSearch_example", "enforcedFormulaConstraints_example", "fallbackFormulaConstraints_example", c("detectableElements_example"), Timeout$new(123, 123), UseHeuristic$new(123, 123), "injectSpecLibMatchFormulas_example", 123, 123), Zodiac$new("enabled_example", 123, 123, "runInTwoSteps_example", ZodiacEdgeFilterThresholds$new(123, 123, 123), ZodiacEpochs$new(123, 123, 123)), FingerprintPrediction$new("enabled_example", "useScoreThreshold_example", "alwaysPredictHighRefMatches_example"), Canopus$new("enabled_example"), StructureDbSearch$new("enabled_example", c("structureSearchDBs_example"), "tagStructuresWithLipidClass_example", Mode$new()), MsNovelist$new("enabled_example", 123), c(key = "inner_example")) # JobSubmission | configuration of the job that will be submitted of the job to be returned
 #' var_opt_fields <- c(JobOptField$new()) # array[JobOptField] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
 #'
 #' #Start computation for given compounds and with given parameters.
@@ -471,7 +471,7 @@
 #' library(Rsirius)
 #' var_project_id <- "project_id_example" # character | project-space to run jobs on
 #' var_job_config_name <- "job_config_name_example" # character | name if the config to be used
-#' var_request_body <- c("property_example") # array[character] | compound ids to be computed
+#' var_request_body <- c("property_example") # array[character] | List of alignedFeatureIds to be computed
 #' var_recompute <- "recompute_example" # character | enable or disable recompute. If null the stored value will be used. (Optional)
 #' var_opt_fields <- c(JobOptField$new()) # array[JobOptField] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
 #'
@@ -1537,8 +1537,8 @@ JobsApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #' @return character
     #' @export
-    PostJobConfig = function(name, job_submission, override_existing = FALSE, data_file = NULL, ...) {
-      local_var_response <- self$PostJobConfigWithHttpInfo(name, job_submission, override_existing, data_file = data_file, ...)
+    SaveJobConfig = function(name, job_submission, override_existing = FALSE, data_file = NULL, ...) {
+      local_var_response <- self$SaveJobConfigWithHttpInfo(name, job_submission, override_existing, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
@@ -1561,7 +1561,7 @@ JobsApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #' @return API response (character) with additional information such as HTTP status code, headers
     #' @export
-    PostJobConfigWithHttpInfo = function(name, job_submission, override_existing = FALSE, data_file = NULL, ...) {
+    SaveJobConfigWithHttpInfo = function(name, job_submission, override_existing = FALSE, data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -1883,7 +1883,7 @@ JobsApi <- R6::R6Class(
     #'
     #' @param project_id project-space to run jobs on
     #' @param job_config_name name if the config to be used
-    #' @param request_body compound ids to be computed
+    #' @param request_body List of alignedFeatureIds to be computed
     #' @param recompute (optional) enable or disable recompute. If null the stored value will be used.
     #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["command","progress"])
     #' @param data_file (optional) name of the data file to save the result
@@ -1909,7 +1909,7 @@ JobsApi <- R6::R6Class(
     #'
     #' @param project_id project-space to run jobs on
     #' @param job_config_name name if the config to be used
-    #' @param request_body compound ids to be computed
+    #' @param request_body List of alignedFeatureIds to be computed
     #' @param recompute (optional) enable or disable recompute. If null the stored value will be used.
     #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["command","progress"])
     #' @param data_file (optional) name of the data file to save the result

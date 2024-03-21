@@ -218,7 +218,7 @@
 #' \item \emph{ @param } ignore_formulas character
 #' \item \emph{ @param } allow_ms1_only character
 #' \item \emph{ @param } opt_fields list( \link{JobOptField} )
-#' \item \emph{ @param } imput_files list( data.frame )
+#' \item \emph{ @param } input_files list( data.frame )
 #' \item \emph{ @returnType } \link{Job} \cr
 #'
 #'
@@ -430,14 +430,14 @@
 #' var_ignore_formulas <- FALSE # character |  (Optional)
 #' var_allow_ms1_only <- TRUE # character |  (Optional)
 #' var_opt_fields <- c(JobOptField$new()) # array[JobOptField] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
-#' var_imput_files <- c(123) # array[data.frame] |  (Optional)
+#' var_input_files <- c(123) # array[data.frame] |  (Optional)
 #'
 #' #Import ms/ms data from the given format into the specified project-space as background job.
 #' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-#' # result <- api_instance$ImportPreprocessedDataAsJob(var_project_id, ignore_formulas = var_ignore_formulas, allow_ms1_only = var_allow_ms1_only, opt_fields = var_opt_fields, imput_files = var_imput_filesdata_file = "result.txt")
-#' result <- api_instance$projects_api$ImportPreprocessedDataAsJob(var_project_id, ignore_formulas = var_ignore_formulas, allow_ms1_only = var_allow_ms1_only, opt_fields = var_opt_fields, imput_files = var_imput_files)
+#' # result <- api_instance$ImportPreprocessedDataAsJob(var_project_id, ignore_formulas = var_ignore_formulas, allow_ms1_only = var_allow_ms1_only, opt_fields = var_opt_fields, input_files = var_input_filesdata_file = "result.txt")
+#' result <- api_instance$projects_api$ImportPreprocessedDataAsJob(var_project_id, ignore_formulas = var_ignore_formulas, allow_ms1_only = var_allow_ms1_only, opt_fields = var_opt_fields, input_files = var_input_files)
 #' dput(result)
 #'
 #'
@@ -1353,7 +1353,7 @@ ProjectsApi <- R6::R6Class(
 
       query_params[["allowMs1Only"]] <- `allow_ms1_only`
 
-      file_params["inputFiles"] <- curl::form_file(`input_files`)
+      file_params[["inputFiles"]] <- curl::form_file(`input_files`)
       local_var_url_path <- "/api/projects/{projectId}/import/ms-data-files"
       if (!missing(`project_id`)) {
         local_var_url_path <- gsub("\\{projectId\\}", URLencode(as.character(`project_id`), reserved = TRUE), local_var_url_path)
@@ -1472,7 +1472,7 @@ ProjectsApi <- R6::R6Class(
         query_params[["optFields"]] <- c(query_params[["optFields"]], list(`optFields` = query_item))
       }
 
-      file_params["inputFiles"] <- curl::form_file(`input_files`)
+      file_params[["inputFiles"]] <- curl::form_file(`input_files`)
       local_var_url_path <- "/api/projects/{projectId}/jobs/import/ms-data-files-job"
       if (!missing(`project_id`)) {
         local_var_url_path <- gsub("\\{projectId\\}", URLencode(as.character(`project_id`), reserved = TRUE), local_var_url_path)
@@ -1583,7 +1583,7 @@ ProjectsApi <- R6::R6Class(
 
       query_params[["allowMs1Only"]] <- `allow_ms1_only`
 
-      file_params["inputFiles"] <- curl::form_file(`input_files`)
+      file_params[["inputFiles"]] <- curl::form_file(`input_files`)
       local_var_url_path <- "/api/projects/{projectId}/import/preprocessed-data-files"
       if (!missing(`project_id`)) {
         local_var_url_path <- gsub("\\{projectId\\}", URLencode(as.character(`project_id`), reserved = TRUE), local_var_url_path)
@@ -1643,13 +1643,13 @@ ProjectsApi <- R6::R6Class(
     #' @param ignore_formulas (optional) No description (default value: FALSE)
     #' @param allow_ms1_only (optional) No description (default value: TRUE)
     #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["progress"])
-    #' @param imput_files (optional) No description
+    #' @param input_files (optional) No description
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #' @return Job
     #' @export
-    ImportPreprocessedDataAsJob = function(project_id, ignore_formulas = FALSE, allow_ms1_only = TRUE, opt_fields = list("progress"), imput_files = NULL, data_file = NULL, ...) {
-      local_var_response <- self$ImportPreprocessedDataAsJobWithHttpInfo(project_id, ignore_formulas, allow_ms1_only, opt_fields, imput_files, data_file = data_file, ...)
+    ImportPreprocessedDataAsJob = function(project_id, ignore_formulas = FALSE, allow_ms1_only = TRUE, opt_fields = list("progress"), input_files = NULL, data_file = NULL, ...) {
+      local_var_response <- self$ImportPreprocessedDataAsJobWithHttpInfo(project_id, ignore_formulas, allow_ms1_only, opt_fields, input_files, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
@@ -1669,12 +1669,12 @@ ProjectsApi <- R6::R6Class(
     #' @param ignore_formulas (optional) No description (default value: FALSE)
     #' @param allow_ms1_only (optional) No description (default value: TRUE)
     #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["progress"])
-    #' @param imput_files (optional) No description
+    #' @param input_files (optional) No description
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #' @return API response (Job) with additional information such as HTTP status code, headers
     #' @export
-    ImportPreprocessedDataAsJobWithHttpInfo = function(project_id, ignore_formulas = FALSE, allow_ms1_only = TRUE, opt_fields = list("progress"), imput_files = NULL, data_file = NULL, ...) {
+    ImportPreprocessedDataAsJobWithHttpInfo = function(project_id, ignore_formulas = FALSE, allow_ms1_only = TRUE, opt_fields = list("progress"), input_files = NULL, data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -1702,7 +1702,7 @@ ProjectsApi <- R6::R6Class(
         query_params[["optFields"]] <- c(query_params[["optFields"]], list(`optFields` = query_item))
       }
 
-      file_params["imputFiles"] <- curl::form_file(`imput_files`)
+      file_params[["inputFiles"]] <- curl::form_file(`input_files`)
       local_var_url_path <- "/api/projects/{projectId}/import/preprocessed-data-files-job"
       if (!missing(`project_id`)) {
         local_var_url_path <- gsub("\\{projectId\\}", URLencode(as.character(`project_id`), reserved = TRUE), local_var_url_path)

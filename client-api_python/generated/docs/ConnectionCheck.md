@@ -10,9 +10,9 @@ Name | Type | Description | Notes
 **errors** | [**List[ConnectionError]**](ConnectionError.md) | List of errors ordered by significance. first error should be reported and addressed first.  Following errors might just be follow-up errors | 
 **supports_pos_predictor_types** | **bool** |  | 
 **supports_neg_predictor_types** | **bool** |  | 
+**available_workers** | **List[str]** |  | 
 **un_available_workers** | **List[str]** |  | 
 **supports_all_predictor_types** | **bool** |  | 
-**available_workers** | **List[str]** |  | 
 
 ## Example
 

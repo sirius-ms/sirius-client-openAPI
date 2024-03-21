@@ -20,11 +20,21 @@ Instrument <- R6::R6Class(
       val <- unlist(local.optional.var)
       enumvec <- .parse_Instrument()
 
-      stopifnot(length(val) == 1L)
+      if (length(val) == 0L) {
+        val = "DUMMY_ENUM"
+      } else {
+        stopifnot(length(val) == 1L)
+      }
 
-      if (!val %in% enumvec)
+      if (!val %in% enumvec) {
+        if (!(val=="DUMMY_ENUM")) {
           stop("Use one of the valid values: ",
-              paste0(enumvec, collapse = ", "))
+            paste0(enumvec, collapse = ", "))
+        }
+        warning("Initializing Instrument with DUMMY_ENUM. Use one of the valid values: ",
+          paste0(enumvec, collapse = ", "),
+          ". If you did not manually initialize Instrument, this may already be overwritten by an enum loaded from a JSON config.")
+      }
       private$value <- val
     },
     #' To JSON string

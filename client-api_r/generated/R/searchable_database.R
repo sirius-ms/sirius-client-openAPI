@@ -430,10 +430,6 @@ SearchableDatabase <- R6::R6Class(
     #' @return true if the values in all fields are valid.
     #' @export
     isValid = function() {
-      if (nchar(self$`displayName`) > 15) {
-        return(FALSE)
-      }
-
       # check if the required `databaseId` is null
       if (is.null(self$`databaseId`)) {
         return(FALSE)
@@ -465,10 +461,6 @@ SearchableDatabase <- R6::R6Class(
     #' @export
     getInvalidFields = function() {
       invalid_fields <- list()
-      if (nchar(self$`displayName`) > 15) {
-        invalid_fields["displayName"] <- "Invalid length for `displayName`, must be smaller than or equal to 15."
-      }
-
       # check if the required `databaseId` is null
       if (is.null(self$`databaseId`)) {
         invalid_fields["databaseId"] <- "Non-nullable required field `databaseId` cannot be null."

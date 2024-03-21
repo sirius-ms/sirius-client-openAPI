@@ -85,7 +85,9 @@ class TestJobSubmission(unittest.TestCase):
                     use_heuristic = PySirius.models.use_heuristic.UseHeuristic(
                         use_heuristic_above_mz = 56, 
                         use_only_heuristic_above_mz = 56, ), 
-                    min_score_to_inject_spec_lib_match = 1.337, ),
+                    inject_spec_lib_match_formulas = True, 
+                    min_score_to_inject_spec_lib_match = 1.337, 
+                    min_peaks_to_inject_spec_lib_match = 56, ),
                 zodiac_params = PySirius.models.zodiac.Zodiac(
                     enabled = True, 
                     considered_candidates_at300_mz = 56, 
