@@ -9,14 +9,14 @@
 #' @format An \code{R6Class} generator object
 #' @field totalPages  integer [optional]
 #' @field totalElements  integer [optional]
+#' @field first  character [optional]
 #' @field size  integer [optional]
 #' @field content  list(\link{Job}) [optional]
 #' @field number  integer [optional]
 #' @field sort  \link{SortObject} [optional]
-#' @field first  character [optional]
+#' @field pageable  \link{PageableObject} [optional]
 #' @field last  character [optional]
 #' @field numberOfElements  integer [optional]
-#' @field pageable  \link{PageableObject} [optional]
 #' @field empty  character [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
@@ -26,14 +26,14 @@ PageJob <- R6::R6Class(
   public = list(
     `totalPages` = NULL,
     `totalElements` = NULL,
+    `first` = NULL,
     `size` = NULL,
     `content` = NULL,
     `number` = NULL,
     `sort` = NULL,
-    `first` = NULL,
+    `pageable` = NULL,
     `last` = NULL,
     `numberOfElements` = NULL,
-    `pageable` = NULL,
     `empty` = NULL,
     #' Initialize a new PageJob class.
     #'
@@ -42,18 +42,18 @@ PageJob <- R6::R6Class(
     #'
     #' @param totalPages totalPages
     #' @param totalElements totalElements
+    #' @param first first
     #' @param size size
     #' @param content content
     #' @param number number
     #' @param sort sort
-    #' @param first first
+    #' @param pageable pageable
     #' @param last last
     #' @param numberOfElements numberOfElements
-    #' @param pageable pageable
     #' @param empty empty
     #' @param ... Other optional arguments.
     #' @export
-    initialize = function(`totalPages` = NULL, `totalElements` = NULL, `size` = NULL, `content` = NULL, `number` = NULL, `sort` = NULL, `first` = NULL, `last` = NULL, `numberOfElements` = NULL, `pageable` = NULL, `empty` = NULL, ...) {
+    initialize = function(`totalPages` = NULL, `totalElements` = NULL, `first` = NULL, `size` = NULL, `content` = NULL, `number` = NULL, `sort` = NULL, `pageable` = NULL, `last` = NULL, `numberOfElements` = NULL, `empty` = NULL, ...) {
       if (!is.null(`totalPages`)) {
         if (!(is.numeric(`totalPages`) && length(`totalPages`) == 1)) {
           stop(paste("Error! Invalid data for `totalPages`. Must be an integer:", `totalPages`))
@@ -65,6 +65,12 @@ PageJob <- R6::R6Class(
           stop(paste("Error! Invalid data for `totalElements`. Must be an integer:", `totalElements`))
         }
         self$`totalElements` <- `totalElements`
+      }
+      if (!is.null(`first`)) {
+        if (!(is.logical(`first`) && length(`first`) == 1)) {
+          stop(paste("Error! Invalid data for `first`. Must be a boolean:", `first`))
+        }
+        self$`first` <- `first`
       }
       if (!is.null(`size`)) {
         if (!(is.numeric(`size`) && length(`size`) == 1)) {
@@ -87,11 +93,9 @@ PageJob <- R6::R6Class(
         stopifnot(R6::is.R6(`sort`))
         self$`sort` <- `sort`
       }
-      if (!is.null(`first`)) {
-        if (!(is.logical(`first`) && length(`first`) == 1)) {
-          stop(paste("Error! Invalid data for `first`. Must be a boolean:", `first`))
-        }
-        self$`first` <- `first`
+      if (!is.null(`pageable`)) {
+        stopifnot(R6::is.R6(`pageable`))
+        self$`pageable` <- `pageable`
       }
       if (!is.null(`last`)) {
         if (!(is.logical(`last`) && length(`last`) == 1)) {
@@ -104,10 +108,6 @@ PageJob <- R6::R6Class(
           stop(paste("Error! Invalid data for `numberOfElements`. Must be an integer:", `numberOfElements`))
         }
         self$`numberOfElements` <- `numberOfElements`
-      }
-      if (!is.null(`pageable`)) {
-        stopifnot(R6::is.R6(`pageable`))
-        self$`pageable` <- `pageable`
       }
       if (!is.null(`empty`)) {
         if (!(is.logical(`empty`) && length(`empty`) == 1)) {
@@ -133,6 +133,10 @@ PageJob <- R6::R6Class(
         PageJobObject[["totalElements"]] <-
           self$`totalElements`
       }
+      if (!is.null(self$`first`)) {
+        PageJobObject[["first"]] <-
+          self$`first`
+      }
       if (!is.null(self$`size`)) {
         PageJobObject[["size"]] <-
           self$`size`
@@ -149,9 +153,9 @@ PageJob <- R6::R6Class(
         PageJobObject[["sort"]] <-
           self$`sort`$toJSON()
       }
-      if (!is.null(self$`first`)) {
-        PageJobObject[["first"]] <-
-          self$`first`
+      if (!is.null(self$`pageable`)) {
+        PageJobObject[["pageable"]] <-
+          self$`pageable`$toJSON()
       }
       if (!is.null(self$`last`)) {
         PageJobObject[["last"]] <-
@@ -160,10 +164,6 @@ PageJob <- R6::R6Class(
       if (!is.null(self$`numberOfElements`)) {
         PageJobObject[["numberOfElements"]] <-
           self$`numberOfElements`
-      }
-      if (!is.null(self$`pageable`)) {
-        PageJobObject[["pageable"]] <-
-          self$`pageable`$toJSON()
       }
       if (!is.null(self$`empty`)) {
         PageJobObject[["empty"]] <-
@@ -187,6 +187,9 @@ PageJob <- R6::R6Class(
       if (!is.null(this_object$`totalElements`)) {
         self$`totalElements` <- this_object$`totalElements`
       }
+      if (!is.null(this_object$`first`)) {
+        self$`first` <- this_object$`first`
+      }
       if (!is.null(this_object$`size`)) {
         self$`size` <- this_object$`size`
       }
@@ -201,19 +204,16 @@ PageJob <- R6::R6Class(
         `sort_object`$fromJSON(jsonlite::toJSON(this_object$`sort`, auto_unbox = TRUE, digits = NA))
         self$`sort` <- `sort_object`
       }
-      if (!is.null(this_object$`first`)) {
-        self$`first` <- this_object$`first`
+      if (!is.null(this_object$`pageable`)) {
+        `pageable_object` <- PageableObject$new()
+        `pageable_object`$fromJSON(jsonlite::toJSON(this_object$`pageable`, auto_unbox = TRUE, digits = NA))
+        self$`pageable` <- `pageable_object`
       }
       if (!is.null(this_object$`last`)) {
         self$`last` <- this_object$`last`
       }
       if (!is.null(this_object$`numberOfElements`)) {
         self$`numberOfElements` <- this_object$`numberOfElements`
-      }
-      if (!is.null(this_object$`pageable`)) {
-        `pageable_object` <- PageableObject$new()
-        `pageable_object`$fromJSON(jsonlite::toJSON(this_object$`pageable`, auto_unbox = TRUE, digits = NA))
-        self$`pageable` <- `pageable_object`
       }
       if (!is.null(this_object$`empty`)) {
         self$`empty` <- this_object$`empty`
@@ -243,6 +243,14 @@ PageJob <- R6::R6Class(
             %d
                     ',
           self$`totalElements`
+          )
+        },
+        if (!is.null(self$`first`)) {
+          sprintf(
+          '"first":
+            %s
+                    ',
+          tolower(self$`first`)
           )
         },
         if (!is.null(self$`size`)) {
@@ -277,12 +285,12 @@ PageJob <- R6::R6Class(
           jsonlite::toJSON(self$`sort`$toJSON(), auto_unbox = TRUE, digits = NA)
           )
         },
-        if (!is.null(self$`first`)) {
+        if (!is.null(self$`pageable`)) {
           sprintf(
-          '"first":
-            %s
-                    ',
-          tolower(self$`first`)
+          '"pageable":
+          %s
+          ',
+          jsonlite::toJSON(self$`pageable`$toJSON(), auto_unbox = TRUE, digits = NA)
           )
         },
         if (!is.null(self$`last`)) {
@@ -299,14 +307,6 @@ PageJob <- R6::R6Class(
             %d
                     ',
           self$`numberOfElements`
-          )
-        },
-        if (!is.null(self$`pageable`)) {
-          sprintf(
-          '"pageable":
-          %s
-          ',
-          jsonlite::toJSON(self$`pageable`$toJSON(), auto_unbox = TRUE, digits = NA)
           )
         },
         if (!is.null(self$`empty`)) {
@@ -333,14 +333,14 @@ PageJob <- R6::R6Class(
       this_object <- jsonlite::fromJSON(input_json)
       self$`totalPages` <- this_object$`totalPages`
       self$`totalElements` <- this_object$`totalElements`
+      self$`first` <- this_object$`first`
       self$`size` <- this_object$`size`
       self$`content` <- ApiClient$new()$deserializeObj(this_object$`content`, "array[Job]", loadNamespace("Rsirius"))
       self$`number` <- this_object$`number`
       self$`sort` <- SortObject$new()$fromJSON(jsonlite::toJSON(this_object$`sort`, auto_unbox = TRUE, digits = NA))
-      self$`first` <- this_object$`first`
+      self$`pageable` <- PageableObject$new()$fromJSON(jsonlite::toJSON(this_object$`pageable`, auto_unbox = TRUE, digits = NA))
       self$`last` <- this_object$`last`
       self$`numberOfElements` <- this_object$`numberOfElements`
-      self$`pageable` <- PageableObject$new()$fromJSON(jsonlite::toJSON(this_object$`pageable`, auto_unbox = TRUE, digits = NA))
       self$`empty` <- this_object$`empty`
       self
     },

@@ -19,7 +19,6 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from typing_extensions import Annotated
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -27,7 +26,7 @@ class SearchableDatabase(BaseModel):
     """
     SearchableDatabase
     """ # noqa: E501
-    display_name: Optional[Annotated[str, Field(strict=True, max_length=15)]] = Field(default=None, description="display name of the database  Should be short", alias="displayName")
+    display_name: Optional[StrictStr] = Field(default=None, description="display name of the database  Should be short", alias="displayName")
     location: Optional[StrictStr] = Field(default=None, description="Storage location of user database  Might be NULL for non-user databases or if default location is used.")
     match_rt_of_reference_spectra: Optional[StrictBool] = Field(default=False, description="Indicates whether this database shall be used to use retention time information for library matching.  Typically used for in-house spectral libraries that have been measured on", alias="matchRtOfReferenceSpectra")
     database_id: StrictStr = Field(description="A unique identifier or name of the database.  Should only contain file path and url save characters  For user databases this is usually the file name.", alias="databaseId")

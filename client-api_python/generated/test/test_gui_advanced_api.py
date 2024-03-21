@@ -14,16 +14,23 @@
 
 import unittest
 
-from PySirius.api.gui_api import GuiApi
+from PySirius.api.gui_advanced_api import GuiAdvancedApi
 
 
-class TestGuiApi(unittest.TestCase):
-    """GuiApi unit test stubs"""
+class TestGuiAdvancedApi(unittest.TestCase):
+    """GuiAdvancedApi unit test stubs"""
 
     def setUp(self) -> None:
-        self.api = GuiApi()
+        self.api = GuiAdvancedApi()
 
     def tearDown(self) -> None:
+        pass
+
+    def test_apply_to_gui(self) -> None:
+        """Test case for apply_to_gui
+
+        Apply given changes to the running GUI instance.
+        """
         pass
 
     def test_close_gui(self) -> None:

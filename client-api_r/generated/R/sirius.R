@@ -24,7 +24,9 @@
 #' @field detectableElements These configurations hold the information how to autodetect elements based on the given formula constraints.  Note: If the compound is already assigned to a specific molecular formula, this annotation is ignored.  <p>  Detectable: Detectable elements are added to the chemical alphabet, if there are indications for them (e.g. in isotope pattern) list(character) [optional]
 #' @field ilpTimeout  \link{Timeout} [optional]
 #' @field useHeuristic  \link{UseHeuristic} [optional]
-#' @field minScoreToInjectSpecLibMatch Similarity Threshold to inject formula candidates no matter which score/rank they have or which filter settings are applied.  If threshold >= 0 formulas candidates with reference spectrum similarity above the threshold will be injected.  If NULL injection is disables. numeric [optional]
+#' @field injectSpecLibMatchFormulas If true formula candidates that belong to spectral library matches above a certain threshold will  we inject/preserved for further analyses no matter which score they have or which filter is applied character [optional]
+#' @field minScoreToInjectSpecLibMatch Similarity Threshold to inject formula candidates no matter which score/rank they have or which filter settings are applied.  If threshold >= 0 formulas candidates with reference spectrum similarity above the threshold will be injected. numeric [optional]
+#' @field minPeaksToInjectSpecLibMatch Matching peaks threshold to inject formula candidates no matter which score they have or which filter is applied. integer [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
 #' @export
@@ -48,7 +50,9 @@ Sirius <- R6::R6Class(
     `detectableElements` = NULL,
     `ilpTimeout` = NULL,
     `useHeuristic` = NULL,
+    `injectSpecLibMatchFormulas` = NULL,
     `minScoreToInjectSpecLibMatch` = NULL,
+    `minPeaksToInjectSpecLibMatch` = NULL,
     #' Initialize a new Sirius class.
     #'
     #' @description
@@ -71,10 +75,12 @@ Sirius <- R6::R6Class(
     #' @param detectableElements These configurations hold the information how to autodetect elements based on the given formula constraints.  Note: If the compound is already assigned to a specific molecular formula, this annotation is ignored.  <p>  Detectable: Detectable elements are added to the chemical alphabet, if there are indications for them (e.g. in isotope pattern)
     #' @param ilpTimeout ilpTimeout
     #' @param useHeuristic useHeuristic
-    #' @param minScoreToInjectSpecLibMatch Similarity Threshold to inject formula candidates no matter which score/rank they have or which filter settings are applied.  If threshold >= 0 formulas candidates with reference spectrum similarity above the threshold will be injected.  If NULL injection is disables.
+    #' @param injectSpecLibMatchFormulas If true formula candidates that belong to spectral library matches above a certain threshold will  we inject/preserved for further analyses no matter which score they have or which filter is applied
+    #' @param minScoreToInjectSpecLibMatch Similarity Threshold to inject formula candidates no matter which score/rank they have or which filter settings are applied.  If threshold >= 0 formulas candidates with reference spectrum similarity above the threshold will be injected.
+    #' @param minPeaksToInjectSpecLibMatch Matching peaks threshold to inject formula candidates no matter which score they have or which filter is applied.
     #' @param ... Other optional arguments.
     #' @export
-    initialize = function(`enabled` = NULL, `profile` = NULL, `numberOfCandidates` = NULL, `numberOfCandidatesPerIonization` = NULL, `massAccuracyMS2ppm` = NULL, `isotopeMs2Settings` = NULL, `filterByIsotopePattern` = NULL, `enforceElGordoFormula` = NULL, `performBottomUpSearch` = NULL, `performDenovoBelowMz` = NULL, `formulaSearchDBs` = NULL, `applyFormulaConstraintsToDBAndBottomUpSearch` = NULL, `enforcedFormulaConstraints` = NULL, `fallbackFormulaConstraints` = NULL, `detectableElements` = NULL, `ilpTimeout` = NULL, `useHeuristic` = NULL, `minScoreToInjectSpecLibMatch` = NULL, ...) {
+    initialize = function(`enabled` = NULL, `profile` = NULL, `numberOfCandidates` = NULL, `numberOfCandidatesPerIonization` = NULL, `massAccuracyMS2ppm` = NULL, `isotopeMs2Settings` = NULL, `filterByIsotopePattern` = NULL, `enforceElGordoFormula` = NULL, `performBottomUpSearch` = NULL, `performDenovoBelowMz` = NULL, `formulaSearchDBs` = NULL, `applyFormulaConstraintsToDBAndBottomUpSearch` = NULL, `enforcedFormulaConstraints` = NULL, `fallbackFormulaConstraints` = NULL, `detectableElements` = NULL, `ilpTimeout` = NULL, `useHeuristic` = NULL, `injectSpecLibMatchFormulas` = NULL, `minScoreToInjectSpecLibMatch` = NULL, `minPeaksToInjectSpecLibMatch` = NULL, ...) {
       if (!is.null(`enabled`)) {
         if (!(is.logical(`enabled`) && length(`enabled`) == 1)) {
           stop(paste("Error! Invalid data for `enabled`. Must be a boolean:", `enabled`))
@@ -175,11 +181,23 @@ Sirius <- R6::R6Class(
         stopifnot(R6::is.R6(`useHeuristic`))
         self$`useHeuristic` <- `useHeuristic`
       }
+      if (!is.null(`injectSpecLibMatchFormulas`)) {
+        if (!(is.logical(`injectSpecLibMatchFormulas`) && length(`injectSpecLibMatchFormulas`) == 1)) {
+          stop(paste("Error! Invalid data for `injectSpecLibMatchFormulas`. Must be a boolean:", `injectSpecLibMatchFormulas`))
+        }
+        self$`injectSpecLibMatchFormulas` <- `injectSpecLibMatchFormulas`
+      }
       if (!is.null(`minScoreToInjectSpecLibMatch`)) {
         if (!(is.numeric(`minScoreToInjectSpecLibMatch`) && length(`minScoreToInjectSpecLibMatch`) == 1)) {
           stop(paste("Error! Invalid data for `minScoreToInjectSpecLibMatch`. Must be a number:", `minScoreToInjectSpecLibMatch`))
         }
         self$`minScoreToInjectSpecLibMatch` <- `minScoreToInjectSpecLibMatch`
+      }
+      if (!is.null(`minPeaksToInjectSpecLibMatch`)) {
+        if (!(is.numeric(`minPeaksToInjectSpecLibMatch`) && length(`minPeaksToInjectSpecLibMatch`) == 1)) {
+          stop(paste("Error! Invalid data for `minPeaksToInjectSpecLibMatch`. Must be an integer:", `minPeaksToInjectSpecLibMatch`))
+        }
+        self$`minPeaksToInjectSpecLibMatch` <- `minPeaksToInjectSpecLibMatch`
       }
     },
     #' To JSON string
@@ -259,9 +277,17 @@ Sirius <- R6::R6Class(
         SiriusObject[["useHeuristic"]] <-
           self$`useHeuristic`$toJSON()
       }
+      if (!is.null(self$`injectSpecLibMatchFormulas`)) {
+        SiriusObject[["injectSpecLibMatchFormulas"]] <-
+          self$`injectSpecLibMatchFormulas`
+      }
       if (!is.null(self$`minScoreToInjectSpecLibMatch`)) {
         SiriusObject[["minScoreToInjectSpecLibMatch"]] <-
           self$`minScoreToInjectSpecLibMatch`
+      }
+      if (!is.null(self$`minPeaksToInjectSpecLibMatch`)) {
+        SiriusObject[["minPeaksToInjectSpecLibMatch"]] <-
+          self$`minPeaksToInjectSpecLibMatch`
       }
       SiriusObject
     },
@@ -335,8 +361,14 @@ Sirius <- R6::R6Class(
         `useheuristic_object`$fromJSON(jsonlite::toJSON(this_object$`useHeuristic`, auto_unbox = TRUE, digits = NA))
         self$`useHeuristic` <- `useheuristic_object`
       }
+      if (!is.null(this_object$`injectSpecLibMatchFormulas`)) {
+        self$`injectSpecLibMatchFormulas` <- this_object$`injectSpecLibMatchFormulas`
+      }
       if (!is.null(this_object$`minScoreToInjectSpecLibMatch`)) {
         self$`minScoreToInjectSpecLibMatch` <- this_object$`minScoreToInjectSpecLibMatch`
+      }
+      if (!is.null(this_object$`minPeaksToInjectSpecLibMatch`)) {
+        self$`minPeaksToInjectSpecLibMatch` <- this_object$`minPeaksToInjectSpecLibMatch`
       }
       self
     },
@@ -485,12 +517,28 @@ Sirius <- R6::R6Class(
           jsonlite::toJSON(self$`useHeuristic`$toJSON(), auto_unbox = TRUE, digits = NA)
           )
         },
+        if (!is.null(self$`injectSpecLibMatchFormulas`)) {
+          sprintf(
+          '"injectSpecLibMatchFormulas":
+            %s
+                    ',
+          tolower(self$`injectSpecLibMatchFormulas`)
+          )
+        },
         if (!is.null(self$`minScoreToInjectSpecLibMatch`)) {
           sprintf(
           '"minScoreToInjectSpecLibMatch":
             %d
                     ',
           self$`minScoreToInjectSpecLibMatch`
+          )
+        },
+        if (!is.null(self$`minPeaksToInjectSpecLibMatch`)) {
+          sprintf(
+          '"minPeaksToInjectSpecLibMatch":
+            %d
+                    ',
+          self$`minPeaksToInjectSpecLibMatch`
           )
         }
       )
@@ -527,7 +575,9 @@ Sirius <- R6::R6Class(
       self$`detectableElements` <- ApiClient$new()$deserializeObj(this_object$`detectableElements`, "array[character]", loadNamespace("Rsirius"))
       self$`ilpTimeout` <- Timeout$new()$fromJSON(jsonlite::toJSON(this_object$`ilpTimeout`, auto_unbox = TRUE, digits = NA))
       self$`useHeuristic` <- UseHeuristic$new()$fromJSON(jsonlite::toJSON(this_object$`useHeuristic`, auto_unbox = TRUE, digits = NA))
+      self$`injectSpecLibMatchFormulas` <- this_object$`injectSpecLibMatchFormulas`
       self$`minScoreToInjectSpecLibMatch` <- this_object$`minScoreToInjectSpecLibMatch`
+      self$`minPeaksToInjectSpecLibMatch` <- this_object$`minPeaksToInjectSpecLibMatch`
       self
     },
     #' Validate JSON input with respect to Sirius

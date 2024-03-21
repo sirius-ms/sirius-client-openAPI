@@ -46,8 +46,10 @@ class Sirius(BaseModel):
     detectable_elements: Optional[List[Optional[StrictStr]]] = Field(default=None, description="These configurations hold the information how to autodetect elements based on the given formula constraints.  Note: If the compound is already assigned to a specific molecular formula, this annotation is ignored.  <p>  Detectable: Detectable elements are added to the chemical alphabet, if there are indications for them (e.g. in isotope pattern)", alias="detectableElements")
     ilp_timeout: Optional[Timeout] = Field(default=None, alias="ilpTimeout")
     use_heuristic: Optional[UseHeuristic] = Field(default=None, alias="useHeuristic")
-    min_score_to_inject_spec_lib_match: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Similarity Threshold to inject formula candidates no matter which score/rank they have or which filter settings are applied.  If threshold >= 0 formulas candidates with reference spectrum similarity above the threshold will be injected.  If NULL injection is disables.", alias="minScoreToInjectSpecLibMatch")
-    __properties: ClassVar[List[str]] = ["enabled", "profile", "numberOfCandidates", "numberOfCandidatesPerIonization", "massAccuracyMS2ppm", "isotopeMs2Settings", "filterByIsotopePattern", "enforceElGordoFormula", "performBottomUpSearch", "performDenovoBelowMz", "formulaSearchDBs", "applyFormulaConstraintsToDBAndBottomUpSearch", "enforcedFormulaConstraints", "fallbackFormulaConstraints", "detectableElements", "ilpTimeout", "useHeuristic", "minScoreToInjectSpecLibMatch"]
+    inject_spec_lib_match_formulas: Optional[StrictBool] = Field(default=None, description="If true formula candidates that belong to spectral library matches above a certain threshold will  we inject/preserved for further analyses no matter which score they have or which filter is applied", alias="injectSpecLibMatchFormulas")
+    min_score_to_inject_spec_lib_match: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Similarity Threshold to inject formula candidates no matter which score/rank they have or which filter settings are applied.  If threshold >= 0 formulas candidates with reference spectrum similarity above the threshold will be injected.", alias="minScoreToInjectSpecLibMatch")
+    min_peaks_to_inject_spec_lib_match: Optional[StrictInt] = Field(default=None, description="Matching peaks threshold to inject formula candidates no matter which score they have or which filter is applied.", alias="minPeaksToInjectSpecLibMatch")
+    __properties: ClassVar[List[str]] = ["enabled", "profile", "numberOfCandidates", "numberOfCandidatesPerIonization", "massAccuracyMS2ppm", "isotopeMs2Settings", "filterByIsotopePattern", "enforceElGordoFormula", "performBottomUpSearch", "performDenovoBelowMz", "formulaSearchDBs", "applyFormulaConstraintsToDBAndBottomUpSearch", "enforcedFormulaConstraints", "fallbackFormulaConstraints", "detectableElements", "ilpTimeout", "useHeuristic", "injectSpecLibMatchFormulas", "minScoreToInjectSpecLibMatch", "minPeaksToInjectSpecLibMatch"]
 
     @field_validator('isotope_ms2_settings')
     def isotope_ms2_settings_validate_enum(cls, value):
@@ -184,10 +186,20 @@ class Sirius(BaseModel):
         if self.use_heuristic is None and "use_heuristic" in self.model_fields_set:
             _dict['useHeuristic'] = None
 
+        # set to None if inject_spec_lib_match_formulas (nullable) is None
+        # and model_fields_set contains the field
+        if self.inject_spec_lib_match_formulas is None and "inject_spec_lib_match_formulas" in self.model_fields_set:
+            _dict['injectSpecLibMatchFormulas'] = None
+
         # set to None if min_score_to_inject_spec_lib_match (nullable) is None
         # and model_fields_set contains the field
         if self.min_score_to_inject_spec_lib_match is None and "min_score_to_inject_spec_lib_match" in self.model_fields_set:
             _dict['minScoreToInjectSpecLibMatch'] = None
+
+        # set to None if min_peaks_to_inject_spec_lib_match (nullable) is None
+        # and model_fields_set contains the field
+        if self.min_peaks_to_inject_spec_lib_match is None and "min_peaks_to_inject_spec_lib_match" in self.model_fields_set:
+            _dict['minPeaksToInjectSpecLibMatch'] = None
 
         return _dict
 
@@ -218,7 +230,9 @@ class Sirius(BaseModel):
             "detectableElements": obj.get("detectableElements"),
             "ilpTimeout": Timeout.from_dict(obj["ilpTimeout"]) if obj.get("ilpTimeout") is not None else None,
             "useHeuristic": UseHeuristic.from_dict(obj["useHeuristic"]) if obj.get("useHeuristic") is not None else None,
-            "minScoreToInjectSpecLibMatch": obj.get("minScoreToInjectSpecLibMatch")
+            "injectSpecLibMatchFormulas": obj.get("injectSpecLibMatchFormulas"),
+            "minScoreToInjectSpecLibMatch": obj.get("minScoreToInjectSpecLibMatch"),
+            "minPeaksToInjectSpecLibMatch": obj.get("minPeaksToInjectSpecLibMatch")
         })
         return _obj
 

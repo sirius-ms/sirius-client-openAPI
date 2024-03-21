@@ -791,7 +791,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **import_preprocessed_data_as_job**
-> Job import_preprocessed_data_as_job(project_id, ignore_formulas=ignore_formulas, allow_ms1_only=allow_ms1_only, opt_fields=opt_fields, imput_files=imput_files)
+> Job import_preprocessed_data_as_job(project_id, ignore_formulas=ignore_formulas, allow_ms1_only=allow_ms1_only, opt_fields=opt_fields, input_files=input_files)
 
 Import ms/ms data from the given format into the specified project-space as background job.
 
@@ -822,11 +822,11 @@ with PySirius.ApiClient(configuration) as api_client:
     ignore_formulas = False # bool |  (optional) (default to False)
     allow_ms1_only = True # bool |  (optional) (default to True)
     opt_fields = ["progress"] # List[JobOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to ["progress"])
-    imput_files = None # List[bytearray] |  (optional)
+    input_files = None # List[bytearray] |  (optional)
 
     try:
         # Import ms/ms data from the given format into the specified project-space as background job.
-        api_response = api_instance.import_preprocessed_data_as_job(project_id, ignore_formulas=ignore_formulas, allow_ms1_only=allow_ms1_only, opt_fields=opt_fields, imput_files=imput_files)
+        api_response = api_instance.import_preprocessed_data_as_job(project_id, ignore_formulas=ignore_formulas, allow_ms1_only=allow_ms1_only, opt_fields=opt_fields, input_files=input_files)
         print("The response of ProjectsApi->import_preprocessed_data_as_job:\n")
         pprint(api_response)
     except Exception as e:
@@ -844,7 +844,7 @@ Name | Type | Description  | Notes
  **ignore_formulas** | **bool**|  | [optional] [default to False]
  **allow_ms1_only** | **bool**|  | [optional] [default to True]
  **opt_fields** | [**List[JobOptField]**](JobOptField.md)| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;progress&quot;]]
- **imput_files** | **List[bytearray]**|  | [optional] 
+ **input_files** | **List[bytearray]**|  | [optional] 
 
 ### Return type
 

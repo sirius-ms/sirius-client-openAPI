@@ -14,7 +14,7 @@ Method | HTTP request | Description
 [**GetJobs**](JobsApi.md#GetJobs) | **GET** /api/projects/{projectId}/jobs | Get List of all available jobs with information such as current state and progress (if available).
 [**GetJobsPaged**](JobsApi.md#GetJobsPaged) | **GET** /api/projects/{projectId}/jobs/page | Get Page of jobs with information such as current state and progress (if available).
 [**HasJobs**](JobsApi.md#HasJobs) | **GET** /api/projects/{projectId}/has-jobs | 
-[**PostJobConfig**](JobsApi.md#PostJobConfig) | **POST** /api/job-configs/{name} | Add new job configuration with given name.
+[**SaveJobConfig**](JobsApi.md#SaveJobConfig) | **POST** /api/job-configs/{name} | Add new job configuration with given name.
 [**StartCommand**](JobsApi.md#StartCommand) | **POST** /api/{projectId}/jobs/run-command | Start computation for given command and input.
 [**StartJob**](JobsApi.md#StartJob) | **POST** /api/projects/{projectId}/jobs | Start computation for given compounds and with given parameters.
 [**StartJobFromConfig**](JobsApi.md#StartJobFromConfig) | **POST** /api/projects/{projectId}/jobs/from-config | Start computation for given compounds and with parameters from a stored job-config.
@@ -505,8 +505,8 @@ No authorization required
 |-------------|-------------|------------------|
 | **200** | OK |  -  |
 
-# **PostJobConfig**
-> character PostJobConfig(name, job_submission, override_existing = FALSE)
+# **SaveJobConfig**
+> character SaveJobConfig(name, job_submission, override_existing = FALSE)
 
 Add new job configuration with given name.
 
@@ -520,13 +520,13 @@ library(Rsirius)
 #
 # prepare function argument(s)
 var_name <- "name_example" # character | name of the job-config to add
-var_job_submission <- JobSubmission$new(c("compoundIds_example"), c("alignedFeatureIds_example"), c("fallbackAdducts_example"), c("enforcedAdducts_example"), c("detectableAdducts_example"), "recompute_example", SpectralLibrarySearch$new("enabled_example", c("spectraSearchDBs_example"), 123, 123, SpectralAlignmentType$new()), Sirius$new("enabled_example", Instrument$new(), 123, 123, 123, "IGNORE", "filterByIsotopePattern_example", "enforceElGordoFormula_example", "performBottomUpSearch_example", 123, c("formulaSearchDBs_example"), "applyFormulaConstraintsToDBAndBottomUpSearch_example", "enforcedFormulaConstraints_example", "fallbackFormulaConstraints_example", c("detectableElements_example"), Timeout$new(123, 123), UseHeuristic$new(123, 123), 123), Zodiac$new("enabled_example", 123, 123, "runInTwoSteps_example", ZodiacEdgeFilterThresholds$new(123, 123, 123), ZodiacEpochs$new(123, 123, 123)), FingerprintPrediction$new("enabled_example", "useScoreThreshold_example", "alwaysPredictHighRefMatches_example"), Canopus$new("enabled_example"), StructureDbSearch$new("enabled_example", c("structureSearchDBs_example"), "tagStructuresWithLipidClass_example", Mode$new()), MsNovelist$new("enabled_example", 123), c(key = "inner_example")) # JobSubmission | to add
+var_job_submission <- JobSubmission$new(c("compoundIds_example"), c("alignedFeatureIds_example"), c("fallbackAdducts_example"), c("enforcedAdducts_example"), c("detectableAdducts_example"), "recompute_example", SpectralLibrarySearch$new("enabled_example", c("spectraSearchDBs_example"), 123, 123, SpectralAlignmentType$new()), Sirius$new("enabled_example", Instrument$new(), 123, 123, 123, "IGNORE", "filterByIsotopePattern_example", "enforceElGordoFormula_example", "performBottomUpSearch_example", 123, c("formulaSearchDBs_example"), "applyFormulaConstraintsToDBAndBottomUpSearch_example", "enforcedFormulaConstraints_example", "fallbackFormulaConstraints_example", c("detectableElements_example"), Timeout$new(123, 123), UseHeuristic$new(123, 123), "injectSpecLibMatchFormulas_example", 123, 123), Zodiac$new("enabled_example", 123, 123, "runInTwoSteps_example", ZodiacEdgeFilterThresholds$new(123, 123, 123), ZodiacEpochs$new(123, 123, 123)), FingerprintPrediction$new("enabled_example", "useScoreThreshold_example", "alwaysPredictHighRefMatches_example"), Canopus$new("enabled_example"), StructureDbSearch$new("enabled_example", c("structureSearchDBs_example"), "tagStructuresWithLipidClass_example", Mode$new()), MsNovelist$new("enabled_example", 123), c(key = "inner_example")) # JobSubmission | to add
 var_override_existing <- FALSE # character |  (Optional)
 
 api_instance <- rsirius_api$new()
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$PostJobConfig(var_name, var_job_submission, override_existing = var_override_existingdata_file = "result.txt")
-result <- api_instance$jobs_api$PostJobConfig(var_name, var_job_submission, override_existing = var_override_existing)
+# result <- api_instance$SaveJobConfig(var_name, var_job_submission, override_existing = var_override_existingdata_file = "result.txt")
+result <- api_instance$jobs_api$SaveJobConfig(var_name, var_job_submission, override_existing = var_override_existing)
 dput(result)
 ```
 
@@ -622,7 +622,7 @@ library(Rsirius)
 #
 # prepare function argument(s)
 var_project_id <- "project_id_example" # character | project-space to run jobs on
-var_job_submission <- JobSubmission$new(c("compoundIds_example"), c("alignedFeatureIds_example"), c("fallbackAdducts_example"), c("enforcedAdducts_example"), c("detectableAdducts_example"), "recompute_example", SpectralLibrarySearch$new("enabled_example", c("spectraSearchDBs_example"), 123, 123, SpectralAlignmentType$new()), Sirius$new("enabled_example", Instrument$new(), 123, 123, 123, "IGNORE", "filterByIsotopePattern_example", "enforceElGordoFormula_example", "performBottomUpSearch_example", 123, c("formulaSearchDBs_example"), "applyFormulaConstraintsToDBAndBottomUpSearch_example", "enforcedFormulaConstraints_example", "fallbackFormulaConstraints_example", c("detectableElements_example"), Timeout$new(123, 123), UseHeuristic$new(123, 123), 123), Zodiac$new("enabled_example", 123, 123, "runInTwoSteps_example", ZodiacEdgeFilterThresholds$new(123, 123, 123), ZodiacEpochs$new(123, 123, 123)), FingerprintPrediction$new("enabled_example", "useScoreThreshold_example", "alwaysPredictHighRefMatches_example"), Canopus$new("enabled_example"), StructureDbSearch$new("enabled_example", c("structureSearchDBs_example"), "tagStructuresWithLipidClass_example", Mode$new()), MsNovelist$new("enabled_example", 123), c(key = "inner_example")) # JobSubmission | configuration of the job that will be submitted of the job to be returned
+var_job_submission <- JobSubmission$new(c("compoundIds_example"), c("alignedFeatureIds_example"), c("fallbackAdducts_example"), c("enforcedAdducts_example"), c("detectableAdducts_example"), "recompute_example", SpectralLibrarySearch$new("enabled_example", c("spectraSearchDBs_example"), 123, 123, SpectralAlignmentType$new()), Sirius$new("enabled_example", Instrument$new(), 123, 123, 123, "IGNORE", "filterByIsotopePattern_example", "enforceElGordoFormula_example", "performBottomUpSearch_example", 123, c("formulaSearchDBs_example"), "applyFormulaConstraintsToDBAndBottomUpSearch_example", "enforcedFormulaConstraints_example", "fallbackFormulaConstraints_example", c("detectableElements_example"), Timeout$new(123, 123), UseHeuristic$new(123, 123), "injectSpecLibMatchFormulas_example", 123, 123), Zodiac$new("enabled_example", 123, 123, "runInTwoSteps_example", ZodiacEdgeFilterThresholds$new(123, 123, 123), ZodiacEpochs$new(123, 123, 123)), FingerprintPrediction$new("enabled_example", "useScoreThreshold_example", "alwaysPredictHighRefMatches_example"), Canopus$new("enabled_example"), StructureDbSearch$new("enabled_example", c("structureSearchDBs_example"), "tagStructuresWithLipidClass_example", Mode$new()), MsNovelist$new("enabled_example", 123), c(key = "inner_example")) # JobSubmission | configuration of the job that will be submitted of the job to be returned
 var_opt_fields <- c(JobOptField$new()) # array[JobOptField] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
 
 api_instance <- rsirius_api$new()
@@ -674,7 +674,7 @@ library(Rsirius)
 # prepare function argument(s)
 var_project_id <- "project_id_example" # character | project-space to run jobs on
 var_job_config_name <- "job_config_name_example" # character | name if the config to be used
-var_request_body <- c("property_example") # array[character] | compound ids to be computed
+var_request_body <- c("property_example") # array[character] | List of alignedFeatureIds to be computed
 var_recompute <- "recompute_example" # character | enable or disable recompute. If null the stored value will be used. (Optional)
 var_opt_fields <- c(JobOptField$new()) # array[JobOptField] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
 
@@ -691,7 +691,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **character**| project-space to run jobs on | 
  **job_config_name** | **character**| name if the config to be used | 
- **request_body** | list( **character** )| compound ids to be computed | 
+ **request_body** | list( **character** )| List of alignedFeatureIds to be computed | 
  **recompute** | **character**| enable or disable recompute. If null the stored value will be used. | [optional] 
  **opt_fields** | list( [**JobOptField**](JobOptField.md) )| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;command&quot;,&quot;progress&quot;]]
 

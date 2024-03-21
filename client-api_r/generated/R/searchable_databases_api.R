@@ -986,7 +986,7 @@ SearchableDatabasesApi <- R6::R6Class(
 
       query_params[["bufferSize"]] <- `buffer_size`
 
-      file_params["inputFiles"] <- curl::form_file(`input_files`)
+      file_params[["inputFiles"]] <- curl::form_file(`input_files`)
       local_var_url_path <- "/api/databases/{databaseId}/import/from-files"
       if (!missing(`database_id`)) {
         local_var_url_path <- gsub("\\{databaseId\\}", URLencode(as.character(`database_id`), reserved = TRUE), local_var_url_path)
@@ -1100,7 +1100,7 @@ SearchableDatabasesApi <- R6::R6Class(
         query_params[["optFields"]] <- c(query_params[["optFields"]], list(`optFields` = query_item))
       }
 
-      file_params["inputFiles"] <- curl::form_file(`input_files`)
+      file_params[["inputFiles"]] <- curl::form_file(`input_files`)
       local_var_url_path <- "/api/databases/{databaseId}/import/from-files-job"
       if (!missing(`database_id`)) {
         local_var_url_path <- gsub("\\{databaseId\\}", URLencode(as.character(`database_id`), reserved = TRUE), local_var_url_path)

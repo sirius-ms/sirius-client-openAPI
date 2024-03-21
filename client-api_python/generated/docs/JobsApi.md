@@ -14,7 +14,7 @@ Method | HTTP request | Description
 [**get_jobs**](JobsApi.md#get_jobs) | **GET** /api/projects/{projectId}/jobs | Get List of all available jobs with information such as current state and progress (if available).
 [**get_jobs_paged**](JobsApi.md#get_jobs_paged) | **GET** /api/projects/{projectId}/jobs/page | Get Page of jobs with information such as current state and progress (if available).
 [**has_jobs**](JobsApi.md#has_jobs) | **GET** /api/projects/{projectId}/has-jobs | 
-[**post_job_config**](JobsApi.md#post_job_config) | **POST** /api/job-configs/{name} | Add new job configuration with given name.
+[**save_job_config**](JobsApi.md#save_job_config) | **POST** /api/job-configs/{name} | Add new job configuration with given name.
 [**start_command**](JobsApi.md#start_command) | **POST** /api/{projectId}/jobs/run-command | Start computation for given command and input.
 [**start_job**](JobsApi.md#start_job) | **POST** /api/projects/{projectId}/jobs | Start computation for given compounds and with given parameters.
 [**start_job_from_config**](JobsApi.md#start_job_from_config) | **POST** /api/projects/{projectId}/jobs/from-config | Start computation for given compounds and with parameters from a stored job-config.
@@ -718,8 +718,8 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **post_job_config**
-> str post_job_config(name, job_submission, override_existing=override_existing)
+# **save_job_config**
+> str save_job_config(name, job_submission, override_existing=override_existing)
 
 Add new job configuration with given name.
 
@@ -751,11 +751,11 @@ with PySirius.ApiClient(configuration) as api_client:
 
     try:
         # Add new job configuration with given name.
-        api_response = api_instance.post_job_config(name, job_submission, override_existing=override_existing)
-        print("The response of JobsApi->post_job_config:\n")
+        api_response = api_instance.save_job_config(name, job_submission, override_existing=override_existing)
+        print("The response of JobsApi->save_job_config:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling JobsApi->post_job_config: %s\n" % e)
+        print("Exception when calling JobsApi->save_job_config: %s\n" % e)
 ```
 
 
@@ -968,7 +968,7 @@ with PySirius.ApiClient(configuration) as api_client:
     api_instance = PySirius.JobsApi(api_client)
     project_id = 'project_id_example' # str | project-space to run jobs on
     job_config_name = 'job_config_name_example' # str | name if the config to be used
-    request_body = ['request_body_example'] # List[str] | compound ids to be computed
+    request_body = ['request_body_example'] # List[str] | List of alignedFeatureIds to be computed
     recompute = True # bool | enable or disable recompute. If null the stored value will be used. (optional)
     opt_fields = ["command","progress"] # List[JobOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to ["command","progress"])
 
@@ -990,7 +990,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **str**| project-space to run jobs on | 
  **job_config_name** | **str**| name if the config to be used | 
- **request_body** | [**List[str]**](str.md)| compound ids to be computed | 
+ **request_body** | [**List[str]**](str.md)| List of alignedFeatureIds to be computed | 
  **recompute** | **bool**| enable or disable recompute. If null the stored value will be used. | [optional] 
  **opt_fields** | [**List[JobOptField]**](JobOptField.md)| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;command&quot;,&quot;progress&quot;]]
 

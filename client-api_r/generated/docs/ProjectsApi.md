@@ -559,7 +559,7 @@ No authorization required
 | **200** | OK |  -  |
 
 # **ImportPreprocessedDataAsJob**
-> Job ImportPreprocessedDataAsJob(project_id, ignore_formulas = FALSE, allow_ms1_only = TRUE, opt_fields = ["progress"], imput_files = var.imput_files)
+> Job ImportPreprocessedDataAsJob(project_id, ignore_formulas = FALSE, allow_ms1_only = TRUE, opt_fields = ["progress"], input_files = var.input_files)
 
 Import ms/ms data from the given format into the specified project-space as background job.
 
@@ -576,12 +576,12 @@ var_project_id <- "project_id_example" # character | project-space to import int
 var_ignore_formulas <- FALSE # character |  (Optional)
 var_allow_ms1_only <- TRUE # character |  (Optional)
 var_opt_fields <- c(JobOptField$new()) # array[JobOptField] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
-var_imput_files <- c(123) # array[data.frame] |  (Optional)
+var_input_files <- c(123) # array[data.frame] |  (Optional)
 
 api_instance <- rsirius_api$new()
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$ImportPreprocessedDataAsJob(var_project_id, ignore_formulas = var_ignore_formulas, allow_ms1_only = var_allow_ms1_only, opt_fields = var_opt_fields, imput_files = var_imput_filesdata_file = "result.txt")
-result <- api_instance$projects_api$ImportPreprocessedDataAsJob(var_project_id, ignore_formulas = var_ignore_formulas, allow_ms1_only = var_allow_ms1_only, opt_fields = var_opt_fields, imput_files = var_imput_files)
+# result <- api_instance$ImportPreprocessedDataAsJob(var_project_id, ignore_formulas = var_ignore_formulas, allow_ms1_only = var_allow_ms1_only, opt_fields = var_opt_fields, input_files = var_input_filesdata_file = "result.txt")
+result <- api_instance$projects_api$ImportPreprocessedDataAsJob(var_project_id, ignore_formulas = var_ignore_formulas, allow_ms1_only = var_allow_ms1_only, opt_fields = var_opt_fields, input_files = var_input_files)
 dput(result)
 ```
 
@@ -593,7 +593,7 @@ Name | Type | Description  | Notes
  **ignore_formulas** | **character**|  | [optional] [default to FALSE]
  **allow_ms1_only** | **character**|  | [optional] [default to TRUE]
  **opt_fields** | list( [**JobOptField**](JobOptField.md) )| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;progress&quot;]]
- **imput_files** | list( **data.frame** )|  | [optional] 
+ **input_files** | list( **data.frame** )|  | [optional] 
 
 ### Return type
 

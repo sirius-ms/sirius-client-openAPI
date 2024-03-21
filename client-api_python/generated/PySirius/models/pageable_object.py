@@ -29,11 +29,11 @@ class PageableObject(BaseModel):
     """ # noqa: E501
     offset: Optional[StrictInt] = None
     sort: Optional[SortObject] = None
-    unpaged: Optional[StrictBool] = None
-    paged: Optional[StrictBool] = None
     page_number: Optional[StrictInt] = Field(default=None, alias="pageNumber")
     page_size: Optional[StrictInt] = Field(default=None, alias="pageSize")
-    __properties: ClassVar[List[str]] = ["offset", "sort", "unpaged", "paged", "pageNumber", "pageSize"]
+    paged: Optional[StrictBool] = None
+    unpaged: Optional[StrictBool] = None
+    __properties: ClassVar[List[str]] = ["offset", "sort", "pageNumber", "pageSize", "paged", "unpaged"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -91,10 +91,10 @@ class PageableObject(BaseModel):
         _obj = cls.model_validate({
             "offset": obj.get("offset"),
             "sort": SortObject.from_dict(obj["sort"]) if obj.get("sort") is not None else None,
-            "unpaged": obj.get("unpaged"),
-            "paged": obj.get("paged"),
             "pageNumber": obj.get("pageNumber"),
-            "pageSize": obj.get("pageSize")
+            "pageSize": obj.get("pageSize"),
+            "paged": obj.get("paged"),
+            "unpaged": obj.get("unpaged")
         })
         return _obj
 

@@ -95,8 +95,8 @@ class TestJobsApi(unittest.TestCase):
         """
         pass
 
-    def test_post_job_config(self) -> None:
-        """Test case for post_job_config
+    def test_save_job_config(self) -> None:
+        """Test case for save_job_config
 
         Add new job configuration with given name.
         """
