@@ -163,31 +163,59 @@ JobSubmission <- R6::R6Class(
       }
       if (!is.null(self$`spectraSearchParams`)) {
         JobSubmissionObject[["spectraSearchParams"]] <-
-          self$`spectraSearchParams`$toJSON()
+          if (length(names(self$`spectraSearchParams`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`spectraSearchParams`$toJSON()))) {
+            jsonlite::fromJSON(self$`spectraSearchParams`$toJSON())
+          } else {
+            self$`spectraSearchParams`$toJSON()
+          }
       }
       if (!is.null(self$`formulaIdParams`)) {
         JobSubmissionObject[["formulaIdParams"]] <-
-          self$`formulaIdParams`$toJSON()
+          if (length(names(self$`formulaIdParams`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`formulaIdParams`$toJSON()))) {
+            jsonlite::fromJSON(self$`formulaIdParams`$toJSON())
+          } else {
+            self$`formulaIdParams`$toJSON()
+          }
       }
       if (!is.null(self$`zodiacParams`)) {
         JobSubmissionObject[["zodiacParams"]] <-
-          self$`zodiacParams`$toJSON()
+          if (length(names(self$`zodiacParams`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`zodiacParams`$toJSON()))) {
+            jsonlite::fromJSON(self$`zodiacParams`$toJSON())
+          } else {
+            self$`zodiacParams`$toJSON()
+          }
       }
       if (!is.null(self$`fingerprintPredictionParams`)) {
         JobSubmissionObject[["fingerprintPredictionParams"]] <-
-          self$`fingerprintPredictionParams`$toJSON()
+          if (length(names(self$`fingerprintPredictionParams`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`fingerprintPredictionParams`$toJSON()))) {
+            jsonlite::fromJSON(self$`fingerprintPredictionParams`$toJSON())
+          } else {
+            self$`fingerprintPredictionParams`$toJSON()
+          }
       }
       if (!is.null(self$`canopusParams`)) {
         JobSubmissionObject[["canopusParams"]] <-
-          self$`canopusParams`$toJSON()
+          if (length(names(self$`canopusParams`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`canopusParams`$toJSON()))) {
+            jsonlite::fromJSON(self$`canopusParams`$toJSON())
+          } else {
+            self$`canopusParams`$toJSON()
+          }
       }
       if (!is.null(self$`structureDbSearchParams`)) {
         JobSubmissionObject[["structureDbSearchParams"]] <-
-          self$`structureDbSearchParams`$toJSON()
+          if (length(names(self$`structureDbSearchParams`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`structureDbSearchParams`$toJSON()))) {
+            jsonlite::fromJSON(self$`structureDbSearchParams`$toJSON())
+          } else {
+            self$`structureDbSearchParams`$toJSON()
+          }
       }
       if (!is.null(self$`msNovelistParams`)) {
         JobSubmissionObject[["msNovelistParams"]] <-
-          self$`msNovelistParams`$toJSON()
+          if (length(names(self$`msNovelistParams`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`msNovelistParams`$toJSON()))) {
+            jsonlite::fromJSON(self$`msNovelistParams`$toJSON())
+          } else {
+            self$`msNovelistParams`$toJSON()
+          }
       }
       if (!is.null(self$`configMap`)) {
         JobSubmissionObject[["configMap"]] <-

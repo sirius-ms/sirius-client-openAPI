@@ -71,7 +71,11 @@ ConsensusAnnotationsDeNovo <- R6::R6Class(
       }
       if (!is.null(self$`compoundClasses`)) {
         ConsensusAnnotationsDeNovoObject[["compoundClasses"]] <-
-          self$`compoundClasses`$toJSON()
+          if (length(names(self$`compoundClasses`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`compoundClasses`$toJSON()))) {
+            jsonlite::fromJSON(self$`compoundClasses`$toJSON())
+          } else {
+            self$`compoundClasses`$toJSON()
+          }
       }
       if (!is.null(self$`supportingFeatureIds`)) {
         ConsensusAnnotationsDeNovoObject[["supportingFeatureIds"]] <-
@@ -79,7 +83,11 @@ ConsensusAnnotationsDeNovo <- R6::R6Class(
       }
       if (!is.null(self$`selectionCriterion`)) {
         ConsensusAnnotationsDeNovoObject[["selectionCriterion"]] <-
-          self$`selectionCriterion`$toJSON()
+          if (length(names(self$`selectionCriterion`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`selectionCriterion`$toJSON()))) {
+            jsonlite::fromJSON(self$`selectionCriterion`$toJSON())
+          } else {
+            self$`selectionCriterion`$toJSON()
+          }
       }
       ConsensusAnnotationsDeNovoObject
     },

@@ -229,7 +229,11 @@ FormulaCandidate <- R6::R6Class(
       }
       if (!is.null(self$`medianMassDeviation`)) {
         FormulaCandidateObject[["medianMassDeviation"]] <-
-          self$`medianMassDeviation`$toJSON()
+          if (length(names(self$`medianMassDeviation`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`medianMassDeviation`$toJSON()))) {
+            jsonlite::fromJSON(self$`medianMassDeviation`$toJSON())
+          } else {
+            self$`medianMassDeviation`$toJSON()
+          }
       }
       if (!is.null(self$`topCSIScore`)) {
         FormulaCandidateObject[["topCSIScore"]] <-
@@ -237,19 +241,35 @@ FormulaCandidate <- R6::R6Class(
       }
       if (!is.null(self$`fragmentationTree`)) {
         FormulaCandidateObject[["fragmentationTree"]] <-
-          self$`fragmentationTree`$toJSON()
+          if (length(names(self$`fragmentationTree`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`fragmentationTree`$toJSON()))) {
+            jsonlite::fromJSON(self$`fragmentationTree`$toJSON())
+          } else {
+            self$`fragmentationTree`$toJSON()
+          }
       }
       if (!is.null(self$`annotatedSpectrum`)) {
         FormulaCandidateObject[["annotatedSpectrum"]] <-
-          self$`annotatedSpectrum`$toJSON()
+          if (length(names(self$`annotatedSpectrum`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`annotatedSpectrum`$toJSON()))) {
+            jsonlite::fromJSON(self$`annotatedSpectrum`$toJSON())
+          } else {
+            self$`annotatedSpectrum`$toJSON()
+          }
       }
       if (!is.null(self$`isotopePatternAnnotation`)) {
         FormulaCandidateObject[["isotopePatternAnnotation"]] <-
-          self$`isotopePatternAnnotation`$toJSON()
+          if (length(names(self$`isotopePatternAnnotation`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`isotopePatternAnnotation`$toJSON()))) {
+            jsonlite::fromJSON(self$`isotopePatternAnnotation`$toJSON())
+          } else {
+            self$`isotopePatternAnnotation`$toJSON()
+          }
       }
       if (!is.null(self$`lipidAnnotation`)) {
         FormulaCandidateObject[["lipidAnnotation"]] <-
-          self$`lipidAnnotation`$toJSON()
+          if (length(names(self$`lipidAnnotation`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`lipidAnnotation`$toJSON()))) {
+            jsonlite::fromJSON(self$`lipidAnnotation`$toJSON())
+          } else {
+            self$`lipidAnnotation`$toJSON()
+          }
       }
       if (!is.null(self$`predictedFingerprint`)) {
         FormulaCandidateObject[["predictedFingerprint"]] <-
@@ -257,11 +277,19 @@ FormulaCandidate <- R6::R6Class(
       }
       if (!is.null(self$`compoundClasses`)) {
         FormulaCandidateObject[["compoundClasses"]] <-
-          self$`compoundClasses`$toJSON()
+          if (length(names(self$`compoundClasses`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`compoundClasses`$toJSON()))) {
+            jsonlite::fromJSON(self$`compoundClasses`$toJSON())
+          } else {
+            self$`compoundClasses`$toJSON()
+          }
       }
       if (!is.null(self$`canopusPrediction`)) {
         FormulaCandidateObject[["canopusPrediction"]] <-
-          self$`canopusPrediction`$toJSON()
+          if (length(names(self$`canopusPrediction`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`canopusPrediction`$toJSON()))) {
+            jsonlite::fromJSON(self$`canopusPrediction`$toJSON())
+          } else {
+            self$`canopusPrediction`$toJSON()
+          }
       }
       FormulaCandidateObject
     },

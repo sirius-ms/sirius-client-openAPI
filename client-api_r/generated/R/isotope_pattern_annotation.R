@@ -47,11 +47,19 @@ IsotopePatternAnnotation <- R6::R6Class(
       IsotopePatternAnnotationObject <- list()
       if (!is.null(self$`isotopePattern`)) {
         IsotopePatternAnnotationObject[["isotopePattern"]] <-
-          self$`isotopePattern`$toJSON()
+          if (length(names(self$`isotopePattern`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`isotopePattern`$toJSON()))) {
+            jsonlite::fromJSON(self$`isotopePattern`$toJSON())
+          } else {
+            self$`isotopePattern`$toJSON()
+          }
       }
       if (!is.null(self$`simulatedPattern`)) {
         IsotopePatternAnnotationObject[["simulatedPattern"]] <-
-          self$`simulatedPattern`$toJSON()
+          if (length(names(self$`simulatedPattern`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`simulatedPattern`$toJSON()))) {
+            jsonlite::fromJSON(self$`simulatedPattern`$toJSON())
+          } else {
+            self$`simulatedPattern`$toJSON()
+          }
       }
       IsotopePatternAnnotationObject
     },

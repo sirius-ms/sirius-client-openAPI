@@ -151,11 +151,19 @@ PageStructureCandidateFormula <- R6::R6Class(
       }
       if (!is.null(self$`sort`)) {
         PageStructureCandidateFormulaObject[["sort"]] <-
-          self$`sort`$toJSON()
+          if (length(names(self$`sort`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`sort`$toJSON()))) {
+            jsonlite::fromJSON(self$`sort`$toJSON())
+          } else {
+            self$`sort`$toJSON()
+          }
       }
       if (!is.null(self$`pageable`)) {
         PageStructureCandidateFormulaObject[["pageable"]] <-
-          self$`pageable`$toJSON()
+          if (length(names(self$`pageable`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`pageable`$toJSON()))) {
+            jsonlite::fromJSON(self$`pageable`$toJSON())
+          } else {
+            self$`pageable`$toJSON()
+          }
       }
       if (!is.null(self$`last`)) {
         PageStructureCandidateFormulaObject[["last"]] <-

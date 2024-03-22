@@ -70,15 +70,27 @@ CompoundClasses <- R6::R6Class(
       CompoundClassesObject <- list()
       if (!is.null(self$`npcPathway`)) {
         CompoundClassesObject[["npcPathway"]] <-
-          self$`npcPathway`$toJSON()
+          if (length(names(self$`npcPathway`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`npcPathway`$toJSON()))) {
+            jsonlite::fromJSON(self$`npcPathway`$toJSON())
+          } else {
+            self$`npcPathway`$toJSON()
+          }
       }
       if (!is.null(self$`npcSuperclass`)) {
         CompoundClassesObject[["npcSuperclass"]] <-
-          self$`npcSuperclass`$toJSON()
+          if (length(names(self$`npcSuperclass`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`npcSuperclass`$toJSON()))) {
+            jsonlite::fromJSON(self$`npcSuperclass`$toJSON())
+          } else {
+            self$`npcSuperclass`$toJSON()
+          }
       }
       if (!is.null(self$`npcClass`)) {
         CompoundClassesObject[["npcClass"]] <-
-          self$`npcClass`$toJSON()
+          if (length(names(self$`npcClass`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`npcClass`$toJSON()))) {
+            jsonlite::fromJSON(self$`npcClass`$toJSON())
+          } else {
+            self$`npcClass`$toJSON()
+          }
       }
       if (!is.null(self$`classyFireLineage`)) {
         CompoundClassesObject[["classyFireLineage"]] <-

@@ -96,7 +96,11 @@ ConsensusAnnotationsCSI <- R6::R6Class(
       }
       if (!is.null(self$`compoundClasses`)) {
         ConsensusAnnotationsCSIObject[["compoundClasses"]] <-
-          self$`compoundClasses`$toJSON()
+          if (length(names(self$`compoundClasses`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`compoundClasses`$toJSON()))) {
+            jsonlite::fromJSON(self$`compoundClasses`$toJSON())
+          } else {
+            self$`compoundClasses`$toJSON()
+          }
       }
       if (!is.null(self$`supportingFeatureIds`)) {
         ConsensusAnnotationsCSIObject[["supportingFeatureIds"]] <-
@@ -104,11 +108,19 @@ ConsensusAnnotationsCSI <- R6::R6Class(
       }
       if (!is.null(self$`selectionCriterion`)) {
         ConsensusAnnotationsCSIObject[["selectionCriterion"]] <-
-          self$`selectionCriterion`$toJSON()
+          if (length(names(self$`selectionCriterion`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`selectionCriterion`$toJSON()))) {
+            jsonlite::fromJSON(self$`selectionCriterion`$toJSON())
+          } else {
+            self$`selectionCriterion`$toJSON()
+          }
       }
       if (!is.null(self$`csiFingerIdStructure`)) {
         ConsensusAnnotationsCSIObject[["csiFingerIdStructure"]] <-
-          self$`csiFingerIdStructure`$toJSON()
+          if (length(names(self$`csiFingerIdStructure`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`csiFingerIdStructure`$toJSON()))) {
+            jsonlite::fromJSON(self$`csiFingerIdStructure`$toJSON())
+          } else {
+            self$`csiFingerIdStructure`$toJSON()
+          }
       }
       if (!is.null(self$`confidenceExactMatch`)) {
         ConsensusAnnotationsCSIObject[["confidenceExactMatch"]] <-

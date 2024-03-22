@@ -186,7 +186,11 @@ PeakAnnotation <- R6::R6Class(
       }
       if (!is.null(self$`parentPeak`)) {
         PeakAnnotationObject[["parentPeak"]] <-
-          self$`parentPeak`$toJSON()
+          if (length(names(self$`parentPeak`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`parentPeak`$toJSON()))) {
+            jsonlite::fromJSON(self$`parentPeak`$toJSON())
+          } else {
+            self$`parentPeak`$toJSON()
+          }
       }
       if (!is.null(self$`substructureAtoms`)) {
         PeakAnnotationObject[["substructureAtoms"]] <-

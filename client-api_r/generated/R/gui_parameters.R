@@ -79,7 +79,11 @@ GuiParameters <- R6::R6Class(
       GuiParametersObject <- list()
       if (!is.null(self$`selectedTab`)) {
         GuiParametersObject[["selectedTab"]] <-
-          self$`selectedTab`$toJSON()
+          if (length(names(self$`selectedTab`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`selectedTab`$toJSON()))) {
+            jsonlite::fromJSON(self$`selectedTab`$toJSON())
+          } else {
+            self$`selectedTab`$toJSON()
+          }
       }
       if (!is.null(self$`cid`)) {
         GuiParametersObject[["cid"]] <-

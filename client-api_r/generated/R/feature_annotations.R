@@ -54,15 +54,27 @@ FeatureAnnotations <- R6::R6Class(
       FeatureAnnotationsObject <- list()
       if (!is.null(self$`formulaAnnotation`)) {
         FeatureAnnotationsObject[["formulaAnnotation"]] <-
-          self$`formulaAnnotation`$toJSON()
+          if (length(names(self$`formulaAnnotation`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`formulaAnnotation`$toJSON()))) {
+            jsonlite::fromJSON(self$`formulaAnnotation`$toJSON())
+          } else {
+            self$`formulaAnnotation`$toJSON()
+          }
       }
       if (!is.null(self$`structureAnnotation`)) {
         FeatureAnnotationsObject[["structureAnnotation"]] <-
-          self$`structureAnnotation`$toJSON()
+          if (length(names(self$`structureAnnotation`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`structureAnnotation`$toJSON()))) {
+            jsonlite::fromJSON(self$`structureAnnotation`$toJSON())
+          } else {
+            self$`structureAnnotation`$toJSON()
+          }
       }
       if (!is.null(self$`compoundClassAnnotation`)) {
         FeatureAnnotationsObject[["compoundClassAnnotation"]] <-
-          self$`compoundClassAnnotation`$toJSON()
+          if (length(names(self$`compoundClassAnnotation`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`compoundClassAnnotation`$toJSON()))) {
+            jsonlite::fromJSON(self$`compoundClassAnnotation`$toJSON())
+          } else {
+            self$`compoundClassAnnotation`$toJSON()
+          }
       }
       FeatureAnnotationsObject
     },

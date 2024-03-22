@@ -130,7 +130,11 @@ AnnotatedSpectrum <- R6::R6Class(
       }
       if (!is.null(self$`spectrumAnnotation`)) {
         AnnotatedSpectrumObject[["spectrumAnnotation"]] <-
-          self$`spectrumAnnotation`$toJSON()
+          if (length(names(self$`spectrumAnnotation`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`spectrumAnnotation`$toJSON()))) {
+            jsonlite::fromJSON(self$`spectrumAnnotation`$toJSON())
+          } else {
+            self$`spectrumAnnotation`$toJSON()
+          }
       }
       AnnotatedSpectrumObject
     },
