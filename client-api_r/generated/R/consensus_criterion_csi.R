@@ -68,8 +68,7 @@ ConsensusCriterionCSI <- R6::R6Class(
     #' @return ConsensusCriterionCSI in JSON format
     #' @export
     toJSONString = function() {
-      as.character(jsonlite::toJSON(private$value,
-          auto_unbox = TRUE))
+        jsonlite::toJSON(private$value, auto_unbox = TRUE)
     },
     #' Deserialize JSON string into an instance of ConsensusCriterionCSI
     #'
