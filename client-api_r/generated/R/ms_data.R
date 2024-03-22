@@ -63,11 +63,19 @@ MsData <- R6::R6Class(
       MsDataObject <- list()
       if (!is.null(self$`mergedMs1`)) {
         MsDataObject[["mergedMs1"]] <-
-          self$`mergedMs1`$toJSON()
+          if (length(names(self$`mergedMs1`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`mergedMs1`$toJSON()))) {
+            jsonlite::fromJSON(self$`mergedMs1`$toJSON())
+          } else {
+            self$`mergedMs1`$toJSON()
+          }
       }
       if (!is.null(self$`mergedMs2`)) {
         MsDataObject[["mergedMs2"]] <-
-          self$`mergedMs2`$toJSON()
+          if (length(names(self$`mergedMs2`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`mergedMs2`$toJSON()))) {
+            jsonlite::fromJSON(self$`mergedMs2`$toJSON())
+          } else {
+            self$`mergedMs2`$toJSON()
+          }
       }
       if (!is.null(self$`ms1Spectra`)) {
         MsDataObject[["ms1Spectra"]] <-

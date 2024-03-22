@@ -131,15 +131,27 @@ Compound <- R6::R6Class(
       }
       if (!is.null(self$`consensusAnnotations`)) {
         CompoundObject[["consensusAnnotations"]] <-
-          self$`consensusAnnotations`$toJSON()
+          if (length(names(self$`consensusAnnotations`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`consensusAnnotations`$toJSON()))) {
+            jsonlite::fromJSON(self$`consensusAnnotations`$toJSON())
+          } else {
+            self$`consensusAnnotations`$toJSON()
+          }
       }
       if (!is.null(self$`consensusAnnotationsDeNovo`)) {
         CompoundObject[["consensusAnnotationsDeNovo"]] <-
-          self$`consensusAnnotationsDeNovo`$toJSON()
+          if (length(names(self$`consensusAnnotationsDeNovo`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`consensusAnnotationsDeNovo`$toJSON()))) {
+            jsonlite::fromJSON(self$`consensusAnnotationsDeNovo`$toJSON())
+          } else {
+            self$`consensusAnnotationsDeNovo`$toJSON()
+          }
       }
       if (!is.null(self$`customAnnotations`)) {
         CompoundObject[["customAnnotations"]] <-
-          self$`customAnnotations`$toJSON()
+          if (length(names(self$`customAnnotations`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`customAnnotations`$toJSON()))) {
+            jsonlite::fromJSON(self$`customAnnotations`$toJSON())
+          } else {
+            self$`customAnnotations`$toJSON()
+          }
       }
       CompoundObject
     },

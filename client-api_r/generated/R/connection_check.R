@@ -104,11 +104,19 @@ ConnectionCheck <- R6::R6Class(
       ConnectionCheckObject <- list()
       if (!is.null(self$`workerInfo`)) {
         ConnectionCheckObject[["workerInfo"]] <-
-          self$`workerInfo`$toJSON()
+          if (length(names(self$`workerInfo`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`workerInfo`$toJSON()))) {
+            jsonlite::fromJSON(self$`workerInfo`$toJSON())
+          } else {
+            self$`workerInfo`$toJSON()
+          }
       }
       if (!is.null(self$`licenseInfo`)) {
         ConnectionCheckObject[["licenseInfo"]] <-
-          self$`licenseInfo`$toJSON()
+          if (length(names(self$`licenseInfo`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`licenseInfo`$toJSON()))) {
+            jsonlite::fromJSON(self$`licenseInfo`$toJSON())
+          } else {
+            self$`licenseInfo`$toJSON()
+          }
       }
       if (!is.null(self$`errors`)) {
         ConnectionCheckObject[["errors"]] <-

@@ -99,11 +99,19 @@ Zodiac <- R6::R6Class(
       }
       if (!is.null(self$`edgeFilterThresholds`)) {
         ZodiacObject[["edgeFilterThresholds"]] <-
-          self$`edgeFilterThresholds`$toJSON()
+          if (length(names(self$`edgeFilterThresholds`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`edgeFilterThresholds`$toJSON()))) {
+            jsonlite::fromJSON(self$`edgeFilterThresholds`$toJSON())
+          } else {
+            self$`edgeFilterThresholds`$toJSON()
+          }
       }
       if (!is.null(self$`gibbsSamplerParameters`)) {
         ZodiacObject[["gibbsSamplerParameters"]] <-
-          self$`gibbsSamplerParameters`$toJSON()
+          if (length(names(self$`gibbsSamplerParameters`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`gibbsSamplerParameters`$toJSON()))) {
+            jsonlite::fromJSON(self$`gibbsSamplerParameters`$toJSON())
+          } else {
+            self$`gibbsSamplerParameters`$toJSON()
+          }
       }
       ZodiacObject
     },

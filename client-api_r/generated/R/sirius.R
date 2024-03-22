@@ -215,7 +215,11 @@ Sirius <- R6::R6Class(
       }
       if (!is.null(self$`profile`)) {
         SiriusObject[["profile"]] <-
-          self$`profile`$toJSON()
+          if (length(names(self$`profile`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`profile`$toJSON()))) {
+            jsonlite::fromJSON(self$`profile`$toJSON())
+          } else {
+            self$`profile`$toJSON()
+          }
       }
       if (!is.null(self$`numberOfCandidates`)) {
         SiriusObject[["numberOfCandidates"]] <-
@@ -271,11 +275,19 @@ Sirius <- R6::R6Class(
       }
       if (!is.null(self$`ilpTimeout`)) {
         SiriusObject[["ilpTimeout"]] <-
-          self$`ilpTimeout`$toJSON()
+          if (length(names(self$`ilpTimeout`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`ilpTimeout`$toJSON()))) {
+            jsonlite::fromJSON(self$`ilpTimeout`$toJSON())
+          } else {
+            self$`ilpTimeout`$toJSON()
+          }
       }
       if (!is.null(self$`useHeuristic`)) {
         SiriusObject[["useHeuristic"]] <-
-          self$`useHeuristic`$toJSON()
+          if (length(names(self$`useHeuristic`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`useHeuristic`$toJSON()))) {
+            jsonlite::fromJSON(self$`useHeuristic`$toJSON())
+          } else {
+            self$`useHeuristic`$toJSON()
+          }
       }
       if (!is.null(self$`injectSpecLibMatchFormulas`)) {
         SiriusObject[["injectSpecLibMatchFormulas"]] <-

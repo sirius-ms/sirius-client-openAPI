@@ -82,7 +82,11 @@ Job <- R6::R6Class(
       }
       if (!is.null(self$`progress`)) {
         JobObject[["progress"]] <-
-          self$`progress`$toJSON()
+          if (length(names(self$`progress`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`progress`$toJSON()))) {
+            jsonlite::fromJSON(self$`progress`$toJSON())
+          } else {
+            self$`progress`$toJSON()
+          }
       }
       if (!is.null(self$`affectedCompoundIds`)) {
         JobObject[["affectedCompoundIds"]] <-

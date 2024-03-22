@@ -154,15 +154,27 @@ AlignedFeature <- R6::R6Class(
       }
       if (!is.null(self$`msData`)) {
         AlignedFeatureObject[["msData"]] <-
-          self$`msData`$toJSON()
+          if (length(names(self$`msData`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`msData`$toJSON()))) {
+            jsonlite::fromJSON(self$`msData`$toJSON())
+          } else {
+            self$`msData`$toJSON()
+          }
       }
       if (!is.null(self$`topAnnotations`)) {
         AlignedFeatureObject[["topAnnotations"]] <-
-          self$`topAnnotations`$toJSON()
+          if (length(names(self$`topAnnotations`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`topAnnotations`$toJSON()))) {
+            jsonlite::fromJSON(self$`topAnnotations`$toJSON())
+          } else {
+            self$`topAnnotations`$toJSON()
+          }
       }
       if (!is.null(self$`topAnnotationsDeNovo`)) {
         AlignedFeatureObject[["topAnnotationsDeNovo"]] <-
-          self$`topAnnotationsDeNovo`$toJSON()
+          if (length(names(self$`topAnnotationsDeNovo`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`topAnnotationsDeNovo`$toJSON()))) {
+            jsonlite::fromJSON(self$`topAnnotationsDeNovo`$toJSON())
+          } else {
+            self$`topAnnotationsDeNovo`$toJSON()
+          }
       }
       if (!is.null(self$`computing`)) {
         AlignedFeatureObject[["computing"]] <-
