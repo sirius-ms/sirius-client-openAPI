@@ -69,7 +69,7 @@
     #' @return {{{classname}}} in JSON format
     #' @export
     toJSONString = function() {
-        jsonlite::toJSON(private$value, auto_unbox = TRUE)
+      jsonlite::toJSON(private$value, auto_unbox = TRUE)
     },
     #' Deserialize JSON string into an instance of {{{classname}}}
     #'
