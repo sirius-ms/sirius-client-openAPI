@@ -22,8 +22,7 @@ import re
 import tempfile
 
 from urllib.parse import quote
-from typing import Tuple, Optional, List, Dict, Union
-from pydantic import SecretStr
+from typing import Tuple, Optional, List, Dict
 
 from PySirius.configuration import Configuration
 from PySirius.api_response import ApiResponse, T as ApiResponseT
@@ -208,8 +207,7 @@ class ApiClient:
                 post_params,
                 collection_formats
             )
-            if files:
-                post_params.extend(self.files_parameters(files))
+            post_params.extend(self.files_parameters(files))
 
         # auth setting
         self.update_params_for_auth(
@@ -314,10 +312,7 @@ class ApiClient:
                     match = re.search(r"charset=([a-zA-Z\-\d]+)[\s;]?", content_type)
                 encoding = match.group(1) if match else "utf-8"
                 response_text = response_data.data.decode(encoding)
-                if response_type in ["bytearray", "str"]:
-                    return_data = self.__deserialize_primitive(response_text, response_type)
-                else:
-                    return_data = self.deserialize(response_text, response_type)
+                return_data = self.deserialize(response_text, response_type)
         finally:
             if not 200 <= response_data.status <= 299:
                 raise ApiException.from_response(
@@ -337,7 +332,6 @@ class ApiClient:
         """Builds a JSON POST object.
 
         If obj is None, return None.
-        If obj is SecretStr, return obj.get_secret_value()
         If obj is str, int, long, float, bool, return directly.
         If obj is datetime.datetime, datetime.date
             convert to string in iso8601 format.
@@ -350,8 +344,6 @@ class ApiClient:
         """
         if obj is None:
             return None
-        elif isinstance(obj, SecretStr):
-            return obj.get_secret_value()
         elif isinstance(obj, self.PRIMITIVE_TYPES):
             return obj
         elif isinstance(obj, list):
@@ -373,10 +365,7 @@ class ApiClient:
             # and attributes which value is not None.
             # Convert attribute name to json key in
             # model definition for request.
-            if hasattr(obj, 'to_dict') and callable(getattr(obj, 'to_dict')):
-                obj_dict = obj.to_dict()
-            else:
-                obj_dict = obj.__dict__
+            obj_dict = obj.to_dict()
 
         return {
             key: self.sanitize_for_serialization(val)
@@ -515,30 +504,31 @@ class ApiClient:
 
         return "&".join(["=".join(map(str, item)) for item in new_params])
 
-    def files_parameters(self, files: Dict[str, Union[str, bytes]]):
+    def files_parameters(self, files=None):
         """Builds form parameters.
 
         :param files: File parameters.
         :return: Form parameters with files.
         """
         params = []
-        for k, v in files.items():
-            if isinstance(v, str):
-                with open(v, 'rb') as f:
-                    filename = os.path.basename(f.name)
-                    filedata = f.read()
-            elif isinstance(v, bytes):
-                filename = k
-                filedata = v
-            else:
-                raise ValueError("Unsupported file value")
-            mimetype = (
-                mimetypes.guess_type(filename)[0]
-                or 'application/octet-stream'
-            )
-            params.append(
-                tuple([k, tuple([filename, filedata, mimetype])])
-            )
+
+        if files:
+            for k, v in files.items():
+                if not v:
+                    continue
+                file_names = v if type(v) is list else [v]
+                for n in file_names:
+                    with open(n, 'rb') as f:
+                        filename = os.path.basename(f.name)
+                        filedata = f.read()
+                        mimetype = (
+                            mimetypes.guess_type(filename)[0]
+                            or 'application/octet-stream'
+                        )
+                        params.append(
+                            tuple([k, tuple([filename, filedata, mimetype])])
+                        )
+
         return params
 
     def select_header_accept(self, accepts: List[str]) -> Optional[str]:
