@@ -26,7 +26,7 @@ class DBLink(BaseModel):
     """
     DBLink
     """ # noqa: E501
-    name: Optional[StrictStr] = None
+    name: StrictStr
     id: Optional[StrictStr] = None
     __properties: ClassVar[List[str]] = ["name", "id"]
 

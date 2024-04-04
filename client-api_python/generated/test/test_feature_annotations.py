@@ -195,7 +195,7 @@ class TestFeatureAnnotations(unittest.TestCase):
                             query_spectrum_index = 56, 
                             db_name = '', 
                             db_id = '', 
-                            uuid = '', 
+                            uuid = 56, 
                             splash = '', 
                             molecular_formula = '', 
                             adduct = '', 
@@ -217,8 +217,7 @@ class TestFeatureAnnotations(unittest.TestCase):
                         ], 
                     csi_score = 1.337, 
                     tanimoto_similarity = 1.337, 
-                    confidence_exact_match = 1.337, 
-                    confidence_approx_match = 1.337, 
+                    mces_dist_to_top_hit = 1.337, 
                     fingerprint = PySirius.models.binary_fingerprint.BinaryFingerprint(
                         bits_set = [
                             56
@@ -246,7 +245,10 @@ class TestFeatureAnnotations(unittest.TestCase):
                         ], 
                     classy_fire_alternatives = [
                         
-                        ], )
+                        ], ),
+                confidence_exact_match = 1.337,
+                confidence_approx_match = 1.337,
+                expansive_search_state = 'OFF'
             )
         else:
             return FeatureAnnotations(

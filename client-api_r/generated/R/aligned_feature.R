@@ -9,7 +9,6 @@
 #' @format An \code{R6Class} generator object
 #' @field alignedFeatureId  character [optional]
 #' @field name  character [optional]
-#' @field index  integer [optional]
 #' @field ionMass  numeric [optional]
 #' @field adduct  character [optional]
 #' @field rtStartSeconds  numeric [optional]
@@ -26,7 +25,6 @@ AlignedFeature <- R6::R6Class(
   public = list(
     `alignedFeatureId` = NULL,
     `name` = NULL,
-    `index` = NULL,
     `ionMass` = NULL,
     `adduct` = NULL,
     `rtStartSeconds` = NULL,
@@ -42,7 +40,6 @@ AlignedFeature <- R6::R6Class(
     #'
     #' @param alignedFeatureId alignedFeatureId
     #' @param name name
-    #' @param index index
     #' @param ionMass ionMass
     #' @param adduct adduct
     #' @param rtStartSeconds rtStartSeconds
@@ -53,7 +50,7 @@ AlignedFeature <- R6::R6Class(
     #' @param computing Write lock for this feature. If the feature is locked no write operations are possible.  True if any computation is modifying this feature or its results
     #' @param ... Other optional arguments.
     #' @export
-    initialize = function(`alignedFeatureId` = NULL, `name` = NULL, `index` = NULL, `ionMass` = NULL, `adduct` = NULL, `rtStartSeconds` = NULL, `rtEndSeconds` = NULL, `msData` = NULL, `topAnnotations` = NULL, `topAnnotationsDeNovo` = NULL, `computing` = NULL, ...) {
+    initialize = function(`alignedFeatureId` = NULL, `name` = NULL, `ionMass` = NULL, `adduct` = NULL, `rtStartSeconds` = NULL, `rtEndSeconds` = NULL, `msData` = NULL, `topAnnotations` = NULL, `topAnnotationsDeNovo` = NULL, `computing` = NULL, ...) {
       if (!is.null(`alignedFeatureId`)) {
         if (!(is.character(`alignedFeatureId`) && length(`alignedFeatureId`) == 1)) {
           stop(paste("Error! Invalid data for `alignedFeatureId`. Must be a string:", `alignedFeatureId`))
@@ -65,12 +62,6 @@ AlignedFeature <- R6::R6Class(
           stop(paste("Error! Invalid data for `name`. Must be a string:", `name`))
         }
         self$`name` <- `name`
-      }
-      if (!is.null(`index`)) {
-        if (!(is.numeric(`index`) && length(`index`) == 1)) {
-          stop(paste("Error! Invalid data for `index`. Must be an integer:", `index`))
-        }
-        self$`index` <- `index`
       }
       if (!is.null(`ionMass`)) {
         if (!(is.numeric(`ionMass`) && length(`ionMass`) == 1)) {
@@ -131,10 +122,6 @@ AlignedFeature <- R6::R6Class(
       if (!is.null(self$`name`)) {
         AlignedFeatureObject[["name"]] <-
           self$`name`
-      }
-      if (!is.null(self$`index`)) {
-        AlignedFeatureObject[["index"]] <-
-          self$`index`
       }
       if (!is.null(self$`ionMass`)) {
         AlignedFeatureObject[["ionMass"]] <-
@@ -198,9 +185,6 @@ AlignedFeature <- R6::R6Class(
       if (!is.null(this_object$`name`)) {
         self$`name` <- this_object$`name`
       }
-      if (!is.null(this_object$`index`)) {
-        self$`index` <- this_object$`index`
-      }
       if (!is.null(this_object$`ionMass`)) {
         self$`ionMass` <- this_object$`ionMass`
       }
@@ -256,14 +240,6 @@ AlignedFeature <- R6::R6Class(
             "%s"
                     ',
           self$`name`
-          )
-        },
-        if (!is.null(self$`index`)) {
-          sprintf(
-          '"index":
-            %d
-                    ',
-          self$`index`
           )
         },
         if (!is.null(self$`ionMass`)) {
@@ -346,7 +322,6 @@ AlignedFeature <- R6::R6Class(
       this_object <- jsonlite::fromJSON(input_json)
       self$`alignedFeatureId` <- this_object$`alignedFeatureId`
       self$`name` <- this_object$`name`
-      self$`index` <- this_object$`index`
       self$`ionMass` <- this_object$`ionMass`
       self$`adduct` <- this_object$`adduct`
       self$`rtStartSeconds` <- this_object$`rtStartSeconds`

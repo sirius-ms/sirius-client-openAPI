@@ -30,7 +30,6 @@ class AlignedFeature(BaseModel):
     """ # noqa: E501
     aligned_feature_id: Optional[StrictStr] = Field(default=None, alias="alignedFeatureId")
     name: Optional[StrictStr] = None
-    index: Optional[StrictInt] = None
     ion_mass: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="ionMass")
     adduct: Optional[StrictStr] = None
     rt_start_seconds: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="rtStartSeconds")
@@ -39,7 +38,7 @@ class AlignedFeature(BaseModel):
     top_annotations: Optional[FeatureAnnotations] = Field(default=None, alias="topAnnotations")
     top_annotations_de_novo: Optional[FeatureAnnotations] = Field(default=None, alias="topAnnotationsDeNovo")
     computing: Optional[StrictBool] = Field(default=None, description="Write lock for this feature. If the feature is locked no write operations are possible.  True if any computation is modifying this feature or its results")
-    __properties: ClassVar[List[str]] = ["alignedFeatureId", "name", "index", "ionMass", "adduct", "rtStartSeconds", "rtEndSeconds", "msData", "topAnnotations", "topAnnotationsDeNovo", "computing"]
+    __properties: ClassVar[List[str]] = ["alignedFeatureId", "name", "ionMass", "adduct", "rtStartSeconds", "rtEndSeconds", "msData", "topAnnotations", "topAnnotationsDeNovo", "computing"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -128,7 +127,6 @@ class AlignedFeature(BaseModel):
         _obj = cls.model_validate({
             "alignedFeatureId": obj.get("alignedFeatureId"),
             "name": obj.get("name"),
-            "index": obj.get("index"),
             "ionMass": obj.get("ionMass"),
             "adduct": obj.get("adduct"),
             "rtStartSeconds": obj.get("rtStartSeconds"),

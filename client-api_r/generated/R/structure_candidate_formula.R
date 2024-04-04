@@ -13,12 +13,11 @@
 #' @field xlogP  numeric [optional]
 #' @field dbLinks List of structure database links belonging to this structure candidate  OPTIONAL: needs to be added by parameter list(\link{DBLink}) [optional]
 #' @field spectralLibraryMatches List of spectral library matches belonging to this structure candidate  OPTIONAL: needs to be added by parameter list(\link{SpectralLibraryMatch}) [optional]
-#' @field csiScore  numeric [optional]
-#' @field tanimotoSimilarity  numeric [optional]
-#' @field confidenceExactMatch  numeric [optional]
-#' @field confidenceApproxMatch  numeric [optional]
+#' @field csiScore CSI:FingerID score of the fingerprint of this compound to the predicted fingerprint of CSI:FingerID  This is the score used for ranking structure candidates numeric [optional]
+#' @field tanimotoSimilarity Tanimoto similarly of the fingerprint of this compound to the predicted fingerprint of CSI:FingerID numeric [optional]
+#' @field mcesDistToTopHit Maximum Common Edge Subgraph (MCES) distance to the top scoring hit (CSI:FingerID) in a candidate list. numeric [optional]
 #' @field fingerprint  \link{BinaryFingerprint} [optional]
-#' @field molecularFormula molecular formula of this candidate character [optional]
+#' @field molecularFormula Molecular formula of this candidate character [optional]
 #' @field adduct Adduct of this candidate character [optional]
 #' @field formulaId Id of the corresponding Formula candidate character [optional]
 #' @importFrom R6 R6Class
@@ -35,8 +34,7 @@ StructureCandidateFormula <- R6::R6Class(
     `spectralLibraryMatches` = NULL,
     `csiScore` = NULL,
     `tanimotoSimilarity` = NULL,
-    `confidenceExactMatch` = NULL,
-    `confidenceApproxMatch` = NULL,
+    `mcesDistToTopHit` = NULL,
     `fingerprint` = NULL,
     `molecularFormula` = NULL,
     `adduct` = NULL,
@@ -52,17 +50,16 @@ StructureCandidateFormula <- R6::R6Class(
     #' @param xlogP xlogP
     #' @param dbLinks List of structure database links belonging to this structure candidate  OPTIONAL: needs to be added by parameter
     #' @param spectralLibraryMatches List of spectral library matches belonging to this structure candidate  OPTIONAL: needs to be added by parameter
-    #' @param csiScore csiScore
-    #' @param tanimotoSimilarity tanimotoSimilarity
-    #' @param confidenceExactMatch confidenceExactMatch
-    #' @param confidenceApproxMatch confidenceApproxMatch
+    #' @param csiScore CSI:FingerID score of the fingerprint of this compound to the predicted fingerprint of CSI:FingerID  This is the score used for ranking structure candidates
+    #' @param tanimotoSimilarity Tanimoto similarly of the fingerprint of this compound to the predicted fingerprint of CSI:FingerID
+    #' @param mcesDistToTopHit Maximum Common Edge Subgraph (MCES) distance to the top scoring hit (CSI:FingerID) in a candidate list.
     #' @param fingerprint fingerprint
-    #' @param molecularFormula molecular formula of this candidate
+    #' @param molecularFormula Molecular formula of this candidate
     #' @param adduct Adduct of this candidate
     #' @param formulaId Id of the corresponding Formula candidate
     #' @param ... Other optional arguments.
     #' @export
-    initialize = function(`inchiKey` = NULL, `smiles` = NULL, `structureName` = NULL, `xlogP` = NULL, `dbLinks` = NULL, `spectralLibraryMatches` = NULL, `csiScore` = NULL, `tanimotoSimilarity` = NULL, `confidenceExactMatch` = NULL, `confidenceApproxMatch` = NULL, `fingerprint` = NULL, `molecularFormula` = NULL, `adduct` = NULL, `formulaId` = NULL, ...) {
+    initialize = function(`inchiKey` = NULL, `smiles` = NULL, `structureName` = NULL, `xlogP` = NULL, `dbLinks` = NULL, `spectralLibraryMatches` = NULL, `csiScore` = NULL, `tanimotoSimilarity` = NULL, `mcesDistToTopHit` = NULL, `fingerprint` = NULL, `molecularFormula` = NULL, `adduct` = NULL, `formulaId` = NULL, ...) {
       if (!is.null(`inchiKey`)) {
         if (!(is.character(`inchiKey`) && length(`inchiKey`) == 1)) {
           stop(paste("Error! Invalid data for `inchiKey`. Must be a string:", `inchiKey`))
@@ -109,17 +106,11 @@ StructureCandidateFormula <- R6::R6Class(
         }
         self$`tanimotoSimilarity` <- `tanimotoSimilarity`
       }
-      if (!is.null(`confidenceExactMatch`)) {
-        if (!(is.numeric(`confidenceExactMatch`) && length(`confidenceExactMatch`) == 1)) {
-          stop(paste("Error! Invalid data for `confidenceExactMatch`. Must be a number:", `confidenceExactMatch`))
+      if (!is.null(`mcesDistToTopHit`)) {
+        if (!(is.numeric(`mcesDistToTopHit`) && length(`mcesDistToTopHit`) == 1)) {
+          stop(paste("Error! Invalid data for `mcesDistToTopHit`. Must be a number:", `mcesDistToTopHit`))
         }
-        self$`confidenceExactMatch` <- `confidenceExactMatch`
-      }
-      if (!is.null(`confidenceApproxMatch`)) {
-        if (!(is.numeric(`confidenceApproxMatch`) && length(`confidenceApproxMatch`) == 1)) {
-          stop(paste("Error! Invalid data for `confidenceApproxMatch`. Must be a number:", `confidenceApproxMatch`))
-        }
-        self$`confidenceApproxMatch` <- `confidenceApproxMatch`
+        self$`mcesDistToTopHit` <- `mcesDistToTopHit`
       }
       if (!is.null(`fingerprint`)) {
         stopifnot(R6::is.R6(`fingerprint`))
@@ -185,13 +176,9 @@ StructureCandidateFormula <- R6::R6Class(
         StructureCandidateFormulaObject[["tanimotoSimilarity"]] <-
           self$`tanimotoSimilarity`
       }
-      if (!is.null(self$`confidenceExactMatch`)) {
-        StructureCandidateFormulaObject[["confidenceExactMatch"]] <-
-          self$`confidenceExactMatch`
-      }
-      if (!is.null(self$`confidenceApproxMatch`)) {
-        StructureCandidateFormulaObject[["confidenceApproxMatch"]] <-
-          self$`confidenceApproxMatch`
+      if (!is.null(self$`mcesDistToTopHit`)) {
+        StructureCandidateFormulaObject[["mcesDistToTopHit"]] <-
+          self$`mcesDistToTopHit`
       }
       if (!is.null(self$`fingerprint`)) {
         StructureCandidateFormulaObject[["fingerprint"]] <-
@@ -249,11 +236,8 @@ StructureCandidateFormula <- R6::R6Class(
       if (!is.null(this_object$`tanimotoSimilarity`)) {
         self$`tanimotoSimilarity` <- this_object$`tanimotoSimilarity`
       }
-      if (!is.null(this_object$`confidenceExactMatch`)) {
-        self$`confidenceExactMatch` <- this_object$`confidenceExactMatch`
-      }
-      if (!is.null(this_object$`confidenceApproxMatch`)) {
-        self$`confidenceApproxMatch` <- this_object$`confidenceApproxMatch`
+      if (!is.null(this_object$`mcesDistToTopHit`)) {
+        self$`mcesDistToTopHit` <- this_object$`mcesDistToTopHit`
       }
       if (!is.null(this_object$`fingerprint`)) {
         `fingerprint_object` <- BinaryFingerprint$new()
@@ -344,20 +328,12 @@ StructureCandidateFormula <- R6::R6Class(
           self$`tanimotoSimilarity`
           )
         },
-        if (!is.null(self$`confidenceExactMatch`)) {
+        if (!is.null(self$`mcesDistToTopHit`)) {
           sprintf(
-          '"confidenceExactMatch":
+          '"mcesDistToTopHit":
             %d
                     ',
-          self$`confidenceExactMatch`
-          )
-        },
-        if (!is.null(self$`confidenceApproxMatch`)) {
-          sprintf(
-          '"confidenceApproxMatch":
-            %d
-                    ',
-          self$`confidenceApproxMatch`
+          self$`mcesDistToTopHit`
           )
         },
         if (!is.null(self$`fingerprint`)) {
@@ -414,8 +390,7 @@ StructureCandidateFormula <- R6::R6Class(
       self$`spectralLibraryMatches` <- ApiClient$new()$deserializeObj(this_object$`spectralLibraryMatches`, "array[SpectralLibraryMatch]", loadNamespace("Rsirius"))
       self$`csiScore` <- this_object$`csiScore`
       self$`tanimotoSimilarity` <- this_object$`tanimotoSimilarity`
-      self$`confidenceExactMatch` <- this_object$`confidenceExactMatch`
-      self$`confidenceApproxMatch` <- this_object$`confidenceApproxMatch`
+      self$`mcesDistToTopHit` <- this_object$`mcesDistToTopHit`
       self$`fingerprint` <- BinaryFingerprint$new()$fromJSON(jsonlite::toJSON(this_object$`fingerprint`, auto_unbox = TRUE, digits = NA))
       self$`molecularFormula` <- this_object$`molecularFormula`
       self$`adduct` <- this_object$`adduct`

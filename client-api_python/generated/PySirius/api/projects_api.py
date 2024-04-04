@@ -611,6 +611,7 @@ class ProjectsApi:
         self,
         project_id: Annotated[StrictStr, Field(description="unique name/identifier that shall be used to access the newly created project-space. Must consist only of [a-zA-Z0-9_-].")],
         path_to_project: Annotated[Optional[StrictStr], Field(description="local file path where the project will be created. If NULL, project will be stored by its projectId in default project location. DEPRECATED: This parameter relies on the local filesystem and will likely be removed in later versions of this API to allow for more flexible use cases.")] = None,
+        opt_fields: Optional[List[Optional[ProjectInfoOptField]]] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -632,6 +633,8 @@ class ProjectsApi:
         :type project_id: str
         :param path_to_project: local file path where the project will be created. If NULL, project will be stored by its projectId in default project location. DEPRECATED: This parameter relies on the local filesystem and will likely be removed in later versions of this API to allow for more flexible use cases.
         :type path_to_project: str
+        :param opt_fields:
+        :type opt_fields: List[ProjectInfoOptField]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -657,6 +660,7 @@ class ProjectsApi:
         _param = self._create_project_space_serialize(
             project_id=project_id,
             path_to_project=path_to_project,
+            opt_fields=opt_fields,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -682,6 +686,7 @@ class ProjectsApi:
         self,
         project_id: Annotated[StrictStr, Field(description="unique name/identifier that shall be used to access the newly created project-space. Must consist only of [a-zA-Z0-9_-].")],
         path_to_project: Annotated[Optional[StrictStr], Field(description="local file path where the project will be created. If NULL, project will be stored by its projectId in default project location. DEPRECATED: This parameter relies on the local filesystem and will likely be removed in later versions of this API to allow for more flexible use cases.")] = None,
+        opt_fields: Optional[List[Optional[ProjectInfoOptField]]] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -703,6 +708,8 @@ class ProjectsApi:
         :type project_id: str
         :param path_to_project: local file path where the project will be created. If NULL, project will be stored by its projectId in default project location. DEPRECATED: This parameter relies on the local filesystem and will likely be removed in later versions of this API to allow for more flexible use cases.
         :type path_to_project: str
+        :param opt_fields:
+        :type opt_fields: List[ProjectInfoOptField]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -728,6 +735,7 @@ class ProjectsApi:
         _param = self._create_project_space_serialize(
             project_id=project_id,
             path_to_project=path_to_project,
+            opt_fields=opt_fields,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -753,6 +761,7 @@ class ProjectsApi:
         self,
         project_id: Annotated[StrictStr, Field(description="unique name/identifier that shall be used to access the newly created project-space. Must consist only of [a-zA-Z0-9_-].")],
         path_to_project: Annotated[Optional[StrictStr], Field(description="local file path where the project will be created. If NULL, project will be stored by its projectId in default project location. DEPRECATED: This parameter relies on the local filesystem and will likely be removed in later versions of this API to allow for more flexible use cases.")] = None,
+        opt_fields: Optional[List[Optional[ProjectInfoOptField]]] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -774,6 +783,8 @@ class ProjectsApi:
         :type project_id: str
         :param path_to_project: local file path where the project will be created. If NULL, project will be stored by its projectId in default project location. DEPRECATED: This parameter relies on the local filesystem and will likely be removed in later versions of this API to allow for more flexible use cases.
         :type path_to_project: str
+        :param opt_fields:
+        :type opt_fields: List[ProjectInfoOptField]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -799,6 +810,7 @@ class ProjectsApi:
         _param = self._create_project_space_serialize(
             project_id=project_id,
             path_to_project=path_to_project,
+            opt_fields=opt_fields,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -819,6 +831,7 @@ class ProjectsApi:
         self,
         project_id,
         path_to_project,
+        opt_fields,
         _request_auth,
         _content_type,
         _headers,
@@ -828,6 +841,7 @@ class ProjectsApi:
         _host = None
 
         _collection_formats: Dict[str, str] = {
+            'optFields': 'multi',
         }
 
         _path_params: Dict[str, str] = {}
@@ -844,6 +858,10 @@ class ProjectsApi:
         if path_to_project is not None:
             
             _query_params.append(('pathToProject', path_to_project))
+            
+        if opt_fields is not None:
+            
+            _query_params.append(('optFields', opt_fields))
             
         # process the header parameters
         # process the form parameters

@@ -27,10 +27,3 @@ test_that("command", {
   # uncomment below to test the property
   #expect_equal(model.instance$`command`, "EXPECTED_RESULT")
 })
-
-test_that("inputPaths", {
-  # tests for the property `inputPaths` (array[character])
-
-  # uncomment below to test the property
-  #expect_equal(model.instance$`inputPaths`, "EXPECTED_RESULT")
-})

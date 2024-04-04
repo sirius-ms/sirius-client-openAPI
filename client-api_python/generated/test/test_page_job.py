@@ -62,6 +62,7 @@ class TestPageJob(unittest.TestCase):
                     empty = True, 
                     sorted = True, 
                     unsorted = True, ),
+                number_of_elements = 56,
                 pageable = PySirius.models.pageable_object.PageableObject(
                     offset = 56, 
                     sort = PySirius.models.sort_object.SortObject(
@@ -73,7 +74,6 @@ class TestPageJob(unittest.TestCase):
                     paged = True, 
                     unpaged = True, ),
                 last = True,
-                number_of_elements = 56,
                 empty = True
             )
         else:

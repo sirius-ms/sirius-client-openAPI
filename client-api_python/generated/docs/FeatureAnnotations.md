@@ -9,6 +9,9 @@ Name | Type | Description | Notes
 **formula_annotation** | [**FormulaCandidate**](FormulaCandidate.md) |  | [optional] 
 **structure_annotation** | [**StructureCandidateScored**](StructureCandidateScored.md) |  | [optional] 
 **compound_class_annotation** | [**CompoundClasses**](CompoundClasses.md) |  | [optional] 
+**confidence_exact_match** | **float** | Confidence Score that represents the confidence whether the top hit is correct. | [optional] 
+**confidence_approx_match** | **float** | Confidence Score that represents the confidence whether the top hit or a very similar hit (estimated by MCES distance) is correct. | [optional] 
+**expansive_search_state** | [**Mode**](Mode.md) |  | [optional] 
 
 ## Example
 

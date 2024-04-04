@@ -438,7 +438,7 @@
 #'
 #' library(Rsirius)
 #' var_project_id <- "project_id_example" # character | project-space to perform the command for.
-#' var_command_submission <- CommandSubmission$new(c("command_example"), c("compoundIds_example"), c("alignedFeatureIds_example"), c("inputPaths_example")) # CommandSubmission | the command and the input to be executed
+#' var_command_submission <- CommandSubmission$new(c("command_example"), c("compoundIds_example"), c("alignedFeatureIds_example")) # CommandSubmission | the command and the input to be executed
 #' var_opt_fields <- c(JobOptField$new()) # array[JobOptField] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
 #'
 #' #Start computation for given command and input.

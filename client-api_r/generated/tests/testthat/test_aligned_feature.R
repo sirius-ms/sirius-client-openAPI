@@ -19,13 +19,6 @@ test_that("name", {
   #expect_equal(model.instance$`name`, "EXPECTED_RESULT")
 })
 
-test_that("index", {
-  # tests for the property `index` (integer)
-
-  # uncomment below to test the property
-  #expect_equal(model.instance$`index`, "EXPECTED_RESULT")
-})
-
 test_that("ionMass", {
   # tests for the property `ionMass` (numeric)
 

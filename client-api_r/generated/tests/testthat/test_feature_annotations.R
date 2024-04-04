@@ -25,3 +25,26 @@ test_that("compoundClassAnnotation", {
   # uncomment below to test the property
   #expect_equal(model.instance$`compoundClassAnnotation`, "EXPECTED_RESULT")
 })
+
+test_that("confidenceExactMatch", {
+  # tests for the property `confidenceExactMatch` (numeric)
+  # Confidence Score that represents the confidence whether the top hit is correct.
+
+  # uncomment below to test the property
+  #expect_equal(model.instance$`confidenceExactMatch`, "EXPECTED_RESULT")
+})
+
+test_that("confidenceApproxMatch", {
+  # tests for the property `confidenceApproxMatch` (numeric)
+  # Confidence Score that represents the confidence whether the top hit or a very similar hit (estimated by MCES distance) is correct.
+
+  # uncomment below to test the property
+  #expect_equal(model.instance$`confidenceApproxMatch`, "EXPECTED_RESULT")
+})
+
+test_that("expansiveSearchState", {
+  # tests for the property `expansiveSearchState` (Mode)
+
+  # uncomment below to test the property
+  #expect_equal(model.instance$`expansiveSearchState`, "EXPECTED_RESULT")
+})

@@ -8,7 +8,6 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **aligned_feature_id** | **str** |  | [optional] 
 **name** | **str** |  | [optional] 
-**index** | **int** |  | [optional] 
 **ion_mass** | **float** |  | [optional] 
 **adduct** | **str** |  | [optional] 
 **rt_start_seconds** | **float** |  | [optional] 

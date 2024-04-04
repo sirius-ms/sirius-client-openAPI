@@ -431,7 +431,7 @@
 #' \item \emph{ @param } formula_id character
 #'
 #'
-#' \item status code : 200 | Fragmentation Tree in internal format.   NOTE: This endpoint is likely to be removed in future versions of the API.
+#' \item status code : 200 | Fragmentation Tree in internal format.  <p>  NOTE: This endpoint is likely to be removed in future versions of the API.
 #'
 #' \item return type : character
 #' \item response headers :

@@ -54,6 +54,13 @@ test_that("sort", {
   #expect_equal(model.instance$`sort`, "EXPECTED_RESULT")
 })
 
+test_that("numberOfElements", {
+  # tests for the property `numberOfElements` (integer)
+
+  # uncomment below to test the property
+  #expect_equal(model.instance$`numberOfElements`, "EXPECTED_RESULT")
+})
+
 test_that("pageable", {
   # tests for the property `pageable` (PageableObject)
 
@@ -66,13 +73,6 @@ test_that("last", {
 
   # uncomment below to test the property
   #expect_equal(model.instance$`last`, "EXPECTED_RESULT")
-})
-
-test_that("numberOfElements", {
-  # tests for the property `numberOfElements` (integer)
-
-  # uncomment below to test the property
-  #expect_equal(model.instance$`numberOfElements`, "EXPECTED_RESULT")
 })
 
 test_that("empty", {

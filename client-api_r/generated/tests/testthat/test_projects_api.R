@@ -39,6 +39,7 @@ test_that("CreateProjectSpace", {
   # Create and open a new project-space at given location and make it accessible via the given projectId.
   # @param project_id character unique name/identifier that shall be used to access the newly created project-space. Must consist only of [a-zA-Z0-9_-].
   # @param path_to_project character local file path where the project will be created. If NULL, project will be stored by its projectId in default project location. DEPRECATED: This parameter relies on the local filesystem and will likely be removed in later versions of this API to allow for more flexible use cases. (optional)
+  # @param opt_fields array[ProjectInfoOptField]  (optional)
   # @return [ProjectInfo]
 
   # uncomment below to test the operation

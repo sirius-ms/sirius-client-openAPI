@@ -1647,7 +1647,7 @@ No authorization required
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Fragmentation Tree in internal format.   NOTE: This endpoint is likely to be removed in future versions of the API. |  -  |
+**200** | Fragmentation Tree in internal format.  &lt;p&gt;  NOTE: This endpoint is likely to be removed in future versions of the API. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

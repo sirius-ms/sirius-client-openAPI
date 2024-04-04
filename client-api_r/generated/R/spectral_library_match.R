@@ -12,7 +12,7 @@
 #' @field querySpectrumIndex  integer
 #' @field dbName  character [optional]
 #' @field dbId  character [optional]
-#' @field uuid  character
+#' @field uuid  integer
 #' @field splash  character [optional]
 #' @field molecularFormula  character [optional]
 #' @field adduct  character [optional]
@@ -73,8 +73,8 @@ SpectralLibraryMatch <- R6::R6Class(
         self$`querySpectrumIndex` <- `querySpectrumIndex`
       }
       if (!missing(`uuid`)) {
-        if (!(is.character(`uuid`) && length(`uuid`) == 1)) {
-          stop(paste("Error! Invalid data for `uuid`. Must be a string:", `uuid`))
+        if (!(is.numeric(`uuid`) && length(`uuid`) == 1)) {
+          stop(paste("Error! Invalid data for `uuid`. Must be an integer:", `uuid`))
         }
         self$`uuid` <- `uuid`
       }
@@ -309,7 +309,7 @@ SpectralLibraryMatch <- R6::R6Class(
         if (!is.null(self$`uuid`)) {
           sprintf(
           '"uuid":
-            "%s"
+            %d
                     ',
           self$`uuid`
           )
@@ -426,8 +426,8 @@ SpectralLibraryMatch <- R6::R6Class(
       }
       # check the required field `uuid`
       if (!is.null(input_json$`uuid`)) {
-        if (!(is.character(input_json$`uuid`) && length(input_json$`uuid`) == 1)) {
-          stop(paste("Error! Invalid data for `uuid`. Must be a string:", input_json$`uuid`))
+        if (!(is.numeric(input_json$`uuid`) && length(input_json$`uuid`) == 1)) {
+          stop(paste("Error! Invalid data for `uuid`. Must be an integer:", input_json$`uuid`))
         }
       } else {
         stop(paste("The JSON input `", input, "` is invalid for SpectralLibraryMatch: the required field `uuid` is missing."))

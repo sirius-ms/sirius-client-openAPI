@@ -35,15 +35,14 @@ class StructureCandidateFormula(BaseModel):
     xlog_p: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="xlogP")
     db_links: Optional[List[Optional[DBLink]]] = Field(default=None, description="List of structure database links belonging to this structure candidate  OPTIONAL: needs to be added by parameter", alias="dbLinks")
     spectral_library_matches: Optional[List[Optional[SpectralLibraryMatch]]] = Field(default=None, description="List of spectral library matches belonging to this structure candidate  OPTIONAL: needs to be added by parameter", alias="spectralLibraryMatches")
-    csi_score: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="csiScore")
-    tanimoto_similarity: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="tanimotoSimilarity")
-    confidence_exact_match: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="confidenceExactMatch")
-    confidence_approx_match: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="confidenceApproxMatch")
+    csi_score: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="CSI:FingerID score of the fingerprint of this compound to the predicted fingerprint of CSI:FingerID  This is the score used for ranking structure candidates", alias="csiScore")
+    tanimoto_similarity: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Tanimoto similarly of the fingerprint of this compound to the predicted fingerprint of CSI:FingerID", alias="tanimotoSimilarity")
+    mces_dist_to_top_hit: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Maximum Common Edge Subgraph (MCES) distance to the top scoring hit (CSI:FingerID) in a candidate list.", alias="mcesDistToTopHit")
     fingerprint: Optional[BinaryFingerprint] = None
-    molecular_formula: Optional[StrictStr] = Field(default=None, description="molecular formula of this candidate", alias="molecularFormula")
+    molecular_formula: Optional[StrictStr] = Field(default=None, description="Molecular formula of this candidate", alias="molecularFormula")
     adduct: Optional[StrictStr] = Field(default=None, description="Adduct of this candidate")
     formula_id: Optional[StrictStr] = Field(default=None, description="Id of the corresponding Formula candidate", alias="formulaId")
-    __properties: ClassVar[List[str]] = ["inchiKey", "smiles", "structureName", "xlogP", "dbLinks", "spectralLibraryMatches", "csiScore", "tanimotoSimilarity", "confidenceExactMatch", "confidenceApproxMatch", "fingerprint", "molecularFormula", "adduct", "formulaId"]
+    __properties: ClassVar[List[str]] = ["inchiKey", "smiles", "structureName", "xlogP", "dbLinks", "spectralLibraryMatches", "csiScore", "tanimotoSimilarity", "mcesDistToTopHit", "fingerprint", "molecularFormula", "adduct", "formulaId"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -126,15 +125,10 @@ class StructureCandidateFormula(BaseModel):
         if self.tanimoto_similarity is None and "tanimoto_similarity" in self.model_fields_set:
             _dict['tanimotoSimilarity'] = None
 
-        # set to None if confidence_exact_match (nullable) is None
+        # set to None if mces_dist_to_top_hit (nullable) is None
         # and model_fields_set contains the field
-        if self.confidence_exact_match is None and "confidence_exact_match" in self.model_fields_set:
-            _dict['confidenceExactMatch'] = None
-
-        # set to None if confidence_approx_match (nullable) is None
-        # and model_fields_set contains the field
-        if self.confidence_approx_match is None and "confidence_approx_match" in self.model_fields_set:
-            _dict['confidenceApproxMatch'] = None
+        if self.mces_dist_to_top_hit is None and "mces_dist_to_top_hit" in self.model_fields_set:
+            _dict['mcesDistToTopHit'] = None
 
         # set to None if fingerprint (nullable) is None
         # and model_fields_set contains the field
@@ -161,8 +155,7 @@ class StructureCandidateFormula(BaseModel):
             "spectralLibraryMatches": [SpectralLibraryMatch.from_dict(_item) for _item in obj["spectralLibraryMatches"]] if obj.get("spectralLibraryMatches") is not None else None,
             "csiScore": obj.get("csiScore"),
             "tanimotoSimilarity": obj.get("tanimotoSimilarity"),
-            "confidenceExactMatch": obj.get("confidenceExactMatch"),
-            "confidenceApproxMatch": obj.get("confidenceApproxMatch"),
+            "mcesDistToTopHit": obj.get("mcesDistToTopHit"),
             "fingerprint": BinaryFingerprint.from_dict(obj["fingerprint"]) if obj.get("fingerprint") is not None else None,
             "molecularFormula": obj.get("molecularFormula"),
             "adduct": obj.get("adduct"),

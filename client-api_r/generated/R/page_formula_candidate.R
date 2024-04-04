@@ -14,9 +14,9 @@
 #' @field content  list(\link{FormulaCandidate}) [optional]
 #' @field number  integer [optional]
 #' @field sort  \link{SortObject} [optional]
+#' @field numberOfElements  integer [optional]
 #' @field pageable  \link{PageableObject} [optional]
 #' @field last  character [optional]
-#' @field numberOfElements  integer [optional]
 #' @field empty  character [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
@@ -31,9 +31,9 @@ PageFormulaCandidate <- R6::R6Class(
     `content` = NULL,
     `number` = NULL,
     `sort` = NULL,
+    `numberOfElements` = NULL,
     `pageable` = NULL,
     `last` = NULL,
-    `numberOfElements` = NULL,
     `empty` = NULL,
     #' Initialize a new PageFormulaCandidate class.
     #'
@@ -47,13 +47,13 @@ PageFormulaCandidate <- R6::R6Class(
     #' @param content content
     #' @param number number
     #' @param sort sort
+    #' @param numberOfElements numberOfElements
     #' @param pageable pageable
     #' @param last last
-    #' @param numberOfElements numberOfElements
     #' @param empty empty
     #' @param ... Other optional arguments.
     #' @export
-    initialize = function(`totalPages` = NULL, `totalElements` = NULL, `first` = NULL, `size` = NULL, `content` = NULL, `number` = NULL, `sort` = NULL, `pageable` = NULL, `last` = NULL, `numberOfElements` = NULL, `empty` = NULL, ...) {
+    initialize = function(`totalPages` = NULL, `totalElements` = NULL, `first` = NULL, `size` = NULL, `content` = NULL, `number` = NULL, `sort` = NULL, `numberOfElements` = NULL, `pageable` = NULL, `last` = NULL, `empty` = NULL, ...) {
       if (!is.null(`totalPages`)) {
         if (!(is.numeric(`totalPages`) && length(`totalPages`) == 1)) {
           stop(paste("Error! Invalid data for `totalPages`. Must be an integer:", `totalPages`))
@@ -93,6 +93,12 @@ PageFormulaCandidate <- R6::R6Class(
         stopifnot(R6::is.R6(`sort`))
         self$`sort` <- `sort`
       }
+      if (!is.null(`numberOfElements`)) {
+        if (!(is.numeric(`numberOfElements`) && length(`numberOfElements`) == 1)) {
+          stop(paste("Error! Invalid data for `numberOfElements`. Must be an integer:", `numberOfElements`))
+        }
+        self$`numberOfElements` <- `numberOfElements`
+      }
       if (!is.null(`pageable`)) {
         stopifnot(R6::is.R6(`pageable`))
         self$`pageable` <- `pageable`
@@ -102,12 +108,6 @@ PageFormulaCandidate <- R6::R6Class(
           stop(paste("Error! Invalid data for `last`. Must be a boolean:", `last`))
         }
         self$`last` <- `last`
-      }
-      if (!is.null(`numberOfElements`)) {
-        if (!(is.numeric(`numberOfElements`) && length(`numberOfElements`) == 1)) {
-          stop(paste("Error! Invalid data for `numberOfElements`. Must be an integer:", `numberOfElements`))
-        }
-        self$`numberOfElements` <- `numberOfElements`
       }
       if (!is.null(`empty`)) {
         if (!(is.logical(`empty`) && length(`empty`) == 1)) {
@@ -157,6 +157,10 @@ PageFormulaCandidate <- R6::R6Class(
             self$`sort`$toJSON()
           }
       }
+      if (!is.null(self$`numberOfElements`)) {
+        PageFormulaCandidateObject[["numberOfElements"]] <-
+          self$`numberOfElements`
+      }
       if (!is.null(self$`pageable`)) {
         PageFormulaCandidateObject[["pageable"]] <-
           if (length(names(self$`pageable`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`pageable`$toJSON()))) {
@@ -168,10 +172,6 @@ PageFormulaCandidate <- R6::R6Class(
       if (!is.null(self$`last`)) {
         PageFormulaCandidateObject[["last"]] <-
           self$`last`
-      }
-      if (!is.null(self$`numberOfElements`)) {
-        PageFormulaCandidateObject[["numberOfElements"]] <-
-          self$`numberOfElements`
       }
       if (!is.null(self$`empty`)) {
         PageFormulaCandidateObject[["empty"]] <-
@@ -212,6 +212,9 @@ PageFormulaCandidate <- R6::R6Class(
         `sort_object`$fromJSON(jsonlite::toJSON(this_object$`sort`, auto_unbox = TRUE, digits = NA))
         self$`sort` <- `sort_object`
       }
+      if (!is.null(this_object$`numberOfElements`)) {
+        self$`numberOfElements` <- this_object$`numberOfElements`
+      }
       if (!is.null(this_object$`pageable`)) {
         `pageable_object` <- PageableObject$new()
         `pageable_object`$fromJSON(jsonlite::toJSON(this_object$`pageable`, auto_unbox = TRUE, digits = NA))
@@ -219,9 +222,6 @@ PageFormulaCandidate <- R6::R6Class(
       }
       if (!is.null(this_object$`last`)) {
         self$`last` <- this_object$`last`
-      }
-      if (!is.null(this_object$`numberOfElements`)) {
-        self$`numberOfElements` <- this_object$`numberOfElements`
       }
       if (!is.null(this_object$`empty`)) {
         self$`empty` <- this_object$`empty`
@@ -293,6 +293,14 @@ PageFormulaCandidate <- R6::R6Class(
           jsonlite::toJSON(self$`sort`$toJSON(), auto_unbox = TRUE, digits = NA)
           )
         },
+        if (!is.null(self$`numberOfElements`)) {
+          sprintf(
+          '"numberOfElements":
+            %d
+                    ',
+          self$`numberOfElements`
+          )
+        },
         if (!is.null(self$`pageable`)) {
           sprintf(
           '"pageable":
@@ -307,14 +315,6 @@ PageFormulaCandidate <- R6::R6Class(
             %s
                     ',
           tolower(self$`last`)
-          )
-        },
-        if (!is.null(self$`numberOfElements`)) {
-          sprintf(
-          '"numberOfElements":
-            %d
-                    ',
-          self$`numberOfElements`
           )
         },
         if (!is.null(self$`empty`)) {
@@ -346,9 +346,9 @@ PageFormulaCandidate <- R6::R6Class(
       self$`content` <- ApiClient$new()$deserializeObj(this_object$`content`, "array[FormulaCandidate]", loadNamespace("Rsirius"))
       self$`number` <- this_object$`number`
       self$`sort` <- SortObject$new()$fromJSON(jsonlite::toJSON(this_object$`sort`, auto_unbox = TRUE, digits = NA))
+      self$`numberOfElements` <- this_object$`numberOfElements`
       self$`pageable` <- PageableObject$new()$fromJSON(jsonlite::toJSON(this_object$`pageable`, auto_unbox = TRUE, digits = NA))
       self$`last` <- this_object$`last`
-      self$`numberOfElements` <- this_object$`numberOfElements`
       self$`empty` <- this_object$`empty`
       self
     },

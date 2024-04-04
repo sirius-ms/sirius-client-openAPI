@@ -27,6 +27,13 @@ test_that("errors", {
   #expect_equal(model.instance$`errors`, "EXPECTED_RESULT")
 })
 
+test_that("supportsAllPredictorTypes", {
+  # tests for the property `supportsAllPredictorTypes` (character)
+
+  # uncomment below to test the property
+  #expect_equal(model.instance$`supportsAllPredictorTypes`, "EXPECTED_RESULT")
+})
+
 test_that("supportsPosPredictorTypes", {
   # tests for the property `supportsPosPredictorTypes` (character)
 
@@ -53,11 +60,4 @@ test_that("unAvailableWorkers", {
 
   # uncomment below to test the property
   #expect_equal(model.instance$`unAvailableWorkers`, "EXPECTED_RESULT")
-})
-
-test_that("supportsAllPredictorTypes", {
-  # tests for the property `supportsAllPredictorTypes` (character)
-
-  # uncomment below to test the property
-  #expect_equal(model.instance$`supportsAllPredictorTypes`, "EXPECTED_RESULT")
 })

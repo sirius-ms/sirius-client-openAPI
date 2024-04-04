@@ -17,10 +17,11 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field
-from typing import Any, ClassVar, Dict, List, Optional
+from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt
+from typing import Any, ClassVar, Dict, List, Optional, Union
 from PySirius.models.compound_classes import CompoundClasses
 from PySirius.models.formula_candidate import FormulaCandidate
+from PySirius.models.mode import Mode
 from PySirius.models.structure_candidate_scored import StructureCandidateScored
 from typing import Optional, Set
 from typing_extensions import Self
@@ -32,7 +33,10 @@ class FeatureAnnotations(BaseModel):
     formula_annotation: Optional[FormulaCandidate] = Field(default=None, alias="formulaAnnotation")
     structure_annotation: Optional[StructureCandidateScored] = Field(default=None, alias="structureAnnotation")
     compound_class_annotation: Optional[CompoundClasses] = Field(default=None, alias="compoundClassAnnotation")
-    __properties: ClassVar[List[str]] = ["formulaAnnotation", "structureAnnotation", "compoundClassAnnotation"]
+    confidence_exact_match: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Confidence Score that represents the confidence whether the top hit is correct.", alias="confidenceExactMatch")
+    confidence_approx_match: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Confidence Score that represents the confidence whether the top hit or a very similar hit (estimated by MCES distance) is correct.", alias="confidenceApproxMatch")
+    expansive_search_state: Optional[Mode] = Field(default=None, alias="expansiveSearchState")
+    __properties: ClassVar[List[str]] = ["formulaAnnotation", "structureAnnotation", "compoundClassAnnotation", "confidenceExactMatch", "confidenceApproxMatch", "expansiveSearchState"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -97,6 +101,21 @@ class FeatureAnnotations(BaseModel):
         if self.compound_class_annotation is None and "compound_class_annotation" in self.model_fields_set:
             _dict['compoundClassAnnotation'] = None
 
+        # set to None if confidence_exact_match (nullable) is None
+        # and model_fields_set contains the field
+        if self.confidence_exact_match is None and "confidence_exact_match" in self.model_fields_set:
+            _dict['confidenceExactMatch'] = None
+
+        # set to None if confidence_approx_match (nullable) is None
+        # and model_fields_set contains the field
+        if self.confidence_approx_match is None and "confidence_approx_match" in self.model_fields_set:
+            _dict['confidenceApproxMatch'] = None
+
+        # set to None if expansive_search_state (nullable) is None
+        # and model_fields_set contains the field
+        if self.expansive_search_state is None and "expansive_search_state" in self.model_fields_set:
+            _dict['expansiveSearchState'] = None
+
         return _dict
 
     @classmethod
@@ -111,7 +130,10 @@ class FeatureAnnotations(BaseModel):
         _obj = cls.model_validate({
             "formulaAnnotation": FormulaCandidate.from_dict(obj["formulaAnnotation"]) if obj.get("formulaAnnotation") is not None else None,
             "structureAnnotation": StructureCandidateScored.from_dict(obj["structureAnnotation"]) if obj.get("structureAnnotation") is not None else None,
-            "compoundClassAnnotation": CompoundClasses.from_dict(obj["compoundClassAnnotation"]) if obj.get("compoundClassAnnotation") is not None else None
+            "compoundClassAnnotation": CompoundClasses.from_dict(obj["compoundClassAnnotation"]) if obj.get("compoundClassAnnotation") is not None else None,
+            "confidenceExactMatch": obj.get("confidenceExactMatch"),
+            "confidenceApproxMatch": obj.get("confidenceApproxMatch"),
+            "expansiveSearchState": obj.get("expansiveSearchState")
         })
         return _obj
 

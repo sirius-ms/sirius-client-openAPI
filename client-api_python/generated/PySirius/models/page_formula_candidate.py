@@ -36,11 +36,11 @@ class PageFormulaCandidate(BaseModel):
     content: Optional[List[Optional[FormulaCandidate]]] = None
     number: Optional[StrictInt] = None
     sort: Optional[SortObject] = None
+    number_of_elements: Optional[StrictInt] = Field(default=None, alias="numberOfElements")
     pageable: Optional[PageableObject] = None
     last: Optional[StrictBool] = None
-    number_of_elements: Optional[StrictInt] = Field(default=None, alias="numberOfElements")
     empty: Optional[StrictBool] = None
-    __properties: ClassVar[List[str]] = ["totalPages", "totalElements", "first", "size", "content", "number", "sort", "pageable", "last", "numberOfElements", "empty"]
+    __properties: ClassVar[List[str]] = ["totalPages", "totalElements", "first", "size", "content", "number", "sort", "numberOfElements", "pageable", "last", "empty"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -113,9 +113,9 @@ class PageFormulaCandidate(BaseModel):
             "content": [FormulaCandidate.from_dict(_item) for _item in obj["content"]] if obj.get("content") is not None else None,
             "number": obj.get("number"),
             "sort": SortObject.from_dict(obj["sort"]) if obj.get("sort") is not None else None,
+            "numberOfElements": obj.get("numberOfElements"),
             "pageable": PageableObject.from_dict(obj["pageable"]) if obj.get("pageable") is not None else None,
             "last": obj.get("last"),
-            "numberOfElements": obj.get("numberOfElements"),
             "empty": obj.get("empty")
         })
         return _obj
