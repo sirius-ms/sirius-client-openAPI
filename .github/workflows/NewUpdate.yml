@@ -17,10 +17,11 @@ jobs:
     # Runs using the runners shell
     - name: checkout repo
       uses: actions/checkout@v3.1.0
-    - name: Download latest generator
+    - name: Download latest generators
       run: |
         cd .updater/openapi_generator
-        wget https://oss.sonatype.org/content/repositories/snapshots/org/openapitools/openapi-generator-cli/7.5.0-SNAPSHOT/openapi-generator-cli-7.5.0-20240321.100714-45.jar -O openapi-generator-cli.jar
+        wget https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/7.4.0/openapi-generator-cli-7.4.0.jar -O openapi-generator-cli.jar
+        wget https://oss.sonatype.org/content/repositories/snapshots/org/openapitools/openapi-generator-cli/7.5.0-SNAPSHOT/openapi-generator-cli-7.5.0-20240321.100714-45.jar -O openapi-generator-cli-snapshot.jar
         java -jar openapi-generator-cli.jar version > version
     # - name: Download latest Sirius Release
     #   uses: nick-fields/retry@v2
@@ -57,7 +58,7 @@ jobs:
         
         echo "generating R Code"
         rm -rf client-api_r/generated/*
-        java -jar .updater/openapi_generator/openapi-generator-cli.jar generate -i .updater/api/api-docs.json -c .updater/config/R/config.json -g r -o client-api_r/generated -t client-api_r/templates/r
+        java -jar .updater/openapi_generator/openapi-generator-cli-snapshot.jar generate -i .updater/api/api-docs.json -c .updater/config/R/config.json -g r -o client-api_r/generated -t client-api_r/templates/r
         
         # echo "recover R manual folder"
         # mv client-api_r/man/ client-api_r/generated/
@@ -114,6 +115,7 @@ jobs:
     - name: Remove Openapi Generator Files
       run: |
         rm .updater/openapi_generator/openapi-generator-cli.jar
+        rm .updater/openapi_generator/openapi-generator-cli-snapshot.jar
         ls ./.github/workflows
         echo "Done"
     - name: update file and push to remote
