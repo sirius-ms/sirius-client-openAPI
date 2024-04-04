@@ -51,7 +51,7 @@ class TestStructureCandidate(unittest.TestCase):
                         query_spectrum_index = 56, 
                         db_name = '', 
                         db_id = '', 
-                        uuid = '', 
+                        uuid = 56, 
                         splash = '', 
                         molecular_formula = '', 
                         adduct = '', 

@@ -32,7 +32,7 @@ class SpectralLibraryMatch(BaseModel):
     query_spectrum_index: StrictInt = Field(alias="querySpectrumIndex")
     db_name: Optional[StrictStr] = Field(default=None, alias="dbName")
     db_id: Optional[StrictStr] = Field(default=None, alias="dbId")
-    uuid: StrictStr
+    uuid: StrictInt
     splash: Optional[StrictStr] = None
     molecular_formula: Optional[StrictStr] = Field(default=None, alias="molecularFormula")
     adduct: Optional[StrictStr] = None

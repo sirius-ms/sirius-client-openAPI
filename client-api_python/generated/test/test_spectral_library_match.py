@@ -40,7 +40,7 @@ class TestSpectralLibraryMatch(unittest.TestCase):
                 query_spectrum_index = 56,
                 db_name = '',
                 db_id = '',
-                uuid = '',
+                uuid = 56,
                 splash = '',
                 molecular_formula = '',
                 adduct = '',
@@ -64,7 +64,7 @@ class TestSpectralLibraryMatch(unittest.TestCase):
             return SpectralLibraryMatch(
                 similarity = 1.337,
                 query_spectrum_index = 56,
-                uuid = '',
+                uuid = 56,
                 candidate_in_chi_key = '',
         )
         """

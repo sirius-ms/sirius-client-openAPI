@@ -40,6 +40,7 @@ class TestDBLink(unittest.TestCase):
             )
         else:
             return DBLink(
+                name = '',
         )
         """
 

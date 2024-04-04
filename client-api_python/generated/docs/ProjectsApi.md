@@ -160,7 +160,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **create_project_space**
-> ProjectInfo create_project_space(project_id, path_to_project=path_to_project)
+> ProjectInfo create_project_space(project_id, path_to_project=path_to_project, opt_fields=opt_fields)
 
 Create and open a new project-space at given location and make it accessible via the given projectId.
 
@@ -172,6 +172,7 @@ Create and open a new project-space at given location and make it accessible via
 ```python
 import PySirius
 from PySirius.models.project_info import ProjectInfo
+from PySirius.models.project_info_opt_field import ProjectInfoOptField
 from PySirius.rest import ApiException
 from pprint import pprint
 
@@ -188,10 +189,11 @@ with PySirius.ApiClient(configuration) as api_client:
     api_instance = PySirius.ProjectsApi(api_client)
     project_id = 'project_id_example' # str | unique name/identifier that shall be used to access the newly created project-space. Must consist only of [a-zA-Z0-9_-].
     path_to_project = 'path_to_project_example' # str | local file path where the project will be created. If NULL, project will be stored by its projectId in default project location. DEPRECATED: This parameter relies on the local filesystem and will likely be removed in later versions of this API to allow for more flexible use cases. (optional)
+    opt_fields = [] # List[ProjectInfoOptField] |  (optional) (default to [])
 
     try:
         # Create and open a new project-space at given location and make it accessible via the given projectId.
-        api_response = api_instance.create_project_space(project_id, path_to_project=path_to_project)
+        api_response = api_instance.create_project_space(project_id, path_to_project=path_to_project, opt_fields=opt_fields)
         print("The response of ProjectsApi->create_project_space:\n")
         pprint(api_response)
     except Exception as e:
@@ -207,6 +209,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **str**| unique name/identifier that shall be used to access the newly created project-space. Must consist only of [a-zA-Z0-9_-]. | 
  **path_to_project** | **str**| local file path where the project will be created. If NULL, project will be stored by its projectId in default project location. DEPRECATED: This parameter relies on the local filesystem and will likely be removed in later versions of this API to allow for more flexible use cases. | [optional] 
+ **opt_fields** | [**List[ProjectInfoOptField]**](ProjectInfoOptField.md)|  | [optional] [default to []]
 
 ### Return type
 

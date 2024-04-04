@@ -498,6 +498,9 @@ SearchableDatabasesApi <- R6::R6Class(
         stop("Missing required parameter `database_id`.")
       }
 
+      if (!str_detect(`database_id`, "^[a-zA-Z0-9-_]+$")) {
+        stop("Invalid value for `database_id` when calling SearchableDatabasesApi$CreateDatabase, must conform to the pattern ^[a-zA-Z0-9-_]+$.")
+      }
 
 
       if (!is.null(`searchable_database_parameters`)) {

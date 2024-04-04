@@ -46,7 +46,7 @@ class TestPageSpectralLibraryMatch(unittest.TestCase):
                         query_spectrum_index = 56, 
                         db_name = '', 
                         db_id = '', 
-                        uuid = '', 
+                        uuid = 56, 
                         splash = '', 
                         molecular_formula = '', 
                         adduct = '', 
@@ -71,6 +71,7 @@ class TestPageSpectralLibraryMatch(unittest.TestCase):
                     empty = True, 
                     sorted = True, 
                     unsorted = True, ),
+                number_of_elements = 56,
                 pageable = PySirius.models.pageable_object.PageableObject(
                     offset = 56, 
                     sort = PySirius.models.sort_object.SortObject(
@@ -82,7 +83,6 @@ class TestPageSpectralLibraryMatch(unittest.TestCase):
                     paged = True, 
                     unpaged = True, ),
                 last = True,
-                number_of_elements = 56,
                 empty = True
             )
         else:

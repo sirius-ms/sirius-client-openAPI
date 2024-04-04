@@ -10,7 +10,6 @@
 #' @field compoundIds Compounds that should be the input for this Job  Will be converted to the respective alignedFeatureIds for computation.   At least one compoundId or alignedFeatureId needs to be specified. list(character) [optional]
 #' @field alignedFeatureIds Features (aligned over runs) that should be the input for this Job   At least one compoundId or alignedFeatureId needs to be specified. list(character) [optional]
 #' @field command  list(character)
-#' @field inputPaths  list(character) [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
 #' @export
@@ -20,7 +19,6 @@ CommandSubmission <- R6::R6Class(
     `compoundIds` = NULL,
     `alignedFeatureIds` = NULL,
     `command` = NULL,
-    `inputPaths` = NULL,
     #' Initialize a new CommandSubmission class.
     #'
     #' @description
@@ -29,10 +27,9 @@ CommandSubmission <- R6::R6Class(
     #' @param command command
     #' @param compoundIds Compounds that should be the input for this Job  Will be converted to the respective alignedFeatureIds for computation.   At least one compoundId or alignedFeatureId needs to be specified.
     #' @param alignedFeatureIds Features (aligned over runs) that should be the input for this Job   At least one compoundId or alignedFeatureId needs to be specified.
-    #' @param inputPaths inputPaths
     #' @param ... Other optional arguments.
     #' @export
-    initialize = function(`command`, `compoundIds` = NULL, `alignedFeatureIds` = NULL, `inputPaths` = NULL, ...) {
+    initialize = function(`command`, `compoundIds` = NULL, `alignedFeatureIds` = NULL, ...) {
       if (!missing(`command`)) {
         stopifnot(is.vector(`command`), length(`command`) != 0)
         sapply(`command`, function(x) stopifnot(is.character(x)))
@@ -47,11 +44,6 @@ CommandSubmission <- R6::R6Class(
         stopifnot(is.vector(`alignedFeatureIds`), length(`alignedFeatureIds`) != 0)
         sapply(`alignedFeatureIds`, function(x) stopifnot(is.character(x)))
         self$`alignedFeatureIds` <- `alignedFeatureIds`
-      }
-      if (!is.null(`inputPaths`)) {
-        stopifnot(is.vector(`inputPaths`), length(`inputPaths`) != 0)
-        sapply(`inputPaths`, function(x) stopifnot(is.character(x)))
-        self$`inputPaths` <- `inputPaths`
       }
     },
     #' To JSON string
@@ -75,10 +67,6 @@ CommandSubmission <- R6::R6Class(
         CommandSubmissionObject[["command"]] <-
           self$`command`
       }
-      if (!is.null(self$`inputPaths`)) {
-        CommandSubmissionObject[["inputPaths"]] <-
-          self$`inputPaths`
-      }
       CommandSubmissionObject
     },
     #' Deserialize JSON string into an instance of CommandSubmission
@@ -99,9 +87,6 @@ CommandSubmission <- R6::R6Class(
       }
       if (!is.null(this_object$`command`)) {
         self$`command` <- ApiClient$new()$deserializeObj(this_object$`command`, "array[character]", loadNamespace("Rsirius"))
-      }
-      if (!is.null(this_object$`inputPaths`)) {
-        self$`inputPaths` <- ApiClient$new()$deserializeObj(this_object$`inputPaths`, "array[character]", loadNamespace("Rsirius"))
       }
       self
     },
@@ -137,14 +122,6 @@ CommandSubmission <- R6::R6Class(
           ',
           paste(unlist(lapply(self$`command`, function(x) paste0('"', x, '"'))), collapse = ",")
           )
-        },
-        if (!is.null(self$`inputPaths`)) {
-          sprintf(
-          '"inputPaths":
-             [%s]
-          ',
-          paste(unlist(lapply(self$`inputPaths`, function(x) paste0('"', x, '"'))), collapse = ",")
-          )
         }
       )
       jsoncontent <- paste(jsoncontent, collapse = ",")
@@ -163,7 +140,6 @@ CommandSubmission <- R6::R6Class(
       self$`compoundIds` <- ApiClient$new()$deserializeObj(this_object$`compoundIds`, "array[character]", loadNamespace("Rsirius"))
       self$`alignedFeatureIds` <- ApiClient$new()$deserializeObj(this_object$`alignedFeatureIds`, "array[character]", loadNamespace("Rsirius"))
       self$`command` <- ApiClient$new()$deserializeObj(this_object$`command`, "array[character]", loadNamespace("Rsirius"))
-      self$`inputPaths` <- ApiClient$new()$deserializeObj(this_object$`inputPaths`, "array[character]", loadNamespace("Rsirius"))
       self
     },
     #' Validate JSON input with respect to CommandSubmission

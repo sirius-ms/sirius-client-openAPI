@@ -57,7 +57,7 @@ class TestPageStructureCandidateFormula(unittest.TestCase):
                                 query_spectrum_index = 56, 
                                 db_name = '', 
                                 db_id = '', 
-                                uuid = '', 
+                                uuid = 56, 
                                 splash = '', 
                                 molecular_formula = '', 
                                 adduct = '', 
@@ -79,8 +79,7 @@ class TestPageStructureCandidateFormula(unittest.TestCase):
                             ], 
                         csi_score = 1.337, 
                         tanimoto_similarity = 1.337, 
-                        confidence_exact_match = 1.337, 
-                        confidence_approx_match = 1.337, 
+                        mces_dist_to_top_hit = 1.337, 
                         fingerprint = PySirius.models.binary_fingerprint.BinaryFingerprint(
                             bits_set = [
                                 56
@@ -95,6 +94,7 @@ class TestPageStructureCandidateFormula(unittest.TestCase):
                     empty = True, 
                     sorted = True, 
                     unsorted = True, ),
+                number_of_elements = 56,
                 pageable = PySirius.models.pageable_object.PageableObject(
                     offset = 56, 
                     sort = PySirius.models.sort_object.SortObject(
@@ -106,7 +106,6 @@ class TestPageStructureCandidateFormula(unittest.TestCase):
                     paged = True, 
                     unpaged = True, ),
                 last = True,
-                number_of_elements = 56,
                 empty = True
             )
         else:

@@ -9,7 +9,7 @@ Name | Type | Description | Notes
 **querySpectrumIndex** | **integer** |  | 
 **dbName** | **character** |  | [optional] 
 **dbId** | **character** |  | [optional] 
-**uuid** | **character** |  | 
+**uuid** | **integer** |  | 
 **splash** | **character** |  | [optional] 
 **molecularFormula** | **character** |  | [optional] 
 **adduct** | **character** |  | [optional] 

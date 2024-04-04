@@ -41,7 +41,7 @@ test_that("dbId", {
 })
 
 test_that("uuid", {
-  # tests for the property `uuid` (character)
+  # tests for the property `uuid` (integer)
 
   # uncomment below to test the property
   #expect_equal(model.instance$`uuid`, "EXPECTED_RESULT")

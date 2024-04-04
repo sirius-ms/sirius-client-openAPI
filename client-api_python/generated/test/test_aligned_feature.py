@@ -37,7 +37,6 @@ class TestAlignedFeature(unittest.TestCase):
             return AlignedFeature(
                 aligned_feature_id = '',
                 name = '',
-                index = 56,
                 ion_mass = 1.337,
                 adduct = '',
                 rt_start_seconds = 1.337,
@@ -234,7 +233,7 @@ class TestAlignedFeature(unittest.TestCase):
                                 query_spectrum_index = 56, 
                                 db_name = '', 
                                 db_id = '', 
-                                uuid = '', 
+                                uuid = 56, 
                                 splash = '', 
                                 molecular_formula = '', 
                                 adduct = '', 
@@ -245,14 +244,16 @@ class TestAlignedFeature(unittest.TestCase):
                             ], 
                         csi_score = 1.337, 
                         tanimoto_similarity = 1.337, 
-                        confidence_exact_match = 1.337, 
-                        confidence_approx_match = 1.337, 
+                        mces_dist_to_top_hit = 1.337, 
                         fingerprint = PySirius.models.binary_fingerprint.BinaryFingerprint(
                             bits_set = [
                                 56
                                 ], 
                             length = 56, ), ), 
-                    compound_class_annotation = PySirius.models.compound_classes.CompoundClasses(), ),
+                    compound_class_annotation = PySirius.models.compound_classes.CompoundClasses(), 
+                    confidence_exact_match = 1.337, 
+                    confidence_approx_match = 1.337, 
+                    expansive_search_state = 'OFF', ),
                 top_annotations_de_novo = PySirius.models.feature_annotations.FeatureAnnotations(
                     formula_annotation = PySirius.models.formula_candidate.FormulaCandidate(
                         formula_id = '', 
@@ -414,7 +415,7 @@ class TestAlignedFeature(unittest.TestCase):
                                 query_spectrum_index = 56, 
                                 db_name = '', 
                                 db_id = '', 
-                                uuid = '', 
+                                uuid = 56, 
                                 splash = '', 
                                 molecular_formula = '', 
                                 adduct = '', 
@@ -425,14 +426,16 @@ class TestAlignedFeature(unittest.TestCase):
                             ], 
                         csi_score = 1.337, 
                         tanimoto_similarity = 1.337, 
-                        confidence_exact_match = 1.337, 
-                        confidence_approx_match = 1.337, 
+                        mces_dist_to_top_hit = 1.337, 
                         fingerprint = PySirius.models.binary_fingerprint.BinaryFingerprint(
                             bits_set = [
                                 56
                                 ], 
                             length = 56, ), ), 
-                    compound_class_annotation = PySirius.models.compound_classes.CompoundClasses(), ),
+                    compound_class_annotation = PySirius.models.compound_classes.CompoundClasses(), 
+                    confidence_exact_match = 1.337, 
+                    confidence_approx_match = 1.337, 
+                    expansive_search_state = 'OFF', ),
                 computing = True
             )
         else:

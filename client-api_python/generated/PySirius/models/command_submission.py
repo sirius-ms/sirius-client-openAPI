@@ -29,8 +29,7 @@ class CommandSubmission(BaseModel):
     compound_ids: Optional[List[Optional[StrictStr]]] = Field(default=None, description="Compounds that should be the input for this Job  Will be converted to the respective alignedFeatureIds for computation.   At least one compoundId or alignedFeatureId needs to be specified.", alias="compoundIds")
     aligned_feature_ids: Optional[List[Optional[StrictStr]]] = Field(default=None, description="Features (aligned over runs) that should be the input for this Job   At least one compoundId or alignedFeatureId needs to be specified.", alias="alignedFeatureIds")
     command: List[StrictStr]
-    input_paths: Optional[List[StrictStr]] = Field(default=None, alias="inputPaths")
-    __properties: ClassVar[List[str]] = ["compoundIds", "alignedFeatureIds", "command", "inputPaths"]
+    __properties: ClassVar[List[str]] = ["compoundIds", "alignedFeatureIds", "command"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -95,8 +94,7 @@ class CommandSubmission(BaseModel):
         _obj = cls.model_validate({
             "compoundIds": obj.get("compoundIds"),
             "alignedFeatureIds": obj.get("alignedFeatureIds"),
-            "command": obj.get("command"),
-            "inputPaths": obj.get("inputPaths")
+            "command": obj.get("command")
         })
         return _obj
 

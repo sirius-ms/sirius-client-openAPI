@@ -10,6 +10,9 @@
 #' @field formulaAnnotation  \link{FormulaCandidate} [optional]
 #' @field structureAnnotation  \link{StructureCandidateScored} [optional]
 #' @field compoundClassAnnotation  \link{CompoundClasses} [optional]
+#' @field confidenceExactMatch Confidence Score that represents the confidence whether the top hit is correct. numeric [optional]
+#' @field confidenceApproxMatch Confidence Score that represents the confidence whether the top hit or a very similar hit (estimated by MCES distance) is correct. numeric [optional]
+#' @field expansiveSearchState  \link{Mode} [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
 #' @export
@@ -19,6 +22,9 @@ FeatureAnnotations <- R6::R6Class(
     `formulaAnnotation` = NULL,
     `structureAnnotation` = NULL,
     `compoundClassAnnotation` = NULL,
+    `confidenceExactMatch` = NULL,
+    `confidenceApproxMatch` = NULL,
+    `expansiveSearchState` = NULL,
     #' Initialize a new FeatureAnnotations class.
     #'
     #' @description
@@ -27,9 +33,12 @@ FeatureAnnotations <- R6::R6Class(
     #' @param formulaAnnotation formulaAnnotation
     #' @param structureAnnotation structureAnnotation
     #' @param compoundClassAnnotation compoundClassAnnotation
+    #' @param confidenceExactMatch Confidence Score that represents the confidence whether the top hit is correct.
+    #' @param confidenceApproxMatch Confidence Score that represents the confidence whether the top hit or a very similar hit (estimated by MCES distance) is correct.
+    #' @param expansiveSearchState expansiveSearchState
     #' @param ... Other optional arguments.
     #' @export
-    initialize = function(`formulaAnnotation` = NULL, `structureAnnotation` = NULL, `compoundClassAnnotation` = NULL, ...) {
+    initialize = function(`formulaAnnotation` = NULL, `structureAnnotation` = NULL, `compoundClassAnnotation` = NULL, `confidenceExactMatch` = NULL, `confidenceApproxMatch` = NULL, `expansiveSearchState` = NULL, ...) {
       if (!is.null(`formulaAnnotation`)) {
         stopifnot(R6::is.R6(`formulaAnnotation`))
         self$`formulaAnnotation` <- `formulaAnnotation`
@@ -41,6 +50,25 @@ FeatureAnnotations <- R6::R6Class(
       if (!is.null(`compoundClassAnnotation`)) {
         stopifnot(R6::is.R6(`compoundClassAnnotation`))
         self$`compoundClassAnnotation` <- `compoundClassAnnotation`
+      }
+      if (!is.null(`confidenceExactMatch`)) {
+        if (!(is.numeric(`confidenceExactMatch`) && length(`confidenceExactMatch`) == 1)) {
+          stop(paste("Error! Invalid data for `confidenceExactMatch`. Must be a number:", `confidenceExactMatch`))
+        }
+        self$`confidenceExactMatch` <- `confidenceExactMatch`
+      }
+      if (!is.null(`confidenceApproxMatch`)) {
+        if (!(is.numeric(`confidenceApproxMatch`) && length(`confidenceApproxMatch`) == 1)) {
+          stop(paste("Error! Invalid data for `confidenceApproxMatch`. Must be a number:", `confidenceApproxMatch`))
+        }
+        self$`confidenceApproxMatch` <- `confidenceApproxMatch`
+      }
+      if (!is.null(`expansiveSearchState`)) {
+        if (!(`expansiveSearchState` %in% c())) {
+          stop(paste("Error! \"", `expansiveSearchState`, "\" cannot be assigned to `expansiveSearchState`. Must be .", sep = ""))
+        }
+        stopifnot(R6::is.R6(`expansiveSearchState`))
+        self$`expansiveSearchState` <- `expansiveSearchState`
       }
     },
     #' To JSON string
@@ -76,6 +104,22 @@ FeatureAnnotations <- R6::R6Class(
             self$`compoundClassAnnotation`$toJSON()
           }
       }
+      if (!is.null(self$`confidenceExactMatch`)) {
+        FeatureAnnotationsObject[["confidenceExactMatch"]] <-
+          self$`confidenceExactMatch`
+      }
+      if (!is.null(self$`confidenceApproxMatch`)) {
+        FeatureAnnotationsObject[["confidenceApproxMatch"]] <-
+          self$`confidenceApproxMatch`
+      }
+      if (!is.null(self$`expansiveSearchState`)) {
+        FeatureAnnotationsObject[["expansiveSearchState"]] <-
+          if (length(names(self$`expansiveSearchState`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`expansiveSearchState`$toJSON()))) {
+            jsonlite::fromJSON(self$`expansiveSearchState`$toJSON())
+          } else {
+            self$`expansiveSearchState`$toJSON()
+          }
+      }
       FeatureAnnotationsObject
     },
     #' Deserialize JSON string into an instance of FeatureAnnotations
@@ -102,6 +146,17 @@ FeatureAnnotations <- R6::R6Class(
         `compoundclassannotation_object` <- CompoundClasses$new()
         `compoundclassannotation_object`$fromJSON(jsonlite::toJSON(this_object$`compoundClassAnnotation`, auto_unbox = TRUE, digits = NA))
         self$`compoundClassAnnotation` <- `compoundclassannotation_object`
+      }
+      if (!is.null(this_object$`confidenceExactMatch`)) {
+        self$`confidenceExactMatch` <- this_object$`confidenceExactMatch`
+      }
+      if (!is.null(this_object$`confidenceApproxMatch`)) {
+        self$`confidenceApproxMatch` <- this_object$`confidenceApproxMatch`
+      }
+      if (!is.null(this_object$`expansiveSearchState`)) {
+        `expansivesearchstate_object` <- Mode$new()
+        `expansivesearchstate_object`$fromJSON(jsonlite::toJSON(this_object$`expansiveSearchState`, auto_unbox = TRUE, digits = NA))
+        self$`expansiveSearchState` <- `expansivesearchstate_object`
       }
       self
     },
@@ -137,6 +192,30 @@ FeatureAnnotations <- R6::R6Class(
           ',
           jsonlite::toJSON(self$`compoundClassAnnotation`$toJSON(), auto_unbox = TRUE, digits = NA)
           )
+        },
+        if (!is.null(self$`confidenceExactMatch`)) {
+          sprintf(
+          '"confidenceExactMatch":
+            %d
+                    ',
+          self$`confidenceExactMatch`
+          )
+        },
+        if (!is.null(self$`confidenceApproxMatch`)) {
+          sprintf(
+          '"confidenceApproxMatch":
+            %d
+                    ',
+          self$`confidenceApproxMatch`
+          )
+        },
+        if (!is.null(self$`expansiveSearchState`)) {
+          sprintf(
+          '"expansiveSearchState":
+          %s
+          ',
+          jsonlite::toJSON(self$`expansiveSearchState`$toJSON(), auto_unbox = TRUE, digits = NA)
+          )
         }
       )
       jsoncontent <- paste(jsoncontent, collapse = ",")
@@ -155,6 +234,9 @@ FeatureAnnotations <- R6::R6Class(
       self$`formulaAnnotation` <- FormulaCandidate$new()$fromJSON(jsonlite::toJSON(this_object$`formulaAnnotation`, auto_unbox = TRUE, digits = NA))
       self$`structureAnnotation` <- StructureCandidateScored$new()$fromJSON(jsonlite::toJSON(this_object$`structureAnnotation`, auto_unbox = TRUE, digits = NA))
       self$`compoundClassAnnotation` <- CompoundClasses$new()$fromJSON(jsonlite::toJSON(this_object$`compoundClassAnnotation`, auto_unbox = TRUE, digits = NA))
+      self$`confidenceExactMatch` <- this_object$`confidenceExactMatch`
+      self$`confidenceApproxMatch` <- this_object$`confidenceApproxMatch`
+      self$`expansiveSearchState` <- Mode$new()$fromJSON(jsonlite::toJSON(this_object$`expansiveSearchState`, auto_unbox = TRUE, digits = NA))
       self
     },
     #' Validate JSON input with respect to FeatureAnnotations

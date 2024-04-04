@@ -8,7 +8,6 @@ Name | Type | Description | Notes
 **compound_ids** | **List[Optional[str]]** | Compounds that should be the input for this Job  Will be converted to the respective alignedFeatureIds for computation.   At least one compoundId or alignedFeatureId needs to be specified. | [optional] 
 **aligned_feature_ids** | **List[Optional[str]]** | Features (aligned over runs) that should be the input for this Job   At least one compoundId or alignedFeatureId needs to be specified. | [optional] 
 **command** | **List[str]** |  | 
-**input_paths** | **List[str]** |  | [optional] 
 
 ## Example
 

@@ -7,7 +7,6 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **alignedFeatureId** | **character** |  | [optional] 
 **name** | **character** |  | [optional] 
-**index** | **integer** |  | [optional] 
 **ionMass** | **numeric** |  | [optional] 
 **adduct** | **character** |  | [optional] 
 **rtStartSeconds** | **numeric** |  | [optional] 

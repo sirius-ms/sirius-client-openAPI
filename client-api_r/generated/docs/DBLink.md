@@ -4,7 +4,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**name** | **character** |  | [optional] 
+**name** | **character** |  | 
 **id** | **character** |  | [optional] 
 
 

@@ -117,7 +117,7 @@ No authorization required
 | **200** | ProjectInfo of the newly created project if opened (copyProjectId !&#x3D; null) or the project info of  the source project otherwise  &lt;p&gt;  DEPRECATED: This endpoint relies on the local filesystem and will likely be removed in later versions of this API to allow for more flexible use cases. |  -  |
 
 # **CreateProjectSpace**
-> ProjectInfo CreateProjectSpace(project_id, path_to_project = var.path_to_project)
+> ProjectInfo CreateProjectSpace(project_id, path_to_project = var.path_to_project, opt_fields = [])
 
 Create and open a new project-space at given location and make it accessible via the given projectId.
 
@@ -132,11 +132,12 @@ library(Rsirius)
 # prepare function argument(s)
 var_project_id <- "project_id_example" # character | unique name/identifier that shall be used to access the newly created project-space. Must consist only of [a-zA-Z0-9_-].
 var_path_to_project <- "path_to_project_example" # character | local file path where the project will be created. If NULL, project will be stored by its projectId in default project location. DEPRECATED: This parameter relies on the local filesystem and will likely be removed in later versions of this API to allow for more flexible use cases. (Optional)
+var_opt_fields <- c(ProjectInfoOptField$new()) # array[ProjectInfoOptField] |  (Optional)
 
 api_instance <- rsirius_api$new()
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$CreateProjectSpace(var_project_id, path_to_project = var_path_to_projectdata_file = "result.txt")
-result <- api_instance$projects_api$CreateProjectSpace(var_project_id, path_to_project = var_path_to_project)
+# result <- api_instance$CreateProjectSpace(var_project_id, path_to_project = var_path_to_project, opt_fields = var_opt_fieldsdata_file = "result.txt")
+result <- api_instance$projects_api$CreateProjectSpace(var_project_id, path_to_project = var_path_to_project, opt_fields = var_opt_fields)
 dput(result)
 ```
 
@@ -146,6 +147,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **character**| unique name/identifier that shall be used to access the newly created project-space. Must consist only of [a-zA-Z0-9_-]. | 
  **path_to_project** | **character**| local file path where the project will be created. If NULL, project will be stored by its projectId in default project location. DEPRECATED: This parameter relies on the local filesystem and will likely be removed in later versions of this API to allow for more flexible use cases. | [optional] 
+ **opt_fields** | list( [**ProjectInfoOptField**](ProjectInfoOptField.md) )|  | [optional] [default to []]
 
 ### Return type
 

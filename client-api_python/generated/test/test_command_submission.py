@@ -43,9 +43,6 @@ class TestCommandSubmission(unittest.TestCase):
                     ],
                 command = [
                     ''
-                    ],
-                input_paths = [
-                    ''
                     ]
             )
         else:

@@ -11,9 +11,9 @@ Name | Type | Description | Notes
 **content** | [**array[SpectralLibraryMatch]**](SpectralLibraryMatch.md) |  | [optional] 
 **number** | **integer** |  | [optional] 
 **sort** | [**SortObject**](SortObject.md) |  | [optional] 
+**numberOfElements** | **integer** |  | [optional] 
 **pageable** | [**PageableObject**](PageableObject.md) |  | [optional] 
 **last** | **character** |  | [optional] 
-**numberOfElements** | **integer** |  | [optional] 
 **empty** | **character** |  | [optional] 
 
 

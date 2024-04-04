@@ -51,6 +51,7 @@ test_that("spectralLibraryMatches", {
 
 test_that("csiScore", {
   # tests for the property `csiScore` (numeric)
+  # CSI:FingerID score of the fingerprint of this compound to the predicted fingerprint of CSI:FingerID  This is the score used for ranking structure candidates
 
   # uncomment below to test the property
   #expect_equal(model.instance$`csiScore`, "EXPECTED_RESULT")
@@ -58,23 +59,18 @@ test_that("csiScore", {
 
 test_that("tanimotoSimilarity", {
   # tests for the property `tanimotoSimilarity` (numeric)
+  # Tanimoto similarly of the fingerprint of this compound to the predicted fingerprint of CSI:FingerID
 
   # uncomment below to test the property
   #expect_equal(model.instance$`tanimotoSimilarity`, "EXPECTED_RESULT")
 })
 
-test_that("confidenceExactMatch", {
-  # tests for the property `confidenceExactMatch` (numeric)
+test_that("mcesDistToTopHit", {
+  # tests for the property `mcesDistToTopHit` (numeric)
+  # Maximum Common Edge Subgraph (MCES) distance to the top scoring hit (CSI:FingerID) in a candidate list.
 
   # uncomment below to test the property
-  #expect_equal(model.instance$`confidenceExactMatch`, "EXPECTED_RESULT")
-})
-
-test_that("confidenceApproxMatch", {
-  # tests for the property `confidenceApproxMatch` (numeric)
-
-  # uncomment below to test the property
-  #expect_equal(model.instance$`confidenceApproxMatch`, "EXPECTED_RESULT")
+  #expect_equal(model.instance$`mcesDistToTopHit`, "EXPECTED_RESULT")
 })
 
 test_that("fingerprint", {

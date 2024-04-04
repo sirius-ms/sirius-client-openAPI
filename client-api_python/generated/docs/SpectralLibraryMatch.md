@@ -10,7 +10,7 @@ Name | Type | Description | Notes
 **query_spectrum_index** | **int** |  | 
 **db_name** | **str** |  | [optional] 
 **db_id** | **str** |  | [optional] 
-**uuid** | **str** |  | 
+**uuid** | **int** |  | 
 **splash** | **str** |  | [optional] 
 **molecular_formula** | **str** |  | [optional] 
 **adduct** | **str** |  | [optional] 

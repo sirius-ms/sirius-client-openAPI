@@ -16,7 +16,7 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from pydantic import Field, StrictBool, StrictBytes, StrictInt, StrictStr
+from pydantic import Field, StrictBool, StrictBytes, StrictInt, StrictStr, field_validator
 from typing import List, Optional, Union
 from typing_extensions import Annotated
 from PySirius.models.job import Job
@@ -316,7 +316,7 @@ class SearchableDatabasesApi:
     @validate_call
     def create_database(
         self,
-        database_id: StrictStr,
+        database_id: Annotated[str, Field(strict=True)],
         searchable_database_parameters: Optional[SearchableDatabaseParameters] = None,
         _request_timeout: Union[
             None,
@@ -386,7 +386,7 @@ class SearchableDatabasesApi:
     @validate_call
     def create_database_with_http_info(
         self,
-        database_id: StrictStr,
+        database_id: Annotated[str, Field(strict=True)],
         searchable_database_parameters: Optional[SearchableDatabaseParameters] = None,
         _request_timeout: Union[
             None,
@@ -456,7 +456,7 @@ class SearchableDatabasesApi:
     @validate_call
     def create_database_without_preload_content(
         self,
-        database_id: StrictStr,
+        database_id: Annotated[str, Field(strict=True)],
         searchable_database_parameters: Optional[SearchableDatabaseParameters] = None,
         _request_timeout: Union[
             None,
