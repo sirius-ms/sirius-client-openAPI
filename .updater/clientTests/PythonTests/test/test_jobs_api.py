@@ -38,7 +38,7 @@ class TestJobsApi(unittest.TestCase):
         preproc_ms2_file_1 = path_to_demo_data + "/Kaempferol.ms"
         preproc_ms2_file_2 = path_to_demo_data + "/laudanosine.mgf"
         input_files = [preproc_ms2_file_1, preproc_ms2_file_2]
-        self.api.get_ProjectsApi().import_preprocessed_data_as_job(self.project_id, imput_files=input_files)
+        self.api.get_ProjectsApi().import_preprocessed_data_as_job(self.project_id, input_files=input_files)
 
     def tearDown(self) -> None:
         self.api.get_ProjectsApi().close_project_space(self.project_id)
@@ -66,7 +66,7 @@ class TestJobsApi(unittest.TestCase):
         """
         config_name = "test_delete_job_config"
         default_config = self.api.get_JobsApi().get_default_job_config()
-        self.api.get_JobsApi().post_job_config(config_name, default_config)
+        self.api.get_JobsApi().save_job_config(config_name, default_config)
 
         response_before = self.api.get_JobsApi().get_job_configs()
         self.api.get_JobsApi().delete_job_config(config_name)
@@ -115,7 +115,7 @@ class TestJobsApi(unittest.TestCase):
         """
         config_name = "test_get_job_config"
         default_config = self.api.get_JobsApi().get_default_job_config()
-        self.api.get_JobsApi().post_job_config(config_name, default_config)
+        self.api.get_JobsApi().save_job_config(config_name, default_config)
 
         response = self.api.get_JobsApi().get_job_config(config_name)
         self.api.get_JobsApi().delete_job_config(config_name)
@@ -129,7 +129,7 @@ class TestJobsApi(unittest.TestCase):
         """
         config_name = "test_get_job_configs"
         default_config = self.api.get_JobsApi().get_default_job_config()
-        self.api.get_JobsApi().post_job_config(config_name, default_config)
+        self.api.get_JobsApi().save_job_config(config_name, default_config)
 
         response = self.api.get_JobsApi().get_job_configs()
         self.api.get_JobsApi().delete_job_config(config_name)
@@ -162,18 +162,18 @@ class TestJobsApi(unittest.TestCase):
         self.assertIsInstance(response, bool)
         self.assertTrue(response)
 
-    def test_post_job_config(self) -> None:
-        """Test case for post_job_config
+    def test_save_job_config(self) -> None:
+        """Test case for save_job_config
 
         Add new job configuration with given name.
         """
-        config_name = "test_post_job_config"
+        config_name = "test_save_job_config"
         default_config = self.api.get_JobsApi().get_default_job_config()
 
-        response = self.api.get_JobsApi().post_job_config(config_name, default_config)
+        response = self.api.get_JobsApi().save_job_config(config_name, default_config)
         self.api.get_JobsApi().delete_job_config(config_name)
 
-        self.assertEqual(response, "test_post_job_config")
+        self.assertEqual(response, "test_save_job_config")
 
     def test_start_command(self) -> None:
         """Test case for start_command
@@ -227,7 +227,7 @@ class TestJobsApi(unittest.TestCase):
                 sirius_json
         }
         job_submission = JobSubmission.from_json(json.dumps(job_submission_json))
-        self.api.get_JobsApi().post_job_config(config_name, job_submission)
+        self.api.get_JobsApi().save_job_config(config_name, job_submission)
         response = self.api.get_JobsApi().start_job_from_config(self.project_id, config_name, [aligned_feature_id])
         time.sleep(3)
         self.api.get_JobsApi().delete_job_config(config_name)

@@ -51,10 +51,9 @@ class TestSearchableDatabasesApi(unittest.TestCase):
         """Test case for get_custom_databases
 
         """
-        # # BUG Name too long
-        # response = self.api.get_custom_databases()
-        # self.assertIsInstance(response, list)
-        # self.assertIsInstance(response[0], SearchableDatabase)
+        response = self.api.get_custom_databases()
+        self.assertIsInstance(response, list)
+        self.assertIsInstance(response[0], SearchableDatabase)
 
     def test_get_database(self) -> None:
         """Test case for get_database
@@ -67,19 +66,17 @@ class TestSearchableDatabasesApi(unittest.TestCase):
         """Test case for get_databases
 
         """
-        # # BUG Name too long
-        # response = self.api.get_databases()
-        # self.assertIsInstance(response, list)
-        # self.assertIsInstance(response[0], SearchableDatabase)
+        response = self.api.get_databases()
+        self.assertIsInstance(response, list)
+        self.assertIsInstance(response[0], SearchableDatabase)
 
     def test_get_included_databases(self) -> None:
         """Test case for get_included_databases
 
         """
-        # # BUG Name too long
-        # response = self.api.get_included_databases()
-        # self.assertIsInstance(response, list)
-        # self.assertIsInstance(response[0], SearchableDatabase)
+        response = self.api.get_included_databases()
+        self.assertIsInstance(response, list)
+        self.assertIsInstance(response[0], SearchableDatabase)
 
     def test_import_into_database(self) -> None:
         """Test case for import_into_database

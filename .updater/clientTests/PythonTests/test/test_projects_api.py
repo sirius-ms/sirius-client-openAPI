@@ -57,14 +57,15 @@ class TestProjectsApi(unittest.TestCase):
 
         Move an existing (opened) project-space to another location.
         """
-        copy_project_id = "test_copy_project_space_copied"
-        copy_path_to_project = f"{os.environ.get('HOME')}/test_copy_project_space_dir_copied"
-        response = self.api.copy_project_space(self.project_id, copy_project_id, copy_path_to_project)
+        # # DEPRECATED
+        # copy_project_id = "test_copy_project_space_copied"
+        # copy_path_to_project = f"{os.environ.get('HOME')}/test_copy_project_space_dir_copied"
+        # response = self.api.copy_project_space(self.project_id, copy_path_to_project, copy_project_id)
 
-        self.api.close_project_space(copy_project_id)
-        shutil.rmtree(copy_path_to_project)
+        # self.api.close_project_space(copy_project_id)
+        # shutil.rmtree(copy_path_to_project)
 
-        self.assertIsInstance(response, ProjectInfo)
+        # self.assertIsInstance(response, ProjectInfo)
 
     def test_create_project_space(self) -> None:
         """Test case for create_project_space
@@ -157,7 +158,7 @@ class TestProjectsApi(unittest.TestCase):
         Import ms/ms data from the given format into the specified project-space as background job.
         """
         input_files = [self.preproc_ms2_file_1, self.preproc_ms2_file_2]
-        response = self.api.import_preprocessed_data_as_job(self.project_id, imput_files=input_files)
+        response = self.api.import_preprocessed_data_as_job(self.project_id, input_files=input_files)
         self.assertIsInstance(response, Job)
 
 
