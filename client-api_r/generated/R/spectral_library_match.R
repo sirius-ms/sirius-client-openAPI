@@ -7,6 +7,8 @@
 #' @title SpectralLibraryMatch
 #' @description SpectralLibraryMatch Class
 #' @format An \code{R6Class} generator object
+#' @field specMatchId  character [optional]
+#' @field rank  integer [optional]
 #' @field similarity  numeric
 #' @field sharedPeaks  integer [optional]
 #' @field querySpectrumIndex  integer
@@ -26,6 +28,8 @@
 SpectralLibraryMatch <- R6::R6Class(
   "SpectralLibraryMatch",
   public = list(
+    `specMatchId` = NULL,
+    `rank` = NULL,
     `similarity` = NULL,
     `sharedPeaks` = NULL,
     `querySpectrumIndex` = NULL,
@@ -48,6 +52,8 @@ SpectralLibraryMatch <- R6::R6Class(
     #' @param querySpectrumIndex querySpectrumIndex
     #' @param uuid uuid
     #' @param candidateInChiKey candidateInChiKey
+    #' @param specMatchId specMatchId
+    #' @param rank rank
     #' @param sharedPeaks sharedPeaks
     #' @param dbName dbName
     #' @param dbId dbId
@@ -59,7 +65,7 @@ SpectralLibraryMatch <- R6::R6Class(
     #' @param referenceSpectrum referenceSpectrum
     #' @param ... Other optional arguments.
     #' @export
-    initialize = function(`similarity`, `querySpectrumIndex`, `uuid`, `candidateInChiKey`, `sharedPeaks` = NULL, `dbName` = NULL, `dbId` = NULL, `splash` = NULL, `molecularFormula` = NULL, `adduct` = NULL, `exactMass` = NULL, `smiles` = NULL, `referenceSpectrum` = NULL, ...) {
+    initialize = function(`similarity`, `querySpectrumIndex`, `uuid`, `candidateInChiKey`, `specMatchId` = NULL, `rank` = NULL, `sharedPeaks` = NULL, `dbName` = NULL, `dbId` = NULL, `splash` = NULL, `molecularFormula` = NULL, `adduct` = NULL, `exactMass` = NULL, `smiles` = NULL, `referenceSpectrum` = NULL, ...) {
       if (!missing(`similarity`)) {
         if (!(is.numeric(`similarity`) && length(`similarity`) == 1)) {
           stop(paste("Error! Invalid data for `similarity`. Must be a number:", `similarity`))
@@ -83,6 +89,18 @@ SpectralLibraryMatch <- R6::R6Class(
           stop(paste("Error! Invalid data for `candidateInChiKey`. Must be a string:", `candidateInChiKey`))
         }
         self$`candidateInChiKey` <- `candidateInChiKey`
+      }
+      if (!is.null(`specMatchId`)) {
+        if (!(is.character(`specMatchId`) && length(`specMatchId`) == 1)) {
+          stop(paste("Error! Invalid data for `specMatchId`. Must be a string:", `specMatchId`))
+        }
+        self$`specMatchId` <- `specMatchId`
+      }
+      if (!is.null(`rank`)) {
+        if (!(is.numeric(`rank`) && length(`rank`) == 1)) {
+          stop(paste("Error! Invalid data for `rank`. Must be an integer:", `rank`))
+        }
+        self$`rank` <- `rank`
       }
       if (!is.null(`sharedPeaks`)) {
         if (!(is.numeric(`sharedPeaks`) && length(`sharedPeaks`) == 1)) {
@@ -146,6 +164,14 @@ SpectralLibraryMatch <- R6::R6Class(
     #' @export
     toJSON = function() {
       SpectralLibraryMatchObject <- list()
+      if (!is.null(self$`specMatchId`)) {
+        SpectralLibraryMatchObject[["specMatchId"]] <-
+          self$`specMatchId`
+      }
+      if (!is.null(self$`rank`)) {
+        SpectralLibraryMatchObject[["rank"]] <-
+          self$`rank`
+      }
       if (!is.null(self$`similarity`)) {
         SpectralLibraryMatchObject[["similarity"]] <-
           self$`similarity`
@@ -214,6 +240,12 @@ SpectralLibraryMatch <- R6::R6Class(
     #' @export
     fromJSON = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
+      if (!is.null(this_object$`specMatchId`)) {
+        self$`specMatchId` <- this_object$`specMatchId`
+      }
+      if (!is.null(this_object$`rank`)) {
+        self$`rank` <- this_object$`rank`
+      }
       if (!is.null(this_object$`similarity`)) {
         self$`similarity` <- this_object$`similarity`
       }
@@ -266,6 +298,22 @@ SpectralLibraryMatch <- R6::R6Class(
     #' @export
     toJSONString = function() {
       jsoncontent <- c(
+        if (!is.null(self$`specMatchId`)) {
+          sprintf(
+          '"specMatchId":
+            "%s"
+                    ',
+          self$`specMatchId`
+          )
+        },
+        if (!is.null(self$`rank`)) {
+          sprintf(
+          '"rank":
+            %d
+                    ',
+          self$`rank`
+          )
+        },
         if (!is.null(self$`similarity`)) {
           sprintf(
           '"similarity":
@@ -384,6 +432,8 @@ SpectralLibraryMatch <- R6::R6Class(
     #' @export
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
+      self$`specMatchId` <- this_object$`specMatchId`
+      self$`rank` <- this_object$`rank`
       self$`similarity` <- this_object$`similarity`
       self$`sharedPeaks` <- this_object$`sharedPeaks`
       self$`querySpectrumIndex` <- this_object$`querySpectrumIndex`

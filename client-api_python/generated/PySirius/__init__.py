@@ -108,10 +108,10 @@ from PySirius.models.searchable_database_parameters import SearchableDatabasePar
 from PySirius.models.simple_peak import SimplePeak
 from PySirius.models.sirius import Sirius
 from PySirius.models.sort_object import SortObject
-from PySirius.models.spectral_alignment_type import SpectralAlignmentType
 from PySirius.models.spectral_library_match import SpectralLibraryMatch
 from PySirius.models.spectral_library_match_opt_field import SpectralLibraryMatchOptField
 from PySirius.models.spectral_library_search import SpectralLibrarySearch
+from PySirius.models.spectral_matching_type import SpectralMatchingType
 from PySirius.models.spectrum_annotation import SpectrumAnnotation
 from PySirius.models.structure_candidate import StructureCandidate
 from PySirius.models.structure_candidate_formula import StructureCandidateFormula

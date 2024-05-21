@@ -69,7 +69,7 @@ style_dir()
 
 ## Documentation for API Endpoints
 
-All URIs are relative to *http://localhost:8080*
+All URIs are relative to *http://localhost:42691*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
@@ -82,6 +82,7 @@ Class | Method | HTTP request | Description
 *CompoundsApi* | [**GetCompoundsPaged**](docs/CompoundsApi.md#GetCompoundsPaged) | **GET** /api/projects/{projectId}/compounds/page | Page of available compounds (group of ion identities) in the given project-space.
 *FeaturesApi* | [**AddAlignedFeatures**](docs/FeaturesApi.md#AddAlignedFeatures) | **POST** /api/projects/{projectId}/aligned-features | Import (aligned) features into the project.
 *FeaturesApi* | [**DeleteAlignedFeature**](docs/FeaturesApi.md#DeleteAlignedFeature) | **DELETE** /api/projects/{projectId}/aligned-features/{alignedFeatureId} | Delete feature (aligned over runs) with the given identifier from the specified project-space.
+*FeaturesApi* | [**DeleteAlignedFeatures**](docs/FeaturesApi.md#DeleteAlignedFeatures) | **PUT** /api/projects/{projectId}/aligned-features/delete | Delete feature (aligned over runs) with the given identifier from the specified project-space.
 *FeaturesApi* | [**GetAlignedFeature**](docs/FeaturesApi.md#GetAlignedFeature) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId} | Get feature (aligned over runs) with the given identifier from the specified project-space.
 *FeaturesApi* | [**GetAlignedFeatures**](docs/FeaturesApi.md#GetAlignedFeatures) | **GET** /api/projects/{projectId}/aligned-features | Get all available features (aligned over runs) in the given project-space.
 *FeaturesApi* | [**GetAlignedFeaturesPaged**](docs/FeaturesApi.md#GetAlignedFeaturesPaged) | **GET** /api/projects/{projectId}/aligned-features/page | Get all available features (aligned over runs) in the given project-space.
@@ -102,6 +103,7 @@ Class | Method | HTTP request | Description
 *FeaturesApi* | [**GetLipidAnnotation**](docs/FeaturesApi.md#GetLipidAnnotation) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/lipid-annotation | Returns Lipid annotation (ElGordo) for the given formula result identifier.
 *FeaturesApi* | [**GetMsData**](docs/FeaturesApi.md#GetMsData) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/ms-data | Mass Spec data (input data) for the given 'alignedFeatureId' .
 *FeaturesApi* | [**GetSiriusFragTree**](docs/FeaturesApi.md#GetSiriusFragTree) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/sirius-fragtree | Returns fragmentation tree (SIRIUS) for the given formula result identifier in SIRIUS' internal format.
+*FeaturesApi* | [**GetSpectralLibraryMatch**](docs/FeaturesApi.md#GetSpectralLibraryMatch) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/spectral-library-matches/{matchId} | List of spectral library matches for the given 'alignedFeatureId'.
 *FeaturesApi* | [**GetSpectralLibraryMatches**](docs/FeaturesApi.md#GetSpectralLibraryMatches) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/spectral-library-matches | List of spectral library matches for the given 'alignedFeatureId'.
 *FeaturesApi* | [**GetSpectralLibraryMatchesPaged**](docs/FeaturesApi.md#GetSpectralLibraryMatchesPaged) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/spectral-library-matches/page | Page of spectral library matches for the given 'alignedFeatureId'.
 *FeaturesApi* | [**GetStructureAnnotatedMsData**](docs/FeaturesApi.md#GetStructureAnnotatedMsData) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/structures/{inchiKey}/annotated-msmsdata | Returns MS/MS Data (Merged MS/MS and list of measured MS/MS ) which are annotated with fragments and losses  for the given formula result identifier and structure candidate inChIKey.
@@ -235,10 +237,10 @@ Class | Method | HTTP request | Description
  - [SimplePeak](docs/SimplePeak.md)
  - [Sirius](docs/Sirius.md)
  - [SortObject](docs/SortObject.md)
- - [SpectralAlignmentType](docs/SpectralAlignmentType.md)
  - [SpectralLibraryMatch](docs/SpectralLibraryMatch.md)
  - [SpectralLibraryMatchOptField](docs/SpectralLibraryMatchOptField.md)
  - [SpectralLibrarySearch](docs/SpectralLibrarySearch.md)
+ - [SpectralMatchingType](docs/SpectralMatchingType.md)
  - [SpectrumAnnotation](docs/SpectrumAnnotation.md)
  - [StructureCandidate](docs/StructureCandidate.md)
  - [StructureCandidateFormula](docs/StructureCandidateFormula.md)

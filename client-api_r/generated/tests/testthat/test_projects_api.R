@@ -7,7 +7,7 @@ api_instance <- ProjectsApi$new()
 
 test_that("CloseProjectSpace", {
   # tests for CloseProjectSpace
-  # base path: http://localhost:8080
+  # base path: http://localhost:42691
   # Close project-space and remove it from application
   # Close project-space and remove it from application. Project will NOT be deleted from disk.  &lt;p&gt;  ATTENTION: This will cancel and remove all jobs running on this Project before closing it.  If there are many jobs, this might take some time.
   # @param project_id character unique name/identifier of the  project-space to be closed.
@@ -19,7 +19,7 @@ test_that("CloseProjectSpace", {
 
 test_that("CopyProjectSpace", {
   # tests for CopyProjectSpace
-  # base path: http://localhost:8080
+  # base path: http://localhost:42691
   # Move an existing (opened) project-space to another location.
   # Move an existing (opened) project-space to another location.
   # @param project_id character unique name/identifier of the project-space that shall be copied.
@@ -34,7 +34,7 @@ test_that("CopyProjectSpace", {
 
 test_that("CreateProjectSpace", {
   # tests for CreateProjectSpace
-  # base path: http://localhost:8080
+  # base path: http://localhost:42691
   # Create and open a new project-space at given location and make it accessible via the given projectId.
   # Create and open a new project-space at given location and make it accessible via the given projectId.
   # @param project_id character unique name/identifier that shall be used to access the newly created project-space. Must consist only of [a-zA-Z0-9_-].
@@ -48,7 +48,7 @@ test_that("CreateProjectSpace", {
 
 test_that("GetCanopusClassyFireData", {
   # tests for GetCanopusClassyFireData
-  # base path: http://localhost:8080
+  # base path: http://localhost:42691
   # Get CANOPUS prediction vector definition for ClassyFire classes
   # @param project_id character 
   # @param charge integer 
@@ -60,7 +60,7 @@ test_that("GetCanopusClassyFireData", {
 
 test_that("GetCanopusNpcData", {
   # tests for GetCanopusNpcData
-  # base path: http://localhost:8080
+  # base path: http://localhost:42691
   # Get CANOPUS prediction vector definition for NPC classes
   # @param project_id character 
   # @param charge integer 
@@ -72,7 +72,7 @@ test_that("GetCanopusNpcData", {
 
 test_that("GetFingerIdData", {
   # tests for GetFingerIdData
-  # base path: http://localhost:8080
+  # base path: http://localhost:42691
   # Get CSI:FingerID fingerprint (prediction vector) definition
   # @param project_id character 
   # @param charge integer 
@@ -84,7 +84,7 @@ test_that("GetFingerIdData", {
 
 test_that("GetProjectSpace", {
   # tests for GetProjectSpace
-  # base path: http://localhost:8080
+  # base path: http://localhost:42691
   # Get project space info by its projectId.
   # Get project space info by its projectId.
   # @param project_id character unique name/identifier tof the project-space to be accessed.
@@ -97,7 +97,7 @@ test_that("GetProjectSpace", {
 
 test_that("GetProjectSpaces", {
   # tests for GetProjectSpaces
-  # base path: http://localhost:8080
+  # base path: http://localhost:42691
   # List opened project spaces.
   # List opened project spaces.
   # @return [array[ProjectInfo]]
@@ -108,7 +108,7 @@ test_that("GetProjectSpaces", {
 
 test_that("ImportMsRunData", {
   # tests for ImportMsRunData
-  # base path: http://localhost:8080
+  # base path: http://localhost:42691
   # Import and Align full MS-Runs from various formats into the specified project  Possible formats (mzML, mzXML)
   # Import and Align full MS-Runs from various formats into the specified project  Possible formats (mzML, mzXML)
   # @param project_id character project-space to import into.
@@ -123,7 +123,7 @@ test_that("ImportMsRunData", {
 
 test_that("ImportMsRunDataAsJob", {
   # tests for ImportMsRunDataAsJob
-  # base path: http://localhost:8080
+  # base path: http://localhost:42691
   # Import and Align full MS-Runs from various formats into the specified project as background job.
   # Import and Align full MS-Runs from various formats into the specified project as background job.  Possible formats (mzML, mzXML)
   # @param project_id character project-space to import into.
@@ -139,7 +139,7 @@ test_that("ImportMsRunDataAsJob", {
 
 test_that("ImportPreprocessedData", {
   # tests for ImportPreprocessedData
-  # base path: http://localhost:8080
+  # base path: http://localhost:42691
   # Import already preprocessed ms/ms data from various formats into the specified project  Possible formats (ms, mgf, cef, msp)
   # Import already preprocessed ms/ms data from various formats into the specified project  Possible formats (ms, mgf, cef, msp)
   # @param project_id character project-space to import into.
@@ -154,7 +154,7 @@ test_that("ImportPreprocessedData", {
 
 test_that("ImportPreprocessedDataAsJob", {
   # tests for ImportPreprocessedDataAsJob
-  # base path: http://localhost:8080
+  # base path: http://localhost:42691
   # Import ms/ms data from the given format into the specified project-space as background job.
   # Import ms/ms data from the given format into the specified project-space as background job.  Possible formats (ms, mgf, cef, msp)
   # @param project_id character project-space to import into.
@@ -170,7 +170,7 @@ test_that("ImportPreprocessedDataAsJob", {
 
 test_that("OpenProjectSpace", {
   # tests for OpenProjectSpace
-  # base path: http://localhost:8080
+  # base path: http://localhost:42691
   # Open an existing project-space and make it accessible via the given projectId.
   # Open an existing project-space and make it accessible via the given projectId.
   # @param project_id character unique name/identifier that shall be used to access the opened project-space. Must consist only of [a-zA-Z0-9_-].

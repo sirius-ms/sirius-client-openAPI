@@ -38,7 +38,7 @@ test_that("precursorDeviationPpm", {
 })
 
 test_that("scoring", {
-  # tests for the property `scoring` (SpectralAlignmentType)
+  # tests for the property `scoring` (SpectralMatchingType)
 
   # uncomment below to test the property
   #expect_equal(model.instance$`scoring`, "EXPECTED_RESULT")

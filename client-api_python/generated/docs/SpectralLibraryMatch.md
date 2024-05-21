@@ -5,6 +5,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**spec_match_id** | **str** |  | [optional] 
+**rank** | **int** |  | [optional] 
 **similarity** | **float** |  | 
 **shared_peaks** | **int** |  | [optional] 
 **query_spectrum_index** | **int** |  | 

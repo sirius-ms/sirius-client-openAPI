@@ -38,6 +38,7 @@ class TestFormulaCandidate(unittest.TestCase):
                 formula_id = '',
                 molecular_formula = '',
                 adduct = '',
+                rank = 56,
                 sirius_score = 1.337,
                 isotope_score = 1.337,
                 tree_score = 1.337,
@@ -48,7 +49,6 @@ class TestFormulaCandidate(unittest.TestCase):
                 median_mass_deviation = PySirius.models.deviation.Deviation(
                     ppm = 1.337, 
                     absolute = 1.337, ),
-                top_csi_score = 1.337,
                 fragmentation_tree = PySirius.models.fragmentation_tree.FragmentationTree(
                     fragments = [
                         PySirius.models.fragment_node.FragmentNode(

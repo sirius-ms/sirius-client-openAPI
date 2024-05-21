@@ -36,7 +36,7 @@ ApiClient  <- R6::R6Class(
   "ApiClient",
   public = list(
     # base path of all requests
-    base_path = "http://localhost:8080",
+    base_path = "http://localhost:42691",
     # user agent in the HTTP request
     user_agent = "OpenAPI-Generator/0.9/r",
     # default headers in the HTTP request

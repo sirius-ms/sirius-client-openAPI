@@ -49,6 +49,23 @@
 #' }
 #' }
 #'
+#' \strong{ DeleteAlignedFeatures } \emph{ Delete feature (aligned over runs) with the given identifier from the specified project-space. }
+#' Delete feature (aligned over runs) with the given identifier from the specified project-space.
+#'
+#' \itemize{
+#' \item \emph{ @param } project_id character
+#' \item \emph{ @param } request_body list( character )
+#'
+#'
+#' \item status code : 200 | OK
+#'
+#'
+#' \item response headers :
+#'
+#' \tabular{ll}{
+#' }
+#' }
+#'
 #' \strong{ GetAlignedFeature } \emph{ Get feature (aligned over runs) with the given identifier from the specified project-space. }
 #' Get feature (aligned over runs) with the given identifier from the specified project-space.
 #'
@@ -440,6 +457,26 @@
 #' }
 #' }
 #'
+#' \strong{ GetSpectralLibraryMatch } \emph{ List of spectral library matches for the given &#39;alignedFeatureId&#39;. }
+#' List of spectral library matches for the given 'alignedFeatureId'.
+#'
+#' \itemize{
+#' \item \emph{ @param } project_id character
+#' \item \emph{ @param } aligned_feature_id character
+#' \item \emph{ @param } match_id character
+#' \item \emph{ @param } opt_fields list( \link{SpectralLibraryMatchOptField} )
+#' \item \emph{ @returnType } \link{SpectralLibraryMatch} \cr
+#'
+#'
+#' \item status code : 200 | Spectral library matches of this feature (aligned over runs).
+#'
+#' \item return type : SpectralLibraryMatch
+#' \item response headers :
+#'
+#' \tabular{ll}{
+#' }
+#' }
+#'
 #' \strong{ GetSpectralLibraryMatches } \emph{ List of spectral library matches for the given &#39;alignedFeatureId&#39;. }
 #' List of spectral library matches for the given 'alignedFeatureId'.
 #'
@@ -637,6 +674,18 @@
 #' api_instance <- rsirius_api$new()
 #'
 #' api_instance$features_api$DeleteAlignedFeature(var_project_id, var_aligned_feature_id)
+#'
+#'
+#' ####################  DeleteAlignedFeatures  ####################
+#'
+#' library(Rsirius)
+#' var_project_id <- "project_id_example" # character | project-space to delete from.
+#' var_request_body <- c("property_example") # array[character] | 
+#'
+#' #Delete feature (aligned over runs) with the given identifier from the specified project-space.
+#' api_instance <- rsirius_api$new()
+#'
+#' api_instance$features_api$DeleteAlignedFeatures(var_project_id, var_request_body)
 #'
 #'
 #' ####################  GetAlignedFeature  ####################
@@ -969,6 +1018,23 @@
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
 #' # result <- api_instance$GetSiriusFragTree(var_project_id, var_aligned_feature_id, var_formula_iddata_file = "result.txt")
 #' result <- api_instance$features_api$GetSiriusFragTree(var_project_id, var_aligned_feature_id, var_formula_id)
+#' dput(result)
+#'
+#'
+#' ####################  GetSpectralLibraryMatch  ####################
+#'
+#' library(Rsirius)
+#' var_project_id <- "project_id_example" # character | project-space to read from.
+#' var_aligned_feature_id <- "aligned_feature_id_example" # character | feature (aligned over runs) the structure candidates belong to.
+#' var_match_id <- "match_id_example" # character | 
+#' var_opt_fields <- c(SpectralLibraryMatchOptField$new()) # array[SpectralLibraryMatchOptField] |  (Optional)
+#'
+#' #List of spectral library matches for the given 'alignedFeatureId'.
+#' api_instance <- rsirius_api$new()
+#'
+#' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
+#' # result <- api_instance$GetSpectralLibraryMatch(var_project_id, var_aligned_feature_id, var_match_id, opt_fields = var_opt_fieldsdata_file = "result.txt")
+#' result <- api_instance$features_api$GetSpectralLibraryMatch(var_project_id, var_aligned_feature_id, var_match_id, opt_fields = var_opt_fields)
 #' dput(result)
 #'
 #'
@@ -1327,6 +1393,106 @@ FeaturesApi <- R6::R6Class(
 
       local_var_resp <- self$api_client$CallApi(url = paste0(self$api_client$base_path, local_var_url_path),
                                  method = "DELETE",
+                                 query_params = query_params,
+                                 header_params = header_params,
+                                 form_params = form_params,
+                                 file_params = file_params,
+                                 accepts = local_var_accepts,
+                                 content_types = local_var_content_types,
+                                 body = local_var_body,
+                                 is_oauth = is_oauth,
+                                 oauth_scopes = oauth_scopes,
+                                 ...)
+
+      if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
+        local_var_resp$content <- NULL
+        local_var_resp
+      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
+      } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
+        ApiResponse$new("API client error", local_var_resp)
+      } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
+        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
+          local_var_resp$response <- "API server error"
+        }
+        local_var_resp
+      }
+    },
+    #' Delete feature (aligned over runs) with the given identifier from the specified project-space.
+    #'
+    #' @description
+    #' Delete feature (aligned over runs) with the given identifier from the specified project-space.
+    #'
+    #' @param project_id project-space to delete from.
+    #' @param request_body 
+    #' @param ... Other optional arguments
+    #' @return void
+    #' @export
+    DeleteAlignedFeatures = function(project_id, request_body, ...) {
+      local_var_response <- self$DeleteAlignedFeaturesWithHttpInfo(project_id, request_body, ...)
+      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
+        local_var_response$content
+      } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
+        local_var_response
+      } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
+        local_var_response
+      } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
+        local_var_response
+      }
+    },
+    #' Delete feature (aligned over runs) with the given identifier from the specified project-space.
+    #'
+    #' @description
+    #' Delete feature (aligned over runs) with the given identifier from the specified project-space.
+    #'
+    #' @param project_id project-space to delete from.
+    #' @param request_body 
+    #' @param ... Other optional arguments
+    #' @return API response (void) with additional information such as HTTP status code, headers
+    #' @export
+    DeleteAlignedFeaturesWithHttpInfo = function(project_id, request_body, ...) {
+      args <- list(...)
+      query_params <- list()
+      header_params <- c()
+      form_params <- list()
+      file_params <- list()
+      local_var_body <- NULL
+      oauth_scopes <- NULL
+      is_oauth <- FALSE
+
+      if (missing(`project_id`)) {
+        stop("Missing required parameter `project_id`.")
+      }
+
+      if (missing(`request_body`)) {
+        stop("Missing required parameter `request_body`.")
+      }
+
+
+
+      if (!is.null(`request_body`)) {
+        body.items <- paste(unlist(lapply(`request_body`, function(param) {
+                                                             param$toJSONString()
+                                                         })), collapse = ",")
+        local_var_body <- paste0("[", body.items, "]")
+      } else {
+        body <- NULL
+      }
+
+      local_var_url_path <- "/api/projects/{projectId}/aligned-features/delete"
+      if (!missing(`project_id`)) {
+        local_var_url_path <- gsub("\\{projectId\\}", URLencode(as.character(`project_id`), reserved = TRUE), local_var_url_path)
+      }
+
+
+      # The Accept request HTTP header
+      local_var_accepts <- list()
+
+      # The Content-Type representation header
+      local_var_content_types <- list("application/json")
+
+      local_var_resp <- self$api_client$CallApi(url = paste0(self$api_client$base_path, local_var_url_path),
+                                 method = "PUT",
                                  query_params = query_params,
                                  header_params = header_params,
                                  form_params = form_params,
@@ -3786,6 +3952,133 @@ FeaturesApi <- R6::R6Class(
 
         deserialized_resp_obj <- tryCatch(
           self$api_client$deserialize(local_var_resp$response_as_text(), "character", loadNamespace("Rsirius")),
+          error = function(e) {
+            stop("Failed to deserialize response")
+          }
+        )
+        local_var_resp$content <- deserialized_resp_obj
+        local_var_resp
+      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
+      } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
+        ApiResponse$new("API client error", local_var_resp)
+      } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
+        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
+          local_var_resp$response <- "API server error"
+        }
+        local_var_resp
+      }
+    },
+    #' List of spectral library matches for the given 'alignedFeatureId'.
+    #'
+    #' @description
+    #' List of spectral library matches for the given 'alignedFeatureId'.
+    #'
+    #' @param project_id project-space to read from.
+    #' @param aligned_feature_id feature (aligned over runs) the structure candidates belong to.
+    #' @param match_id 
+    #' @param opt_fields (optional) No description (default value: [])
+    #' @param data_file (optional) name of the data file to save the result
+    #' @param ... Other optional arguments
+    #' @return SpectralLibraryMatch
+    #' @export
+    GetSpectralLibraryMatch = function(project_id, aligned_feature_id, match_id, opt_fields = list(), data_file = NULL, ...) {
+      local_var_response <- self$GetSpectralLibraryMatchWithHttpInfo(project_id, aligned_feature_id, match_id, opt_fields, data_file = data_file, ...)
+      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
+        local_var_response$content
+      } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
+        local_var_response
+      } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
+        local_var_response
+      } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
+        local_var_response
+      }
+    },
+    #' List of spectral library matches for the given 'alignedFeatureId'.
+    #'
+    #' @description
+    #' List of spectral library matches for the given 'alignedFeatureId'.
+    #'
+    #' @param project_id project-space to read from.
+    #' @param aligned_feature_id feature (aligned over runs) the structure candidates belong to.
+    #' @param match_id 
+    #' @param opt_fields (optional) No description (default value: [])
+    #' @param data_file (optional) name of the data file to save the result
+    #' @param ... Other optional arguments
+    #' @return API response (SpectralLibraryMatch) with additional information such as HTTP status code, headers
+    #' @export
+    GetSpectralLibraryMatchWithHttpInfo = function(project_id, aligned_feature_id, match_id, opt_fields = list(), data_file = NULL, ...) {
+      args <- list(...)
+      query_params <- list()
+      header_params <- c()
+      form_params <- list()
+      file_params <- list()
+      local_var_body <- NULL
+      oauth_scopes <- NULL
+      is_oauth <- FALSE
+
+      if (missing(`project_id`)) {
+        stop("Missing required parameter `project_id`.")
+      }
+
+      if (missing(`aligned_feature_id`)) {
+        stop("Missing required parameter `aligned_feature_id`.")
+      }
+
+      if (missing(`match_id`)) {
+        stop("Missing required parameter `match_id`.")
+      }
+
+
+
+
+
+      # explore
+      for (query_item in `opt_fields`) {
+        query_params[["optFields"]] <- c(query_params[["optFields"]], list(`optFields` = query_item))
+      }
+
+      local_var_url_path <- "/api/projects/{projectId}/aligned-features/{alignedFeatureId}/spectral-library-matches/{matchId}"
+      if (!missing(`project_id`)) {
+        local_var_url_path <- gsub("\\{projectId\\}", URLencode(as.character(`project_id`), reserved = TRUE), local_var_url_path)
+      }
+
+      if (!missing(`aligned_feature_id`)) {
+        local_var_url_path <- gsub("\\{alignedFeatureId\\}", URLencode(as.character(`aligned_feature_id`), reserved = TRUE), local_var_url_path)
+      }
+
+      if (!missing(`match_id`)) {
+        local_var_url_path <- gsub("\\{matchId\\}", URLencode(as.character(`match_id`), reserved = TRUE), local_var_url_path)
+      }
+
+
+      # The Accept request HTTP header
+      local_var_accepts <- list("application/json")
+
+      # The Content-Type representation header
+      local_var_content_types <- list()
+
+      local_var_resp <- self$api_client$CallApi(url = paste0(self$api_client$base_path, local_var_url_path),
+                                 method = "GET",
+                                 query_params = query_params,
+                                 header_params = header_params,
+                                 form_params = form_params,
+                                 file_params = file_params,
+                                 accepts = local_var_accepts,
+                                 content_types = local_var_content_types,
+                                 body = local_var_body,
+                                 is_oauth = is_oauth,
+                                 oauth_scopes = oauth_scopes,
+                                 ...)
+
+      if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
+        # save response in a file
+        if (!is.null(data_file)) {
+          write(local_var_resp$response, data_file)
+        }
+
+        deserialized_resp_obj <- tryCatch(
+          self$api_client$deserialize(local_var_resp$response_as_text(), "SpectralLibraryMatch", loadNamespace("Rsirius")),
           error = function(e) {
             stop("Failed to deserialize response")
           }

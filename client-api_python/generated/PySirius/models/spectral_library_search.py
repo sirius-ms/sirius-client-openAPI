@@ -19,7 +19,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictFloat, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional, Union
-from PySirius.models.spectral_alignment_type import SpectralAlignmentType
+from PySirius.models.spectral_matching_type import SpectralMatchingType
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -31,7 +31,7 @@ class SpectralLibrarySearch(BaseModel):
     spectra_search_dbs: Optional[List[Optional[StrictStr]]] = Field(default=None, description="Structure Databases with Reference spectra to search in.  <p>  Defaults to BIO + Custom Databases. Possible values are available to Database API.", alias="spectraSearchDBs")
     peak_deviation_ppm: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Maximum allowed mass deviation in ppm for matching peaks.", alias="peakDeviationPpm")
     precursor_deviation_ppm: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Maximum allowed mass deviation in ppm for matching the precursor. If not specified, the same value as for the peaks is used.", alias="precursorDeviationPpm")
-    scoring: Optional[SpectralAlignmentType] = None
+    scoring: Optional[SpectralMatchingType] = None
     __properties: ClassVar[List[str]] = ["enabled", "spectraSearchDBs", "peakDeviationPpm", "precursorDeviationPpm", "scoring"]
 
     model_config = ConfigDict(

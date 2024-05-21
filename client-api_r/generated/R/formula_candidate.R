@@ -10,6 +10,7 @@
 #' @field formulaId Unique identifier of this formula candidate character [optional]
 #' @field molecularFormula molecular formula of this formula candidate character [optional]
 #' @field adduct Adduct of this formula candidate character [optional]
+#' @field rank  integer [optional]
 #' @field siriusScore Sirius Score (isotope + tree score) of the formula candidate.  If NULL result is not available numeric [optional]
 #' @field isotopeScore  numeric [optional]
 #' @field treeScore  numeric [optional]
@@ -18,7 +19,6 @@
 #' @field numOfExplainablePeaks  integer [optional]
 #' @field totalExplainedIntensity  numeric [optional]
 #' @field medianMassDeviation  \link{Deviation} [optional]
-#' @field topCSIScore CSI:FingerID Score of the highest scoring structure candidate (top hit) of this formula candidate.  If NULL result is not available numeric [optional]
 #' @field fragmentationTree  \link{FragmentationTree} [optional]
 #' @field annotatedSpectrum  \link{AnnotatedSpectrum} [optional]
 #' @field isotopePatternAnnotation  \link{IsotopePatternAnnotation} [optional]
@@ -35,6 +35,7 @@ FormulaCandidate <- R6::R6Class(
     `formulaId` = NULL,
     `molecularFormula` = NULL,
     `adduct` = NULL,
+    `rank` = NULL,
     `siriusScore` = NULL,
     `isotopeScore` = NULL,
     `treeScore` = NULL,
@@ -43,7 +44,6 @@ FormulaCandidate <- R6::R6Class(
     `numOfExplainablePeaks` = NULL,
     `totalExplainedIntensity` = NULL,
     `medianMassDeviation` = NULL,
-    `topCSIScore` = NULL,
     `fragmentationTree` = NULL,
     `annotatedSpectrum` = NULL,
     `isotopePatternAnnotation` = NULL,
@@ -59,6 +59,7 @@ FormulaCandidate <- R6::R6Class(
     #' @param formulaId Unique identifier of this formula candidate
     #' @param molecularFormula molecular formula of this formula candidate
     #' @param adduct Adduct of this formula candidate
+    #' @param rank rank
     #' @param siriusScore Sirius Score (isotope + tree score) of the formula candidate.  If NULL result is not available
     #' @param isotopeScore isotopeScore
     #' @param treeScore treeScore
@@ -67,7 +68,6 @@ FormulaCandidate <- R6::R6Class(
     #' @param numOfExplainablePeaks numOfExplainablePeaks
     #' @param totalExplainedIntensity totalExplainedIntensity
     #' @param medianMassDeviation medianMassDeviation
-    #' @param topCSIScore CSI:FingerID Score of the highest scoring structure candidate (top hit) of this formula candidate.  If NULL result is not available
     #' @param fragmentationTree fragmentationTree
     #' @param annotatedSpectrum annotatedSpectrum
     #' @param isotopePatternAnnotation isotopePatternAnnotation
@@ -77,7 +77,7 @@ FormulaCandidate <- R6::R6Class(
     #' @param canopusPrediction canopusPrediction
     #' @param ... Other optional arguments.
     #' @export
-    initialize = function(`formulaId` = NULL, `molecularFormula` = NULL, `adduct` = NULL, `siriusScore` = NULL, `isotopeScore` = NULL, `treeScore` = NULL, `zodiacScore` = NULL, `numOfExplainedPeaks` = NULL, `numOfExplainablePeaks` = NULL, `totalExplainedIntensity` = NULL, `medianMassDeviation` = NULL, `topCSIScore` = NULL, `fragmentationTree` = NULL, `annotatedSpectrum` = NULL, `isotopePatternAnnotation` = NULL, `lipidAnnotation` = NULL, `predictedFingerprint` = NULL, `compoundClasses` = NULL, `canopusPrediction` = NULL, ...) {
+    initialize = function(`formulaId` = NULL, `molecularFormula` = NULL, `adduct` = NULL, `rank` = NULL, `siriusScore` = NULL, `isotopeScore` = NULL, `treeScore` = NULL, `zodiacScore` = NULL, `numOfExplainedPeaks` = NULL, `numOfExplainablePeaks` = NULL, `totalExplainedIntensity` = NULL, `medianMassDeviation` = NULL, `fragmentationTree` = NULL, `annotatedSpectrum` = NULL, `isotopePatternAnnotation` = NULL, `lipidAnnotation` = NULL, `predictedFingerprint` = NULL, `compoundClasses` = NULL, `canopusPrediction` = NULL, ...) {
       if (!is.null(`formulaId`)) {
         if (!(is.character(`formulaId`) && length(`formulaId`) == 1)) {
           stop(paste("Error! Invalid data for `formulaId`. Must be a string:", `formulaId`))
@@ -95,6 +95,12 @@ FormulaCandidate <- R6::R6Class(
           stop(paste("Error! Invalid data for `adduct`. Must be a string:", `adduct`))
         }
         self$`adduct` <- `adduct`
+      }
+      if (!is.null(`rank`)) {
+        if (!(is.numeric(`rank`) && length(`rank`) == 1)) {
+          stop(paste("Error! Invalid data for `rank`. Must be an integer:", `rank`))
+        }
+        self$`rank` <- `rank`
       }
       if (!is.null(`siriusScore`)) {
         if (!(is.numeric(`siriusScore`) && length(`siriusScore`) == 1)) {
@@ -141,12 +147,6 @@ FormulaCandidate <- R6::R6Class(
       if (!is.null(`medianMassDeviation`)) {
         stopifnot(R6::is.R6(`medianMassDeviation`))
         self$`medianMassDeviation` <- `medianMassDeviation`
-      }
-      if (!is.null(`topCSIScore`)) {
-        if (!(is.numeric(`topCSIScore`) && length(`topCSIScore`) == 1)) {
-          stop(paste("Error! Invalid data for `topCSIScore`. Must be a number:", `topCSIScore`))
-        }
-        self$`topCSIScore` <- `topCSIScore`
       }
       if (!is.null(`fragmentationTree`)) {
         stopifnot(R6::is.R6(`fragmentationTree`))
@@ -199,6 +199,10 @@ FormulaCandidate <- R6::R6Class(
         FormulaCandidateObject[["adduct"]] <-
           self$`adduct`
       }
+      if (!is.null(self$`rank`)) {
+        FormulaCandidateObject[["rank"]] <-
+          self$`rank`
+      }
       if (!is.null(self$`siriusScore`)) {
         FormulaCandidateObject[["siriusScore"]] <-
           self$`siriusScore`
@@ -234,10 +238,6 @@ FormulaCandidate <- R6::R6Class(
           } else {
             self$`medianMassDeviation`$toJSON()
           }
-      }
-      if (!is.null(self$`topCSIScore`)) {
-        FormulaCandidateObject[["topCSIScore"]] <-
-          self$`topCSIScore`
       }
       if (!is.null(self$`fragmentationTree`)) {
         FormulaCandidateObject[["fragmentationTree"]] <-
@@ -312,6 +312,9 @@ FormulaCandidate <- R6::R6Class(
       if (!is.null(this_object$`adduct`)) {
         self$`adduct` <- this_object$`adduct`
       }
+      if (!is.null(this_object$`rank`)) {
+        self$`rank` <- this_object$`rank`
+      }
       if (!is.null(this_object$`siriusScore`)) {
         self$`siriusScore` <- this_object$`siriusScore`
       }
@@ -337,9 +340,6 @@ FormulaCandidate <- R6::R6Class(
         `medianmassdeviation_object` <- Deviation$new()
         `medianmassdeviation_object`$fromJSON(jsonlite::toJSON(this_object$`medianMassDeviation`, auto_unbox = TRUE, digits = NA))
         self$`medianMassDeviation` <- `medianmassdeviation_object`
-      }
-      if (!is.null(this_object$`topCSIScore`)) {
-        self$`topCSIScore` <- this_object$`topCSIScore`
       }
       if (!is.null(this_object$`fragmentationTree`)) {
         `fragmentationtree_object` <- FragmentationTree$new()
@@ -409,6 +409,14 @@ FormulaCandidate <- R6::R6Class(
           self$`adduct`
           )
         },
+        if (!is.null(self$`rank`)) {
+          sprintf(
+          '"rank":
+            %d
+                    ',
+          self$`rank`
+          )
+        },
         if (!is.null(self$`siriusScore`)) {
           sprintf(
           '"siriusScore":
@@ -471,14 +479,6 @@ FormulaCandidate <- R6::R6Class(
           %s
           ',
           jsonlite::toJSON(self$`medianMassDeviation`$toJSON(), auto_unbox = TRUE, digits = NA)
-          )
-        },
-        if (!is.null(self$`topCSIScore`)) {
-          sprintf(
-          '"topCSIScore":
-            %d
-                    ',
-          self$`topCSIScore`
           )
         },
         if (!is.null(self$`fragmentationTree`)) {
@@ -554,6 +554,7 @@ FormulaCandidate <- R6::R6Class(
       self$`formulaId` <- this_object$`formulaId`
       self$`molecularFormula` <- this_object$`molecularFormula`
       self$`adduct` <- this_object$`adduct`
+      self$`rank` <- this_object$`rank`
       self$`siriusScore` <- this_object$`siriusScore`
       self$`isotopeScore` <- this_object$`isotopeScore`
       self$`treeScore` <- this_object$`treeScore`
@@ -562,7 +563,6 @@ FormulaCandidate <- R6::R6Class(
       self$`numOfExplainablePeaks` <- this_object$`numOfExplainablePeaks`
       self$`totalExplainedIntensity` <- this_object$`totalExplainedIntensity`
       self$`medianMassDeviation` <- Deviation$new()$fromJSON(jsonlite::toJSON(this_object$`medianMassDeviation`, auto_unbox = TRUE, digits = NA))
-      self$`topCSIScore` <- this_object$`topCSIScore`
       self$`fragmentationTree` <- FragmentationTree$new()$fromJSON(jsonlite::toJSON(this_object$`fragmentationTree`, auto_unbox = TRUE, digits = NA))
       self$`annotatedSpectrum` <- AnnotatedSpectrum$new()$fromJSON(jsonlite::toJSON(this_object$`annotatedSpectrum`, auto_unbox = TRUE, digits = NA))
       self$`isotopePatternAnnotation` <- IsotopePatternAnnotation$new()$fromJSON(jsonlite::toJSON(this_object$`isotopePatternAnnotation`, auto_unbox = TRUE, digits = NA))

@@ -29,6 +29,13 @@ test_that("adduct", {
   #expect_equal(model.instance$`adduct`, "EXPECTED_RESULT")
 })
 
+test_that("rank", {
+  # tests for the property `rank` (integer)
+
+  # uncomment below to test the property
+  #expect_equal(model.instance$`rank`, "EXPECTED_RESULT")
+})
+
 test_that("siriusScore", {
   # tests for the property `siriusScore` (numeric)
   # Sirius Score (isotope + tree score) of the formula candidate.  If NULL result is not available
@@ -85,14 +92,6 @@ test_that("medianMassDeviation", {
 
   # uncomment below to test the property
   #expect_equal(model.instance$`medianMassDeviation`, "EXPECTED_RESULT")
-})
-
-test_that("topCSIScore", {
-  # tests for the property `topCSIScore` (numeric)
-  # CSI:FingerID Score of the highest scoring structure candidate (top hit) of this formula candidate.  If NULL result is not available
-
-  # uncomment below to test the property
-  #expect_equal(model.instance$`topCSIScore`, "EXPECTED_RESULT")
 })
 
 test_that("fragmentationTree", {

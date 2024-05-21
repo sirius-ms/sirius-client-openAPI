@@ -1,4 +1,4 @@
-# Rsirius::SpectralAlignmentType
+# Rsirius::SpectralMatchingType
 
 
 ## Properties

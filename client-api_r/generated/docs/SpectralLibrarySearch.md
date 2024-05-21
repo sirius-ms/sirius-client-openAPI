@@ -9,6 +9,6 @@ Name | Type | Description | Notes
 **spectraSearchDBs** | **array[character]** | Structure Databases with Reference spectra to search in.  &lt;p&gt;  Defaults to BIO + Custom Databases. Possible values are available to Database API. | [optional] 
 **peakDeviationPpm** | **numeric** | Maximum allowed mass deviation in ppm for matching peaks. | [optional] 
 **precursorDeviationPpm** | **numeric** | Maximum allowed mass deviation in ppm for matching the precursor. If not specified, the same value as for the peaks is used. | [optional] 
-**scoring** | [**SpectralAlignmentType**](SpectralAlignmentType.md) |  | [optional] [Enum: ] 
+**scoring** | [**SpectralMatchingType**](SpectralMatchingType.md) |  | [optional] [Enum: ] 
 
 

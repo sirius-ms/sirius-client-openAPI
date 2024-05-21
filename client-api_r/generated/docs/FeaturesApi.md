@@ -1,11 +1,12 @@
 # FeaturesApi
 
-All URIs are relative to *http://localhost:8080*
+All URIs are relative to *http://localhost:42691*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**AddAlignedFeatures**](FeaturesApi.md#AddAlignedFeatures) | **POST** /api/projects/{projectId}/aligned-features | Import (aligned) features into the project.
 [**DeleteAlignedFeature**](FeaturesApi.md#DeleteAlignedFeature) | **DELETE** /api/projects/{projectId}/aligned-features/{alignedFeatureId} | Delete feature (aligned over runs) with the given identifier from the specified project-space.
+[**DeleteAlignedFeatures**](FeaturesApi.md#DeleteAlignedFeatures) | **PUT** /api/projects/{projectId}/aligned-features/delete | Delete feature (aligned over runs) with the given identifier from the specified project-space.
 [**GetAlignedFeature**](FeaturesApi.md#GetAlignedFeature) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId} | Get feature (aligned over runs) with the given identifier from the specified project-space.
 [**GetAlignedFeatures**](FeaturesApi.md#GetAlignedFeatures) | **GET** /api/projects/{projectId}/aligned-features | Get all available features (aligned over runs) in the given project-space.
 [**GetAlignedFeaturesPaged**](FeaturesApi.md#GetAlignedFeaturesPaged) | **GET** /api/projects/{projectId}/aligned-features/page | Get all available features (aligned over runs) in the given project-space.
@@ -26,6 +27,7 @@ Method | HTTP request | Description
 [**GetLipidAnnotation**](FeaturesApi.md#GetLipidAnnotation) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/lipid-annotation | Returns Lipid annotation (ElGordo) for the given formula result identifier.
 [**GetMsData**](FeaturesApi.md#GetMsData) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/ms-data | Mass Spec data (input data) for the given &#39;alignedFeatureId&#39; .
 [**GetSiriusFragTree**](FeaturesApi.md#GetSiriusFragTree) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/sirius-fragtree | Returns fragmentation tree (SIRIUS) for the given formula result identifier in SIRIUS&#39; internal format.
+[**GetSpectralLibraryMatch**](FeaturesApi.md#GetSpectralLibraryMatch) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/spectral-library-matches/{matchId} | List of spectral library matches for the given &#39;alignedFeatureId&#39;.
 [**GetSpectralLibraryMatches**](FeaturesApi.md#GetSpectralLibraryMatches) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/spectral-library-matches | List of spectral library matches for the given &#39;alignedFeatureId&#39;.
 [**GetSpectralLibraryMatchesPaged**](FeaturesApi.md#GetSpectralLibraryMatchesPaged) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/spectral-library-matches/page | Page of spectral library matches for the given &#39;alignedFeatureId&#39;.
 [**GetStructureAnnotatedMsData**](FeaturesApi.md#GetStructureAnnotatedMsData) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/structures/{inchiKey}/annotated-msmsdata | Returns MS/MS Data (Merged MS/MS and list of measured MS/MS ) which are annotated with fragments and losses  for the given formula result identifier and structure candidate inChIKey.
@@ -126,6 +128,52 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
+ - **Accept**: Not defined
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | OK |  -  |
+
+# **DeleteAlignedFeatures**
+> DeleteAlignedFeatures(project_id, request_body)
+
+Delete feature (aligned over runs) with the given identifier from the specified project-space.
+
+Delete feature (aligned over runs) with the given identifier from the specified project-space.
+
+### Example
+```R
+library(Rsirius)
+
+# Delete feature (aligned over runs) with the given identifier from the specified project-space.
+#
+# prepare function argument(s)
+var_project_id <- "project_id_example" # character | project-space to delete from.
+var_request_body <- c("property_example") # array[character] | 
+
+api_instance <- rsirius_api$new()
+api_instance$features_api$DeleteAlignedFeatures(var_project_id, var_request_body)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **project_id** | **character**| project-space to delete from. | 
+ **request_body** | list( **character** )|  | 
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
  - **Accept**: Not defined
 
 ### HTTP response details
@@ -1178,6 +1226,59 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Fragmentation Tree in internal format.  &lt;p&gt;  NOTE: This endpoint is likely to be removed in future versions of the API. |  -  |
+
+# **GetSpectralLibraryMatch**
+> SpectralLibraryMatch GetSpectralLibraryMatch(project_id, aligned_feature_id, match_id, opt_fields = [])
+
+List of spectral library matches for the given 'alignedFeatureId'.
+
+List of spectral library matches for the given 'alignedFeatureId'.
+
+### Example
+```R
+library(Rsirius)
+
+# List of spectral library matches for the given 'alignedFeatureId'.
+#
+# prepare function argument(s)
+var_project_id <- "project_id_example" # character | project-space to read from.
+var_aligned_feature_id <- "aligned_feature_id_example" # character | feature (aligned over runs) the structure candidates belong to.
+var_match_id <- "match_id_example" # character | 
+var_opt_fields <- c(SpectralLibraryMatchOptField$new()) # array[SpectralLibraryMatchOptField] |  (Optional)
+
+api_instance <- rsirius_api$new()
+# to save the result into a file, simply add the optional `data_file` parameter, e.g.
+# result <- api_instance$GetSpectralLibraryMatch(var_project_id, var_aligned_feature_id, var_match_id, opt_fields = var_opt_fieldsdata_file = "result.txt")
+result <- api_instance$features_api$GetSpectralLibraryMatch(var_project_id, var_aligned_feature_id, var_match_id, opt_fields = var_opt_fields)
+dput(result)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **project_id** | **character**| project-space to read from. | 
+ **aligned_feature_id** | **character**| feature (aligned over runs) the structure candidates belong to. | 
+ **match_id** | **character**|  | 
+ **opt_fields** | list( [**SpectralLibraryMatchOptField**](SpectralLibraryMatchOptField.md) )|  | [optional] [default to []]
+
+### Return type
+
+[**SpectralLibraryMatch**](SpectralLibraryMatch.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Spectral library matches of this feature (aligned over runs). |  -  |
 
 # **GetSpectralLibraryMatches**
 > array[SpectralLibraryMatch] GetSpectralLibraryMatches(project_id, aligned_feature_id, opt_fields = [])

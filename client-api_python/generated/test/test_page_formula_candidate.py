@@ -37,13 +37,13 @@ class TestPageFormulaCandidate(unittest.TestCase):
             return PageFormulaCandidate(
                 total_pages = 56,
                 total_elements = 56,
-                first = True,
                 size = 56,
                 content = [
                     PySirius.models.formula_candidate.FormulaCandidate(
                         formula_id = '', 
                         molecular_formula = '', 
                         adduct = '', 
+                        rank = 56, 
                         sirius_score = 1.337, 
                         isotope_score = 1.337, 
                         tree_score = 1.337, 
@@ -54,7 +54,6 @@ class TestPageFormulaCandidate(unittest.TestCase):
                         median_mass_deviation = PySirius.models.deviation.Deviation(
                             ppm = 1.337, 
                             absolute = 1.337, ), 
-                        top_csi_score = 1.337, 
                         fragmentation_tree = PySirius.models.fragmentation_tree.FragmentationTree(
                             fragments = [
                                 PySirius.models.fragment_node.FragmentNode(
@@ -189,6 +188,8 @@ class TestPageFormulaCandidate(unittest.TestCase):
                     empty = True, 
                     sorted = True, 
                     unsorted = True, ),
+                last = True,
+                first = True,
                 number_of_elements = 56,
                 pageable = PySirius.models.pageable_object.PageableObject(
                     offset = 56, 
@@ -200,7 +201,6 @@ class TestPageFormulaCandidate(unittest.TestCase):
                     page_size = 56, 
                     paged = True, 
                     unpaged = True, ),
-                last = True,
                 empty = True
             )
         else:

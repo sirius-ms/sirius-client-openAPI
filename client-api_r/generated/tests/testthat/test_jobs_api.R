@@ -7,7 +7,7 @@ api_instance <- JobsApi$new()
 
 test_that("DeleteJob", {
   # tests for DeleteJob
-  # base path: http://localhost:8080
+  # base path: http://localhost:42691
   # Delete job.
   # Delete job. Specify how to behave for running jobs.
   # @param project_id character project-space to delete job from
@@ -22,7 +22,7 @@ test_that("DeleteJob", {
 
 test_that("DeleteJobConfig", {
   # tests for DeleteJobConfig
-  # base path: http://localhost:8080
+  # base path: http://localhost:42691
   # Delete job configuration with given name.
   # Delete job configuration with given name.
   # @param name character name of the job-config to delete
@@ -34,7 +34,7 @@ test_that("DeleteJobConfig", {
 
 test_that("DeleteJobs", {
   # tests for DeleteJobs
-  # base path: http://localhost:8080
+  # base path: http://localhost:42691
   # * Delete ALL jobs.
   # * Delete ALL jobs. Specify how to behave for running jobs.
   # @param project_id character project-space to delete jobs from
@@ -48,7 +48,7 @@ test_that("DeleteJobs", {
 
 test_that("GetDefaultJobConfig", {
   # tests for GetDefaultJobConfig
-  # base path: http://localhost:8080
+  # base path: http://localhost:42691
   # Request default job configuration
   # Request default job configuration
   # @param include_config_map character if true, generic configmap with-defaults will be included (optional)
@@ -60,7 +60,7 @@ test_that("GetDefaultJobConfig", {
 
 test_that("GetJob", {
   # tests for GetJob
-  # base path: http://localhost:8080
+  # base path: http://localhost:42691
   # Get job information and its current state and progress (if available).
   # Get job information and its current state and progress (if available).
   # @param project_id character project-space to run jobs on
@@ -74,7 +74,7 @@ test_that("GetJob", {
 
 test_that("GetJobConfig", {
   # tests for GetJobConfig
-  # base path: http://localhost:8080
+  # base path: http://localhost:42691
   # Request job configuration with given name.
   # Request job configuration with given name.
   # @param name character name of the job-config to return
@@ -87,7 +87,7 @@ test_that("GetJobConfig", {
 
 test_that("GetJobConfigs", {
   # tests for GetJobConfigs
-  # base path: http://localhost:8080
+  # base path: http://localhost:42691
   # Request all available job configurations
   # Request all available job configurations
   # @param include_config_map character if true the generic configmap will be part of the output (optional)
@@ -99,7 +99,7 @@ test_that("GetJobConfigs", {
 
 test_that("GetJobs", {
   # tests for GetJobs
-  # base path: http://localhost:8080
+  # base path: http://localhost:42691
   # Get List of all available jobs with information such as current state and progress (if available).
   # Get List of all available jobs with information such as current state and progress (if available).
   # @param project_id character project-space to run jobs on
@@ -112,7 +112,7 @@ test_that("GetJobs", {
 
 test_that("GetJobsPaged", {
   # tests for GetJobsPaged
-  # base path: http://localhost:8080
+  # base path: http://localhost:42691
   # Get Page of jobs with information such as current state and progress (if available).
   # Get Page of jobs with information such as current state and progress (if available).
   # @param project_id character project-space to run jobs on
@@ -128,7 +128,7 @@ test_that("GetJobsPaged", {
 
 test_that("HasJobs", {
   # tests for HasJobs
-  # base path: http://localhost:8080
+  # base path: http://localhost:42691
   # @param project_id character 
   # @param include_finished character  (optional)
   # @return [character]
@@ -139,7 +139,7 @@ test_that("HasJobs", {
 
 test_that("SaveJobConfig", {
   # tests for SaveJobConfig
-  # base path: http://localhost:8080
+  # base path: http://localhost:42691
   # Add new job configuration with given name.
   # Add new job configuration with given name.
   # @param name character name of the job-config to add
@@ -153,7 +153,7 @@ test_that("SaveJobConfig", {
 
 test_that("StartCommand", {
   # tests for StartCommand
-  # base path: http://localhost:8080
+  # base path: http://localhost:42691
   # Start computation for given command and input.
   # Start computation for given command and input.
   # @param project_id character project-space to perform the command for.
@@ -167,7 +167,7 @@ test_that("StartCommand", {
 
 test_that("StartJob", {
   # tests for StartJob
-  # base path: http://localhost:8080
+  # base path: http://localhost:42691
   # Start computation for given compounds and with given parameters.
   # Start computation for given compounds and with given parameters.
   # @param project_id character project-space to run jobs on
@@ -181,7 +181,7 @@ test_that("StartJob", {
 
 test_that("StartJobFromConfig", {
   # tests for StartJobFromConfig
-  # base path: http://localhost:8080
+  # base path: http://localhost:42691
   # Start computation for given compounds and with parameters from a stored job-config.
   # Start computation for given compounds and with parameters from a stored job-config.
   # @param project_id character project-space to run jobs on

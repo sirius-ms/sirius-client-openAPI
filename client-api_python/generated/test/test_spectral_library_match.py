@@ -35,6 +35,8 @@ class TestSpectralLibraryMatch(unittest.TestCase):
         model = SpectralLibraryMatch()
         if include_optional:
             return SpectralLibraryMatch(
+                spec_match_id = '',
+                rank = 56,
                 similarity = 1.337,
                 shared_peaks = 56,
                 query_spectrum_index = 56,

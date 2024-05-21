@@ -26,11 +26,11 @@ test_that("ionMass", {
   #expect_equal(model.instance$`ionMass`, "EXPECTED_RESULT")
 })
 
-test_that("adduct", {
-  # tests for the property `adduct` (character)
+test_that("ionType", {
+  # tests for the property `ionType` (character)
 
   # uncomment below to test the property
-  #expect_equal(model.instance$`adduct`, "EXPECTED_RESULT")
+  #expect_equal(model.instance$`ionType`, "EXPECTED_RESULT")
 })
 
 test_that("rtStartSeconds", {

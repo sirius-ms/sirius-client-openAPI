@@ -37,7 +37,6 @@ class TestPageStructureCandidateFormula(unittest.TestCase):
             return PageStructureCandidateFormula(
                 total_pages = 56,
                 total_elements = 56,
-                first = True,
                 size = 56,
                 content = [
                     PySirius.models.structure_candidate_formula.StructureCandidateFormula(
@@ -52,6 +51,8 @@ class TestPageStructureCandidateFormula(unittest.TestCase):
                             ], 
                         spectral_library_matches = [
                             PySirius.models.spectral_library_match.SpectralLibraryMatch(
+                                spec_match_id = '', 
+                                rank = 56, 
                                 similarity = 1.337, 
                                 shared_peaks = 56, 
                                 query_spectrum_index = 56, 
@@ -77,6 +78,7 @@ class TestPageStructureCandidateFormula(unittest.TestCase):
                                         ], 
                                     abs_intensity_factor = 1.337, ), )
                             ], 
+                        rank = 56, 
                         csi_score = 1.337, 
                         tanimoto_similarity = 1.337, 
                         mces_dist_to_top_hit = 1.337, 
@@ -94,6 +96,8 @@ class TestPageStructureCandidateFormula(unittest.TestCase):
                     empty = True, 
                     sorted = True, 
                     unsorted = True, ),
+                last = True,
+                first = True,
                 number_of_elements = 56,
                 pageable = PySirius.models.pageable_object.PageableObject(
                     offset = 56, 
@@ -105,7 +109,6 @@ class TestPageStructureCandidateFormula(unittest.TestCase):
                     page_size = 56, 
                     paged = True, 
                     unpaged = True, ),
-                last = True,
                 empty = True
             )
         else:

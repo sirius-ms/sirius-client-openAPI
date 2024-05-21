@@ -75,6 +75,8 @@ class TestConsensusAnnotationsCSI(unittest.TestCase):
                         ], 
                     spectral_library_matches = [
                         PySirius.models.spectral_library_match.SpectralLibraryMatch(
+                            spec_match_id = '', 
+                            rank = 56, 
                             similarity = 1.337, 
                             shared_peaks = 56, 
                             query_spectrum_index = 56, 

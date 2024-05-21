@@ -10,7 +10,7 @@
 #' @field alignedFeatureId  character [optional]
 #' @field name  character [optional]
 #' @field ionMass  numeric [optional]
-#' @field adduct  character [optional]
+#' @field ionType  character [optional]
 #' @field rtStartSeconds  numeric [optional]
 #' @field rtEndSeconds  numeric [optional]
 #' @field msData  \link{MsData} [optional]
@@ -26,7 +26,7 @@ AlignedFeature <- R6::R6Class(
     `alignedFeatureId` = NULL,
     `name` = NULL,
     `ionMass` = NULL,
-    `adduct` = NULL,
+    `ionType` = NULL,
     `rtStartSeconds` = NULL,
     `rtEndSeconds` = NULL,
     `msData` = NULL,
@@ -41,7 +41,7 @@ AlignedFeature <- R6::R6Class(
     #' @param alignedFeatureId alignedFeatureId
     #' @param name name
     #' @param ionMass ionMass
-    #' @param adduct adduct
+    #' @param ionType ionType
     #' @param rtStartSeconds rtStartSeconds
     #' @param rtEndSeconds rtEndSeconds
     #' @param msData msData
@@ -50,7 +50,7 @@ AlignedFeature <- R6::R6Class(
     #' @param computing Write lock for this feature. If the feature is locked no write operations are possible.  True if any computation is modifying this feature or its results
     #' @param ... Other optional arguments.
     #' @export
-    initialize = function(`alignedFeatureId` = NULL, `name` = NULL, `ionMass` = NULL, `adduct` = NULL, `rtStartSeconds` = NULL, `rtEndSeconds` = NULL, `msData` = NULL, `topAnnotations` = NULL, `topAnnotationsDeNovo` = NULL, `computing` = NULL, ...) {
+    initialize = function(`alignedFeatureId` = NULL, `name` = NULL, `ionMass` = NULL, `ionType` = NULL, `rtStartSeconds` = NULL, `rtEndSeconds` = NULL, `msData` = NULL, `topAnnotations` = NULL, `topAnnotationsDeNovo` = NULL, `computing` = NULL, ...) {
       if (!is.null(`alignedFeatureId`)) {
         if (!(is.character(`alignedFeatureId`) && length(`alignedFeatureId`) == 1)) {
           stop(paste("Error! Invalid data for `alignedFeatureId`. Must be a string:", `alignedFeatureId`))
@@ -69,11 +69,11 @@ AlignedFeature <- R6::R6Class(
         }
         self$`ionMass` <- `ionMass`
       }
-      if (!is.null(`adduct`)) {
-        if (!(is.character(`adduct`) && length(`adduct`) == 1)) {
-          stop(paste("Error! Invalid data for `adduct`. Must be a string:", `adduct`))
+      if (!is.null(`ionType`)) {
+        if (!(is.character(`ionType`) && length(`ionType`) == 1)) {
+          stop(paste("Error! Invalid data for `ionType`. Must be a string:", `ionType`))
         }
-        self$`adduct` <- `adduct`
+        self$`ionType` <- `ionType`
       }
       if (!is.null(`rtStartSeconds`)) {
         if (!(is.numeric(`rtStartSeconds`) && length(`rtStartSeconds`) == 1)) {
@@ -127,9 +127,9 @@ AlignedFeature <- R6::R6Class(
         AlignedFeatureObject[["ionMass"]] <-
           self$`ionMass`
       }
-      if (!is.null(self$`adduct`)) {
-        AlignedFeatureObject[["adduct"]] <-
-          self$`adduct`
+      if (!is.null(self$`ionType`)) {
+        AlignedFeatureObject[["ionType"]] <-
+          self$`ionType`
       }
       if (!is.null(self$`rtStartSeconds`)) {
         AlignedFeatureObject[["rtStartSeconds"]] <-
@@ -188,8 +188,8 @@ AlignedFeature <- R6::R6Class(
       if (!is.null(this_object$`ionMass`)) {
         self$`ionMass` <- this_object$`ionMass`
       }
-      if (!is.null(this_object$`adduct`)) {
-        self$`adduct` <- this_object$`adduct`
+      if (!is.null(this_object$`ionType`)) {
+        self$`ionType` <- this_object$`ionType`
       }
       if (!is.null(this_object$`rtStartSeconds`)) {
         self$`rtStartSeconds` <- this_object$`rtStartSeconds`
@@ -250,12 +250,12 @@ AlignedFeature <- R6::R6Class(
           self$`ionMass`
           )
         },
-        if (!is.null(self$`adduct`)) {
+        if (!is.null(self$`ionType`)) {
           sprintf(
-          '"adduct":
+          '"ionType":
             "%s"
                     ',
-          self$`adduct`
+          self$`ionType`
           )
         },
         if (!is.null(self$`rtStartSeconds`)) {
@@ -323,7 +323,7 @@ AlignedFeature <- R6::R6Class(
       self$`alignedFeatureId` <- this_object$`alignedFeatureId`
       self$`name` <- this_object$`name`
       self$`ionMass` <- this_object$`ionMass`
-      self$`adduct` <- this_object$`adduct`
+      self$`ionType` <- this_object$`ionType`
       self$`rtStartSeconds` <- this_object$`rtStartSeconds`
       self$`rtEndSeconds` <- this_object$`rtEndSeconds`
       self$`msData` <- MsData$new()$fromJSON(jsonlite::toJSON(this_object$`msData`, auto_unbox = TRUE, digits = NA))

@@ -55,10 +55,10 @@ import PySirius
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8080
+# Defining the host is optional and defaults to http://localhost:42691
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8080"
+    host = "http://localhost:42691"
 )
 
 
@@ -80,7 +80,7 @@ with PySirius.ApiClient(configuration) as api_client:
 
 ## Documentation for API Endpoints
 
-All URIs are relative to *http://localhost:8080*
+All URIs are relative to *http://localhost:42691*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
@@ -93,6 +93,7 @@ Class | Method | HTTP request | Description
 *CompoundsApi* | [**get_compounds_paged**](docs/CompoundsApi.md#get_compounds_paged) | **GET** /api/projects/{projectId}/compounds/page | Page of available compounds (group of ion identities) in the given project-space.
 *FeaturesApi* | [**add_aligned_features**](docs/FeaturesApi.md#add_aligned_features) | **POST** /api/projects/{projectId}/aligned-features | Import (aligned) features into the project.
 *FeaturesApi* | [**delete_aligned_feature**](docs/FeaturesApi.md#delete_aligned_feature) | **DELETE** /api/projects/{projectId}/aligned-features/{alignedFeatureId} | Delete feature (aligned over runs) with the given identifier from the specified project-space.
+*FeaturesApi* | [**delete_aligned_features**](docs/FeaturesApi.md#delete_aligned_features) | **PUT** /api/projects/{projectId}/aligned-features/delete | Delete feature (aligned over runs) with the given identifier from the specified project-space.
 *FeaturesApi* | [**get_aligned_feature**](docs/FeaturesApi.md#get_aligned_feature) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId} | Get feature (aligned over runs) with the given identifier from the specified project-space.
 *FeaturesApi* | [**get_aligned_features**](docs/FeaturesApi.md#get_aligned_features) | **GET** /api/projects/{projectId}/aligned-features | Get all available features (aligned over runs) in the given project-space.
 *FeaturesApi* | [**get_aligned_features_paged**](docs/FeaturesApi.md#get_aligned_features_paged) | **GET** /api/projects/{projectId}/aligned-features/page | Get all available features (aligned over runs) in the given project-space.
@@ -113,6 +114,7 @@ Class | Method | HTTP request | Description
 *FeaturesApi* | [**get_lipid_annotation**](docs/FeaturesApi.md#get_lipid_annotation) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/lipid-annotation | Returns Lipid annotation (ElGordo) for the given formula result identifier.
 *FeaturesApi* | [**get_ms_data**](docs/FeaturesApi.md#get_ms_data) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/ms-data | Mass Spec data (input data) for the given &#39;alignedFeatureId&#39; .
 *FeaturesApi* | [**get_sirius_frag_tree**](docs/FeaturesApi.md#get_sirius_frag_tree) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/sirius-fragtree | Returns fragmentation tree (SIRIUS) for the given formula result identifier in SIRIUS&#39; internal format.
+*FeaturesApi* | [**get_spectral_library_match**](docs/FeaturesApi.md#get_spectral_library_match) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/spectral-library-matches/{matchId} | List of spectral library matches for the given &#39;alignedFeatureId&#39;.
 *FeaturesApi* | [**get_spectral_library_matches**](docs/FeaturesApi.md#get_spectral_library_matches) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/spectral-library-matches | List of spectral library matches for the given &#39;alignedFeatureId&#39;.
 *FeaturesApi* | [**get_spectral_library_matches_paged**](docs/FeaturesApi.md#get_spectral_library_matches_paged) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/spectral-library-matches/page | Page of spectral library matches for the given &#39;alignedFeatureId&#39;.
 *FeaturesApi* | [**get_structure_annotated_ms_data**](docs/FeaturesApi.md#get_structure_annotated_ms_data) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/structures/{inchiKey}/annotated-msmsdata | Returns MS/MS Data (Merged MS/MS and list of measured MS/MS ) which are annotated with fragments and losses  for the given formula result identifier and structure candidate inChIKey.
@@ -246,10 +248,10 @@ Class | Method | HTTP request | Description
  - [SimplePeak](docs/SimplePeak.md)
  - [Sirius](docs/Sirius.md)
  - [SortObject](docs/SortObject.md)
- - [SpectralAlignmentType](docs/SpectralAlignmentType.md)
  - [SpectralLibraryMatch](docs/SpectralLibraryMatch.md)
  - [SpectralLibraryMatchOptField](docs/SpectralLibraryMatchOptField.md)
  - [SpectralLibrarySearch](docs/SpectralLibrarySearch.md)
+ - [SpectralMatchingType](docs/SpectralMatchingType.md)
  - [SpectrumAnnotation](docs/SpectrumAnnotation.md)
  - [StructureCandidate](docs/StructureCandidate.md)
  - [StructureCandidateFormula](docs/StructureCandidateFormula.md)

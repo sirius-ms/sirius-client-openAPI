@@ -7,14 +7,14 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **total_pages** | **int** |  | [optional] 
 **total_elements** | **int** |  | [optional] 
-**first** | **bool** |  | [optional] 
 **size** | **int** |  | [optional] 
 **content** | [**List[Compound]**](Compound.md) |  | [optional] 
 **number** | **int** |  | [optional] 
 **sort** | [**SortObject**](SortObject.md) |  | [optional] 
+**last** | **bool** |  | [optional] 
+**first** | **bool** |  | [optional] 
 **number_of_elements** | **int** |  | [optional] 
 **pageable** | [**PageableObject**](PageableObject.md) |  | [optional] 
-**last** | **bool** |  | [optional] 
 **empty** | **bool** |  | [optional] 
 
 ## Example

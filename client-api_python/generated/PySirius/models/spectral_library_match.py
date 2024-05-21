@@ -27,6 +27,8 @@ class SpectralLibraryMatch(BaseModel):
     """
     SpectralLibraryMatch
     """ # noqa: E501
+    spec_match_id: Optional[StrictStr] = Field(default=None, alias="specMatchId")
+    rank: Optional[StrictInt] = None
     similarity: Union[StrictFloat, StrictInt]
     shared_peaks: Optional[StrictInt] = Field(default=None, alias="sharedPeaks")
     query_spectrum_index: StrictInt = Field(alias="querySpectrumIndex")
@@ -40,7 +42,7 @@ class SpectralLibraryMatch(BaseModel):
     smiles: Optional[StrictStr] = None
     candidate_in_chi_key: StrictStr = Field(alias="candidateInChiKey")
     reference_spectrum: Optional[BasicSpectrum] = Field(default=None, alias="referenceSpectrum")
-    __properties: ClassVar[List[str]] = ["similarity", "sharedPeaks", "querySpectrumIndex", "dbName", "dbId", "uuid", "splash", "molecularFormula", "adduct", "exactMass", "smiles", "candidateInChiKey", "referenceSpectrum"]
+    __properties: ClassVar[List[str]] = ["specMatchId", "rank", "similarity", "sharedPeaks", "querySpectrumIndex", "dbName", "dbId", "uuid", "splash", "molecularFormula", "adduct", "exactMass", "smiles", "candidateInChiKey", "referenceSpectrum"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -96,6 +98,8 @@ class SpectralLibraryMatch(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
+            "specMatchId": obj.get("specMatchId"),
+            "rank": obj.get("rank"),
             "similarity": obj.get("similarity"),
             "sharedPeaks": obj.get("sharedPeaks"),
             "querySpectrumIndex": obj.get("querySpectrumIndex"),

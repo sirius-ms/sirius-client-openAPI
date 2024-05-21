@@ -40,6 +40,13 @@ class TestFeaturesApi(unittest.TestCase):
         """
         pass
 
+    def test_delete_aligned_features(self) -> None:
+        """Test case for delete_aligned_features
+
+        Delete feature (aligned over runs) with the given identifier from the specified project-space.
+        """
+        pass
+
     def test_get_aligned_feature(self) -> None:
         """Test case for get_aligned_feature
 
@@ -177,6 +184,13 @@ class TestFeaturesApi(unittest.TestCase):
         """Test case for get_sirius_frag_tree
 
         Returns fragmentation tree (SIRIUS) for the given formula result identifier in SIRIUS' internal format.
+        """
+        pass
+
+    def test_get_spectral_library_match(self) -> None:
+        """Test case for get_spectral_library_match
+
+        List of spectral library matches for the given 'alignedFeatureId'.
         """
         pass
 

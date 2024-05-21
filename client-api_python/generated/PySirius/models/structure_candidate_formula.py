@@ -35,6 +35,7 @@ class StructureCandidateFormula(BaseModel):
     xlog_p: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="xlogP")
     db_links: Optional[List[Optional[DBLink]]] = Field(default=None, description="List of structure database links belonging to this structure candidate  OPTIONAL: needs to be added by parameter", alias="dbLinks")
     spectral_library_matches: Optional[List[Optional[SpectralLibraryMatch]]] = Field(default=None, description="List of spectral library matches belonging to this structure candidate  OPTIONAL: needs to be added by parameter", alias="spectralLibraryMatches")
+    rank: Optional[StrictInt] = Field(default=None, description="the overall rank of this candidate among all candidates of this feature")
     csi_score: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="CSI:FingerID score of the fingerprint of this compound to the predicted fingerprint of CSI:FingerID  This is the score used for ranking structure candidates", alias="csiScore")
     tanimoto_similarity: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Tanimoto similarly of the fingerprint of this compound to the predicted fingerprint of CSI:FingerID", alias="tanimotoSimilarity")
     mces_dist_to_top_hit: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Maximum Common Edge Subgraph (MCES) distance to the top scoring hit (CSI:FingerID) in a candidate list.", alias="mcesDistToTopHit")
@@ -42,7 +43,7 @@ class StructureCandidateFormula(BaseModel):
     molecular_formula: Optional[StrictStr] = Field(default=None, description="Molecular formula of this candidate", alias="molecularFormula")
     adduct: Optional[StrictStr] = Field(default=None, description="Adduct of this candidate")
     formula_id: Optional[StrictStr] = Field(default=None, description="Id of the corresponding Formula candidate", alias="formulaId")
-    __properties: ClassVar[List[str]] = ["inchiKey", "smiles", "structureName", "xlogP", "dbLinks", "spectralLibraryMatches", "csiScore", "tanimotoSimilarity", "mcesDistToTopHit", "fingerprint", "molecularFormula", "adduct", "formulaId"]
+    __properties: ClassVar[List[str]] = ["inchiKey", "smiles", "structureName", "xlogP", "dbLinks", "spectralLibraryMatches", "rank", "csiScore", "tanimotoSimilarity", "mcesDistToTopHit", "fingerprint", "molecularFormula", "adduct", "formulaId"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -153,6 +154,7 @@ class StructureCandidateFormula(BaseModel):
             "xlogP": obj.get("xlogP"),
             "dbLinks": [DBLink.from_dict(_item) for _item in obj["dbLinks"]] if obj.get("dbLinks") is not None else None,
             "spectralLibraryMatches": [SpectralLibraryMatch.from_dict(_item) for _item in obj["spectralLibraryMatches"]] if obj.get("spectralLibraryMatches") is not None else None,
+            "rank": obj.get("rank"),
             "csiScore": obj.get("csiScore"),
             "tanimotoSimilarity": obj.get("tanimotoSimilarity"),
             "mcesDistToTopHit": obj.get("mcesDistToTopHit"),

@@ -46,6 +46,8 @@ class TestStructureCandidateScored(unittest.TestCase):
                     ],
                 spectral_library_matches = [
                     PySirius.models.spectral_library_match.SpectralLibraryMatch(
+                        spec_match_id = '', 
+                        rank = 56, 
                         similarity = 1.337, 
                         shared_peaks = 56, 
                         query_spectrum_index = 56, 
@@ -71,6 +73,7 @@ class TestStructureCandidateScored(unittest.TestCase):
                                 ], 
                             abs_intensity_factor = 1.337, ), )
                     ],
+                rank = 56,
                 csi_score = 1.337,
                 tanimoto_similarity = 1.337,
                 mces_dist_to_top_hit = 1.337,

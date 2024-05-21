@@ -13,6 +13,7 @@
 #' @field xlogP  numeric [optional]
 #' @field dbLinks List of structure database links belonging to this structure candidate  OPTIONAL: needs to be added by parameter list(\link{DBLink}) [optional]
 #' @field spectralLibraryMatches List of spectral library matches belonging to this structure candidate  OPTIONAL: needs to be added by parameter list(\link{SpectralLibraryMatch}) [optional]
+#' @field rank the overall rank of this candidate among all candidates of this feature integer [optional]
 #' @field csiScore CSI:FingerID score of the fingerprint of this compound to the predicted fingerprint of CSI:FingerID  This is the score used for ranking structure candidates numeric [optional]
 #' @field tanimotoSimilarity Tanimoto similarly of the fingerprint of this compound to the predicted fingerprint of CSI:FingerID numeric [optional]
 #' @field mcesDistToTopHit Maximum Common Edge Subgraph (MCES) distance to the top scoring hit (CSI:FingerID) in a candidate list. numeric [optional]
@@ -32,6 +33,7 @@ StructureCandidateFormula <- R6::R6Class(
     `xlogP` = NULL,
     `dbLinks` = NULL,
     `spectralLibraryMatches` = NULL,
+    `rank` = NULL,
     `csiScore` = NULL,
     `tanimotoSimilarity` = NULL,
     `mcesDistToTopHit` = NULL,
@@ -50,6 +52,7 @@ StructureCandidateFormula <- R6::R6Class(
     #' @param xlogP xlogP
     #' @param dbLinks List of structure database links belonging to this structure candidate  OPTIONAL: needs to be added by parameter
     #' @param spectralLibraryMatches List of spectral library matches belonging to this structure candidate  OPTIONAL: needs to be added by parameter
+    #' @param rank the overall rank of this candidate among all candidates of this feature
     #' @param csiScore CSI:FingerID score of the fingerprint of this compound to the predicted fingerprint of CSI:FingerID  This is the score used for ranking structure candidates
     #' @param tanimotoSimilarity Tanimoto similarly of the fingerprint of this compound to the predicted fingerprint of CSI:FingerID
     #' @param mcesDistToTopHit Maximum Common Edge Subgraph (MCES) distance to the top scoring hit (CSI:FingerID) in a candidate list.
@@ -59,7 +62,7 @@ StructureCandidateFormula <- R6::R6Class(
     #' @param formulaId Id of the corresponding Formula candidate
     #' @param ... Other optional arguments.
     #' @export
-    initialize = function(`inchiKey` = NULL, `smiles` = NULL, `structureName` = NULL, `xlogP` = NULL, `dbLinks` = NULL, `spectralLibraryMatches` = NULL, `csiScore` = NULL, `tanimotoSimilarity` = NULL, `mcesDistToTopHit` = NULL, `fingerprint` = NULL, `molecularFormula` = NULL, `adduct` = NULL, `formulaId` = NULL, ...) {
+    initialize = function(`inchiKey` = NULL, `smiles` = NULL, `structureName` = NULL, `xlogP` = NULL, `dbLinks` = NULL, `spectralLibraryMatches` = NULL, `rank` = NULL, `csiScore` = NULL, `tanimotoSimilarity` = NULL, `mcesDistToTopHit` = NULL, `fingerprint` = NULL, `molecularFormula` = NULL, `adduct` = NULL, `formulaId` = NULL, ...) {
       if (!is.null(`inchiKey`)) {
         if (!(is.character(`inchiKey`) && length(`inchiKey`) == 1)) {
           stop(paste("Error! Invalid data for `inchiKey`. Must be a string:", `inchiKey`))
@@ -93,6 +96,12 @@ StructureCandidateFormula <- R6::R6Class(
         stopifnot(is.vector(`spectralLibraryMatches`), length(`spectralLibraryMatches`) != 0)
         sapply(`spectralLibraryMatches`, function(x) stopifnot(R6::is.R6(x)))
         self$`spectralLibraryMatches` <- `spectralLibraryMatches`
+      }
+      if (!is.null(`rank`)) {
+        if (!(is.numeric(`rank`) && length(`rank`) == 1)) {
+          stop(paste("Error! Invalid data for `rank`. Must be an integer:", `rank`))
+        }
+        self$`rank` <- `rank`
       }
       if (!is.null(`csiScore`)) {
         if (!(is.numeric(`csiScore`) && length(`csiScore`) == 1)) {
@@ -168,6 +177,10 @@ StructureCandidateFormula <- R6::R6Class(
         StructureCandidateFormulaObject[["spectralLibraryMatches"]] <-
           lapply(self$`spectralLibraryMatches`, function(x) x$toJSON())
       }
+      if (!is.null(self$`rank`)) {
+        StructureCandidateFormulaObject[["rank"]] <-
+          self$`rank`
+      }
       if (!is.null(self$`csiScore`)) {
         StructureCandidateFormulaObject[["csiScore"]] <-
           self$`csiScore`
@@ -229,6 +242,9 @@ StructureCandidateFormula <- R6::R6Class(
       }
       if (!is.null(this_object$`spectralLibraryMatches`)) {
         self$`spectralLibraryMatches` <- ApiClient$new()$deserializeObj(this_object$`spectralLibraryMatches`, "array[SpectralLibraryMatch]", loadNamespace("Rsirius"))
+      }
+      if (!is.null(this_object$`rank`)) {
+        self$`rank` <- this_object$`rank`
       }
       if (!is.null(this_object$`csiScore`)) {
         self$`csiScore` <- this_object$`csiScore`
@@ -312,6 +328,14 @@ StructureCandidateFormula <- R6::R6Class(
           paste(sapply(self$`spectralLibraryMatches`, function(x) jsonlite::toJSON(x$toJSON(), auto_unbox = TRUE, digits = NA)), collapse = ",")
           )
         },
+        if (!is.null(self$`rank`)) {
+          sprintf(
+          '"rank":
+            %d
+                    ',
+          self$`rank`
+          )
+        },
         if (!is.null(self$`csiScore`)) {
           sprintf(
           '"csiScore":
@@ -388,6 +412,7 @@ StructureCandidateFormula <- R6::R6Class(
       self$`xlogP` <- this_object$`xlogP`
       self$`dbLinks` <- ApiClient$new()$deserializeObj(this_object$`dbLinks`, "array[DBLink]", loadNamespace("Rsirius"))
       self$`spectralLibraryMatches` <- ApiClient$new()$deserializeObj(this_object$`spectralLibraryMatches`, "array[SpectralLibraryMatch]", loadNamespace("Rsirius"))
+      self$`rank` <- this_object$`rank`
       self$`csiScore` <- this_object$`csiScore`
       self$`tanimotoSimilarity` <- this_object$`tanimotoSimilarity`
       self$`mcesDistToTopHit` <- this_object$`mcesDistToTopHit`

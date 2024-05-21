@@ -1,4 +1,4 @@
-# SpectralAlignmentType
+# SpectralMatchingType
 
 
 ## Properties

@@ -7,7 +7,7 @@ api_instance <- CompoundsApi$new()
 
 test_that("AddCompounds", {
   # tests for AddCompounds
-  # base path: http://localhost:8080
+  # base path: http://localhost:42691
   # Import Compounds and its contained features.
   # Import Compounds and its contained features. Compounds and Features must not exist in the project.  Otherwise, they will exist twice.
   # @param project_id character project-space to import into.
@@ -22,7 +22,7 @@ test_that("AddCompounds", {
 
 test_that("DeleteCompound", {
   # tests for DeleteCompound
-  # base path: http://localhost:8080
+  # base path: http://localhost:42691
   # Delete compound (group of ion identities) with the given identifier (and the included features) from the  specified project-space.
   # Delete compound (group of ion identities) with the given identifier (and the included features) from the  specified project-space.
   # @param project_id character project-space to delete from.
@@ -35,7 +35,7 @@ test_that("DeleteCompound", {
 
 test_that("GetCompound", {
   # tests for GetCompound
-  # base path: http://localhost:8080
+  # base path: http://localhost:42691
   # Get compound (group of ion identities) with the given identifier from the specified project-space.
   # Get compound (group of ion identities) with the given identifier from the specified project-space.
   # @param project_id character project-space to read from.
@@ -50,7 +50,7 @@ test_that("GetCompound", {
 
 test_that("GetCompounds", {
   # tests for GetCompounds
-  # base path: http://localhost:8080
+  # base path: http://localhost:42691
   # List of all available compounds (group of ion identities) in the given project-space.
   # List of all available compounds (group of ion identities) in the given project-space.
   # @param project_id character project-space to read from.
@@ -64,7 +64,7 @@ test_that("GetCompounds", {
 
 test_that("GetCompoundsPaged", {
   # tests for GetCompoundsPaged
-  # base path: http://localhost:8080
+  # base path: http://localhost:42691
   # Page of available compounds (group of ion identities) in the given project-space.
   # Page of available compounds (group of ion identities) in the given project-space.
   # @param project_id character project-space to read from.

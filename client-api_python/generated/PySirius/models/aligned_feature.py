@@ -31,14 +31,14 @@ class AlignedFeature(BaseModel):
     aligned_feature_id: Optional[StrictStr] = Field(default=None, alias="alignedFeatureId")
     name: Optional[StrictStr] = None
     ion_mass: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="ionMass")
-    adduct: Optional[StrictStr] = None
+    ion_type: Optional[StrictStr] = Field(default=None, alias="ionType")
     rt_start_seconds: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="rtStartSeconds")
     rt_end_seconds: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="rtEndSeconds")
     ms_data: Optional[MsData] = Field(default=None, alias="msData")
     top_annotations: Optional[FeatureAnnotations] = Field(default=None, alias="topAnnotations")
     top_annotations_de_novo: Optional[FeatureAnnotations] = Field(default=None, alias="topAnnotationsDeNovo")
     computing: Optional[StrictBool] = Field(default=None, description="Write lock for this feature. If the feature is locked no write operations are possible.  True if any computation is modifying this feature or its results")
-    __properties: ClassVar[List[str]] = ["alignedFeatureId", "name", "ionMass", "adduct", "rtStartSeconds", "rtEndSeconds", "msData", "topAnnotations", "topAnnotationsDeNovo", "computing"]
+    __properties: ClassVar[List[str]] = ["alignedFeatureId", "name", "ionMass", "ionType", "rtStartSeconds", "rtEndSeconds", "msData", "topAnnotations", "topAnnotationsDeNovo", "computing"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -128,7 +128,7 @@ class AlignedFeature(BaseModel):
             "alignedFeatureId": obj.get("alignedFeatureId"),
             "name": obj.get("name"),
             "ionMass": obj.get("ionMass"),
-            "adduct": obj.get("adduct"),
+            "ionType": obj.get("ionType"),
             "rtStartSeconds": obj.get("rtStartSeconds"),
             "rtEndSeconds": obj.get("rtEndSeconds"),
             "msData": MsData.from_dict(obj["msData"]) if obj.get("msData") is not None else None,

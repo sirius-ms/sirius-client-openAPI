@@ -37,14 +37,13 @@ class TestPageAlignedFeature(unittest.TestCase):
             return PageAlignedFeature(
                 total_pages = 56,
                 total_elements = 56,
-                first = True,
                 size = 56,
                 content = [
                     PySirius.models.aligned_feature.AlignedFeature(
                         aligned_feature_id = '', 
                         name = '', 
                         ion_mass = 1.337, 
-                        adduct = '', 
+                        ion_type = '', 
                         rt_start_seconds = 1.337, 
                         rt_end_seconds = 1.337, 
                         ms_data = PySirius.models.ms_data.MsData(
@@ -83,6 +82,7 @@ class TestPageAlignedFeature(unittest.TestCase):
                                 formula_id = '', 
                                 molecular_formula = '', 
                                 adduct = '', 
+                                rank = 56, 
                                 sirius_score = 1.337, 
                                 isotope_score = 1.337, 
                                 tree_score = 1.337, 
@@ -93,7 +93,6 @@ class TestPageAlignedFeature(unittest.TestCase):
                                 median_mass_deviation = PySirius.models.deviation.Deviation(
                                     ppm = 1.337, 
                                     absolute = 1.337, ), 
-                                top_csi_score = 1.337, 
                                 fragmentation_tree = PySirius.models.fragmentation_tree.FragmentationTree(
                                     fragments = [
                                         PySirius.models.fragment_node.FragmentNode(
@@ -212,6 +211,8 @@ class TestPageAlignedFeature(unittest.TestCase):
                                     ], 
                                 spectral_library_matches = [
                                     PySirius.models.spectral_library_match.SpectralLibraryMatch(
+                                        spec_match_id = '', 
+                                        rank = 56, 
                                         similarity = 1.337, 
                                         shared_peaks = 56, 
                                         query_spectrum_index = 56, 
@@ -226,6 +227,7 @@ class TestPageAlignedFeature(unittest.TestCase):
                                         candidate_in_chi_key = '', 
                                         reference_spectrum = , )
                                     ], 
+                                rank = 56, 
                                 csi_score = 1.337, 
                                 tanimoto_similarity = 1.337, 
                                 mces_dist_to_top_hit = 1.337, 
@@ -248,6 +250,8 @@ class TestPageAlignedFeature(unittest.TestCase):
                     empty = True, 
                     sorted = True, 
                     unsorted = True, ),
+                last = True,
+                first = True,
                 number_of_elements = 56,
                 pageable = PySirius.models.pageable_object.PageableObject(
                     offset = 56, 
@@ -259,7 +263,6 @@ class TestPageAlignedFeature(unittest.TestCase):
                     page_size = 56, 
                     paged = True, 
                     unpaged = True, ),
-                last = True,
                 empty = True
             )
         else:

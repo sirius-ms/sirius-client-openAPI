@@ -4,6 +4,8 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**specMatchId** | **character** |  | [optional] 
+**rank** | **integer** |  | [optional] 
 **similarity** | **numeric** |  | 
 **sharedPeaks** | **integer** |  | [optional] 
 **querySpectrumIndex** | **integer** |  | 

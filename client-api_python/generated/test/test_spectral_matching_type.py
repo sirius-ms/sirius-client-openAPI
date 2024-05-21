@@ -14,10 +14,10 @@
 
 import unittest
 
-from PySirius.models.spectral_alignment_type import SpectralAlignmentType
+from PySirius.models.spectral_matching_type import SpectralMatchingType
 
-class TestSpectralAlignmentType(unittest.TestCase):
-    """SpectralAlignmentType unit test stubs"""
+class TestSpectralMatchingType(unittest.TestCase):
+    """SpectralMatchingType unit test stubs"""
 
     def setUp(self):
         pass
@@ -25,9 +25,9 @@ class TestSpectralAlignmentType(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def testSpectralAlignmentType(self):
-        """Test SpectralAlignmentType"""
-        # inst = SpectralAlignmentType()
+    def testSpectralMatchingType(self):
+        """Test SpectralMatchingType"""
+        # inst = SpectralMatchingType()
 
 if __name__ == '__main__':
     unittest.main()

@@ -88,7 +88,6 @@ class TestConnectionCheck(unittest.TestCase):
                         error = True, 
                         warning = True, )
                     ],
-                supports_all_predictor_types = True,
                 supports_pos_predictor_types = True,
                 supports_neg_predictor_types = True,
                 available_workers = [
@@ -96,7 +95,8 @@ class TestConnectionCheck(unittest.TestCase):
                     ],
                 un_available_workers = [
                     ''
-                    ]
+                    ],
+                supports_all_predictor_types = True
             )
         else:
             return ConnectionCheck(
@@ -137,7 +137,6 @@ class TestConnectionCheck(unittest.TestCase):
                         error = True, 
                         warning = True, )
                     ],
-                supports_all_predictor_types = True,
                 supports_pos_predictor_types = True,
                 supports_neg_predictor_types = True,
                 available_workers = [
@@ -146,6 +145,7 @@ class TestConnectionCheck(unittest.TestCase):
                 un_available_workers = [
                     ''
                     ],
+                supports_all_predictor_types = True,
         )
         """
 

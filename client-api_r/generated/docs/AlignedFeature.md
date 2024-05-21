@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **alignedFeatureId** | **character** |  | [optional] 
 **name** | **character** |  | [optional] 
 **ionMass** | **numeric** |  | [optional] 
-**adduct** | **character** |  | [optional] 
+**ionType** | **character** |  | [optional] 
 **rtStartSeconds** | **numeric** |  | [optional] 
 **rtEndSeconds** | **numeric** |  | [optional] 
 **msData** | [**MsData**](MsData.md) |  | [optional] 

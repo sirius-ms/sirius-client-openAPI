@@ -5,6 +5,20 @@ context("Test SpectralLibraryMatch")
 
 model_instance <- SpectralLibraryMatch$new()
 
+test_that("specMatchId", {
+  # tests for the property `specMatchId` (character)
+
+  # uncomment below to test the property
+  #expect_equal(model.instance$`specMatchId`, "EXPECTED_RESULT")
+})
+
+test_that("rank", {
+  # tests for the property `rank` (integer)
+
+  # uncomment below to test the property
+  #expect_equal(model.instance$`rank`, "EXPECTED_RESULT")
+})
+
 test_that("similarity", {
   # tests for the property `similarity` (numeric)
 

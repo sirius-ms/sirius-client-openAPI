@@ -49,6 +49,14 @@ test_that("spectralLibraryMatches", {
   #expect_equal(model.instance$`spectralLibraryMatches`, "EXPECTED_RESULT")
 })
 
+test_that("rank", {
+  # tests for the property `rank` (integer)
+  # the overall rank of this candidate among all candidates of this feature
+
+  # uncomment below to test the property
+  #expect_equal(model.instance$`rank`, "EXPECTED_RESULT")
+})
+
 test_that("csiScore", {
   # tests for the property `csiScore` (numeric)
   # CSI:FingerID score of the fingerprint of this compound to the predicted fingerprint of CSI:FingerID  This is the score used for ranking structure candidates

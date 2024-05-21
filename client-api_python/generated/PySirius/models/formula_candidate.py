@@ -36,6 +36,7 @@ class FormulaCandidate(BaseModel):
     formula_id: Optional[StrictStr] = Field(default=None, description="Unique identifier of this formula candidate", alias="formulaId")
     molecular_formula: Optional[StrictStr] = Field(default=None, description="molecular formula of this formula candidate", alias="molecularFormula")
     adduct: Optional[StrictStr] = Field(default=None, description="Adduct of this formula candidate")
+    rank: Optional[StrictInt] = None
     sirius_score: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Sirius Score (isotope + tree score) of the formula candidate.  If NULL result is not available", alias="siriusScore")
     isotope_score: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="isotopeScore")
     tree_score: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="treeScore")
@@ -44,7 +45,6 @@ class FormulaCandidate(BaseModel):
     num_of_explainable_peaks: Optional[StrictInt] = Field(default=None, alias="numOfExplainablePeaks")
     total_explained_intensity: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="totalExplainedIntensity")
     median_mass_deviation: Optional[Deviation] = Field(default=None, alias="medianMassDeviation")
-    top_csi_score: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="CSI:FingerID Score of the highest scoring structure candidate (top hit) of this formula candidate.  If NULL result is not available", alias="topCSIScore")
     fragmentation_tree: Optional[FragmentationTree] = Field(default=None, alias="fragmentationTree")
     annotated_spectrum: Optional[AnnotatedSpectrum] = Field(default=None, alias="annotatedSpectrum")
     isotope_pattern_annotation: Optional[IsotopePatternAnnotation] = Field(default=None, alias="isotopePatternAnnotation")
@@ -52,7 +52,7 @@ class FormulaCandidate(BaseModel):
     predicted_fingerprint: Optional[List[Optional[Union[StrictFloat, StrictInt]]]] = Field(default=None, description="Probabilistic molecular fingerprint predicted by CSI:FingerID", alias="predictedFingerprint")
     compound_classes: Optional[CompoundClasses] = Field(default=None, alias="compoundClasses")
     canopus_prediction: Optional[CanopusPrediction] = Field(default=None, alias="canopusPrediction")
-    __properties: ClassVar[List[str]] = ["formulaId", "molecularFormula", "adduct", "siriusScore", "isotopeScore", "treeScore", "zodiacScore", "numOfExplainedPeaks", "numOfExplainablePeaks", "totalExplainedIntensity", "medianMassDeviation", "topCSIScore", "fragmentationTree", "annotatedSpectrum", "isotopePatternAnnotation", "lipidAnnotation", "predictedFingerprint", "compoundClasses", "canopusPrediction"]
+    __properties: ClassVar[List[str]] = ["formulaId", "molecularFormula", "adduct", "rank", "siriusScore", "isotopeScore", "treeScore", "zodiacScore", "numOfExplainedPeaks", "numOfExplainablePeaks", "totalExplainedIntensity", "medianMassDeviation", "fragmentationTree", "annotatedSpectrum", "isotopePatternAnnotation", "lipidAnnotation", "predictedFingerprint", "compoundClasses", "canopusPrediction"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -154,11 +154,6 @@ class FormulaCandidate(BaseModel):
         if self.median_mass_deviation is None and "median_mass_deviation" in self.model_fields_set:
             _dict['medianMassDeviation'] = None
 
-        # set to None if top_csi_score (nullable) is None
-        # and model_fields_set contains the field
-        if self.top_csi_score is None and "top_csi_score" in self.model_fields_set:
-            _dict['topCSIScore'] = None
-
         # set to None if fragmentation_tree (nullable) is None
         # and model_fields_set contains the field
         if self.fragmentation_tree is None and "fragmentation_tree" in self.model_fields_set:
@@ -209,6 +204,7 @@ class FormulaCandidate(BaseModel):
             "formulaId": obj.get("formulaId"),
             "molecularFormula": obj.get("molecularFormula"),
             "adduct": obj.get("adduct"),
+            "rank": obj.get("rank"),
             "siriusScore": obj.get("siriusScore"),
             "isotopeScore": obj.get("isotopeScore"),
             "treeScore": obj.get("treeScore"),
@@ -217,7 +213,6 @@ class FormulaCandidate(BaseModel):
             "numOfExplainablePeaks": obj.get("numOfExplainablePeaks"),
             "totalExplainedIntensity": obj.get("totalExplainedIntensity"),
             "medianMassDeviation": Deviation.from_dict(obj["medianMassDeviation"]) if obj.get("medianMassDeviation") is not None else None,
-            "topCSIScore": obj.get("topCSIScore"),
             "fragmentationTree": FragmentationTree.from_dict(obj["fragmentationTree"]) if obj.get("fragmentationTree") is not None else None,
             "annotatedSpectrum": AnnotatedSpectrum.from_dict(obj["annotatedSpectrum"]) if obj.get("annotatedSpectrum") is not None else None,
             "isotopePatternAnnotation": IsotopePatternAnnotation.from_dict(obj["isotopePatternAnnotation"]) if obj.get("isotopePatternAnnotation") is not None else None,

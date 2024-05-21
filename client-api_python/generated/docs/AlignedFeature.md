@@ -9,7 +9,7 @@ Name | Type | Description | Notes
 **aligned_feature_id** | **str** |  | [optional] 
 **name** | **str** |  | [optional] 
 **ion_mass** | **float** |  | [optional] 
-**adduct** | **str** |  | [optional] 
+**ion_type** | **str** |  | [optional] 
 **rt_start_seconds** | **float** |  | [optional] 
 **rt_end_seconds** | **float** |  | [optional] 
 **ms_data** | [**MsData**](MsData.md) |  | [optional] 

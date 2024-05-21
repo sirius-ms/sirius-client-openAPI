@@ -1,6 +1,6 @@
 # PySirius.JobsApi
 
-All URIs are relative to *http://localhost:8080*
+All URIs are relative to *http://localhost:42691*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -35,10 +35,10 @@ import PySirius
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8080
+# Defining the host is optional and defaults to http://localhost:42691
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8080"
+    host = "http://localhost:42691"
 )
 
 
@@ -106,10 +106,10 @@ import PySirius
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8080
+# Defining the host is optional and defaults to http://localhost:42691
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8080"
+    host = "http://localhost:42691"
 )
 
 
@@ -171,10 +171,10 @@ import PySirius
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8080
+# Defining the host is optional and defaults to http://localhost:42691
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8080"
+    host = "http://localhost:42691"
 )
 
 
@@ -241,10 +241,10 @@ from PySirius.models.job_submission import JobSubmission
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8080
+# Defining the host is optional and defaults to http://localhost:42691
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8080"
+    host = "http://localhost:42691"
 )
 
 
@@ -310,10 +310,10 @@ from PySirius.models.job_opt_field import JobOptField
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8080
+# Defining the host is optional and defaults to http://localhost:42691
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8080"
+    host = "http://localhost:42691"
 )
 
 
@@ -382,10 +382,10 @@ from PySirius.models.job_submission import JobSubmission
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8080
+# Defining the host is optional and defaults to http://localhost:42691
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8080"
+    host = "http://localhost:42691"
 )
 
 
@@ -452,10 +452,10 @@ from PySirius.models.job_submission import JobSubmission
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8080
+# Defining the host is optional and defaults to http://localhost:42691
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8080"
+    host = "http://localhost:42691"
 )
 
 
@@ -521,10 +521,10 @@ from PySirius.models.job_opt_field import JobOptField
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8080
+# Defining the host is optional and defaults to http://localhost:42691
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8080"
+    host = "http://localhost:42691"
 )
 
 
@@ -592,10 +592,10 @@ from PySirius.models.page_job import PageJob
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8080
+# Defining the host is optional and defaults to http://localhost:42691
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8080"
+    host = "http://localhost:42691"
 )
 
 
@@ -665,10 +665,10 @@ import PySirius
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8080
+# Defining the host is optional and defaults to http://localhost:42691
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8080"
+    host = "http://localhost:42691"
 )
 
 
@@ -734,10 +734,10 @@ from PySirius.models.job_submission import JobSubmission
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8080
+# Defining the host is optional and defaults to http://localhost:42691
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8080"
+    host = "http://localhost:42691"
 )
 
 
@@ -808,10 +808,10 @@ from PySirius.models.job_opt_field import JobOptField
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8080
+# Defining the host is optional and defaults to http://localhost:42691
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8080"
+    host = "http://localhost:42691"
 )
 
 
@@ -882,10 +882,10 @@ from PySirius.models.job_submission import JobSubmission
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8080
+# Defining the host is optional and defaults to http://localhost:42691
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8080"
+    host = "http://localhost:42691"
 )
 
 
@@ -955,10 +955,10 @@ from PySirius.models.job_opt_field import JobOptField
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8080
+# Defining the host is optional and defaults to http://localhost:42691
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8080"
+    host = "http://localhost:42691"
 )
 
 

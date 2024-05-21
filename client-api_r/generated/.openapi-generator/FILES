@@ -86,10 +86,10 @@ R/searchable_databases_api.R
 R/simple_peak.R
 R/sirius.R
 R/sort_object.R
-R/spectral_alignment_type.R
 R/spectral_library_match.R
 R/spectral_library_match_opt_field.R
 R/spectral_library_search.R
+R/spectral_matching_type.R
 R/spectrum_annotation.R
 R/structure_candidate.R
 R/structure_candidate_formula.R
@@ -185,10 +185,10 @@ docs/SearchableDatabasesApi.md
 docs/SimplePeak.md
 docs/Sirius.md
 docs/SortObject.md
-docs/SpectralAlignmentType.md
 docs/SpectralLibraryMatch.md
 docs/SpectralLibraryMatchOptField.md
 docs/SpectralLibrarySearch.md
+docs/SpectralMatchingType.md
 docs/SpectrumAnnotation.md
 docs/StructureCandidate.md
 docs/StructureCandidateFormula.md
@@ -285,10 +285,10 @@ tests/testthat/test_searchable_databases_api.R
 tests/testthat/test_simple_peak.R
 tests/testthat/test_sirius.R
 tests/testthat/test_sort_object.R
-tests/testthat/test_spectral_alignment_type.R
 tests/testthat/test_spectral_library_match.R
 tests/testthat/test_spectral_library_match_opt_field.R
 tests/testthat/test_spectral_library_search.R
+tests/testthat/test_spectral_matching_type.R
 tests/testthat/test_spectrum_annotation.R
 tests/testthat/test_structure_candidate.R
 tests/testthat/test_structure_candidate_formula.R

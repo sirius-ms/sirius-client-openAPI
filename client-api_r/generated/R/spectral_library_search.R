@@ -11,7 +11,7 @@
 #' @field spectraSearchDBs Structure Databases with Reference spectra to search in.  <p>  Defaults to BIO + Custom Databases. Possible values are available to Database API. list(character) [optional]
 #' @field peakDeviationPpm Maximum allowed mass deviation in ppm for matching peaks. numeric [optional]
 #' @field precursorDeviationPpm Maximum allowed mass deviation in ppm for matching the precursor. If not specified, the same value as for the peaks is used. numeric [optional]
-#' @field scoring  \link{SpectralAlignmentType} [optional]
+#' @field scoring  \link{SpectralMatchingType} [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
 #' @export
@@ -125,7 +125,7 @@ SpectralLibrarySearch <- R6::R6Class(
         self$`precursorDeviationPpm` <- this_object$`precursorDeviationPpm`
       }
       if (!is.null(this_object$`scoring`)) {
-        `scoring_object` <- SpectralAlignmentType$new()
+        `scoring_object` <- SpectralMatchingType$new()
         `scoring_object`$fromJSON(jsonlite::toJSON(this_object$`scoring`, auto_unbox = TRUE, digits = NA))
         self$`scoring` <- `scoring_object`
       }
@@ -198,7 +198,7 @@ SpectralLibrarySearch <- R6::R6Class(
       self$`spectraSearchDBs` <- ApiClient$new()$deserializeObj(this_object$`spectraSearchDBs`, "array[character]", loadNamespace("Rsirius"))
       self$`peakDeviationPpm` <- this_object$`peakDeviationPpm`
       self$`precursorDeviationPpm` <- this_object$`precursorDeviationPpm`
-      self$`scoring` <- SpectralAlignmentType$new()$fromJSON(jsonlite::toJSON(this_object$`scoring`, auto_unbox = TRUE, digits = NA))
+      self$`scoring` <- SpectralMatchingType$new()$fromJSON(jsonlite::toJSON(this_object$`scoring`, auto_unbox = TRUE, digits = NA))
       self
     },
     #' Validate JSON input with respect to SpectralLibrarySearch
