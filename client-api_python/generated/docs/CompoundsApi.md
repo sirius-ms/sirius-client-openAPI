@@ -1,6 +1,6 @@
 # PySirius.CompoundsApi
 
-All URIs are relative to *http://localhost:42691*
+All URIs are relative to *http://localhost:8080*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -30,10 +30,10 @@ from PySirius.models.compound_opt_field import CompoundOptField
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:42691
+# Defining the host is optional and defaults to http://localhost:8080
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:42691"
+    host = "http://localhost:8080"
 )
 
 
@@ -103,10 +103,10 @@ import PySirius
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:42691
+# Defining the host is optional and defaults to http://localhost:8080
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:42691"
+    host = "http://localhost:8080"
 )
 
 
@@ -173,10 +173,10 @@ from PySirius.models.compound_opt_field import CompoundOptField
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:42691
+# Defining the host is optional and defaults to http://localhost:8080
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:42691"
+    host = "http://localhost:8080"
 )
 
 
@@ -249,10 +249,10 @@ from PySirius.models.compound_opt_field import CompoundOptField
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:42691
+# Defining the host is optional and defaults to http://localhost:8080
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:42691"
+    host = "http://localhost:8080"
 )
 
 
@@ -323,10 +323,10 @@ from PySirius.models.page_compound import PageCompound
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:42691
+# Defining the host is optional and defaults to http://localhost:8080
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:42691"
+    host = "http://localhost:8080"
 )
 
 

@@ -7,7 +7,7 @@ api_instance <- GuiAdvancedApi$new()
 
 test_that("ApplyToGui", {
   # tests for ApplyToGui
-  # base path: http://localhost:42691
+  # base path: http://localhost:8080
   # Apply given changes to the running GUI instance.
   # Apply given changes to the running GUI instance.
   # @param project_id character of project-space the GUI instance is connected to.
@@ -20,7 +20,7 @@ test_that("ApplyToGui", {
 
 test_that("CloseGui", {
   # tests for CloseGui
-  # base path: http://localhost:42691
+  # base path: http://localhost:8080
   # Close GUI instance of given project-space if available.
   # Close GUI instance of given project-space if available.
   # @param project_id character if project-space the GUI instance is connected to.
@@ -33,7 +33,7 @@ test_that("CloseGui", {
 
 test_that("GetGuis", {
   # tests for GetGuis
-  # base path: http://localhost:42691
+  # base path: http://localhost:8080
   # Get list of currently running gui windows, managed by this SIRIUS instance.
   # Get list of currently running gui windows, managed by this SIRIUS instance.  Note this will not show any Clients that are connected from a separate process!
   # @return [array[GuiInfo]]
@@ -44,7 +44,7 @@ test_that("GetGuis", {
 
 test_that("OpenGui", {
   # tests for OpenGui
-  # base path: http://localhost:42691
+  # base path: http://localhost:8080
   # Open GUI instance on specified project-space and bring the GUI window to foreground.
   # Open GUI instance on specified project-space and bring the GUI window to foreground.
   # @param project_id character of project-space the GUI instance will connect to.

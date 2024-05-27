@@ -7,7 +7,7 @@ api_instance <- InfoApi$new()
 
 test_that("GetConnectionCheck", {
   # tests for GetConnectionCheck
-  # base path: http://localhost:42691
+  # base path: http://localhost:8080
   # @return [ConnectionCheck]
 
   # uncomment below to test the operation
@@ -16,7 +16,7 @@ test_that("GetConnectionCheck", {
 
 test_that("GetInfo", {
   # tests for GetInfo
-  # base path: http://localhost:42691
+  # base path: http://localhost:8080
   # @return [Info]
 
   # uncomment below to test the operation
