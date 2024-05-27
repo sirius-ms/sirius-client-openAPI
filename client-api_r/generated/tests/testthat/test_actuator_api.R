@@ -7,7 +7,7 @@ api_instance <- ActuatorApi$new()
 
 test_that("Health", {
   # tests for Health
-  # base path: http://localhost:42691
+  # base path: http://localhost:8080
   # Actuator web endpoint &#39;health&#39;
   # @return [object]
 
@@ -17,7 +17,7 @@ test_that("Health", {
 
 test_that("Shutdown", {
   # tests for Shutdown
-  # base path: http://localhost:42691
+  # base path: http://localhost:8080
   # Actuator web endpoint &#39;shutdown&#39;
   # @return [object]
 
