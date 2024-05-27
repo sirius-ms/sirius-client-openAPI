@@ -7,7 +7,7 @@ api_instance <- LoginAndAccountApi$new()
 
 test_that("GetAccountInfo", {
   # tests for GetAccountInfo
-  # base path: http://localhost:42691
+  # base path: http://localhost:8080
   # Get information about the account currently logged in.
   # Get information about the account currently logged in. Fails if not logged in.
   # @param include_subs character include available and active subscriptions in {@link AccountInfo AccountInfo}. (optional)
@@ -19,7 +19,7 @@ test_that("GetAccountInfo", {
 
 test_that("GetSignUpURL", {
   # tests for GetSignUpURL
-  # base path: http://localhost:42691
+  # base path: http://localhost:8080
   # Get SignUp URL (For signUp via web browser)
   # Get SignUp URL (For signUp via web browser)
   # @return [character]
@@ -30,7 +30,7 @@ test_that("GetSignUpURL", {
 
 test_that("GetSubscriptions", {
   # tests for GetSubscriptions
-  # base path: http://localhost:42691
+  # base path: http://localhost:8080
   # Get available subscriptions of the account currently logged in.
   # Get available subscriptions of the account currently logged in. Fails if not logged in.
   # @return [array[Subscription]]
@@ -41,7 +41,7 @@ test_that("GetSubscriptions", {
 
 test_that("IsLoggedIn", {
   # tests for IsLoggedIn
-  # base path: http://localhost:42691
+  # base path: http://localhost:8080
   # Check if a user is logged in.
   # Check if a user is logged in.
   # @return [character]
@@ -52,7 +52,7 @@ test_that("IsLoggedIn", {
 
 test_that("Login", {
   # tests for Login
-  # base path: http://localhost:42691
+  # base path: http://localhost:8080
   # Login into SIRIUS web services and activate default subscription if available.
   # Login into SIRIUS web services and activate default subscription if available.
   # @param accept_terms character 
@@ -67,7 +67,7 @@ test_that("Login", {
 
 test_that("Logout", {
   # tests for Logout
-  # base path: http://localhost:42691
+  # base path: http://localhost:8080
   # Logout from SIRIUS web services.
   # Logout from SIRIUS web services.
   # @return [Void]
@@ -78,7 +78,7 @@ test_that("Logout", {
 
 test_that("OpenPortal", {
   # tests for OpenPortal
-  # base path: http://localhost:42691
+  # base path: http://localhost:8080
   # Open User portal in browser.
   # Open User portal in browser. If user is logged in SIRIUS tries to transfer the login state to the browser.
   # @return [Void]
@@ -89,7 +89,7 @@ test_that("OpenPortal", {
 
 test_that("SelectSubscription", {
   # tests for SelectSubscription
-  # base path: http://localhost:42691
+  # base path: http://localhost:8080
   # Select a subscription as active subscription to be used for computations.
   # Select a subscription as active subscription to be used for computations.
   # @param sid character 
@@ -101,7 +101,7 @@ test_that("SelectSubscription", {
 
 test_that("SignUp", {
   # tests for SignUp
-  # base path: http://localhost:42691
+  # base path: http://localhost:8080
   # Open SignUp window in system browser and return signUp link.
   # Open SignUp window in system browser and return signUp link.
   # @return [character]

@@ -69,7 +69,7 @@ style_dir()
 
 ## Documentation for API Endpoints
 
-All URIs are relative to *http://localhost:42691*
+All URIs are relative to *http://localhost:8080*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
