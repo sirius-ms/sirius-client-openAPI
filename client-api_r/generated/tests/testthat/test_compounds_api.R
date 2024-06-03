@@ -78,3 +78,14 @@ test_that("GetCompoundsPaged", {
   # uncomment below to test the operation
   #expect_equal(result, "EXPECTED_RESULT")
 })
+
+test_that("GetTraces", {
+  # tests for GetTraces
+  # base path: http://localhost:8080
+  # @param project_id character 
+  # @param compound_id character 
+  # @return [TraceSet]
+
+  # uncomment below to test the operation
+  #expect_equal(result, "EXPECTED_RESULT")
+})

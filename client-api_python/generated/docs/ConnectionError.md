@@ -29,7 +29,7 @@ print(ConnectionError.to_json())
 # convert the object into a dict
 connection_error_dict = connection_error_instance.to_dict()
 # create an instance of ConnectionError from a dict
-connection_error_form_dict = connection_error.from_dict(connection_error_dict)
+connection_error_from_dict = ConnectionError.from_dict(connection_error_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

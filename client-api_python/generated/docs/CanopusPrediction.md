@@ -24,7 +24,7 @@ print(CanopusPrediction.to_json())
 # convert the object into a dict
 canopus_prediction_dict = canopus_prediction_instance.to_dict()
 # create an instance of CanopusPrediction from a dict
-canopus_prediction_form_dict = canopus_prediction.from_dict(canopus_prediction_dict)
+canopus_prediction_from_dict = CanopusPrediction.from_dict(canopus_prediction_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

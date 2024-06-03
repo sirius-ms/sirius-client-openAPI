@@ -26,7 +26,7 @@ print(LipidAnnotation.to_json())
 # convert the object into a dict
 lipid_annotation_dict = lipid_annotation_instance.to_dict()
 # create an instance of LipidAnnotation from a dict
-lipid_annotation_form_dict = lipid_annotation.from_dict(lipid_annotation_dict)
+lipid_annotation_from_dict = LipidAnnotation.from_dict(lipid_annotation_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

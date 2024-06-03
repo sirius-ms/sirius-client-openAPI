@@ -41,7 +41,7 @@ print(FormulaCandidate.to_json())
 # convert the object into a dict
 formula_candidate_dict = formula_candidate_instance.to_dict()
 # create an instance of FormulaCandidate from a dict
-formula_candidate_form_dict = formula_candidate.from_dict(formula_candidate_dict)
+formula_candidate_from_dict = FormulaCandidate.from_dict(formula_candidate_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

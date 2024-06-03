@@ -35,7 +35,7 @@ print(StructureCandidateFormula.to_json())
 # convert the object into a dict
 structure_candidate_formula_dict = structure_candidate_formula_instance.to_dict()
 # create an instance of StructureCandidateFormula from a dict
-structure_candidate_formula_form_dict = structure_candidate_formula.from_dict(structure_candidate_formula_dict)
+structure_candidate_formula_from_dict = StructureCandidateFormula.from_dict(structure_candidate_formula_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

@@ -7,12 +7,12 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **total_pages** | **int** |  | [optional] 
 **total_elements** | **int** |  | [optional] 
+**first** | **bool** |  | [optional] 
+**last** | **bool** |  | [optional] 
 **size** | **int** |  | [optional] 
 **content** | [**List[Compound]**](Compound.md) |  | [optional] 
 **number** | **int** |  | [optional] 
 **sort** | [**SortObject**](SortObject.md) |  | [optional] 
-**last** | **bool** |  | [optional] 
-**first** | **bool** |  | [optional] 
 **number_of_elements** | **int** |  | [optional] 
 **pageable** | [**PageableObject**](PageableObject.md) |  | [optional] 
 **empty** | **bool** |  | [optional] 
@@ -32,7 +32,7 @@ print(PageCompound.to_json())
 # convert the object into a dict
 page_compound_dict = page_compound_instance.to_dict()
 # create an instance of PageCompound from a dict
-page_compound_form_dict = page_compound.from_dict(page_compound_dict)
+page_compound_from_dict = PageCompound.from_dict(page_compound_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

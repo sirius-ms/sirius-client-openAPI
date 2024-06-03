@@ -43,7 +43,7 @@ test_that("confidenceApproxMatch", {
 })
 
 test_that("expansiveSearchState", {
-  # tests for the property `expansiveSearchState` (Mode)
+  # tests for the property `expansiveSearchState` (ConfidenceMode)
 
   # uncomment below to test the property
   #expect_equal(model.instance$`expansiveSearchState`, "EXPECTED_RESULT")

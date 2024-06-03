@@ -30,7 +30,7 @@ print(Compound.to_json())
 # convert the object into a dict
 compound_dict = compound_instance.to_dict()
 # create an instance of Compound from a dict
-compound_form_dict = compound.from_dict(compound_dict)
+compound_from_dict = Compound.from_dict(compound_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

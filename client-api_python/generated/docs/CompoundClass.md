@@ -29,7 +29,7 @@ print(CompoundClass.to_json())
 # convert the object into a dict
 compound_class_dict = compound_class_instance.to_dict()
 # create an instance of CompoundClass from a dict
-compound_class_form_dict = compound_class.from_dict(compound_class_dict)
+compound_class_from_dict = CompoundClass.from_dict(compound_class_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

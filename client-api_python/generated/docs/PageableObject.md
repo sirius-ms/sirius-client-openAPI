@@ -27,7 +27,7 @@ print(PageableObject.to_json())
 # convert the object into a dict
 pageable_object_dict = pageable_object_instance.to_dict()
 # create an instance of PageableObject from a dict
-pageable_object_form_dict = pageable_object.from_dict(pageable_object_dict)
+pageable_object_from_dict = PageableObject.from_dict(pageable_object_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

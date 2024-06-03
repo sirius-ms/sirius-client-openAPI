@@ -23,7 +23,7 @@ print(DBLink.to_json())
 # convert the object into a dict
 db_link_dict = db_link_instance.to_dict()
 # create an instance of DBLink from a dict
-db_link_form_dict = db_link.from_dict(db_link_dict)
+db_link_from_dict = DBLink.from_dict(db_link_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

@@ -9,6 +9,9 @@
 #' @format An \code{R6Class} generator object
 #' @field nightSkyApiVersion API version of the SIRIUS Nightsky API character [optional]
 #' @field siriusVersion Version of the SIRIUS application character [optional]
+#' @field latestSiriusVersion Latest available Version of the SIRIUS application character [optional]
+#' @field latestSiriusLink Link to the latest available Version of the SIRIUS application character [optional]
+#' @field updateAvailable true if newer SIRIUS version is available character [optional]
 #' @field siriusLibVersion Version of the SIRIUS libraries character [optional]
 #' @field fingerIdLibVersion Version of the CSI:FingerID libraries character [optional]
 #' @field chemDbVersion Version of the Chemical Database available via SIRIUS web services character [optional]
@@ -24,6 +27,9 @@ Info <- R6::R6Class(
   public = list(
     `nightSkyApiVersion` = NULL,
     `siriusVersion` = NULL,
+    `latestSiriusVersion` = NULL,
+    `latestSiriusLink` = NULL,
+    `updateAvailable` = NULL,
     `siriusLibVersion` = NULL,
     `fingerIdLibVersion` = NULL,
     `chemDbVersion` = NULL,
@@ -40,6 +46,9 @@ Info <- R6::R6Class(
     #' @param supportedILPSolvers Set of ILP Solvers that are Supported and their version information
     #' @param nightSkyApiVersion API version of the SIRIUS Nightsky API
     #' @param siriusVersion Version of the SIRIUS application
+    #' @param latestSiriusVersion Latest available Version of the SIRIUS application
+    #' @param latestSiriusLink Link to the latest available Version of the SIRIUS application
+    #' @param updateAvailable true if newer SIRIUS version is available
     #' @param siriusLibVersion Version of the SIRIUS libraries
     #' @param fingerIdLibVersion Version of the CSI:FingerID libraries
     #' @param chemDbVersion Version of the Chemical Database available via SIRIUS web services
@@ -47,7 +56,7 @@ Info <- R6::R6Class(
     #' @param fingerprintId Version of the Molecular Fingerprint used by SIRIUS
     #' @param ... Other optional arguments.
     #' @export
-    initialize = function(`availableILPSolvers`, `supportedILPSolvers`, `nightSkyApiVersion` = NULL, `siriusVersion` = NULL, `siriusLibVersion` = NULL, `fingerIdLibVersion` = NULL, `chemDbVersion` = NULL, `fingerIdModelVersion` = NULL, `fingerprintId` = NULL, ...) {
+    initialize = function(`availableILPSolvers`, `supportedILPSolvers`, `nightSkyApiVersion` = NULL, `siriusVersion` = NULL, `latestSiriusVersion` = NULL, `latestSiriusLink` = NULL, `updateAvailable` = NULL, `siriusLibVersion` = NULL, `fingerIdLibVersion` = NULL, `chemDbVersion` = NULL, `fingerIdModelVersion` = NULL, `fingerprintId` = NULL, ...) {
       if (!missing(`availableILPSolvers`)) {
         stopifnot(is.vector(`availableILPSolvers`), length(`availableILPSolvers`) != 0)
         sapply(`availableILPSolvers`, function(x) stopifnot(is.character(x)))
@@ -69,6 +78,24 @@ Info <- R6::R6Class(
           stop(paste("Error! Invalid data for `siriusVersion`. Must be a string:", `siriusVersion`))
         }
         self$`siriusVersion` <- `siriusVersion`
+      }
+      if (!is.null(`latestSiriusVersion`)) {
+        if (!(is.character(`latestSiriusVersion`) && length(`latestSiriusVersion`) == 1)) {
+          stop(paste("Error! Invalid data for `latestSiriusVersion`. Must be a string:", `latestSiriusVersion`))
+        }
+        self$`latestSiriusVersion` <- `latestSiriusVersion`
+      }
+      if (!is.null(`latestSiriusLink`)) {
+        if (!(is.character(`latestSiriusLink`) && length(`latestSiriusLink`) == 1)) {
+          stop(paste("Error! Invalid data for `latestSiriusLink`. Must be a string:", `latestSiriusLink`))
+        }
+        self$`latestSiriusLink` <- `latestSiriusLink`
+      }
+      if (!is.null(`updateAvailable`)) {
+        if (!(is.logical(`updateAvailable`) && length(`updateAvailable`) == 1)) {
+          stop(paste("Error! Invalid data for `updateAvailable`. Must be a boolean:", `updateAvailable`))
+        }
+        self$`updateAvailable` <- `updateAvailable`
       }
       if (!is.null(`siriusLibVersion`)) {
         if (!(is.character(`siriusLibVersion`) && length(`siriusLibVersion`) == 1)) {
@@ -118,6 +145,18 @@ Info <- R6::R6Class(
         InfoObject[["siriusVersion"]] <-
           self$`siriusVersion`
       }
+      if (!is.null(self$`latestSiriusVersion`)) {
+        InfoObject[["latestSiriusVersion"]] <-
+          self$`latestSiriusVersion`
+      }
+      if (!is.null(self$`latestSiriusLink`)) {
+        InfoObject[["latestSiriusLink"]] <-
+          self$`latestSiriusLink`
+      }
+      if (!is.null(self$`updateAvailable`)) {
+        InfoObject[["updateAvailable"]] <-
+          self$`updateAvailable`
+      }
       if (!is.null(self$`siriusLibVersion`)) {
         InfoObject[["siriusLibVersion"]] <-
           self$`siriusLibVersion`
@@ -163,6 +202,15 @@ Info <- R6::R6Class(
       }
       if (!is.null(this_object$`siriusVersion`)) {
         self$`siriusVersion` <- this_object$`siriusVersion`
+      }
+      if (!is.null(this_object$`latestSiriusVersion`)) {
+        self$`latestSiriusVersion` <- this_object$`latestSiriusVersion`
+      }
+      if (!is.null(this_object$`latestSiriusLink`)) {
+        self$`latestSiriusLink` <- this_object$`latestSiriusLink`
+      }
+      if (!is.null(this_object$`updateAvailable`)) {
+        self$`updateAvailable` <- this_object$`updateAvailable`
       }
       if (!is.null(this_object$`siriusLibVersion`)) {
         self$`siriusLibVersion` <- this_object$`siriusLibVersion`
@@ -210,6 +258,30 @@ Info <- R6::R6Class(
             "%s"
                     ',
           self$`siriusVersion`
+          )
+        },
+        if (!is.null(self$`latestSiriusVersion`)) {
+          sprintf(
+          '"latestSiriusVersion":
+            "%s"
+                    ',
+          self$`latestSiriusVersion`
+          )
+        },
+        if (!is.null(self$`latestSiriusLink`)) {
+          sprintf(
+          '"latestSiriusLink":
+            "%s"
+                    ',
+          self$`latestSiriusLink`
+          )
+        },
+        if (!is.null(self$`updateAvailable`)) {
+          sprintf(
+          '"updateAvailable":
+            %s
+                    ',
+          tolower(self$`updateAvailable`)
           )
         },
         if (!is.null(self$`siriusLibVersion`)) {
@@ -284,6 +356,9 @@ Info <- R6::R6Class(
       this_object <- jsonlite::fromJSON(input_json)
       self$`nightSkyApiVersion` <- this_object$`nightSkyApiVersion`
       self$`siriusVersion` <- this_object$`siriusVersion`
+      self$`latestSiriusVersion` <- this_object$`latestSiriusVersion`
+      self$`latestSiriusLink` <- this_object$`latestSiriusLink`
+      self$`updateAvailable` <- this_object$`updateAvailable`
       self$`siriusLibVersion` <- this_object$`siriusLibVersion`
       self$`fingerIdLibVersion` <- this_object$`fingerIdLibVersion`
       self$`chemDbVersion` <- this_object$`chemDbVersion`

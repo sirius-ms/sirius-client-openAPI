@@ -23,7 +23,7 @@ print(Term.to_json())
 # convert the object into a dict
 term_dict = term_instance.to_dict()
 # create an instance of Term from a dict
-term_form_dict = term.from_dict(term_dict)
+term_from_dict = Term.from_dict(term_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

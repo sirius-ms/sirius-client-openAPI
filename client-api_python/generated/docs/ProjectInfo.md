@@ -28,7 +28,7 @@ print(ProjectInfo.to_json())
 # convert the object into a dict
 project_info_dict = project_info_instance.to_dict()
 # create an instance of ProjectInfo from a dict
-project_info_form_dict = project_info.from_dict(project_info_dict)
+project_info_from_dict = ProjectInfo.from_dict(project_info_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

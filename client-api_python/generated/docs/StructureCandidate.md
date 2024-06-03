@@ -27,7 +27,7 @@ print(StructureCandidate.to_json())
 # convert the object into a dict
 structure_candidate_dict = structure_candidate_instance.to_dict()
 # create an instance of StructureCandidate from a dict
-structure_candidate_form_dict = structure_candidate.from_dict(structure_candidate_dict)
+structure_candidate_from_dict = StructureCandidate.from_dict(structure_candidate_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

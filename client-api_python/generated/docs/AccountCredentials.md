@@ -25,7 +25,7 @@ print(AccountCredentials.to_json())
 # convert the object into a dict
 account_credentials_dict = account_credentials_instance.to_dict()
 # create an instance of AccountCredentials from a dict
-account_credentials_form_dict = account_credentials.from_dict(account_credentials_dict)
+account_credentials_from_dict = AccountCredentials.from_dict(account_credentials_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

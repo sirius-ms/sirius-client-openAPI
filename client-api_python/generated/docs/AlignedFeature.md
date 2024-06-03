@@ -7,11 +7,16 @@ The AlignedFeature contains the ID of a feature (aligned over runs) together wit
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **aligned_feature_id** | **str** |  | [optional] 
+**compound_id** | **str** |  | [optional] 
 **name** | **str** |  | [optional] 
 **ion_mass** | **float** |  | [optional] 
-**ion_type** | **str** |  | [optional] 
+**charge** | **int** |  | 
+**detected_adducts** | **List[str]** |  | 
 **rt_start_seconds** | **float** |  | [optional] 
 **rt_end_seconds** | **float** |  | [optional] 
+**quality** | [**DataQuality**](DataQuality.md) |  | [optional] 
+**has_ms1** | **bool** | If true, the feature has at lease one MS1 spectrum | [optional] 
+**has_ms_ms** | **bool** | If true, the feature has at lease one MS/MS spectrum | [optional] 
 **ms_data** | [**MsData**](MsData.md) |  | [optional] 
 **top_annotations** | [**FeatureAnnotations**](FeatureAnnotations.md) |  | [optional] 
 **top_annotations_de_novo** | [**FeatureAnnotations**](FeatureAnnotations.md) |  | [optional] 
@@ -32,7 +37,7 @@ print(AlignedFeature.to_json())
 # convert the object into a dict
 aligned_feature_dict = aligned_feature_instance.to_dict()
 # create an instance of AlignedFeature from a dict
-aligned_feature_form_dict = aligned_feature.from_dict(aligned_feature_dict)
+aligned_feature_from_dict = AlignedFeature.from_dict(aligned_feature_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

@@ -12,7 +12,7 @@
 #' @field compoundClassAnnotation  \link{CompoundClasses} [optional]
 #' @field confidenceExactMatch Confidence Score that represents the confidence whether the top hit is correct. numeric [optional]
 #' @field confidenceApproxMatch Confidence Score that represents the confidence whether the top hit or a very similar hit (estimated by MCES distance) is correct. numeric [optional]
-#' @field expansiveSearchState  \link{Mode} [optional]
+#' @field expansiveSearchState  \link{ConfidenceMode} [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
 #' @export
@@ -154,7 +154,7 @@ FeatureAnnotations <- R6::R6Class(
         self$`confidenceApproxMatch` <- this_object$`confidenceApproxMatch`
       }
       if (!is.null(this_object$`expansiveSearchState`)) {
-        `expansivesearchstate_object` <- Mode$new()
+        `expansivesearchstate_object` <- ConfidenceMode$new()
         `expansivesearchstate_object`$fromJSON(jsonlite::toJSON(this_object$`expansiveSearchState`, auto_unbox = TRUE, digits = NA))
         self$`expansiveSearchState` <- `expansivesearchstate_object`
       }
@@ -236,7 +236,7 @@ FeatureAnnotations <- R6::R6Class(
       self$`compoundClassAnnotation` <- CompoundClasses$new()$fromJSON(jsonlite::toJSON(this_object$`compoundClassAnnotation`, auto_unbox = TRUE, digits = NA))
       self$`confidenceExactMatch` <- this_object$`confidenceExactMatch`
       self$`confidenceApproxMatch` <- this_object$`confidenceApproxMatch`
-      self$`expansiveSearchState` <- Mode$new()$fromJSON(jsonlite::toJSON(this_object$`expansiveSearchState`, auto_unbox = TRUE, digits = NA))
+      self$`expansiveSearchState` <- ConfidenceMode$new()$fromJSON(jsonlite::toJSON(this_object$`expansiveSearchState`, auto_unbox = TRUE, digits = NA))
       self
     },
     #' Validate JSON input with respect to FeatureAnnotations

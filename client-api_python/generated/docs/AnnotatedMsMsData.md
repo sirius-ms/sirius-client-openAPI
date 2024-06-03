@@ -23,7 +23,7 @@ print(AnnotatedMsMsData.to_json())
 # convert the object into a dict
 annotated_ms_ms_data_dict = annotated_ms_ms_data_instance.to_dict()
 # create an instance of AnnotatedMsMsData from a dict
-annotated_ms_ms_data_form_dict = annotated_ms_ms_data.from_dict(annotated_ms_ms_data_dict)
+annotated_ms_ms_data_from_dict = AnnotatedMsMsData.from_dict(annotated_ms_ms_data_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

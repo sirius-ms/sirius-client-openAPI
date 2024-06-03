@@ -30,7 +30,7 @@ print(FeatureImport.to_json())
 # convert the object into a dict
 feature_import_dict = feature_import_instance.to_dict()
 # create an instance of FeatureImport from a dict
-feature_import_form_dict = feature_import.from_dict(feature_import_dict)
+feature_import_from_dict = FeatureImport.from_dict(feature_import_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

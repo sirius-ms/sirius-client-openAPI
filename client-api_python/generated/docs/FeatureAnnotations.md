@@ -11,7 +11,7 @@ Name | Type | Description | Notes
 **compound_class_annotation** | [**CompoundClasses**](CompoundClasses.md) |  | [optional] 
 **confidence_exact_match** | **float** | Confidence Score that represents the confidence whether the top hit is correct. | [optional] 
 **confidence_approx_match** | **float** | Confidence Score that represents the confidence whether the top hit or a very similar hit (estimated by MCES distance) is correct. | [optional] 
-**expansive_search_state** | [**Mode**](Mode.md) |  | [optional] 
+**expansive_search_state** | [**ConfidenceMode**](ConfidenceMode.md) |  | [optional] 
 
 ## Example
 
@@ -28,7 +28,7 @@ print(FeatureAnnotations.to_json())
 # convert the object into a dict
 feature_annotations_dict = feature_annotations_instance.to_dict()
 # create an instance of FeatureAnnotations from a dict
-feature_annotations_form_dict = feature_annotations.from_dict(feature_annotations_dict)
+feature_annotations_from_dict = FeatureAnnotations.from_dict(feature_annotations_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

@@ -9,6 +9,7 @@ Method | HTTP request | Description
 [**GetCompound**](CompoundsApi.md#GetCompound) | **GET** /api/projects/{projectId}/compounds/{compoundId} | Get compound (group of ion identities) with the given identifier from the specified project-space.
 [**GetCompounds**](CompoundsApi.md#GetCompounds) | **GET** /api/projects/{projectId}/compounds | List of all available compounds (group of ion identities) in the given project-space.
 [**GetCompoundsPaged**](CompoundsApi.md#GetCompoundsPaged) | **GET** /api/projects/{projectId}/compounds/page | Page of available compounds (group of ion identities) in the given project-space.
+[**GetTraces**](CompoundsApi.md#GetTraces) | **GET** /api/projects/{projectId}/compounds/{compoundId}/traces | 
 
 
 # **AddCompounds**
@@ -270,4 +271,49 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Compounds with additional optional fields (if specified). |  -  |
+
+# **GetTraces**
+> TraceSet GetTraces(project_id, compound_id)
+
+
+
+### Example
+```R
+library(Rsirius)
+
+# prepare function argument(s)
+var_project_id <- "project_id_example" # character | 
+var_compound_id <- "compound_id_example" # character | 
+
+api_instance <- rsirius_api$new()
+# to save the result into a file, simply add the optional `data_file` parameter, e.g.
+# result <- api_instance$GetTraces(var_project_id, var_compound_iddata_file = "result.txt")
+result <- api_instance$compounds_api$GetTraces(var_project_id, var_compound_id)
+dput(result)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **project_id** | **character**|  | 
+ **compound_id** | **character**|  | 
+
+### Return type
+
+[**TraceSet**](TraceSet.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | OK |  -  |
 

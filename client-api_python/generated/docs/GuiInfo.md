@@ -22,7 +22,7 @@ print(GuiInfo.to_json())
 # convert the object into a dict
 gui_info_dict = gui_info_instance.to_dict()
 # create an instance of GuiInfo from a dict
-gui_info_form_dict = gui_info.from_dict(gui_info_dict)
+gui_info_from_dict = GuiInfo.from_dict(gui_info_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

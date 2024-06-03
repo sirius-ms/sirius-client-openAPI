@@ -25,7 +25,7 @@ print(FragmentationTree.to_json())
 # convert the object into a dict
 fragmentation_tree_dict = fragmentation_tree_instance.to_dict()
 # create an instance of FragmentationTree from a dict
-fragmentation_tree_form_dict = fragmentation_tree.from_dict(fragmentation_tree_dict)
+fragmentation_tree_from_dict = FragmentationTree.from_dict(fragmentation_tree_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

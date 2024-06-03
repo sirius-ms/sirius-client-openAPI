@@ -25,7 +25,7 @@ print(LossEdge.to_json())
 # convert the object into a dict
 loss_edge_dict = loss_edge_instance.to_dict()
 # create an instance of LossEdge from a dict
-loss_edge_form_dict = loss_edge.from_dict(loss_edge_dict)
+loss_edge_from_dict = LossEdge.from_dict(loss_edge_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

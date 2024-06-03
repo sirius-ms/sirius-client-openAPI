@@ -36,7 +36,7 @@ print(SpectralLibraryMatch.to_json())
 # convert the object into a dict
 spectral_library_match_dict = spectral_library_match_instance.to_dict()
 # create an instance of SpectralLibraryMatch from a dict
-spectral_library_match_form_dict = spectral_library_match.from_dict(spectral_library_match_dict)
+spectral_library_match_from_dict = SpectralLibraryMatch.from_dict(spectral_library_match_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

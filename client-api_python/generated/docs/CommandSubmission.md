@@ -24,7 +24,7 @@ print(CommandSubmission.to_json())
 # convert the object into a dict
 command_submission_dict = command_submission_instance.to_dict()
 # create an instance of CommandSubmission from a dict
-command_submission_form_dict = command_submission.from_dict(command_submission_dict)
+command_submission_from_dict = CommandSubmission.from_dict(command_submission_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

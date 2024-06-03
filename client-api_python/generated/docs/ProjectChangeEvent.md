@@ -27,7 +27,7 @@ print(ProjectChangeEvent.to_json())
 # convert the object into a dict
 project_change_event_dict = project_change_event_instance.to_dict()
 # create an instance of ProjectChangeEvent from a dict
-project_change_event_form_dict = project_change_event.from_dict(project_change_event_dict)
+project_change_event_from_dict = ProjectChangeEvent.from_dict(project_change_event_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

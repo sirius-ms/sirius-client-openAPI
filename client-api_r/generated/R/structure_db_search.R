@@ -10,7 +10,7 @@
 #' @field enabled tags whether the tool is enabled character [optional]
 #' @field structureSearchDBs Structure databases to search in, If expansive search is enabled this DB selection will be expanded to PubChem  if not high confidence hit was found in the selected databases.   Defaults to BIO + Custom Databases. Possible values are available to Database API. list(character) [optional]
 #' @field tagStructuresWithLipidClass Candidates matching the lipid class estimated by El Gordo will be tagged.  The lipid class will only be available if El Gordo predicts that the MS/MS is a lipid spectrum.  If this parameter is set to 'false' El Gordo will still be executed and e.g. improve the fragmentation  tree, but the matching structure candidates will not be tagged if they match lipid class. character [optional]
-#' @field expansiveSearchConfidenceMode  \link{Mode} [optional]
+#' @field expansiveSearchConfidenceMode  \link{ConfidenceMode} [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
 #' @export
@@ -109,7 +109,7 @@ StructureDbSearch <- R6::R6Class(
         self$`tagStructuresWithLipidClass` <- this_object$`tagStructuresWithLipidClass`
       }
       if (!is.null(this_object$`expansiveSearchConfidenceMode`)) {
-        `expansivesearchconfidencemode_object` <- Mode$new()
+        `expansivesearchconfidencemode_object` <- ConfidenceMode$new()
         `expansivesearchconfidencemode_object`$fromJSON(jsonlite::toJSON(this_object$`expansiveSearchConfidenceMode`, auto_unbox = TRUE, digits = NA))
         self$`expansiveSearchConfidenceMode` <- `expansivesearchconfidencemode_object`
       }
@@ -173,7 +173,7 @@ StructureDbSearch <- R6::R6Class(
       self$`enabled` <- this_object$`enabled`
       self$`structureSearchDBs` <- ApiClient$new()$deserializeObj(this_object$`structureSearchDBs`, "array[character]", loadNamespace("Rsirius"))
       self$`tagStructuresWithLipidClass` <- this_object$`tagStructuresWithLipidClass`
-      self$`expansiveSearchConfidenceMode` <- Mode$new()$fromJSON(jsonlite::toJSON(this_object$`expansiveSearchConfidenceMode`, auto_unbox = TRUE, digits = NA))
+      self$`expansiveSearchConfidenceMode` <- ConfidenceMode$new()$fromJSON(jsonlite::toJSON(this_object$`expansiveSearchConfidenceMode`, auto_unbox = TRUE, digits = NA))
       self
     },
     #' Validate JSON input with respect to StructureDbSearch

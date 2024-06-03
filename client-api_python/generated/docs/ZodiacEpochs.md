@@ -24,7 +24,7 @@ print(ZodiacEpochs.to_json())
 # convert the object into a dict
 zodiac_epochs_dict = zodiac_epochs_instance.to_dict()
 # create an instance of ZodiacEpochs from a dict
-zodiac_epochs_form_dict = zodiac_epochs.from_dict(zodiac_epochs_dict)
+zodiac_epochs_from_dict = ZodiacEpochs.from_dict(zodiac_epochs_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

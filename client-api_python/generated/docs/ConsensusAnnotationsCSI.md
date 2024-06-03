@@ -28,7 +28,7 @@ print(ConsensusAnnotationsCSI.to_json())
 # convert the object into a dict
 consensus_annotations_csi_dict = consensus_annotations_csi_instance.to_dict()
 # create an instance of ConsensusAnnotationsCSI from a dict
-consensus_annotations_csi_form_dict = consensus_annotations_csi.from_dict(consensus_annotations_csi_dict)
+consensus_annotations_csi_from_dict = ConsensusAnnotationsCSI.from_dict(consensus_annotations_csi_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

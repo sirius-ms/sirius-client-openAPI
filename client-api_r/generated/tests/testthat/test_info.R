@@ -21,6 +21,30 @@ test_that("siriusVersion", {
   #expect_equal(model.instance$`siriusVersion`, "EXPECTED_RESULT")
 })
 
+test_that("latestSiriusVersion", {
+  # tests for the property `latestSiriusVersion` (character)
+  # Latest available Version of the SIRIUS application
+
+  # uncomment below to test the property
+  #expect_equal(model.instance$`latestSiriusVersion`, "EXPECTED_RESULT")
+})
+
+test_that("latestSiriusLink", {
+  # tests for the property `latestSiriusLink` (character)
+  # Link to the latest available Version of the SIRIUS application
+
+  # uncomment below to test the property
+  #expect_equal(model.instance$`latestSiriusLink`, "EXPECTED_RESULT")
+})
+
+test_that("updateAvailable", {
+  # tests for the property `updateAvailable` (character)
+  # true if newer SIRIUS version is available
+
+  # uncomment below to test the property
+  #expect_equal(model.instance$`updateAvailable`, "EXPECTED_RESULT")
+})
+
 test_that("siriusLibVersion", {
   # tests for the property `siriusLibVersion` (character)
   # Version of the SIRIUS libraries

@@ -23,7 +23,7 @@ print(Timeout.to_json())
 # convert the object into a dict
 timeout_dict = timeout_instance.to_dict()
 # create an instance of Timeout from a dict
-timeout_form_dict = timeout.from_dict(timeout_dict)
+timeout_from_dict = Timeout.from_dict(timeout_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

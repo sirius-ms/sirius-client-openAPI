@@ -28,7 +28,7 @@ print(BasicSpectrum.to_json())
 # convert the object into a dict
 basic_spectrum_dict = basic_spectrum_instance.to_dict()
 # create an instance of BasicSpectrum from a dict
-basic_spectrum_form_dict = basic_spectrum.from_dict(basic_spectrum_dict)
+basic_spectrum_from_dict = BasicSpectrum.from_dict(basic_spectrum_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

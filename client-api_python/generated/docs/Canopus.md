@@ -23,7 +23,7 @@ print(Canopus.to_json())
 # convert the object into a dict
 canopus_dict = canopus_instance.to_dict()
 # create an instance of Canopus from a dict
-canopus_form_dict = canopus.from_dict(canopus_dict)
+canopus_from_dict = Canopus.from_dict(canopus_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

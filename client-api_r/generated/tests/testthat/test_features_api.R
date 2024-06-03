@@ -88,6 +88,19 @@ test_that("GetAlignedFeaturesPaged", {
   #expect_equal(result, "EXPECTED_RESULT")
 })
 
+test_that("GetAlignedFeaturesQuality", {
+  # tests for GetAlignedFeaturesQuality
+  # base path: http://localhost:8080
+  # Get data quality information for feature (aligned over runs) with the given identifier from the specified project-space.
+  # Get data quality information for feature (aligned over runs) with the given identifier from the specified project-space.
+  # @param project_id character project-space to read from.
+  # @param aligned_feature_id character identifier of feature (aligned over runs) to access.
+  # @return [AlignedFeatureQuality]
+
+  # uncomment below to test the operation
+  #expect_equal(result, "EXPECTED_RESULT")
+})
+
 test_that("GetBestMatchingCompoundClasses", {
   # tests for GetBestMatchingCompoundClasses
   # base path: http://localhost:8080
@@ -324,6 +337,18 @@ test_that("GetMsData", {
   #expect_equal(result, "EXPECTED_RESULT")
 })
 
+test_that("GetQuantification", {
+  # tests for GetQuantification
+  # base path: http://localhost:8080
+  # @param project_id character 
+  # @param aligned_feature_id character 
+  # @param type character  (optional)
+  # @return [QuantificationTable]
+
+  # uncomment below to test the operation
+  #expect_equal(result, "EXPECTED_RESULT")
+})
+
 test_that("GetSiriusFragTree", {
   # tests for GetSiriusFragTree
   # base path: http://localhost:8080
@@ -360,6 +385,9 @@ test_that("GetSpectralLibraryMatches", {
   # List of spectral library matches for the given &#39;alignedFeatureId&#39;.
   # @param project_id character project-space to read from.
   # @param aligned_feature_id character feature (aligned over runs) the structure candidates belong to.
+  # @param min_shared_peaks integer  (optional)
+  # @param min_similarity numeric  (optional)
+  # @param candidate_in_chi_key character  (optional)
   # @param opt_fields array[SpectralLibraryMatchOptField]  (optional)
   # @return [array[SpectralLibraryMatch]]
 
@@ -371,14 +399,33 @@ test_that("GetSpectralLibraryMatchesPaged", {
   # tests for GetSpectralLibraryMatchesPaged
   # base path: http://localhost:8080
   # Page of spectral library matches for the given &#39;alignedFeatureId&#39;.
-  # Page of spectral library matches for the given &#39;alignedFeatureId&#39;.
+  # Page of spectral library matches for the given &#39;alignedFeatureId&#39;.  If a &#39;candidateInChiKey&#39; is provided, returns only matches for the database compound with the given InChI key.
   # @param project_id character project-space to read from.
   # @param aligned_feature_id character feature (aligned over runs) the structure candidates belong to.
   # @param page integer Zero-based page index (0..N) (optional)
   # @param size integer The size of the page to be returned (optional)
   # @param sort array[character] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (optional)
+  # @param min_shared_peaks integer  (optional)
+  # @param min_similarity numeric  (optional)
+  # @param candidate_in_chi_key character  (optional)
   # @param opt_fields array[SpectralLibraryMatchOptField]  (optional)
   # @return [PageSpectralLibraryMatch]
+
+  # uncomment below to test the operation
+  #expect_equal(result, "EXPECTED_RESULT")
+})
+
+test_that("GetSpectralLibraryMatchesSummary", {
+  # tests for GetSpectralLibraryMatchesSummary
+  # base path: http://localhost:8080
+  # Summarize matched reference spectra for the given &#39;alignedFeatureId&#39;.
+  # Summarize matched reference spectra for the given &#39;alignedFeatureId&#39;.  If a &#39;candidateInChiKey&#39; is provided, summarizes only matches for the database compound with the given InChI key.
+  # @param project_id character project-space to read from.
+  # @param aligned_feature_id character feature (aligned over runs) the structure candidates belong to.
+  # @param min_shared_peaks integer min threshold of shared peaks. (optional)
+  # @param min_similarity numeric min spectral similarity threshold. (optional)
+  # @param candidate_in_chi_key character inchi key of the database compound. (optional)
+  # @return [SpectralLibraryMatchSummary]
 
   # uncomment below to test the operation
   #expect_equal(result, "EXPECTED_RESULT")
@@ -474,6 +521,17 @@ test_that("GetStructureCandidatesPaged", {
   # @param sort array[character] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (optional)
   # @param opt_fields array[StructureCandidateOptField] set of optional fields to be included. Use 'none' only to override defaults. (optional)
   # @return [PageStructureCandidateFormula]
+
+  # uncomment below to test the operation
+  #expect_equal(result, "EXPECTED_RESULT")
+})
+
+test_that("GetTraces1", {
+  # tests for GetTraces1
+  # base path: http://localhost:8080
+  # @param project_id character 
+  # @param aligned_feature_id character 
+  # @return [TraceSet]
 
   # uncomment below to test the operation
   #expect_equal(result, "EXPECTED_RESULT")

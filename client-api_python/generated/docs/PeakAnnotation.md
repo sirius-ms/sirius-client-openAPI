@@ -35,7 +35,7 @@ print(PeakAnnotation.to_json())
 # convert the object into a dict
 peak_annotation_dict = peak_annotation_instance.to_dict()
 # create an instance of PeakAnnotation from a dict
-peak_annotation_form_dict = peak_annotation.from_dict(peak_annotation_dict)
+peak_annotation_from_dict = PeakAnnotation.from_dict(peak_annotation_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
