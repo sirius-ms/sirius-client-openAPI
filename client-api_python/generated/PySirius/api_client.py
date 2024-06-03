@@ -22,7 +22,7 @@ import re
 import tempfile
 
 from urllib.parse import quote
-from typing import Tuple, Optional, List, Dict, Union
+from typing import Tuple, Optional, List, Dict
 from pydantic import SecretStr
 
 from PySirius.configuration import Configuration
@@ -208,8 +208,7 @@ class ApiClient:
                 post_params,
                 collection_formats
             )
-            if files:
-                post_params.extend(self.files_parameters(files))
+            post_params.extend(self.files_parameters(files))
 
         # auth setting
         self.update_params_for_auth(
@@ -517,30 +516,31 @@ class ApiClient:
 
         return "&".join(["=".join(map(str, item)) for item in new_params])
 
-    def files_parameters(self, files: Dict[str, Union[str, bytes]]):
+    def files_parameters(self, files=None):
         """Builds form parameters.
 
         :param files: File parameters.
         :return: Form parameters with files.
         """
         params = []
-        for k, v in files.items():
-            if isinstance(v, str):
-                with open(v, 'rb') as f:
-                    filename = os.path.basename(f.name)
-                    filedata = f.read()
-            elif isinstance(v, bytes):
-                filename = k
-                filedata = v
-            else:
-                raise ValueError("Unsupported file value")
-            mimetype = (
-                mimetypes.guess_type(filename)[0]
-                or 'application/octet-stream'
-            )
-            params.append(
-                tuple([k, tuple([filename, filedata, mimetype])])
-            )
+
+        if files:
+            for k, v in files.items():
+                if not v:
+                    continue
+                file_names = v if type(v) is list else [v]
+                for n in file_names:
+                    with open(n, 'rb') as f:
+                        filename = os.path.basename(f.name)
+                        filedata = f.read()
+                        mimetype = (
+                            mimetypes.guess_type(filename)[0]
+                            or 'application/octet-stream'
+                        )
+                        params.append(
+                            tuple([k, tuple([filename, filedata, mimetype])])
+                        )
+
         return params
 
     def select_header_accept(self, accepts: List[str]) -> Optional[str]:
