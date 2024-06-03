@@ -49,7 +49,7 @@ jobs:
         
         echo "generating Python Code"
         rm -rf client-api_python/generated/*
-        java -jar .updater/openapi_generator/openapi-generator-cli.jar generate -i .updater/api/api-docs.json -c .updater/config/Python/config.json -g python -o client-api_python/generated
+        java -jar .updater/openapi_generator/openapi-generator-cli.jar generate -i .updater/api/api-docs.json -c .updater/config/Python/config.json -g python -o client-api_python/generated -t client-api_python/templates/python
         
         # echo "temporarily move R manual folder"
         # mv client-api_r/generated/man/ client-api_r/
