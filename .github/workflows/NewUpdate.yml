@@ -20,29 +20,27 @@ jobs:
     - name: Download latest generators
       run: |
         cd .updater/openapi_generator
-        wget https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/7.4.0/openapi-generator-cli-7.4.0.jar -O openapi-generator-cli.jar
-        wget https://oss.sonatype.org/content/repositories/snapshots/org/openapitools/openapi-generator-cli/7.5.0-SNAPSHOT/openapi-generator-cli-7.5.0-20240321.100714-45.jar -O openapi-generator-cli-snapshot.jar
+        wget https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/7.6.0/openapi-generator-cli-7.6.0.jar -O openapi-generator-cli.jar
         java -jar openapi-generator-cli.jar version > version
-    # - name: Download latest Sirius Release
-    #   uses: nick-fields/retry@v2
-    #   with:
-    #     max_attempts: 5
-    #     timeout_minutes: 5
-    #     command: |
-    #         cd .updater/api
-    #         curl -s  https://api.github.com/repos/boecker-lab/sirius/releases | grep 'browser_download_url.*linux64.zip\"' | sort | tac | head -n 1 | cut -d : -f 2,3 | tr -d \" | wget -i -
-    #         echo "Download Complete"
-    #         unzip *.zip
-    #         echo "Api Ready"
-    # - name: Run Rest Api
-    #   run: |
-    #     bash .updater/api/sirius/bin/sirius REST -p 8080 -s &
+    - name: Download latest Sirius Release
+      uses: nick-fields/retry@v2
+      with:
+        max_attempts: 5
+        timeout_minutes: 5
+        command: |
+            cd .updater/api
+            curl -s  https://api.github.com/repositories/94561614/releases | grep 'browser_download_url.*linux64.zip\"' | sort | tac | head -n 1 | cut -d : -f 2,3 | tr -d \" | wget -i -
+            echo "Download Complete"
+            unzip *.zip
+            echo "Api Ready"
+    - name: Run Rest Api
+      run: |
+        bash .updater/api/sirius/bin/sirius REST -p 8080 -s &
     - name: Update api-docs.json
       run: |
-        # while ! nc -z localhost 8080; do sleep 0.1; done
+        while ! nc -z localhost 8080; do sleep 0.1; done
         cd .updater/api
-        wget https://upload.uni-jena.de/data/665497d2ea5a99.72335243/s6_api_docs.json
-        mv s6_api_docs.json api-docs.json
+        wget http://localhost:8080/v3/api-docs -O api-docs.json
     - name: Update Clients
       run: |
         # echo "generating Java Code"
@@ -58,7 +56,7 @@ jobs:
         
         echo "generating R Code"
         rm -rf client-api_r/generated/*
-        java -jar .updater/openapi_generator/openapi-generator-cli-snapshot.jar generate -i .updater/api/api-docs.json -c .updater/config/R/config.json -g r -o client-api_r/generated -t client-api_r/templates/r
+        java -jar .updater/openapi_generator/openapi-generator-cli.jar generate -i .updater/api/api-docs.json -c .updater/config/R/config.json -g r -o client-api_r/generated -t client-api_r/templates/r
         
         # echo "recover R manual folder"
         # mv client-api_r/man/ client-api_r/generated/
@@ -107,15 +105,14 @@ jobs:
 
     #     chmod +x ./client-api_r/add_to_docu.sh
     #     ./client-api_r/add_to_docu.sh ./client-api_r/generated/docs/CompoundsApi.md
-    # - name: Remove Sirius Rest Api
-    #   run: |
-    #     cd .updater/api
-    #     rm -rf *sirius*
-    #     echo "Done"
+    - name: Remove Sirius Rest Api
+      run: |
+        cd .updater/api
+        rm -rf *sirius*
+        echo "Done"
     - name: Remove Openapi Generator Files
       run: |
         rm .updater/openapi_generator/openapi-generator-cli.jar
-        rm .updater/openapi_generator/openapi-generator-cli-snapshot.jar
         ls ./.github/workflows
         echo "Done"
     - name: update file and push to remote
@@ -134,13 +131,13 @@ jobs:
     #     gh run watch $id --exit-status --interval 30
     #     echo "generation done!"
     #   env:
-    #     GH_TOKEN: ${{ github.token }}
+    #     GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: update file and create pull request
       id: open-pr
       uses: repo-sync/pull-request@v2
       with:
           destination_branch: ${{ inputs.target_branch }}
-          github_token: ${{ secrets.MERGE_REQUEST_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           pr_label: "Feature"
           pr_title: "AutoUpdated"
           pr_allow_empty: true
@@ -151,12 +148,12 @@ jobs:
       id: lockpull
       uses: sudo-bot/action-pull-request-lock@v1.1.0
       with:
-        github-token: ${{ secrets.MERGE_REQUEST_TOKEN }}
+        github-token: ${{ secrets.GITHUB_TOKEN }}
         number: ${{steps.open-pr.outputs.pr_number}}
         lock-reason: resolved
     - name: Run tests if no changes occure
       env:
-        GH_TOKEN: ${{ github.token }}
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       if: steps.lockpull.outcome == 'failure'
       run: |
         gh workflow run RunTests.yml --ref ${GITHUB_REF##*/}
@@ -166,6 +163,6 @@ jobs:
       if: steps.lockpull.outcome == 'failure'
       uses: dawidd6/action-delete-branch@v3
       with:
-        github_token: ${{github.token}}
+        github_token: ${{ secrets.GITHUB_TOKEN }}
         prefix: temp_
         soft_fail: true
