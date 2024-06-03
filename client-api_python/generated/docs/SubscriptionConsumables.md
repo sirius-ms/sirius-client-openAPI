@@ -22,7 +22,7 @@ print(SubscriptionConsumables.to_json())
 # convert the object into a dict
 subscription_consumables_dict = subscription_consumables_instance.to_dict()
 # create an instance of SubscriptionConsumables from a dict
-subscription_consumables_form_dict = subscription_consumables.from_dict(subscription_consumables_dict)
+subscription_consumables_from_dict = SubscriptionConsumables.from_dict(subscription_consumables_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

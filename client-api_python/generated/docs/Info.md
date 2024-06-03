@@ -7,6 +7,9 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **night_sky_api_version** | **str** | API version of the SIRIUS Nightsky API | [optional] 
 **sirius_version** | **str** | Version of the SIRIUS application | [optional] 
+**latest_sirius_version** | **str** | Latest available Version of the SIRIUS application | [optional] 
+**latest_sirius_link** | **str** | Link to the latest available Version of the SIRIUS application | [optional] 
+**update_available** | **bool** | true if newer SIRIUS version is available | [optional] 
 **sirius_lib_version** | **str** | Version of the SIRIUS libraries | [optional] 
 **finger_id_lib_version** | **str** | Version of the CSI:FingerID libraries | [optional] 
 **chem_db_version** | **str** | Version of the Chemical Database available via SIRIUS web services | [optional] 
@@ -30,7 +33,7 @@ print(Info.to_json())
 # convert the object into a dict
 info_dict = info_instance.to_dict()
 # create an instance of Info from a dict
-info_form_dict = info.from_dict(info_dict)
+info_from_dict = Info.from_dict(info_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

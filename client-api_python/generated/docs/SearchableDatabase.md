@@ -33,7 +33,7 @@ print(SearchableDatabase.to_json())
 # convert the object into a dict
 searchable_database_dict = searchable_database_instance.to_dict()
 # create an instance of SearchableDatabase from a dict
-searchable_database_form_dict = searchable_database.from_dict(searchable_database_dict)
+searchable_database_from_dict = SearchableDatabase.from_dict(searchable_database_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

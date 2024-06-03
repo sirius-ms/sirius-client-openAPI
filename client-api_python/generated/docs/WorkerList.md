@@ -23,7 +23,7 @@ print(WorkerList.to_json())
 # convert the object into a dict
 worker_list_dict = worker_list_instance.to_dict()
 # create an instance of WorkerList from a dict
-worker_list_form_dict = worker_list.from_dict(worker_list_dict)
+worker_list_from_dict = WorkerList.from_dict(worker_list_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

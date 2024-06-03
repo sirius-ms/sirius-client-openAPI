@@ -23,7 +23,7 @@ print(CompoundImport.to_json())
 # convert the object into a dict
 compound_import_dict = compound_import_instance.to_dict()
 # create an instance of CompoundImport from a dict
-compound_import_form_dict = compound_import.from_dict(compound_import_dict)
+compound_import_from_dict = CompoundImport.from_dict(compound_import_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

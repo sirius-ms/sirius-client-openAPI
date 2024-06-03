@@ -42,7 +42,7 @@ print(Sirius.to_json())
 # convert the object into a dict
 sirius_dict = sirius_instance.to_dict()
 # create an instance of Sirius from a dict
-sirius_form_dict = sirius.from_dict(sirius_dict)
+sirius_from_dict = Sirius.from_dict(sirius_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

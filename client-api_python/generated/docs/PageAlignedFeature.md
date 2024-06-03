@@ -7,12 +7,12 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **total_pages** | **int** |  | [optional] 
 **total_elements** | **int** |  | [optional] 
+**first** | **bool** |  | [optional] 
+**last** | **bool** |  | [optional] 
 **size** | **int** |  | [optional] 
 **content** | [**List[AlignedFeature]**](AlignedFeature.md) |  | [optional] 
 **number** | **int** |  | [optional] 
 **sort** | [**SortObject**](SortObject.md) |  | [optional] 
-**last** | **bool** |  | [optional] 
-**first** | **bool** |  | [optional] 
 **number_of_elements** | **int** |  | [optional] 
 **pageable** | [**PageableObject**](PageableObject.md) |  | [optional] 
 **empty** | **bool** |  | [optional] 
@@ -32,7 +32,7 @@ print(PageAlignedFeature.to_json())
 # convert the object into a dict
 page_aligned_feature_dict = page_aligned_feature_instance.to_dict()
 # create an instance of PageAlignedFeature from a dict
-page_aligned_feature_form_dict = page_aligned_feature.from_dict(page_aligned_feature_dict)
+page_aligned_feature_from_dict = PageAlignedFeature.from_dict(page_aligned_feature_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

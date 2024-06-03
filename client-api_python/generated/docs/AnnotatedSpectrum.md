@@ -29,7 +29,7 @@ print(AnnotatedSpectrum.to_json())
 # convert the object into a dict
 annotated_spectrum_dict = annotated_spectrum_instance.to_dict()
 # create an instance of AnnotatedSpectrum from a dict
-annotated_spectrum_form_dict = annotated_spectrum.from_dict(annotated_spectrum_dict)
+annotated_spectrum_from_dict = AnnotatedSpectrum.from_dict(annotated_spectrum_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

@@ -28,7 +28,7 @@ print(JobProgress.to_json())
 # convert the object into a dict
 job_progress_dict = job_progress_instance.to_dict()
 # create an instance of JobProgress from a dict
-job_progress_form_dict = job_progress.from_dict(job_progress_dict)
+job_progress_from_dict = JobProgress.from_dict(job_progress_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

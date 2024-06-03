@@ -24,7 +24,7 @@ print(ZodiacEdgeFilterThresholds.to_json())
 # convert the object into a dict
 zodiac_edge_filter_thresholds_dict = zodiac_edge_filter_thresholds_instance.to_dict()
 # create an instance of ZodiacEdgeFilterThresholds from a dict
-zodiac_edge_filter_thresholds_form_dict = zodiac_edge_filter_thresholds.from_dict(zodiac_edge_filter_thresholds_dict)
+zodiac_edge_filter_thresholds_from_dict = ZodiacEdgeFilterThresholds.from_dict(zodiac_edge_filter_thresholds_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

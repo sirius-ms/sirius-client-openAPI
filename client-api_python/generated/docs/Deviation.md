@@ -23,7 +23,7 @@ print(Deviation.to_json())
 # convert the object into a dict
 deviation_dict = deviation_instance.to_dict()
 # create an instance of Deviation from a dict
-deviation_form_dict = deviation.from_dict(deviation_dict)
+deviation_from_dict = Deviation.from_dict(deviation_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

@@ -28,7 +28,7 @@ print(Zodiac.to_json())
 # convert the object into a dict
 zodiac_dict = zodiac_instance.to_dict()
 # create an instance of Zodiac from a dict
-zodiac_form_dict = zodiac.from_dict(zodiac_dict)
+zodiac_from_dict = Zodiac.from_dict(zodiac_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

@@ -25,7 +25,7 @@ print(ConsensusAnnotationsDeNovo.to_json())
 # convert the object into a dict
 consensus_annotations_de_novo_dict = consensus_annotations_de_novo_instance.to_dict()
 # create an instance of ConsensusAnnotationsDeNovo from a dict
-consensus_annotations_de_novo_form_dict = consensus_annotations_de_novo.from_dict(consensus_annotations_de_novo_dict)
+consensus_annotations_de_novo_from_dict = ConsensusAnnotationsDeNovo.from_dict(consensus_annotations_de_novo_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

@@ -6,11 +6,16 @@ The AlignedFeature contains the ID of a feature (aligned over runs) together wit
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **alignedFeatureId** | **character** |  | [optional] 
+**compoundId** | **character** |  | [optional] 
 **name** | **character** |  | [optional] 
 **ionMass** | **numeric** |  | [optional] 
-**ionType** | **character** |  | [optional] 
+**charge** | **integer** |  | 
+**detectedAdducts** | **set[character]** |  | 
 **rtStartSeconds** | **numeric** |  | [optional] 
 **rtEndSeconds** | **numeric** |  | [optional] 
+**quality** | [**DataQuality**](DataQuality.md) |  | [optional] [Enum: ] 
+**hasMs1** | **character** | If true, the feature has at lease one MS1 spectrum | [optional] 
+**hasMsMs** | **character** | If true, the feature has at lease one MS/MS spectrum | [optional] 
 **msData** | [**MsData**](MsData.md) |  | [optional] 
 **topAnnotations** | [**FeatureAnnotations**](FeatureAnnotations.md) |  | [optional] 
 **topAnnotationsDeNovo** | [**FeatureAnnotations**](FeatureAnnotations.md) |  | [optional] 

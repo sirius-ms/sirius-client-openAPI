@@ -29,7 +29,7 @@ print(ConnectionCheck.to_json())
 # convert the object into a dict
 connection_check_dict = connection_check_instance.to_dict()
 # create an instance of ConnectionCheck from a dict
-connection_check_form_dict = connection_check.from_dict(connection_check_dict)
+connection_check_from_dict = ConnectionCheck.from_dict(connection_check_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

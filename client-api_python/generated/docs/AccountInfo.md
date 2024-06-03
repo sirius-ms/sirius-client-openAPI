@@ -27,7 +27,7 @@ print(AccountInfo.to_json())
 # convert the object into a dict
 account_info_dict = account_info_instance.to_dict()
 # create an instance of AccountInfo from a dict
-account_info_form_dict = account_info.from_dict(account_info_dict)
+account_info_from_dict = AccountInfo.from_dict(account_info_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

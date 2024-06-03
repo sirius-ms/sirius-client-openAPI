@@ -30,7 +30,7 @@ test_that("tagStructuresWithLipidClass", {
 })
 
 test_that("expansiveSearchConfidenceMode", {
-  # tests for the property `expansiveSearchConfidenceMode` (Mode)
+  # tests for the property `expansiveSearchConfidenceMode` (ConfidenceMode)
 
   # uncomment below to test the property
   #expect_equal(model.instance$`expansiveSearchConfidenceMode`, "EXPECTED_RESULT")

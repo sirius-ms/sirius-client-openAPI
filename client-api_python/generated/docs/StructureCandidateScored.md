@@ -32,7 +32,7 @@ print(StructureCandidateScored.to_json())
 # convert the object into a dict
 structure_candidate_scored_dict = structure_candidate_scored_instance.to_dict()
 # create an instance of StructureCandidateScored from a dict
-structure_candidate_scored_form_dict = structure_candidate_scored.from_dict(structure_candidate_scored_dict)
+structure_candidate_scored_from_dict = StructureCandidateScored.from_dict(structure_candidate_scored_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

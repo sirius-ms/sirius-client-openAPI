@@ -23,7 +23,7 @@ print(UseHeuristic.to_json())
 # convert the object into a dict
 use_heuristic_dict = use_heuristic_instance.to_dict()
 # create an instance of UseHeuristic from a dict
-use_heuristic_form_dict = use_heuristic.from_dict(use_heuristic_dict)
+use_heuristic_from_dict = UseHeuristic.from_dict(use_heuristic_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

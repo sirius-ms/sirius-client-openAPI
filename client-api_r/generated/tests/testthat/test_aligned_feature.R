@@ -12,6 +12,13 @@ test_that("alignedFeatureId", {
   #expect_equal(model.instance$`alignedFeatureId`, "EXPECTED_RESULT")
 })
 
+test_that("compoundId", {
+  # tests for the property `compoundId` (character)
+
+  # uncomment below to test the property
+  #expect_equal(model.instance$`compoundId`, "EXPECTED_RESULT")
+})
+
 test_that("name", {
   # tests for the property `name` (character)
 
@@ -26,11 +33,18 @@ test_that("ionMass", {
   #expect_equal(model.instance$`ionMass`, "EXPECTED_RESULT")
 })
 
-test_that("ionType", {
-  # tests for the property `ionType` (character)
+test_that("charge", {
+  # tests for the property `charge` (integer)
 
   # uncomment below to test the property
-  #expect_equal(model.instance$`ionType`, "EXPECTED_RESULT")
+  #expect_equal(model.instance$`charge`, "EXPECTED_RESULT")
+})
+
+test_that("detectedAdducts", {
+  # tests for the property `detectedAdducts` (set[character])
+
+  # uncomment below to test the property
+  #expect_equal(model.instance$`detectedAdducts`, "EXPECTED_RESULT")
 })
 
 test_that("rtStartSeconds", {
@@ -45,6 +59,29 @@ test_that("rtEndSeconds", {
 
   # uncomment below to test the property
   #expect_equal(model.instance$`rtEndSeconds`, "EXPECTED_RESULT")
+})
+
+test_that("quality", {
+  # tests for the property `quality` (DataQuality)
+
+  # uncomment below to test the property
+  #expect_equal(model.instance$`quality`, "EXPECTED_RESULT")
+})
+
+test_that("hasMs1", {
+  # tests for the property `hasMs1` (character)
+  # If true, the feature has at lease one MS1 spectrum
+
+  # uncomment below to test the property
+  #expect_equal(model.instance$`hasMs1`, "EXPECTED_RESULT")
+})
+
+test_that("hasMsMs", {
+  # tests for the property `hasMsMs` (character)
+  # If true, the feature has at lease one MS/MS spectrum
+
+  # uncomment below to test the property
+  #expect_equal(model.instance$`hasMsMs`, "EXPECTED_RESULT")
 })
 
 test_that("msData", {

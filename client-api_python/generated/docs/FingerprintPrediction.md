@@ -25,7 +25,7 @@ print(FingerprintPrediction.to_json())
 # convert the object into a dict
 fingerprint_prediction_dict = fingerprint_prediction_instance.to_dict()
 # create an instance of FingerprintPrediction from a dict
-fingerprint_prediction_form_dict = fingerprint_prediction.from_dict(fingerprint_prediction_dict)
+fingerprint_prediction_from_dict = FingerprintPrediction.from_dict(fingerprint_prediction_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

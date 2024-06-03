@@ -25,7 +25,7 @@ print(BackgroundComputationsStateEvent.to_json())
 # convert the object into a dict
 background_computations_state_event_dict = background_computations_state_event_instance.to_dict()
 # create an instance of BackgroundComputationsStateEvent from a dict
-background_computations_state_event_form_dict = background_computations_state_event.from_dict(background_computations_state_event_dict)
+background_computations_state_event_from_dict = BackgroundComputationsStateEvent.from_dict(background_computations_state_event_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

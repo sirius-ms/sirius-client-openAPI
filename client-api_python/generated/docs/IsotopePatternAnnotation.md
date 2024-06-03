@@ -23,7 +23,7 @@ print(IsotopePatternAnnotation.to_json())
 # convert the object into a dict
 isotope_pattern_annotation_dict = isotope_pattern_annotation_instance.to_dict()
 # create an instance of IsotopePatternAnnotation from a dict
-isotope_pattern_annotation_form_dict = isotope_pattern_annotation.from_dict(isotope_pattern_annotation_dict)
+isotope_pattern_annotation_from_dict = IsotopePatternAnnotation.from_dict(isotope_pattern_annotation_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

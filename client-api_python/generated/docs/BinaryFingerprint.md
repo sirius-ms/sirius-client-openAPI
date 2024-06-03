@@ -23,7 +23,7 @@ print(BinaryFingerprint.to_json())
 # convert the object into a dict
 binary_fingerprint_dict = binary_fingerprint_instance.to_dict()
 # create an instance of BinaryFingerprint from a dict
-binary_fingerprint_form_dict = binary_fingerprint.from_dict(binary_fingerprint_dict)
+binary_fingerprint_from_dict = BinaryFingerprint.from_dict(binary_fingerprint_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

@@ -25,7 +25,7 @@ print(ParentPeak.to_json())
 # convert the object into a dict
 parent_peak_dict = parent_peak_instance.to_dict()
 # create an instance of ParentPeak from a dict
-parent_peak_form_dict = parent_peak.from_dict(parent_peak_dict)
+parent_peak_from_dict = ParentPeak.from_dict(parent_peak_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

@@ -8,11 +8,16 @@
 #' @description AlignedFeature Class
 #' @format An \code{R6Class} generator object
 #' @field alignedFeatureId  character [optional]
+#' @field compoundId  character [optional]
 #' @field name  character [optional]
 #' @field ionMass  numeric [optional]
-#' @field ionType  character [optional]
+#' @field charge  integer
+#' @field detectedAdducts  list(character)
 #' @field rtStartSeconds  numeric [optional]
 #' @field rtEndSeconds  numeric [optional]
+#' @field quality  \link{DataQuality} [optional]
+#' @field hasMs1 If true, the feature has at lease one MS1 spectrum character [optional]
+#' @field hasMsMs If true, the feature has at lease one MS/MS spectrum character [optional]
 #' @field msData  \link{MsData} [optional]
 #' @field topAnnotations  \link{FeatureAnnotations} [optional]
 #' @field topAnnotationsDeNovo  \link{FeatureAnnotations} [optional]
@@ -24,11 +29,16 @@ AlignedFeature <- R6::R6Class(
   "AlignedFeature",
   public = list(
     `alignedFeatureId` = NULL,
+    `compoundId` = NULL,
     `name` = NULL,
     `ionMass` = NULL,
-    `ionType` = NULL,
+    `charge` = NULL,
+    `detectedAdducts` = NULL,
     `rtStartSeconds` = NULL,
     `rtEndSeconds` = NULL,
+    `quality` = NULL,
+    `hasMs1` = NULL,
+    `hasMsMs` = NULL,
     `msData` = NULL,
     `topAnnotations` = NULL,
     `topAnnotationsDeNovo` = NULL,
@@ -38,24 +48,49 @@ AlignedFeature <- R6::R6Class(
     #' @description
     #' Initialize a new AlignedFeature class.
     #'
+    #' @param charge charge
+    #' @param detectedAdducts detectedAdducts
     #' @param alignedFeatureId alignedFeatureId
+    #' @param compoundId compoundId
     #' @param name name
     #' @param ionMass ionMass
-    #' @param ionType ionType
     #' @param rtStartSeconds rtStartSeconds
     #' @param rtEndSeconds rtEndSeconds
+    #' @param quality quality
+    #' @param hasMs1 If true, the feature has at lease one MS1 spectrum
+    #' @param hasMsMs If true, the feature has at lease one MS/MS spectrum
     #' @param msData msData
     #' @param topAnnotations topAnnotations
     #' @param topAnnotationsDeNovo topAnnotationsDeNovo
     #' @param computing Write lock for this feature. If the feature is locked no write operations are possible.  True if any computation is modifying this feature or its results
     #' @param ... Other optional arguments.
     #' @export
-    initialize = function(`alignedFeatureId` = NULL, `name` = NULL, `ionMass` = NULL, `ionType` = NULL, `rtStartSeconds` = NULL, `rtEndSeconds` = NULL, `msData` = NULL, `topAnnotations` = NULL, `topAnnotationsDeNovo` = NULL, `computing` = NULL, ...) {
+    initialize = function(`charge`, `detectedAdducts`, `alignedFeatureId` = NULL, `compoundId` = NULL, `name` = NULL, `ionMass` = NULL, `rtStartSeconds` = NULL, `rtEndSeconds` = NULL, `quality` = NULL, `hasMs1` = NULL, `hasMsMs` = NULL, `msData` = NULL, `topAnnotations` = NULL, `topAnnotationsDeNovo` = NULL, `computing` = NULL, ...) {
+      if (!missing(`charge`)) {
+        if (!(is.numeric(`charge`) && length(`charge`) == 1)) {
+          stop(paste("Error! Invalid data for `charge`. Must be an integer:", `charge`))
+        }
+        self$`charge` <- `charge`
+      }
+      if (!missing(`detectedAdducts`)) {
+        stopifnot(is.vector(`detectedAdducts`), length(`detectedAdducts`) != 0)
+        sapply(`detectedAdducts`, function(x) stopifnot(is.character(x)))
+        if (!identical(`detectedAdducts`, unique(`detectedAdducts`))) {
+          stop("Error! Items in `detectedAdducts` are not unique.")
+        }
+        self$`detectedAdducts` <- `detectedAdducts`
+      }
       if (!is.null(`alignedFeatureId`)) {
         if (!(is.character(`alignedFeatureId`) && length(`alignedFeatureId`) == 1)) {
           stop(paste("Error! Invalid data for `alignedFeatureId`. Must be a string:", `alignedFeatureId`))
         }
         self$`alignedFeatureId` <- `alignedFeatureId`
+      }
+      if (!is.null(`compoundId`)) {
+        if (!(is.character(`compoundId`) && length(`compoundId`) == 1)) {
+          stop(paste("Error! Invalid data for `compoundId`. Must be a string:", `compoundId`))
+        }
+        self$`compoundId` <- `compoundId`
       }
       if (!is.null(`name`)) {
         if (!(is.character(`name`) && length(`name`) == 1)) {
@@ -69,12 +104,6 @@ AlignedFeature <- R6::R6Class(
         }
         self$`ionMass` <- `ionMass`
       }
-      if (!is.null(`ionType`)) {
-        if (!(is.character(`ionType`) && length(`ionType`) == 1)) {
-          stop(paste("Error! Invalid data for `ionType`. Must be a string:", `ionType`))
-        }
-        self$`ionType` <- `ionType`
-      }
       if (!is.null(`rtStartSeconds`)) {
         if (!(is.numeric(`rtStartSeconds`) && length(`rtStartSeconds`) == 1)) {
           stop(paste("Error! Invalid data for `rtStartSeconds`. Must be a number:", `rtStartSeconds`))
@@ -86,6 +115,25 @@ AlignedFeature <- R6::R6Class(
           stop(paste("Error! Invalid data for `rtEndSeconds`. Must be a number:", `rtEndSeconds`))
         }
         self$`rtEndSeconds` <- `rtEndSeconds`
+      }
+      if (!is.null(`quality`)) {
+        if (!(`quality` %in% c())) {
+          stop(paste("Error! \"", `quality`, "\" cannot be assigned to `quality`. Must be .", sep = ""))
+        }
+        stopifnot(R6::is.R6(`quality`))
+        self$`quality` <- `quality`
+      }
+      if (!is.null(`hasMs1`)) {
+        if (!(is.logical(`hasMs1`) && length(`hasMs1`) == 1)) {
+          stop(paste("Error! Invalid data for `hasMs1`. Must be a boolean:", `hasMs1`))
+        }
+        self$`hasMs1` <- `hasMs1`
+      }
+      if (!is.null(`hasMsMs`)) {
+        if (!(is.logical(`hasMsMs`) && length(`hasMsMs`) == 1)) {
+          stop(paste("Error! Invalid data for `hasMsMs`. Must be a boolean:", `hasMsMs`))
+        }
+        self$`hasMsMs` <- `hasMsMs`
       }
       if (!is.null(`msData`)) {
         stopifnot(R6::is.R6(`msData`))
@@ -119,6 +167,10 @@ AlignedFeature <- R6::R6Class(
         AlignedFeatureObject[["alignedFeatureId"]] <-
           self$`alignedFeatureId`
       }
+      if (!is.null(self$`compoundId`)) {
+        AlignedFeatureObject[["compoundId"]] <-
+          self$`compoundId`
+      }
       if (!is.null(self$`name`)) {
         AlignedFeatureObject[["name"]] <-
           self$`name`
@@ -127,9 +179,13 @@ AlignedFeature <- R6::R6Class(
         AlignedFeatureObject[["ionMass"]] <-
           self$`ionMass`
       }
-      if (!is.null(self$`ionType`)) {
-        AlignedFeatureObject[["ionType"]] <-
-          self$`ionType`
+      if (!is.null(self$`charge`)) {
+        AlignedFeatureObject[["charge"]] <-
+          self$`charge`
+      }
+      if (!is.null(self$`detectedAdducts`)) {
+        AlignedFeatureObject[["detectedAdducts"]] <-
+          self$`detectedAdducts`
       }
       if (!is.null(self$`rtStartSeconds`)) {
         AlignedFeatureObject[["rtStartSeconds"]] <-
@@ -138,6 +194,22 @@ AlignedFeature <- R6::R6Class(
       if (!is.null(self$`rtEndSeconds`)) {
         AlignedFeatureObject[["rtEndSeconds"]] <-
           self$`rtEndSeconds`
+      }
+      if (!is.null(self$`quality`)) {
+        AlignedFeatureObject[["quality"]] <-
+          if (length(names(self$`quality`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`quality`$toJSON()))) {
+            jsonlite::fromJSON(self$`quality`$toJSON())
+          } else {
+            self$`quality`$toJSON()
+          }
+      }
+      if (!is.null(self$`hasMs1`)) {
+        AlignedFeatureObject[["hasMs1"]] <-
+          self$`hasMs1`
+      }
+      if (!is.null(self$`hasMsMs`)) {
+        AlignedFeatureObject[["hasMsMs"]] <-
+          self$`hasMsMs`
       }
       if (!is.null(self$`msData`)) {
         AlignedFeatureObject[["msData"]] <-
@@ -182,20 +254,40 @@ AlignedFeature <- R6::R6Class(
       if (!is.null(this_object$`alignedFeatureId`)) {
         self$`alignedFeatureId` <- this_object$`alignedFeatureId`
       }
+      if (!is.null(this_object$`compoundId`)) {
+        self$`compoundId` <- this_object$`compoundId`
+      }
       if (!is.null(this_object$`name`)) {
         self$`name` <- this_object$`name`
       }
       if (!is.null(this_object$`ionMass`)) {
         self$`ionMass` <- this_object$`ionMass`
       }
-      if (!is.null(this_object$`ionType`)) {
-        self$`ionType` <- this_object$`ionType`
+      if (!is.null(this_object$`charge`)) {
+        self$`charge` <- this_object$`charge`
+      }
+      if (!is.null(this_object$`detectedAdducts`)) {
+        self$`detectedAdducts` <- ApiClient$new()$deserializeObj(this_object$`detectedAdducts`, "set[character]", loadNamespace("Rsirius"))
+        if (!identical(self$`detectedAdducts`, unique(self$`detectedAdducts`))) {
+          stop("Error! Items in `detectedAdducts` are not unique.")
+        }
       }
       if (!is.null(this_object$`rtStartSeconds`)) {
         self$`rtStartSeconds` <- this_object$`rtStartSeconds`
       }
       if (!is.null(this_object$`rtEndSeconds`)) {
         self$`rtEndSeconds` <- this_object$`rtEndSeconds`
+      }
+      if (!is.null(this_object$`quality`)) {
+        `quality_object` <- DataQuality$new()
+        `quality_object`$fromJSON(jsonlite::toJSON(this_object$`quality`, auto_unbox = TRUE, digits = NA))
+        self$`quality` <- `quality_object`
+      }
+      if (!is.null(this_object$`hasMs1`)) {
+        self$`hasMs1` <- this_object$`hasMs1`
+      }
+      if (!is.null(this_object$`hasMsMs`)) {
+        self$`hasMsMs` <- this_object$`hasMsMs`
       }
       if (!is.null(this_object$`msData`)) {
         `msdata_object` <- MsData$new()
@@ -234,6 +326,14 @@ AlignedFeature <- R6::R6Class(
           self$`alignedFeatureId`
           )
         },
+        if (!is.null(self$`compoundId`)) {
+          sprintf(
+          '"compoundId":
+            "%s"
+                    ',
+          self$`compoundId`
+          )
+        },
         if (!is.null(self$`name`)) {
           sprintf(
           '"name":
@@ -250,12 +350,20 @@ AlignedFeature <- R6::R6Class(
           self$`ionMass`
           )
         },
-        if (!is.null(self$`ionType`)) {
+        if (!is.null(self$`charge`)) {
           sprintf(
-          '"ionType":
-            "%s"
+          '"charge":
+            %d
                     ',
-          self$`ionType`
+          self$`charge`
+          )
+        },
+        if (!is.null(self$`detectedAdducts`)) {
+          sprintf(
+          '"detectedAdducts":
+             [%s]
+          ',
+          paste(unlist(lapply(self$`detectedAdducts`, function(x) paste0('"', x, '"'))), collapse = ",")
           )
         },
         if (!is.null(self$`rtStartSeconds`)) {
@@ -272,6 +380,30 @@ AlignedFeature <- R6::R6Class(
             %d
                     ',
           self$`rtEndSeconds`
+          )
+        },
+        if (!is.null(self$`quality`)) {
+          sprintf(
+          '"quality":
+          %s
+          ',
+          jsonlite::toJSON(self$`quality`$toJSON(), auto_unbox = TRUE, digits = NA)
+          )
+        },
+        if (!is.null(self$`hasMs1`)) {
+          sprintf(
+          '"hasMs1":
+            %s
+                    ',
+          tolower(self$`hasMs1`)
+          )
+        },
+        if (!is.null(self$`hasMsMs`)) {
+          sprintf(
+          '"hasMsMs":
+            %s
+                    ',
+          tolower(self$`hasMsMs`)
           )
         },
         if (!is.null(self$`msData`)) {
@@ -321,11 +453,19 @@ AlignedFeature <- R6::R6Class(
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       self$`alignedFeatureId` <- this_object$`alignedFeatureId`
+      self$`compoundId` <- this_object$`compoundId`
       self$`name` <- this_object$`name`
       self$`ionMass` <- this_object$`ionMass`
-      self$`ionType` <- this_object$`ionType`
+      self$`charge` <- this_object$`charge`
+      self$`detectedAdducts` <- ApiClient$new()$deserializeObj(this_object$`detectedAdducts`, "set[character]", loadNamespace("Rsirius"))
+      if (!identical(self$`detectedAdducts`, unique(self$`detectedAdducts`))) {
+        stop("Error! Items in `detectedAdducts` are not unique.")
+      }
       self$`rtStartSeconds` <- this_object$`rtStartSeconds`
       self$`rtEndSeconds` <- this_object$`rtEndSeconds`
+      self$`quality` <- DataQuality$new()$fromJSON(jsonlite::toJSON(this_object$`quality`, auto_unbox = TRUE, digits = NA))
+      self$`hasMs1` <- this_object$`hasMs1`
+      self$`hasMsMs` <- this_object$`hasMsMs`
       self$`msData` <- MsData$new()$fromJSON(jsonlite::toJSON(this_object$`msData`, auto_unbox = TRUE, digits = NA))
       self$`topAnnotations` <- FeatureAnnotations$new()$fromJSON(jsonlite::toJSON(this_object$`topAnnotations`, auto_unbox = TRUE, digits = NA))
       self$`topAnnotationsDeNovo` <- FeatureAnnotations$new()$fromJSON(jsonlite::toJSON(this_object$`topAnnotationsDeNovo`, auto_unbox = TRUE, digits = NA))
@@ -341,6 +481,24 @@ AlignedFeature <- R6::R6Class(
     #' @export
     validateJSON = function(input) {
       input_json <- jsonlite::fromJSON(input)
+      # check the required field `charge`
+      if (!is.null(input_json$`charge`)) {
+        if (!(is.numeric(input_json$`charge`) && length(input_json$`charge`) == 1)) {
+          stop(paste("Error! Invalid data for `charge`. Must be an integer:", input_json$`charge`))
+        }
+      } else {
+        stop(paste("The JSON input `", input, "` is invalid for AlignedFeature: the required field `charge` is missing."))
+      }
+      # check the required field `detectedAdducts`
+      if (!is.null(input_json$`detectedAdducts`)) {
+        stopifnot(is.vector(input_json$`detectedAdducts`), length(input_json$`detectedAdducts`) != 0)
+        if (!identical(input_json$`detectedAdducts`, unique(input_json$`detectedAdducts`))) {
+          stop("Error! Items in `detectedAdducts` are not unique.")
+        }
+        tmp <- sapply(input_json$`detectedAdducts`, function(x) stopifnot(is.character(x)))
+      } else {
+        stop(paste("The JSON input `", input, "` is invalid for AlignedFeature: the required field `detectedAdducts` is missing."))
+      }
     },
     #' To string (JSON format)
     #'
@@ -360,6 +518,17 @@ AlignedFeature <- R6::R6Class(
     #' @return true if the values in all fields are valid.
     #' @export
     isValid = function() {
+      # check if the required `charge` is null
+      if (is.null(self$`charge`)) {
+        return(FALSE)
+      }
+
+      # check if the required `detectedAdducts` is null
+      if (is.null(self$`detectedAdducts`)) {
+        return(FALSE)
+      }
+
+
       TRUE
     },
     #' Return a list of invalid fields (if any).
@@ -371,6 +540,17 @@ AlignedFeature <- R6::R6Class(
     #' @export
     getInvalidFields = function() {
       invalid_fields <- list()
+      # check if the required `charge` is null
+      if (is.null(self$`charge`)) {
+        invalid_fields["charge"] <- "Non-nullable required field `charge` cannot be null."
+      }
+
+      # check if the required `detectedAdducts` is null
+      if (is.null(self$`detectedAdducts`)) {
+        invalid_fields["detectedAdducts"] <- "Non-nullable required field `detectedAdducts` cannot be null."
+      }
+
+
       invalid_fields
     },
     #' Print the object

@@ -7,12 +7,12 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **total_pages** | **int** |  | [optional] 
 **total_elements** | **int** |  | [optional] 
+**first** | **bool** |  | [optional] 
+**last** | **bool** |  | [optional] 
 **size** | **int** |  | [optional] 
 **content** | [**List[Job]**](Job.md) |  | [optional] 
 **number** | **int** |  | [optional] 
 **sort** | [**SortObject**](SortObject.md) |  | [optional] 
-**last** | **bool** |  | [optional] 
-**first** | **bool** |  | [optional] 
 **number_of_elements** | **int** |  | [optional] 
 **pageable** | [**PageableObject**](PageableObject.md) |  | [optional] 
 **empty** | **bool** |  | [optional] 
@@ -32,7 +32,7 @@ print(PageJob.to_json())
 # convert the object into a dict
 page_job_dict = page_job_instance.to_dict()
 # create an instance of PageJob from a dict
-page_job_form_dict = page_job.from_dict(page_job_dict)
+page_job_from_dict = PageJob.from_dict(page_job_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

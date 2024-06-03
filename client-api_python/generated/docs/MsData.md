@@ -26,7 +26,7 @@ print(MsData.to_json())
 # convert the object into a dict
 ms_data_dict = ms_data_instance.to_dict()
 # create an instance of MsData from a dict
-ms_data_form_dict = ms_data.from_dict(ms_data_dict)
+ms_data_from_dict = MsData.from_dict(ms_data_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

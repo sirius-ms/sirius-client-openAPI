@@ -28,7 +28,7 @@ print(SpectrumAnnotation.to_json())
 # convert the object into a dict
 spectrum_annotation_dict = spectrum_annotation_instance.to_dict()
 # create an instance of SpectrumAnnotation from a dict
-spectrum_annotation_form_dict = spectrum_annotation.from_dict(spectrum_annotation_dict)
+spectrum_annotation_from_dict = SpectrumAnnotation.from_dict(spectrum_annotation_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
