@@ -32,9 +32,8 @@ class TestInfoApi(unittest.TestCase):
         """Test case for get_connection_check
 
         """
-        # # NOT FUNCTIONAL
-        # response = self.api.get_connection_check()
-        # self.assertIsInstance(response, ConnectionCheck)
+        response = self.api.get_connection_check()
+        self.assertIsInstance(response, ConnectionCheck)
 
     def test_get_info(self) -> None:
         """Test case for get_info
