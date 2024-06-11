@@ -81,7 +81,7 @@ StructureDbSearch <- R6::R6Class(
       }
       if (!is.null(self$`expansiveSearchConfidenceMode`)) {
         StructureDbSearchObject[["expansiveSearchConfidenceMode"]] <-
-          if (length(names(self$`expansiveSearchConfidenceMode`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`expansiveSearchConfidenceMode`$toJSON()))) {
+          if !is.numeric(self$`expansiveSearchConfidenceMode`$toJSON()) && (length(names(self$`expansiveSearchConfidenceMode`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`expansiveSearchConfidenceMode`$toJSON()))) {
             jsonlite::fromJSON(self$`expansiveSearchConfidenceMode`$toJSON())
           } else {
             self$`expansiveSearchConfidenceMode`$toJSON()

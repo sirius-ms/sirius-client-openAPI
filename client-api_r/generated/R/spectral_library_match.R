@@ -222,7 +222,7 @@ SpectralLibraryMatch <- R6::R6Class(
       }
       if (!is.null(self$`referenceSpectrum`)) {
         SpectralLibraryMatchObject[["referenceSpectrum"]] <-
-          if (length(names(self$`referenceSpectrum`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`referenceSpectrum`$toJSON()))) {
+          if !is.numeric(self$`referenceSpectrum`$toJSON()) && (length(names(self$`referenceSpectrum`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`referenceSpectrum`$toJSON()))) {
             jsonlite::fromJSON(self$`referenceSpectrum`$toJSON())
           } else {
             self$`referenceSpectrum`$toJSON()

@@ -66,7 +66,7 @@ AnnotatedPeak <- R6::R6Class(
       }
       if (!is.null(self$`peakAnnotation`)) {
         AnnotatedPeakObject[["peakAnnotation"]] <-
-          if (length(names(self$`peakAnnotation`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`peakAnnotation`$toJSON()))) {
+          if !is.numeric(self$`peakAnnotation`$toJSON()) && (length(names(self$`peakAnnotation`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`peakAnnotation`$toJSON()))) {
             jsonlite::fromJSON(self$`peakAnnotation`$toJSON())
           } else {
             self$`peakAnnotation`$toJSON()

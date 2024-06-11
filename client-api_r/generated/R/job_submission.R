@@ -163,7 +163,7 @@ JobSubmission <- R6::R6Class(
       }
       if (!is.null(self$`spectraSearchParams`)) {
         JobSubmissionObject[["spectraSearchParams"]] <-
-          if (length(names(self$`spectraSearchParams`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`spectraSearchParams`$toJSON()))) {
+          if !is.numeric(self$`spectraSearchParams`$toJSON()) && (length(names(self$`spectraSearchParams`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`spectraSearchParams`$toJSON()))) {
             jsonlite::fromJSON(self$`spectraSearchParams`$toJSON())
           } else {
             self$`spectraSearchParams`$toJSON()
@@ -171,7 +171,7 @@ JobSubmission <- R6::R6Class(
       }
       if (!is.null(self$`formulaIdParams`)) {
         JobSubmissionObject[["formulaIdParams"]] <-
-          if (length(names(self$`formulaIdParams`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`formulaIdParams`$toJSON()))) {
+          if !is.numeric(self$`formulaIdParams`$toJSON()) && (length(names(self$`formulaIdParams`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`formulaIdParams`$toJSON()))) {
             jsonlite::fromJSON(self$`formulaIdParams`$toJSON())
           } else {
             self$`formulaIdParams`$toJSON()
@@ -179,7 +179,7 @@ JobSubmission <- R6::R6Class(
       }
       if (!is.null(self$`zodiacParams`)) {
         JobSubmissionObject[["zodiacParams"]] <-
-          if (length(names(self$`zodiacParams`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`zodiacParams`$toJSON()))) {
+          if !is.numeric(self$`zodiacParams`$toJSON()) && (length(names(self$`zodiacParams`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`zodiacParams`$toJSON()))) {
             jsonlite::fromJSON(self$`zodiacParams`$toJSON())
           } else {
             self$`zodiacParams`$toJSON()
@@ -187,7 +187,7 @@ JobSubmission <- R6::R6Class(
       }
       if (!is.null(self$`fingerprintPredictionParams`)) {
         JobSubmissionObject[["fingerprintPredictionParams"]] <-
-          if (length(names(self$`fingerprintPredictionParams`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`fingerprintPredictionParams`$toJSON()))) {
+          if !is.numeric(self$`fingerprintPredictionParams`$toJSON()) && (length(names(self$`fingerprintPredictionParams`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`fingerprintPredictionParams`$toJSON()))) {
             jsonlite::fromJSON(self$`fingerprintPredictionParams`$toJSON())
           } else {
             self$`fingerprintPredictionParams`$toJSON()
@@ -195,7 +195,7 @@ JobSubmission <- R6::R6Class(
       }
       if (!is.null(self$`canopusParams`)) {
         JobSubmissionObject[["canopusParams"]] <-
-          if (length(names(self$`canopusParams`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`canopusParams`$toJSON()))) {
+          if !is.numeric(self$`canopusParams`$toJSON()) && (length(names(self$`canopusParams`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`canopusParams`$toJSON()))) {
             jsonlite::fromJSON(self$`canopusParams`$toJSON())
           } else {
             self$`canopusParams`$toJSON()
@@ -203,7 +203,7 @@ JobSubmission <- R6::R6Class(
       }
       if (!is.null(self$`structureDbSearchParams`)) {
         JobSubmissionObject[["structureDbSearchParams"]] <-
-          if (length(names(self$`structureDbSearchParams`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`structureDbSearchParams`$toJSON()))) {
+          if !is.numeric(self$`structureDbSearchParams`$toJSON()) && (length(names(self$`structureDbSearchParams`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`structureDbSearchParams`$toJSON()))) {
             jsonlite::fromJSON(self$`structureDbSearchParams`$toJSON())
           } else {
             self$`structureDbSearchParams`$toJSON()
@@ -211,7 +211,7 @@ JobSubmission <- R6::R6Class(
       }
       if (!is.null(self$`msNovelistParams`)) {
         JobSubmissionObject[["msNovelistParams"]] <-
-          if (length(names(self$`msNovelistParams`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`msNovelistParams`$toJSON()))) {
+          if !is.numeric(self$`msNovelistParams`$toJSON()) && (length(names(self$`msNovelistParams`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`msNovelistParams`$toJSON()))) {
             jsonlite::fromJSON(self$`msNovelistParams`$toJSON())
           } else {
             self$`msNovelistParams`$toJSON()

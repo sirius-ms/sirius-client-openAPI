@@ -68,7 +68,7 @@ Item <- R6::R6Class(
       }
       if (!is.null(self$`quality`)) {
         ItemObject[["quality"]] <-
-          if (length(names(self$`quality`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`quality`$toJSON()))) {
+          if !is.numeric(self$`quality`$toJSON()) && (length(names(self$`quality`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`quality`$toJSON()))) {
             jsonlite::fromJSON(self$`quality`$toJSON())
           } else {
             self$`quality`$toJSON()

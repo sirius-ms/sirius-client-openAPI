@@ -99,7 +99,7 @@ Zodiac <- R6::R6Class(
       }
       if (!is.null(self$`edgeFilterThresholds`)) {
         ZodiacObject[["edgeFilterThresholds"]] <-
-          if (length(names(self$`edgeFilterThresholds`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`edgeFilterThresholds`$toJSON()))) {
+          if !is.numeric(self$`edgeFilterThresholds`$toJSON()) && (length(names(self$`edgeFilterThresholds`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`edgeFilterThresholds`$toJSON()))) {
             jsonlite::fromJSON(self$`edgeFilterThresholds`$toJSON())
           } else {
             self$`edgeFilterThresholds`$toJSON()
@@ -107,7 +107,7 @@ Zodiac <- R6::R6Class(
       }
       if (!is.null(self$`gibbsSamplerParameters`)) {
         ZodiacObject[["gibbsSamplerParameters"]] <-
-          if (length(names(self$`gibbsSamplerParameters`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`gibbsSamplerParameters`$toJSON()))) {
+          if !is.numeric(self$`gibbsSamplerParameters`$toJSON()) && (length(names(self$`gibbsSamplerParameters`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`gibbsSamplerParameters`$toJSON()))) {
             jsonlite::fromJSON(self$`gibbsSamplerParameters`$toJSON())
           } else {
             self$`gibbsSamplerParameters`$toJSON()

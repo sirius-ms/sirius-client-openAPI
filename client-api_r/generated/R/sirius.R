@@ -215,7 +215,7 @@ Sirius <- R6::R6Class(
       }
       if (!is.null(self$`profile`)) {
         SiriusObject[["profile"]] <-
-          if (length(names(self$`profile`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`profile`$toJSON()))) {
+          if !is.numeric(self$`profile`$toJSON()) && (length(names(self$`profile`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`profile`$toJSON()))) {
             jsonlite::fromJSON(self$`profile`$toJSON())
           } else {
             self$`profile`$toJSON()
@@ -275,7 +275,7 @@ Sirius <- R6::R6Class(
       }
       if (!is.null(self$`ilpTimeout`)) {
         SiriusObject[["ilpTimeout"]] <-
-          if (length(names(self$`ilpTimeout`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`ilpTimeout`$toJSON()))) {
+          if !is.numeric(self$`ilpTimeout`$toJSON()) && (length(names(self$`ilpTimeout`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`ilpTimeout`$toJSON()))) {
             jsonlite::fromJSON(self$`ilpTimeout`$toJSON())
           } else {
             self$`ilpTimeout`$toJSON()
@@ -283,7 +283,7 @@ Sirius <- R6::R6Class(
       }
       if (!is.null(self$`useHeuristic`)) {
         SiriusObject[["useHeuristic"]] <-
-          if (length(names(self$`useHeuristic`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`useHeuristic`$toJSON()))) {
+          if !is.numeric(self$`useHeuristic`$toJSON()) && (length(names(self$`useHeuristic`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`useHeuristic`$toJSON()))) {
             jsonlite::fromJSON(self$`useHeuristic`$toJSON())
           } else {
             self$`useHeuristic`$toJSON()

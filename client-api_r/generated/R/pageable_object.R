@@ -89,7 +89,7 @@ PageableObject <- R6::R6Class(
       }
       if (!is.null(self$`sort`)) {
         PageableObjectObject[["sort"]] <-
-          if (length(names(self$`sort`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`sort`$toJSON()))) {
+          if !is.numeric(self$`sort`$toJSON()) && (length(names(self$`sort`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`sort`$toJSON()))) {
             jsonlite::fromJSON(self$`sort`$toJSON())
           } else {
             self$`sort`$toJSON()

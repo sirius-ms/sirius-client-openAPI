@@ -67,7 +67,7 @@ SpectralLibraryMatchSummary <- R6::R6Class(
       SpectralLibraryMatchSummaryObject <- list()
       if (!is.null(self$`bestMatch`)) {
         SpectralLibraryMatchSummaryObject[["bestMatch"]] <-
-          if (length(names(self$`bestMatch`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`bestMatch`$toJSON()))) {
+          if !is.numeric(self$`bestMatch`$toJSON()) && (length(names(self$`bestMatch`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`bestMatch`$toJSON()))) {
             jsonlite::fromJSON(self$`bestMatch`$toJSON())
           } else {
             self$`bestMatch`$toJSON()
