@@ -48,7 +48,7 @@ AnnotatedMsMsData <- R6::R6Class(
       AnnotatedMsMsDataObject <- list()
       if (!is.null(self$`mergedMs2`)) {
         AnnotatedMsMsDataObject[["mergedMs2"]] <-
-          if !is.numeric(self$`mergedMs2`$toJSON()) && (length(names(self$`mergedMs2`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`mergedMs2`$toJSON()))) {
+          if (!is.numeric(self$`mergedMs2`$toJSON()) && length(names(self$`mergedMs2`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`mergedMs2`$toJSON()))) {
             jsonlite::fromJSON(self$`mergedMs2`$toJSON())
           } else {
             self$`mergedMs2`$toJSON()

@@ -38,7 +38,6 @@ class TestPageStructureCandidateFormula(unittest.TestCase):
                 total_pages = 56,
                 total_elements = 56,
                 last = True,
-                first = True,
                 size = 56,
                 content = [
                     PySirius.models.structure_candidate_formula.StructureCandidateFormula(
@@ -98,6 +97,7 @@ class TestPageStructureCandidateFormula(unittest.TestCase):
                     empty = True, 
                     sorted = True, 
                     unsorted = True, ),
+                first = True,
                 number_of_elements = 56,
                 pageable = PySirius.models.pageable_object.PageableObject(
                     offset = 56, 
@@ -107,8 +107,8 @@ class TestPageStructureCandidateFormula(unittest.TestCase):
                         unsorted = True, ), 
                     page_number = 56, 
                     page_size = 56, 
-                    paged = True, 
-                    unpaged = True, ),
+                    unpaged = True, 
+                    paged = True, ),
                 empty = True
             )
         else:

@@ -71,7 +71,7 @@ ConsensusAnnotationsDeNovo <- R6::R6Class(
       }
       if (!is.null(self$`compoundClasses`)) {
         ConsensusAnnotationsDeNovoObject[["compoundClasses"]] <-
-          if !is.numeric(self$`compoundClasses`$toJSON()) && (length(names(self$`compoundClasses`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`compoundClasses`$toJSON()))) {
+          if (!is.numeric(self$`compoundClasses`$toJSON()) && length(names(self$`compoundClasses`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`compoundClasses`$toJSON()))) {
             jsonlite::fromJSON(self$`compoundClasses`$toJSON())
           } else {
             self$`compoundClasses`$toJSON()
@@ -83,7 +83,7 @@ ConsensusAnnotationsDeNovo <- R6::R6Class(
       }
       if (!is.null(self$`selectionCriterion`)) {
         ConsensusAnnotationsDeNovoObject[["selectionCriterion"]] <-
-          if !is.numeric(self$`selectionCriterion`$toJSON()) && (length(names(self$`selectionCriterion`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`selectionCriterion`$toJSON()))) {
+          if (!is.numeric(self$`selectionCriterion`$toJSON()) && length(names(self$`selectionCriterion`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`selectionCriterion`$toJSON()))) {
             jsonlite::fromJSON(self$`selectionCriterion`$toJSON())
           } else {
             self$`selectionCriterion`$toJSON()

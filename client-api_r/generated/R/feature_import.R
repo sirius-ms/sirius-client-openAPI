@@ -134,7 +134,7 @@ FeatureImport <- R6::R6Class(
       }
       if (!is.null(self$`mergedMs1`)) {
         FeatureImportObject[["mergedMs1"]] <-
-          if !is.numeric(self$`mergedMs1`$toJSON()) && (length(names(self$`mergedMs1`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`mergedMs1`$toJSON()))) {
+          if (!is.numeric(self$`mergedMs1`$toJSON()) && length(names(self$`mergedMs1`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`mergedMs1`$toJSON()))) {
             jsonlite::fromJSON(self$`mergedMs1`$toJSON())
           } else {
             self$`mergedMs1`$toJSON()

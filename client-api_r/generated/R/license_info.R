@@ -81,7 +81,7 @@ LicenseInfo <- R6::R6Class(
       }
       if (!is.null(self$`subscription`)) {
         LicenseInfoObject[["subscription"]] <-
-          if !is.numeric(self$`subscription`$toJSON()) && (length(names(self$`subscription`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`subscription`$toJSON()))) {
+          if (!is.numeric(self$`subscription`$toJSON()) && length(names(self$`subscription`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`subscription`$toJSON()))) {
             jsonlite::fromJSON(self$`subscription`$toJSON())
           } else {
             self$`subscription`$toJSON()
@@ -89,7 +89,7 @@ LicenseInfo <- R6::R6Class(
       }
       if (!is.null(self$`consumables`)) {
         LicenseInfoObject[["consumables"]] <-
-          if !is.numeric(self$`consumables`$toJSON()) && (length(names(self$`consumables`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`consumables`$toJSON()))) {
+          if (!is.numeric(self$`consumables`$toJSON()) && length(names(self$`consumables`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`consumables`$toJSON()))) {
             jsonlite::fromJSON(self$`consumables`$toJSON())
           } else {
             self$`consumables`$toJSON()

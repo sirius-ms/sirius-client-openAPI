@@ -10,11 +10,11 @@
 #' @field totalPages  integer [optional]
 #' @field totalElements  integer [optional]
 #' @field last  character [optional]
-#' @field first  character [optional]
 #' @field size  integer [optional]
 #' @field content  list(\link{Compound}) [optional]
 #' @field number  integer [optional]
 #' @field sort  \link{SortObject} [optional]
+#' @field first  character [optional]
 #' @field numberOfElements  integer [optional]
 #' @field pageable  \link{PageableObject} [optional]
 #' @field empty  character [optional]
@@ -27,11 +27,11 @@ PageCompound <- R6::R6Class(
     `totalPages` = NULL,
     `totalElements` = NULL,
     `last` = NULL,
-    `first` = NULL,
     `size` = NULL,
     `content` = NULL,
     `number` = NULL,
     `sort` = NULL,
+    `first` = NULL,
     `numberOfElements` = NULL,
     `pageable` = NULL,
     `empty` = NULL,
@@ -43,17 +43,17 @@ PageCompound <- R6::R6Class(
     #' @param totalPages totalPages
     #' @param totalElements totalElements
     #' @param last last
-    #' @param first first
     #' @param size size
     #' @param content content
     #' @param number number
     #' @param sort sort
+    #' @param first first
     #' @param numberOfElements numberOfElements
     #' @param pageable pageable
     #' @param empty empty
     #' @param ... Other optional arguments.
     #' @export
-    initialize = function(`totalPages` = NULL, `totalElements` = NULL, `last` = NULL, `first` = NULL, `size` = NULL, `content` = NULL, `number` = NULL, `sort` = NULL, `numberOfElements` = NULL, `pageable` = NULL, `empty` = NULL, ...) {
+    initialize = function(`totalPages` = NULL, `totalElements` = NULL, `last` = NULL, `size` = NULL, `content` = NULL, `number` = NULL, `sort` = NULL, `first` = NULL, `numberOfElements` = NULL, `pageable` = NULL, `empty` = NULL, ...) {
       if (!is.null(`totalPages`)) {
         if (!(is.numeric(`totalPages`) && length(`totalPages`) == 1)) {
           stop(paste("Error! Invalid data for `totalPages`. Must be an integer:", `totalPages`))
@@ -71,12 +71,6 @@ PageCompound <- R6::R6Class(
           stop(paste("Error! Invalid data for `last`. Must be a boolean:", `last`))
         }
         self$`last` <- `last`
-      }
-      if (!is.null(`first`)) {
-        if (!(is.logical(`first`) && length(`first`) == 1)) {
-          stop(paste("Error! Invalid data for `first`. Must be a boolean:", `first`))
-        }
-        self$`first` <- `first`
       }
       if (!is.null(`size`)) {
         if (!(is.numeric(`size`) && length(`size`) == 1)) {
@@ -98,6 +92,12 @@ PageCompound <- R6::R6Class(
       if (!is.null(`sort`)) {
         stopifnot(R6::is.R6(`sort`))
         self$`sort` <- `sort`
+      }
+      if (!is.null(`first`)) {
+        if (!(is.logical(`first`) && length(`first`) == 1)) {
+          stop(paste("Error! Invalid data for `first`. Must be a boolean:", `first`))
+        }
+        self$`first` <- `first`
       }
       if (!is.null(`numberOfElements`)) {
         if (!(is.numeric(`numberOfElements`) && length(`numberOfElements`) == 1)) {
@@ -137,10 +137,6 @@ PageCompound <- R6::R6Class(
         PageCompoundObject[["last"]] <-
           self$`last`
       }
-      if (!is.null(self$`first`)) {
-        PageCompoundObject[["first"]] <-
-          self$`first`
-      }
       if (!is.null(self$`size`)) {
         PageCompoundObject[["size"]] <-
           self$`size`
@@ -155,11 +151,15 @@ PageCompound <- R6::R6Class(
       }
       if (!is.null(self$`sort`)) {
         PageCompoundObject[["sort"]] <-
-          if !is.numeric(self$`sort`$toJSON()) && (length(names(self$`sort`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`sort`$toJSON()))) {
+          if (!is.numeric(self$`sort`$toJSON()) && length(names(self$`sort`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`sort`$toJSON()))) {
             jsonlite::fromJSON(self$`sort`$toJSON())
           } else {
             self$`sort`$toJSON()
           }
+      }
+      if (!is.null(self$`first`)) {
+        PageCompoundObject[["first"]] <-
+          self$`first`
       }
       if (!is.null(self$`numberOfElements`)) {
         PageCompoundObject[["numberOfElements"]] <-
@@ -167,7 +167,7 @@ PageCompound <- R6::R6Class(
       }
       if (!is.null(self$`pageable`)) {
         PageCompoundObject[["pageable"]] <-
-          if !is.numeric(self$`pageable`$toJSON()) && (length(names(self$`pageable`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`pageable`$toJSON()))) {
+          if (!is.numeric(self$`pageable`$toJSON()) && length(names(self$`pageable`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`pageable`$toJSON()))) {
             jsonlite::fromJSON(self$`pageable`$toJSON())
           } else {
             self$`pageable`$toJSON()
@@ -198,9 +198,6 @@ PageCompound <- R6::R6Class(
       if (!is.null(this_object$`last`)) {
         self$`last` <- this_object$`last`
       }
-      if (!is.null(this_object$`first`)) {
-        self$`first` <- this_object$`first`
-      }
       if (!is.null(this_object$`size`)) {
         self$`size` <- this_object$`size`
       }
@@ -214,6 +211,9 @@ PageCompound <- R6::R6Class(
         `sort_object` <- SortObject$new()
         `sort_object`$fromJSON(jsonlite::toJSON(this_object$`sort`, auto_unbox = TRUE, digits = NA))
         self$`sort` <- `sort_object`
+      }
+      if (!is.null(this_object$`first`)) {
+        self$`first` <- this_object$`first`
       }
       if (!is.null(this_object$`numberOfElements`)) {
         self$`numberOfElements` <- this_object$`numberOfElements`
@@ -261,14 +261,6 @@ PageCompound <- R6::R6Class(
           tolower(self$`last`)
           )
         },
-        if (!is.null(self$`first`)) {
-          sprintf(
-          '"first":
-            %s
-                    ',
-          tolower(self$`first`)
-          )
-        },
         if (!is.null(self$`size`)) {
           sprintf(
           '"size":
@@ -299,6 +291,14 @@ PageCompound <- R6::R6Class(
           %s
           ',
           jsonlite::toJSON(self$`sort`$toJSON(), auto_unbox = TRUE, digits = NA)
+          )
+        },
+        if (!is.null(self$`first`)) {
+          sprintf(
+          '"first":
+            %s
+                    ',
+          tolower(self$`first`)
           )
         },
         if (!is.null(self$`numberOfElements`)) {
@@ -342,11 +342,11 @@ PageCompound <- R6::R6Class(
       self$`totalPages` <- this_object$`totalPages`
       self$`totalElements` <- this_object$`totalElements`
       self$`last` <- this_object$`last`
-      self$`first` <- this_object$`first`
       self$`size` <- this_object$`size`
       self$`content` <- ApiClient$new()$deserializeObj(this_object$`content`, "array[Compound]", loadNamespace("Rsirius"))
       self$`number` <- this_object$`number`
       self$`sort` <- SortObject$new()$fromJSON(jsonlite::toJSON(this_object$`sort`, auto_unbox = TRUE, digits = NA))
+      self$`first` <- this_object$`first`
       self$`numberOfElements` <- this_object$`numberOfElements`
       self$`pageable` <- PageableObject$new()$fromJSON(jsonlite::toJSON(this_object$`pageable`, auto_unbox = TRUE, digits = NA))
       self$`empty` <- this_object$`empty`

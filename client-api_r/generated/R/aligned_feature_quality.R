@@ -64,7 +64,7 @@ AlignedFeatureQuality <- R6::R6Class(
       }
       if (!is.null(self$`overallQuality`)) {
         AlignedFeatureQualityObject[["overallQuality"]] <-
-          if !is.numeric(self$`overallQuality`$toJSON()) && (length(names(self$`overallQuality`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`overallQuality`$toJSON()))) {
+          if (!is.numeric(self$`overallQuality`$toJSON()) && length(names(self$`overallQuality`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`overallQuality`$toJSON()))) {
             jsonlite::fromJSON(self$`overallQuality`$toJSON())
           } else {
             self$`overallQuality`$toJSON()

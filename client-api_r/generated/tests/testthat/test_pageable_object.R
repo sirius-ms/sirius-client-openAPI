@@ -33,16 +33,16 @@ test_that("pageSize", {
   #expect_equal(model.instance$`pageSize`, "EXPECTED_RESULT")
 })
 
-test_that("paged", {
-  # tests for the property `paged` (character)
-
-  # uncomment below to test the property
-  #expect_equal(model.instance$`paged`, "EXPECTED_RESULT")
-})
-
 test_that("unpaged", {
   # tests for the property `unpaged` (character)
 
   # uncomment below to test the property
   #expect_equal(model.instance$`unpaged`, "EXPECTED_RESULT")
+})
+
+test_that("paged", {
+  # tests for the property `paged` (character)
+
+  # uncomment below to test the property
+  #expect_equal(model.instance$`paged`, "EXPECTED_RESULT")
 })

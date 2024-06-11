@@ -131,7 +131,7 @@ Compound <- R6::R6Class(
       }
       if (!is.null(self$`consensusAnnotations`)) {
         CompoundObject[["consensusAnnotations"]] <-
-          if !is.numeric(self$`consensusAnnotations`$toJSON()) && (length(names(self$`consensusAnnotations`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`consensusAnnotations`$toJSON()))) {
+          if (!is.numeric(self$`consensusAnnotations`$toJSON()) && length(names(self$`consensusAnnotations`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`consensusAnnotations`$toJSON()))) {
             jsonlite::fromJSON(self$`consensusAnnotations`$toJSON())
           } else {
             self$`consensusAnnotations`$toJSON()
@@ -139,7 +139,7 @@ Compound <- R6::R6Class(
       }
       if (!is.null(self$`consensusAnnotationsDeNovo`)) {
         CompoundObject[["consensusAnnotationsDeNovo"]] <-
-          if !is.numeric(self$`consensusAnnotationsDeNovo`$toJSON()) && (length(names(self$`consensusAnnotationsDeNovo`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`consensusAnnotationsDeNovo`$toJSON()))) {
+          if (!is.numeric(self$`consensusAnnotationsDeNovo`$toJSON()) && length(names(self$`consensusAnnotationsDeNovo`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`consensusAnnotationsDeNovo`$toJSON()))) {
             jsonlite::fromJSON(self$`consensusAnnotationsDeNovo`$toJSON())
           } else {
             self$`consensusAnnotationsDeNovo`$toJSON()
@@ -147,7 +147,7 @@ Compound <- R6::R6Class(
       }
       if (!is.null(self$`customAnnotations`)) {
         CompoundObject[["customAnnotations"]] <-
-          if !is.numeric(self$`customAnnotations`$toJSON()) && (length(names(self$`customAnnotations`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`customAnnotations`$toJSON()))) {
+          if (!is.numeric(self$`customAnnotations`$toJSON()) && length(names(self$`customAnnotations`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`customAnnotations`$toJSON()))) {
             jsonlite::fromJSON(self$`customAnnotations`$toJSON())
           } else {
             self$`customAnnotations`$toJSON()

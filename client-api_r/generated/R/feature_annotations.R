@@ -82,7 +82,7 @@ FeatureAnnotations <- R6::R6Class(
       FeatureAnnotationsObject <- list()
       if (!is.null(self$`formulaAnnotation`)) {
         FeatureAnnotationsObject[["formulaAnnotation"]] <-
-          if !is.numeric(self$`formulaAnnotation`$toJSON()) && (length(names(self$`formulaAnnotation`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`formulaAnnotation`$toJSON()))) {
+          if (!is.numeric(self$`formulaAnnotation`$toJSON()) && length(names(self$`formulaAnnotation`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`formulaAnnotation`$toJSON()))) {
             jsonlite::fromJSON(self$`formulaAnnotation`$toJSON())
           } else {
             self$`formulaAnnotation`$toJSON()
@@ -90,7 +90,7 @@ FeatureAnnotations <- R6::R6Class(
       }
       if (!is.null(self$`structureAnnotation`)) {
         FeatureAnnotationsObject[["structureAnnotation"]] <-
-          if !is.numeric(self$`structureAnnotation`$toJSON()) && (length(names(self$`structureAnnotation`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`structureAnnotation`$toJSON()))) {
+          if (!is.numeric(self$`structureAnnotation`$toJSON()) && length(names(self$`structureAnnotation`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`structureAnnotation`$toJSON()))) {
             jsonlite::fromJSON(self$`structureAnnotation`$toJSON())
           } else {
             self$`structureAnnotation`$toJSON()
@@ -98,7 +98,7 @@ FeatureAnnotations <- R6::R6Class(
       }
       if (!is.null(self$`compoundClassAnnotation`)) {
         FeatureAnnotationsObject[["compoundClassAnnotation"]] <-
-          if !is.numeric(self$`compoundClassAnnotation`$toJSON()) && (length(names(self$`compoundClassAnnotation`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`compoundClassAnnotation`$toJSON()))) {
+          if (!is.numeric(self$`compoundClassAnnotation`$toJSON()) && length(names(self$`compoundClassAnnotation`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`compoundClassAnnotation`$toJSON()))) {
             jsonlite::fromJSON(self$`compoundClassAnnotation`$toJSON())
           } else {
             self$`compoundClassAnnotation`$toJSON()
@@ -114,7 +114,7 @@ FeatureAnnotations <- R6::R6Class(
       }
       if (!is.null(self$`expansiveSearchState`)) {
         FeatureAnnotationsObject[["expansiveSearchState"]] <-
-          if !is.numeric(self$`expansiveSearchState`$toJSON()) && (length(names(self$`expansiveSearchState`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`expansiveSearchState`$toJSON()))) {
+          if (!is.numeric(self$`expansiveSearchState`$toJSON()) && length(names(self$`expansiveSearchState`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`expansiveSearchState`$toJSON()))) {
             jsonlite::fromJSON(self$`expansiveSearchState`$toJSON())
           } else {
             self$`expansiveSearchState`$toJSON()

@@ -195,7 +195,7 @@ StructureCandidateFormula <- R6::R6Class(
       }
       if (!is.null(self$`fingerprint`)) {
         StructureCandidateFormulaObject[["fingerprint"]] <-
-          if !is.numeric(self$`fingerprint`$toJSON()) && (length(names(self$`fingerprint`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`fingerprint`$toJSON()))) {
+          if (!is.numeric(self$`fingerprint`$toJSON()) && length(names(self$`fingerprint`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`fingerprint`$toJSON()))) {
             jsonlite::fromJSON(self$`fingerprint`$toJSON())
           } else {
             self$`fingerprint`$toJSON()

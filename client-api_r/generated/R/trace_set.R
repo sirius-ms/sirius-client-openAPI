@@ -74,7 +74,7 @@ TraceSet <- R6::R6Class(
       }
       if (!is.null(self$`axes`)) {
         TraceSetObject[["axes"]] <-
-          if !is.numeric(self$`axes`$toJSON()) && (length(names(self$`axes`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`axes`$toJSON()))) {
+          if (!is.numeric(self$`axes`$toJSON()) && length(names(self$`axes`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`axes`$toJSON()))) {
             jsonlite::fromJSON(self$`axes`$toJSON())
           } else {
             self$`axes`$toJSON()

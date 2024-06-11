@@ -47,7 +47,7 @@ IsotopePatternAnnotation <- R6::R6Class(
       IsotopePatternAnnotationObject <- list()
       if (!is.null(self$`isotopePattern`)) {
         IsotopePatternAnnotationObject[["isotopePattern"]] <-
-          if !is.numeric(self$`isotopePattern`$toJSON()) && (length(names(self$`isotopePattern`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`isotopePattern`$toJSON()))) {
+          if (!is.numeric(self$`isotopePattern`$toJSON()) && length(names(self$`isotopePattern`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`isotopePattern`$toJSON()))) {
             jsonlite::fromJSON(self$`isotopePattern`$toJSON())
           } else {
             self$`isotopePattern`$toJSON()
@@ -55,7 +55,7 @@ IsotopePatternAnnotation <- R6::R6Class(
       }
       if (!is.null(self$`simulatedPattern`)) {
         IsotopePatternAnnotationObject[["simulatedPattern"]] <-
-          if !is.numeric(self$`simulatedPattern`$toJSON()) && (length(names(self$`simulatedPattern`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`simulatedPattern`$toJSON()))) {
+          if (!is.numeric(self$`simulatedPattern`$toJSON()) && length(names(self$`simulatedPattern`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`simulatedPattern`$toJSON()))) {
             jsonlite::fromJSON(self$`simulatedPattern`$toJSON())
           } else {
             self$`simulatedPattern`$toJSON()

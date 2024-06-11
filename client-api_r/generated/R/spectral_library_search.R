@@ -94,7 +94,7 @@ SpectralLibrarySearch <- R6::R6Class(
       }
       if (!is.null(self$`scoring`)) {
         SpectralLibrarySearchObject[["scoring"]] <-
-          if !is.numeric(self$`scoring`$toJSON()) && (length(names(self$`scoring`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`scoring`$toJSON()))) {
+          if (!is.numeric(self$`scoring`$toJSON()) && length(names(self$`scoring`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`scoring`$toJSON()))) {
             jsonlite::fromJSON(self$`scoring`$toJSON())
           } else {
             self$`scoring`$toJSON()
