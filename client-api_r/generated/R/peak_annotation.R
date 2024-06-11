@@ -186,7 +186,9 @@ PeakAnnotation <- R6::R6Class(
       }
       if (!is.null(self$`parentPeak`)) {
         PeakAnnotationObject[["parentPeak"]] <-
-          if (!is.numeric(self$`parentPeak`$toJSON()) && length(names(self$`parentPeak`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`parentPeak`$toJSON()))) {
+          if (is.list(self$`parentPeak`$toJSON()) && length(self$`parentPeak`$toJSON()) == 0L){
+            NULL
+          } else if (length(names(self$`parentPeak`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`parentPeak`$toJSON()))) {
             jsonlite::fromJSON(self$`parentPeak`$toJSON())
           } else {
             self$`parentPeak`$toJSON()

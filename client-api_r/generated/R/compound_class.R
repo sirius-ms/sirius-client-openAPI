@@ -97,7 +97,9 @@ CompoundClass <- R6::R6Class(
       CompoundClassObject <- list()
       if (!is.null(self$`type`)) {
         CompoundClassObject[["type"]] <-
-          if (!is.numeric(self$`type`$toJSON()) && length(names(self$`type`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`type`$toJSON()))) {
+          if (is.list(self$`type`$toJSON()) && length(self$`type`$toJSON()) == 0L){
+            NULL
+          } else if (length(names(self$`type`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`type`$toJSON()))) {
             jsonlite::fromJSON(self$`type`$toJSON())
           } else {
             self$`type`$toJSON()

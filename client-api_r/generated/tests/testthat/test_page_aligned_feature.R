@@ -26,6 +26,13 @@ test_that("last", {
   #expect_equal(model.instance$`last`, "EXPECTED_RESULT")
 })
 
+test_that("first", {
+  # tests for the property `first` (character)
+
+  # uncomment below to test the property
+  #expect_equal(model.instance$`first`, "EXPECTED_RESULT")
+})
+
 test_that("size", {
   # tests for the property `size` (integer)
 
@@ -52,13 +59,6 @@ test_that("sort", {
 
   # uncomment below to test the property
   #expect_equal(model.instance$`sort`, "EXPECTED_RESULT")
-})
-
-test_that("first", {
-  # tests for the property `first` (character)
-
-  # uncomment below to test the property
-  #expect_equal(model.instance$`first`, "EXPECTED_RESULT")
 })
 
 test_that("numberOfElements", {

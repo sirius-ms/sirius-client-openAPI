@@ -38,6 +38,7 @@ class TestPageJob(unittest.TestCase):
                 total_pages = 56,
                 total_elements = 56,
                 last = True,
+                first = True,
                 size = 56,
                 content = [
                     PySirius.models.job.Job(
@@ -62,7 +63,6 @@ class TestPageJob(unittest.TestCase):
                     empty = True, 
                     sorted = True, 
                     unsorted = True, ),
-                first = True,
                 number_of_elements = 56,
                 pageable = PySirius.models.pageable_object.PageableObject(
                     offset = 56, 

@@ -70,7 +70,9 @@ CompoundClasses <- R6::R6Class(
       CompoundClassesObject <- list()
       if (!is.null(self$`npcPathway`)) {
         CompoundClassesObject[["npcPathway"]] <-
-          if (!is.numeric(self$`npcPathway`$toJSON()) && length(names(self$`npcPathway`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`npcPathway`$toJSON()))) {
+          if (is.list(self$`npcPathway`$toJSON()) && length(self$`npcPathway`$toJSON()) == 0L){
+            NULL
+          } else if (length(names(self$`npcPathway`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`npcPathway`$toJSON()))) {
             jsonlite::fromJSON(self$`npcPathway`$toJSON())
           } else {
             self$`npcPathway`$toJSON()
@@ -78,7 +80,9 @@ CompoundClasses <- R6::R6Class(
       }
       if (!is.null(self$`npcSuperclass`)) {
         CompoundClassesObject[["npcSuperclass"]] <-
-          if (!is.numeric(self$`npcSuperclass`$toJSON()) && length(names(self$`npcSuperclass`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`npcSuperclass`$toJSON()))) {
+          if (is.list(self$`npcSuperclass`$toJSON()) && length(self$`npcSuperclass`$toJSON()) == 0L){
+            NULL
+          } else if (length(names(self$`npcSuperclass`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`npcSuperclass`$toJSON()))) {
             jsonlite::fromJSON(self$`npcSuperclass`$toJSON())
           } else {
             self$`npcSuperclass`$toJSON()
@@ -86,7 +90,9 @@ CompoundClasses <- R6::R6Class(
       }
       if (!is.null(self$`npcClass`)) {
         CompoundClassesObject[["npcClass"]] <-
-          if (!is.numeric(self$`npcClass`$toJSON()) && length(names(self$`npcClass`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`npcClass`$toJSON()))) {
+          if (is.list(self$`npcClass`$toJSON()) && length(self$`npcClass`$toJSON()) == 0L){
+            NULL
+          } else if (length(names(self$`npcClass`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`npcClass`$toJSON()))) {
             jsonlite::fromJSON(self$`npcClass`$toJSON())
           } else {
             self$`npcClass`$toJSON()

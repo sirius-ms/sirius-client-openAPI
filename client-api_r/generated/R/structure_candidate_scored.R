@@ -168,7 +168,9 @@ StructureCandidateScored <- R6::R6Class(
       }
       if (!is.null(self$`fingerprint`)) {
         StructureCandidateScoredObject[["fingerprint"]] <-
-          if (!is.numeric(self$`fingerprint`$toJSON()) && length(names(self$`fingerprint`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`fingerprint`$toJSON()))) {
+          if (is.list(self$`fingerprint`$toJSON()) && length(self$`fingerprint`$toJSON()) == 0L){
+            NULL
+          } else if (length(names(self$`fingerprint`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`fingerprint`$toJSON()))) {
             jsonlite::fromJSON(self$`fingerprint`$toJSON())
           } else {
             self$`fingerprint`$toJSON()

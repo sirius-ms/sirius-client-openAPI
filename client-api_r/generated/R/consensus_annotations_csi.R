@@ -96,7 +96,9 @@ ConsensusAnnotationsCSI <- R6::R6Class(
       }
       if (!is.null(self$`compoundClasses`)) {
         ConsensusAnnotationsCSIObject[["compoundClasses"]] <-
-          if (!is.numeric(self$`compoundClasses`$toJSON()) && length(names(self$`compoundClasses`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`compoundClasses`$toJSON()))) {
+          if (is.list(self$`compoundClasses`$toJSON()) && length(self$`compoundClasses`$toJSON()) == 0L){
+            NULL
+          } else if (length(names(self$`compoundClasses`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`compoundClasses`$toJSON()))) {
             jsonlite::fromJSON(self$`compoundClasses`$toJSON())
           } else {
             self$`compoundClasses`$toJSON()
@@ -108,7 +110,9 @@ ConsensusAnnotationsCSI <- R6::R6Class(
       }
       if (!is.null(self$`selectionCriterion`)) {
         ConsensusAnnotationsCSIObject[["selectionCriterion"]] <-
-          if (!is.numeric(self$`selectionCriterion`$toJSON()) && length(names(self$`selectionCriterion`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`selectionCriterion`$toJSON()))) {
+          if (is.list(self$`selectionCriterion`$toJSON()) && length(self$`selectionCriterion`$toJSON()) == 0L){
+            NULL
+          } else if (length(names(self$`selectionCriterion`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`selectionCriterion`$toJSON()))) {
             jsonlite::fromJSON(self$`selectionCriterion`$toJSON())
           } else {
             self$`selectionCriterion`$toJSON()
@@ -116,7 +120,9 @@ ConsensusAnnotationsCSI <- R6::R6Class(
       }
       if (!is.null(self$`csiFingerIdStructure`)) {
         ConsensusAnnotationsCSIObject[["csiFingerIdStructure"]] <-
-          if (!is.numeric(self$`csiFingerIdStructure`$toJSON()) && length(names(self$`csiFingerIdStructure`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`csiFingerIdStructure`$toJSON()))) {
+          if (is.list(self$`csiFingerIdStructure`$toJSON()) && length(self$`csiFingerIdStructure`$toJSON()) == 0L){
+            NULL
+          } else if (length(names(self$`csiFingerIdStructure`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`csiFingerIdStructure`$toJSON()))) {
             jsonlite::fromJSON(self$`csiFingerIdStructure`$toJSON())
           } else {
             self$`csiFingerIdStructure`$toJSON()

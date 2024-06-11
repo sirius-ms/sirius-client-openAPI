@@ -197,7 +197,9 @@ AlignedFeature <- R6::R6Class(
       }
       if (!is.null(self$`quality`)) {
         AlignedFeatureObject[["quality"]] <-
-          if (!is.numeric(self$`quality`$toJSON()) && length(names(self$`quality`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`quality`$toJSON()))) {
+          if (is.list(self$`quality`$toJSON()) && length(self$`quality`$toJSON()) == 0L){
+            NULL
+          } else if (length(names(self$`quality`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`quality`$toJSON()))) {
             jsonlite::fromJSON(self$`quality`$toJSON())
           } else {
             self$`quality`$toJSON()
@@ -213,7 +215,9 @@ AlignedFeature <- R6::R6Class(
       }
       if (!is.null(self$`msData`)) {
         AlignedFeatureObject[["msData"]] <-
-          if (!is.numeric(self$`msData`$toJSON()) && length(names(self$`msData`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`msData`$toJSON()))) {
+          if (is.list(self$`msData`$toJSON()) && length(self$`msData`$toJSON()) == 0L){
+            NULL
+          } else if (length(names(self$`msData`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`msData`$toJSON()))) {
             jsonlite::fromJSON(self$`msData`$toJSON())
           } else {
             self$`msData`$toJSON()
@@ -221,7 +225,9 @@ AlignedFeature <- R6::R6Class(
       }
       if (!is.null(self$`topAnnotations`)) {
         AlignedFeatureObject[["topAnnotations"]] <-
-          if (!is.numeric(self$`topAnnotations`$toJSON()) && length(names(self$`topAnnotations`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`topAnnotations`$toJSON()))) {
+          if (is.list(self$`topAnnotations`$toJSON()) && length(self$`topAnnotations`$toJSON()) == 0L){
+            NULL
+          } else if (length(names(self$`topAnnotations`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`topAnnotations`$toJSON()))) {
             jsonlite::fromJSON(self$`topAnnotations`$toJSON())
           } else {
             self$`topAnnotations`$toJSON()
@@ -229,7 +235,9 @@ AlignedFeature <- R6::R6Class(
       }
       if (!is.null(self$`topAnnotationsDeNovo`)) {
         AlignedFeatureObject[["topAnnotationsDeNovo"]] <-
-          if (!is.numeric(self$`topAnnotationsDeNovo`$toJSON()) && length(names(self$`topAnnotationsDeNovo`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`topAnnotationsDeNovo`$toJSON()))) {
+          if (is.list(self$`topAnnotationsDeNovo`$toJSON()) && length(self$`topAnnotationsDeNovo`$toJSON()) == 0L){
+            NULL
+          } else if (length(names(self$`topAnnotationsDeNovo`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`topAnnotationsDeNovo`$toJSON()))) {
             jsonlite::fromJSON(self$`topAnnotationsDeNovo`$toJSON())
           } else {
             self$`topAnnotationsDeNovo`$toJSON()

@@ -32,15 +32,15 @@ class PageStructureCandidateScored(BaseModel):
     total_pages: Optional[StrictInt] = Field(default=None, alias="totalPages")
     total_elements: Optional[StrictInt] = Field(default=None, alias="totalElements")
     last: Optional[StrictBool] = None
+    first: Optional[StrictBool] = None
     size: Optional[StrictInt] = None
     content: Optional[List[Optional[StructureCandidateScored]]] = None
     number: Optional[StrictInt] = None
     sort: Optional[SortObject] = None
-    first: Optional[StrictBool] = None
     number_of_elements: Optional[StrictInt] = Field(default=None, alias="numberOfElements")
     pageable: Optional[PageableObject] = None
     empty: Optional[StrictBool] = None
-    __properties: ClassVar[List[str]] = ["totalPages", "totalElements", "last", "size", "content", "number", "sort", "first", "numberOfElements", "pageable", "empty"]
+    __properties: ClassVar[List[str]] = ["totalPages", "totalElements", "last", "first", "size", "content", "number", "sort", "numberOfElements", "pageable", "empty"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -109,11 +109,11 @@ class PageStructureCandidateScored(BaseModel):
             "totalPages": obj.get("totalPages"),
             "totalElements": obj.get("totalElements"),
             "last": obj.get("last"),
+            "first": obj.get("first"),
             "size": obj.get("size"),
             "content": [StructureCandidateScored.from_dict(_item) for _item in obj["content"]] if obj.get("content") is not None else None,
             "number": obj.get("number"),
             "sort": SortObject.from_dict(obj["sort"]) if obj.get("sort") is not None else None,
-            "first": obj.get("first"),
             "numberOfElements": obj.get("numberOfElements"),
             "pageable": PageableObject.from_dict(obj["pageable"]) if obj.get("pageable") is not None else None,
             "empty": obj.get("empty")
