@@ -14,7 +14,6 @@
 
 import os
 import unittest
-import shutil
 
 from PySirius.api.projects_api import ProjectsApi
 from PySirius.models.job import Job
@@ -41,7 +40,7 @@ class TestProjectsApi(unittest.TestCase):
     def tearDown(self) -> None:
         # equals test_close_project_space
         self.api.close_project_space(self.project_id)
-        shutil.rmtree(self.path_to_project)
+        os.remove(self.path_to_project)
 
 
     def test_close_project_space(self) -> None:
@@ -125,9 +124,9 @@ class TestProjectsApi(unittest.TestCase):
 
         Import and Align full MS-Runs from various formats into the specified project  Possible formats (mzML, mzXML)
         """
-        # # NOT FUNCTIONAL:
-        # # jakarta.servlet.ServletException: Request processing failed: java.lang.UnsupportedOperationException: LCMS import not implemented
+        # TODO defaults to /home/user/file path when given absolute path; example: java.io.FileNotFoundException: /home/joxem/SPF4_Eso3_GH6_01_22643.mzXML
         # input_files = [self.full_ms_file]
+        # print(self.full_ms_file)
         # response = self.api.import_ms_run_data(self.project_id, input_files=input_files)
         # self.assertIsInstance(response, ImportResult)
 
@@ -167,10 +166,9 @@ class TestProjectsApi(unittest.TestCase):
 
         Open an existing project-space and make it accessible via the given projectId.
         """
-        # TODO this is also broken when using the Swagger GUI
-        # self.api.close_project_space(self.project_id)
-        # response = self.api.open_project_space(self.project_id, self.path_to_project)
-        # self.assertIsInstance(response, ProjectInfo)
+        response = self.api.open_project_space("tomato", f"{os.environ.get('HOME')}/tomato_small.sirius")
+        self.api.close_project_space("tomato")
+        self.assertIsInstance(response, ProjectInfo)
 
 
 if __name__ == '__main__':
