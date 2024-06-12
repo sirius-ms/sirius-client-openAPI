@@ -15,7 +15,6 @@
 import os
 import json
 import time
-import shutil
 import unittest
 
 import PySirius
@@ -42,7 +41,7 @@ class TestJobsApi(unittest.TestCase):
 
     def tearDown(self) -> None:
         self.api.get_ProjectsApi().close_project_space(self.project_id)
-        shutil.rmtree(self.path_to_project)
+        os.remove(self.path_to_project)
 
     def test_delete_job(self) -> None:
         """Test case for delete_job
@@ -205,7 +204,8 @@ class TestJobsApi(unittest.TestCase):
         time.sleep(3)
 
         self.assertIsInstance(response, Job)
-        self.assertTrue(os.path.exists(self.path_to_project + "/" + aligned_feature_id + "/scores"))
+        # # TODO find substitute for this line for SIRIUS6
+        # self.assertTrue(os.path.exists(self.path_to_project + "/" + aligned_feature_id + "/scores"))
 
     def test_start_job_from_config(self) -> None:
         """Test case for start_job_from_config
@@ -233,7 +233,8 @@ class TestJobsApi(unittest.TestCase):
         self.api.get_JobsApi().delete_job_config(config_name)
 
         self.assertIsInstance(response, Job)
-        self.assertTrue(os.path.exists(self.path_to_project + "/" + aligned_feature_id + "/scores"))
+        # # TODO find substitute for this line for SIRIUS6
+        # self.assertTrue(os.path.exists(self.path_to_project + "/" + aligned_feature_id + "/scores"))
 
 
 if __name__ == '__main__':
