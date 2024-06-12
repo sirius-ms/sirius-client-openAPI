@@ -122,8 +122,28 @@ test_that("GetCompoundsPaged", {
   project_dir <- paste(Sys.getenv("HOME"), "GetCompoundsPaged", sep="/")
   projects_api$CreateProjectSpace(project_id, project_dir)
 
-  result <- api_instance$GetCompoundsPaged(project_id)
-  expect_true(inherits(result, "PageCompound"))
+  response <- api_instance$GetCompoundsPaged(project_id)
+  expect_true(inherits(response, "PageCompound"))
+
+  withr::defer(projects_api$CloseProjectSpace(project_id))
+  withr::defer(unlink(project_dir, recursive=TRUE))
+})
+
+test_that("GetTraces", {
+  # tests for GetTraces
+  # base path: http://localhost:8080
+  # @param project_id character
+  # @param compound_id character
+  # @return [TraceSet]
+
+  project_id <- "GetTraces"
+  project_dir <- paste(Sys.getenv("HOME"), "GetTraces", sep="/")
+  projects_api$CreateProjectSpace(project_id, project_dir)
+  api_instance$AddCompounds(project_id, compound_import)
+  compound_id <- api_instance$GetCompounds(project_id)[[1]]$compoundId
+
+  response <- api_instance$GetTraces(project_id, compound_id)
+  expect_true(inherits(response, "TraceSet"))
 
   withr::defer(projects_api$CloseProjectSpace(project_id))
   withr::defer(unlink(project_dir, recursive=TRUE))

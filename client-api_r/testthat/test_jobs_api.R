@@ -54,8 +54,8 @@ test_that("GetDefaultJobConfig", {
   # @param include_config_map character if true, generic configmap with-defaults will be included (optional)
   # @return [JobSubmission]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  response <- api_instance$GetDefaultJobConfig(TRUE)
+  expect_true(inherits(response, "JobSubmission")
 })
 
 test_that("GetJob", {
@@ -129,7 +129,7 @@ test_that("GetJobsPaged", {
 test_that("HasJobs", {
   # tests for HasJobs
   # base path: http://localhost:8080
-  # @param project_id character 
+  # @param project_id character
   # @param include_finished character  (optional)
   # @return [character]
 
@@ -137,8 +137,8 @@ test_that("HasJobs", {
   #expect_equal(result, "EXPECTED_RESULT")
 })
 
-test_that("PostJobConfig", {
-  # tests for PostJobConfig
+test_that("SaveJobConfig", {
+  # tests for SaveJobConfig
   # base path: http://localhost:8080
   # Add new job configuration with given name.
   # Add new job configuration with given name.
@@ -186,7 +186,7 @@ test_that("StartJobFromConfig", {
   # Start computation for given compounds and with parameters from a stored job-config.
   # @param project_id character project-space to run jobs on
   # @param job_config_name character name if the config to be used
-  # @param request_body array[character] compound ids to be computed
+  # @param request_body array[character] List of alignedFeatureIds to be computed
   # @param recompute character enable or disable recompute. If null the stored value will be used. (optional)
   # @param opt_fields array[JobOptField] set of optional fields to be included. Use 'none' only to override defaults. (optional)
   # @return [Job]

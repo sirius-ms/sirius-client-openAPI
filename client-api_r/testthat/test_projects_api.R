@@ -65,14 +65,13 @@ test_that("GetCanopusClassyFireData", {
   # @return [character]
 
   project_id <- "GetCanopusClassyFireData"
-  project_dir <- paste(Sys.getenv("HOME"), "s6TomatoFullAPI", sep="/")
+  project_dir <- paste(Sys.getenv("HOME"), "tomato_small.sirius", sep="/")
   api_instance$OpenProjectSpace(project_id, project_dir)
 
   response <- api_instance$GetCanopusClassyFireData(project_id, 56)
   expect_true(inherits(response, "character"))
 
   withr::defer(api_instance$CloseProjectSpace(project_id))
-  # withr::defer(unlink(project_dir, recursive=TRUE))
 })
 
 test_that("GetCanopusNpcData", {
@@ -84,14 +83,13 @@ test_that("GetCanopusNpcData", {
   # @return [character]
 
   project_id <- "GetCanopusNpcData"
-  project_dir <- paste(Sys.getenv("HOME"), "s6TomatoFullAPI", sep="/")
+  project_dir <- paste(Sys.getenv("HOME"), "tomato_small.sirius", sep="/")
   api_instance$OpenProjectSpace(project_id, project_dir)
 
   response <- api_instance$GetCanopusNpcData(project_id, 56)
   expect_true(inherits(response, "character"))
 
   withr::defer(api_instance$CloseProjectSpace(project_id))
-  # withr::defer(unlink(project_dir, recursive=TRUE))
 })
 
 test_that("GetFingerIdData", {
@@ -103,14 +101,13 @@ test_that("GetFingerIdData", {
   # @return [character]
 
   project_id <- "GetFingerIdData"
-  project_dir <- paste(Sys.getenv("HOME"), "s6TomatoFullAPI", sep="/")
+  project_dir <- paste(Sys.getenv("HOME"), "tomato_small.sirius", sep="/")
   api_instance$OpenProjectSpace(project_id, project_dir)
 
   response <- api_instance$GetFingerIdData(project_id, 56)
   expect_true(inherits(response, "character"))
 
   withr::defer(api_instance$CloseProjectSpace(project_id))
-  # withr::defer(unlink(project_dir, recursive=TRUE))
 })
 
 test_that("GetProjectSpace", {
@@ -163,17 +160,17 @@ test_that("ImportMsRunData", {
   # @param input_files array[data.frame]  (optional)
   # @return [ImportResult]
 
-  # # TODO LCMS import not implemented
-  # project_id <- "ImportMsRunData"
-  # project_dir <- paste(Sys.getenv("HOME"), "ImportMsRunData", sep="/")
-  # api_instance$CreateProjectSpace(project_id, project_dir)
+  # TODO LCMS import not implemented
+  project_id <- "ImportMsRunData"
+  project_dir <- paste(Sys.getenv("HOME"), "ImportMsRunData", sep="/")
+  api_instance$CreateProjectSpace(project_id, project_dir)
 
-  # var_input_files <- full_ms_file
-  # response <- api_instance$ImportMsRunData(project_id, input_files=var_input_files)
-  # expect_true(inherits(response, "ImportResult"))
+  var_input_files <- full_ms_file
+  response <- api_instance$ImportMsRunData(project_id, input_files=var_input_files)
+  expect_true(inherits(response, "ImportResult"))
 
-  # withr::defer(api_instance$CloseProjectSpace(project_id))
-  # withr::defer(unlink(project_dir, recursive=TRUE))
+  withr::defer(api_instance$CloseProjectSpace(project_id))
+  withr::defer(unlink(project_dir, recursive=TRUE))
 })
 
 test_that("ImportMsRunDataAsJob", {
@@ -188,17 +185,17 @@ test_that("ImportMsRunDataAsJob", {
   # @param input_files array[data.frame]  (optional)
   # @return [Job]
 
-  # # TODO LCMS import not implemented
-  # project_id <- "ImportMsRunDataAsJob"
-  # project_dir <- paste(Sys.getenv("HOME"), "ImportMsRunDataAsJob", sep="/")
-  # api_instance$CreateProjectSpace(project_id, project_dir)
+  # TODO LCMS import not implemented
+  project_id <- "ImportMsRunDataAsJob"
+  project_dir <- paste(Sys.getenv("HOME"), "ImportMsRunDataAsJob", sep="/")
+  api_instance$CreateProjectSpace(project_id, project_dir)
 
-  # var_input_files <- full_ms_file
-  # response <- api_instance$ImportMsRunDataAsJob(project_id, input_files=var_input_files)
-  # expect_true(inherits(response, "Job"))
+  var_input_files <- full_ms_file
+  response <- api_instance$ImportMsRunDataAsJob(project_id, input_files=var_input_files)
+  expect_true(inherits(response, "Job"))
 
-  # withr::defer(api_instance$CloseProjectSpace(project_id))
-  # withr::defer(unlink(project_dir, recursive=TRUE))
+  withr::defer(api_instance$CloseProjectSpace(project_id))
+  withr::defer(unlink(project_dir, recursive=TRUE))
 })
 
 test_that("ImportPreprocessedData", {
@@ -259,7 +256,7 @@ test_that("OpenProjectSpace", {
   # @return [ProjectInfo]
 
   project_id <- "OpenProjectSpace"
-  project_dir <- paste(Sys.getenv("HOME"), "s6TomatoFullAPI", sep="/")
+  project_dir <- paste(Sys.getenv("HOME"), "tomato_small.sirius", sep="/")
 
   response <- api_instance$OpenProjectSpace(project_id, project_dir)
   expect_true(inherits(response, "ProjectInfo"))

@@ -2,8 +2,11 @@
 # Please update as you see appropriate
 
 context("Test FeaturesApi")
+options(warn=-1)
 
 api_instance <- FeaturesApi$new()
+projects_api <- ProjectsApi$new()
+tomato_project = path_to_demo_data <- paste(Sys.getenv("HOME"), "tomato_small.sirius", sep="/")
 
 test_that("AddAlignedFeatures", {
   # tests for AddAlignedFeatures
@@ -32,6 +35,19 @@ test_that("DeleteAlignedFeature", {
   #expect_equal(result, "EXPECTED_RESULT")
 })
 
+test_that("DeleteAlignedFeatures", {
+  # tests for DeleteAlignedFeatures
+  # base path: http://localhost:8080
+  # Delete feature (aligned over runs) with the given identifier from the specified project-space.
+  # Delete feature (aligned over runs) with the given identifier from the specified project-space.
+  # @param project_id character project-space to delete from.
+  # @param request_body array[character]
+  # @return [Void]
+
+  # uncomment below to test the operation
+  #expect_equal(result, "EXPECTED_RESULT")
+})
+
 test_that("GetAlignedFeature", {
   # tests for GetAlignedFeature
   # base path: http://localhost:8080
@@ -42,8 +58,14 @@ test_that("GetAlignedFeature", {
   # @param opt_fields array[AlignedFeatureOptField] set of optional fields to be included. Use 'none' only to override defaults. (optional)
   # @return [AlignedFeature]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  project_id <- "GetAlignedFeature"
+  projects_api$OpenProjectSpace(project_id, tomato_project)
+  aligned_feature_id <- api_instance$GetAlignedFeatures(project_id)[[1]]$alignedFeatureId
+
+  response <- api_instance$GetAlignedFeature(project_id, aligned_feature_id)
+  expect_true(inherits(response, "AlignedFeature"))
+
+  withr::defer(projects_api$CloseProjectSpace(project_id))
 })
 
 test_that("GetAlignedFeatures", {
@@ -54,9 +76,14 @@ test_that("GetAlignedFeatures", {
   # @param project_id character project-space to read from.
   # @param opt_fields array[AlignedFeatureOptField] set of optional fields to be included. Use 'none' only to override defaults. (optional)
   # @return [array[AlignedFeature]]
+  project_id <- "GetAlignedFeatures"
+  projects_api$OpenProjectSpace(project_id, tomato_project)
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  response <- api_instance$GetAlignedFeatures(project_id)
+  expect_true(inherits(response, "list"))
+  expect_true(inherits(response[[1]], "AlignedFeature"))
+
+  withr::defer(projects_api$CloseProjectSpace(project_id))
 })
 
 test_that("GetAlignedFeaturesPaged", {
@@ -71,8 +98,32 @@ test_that("GetAlignedFeaturesPaged", {
   # @param opt_fields array[AlignedFeatureOptField] set of optional fields to be included. Use 'none' only to override defaults. (optional)
   # @return [PageAlignedFeature]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  project_id <- "GetAlignedFeaturesPaged"
+  projects_api$OpenProjectSpace(project_id, tomato_project)
+
+  response <- api_instance$GetAlignedFeaturesPaged(project_id)
+  expect_true(inherits(response, "PageAlignedFeature"))
+
+  withr::defer(projects_api$CloseProjectSpace(project_id))
+})
+
+test_that("GetAlignedFeaturesQuality", {
+  # tests for GetAlignedFeaturesQuality
+  # base path: http://localhost:8080
+  # Get data quality information for feature (aligned over runs) with the given identifier from the specified project-space.
+  # Get data quality information for feature (aligned over runs) with the given identifier from the specified project-space.
+  # @param project_id character project-space to read from.
+  # @param aligned_feature_id character identifier of feature (aligned over runs) to access.
+  # @return [AlignedFeatureQuality]
+
+  project_id <- "GetAlignedFeaturesQuality"
+  projects_api$OpenProjectSpace(project_id, tomato_project)
+  aligned_feature_id <- api_instance$GetAlignedFeatures(project_id)[[1]]$alignedFeatureId
+
+  response <- api_instance$GetAlignedFeaturesQuality(project_id, aligned_feature_id)
+  expect_true(inherits(response, "AlignedFeatureQuality"))
+
+  withr::defer(projects_api$CloseProjectSpace(project_id))
 })
 
 test_that("GetBestMatchingCompoundClasses", {
@@ -85,8 +136,15 @@ test_that("GetBestMatchingCompoundClasses", {
   # @param formula_id character identifier of the requested formula result
   # @return [CompoundClasses]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  project_id <- "GetFormulaCandidate"
+  projects_api$OpenProjectSpace(project_id, tomato_project)
+  aligned_feature_id <- api_instance$GetAlignedFeatures(project_id)[[1]]$alignedFeatureId
+  formula_id <- api_instance$GetFormulaCandidates(project_id, aligned_feature_id)[[1]]$formulaId
+
+  response <-api_instance$GetBestMatchingCompoundClasses(project_id, aligned_feature_id, formula_id)
+  expect_true(inherits(response, "CompoundClasses"))
+
+  withr::defer(projects_api$CloseProjectSpace(project_id))
 })
 
 test_that("GetCanopusPrediction", {
@@ -99,8 +157,15 @@ test_that("GetCanopusPrediction", {
   # @param formula_id character identifier of the requested formula result
   # @return [CanopusPrediction]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  project_id <- "GetCanopusPrediction"
+  projects_api$OpenProjectSpace(project_id, tomato_project)
+  aligned_feature_id <- api_instance$GetAlignedFeatures(project_id)[[1]]$alignedFeatureId
+  formula_id <- api_instance$GetFormulaCandidates(project_id, aligned_feature_id)[[1]]$formulaId
+
+  response <-api_instance$GetCanopusPrediction(project_id, aligned_feature_id, formula_id)
+  expect_true(inherits(response, "CanopusPrediction"))
+
+  withr::defer(projects_api$CloseProjectSpace(project_id))
 })
 
 test_that("GetDeNovoStructureCandidates", {
@@ -177,8 +242,16 @@ test_that("GetFingerprintPrediction", {
   # @param formula_id character identifier of the requested formula result
   # @return [array[numeric]]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  project_id <- "GetFingerprintPrediction"
+  projects_api$OpenProjectSpace(project_id, tomato_project)
+  aligned_feature_id <- api_instance$GetAlignedFeatures(project_id)[[1]]$alignedFeatureId
+  formula_id <- api_instance$GetFormulaCandidates(project_id, aligned_feature_id)[[1]]$formulaId
+
+  response <-api_instance$GetFingerprintPrediction(project_id, aligned_feature_id, formula_id)
+  expect_true(inherits(response, "list"))
+  expect_true(inherits(response[[1]], "numeric"))
+
+  withr::defer(projects_api$CloseProjectSpace(project_id))
 })
 
 test_that("GetFormulaAnnotatedMsMsData", {
@@ -191,8 +264,15 @@ test_that("GetFormulaAnnotatedMsMsData", {
   # @param formula_id character identifier of the requested formula result
   # @return [AnnotatedMsMsData]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  project_id <- "GetFormulaAnnotatedMsMsData"
+  projects_api$OpenProjectSpace(project_id, tomato_project)
+  aligned_feature_id <- api_instance$GetAlignedFeatures(project_id)[[1]]$alignedFeatureId
+  formula_id <- api_instance$GetFormulaCandidates(project_id, aligned_feature_id)[[1]]$formulaId
+
+  response <-api_instance$GetFormulaAnnotatedMsMsData(project_id, aligned_feature_id, formula_id)
+  expect_true(inherits(response, "AnnotatedMsMsData"))
+
+  withr::defer(projects_api$CloseProjectSpace(project_id))
 })
 
 test_that("GetFormulaAnnotatedSpectrum", {
@@ -221,8 +301,15 @@ test_that("GetFormulaCandidate", {
   # @param opt_fields array[FormulaCandidateOptField] set of optional fields to be included. Use 'none' only to override defaults. (optional)
   # @return [FormulaCandidate]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  project_id <- "GetFormulaCandidate"
+  projects_api$OpenProjectSpace(project_id, tomato_project)
+  aligned_feature_id <- api_instance$GetAlignedFeatures(project_id)[[1]]$alignedFeatureId
+  formula_id <- api_instance$GetFormulaCandidates(project_id, aligned_feature_id)[[1]]$formulaId
+
+  response <-api_instance$GetFormulaCandidate(project_id, aligned_feature_id, formula_id)
+  expect_true(inherits(response, "FormulaCandidate"))
+
+  withr::defer(projects_api$CloseProjectSpace(project_id))
 })
 
 test_that("GetFormulaCandidates", {
@@ -235,8 +322,15 @@ test_that("GetFormulaCandidates", {
   # @param opt_fields array[FormulaCandidateOptField] set of optional fields to be included. Use 'none' only to override defaults. (optional)
   # @return [array[FormulaCandidate]]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  project_id <- "GetFormulaCandidates"
+  projects_api$OpenProjectSpace(project_id, tomato_project)
+  aligned_feature_id <- api_instance$GetAlignedFeatures(project_id)[[1]]$alignedFeatureId
+
+  response <- api_instance$GetFormulaCandidates(project_id, aligned_feature_id)
+  expect_true(inherits(response, "list"))
+  expect_true(inherits(response[[1]], "FormulaCandidate"))
+
+  withr::defer(projects_api$CloseProjectSpace(project_id))
 })
 
 test_that("GetFormulaCandidatesPaged", {
@@ -252,8 +346,14 @@ test_that("GetFormulaCandidatesPaged", {
   # @param opt_fields array[FormulaCandidateOptField] set of optional fields to be included. Use 'none' only to override defaults. (optional)
   # @return [PageFormulaCandidate]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  project_id <- "GetFormulaCandidatesPaged"
+  projects_api$OpenProjectSpace(project_id, tomato_project)
+  aligned_feature_id <- api_instance$GetAlignedFeatures(project_id)[[1]]$alignedFeatureId
+
+  response <- api_instance$GetFormulaCandidatesPaged(project_id, aligned_feature_id)
+  expect_true(inherits(response, "PageFormulaCandidate"))
+
+  withr::defer(projects_api$CloseProjectSpace(project_id))
 })
 
 test_that("GetFragTree", {
@@ -266,8 +366,15 @@ test_that("GetFragTree", {
   # @param formula_id character identifier of the requested formula result
   # @return [FragmentationTree]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  project_id <- "GetFragTree"
+  projects_api$OpenProjectSpace(project_id, tomato_project)
+  aligned_feature_id <- api_instance$GetAlignedFeatures(project_id)[[1]]$alignedFeatureId
+  formula_id <- api_instance$GetFormulaCandidates(project_id, aligned_feature_id)[[1]]$formulaId
+
+  response <- api_instance$GetFragTree(project_id, aligned_feature_id, formula_id)
+  expect_true(inherits(response, "FragmentationTree"))
+
+  withr::defer(projects_api$CloseProjectSpace(project_id))
 })
 
 test_that("GetIsotopePatternAnnotation", {
@@ -280,8 +387,15 @@ test_that("GetIsotopePatternAnnotation", {
   # @param formula_id character identifier of the requested formula result
   # @return [IsotopePatternAnnotation]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  project_id <- "GetIsotopePatternAnnotation"
+  projects_api$OpenProjectSpace(project_id, tomato_project)
+  aligned_feature_id <- api_instance$GetAlignedFeatures(project_id)[[1]]$alignedFeatureId
+  formula_id <- api_instance$GetFormulaCandidates(project_id, aligned_feature_id)[[1]]$formulaId
+
+  response <- api_instance$GetIsotopePatternAnnotation(project_id, aligned_feature_id, formula_id)
+  expect_true(inherits(response, "IsotopePatternAnnotation"))
+
+  withr::defer(projects_api$CloseProjectSpace(project_id))
 })
 
 test_that("GetLipidAnnotation", {
@@ -294,8 +408,15 @@ test_that("GetLipidAnnotation", {
   # @param formula_id character identifier of the requested formula result
   # @return [LipidAnnotation]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  project_id <- "GetLipidAnnotation"
+  projects_api$OpenProjectSpace(project_id, tomato_project)
+  aligned_feature_id <- api_instance$GetAlignedFeatures(project_id)[[1]]$alignedFeatureId
+  formula_id <- api_instance$GetFormulaCandidates(project_id, aligned_feature_id)[[1]]$formulaId
+
+  response <- api_instance$GetLipidAnnotation(project_id, aligned_feature_id, formula_id)
+  expect_true(inherits(response, "LipidAnnotation"))
+
+  withr::defer(projects_api$CloseProjectSpace(project_id))
 })
 
 test_that("GetMsData", {
@@ -307,8 +428,32 @@ test_that("GetMsData", {
   # @param aligned_feature_id character feature (aligned over runs) the Mass Spec data belong sto.
   # @return [MsData]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  project_id <- "GetMsData"
+  projects_api$OpenProjectSpace(project_id, tomato_project)
+  aligned_feature_id <- api_instance$GetAlignedFeatures(project_id)[[1]]$alignedFeatureId
+
+  response <- api_instance$GetMsData(project_id, aligned_feature_id)
+  expect_true(inherits(response, "MsData"))
+
+  withr::defer(projects_api$CloseProjectSpace(project_id))
+})
+
+test_that("GetQuantification", {
+  # tests for GetQuantification
+  # base path: http://localhost:8080
+  # @param project_id character
+  # @param aligned_feature_id character
+  # @param type character  (optional)
+  # @return [QuantificationTable]
+
+  project_id <- "GetQuantification"
+  projects_api$OpenProjectSpace(project_id, tomato_project)
+  aligned_feature_id <- api_instance$GetAlignedFeatures(project_id)[[1]]$alignedFeatureId
+
+  response <- api_instance$GetQuantification(project_id, aligned_feature_id)
+  expect_true(inherits(response, "QuantificationTable"))
+
+  withr::defer(projects_api$CloseProjectSpace(project_id))
 })
 
 test_that("GetSiriusFragTree", {
@@ -321,8 +466,40 @@ test_that("GetSiriusFragTree", {
   # @param formula_id character identifier of the requested formula result
   # @return [character]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  project_id <- "GetSiriusFragTree"
+  projects_api$OpenProjectSpace(project_id, tomato_project)
+  aligned_feature_id <- api_instance$GetAlignedFeatures(project_id)[[1]]$alignedFeatureId
+  formula_id <- api_instance$GetFormulaCandidates(project_id, aligned_feature_id)[[1]]$formulaId
+
+  response <- api_instance$GetSiriusFragTree(project_id, aligned_feature_id, formula_id)
+  expect_true(inherits(response, "list"))
+  expect_true(inherits(response[[1]], "character"))
+
+  withr::defer(projects_api$CloseProjectSpace(project_id))
+})
+
+test_that("GetSpectralLibraryMatch", {
+  # tests for GetSpectralLibraryMatch
+  # base path: http://localhost:8080
+  # List of spectral library matches for the given &#39;alignedFeatureId&#39;.
+  # List of spectral library matches for the given &#39;alignedFeatureId&#39;.
+  # @param project_id character project-space to read from.
+  # @param aligned_feature_id character feature (aligned over runs) the structure candidates belong to.
+  # @param match_id character
+  # @param opt_fields array[SpectralLibraryMatchOptField]  (optional)
+  # @return [SpectralLibraryMatch]
+
+#   # TODO seems like there are none
+#   project_id <- "GetSpectralLibraryMatch"
+#   projects_api$OpenProjectSpace(project_id, tomato_project)
+#   aligned_feature_id <- api_instance$GetAlignedFeatures(project_id)[[1]]$alignedFeatureId
+#   match_id <- api_instance$GetSpectralLibraryMatches(project_id, aligned_feature_id)[[1]]$matchId
+#
+#   response <- api_instance$GetSpectralLibraryMatch(project_id, aligned_feature_id, match_id)
+#   expect_true(inherits(response, "list"))
+#   expect_true(inherits(response[[1]], "SpectralLibraryMatch"))
+#
+#   withr::defer(projects_api$CloseProjectSpace(project_id))
 })
 
 test_that("GetSpectralLibraryMatches", {
@@ -332,25 +509,55 @@ test_that("GetSpectralLibraryMatches", {
   # List of spectral library matches for the given &#39;alignedFeatureId&#39;.
   # @param project_id character project-space to read from.
   # @param aligned_feature_id character feature (aligned over runs) the structure candidates belong to.
+  # @param min_shared_peaks integer  (optional)
+  # @param min_similarity numeric  (optional)
+  # @param candidate_in_chi_key character  (optional)
   # @param opt_fields array[SpectralLibraryMatchOptField]  (optional)
   # @return [array[SpectralLibraryMatch]]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+#   # TODO seems like there are none
+#   project_id <- "GetSpectralLibraryMatches"
+#   projects_api$OpenProjectSpace(project_id, tomato_project)
+#   aligned_feature_id <- api_instance$GetAlignedFeatures(project_id)[[1]]$alignedFeatureId
+#
+#   response <- api_instance$GetSpectralLibraryMatches(project_id, aligned_feature_id)
+#   expect_true(inherits(response, "list"))
+#   expect_true(inherits(response[[1]], "SpectralLibraryMatch"))
+#
+#   withr::defer(projects_api$CloseProjectSpace(project_id))
 })
 
 test_that("GetSpectralLibraryMatchesPaged", {
   # tests for GetSpectralLibraryMatchesPaged
   # base path: http://localhost:8080
   # Page of spectral library matches for the given &#39;alignedFeatureId&#39;.
-  # Page of spectral library matches for the given &#39;alignedFeatureId&#39;.
+  # Page of spectral library matches for the given &#39;alignedFeatureId&#39;.  If a &#39;candidateInChiKey&#39; is provided, returns only matches for the database compound with the given InChI key.
   # @param project_id character project-space to read from.
   # @param aligned_feature_id character feature (aligned over runs) the structure candidates belong to.
   # @param page integer Zero-based page index (0..N) (optional)
   # @param size integer The size of the page to be returned (optional)
   # @param sort array[character] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (optional)
+  # @param min_shared_peaks integer  (optional)
+  # @param min_similarity numeric  (optional)
+  # @param candidate_in_chi_key character  (optional)
   # @param opt_fields array[SpectralLibraryMatchOptField]  (optional)
   # @return [PageSpectralLibraryMatch]
+
+  # uncomment below to test the operation
+  #expect_equal(result, "EXPECTED_RESULT")
+})
+
+test_that("GetSpectralLibraryMatchesSummary", {
+  # tests for GetSpectralLibraryMatchesSummary
+  # base path: http://localhost:8080
+  # Summarize matched reference spectra for the given &#39;alignedFeatureId&#39;.
+  # Summarize matched reference spectra for the given &#39;alignedFeatureId&#39;.  If a &#39;candidateInChiKey&#39; is provided, summarizes only matches for the database compound with the given InChI key.
+  # @param project_id character project-space to read from.
+  # @param aligned_feature_id character feature (aligned over runs) the structure candidates belong to.
+  # @param min_shared_peaks integer min threshold of shared peaks. (optional)
+  # @param min_similarity numeric min spectral similarity threshold. (optional)
+  # @param candidate_in_chi_key character inchi key of the database compound. (optional)
+  # @return [SpectralLibraryMatchSummary]
 
   # uncomment below to test the operation
   #expect_equal(result, "EXPECTED_RESULT")
@@ -397,8 +604,15 @@ test_that("GetStructureCandidates", {
   # @param opt_fields array[StructureCandidateOptField] set of optional fields to be included. Use 'none' only to override defaults. (optional)
   # @return [array[StructureCandidateFormula]]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  project_id <- "GetStructureCandidates"
+  projects_api$OpenProjectSpace(project_id, tomato_project)
+  aligned_feature_id <- api_instance$GetAlignedFeatures(project_id)[[1]]$alignedFeatureId
+
+  response <- api_instance$GetStructureCandidates(project_id, aligned_feature_id)
+  expect_true(inherits(response, "list"))
+  expect_true(inherits(response[[1]], "StructureCandidateFormula"))
+
+  withr::defer(projects_api$CloseProjectSpace(project_id))
 })
 
 test_that("GetStructureCandidatesByFormula", {
@@ -412,8 +626,16 @@ test_that("GetStructureCandidatesByFormula", {
   # @param opt_fields array[StructureCandidateOptField] set of optional fields to be included. Use 'none' only to override defaults. (optional)
   # @return [array[StructureCandidateScored]]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  project_id <- "GetStructureCandidatesByFormula"
+  projects_api$OpenProjectSpace(project_id, tomato_project)
+  aligned_feature_id <- api_instance$GetAlignedFeatures(project_id)[[1]]$alignedFeatureId
+  formula_id <- api_instance$GetFormulaCandidates(project_id, aligned_feature_id)[[1]]$formulaId
+
+  response <- api_instance$GetStructureCandidatesByFormula(project_id, aligned_feature_id, formula_id)
+  expect_true(inherits(response, "list"))
+  expect_true(inherits(response[[1]], "StructureCandidateScored"))
+
+  withr::defer(projects_api$CloseProjectSpace(project_id))
 })
 
 test_that("GetStructureCandidatesByFormulaPaged", {
@@ -430,8 +652,15 @@ test_that("GetStructureCandidatesByFormulaPaged", {
   # @param opt_fields array[StructureCandidateOptField] set of optional fields to be included. Use 'none' only to override defaults. (optional)
   # @return [PageStructureCandidateScored]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  project_id <- "GetStructureCandidatesByFormulaPaged"
+  projects_api$OpenProjectSpace(project_id, tomato_project)
+  aligned_feature_id <- api_instance$GetAlignedFeatures(project_id)[[1]]$alignedFeatureId
+  formula_id <- api_instance$GetFormulaCandidates(project_id, aligned_feature_id)[[1]]$formulaId
+
+  response <- api_instance$GetStructureCandidatesByFormulaPaged(project_id, aligned_feature_id, formula_id)
+  expect_true(inherits(response, "PageStructureCandidateScored"))
+
+  withr::defer(projects_api$CloseProjectSpace(project_id))
 })
 
 test_that("GetStructureCandidatesPaged", {
@@ -447,6 +676,29 @@ test_that("GetStructureCandidatesPaged", {
   # @param opt_fields array[StructureCandidateOptField] set of optional fields to be included. Use 'none' only to override defaults. (optional)
   # @return [PageStructureCandidateFormula]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  project_id <- "GetStructureCandidatesPaged"
+  projects_api$OpenProjectSpace(project_id, tomato_project)
+  aligned_feature_id <- api_instance$GetAlignedFeatures(project_id)[[1]]$alignedFeatureId
+
+  response <- api_instance$GetStructureCandidatesPaged(project_id, aligned_feature_id)
+  expect_true(inherits(response, "PageStructureCandidateFormula"))
+
+  withr::defer(projects_api$CloseProjectSpace(project_id))
+})
+
+test_that("GetTraces1", {
+  # tests for GetTraces1
+  # base path: http://localhost:8080
+  # @param project_id character
+  # @param aligned_feature_id character
+  # @return [TraceSet]
+
+  project_id <- "GetTraces1"
+  projects_api$OpenProjectSpace(project_id, tomato_project)
+  aligned_feature_id <- api_instance$GetAlignedFeatures(project_id)[[1]]$alignedFeatureId
+
+  response <- api_instance$GetTraces1(project_id, aligned_feature_id)
+  expect_true(inherits(response, "TraceSet"))
+
+  withr::defer(projects_api$CloseProjectSpace(project_id))
 })

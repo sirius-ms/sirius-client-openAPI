@@ -24,6 +24,7 @@ test_that("GetSignUpURL", {
   # Get SignUp URL (For signUp via web browser)
   # @return [character]
 
+  # TODO deserialize error
   response <- api_instance$GetSignUpURL()
   expect_true(inherits(response, "character"))
 })
