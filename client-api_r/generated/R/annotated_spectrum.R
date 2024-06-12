@@ -198,7 +198,7 @@ AnnotatedSpectrum <- R6::R6Class(
         if (!is.null(self$`msLevel`)) {
           sprintf(
           '"msLevel":
-            %d
+            %f
                     ',
           self$`msLevel`
           )
@@ -214,7 +214,7 @@ AnnotatedSpectrum <- R6::R6Class(
         if (!is.null(self$`precursorMz`)) {
           sprintf(
           '"precursorMz":
-            %d
+            %f
                     ',
           self$`precursorMz`
           )
@@ -222,7 +222,7 @@ AnnotatedSpectrum <- R6::R6Class(
         if (!is.null(self$`scanNumber`)) {
           sprintf(
           '"scanNumber":
-            %d
+            %f
                     ',
           self$`scanNumber`
           )
@@ -238,7 +238,7 @@ AnnotatedSpectrum <- R6::R6Class(
         if (!is.null(self$`absIntensityFactor`)) {
           sprintf(
           '"absIntensityFactor":
-            %d
+            %f
                     ',
           self$`absIntensityFactor`
           )

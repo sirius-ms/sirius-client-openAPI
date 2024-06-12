@@ -89,7 +89,7 @@ Deviation <- R6::R6Class(
         if (!is.null(self$`ppm`)) {
           sprintf(
           '"ppm":
-            %d
+            %f
                     ',
           self$`ppm`
           )
@@ -97,7 +97,7 @@ Deviation <- R6::R6Class(
         if (!is.null(self$`absolute`)) {
           sprintf(
           '"absolute":
-            %d
+            %f
                     ',
           self$`absolute`
           )

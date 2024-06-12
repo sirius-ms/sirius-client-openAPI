@@ -105,7 +105,7 @@ ZodiacEdgeFilterThresholds <- R6::R6Class(
         if (!is.null(self$`thresholdFilter`)) {
           sprintf(
           '"thresholdFilter":
-            %d
+            %f
                     ',
           self$`thresholdFilter`
           )
@@ -113,7 +113,7 @@ ZodiacEdgeFilterThresholds <- R6::R6Class(
         if (!is.null(self$`minLocalCandidates`)) {
           sprintf(
           '"minLocalCandidates":
-            %d
+            %f
                     ',
           self$`minLocalCandidates`
           )
@@ -121,7 +121,7 @@ ZodiacEdgeFilterThresholds <- R6::R6Class(
         if (!is.null(self$`minLocalConnections`)) {
           sprintf(
           '"minLocalConnections":
-            %d
+            %f
                     ',
           self$`minLocalConnections`
           )

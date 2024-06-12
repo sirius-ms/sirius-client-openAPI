@@ -135,7 +135,7 @@ SpectralLibraryMatchSummary <- R6::R6Class(
         if (!is.null(self$`spectralMatchCount`)) {
           sprintf(
           '"spectralMatchCount":
-            %d
+            %f
                     ',
           self$`spectralMatchCount`
           )
@@ -143,7 +143,7 @@ SpectralLibraryMatchSummary <- R6::R6Class(
         if (!is.null(self$`referenceSpectraCount`)) {
           sprintf(
           '"referenceSpectraCount":
-            %d
+            %f
                     ',
           self$`referenceSpectraCount`
           )
@@ -151,7 +151,7 @@ SpectralLibraryMatchSummary <- R6::R6Class(
         if (!is.null(self$`databaseCompoundCount`)) {
           sprintf(
           '"databaseCompoundCount":
-            %d
+            %f
                     ',
           self$`databaseCompoundCount`
           )

@@ -176,7 +176,7 @@ BasicSpectrum <- R6::R6Class(
         if (!is.null(self$`msLevel`)) {
           sprintf(
           '"msLevel":
-            %d
+            %f
                     ',
           self$`msLevel`
           )
@@ -192,7 +192,7 @@ BasicSpectrum <- R6::R6Class(
         if (!is.null(self$`precursorMz`)) {
           sprintf(
           '"precursorMz":
-            %d
+            %f
                     ',
           self$`precursorMz`
           )
@@ -200,7 +200,7 @@ BasicSpectrum <- R6::R6Class(
         if (!is.null(self$`scanNumber`)) {
           sprintf(
           '"scanNumber":
-            %d
+            %f
                     ',
           self$`scanNumber`
           )
@@ -216,7 +216,7 @@ BasicSpectrum <- R6::R6Class(
         if (!is.null(self$`absIntensityFactor`)) {
           sprintf(
           '"absIntensityFactor":
-            %d
+            %f
                     ',
           self$`absIntensityFactor`
           )

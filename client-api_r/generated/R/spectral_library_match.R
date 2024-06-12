@@ -311,7 +311,7 @@ SpectralLibraryMatch <- R6::R6Class(
         if (!is.null(self$`rank`)) {
           sprintf(
           '"rank":
-            %d
+            %f
                     ',
           self$`rank`
           )
@@ -319,7 +319,7 @@ SpectralLibraryMatch <- R6::R6Class(
         if (!is.null(self$`similarity`)) {
           sprintf(
           '"similarity":
-            %d
+            %f
                     ',
           self$`similarity`
           )
@@ -327,7 +327,7 @@ SpectralLibraryMatch <- R6::R6Class(
         if (!is.null(self$`sharedPeaks`)) {
           sprintf(
           '"sharedPeaks":
-            %d
+            %f
                     ',
           self$`sharedPeaks`
           )
@@ -335,7 +335,7 @@ SpectralLibraryMatch <- R6::R6Class(
         if (!is.null(self$`querySpectrumIndex`)) {
           sprintf(
           '"querySpectrumIndex":
-            %d
+            %f
                     ',
           self$`querySpectrumIndex`
           )
@@ -359,7 +359,7 @@ SpectralLibraryMatch <- R6::R6Class(
         if (!is.null(self$`uuid`)) {
           sprintf(
           '"uuid":
-            %d
+            %f
                     ',
           self$`uuid`
           )

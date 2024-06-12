@@ -305,7 +305,7 @@ SearchableDatabase <- R6::R6Class(
         if (!is.null(self$`dbVersion`)) {
           sprintf(
           '"dbVersion":
-            %d
+            %f
                     ',
           self$`dbVersion`
           )
@@ -321,7 +321,7 @@ SearchableDatabase <- R6::R6Class(
         if (!is.null(self$`numberOfStructures`)) {
           sprintf(
           '"numberOfStructures":
-            %d
+            %f
                     ',
           self$`numberOfStructures`
           )
@@ -329,7 +329,7 @@ SearchableDatabase <- R6::R6Class(
         if (!is.null(self$`numberOfFormulas`)) {
           sprintf(
           '"numberOfFormulas":
-            %d
+            %f
                     ',
           self$`numberOfFormulas`
           )
@@ -337,7 +337,7 @@ SearchableDatabase <- R6::R6Class(
         if (!is.null(self$`numberOfReferenceSpectra`)) {
           sprintf(
           '"numberOfReferenceSpectra":
-            %d
+            %f
                     ',
           self$`numberOfReferenceSpectra`
           )

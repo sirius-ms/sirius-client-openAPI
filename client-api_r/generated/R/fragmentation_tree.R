@@ -119,7 +119,7 @@ FragmentationTree <- R6::R6Class(
         if (!is.null(self$`treeScore`)) {
           sprintf(
           '"treeScore":
-            %d
+            %f
                     ',
           self$`treeScore`
           )

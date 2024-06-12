@@ -353,7 +353,7 @@ AlignedFeature <- R6::R6Class(
         if (!is.null(self$`ionMass`)) {
           sprintf(
           '"ionMass":
-            %d
+            %f
                     ',
           self$`ionMass`
           )
@@ -361,7 +361,7 @@ AlignedFeature <- R6::R6Class(
         if (!is.null(self$`charge`)) {
           sprintf(
           '"charge":
-            %d
+            %f
                     ',
           self$`charge`
           )
@@ -377,7 +377,7 @@ AlignedFeature <- R6::R6Class(
         if (!is.null(self$`rtStartSeconds`)) {
           sprintf(
           '"rtStartSeconds":
-            %d
+            %f
                     ',
           self$`rtStartSeconds`
           )
@@ -385,7 +385,7 @@ AlignedFeature <- R6::R6Class(
         if (!is.null(self$`rtEndSeconds`)) {
           sprintf(
           '"rtEndSeconds":
-            %d
+            %f
                     ',
           self$`rtEndSeconds`
           )

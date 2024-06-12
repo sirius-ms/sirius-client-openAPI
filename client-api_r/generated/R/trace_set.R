@@ -126,7 +126,7 @@ TraceSet <- R6::R6Class(
         if (!is.null(self$`sampleId`)) {
           sprintf(
           '"sampleId":
-            %d
+            %f
                     ',
           self$`sampleId`
           )

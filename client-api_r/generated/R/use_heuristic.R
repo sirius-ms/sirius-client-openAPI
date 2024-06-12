@@ -89,7 +89,7 @@ UseHeuristic <- R6::R6Class(
         if (!is.null(self$`useHeuristicAboveMz`)) {
           sprintf(
           '"useHeuristicAboveMz":
-            %d
+            %f
                     ',
           self$`useHeuristicAboveMz`
           )
@@ -97,7 +97,7 @@ UseHeuristic <- R6::R6Class(
         if (!is.null(self$`useOnlyHeuristicAboveMz`)) {
           sprintf(
           '"useOnlyHeuristicAboveMz":
-            %d
+            %f
                     ',
           self$`useOnlyHeuristicAboveMz`
           )

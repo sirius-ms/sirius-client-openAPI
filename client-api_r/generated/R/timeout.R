@@ -89,7 +89,7 @@ Timeout <- R6::R6Class(
         if (!is.null(self$`numberOfSecondsPerDecomposition`)) {
           sprintf(
           '"numberOfSecondsPerDecomposition":
-            %d
+            %f
                     ',
           self$`numberOfSecondsPerDecomposition`
           )
@@ -97,7 +97,7 @@ Timeout <- R6::R6Class(
         if (!is.null(self$`numberOfSecondsPerInstance`)) {
           sprintf(
           '"numberOfSecondsPerInstance":
-            %d
+            %f
                     ',
           self$`numberOfSecondsPerInstance`
           )

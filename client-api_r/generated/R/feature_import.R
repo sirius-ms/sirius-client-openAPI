@@ -221,7 +221,7 @@ FeatureImport <- R6::R6Class(
         if (!is.null(self$`ionMass`)) {
           sprintf(
           '"ionMass":
-            %d
+            %f
                     ',
           self$`ionMass`
           )
@@ -237,7 +237,7 @@ FeatureImport <- R6::R6Class(
         if (!is.null(self$`rtStartSeconds`)) {
           sprintf(
           '"rtStartSeconds":
-            %d
+            %f
                     ',
           self$`rtStartSeconds`
           )
@@ -245,7 +245,7 @@ FeatureImport <- R6::R6Class(
         if (!is.null(self$`rtEndSeconds`)) {
           sprintf(
           '"rtEndSeconds":
-            %d
+            %f
                     ',
           self$`rtEndSeconds`
           )

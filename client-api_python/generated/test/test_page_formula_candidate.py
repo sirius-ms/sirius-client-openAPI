@@ -37,8 +37,8 @@ class TestPageFormulaCandidate(unittest.TestCase):
             return PageFormulaCandidate(
                 total_pages = 56,
                 total_elements = 56,
-                last = True,
                 first = True,
+                last = True,
                 size = 56,
                 content = [
                     PySirius.models.formula_candidate.FormulaCandidate(
@@ -199,8 +199,8 @@ class TestPageFormulaCandidate(unittest.TestCase):
                         unsorted = True, ), 
                     page_number = 56, 
                     page_size = 56, 
-                    unpaged = True, 
-                    paged = True, ),
+                    paged = True, 
+                    unpaged = True, ),
                 empty = True
             )
         else:

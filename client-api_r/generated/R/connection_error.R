@@ -213,7 +213,7 @@ ConnectionError <- R6::R6Class(
         if (!is.null(self$`siriusErrorCode`)) {
           sprintf(
           '"siriusErrorCode":
-            %d
+            %f
                     ',
           self$`siriusErrorCode`
           )
@@ -229,7 +229,7 @@ ConnectionError <- R6::R6Class(
         if (!is.null(self$`serverResponseErrorCode`)) {
           sprintf(
           '"serverResponseErrorCode":
-            %d
+            %f
                     ',
           self$`serverResponseErrorCode`
           )

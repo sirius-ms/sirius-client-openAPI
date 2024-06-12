@@ -418,7 +418,7 @@ Sirius <- R6::R6Class(
         if (!is.null(self$`numberOfCandidates`)) {
           sprintf(
           '"numberOfCandidates":
-            %d
+            %f
                     ',
           self$`numberOfCandidates`
           )
@@ -426,7 +426,7 @@ Sirius <- R6::R6Class(
         if (!is.null(self$`numberOfCandidatesPerIonization`)) {
           sprintf(
           '"numberOfCandidatesPerIonization":
-            %d
+            %f
                     ',
           self$`numberOfCandidatesPerIonization`
           )
@@ -434,7 +434,7 @@ Sirius <- R6::R6Class(
         if (!is.null(self$`massAccuracyMS2ppm`)) {
           sprintf(
           '"massAccuracyMS2ppm":
-            %d
+            %f
                     ',
           self$`massAccuracyMS2ppm`
           )
@@ -474,7 +474,7 @@ Sirius <- R6::R6Class(
         if (!is.null(self$`performDenovoBelowMz`)) {
           sprintf(
           '"performDenovoBelowMz":
-            %d
+            %f
                     ',
           self$`performDenovoBelowMz`
           )
@@ -546,7 +546,7 @@ Sirius <- R6::R6Class(
         if (!is.null(self$`minScoreToInjectSpecLibMatch`)) {
           sprintf(
           '"minScoreToInjectSpecLibMatch":
-            %d
+            %f
                     ',
           self$`minScoreToInjectSpecLibMatch`
           )
@@ -554,7 +554,7 @@ Sirius <- R6::R6Class(
         if (!is.null(self$`minPeaksToInjectSpecLibMatch`)) {
           sprintf(
           '"minPeaksToInjectSpecLibMatch":
-            %d
+            %f
                     ',
           self$`minPeaksToInjectSpecLibMatch`
           )

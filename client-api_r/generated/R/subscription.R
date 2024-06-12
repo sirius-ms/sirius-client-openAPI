@@ -345,7 +345,7 @@ Subscription <- R6::R6Class(
         if (!is.null(self$`instanceLimit`)) {
           sprintf(
           '"instanceLimit":
-            %d
+            %f
                     ',
           self$`instanceLimit`
           )
@@ -353,7 +353,7 @@ Subscription <- R6::R6Class(
         if (!is.null(self$`instanceHashRecordingTime`)) {
           sprintf(
           '"instanceHashRecordingTime":
-            %d
+            %f
                     ',
           self$`instanceHashRecordingTime`
           )
@@ -361,7 +361,7 @@ Subscription <- R6::R6Class(
         if (!is.null(self$`maxQueriesPerInstance`)) {
           sprintf(
           '"maxQueriesPerInstance":
-            %d
+            %f
                     ',
           self$`maxQueriesPerInstance`
           )
@@ -369,7 +369,7 @@ Subscription <- R6::R6Class(
         if (!is.null(self$`maxUserAccounts`)) {
           sprintf(
           '"maxUserAccounts":
-            %d
+            %f
                     ',
           self$`maxUserAccounts`
           )

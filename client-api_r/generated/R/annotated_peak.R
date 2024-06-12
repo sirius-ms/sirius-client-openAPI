@@ -111,7 +111,7 @@ AnnotatedPeak <- R6::R6Class(
         if (!is.null(self$`mz`)) {
           sprintf(
           '"mz":
-            %d
+            %f
                     ',
           self$`mz`
           )
@@ -119,7 +119,7 @@ AnnotatedPeak <- R6::R6Class(
         if (!is.null(self$`intensity`)) {
           sprintf(
           '"intensity":
-            %d
+            %f
                     ',
           self$`intensity`
           )

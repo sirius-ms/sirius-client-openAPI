@@ -128,7 +128,7 @@ BackgroundComputationsStateEvent <- R6::R6Class(
         if (!is.null(self$`numberOfJobs`)) {
           sprintf(
           '"numberOfJobs":
-            %d
+            %f
                     ',
           self$`numberOfJobs`
           )
@@ -136,7 +136,7 @@ BackgroundComputationsStateEvent <- R6::R6Class(
         if (!is.null(self$`numberOfRunningJobs`)) {
           sprintf(
           '"numberOfRunningJobs":
-            %d
+            %f
                     ',
           self$`numberOfRunningJobs`
           )
@@ -144,7 +144,7 @@ BackgroundComputationsStateEvent <- R6::R6Class(
         if (!is.null(self$`numberOfFinishedJobs`)) {
           sprintf(
           '"numberOfFinishedJobs":
-            %d
+            %f
                     ',
           self$`numberOfFinishedJobs`
           )

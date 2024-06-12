@@ -96,7 +96,7 @@ BinaryFingerprint <- R6::R6Class(
         if (!is.null(self$`length`)) {
           sprintf(
           '"length":
-            %d
+            %f
                     ',
           self$`length`
           )

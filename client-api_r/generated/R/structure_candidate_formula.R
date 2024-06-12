@@ -309,7 +309,7 @@ StructureCandidateFormula <- R6::R6Class(
         if (!is.null(self$`xlogP`)) {
           sprintf(
           '"xlogP":
-            %d
+            %f
                     ',
           self$`xlogP`
           )
@@ -333,7 +333,7 @@ StructureCandidateFormula <- R6::R6Class(
         if (!is.null(self$`rank`)) {
           sprintf(
           '"rank":
-            %d
+            %f
                     ',
           self$`rank`
           )
@@ -341,7 +341,7 @@ StructureCandidateFormula <- R6::R6Class(
         if (!is.null(self$`csiScore`)) {
           sprintf(
           '"csiScore":
-            %d
+            %f
                     ',
           self$`csiScore`
           )
@@ -349,7 +349,7 @@ StructureCandidateFormula <- R6::R6Class(
         if (!is.null(self$`tanimotoSimilarity`)) {
           sprintf(
           '"tanimotoSimilarity":
-            %d
+            %f
                     ',
           self$`tanimotoSimilarity`
           )
@@ -357,7 +357,7 @@ StructureCandidateFormula <- R6::R6Class(
         if (!is.null(self$`mcesDistToTopHit`)) {
           sprintf(
           '"mcesDistToTopHit":
-            %d
+            %f
                     ',
           self$`mcesDistToTopHit`
           )

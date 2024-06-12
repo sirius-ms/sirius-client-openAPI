@@ -9,8 +9,8 @@
 #' @format An \code{R6Class} generator object
 #' @field totalPages  integer [optional]
 #' @field totalElements  integer [optional]
-#' @field last  character [optional]
 #' @field first  character [optional]
+#' @field last  character [optional]
 #' @field size  integer [optional]
 #' @field content  list(\link{AlignedFeature}) [optional]
 #' @field number  integer [optional]
@@ -26,8 +26,8 @@ PageAlignedFeature <- R6::R6Class(
   public = list(
     `totalPages` = NULL,
     `totalElements` = NULL,
-    `last` = NULL,
     `first` = NULL,
+    `last` = NULL,
     `size` = NULL,
     `content` = NULL,
     `number` = NULL,
@@ -42,8 +42,8 @@ PageAlignedFeature <- R6::R6Class(
     #'
     #' @param totalPages totalPages
     #' @param totalElements totalElements
-    #' @param last last
     #' @param first first
+    #' @param last last
     #' @param size size
     #' @param content content
     #' @param number number
@@ -53,7 +53,7 @@ PageAlignedFeature <- R6::R6Class(
     #' @param empty empty
     #' @param ... Other optional arguments.
     #' @export
-    initialize = function(`totalPages` = NULL, `totalElements` = NULL, `last` = NULL, `first` = NULL, `size` = NULL, `content` = NULL, `number` = NULL, `sort` = NULL, `numberOfElements` = NULL, `pageable` = NULL, `empty` = NULL, ...) {
+    initialize = function(`totalPages` = NULL, `totalElements` = NULL, `first` = NULL, `last` = NULL, `size` = NULL, `content` = NULL, `number` = NULL, `sort` = NULL, `numberOfElements` = NULL, `pageable` = NULL, `empty` = NULL, ...) {
       if (!is.null(`totalPages`)) {
         if (!(is.numeric(`totalPages`) && length(`totalPages`) == 1)) {
           stop(paste("Error! Invalid data for `totalPages`. Must be an integer:", `totalPages`))
@@ -66,17 +66,17 @@ PageAlignedFeature <- R6::R6Class(
         }
         self$`totalElements` <- `totalElements`
       }
-      if (!is.null(`last`)) {
-        if (!(is.logical(`last`) && length(`last`) == 1)) {
-          stop(paste("Error! Invalid data for `last`. Must be a boolean:", `last`))
-        }
-        self$`last` <- `last`
-      }
       if (!is.null(`first`)) {
         if (!(is.logical(`first`) && length(`first`) == 1)) {
           stop(paste("Error! Invalid data for `first`. Must be a boolean:", `first`))
         }
         self$`first` <- `first`
+      }
+      if (!is.null(`last`)) {
+        if (!(is.logical(`last`) && length(`last`) == 1)) {
+          stop(paste("Error! Invalid data for `last`. Must be a boolean:", `last`))
+        }
+        self$`last` <- `last`
       }
       if (!is.null(`size`)) {
         if (!(is.numeric(`size`) && length(`size`) == 1)) {
@@ -133,13 +133,13 @@ PageAlignedFeature <- R6::R6Class(
         PageAlignedFeatureObject[["totalElements"]] <-
           self$`totalElements`
       }
-      if (!is.null(self$`last`)) {
-        PageAlignedFeatureObject[["last"]] <-
-          self$`last`
-      }
       if (!is.null(self$`first`)) {
         PageAlignedFeatureObject[["first"]] <-
           self$`first`
+      }
+      if (!is.null(self$`last`)) {
+        PageAlignedFeatureObject[["last"]] <-
+          self$`last`
       }
       if (!is.null(self$`size`)) {
         PageAlignedFeatureObject[["size"]] <-
@@ -199,11 +199,11 @@ PageAlignedFeature <- R6::R6Class(
       if (!is.null(this_object$`totalElements`)) {
         self$`totalElements` <- this_object$`totalElements`
       }
-      if (!is.null(this_object$`last`)) {
-        self$`last` <- this_object$`last`
-      }
       if (!is.null(this_object$`first`)) {
         self$`first` <- this_object$`first`
+      }
+      if (!is.null(this_object$`last`)) {
+        self$`last` <- this_object$`last`
       }
       if (!is.null(this_object$`size`)) {
         self$`size` <- this_object$`size`
@@ -244,7 +244,7 @@ PageAlignedFeature <- R6::R6Class(
         if (!is.null(self$`totalPages`)) {
           sprintf(
           '"totalPages":
-            %d
+            %f
                     ',
           self$`totalPages`
           )
@@ -252,17 +252,9 @@ PageAlignedFeature <- R6::R6Class(
         if (!is.null(self$`totalElements`)) {
           sprintf(
           '"totalElements":
-            %d
+            %f
                     ',
           self$`totalElements`
-          )
-        },
-        if (!is.null(self$`last`)) {
-          sprintf(
-          '"last":
-            %s
-                    ',
-          tolower(self$`last`)
           )
         },
         if (!is.null(self$`first`)) {
@@ -273,10 +265,18 @@ PageAlignedFeature <- R6::R6Class(
           tolower(self$`first`)
           )
         },
+        if (!is.null(self$`last`)) {
+          sprintf(
+          '"last":
+            %s
+                    ',
+          tolower(self$`last`)
+          )
+        },
         if (!is.null(self$`size`)) {
           sprintf(
           '"size":
-            %d
+            %f
                     ',
           self$`size`
           )
@@ -292,7 +292,7 @@ PageAlignedFeature <- R6::R6Class(
         if (!is.null(self$`number`)) {
           sprintf(
           '"number":
-            %d
+            %f
                     ',
           self$`number`
           )
@@ -308,7 +308,7 @@ PageAlignedFeature <- R6::R6Class(
         if (!is.null(self$`numberOfElements`)) {
           sprintf(
           '"numberOfElements":
-            %d
+            %f
                     ',
           self$`numberOfElements`
           )
@@ -345,8 +345,8 @@ PageAlignedFeature <- R6::R6Class(
       this_object <- jsonlite::fromJSON(input_json)
       self$`totalPages` <- this_object$`totalPages`
       self$`totalElements` <- this_object$`totalElements`
-      self$`last` <- this_object$`last`
       self$`first` <- this_object$`first`
+      self$`last` <- this_object$`last`
       self$`size` <- this_object$`size`
       self$`content` <- ApiClient$new()$deserializeObj(this_object$`content`, "array[AlignedFeature]", loadNamespace("Rsirius"))
       self$`number` <- this_object$`number`

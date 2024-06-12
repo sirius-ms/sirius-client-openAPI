@@ -159,7 +159,7 @@ Annotation <- R6::R6Class(
         if (!is.null(self$`index`)) {
           sprintf(
           '"index":
-            %d
+            %f
                     ',
           self$`index`
           )
@@ -167,7 +167,7 @@ Annotation <- R6::R6Class(
         if (!is.null(self$`from`)) {
           sprintf(
           '"from":
-            %d
+            %f
                     ',
           self$`from`
           )
@@ -175,7 +175,7 @@ Annotation <- R6::R6Class(
         if (!is.null(self$`to`)) {
           sprintf(
           '"to":
-            %d
+            %f
                     ',
           self$`to`
           )

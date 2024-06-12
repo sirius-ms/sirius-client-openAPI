@@ -426,7 +426,7 @@ FormulaCandidate <- R6::R6Class(
         if (!is.null(self$`rank`)) {
           sprintf(
           '"rank":
-            %d
+            %f
                     ',
           self$`rank`
           )
@@ -434,7 +434,7 @@ FormulaCandidate <- R6::R6Class(
         if (!is.null(self$`siriusScore`)) {
           sprintf(
           '"siriusScore":
-            %d
+            %f
                     ',
           self$`siriusScore`
           )
@@ -442,7 +442,7 @@ FormulaCandidate <- R6::R6Class(
         if (!is.null(self$`isotopeScore`)) {
           sprintf(
           '"isotopeScore":
-            %d
+            %f
                     ',
           self$`isotopeScore`
           )
@@ -450,7 +450,7 @@ FormulaCandidate <- R6::R6Class(
         if (!is.null(self$`treeScore`)) {
           sprintf(
           '"treeScore":
-            %d
+            %f
                     ',
           self$`treeScore`
           )
@@ -458,7 +458,7 @@ FormulaCandidate <- R6::R6Class(
         if (!is.null(self$`zodiacScore`)) {
           sprintf(
           '"zodiacScore":
-            %d
+            %f
                     ',
           self$`zodiacScore`
           )
@@ -466,7 +466,7 @@ FormulaCandidate <- R6::R6Class(
         if (!is.null(self$`numOfExplainedPeaks`)) {
           sprintf(
           '"numOfExplainedPeaks":
-            %d
+            %f
                     ',
           self$`numOfExplainedPeaks`
           )
@@ -474,7 +474,7 @@ FormulaCandidate <- R6::R6Class(
         if (!is.null(self$`numOfExplainablePeaks`)) {
           sprintf(
           '"numOfExplainablePeaks":
-            %d
+            %f
                     ',
           self$`numOfExplainablePeaks`
           )
@@ -482,7 +482,7 @@ FormulaCandidate <- R6::R6Class(
         if (!is.null(self$`totalExplainedIntensity`)) {
           sprintf(
           '"totalExplainedIntensity":
-            %d
+            %f
                     ',
           self$`totalExplainedIntensity`
           )

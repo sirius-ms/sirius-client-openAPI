@@ -105,7 +105,7 @@ ParentPeak <- R6::R6Class(
         if (!is.null(self$`parentIdx`)) {
           sprintf(
           '"parentIdx":
-            %d
+            %f
                     ',
           self$`parentIdx`
           )
@@ -113,7 +113,7 @@ ParentPeak <- R6::R6Class(
         if (!is.null(self$`parentFragmentId`)) {
           sprintf(
           '"parentFragmentId":
-            %d
+            %f
                     ',
           self$`parentFragmentId`
           )

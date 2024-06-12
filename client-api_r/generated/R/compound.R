@@ -234,7 +234,7 @@ Compound <- R6::R6Class(
         if (!is.null(self$`rtStartSeconds`)) {
           sprintf(
           '"rtStartSeconds":
-            %d
+            %f
                     ',
           self$`rtStartSeconds`
           )
@@ -242,7 +242,7 @@ Compound <- R6::R6Class(
         if (!is.null(self$`rtEndSeconds`)) {
           sprintf(
           '"rtEndSeconds":
-            %d
+            %f
                     ',
           self$`rtEndSeconds`
           )
@@ -250,7 +250,7 @@ Compound <- R6::R6Class(
         if (!is.null(self$`neutralMass`)) {
           sprintf(
           '"neutralMass":
-            %d
+            %f
                     ',
           self$`neutralMass`
           )

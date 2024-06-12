@@ -206,7 +206,7 @@ WorkerInfo <- R6::R6Class(
         if (!is.null(self$`id`)) {
           sprintf(
           '"id":
-            %d
+            %f
                     ',
           self$`id`
           )
@@ -254,7 +254,7 @@ WorkerInfo <- R6::R6Class(
         if (!is.null(self$`state`)) {
           sprintf(
           '"state":
-            %d
+            %f
                     ',
           self$`state`
           )
@@ -262,7 +262,7 @@ WorkerInfo <- R6::R6Class(
         if (!is.null(self$`alive`)) {
           sprintf(
           '"alive":
-            %d
+            %f
                     ',
           self$`alive`
           )
@@ -270,7 +270,7 @@ WorkerInfo <- R6::R6Class(
         if (!is.null(self$`serverTime`)) {
           sprintf(
           '"serverTime":
-            %d
+            %f
                     ',
           self$`serverTime`
           )

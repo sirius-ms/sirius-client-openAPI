@@ -175,7 +175,7 @@ StructureCandidate <- R6::R6Class(
         if (!is.null(self$`xlogP`)) {
           sprintf(
           '"xlogP":
-            %d
+            %f
                     ',
           self$`xlogP`
           )

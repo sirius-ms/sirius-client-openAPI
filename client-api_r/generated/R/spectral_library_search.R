@@ -161,7 +161,7 @@ SpectralLibrarySearch <- R6::R6Class(
         if (!is.null(self$`peakDeviationPpm`)) {
           sprintf(
           '"peakDeviationPpm":
-            %d
+            %f
                     ',
           self$`peakDeviationPpm`
           )
@@ -169,7 +169,7 @@ SpectralLibrarySearch <- R6::R6Class(
         if (!is.null(self$`precursorDeviationPpm`)) {
           sprintf(
           '"precursorDeviationPpm":
-            %d
+            %f
                     ',
           self$`precursorDeviationPpm`
           )

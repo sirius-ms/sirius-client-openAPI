@@ -88,7 +88,7 @@ WorkerList <- R6::R6Class(
         if (!is.null(self$`pendingJobs`)) {
           sprintf(
           '"pendingJobs":
-            %d
+            %f
                     ',
           self$`pendingJobs`
           )

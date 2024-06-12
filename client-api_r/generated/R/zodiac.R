@@ -173,7 +173,7 @@ Zodiac <- R6::R6Class(
         if (!is.null(self$`consideredCandidatesAt300Mz`)) {
           sprintf(
           '"consideredCandidatesAt300Mz":
-            %d
+            %f
                     ',
           self$`consideredCandidatesAt300Mz`
           )
@@ -181,7 +181,7 @@ Zodiac <- R6::R6Class(
         if (!is.null(self$`consideredCandidatesAt800Mz`)) {
           sprintf(
           '"consideredCandidatesAt800Mz":
-            %d
+            %f
                     ',
           self$`consideredCandidatesAt800Mz`
           )

@@ -204,7 +204,7 @@ FeatureAnnotations <- R6::R6Class(
         if (!is.null(self$`confidenceExactMatch`)) {
           sprintf(
           '"confidenceExactMatch":
-            %d
+            %f
                     ',
           self$`confidenceExactMatch`
           )
@@ -212,7 +212,7 @@ FeatureAnnotations <- R6::R6Class(
         if (!is.null(self$`confidenceApproxMatch`)) {
           sprintf(
           '"confidenceApproxMatch":
-            %d
+            %f
                     ',
           self$`confidenceApproxMatch`
           )

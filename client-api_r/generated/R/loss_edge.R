@@ -121,7 +121,7 @@ LossEdge <- R6::R6Class(
         if (!is.null(self$`sourceFragmentIdx`)) {
           sprintf(
           '"sourceFragmentIdx":
-            %d
+            %f
                     ',
           self$`sourceFragmentIdx`
           )
@@ -129,7 +129,7 @@ LossEdge <- R6::R6Class(
         if (!is.null(self$`targetFragmentIdx`)) {
           sprintf(
           '"targetFragmentIdx":
-            %d
+            %f
                     ',
           self$`targetFragmentIdx`
           )
@@ -145,7 +145,7 @@ LossEdge <- R6::R6Class(
         if (!is.null(self$`score`)) {
           sprintf(
           '"score":
-            %d
+            %f
                     ',
           self$`score`
           )

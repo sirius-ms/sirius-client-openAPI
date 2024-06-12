@@ -97,7 +97,7 @@ MsNovelist <- R6::R6Class(
         if (!is.null(self$`numberOfCandidateToPredict`)) {
           sprintf(
           '"numberOfCandidateToPredict":
-            %d
+            %f
                     ',
           self$`numberOfCandidateToPredict`
           )

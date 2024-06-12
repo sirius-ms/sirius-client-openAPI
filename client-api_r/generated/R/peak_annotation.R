@@ -284,7 +284,7 @@ PeakAnnotation <- R6::R6Class(
         if (!is.null(self$`fragmentId`)) {
           sprintf(
           '"fragmentId":
-            %d
+            %f
                     ',
           self$`fragmentId`
           )
@@ -308,7 +308,7 @@ PeakAnnotation <- R6::R6Class(
         if (!is.null(self$`exactMass`)) {
           sprintf(
           '"exactMass":
-            %d
+            %f
                     ',
           self$`exactMass`
           )
@@ -316,7 +316,7 @@ PeakAnnotation <- R6::R6Class(
         if (!is.null(self$`massDeviationMz`)) {
           sprintf(
           '"massDeviationMz":
-            %d
+            %f
                     ',
           self$`massDeviationMz`
           )
@@ -324,7 +324,7 @@ PeakAnnotation <- R6::R6Class(
         if (!is.null(self$`massDeviationPpm`)) {
           sprintf(
           '"massDeviationPpm":
-            %d
+            %f
                     ',
           self$`massDeviationPpm`
           )
@@ -332,7 +332,7 @@ PeakAnnotation <- R6::R6Class(
         if (!is.null(self$`recalibratedMassDeviationMz`)) {
           sprintf(
           '"recalibratedMassDeviationMz":
-            %d
+            %f
                     ',
           self$`recalibratedMassDeviationMz`
           )
@@ -340,7 +340,7 @@ PeakAnnotation <- R6::R6Class(
         if (!is.null(self$`recalibratedMassDeviationPpm`)) {
           sprintf(
           '"recalibratedMassDeviationPpm":
-            %d
+            %f
                     ',
           self$`recalibratedMassDeviationPpm`
           )
@@ -380,7 +380,7 @@ PeakAnnotation <- R6::R6Class(
         if (!is.null(self$`substructureScore`)) {
           sprintf(
           '"substructureScore":
-            %d
+            %f
                     ',
           self$`substructureScore`
           )
@@ -388,7 +388,7 @@ PeakAnnotation <- R6::R6Class(
         if (!is.null(self$`hydrogenRearrangements`)) {
           sprintf(
           '"hydrogenRearrangements":
-            %d
+            %f
                     ',
           self$`hydrogenRearrangements`
           )

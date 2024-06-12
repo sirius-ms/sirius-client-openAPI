@@ -201,7 +201,7 @@ ProjectInfo <- R6::R6Class(
         if (!is.null(self$`numOfFeatures`)) {
           sprintf(
           '"numOfFeatures":
-            %d
+            %f
                     ',
           self$`numOfFeatures`
           )
@@ -209,7 +209,7 @@ ProjectInfo <- R6::R6Class(
         if (!is.null(self$`numOfCompounds`)) {
           sprintf(
           '"numOfCompounds":
-            %d
+            %f
                     ',
           self$`numOfCompounds`
           )
@@ -217,7 +217,7 @@ ProjectInfo <- R6::R6Class(
         if (!is.null(self$`numOfBytes`)) {
           sprintf(
           '"numOfBytes":
-            %d
+            %f
                     ',
           self$`numOfBytes`
           )

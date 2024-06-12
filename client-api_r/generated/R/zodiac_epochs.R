@@ -105,7 +105,7 @@ ZodiacEpochs <- R6::R6Class(
         if (!is.null(self$`iterations`)) {
           sprintf(
           '"iterations":
-            %d
+            %f
                     ',
           self$`iterations`
           )
@@ -113,7 +113,7 @@ ZodiacEpochs <- R6::R6Class(
         if (!is.null(self$`burnInPeriod`)) {
           sprintf(
           '"burnInPeriod":
-            %d
+            %f
                     ',
           self$`burnInPeriod`
           )
@@ -121,7 +121,7 @@ ZodiacEpochs <- R6::R6Class(
         if (!is.null(self$`numberOfMarkovChains`)) {
           sprintf(
           '"numberOfMarkovChains":
-            %d
+            %f
                     ',
           self$`numberOfMarkovChains`
           )

@@ -185,7 +185,7 @@ SpectrumAnnotation <- R6::R6Class(
         if (!is.null(self$`exactMass`)) {
           sprintf(
           '"exactMass":
-            %d
+            %f
                     ',
           self$`exactMass`
           )
@@ -193,7 +193,7 @@ SpectrumAnnotation <- R6::R6Class(
         if (!is.null(self$`massDeviationMz`)) {
           sprintf(
           '"massDeviationMz":
-            %d
+            %f
                     ',
           self$`massDeviationMz`
           )
@@ -201,7 +201,7 @@ SpectrumAnnotation <- R6::R6Class(
         if (!is.null(self$`massDeviationPpm`)) {
           sprintf(
           '"massDeviationPpm":
-            %d
+            %f
                     ',
           self$`massDeviationPpm`
           )
@@ -217,7 +217,7 @@ SpectrumAnnotation <- R6::R6Class(
         if (!is.null(self$`structureAnnotationScore`)) {
           sprintf(
           '"structureAnnotationScore":
-            %d
+            %f
                     ',
           self$`structureAnnotationScore`
           )

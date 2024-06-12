@@ -73,7 +73,7 @@ SubscriptionConsumables <- R6::R6Class(
         if (!is.null(self$`countedCompounds`)) {
           sprintf(
           '"countedCompounds":
-            %d
+            %f
                     ',
           self$`countedCompounds`
           )

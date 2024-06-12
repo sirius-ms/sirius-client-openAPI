@@ -215,7 +215,7 @@ Trace <- R6::R6Class(
         if (!is.null(self$`id`)) {
           sprintf(
           '"id":
-            %d
+            %f
                     ',
           self$`id`
           )
@@ -223,7 +223,7 @@ Trace <- R6::R6Class(
         if (!is.null(self$`sampleId`)) {
           sprintf(
           '"sampleId":
-            %d
+            %f
                     ',
           self$`sampleId`
           )
@@ -263,7 +263,7 @@ Trace <- R6::R6Class(
         if (!is.null(self$`mz`)) {
           sprintf(
           '"mz":
-            %d
+            %f
                     ',
           self$`mz`
           )
@@ -279,7 +279,7 @@ Trace <- R6::R6Class(
         if (!is.null(self$`normalizationFactor`)) {
           sprintf(
           '"normalizationFactor":
-            %d
+            %f
                     ',
           self$`normalizationFactor`
           )
@@ -287,7 +287,7 @@ Trace <- R6::R6Class(
         if (!is.null(self$`noiseLevel`)) {
           sprintf(
           '"noiseLevel":
-            %d
+            %f
                     ',
           self$`noiseLevel`
           )
