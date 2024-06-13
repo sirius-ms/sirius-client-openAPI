@@ -380,6 +380,10 @@
       {{/vars}}
       )
       jsoncontent <- paste(jsoncontent, collapse = ",")
+      # remove c() occurences
+      jsoncontent <- gsub('c\\((.*?)\\)', '\\1', jsoncontent)
+      # reduce resulting double escaped quotes \"\" into \"
+      jsoncontent <- gsub('\\\"\\\"+', '\\\"', jsoncontent)
       json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
       {{#isAdditionalPropertiesTrue}}
       json_obj <- jsonlite::fromJSON(json_string)
