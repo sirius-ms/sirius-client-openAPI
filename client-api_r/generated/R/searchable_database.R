@@ -344,6 +344,10 @@ SearchableDatabase <- R6::R6Class(
         }
       )
       jsoncontent <- paste(jsoncontent, collapse = ",")
+      # remove c() occurences
+      jsoncontent <- gsub('c\\((.*?)\\)', '\\1', jsoncontent)
+      # reduce resulting double escaped quotes \"\" into \"
+      jsoncontent <- gsub('\\\"\\\"+', '\\\"', jsoncontent)
       json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
     },
     #' Deserialize JSON string into an instance of SearchableDatabase
