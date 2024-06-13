@@ -20,6 +20,7 @@ import unittest
 import PySirius
 from PySirius import PySiriusAPI
 from PySirius.models.compound import Compound
+from PySirius.models.trace_set import TraceSet
 from PySirius.models.page_compound import PageCompound
 from PySirius.models.compound_import import CompoundImport
 
@@ -123,6 +124,13 @@ class TestCompoundsApi(unittest.TestCase):
         response = self.api.get_CompoundsApi().get_compounds_paged(self.project_id)
         self.assertIsInstance(response, PageCompound)
 
+    def test_get_traces(self) -> None:
+        """Test case for get_traces
+
+        """
+        compound_id = self.api.get_CompoundsApi().get_compounds(self.project_id)[0].compound_id
+        response = self.api.get_CompoundsApi().get_traces(self.project_id, compound_id)
+        self.assertIsInstance(response, TraceSet)
 
 if __name__ == '__main__':
     unittest.main()
