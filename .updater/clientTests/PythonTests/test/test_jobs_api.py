@@ -201,7 +201,7 @@ class TestJobsApi(unittest.TestCase):
         }
         job_submission = JobSubmission.from_json(json.dumps(job_submission_json))
         response = self.api.get_JobsApi().start_job(self.project_id, job_submission)
-        time.sleep(3)
+        # time.sleep(3)
 
         self.assertIsInstance(response, Job)
         # # TODO find substitute for this line for SIRIUS6
@@ -229,7 +229,7 @@ class TestJobsApi(unittest.TestCase):
         job_submission = JobSubmission.from_json(json.dumps(job_submission_json))
         self.api.get_JobsApi().save_job_config(config_name, job_submission)
         response = self.api.get_JobsApi().start_job_from_config(self.project_id, config_name, [aligned_feature_id])
-        time.sleep(3)
+        # time.sleep(3)
         self.api.get_JobsApi().delete_job_config(config_name)
 
         self.assertIsInstance(response, Job)
