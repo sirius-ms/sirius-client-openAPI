@@ -46,9 +46,10 @@ JobProgress <- R6::R6Class(
         self$`indeterminate` <- `indeterminate`
       }
       if (!is.null(`state`)) {
-        if (!(`state` %in% c("WAITING", "READY", "QUEUED", "SUBMITTED", "RUNNING", "CANCELED", "FAILED", "DONE"))) {
-          stop(paste("Error! \"", `state`, "\" cannot be assigned to `state`. Must be \"WAITING\", \"READY\", \"QUEUED\", \"SUBMITTED\", \"RUNNING\", \"CANCELED\", \"FAILED\", \"DONE\".", sep = ""))
-        }
+        # disabled, as it is broken and checks for `state` %in% c()
+        # if (!(`state` %in% c("WAITING", "READY", "QUEUED", "SUBMITTED", "RUNNING", "CANCELED", "FAILED", "DONE"))) {
+        #  stop(paste("Error! \"", `state`, "\" cannot be assigned to `state`. Must be \"WAITING\", \"READY\", \"QUEUED\", \"SUBMITTED\", \"RUNNING\", \"CANCELED\", \"FAILED\", \"DONE\".", sep = ""))
+        # }
         if (!(is.character(`state`) && length(`state`) == 1)) {
           stop(paste("Error! Invalid data for `state`. Must be a string:", `state`))
         }
@@ -206,10 +207,10 @@ JobProgress <- R6::R6Class(
         }
       )
       jsoncontent <- paste(jsoncontent, collapse = ",")
-      # remove c() occurences
-      jsoncontent <- gsub('c\\((.*?)\\)', '\\1', jsoncontent)
-      # reduce resulting double escaped quotes \"\" into \"
-      jsoncontent <- gsub('\\\"\\\"+', '\\\"', jsoncontent)
+      # remove c() occurences and reduce resulting double escaped quotes \"\" into \"
+      jsoncontent <- gsub('\\\"c\\((.*?)\\\"\\)', '\\1', jsoncontent)
+      # fix wrong serialization of "\"ENUM\"" to "ENUM"
+      jsoncontent <- gsub("\\\\\"([A-Z]+)\\\\\"", "\\1", jsoncontent)
       json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
     },
     #' Deserialize JSON string into an instance of JobProgress

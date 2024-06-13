@@ -9,8 +9,8 @@
 #' @format An \code{R6Class} generator object
 #' @field totalPages  integer [optional]
 #' @field totalElements  integer [optional]
-#' @field last  character [optional]
 #' @field first  character [optional]
+#' @field last  character [optional]
 #' @field size  integer [optional]
 #' @field content  list(\link{SpectralLibraryMatch}) [optional]
 #' @field number  integer [optional]
@@ -26,8 +26,8 @@ PageSpectralLibraryMatch <- R6::R6Class(
   public = list(
     `totalPages` = NULL,
     `totalElements` = NULL,
-    `last` = NULL,
     `first` = NULL,
+    `last` = NULL,
     `size` = NULL,
     `content` = NULL,
     `number` = NULL,
@@ -42,8 +42,8 @@ PageSpectralLibraryMatch <- R6::R6Class(
     #'
     #' @param totalPages totalPages
     #' @param totalElements totalElements
-    #' @param last last
     #' @param first first
+    #' @param last last
     #' @param size size
     #' @param content content
     #' @param number number
@@ -53,7 +53,7 @@ PageSpectralLibraryMatch <- R6::R6Class(
     #' @param empty empty
     #' @param ... Other optional arguments.
     #' @export
-    initialize = function(`totalPages` = NULL, `totalElements` = NULL, `last` = NULL, `first` = NULL, `size` = NULL, `content` = NULL, `number` = NULL, `sort` = NULL, `numberOfElements` = NULL, `pageable` = NULL, `empty` = NULL, ...) {
+    initialize = function(`totalPages` = NULL, `totalElements` = NULL, `first` = NULL, `last` = NULL, `size` = NULL, `content` = NULL, `number` = NULL, `sort` = NULL, `numberOfElements` = NULL, `pageable` = NULL, `empty` = NULL, ...) {
       if (!is.null(`totalPages`)) {
         if (!(is.numeric(`totalPages`) && length(`totalPages`) == 1)) {
           stop(paste("Error! Invalid data for `totalPages`. Must be an integer:", `totalPages`))
@@ -66,17 +66,17 @@ PageSpectralLibraryMatch <- R6::R6Class(
         }
         self$`totalElements` <- `totalElements`
       }
-      if (!is.null(`last`)) {
-        if (!(is.logical(`last`) && length(`last`) == 1)) {
-          stop(paste("Error! Invalid data for `last`. Must be a boolean:", `last`))
-        }
-        self$`last` <- `last`
-      }
       if (!is.null(`first`)) {
         if (!(is.logical(`first`) && length(`first`) == 1)) {
           stop(paste("Error! Invalid data for `first`. Must be a boolean:", `first`))
         }
         self$`first` <- `first`
+      }
+      if (!is.null(`last`)) {
+        if (!(is.logical(`last`) && length(`last`) == 1)) {
+          stop(paste("Error! Invalid data for `last`. Must be a boolean:", `last`))
+        }
+        self$`last` <- `last`
       }
       if (!is.null(`size`)) {
         if (!(is.numeric(`size`) && length(`size`) == 1)) {
@@ -133,13 +133,13 @@ PageSpectralLibraryMatch <- R6::R6Class(
         PageSpectralLibraryMatchObject[["totalElements"]] <-
           self$`totalElements`
       }
-      if (!is.null(self$`last`)) {
-        PageSpectralLibraryMatchObject[["last"]] <-
-          self$`last`
-      }
       if (!is.null(self$`first`)) {
         PageSpectralLibraryMatchObject[["first"]] <-
           self$`first`
+      }
+      if (!is.null(self$`last`)) {
+        PageSpectralLibraryMatchObject[["last"]] <-
+          self$`last`
       }
       if (!is.null(self$`size`)) {
         PageSpectralLibraryMatchObject[["size"]] <-
@@ -199,11 +199,11 @@ PageSpectralLibraryMatch <- R6::R6Class(
       if (!is.null(this_object$`totalElements`)) {
         self$`totalElements` <- this_object$`totalElements`
       }
-      if (!is.null(this_object$`last`)) {
-        self$`last` <- this_object$`last`
-      }
       if (!is.null(this_object$`first`)) {
         self$`first` <- this_object$`first`
+      }
+      if (!is.null(this_object$`last`)) {
+        self$`last` <- this_object$`last`
       }
       if (!is.null(this_object$`size`)) {
         self$`size` <- this_object$`size`
@@ -257,20 +257,20 @@ PageSpectralLibraryMatch <- R6::R6Class(
           self$`totalElements`
           )
         },
-        if (!is.null(self$`last`)) {
-          sprintf(
-          '"last":
-            %s
-                    ',
-          tolower(self$`last`)
-          )
-        },
         if (!is.null(self$`first`)) {
           sprintf(
           '"first":
             %s
                     ',
           tolower(self$`first`)
+          )
+        },
+        if (!is.null(self$`last`)) {
+          sprintf(
+          '"last":
+            %s
+                    ',
+          tolower(self$`last`)
           )
         },
         if (!is.null(self$`size`)) {
@@ -331,10 +331,10 @@ PageSpectralLibraryMatch <- R6::R6Class(
         }
       )
       jsoncontent <- paste(jsoncontent, collapse = ",")
-      # remove c() occurences
-      jsoncontent <- gsub('c\\((.*?)\\)', '\\1', jsoncontent)
-      # reduce resulting double escaped quotes \"\" into \"
-      jsoncontent <- gsub('\\\"\\\"+', '\\\"', jsoncontent)
+      # remove c() occurences and reduce resulting double escaped quotes \"\" into \"
+      jsoncontent <- gsub('\\\"c\\((.*?)\\\"\\)', '\\1', jsoncontent)
+      # fix wrong serialization of "\"ENUM\"" to "ENUM"
+      jsoncontent <- gsub("\\\\\"([A-Z]+)\\\\\"", "\\1", jsoncontent)
       json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
     },
     #' Deserialize JSON string into an instance of PageSpectralLibraryMatch
@@ -349,8 +349,8 @@ PageSpectralLibraryMatch <- R6::R6Class(
       this_object <- jsonlite::fromJSON(input_json)
       self$`totalPages` <- this_object$`totalPages`
       self$`totalElements` <- this_object$`totalElements`
-      self$`last` <- this_object$`last`
       self$`first` <- this_object$`first`
+      self$`last` <- this_object$`last`
       self$`size` <- this_object$`size`
       self$`content` <- ApiClient$new()$deserializeObj(this_object$`content`, "array[SpectralLibraryMatch]", loadNamespace("Rsirius"))
       self$`number` <- this_object$`number`

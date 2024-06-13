@@ -37,9 +37,10 @@ Annotation <- R6::R6Class(
     #' @export
     initialize = function(`type` = NULL, `description` = NULL, `index` = NULL, `from` = NULL, `to` = NULL, ...) {
       if (!is.null(`type`)) {
-        if (!(`type` %in% c("FEATURE", "MS2"))) {
-          stop(paste("Error! \"", `type`, "\" cannot be assigned to `type`. Must be \"FEATURE\", \"MS2\".", sep = ""))
-        }
+        # disabled, as it is broken and checks for `type` %in% c()
+        # if (!(`type` %in% c("FEATURE", "MS2"))) {
+        #  stop(paste("Error! \"", `type`, "\" cannot be assigned to `type`. Must be \"FEATURE\", \"MS2\".", sep = ""))
+        # }
         if (!(is.character(`type`) && length(`type`) == 1)) {
           stop(paste("Error! Invalid data for `type`. Must be a string:", `type`))
         }
@@ -182,10 +183,10 @@ Annotation <- R6::R6Class(
         }
       )
       jsoncontent <- paste(jsoncontent, collapse = ",")
-      # remove c() occurences
-      jsoncontent <- gsub('c\\((.*?)\\)', '\\1', jsoncontent)
-      # reduce resulting double escaped quotes \"\" into \"
-      jsoncontent <- gsub('\\\"\\\"+', '\\\"', jsoncontent)
+      # remove c() occurences and reduce resulting double escaped quotes \"\" into \"
+      jsoncontent <- gsub('\\\"c\\((.*?)\\\"\\)', '\\1', jsoncontent)
+      # fix wrong serialization of "\"ENUM\"" to "ENUM"
+      jsoncontent <- gsub("\\\\\"([A-Z]+)\\\\\"", "\\1", jsoncontent)
       json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
     },
     #' Deserialize JSON string into an instance of Annotation

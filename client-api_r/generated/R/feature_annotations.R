@@ -64,9 +64,10 @@ FeatureAnnotations <- R6::R6Class(
         self$`confidenceApproxMatch` <- `confidenceApproxMatch`
       }
       if (!is.null(`expansiveSearchState`)) {
-        if (!(`expansiveSearchState` %in% c())) {
-          stop(paste("Error! \"", `expansiveSearchState`, "\" cannot be assigned to `expansiveSearchState`. Must be .", sep = ""))
-        }
+        # disabled, as it is broken and checks for `expansiveSearchState` %in% c()
+        # if (!(`expansiveSearchState` %in% c())) {
+        #  stop(paste("Error! \"", `expansiveSearchState`, "\" cannot be assigned to `expansiveSearchState`. Must be .", sep = ""))
+        # }
         stopifnot(R6::is.R6(`expansiveSearchState`))
         self$`expansiveSearchState` <- `expansiveSearchState`
       }
@@ -227,10 +228,10 @@ FeatureAnnotations <- R6::R6Class(
         }
       )
       jsoncontent <- paste(jsoncontent, collapse = ",")
-      # remove c() occurences
-      jsoncontent <- gsub('c\\((.*?)\\)', '\\1', jsoncontent)
-      # reduce resulting double escaped quotes \"\" into \"
-      jsoncontent <- gsub('\\\"\\\"+', '\\\"', jsoncontent)
+      # remove c() occurences and reduce resulting double escaped quotes \"\" into \"
+      jsoncontent <- gsub('\\\"c\\((.*?)\\\"\\)', '\\1', jsoncontent)
+      # fix wrong serialization of "\"ENUM\"" to "ENUM"
+      jsoncontent <- gsub("\\\\\"([A-Z]+)\\\\\"", "\\1", jsoncontent)
       json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
     },
     #' Deserialize JSON string into an instance of FeatureAnnotations

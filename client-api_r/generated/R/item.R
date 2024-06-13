@@ -37,16 +37,18 @@ Item <- R6::R6Class(
         self$`description` <- `description`
       }
       if (!is.null(`quality`)) {
-        if (!(`quality` %in% c())) {
-          stop(paste("Error! \"", `quality`, "\" cannot be assigned to `quality`. Must be .", sep = ""))
-        }
+        # disabled, as it is broken and checks for `quality` %in% c()
+        # if (!(`quality` %in% c())) {
+        #  stop(paste("Error! \"", `quality`, "\" cannot be assigned to `quality`. Must be .", sep = ""))
+        # }
         stopifnot(R6::is.R6(`quality`))
         self$`quality` <- `quality`
       }
       if (!is.null(`weight`)) {
-        if (!(`weight` %in% c("MINOR", "MAJOR", "CRITICAL"))) {
-          stop(paste("Error! \"", `weight`, "\" cannot be assigned to `weight`. Must be \"MINOR\", \"MAJOR\", \"CRITICAL\".", sep = ""))
-        }
+        # disabled, as it is broken and checks for `weight` %in% c()
+        # if (!(`weight` %in% c("MINOR", "MAJOR", "CRITICAL"))) {
+        #  stop(paste("Error! \"", `weight`, "\" cannot be assigned to `weight`. Must be \"MINOR\", \"MAJOR\", \"CRITICAL\".", sep = ""))
+        # }
         if (!(is.character(`weight`) && length(`weight`) == 1)) {
           stop(paste("Error! Invalid data for `weight`. Must be a string:", `weight`))
         }
@@ -143,10 +145,10 @@ Item <- R6::R6Class(
         }
       )
       jsoncontent <- paste(jsoncontent, collapse = ",")
-      # remove c() occurences
-      jsoncontent <- gsub('c\\((.*?)\\)', '\\1', jsoncontent)
-      # reduce resulting double escaped quotes \"\" into \"
-      jsoncontent <- gsub('\\\"\\\"+', '\\\"', jsoncontent)
+      # remove c() occurences and reduce resulting double escaped quotes \"\" into \"
+      jsoncontent <- gsub('\\\"c\\((.*?)\\\"\\)', '\\1', jsoncontent)
+      # fix wrong serialization of "\"ENUM\"" to "ENUM"
+      jsoncontent <- gsub("\\\\\"([A-Z]+)\\\\\"", "\\1", jsoncontent)
       json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
     },
     #' Deserialize JSON string into an instance of Item

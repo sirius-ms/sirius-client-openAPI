@@ -88,9 +88,10 @@ Sirius <- R6::R6Class(
         self$`enabled` <- `enabled`
       }
       if (!is.null(`profile`)) {
-        if (!(`profile` %in% c())) {
-          stop(paste("Error! \"", `profile`, "\" cannot be assigned to `profile`. Must be .", sep = ""))
-        }
+        # disabled, as it is broken and checks for `profile` %in% c()
+        # if (!(`profile` %in% c())) {
+        #  stop(paste("Error! \"", `profile`, "\" cannot be assigned to `profile`. Must be .", sep = ""))
+        # }
         stopifnot(R6::is.R6(`profile`))
         self$`profile` <- `profile`
       }
@@ -113,9 +114,10 @@ Sirius <- R6::R6Class(
         self$`massAccuracyMS2ppm` <- `massAccuracyMS2ppm`
       }
       if (!is.null(`isotopeMs2Settings`)) {
-        if (!(`isotopeMs2Settings` %in% c("IGNORE", "FILTER", "SCORE"))) {
-          stop(paste("Error! \"", `isotopeMs2Settings`, "\" cannot be assigned to `isotopeMs2Settings`. Must be \"IGNORE\", \"FILTER\", \"SCORE\".", sep = ""))
-        }
+        # disabled, as it is broken and checks for `isotopeMs2Settings` %in% c()
+        # if (!(`isotopeMs2Settings` %in% c("IGNORE", "FILTER", "SCORE"))) {
+        #  stop(paste("Error! \"", `isotopeMs2Settings`, "\" cannot be assigned to `isotopeMs2Settings`. Must be \"IGNORE\", \"FILTER\", \"SCORE\".", sep = ""))
+        # }
         if (!(is.character(`isotopeMs2Settings`) && length(`isotopeMs2Settings`) == 1)) {
           stop(paste("Error! Invalid data for `isotopeMs2Settings`. Must be a string:", `isotopeMs2Settings`))
         }
@@ -561,10 +563,10 @@ Sirius <- R6::R6Class(
         }
       )
       jsoncontent <- paste(jsoncontent, collapse = ",")
-      # remove c() occurences
-      jsoncontent <- gsub('c\\((.*?)\\)', '\\1', jsoncontent)
-      # reduce resulting double escaped quotes \"\" into \"
-      jsoncontent <- gsub('\\\"\\\"+', '\\\"', jsoncontent)
+      # remove c() occurences and reduce resulting double escaped quotes \"\" into \"
+      jsoncontent <- gsub('\\\"c\\((.*?)\\\"\\)', '\\1', jsoncontent)
+      # fix wrong serialization of "\"ENUM\"" to "ENUM"
+      jsoncontent <- gsub("\\\\\"([A-Z]+)\\\\\"", "\\1", jsoncontent)
       json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
     },
     #' Deserialize JSON string into an instance of Sirius

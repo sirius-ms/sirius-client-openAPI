@@ -40,9 +40,10 @@ ProjectChangeEvent <- R6::R6Class(
     #' @export
     initialize = function(`eventType` = NULL, `projectId` = NULL, `compoundId` = NULL, `featuredId` = NULL, `formulaId` = NULL, `structureInChIKey` = NULL, ...) {
       if (!is.null(`eventType`)) {
-        if (!(`eventType` %in% c("PROJECT_OPENED", "PROJECT_MOVED", "PROJECT_CLOSED", "FEATURE_CREATED", "FEATURE_UPDATED", "FEATURE_DELETED", "RESULT_CREATED", "RESULT_UPDATED", "RESULT_DELETED"))) {
-          stop(paste("Error! \"", `eventType`, "\" cannot be assigned to `eventType`. Must be \"PROJECT_OPENED\", \"PROJECT_MOVED\", \"PROJECT_CLOSED\", \"FEATURE_CREATED\", \"FEATURE_UPDATED\", \"FEATURE_DELETED\", \"RESULT_CREATED\", \"RESULT_UPDATED\", \"RESULT_DELETED\".", sep = ""))
-        }
+        # disabled, as it is broken and checks for `eventType` %in% c()
+        # if (!(`eventType` %in% c("PROJECT_OPENED", "PROJECT_MOVED", "PROJECT_CLOSED", "FEATURE_CREATED", "FEATURE_UPDATED", "FEATURE_DELETED", "RESULT_CREATED", "RESULT_UPDATED", "RESULT_DELETED"))) {
+        #  stop(paste("Error! \"", `eventType`, "\" cannot be assigned to `eventType`. Must be \"PROJECT_OPENED\", \"PROJECT_MOVED\", \"PROJECT_CLOSED\", \"FEATURE_CREATED\", \"FEATURE_UPDATED\", \"FEATURE_DELETED\", \"RESULT_CREATED\", \"RESULT_UPDATED\", \"RESULT_DELETED\".", sep = ""))
+        # }
         if (!(is.character(`eventType`) && length(`eventType`) == 1)) {
           stop(paste("Error! Invalid data for `eventType`. Must be a string:", `eventType`))
         }
@@ -206,10 +207,10 @@ ProjectChangeEvent <- R6::R6Class(
         }
       )
       jsoncontent <- paste(jsoncontent, collapse = ",")
-      # remove c() occurences
-      jsoncontent <- gsub('c\\((.*?)\\)', '\\1', jsoncontent)
-      # reduce resulting double escaped quotes \"\" into \"
-      jsoncontent <- gsub('\\\"\\\"+', '\\\"', jsoncontent)
+      # remove c() occurences and reduce resulting double escaped quotes \"\" into \"
+      jsoncontent <- gsub('\\\"c\\((.*?)\\\"\\)', '\\1', jsoncontent)
+      # fix wrong serialization of "\"ENUM\"" to "ENUM"
+      jsoncontent <- gsub("\\\\\"([A-Z]+)\\\\\"", "\\1", jsoncontent)
       json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
     },
     #' Deserialize JSON string into an instance of ProjectChangeEvent

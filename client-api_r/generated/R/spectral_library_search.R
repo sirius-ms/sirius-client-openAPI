@@ -60,9 +60,10 @@ SpectralLibrarySearch <- R6::R6Class(
         self$`precursorDeviationPpm` <- `precursorDeviationPpm`
       }
       if (!is.null(`scoring`)) {
-        if (!(`scoring` %in% c())) {
-          stop(paste("Error! \"", `scoring`, "\" cannot be assigned to `scoring`. Must be .", sep = ""))
-        }
+        # disabled, as it is broken and checks for `scoring` %in% c()
+        # if (!(`scoring` %in% c())) {
+        #  stop(paste("Error! \"", `scoring`, "\" cannot be assigned to `scoring`. Must be .", sep = ""))
+        # }
         stopifnot(R6::is.R6(`scoring`))
         self$`scoring` <- `scoring`
       }
@@ -184,10 +185,10 @@ SpectralLibrarySearch <- R6::R6Class(
         }
       )
       jsoncontent <- paste(jsoncontent, collapse = ",")
-      # remove c() occurences
-      jsoncontent <- gsub('c\\((.*?)\\)', '\\1', jsoncontent)
-      # reduce resulting double escaped quotes \"\" into \"
-      jsoncontent <- gsub('\\\"\\\"+', '\\\"', jsoncontent)
+      # remove c() occurences and reduce resulting double escaped quotes \"\" into \"
+      jsoncontent <- gsub('\\\"c\\((.*?)\\\"\\)', '\\1', jsoncontent)
+      # fix wrong serialization of "\"ENUM\"" to "ENUM"
+      jsoncontent <- gsub("\\\\\"([A-Z]+)\\\\\"", "\\1", jsoncontent)
       json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
     },
     #' Deserialize JSON string into an instance of SpectralLibrarySearch

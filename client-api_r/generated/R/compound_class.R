@@ -43,9 +43,10 @@ CompoundClass <- R6::R6Class(
     #' @export
     initialize = function(`type` = NULL, `level` = NULL, `name` = NULL, `description` = NULL, `id` = NULL, `probability` = NULL, `index` = NULL, ...) {
       if (!is.null(`type`)) {
-        if (!(`type` %in% c())) {
-          stop(paste("Error! \"", `type`, "\" cannot be assigned to `type`. Must be .", sep = ""))
-        }
+        # disabled, as it is broken and checks for `type` %in% c()
+        # if (!(`type` %in% c())) {
+        #  stop(paste("Error! \"", `type`, "\" cannot be assigned to `type`. Must be .", sep = ""))
+        # }
         stopifnot(R6::is.R6(`type`))
         self$`type` <- `type`
       }
@@ -233,10 +234,10 @@ CompoundClass <- R6::R6Class(
         }
       )
       jsoncontent <- paste(jsoncontent, collapse = ",")
-      # remove c() occurences
-      jsoncontent <- gsub('c\\((.*?)\\)', '\\1', jsoncontent)
-      # reduce resulting double escaped quotes \"\" into \"
-      jsoncontent <- gsub('\\\"\\\"+', '\\\"', jsoncontent)
+      # remove c() occurences and reduce resulting double escaped quotes \"\" into \"
+      jsoncontent <- gsub('\\\"c\\((.*?)\\\"\\)', '\\1', jsoncontent)
+      # fix wrong serialization of "\"ENUM\"" to "ENUM"
+      jsoncontent <- gsub("\\\\\"([A-Z]+)\\\\\"", "\\1", jsoncontent)
       json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
     },
     #' Deserialize JSON string into an instance of CompoundClass

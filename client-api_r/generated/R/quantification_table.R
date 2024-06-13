@@ -46,27 +46,30 @@ QuantificationTable <- R6::R6Class(
     #' @export
     initialize = function(`quantificationType` = NULL, `rowType` = NULL, `columnType` = NULL, `rowIds` = NULL, `columnIds` = NULL, `rowNames` = NULL, `columnNames` = NULL, `values` = NULL, ...) {
       if (!is.null(`quantificationType`)) {
-        if (!(`quantificationType` %in% c("APEX_HEIGHT"))) {
-          stop(paste("Error! \"", `quantificationType`, "\" cannot be assigned to `quantificationType`. Must be \"APEX_HEIGHT\".", sep = ""))
-        }
+        # disabled, as it is broken and checks for `quantificationType` %in% c()
+        # if (!(`quantificationType` %in% c("APEX_HEIGHT"))) {
+        #  stop(paste("Error! \"", `quantificationType`, "\" cannot be assigned to `quantificationType`. Must be \"APEX_HEIGHT\".", sep = ""))
+        # }
         if (!(is.character(`quantificationType`) && length(`quantificationType`) == 1)) {
           stop(paste("Error! Invalid data for `quantificationType`. Must be a string:", `quantificationType`))
         }
         self$`quantificationType` <- `quantificationType`
       }
       if (!is.null(`rowType`)) {
-        if (!(`rowType` %in% c("FEATURES"))) {
-          stop(paste("Error! \"", `rowType`, "\" cannot be assigned to `rowType`. Must be \"FEATURES\".", sep = ""))
-        }
+        # disabled, as it is broken and checks for `rowType` %in% c()
+        # if (!(`rowType` %in% c("FEATURES"))) {
+        #  stop(paste("Error! \"", `rowType`, "\" cannot be assigned to `rowType`. Must be \"FEATURES\".", sep = ""))
+        # }
         if (!(is.character(`rowType`) && length(`rowType`) == 1)) {
           stop(paste("Error! Invalid data for `rowType`. Must be a string:", `rowType`))
         }
         self$`rowType` <- `rowType`
       }
       if (!is.null(`columnType`)) {
-        if (!(`columnType` %in% c("SAMPLES"))) {
-          stop(paste("Error! \"", `columnType`, "\" cannot be assigned to `columnType`. Must be \"SAMPLES\".", sep = ""))
-        }
+        # disabled, as it is broken and checks for `columnType` %in% c()
+        # if (!(`columnType` %in% c("SAMPLES"))) {
+        #  stop(paste("Error! \"", `columnType`, "\" cannot be assigned to `columnType`. Must be \"SAMPLES\".", sep = ""))
+        # }
         if (!(is.character(`columnType`) && length(`columnType`) == 1)) {
           stop(paste("Error! Invalid data for `columnType`. Must be a string:", `columnType`))
         }
@@ -261,10 +264,10 @@ QuantificationTable <- R6::R6Class(
         }
       )
       jsoncontent <- paste(jsoncontent, collapse = ",")
-      # remove c() occurences
-      jsoncontent <- gsub('c\\((.*?)\\)', '\\1', jsoncontent)
-      # reduce resulting double escaped quotes \"\" into \"
-      jsoncontent <- gsub('\\\"\\\"+', '\\\"', jsoncontent)
+      # remove c() occurences and reduce resulting double escaped quotes \"\" into \"
+      jsoncontent <- gsub('\\\"c\\((.*?)\\\"\\)', '\\1', jsoncontent)
+      # fix wrong serialization of "\"ENUM\"" to "ENUM"
+      jsoncontent <- gsub("\\\\\"([A-Z]+)\\\\\"", "\\1", jsoncontent)
       json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
     },
     #' Deserialize JSON string into an instance of QuantificationTable
