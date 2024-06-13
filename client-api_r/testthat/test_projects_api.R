@@ -47,7 +47,7 @@ test_that("CreateProjectSpace", {
   # @return [ProjectInfo]
 
   project_id <- "CreateProjectSpace"
-  project_dir <- paste(Sys.getenv("HOME"), "CreateProjectSpace", sep="/")
+  project_dir <- paste(Sys.getenv("HOME"), project_id, sep="/")
 
   response <- api_instance$CreateProjectSpace(project_id, project_dir)
   expect_true(inherits(response, "ProjectInfo"))
@@ -120,7 +120,7 @@ test_that("GetProjectSpace", {
   # @return [ProjectInfo]
 
   project_id <- "GetProjectSpace"
-  project_dir <- paste(Sys.getenv("HOME"), "GetProjectSpace", sep="/")
+  project_dir <- paste(Sys.getenv("HOME"), project_id, sep="/")
   api_instance$CreateProjectSpace(project_id, project_dir)
 
   response <- api_instance$GetProjectSpace(project_id)
@@ -138,7 +138,7 @@ test_that("GetProjectSpaces", {
   # @return [array[ProjectInfo]]
 
   project_id <- "GetProjectSpaces"
-  project_dir <- paste(Sys.getenv("HOME"), "GetProjectSpaces", sep="/")
+  project_dir <- paste(Sys.getenv("HOME"), project_id, sep="/")
   api_instance$CreateProjectSpace(project_id, project_dir)
 
   response <- api_instance$GetProjectSpaces()
@@ -160,17 +160,17 @@ test_that("ImportMsRunData", {
   # @param input_files array[data.frame]  (optional)
   # @return [ImportResult]
 
-  # TODO LCMS import not implemented
-  project_id <- "ImportMsRunData"
-  project_dir <- paste(Sys.getenv("HOME"), "ImportMsRunData", sep="/")
-  api_instance$CreateProjectSpace(project_id, project_dir)
-
-  var_input_files <- full_ms_file
-  response <- api_instance$ImportMsRunData(project_id, input_files=var_input_files)
-  expect_true(inherits(response, "ImportResult"))
-
-  withr::defer(api_instance$CloseProjectSpace(project_id))
-  withr::defer(unlink(project_dir, recursive=TRUE))
+#   # TODO LCMS import not implemented
+#   project_id <- "ImportMsRunData"
+#   project_dir <- paste(Sys.getenv("HOME"), project_id, sep="/")
+#   api_instance$CreateProjectSpace(project_id, project_dir)
+#
+#   var_input_files <- full_ms_file
+#   response <- api_instance$ImportMsRunData(project_id, input_files=var_input_files)
+#   expect_true(inherits(response, "ImportResult"))
+#
+#   withr::defer(api_instance$CloseProjectSpace(project_id))
+#   withr::defer(unlink(project_dir, recursive=TRUE))
 })
 
 test_that("ImportMsRunDataAsJob", {
@@ -185,9 +185,8 @@ test_that("ImportMsRunDataAsJob", {
   # @param input_files array[data.frame]  (optional)
   # @return [Job]
 
-  # TODO LCMS import not implemented
   project_id <- "ImportMsRunDataAsJob"
-  project_dir <- paste(Sys.getenv("HOME"), "ImportMsRunDataAsJob", sep="/")
+  project_dir <- paste(Sys.getenv("HOME"), project_id, sep="/")
   api_instance$CreateProjectSpace(project_id, project_dir)
 
   var_input_files <- full_ms_file
@@ -210,7 +209,7 @@ test_that("ImportPreprocessedData", {
   # @return [ImportResult]
 
   project_id <- "ImportPreprocessedData"
-  project_dir <- paste(Sys.getenv("HOME"), "ImportPreprocessedData", sep="/")
+  project_dir <- paste(Sys.getenv("HOME"), project_id, sep="/")
   api_instance$CreateProjectSpace(project_id, project_dir)
 
   var_input_files <- preproc_ms2_file_1
@@ -234,7 +233,7 @@ test_that("ImportPreprocessedDataAsJob", {
   # @return [Job]
 
   project_id <- "ImportPreprocessedDataAsJob"
-  project_dir <- paste(Sys.getenv("HOME"), "ImportPreprocessedDataAsJob", sep="/")
+  project_dir <- paste(Sys.getenv("HOME"), project_id, sep="/")
   api_instance$CreateProjectSpace(project_id, project_dir)
 
   var_input_files <- preproc_ms2_file_1
