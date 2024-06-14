@@ -54,6 +54,19 @@ class SiriusSDK:
                 time.sleep(1)
                 try:
                     if SiriusSDK.process.poll() is None:
+                        if self.workspace is None:
+                            found = self.__cycle_find_sirius_pid_and_port_from_folder__()
+                        else:
+                            found = self.__cycle_find_sirius_pid_and_port_from_folder__(folder=self.workspace)
+                        if not found:
+                            print(
+                                "Could not find sirius.port file. Please terminate SIRIUS if needed and try specifying a port")
+                            print(
+                                "Alternatively, try attaching to a running SIRIUS instance with attach_to_running_sirius()")
+                            return None
+                        SiriusSDK.host = f'http://localhost:{SiriusSDK.port}'
+                        SiriusSDK.configuration = PySirius.Configuration(SiriusSDK.host)
+                        SiriusSDK.api_client = PySirius.ApiClient(SiriusSDK.configuration)
                         if PySirius.ActuatorApi(SiriusSDK.api_client).health().get('status') == 'UP':
                             SiriusSDK.process_id = SiriusSDK.process.pid
                             return None
