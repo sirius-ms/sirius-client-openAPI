@@ -7,6 +7,8 @@ options(warn=-1)
 api_instance <- FeaturesApi$new()
 projects_api <- ProjectsApi$new()
 tomato_project = path_to_demo_data <- paste(Sys.getenv("HOME"), "tomato_small.sirius", sep="/")
+basic_spectrum <- c(BasicSpectrum$new(peaks = c(SimplePeak$new(1.23, 4.56)), precursorMz = 1.23))
+feature_import <- c(FeatureImport$new(name = "testfeature", feature_id = "testfeature", ionMass = 1.23, adduct = "[M+?]+", ms1Spectra = basic_spectrum, ms2Spectra = basic_spectrum))
 
 test_that("AddAlignedFeatures", {
   # tests for AddAlignedFeatures
@@ -178,8 +180,15 @@ test_that("GetDeNovoStructureCandidates", {
   # @param opt_fields array[StructureCandidateOptField] set of optional fields to be included. Use 'none' only to override defaults. (optional)
   # @return [array[StructureCandidateFormula]]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  project_id <- "GetDeNovoStructureCandidatesByFormula"
+  projects_api$OpenProjectSpace(project_id, tomato_project)
+  aligned_feature_id <- "586487307819356741"
+
+  response <- api_instance$GetDeNovoStructureCandidates(project_id, aligned_feature_id)
+  expect_true(inherits(response, "list"))
+  expect_true(inherits(response[[1]], "StructureCandidateFormula"))
+
+  withr::defer(projects_api$CloseProjectSpace(project_id))
 })
 
 test_that("GetDeNovoStructureCandidatesByFormula", {
@@ -193,8 +202,16 @@ test_that("GetDeNovoStructureCandidatesByFormula", {
   # @param opt_fields array[StructureCandidateOptField] set of optional fields to be included. Use 'none' only to override defaults. (optional)
   # @return [array[StructureCandidateScored]]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  project_id <- "GetDeNovoStructureCandidatesByFormula"
+  projects_api$OpenProjectSpace(project_id, tomato_project)
+  aligned_feature_id <- "586487307819356741"
+  formula_id <- api_instance$GetFormulaCandidates(project_id, aligned_feature_id)[[1]]$formulaId
+
+  response <- api_instance$GetDeNovoStructureCandidatesByFormula(project_id, aligned_feature_id, formula_id)
+  expect_true(inherits(response, "list"))
+  expect_true(inherits(response[[1]], "StructureCandidateScored"))
+
+  withr::defer(projects_api$CloseProjectSpace(project_id))
 })
 
 test_that("GetDeNovoStructureCandidatesByFormulaPaged", {
@@ -211,8 +228,15 @@ test_that("GetDeNovoStructureCandidatesByFormulaPaged", {
   # @param opt_fields array[StructureCandidateOptField] set of optional fields to be included. Use 'none' only to override defaults. (optional)
   # @return [PageStructureCandidateScored]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  project_id <- "GetDeNovoStructureCandidatesByFormulaPaged"
+  projects_api$OpenProjectSpace(project_id, tomato_project)
+  aligned_feature_id <- "586487307819356741"
+  formula_id <- api_instance$GetFormulaCandidates(project_id, aligned_feature_id)[[1]]$formulaId
+
+  response <- api_instance$GetDeNovoStructureCandidatesByFormulaPaged(project_id, aligned_feature_id, formula_id)
+  expect_true(inherits(response, "PageStructureCandidateScored"))
+
+  withr::defer(projects_api$CloseProjectSpace(project_id))
 })
 
 test_that("GetDeNovoStructureCandidatesPaged", {
@@ -228,8 +252,14 @@ test_that("GetDeNovoStructureCandidatesPaged", {
   # @param opt_fields array[StructureCandidateOptField] set of optional fields to be included. Use 'none' only to override defaults. (optional)
   # @return [PageStructureCandidateFormula]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  project_id <- "GetDeNovoStructureCandidatesPaged"
+  projects_api$OpenProjectSpace(project_id, tomato_project)
+  aligned_feature_id <- "586487307819356741"
+
+  response <- api_instance$GetDeNovoStructureCandidatesPaged(project_id, aligned_feature_id)
+  expect_true(inherits(response, "PageStructureCandidateFormula"))
+
+  withr::defer(projects_api$CloseProjectSpace(project_id))
 })
 
 test_that("GetFingerprintPrediction", {
@@ -286,8 +316,15 @@ test_that("GetFormulaAnnotatedSpectrum", {
   # @param spectrum_index integer index of the spectrum to be annotated. Merged MS/MS will be used if spectrumIndex < 0 (default) (optional)
   # @return [AnnotatedSpectrum]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  project_id <- "GetFormulaAnnotatedSpectrum"
+  projects_api$OpenProjectSpace(project_id, tomato_project)
+  aligned_feature_id <- api_instance$GetAlignedFeatures(project_id)[[1]]$alignedFeatureId
+  formula_id <- api_instance$GetFormulaCandidates(project_id, aligned_feature_id)[[1]]$formulaId
+
+  response <-api_instance$GetFormulaAnnotatedSpectrum(project_id, aligned_feature_id, formula_id)
+  expect_true(inherits(response, "AnnotatedSpectrum"))
+
+  withr::defer(projects_api$CloseProjectSpace(project_id))
 })
 
 test_that("GetFormulaCandidate", {
@@ -543,8 +580,14 @@ test_that("GetSpectralLibraryMatchesPaged", {
   # @param opt_fields array[SpectralLibraryMatchOptField]  (optional)
   # @return [PageSpectralLibraryMatch]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  project_id <- "GetSpectralLibraryMatchesPaged"
+  projects_api$OpenProjectSpace(project_id, tomato_project)
+  aligned_feature_id <- api_instance$GetAlignedFeatures(project_id)[[1]]$alignedFeatureId
+
+  response <- api_instance$GetSpectralLibraryMatchesPaged(project_id, aligned_feature_id)
+  expect_true(inherits(response, "PageSpectralLibraryMatch"))
+
+  withr::defer(projects_api$CloseProjectSpace(project_id))
 })
 
 test_that("GetSpectralLibraryMatchesSummary", {
@@ -559,8 +602,14 @@ test_that("GetSpectralLibraryMatchesSummary", {
   # @param candidate_in_chi_key character inchi key of the database compound. (optional)
   # @return [SpectralLibraryMatchSummary]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  project_id <- "GetSpectralLibraryMatchesSummary"
+  projects_api$OpenProjectSpace(project_id, tomato_project)
+  aligned_feature_id <- api_instance$GetAlignedFeatures(project_id)[[1]]$alignedFeatureId
+
+  response <- api_instance$GetSpectralLibraryMatchesSummary(project_id, aligned_feature_id)
+  expect_true(inherits(response, "SpectralLibraryMatchSummary"))
+
+  withr::defer(projects_api$CloseProjectSpace(project_id))
 })
 
 test_that("GetStructureAnnotatedMsData", {
