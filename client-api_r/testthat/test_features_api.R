@@ -6,6 +6,11 @@ options(warn=-1)
 
 api_instance <- FeaturesApi$new()
 projects_api <- ProjectsApi$new()
+
+path_to_demo_data <- paste(Sys.getenv("HOME"), "sirius-client-openAPI/.updater/clientTests/Data", sep="/")
+preproc_ms2_file_1 = paste(path_to_demo_data, "Kaempferol.ms", sep="/")
+preproc_ms2_file_2 = paste(path_to_demo_data, "laudanosine.mgf", sep="/")
+
 tomato_project = path_to_demo_data <- paste(Sys.getenv("HOME"), "tomato_small.sirius", sep="/")
 basic_spectrum <- c(BasicSpectrum$new(peaks = c(SimplePeak$new(1.23, 4.56)), precursorMz = 1.23))
 feature_import <- c(FeatureImport$new(name = "testfeature", feature_id = "testfeature", ionMass = 1.23, adduct = "[M+?]+", ms1Spectra = basic_spectrum, ms2Spectra = basic_spectrum))
@@ -33,8 +38,18 @@ test_that("DeleteAlignedFeature", {
   # @param aligned_feature_id character identifier of feature (aligned over runs) to delete.
   # @return [Void]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  project_id <- "DeleteAlignedFeature"
+  projects_api$OpenProjectSpace(project_id, tomato_project)
+  var_input_files <- preproc_ms2_file_1
+  import <- projects_api$ImportPreprocessedData(project_id, input_files=var_input_files)
+  feature_id <- import$affectedAlignedFeatureIds[[1]]
+
+  response_before <- api_instance$GetAlignedFeatures(project_id)
+  api_instance$DeleteAlignedFeature(project_id, feature_id)
+  response_after <- api_instance$GetAlignedFeatures(project_id)
+
+  expect_equal(length(response_before) - length(response_after), 1)
+  withr::defer(projects_api$CloseProjectSpace(project_id))
 })
 
 test_that("DeleteAlignedFeatures", {
