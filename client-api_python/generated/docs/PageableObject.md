@@ -9,8 +9,8 @@ Name | Type | Description | Notes
 **sort** | [**SortObject**](SortObject.md) |  | [optional] 
 **page_number** | **int** |  | [optional] 
 **page_size** | **int** |  | [optional] 
-**unpaged** | **bool** |  | [optional] 
 **paged** | **bool** |  | [optional] 
+**unpaged** | **bool** |  | [optional] 
 
 ## Example
 

@@ -295,8 +295,8 @@ class TestPageCompound(unittest.TestCase):
                         unsorted = True, ), 
                     page_number = 56, 
                     page_size = 56, 
-                    unpaged = True, 
-                    paged = True, ),
+                    paged = True, 
+                    unpaged = True, ),
                 empty = True
             )
         else:
