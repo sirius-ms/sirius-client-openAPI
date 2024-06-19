@@ -6,8 +6,8 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **totalPages** | **integer** |  | [optional] 
 **totalElements** | **integer** |  | [optional] 
-**last** | **character** |  | [optional] 
 **first** | **character** |  | [optional] 
+**last** | **character** |  | [optional] 
 **size** | **integer** |  | [optional] 
 **content** | [**array[StructureCandidateFormula]**](StructureCandidateFormula.md) |  | [optional] 
 **number** | **integer** |  | [optional] 
