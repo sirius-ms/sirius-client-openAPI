@@ -42,8 +42,8 @@ class TestPageableObject(unittest.TestCase):
                     unsorted = True, ),
                 page_number = 56,
                 page_size = 56,
-                paged = True,
-                unpaged = True
+                unpaged = True,
+                paged = True
             )
         else:
             return PageableObject(

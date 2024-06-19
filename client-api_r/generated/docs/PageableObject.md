@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **sort** | [**SortObject**](SortObject.md) |  | [optional] 
 **pageNumber** | **integer** |  | [optional] 
 **pageSize** | **integer** |  | [optional] 
-**paged** | **character** |  | [optional] 
 **unpaged** | **character** |  | [optional] 
+**paged** | **character** |  | [optional] 
 
 
