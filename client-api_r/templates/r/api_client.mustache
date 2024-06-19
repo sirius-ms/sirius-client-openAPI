@@ -344,10 +344,11 @@ ApiClient  <- R6::R6Class(
     #' @return Deserialized object.
     #' @export
     deserialize = function(raw_response, return_type, pkg_env) {
-      if (jsonlite::validate(raw_response)) {
-        resp_obj <- jsonlite::fromJSON(raw_response)
-      } else {
+      # jsonlite fails with URLs as strings, pass them raw
+      if (grepl('^(http|https)://', raw_response)) {
         resp_obj <- raw_response
+      } else {
+        resp_obj <- jsonlite::fromJSON(raw_response)
       }
       self$deserializeObj(resp_obj, return_type, pkg_env)
     },
