@@ -56,6 +56,15 @@ jobs:
       with:
         cache: false
         working-directory: ./client-api_r/generated
+    - name: Install textshaping
+      run: install.packages("textshaping")
+      shell: Rscript {0}
+    - name: Install ragg
+      run: install.packages("ragg")
+      shell: Rscript {0}
+    - name: Install pkgdown
+      run: install.packages("pkgdown")
+      shell: Rscript {0}
     - name: Install devtools
       run: install.packages("devtools")
       shell: Rscript {0}
