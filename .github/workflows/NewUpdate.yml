@@ -132,7 +132,7 @@ jobs:
     - name: Run tests if no changes occure
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      if: steps.lockpull.outcome == 'failure'
+#      if: steps.lockpull.outcome == 'failure'
       run: |
         gh workflow run RunTests.yml --ref ${GITHUB_REF##*/}
         echo "sleeping for 30min before temp branch removal"
