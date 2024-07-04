@@ -41,7 +41,7 @@ jobs:
     - name: Download tomato_small project space
       run: wget ${{ secrets.TOMATO_SMALL_DOWNLOAD_LINK }} -O tomato_small.sirius
     - name: Change HOME to working directory of runner
-      run: HOME=/home/runner/work/sirius-client-openAPI
+      run: echo "HOME=/home/runner/work/sirius-client-openAPI" >> $GITHUB_ENV
     - name: Run Sirius
       run: |
         ./.updater/api/sirius/bin/sirius REST -s -p 8080 &

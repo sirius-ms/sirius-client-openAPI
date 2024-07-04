@@ -55,7 +55,7 @@ jobs:
     - name: Download tomato_small project space
       run: wget ${{ secrets.TOMATO_SMALL_DOWNLOAD_LINK }} -O tomato_small.sirius
     - name: Change HOME to working directory of runner
-      run: HOME=/home/runner/work/sirius-client-openAPI
+      run: echo "HOME=/home/runner/work/sirius-client-openAPI" >> $GITHUB_ENV
     - name: Lint with flake8
       run: |
         # stop the build if there are Python syntax errors or undefined names
