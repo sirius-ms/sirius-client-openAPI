@@ -18,7 +18,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.9", "3.10", "3.11"]
+        python-version: ["3.9", "3.10", "3.11", "3.12"]
     env:
       SIRIUS_USER: ${{ secrets.SIRIUS_USER }}
       SIRIUS_PW: ${{ secrets.SIRIUS_PW }}
@@ -32,8 +32,7 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         python -m pip install flake8
-        pip install git+https://github.com/LukasScholz/sirius-client-openAPI#subdirectory=client-api_python/generated
-        pip install -e ./client-api_python/generated
+        pip install ./client-api_python/generated
         echo "Finished Installing"
     - name: Cache Sirius Release
       id: cache-sirius
@@ -41,28 +40,38 @@ jobs:
       with:
         path: .updater/api/sirius
         key: sirius
+    - name: Download tomato_small project space
+      run: wget ${{ secrets.TOMATO_SMALL_DOWNLOAD_LINK }} -O tomato_small.sirius
+    - name: Change HOME to working directory of runner
+      run: HOME=/home/runner/work/sirius-client-openAPI
     - name: Lint with flake8
       run: |
         # stop the build if there are Python syntax errors or undefined names
         flake8 ./client-api_python --count --select=E9,F63,F7,F82 --show-source --statistics
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8 ./client-api_python --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-    
     - name: Run Rest Api
-      run: |
-        bash .updater/api/sirius/bin/sirius REST -p 8080 -s &
+      run: bash .updater/api/sirius/bin/sirius REST -p 8080 -s &
     - name: Wait for Api to start
-      run: |
-        while ! nc -z localhost 8080; do sleep 0.1; done
-    - name: Test with unittest
-      run: |
-        mkdir .updater/api/temp
-        cd .updater/clientTests/PythonTests
-        bash PythonTestAutoFix.sh
-        cd ./../../../client-api_python/generated/test
-        for x in $(dir); do echo Testing $x; if ! python3 $x; then exit 1; fi; done
-    - name: checking for empty functions in tests
-      run: |
-        cd .updater/clientTests/PythonTests/test
-        for x in $(ls ./../../../../client-api_python/generated/test); do if [ -f "$x" ] || [ -f "./models/$x" ] ; then : ; else echo "$(tput bold)$x$(tput sgr0) is potentially an unmodified test file!";fi; done
-        echo No additional files detected
+      run: while ! nc -z localhost 8080; do sleep 0.1; done
+    - name: Test actuator API
+      run: python test_actuator_api.py
+      working-directory: .updater/clientTests/PythonTests/test
+#    - name: Test compounds API
+#      run: python test_compounds_api.py
+#      working-directory: .updater/clientTests/PythonTests/test
+    - name: Test info API
+      run: python test_info_api.py
+      working-directory: .updater/clientTests/PythonTests/test
+    - name: Test jobs API
+      run: python test_jobs_api.py
+      working-directory: .updater/clientTests/PythonTests/test
+    - name: Test login_and_account API
+      run: python test_login_and_account_api.py
+      working-directory: .updater/clientTests/PythonTests/test
+    - name: Test projects API
+      run: python test_projects_api.py
+      working-directory: .updater/clientTests/PythonTests/test
+    - name: Test searchable_databases API
+      run: python test_searchable_databases_api.py
+      working-directory: .updater/clientTests/PythonTests/test

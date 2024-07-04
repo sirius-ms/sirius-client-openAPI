@@ -72,15 +72,10 @@ jobs:
 
          echo "from PySirius.sirius_api import PySiriusAPI" >> client-api_python/generated/PySirius/__init__.py
          echo "from PySirius.Sirius import SiriusSDK" >> client-api_python/generated/PySirius/__init__.py
-
-    #      cd client-api_python/generated
-    #      sed '/## Installation & Usage/Q' README.md > tempor
-    #      echo "## Documentation for API Endpoints" >> tempor
-    #      sed '1,/## Documentation for API Endpoints/d' README.md >> tempor
-    #      cat tempor > README.md
-    #      rm tempor
     - name: Format R package
       run: |
+        rm -r client-api_r/generated/tests
+        
         cp client-api_r/SiriusSDK.R  client-api_r/generated/R/SiriusSDK.R
         echo >> client-api_r/generated/NAMESPACE
         echo "# SDK" >> client-api_r/generated/NAMESPACE
@@ -88,23 +83,6 @@ jobs:
         
         chmod +x ./client-api_r/patches/list_syntax_fix.sh
         ./client-api_r/patches/list_syntax_fix.sh
-
-    #     cp -r client-api_r/testthat client-api_r/generated/tests
-
-    #     chmod +x ./client-api_r/api_response_fix.sh
-    #     ./client-api_r/api_response_fix.sh ./client-api_r/generated/R/api_response.R
-
-    #     chmod +x ./client-api_r/api_client_fix.sh
-    #     ./client-api_r/api_client_fix.sh ./client-api_r/generated/R/api_client.R
-
-    #     chmod +x ./client-api_r/compounds_api_fix.sh
-    #     ./client-api_r/compounds_api_fix.sh ./client-api_r/generated/R/compounds_api.R
-
-    #     chmod +x ./client-api_r/computations_api_fix.sh
-    #     ./client-api_r/computations_api_fix.sh ./client-api_r/generated/R/computations_api.R
-
-    #     chmod +x ./client-api_r/add_to_docu.sh
-    #     ./client-api_r/add_to_docu.sh ./client-api_r/generated/docs/CompoundsApi.md
     - name: Remove Sirius Rest Api
       run: |
         cd .updater/api
@@ -119,19 +97,19 @@ jobs:
       uses: stefanzweifel/git-auto-commit-action@v4.15.2
       with:
         commit_message: Auto-Updated OpenAPI Clients
-    # - name: Run RManualGeneration
-    #   run: |
-    #     gh workflow run RManualGeneration.yml --ref ${GITHUB_REF##*/}
-    #     echo "dispatched workflow"
-    #     echo "sleeping for 30s to make sure it started"
-    #     sleep 30
-    #     list=$(gh run list --workflow RManualGeneration --branch ${GITHUB_REF##*/})
-    #     id=$(echo $list | grep -oP 'in_progress RManualGeneration RManualGeneration [^ ]* workflow_dispatch \K\d+')
-    #     echo "run ID of RManualGeneration is: $id"
-    #     gh run watch $id --exit-status --interval 30
-    #     echo "generation done!"
-    #   env:
-    #     GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Run RManualGeneration
+      run: |
+        gh workflow run RManualGeneration.yml --ref ${GITHUB_REF##*/}
+        echo "dispatched workflow"
+        echo "sleeping for 30s to make sure it started"
+        sleep 30
+        list=$(gh run list --workflow RManualGeneration --branch ${GITHUB_REF##*/})
+        id=$(echo $list | grep -oP 'in_progress RManualGeneration RManualGeneration [^ ]* workflow_dispatch \K\d+')
+        echo "run ID of RManualGeneration is: $id"
+        gh run watch $id --exit-status --interval 3
+        echo "generation done!"
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: update file and create pull request
       id: open-pr
       uses: repo-sync/pull-request@v2

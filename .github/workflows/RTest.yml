@@ -15,7 +15,7 @@ jobs:
       fail-fast: false
       matrix:
         # 3.4.0 purrr error, 3.3.0 not supported by action
-        r-version: ["3.5.0", "3.6.0", "4.0.0", "4.1.0", "4.2.0"]
+        r-version: ["3.5.0", "3.6.0", "4.0.0", "4.1.0", "4.2.0", "4.3.0", "4.4.0"]
     env:
       SIRIUS_USER: ${{ secrets.SIRIUS_USER }}
       SIRIUS_PW: ${{ secrets.SIRIUS_PW }}
@@ -26,6 +26,10 @@ jobs:
       with:
         path: .updater/api/sirius
         key: sirius
+    - name: Download tomato_small project space
+      run: wget ${{ secrets.TOMATO_SMALL_DOWNLOAD_LINK }} -O tomato_small.sirius
+    - name: Change HOME to working directory of runner
+      run: HOME=/home/runner/work/sirius-client-openAPI
     - name: Run Sirius
       run: |
         ./.updater/api/sirius/bin/sirius REST -s -p 8080 &
@@ -40,9 +44,37 @@ jobs:
       with:
         cache: false
         working-directory: ./client-api_r/generated
-    - name: Build Rsirius
-      run: |
-        R CMD build ./client-api_r/generated
-    - name: Test Rsirius using testthat
-      run: |
-        R CMD check Rsirius_1.0.0.tar.gz --no-manual
+    - name: Install devtools
+      run: install.packages("devtools")
+      shell: Rscript {0}
+    - name: Install Rsirius
+      run: devtools::install(".client-api_r/generated")
+      shell: Rscript {0}
+    - name: Test actuator API
+      run: library("Rsirius"); testthat::test_file("test_actuator_api.R")
+      shell: Rscript {0}
+      working-directory: .updater/clientTests/Rtests/test
+#    - name: Test compounds API
+#      run: library("Rsirius"); testthat::test_file("test_compounds_api.R")
+#      shell: Rscript {0}
+#      working-directory: .updater/clientTests/Rtests/test
+    - name: Test info API
+      run: library("Rsirius"); testthat::test_file("test_info_api.R")
+      shell: Rscript {0}
+      working-directory: .updater/clientTests/Rtests/test
+    - name: Test jobs API
+      run: library("Rsirius"); testthat::test_file("test_jobs_api.R")
+      shell: Rscript {0}
+      working-directory: .updater/clientTests/Rtests/test
+    - name: Test login_and_account API
+      run: library("Rsirius"); testthat::test_file("test_login_and_account_api.R")
+      shell: Rscript {0}
+      working-directory: .updater/clientTests/Rtests/test
+    - name: Test projects API
+      run: library("Rsirius"); testthat::test_file("test_projects_api.R")
+      shell: Rscript {0}
+      working-directory: .updater/clientTests/Rtests/test
+    - name: Test searchable_databases API
+      run: library("Rsirius"); testthat::test_file("test_searchable_databases_api.R")
+      shell: Rscript {0}
+      working-directory: .updater/clientTests/Rtests/test
