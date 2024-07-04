@@ -2,7 +2,7 @@
 
 name: RunTests
 
-on: [workflow_dispatch, workflow_call]
+on: [workflow_dispatch, workflow_call, pull_request]
 
 jobs:
   RTest:
