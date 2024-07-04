@@ -19,8 +19,8 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # does not run on the temp branch itself
-  # UpdateCache:
-  #   uses: ./.github/workflows/update-api.yml
+  UpdateCache:
+    uses: ./.github/workflows/update-api.yml
   UpdateOnNewBranch:
     runs-on: ubuntu-latest
     steps:
