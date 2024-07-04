@@ -40,6 +40,7 @@ jobs:
       with:
         path: .updater/api/sirius
         key: sirius
+        fail-on-cache-miss: true
     - name: Download tomato_small project space
       run: wget ${{ secrets.TOMATO_SMALL_DOWNLOAD_LINK }} -O tomato_small.sirius
     - name: Change HOME to working directory of runner
