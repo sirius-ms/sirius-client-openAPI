@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **aligned_feature_id** | **str** |  | [optional] 
 **compound_id** | **str** |  | [optional] 
 **name** | **str** |  | [optional] 
+**external_feature_id** | **str** | Externally provided FeatureId (e.g. by some preprocessing tool).  This FeatureId is NOT used by SIRIUS but is stored to ease mapping information back to the source. | [optional] 
 **ion_mass** | **float** |  | [optional] 
 **charge** | **int** |  | 
 **detected_adducts** | **List[str]** |  | 
