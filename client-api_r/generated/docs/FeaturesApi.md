@@ -57,7 +57,7 @@ library(Rsirius)
 #
 # prepare function argument(s)
 var_project_id <- "project_id_example" # character | project-space to import into.
-var_feature_import <- c(FeatureImport$new(123, "adduct_example", c(BasicSpectrum$new(c(SimplePeak$new(123, 123)), "name_example", 123, "collisionEnergy_example", 123, 123, 123)), c(BasicSpectrum$new(c(SimplePeak$new(123, 123)), "name_example", 123, "collisionEnergy_example", 123, 123, 123)), "name_example", "featureId_example", 123, 123, BasicSpectrum$new(c(SimplePeak$new(123, 123)), "name_example", 123, "collisionEnergy_example", 123, 123, 123))) # array[FeatureImport] | the feature data to be imported
+var_feature_import <- c(FeatureImport$new(123, 123, c(BasicSpectrum$new(c(SimplePeak$new(123, 123)), "name_example", 123, "collisionEnergy_example", 123, 123, 123)), c(BasicSpectrum$new(c(SimplePeak$new(123, 123)), "name_example", 123, "collisionEnergy_example", 123, 123, 123)), "name_example", "externalFeatureId_example", c("detectedAdducts_example"), 123, 123, BasicSpectrum$new(c(SimplePeak$new(123, 123)), "name_example", 123, "collisionEnergy_example", 123, 123, 123))) # array[FeatureImport] | the feature data to be imported
 var_opt_fields <- c(AlignedFeatureOptField$new()) # array[AlignedFeatureOptField] | set of optional fields to be included. Use 'none' to override defaults. (Optional)
 
 api_instance <- rsirius_api$new()
