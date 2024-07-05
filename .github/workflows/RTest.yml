@@ -71,6 +71,7 @@ jobs:
         if (inherits(api_response, "AccountInfo")) {
           quit(status=0)
         } else {
+          print('Login failed, aborting...')
           quit(status=1)
         }
       shell: Rscript {0}
