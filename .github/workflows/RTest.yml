@@ -85,6 +85,11 @@ jobs:
 #      run: library("Rsirius"); testthat::test_file("test_compounds_api.R")
 #      shell: Rscript {0}
 #      working-directory: .updater/clientTests/RTests/test
+    - name: Test features API
+      if: always() && steps.api_start.outcome == 'success' && steps.rsirius_install.outcome == 'success' && steps.login.outcome == 'success'
+      run: library("Rsirius"); testthat::test_file("test_features_api.R")
+      shell: Rscript {0}
+      working-directory: .updater/clientTests/RTests/test
     - name: Test info API
       if: always() && steps.api_start.outcome == 'success' && steps.rsirius_install.outcome == 'success' && steps.login.outcome == 'success'
       run: library("Rsirius"); testthat::test_file("test_info_api.R")
