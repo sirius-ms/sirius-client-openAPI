@@ -29,6 +29,7 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
+      id: pysirius_install
       run: |
         python -m pip install --upgrade pip
         python -m pip install flake8
@@ -67,25 +68,33 @@ jobs:
     - name: Run Rest Api
       run: bash .updater/api/sirius/bin/sirius REST -p 8080 -s &
     - name: Wait for Api to start
+      id: api_start
       run: while ! nc -z localhost 8080; do sleep 0.1; done
     - name: Test actuator API
+      if: steps.api_start.outcome == 'success' && steps.pysirius_install.outcome == 'success'
       run: python test_actuator_api.py
       working-directory: .updater/clientTests/PythonTests/test
 #    - name: Test compounds API
+#      if: steps.api_start.outcome == 'success' && steps.pysirius_install.outcome == 'success'
 #      run: python test_compounds_api.py
 #      working-directory: .updater/clientTests/PythonTests/test
     - name: Test info API
+      if: steps.api_start.outcome == 'success' && steps.pysirius_install.outcome == 'success'
       run: python test_info_api.py
       working-directory: .updater/clientTests/PythonTests/test
     - name: Test jobs API
+      if: steps.api_start.outcome == 'success' && steps.pysirius_install.outcome == 'success'
       run: python test_jobs_api.py
       working-directory: .updater/clientTests/PythonTests/test
     - name: Test login_and_account API
+      if: steps.api_start.outcome == 'success' && steps.pysirius_install.outcome == 'success'
       run: python test_login_and_account_api.py
       working-directory: .updater/clientTests/PythonTests/test
     - name: Test projects API
+      if: steps.api_start.outcome == 'success' && steps.pysirius_install.outcome == 'success'
       run: python test_projects_api.py
       working-directory: .updater/clientTests/PythonTests/test
     - name: Test searchable_databases API
+      if: steps.api_start.outcome == 'success' && steps.pysirius_install.outcome == 'success'
       run: python test_searchable_databases_api.py
       working-directory: .updater/clientTests/PythonTests/test
