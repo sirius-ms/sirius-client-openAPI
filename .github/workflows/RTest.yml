@@ -57,33 +57,41 @@ jobs:
         cache: false
         working-directory: ./client-api_r/generated
     - name: Install Rsirius
+      id: rsirius_install
       run: install.packages("/home/runner/work/sirius-client-openAPI/sirius-client-openAPI/client-api_r/generated", repos = NULL, type = "source")
       shell: Rscript {0}
     - name: Test actuator API
+      if: steps.rsirius_install.outcome == 'success'
       run: library("Rsirius"); testthat::test_file("test_actuator_api.R")
       shell: Rscript {0}
       working-directory: .updater/clientTests/RTests/test
 #    - name: Test compounds API
+#      if: steps.rsirius_install.outcome == 'success'
 #      run: library("Rsirius"); testthat::test_file("test_compounds_api.R")
 #      shell: Rscript {0}
 #      working-directory: .updater/clientTests/RTests/test
     - name: Test info API
+      if: steps.rsirius_install.outcome == 'success'
       run: library("Rsirius"); testthat::test_file("test_info_api.R")
       shell: Rscript {0}
       working-directory: .updater/clientTests/RTests/test
     - name: Test jobs API
+      if: steps.rsirius_install.outcome == 'success'
       run: library("Rsirius"); testthat::test_file("test_jobs_api.R")
       shell: Rscript {0}
       working-directory: .updater/clientTests/RTests/test
     - name: Test login_and_account API
+      if: steps.rsirius_install.outcome == 'success'
       run: library("Rsirius"); testthat::test_file("test_login_and_account_api.R")
       shell: Rscript {0}
       working-directory: .updater/clientTests/RTests/test
     - name: Test projects API
+      if: steps.rsirius_install.outcome == 'success'
       run: library("Rsirius"); testthat::test_file("test_projects_api.R")
       shell: Rscript {0}
       working-directory: .updater/clientTests/RTests/test
     - name: Test searchable_databases API
+      if: steps.rsirius_install.outcome == 'success'
       run: library("Rsirius"); testthat::test_file("test_searchable_databases_api.R")
       shell: Rscript {0}
       working-directory: .updater/clientTests/RTests/test
