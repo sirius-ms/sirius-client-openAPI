@@ -70,31 +70,47 @@ jobs:
     - name: Wait for Api to start
       id: api_start
       run: while ! nc -z localhost 8080; do sleep 0.1; done
+    - name: Login to SIRIUS
+      id: login
+      run: |
+        import os
+        import PySirius
+        accept_terms = True
+        account_credentials = PySirius.AccountCredentials(username=os.environ['SIRIUS_USER'], password=os.environ['SIRIUS_PW'])
+        configuration = PySirius.Configuration(host = "http://localhost:8080")
+        api_instance = PySirius.LoginAndAccountApi(PySirius.ApiClient(configuration))
+        api_response = api_instance.login(accept_terms, account_credentials)
+        if isinstance(api_response, PySirius.AccountInfo):
+          exit(0)
+        else:
+          print('Login failed, aborting...')
+          exit(1)
+      shell: python
     - name: Test actuator API
-      if: always() && steps.api_start.outcome == 'success' && steps.pysirius_install.outcome == 'success'
+      if: always() && steps.api_start.outcome == 'success' && steps.pysirius_install.outcome == 'success' && steps.login.outcome == 'success'
       run: python test_actuator_api.py
       working-directory: .updater/clientTests/PythonTests/test
 #    - name: Test compounds API
-#      if: always() && steps.api_start.outcome == 'success' && steps.pysirius_install.outcome == 'success'
+#      if: always() && steps.api_start.outcome == 'success' && steps.pysirius_install.outcome == 'success' && steps.login.outcome == 'success'
 #      run: python test_compounds_api.py
 #      working-directory: .updater/clientTests/PythonTests/test
     - name: Test info API
-      if: always() && steps.api_start.outcome == 'success' && steps.pysirius_install.outcome == 'success'
+      if: always() && steps.api_start.outcome == 'success' && steps.pysirius_install.outcome == 'success' && steps.login.outcome == 'success'
       run: python test_info_api.py
       working-directory: .updater/clientTests/PythonTests/test
     - name: Test jobs API
-      if: always() && steps.api_start.outcome == 'success' && steps.pysirius_install.outcome == 'success'
+      if: always() && steps.api_start.outcome == 'success' && steps.pysirius_install.outcome == 'success' && steps.login.outcome == 'success'
       run: python test_jobs_api.py
       working-directory: .updater/clientTests/PythonTests/test
     - name: Test login_and_account API
-      if: always() && steps.api_start.outcome == 'success' && steps.pysirius_install.outcome == 'success'
+      if: always() && steps.api_start.outcome == 'success' && steps.pysirius_install.outcome == 'success' && steps.login.outcome == 'success'
       run: python test_login_and_account_api.py
       working-directory: .updater/clientTests/PythonTests/test
     - name: Test projects API
-      if: always() && steps.api_start.outcome == 'success' && steps.pysirius_install.outcome == 'success'
+      if: always() && steps.api_start.outcome == 'success' && steps.pysirius_install.outcome == 'success' && steps.login.outcome == 'success'
       run: python test_projects_api.py
       working-directory: .updater/clientTests/PythonTests/test
     - name: Test searchable_databases API
-      if: always() && steps.api_start.outcome == 'success' && steps.pysirius_install.outcome == 'success'
+      if: always() && steps.api_start.outcome == 'success' && steps.pysirius_install.outcome == 'success' && steps.login.outcome == 'success'
       run: python test_searchable_databases_api.py
       working-directory: .updater/clientTests/PythonTests/test

@@ -60,38 +60,52 @@ jobs:
     - name: Wait for Api to start
       id: api_start
       run: while ! nc -z localhost 8080; do sleep 0.1; done
+    - name: Login to SIRIUS
+      id: login
+      run: |
+        library(Rsirius)
+        var_accept_terms <- True
+        var_account_credentials <- AccountCredentials$new(Sys.getenv('SIRIUS_USER'), Sys.getenv('SIRIUS_PW'))
+        api_instance <- rsirius_api$new()
+        api_response <- api_instance$login_and_account_api$Login(var_accept_terms, var_account_credentials)
+        if (inherits(api_response, "AccountInfo")) {
+          quit(status=0)
+        } else {
+          quit(status=1)
+        }
+      shell: Rscript {0}
     - name: Test actuator API
-      if: always() && steps.api_start.outcome == 'success' && steps.rsirius_install.outcome == 'success'
+      if: always() && steps.api_start.outcome == 'success' && steps.rsirius_install.outcome == 'success' && steps.login.outcome == 'success'
       run: library("Rsirius"); testthat::test_file("test_actuator_api.R")
       shell: Rscript {0}
       working-directory: .updater/clientTests/RTests/test
 #    - name: Test compounds API
-#      if: always() && steps.api_start.outcome == 'success' && steps.rsirius_install.outcome == 'success'
+#      if: always() && steps.api_start.outcome == 'success' && steps.rsirius_install.outcome == 'success' && steps.login.outcome == 'success'
 #      run: library("Rsirius"); testthat::test_file("test_compounds_api.R")
 #      shell: Rscript {0}
 #      working-directory: .updater/clientTests/RTests/test
     - name: Test info API
-      if: always() && steps.api_start.outcome == 'success' && steps.rsirius_install.outcome == 'success'
+      if: always() && steps.api_start.outcome == 'success' && steps.rsirius_install.outcome == 'success' && steps.login.outcome == 'success'
       run: library("Rsirius"); testthat::test_file("test_info_api.R")
       shell: Rscript {0}
       working-directory: .updater/clientTests/RTests/test
     - name: Test jobs API
-      if: always() && steps.api_start.outcome == 'success' && steps.rsirius_install.outcome == 'success'
+      if: always() && steps.api_start.outcome == 'success' && steps.rsirius_install.outcome == 'success' && steps.login.outcome == 'success'
       run: library("Rsirius"); testthat::test_file("test_jobs_api.R")
       shell: Rscript {0}
       working-directory: .updater/clientTests/RTests/test
     - name: Test login_and_account API
-      if: always() && steps.api_start.outcome == 'success' && steps.rsirius_install.outcome == 'success'
+      if: always() && steps.api_start.outcome == 'success' && steps.rsirius_install.outcome == 'success' && steps.login.outcome == 'success'
       run: library("Rsirius"); testthat::test_file("test_login_and_account_api.R")
       shell: Rscript {0}
       working-directory: .updater/clientTests/RTests/test
     - name: Test projects API
-      if: always() && steps.api_start.outcome == 'success' && steps.rsirius_install.outcome == 'success'
+      if: always() && steps.api_start.outcome == 'success' && steps.rsirius_install.outcome == 'success' && steps.login.outcome == 'success'
       run: library("Rsirius"); testthat::test_file("test_projects_api.R")
       shell: Rscript {0}
       working-directory: .updater/clientTests/RTests/test
     - name: Test searchable_databases API
-      if: always() && steps.api_start.outcome == 'success' && steps.rsirius_install.outcome == 'success'
+      if: always() && steps.api_start.outcome == 'success' && steps.rsirius_install.outcome == 'success' && steps.login.outcome == 'success'
       run: library("Rsirius"); testthat::test_file("test_searchable_databases_api.R")
       shell: Rscript {0}
       working-directory: .updater/clientTests/RTests/test
