@@ -10,6 +10,7 @@
 #' @field alignedFeatureId  character [optional]
 #' @field compoundId  character [optional]
 #' @field name  character [optional]
+#' @field externalFeatureId Externally provided FeatureId (e.g. by some preprocessing tool).  This FeatureId is NOT used by SIRIUS but is stored to ease mapping information back to the source. character [optional]
 #' @field ionMass  numeric [optional]
 #' @field charge  integer
 #' @field detectedAdducts  list(character)
@@ -31,6 +32,7 @@ AlignedFeature <- R6::R6Class(
     `alignedFeatureId` = NULL,
     `compoundId` = NULL,
     `name` = NULL,
+    `externalFeatureId` = NULL,
     `ionMass` = NULL,
     `charge` = NULL,
     `detectedAdducts` = NULL,
@@ -53,6 +55,7 @@ AlignedFeature <- R6::R6Class(
     #' @param alignedFeatureId alignedFeatureId
     #' @param compoundId compoundId
     #' @param name name
+    #' @param externalFeatureId Externally provided FeatureId (e.g. by some preprocessing tool).  This FeatureId is NOT used by SIRIUS but is stored to ease mapping information back to the source.
     #' @param ionMass ionMass
     #' @param rtStartSeconds rtStartSeconds
     #' @param rtEndSeconds rtEndSeconds
@@ -65,7 +68,7 @@ AlignedFeature <- R6::R6Class(
     #' @param computing Write lock for this feature. If the feature is locked no write operations are possible.  True if any computation is modifying this feature or its results
     #' @param ... Other optional arguments.
     #' @export
-    initialize = function(`charge`, `detectedAdducts`, `alignedFeatureId` = NULL, `compoundId` = NULL, `name` = NULL, `ionMass` = NULL, `rtStartSeconds` = NULL, `rtEndSeconds` = NULL, `quality` = NULL, `hasMs1` = NULL, `hasMsMs` = NULL, `msData` = NULL, `topAnnotations` = NULL, `topAnnotationsDeNovo` = NULL, `computing` = NULL, ...) {
+    initialize = function(`charge`, `detectedAdducts`, `alignedFeatureId` = NULL, `compoundId` = NULL, `name` = NULL, `externalFeatureId` = NULL, `ionMass` = NULL, `rtStartSeconds` = NULL, `rtEndSeconds` = NULL, `quality` = NULL, `hasMs1` = NULL, `hasMsMs` = NULL, `msData` = NULL, `topAnnotations` = NULL, `topAnnotationsDeNovo` = NULL, `computing` = NULL, ...) {
       if (!missing(`charge`)) {
         if (!(is.numeric(`charge`) && length(`charge`) == 1)) {
           stop(paste("Error! Invalid data for `charge`. Must be an integer:", `charge`))
@@ -97,6 +100,12 @@ AlignedFeature <- R6::R6Class(
           stop(paste("Error! Invalid data for `name`. Must be a string:", `name`))
         }
         self$`name` <- `name`
+      }
+      if (!is.null(`externalFeatureId`)) {
+        if (!(is.character(`externalFeatureId`) && length(`externalFeatureId`) == 1)) {
+          stop(paste("Error! Invalid data for `externalFeatureId`. Must be a string:", `externalFeatureId`))
+        }
+        self$`externalFeatureId` <- `externalFeatureId`
       }
       if (!is.null(`ionMass`)) {
         if (!(is.numeric(`ionMass`) && length(`ionMass`) == 1)) {
@@ -175,6 +184,10 @@ AlignedFeature <- R6::R6Class(
       if (!is.null(self$`name`)) {
         AlignedFeatureObject[["name"]] <-
           self$`name`
+      }
+      if (!is.null(self$`externalFeatureId`)) {
+        AlignedFeatureObject[["externalFeatureId"]] <-
+          self$`externalFeatureId`
       }
       if (!is.null(self$`ionMass`)) {
         AlignedFeatureObject[["ionMass"]] <-
@@ -269,6 +282,9 @@ AlignedFeature <- R6::R6Class(
       if (!is.null(this_object$`name`)) {
         self$`name` <- this_object$`name`
       }
+      if (!is.null(this_object$`externalFeatureId`)) {
+        self$`externalFeatureId` <- this_object$`externalFeatureId`
+      }
       if (!is.null(this_object$`ionMass`)) {
         self$`ionMass` <- this_object$`ionMass`
       }
@@ -349,6 +365,14 @@ AlignedFeature <- R6::R6Class(
             "%s"
                     ',
           self$`name`
+          )
+        },
+        if (!is.null(self$`externalFeatureId`)) {
+          sprintf(
+          '"externalFeatureId":
+            "%s"
+                    ',
+          self$`externalFeatureId`
           )
         },
         if (!is.null(self$`ionMass`)) {
@@ -468,6 +492,7 @@ AlignedFeature <- R6::R6Class(
       self$`alignedFeatureId` <- this_object$`alignedFeatureId`
       self$`compoundId` <- this_object$`compoundId`
       self$`name` <- this_object$`name`
+      self$`externalFeatureId` <- this_object$`externalFeatureId`
       self$`ionMass` <- this_object$`ionMass`
       self$`charge` <- this_object$`charge`
       self$`detectedAdducts` <- ApiClient$new()$deserializeObj(this_object$`detectedAdducts`, "set[character]", loadNamespace("Rsirius"))
