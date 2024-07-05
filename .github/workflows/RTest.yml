@@ -62,28 +62,28 @@ jobs:
     - name: Test actuator API
       run: library("Rsirius"); testthat::test_file("test_actuator_api.R")
       shell: Rscript {0}
-      working-directory: .updater/clientTests/Rtests/test
+      working-directory: .updater/clientTests/RTests/test
 #    - name: Test compounds API
 #      run: library("Rsirius"); testthat::test_file("test_compounds_api.R")
 #      shell: Rscript {0}
-#      working-directory: .updater/clientTests/Rtests/test
+#      working-directory: .updater/clientTests/RTests/test
     - name: Test info API
       run: library("Rsirius"); testthat::test_file("test_info_api.R")
       shell: Rscript {0}
-      working-directory: .updater/clientTests/Rtests/test
+      working-directory: .updater/clientTests/RTests/test
     - name: Test jobs API
       run: library("Rsirius"); testthat::test_file("test_jobs_api.R")
       shell: Rscript {0}
-      working-directory: .updater/clientTests/Rtests/test
+      working-directory: .updater/clientTests/RTests/test
     - name: Test login_and_account API
       run: library("Rsirius"); testthat::test_file("test_login_and_account_api.R")
       shell: Rscript {0}
-      working-directory: .updater/clientTests/Rtests/test
+      working-directory: .updater/clientTests/RTests/test
     - name: Test projects API
       run: library("Rsirius"); testthat::test_file("test_projects_api.R")
       shell: Rscript {0}
-      working-directory: .updater/clientTests/Rtests/test
+      working-directory: .updater/clientTests/RTests/test
     - name: Test searchable_databases API
       run: library("Rsirius"); testthat::test_file("test_searchable_databases_api.R")
       shell: Rscript {0}
-      working-directory: .updater/clientTests/Rtests/test
+      working-directory: .updater/clientTests/RTests/test
