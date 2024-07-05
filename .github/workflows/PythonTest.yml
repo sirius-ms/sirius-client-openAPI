@@ -63,7 +63,7 @@ jobs:
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8 ./client-api_python --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Unset DISPLAY
-      run: unset DISPLAY
+      run: echo "JAVA_TOOL_OPTIONS=-Djava.awt.headless=true" >> $GITHUB_ENV
     - name: Run Rest Api
       run: bash .updater/api/sirius/bin/sirius REST -p 8080 -s &
     - name: Wait for Api to start
