@@ -42,10 +42,11 @@ jobs:
       run: wget ${{ secrets.TOMATO_SMALL_DOWNLOAD_LINK }} -O tomato_small.sirius
     - name: Change HOME to working directory of runner
       run: echo "HOME=/home/runner/work/sirius-client-openAPI" >> $GITHUB_ENV
-    - name: Run Sirius
-      run: |
-        ./.updater/api/sirius/bin/sirius REST -s -p 8080 &
-        sleep 10
+    - name: Run Rest Api
+      run: bash .updater/api/sirius/bin/sirius REST -p 8080 -s &
+    - name: Wait for Api to start
+      id: api_start
+      run: while ! nc -z localhost 8080; do sleep 0.1; done
     - uses: actions/checkout@v3
     - name: Set up R ${{ matrix.r-version }}
       uses: r-lib/actions/setup-r@v2
@@ -61,37 +62,37 @@ jobs:
       run: install.packages("/home/runner/work/sirius-client-openAPI/sirius-client-openAPI/client-api_r/generated", repos = NULL, type = "source")
       shell: Rscript {0}
     - name: Test actuator API
-      if: steps.rsirius_install.outcome == 'success'
+      if: steps.api_start.outcome == 'success' && steps.rsirius_install.outcome == 'success'
       run: library("Rsirius"); testthat::test_file("test_actuator_api.R")
       shell: Rscript {0}
       working-directory: .updater/clientTests/RTests/test
 #    - name: Test compounds API
-#      if: steps.rsirius_install.outcome == 'success'
+#      if: steps.api_start.outcome == 'success' && steps.rsirius_install.outcome == 'success'
 #      run: library("Rsirius"); testthat::test_file("test_compounds_api.R")
 #      shell: Rscript {0}
 #      working-directory: .updater/clientTests/RTests/test
     - name: Test info API
-      if: steps.rsirius_install.outcome == 'success'
+      if: steps.api_start.outcome == 'success' && steps.rsirius_install.outcome == 'success'
       run: library("Rsirius"); testthat::test_file("test_info_api.R")
       shell: Rscript {0}
       working-directory: .updater/clientTests/RTests/test
     - name: Test jobs API
-      if: steps.rsirius_install.outcome == 'success'
+      if: steps.api_start.outcome == 'success' && steps.rsirius_install.outcome == 'success'
       run: library("Rsirius"); testthat::test_file("test_jobs_api.R")
       shell: Rscript {0}
       working-directory: .updater/clientTests/RTests/test
     - name: Test login_and_account API
-      if: steps.rsirius_install.outcome == 'success'
+      if: steps.api_start.outcome == 'success' && steps.rsirius_install.outcome == 'success'
       run: library("Rsirius"); testthat::test_file("test_login_and_account_api.R")
       shell: Rscript {0}
       working-directory: .updater/clientTests/RTests/test
     - name: Test projects API
-      if: steps.rsirius_install.outcome == 'success'
+      if: steps.api_start.outcome == 'success' && steps.rsirius_install.outcome == 'success'
       run: library("Rsirius"); testthat::test_file("test_projects_api.R")
       shell: Rscript {0}
       working-directory: .updater/clientTests/RTests/test
     - name: Test searchable_databases API
-      if: steps.rsirius_install.outcome == 'success'
+      if: steps.api_start.outcome == 'success' && steps.rsirius_install.outcome == 'success'
       run: library("Rsirius"); testthat::test_file("test_searchable_databases_api.R")
       shell: Rscript {0}
       working-directory: .updater/clientTests/RTests/test
