@@ -56,20 +56,8 @@ jobs:
       with:
         cache: false
         working-directory: ./client-api_r/generated
-    - name: Install textshaping
-      run: install.packages("textshaping")
-      shell: Rscript {0}
-    - name: Install ragg
-      run: install.packages("ragg")
-      shell: Rscript {0}
-    - name: Install pkgdown
-      run: install.packages("pkgdown")
-      shell: Rscript {0}
-    - name: Install devtools
-      run: install.packages("devtools")
-      shell: Rscript {0}
     - name: Install Rsirius
-      run: devtools::install(".client-api_r/generated")
+      run: install.packages("/home/runner/work/sirius-client-openAPI/sirius-client-openAPI/client-api_r/generated", repos = NULL, type = "source")
       shell: Rscript {0}
     - name: Test actuator API
       run: library("Rsirius"); testthat::test_file("test_actuator_api.R")
