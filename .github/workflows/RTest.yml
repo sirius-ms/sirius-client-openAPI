@@ -14,12 +14,25 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # 3.4.0 purrr error, 3.3.0 not supported by action
         r-version: ["4.0.0", "4.1.0", "4.2.0", "4.3.0", "4.4.0"]
     env:
       SIRIUS_USER: ${{ secrets.SIRIUS_USER }}
       SIRIUS_PW: ${{ secrets.SIRIUS_PW }}
     steps:
+    - uses: actions/checkout@v3
+    - name: Set up R ${{ matrix.r-version }}
+      uses: r-lib/actions/setup-r@v2
+      with:
+        r-version: ${{ matrix.r-version }}
+    - name: Install Rsirius dependencies
+      uses: r-lib/actions/setup-r-dependencies@v2
+      with:
+        cache: false
+        working-directory: ./client-api_r/generated
+    - name: Install Rsirius
+      id: rsirius_install
+      run: install.packages("/home/runner/work/sirius-client-openAPI/sirius-client-openAPI/client-api_r/generated", repos = NULL, type = "source")
+      shell: Rscript {0}
     - name: Cache Sirius Release
       id: cache-sirius
       uses: actions/cache@v3
@@ -47,20 +60,6 @@ jobs:
     - name: Wait for Api to start
       id: api_start
       run: while ! nc -z localhost 8080; do sleep 0.1; done
-    - uses: actions/checkout@v3
-    - name: Set up R ${{ matrix.r-version }}
-      uses: r-lib/actions/setup-r@v2
-      with:
-        r-version: ${{ matrix.r-version }}
-    - name: Install Rsirius dependencies
-      uses: r-lib/actions/setup-r-dependencies@v2
-      with:
-        cache: false
-        working-directory: ./client-api_r/generated
-    - name: Install Rsirius
-      id: rsirius_install
-      run: install.packages("/home/runner/work/sirius-client-openAPI/sirius-client-openAPI/client-api_r/generated", repos = NULL, type = "source")
-      shell: Rscript {0}
     - name: Test actuator API
       if: always() && steps.api_start.outcome == 'success' && steps.rsirius_install.outcome == 'success'
       run: library("Rsirius"); testthat::test_file("test_actuator_api.R")
