@@ -64,7 +64,7 @@ jobs:
       id: login
       run: |
         library(Rsirius)
-        var_accept_terms <- True
+        var_accept_terms <- TRUE
         var_account_credentials <- AccountCredentials$new(Sys.getenv('SIRIUS_USER'), Sys.getenv('SIRIUS_PW'))
         api_instance <- rsirius_api$new()
         api_response <- api_instance$login_and_account_api$Login(var_accept_terms, var_account_credentials)
