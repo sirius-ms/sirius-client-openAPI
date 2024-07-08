@@ -74,20 +74,19 @@ jobs:
     - name: Login to SIRIUS
       id: login
       run: |
-        echo "TODO re-instate login"
-#        import os
-#        import PySirius
-#        accept_terms = True
-#        account_credentials = PySirius.AccountCredentials(username=os.environ['SIRIUS_USER'], password=os.environ['SIRIUS_PW'])
-#        configuration = PySirius.Configuration(host = "http://localhost:8080")
-#        api_instance = PySirius.LoginAndAccountApi(PySirius.ApiClient(configuration))
-#        api_response = api_instance.login(accept_terms, account_credentials)
-#        if isinstance(api_response, PySirius.AccountInfo):
-#          exit(0)
-#        else:
-#          print('Login failed, aborting...')
-#          exit(1)
-#      shell: python
+        import os
+        import PySirius
+        accept_terms = True
+        account_credentials = PySirius.AccountCredentials(username=os.environ['SIRIUS_USER'], password=os.environ['SIRIUS_PW'])
+        configuration = PySirius.Configuration(host = "http://localhost:8080")
+        api_instance = PySirius.LoginAndAccountApi(PySirius.ApiClient(configuration))
+        api_response = api_instance.login(accept_terms, account_credentials)
+        if isinstance(api_response, PySirius.AccountInfo):
+          exit(0)
+        else:
+          print('Login failed, aborting...')
+          exit(1)
+      shell: python
     - name: Test actuator API
       if: always() && steps.api_start.outcome == 'success' && steps.pysirius_install.outcome == 'success' && steps.login.outcome == 'success'
       run: python test_actuator_api.py
