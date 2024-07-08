@@ -30,11 +30,9 @@ jobs:
         cache: false
         working-directory: ./client-api_r/generated
     - name: Install Rsirius
-      id: rsirius_install
       run: install.packages("/home/runner/work/sirius-client-openAPI/sirius-client-openAPI/client-api_r/generated", repos = NULL, type = "source")
       shell: Rscript {0}
     - name: Cache Sirius Release
-      id: cache-sirius
       uses: actions/cache@v3
       with:
         path: .updater/api/sirius
@@ -47,7 +45,8 @@ jobs:
         timeout_minutes: 5
         command: |
           cd .updater/api
-          curl -s  https://api.github.com/repositories/94561614/releases | grep 'browser_download_url.*linux64.zip\"' | sort | tac | head -n 1 | cut -d : -f 2,3 | tr -d \" | wget -i -
+          # TODO get most recent instead of hardcoded stable
+          wget https://github.com/sirius-ms/sirius/releases/download/v6.0.0/sirius-6.0.0-linux64.zip
           echo "Download Complete"
           unzip *.zip
           echo "Api Ready"
@@ -58,10 +57,8 @@ jobs:
     - name: Run Rest Api
       run: bash .updater/api/sirius/bin/sirius REST -p 8080 -s &
     - name: Wait for Api to start
-      id: api_start
       run: while ! nc -z localhost 8080; do sleep 0.1; done
     - name: Login to SIRIUS
-      id: login
       run: |
         library(Rsirius)
         var_accept_terms <- TRUE
@@ -75,43 +72,14 @@ jobs:
           quit(status=1)
         }
       shell: Rscript {0}
-    - name: Test actuator API
-      if: always() && steps.api_start.outcome == 'success' && steps.rsirius_install.outcome == 'success' && steps.login.outcome == 'success'
-      run: library("Rsirius"); testthat::test_files("test_actuator_api.R", stop_on_failure = TRUE)
-      shell: Rscript {0}
-      working-directory: .updater/clientTests/RTests/test
-#    - name: Test compounds API
-#      if: always() && steps.api_start.outcome == 'success' && steps.rsirius_install.outcome == 'success' && steps.login.outcome == 'success'
-#      run: library("Rsirius"); testthat::test_files("test_compounds_api.R", stop_on_failure = TRUE)
-#      shell: Rscript {0}
-#      working-directory: .updater/clientTests/RTests/test
-    - name: Test features API
-      if: always() && steps.api_start.outcome == 'success' && steps.rsirius_install.outcome == 'success' && steps.login.outcome == 'success'
-      run: library("Rsirius"); testthat::test_files("test_features_api.R", stop_on_failure = TRUE)
-      shell: Rscript {0}
-      working-directory: .updater/clientTests/RTests/test
-    - name: Test info API
-      if: always() && steps.api_start.outcome == 'success' && steps.rsirius_install.outcome == 'success' && steps.login.outcome == 'success'
-      run: library("Rsirius"); testthat::test_files("test_info_api.R", stop_on_failure = TRUE)
-      shell: Rscript {0}
-      working-directory: .updater/clientTests/RTests/test
-    - name: Test jobs API
-      if: always() && steps.api_start.outcome == 'success' && steps.rsirius_install.outcome == 'success' && steps.login.outcome == 'success'
-      run: library("Rsirius"); testthat::test_files("test_jobs_api.R", stop_on_failure = TRUE)
-      shell: Rscript {0}
-      working-directory: .updater/clientTests/RTests/test
-    - name: Test login_and_account API
-      if: always() && steps.api_start.outcome == 'success' && steps.rsirius_install.outcome == 'success' && steps.login.outcome == 'success'
-      run: library("Rsirius"); testthat::test_files("test_login_and_account_api.R", stop_on_failure = TRUE)
-      shell: Rscript {0}
-      working-directory: .updater/clientTests/RTests/test
-    - name: Test projects API
-      if: always() && steps.api_start.outcome == 'success' && steps.rsirius_install.outcome == 'success' && steps.login.outcome == 'success'
-      run: library("Rsirius"); testthat::test_files("test_projects_api.R", stop_on_failure = TRUE)
-      shell: Rscript {0}
-      working-directory: .updater/clientTests/RTests/test
-    - name: Test searchable_databases API
-      if: always() && steps.api_start.outcome == 'success' && steps.rsirius_install.outcome == 'success' && steps.login.outcome == 'success'
-      run: library("Rsirius"); testthat::test_files("test_searchable_databases_api.R", stop_on_failure = TRUE)
-      shell: Rscript {0}
-      working-directory: .updater/clientTests/RTests/test
+    - name: Copy tests into Rsirius folder for testing
+      run: |
+        cp -r .updater/clientTests/RTests/test client-api_r/tests/testthat
+        # TODO move back after issues are fixed
+        rm client-api_r/tests/testthat/test_compounds_api.py
+    - name: Build Rsirius
+      run: |
+        R CMD build ./client-api_r/generated
+    - name: Test Rsirius using testthat
+      run: |
+        R CMD check Rsirius_0.9.tar.gz --no-manual

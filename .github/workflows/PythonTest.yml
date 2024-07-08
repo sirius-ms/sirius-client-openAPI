@@ -49,7 +49,8 @@ jobs:
         timeout_minutes: 5
         command: |
           cd .updater/api
-          curl -s  https://api.github.com/repositories/94561614/releases | grep 'browser_download_url.*linux64.zip\"' | sort | tac | head -n 1 | cut -d : -f 2,3 | tr -d \" | wget -i -
+          # TODO get most recent instead of hardcoded stable
+          wget https://github.com/sirius-ms/sirius/releases/download/v6.0.0/sirius-6.0.0-linux64.zip
           echo "Download Complete"
           unzip *.zip
           echo "Api Ready"
