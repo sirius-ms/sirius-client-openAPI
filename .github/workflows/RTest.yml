@@ -76,6 +76,7 @@ jobs:
       run: |
         mkdir client-api_r/tests
         cp -r .updater/clientTests/RTests/test client-api_r/tests/testthat
+        cp .updater/clientTests/RTests/testthat.R client-api_r/tests/testthat.R
         # TODO move back after issues are fixed
         rm client-api_r/tests/testthat/test_compounds_api.R
     - name: Build Rsirius
