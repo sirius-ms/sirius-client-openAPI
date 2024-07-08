@@ -27,7 +27,7 @@ library(Rsirius)
 #
 # prepare function argument(s)
 var_project_id <- "project_id_example" # character | project-space to import into.
-var_compound_import <- c(CompoundImport$new(c(FeatureImport$new(123, "adduct_example", c(BasicSpectrum$new(c(SimplePeak$new(..., ...)), "name_example", 123, "collisionEnergy_example", 123, 123, 123)), c(BasicSpectrum$new(c(SimplePeak$new(..., ...)), "name_example", 123, "collisionEnergy_example", 123, 123, 123)), "name_example", "featureId_example", 123, 123, BasicSpectrum$new(c(SimplePeak$new(123, 123)), "name_example", 123, "collisionEnergy_example", 123, 123, 123))), "name_example")) # array[CompoundImport] | the compound data to be imported
+var_compound_import <- c(CompoundImport$new(c(FeatureImport$new(123, 123, c(BasicSpectrum$new(c(SimplePeak$new(..., ...)), "name_example", 123, "collisionEnergy_example", 123, 123, 123)), c(BasicSpectrum$new(c(SimplePeak$new(..., ...)), "name_example", 123, "collisionEnergy_example", 123, 123, 123)), "name_example", "externalFeatureId_example", c("detectedAdducts_example"), 123, 123, BasicSpectrum$new(c(SimplePeak$new(123, 123)), "name_example", 123, "collisionEnergy_example", 123, 123, 123))), "name_example")) # array[CompoundImport] | the compound data to be imported
 var_opt_fields <- c(CompoundOptField$new()) # array[CompoundOptField] | set of optional fields to be included. Use 'none' to override defaults. (Optional)
 var_opt_fields_features <- c(AlignedFeatureOptField$new()) # array[AlignedFeatureOptField] | set of optional fields of the nested features to be included. Use 'none' to override defaults. (Optional)
 
