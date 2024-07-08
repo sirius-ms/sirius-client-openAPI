@@ -74,6 +74,7 @@ jobs:
       shell: Rscript {0}
     - name: Copy tests into Rsirius folder for testing
       run: |
+        mkdir client-api_r/tests
         cp -r .updater/clientTests/RTests/test client-api_r/tests/testthat
         # TODO move back after issues are fixed
         rm client-api_r/tests/testthat/test_compounds_api.py
