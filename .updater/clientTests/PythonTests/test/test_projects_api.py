@@ -11,7 +11,6 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 import os
 import unittest
 
@@ -19,6 +18,8 @@ from PySirius.api.projects_api import ProjectsApi
 from PySirius.models.job import Job
 from PySirius.models.project_info import ProjectInfo
 from PySirius.models.import_result import ImportResult
+from PySirius.models.lcms_submission_parameters import LcmsSubmissionParameters
+from PySirius.models.data_smoothing import DataSmoothing
 
 
 class TestProjectsApi(unittest.TestCase):
@@ -36,12 +37,10 @@ class TestProjectsApi(unittest.TestCase):
         self.path_to_project = f"{os.environ.get('HOME')}/test_projects_api_dir"
         self.create_response = self.api.create_project_space(self.project_id, self.path_to_project)
 
-
     def tearDown(self) -> None:
         # equals test_close_project_space
         self.api.close_project_space(self.project_id)
         os.remove(self.path_to_project)
-
 
     def test_close_project_space(self) -> None:
         """Test case for close_project_space
@@ -49,7 +48,6 @@ class TestProjectsApi(unittest.TestCase):
         Close project-space and remove it from application
         """
         pass
-
 
     def test_copy_project_space(self) -> None:
         """Test case for copy_project_space
@@ -81,7 +79,6 @@ class TestProjectsApi(unittest.TestCase):
         response = self.api.get_canopus_classy_fire_data(self.project_id, 0)
         self.assertIsInstance(response, str)
 
-
     def test_get_canopus_npc_data(self) -> None:
         """Test case for get_canopus_npc_data
 
@@ -89,7 +86,6 @@ class TestProjectsApi(unittest.TestCase):
         """
         response = self.api.get_canopus_npc_data(self.project_id, 0)
         self.assertIsInstance(response, str)
-
 
     def test_get_finger_id_data(self) -> None:
         """Test case for get_finger_id_data
@@ -99,7 +95,6 @@ class TestProjectsApi(unittest.TestCase):
         response = self.api.get_finger_id_data(self.project_id, 0)
         self.assertIsInstance(response, str)
 
-
     def test_get_project_space(self) -> None:
         """Test case for get_project_space
 
@@ -107,7 +102,6 @@ class TestProjectsApi(unittest.TestCase):
         """
         response = self.api.get_project_space(self.project_id)
         self.assertIsInstance(response, ProjectInfo)
-
 
     def test_get_project_spaces(self) -> None:
         """Test case for get_project_spaces
@@ -118,18 +112,20 @@ class TestProjectsApi(unittest.TestCase):
         self.assertIsInstance(response, list)
         self.assertIsInstance(response[0], ProjectInfo)
 
-
     def test_import_ms_run_data(self) -> None:
         """Test case for import_ms_run_data
 
         Import and Align full MS-Runs from various formats into the specified project  Possible formats (mzML, mzXML)
         """
-        # TODO defaults to /home/user/file path when given absolute path; example: java.io.FileNotFoundException: /home/joxem/SPF4_Eso3_GH6_01_22643.mzXML
+        # TODO
+        # {"timestamp": "2024-07-12T13:12:57.748+00:00", "status": 500, "error": "Internal Server Error",
+        # "message": "jakarta.servlet.ServletException: Request processing failed: java.lang.RuntimeException: java.lang.NullPointerException: Cannot invoke \"de.unijena.bioinf.ms.frontend.subtools.lcms_align.DataSmoothing.ordinal()\" because \"filter\" is null",
+        # "path": "/api/projects/test_projects_api/import/ms-data-files"}
         # input_files = [self.full_ms_file]
         # print(self.full_ms_file)
-        # response = self.api.import_ms_run_data(self.project_id, input_files=input_files)
+        # parameters = LcmsSubmissionParameters(filter=DataSmoothing.AUTO)
+        # response = self.api.import_ms_run_data(self.project_id, parameters, input_files=input_files)
         # self.assertIsInstance(response, ImportResult)
-
 
     def test_import_ms_run_data_as_job(self) -> None:
         """Test case for import_ms_run_data_as_job
@@ -137,9 +133,33 @@ class TestProjectsApi(unittest.TestCase):
         Import and Align full MS-Runs from various formats into the specified project as background job.
         """
         input_files = [self.full_ms_file]
-        response = self.api.import_ms_run_data_as_job(self.project_id, input_files=input_files)
+        parameters = LcmsSubmissionParameters()
+        response = self.api.import_ms_run_data_as_job(self.project_id, parameters, input_files=input_files)
         self.assertIsInstance(response, Job)
 
+    def test_import_ms_run_data_as_job_locally(self) -> None:
+        """Test case for import_ms_run_data_as_job_locally
+
+        Import and Align full MS-Runs from various formats into the specified project as background job
+        """
+        input_files = [self.full_ms_file]
+        parameters = LcmsSubmissionParameters()
+        response = self.api.import_ms_run_data_as_job_locally(self.project_id, parameters, request_body=input_files)
+        self.assertIsInstance(response, Job)
+
+    def test_import_ms_run_data_locally(self) -> None:
+        """Test case for import_ms_run_data_locally
+
+        Import and Align full MS-Runs from various formats into the specified project  Possible formats (mzML, mzXML)
+        """
+        # TODO
+        # {"timestamp": "2024-07-12T13:12:57.748+00:00", "status": 500, "error": "Internal Server Error",
+        # "message": "jakarta.servlet.ServletException: Request processing failed: java.lang.RuntimeException: java.lang.NullPointerException: Cannot invoke \"de.unijena.bioinf.ms.frontend.subtools.lcms_align.DataSmoothing.ordinal()\" because \"filter\" is null",
+        # "path": "/api/projects/test_projects_api/import/ms-data-files"}
+        # input_files = [self.full_ms_file]
+        # parameters = LcmsSubmissionParameters()
+        # response = self.api.import_ms_run_data_locally(self.project_id, parameters=parameters, request_body=input_files)
+        # self.assertIsInstance(response, ImportResult)
 
     def test_import_preprocessed_data(self) -> None:
         """Test case for import_preprocessed_data
@@ -150,7 +170,6 @@ class TestProjectsApi(unittest.TestCase):
         response = self.api.import_preprocessed_data(self.project_id, input_files=input_files)
         self.assertIsInstance(response, ImportResult)
 
-
     def test_import_preprocessed_data_as_job(self) -> None:
         """Test case for import_preprocessed_data_as_job
 
@@ -160,6 +179,23 @@ class TestProjectsApi(unittest.TestCase):
         response = self.api.import_preprocessed_data_as_job(self.project_id, input_files=input_files)
         self.assertIsInstance(response, Job)
 
+    def test_import_preprocessed_data_as_job_locally(self) -> None:
+        """Test case for import_preprocessed_data_as_job_locally
+
+        Import ms/ms data from the given format into the specified project-space as background job
+        """
+        input_files = [self.preproc_ms2_file_1, self.preproc_ms2_file_2]
+        response = self.api.import_preprocessed_data_as_job_locally(self.project_id, request_body=input_files)
+        self.assertIsInstance(response, Job)
+
+    def test_import_preprocessed_data_locally(self) -> None:
+        """Test case for import_preprocessed_data_locally
+
+        Import already preprocessed ms/ms data from various formats into the specified project  Possible formats (ms, mgf, cef, msp)
+        """
+        input_files = [self.preproc_ms2_file_1, self.preproc_ms2_file_2]
+        response = self.api.import_preprocessed_data_locally(self.project_id, request_body=input_files)
+        self.assertIsInstance(response, ImportResult)
 
     def test_open_project_space(self) -> None:
         """Test case for open_project_space
@@ -169,7 +205,6 @@ class TestProjectsApi(unittest.TestCase):
         response = self.api.open_project_space("tomato", f"{os.environ.get('HOME')}/tomato_small.sirius")
         self.api.close_project_space("tomato")
         self.assertIsInstance(response, ProjectInfo)
-
 
 if __name__ == '__main__':
     unittest.main()
