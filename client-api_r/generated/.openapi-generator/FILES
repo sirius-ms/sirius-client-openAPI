@@ -40,6 +40,7 @@ R/consensus_annotations_de_novo.R
 R/consensus_criterion_csi.R
 R/consensus_criterion_de_novo.R
 R/data_quality.R
+R/data_smoothing.R
 R/db_link.R
 R/deviation.R
 R/experimental_api.R
@@ -56,7 +57,7 @@ R/gui_info.R
 R/import_result.R
 R/info.R
 R/info_api.R
-R/instrument.R
+R/instrument_profile.R
 R/isotope_pattern_annotation.R
 R/item.R
 R/job.R
@@ -64,6 +65,7 @@ R/job_opt_field.R
 R/job_progress.R
 R/job_submission.R
 R/jobs_api.R
+R/lcms_submission_parameters.R
 R/license_info.R
 R/lipid_annotation.R
 R/login_and_account_api.R
@@ -150,6 +152,7 @@ docs/ConsensusCriterionCSI.md
 docs/ConsensusCriterionDeNovo.md
 docs/DBLink.md
 docs/DataQuality.md
+docs/DataSmoothing.md
 docs/Deviation.md
 docs/ExperimentalApi.md
 docs/FeatureAnnotations.md
@@ -165,7 +168,7 @@ docs/GuiInfo.md
 docs/ImportResult.md
 docs/Info.md
 docs/InfoApi.md
-docs/Instrument.md
+docs/InstrumentProfile.md
 docs/IsotopePatternAnnotation.md
 docs/Item.md
 docs/Job.md
@@ -173,6 +176,7 @@ docs/JobOptField.md
 docs/JobProgress.md
 docs/JobSubmission.md
 docs/JobsApi.md
+docs/LcmsSubmissionParameters.md
 docs/LicenseInfo.md
 docs/LipidAnnotation.md
 docs/LoginAndAccountApi.md
@@ -258,6 +262,7 @@ tests/testthat/test_consensus_annotations_de_novo.R
 tests/testthat/test_consensus_criterion_csi.R
 tests/testthat/test_consensus_criterion_de_novo.R
 tests/testthat/test_data_quality.R
+tests/testthat/test_data_smoothing.R
 tests/testthat/test_db_link.R
 tests/testthat/test_deviation.R
 tests/testthat/test_experimental_api.R
@@ -274,7 +279,7 @@ tests/testthat/test_gui_info.R
 tests/testthat/test_import_result.R
 tests/testthat/test_info.R
 tests/testthat/test_info_api.R
-tests/testthat/test_instrument.R
+tests/testthat/test_instrument_profile.R
 tests/testthat/test_isotope_pattern_annotation.R
 tests/testthat/test_item.R
 tests/testthat/test_job.R
@@ -282,6 +287,7 @@ tests/testthat/test_job_opt_field.R
 tests/testthat/test_job_progress.R
 tests/testthat/test_job_submission.R
 tests/testthat/test_jobs_api.R
+tests/testthat/test_lcms_submission_parameters.R
 tests/testthat/test_license_info.R
 tests/testthat/test_lipid_annotation.R
 tests/testthat/test_login_and_account_api.R

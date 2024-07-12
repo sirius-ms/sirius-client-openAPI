@@ -9,9 +9,10 @@ Name | Type | Description | Notes
 **aligned_feature_id** | **str** |  | [optional] 
 **compound_id** | **str** |  | [optional] 
 **name** | **str** |  | [optional] 
+**external_feature_id** | **str** | Externally provided FeatureId (e.g. by some preprocessing tool).  This FeatureId is NOT used by SIRIUS but is stored to ease mapping information back to the source. | [optional] 
 **ion_mass** | **float** |  | [optional] 
-**charge** | **int** |  | 
-**detected_adducts** | **List[str]** |  | 
+**charge** | **int** | Ion mode (charge) this feature has been measured in. | 
+**detected_adducts** | **List[str]** | Adducts of this feature that have been detected during preprocessing. | 
 **rt_start_seconds** | **float** |  | [optional] 
 **rt_end_seconds** | **float** |  | [optional] 
 **quality** | [**DataQuality**](DataQuality.md) |  | [optional] 

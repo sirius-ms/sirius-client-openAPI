@@ -13,7 +13,7 @@ Method | HTTP request | Description
 
 
 # **add_compounds**
-> List[Compound] add_compounds(project_id, compound_import, opt_fields=opt_fields, opt_fields_features=opt_fields_features)
+> List[Compound] add_compounds(project_id, compound_import, profile=profile, opt_fields=opt_fields, opt_fields_features=opt_fields_features)
 
 Import Compounds and its contained features.
 
@@ -28,6 +28,7 @@ from PySirius.models.aligned_feature_opt_field import AlignedFeatureOptField
 from PySirius.models.compound import Compound
 from PySirius.models.compound_import import CompoundImport
 from PySirius.models.compound_opt_field import CompoundOptField
+from PySirius.models.instrument_profile import InstrumentProfile
 from PySirius.rest import ApiException
 from pprint import pprint
 
@@ -44,12 +45,13 @@ with PySirius.ApiClient(configuration) as api_client:
     api_instance = PySirius.CompoundsApi(api_client)
     project_id = 'project_id_example' # str | project-space to import into.
     compound_import = [PySirius.CompoundImport()] # List[CompoundImport] | the compound data to be imported
+    profile = PySirius.InstrumentProfile() # InstrumentProfile | profile describing the instrument used to measure the data. Used to merge spectra. (optional)
     opt_fields = [] # List[CompoundOptField] | set of optional fields to be included. Use 'none' to override defaults. (optional) (default to [])
     opt_fields_features = [] # List[AlignedFeatureOptField] | set of optional fields of the nested features to be included. Use 'none' to override defaults. (optional) (default to [])
 
     try:
         # Import Compounds and its contained features.
-        api_response = api_instance.add_compounds(project_id, compound_import, opt_fields=opt_fields, opt_fields_features=opt_fields_features)
+        api_response = api_instance.add_compounds(project_id, compound_import, profile=profile, opt_fields=opt_fields, opt_fields_features=opt_fields_features)
         print("The response of CompoundsApi->add_compounds:\n")
         pprint(api_response)
     except Exception as e:
@@ -65,6 +67,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **str**| project-space to import into. | 
  **compound_import** | [**List[CompoundImport]**](CompoundImport.md)| the compound data to be imported | 
+ **profile** | [**InstrumentProfile**](.md)| profile describing the instrument used to measure the data. Used to merge spectra. | [optional] 
  **opt_fields** | [**List[CompoundOptField]**](CompoundOptField.md)| set of optional fields to be included. Use &#39;none&#39; to override defaults. | [optional] [default to []]
  **opt_fields_features** | [**List[AlignedFeatureOptField]**](AlignedFeatureOptField.md)| set of optional fields of the nested features to be included. Use &#39;none&#39; to override defaults. | [optional] [default to []]
 

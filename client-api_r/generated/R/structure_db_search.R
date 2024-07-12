@@ -8,7 +8,7 @@
 #' @description StructureDbSearch Class
 #' @format An \code{R6Class} generator object
 #' @field enabled tags whether the tool is enabled character [optional]
-#' @field structureSearchDBs Structure databases to search in, If expansive search is enabled this DB selection will be expanded to PubChem  if not high confidence hit was found in the selected databases.   Defaults to BIO + Custom Databases. Possible values are available to Database API. list(character) [optional]
+#' @field structureSearchDBs Structure databases to search in, If expansive search is enabled this DB selection will be expanded to PubChem  if not high confidence hit was found in the selected databases.  <p>  Defaults to BIO + Custom Databases. Possible values are available to Database API. list(character) [optional]
 #' @field tagStructuresWithLipidClass Candidates matching the lipid class estimated by El Gordo will be tagged.  The lipid class will only be available if El Gordo predicts that the MS/MS is a lipid spectrum.  If this parameter is set to 'false' El Gordo will still be executed and e.g. improve the fragmentation  tree, but the matching structure candidates will not be tagged if they match lipid class. character [optional]
 #' @field expansiveSearchConfidenceMode  \link{ConfidenceMode} [optional]
 #' @importFrom R6 R6Class
@@ -27,7 +27,7 @@ StructureDbSearch <- R6::R6Class(
     #' Initialize a new StructureDbSearch class.
     #'
     #' @param enabled tags whether the tool is enabled
-    #' @param structureSearchDBs Structure databases to search in, If expansive search is enabled this DB selection will be expanded to PubChem  if not high confidence hit was found in the selected databases.   Defaults to BIO + Custom Databases. Possible values are available to Database API.
+    #' @param structureSearchDBs Structure databases to search in, If expansive search is enabled this DB selection will be expanded to PubChem  if not high confidence hit was found in the selected databases.  <p>  Defaults to BIO + Custom Databases. Possible values are available to Database API.
     #' @param tagStructuresWithLipidClass Candidates matching the lipid class estimated by El Gordo will be tagged.  The lipid class will only be available if El Gordo predicts that the MS/MS is a lipid spectrum.  If this parameter is set to 'false' El Gordo will still be executed and e.g. improve the fragmentation  tree, but the matching structure candidates will not be tagged if they match lipid class.
     #' @param expansiveSearchConfidenceMode expansiveSearchConfidenceMode
     #' @param ... Other optional arguments.

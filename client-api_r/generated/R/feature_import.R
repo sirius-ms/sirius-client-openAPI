@@ -1,21 +1,22 @@
 #' Create a new FeatureImport
 #'
 #' @description
-#' FeatureImport Class
+#' Represents an (aligned) feature to be imported into a SIRIUS project.  At least one of the Mass Spec data sources (e.g. mergedMs1, ms1Spectra, ms2Spectra) needs to be given.  Otherwise, the import will fail.
 #'
 #' @docType class
 #' @title FeatureImport
 #' @description FeatureImport Class
 #' @format An \code{R6Class} generator object
 #' @field name  character [optional]
-#' @field featureId  character [optional]
+#' @field externalFeatureId Externally provided FeatureId (by some preprocessing tool). This FeatureId is NOT used by SIRIUS but is stored to ease mapping information back to the source. character [optional]
 #' @field ionMass  numeric
-#' @field adduct Adduct of this feature. If not know specify [M+?]+ or [M+?]- to define the charge character
+#' @field charge  integer
+#' @field detectedAdducts Detected adducts of this feature. Can be NULL or empty if no adducts are known. list(character) [optional]
 #' @field rtStartSeconds  numeric [optional]
 #' @field rtEndSeconds  numeric [optional]
 #' @field mergedMs1  \link{BasicSpectrum} [optional]
-#' @field ms1Spectra  list(\link{BasicSpectrum})
-#' @field ms2Spectra  list(\link{BasicSpectrum})
+#' @field ms1Spectra List of MS1Spectra belonging to this feature. These spectra will be merged an only a representative  mergedMs1 spectrum will be stored in SIRIUS. At least one of these spectra should contain the  isotope pattern of the precursor ion.  Note: Will be ignored if 'mergedMs1' is given. list(\link{BasicSpectrum}) [optional]
+#' @field ms2Spectra List of MS/MS spectra that belong to this feature. list(\link{BasicSpectrum}) [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
 #' @export
@@ -23,9 +24,10 @@ FeatureImport <- R6::R6Class(
   "FeatureImport",
   public = list(
     `name` = NULL,
-    `featureId` = NULL,
+    `externalFeatureId` = NULL,
     `ionMass` = NULL,
-    `adduct` = NULL,
+    `charge` = NULL,
+    `detectedAdducts` = NULL,
     `rtStartSeconds` = NULL,
     `rtEndSeconds` = NULL,
     `mergedMs1` = NULL,
@@ -37,38 +39,29 @@ FeatureImport <- R6::R6Class(
     #' Initialize a new FeatureImport class.
     #'
     #' @param ionMass ionMass
-    #' @param adduct Adduct of this feature. If not know specify [M+?]+ or [M+?]- to define the charge
-    #' @param ms1Spectra ms1Spectra
-    #' @param ms2Spectra ms2Spectra
+    #' @param charge charge
     #' @param name name
-    #' @param featureId featureId
+    #' @param externalFeatureId Externally provided FeatureId (by some preprocessing tool). This FeatureId is NOT used by SIRIUS but is stored to ease mapping information back to the source.
+    #' @param detectedAdducts Detected adducts of this feature. Can be NULL or empty if no adducts are known.
     #' @param rtStartSeconds rtStartSeconds
     #' @param rtEndSeconds rtEndSeconds
     #' @param mergedMs1 mergedMs1
+    #' @param ms1Spectra List of MS1Spectra belonging to this feature. These spectra will be merged an only a representative  mergedMs1 spectrum will be stored in SIRIUS. At least one of these spectra should contain the  isotope pattern of the precursor ion.  Note: Will be ignored if 'mergedMs1' is given.
+    #' @param ms2Spectra List of MS/MS spectra that belong to this feature.
     #' @param ... Other optional arguments.
     #' @export
-    initialize = function(`ionMass`, `adduct`, `ms1Spectra`, `ms2Spectra`, `name` = NULL, `featureId` = NULL, `rtStartSeconds` = NULL, `rtEndSeconds` = NULL, `mergedMs1` = NULL, ...) {
+    initialize = function(`ionMass`, `charge`, `name` = NULL, `externalFeatureId` = NULL, `detectedAdducts` = NULL, `rtStartSeconds` = NULL, `rtEndSeconds` = NULL, `mergedMs1` = NULL, `ms1Spectra` = NULL, `ms2Spectra` = NULL, ...) {
       if (!missing(`ionMass`)) {
         if (!(is.numeric(`ionMass`) && length(`ionMass`) == 1)) {
           stop(paste("Error! Invalid data for `ionMass`. Must be a number:", `ionMass`))
         }
         self$`ionMass` <- `ionMass`
       }
-      if (!missing(`adduct`)) {
-        if (!(is.character(`adduct`) && length(`adduct`) == 1)) {
-          stop(paste("Error! Invalid data for `adduct`. Must be a string:", `adduct`))
+      if (!missing(`charge`)) {
+        if (!(is.numeric(`charge`) && length(`charge`) == 1)) {
+          stop(paste("Error! Invalid data for `charge`. Must be an integer:", `charge`))
         }
-        self$`adduct` <- `adduct`
-      }
-      if (!missing(`ms1Spectra`)) {
-        stopifnot(is.vector(`ms1Spectra`), length(`ms1Spectra`) != 0)
-        sapply(`ms1Spectra`, function(x) stopifnot(R6::is.R6(x)))
-        self$`ms1Spectra` <- `ms1Spectra`
-      }
-      if (!missing(`ms2Spectra`)) {
-        stopifnot(is.vector(`ms2Spectra`), length(`ms2Spectra`) != 0)
-        sapply(`ms2Spectra`, function(x) stopifnot(R6::is.R6(x)))
-        self$`ms2Spectra` <- `ms2Spectra`
+        self$`charge` <- `charge`
       }
       if (!is.null(`name`)) {
         if (!(is.character(`name`) && length(`name`) == 1)) {
@@ -76,11 +69,19 @@ FeatureImport <- R6::R6Class(
         }
         self$`name` <- `name`
       }
-      if (!is.null(`featureId`)) {
-        if (!(is.character(`featureId`) && length(`featureId`) == 1)) {
-          stop(paste("Error! Invalid data for `featureId`. Must be a string:", `featureId`))
+      if (!is.null(`externalFeatureId`)) {
+        if (!(is.character(`externalFeatureId`) && length(`externalFeatureId`) == 1)) {
+          stop(paste("Error! Invalid data for `externalFeatureId`. Must be a string:", `externalFeatureId`))
         }
-        self$`featureId` <- `featureId`
+        self$`externalFeatureId` <- `externalFeatureId`
+      }
+      if (!is.null(`detectedAdducts`)) {
+        stopifnot(is.vector(`detectedAdducts`), length(`detectedAdducts`) != 0)
+        sapply(`detectedAdducts`, function(x) stopifnot(is.character(x)))
+        if (!identical(`detectedAdducts`, unique(`detectedAdducts`))) {
+          stop("Error! Items in `detectedAdducts` are not unique.")
+        }
+        self$`detectedAdducts` <- `detectedAdducts`
       }
       if (!is.null(`rtStartSeconds`)) {
         if (!(is.numeric(`rtStartSeconds`) && length(`rtStartSeconds`) == 1)) {
@@ -98,6 +99,16 @@ FeatureImport <- R6::R6Class(
         stopifnot(R6::is.R6(`mergedMs1`))
         self$`mergedMs1` <- `mergedMs1`
       }
+      if (!is.null(`ms1Spectra`)) {
+        stopifnot(is.vector(`ms1Spectra`), length(`ms1Spectra`) != 0)
+        sapply(`ms1Spectra`, function(x) stopifnot(R6::is.R6(x)))
+        self$`ms1Spectra` <- `ms1Spectra`
+      }
+      if (!is.null(`ms2Spectra`)) {
+        stopifnot(is.vector(`ms2Spectra`), length(`ms2Spectra`) != 0)
+        sapply(`ms2Spectra`, function(x) stopifnot(R6::is.R6(x)))
+        self$`ms2Spectra` <- `ms2Spectra`
+      }
     },
     #' To JSON string
     #'
@@ -112,17 +123,21 @@ FeatureImport <- R6::R6Class(
         FeatureImportObject[["name"]] <-
           self$`name`
       }
-      if (!is.null(self$`featureId`)) {
-        FeatureImportObject[["featureId"]] <-
-          self$`featureId`
+      if (!is.null(self$`externalFeatureId`)) {
+        FeatureImportObject[["externalFeatureId"]] <-
+          self$`externalFeatureId`
       }
       if (!is.null(self$`ionMass`)) {
         FeatureImportObject[["ionMass"]] <-
           self$`ionMass`
       }
-      if (!is.null(self$`adduct`)) {
-        FeatureImportObject[["adduct"]] <-
-          self$`adduct`
+      if (!is.null(self$`charge`)) {
+        FeatureImportObject[["charge"]] <-
+          self$`charge`
+      }
+      if (!is.null(self$`detectedAdducts`)) {
+        FeatureImportObject[["detectedAdducts"]] <-
+          self$`detectedAdducts`
       }
       if (!is.null(self$`rtStartSeconds`)) {
         FeatureImportObject[["rtStartSeconds"]] <-
@@ -165,14 +180,20 @@ FeatureImport <- R6::R6Class(
       if (!is.null(this_object$`name`)) {
         self$`name` <- this_object$`name`
       }
-      if (!is.null(this_object$`featureId`)) {
-        self$`featureId` <- this_object$`featureId`
+      if (!is.null(this_object$`externalFeatureId`)) {
+        self$`externalFeatureId` <- this_object$`externalFeatureId`
       }
       if (!is.null(this_object$`ionMass`)) {
         self$`ionMass` <- this_object$`ionMass`
       }
-      if (!is.null(this_object$`adduct`)) {
-        self$`adduct` <- this_object$`adduct`
+      if (!is.null(this_object$`charge`)) {
+        self$`charge` <- this_object$`charge`
+      }
+      if (!is.null(this_object$`detectedAdducts`)) {
+        self$`detectedAdducts` <- ApiClient$new()$deserializeObj(this_object$`detectedAdducts`, "set[character]", loadNamespace("Rsirius"))
+        if (!identical(self$`detectedAdducts`, unique(self$`detectedAdducts`))) {
+          stop("Error! Items in `detectedAdducts` are not unique.")
+        }
       }
       if (!is.null(this_object$`rtStartSeconds`)) {
         self$`rtStartSeconds` <- this_object$`rtStartSeconds`
@@ -210,12 +231,12 @@ FeatureImport <- R6::R6Class(
           self$`name`
           )
         },
-        if (!is.null(self$`featureId`)) {
+        if (!is.null(self$`externalFeatureId`)) {
           sprintf(
-          '"featureId":
+          '"externalFeatureId":
             "%s"
                     ',
-          self$`featureId`
+          self$`externalFeatureId`
           )
         },
         if (!is.null(self$`ionMass`)) {
@@ -226,12 +247,20 @@ FeatureImport <- R6::R6Class(
           self$`ionMass`
           )
         },
-        if (!is.null(self$`adduct`)) {
+        if (!is.null(self$`charge`)) {
           sprintf(
-          '"adduct":
-            "%s"
+          '"charge":
+            %f
                     ',
-          self$`adduct`
+          self$`charge`
+          )
+        },
+        if (!is.null(self$`detectedAdducts`)) {
+          sprintf(
+          '"detectedAdducts":
+             [%s]
+          ',
+          paste(unlist(lapply(self$`detectedAdducts`, function(x) paste0('"', x, '"'))), collapse = ",")
           )
         },
         if (!is.null(self$`rtStartSeconds`)) {
@@ -293,9 +322,13 @@ FeatureImport <- R6::R6Class(
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       self$`name` <- this_object$`name`
-      self$`featureId` <- this_object$`featureId`
+      self$`externalFeatureId` <- this_object$`externalFeatureId`
       self$`ionMass` <- this_object$`ionMass`
-      self$`adduct` <- this_object$`adduct`
+      self$`charge` <- this_object$`charge`
+      self$`detectedAdducts` <- ApiClient$new()$deserializeObj(this_object$`detectedAdducts`, "set[character]", loadNamespace("Rsirius"))
+      if (!identical(self$`detectedAdducts`, unique(self$`detectedAdducts`))) {
+        stop("Error! Items in `detectedAdducts` are not unique.")
+      }
       self$`rtStartSeconds` <- this_object$`rtStartSeconds`
       self$`rtEndSeconds` <- this_object$`rtEndSeconds`
       self$`mergedMs1` <- BasicSpectrum$new()$fromJSON(jsonlite::toJSON(this_object$`mergedMs1`, auto_unbox = TRUE, digits = NA))
@@ -320,27 +353,13 @@ FeatureImport <- R6::R6Class(
       } else {
         stop(paste("The JSON input `", input, "` is invalid for FeatureImport: the required field `ionMass` is missing."))
       }
-      # check the required field `adduct`
-      if (!is.null(input_json$`adduct`)) {
-        if (!(is.character(input_json$`adduct`) && length(input_json$`adduct`) == 1)) {
-          stop(paste("Error! Invalid data for `adduct`. Must be a string:", input_json$`adduct`))
+      # check the required field `charge`
+      if (!is.null(input_json$`charge`)) {
+        if (!(is.numeric(input_json$`charge`) && length(input_json$`charge`) == 1)) {
+          stop(paste("Error! Invalid data for `charge`. Must be an integer:", input_json$`charge`))
         }
       } else {
-        stop(paste("The JSON input `", input, "` is invalid for FeatureImport: the required field `adduct` is missing."))
-      }
-      # check the required field `ms1Spectra`
-      if (!is.null(input_json$`ms1Spectra`)) {
-        stopifnot(is.vector(input_json$`ms1Spectra`), length(input_json$`ms1Spectra`) != 0)
-        tmp <- sapply(input_json$`ms1Spectra`, function(x) stopifnot(R6::is.R6(x)))
-      } else {
-        stop(paste("The JSON input `", input, "` is invalid for FeatureImport: the required field `ms1Spectra` is missing."))
-      }
-      # check the required field `ms2Spectra`
-      if (!is.null(input_json$`ms2Spectra`)) {
-        stopifnot(is.vector(input_json$`ms2Spectra`), length(input_json$`ms2Spectra`) != 0)
-        tmp <- sapply(input_json$`ms2Spectra`, function(x) stopifnot(R6::is.R6(x)))
-      } else {
-        stop(paste("The JSON input `", input, "` is invalid for FeatureImport: the required field `ms2Spectra` is missing."))
+        stop(paste("The JSON input `", input, "` is invalid for FeatureImport: the required field `charge` is missing."))
       }
     },
     #' To string (JSON format)
@@ -366,20 +385,11 @@ FeatureImport <- R6::R6Class(
         return(FALSE)
       }
 
-      # check if the required `adduct` is null
-      if (is.null(self$`adduct`)) {
+      # check if the required `charge` is null
+      if (is.null(self$`charge`)) {
         return(FALSE)
       }
 
-      # check if the required `ms1Spectra` is null
-      if (is.null(self$`ms1Spectra`)) {
-        return(FALSE)
-      }
-
-      # check if the required `ms2Spectra` is null
-      if (is.null(self$`ms2Spectra`)) {
-        return(FALSE)
-      }
 
       TRUE
     },
@@ -397,20 +407,11 @@ FeatureImport <- R6::R6Class(
         invalid_fields["ionMass"] <- "Non-nullable required field `ionMass` cannot be null."
       }
 
-      # check if the required `adduct` is null
-      if (is.null(self$`adduct`)) {
-        invalid_fields["adduct"] <- "Non-nullable required field `adduct` cannot be null."
+      # check if the required `charge` is null
+      if (is.null(self$`charge`)) {
+        invalid_fields["charge"] <- "Non-nullable required field `charge` cannot be null."
       }
 
-      # check if the required `ms1Spectra` is null
-      if (is.null(self$`ms1Spectra`)) {
-        invalid_fields["ms1Spectra"] <- "Non-nullable required field `ms1Spectra` cannot be null."
-      }
-
-      # check if the required `ms2Spectra` is null
-      if (is.null(self$`ms2Spectra`)) {
-        invalid_fields["ms2Spectra"] <- "Non-nullable required field `ms2Spectra` cannot be null."
-      }
 
       invalid_fields
     },

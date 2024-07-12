@@ -14,8 +14,12 @@ Method | HTTP request | Description
 [**get_project_spaces**](ProjectsApi.md#get_project_spaces) | **GET** /api/projects | List opened project spaces.
 [**import_ms_run_data**](ProjectsApi.md#import_ms_run_data) | **POST** /api/projects/{projectId}/import/ms-data-files | Import and Align full MS-Runs from various formats into the specified project  Possible formats (mzML, mzXML)
 [**import_ms_run_data_as_job**](ProjectsApi.md#import_ms_run_data_as_job) | **POST** /api/projects/{projectId}/jobs/import/ms-data-files-job | Import and Align full MS-Runs from various formats into the specified project as background job.
+[**import_ms_run_data_as_job_locally**](ProjectsApi.md#import_ms_run_data_as_job_locally) | **POST** /api/projects/{projectId}/jobs/import/ms-data-local-files-job | Import and Align full MS-Runs from various formats into the specified project as background job
+[**import_ms_run_data_locally**](ProjectsApi.md#import_ms_run_data_locally) | **POST** /api/projects/{projectId}/import/ms-local-data-files | Import and Align full MS-Runs from various formats into the specified project  Possible formats (mzML, mzXML)  
 [**import_preprocessed_data**](ProjectsApi.md#import_preprocessed_data) | **POST** /api/projects/{projectId}/import/preprocessed-data-files | Import already preprocessed ms/ms data from various formats into the specified project  Possible formats (ms, mgf, cef, msp)
 [**import_preprocessed_data_as_job**](ProjectsApi.md#import_preprocessed_data_as_job) | **POST** /api/projects/{projectId}/import/preprocessed-data-files-job | Import ms/ms data from the given format into the specified project-space as background job.
+[**import_preprocessed_data_as_job_locally**](ProjectsApi.md#import_preprocessed_data_as_job_locally) | **POST** /api/projects/{projectId}/import/preprocessed-local-data-files-job | Import ms/ms data from the given format into the specified project-space as background job
+[**import_preprocessed_data_locally**](ProjectsApi.md#import_preprocessed_data_locally) | **POST** /api/projects/{projectId}/import/preprocessed-local-data-files | Import already preprocessed ms/ms data from various formats into the specified project  Possible formats (ms, mgf, cef, msp)  
 [**open_project_space**](ProjectsApi.md#open_project_space) | **PUT** /api/projects/{projectId} | Open an existing project-space and make it accessible via the given projectId.
 
 
@@ -569,7 +573,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **import_ms_run_data**
-> ImportResult import_ms_run_data(project_id, align_runs=align_runs, allow_ms1_only=allow_ms1_only, input_files=input_files)
+> ImportResult import_ms_run_data(project_id, parameters, allow_ms1_only=allow_ms1_only, input_files=input_files)
 
 Import and Align full MS-Runs from various formats into the specified project  Possible formats (mzML, mzXML)
 
@@ -581,6 +585,7 @@ Import and Align full MS-Runs from various formats into the specified project  P
 ```python
 import PySirius
 from PySirius.models.import_result import ImportResult
+from PySirius.models.lcms_submission_parameters import LcmsSubmissionParameters
 from PySirius.rest import ApiException
 from pprint import pprint
 
@@ -595,14 +600,14 @@ configuration = PySirius.Configuration(
 with PySirius.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = PySirius.ProjectsApi(api_client)
-    project_id = 'project_id_example' # str | project-space to import into.
-    align_runs = True # bool |  (optional) (default to True)
-    allow_ms1_only = True # bool |  (optional) (default to True)
+    project_id = 'project_id_example' # str | Project-space to import into.
+    parameters = PySirius.LcmsSubmissionParameters() # LcmsSubmissionParameters | Parameters for feature alignment and feature finding.
+    allow_ms1_only = True # bool | Import data without MS/MS. (optional) (default to True)
     input_files = None # List[bytearray] |  (optional)
 
     try:
         # Import and Align full MS-Runs from various formats into the specified project  Possible formats (mzML, mzXML)
-        api_response = api_instance.import_ms_run_data(project_id, align_runs=align_runs, allow_ms1_only=allow_ms1_only, input_files=input_files)
+        api_response = api_instance.import_ms_run_data(project_id, parameters, allow_ms1_only=allow_ms1_only, input_files=input_files)
         print("The response of ProjectsApi->import_ms_run_data:\n")
         pprint(api_response)
     except Exception as e:
@@ -616,9 +621,9 @@ with PySirius.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **project_id** | **str**| project-space to import into. | 
- **align_runs** | **bool**|  | [optional] [default to True]
- **allow_ms1_only** | **bool**|  | [optional] [default to True]
+ **project_id** | **str**| Project-space to import into. | 
+ **parameters** | [**LcmsSubmissionParameters**](.md)| Parameters for feature alignment and feature finding. | 
+ **allow_ms1_only** | **bool**| Import data without MS/MS. | [optional] [default to True]
  **input_files** | **List[bytearray]**|  | [optional] 
 
 ### Return type
@@ -643,7 +648,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **import_ms_run_data_as_job**
-> Job import_ms_run_data_as_job(project_id, align_runs=align_runs, allow_ms1_only=allow_ms1_only, opt_fields=opt_fields, input_files=input_files)
+> Job import_ms_run_data_as_job(project_id, parameters, allow_ms1_only=allow_ms1_only, opt_fields=opt_fields, input_files=input_files)
 
 Import and Align full MS-Runs from various formats into the specified project as background job.
 
@@ -656,6 +661,7 @@ Import and Align full MS-Runs from various formats into the specified project as
 import PySirius
 from PySirius.models.job import Job
 from PySirius.models.job_opt_field import JobOptField
+from PySirius.models.lcms_submission_parameters import LcmsSubmissionParameters
 from PySirius.rest import ApiException
 from pprint import pprint
 
@@ -670,15 +676,15 @@ configuration = PySirius.Configuration(
 with PySirius.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = PySirius.ProjectsApi(api_client)
-    project_id = 'project_id_example' # str | project-space to import into.
-    align_runs = True # bool |  (optional) (default to True)
-    allow_ms1_only = True # bool |  (optional) (default to True)
-    opt_fields = ["progress"] # List[JobOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to ["progress"])
+    project_id = 'project_id_example' # str | Project-space to import into.
+    parameters = PySirius.LcmsSubmissionParameters() # LcmsSubmissionParameters | Parameters for feature alignment and feature finding.
+    allow_ms1_only = True # bool | Import data without MS/MS. (optional) (default to True)
+    opt_fields = ["progress"] # List[JobOptField] | Set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to ["progress"])
     input_files = None # List[bytearray] |  (optional)
 
     try:
         # Import and Align full MS-Runs from various formats into the specified project as background job.
-        api_response = api_instance.import_ms_run_data_as_job(project_id, align_runs=align_runs, allow_ms1_only=allow_ms1_only, opt_fields=opt_fields, input_files=input_files)
+        api_response = api_instance.import_ms_run_data_as_job(project_id, parameters, allow_ms1_only=allow_ms1_only, opt_fields=opt_fields, input_files=input_files)
         print("The response of ProjectsApi->import_ms_run_data_as_job:\n")
         pprint(api_response)
     except Exception as e:
@@ -692,10 +698,10 @@ with PySirius.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **project_id** | **str**| project-space to import into. | 
- **align_runs** | **bool**|  | [optional] [default to True]
- **allow_ms1_only** | **bool**|  | [optional] [default to True]
- **opt_fields** | [**List[JobOptField]**](JobOptField.md)| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;progress&quot;]]
+ **project_id** | **str**| Project-space to import into. | 
+ **parameters** | [**LcmsSubmissionParameters**](.md)| Parameters for feature alignment and feature finding. | 
+ **allow_ms1_only** | **bool**| Import data without MS/MS. | [optional] [default to True]
+ **opt_fields** | [**List[JobOptField]**](JobOptField.md)| Set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;progress&quot;]]
  **input_files** | **List[bytearray]**|  | [optional] 
 
 ### Return type
@@ -716,6 +722,159 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | the import job. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **import_ms_run_data_as_job_locally**
+> Job import_ms_run_data_as_job_locally(project_id, parameters, request_body, allow_ms1_only=allow_ms1_only, opt_fields=opt_fields)
+
+Import and Align full MS-Runs from various formats into the specified project as background job
+
+Import and Align full MS-Runs from various formats into the specified project as background job.  Possible formats (mzML, mzXML)  <p>  ATTENTION: This is loading input files from the filesystem where the SIRIUS service is running,  not on the system where the client SDK is running.  Is more efficient than MultipartFile upload in cases where client (SDK) and server (SIRIUS service)  are running on the same host.  <p>  DEPRECATED: This endpoint relies on the local filesystem and will likely be removed in later versions of this  API to allow for more flexible use cases. Use 'ms-data-files-job' instead.
+
+### Example
+
+
+```python
+import PySirius
+from PySirius.models.job import Job
+from PySirius.models.job_opt_field import JobOptField
+from PySirius.models.lcms_submission_parameters import LcmsSubmissionParameters
+from PySirius.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to http://localhost:8080
+# See configuration.py for a list of all supported configuration parameters.
+configuration = PySirius.Configuration(
+    host = "http://localhost:8080"
+)
+
+
+# Enter a context with an instance of the API client
+with PySirius.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = PySirius.ProjectsApi(api_client)
+    project_id = 'project_id_example' # str | Project-space to import into.
+    parameters = PySirius.LcmsSubmissionParameters() # LcmsSubmissionParameters | Parameters for feature alignment and feature finding.
+    request_body = ['request_body_example'] # List[str] | 
+    allow_ms1_only = True # bool | Import data without MS/MS. (optional) (default to True)
+    opt_fields = ["progress"] # List[JobOptField] | Set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to ["progress"])
+
+    try:
+        # Import and Align full MS-Runs from various formats into the specified project as background job
+        api_response = api_instance.import_ms_run_data_as_job_locally(project_id, parameters, request_body, allow_ms1_only=allow_ms1_only, opt_fields=opt_fields)
+        print("The response of ProjectsApi->import_ms_run_data_as_job_locally:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling ProjectsApi->import_ms_run_data_as_job_locally: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **project_id** | **str**| Project-space to import into. | 
+ **parameters** | [**LcmsSubmissionParameters**](.md)| Parameters for feature alignment and feature finding. | 
+ **request_body** | [**List[str]**](str.md)|  | 
+ **allow_ms1_only** | **bool**| Import data without MS/MS. | [optional] [default to True]
+ **opt_fields** | [**List[JobOptField]**](JobOptField.md)| Set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;progress&quot;]]
+
+### Return type
+
+[**Job**](Job.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | the import job. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **import_ms_run_data_locally**
+> ImportResult import_ms_run_data_locally(project_id, parameters, request_body, allow_ms1_only=allow_ms1_only)
+
+Import and Align full MS-Runs from various formats into the specified project  Possible formats (mzML, mzXML)  
+
+Import and Align full MS-Runs from various formats into the specified project  Possible formats (mzML, mzXML)  <p>  ATTENTION: This is loading input files from the filesystem where the SIRIUS service is running,  not on the system where the client SDK is running.  Is more efficient than MultipartFile upload in cases where client (SDK) and server (SIRIUS service)  are running on the same host.  <p>  DEPRECATED: This endpoint relies on the local filesystem and will likely be removed in later versions of this  API to allow for more flexible use cases. Use 'ms-data-files' instead.
+
+### Example
+
+
+```python
+import PySirius
+from PySirius.models.import_result import ImportResult
+from PySirius.models.lcms_submission_parameters import LcmsSubmissionParameters
+from PySirius.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to http://localhost:8080
+# See configuration.py for a list of all supported configuration parameters.
+configuration = PySirius.Configuration(
+    host = "http://localhost:8080"
+)
+
+
+# Enter a context with an instance of the API client
+with PySirius.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = PySirius.ProjectsApi(api_client)
+    project_id = 'project_id_example' # str | Project to import into.
+    parameters = PySirius.LcmsSubmissionParameters() # LcmsSubmissionParameters | Parameters for feature alignment and feature finding.
+    request_body = ['request_body_example'] # List[str] | Local files to import into project
+    allow_ms1_only = True # bool | Import data without MS/MS. (optional) (default to True)
+
+    try:
+        # Import and Align full MS-Runs from various formats into the specified project  Possible formats (mzML, mzXML)  
+        api_response = api_instance.import_ms_run_data_locally(project_id, parameters, request_body, allow_ms1_only=allow_ms1_only)
+        print("The response of ProjectsApi->import_ms_run_data_locally:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling ProjectsApi->import_ms_run_data_locally: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **project_id** | **str**| Project to import into. | 
+ **parameters** | [**LcmsSubmissionParameters**](.md)| Parameters for feature alignment and feature finding. | 
+ **request_body** | [**List[str]**](str.md)| Local files to import into project | 
+ **allow_ms1_only** | **bool**| Import data without MS/MS. | [optional] [default to True]
+
+### Return type
+
+[**ImportResult**](ImportResult.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -867,6 +1026,157 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | the import job. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **import_preprocessed_data_as_job_locally**
+> Job import_preprocessed_data_as_job_locally(project_id, request_body, ignore_formulas=ignore_formulas, allow_ms1_only=allow_ms1_only, opt_fields=opt_fields)
+
+Import ms/ms data from the given format into the specified project-space as background job
+
+Import ms/ms data from the given format into the specified project-space as background job.  Possible formats (ms, mgf, cef, msp)  <p>  ATTENTION: This is loading input files from the filesystem where the SIRIUS service is running,  not on the system where the client SDK is running.  Is more efficient than MultipartFile upload in cases where client (SDK) and server (SIRIUS service)  are running on the same host.  <p>  DEPRECATED: This endpoint relies on the local filesystem and will likely be removed in later versions of this  API to allow for more flexible use cases. Use 'preprocessed-data-files-job' instead.
+
+### Example
+
+
+```python
+import PySirius
+from PySirius.models.job import Job
+from PySirius.models.job_opt_field import JobOptField
+from PySirius.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to http://localhost:8080
+# See configuration.py for a list of all supported configuration parameters.
+configuration = PySirius.Configuration(
+    host = "http://localhost:8080"
+)
+
+
+# Enter a context with an instance of the API client
+with PySirius.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = PySirius.ProjectsApi(api_client)
+    project_id = 'project_id_example' # str | project-space to import into.
+    request_body = ['request_body_example'] # List[str] | 
+    ignore_formulas = False # bool |  (optional) (default to False)
+    allow_ms1_only = True # bool |  (optional) (default to True)
+    opt_fields = ["progress"] # List[JobOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to ["progress"])
+
+    try:
+        # Import ms/ms data from the given format into the specified project-space as background job
+        api_response = api_instance.import_preprocessed_data_as_job_locally(project_id, request_body, ignore_formulas=ignore_formulas, allow_ms1_only=allow_ms1_only, opt_fields=opt_fields)
+        print("The response of ProjectsApi->import_preprocessed_data_as_job_locally:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling ProjectsApi->import_preprocessed_data_as_job_locally: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **project_id** | **str**| project-space to import into. | 
+ **request_body** | [**List[str]**](str.md)|  | 
+ **ignore_formulas** | **bool**|  | [optional] [default to False]
+ **allow_ms1_only** | **bool**|  | [optional] [default to True]
+ **opt_fields** | [**List[JobOptField]**](JobOptField.md)| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;progress&quot;]]
+
+### Return type
+
+[**Job**](Job.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | the import job. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **import_preprocessed_data_locally**
+> ImportResult import_preprocessed_data_locally(project_id, request_body, ignore_formulas=ignore_formulas, allow_ms1_only=allow_ms1_only)
+
+Import already preprocessed ms/ms data from various formats into the specified project  Possible formats (ms, mgf, cef, msp)  
+
+Import already preprocessed ms/ms data from various formats into the specified project  Possible formats (ms, mgf, cef, msp)  <p>  ATTENTION: This is loading input files from the filesystem where the SIRIUS service is running,  not on the system where the client SDK is running.  Is more efficient than MultipartFile upload in cases where client (SDK) and server (SIRIUS service)  are running on the same host.  <p>  DEPRECATED: This endpoint relies on the local filesystem and will likely be removed in later versions of this  API to allow for more flexible use cases. Use 'preprocessed-data-files' instead.
+
+### Example
+
+
+```python
+import PySirius
+from PySirius.models.import_result import ImportResult
+from PySirius.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to http://localhost:8080
+# See configuration.py for a list of all supported configuration parameters.
+configuration = PySirius.Configuration(
+    host = "http://localhost:8080"
+)
+
+
+# Enter a context with an instance of the API client
+with PySirius.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = PySirius.ProjectsApi(api_client)
+    project_id = 'project_id_example' # str | project-space to import into.
+    request_body = ['request_body_example'] # List[str] | files to import into project
+    ignore_formulas = False # bool |  (optional) (default to False)
+    allow_ms1_only = True # bool |  (optional) (default to True)
+
+    try:
+        # Import already preprocessed ms/ms data from various formats into the specified project  Possible formats (ms, mgf, cef, msp)  
+        api_response = api_instance.import_preprocessed_data_locally(project_id, request_body, ignore_formulas=ignore_formulas, allow_ms1_only=allow_ms1_only)
+        print("The response of ProjectsApi->import_preprocessed_data_locally:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling ProjectsApi->import_preprocessed_data_locally: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **project_id** | **str**| project-space to import into. | 
+ **request_body** | [**List[str]**](str.md)| files to import into project | 
+ **ignore_formulas** | **bool**|  | [optional] [default to False]
+ **allow_ms1_only** | **bool**|  | [optional] [default to True]
+
+### Return type
+
+[**ImportResult**](ImportResult.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

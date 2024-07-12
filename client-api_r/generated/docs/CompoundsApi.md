@@ -13,7 +13,7 @@ Method | HTTP request | Description
 
 
 # **AddCompounds**
-> array[Compound] AddCompounds(project_id, compound_import, opt_fields = [], opt_fields_features = [])
+> array[Compound] AddCompounds(project_id, compound_import, profile = var.profile, opt_fields = [], opt_fields_features = [])
 
 Import Compounds and its contained features.
 
@@ -27,14 +27,15 @@ library(Rsirius)
 #
 # prepare function argument(s)
 var_project_id <- "project_id_example" # character | project-space to import into.
-var_compound_import <- c(CompoundImport$new(c(FeatureImport$new(123, "adduct_example", c(BasicSpectrum$new(c(SimplePeak$new(..., ...)), "name_example", 123, "collisionEnergy_example", 123, 123, 123)), c(BasicSpectrum$new(c(SimplePeak$new(..., ...)), "name_example", 123, "collisionEnergy_example", 123, 123, 123)), "name_example", "featureId_example", 123, 123, BasicSpectrum$new(c(SimplePeak$new(123, 123)), "name_example", 123, "collisionEnergy_example", 123, 123, 123))), "name_example")) # array[CompoundImport] | the compound data to be imported
+var_compound_import <- c(CompoundImport$new(c(FeatureImport$new(123, 123, "name_example", "externalFeatureId_example", c("detectedAdducts_example"), 123, 123, BasicSpectrum$new(c(SimplePeak$new(123, 123)), "name_example", 123, "collisionEnergy_example", 123, 123, 123), c(BasicSpectrum$new(c(SimplePeak$new(..., ...)), "name_example", 123, "collisionEnergy_example", 123, 123, 123)), c(BasicSpectrum$new(c(SimplePeak$new(..., ...)), "name_example", 123, "collisionEnergy_example", 123, 123, 123)))), "name_example")) # array[CompoundImport] | the compound data to be imported
+var_profile <- InstrumentProfile$new() # InstrumentProfile | profile describing the instrument used to measure the data. Used to merge spectra. (Optional)
 var_opt_fields <- c(CompoundOptField$new()) # array[CompoundOptField] | set of optional fields to be included. Use 'none' to override defaults. (Optional)
 var_opt_fields_features <- c(AlignedFeatureOptField$new()) # array[AlignedFeatureOptField] | set of optional fields of the nested features to be included. Use 'none' to override defaults. (Optional)
 
 api_instance <- rsirius_api$new()
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$AddCompounds(var_project_id, var_compound_import, opt_fields = var_opt_fields, opt_fields_features = var_opt_fields_featuresdata_file = "result.txt")
-result <- api_instance$compounds_api$AddCompounds(var_project_id, var_compound_import, opt_fields = var_opt_fields, opt_fields_features = var_opt_fields_features)
+# result <- api_instance$AddCompounds(var_project_id, var_compound_import, profile = var_profile, opt_fields = var_opt_fields, opt_fields_features = var_opt_fields_featuresdata_file = "result.txt")
+result <- api_instance$compounds_api$AddCompounds(var_project_id, var_compound_import, profile = var_profile, opt_fields = var_opt_fields, opt_fields_features = var_opt_fields_features)
 dput(result)
 ```
 
@@ -44,6 +45,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **character**| project-space to import into. | 
  **compound_import** | list( [**CompoundImport**](CompoundImport.md) )| the compound data to be imported | 
+ **profile** | [**InstrumentProfile**](.md)| profile describing the instrument used to measure the data. Used to merge spectra. | [optional] 
  **opt_fields** | list( [**CompoundOptField**](CompoundOptField.md) )| set of optional fields to be included. Use &#39;none&#39; to override defaults. | [optional] [default to []]
  **opt_fields_features** | list( [**AlignedFeatureOptField**](AlignedFeatureOptField.md) )| set of optional fields of the nested features to be included. Use &#39;none&#39; to override defaults. | [optional] [default to []]
 

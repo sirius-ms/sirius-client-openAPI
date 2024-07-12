@@ -43,7 +43,7 @@ Method | HTTP request | Description
 
 
 # **add_aligned_features**
-> List[AlignedFeature] add_aligned_features(project_id, feature_import, opt_fields=opt_fields)
+> List[AlignedFeature] add_aligned_features(project_id, feature_import, profile=profile, opt_fields=opt_fields)
 
 Import (aligned) features into the project.
 
@@ -57,6 +57,7 @@ import PySirius
 from PySirius.models.aligned_feature import AlignedFeature
 from PySirius.models.aligned_feature_opt_field import AlignedFeatureOptField
 from PySirius.models.feature_import import FeatureImport
+from PySirius.models.instrument_profile import InstrumentProfile
 from PySirius.rest import ApiException
 from pprint import pprint
 
@@ -73,11 +74,12 @@ with PySirius.ApiClient(configuration) as api_client:
     api_instance = PySirius.FeaturesApi(api_client)
     project_id = 'project_id_example' # str | project-space to import into.
     feature_import = [PySirius.FeatureImport()] # List[FeatureImport] | the feature data to be imported
+    profile = PySirius.InstrumentProfile() # InstrumentProfile | profile describing the instrument used to measure the data. Used to merge spectra. (optional)
     opt_fields = [] # List[AlignedFeatureOptField] | set of optional fields to be included. Use 'none' to override defaults. (optional) (default to [])
 
     try:
         # Import (aligned) features into the project.
-        api_response = api_instance.add_aligned_features(project_id, feature_import, opt_fields=opt_fields)
+        api_response = api_instance.add_aligned_features(project_id, feature_import, profile=profile, opt_fields=opt_fields)
         print("The response of FeaturesApi->add_aligned_features:\n")
         pprint(api_response)
     except Exception as e:
@@ -93,6 +95,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **str**| project-space to import into. | 
  **feature_import** | [**List[FeatureImport]**](FeatureImport.md)| the feature data to be imported | 
+ **profile** | [**InstrumentProfile**](.md)| profile describing the instrument used to measure the data. Used to merge spectra. | [optional] 
  **opt_fields** | [**List[AlignedFeatureOptField]**](AlignedFeatureOptField.md)| set of optional fields to be included. Use &#39;none&#39; to override defaults. | [optional] [default to []]
 
 ### Return type

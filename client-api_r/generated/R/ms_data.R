@@ -1,7 +1,7 @@
 #' Create a new MsData
 #'
 #' @description
-#' The MsData wraps all spectral input data belonging to a feature.  <p>  Each Feature has:  - One merged MS/MS spectrum (optional)  - One merged MS spectrum (optional)  - many MS/MS spectra  - many MS spectra  <p>  Each non-merged spectrum has an index which can be used to access the spectrum.  <p>  In the future we might add some additional information like chromatographic peak or something similar
+#' The MsData wraps all spectral input data belonging to a (aligned) feature. All spectra fields are optional.  However, at least one Spectrum field needs to be set to create a valid MsData Object.  The different types of spectra fields can be extended to adapt to other MassSpec measurement techniques not covered yet.  <p>  Each Feature can have:  - One merged MS/MS spectrum (optional)  - One merged MS spectrum (optional)  - many MS/MS spectra (optional)  - many MS spectra (optional)  <p>  Each non-merged spectrum has an index which can be used to access the spectrum.  <p>  In the future we might add some additional information like chromatographic peak or something similar
 #'
 #' @docType class
 #' @title MsData
@@ -9,8 +9,8 @@
 #' @format An \code{R6Class} generator object
 #' @field mergedMs1  \link{BasicSpectrum} [optional]
 #' @field mergedMs2  \link{BasicSpectrum} [optional]
-#' @field ms1Spectra  list(\link{BasicSpectrum})
-#' @field ms2Spectra  list(\link{BasicSpectrum})
+#' @field ms1Spectra  list(\link{BasicSpectrum}) [optional]
+#' @field ms2Spectra  list(\link{BasicSpectrum}) [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
 #' @export
@@ -26,23 +26,13 @@ MsData <- R6::R6Class(
     #' @description
     #' Initialize a new MsData class.
     #'
-    #' @param ms1Spectra ms1Spectra
-    #' @param ms2Spectra ms2Spectra
     #' @param mergedMs1 mergedMs1
     #' @param mergedMs2 mergedMs2
+    #' @param ms1Spectra ms1Spectra
+    #' @param ms2Spectra ms2Spectra
     #' @param ... Other optional arguments.
     #' @export
-    initialize = function(`ms1Spectra`, `ms2Spectra`, `mergedMs1` = NULL, `mergedMs2` = NULL, ...) {
-      if (!missing(`ms1Spectra`)) {
-        stopifnot(is.vector(`ms1Spectra`), length(`ms1Spectra`) != 0)
-        sapply(`ms1Spectra`, function(x) stopifnot(R6::is.R6(x)))
-        self$`ms1Spectra` <- `ms1Spectra`
-      }
-      if (!missing(`ms2Spectra`)) {
-        stopifnot(is.vector(`ms2Spectra`), length(`ms2Spectra`) != 0)
-        sapply(`ms2Spectra`, function(x) stopifnot(R6::is.R6(x)))
-        self$`ms2Spectra` <- `ms2Spectra`
-      }
+    initialize = function(`mergedMs1` = NULL, `mergedMs2` = NULL, `ms1Spectra` = NULL, `ms2Spectra` = NULL, ...) {
       if (!is.null(`mergedMs1`)) {
         stopifnot(R6::is.R6(`mergedMs1`))
         self$`mergedMs1` <- `mergedMs1`
@@ -50,6 +40,16 @@ MsData <- R6::R6Class(
       if (!is.null(`mergedMs2`)) {
         stopifnot(R6::is.R6(`mergedMs2`))
         self$`mergedMs2` <- `mergedMs2`
+      }
+      if (!is.null(`ms1Spectra`)) {
+        stopifnot(is.vector(`ms1Spectra`), length(`ms1Spectra`) != 0)
+        sapply(`ms1Spectra`, function(x) stopifnot(R6::is.R6(x)))
+        self$`ms1Spectra` <- `ms1Spectra`
+      }
+      if (!is.null(`ms2Spectra`)) {
+        stopifnot(is.vector(`ms2Spectra`), length(`ms2Spectra`) != 0)
+        sapply(`ms2Spectra`, function(x) stopifnot(R6::is.R6(x)))
+        self$`ms2Spectra` <- `ms2Spectra`
       }
     },
     #' To JSON string
@@ -193,20 +193,6 @@ MsData <- R6::R6Class(
     #' @export
     validateJSON = function(input) {
       input_json <- jsonlite::fromJSON(input)
-      # check the required field `ms1Spectra`
-      if (!is.null(input_json$`ms1Spectra`)) {
-        stopifnot(is.vector(input_json$`ms1Spectra`), length(input_json$`ms1Spectra`) != 0)
-        tmp <- sapply(input_json$`ms1Spectra`, function(x) stopifnot(R6::is.R6(x)))
-      } else {
-        stop(paste("The JSON input `", input, "` is invalid for MsData: the required field `ms1Spectra` is missing."))
-      }
-      # check the required field `ms2Spectra`
-      if (!is.null(input_json$`ms2Spectra`)) {
-        stopifnot(is.vector(input_json$`ms2Spectra`), length(input_json$`ms2Spectra`) != 0)
-        tmp <- sapply(input_json$`ms2Spectra`, function(x) stopifnot(R6::is.R6(x)))
-      } else {
-        stop(paste("The JSON input `", input, "` is invalid for MsData: the required field `ms2Spectra` is missing."))
-      }
     },
     #' To string (JSON format)
     #'
@@ -226,16 +212,6 @@ MsData <- R6::R6Class(
     #' @return true if the values in all fields are valid.
     #' @export
     isValid = function() {
-      # check if the required `ms1Spectra` is null
-      if (is.null(self$`ms1Spectra`)) {
-        return(FALSE)
-      }
-
-      # check if the required `ms2Spectra` is null
-      if (is.null(self$`ms2Spectra`)) {
-        return(FALSE)
-      }
-
       TRUE
     },
     #' Return a list of invalid fields (if any).
@@ -247,16 +223,6 @@ MsData <- R6::R6Class(
     #' @export
     getInvalidFields = function() {
       invalid_fields <- list()
-      # check if the required `ms1Spectra` is null
-      if (is.null(self$`ms1Spectra`)) {
-        invalid_fields["ms1Spectra"] <- "Non-nullable required field `ms1Spectra` cannot be null."
-      }
-
-      # check if the required `ms2Spectra` is null
-      if (is.null(self$`ms2Spectra`)) {
-        invalid_fields["ms2Spectra"] <- "Non-nullable required field `ms2Spectra` cannot be null."
-      }
-
       invalid_fields
     },
     #' Print the object

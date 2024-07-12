@@ -7,7 +7,7 @@ User/developer friendly parameter subset for the Formula/SIRIUS tool  Can use re
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **enabled** | **bool** | tags whether the tool is enabled | [optional] 
-**profile** | [**Instrument**](Instrument.md) |  | [optional] 
+**profile** | [**InstrumentProfile**](InstrumentProfile.md) |  | [optional] 
 **number_of_candidates** | **int** | Number of formula candidates to keep as result list (Formula Candidates). | [optional] 
 **number_of_candidates_per_ionization** | **int** | Use this parameter if you want to force SIRIUS to report at least  NumberOfCandidatesPerIonization results per ionization.  if &lt;&#x3D; 0, this parameter will have no effect and just the top  NumberOfCandidates results will be reported. | [optional] 
 **mass_accuracy_ms2ppm** | **float** | Maximum allowed mass deviation. Only molecular formulas within this mass window are considered. | [optional] 

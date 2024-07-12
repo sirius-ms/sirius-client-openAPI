@@ -43,7 +43,7 @@ Method | HTTP request | Description
 
 
 # **AddAlignedFeatures**
-> array[AlignedFeature] AddAlignedFeatures(project_id, feature_import, opt_fields = [])
+> array[AlignedFeature] AddAlignedFeatures(project_id, feature_import, profile = var.profile, opt_fields = [])
 
 Import (aligned) features into the project.
 
@@ -57,13 +57,14 @@ library(Rsirius)
 #
 # prepare function argument(s)
 var_project_id <- "project_id_example" # character | project-space to import into.
-var_feature_import <- c(FeatureImport$new(123, "adduct_example", c(BasicSpectrum$new(c(SimplePeak$new(123, 123)), "name_example", 123, "collisionEnergy_example", 123, 123, 123)), c(BasicSpectrum$new(c(SimplePeak$new(123, 123)), "name_example", 123, "collisionEnergy_example", 123, 123, 123)), "name_example", "featureId_example", 123, 123, BasicSpectrum$new(c(SimplePeak$new(123, 123)), "name_example", 123, "collisionEnergy_example", 123, 123, 123))) # array[FeatureImport] | the feature data to be imported
+var_feature_import <- c(FeatureImport$new(123, 123, "name_example", "externalFeatureId_example", c("detectedAdducts_example"), 123, 123, BasicSpectrum$new(c(SimplePeak$new(123, 123)), "name_example", 123, "collisionEnergy_example", 123, 123, 123), c(BasicSpectrum$new(c(SimplePeak$new(123, 123)), "name_example", 123, "collisionEnergy_example", 123, 123, 123)), c(BasicSpectrum$new(c(SimplePeak$new(123, 123)), "name_example", 123, "collisionEnergy_example", 123, 123, 123)))) # array[FeatureImport] | the feature data to be imported
+var_profile <- InstrumentProfile$new() # InstrumentProfile | profile describing the instrument used to measure the data. Used to merge spectra. (Optional)
 var_opt_fields <- c(AlignedFeatureOptField$new()) # array[AlignedFeatureOptField] | set of optional fields to be included. Use 'none' to override defaults. (Optional)
 
 api_instance <- rsirius_api$new()
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$AddAlignedFeatures(var_project_id, var_feature_import, opt_fields = var_opt_fieldsdata_file = "result.txt")
-result <- api_instance$features_api$AddAlignedFeatures(var_project_id, var_feature_import, opt_fields = var_opt_fields)
+# result <- api_instance$AddAlignedFeatures(var_project_id, var_feature_import, profile = var_profile, opt_fields = var_opt_fieldsdata_file = "result.txt")
+result <- api_instance$features_api$AddAlignedFeatures(var_project_id, var_feature_import, profile = var_profile, opt_fields = var_opt_fields)
 dput(result)
 ```
 
@@ -73,6 +74,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **character**| project-space to import into. | 
  **feature_import** | list( [**FeatureImport**](FeatureImport.md) )| the feature data to be imported | 
+ **profile** | [**InstrumentProfile**](.md)| profile describing the instrument used to measure the data. Used to merge spectra. | [optional] 
  **opt_fields** | list( [**AlignedFeatureOptField**](AlignedFeatureOptField.md) )| set of optional fields to be included. Use &#39;none&#39; to override defaults. | [optional] [default to []]
 
 ### Return type

@@ -8,7 +8,7 @@
 #' @description Sirius Class
 #' @format An \code{R6Class} generator object
 #' @field enabled tags whether the tool is enabled character [optional]
-#' @field profile  \link{Instrument} [optional]
+#' @field profile  \link{InstrumentProfile} [optional]
 #' @field numberOfCandidates Number of formula candidates to keep as result list (Formula Candidates). integer [optional]
 #' @field numberOfCandidatesPerIonization Use this parameter if you want to force SIRIUS to report at least  NumberOfCandidatesPerIonization results per ionization.  if <= 0, this parameter will have no effect and just the top  NumberOfCandidates results will be reported. integer [optional]
 #' @field massAccuracyMS2ppm Maximum allowed mass deviation. Only molecular formulas within this mass window are considered. numeric [optional]
@@ -325,7 +325,7 @@ Sirius <- R6::R6Class(
         self$`enabled` <- this_object$`enabled`
       }
       if (!is.null(this_object$`profile`)) {
-        `profile_object` <- Instrument$new()
+        `profile_object` <- InstrumentProfile$new()
         `profile_object`$fromJSON(jsonlite::toJSON(this_object$`profile`, auto_unbox = TRUE, digits = NA))
         self$`profile` <- `profile_object`
       }
@@ -580,7 +580,7 @@ Sirius <- R6::R6Class(
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       self$`enabled` <- this_object$`enabled`
-      self$`profile` <- Instrument$new()$fromJSON(jsonlite::toJSON(this_object$`profile`, auto_unbox = TRUE, digits = NA))
+      self$`profile` <- InstrumentProfile$new()$fromJSON(jsonlite::toJSON(this_object$`profile`, auto_unbox = TRUE, digits = NA))
       self$`numberOfCandidates` <- this_object$`numberOfCandidates`
       self$`numberOfCandidatesPerIonization` <- this_object$`numberOfCandidatesPerIonization`
       self$`massAccuracyMS2ppm` <- this_object$`massAccuracyMS2ppm`
