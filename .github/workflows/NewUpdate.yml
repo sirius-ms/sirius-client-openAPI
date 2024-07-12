@@ -74,7 +74,7 @@ jobs:
          echo "from PySirius.Sirius import SiriusSDK" >> client-api_python/generated/PySirius/__init__.py
     - name: Format R package
       run: |
-        rm -r client-api_r/generated/tests
+        # rm -r client-api_r/generated/tests
         
         cp client-api_r/SiriusSDK.R  client-api_r/generated/R/SiriusSDK.R
         echo >> client-api_r/generated/NAMESPACE
