@@ -35,6 +35,7 @@ class TestSubscriptionConsumables(unittest.TestCase):
         model = SubscriptionConsumables()
         if include_optional:
             return SubscriptionConsumables(
+                pending_jobs = 56,
                 counted_compounds = 56
             )
         else:

@@ -35,14 +35,7 @@ class TestLcmsSubmissionParameters(unittest.TestCase):
         model = LcmsSubmissionParameters()
         if include_optional:
             return LcmsSubmissionParameters(
-                align_lcms_runs = True,
-                noise = 1.337,
-                persistence = 1.337,
-                merge = 1.337,
-                filter = 'AUTO',
-                gaussian_sigma = 1.337,
-                wavelet_scale = 56,
-                wavelet_window = 1.337
+                align_lcms_runs = True
             )
         else:
             return LcmsSubmissionParameters(

@@ -70,7 +70,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_info**
-> Info get_info()
+> Info get_info(server_info=server_info, update_info=update_info)
 
 
 
@@ -94,9 +94,11 @@ configuration = PySirius.Configuration(
 with PySirius.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = PySirius.InfoApi(api_client)
+    server_info = True # bool |  (optional) (default to True)
+    update_info = True # bool |  (optional) (default to True)
 
     try:
-        api_response = api_instance.get_info()
+        api_response = api_instance.get_info(server_info=server_info, update_info=update_info)
         print("The response of InfoApi->get_info:\n")
         pprint(api_response)
     except Exception as e:
@@ -107,7 +109,11 @@ with PySirius.ApiClient(configuration) as api_client:
 
 ### Parameters
 
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **server_info** | **bool**|  | [optional] [default to True]
+ **update_info** | **bool**|  | [optional] [default to True]
 
 ### Return type
 

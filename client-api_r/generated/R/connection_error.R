@@ -13,8 +13,8 @@
 #' @field siriusMessage  character
 #' @field serverResponseErrorCode  integer [optional]
 #' @field serverResponseErrorMessage  character [optional]
-#' @field error  character [optional]
 #' @field warning  character [optional]
+#' @field error  character [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
 #' @export
@@ -27,8 +27,8 @@ ConnectionError <- R6::R6Class(
     `siriusMessage` = NULL,
     `serverResponseErrorCode` = NULL,
     `serverResponseErrorMessage` = NULL,
-    `error` = NULL,
     `warning` = NULL,
+    `error` = NULL,
     #' Initialize a new ConnectionError class.
     #'
     #' @description
@@ -40,11 +40,11 @@ ConnectionError <- R6::R6Class(
     #' @param siriusMessage siriusMessage
     #' @param serverResponseErrorCode serverResponseErrorCode
     #' @param serverResponseErrorMessage serverResponseErrorMessage
-    #' @param error error
     #' @param warning warning
+    #' @param error error
     #' @param ... Other optional arguments.
     #' @export
-    initialize = function(`errorType`, `errorKlass`, `siriusErrorCode`, `siriusMessage`, `serverResponseErrorCode` = NULL, `serverResponseErrorMessage` = NULL, `error` = NULL, `warning` = NULL, ...) {
+    initialize = function(`errorType`, `errorKlass`, `siriusErrorCode`, `siriusMessage`, `serverResponseErrorCode` = NULL, `serverResponseErrorMessage` = NULL, `warning` = NULL, `error` = NULL, ...) {
       if (!missing(`errorType`)) {
         if (!(`errorType` %in% c("WARNING", "ERROR"))) {
           stop(paste("Error! \"", `errorType`, "\" cannot be assigned to `errorType`. Must be \"WARNING\", \"ERROR\".", sep = ""))
@@ -55,8 +55,8 @@ ConnectionError <- R6::R6Class(
         self$`errorType` <- `errorType`
       }
       if (!missing(`errorKlass`)) {
-        if (!(`errorKlass` %in% c("UNKNOWN", "INTERNET", "LOGIN_SERVER", "LICENSE_SERVER", "TOKEN", "LOGIN", "LICENSE", "TERMS", "APP_SERVER", "WORKER"))) {
-          stop(paste("Error! \"", `errorKlass`, "\" cannot be assigned to `errorKlass`. Must be \"UNKNOWN\", \"INTERNET\", \"LOGIN_SERVER\", \"LICENSE_SERVER\", \"TOKEN\", \"LOGIN\", \"LICENSE\", \"TERMS\", \"APP_SERVER\", \"WORKER\".", sep = ""))
+        if (!(`errorKlass` %in% c("UNKNOWN", "INTERNET", "LOGIN_SERVER", "LICENSE_SERVER", "TOKEN", "LOGIN", "LICENSE", "TERMS", "APP_SERVER"))) {
+          stop(paste("Error! \"", `errorKlass`, "\" cannot be assigned to `errorKlass`. Must be \"UNKNOWN\", \"INTERNET\", \"LOGIN_SERVER\", \"LICENSE_SERVER\", \"TOKEN\", \"LOGIN\", \"LICENSE\", \"TERMS\", \"APP_SERVER\".", sep = ""))
         }
         if (!(is.character(`errorKlass`) && length(`errorKlass`) == 1)) {
           stop(paste("Error! Invalid data for `errorKlass`. Must be a string:", `errorKlass`))
@@ -87,17 +87,17 @@ ConnectionError <- R6::R6Class(
         }
         self$`serverResponseErrorMessage` <- `serverResponseErrorMessage`
       }
-      if (!is.null(`error`)) {
-        if (!(is.logical(`error`) && length(`error`) == 1)) {
-          stop(paste("Error! Invalid data for `error`. Must be a boolean:", `error`))
-        }
-        self$`error` <- `error`
-      }
       if (!is.null(`warning`)) {
         if (!(is.logical(`warning`) && length(`warning`) == 1)) {
           stop(paste("Error! Invalid data for `warning`. Must be a boolean:", `warning`))
         }
         self$`warning` <- `warning`
+      }
+      if (!is.null(`error`)) {
+        if (!(is.logical(`error`) && length(`error`) == 1)) {
+          stop(paste("Error! Invalid data for `error`. Must be a boolean:", `error`))
+        }
+        self$`error` <- `error`
       }
     },
     #' To JSON string
@@ -133,13 +133,13 @@ ConnectionError <- R6::R6Class(
         ConnectionErrorObject[["serverResponseErrorMessage"]] <-
           self$`serverResponseErrorMessage`
       }
-      if (!is.null(self$`error`)) {
-        ConnectionErrorObject[["error"]] <-
-          self$`error`
-      }
       if (!is.null(self$`warning`)) {
         ConnectionErrorObject[["warning"]] <-
           self$`warning`
+      }
+      if (!is.null(self$`error`)) {
+        ConnectionErrorObject[["error"]] <-
+          self$`error`
       }
       ConnectionErrorObject
     },
@@ -160,8 +160,8 @@ ConnectionError <- R6::R6Class(
         self$`errorType` <- this_object$`errorType`
       }
       if (!is.null(this_object$`errorKlass`)) {
-        if (!is.null(this_object$`errorKlass`) && !(this_object$`errorKlass` %in% c("UNKNOWN", "INTERNET", "LOGIN_SERVER", "LICENSE_SERVER", "TOKEN", "LOGIN", "LICENSE", "TERMS", "APP_SERVER", "WORKER"))) {
-          stop(paste("Error! \"", this_object$`errorKlass`, "\" cannot be assigned to `errorKlass`. Must be \"UNKNOWN\", \"INTERNET\", \"LOGIN_SERVER\", \"LICENSE_SERVER\", \"TOKEN\", \"LOGIN\", \"LICENSE\", \"TERMS\", \"APP_SERVER\", \"WORKER\".", sep = ""))
+        if (!is.null(this_object$`errorKlass`) && !(this_object$`errorKlass` %in% c("UNKNOWN", "INTERNET", "LOGIN_SERVER", "LICENSE_SERVER", "TOKEN", "LOGIN", "LICENSE", "TERMS", "APP_SERVER"))) {
+          stop(paste("Error! \"", this_object$`errorKlass`, "\" cannot be assigned to `errorKlass`. Must be \"UNKNOWN\", \"INTERNET\", \"LOGIN_SERVER\", \"LICENSE_SERVER\", \"TOKEN\", \"LOGIN\", \"LICENSE\", \"TERMS\", \"APP_SERVER\".", sep = ""))
         }
         self$`errorKlass` <- this_object$`errorKlass`
       }
@@ -177,11 +177,11 @@ ConnectionError <- R6::R6Class(
       if (!is.null(this_object$`serverResponseErrorMessage`)) {
         self$`serverResponseErrorMessage` <- this_object$`serverResponseErrorMessage`
       }
-      if (!is.null(this_object$`error`)) {
-        self$`error` <- this_object$`error`
-      }
       if (!is.null(this_object$`warning`)) {
         self$`warning` <- this_object$`warning`
+      }
+      if (!is.null(this_object$`error`)) {
+        self$`error` <- this_object$`error`
       }
       self
     },
@@ -242,20 +242,20 @@ ConnectionError <- R6::R6Class(
           self$`serverResponseErrorMessage`
           )
         },
-        if (!is.null(self$`error`)) {
-          sprintf(
-          '"error":
-            %s
-                    ',
-          tolower(self$`error`)
-          )
-        },
         if (!is.null(self$`warning`)) {
           sprintf(
           '"warning":
             %s
                     ',
           tolower(self$`warning`)
+          )
+        },
+        if (!is.null(self$`error`)) {
+          sprintf(
+          '"error":
+            %s
+                    ',
+          tolower(self$`error`)
           )
         }
       )
@@ -280,16 +280,16 @@ ConnectionError <- R6::R6Class(
         stop(paste("Error! \"", this_object$`errorType`, "\" cannot be assigned to `errorType`. Must be \"WARNING\", \"ERROR\".", sep = ""))
       }
       self$`errorType` <- this_object$`errorType`
-      if (!is.null(this_object$`errorKlass`) && !(this_object$`errorKlass` %in% c("UNKNOWN", "INTERNET", "LOGIN_SERVER", "LICENSE_SERVER", "TOKEN", "LOGIN", "LICENSE", "TERMS", "APP_SERVER", "WORKER"))) {
-        stop(paste("Error! \"", this_object$`errorKlass`, "\" cannot be assigned to `errorKlass`. Must be \"UNKNOWN\", \"INTERNET\", \"LOGIN_SERVER\", \"LICENSE_SERVER\", \"TOKEN\", \"LOGIN\", \"LICENSE\", \"TERMS\", \"APP_SERVER\", \"WORKER\".", sep = ""))
+      if (!is.null(this_object$`errorKlass`) && !(this_object$`errorKlass` %in% c("UNKNOWN", "INTERNET", "LOGIN_SERVER", "LICENSE_SERVER", "TOKEN", "LOGIN", "LICENSE", "TERMS", "APP_SERVER"))) {
+        stop(paste("Error! \"", this_object$`errorKlass`, "\" cannot be assigned to `errorKlass`. Must be \"UNKNOWN\", \"INTERNET\", \"LOGIN_SERVER\", \"LICENSE_SERVER\", \"TOKEN\", \"LOGIN\", \"LICENSE\", \"TERMS\", \"APP_SERVER\".", sep = ""))
       }
       self$`errorKlass` <- this_object$`errorKlass`
       self$`siriusErrorCode` <- this_object$`siriusErrorCode`
       self$`siriusMessage` <- this_object$`siriusMessage`
       self$`serverResponseErrorCode` <- this_object$`serverResponseErrorCode`
       self$`serverResponseErrorMessage` <- this_object$`serverResponseErrorMessage`
-      self$`error` <- this_object$`error`
       self$`warning` <- this_object$`warning`
+      self$`error` <- this_object$`error`
       self
     },
     #' Validate JSON input with respect to ConnectionError

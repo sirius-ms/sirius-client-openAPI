@@ -16,6 +16,8 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
+from pydantic import StrictBool
+from typing import Optional
 from PySirius.models.connection_check import ConnectionCheck
 from PySirius.models.info import Info
 
@@ -279,6 +281,8 @@ class InfoApi:
     @validate_call
     def get_info(
         self,
+        server_info: Optional[StrictBool] = None,
+        update_info: Optional[StrictBool] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -295,6 +299,10 @@ class InfoApi:
         """get_info
 
 
+        :param server_info:
+        :type server_info: bool
+        :param update_info:
+        :type update_info: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -318,6 +326,8 @@ class InfoApi:
         """ # noqa: E501
 
         _param = self._get_info_serialize(
+            server_info=server_info,
+            update_info=update_info,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -341,6 +351,8 @@ class InfoApi:
     @validate_call
     def get_info_with_http_info(
         self,
+        server_info: Optional[StrictBool] = None,
+        update_info: Optional[StrictBool] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -357,6 +369,10 @@ class InfoApi:
         """get_info
 
 
+        :param server_info:
+        :type server_info: bool
+        :param update_info:
+        :type update_info: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -380,6 +396,8 @@ class InfoApi:
         """ # noqa: E501
 
         _param = self._get_info_serialize(
+            server_info=server_info,
+            update_info=update_info,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -403,6 +421,8 @@ class InfoApi:
     @validate_call
     def get_info_without_preload_content(
         self,
+        server_info: Optional[StrictBool] = None,
+        update_info: Optional[StrictBool] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -419,6 +439,10 @@ class InfoApi:
         """get_info
 
 
+        :param server_info:
+        :type server_info: bool
+        :param update_info:
+        :type update_info: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -442,6 +466,8 @@ class InfoApi:
         """ # noqa: E501
 
         _param = self._get_info_serialize(
+            server_info=server_info,
+            update_info=update_info,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -460,6 +486,8 @@ class InfoApi:
 
     def _get_info_serialize(
         self,
+        server_info,
+        update_info,
         _request_auth,
         _content_type,
         _headers,
@@ -480,6 +508,14 @@ class InfoApi:
 
         # process the path parameters
         # process the query parameters
+        if server_info is not None:
+            
+            _query_params.append(('serverInfo', server_info))
+            
+        if update_info is not None:
+            
+            _query_params.append(('updateInfo', update_info))
+            
         # process the header parameters
         # process the form parameters
         # process the body parameter

@@ -72,7 +72,6 @@ from PySirius.models.consensus_criterion_csi import ConsensusCriterionCSI
 from PySirius.models.consensus_criterion_de_novo import ConsensusCriterionDeNovo
 from PySirius.models.db_link import DBLink
 from PySirius.models.data_quality import DataQuality
-from PySirius.models.data_smoothing import DataSmoothing
 from PySirius.models.deviation import Deviation
 from PySirius.models.feature_annotations import FeatureAnnotations
 from PySirius.models.feature_import import FeatureImport
@@ -134,8 +133,6 @@ from PySirius.models.timeout import Timeout
 from PySirius.models.trace import Trace
 from PySirius.models.trace_set import TraceSet
 from PySirius.models.use_heuristic import UseHeuristic
-from PySirius.models.worker_info import WorkerInfo
-from PySirius.models.worker_list import WorkerList
 from PySirius.models.zodiac import Zodiac
 from PySirius.models.zodiac_edge_filter_thresholds import ZodiacEdgeFilterThresholds
 from PySirius.models.zodiac_epochs import ZodiacEpochs

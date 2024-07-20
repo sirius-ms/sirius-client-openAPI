@@ -7,6 +7,7 @@
 #' @title SubscriptionConsumables
 #' @description SubscriptionConsumables Class
 #' @format An \code{R6Class} generator object
+#' @field pendingJobs  integer [optional]
 #' @field countedCompounds  integer [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
@@ -14,16 +15,24 @@
 SubscriptionConsumables <- R6::R6Class(
   "SubscriptionConsumables",
   public = list(
+    `pendingJobs` = NULL,
     `countedCompounds` = NULL,
     #' Initialize a new SubscriptionConsumables class.
     #'
     #' @description
     #' Initialize a new SubscriptionConsumables class.
     #'
+    #' @param pendingJobs pendingJobs
     #' @param countedCompounds countedCompounds
     #' @param ... Other optional arguments.
     #' @export
-    initialize = function(`countedCompounds` = NULL, ...) {
+    initialize = function(`pendingJobs` = NULL, `countedCompounds` = NULL, ...) {
+      if (!is.null(`pendingJobs`)) {
+        if (!(is.numeric(`pendingJobs`) && length(`pendingJobs`) == 1)) {
+          stop(paste("Error! Invalid data for `pendingJobs`. Must be an integer:", `pendingJobs`))
+        }
+        self$`pendingJobs` <- `pendingJobs`
+      }
       if (!is.null(`countedCompounds`)) {
         if (!(is.numeric(`countedCompounds`) && length(`countedCompounds`) == 1)) {
           stop(paste("Error! Invalid data for `countedCompounds`. Must be an integer:", `countedCompounds`))
@@ -40,6 +49,10 @@ SubscriptionConsumables <- R6::R6Class(
     #' @export
     toJSON = function() {
       SubscriptionConsumablesObject <- list()
+      if (!is.null(self$`pendingJobs`)) {
+        SubscriptionConsumablesObject[["pendingJobs"]] <-
+          self$`pendingJobs`
+      }
       if (!is.null(self$`countedCompounds`)) {
         SubscriptionConsumablesObject[["countedCompounds"]] <-
           self$`countedCompounds`
@@ -56,6 +69,9 @@ SubscriptionConsumables <- R6::R6Class(
     #' @export
     fromJSON = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
+      if (!is.null(this_object$`pendingJobs`)) {
+        self$`pendingJobs` <- this_object$`pendingJobs`
+      }
       if (!is.null(this_object$`countedCompounds`)) {
         self$`countedCompounds` <- this_object$`countedCompounds`
       }
@@ -70,6 +86,14 @@ SubscriptionConsumables <- R6::R6Class(
     #' @export
     toJSONString = function() {
       jsoncontent <- c(
+        if (!is.null(self$`pendingJobs`)) {
+          sprintf(
+          '"pendingJobs":
+            %f
+                    ',
+          self$`pendingJobs`
+          )
+        },
         if (!is.null(self$`countedCompounds`)) {
           sprintf(
           '"countedCompounds":
@@ -96,6 +120,7 @@ SubscriptionConsumables <- R6::R6Class(
     #' @export
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
+      self$`pendingJobs` <- this_object$`pendingJobs`
       self$`countedCompounds` <- this_object$`countedCompounds`
       self
     },

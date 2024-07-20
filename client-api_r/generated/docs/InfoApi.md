@@ -47,7 +47,7 @@ No authorization required
 | **200** | OK |  -  |
 
 # **GetInfo**
-> Info GetInfo()
+> Info GetInfo(server_info = TRUE, update_info = TRUE)
 
 
 
@@ -55,16 +55,23 @@ No authorization required
 ```R
 library(Rsirius)
 
+# prepare function argument(s)
+var_server_info <- TRUE # character |  (Optional)
+var_update_info <- TRUE # character |  (Optional)
 
 api_instance <- rsirius_api$new()
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$GetInfo(data_file = "result.txt")
-result <- api_instance$info_api$GetInfo()
+# result <- api_instance$GetInfo(server_info = var_server_info, update_info = var_update_infodata_file = "result.txt")
+result <- api_instance$info_api$GetInfo(server_info = var_server_info, update_info = var_update_info)
 dput(result)
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **server_info** | **character**|  | [optional] [default to TRUE]
+ **update_info** | **character**|  | [optional] [default to TRUE]
 
 ### Return type
 

@@ -17,6 +17,8 @@ test_that("GetConnectionCheck", {
 test_that("GetInfo", {
   # tests for GetInfo
   # base path: http://localhost:8080
+  # @param server_info character  (optional)
+  # @param update_info character  (optional)
   # @return [Info]
 
   # uncomment below to test the operation

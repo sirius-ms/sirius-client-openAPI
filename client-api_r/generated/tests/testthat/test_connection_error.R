@@ -47,16 +47,16 @@ test_that("serverResponseErrorMessage", {
   #expect_equal(model.instance$`serverResponseErrorMessage`, "EXPECTED_RESULT")
 })
 
-test_that("error", {
-  # tests for the property `error` (character)
-
-  # uncomment below to test the property
-  #expect_equal(model.instance$`error`, "EXPECTED_RESULT")
-})
-
 test_that("warning", {
   # tests for the property `warning` (character)
 
   # uncomment below to test the property
   #expect_equal(model.instance$`warning`, "EXPECTED_RESULT")
+})
+
+test_that("error", {
+  # tests for the property `error` (character)
+
+  # uncomment below to test the property
+  #expect_equal(model.instance$`error`, "EXPECTED_RESULT")
 })

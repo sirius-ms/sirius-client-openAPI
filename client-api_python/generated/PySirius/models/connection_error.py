@@ -32,9 +32,9 @@ class ConnectionError(BaseModel):
     sirius_message: StrictStr = Field(alias="siriusMessage")
     server_response_error_code: Optional[StrictInt] = Field(default=None, alias="serverResponseErrorCode")
     server_response_error_message: Optional[StrictStr] = Field(default=None, alias="serverResponseErrorMessage")
-    error: Optional[StrictBool] = None
     warning: Optional[StrictBool] = None
-    __properties: ClassVar[List[str]] = ["errorType", "errorKlass", "siriusErrorCode", "siriusMessage", "serverResponseErrorCode", "serverResponseErrorMessage", "error", "warning"]
+    error: Optional[StrictBool] = None
+    __properties: ClassVar[List[str]] = ["errorType", "errorKlass", "siriusErrorCode", "siriusMessage", "serverResponseErrorCode", "serverResponseErrorMessage", "warning", "error"]
 
     @field_validator('error_type')
     def error_type_validate_enum(cls, value):
@@ -46,8 +46,8 @@ class ConnectionError(BaseModel):
     @field_validator('error_klass')
     def error_klass_validate_enum(cls, value):
         """Validates the enum"""
-        if value not in set(['UNKNOWN', 'INTERNET', 'LOGIN_SERVER', 'LICENSE_SERVER', 'TOKEN', 'LOGIN', 'LICENSE', 'TERMS', 'APP_SERVER', 'WORKER']):
-            raise ValueError("must be one of enum values ('UNKNOWN', 'INTERNET', 'LOGIN_SERVER', 'LICENSE_SERVER', 'TOKEN', 'LOGIN', 'LICENSE', 'TERMS', 'APP_SERVER', 'WORKER')")
+        if value not in set(['UNKNOWN', 'INTERNET', 'LOGIN_SERVER', 'LICENSE_SERVER', 'TOKEN', 'LOGIN', 'LICENSE', 'TERMS', 'APP_SERVER']):
+            raise ValueError("must be one of enum values ('UNKNOWN', 'INTERNET', 'LOGIN_SERVER', 'LICENSE_SERVER', 'TOKEN', 'LOGIN', 'LICENSE', 'TERMS', 'APP_SERVER')")
         return value
 
     model_config = ConfigDict(
@@ -117,8 +117,8 @@ class ConnectionError(BaseModel):
             "siriusMessage": obj.get("siriusMessage"),
             "serverResponseErrorCode": obj.get("serverResponseErrorCode"),
             "serverResponseErrorMessage": obj.get("serverResponseErrorMessage"),
-            "error": obj.get("error"),
-            "warning": obj.get("warning")
+            "warning": obj.get("warning"),
+            "error": obj.get("error")
         })
         return _obj
 

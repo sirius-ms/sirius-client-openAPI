@@ -35,22 +35,6 @@ class TestConnectionCheck(unittest.TestCase):
         model = ConnectionCheck()
         if include_optional:
             return ConnectionCheck(
-                worker_info = PySirius.models.worker_list.WorkerList(
-                    pending_jobs = 56, 
-                    worker_list = [
-                        PySirius.models.worker_info.WorkerInfo(
-                            id = 56, 
-                            type = 'FORMULA_ID', 
-                            supported_predictors = [
-                                'CSI_FINGERID_POSITIVE'
-                                ], 
-                            version = '', 
-                            host = '', 
-                            prefix = '', 
-                            state = 56, 
-                            alive = 56, 
-                            server_time = 56, )
-                        ], ),
                 license_info = PySirius.models.license_info.LicenseInfo(
                     user_email = '', 
                     user_id = '', 
@@ -71,6 +55,7 @@ class TestConnectionCheck(unittest.TestCase):
                         tos = '', 
                         pp = '', ), 
                     consumables = PySirius.models.subscription_consumables.SubscriptionConsumables(
+                        pending_jobs = 56, 
                         counted_compounds = 56, ), 
                     terms = [
                         PySirius.models.term.Term(
@@ -85,18 +70,9 @@ class TestConnectionCheck(unittest.TestCase):
                         sirius_message = '', 
                         server_response_error_code = 56, 
                         server_response_error_message = '', 
-                        error = True, 
-                        warning = True, )
-                    ],
-                supports_pos_predictor_types = True,
-                supports_neg_predictor_types = True,
-                available_workers = [
-                    ''
-                    ],
-                un_available_workers = [
-                    ''
-                    ],
-                supports_all_predictor_types = True
+                        warning = True, 
+                        error = True, )
+                    ]
             )
         else:
             return ConnectionCheck(
@@ -120,6 +96,7 @@ class TestConnectionCheck(unittest.TestCase):
                         tos = '', 
                         pp = '', ), 
                     consumables = PySirius.models.subscription_consumables.SubscriptionConsumables(
+                        pending_jobs = 56, 
                         counted_compounds = 56, ), 
                     terms = [
                         PySirius.models.term.Term(
@@ -134,18 +111,9 @@ class TestConnectionCheck(unittest.TestCase):
                         sirius_message = '', 
                         server_response_error_code = 56, 
                         server_response_error_message = '', 
-                        error = True, 
-                        warning = True, )
+                        warning = True, 
+                        error = True, )
                     ],
-                supports_pos_predictor_types = True,
-                supports_neg_predictor_types = True,
-                available_workers = [
-                    ''
-                    ],
-                un_available_workers = [
-                    ''
-                    ],
-                supports_all_predictor_types = True,
         )
         """
 

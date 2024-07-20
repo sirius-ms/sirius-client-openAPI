@@ -26,8 +26,9 @@ class SubscriptionConsumables(BaseModel):
     """
     SubscriptionConsumables
     """ # noqa: E501
+    pending_jobs: Optional[StrictInt] = Field(default=None, alias="pendingJobs")
     counted_compounds: Optional[StrictInt] = Field(default=None, alias="countedCompounds")
-    __properties: ClassVar[List[str]] = ["countedCompounds"]
+    __properties: ClassVar[List[str]] = ["pendingJobs", "countedCompounds"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -80,6 +81,7 @@ class SubscriptionConsumables(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
+            "pendingJobs": obj.get("pendingJobs"),
             "countedCompounds": obj.get("countedCompounds")
         })
         return _obj

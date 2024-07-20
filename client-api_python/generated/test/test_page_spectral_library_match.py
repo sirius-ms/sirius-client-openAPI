@@ -37,8 +37,8 @@ class TestPageSpectralLibraryMatch(unittest.TestCase):
             return PageSpectralLibraryMatch(
                 total_pages = 56,
                 total_elements = 56,
-                first = True,
                 last = True,
+                first = True,
                 size = 56,
                 content = [
                     PySirius.models.spectral_library_match.SpectralLibraryMatch(
