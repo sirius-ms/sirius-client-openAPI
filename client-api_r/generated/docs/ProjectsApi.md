@@ -5,7 +5,6 @@ All URIs are relative to *http://localhost:8080*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**CloseProjectSpace**](ProjectsApi.md#CloseProjectSpace) | **DELETE** /api/projects/{projectId} | Close project-space and remove it from application
-[**CopyProjectSpace**](ProjectsApi.md#CopyProjectSpace) | **PUT** /api/projects/{projectId}/copy | Move an existing (opened) project-space to another location.
 [**CreateProjectSpace**](ProjectsApi.md#CreateProjectSpace) | **POST** /api/projects/{projectId} | Create and open a new project-space at given location and make it accessible via the given projectId.
 [**GetCanopusClassyFireData**](ProjectsApi.md#GetCanopusClassyFireData) | **GET** /api/projects/{projectId}/cf-data | Get CANOPUS prediction vector definition for ClassyFire classes
 [**GetCanopusNpcData**](ProjectsApi.md#GetCanopusNpcData) | **GET** /api/projects/{projectId}/npc-data | Get CANOPUS prediction vector definition for NPC classes
@@ -14,12 +13,8 @@ Method | HTTP request | Description
 [**GetProjectSpaces**](ProjectsApi.md#GetProjectSpaces) | **GET** /api/projects | List opened project spaces.
 [**ImportMsRunData**](ProjectsApi.md#ImportMsRunData) | **POST** /api/projects/{projectId}/import/ms-data-files | Import and Align full MS-Runs from various formats into the specified project  Possible formats (mzML, mzXML)
 [**ImportMsRunDataAsJob**](ProjectsApi.md#ImportMsRunDataAsJob) | **POST** /api/projects/{projectId}/import/ms-data-files-job | Import and Align full MS-Runs from various formats into the specified project as background job.
-[**ImportMsRunDataAsJobLocally**](ProjectsApi.md#ImportMsRunDataAsJobLocally) | **POST** /api/projects/{projectId}/import/ms-data-local-files-job | Import and Align full MS-Runs from various formats into the specified project as background job
-[**ImportMsRunDataLocally**](ProjectsApi.md#ImportMsRunDataLocally) | **POST** /api/projects/{projectId}/import/ms-local-data-files | Import and Align full MS-Runs from various formats into the specified project  Possible formats (mzML, mzXML)  
 [**ImportPreprocessedData**](ProjectsApi.md#ImportPreprocessedData) | **POST** /api/projects/{projectId}/import/preprocessed-data-files | Import already preprocessed ms/ms data from various formats into the specified project  Possible formats (ms, mgf, cef, msp)
 [**ImportPreprocessedDataAsJob**](ProjectsApi.md#ImportPreprocessedDataAsJob) | **POST** /api/projects/{projectId}/import/preprocessed-data-files-job | Import ms/ms data from the given format into the specified project-space as background job.
-[**ImportPreprocessedDataAsJobLocally**](ProjectsApi.md#ImportPreprocessedDataAsJobLocally) | **POST** /api/projects/{projectId}/import/preprocessed-local-data-files-job | Import ms/ms data from the given format into the specified project-space as background job
-[**ImportPreprocessedDataLocally**](ProjectsApi.md#ImportPreprocessedDataLocally) | **POST** /api/projects/{projectId}/import/preprocessed-local-data-files | Import already preprocessed ms/ms data from various formats into the specified project  Possible formats (ms, mgf, cef, msp)  
 [**OpenProjectSpace**](ProjectsApi.md#OpenProjectSpace) | **PUT** /api/projects/{projectId} | Open an existing project-space and make it accessible via the given projectId.
 
 
@@ -66,59 +61,6 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | OK |  -  |
-
-# **CopyProjectSpace**
-> ProjectInfo CopyProjectSpace(project_id, path_to_copied_project, copy_project_id = var.copy_project_id, opt_fields = [])
-
-Move an existing (opened) project-space to another location.
-
-Move an existing (opened) project-space to another location.
-
-### Example
-```R
-library(Rsirius)
-
-# Move an existing (opened) project-space to another location.
-#
-# prepare function argument(s)
-var_project_id <- "project_id_example" # character | unique name/identifier of the project-space that shall be copied.
-var_path_to_copied_project <- "path_to_copied_project_example" # character | target location where the source project will be copied to.
-var_copy_project_id <- "copy_project_id_example" # character | optional id/mame of the newly created project (copy). If given the project will be opened. (Optional)
-var_opt_fields <- c(ProjectInfoOptField$new()) # array[ProjectInfoOptField] |  (Optional)
-
-api_instance <- rsirius_api$new()
-# to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$CopyProjectSpace(var_project_id, var_path_to_copied_project, copy_project_id = var_copy_project_id, opt_fields = var_opt_fieldsdata_file = "result.txt")
-result <- api_instance$projects_api$CopyProjectSpace(var_project_id, var_path_to_copied_project, copy_project_id = var_copy_project_id, opt_fields = var_opt_fields)
-dput(result)
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **project_id** | **character**| unique name/identifier of the project-space that shall be copied. | 
- **path_to_copied_project** | **character**| target location where the source project will be copied to. | 
- **copy_project_id** | **character**| optional id/mame of the newly created project (copy). If given the project will be opened. | [optional] 
- **opt_fields** | list( [**ProjectInfoOptField**](ProjectInfoOptField.md) )|  | [optional] [default to []]
-
-### Return type
-
-[**ProjectInfo**](ProjectInfo.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **200** | ProjectInfo of the newly created project if opened (copyProjectId !&#x3D; null) or the project info of  the source project otherwise  &lt;p&gt;  DEPRECATED: This endpoint relies on the local filesystem and will likely be removed in later versions of this API to allow for more flexible use cases. |  -  |
 
 # **CreateProjectSpace**
 > ProjectInfo CreateProjectSpace(project_id, path_to_project = var.path_to_project, opt_fields = [])
@@ -511,114 +453,6 @@ No authorization required
 |-------------|-------------|------------------|
 | **200** | the import job. |  -  |
 
-# **ImportMsRunDataAsJobLocally**
-> Job ImportMsRunDataAsJobLocally(project_id, parameters, request_body, allow_ms1_only = TRUE, opt_fields = ["progress"])
-
-Import and Align full MS-Runs from various formats into the specified project as background job
-
-Import and Align full MS-Runs from various formats into the specified project as background job.  Possible formats (mzML, mzXML)  <p>  ATTENTION: This is loading input files from the filesystem where the SIRIUS service is running,  not on the system where the client SDK is running.  Is more efficient than MultipartFile upload in cases where client (SDK) and server (SIRIUS service)  are running on the same host.  <p>  DEPRECATED: This endpoint relies on the local filesystem and will likely be removed in later versions of this  API to allow for more flexible use cases. Use 'ms-data-files-job' instead.
-
-### Example
-```R
-library(Rsirius)
-
-# Import and Align full MS-Runs from various formats into the specified project as background job
-#
-# prepare function argument(s)
-var_project_id <- "project_id_example" # character | Project-space to import into.
-var_parameters <- LcmsSubmissionParameters$new("alignLCMSRuns_example") # LcmsSubmissionParameters | Parameters for feature alignment and feature finding.
-var_request_body <- c("property_example") # array[character] | 
-var_allow_ms1_only <- TRUE # character | Import data without MS/MS. (Optional)
-var_opt_fields <- c(JobOptField$new()) # array[JobOptField] | Set of optional fields to be included. Use 'none' only to override defaults. (Optional)
-
-api_instance <- rsirius_api$new()
-# to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$ImportMsRunDataAsJobLocally(var_project_id, var_parameters, var_request_body, allow_ms1_only = var_allow_ms1_only, opt_fields = var_opt_fieldsdata_file = "result.txt")
-result <- api_instance$projects_api$ImportMsRunDataAsJobLocally(var_project_id, var_parameters, var_request_body, allow_ms1_only = var_allow_ms1_only, opt_fields = var_opt_fields)
-dput(result)
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **project_id** | **character**| Project-space to import into. | 
- **parameters** | [**LcmsSubmissionParameters**](.md)| Parameters for feature alignment and feature finding. | 
- **request_body** | list( **character** )|  | 
- **allow_ms1_only** | **character**| Import data without MS/MS. | [optional] [default to TRUE]
- **opt_fields** | list( [**JobOptField**](JobOptField.md) )| Set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;progress&quot;]]
-
-### Return type
-
-[**Job**](Job.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **200** | the import job. |  -  |
-
-# **ImportMsRunDataLocally**
-> ImportResult ImportMsRunDataLocally(project_id, parameters, request_body, allow_ms1_only = TRUE)
-
-Import and Align full MS-Runs from various formats into the specified project  Possible formats (mzML, mzXML)  
-
-Import and Align full MS-Runs from various formats into the specified project  Possible formats (mzML, mzXML)  <p>  ATTENTION: This is loading input files from the filesystem where the SIRIUS service is running,  not on the system where the client SDK is running.  Is more efficient than MultipartFile upload in cases where client (SDK) and server (SIRIUS service)  are running on the same host.  <p>  DEPRECATED: This endpoint relies on the local filesystem and will likely be removed in later versions of this  API to allow for more flexible use cases. Use 'ms-data-files' instead.
-
-### Example
-```R
-library(Rsirius)
-
-# Import and Align full MS-Runs from various formats into the specified project  Possible formats (mzML, mzXML)  
-#
-# prepare function argument(s)
-var_project_id <- "project_id_example" # character | Project to import into.
-var_parameters <- LcmsSubmissionParameters$new("alignLCMSRuns_example") # LcmsSubmissionParameters | Parameters for feature alignment and feature finding.
-var_request_body <- c("property_example") # array[character] | Local files to import into project
-var_allow_ms1_only <- TRUE # character | Import data without MS/MS. (Optional)
-
-api_instance <- rsirius_api$new()
-# to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$ImportMsRunDataLocally(var_project_id, var_parameters, var_request_body, allow_ms1_only = var_allow_ms1_onlydata_file = "result.txt")
-result <- api_instance$projects_api$ImportMsRunDataLocally(var_project_id, var_parameters, var_request_body, allow_ms1_only = var_allow_ms1_only)
-dput(result)
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **project_id** | **character**| Project to import into. | 
- **parameters** | [**LcmsSubmissionParameters**](.md)| Parameters for feature alignment and feature finding. | 
- **request_body** | list( **character** )| Local files to import into project | 
- **allow_ms1_only** | **character**| Import data without MS/MS. | [optional] [default to TRUE]
-
-### Return type
-
-[**ImportResult**](ImportResult.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **200** | OK |  -  |
-
 # **ImportPreprocessedData**
 > ImportResult ImportPreprocessedData(project_id, ignore_formulas = FALSE, allow_ms1_only = TRUE, input_files = var.input_files)
 
@@ -726,114 +560,6 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | the import job. |  -  |
-
-# **ImportPreprocessedDataAsJobLocally**
-> Job ImportPreprocessedDataAsJobLocally(project_id, request_body, ignore_formulas = FALSE, allow_ms1_only = TRUE, opt_fields = ["progress"])
-
-Import ms/ms data from the given format into the specified project-space as background job
-
-Import ms/ms data from the given format into the specified project-space as background job.  Possible formats (ms, mgf, cef, msp)  <p>  ATTENTION: This is loading input files from the filesystem where the SIRIUS service is running,  not on the system where the client SDK is running.  Is more efficient than MultipartFile upload in cases where client (SDK) and server (SIRIUS service)  are running on the same host.  <p>  DEPRECATED: This endpoint relies on the local filesystem and will likely be removed in later versions of this  API to allow for more flexible use cases. Use 'preprocessed-data-files-job' instead.
-
-### Example
-```R
-library(Rsirius)
-
-# Import ms/ms data from the given format into the specified project-space as background job
-#
-# prepare function argument(s)
-var_project_id <- "project_id_example" # character | project-space to import into.
-var_request_body <- c("property_example") # array[character] | 
-var_ignore_formulas <- FALSE # character |  (Optional)
-var_allow_ms1_only <- TRUE # character |  (Optional)
-var_opt_fields <- c(JobOptField$new()) # array[JobOptField] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
-
-api_instance <- rsirius_api$new()
-# to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$ImportPreprocessedDataAsJobLocally(var_project_id, var_request_body, ignore_formulas = var_ignore_formulas, allow_ms1_only = var_allow_ms1_only, opt_fields = var_opt_fieldsdata_file = "result.txt")
-result <- api_instance$projects_api$ImportPreprocessedDataAsJobLocally(var_project_id, var_request_body, ignore_formulas = var_ignore_formulas, allow_ms1_only = var_allow_ms1_only, opt_fields = var_opt_fields)
-dput(result)
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **project_id** | **character**| project-space to import into. | 
- **request_body** | list( **character** )|  | 
- **ignore_formulas** | **character**|  | [optional] [default to FALSE]
- **allow_ms1_only** | **character**|  | [optional] [default to TRUE]
- **opt_fields** | list( [**JobOptField**](JobOptField.md) )| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;progress&quot;]]
-
-### Return type
-
-[**Job**](Job.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **200** | the import job. |  -  |
-
-# **ImportPreprocessedDataLocally**
-> ImportResult ImportPreprocessedDataLocally(project_id, request_body, ignore_formulas = FALSE, allow_ms1_only = TRUE)
-
-Import already preprocessed ms/ms data from various formats into the specified project  Possible formats (ms, mgf, cef, msp)  
-
-Import already preprocessed ms/ms data from various formats into the specified project  Possible formats (ms, mgf, cef, msp)  <p>  ATTENTION: This is loading input files from the filesystem where the SIRIUS service is running,  not on the system where the client SDK is running.  Is more efficient than MultipartFile upload in cases where client (SDK) and server (SIRIUS service)  are running on the same host.  <p>  DEPRECATED: This endpoint relies on the local filesystem and will likely be removed in later versions of this  API to allow for more flexible use cases. Use 'preprocessed-data-files' instead.
-
-### Example
-```R
-library(Rsirius)
-
-# Import already preprocessed ms/ms data from various formats into the specified project  Possible formats (ms, mgf, cef, msp)  
-#
-# prepare function argument(s)
-var_project_id <- "project_id_example" # character | project-space to import into.
-var_request_body <- c("property_example") # array[character] | files to import into project
-var_ignore_formulas <- FALSE # character |  (Optional)
-var_allow_ms1_only <- TRUE # character |  (Optional)
-
-api_instance <- rsirius_api$new()
-# to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$ImportPreprocessedDataLocally(var_project_id, var_request_body, ignore_formulas = var_ignore_formulas, allow_ms1_only = var_allow_ms1_onlydata_file = "result.txt")
-result <- api_instance$projects_api$ImportPreprocessedDataLocally(var_project_id, var_request_body, ignore_formulas = var_ignore_formulas, allow_ms1_only = var_allow_ms1_only)
-dput(result)
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **project_id** | **character**| project-space to import into. | 
- **request_body** | list( **character** )| files to import into project | 
- **ignore_formulas** | **character**|  | [optional] [default to FALSE]
- **allow_ms1_only** | **character**|  | [optional] [default to TRUE]
-
-### Return type
-
-[**ImportResult**](ImportResult.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **200** | OK |  -  |
 
 # **OpenProjectSpace**
 > ProjectInfo OpenProjectSpace(project_id, path_to_project = var.path_to_project, opt_fields = [])

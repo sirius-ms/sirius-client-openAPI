@@ -35,7 +35,6 @@ PySirius/models/binary_fingerprint.py
 PySirius/models/canopus.py
 PySirius/models/canopus_prediction.py
 PySirius/models/category.py
-PySirius/models/command_submission.py
 PySirius/models/compound.py
 PySirius/models/compound_class.py
 PySirius/models/compound_class_type.py
@@ -135,7 +134,6 @@ docs/BinaryFingerprint.md
 docs/Canopus.md
 docs/CanopusPrediction.md
 docs/Category.md
-docs/CommandSubmission.md
 docs/Compound.md
 docs/CompoundClass.md
 docs/CompoundClassType.md
@@ -248,7 +246,6 @@ test/test_binary_fingerprint.py
 test/test_canopus.py
 test/test_canopus_prediction.py
 test/test_category.py
-test/test_command_submission.py
 test/test_compound.py
 test/test_compound_class.py
 test/test_compound_class_type.py

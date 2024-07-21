@@ -102,13 +102,6 @@ class TestJobsApi(unittest.TestCase):
         """
         pass
 
-    def test_start_command(self) -> None:
-        """Test case for start_command
-
-        Start computation for given command and input.
-        """
-        pass
-
     def test_start_job(self) -> None:
         """Test case for start_job
 

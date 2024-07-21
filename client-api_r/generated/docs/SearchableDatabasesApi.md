@@ -11,7 +11,6 @@ Method | HTTP request | Description
 [**GetDatabases**](SearchableDatabasesApi.md#GetDatabases) | **GET** /api/databases | 
 [**GetIncludedDatabases**](SearchableDatabasesApi.md#GetIncludedDatabases) | **GET** /api/databases/included | 
 [**ImportIntoDatabase**](SearchableDatabasesApi.md#ImportIntoDatabase) | **POST** /api/databases/{databaseId}/import/from-files | Start import of structure and spectra files into the specified database.
-[**ImportIntoDatabaseAsJob**](SearchableDatabasesApi.md#ImportIntoDatabaseAsJob) | **POST** /api/databases/{databaseId}/import/from-files-job | Start import of structure and spectra files into the specified database.
 [**RemoveDatabase**](SearchableDatabasesApi.md#RemoveDatabase) | **DELETE** /api/databases/{databaseId} | 
 [**UpdateDatabase**](SearchableDatabasesApi.md#UpdateDatabase) | **PUT** /api/databases/{databaseId} | 
 
@@ -314,59 +313,6 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**SearchableDatabase**](SearchableDatabase.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: multipart/form-data
- - **Accept**: application/json
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **200** | Job of the import command to be executed. |  -  |
-
-# **ImportIntoDatabaseAsJob**
-> Job ImportIntoDatabaseAsJob(database_id, buffer_size = 1000, opt_fields = ["progress"], input_files = var.input_files)
-
-Start import of structure and spectra files into the specified database.
-
-Start import of structure and spectra files into the specified database.
-
-### Example
-```R
-library(Rsirius)
-
-# Start import of structure and spectra files into the specified database.
-#
-# prepare function argument(s)
-var_database_id <- "database_id_example" # character | database to import into
-var_buffer_size <- 1000 # integer |  (Optional)
-var_opt_fields <- c(JobOptField$new()) # array[JobOptField] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
-var_input_files <- c(123) # array[data.frame] |  (Optional)
-
-api_instance <- rsirius_api$new()
-# to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$ImportIntoDatabaseAsJob(var_database_id, buffer_size = var_buffer_size, opt_fields = var_opt_fields, input_files = var_input_filesdata_file = "result.txt")
-result <- api_instance$searchable_databases_api$ImportIntoDatabaseAsJob(var_database_id, buffer_size = var_buffer_size, opt_fields = var_opt_fields, input_files = var_input_files)
-dput(result)
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **database_id** | **character**| database to import into | 
- **buffer_size** | **integer**|  | [optional] [default to 1000]
- **opt_fields** | list( [**JobOptField**](JobOptField.md) )| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;progress&quot;]]
- **input_files** | list( **data.frame** )|  | [optional] 
-
-### Return type
-
-[**Job**](Job.md)
 
 ### Authorization
 

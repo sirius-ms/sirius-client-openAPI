@@ -24,7 +24,6 @@ R/binary_fingerprint.R
 R/canopus.R
 R/canopus_prediction.R
 R/category.R
-R/command_submission.R
 R/compound.R
 R/compound_class.R
 R/compound_class_type.R
@@ -132,7 +131,6 @@ docs/BinaryFingerprint.md
 docs/Canopus.md
 docs/CanopusPrediction.md
 docs/Category.md
-docs/CommandSubmission.md
 docs/Compound.md
 docs/CompoundClass.md
 docs/CompoundClassType.md
@@ -240,7 +238,6 @@ tests/testthat/test_binary_fingerprint.R
 tests/testthat/test_canopus.R
 tests/testthat/test_canopus_prediction.R
 tests/testthat/test_category.R
-tests/testthat/test_command_submission.R
 tests/testthat/test_compound.R
 tests/testthat/test_compound_class.R
 tests/testthat/test_compound_class_type.R

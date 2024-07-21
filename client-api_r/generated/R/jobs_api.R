@@ -210,25 +210,6 @@
 #' }
 #' }
 #'
-#' \strong{ StartCommand } \emph{ Start computation for given command and input. }
-#' Start computation for given command and input.
-#'
-#' \itemize{
-#' \item \emph{ @param } project_id character
-#' \item \emph{ @param } command_submission \link{CommandSubmission}
-#' \item \emph{ @param } opt_fields list( \link{JobOptField} )
-#' \item \emph{ @returnType } \link{Job} \cr
-#'
-#'
-#' \item status code : 200 | Job of the command to be executed.   DEPRECATED: this endpoint is based on local file paths and will likely be removed in future versions of this API.
-#'
-#' \item return type : Job
-#' \item response headers :
-#'
-#' \tabular{ll}{
-#' }
-#' }
-#'
 #' \strong{ StartJob } \emph{ Start computation for given compounds and with given parameters. }
 #' Start computation for given compounds and with given parameters.
 #'
@@ -431,22 +412,6 @@
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
 #' # result <- api_instance$SaveJobConfig(var_name, var_job_submission, override_existing = var_override_existingdata_file = "result.txt")
 #' result <- api_instance$jobs_api$SaveJobConfig(var_name, var_job_submission, override_existing = var_override_existing)
-#' dput(result)
-#'
-#'
-#' ####################  StartCommand  ####################
-#'
-#' library(Rsirius)
-#' var_project_id <- "project_id_example" # character | project-space to perform the command for.
-#' var_command_submission <- CommandSubmission$new(c("command_example"), c("compoundIds_example"), c("alignedFeatureIds_example")) # CommandSubmission | the command and the input to be executed
-#' var_opt_fields <- c(JobOptField$new()) # array[JobOptField] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
-#'
-#' #Start computation for given command and input.
-#' api_instance <- rsirius_api$new()
-#'
-#' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-#' # result <- api_instance$StartCommand(var_project_id, var_command_submission, opt_fields = var_opt_fieldsdata_file = "result.txt")
-#' result <- api_instance$jobs_api$StartCommand(var_project_id, var_command_submission, opt_fields = var_opt_fields)
 #' dput(result)
 #'
 #'
@@ -1623,124 +1588,6 @@ JobsApi <- R6::R6Class(
 
         deserialized_resp_obj <- tryCatch(
           self$api_client$deserialize(local_var_resp$response_as_text(), "character", loadNamespace("Rsirius")),
-          error = function(e) {
-            stop("Failed to deserialize response")
-          }
-        )
-        local_var_resp$content <- deserialized_resp_obj
-        local_var_resp
-      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
-        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
-      } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
-        ApiResponse$new("API client error", local_var_resp)
-      } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
-        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
-          local_var_resp$response <- "API server error"
-        }
-        local_var_resp
-      }
-    },
-    #' Start computation for given command and input.
-    #'
-    #' @description
-    #' Start computation for given command and input.
-    #'
-    #' @param project_id project-space to perform the command for.
-    #' @param command_submission the command and the input to be executed
-    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["progress"])
-    #' @param data_file (optional) name of the data file to save the result
-    #' @param ... Other optional arguments
-    #' @return Job
-    #' @export
-    StartCommand = function(project_id, command_submission, opt_fields = list("progress"), data_file = NULL, ...) {
-      local_var_response <- self$StartCommandWithHttpInfo(project_id, command_submission, opt_fields, data_file = data_file, ...)
-      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
-        local_var_response$content
-      } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
-        local_var_response
-      } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
-        local_var_response
-      } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
-        local_var_response
-      }
-    },
-    #' Start computation for given command and input.
-    #'
-    #' @description
-    #' Start computation for given command and input.
-    #'
-    #' @param project_id project-space to perform the command for.
-    #' @param command_submission the command and the input to be executed
-    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["progress"])
-    #' @param data_file (optional) name of the data file to save the result
-    #' @param ... Other optional arguments
-    #' @return API response (Job) with additional information such as HTTP status code, headers
-    #' @export
-    StartCommandWithHttpInfo = function(project_id, command_submission, opt_fields = list("progress"), data_file = NULL, ...) {
-      args <- list(...)
-      query_params <- list()
-      header_params <- c()
-      form_params <- list()
-      file_params <- list()
-      local_var_body <- NULL
-      oauth_scopes <- NULL
-      is_oauth <- FALSE
-
-      if (missing(`project_id`)) {
-        stop("Missing required parameter `project_id`.")
-      }
-
-      if (missing(`command_submission`)) {
-        stop("Missing required parameter `command_submission`.")
-      }
-
-
-
-
-      # explore
-      for (query_item in `opt_fields`) {
-        query_params[["optFields"]] <- c(query_params[["optFields"]], list(`optFields` = query_item))
-      }
-
-      if (!is.null(`command_submission`)) {
-        local_var_body <- `command_submission`$toJSONString()
-      } else {
-        body <- NULL
-      }
-
-      local_var_url_path <- "/api/projects/{projectId}/jobs/run-command"
-      if (!missing(`project_id`)) {
-        local_var_url_path <- gsub("\\{projectId\\}", URLencode(as.character(`project_id`), reserved = TRUE), local_var_url_path)
-      }
-
-
-      # The Accept request HTTP header
-      local_var_accepts <- list("application/json")
-
-      # The Content-Type representation header
-      local_var_content_types <- list("application/json")
-
-      local_var_resp <- self$api_client$CallApi(url = paste0(self$api_client$base_path, local_var_url_path),
-                                 method = "POST",
-                                 query_params = query_params,
-                                 header_params = header_params,
-                                 form_params = form_params,
-                                 file_params = file_params,
-                                 accepts = local_var_accepts,
-                                 content_types = local_var_content_types,
-                                 body = local_var_body,
-                                 is_oauth = is_oauth,
-                                 oauth_scopes = oauth_scopes,
-                                 ...)
-
-      if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
-        # save response in a file
-        if (!is.null(data_file)) {
-          write(local_var_resp$response, data_file)
-        }
-
-        deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "Job", loadNamespace("Rsirius")),
           error = function(e) {
             stop("Failed to deserialize response")
           }

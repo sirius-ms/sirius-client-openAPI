@@ -11,7 +11,6 @@ Method | HTTP request | Description
 [**get_databases**](SearchableDatabasesApi.md#get_databases) | **GET** /api/databases | 
 [**get_included_databases**](SearchableDatabasesApi.md#get_included_databases) | **GET** /api/databases/included | 
 [**import_into_database**](SearchableDatabasesApi.md#import_into_database) | **POST** /api/databases/{databaseId}/import/from-files | Start import of structure and spectra files into the specified database.
-[**import_into_database_as_job**](SearchableDatabasesApi.md#import_into_database_as_job) | **POST** /api/databases/{databaseId}/import/from-files-job | Start import of structure and spectra files into the specified database.
 [**remove_database**](SearchableDatabasesApi.md#remove_database) | **DELETE** /api/databases/{databaseId} | 
 [**update_database**](SearchableDatabasesApi.md#update_database) | **PUT** /api/databases/{databaseId} | 
 
@@ -465,81 +464,6 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**SearchableDatabase**](SearchableDatabase.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: multipart/form-data
- - **Accept**: application/json
-
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | Job of the import command to be executed. |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **import_into_database_as_job**
-> Job import_into_database_as_job(database_id, buffer_size=buffer_size, opt_fields=opt_fields, input_files=input_files)
-
-Start import of structure and spectra files into the specified database.
-
-Start import of structure and spectra files into the specified database.
-
-### Example
-
-
-```python
-import PySirius
-from PySirius.models.job import Job
-from PySirius.models.job_opt_field import JobOptField
-from PySirius.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to http://localhost:8080
-# See configuration.py for a list of all supported configuration parameters.
-configuration = PySirius.Configuration(
-    host = "http://localhost:8080"
-)
-
-
-# Enter a context with an instance of the API client
-with PySirius.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = PySirius.SearchableDatabasesApi(api_client)
-    database_id = 'database_id_example' # str | database to import into
-    buffer_size = 1000 # int |  (optional) (default to 1000)
-    opt_fields = ["progress"] # List[JobOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to ["progress"])
-    input_files = None # List[bytearray] |  (optional)
-
-    try:
-        # Start import of structure and spectra files into the specified database.
-        api_response = api_instance.import_into_database_as_job(database_id, buffer_size=buffer_size, opt_fields=opt_fields, input_files=input_files)
-        print("The response of SearchableDatabasesApi->import_into_database_as_job:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling SearchableDatabasesApi->import_into_database_as_job: %s\n" % e)
-```
-
-
-
-### Parameters
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **database_id** | **str**| database to import into | 
- **buffer_size** | **int**|  | [optional] [default to 1000]
- **opt_fields** | [**List[JobOptField]**](JobOptField.md)| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;progress&quot;]]
- **input_files** | **List[bytearray]**|  | [optional] 
-
-### Return type
-
-[**Job**](Job.md)
 
 ### Authorization
 

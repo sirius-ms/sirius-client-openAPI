@@ -105,7 +105,6 @@ Class | Method | HTTP request | Description
 *FeaturesApi* | [**GetLipidAnnotation**](docs/FeaturesApi.md#GetLipidAnnotation) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/lipid-annotation | Returns Lipid annotation (ElGordo) for the given formula result identifier.
 *FeaturesApi* | [**GetMsData**](docs/FeaturesApi.md#GetMsData) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/ms-data | Mass Spec data (input data) for the given 'alignedFeatureId' .
 *FeaturesApi* | [**GetQuantification**](docs/FeaturesApi.md#GetQuantification) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/quantification | 
-*FeaturesApi* | [**GetSiriusFragTree**](docs/FeaturesApi.md#GetSiriusFragTree) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/sirius-fragtree | Returns fragmentation tree (SIRIUS) for the given formula result identifier in SIRIUS' internal format.
 *FeaturesApi* | [**GetSpectralLibraryMatch**](docs/FeaturesApi.md#GetSpectralLibraryMatch) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/spectral-library-matches/{matchId} | List of spectral library matches for the given 'alignedFeatureId'.
 *FeaturesApi* | [**GetSpectralLibraryMatches**](docs/FeaturesApi.md#GetSpectralLibraryMatches) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/spectral-library-matches | List of spectral library matches for the given 'alignedFeatureId'.
 *FeaturesApi* | [**GetSpectralLibraryMatchesPaged**](docs/FeaturesApi.md#GetSpectralLibraryMatchesPaged) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/spectral-library-matches/page | Page of spectral library matches for the given 'alignedFeatureId'.
@@ -133,7 +132,6 @@ Class | Method | HTTP request | Description
 *JobsApi* | [**GetJobsPaged**](docs/JobsApi.md#GetJobsPaged) | **GET** /api/projects/{projectId}/jobs/page | Get Page of jobs with information such as current state and progress (if available).
 *JobsApi* | [**HasJobs**](docs/JobsApi.md#HasJobs) | **GET** /api/projects/{projectId}/has-jobs | 
 *JobsApi* | [**SaveJobConfig**](docs/JobsApi.md#SaveJobConfig) | **POST** /api/job-configs/{name} | Add new job configuration with given name.
-*JobsApi* | [**StartCommand**](docs/JobsApi.md#StartCommand) | **POST** /api/projects/{projectId}/jobs/run-command | Start computation for given command and input.
 *JobsApi* | [**StartJob**](docs/JobsApi.md#StartJob) | **POST** /api/projects/{projectId}/jobs | Start computation for given compounds and with given parameters.
 *JobsApi* | [**StartJobFromConfig**](docs/JobsApi.md#StartJobFromConfig) | **POST** /api/projects/{projectId}/jobs/from-config | Start computation for given compounds and with parameters from a stored job-config.
 *LoginAndAccountApi* | [**GetAccountInfo**](docs/LoginAndAccountApi.md#GetAccountInfo) | **GET** /api/account/ | Get information about the account currently logged in.
@@ -146,7 +144,6 @@ Class | Method | HTTP request | Description
 *LoginAndAccountApi* | [**SelectSubscription**](docs/LoginAndAccountApi.md#SelectSubscription) | **PUT** /api/account/subscriptions/select-active | Select a subscription as active subscription to be used for computations.
 *LoginAndAccountApi* | [**SignUp**](docs/LoginAndAccountApi.md#SignUp) | **GET** /api/account/signUp | Open SignUp window in system browser and return signUp link.
 *ProjectsApi* | [**CloseProjectSpace**](docs/ProjectsApi.md#CloseProjectSpace) | **DELETE** /api/projects/{projectId} | Close project-space and remove it from application
-*ProjectsApi* | [**CopyProjectSpace**](docs/ProjectsApi.md#CopyProjectSpace) | **PUT** /api/projects/{projectId}/copy | Move an existing (opened) project-space to another location.
 *ProjectsApi* | [**CreateProjectSpace**](docs/ProjectsApi.md#CreateProjectSpace) | **POST** /api/projects/{projectId} | Create and open a new project-space at given location and make it accessible via the given projectId.
 *ProjectsApi* | [**GetCanopusClassyFireData**](docs/ProjectsApi.md#GetCanopusClassyFireData) | **GET** /api/projects/{projectId}/cf-data | Get CANOPUS prediction vector definition for ClassyFire classes
 *ProjectsApi* | [**GetCanopusNpcData**](docs/ProjectsApi.md#GetCanopusNpcData) | **GET** /api/projects/{projectId}/npc-data | Get CANOPUS prediction vector definition for NPC classes
@@ -155,12 +152,8 @@ Class | Method | HTTP request | Description
 *ProjectsApi* | [**GetProjectSpaces**](docs/ProjectsApi.md#GetProjectSpaces) | **GET** /api/projects | List opened project spaces.
 *ProjectsApi* | [**ImportMsRunData**](docs/ProjectsApi.md#ImportMsRunData) | **POST** /api/projects/{projectId}/import/ms-data-files | Import and Align full MS-Runs from various formats into the specified project  Possible formats (mzML, mzXML)
 *ProjectsApi* | [**ImportMsRunDataAsJob**](docs/ProjectsApi.md#ImportMsRunDataAsJob) | **POST** /api/projects/{projectId}/import/ms-data-files-job | Import and Align full MS-Runs from various formats into the specified project as background job.
-*ProjectsApi* | [**ImportMsRunDataAsJobLocally**](docs/ProjectsApi.md#ImportMsRunDataAsJobLocally) | **POST** /api/projects/{projectId}/import/ms-data-local-files-job | Import and Align full MS-Runs from various formats into the specified project as background job
-*ProjectsApi* | [**ImportMsRunDataLocally**](docs/ProjectsApi.md#ImportMsRunDataLocally) | **POST** /api/projects/{projectId}/import/ms-local-data-files | Import and Align full MS-Runs from various formats into the specified project  Possible formats (mzML, mzXML)  
 *ProjectsApi* | [**ImportPreprocessedData**](docs/ProjectsApi.md#ImportPreprocessedData) | **POST** /api/projects/{projectId}/import/preprocessed-data-files | Import already preprocessed ms/ms data from various formats into the specified project  Possible formats (ms, mgf, cef, msp)
 *ProjectsApi* | [**ImportPreprocessedDataAsJob**](docs/ProjectsApi.md#ImportPreprocessedDataAsJob) | **POST** /api/projects/{projectId}/import/preprocessed-data-files-job | Import ms/ms data from the given format into the specified project-space as background job.
-*ProjectsApi* | [**ImportPreprocessedDataAsJobLocally**](docs/ProjectsApi.md#ImportPreprocessedDataAsJobLocally) | **POST** /api/projects/{projectId}/import/preprocessed-local-data-files-job | Import ms/ms data from the given format into the specified project-space as background job
-*ProjectsApi* | [**ImportPreprocessedDataLocally**](docs/ProjectsApi.md#ImportPreprocessedDataLocally) | **POST** /api/projects/{projectId}/import/preprocessed-local-data-files | Import already preprocessed ms/ms data from various formats into the specified project  Possible formats (ms, mgf, cef, msp)  
 *ProjectsApi* | [**OpenProjectSpace**](docs/ProjectsApi.md#OpenProjectSpace) | **PUT** /api/projects/{projectId} | Open an existing project-space and make it accessible via the given projectId.
 *SearchableDatabasesApi* | [**AddDatabases**](docs/SearchableDatabasesApi.md#AddDatabases) | **POST** /api/databases | 
 *SearchableDatabasesApi* | [**CreateDatabase**](docs/SearchableDatabasesApi.md#CreateDatabase) | **POST** /api/databases/{databaseId} | 
@@ -169,7 +162,6 @@ Class | Method | HTTP request | Description
 *SearchableDatabasesApi* | [**GetDatabases**](docs/SearchableDatabasesApi.md#GetDatabases) | **GET** /api/databases | 
 *SearchableDatabasesApi* | [**GetIncludedDatabases**](docs/SearchableDatabasesApi.md#GetIncludedDatabases) | **GET** /api/databases/included | 
 *SearchableDatabasesApi* | [**ImportIntoDatabase**](docs/SearchableDatabasesApi.md#ImportIntoDatabase) | **POST** /api/databases/{databaseId}/import/from-files | Start import of structure and spectra files into the specified database.
-*SearchableDatabasesApi* | [**ImportIntoDatabaseAsJob**](docs/SearchableDatabasesApi.md#ImportIntoDatabaseAsJob) | **POST** /api/databases/{databaseId}/import/from-files-job | Start import of structure and spectra files into the specified database.
 *SearchableDatabasesApi* | [**RemoveDatabase**](docs/SearchableDatabasesApi.md#RemoveDatabase) | **DELETE** /api/databases/{databaseId} | 
 *SearchableDatabasesApi* | [**UpdateDatabase**](docs/SearchableDatabasesApi.md#UpdateDatabase) | **PUT** /api/databases/{databaseId} | 
 
@@ -192,7 +184,6 @@ Class | Method | HTTP request | Description
  - [Canopus](docs/Canopus.md)
  - [CanopusPrediction](docs/CanopusPrediction.md)
  - [Category](docs/Category.md)
- - [CommandSubmission](docs/CommandSubmission.md)
  - [Compound](docs/Compound.md)
  - [CompoundClass](docs/CompoundClass.md)
  - [CompoundClassType](docs/CompoundClassType.md)

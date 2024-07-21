@@ -17,21 +17,6 @@ test_that("CloseProjectSpace", {
   #expect_equal(result, "EXPECTED_RESULT")
 })
 
-test_that("CopyProjectSpace", {
-  # tests for CopyProjectSpace
-  # base path: http://localhost:8080
-  # Move an existing (opened) project-space to another location.
-  # Move an existing (opened) project-space to another location.
-  # @param project_id character unique name/identifier of the project-space that shall be copied.
-  # @param path_to_copied_project character target location where the source project will be copied to.
-  # @param copy_project_id character optional id/mame of the newly created project (copy). If given the project will be opened. (optional)
-  # @param opt_fields array[ProjectInfoOptField]  (optional)
-  # @return [ProjectInfo]
-
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
-})
-
 test_that("CreateProjectSpace", {
   # tests for CreateProjectSpace
   # base path: http://localhost:8080
@@ -137,37 +122,6 @@ test_that("ImportMsRunDataAsJob", {
   #expect_equal(result, "EXPECTED_RESULT")
 })
 
-test_that("ImportMsRunDataAsJobLocally", {
-  # tests for ImportMsRunDataAsJobLocally
-  # base path: http://localhost:8080
-  # Import and Align full MS-Runs from various formats into the specified project as background job
-  # Import and Align full MS-Runs from various formats into the specified project as background job.  Possible formats (mzML, mzXML)  &lt;p&gt;  ATTENTION: This is loading input files from the filesystem where the SIRIUS service is running,  not on the system where the client SDK is running.  Is more efficient than MultipartFile upload in cases where client (SDK) and server (SIRIUS service)  are running on the same host.  &lt;p&gt;  DEPRECATED: This endpoint relies on the local filesystem and will likely be removed in later versions of this  API to allow for more flexible use cases. Use &#39;ms-data-files-job&#39; instead.
-  # @param project_id character Project-space to import into.
-  # @param parameters LcmsSubmissionParameters Parameters for feature alignment and feature finding.
-  # @param request_body array[character] 
-  # @param allow_ms1_only character Import data without MS/MS. (optional)
-  # @param opt_fields array[JobOptField] Set of optional fields to be included. Use 'none' only to override defaults. (optional)
-  # @return [Job]
-
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
-})
-
-test_that("ImportMsRunDataLocally", {
-  # tests for ImportMsRunDataLocally
-  # base path: http://localhost:8080
-  # Import and Align full MS-Runs from various formats into the specified project  Possible formats (mzML, mzXML)  
-  # Import and Align full MS-Runs from various formats into the specified project  Possible formats (mzML, mzXML)  &lt;p&gt;  ATTENTION: This is loading input files from the filesystem where the SIRIUS service is running,  not on the system where the client SDK is running.  Is more efficient than MultipartFile upload in cases where client (SDK) and server (SIRIUS service)  are running on the same host.  &lt;p&gt;  DEPRECATED: This endpoint relies on the local filesystem and will likely be removed in later versions of this  API to allow for more flexible use cases. Use &#39;ms-data-files&#39; instead.
-  # @param project_id character Project to import into.
-  # @param parameters LcmsSubmissionParameters Parameters for feature alignment and feature finding.
-  # @param request_body array[character] Local files to import into project
-  # @param allow_ms1_only character Import data without MS/MS. (optional)
-  # @return [ImportResult]
-
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
-})
-
 test_that("ImportPreprocessedData", {
   # tests for ImportPreprocessedData
   # base path: http://localhost:8080
@@ -194,37 +148,6 @@ test_that("ImportPreprocessedDataAsJob", {
   # @param opt_fields array[JobOptField] set of optional fields to be included. Use 'none' only to override defaults. (optional)
   # @param input_files array[data.frame]  (optional)
   # @return [Job]
-
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
-})
-
-test_that("ImportPreprocessedDataAsJobLocally", {
-  # tests for ImportPreprocessedDataAsJobLocally
-  # base path: http://localhost:8080
-  # Import ms/ms data from the given format into the specified project-space as background job
-  # Import ms/ms data from the given format into the specified project-space as background job.  Possible formats (ms, mgf, cef, msp)  &lt;p&gt;  ATTENTION: This is loading input files from the filesystem where the SIRIUS service is running,  not on the system where the client SDK is running.  Is more efficient than MultipartFile upload in cases where client (SDK) and server (SIRIUS service)  are running on the same host.  &lt;p&gt;  DEPRECATED: This endpoint relies on the local filesystem and will likely be removed in later versions of this  API to allow for more flexible use cases. Use &#39;preprocessed-data-files-job&#39; instead.
-  # @param project_id character project-space to import into.
-  # @param request_body array[character] 
-  # @param ignore_formulas character  (optional)
-  # @param allow_ms1_only character  (optional)
-  # @param opt_fields array[JobOptField] set of optional fields to be included. Use 'none' only to override defaults. (optional)
-  # @return [Job]
-
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
-})
-
-test_that("ImportPreprocessedDataLocally", {
-  # tests for ImportPreprocessedDataLocally
-  # base path: http://localhost:8080
-  # Import already preprocessed ms/ms data from various formats into the specified project  Possible formats (ms, mgf, cef, msp)  
-  # Import already preprocessed ms/ms data from various formats into the specified project  Possible formats (ms, mgf, cef, msp)  &lt;p&gt;  ATTENTION: This is loading input files from the filesystem where the SIRIUS service is running,  not on the system where the client SDK is running.  Is more efficient than MultipartFile upload in cases where client (SDK) and server (SIRIUS service)  are running on the same host.  &lt;p&gt;  DEPRECATED: This endpoint relies on the local filesystem and will likely be removed in later versions of this  API to allow for more flexible use cases. Use &#39;preprocessed-data-files&#39; instead.
-  # @param project_id character project-space to import into.
-  # @param request_body array[character] files to import into project
-  # @param ignore_formulas character  (optional)
-  # @param allow_ms1_only character  (optional)
-  # @return [ImportResult]
 
   # uncomment below to test the operation
   #expect_equal(result, "EXPECTED_RESULT")

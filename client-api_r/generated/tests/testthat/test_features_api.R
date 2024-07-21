@@ -337,20 +337,6 @@ test_that("GetQuantification", {
   #expect_equal(result, "EXPECTED_RESULT")
 })
 
-test_that("GetSiriusFragTree", {
-  # tests for GetSiriusFragTree
-  # base path: http://localhost:8080
-  # Returns fragmentation tree (SIRIUS) for the given formula result identifier in SIRIUS&#39; internal format.
-  # Returns fragmentation tree (SIRIUS) for the given formula result identifier in SIRIUS&#39; internal format.
-  # @param project_id character project-space to read from.
-  # @param aligned_feature_id character feature (aligned over runs) the formula result belongs to.
-  # @param formula_id character identifier of the requested formula result
-  # @return [character]
-
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
-})
-
 test_that("GetSpectralLibraryMatch", {
   # tests for GetSpectralLibraryMatch
   # base path: http://localhost:8080

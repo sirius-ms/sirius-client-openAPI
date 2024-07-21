@@ -33,13 +33,6 @@ class TestProjectsApi(unittest.TestCase):
         """
         pass
 
-    def test_copy_project_space(self) -> None:
-        """Test case for copy_project_space
-
-        Move an existing (opened) project-space to another location.
-        """
-        pass
-
     def test_create_project_space(self) -> None:
         """Test case for create_project_space
 
@@ -96,20 +89,6 @@ class TestProjectsApi(unittest.TestCase):
         """
         pass
 
-    def test_import_ms_run_data_as_job_locally(self) -> None:
-        """Test case for import_ms_run_data_as_job_locally
-
-        Import and Align full MS-Runs from various formats into the specified project as background job
-        """
-        pass
-
-    def test_import_ms_run_data_locally(self) -> None:
-        """Test case for import_ms_run_data_locally
-
-        Import and Align full MS-Runs from various formats into the specified project  Possible formats (mzML, mzXML)  
-        """
-        pass
-
     def test_import_preprocessed_data(self) -> None:
         """Test case for import_preprocessed_data
 
@@ -121,20 +100,6 @@ class TestProjectsApi(unittest.TestCase):
         """Test case for import_preprocessed_data_as_job
 
         Import ms/ms data from the given format into the specified project-space as background job.
-        """
-        pass
-
-    def test_import_preprocessed_data_as_job_locally(self) -> None:
-        """Test case for import_preprocessed_data_as_job_locally
-
-        Import ms/ms data from the given format into the specified project-space as background job
-        """
-        pass
-
-    def test_import_preprocessed_data_locally(self) -> None:
-        """Test case for import_preprocessed_data_locally
-
-        Import already preprocessed ms/ms data from various formats into the specified project  Possible formats (ms, mgf, cef, msp)  
         """
         pass
 

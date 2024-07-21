@@ -130,26 +130,6 @@
 #' }
 #' }
 #'
-#' \strong{ ImportIntoDatabaseAsJob } \emph{ Start import of structure and spectra files into the specified database. }
-#' Start import of structure and spectra files into the specified database.
-#'
-#' \itemize{
-#' \item \emph{ @param } database_id character
-#' \item \emph{ @param } buffer_size integer
-#' \item \emph{ @param } opt_fields list( \link{JobOptField} )
-#' \item \emph{ @param } input_files list( data.frame )
-#' \item \emph{ @returnType } \link{Job} \cr
-#'
-#'
-#' \item status code : 200 | Job of the import command to be executed.
-#'
-#' \item return type : Job
-#' \item response headers :
-#'
-#' \tabular{ll}{
-#' }
-#' }
-#'
 #' \strong{ RemoveDatabase } \emph{  }
 #'
 #' \itemize{
@@ -281,23 +261,6 @@
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
 #' # result <- api_instance$ImportIntoDatabase(var_database_id, buffer_size = var_buffer_size, input_files = var_input_filesdata_file = "result.txt")
 #' result <- api_instance$searchable_databases_api$ImportIntoDatabase(var_database_id, buffer_size = var_buffer_size, input_files = var_input_files)
-#' dput(result)
-#'
-#'
-#' ####################  ImportIntoDatabaseAsJob  ####################
-#'
-#' library(Rsirius)
-#' var_database_id <- "database_id_example" # character | database to import into
-#' var_buffer_size <- 1000 # integer |  (Optional)
-#' var_opt_fields <- c(JobOptField$new()) # array[JobOptField] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
-#' var_input_files <- c(123) # array[data.frame] |  (Optional)
-#'
-#' #Start import of structure and spectra files into the specified database.
-#' api_instance <- rsirius_api$new()
-#'
-#' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-#' # result <- api_instance$ImportIntoDatabaseAsJob(var_database_id, buffer_size = var_buffer_size, opt_fields = var_opt_fields, input_files = var_input_filesdata_file = "result.txt")
-#' result <- api_instance$searchable_databases_api$ImportIntoDatabaseAsJob(var_database_id, buffer_size = var_buffer_size, opt_fields = var_opt_fields, input_files = var_input_files)
 #' dput(result)
 #'
 #'
@@ -1023,120 +986,6 @@ SearchableDatabasesApi <- R6::R6Class(
 
         deserialized_resp_obj <- tryCatch(
           self$api_client$deserialize(local_var_resp$response_as_text(), "SearchableDatabase", loadNamespace("Rsirius")),
-          error = function(e) {
-            stop("Failed to deserialize response")
-          }
-        )
-        local_var_resp$content <- deserialized_resp_obj
-        local_var_resp
-      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
-        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
-      } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
-        ApiResponse$new("API client error", local_var_resp)
-      } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
-        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
-          local_var_resp$response <- "API server error"
-        }
-        local_var_resp
-      }
-    },
-    #' Start import of structure and spectra files into the specified database.
-    #'
-    #' @description
-    #' Start import of structure and spectra files into the specified database.
-    #'
-    #' @param database_id database to import into
-    #' @param buffer_size (optional) No description (default value: 1000)
-    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["progress"])
-    #' @param input_files (optional) No description
-    #' @param data_file (optional) name of the data file to save the result
-    #' @param ... Other optional arguments
-    #' @return Job
-    #' @export
-    ImportIntoDatabaseAsJob = function(database_id, buffer_size = 1000, opt_fields = list("progress"), input_files = NULL, data_file = NULL, ...) {
-      local_var_response <- self$ImportIntoDatabaseAsJobWithHttpInfo(database_id, buffer_size, opt_fields, input_files, data_file = data_file, ...)
-      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
-        local_var_response$content
-      } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
-        local_var_response
-      } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
-        local_var_response
-      } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
-        local_var_response
-      }
-    },
-    #' Start import of structure and spectra files into the specified database.
-    #'
-    #' @description
-    #' Start import of structure and spectra files into the specified database.
-    #'
-    #' @param database_id database to import into
-    #' @param buffer_size (optional) No description (default value: 1000)
-    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["progress"])
-    #' @param input_files (optional) No description
-    #' @param data_file (optional) name of the data file to save the result
-    #' @param ... Other optional arguments
-    #' @return API response (Job) with additional information such as HTTP status code, headers
-    #' @export
-    ImportIntoDatabaseAsJobWithHttpInfo = function(database_id, buffer_size = 1000, opt_fields = list("progress"), input_files = NULL, data_file = NULL, ...) {
-      args <- list(...)
-      query_params <- list()
-      header_params <- c()
-      form_params <- list()
-      file_params <- list()
-      local_var_body <- NULL
-      oauth_scopes <- NULL
-      is_oauth <- FALSE
-
-      if (missing(`database_id`)) {
-        stop("Missing required parameter `database_id`.")
-      }
-
-
-
-
-
-      query_params[["bufferSize"]] <- `buffer_size`
-
-      # explore
-      for (query_item in `opt_fields`) {
-        query_params[["optFields"]] <- c(query_params[["optFields"]], list(`optFields` = query_item))
-      }
-
-      file_params[["inputFiles"]] <- curl::form_file(`input_files`)
-      local_var_url_path <- "/api/databases/{databaseId}/import/from-files-job"
-      if (!missing(`database_id`)) {
-        local_var_url_path <- gsub("\\{databaseId\\}", URLencode(as.character(`database_id`), reserved = TRUE), local_var_url_path)
-      }
-
-
-      # The Accept request HTTP header
-      local_var_accepts <- list("application/json")
-
-      # The Content-Type representation header
-      local_var_content_types <- list("multipart/form-data")
-
-      local_var_resp <- self$api_client$CallApi(url = paste0(self$api_client$base_path, local_var_url_path),
-                                 method = "POST",
-                                 query_params = query_params,
-                                 header_params = header_params,
-                                 form_params = form_params,
-                                 file_params = file_params,
-                                 accepts = local_var_accepts,
-                                 content_types = local_var_content_types,
-                                 body = local_var_body,
-                                 is_oauth = is_oauth,
-                                 oauth_scopes = oauth_scopes,
-                                 ...)
-
-      if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
-        # save response in a file
-        if (!is.null(data_file)) {
-          write(local_var_resp$response, data_file)
-        }
-
-        deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "Job", loadNamespace("Rsirius")),
           error = function(e) {
             stop("Failed to deserialize response")
           }

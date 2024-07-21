@@ -56,7 +56,6 @@ from PySirius.models.binary_fingerprint import BinaryFingerprint
 from PySirius.models.canopus import Canopus
 from PySirius.models.canopus_prediction import CanopusPrediction
 from PySirius.models.category import Category
-from PySirius.models.command_submission import CommandSubmission
 from PySirius.models.compound import Compound
 from PySirius.models.compound_class import CompoundClass
 from PySirius.models.compound_class_type import CompoundClassType

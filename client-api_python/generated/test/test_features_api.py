@@ -186,13 +186,6 @@ class TestFeaturesApi(unittest.TestCase):
         """
         pass
 
-    def test_get_sirius_frag_tree(self) -> None:
-        """Test case for get_sirius_frag_tree
-
-        Returns fragmentation tree (SIRIUS) for the given formula result identifier in SIRIUS' internal format.
-        """
-        pass
-
     def test_get_spectral_library_match(self) -> None:
         """Test case for get_spectral_library_match
 

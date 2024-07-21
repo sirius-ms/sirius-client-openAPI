@@ -27,7 +27,6 @@ Method | HTTP request | Description
 [**get_lipid_annotation**](FeaturesApi.md#get_lipid_annotation) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/lipid-annotation | Returns Lipid annotation (ElGordo) for the given formula result identifier.
 [**get_ms_data**](FeaturesApi.md#get_ms_data) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/ms-data | Mass Spec data (input data) for the given &#39;alignedFeatureId&#39; .
 [**get_quantification**](FeaturesApi.md#get_quantification) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/quantification | 
-[**get_sirius_frag_tree**](FeaturesApi.md#get_sirius_frag_tree) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/sirius-fragtree | Returns fragmentation tree (SIRIUS) for the given formula result identifier in SIRIUS&#39; internal format.
 [**get_spectral_library_match**](FeaturesApi.md#get_spectral_library_match) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/spectral-library-matches/{matchId} | List of spectral library matches for the given &#39;alignedFeatureId&#39;.
 [**get_spectral_library_matches**](FeaturesApi.md#get_spectral_library_matches) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/spectral-library-matches | List of spectral library matches for the given &#39;alignedFeatureId&#39;.
 [**get_spectral_library_matches_paged**](FeaturesApi.md#get_spectral_library_matches_paged) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/spectral-library-matches/page | Page of spectral library matches for the given &#39;alignedFeatureId&#39;.
@@ -1721,77 +1720,6 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **get_sirius_frag_tree**
-> str get_sirius_frag_tree(project_id, aligned_feature_id, formula_id)
-
-Returns fragmentation tree (SIRIUS) for the given formula result identifier in SIRIUS' internal format.
-
-Returns fragmentation tree (SIRIUS) for the given formula result identifier in SIRIUS' internal format.
-
-### Example
-
-
-```python
-import PySirius
-from PySirius.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to http://localhost:8080
-# See configuration.py for a list of all supported configuration parameters.
-configuration = PySirius.Configuration(
-    host = "http://localhost:8080"
-)
-
-
-# Enter a context with an instance of the API client
-with PySirius.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = PySirius.FeaturesApi(api_client)
-    project_id = 'project_id_example' # str | project-space to read from.
-    aligned_feature_id = 'aligned_feature_id_example' # str | feature (aligned over runs) the formula result belongs to.
-    formula_id = 'formula_id_example' # str | identifier of the requested formula result
-
-    try:
-        # Returns fragmentation tree (SIRIUS) for the given formula result identifier in SIRIUS' internal format.
-        api_response = api_instance.get_sirius_frag_tree(project_id, aligned_feature_id, formula_id)
-        print("The response of FeaturesApi->get_sirius_frag_tree:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling FeaturesApi->get_sirius_frag_tree: %s\n" % e)
-```
-
-
-
-### Parameters
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **project_id** | **str**| project-space to read from. | 
- **aligned_feature_id** | **str**| feature (aligned over runs) the formula result belongs to. | 
- **formula_id** | **str**| identifier of the requested formula result | 
-
-### Return type
-
-**str**
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | Fragmentation Tree in internal format.  &lt;p&gt;  NOTE: This endpoint is likely to be removed in future versions of the API. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

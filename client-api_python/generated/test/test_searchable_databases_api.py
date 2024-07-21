@@ -69,13 +69,6 @@ class TestSearchableDatabasesApi(unittest.TestCase):
         """
         pass
 
-    def test_import_into_database_as_job(self) -> None:
-        """Test case for import_into_database_as_job
-
-        Start import of structure and spectra files into the specified database.
-        """
-        pass
-
     def test_remove_database(self) -> None:
         """Test case for remove_database
 
