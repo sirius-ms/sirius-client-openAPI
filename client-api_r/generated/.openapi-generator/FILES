@@ -40,7 +40,6 @@ R/consensus_annotations_de_novo.R
 R/consensus_criterion_csi.R
 R/consensus_criterion_de_novo.R
 R/data_quality.R
-R/data_smoothing.R
 R/db_link.R
 R/deviation.R
 R/experimental_api.R
@@ -112,8 +111,6 @@ R/timeout.R
 R/trace.R
 R/trace_set.R
 R/use_heuristic.R
-R/worker_info.R
-R/worker_list.R
 R/zodiac.R
 R/zodiac_edge_filter_thresholds.R
 R/zodiac_epochs.R
@@ -152,9 +149,8 @@ docs/ConsensusCriterionCSI.md
 docs/ConsensusCriterionDeNovo.md
 docs/DBLink.md
 docs/DataQuality.md
-docs/DataSmoothing.md
 docs/Deviation.md
-docs/ExperimentalApi.md
+docs/EXPERIMENTALApi.md
 docs/FeatureAnnotations.md
 docs/FeatureImport.md
 docs/FeaturesApi.md
@@ -222,8 +218,6 @@ docs/Timeout.md
 docs/Trace.md
 docs/TraceSet.md
 docs/UseHeuristic.md
-docs/WorkerInfo.md
-docs/WorkerList.md
 docs/Zodiac.md
 docs/ZodiacEdgeFilterThresholds.md
 docs/ZodiacEpochs.md
@@ -262,7 +256,6 @@ tests/testthat/test_consensus_annotations_de_novo.R
 tests/testthat/test_consensus_criterion_csi.R
 tests/testthat/test_consensus_criterion_de_novo.R
 tests/testthat/test_data_quality.R
-tests/testthat/test_data_smoothing.R
 tests/testthat/test_db_link.R
 tests/testthat/test_deviation.R
 tests/testthat/test_experimental_api.R
@@ -333,8 +326,6 @@ tests/testthat/test_timeout.R
 tests/testthat/test_trace.R
 tests/testthat/test_trace_set.R
 tests/testthat/test_use_heuristic.R
-tests/testthat/test_worker_info.R
-tests/testthat/test_worker_list.R
 tests/testthat/test_zodiac.R
 tests/testthat/test_zodiac_edge_filter_thresholds.R
 tests/testthat/test_zodiac_epochs.R

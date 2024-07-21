@@ -68,13 +68,6 @@ class TestFeaturesApi(unittest.TestCase):
         """
         pass
 
-    def test_get_aligned_features_quality(self) -> None:
-        """Test case for get_aligned_features_quality
-
-        Get data quality information for feature (aligned over runs) with the given identifier from the specified project-space.
-        """
-        pass
-
     def test_get_best_matching_compound_classes(self) -> None:
         """Test case for get_best_matching_compound_classes
 

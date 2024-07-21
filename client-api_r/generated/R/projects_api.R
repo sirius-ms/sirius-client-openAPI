@@ -459,7 +459,7 @@
 #'
 #' library(Rsirius)
 #' var_project_id <- "project_id_example" # character | Project-space to import into.
-#' var_parameters <- LcmsSubmissionParameters$new("alignLCMSRuns_example", 123, 123, 123, DataSmoothing$new(), 123, 123, 123) # LcmsSubmissionParameters | Parameters for feature alignment and feature finding.
+#' var_parameters <- LcmsSubmissionParameters$new("alignLCMSRuns_example") # LcmsSubmissionParameters | Parameters for feature alignment and feature finding.
 #' var_allow_ms1_only <- TRUE # character | Import data without MS/MS. (Optional)
 #' var_input_files <- c(123) # array[data.frame] |  (Optional)
 #'
@@ -476,7 +476,7 @@
 #'
 #' library(Rsirius)
 #' var_project_id <- "project_id_example" # character | Project-space to import into.
-#' var_parameters <- LcmsSubmissionParameters$new("alignLCMSRuns_example", 123, 123, 123, DataSmoothing$new(), 123, 123, 123) # LcmsSubmissionParameters | Parameters for feature alignment and feature finding.
+#' var_parameters <- LcmsSubmissionParameters$new("alignLCMSRuns_example") # LcmsSubmissionParameters | Parameters for feature alignment and feature finding.
 #' var_allow_ms1_only <- TRUE # character | Import data without MS/MS. (Optional)
 #' var_opt_fields <- c(JobOptField$new()) # array[JobOptField] | Set of optional fields to be included. Use 'none' only to override defaults. (Optional)
 #' var_input_files <- c(123) # array[data.frame] |  (Optional)
@@ -494,7 +494,7 @@
 #'
 #' library(Rsirius)
 #' var_project_id <- "project_id_example" # character | Project-space to import into.
-#' var_parameters <- LcmsSubmissionParameters$new("alignLCMSRuns_example", 123, 123, 123, DataSmoothing$new(), 123, 123, 123) # LcmsSubmissionParameters | Parameters for feature alignment and feature finding.
+#' var_parameters <- LcmsSubmissionParameters$new("alignLCMSRuns_example") # LcmsSubmissionParameters | Parameters for feature alignment and feature finding.
 #' var_request_body <- c("property_example") # array[character] | 
 #' var_allow_ms1_only <- TRUE # character | Import data without MS/MS. (Optional)
 #' var_opt_fields <- c(JobOptField$new()) # array[JobOptField] | Set of optional fields to be included. Use 'none' only to override defaults. (Optional)
@@ -512,7 +512,7 @@
 #'
 #' library(Rsirius)
 #' var_project_id <- "project_id_example" # character | Project to import into.
-#' var_parameters <- LcmsSubmissionParameters$new("alignLCMSRuns_example", 123, 123, 123, DataSmoothing$new(), 123, 123, 123) # LcmsSubmissionParameters | Parameters for feature alignment and feature finding.
+#' var_parameters <- LcmsSubmissionParameters$new("alignLCMSRuns_example") # LcmsSubmissionParameters | Parameters for feature alignment and feature finding.
 #' var_request_body <- c("property_example") # array[character] | Local files to import into project
 #' var_allow_ms1_only <- TRUE # character | Import data without MS/MS. (Optional)
 #'
@@ -1643,7 +1643,7 @@ ProjectsApi <- R6::R6Class(
       }
 
       file_params[["inputFiles"]] <- curl::form_file(`input_files`)
-      local_var_url_path <- "/api/projects/{projectId}/jobs/import/ms-data-files-job"
+      local_var_url_path <- "/api/projects/{projectId}/import/ms-data-files-job"
       if (!missing(`project_id`)) {
         local_var_url_path <- gsub("\\{projectId\\}", URLencode(as.character(`project_id`), reserved = TRUE), local_var_url_path)
       }
@@ -1778,7 +1778,7 @@ ProjectsApi <- R6::R6Class(
         body <- NULL
       }
 
-      local_var_url_path <- "/api/projects/{projectId}/jobs/import/ms-data-local-files-job"
+      local_var_url_path <- "/api/projects/{projectId}/import/ms-data-local-files-job"
       if (!missing(`project_id`)) {
         local_var_url_path <- gsub("\\{projectId\\}", URLencode(as.character(`project_id`), reserved = TRUE), local_var_url_path)
       }

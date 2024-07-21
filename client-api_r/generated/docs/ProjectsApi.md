@@ -13,8 +13,8 @@ Method | HTTP request | Description
 [**GetProjectSpace**](ProjectsApi.md#GetProjectSpace) | **GET** /api/projects/{projectId} | Get project space info by its projectId.
 [**GetProjectSpaces**](ProjectsApi.md#GetProjectSpaces) | **GET** /api/projects | List opened project spaces.
 [**ImportMsRunData**](ProjectsApi.md#ImportMsRunData) | **POST** /api/projects/{projectId}/import/ms-data-files | Import and Align full MS-Runs from various formats into the specified project  Possible formats (mzML, mzXML)
-[**ImportMsRunDataAsJob**](ProjectsApi.md#ImportMsRunDataAsJob) | **POST** /api/projects/{projectId}/jobs/import/ms-data-files-job | Import and Align full MS-Runs from various formats into the specified project as background job.
-[**ImportMsRunDataAsJobLocally**](ProjectsApi.md#ImportMsRunDataAsJobLocally) | **POST** /api/projects/{projectId}/jobs/import/ms-data-local-files-job | Import and Align full MS-Runs from various formats into the specified project as background job
+[**ImportMsRunDataAsJob**](ProjectsApi.md#ImportMsRunDataAsJob) | **POST** /api/projects/{projectId}/import/ms-data-files-job | Import and Align full MS-Runs from various formats into the specified project as background job.
+[**ImportMsRunDataAsJobLocally**](ProjectsApi.md#ImportMsRunDataAsJobLocally) | **POST** /api/projects/{projectId}/import/ms-data-local-files-job | Import and Align full MS-Runs from various formats into the specified project as background job
 [**ImportMsRunDataLocally**](ProjectsApi.md#ImportMsRunDataLocally) | **POST** /api/projects/{projectId}/import/ms-local-data-files | Import and Align full MS-Runs from various formats into the specified project  Possible formats (mzML, mzXML)  
 [**ImportPreprocessedData**](ProjectsApi.md#ImportPreprocessedData) | **POST** /api/projects/{projectId}/import/preprocessed-data-files | Import already preprocessed ms/ms data from various formats into the specified project  Possible formats (ms, mgf, cef, msp)
 [**ImportPreprocessedDataAsJob**](ProjectsApi.md#ImportPreprocessedDataAsJob) | **POST** /api/projects/{projectId}/import/preprocessed-data-files-job | Import ms/ms data from the given format into the specified project-space as background job.
@@ -418,7 +418,7 @@ library(Rsirius)
 #
 # prepare function argument(s)
 var_project_id <- "project_id_example" # character | Project-space to import into.
-var_parameters <- LcmsSubmissionParameters$new("alignLCMSRuns_example", 123, 123, 123, DataSmoothing$new(), 123, 123, 123) # LcmsSubmissionParameters | Parameters for feature alignment and feature finding.
+var_parameters <- LcmsSubmissionParameters$new("alignLCMSRuns_example") # LcmsSubmissionParameters | Parameters for feature alignment and feature finding.
 var_allow_ms1_only <- TRUE # character | Import data without MS/MS. (Optional)
 var_input_files <- c(123) # array[data.frame] |  (Optional)
 
@@ -471,7 +471,7 @@ library(Rsirius)
 #
 # prepare function argument(s)
 var_project_id <- "project_id_example" # character | Project-space to import into.
-var_parameters <- LcmsSubmissionParameters$new("alignLCMSRuns_example", 123, 123, 123, DataSmoothing$new(), 123, 123, 123) # LcmsSubmissionParameters | Parameters for feature alignment and feature finding.
+var_parameters <- LcmsSubmissionParameters$new("alignLCMSRuns_example") # LcmsSubmissionParameters | Parameters for feature alignment and feature finding.
 var_allow_ms1_only <- TRUE # character | Import data without MS/MS. (Optional)
 var_opt_fields <- c(JobOptField$new()) # array[JobOptField] | Set of optional fields to be included. Use 'none' only to override defaults. (Optional)
 var_input_files <- c(123) # array[data.frame] |  (Optional)
@@ -526,7 +526,7 @@ library(Rsirius)
 #
 # prepare function argument(s)
 var_project_id <- "project_id_example" # character | Project-space to import into.
-var_parameters <- LcmsSubmissionParameters$new("alignLCMSRuns_example", 123, 123, 123, DataSmoothing$new(), 123, 123, 123) # LcmsSubmissionParameters | Parameters for feature alignment and feature finding.
+var_parameters <- LcmsSubmissionParameters$new("alignLCMSRuns_example") # LcmsSubmissionParameters | Parameters for feature alignment and feature finding.
 var_request_body <- c("property_example") # array[character] | 
 var_allow_ms1_only <- TRUE # character | Import data without MS/MS. (Optional)
 var_opt_fields <- c(JobOptField$new()) # array[JobOptField] | Set of optional fields to be included. Use 'none' only to override defaults. (Optional)
@@ -581,7 +581,7 @@ library(Rsirius)
 #
 # prepare function argument(s)
 var_project_id <- "project_id_example" # character | Project to import into.
-var_parameters <- LcmsSubmissionParameters$new("alignLCMSRuns_example", 123, 123, 123, DataSmoothing$new(), 123, 123, 123) # LcmsSubmissionParameters | Parameters for feature alignment and feature finding.
+var_parameters <- LcmsSubmissionParameters$new("alignLCMSRuns_example") # LcmsSubmissionParameters | Parameters for feature alignment and feature finding.
 var_request_body <- c("property_example") # array[character] | Local files to import into project
 var_allow_ms1_only <- TRUE # character | Import data without MS/MS. (Optional)
 

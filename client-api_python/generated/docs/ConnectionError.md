@@ -11,8 +11,8 @@ Name | Type | Description | Notes
 **sirius_message** | **str** |  | 
 **server_response_error_code** | **int** |  | [optional] 
 **server_response_error_message** | **str** |  | [optional] 
-**error** | **bool** |  | [optional] 
 **warning** | **bool** |  | [optional] 
+**error** | **bool** |  | [optional] 
 
 ## Example
 

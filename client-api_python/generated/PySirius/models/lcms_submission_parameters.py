@@ -17,9 +17,8 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictFloat, StrictInt
-from typing import Any, ClassVar, Dict, List, Optional, Union
-from PySirius.models.data_smoothing import DataSmoothing
+from pydantic import BaseModel, ConfigDict, Field, StrictBool
+from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -28,14 +27,7 @@ class LcmsSubmissionParameters(BaseModel):
     LcmsSubmissionParameters
     """ # noqa: E501
     align_lcms_runs: Optional[StrictBool] = Field(default=True, description="Specifies whether LC/MS runs should be aligned", alias="alignLCMSRuns")
-    noise: Optional[Union[StrictFloat, StrictInt]] = Field(default=2.0, description="Features must be larger than <value> * detected noise level.")
-    persistence: Optional[Union[StrictFloat, StrictInt]] = Field(default=0.1, description="Features must have larger persistence (intensity above valley) than <value> * max trace intensity.")
-    merge: Optional[Union[StrictFloat, StrictInt]] = Field(default=0.8, description="Merge neighboring features with valley less than <value> * intensity.")
-    filter: Optional[DataSmoothing] = None
-    gaussian_sigma: Optional[Union[StrictFloat, StrictInt]] = Field(default=3.0, description="Sigma (kernel width) for gaussian filter algorithm.", alias="gaussianSigma")
-    wavelet_scale: Optional[StrictInt] = Field(default=20, description="Number of coefficients for wavelet filter algorithm.", alias="waveletScale")
-    wavelet_window: Optional[Union[StrictFloat, StrictInt]] = Field(default=11, description="Wavelet window size (%) for wavelet filter algorithm.", alias="waveletWindow")
-    __properties: ClassVar[List[str]] = ["alignLCMSRuns", "noise", "persistence", "merge", "filter", "gaussianSigma", "waveletScale", "waveletWindow"]
+    __properties: ClassVar[List[str]] = ["alignLCMSRuns"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -88,14 +80,7 @@ class LcmsSubmissionParameters(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "alignLCMSRuns": obj.get("alignLCMSRuns") if obj.get("alignLCMSRuns") is not None else True,
-            "noise": obj.get("noise") if obj.get("noise") is not None else 2.0,
-            "persistence": obj.get("persistence") if obj.get("persistence") is not None else 0.1,
-            "merge": obj.get("merge") if obj.get("merge") is not None else 0.8,
-            "filter": obj.get("filter"),
-            "gaussianSigma": obj.get("gaussianSigma") if obj.get("gaussianSigma") is not None else 3.0,
-            "waveletScale": obj.get("waveletScale") if obj.get("waveletScale") is not None else 20,
-            "waveletWindow": obj.get("waveletWindow") if obj.get("waveletWindow") is not None else 11
+            "alignLCMSRuns": obj.get("alignLCMSRuns") if obj.get("alignLCMSRuns") is not None else True
         })
         return _obj
 

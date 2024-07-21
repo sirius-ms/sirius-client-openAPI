@@ -17,11 +17,10 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
+from pydantic import BaseModel, ConfigDict, Field
+from typing import Any, ClassVar, Dict, List
 from PySirius.models.connection_error import ConnectionError
 from PySirius.models.license_info import LicenseInfo
-from PySirius.models.worker_list import WorkerList
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -29,15 +28,9 @@ class ConnectionCheck(BaseModel):
     """
     ConnectionCheck
     """ # noqa: E501
-    worker_info: Optional[WorkerList] = Field(default=None, alias="workerInfo")
     license_info: LicenseInfo = Field(alias="licenseInfo")
     errors: List[ConnectionError] = Field(description="List of errors ordered by significance. first error should be reported and addressed first.  Following errors might just be follow-up errors")
-    supports_pos_predictor_types: StrictBool = Field(alias="supportsPosPredictorTypes")
-    supports_neg_predictor_types: StrictBool = Field(alias="supportsNegPredictorTypes")
-    available_workers: List[StrictStr] = Field(alias="availableWorkers")
-    un_available_workers: List[StrictStr] = Field(alias="unAvailableWorkers")
-    supports_all_predictor_types: StrictBool = Field(alias="supportsAllPredictorTypes")
-    __properties: ClassVar[List[str]] = ["workerInfo", "licenseInfo", "errors", "supportsPosPredictorTypes", "supportsNegPredictorTypes", "availableWorkers", "unAvailableWorkers", "supportsAllPredictorTypes"]
+    __properties: ClassVar[List[str]] = ["licenseInfo", "errors"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -78,9 +71,6 @@ class ConnectionCheck(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of worker_info
-        if self.worker_info:
-            _dict['workerInfo'] = self.worker_info.to_dict()
         # override the default output from pydantic by calling `to_dict()` of license_info
         if self.license_info:
             _dict['licenseInfo'] = self.license_info.to_dict()
@@ -91,11 +81,6 @@ class ConnectionCheck(BaseModel):
                 if _item:
                     _items.append(_item.to_dict())
             _dict['errors'] = _items
-        # set to None if worker_info (nullable) is None
-        # and model_fields_set contains the field
-        if self.worker_info is None and "worker_info" in self.model_fields_set:
-            _dict['workerInfo'] = None
-
         return _dict
 
     @classmethod
@@ -108,14 +93,8 @@ class ConnectionCheck(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "workerInfo": WorkerList.from_dict(obj["workerInfo"]) if obj.get("workerInfo") is not None else None,
             "licenseInfo": LicenseInfo.from_dict(obj["licenseInfo"]) if obj.get("licenseInfo") is not None else None,
-            "errors": [ConnectionError.from_dict(_item) for _item in obj["errors"]] if obj.get("errors") is not None else None,
-            "supportsPosPredictorTypes": obj.get("supportsPosPredictorTypes"),
-            "supportsNegPredictorTypes": obj.get("supportsNegPredictorTypes"),
-            "availableWorkers": obj.get("availableWorkers"),
-            "unAvailableWorkers": obj.get("unAvailableWorkers"),
-            "supportsAllPredictorTypes": obj.get("supportsAllPredictorTypes")
+            "errors": [ConnectionError.from_dict(_item) for _item in obj["errors"]] if obj.get("errors") is not None else None
         })
         return _obj
 

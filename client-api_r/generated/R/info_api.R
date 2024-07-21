@@ -31,6 +31,8 @@
 #' \strong{ GetInfo } \emph{  }
 #'
 #' \itemize{
+#' \item \emph{ @param } server_info character
+#' \item \emph{ @param } update_info character
 #' \item \emph{ @returnType } \link{Info} \cr
 #'
 #'
@@ -63,12 +65,14 @@
 #' ####################  GetInfo  ####################
 #'
 #' library(Rsirius)
+#' var_server_info <- TRUE # character |  (Optional)
+#' var_update_info <- TRUE # character |  (Optional)
 #'
 #' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-#' # result <- api_instance$GetInfo(data_file = "result.txt")
-#' result <- api_instance$info_api$GetInfo()
+#' # result <- api_instance$GetInfo(server_info = var_server_info, update_info = var_update_infodata_file = "result.txt")
+#' result <- api_instance$info_api$GetInfo(server_info = var_server_info, update_info = var_update_info)
 #' dput(result)
 #'
 #'
@@ -185,12 +189,14 @@ InfoApi <- R6::R6Class(
     #' @description
     #' 
     #'
+    #' @param server_info (optional) No description (default value: TRUE)
+    #' @param update_info (optional) No description (default value: TRUE)
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #' @return Info
     #' @export
-    GetInfo = function(data_file = NULL, ...) {
-      local_var_response <- self$GetInfoWithHttpInfo(data_file = data_file, ...)
+    GetInfo = function(server_info = TRUE, update_info = TRUE, data_file = NULL, ...) {
+      local_var_response <- self$GetInfoWithHttpInfo(server_info, update_info, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
@@ -206,11 +212,13 @@ InfoApi <- R6::R6Class(
     #' @description
     #' 
     #'
+    #' @param server_info (optional) No description (default value: TRUE)
+    #' @param update_info (optional) No description (default value: TRUE)
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #' @return API response (Info) with additional information such as HTTP status code, headers
     #' @export
-    GetInfoWithHttpInfo = function(data_file = NULL, ...) {
+    GetInfoWithHttpInfo = function(server_info = TRUE, update_info = TRUE, data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -219,6 +227,12 @@ InfoApi <- R6::R6Class(
       local_var_body <- NULL
       oauth_scopes <- NULL
       is_oauth <- FALSE
+
+
+
+      query_params[["serverInfo"]] <- `server_info`
+
+      query_params[["updateInfo"]] <- `update_info`
 
       local_var_url_path <- "/api/info"
 

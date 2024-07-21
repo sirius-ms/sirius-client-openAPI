@@ -2871,7 +2871,7 @@ class ProjectsApi:
 
         return self.api_client.param_serialize(
             method='POST',
-            resource_path='/api/projects/{projectId}/jobs/import/ms-data-files-job',
+            resource_path='/api/projects/{projectId}/import/ms-data-files-job',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -2943,7 +2943,7 @@ class ProjectsApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """ # noqa: E501
-        warnings.warn("POST /api/projects/{projectId}/jobs/import/ms-data-local-files-job is deprecated.", DeprecationWarning)
+        warnings.warn("POST /api/projects/{projectId}/import/ms-data-local-files-job is deprecated.", DeprecationWarning)
 
         _param = self._import_ms_run_data_as_job_locally_serialize(
             project_id=project_id,
@@ -3027,7 +3027,7 @@ class ProjectsApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """ # noqa: E501
-        warnings.warn("POST /api/projects/{projectId}/jobs/import/ms-data-local-files-job is deprecated.", DeprecationWarning)
+        warnings.warn("POST /api/projects/{projectId}/import/ms-data-local-files-job is deprecated.", DeprecationWarning)
 
         _param = self._import_ms_run_data_as_job_locally_serialize(
             project_id=project_id,
@@ -3111,7 +3111,7 @@ class ProjectsApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """ # noqa: E501
-        warnings.warn("POST /api/projects/{projectId}/jobs/import/ms-data-local-files-job is deprecated.", DeprecationWarning)
+        warnings.warn("POST /api/projects/{projectId}/import/ms-data-local-files-job is deprecated.", DeprecationWarning)
 
         _param = self._import_ms_run_data_as_job_locally_serialize(
             project_id=project_id,
@@ -3212,7 +3212,7 @@ class ProjectsApi:
 
         return self.api_client.param_serialize(
             method='POST',
-            resource_path='/api/projects/{projectId}/jobs/import/ms-data-local-files-job',
+            resource_path='/api/projects/{projectId}/import/ms-data-local-files-job',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,

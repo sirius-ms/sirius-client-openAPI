@@ -5,13 +5,6 @@ context("Test ConnectionCheck")
 
 model_instance <- ConnectionCheck$new()
 
-test_that("workerInfo", {
-  # tests for the property `workerInfo` (WorkerList)
-
-  # uncomment below to test the property
-  #expect_equal(model.instance$`workerInfo`, "EXPECTED_RESULT")
-})
-
 test_that("licenseInfo", {
   # tests for the property `licenseInfo` (LicenseInfo)
 
@@ -25,39 +18,4 @@ test_that("errors", {
 
   # uncomment below to test the property
   #expect_equal(model.instance$`errors`, "EXPECTED_RESULT")
-})
-
-test_that("supportsPosPredictorTypes", {
-  # tests for the property `supportsPosPredictorTypes` (character)
-
-  # uncomment below to test the property
-  #expect_equal(model.instance$`supportsPosPredictorTypes`, "EXPECTED_RESULT")
-})
-
-test_that("supportsNegPredictorTypes", {
-  # tests for the property `supportsNegPredictorTypes` (character)
-
-  # uncomment below to test the property
-  #expect_equal(model.instance$`supportsNegPredictorTypes`, "EXPECTED_RESULT")
-})
-
-test_that("availableWorkers", {
-  # tests for the property `availableWorkers` (set[character])
-
-  # uncomment below to test the property
-  #expect_equal(model.instance$`availableWorkers`, "EXPECTED_RESULT")
-})
-
-test_that("unAvailableWorkers", {
-  # tests for the property `unAvailableWorkers` (set[character])
-
-  # uncomment below to test the property
-  #expect_equal(model.instance$`unAvailableWorkers`, "EXPECTED_RESULT")
-})
-
-test_that("supportsAllPredictorTypes", {
-  # tests for the property `supportsAllPredictorTypes` (character)
-
-  # uncomment below to test the property
-  #expect_equal(model.instance$`supportsAllPredictorTypes`, "EXPECTED_RESULT")
 })

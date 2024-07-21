@@ -14,14 +14,14 @@
 
 import unittest
 
-from PySirius.api.experimental_api import ExperimentalApi
+from PySirius.api.experimental_api import EXPERIMENTALApi
 
 
-class TestExperimentalApi(unittest.TestCase):
-    """ExperimentalApi unit test stubs"""
+class TestEXPERIMENTALApi(unittest.TestCase):
+    """EXPERIMENTALApi unit test stubs"""
 
     def setUp(self) -> None:
-        self.api = ExperimentalApi()
+        self.api = EXPERIMENTALApi()
 
     def tearDown(self) -> None:
         pass

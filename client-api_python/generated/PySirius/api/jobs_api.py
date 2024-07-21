@@ -3096,7 +3096,7 @@ class JobsApi:
         # set the HTTP header `Accept`
         _header_params['Accept'] = self.api_client.select_header_accept(
             [
-                'text/plain'
+                'application/json'
             ]
         )
 
@@ -3186,7 +3186,7 @@ class JobsApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """ # noqa: E501
-        warnings.warn("POST /api/{projectId}/jobs/run-command is deprecated.", DeprecationWarning)
+        warnings.warn("POST /api/projects/{projectId}/jobs/run-command is deprecated.", DeprecationWarning)
 
         _param = self._start_command_serialize(
             project_id=project_id,
@@ -3262,7 +3262,7 @@ class JobsApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """ # noqa: E501
-        warnings.warn("POST /api/{projectId}/jobs/run-command is deprecated.", DeprecationWarning)
+        warnings.warn("POST /api/projects/{projectId}/jobs/run-command is deprecated.", DeprecationWarning)
 
         _param = self._start_command_serialize(
             project_id=project_id,
@@ -3338,7 +3338,7 @@ class JobsApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """ # noqa: E501
-        warnings.warn("POST /api/{projectId}/jobs/run-command is deprecated.", DeprecationWarning)
+        warnings.warn("POST /api/projects/{projectId}/jobs/run-command is deprecated.", DeprecationWarning)
 
         _param = self._start_command_serialize(
             project_id=project_id,
@@ -3426,7 +3426,7 @@ class JobsApi:
 
         return self.api_client.param_serialize(
             method='POST',
-            resource_path='/api/{projectId}/jobs/run-command',
+            resource_path='/api/projects/{projectId}/jobs/run-command',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,

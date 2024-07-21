@@ -5,6 +5,13 @@ context("Test SubscriptionConsumables")
 
 model_instance <- SubscriptionConsumables$new()
 
+test_that("pendingJobs", {
+  # tests for the property `pendingJobs` (integer)
+
+  # uncomment below to test the property
+  #expect_equal(model.instance$`pendingJobs`, "EXPECTED_RESULT")
+})
+
 test_that("countedCompounds", {
   # tests for the property `countedCompounds` (integer)
 

@@ -54,6 +54,7 @@ class TestLicenseInfo(unittest.TestCase):
                     tos = '', 
                     pp = '', ),
                 consumables = PySirius.models.subscription_consumables.SubscriptionConsumables(
+                    pending_jobs = 56, 
                     counted_compounds = 56, ),
                 terms = [
                     PySirius.models.term.Term(

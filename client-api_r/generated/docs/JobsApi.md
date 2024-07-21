@@ -15,7 +15,7 @@ Method | HTTP request | Description
 [**GetJobsPaged**](JobsApi.md#GetJobsPaged) | **GET** /api/projects/{projectId}/jobs/page | Get Page of jobs with information such as current state and progress (if available).
 [**HasJobs**](JobsApi.md#HasJobs) | **GET** /api/projects/{projectId}/has-jobs | 
 [**SaveJobConfig**](JobsApi.md#SaveJobConfig) | **POST** /api/job-configs/{name} | Add new job configuration with given name.
-[**StartCommand**](JobsApi.md#StartCommand) | **POST** /api/{projectId}/jobs/run-command | Start computation for given command and input.
+[**StartCommand**](JobsApi.md#StartCommand) | **POST** /api/projects/{projectId}/jobs/run-command | Start computation for given command and input.
 [**StartJob**](JobsApi.md#StartJob) | **POST** /api/projects/{projectId}/jobs | Start computation for given compounds and with given parameters.
 [**StartJobFromConfig**](JobsApi.md#StartJobFromConfig) | **POST** /api/projects/{projectId}/jobs/from-config | Start computation for given compounds and with parameters from a stored job-config.
 
@@ -549,7 +549,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: text/plain
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |

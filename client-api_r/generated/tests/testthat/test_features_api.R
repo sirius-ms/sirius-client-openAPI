@@ -89,19 +89,6 @@ test_that("GetAlignedFeaturesPaged", {
   #expect_equal(result, "EXPECTED_RESULT")
 })
 
-test_that("GetAlignedFeaturesQuality", {
-  # tests for GetAlignedFeaturesQuality
-  # base path: http://localhost:8080
-  # Get data quality information for feature (aligned over runs) with the given identifier from the specified project-space.
-  # Get data quality information for feature (aligned over runs) with the given identifier from the specified project-space.
-  # @param project_id character project-space to read from.
-  # @param aligned_feature_id character identifier of feature (aligned over runs) to access.
-  # @return [AlignedFeatureQuality]
-
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
-})
-
 test_that("GetBestMatchingCompoundClasses", {
   # tests for GetBestMatchingCompoundClasses
   # base path: http://localhost:8080

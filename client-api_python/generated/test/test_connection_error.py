@@ -41,8 +41,8 @@ class TestConnectionError(unittest.TestCase):
                 sirius_message = '',
                 server_response_error_code = 56,
                 server_response_error_message = '',
-                error = True,
-                warning = True
+                warning = True,
+                error = True
             )
         else:
             return ConnectionError(

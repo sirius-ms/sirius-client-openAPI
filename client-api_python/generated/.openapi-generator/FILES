@@ -50,7 +50,6 @@ PySirius/models/consensus_annotations_de_novo.py
 PySirius/models/consensus_criterion_csi.py
 PySirius/models/consensus_criterion_de_novo.py
 PySirius/models/data_quality.py
-PySirius/models/data_smoothing.py
 PySirius/models/db_link.py
 PySirius/models/deviation.py
 PySirius/models/feature_annotations.py
@@ -113,8 +112,6 @@ PySirius/models/timeout.py
 PySirius/models/trace.py
 PySirius/models/trace_set.py
 PySirius/models/use_heuristic.py
-PySirius/models/worker_info.py
-PySirius/models/worker_list.py
 PySirius/models/zodiac.py
 PySirius/models/zodiac_edge_filter_thresholds.py
 PySirius/models/zodiac_epochs.py
@@ -155,9 +152,8 @@ docs/ConsensusCriterionCSI.md
 docs/ConsensusCriterionDeNovo.md
 docs/DBLink.md
 docs/DataQuality.md
-docs/DataSmoothing.md
 docs/Deviation.md
-docs/ExperimentalApi.md
+docs/EXPERIMENTALApi.md
 docs/FeatureAnnotations.md
 docs/FeatureImport.md
 docs/FeaturesApi.md
@@ -225,8 +221,6 @@ docs/Timeout.md
 docs/Trace.md
 docs/TraceSet.md
 docs/UseHeuristic.md
-docs/WorkerInfo.md
-docs/WorkerList.md
 docs/Zodiac.md
 docs/ZodiacEdgeFilterThresholds.md
 docs/ZodiacEpochs.md
@@ -270,7 +264,6 @@ test/test_consensus_annotations_de_novo.py
 test/test_consensus_criterion_csi.py
 test/test_consensus_criterion_de_novo.py
 test/test_data_quality.py
-test/test_data_smoothing.py
 test/test_db_link.py
 test/test_deviation.py
 test/test_experimental_api.py
@@ -341,8 +334,6 @@ test/test_timeout.py
 test/test_trace.py
 test/test_trace_set.py
 test/test_use_heuristic.py
-test/test_worker_info.py
-test/test_worker_list.py
 test/test_zodiac.py
 test/test_zodiac_edge_filter_thresholds.py
 test/test_zodiac_epochs.py

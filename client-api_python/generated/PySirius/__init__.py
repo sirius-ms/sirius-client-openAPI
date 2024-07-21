@@ -19,6 +19,7 @@ __version__ = "0.9"
 # import apis into sdk package
 from PySirius.api.actuator_api import ActuatorApi
 from PySirius.api.compounds_api import CompoundsApi
+from PySirius.api.experimental_api import EXPERIMENTALApi
 from PySirius.api.features_api import FeaturesApi
 from PySirius.api.gui_api import GuiApi
 from PySirius.api.info_api import InfoApi
@@ -26,7 +27,6 @@ from PySirius.api.jobs_api import JobsApi
 from PySirius.api.login_and_account_api import LoginAndAccountApi
 from PySirius.api.projects_api import ProjectsApi
 from PySirius.api.searchable_databases_api import SearchableDatabasesApi
-from PySirius.api.experimental_api import ExperimentalApi
 
 # import ApiClient
 from PySirius.api_response import ApiResponse
@@ -72,7 +72,6 @@ from PySirius.models.consensus_criterion_csi import ConsensusCriterionCSI
 from PySirius.models.consensus_criterion_de_novo import ConsensusCriterionDeNovo
 from PySirius.models.db_link import DBLink
 from PySirius.models.data_quality import DataQuality
-from PySirius.models.data_smoothing import DataSmoothing
 from PySirius.models.deviation import Deviation
 from PySirius.models.feature_annotations import FeatureAnnotations
 from PySirius.models.feature_import import FeatureImport
@@ -134,8 +133,6 @@ from PySirius.models.timeout import Timeout
 from PySirius.models.trace import Trace
 from PySirius.models.trace_set import TraceSet
 from PySirius.models.use_heuristic import UseHeuristic
-from PySirius.models.worker_info import WorkerInfo
-from PySirius.models.worker_list import WorkerList
 from PySirius.models.zodiac import Zodiac
 from PySirius.models.zodiac_edge_filter_thresholds import ZodiacEdgeFilterThresholds
 from PySirius.models.zodiac_epochs import ZodiacEpochs

@@ -1,10 +1,10 @@
-# ExperimentalApi
+# EXPERIMENTALApi
 
 All URIs are relative to *http://localhost:8080*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**GetAlignedFeaturesQuality**](ExperimentalApi.md#GetAlignedFeaturesQuality) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/quality-report | Get data quality information for feature (aligned over runs) with the given identifier from the specified project-space.
+[**GetAlignedFeaturesQuality**](EXPERIMENTALApi.md#GetAlignedFeaturesQuality) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/quality-report | Get data quality information for feature (aligned over runs) with the given identifier from the specified project-space.
 
 
 # **GetAlignedFeaturesQuality**
@@ -12,7 +12,7 @@ Method | HTTP request | Description
 
 Get data quality information for feature (aligned over runs) with the given identifier from the specified project-space.
 
-Get data quality information for feature (aligned over runs) with the given identifier from the specified project-space.
+Get data quality information for feature (aligned over runs) with the given identifier from the specified project-space.   EXPERIMENTAL: Endpoint is not part of the stable API specification and might change in minor updates.
 
 ### Example
 ```R

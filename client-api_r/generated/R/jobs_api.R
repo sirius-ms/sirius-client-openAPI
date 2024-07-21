@@ -1597,7 +1597,7 @@ JobsApi <- R6::R6Class(
 
 
       # The Accept request HTTP header
-      local_var_accepts <- list("text/plain")
+      local_var_accepts <- list("application/json")
 
       # The Content-Type representation header
       local_var_content_types <- list("application/json")
@@ -1708,7 +1708,7 @@ JobsApi <- R6::R6Class(
         body <- NULL
       }
 
-      local_var_url_path <- "/api/{projectId}/jobs/run-command"
+      local_var_url_path <- "/api/projects/{projectId}/jobs/run-command"
       if (!missing(`project_id`)) {
         local_var_url_path <- gsub("\\{projectId\\}", URLencode(as.character(`project_id`), reserved = TRUE), local_var_url_path)
       }

@@ -20,7 +20,7 @@
 #' @field api_client API client
 #' @field actuator_api an instance of ActuatorApi
 #' @field compounds_api an instance of CompoundsApi
-#' @field experimental_api an instance of ExperimentalApi
+#' @field experimental_api an instance of EXPERIMENTALApi
 #' @field features_api an instance of FeaturesApi
 #' @field gui_api an instance of GuiApi
 #' @field info_api an instance of InfoApi
@@ -61,7 +61,7 @@ rsirius_api <- R6::R6Class(
 
       self$compounds_api <- CompoundsApi$new(self$api_client)
 
-      self$experimental_api <- ExperimentalApi$new(self$api_client)
+      self$experimental_api <- EXPERIMENTALApi$new(self$api_client)
 
       self$features_api <- FeaturesApi$new(self$api_client)
 

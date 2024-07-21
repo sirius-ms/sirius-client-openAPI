@@ -5,6 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**pending_jobs** | **int** |  | [optional] 
 **counted_compounds** | **int** |  | [optional] 
 
 ## Example

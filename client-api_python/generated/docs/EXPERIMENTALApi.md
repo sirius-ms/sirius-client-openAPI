@@ -1,10 +1,10 @@
-# PySirius.ExperimentalApi
+# PySirius.EXPERIMENTALApi
 
 All URIs are relative to *http://localhost:8080*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**get_aligned_features_quality**](ExperimentalApi.md#get_aligned_features_quality) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/quality-report | Get data quality information for feature (aligned over runs) with the given identifier from the specified project-space.
+[**get_aligned_features_quality**](EXPERIMENTALApi.md#get_aligned_features_quality) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/quality-report | Get data quality information for feature (aligned over runs) with the given identifier from the specified project-space.
 
 
 # **get_aligned_features_quality**
@@ -12,7 +12,7 @@ Method | HTTP request | Description
 
 Get data quality information for feature (aligned over runs) with the given identifier from the specified project-space.
 
-Get data quality information for feature (aligned over runs) with the given identifier from the specified project-space.
+Get data quality information for feature (aligned over runs) with the given identifier from the specified project-space.   EXPERIMENTAL: Endpoint is not part of the stable API specification and might change in minor updates.
 
 ### Example
 
@@ -33,17 +33,17 @@ configuration = PySirius.Configuration(
 # Enter a context with an instance of the API client
 with PySirius.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = PySirius.ExperimentalApi(api_client)
+    api_instance = PySirius.EXPERIMENTALApi(api_client)
     project_id = 'project_id_example' # str | project-space to read from.
     aligned_feature_id = 'aligned_feature_id_example' # str | identifier of feature (aligned over runs) to access.
 
     try:
         # Get data quality information for feature (aligned over runs) with the given identifier from the specified project-space.
         api_response = api_instance.get_aligned_features_quality(project_id, aligned_feature_id)
-        print("The response of ExperimentalApi->get_aligned_features_quality:\n")
+        print("The response of EXPERIMENTALApi->get_aligned_features_quality:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling ExperimentalApi->get_aligned_features_quality: %s\n" % e)
+        print("Exception when calling EXPERIMENTALApi->get_aligned_features_quality: %s\n" % e)
 ```
 
 
