@@ -4,6 +4,7 @@ import os
 import time
 import glob
 import signal
+import shutil
 import subprocess
 import PySirius
 
@@ -160,7 +161,7 @@ class SiriusSDK:
                 return None
             SiriusSDK.sirius_path = os.path.abspath(sirius_path)
         else:
-            if os.getenv("PATH").find("sirius") == -1:
+            if not shutil.which("sirius"):
                 print("Please provide a path to the sirius executable if not declared in PATH!")
                 SiriusSDK.reset_sdk_class(self)
                 return None
