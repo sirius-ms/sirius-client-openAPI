@@ -117,21 +117,21 @@ class SiriusSDK:
             value is None for key, value in vars(cls).items() if not key.startswith('__') and not callable(value))
 
     def attach_to_running_sirius(self, sirius_major_version=None, sirius_port=None):
-        """Attaches to a running local sirius either by specifying a port or major version, e.g. '6'."""
+        """Attaches to a running local sirius either by specifying a port or major version, e.g. '6'"""
         if not self.__are_all_vars_none__():
             print("Some attributes of SiriusSDK are not None."
                   "If you are sure that no other SIRIUS instance is running and you do not need the current"
                   "attributes of SiriusSDK, you can use reset_sdk_class() before calling this function again.")
-            return None
+            return
         
         if sirius_port is not None:
             SiriusSDK.port = sirius_port
         else:
-            found = self.__find_sirius_pid_and_port__(sirius_major_version)
+            found = self.__find_sirius_pid_and_port__(str(sirius_major_version))
             if not found:
                 print("No port file matching ~/.sirius/sirius-X.X.port was found.")
                 print("Please try providing the port.")
-                return None
+                return
 
         SiriusSDK.host = f'http://localhost:{SiriusSDK.port}'
         SiriusSDK.configuration = PySirius.Configuration(SiriusSDK.host)
@@ -139,8 +139,7 @@ class SiriusSDK:
         return PySirius.PySiriusAPI(api_client=SiriusSDK.api_client)
 
     def start(self, sirius_path=None, port=None, projectspace=None, workspace=None, forceStart=False):
-        """Starts the Sirius rest service and returns an API instance that allows access to the API endpoints.
-        The path to the binary should either be provided, or sirius should be on PATH."""
+        """starts the Sirius rest service and returns an API instance that allows access to the API endpoints"""
 
         # Fail if started already
         if (SiriusSDK.process is not None) and not forceStart:
@@ -305,3 +304,10 @@ class SiriusSDK:
         else:
             print("There does not seem to be any process or process_id to shut down...")
             return False
+
+    @classmethod
+    def connect_remote(cls, address):
+        """Connect to a remote (or local) running sirius by providing the address, e.g. 'http://localhost:8080'."""
+        config = PySirius.Configuration(address)
+        api_client = PySirius.ApiClient(config)
+        return PySirius.PySiriusAPI(api_client=api_client)

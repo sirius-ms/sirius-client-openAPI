@@ -127,7 +127,7 @@ class SiriusSDK:
         if sirius_port is not None:
             SiriusSDK.port = sirius_port
         else:
-            found = self.__find_sirius_pid_and_port__(sirius_major_version)
+            found = self.__find_sirius_pid_and_port__(str(sirius_major_version))
             if not found:
                 print("No port file matching ~/.sirius/sirius-X.X.port was found.")
                 print("Please try providing the port.")
@@ -304,3 +304,10 @@ class SiriusSDK:
         else:
             print("There does not seem to be any process or process_id to shut down...")
             return False
+
+    @classmethod
+    def connect_remote(cls, address):
+        """Connect to a remote (or local) running sirius by providing the address, e.g. 'http://localhost:8080'."""
+        config = PySirius.Configuration(address)
+        api_client = PySirius.ApiClient(config)
+        return PySirius.PySiriusAPI(api_client=api_client)
