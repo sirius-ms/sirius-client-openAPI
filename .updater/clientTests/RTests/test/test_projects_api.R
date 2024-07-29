@@ -22,21 +22,6 @@ test_that("CloseProjectSpace", {
   #expect_equal(result, "EXPECTED_RESULT")
 })
 
-test_that("CopyProjectSpace", {
-  # tests for CopyProjectSpace
-  # base path: http://localhost:8080
-  # Move an existing (opened) project-space to another location.
-  # Move an existing (opened) project-space to another location.
-  # @param project_id character unique name/identifier of the project-space that shall be copied.
-  # @param path_to_copied_project character target location where the source project will be copied to.
-  # @param copy_project_id character optional id/mame of the newly created project (copy). If given the project will be opened. (optional)
-  # @param opt_fields array[ProjectInfoOptField]  (optional)
-  # @return [ProjectInfo]
-
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
-})
-
 test_that("CreateProjectSpace", {
   # tests for CreateProjectSpace
   # base path: http://localhost:8080
@@ -154,19 +139,20 @@ test_that("ImportMsRunData", {
   # base path: http://localhost:8080
   # Import and Align full MS-Runs from various formats into the specified project  Possible formats (mzML, mzXML)
   # Import and Align full MS-Runs from various formats into the specified project  Possible formats (mzML, mzXML)
-  # @param project_id character project-space to import into.
-  # @param align_runs character  (optional)
-  # @param allow_ms1_only character  (optional)
+  # @param project_id character Project-space to import into.
+  # @param parameters LcmsSubmissionParameters Parameters for feature alignment and feature finding.
+  # @param allow_ms1_only character Import data without MS/MS. (optional)
   # @param input_files array[data.frame]  (optional)
   # @return [ImportResult]
 
-#   # TODO LCMS import not implemented
+#   Request processing failed: java.lang.RuntimeException: java.lang.NullPointerException: Cannot invoke "de.unijena.bioinf.ms.frontend.subtools.lcms_align.DataSmoothing.ordinal()" because "filter" is null
 #   project_id <- "ImportMsRunData"
 #   project_dir <- paste(Sys.getenv("HOME"), project_id, sep="/")
 #   api_instance$CreateProjectSpace(project_id, project_dir)
 #
 #   var_input_files <- full_ms_file
-#   response <- api_instance$ImportMsRunData(project_id, input_files=var_input_files)
+#   var_parameters <- LcmsSubmissionParameters$new()$toJSON()
+#   response <- api_instance$ImportMsRunData(project_id, var_parameters, input_files=var_input_files)
 #   expect_true(inherits(response, "ImportResult"))
 #
 #   withr::defer(api_instance$CloseProjectSpace(project_id))
@@ -178,10 +164,10 @@ test_that("ImportMsRunDataAsJob", {
   # base path: http://localhost:8080
   # Import and Align full MS-Runs from various formats into the specified project as background job.
   # Import and Align full MS-Runs from various formats into the specified project as background job.  Possible formats (mzML, mzXML)
-  # @param project_id character project-space to import into.
-  # @param align_runs character  (optional)
-  # @param allow_ms1_only character  (optional)
-  # @param opt_fields array[JobOptField] set of optional fields to be included. Use 'none' only to override defaults. (optional)
+  # @param project_id character Project-space to import into.
+  # @param parameters LcmsSubmissionParameters Parameters for feature alignment and feature finding.
+  # @param allow_ms1_only character Import data without MS/MS. (optional)
+  # @param opt_fields array[JobOptField] Set of optional fields to be included. Use 'none' only to override defaults. (optional)
   # @param input_files array[data.frame]  (optional)
   # @return [Job]
 
@@ -190,7 +176,8 @@ test_that("ImportMsRunDataAsJob", {
   api_instance$CreateProjectSpace(project_id, project_dir)
 
   var_input_files <- full_ms_file
-  response <- api_instance$ImportMsRunDataAsJob(project_id, input_files=var_input_files)
+  var_parameters <- LcmsSubmissionParameters$new()$toJSON()
+  response <- api_instance$ImportMsRunDataAsJob(project_id, var_parameters, input_files=var_input_files)
   expect_true(inherits(response, "Job"))
 
   withr::defer(api_instance$CloseProjectSpace(project_id))
@@ -229,7 +216,7 @@ test_that("ImportPreprocessedDataAsJob", {
   # @param ignore_formulas character  (optional)
   # @param allow_ms1_only character  (optional)
   # @param opt_fields array[JobOptField] set of optional fields to be included. Use 'none' only to override defaults. (optional)
-  # @param imput_files array[data.frame]  (optional)
+  # @param input_files array[data.frame]  (optional)
   # @return [Job]
 
   project_id <- "ImportPreprocessedDataAsJob"

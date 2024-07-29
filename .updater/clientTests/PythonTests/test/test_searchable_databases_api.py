@@ -87,15 +87,6 @@ class TestSearchableDatabasesApi(unittest.TestCase):
         # response = self.api.import_into_database(self.database_id, input_files=[self.test_file])
         # self.assertIsInstance(response, SearchableDatabase)
 
-    def test_import_into_database_as_job(self) -> None:
-        """Test case for import_into_database_as_job
-
-        Start import of structure and spectra files into the specified database.
-        """
-        # # TODO Async DB import not yet implemented
-        # response = self.api.import_into_database_as_job(self.database_id, input_files=[self.test_file])
-        # self.assertIsInstance(response, Job)
-
     def test_remove_database(self) -> None:
         """Test case for remove_database
 
@@ -106,7 +97,7 @@ class TestSearchableDatabasesApi(unittest.TestCase):
         """Test case for update_database
 
         """
-        # # TODO Updating Custom databases is not yest supported
+        # # TODO Updating Custom databases is not yet supported
         # response = self.api.update_database(self.database_id)
         # self.assertIsInstance(response, SearchableDatabase)
 

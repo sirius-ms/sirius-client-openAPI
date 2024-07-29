@@ -178,13 +178,6 @@ class TestJobsApi(unittest.TestCase):
 
         self.assertEqual(response, "test_save_job_config")
 
-    def test_start_command(self) -> None:
-        """Test case for start_command
-
-        Start computation for given command and input.
-        """
-        pass
-
     def test_start_job(self) -> None:
         """Test case for start_job
 

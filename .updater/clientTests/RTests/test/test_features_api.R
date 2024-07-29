@@ -124,25 +124,6 @@ test_that("GetAlignedFeaturesPaged", {
   withr::defer(projects_api$CloseProjectSpace(project_id))
 })
 
-test_that("GetAlignedFeaturesQuality", {
-  # tests for GetAlignedFeaturesQuality
-  # base path: http://localhost:8080
-  # Get data quality information for feature (aligned over runs) with the given identifier from the specified project-space.
-  # Get data quality information for feature (aligned over runs) with the given identifier from the specified project-space.
-  # @param project_id character project-space to read from.
-  # @param aligned_feature_id character identifier of feature (aligned over runs) to access.
-  # @return [AlignedFeatureQuality]
-
-  project_id <- "GetAlignedFeaturesQuality"
-  projects_api$OpenProjectSpace(project_id, tomato_project)
-  aligned_feature_id <- api_instance$GetAlignedFeatures(project_id)[[1]]$alignedFeatureId
-
-  response <- api_instance$GetAlignedFeaturesQuality(project_id, aligned_feature_id)
-  expect_true(inherits(response, "AlignedFeatureQuality"))
-
-  withr::defer(projects_api$CloseProjectSpace(project_id))
-})
-
 test_that("GetBestMatchingCompoundClasses", {
   # tests for GetBestMatchingCompoundClasses
   # base path: http://localhost:8080
@@ -504,28 +485,6 @@ test_that("GetQuantification", {
 
   response <- api_instance$GetQuantification(project_id, aligned_feature_id)
   expect_true(inherits(response, "QuantificationTable"))
-
-  withr::defer(projects_api$CloseProjectSpace(project_id))
-})
-
-test_that("GetSiriusFragTree", {
-  # tests for GetSiriusFragTree
-  # base path: http://localhost:8080
-  # Returns fragmentation tree (SIRIUS) for the given formula result identifier in SIRIUS&#39; internal format.
-  # Returns fragmentation tree (SIRIUS) for the given formula result identifier in SIRIUS&#39; internal format.
-  # @param project_id character project-space to read from.
-  # @param aligned_feature_id character feature (aligned over runs) the formula result belongs to.
-  # @param formula_id character identifier of the requested formula result
-  # @return [character]
-
-  project_id <- "GetSiriusFragTree"
-  projects_api$OpenProjectSpace(project_id, tomato_project)
-  aligned_feature_id <- api_instance$GetAlignedFeatures(project_id)[[1]]$alignedFeatureId
-  formula_id <- api_instance$GetFormulaCandidates(project_id, aligned_feature_id)[[1]]$formulaId
-
-  response <- api_instance$GetSiriusFragTree(project_id, aligned_feature_id, formula_id)
-  expect_true(inherits(response, "list"))
-  expect_true(inherits(response[[1]], "character"))
 
   withr::defer(projects_api$CloseProjectSpace(project_id))
 })

@@ -212,20 +212,6 @@ test_that("SaveJobConfig", {
   #expect_equal(result, "EXPECTED_RESULT")
 })
 
-test_that("StartCommand", {
-  # tests for StartCommand
-  # base path: http://localhost:8080
-  # Start computation for given command and input.
-  # Start computation for given command and input.
-  # @param project_id character project-space to perform the command for.
-  # @param command_submission CommandSubmission the command and the input to be executed
-  # @param opt_fields array[JobOptField] set of optional fields to be included. Use 'none' only to override defaults. (optional)
-  # @return [Job]
-
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
-})
-
 test_that("StartJob", {
   # tests for StartJob
   # base path: http://localhost:8080
@@ -242,7 +228,7 @@ test_that("StartJob", {
   projects_api$ImportPreprocessedDataAsJob(project_id, input_files=input_file)
   Sys.sleep(1)
   var_alignedFeatureIds <- c(features_api$GetAlignedFeatures(project_id)[[1]]$alignedFeatureId)
-  var_profile <- Instrument$new("QTOF")
+  var_profile <- InstrumentProfile$new("QTOF")
   var_formulaIdParams <- Sirius$new(enabled = TRUE, profile = var_profile)
   job_submission <- JobSubmission$new(alignedFeatureIds = var_alignedFeatureIds, formulaIdParams = var_formulaIdParams)
 

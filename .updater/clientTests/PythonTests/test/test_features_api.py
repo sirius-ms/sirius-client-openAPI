@@ -159,14 +159,6 @@ class TestFeaturesApi(unittest.TestCase):
         response = self.api.get_FeaturesApi().get_aligned_features_paged(self.project_id)
         self.assertIsInstance(response, PageAlignedFeature)
 
-    def test_get_aligned_features_quality(self) -> None:
-        """Test case for get_aligned_features_quality
-
-        Get data quality information for feature (aligned over runs) with the given identifier from the specified project-space.
-        """
-        response = self.api.get_FeaturesApi().get_aligned_features_quality(self.project_id, self.aligned_feature_id)
-        self.assertIsInstance(response, AlignedFeatureQuality)
-
     def test_get_best_matching_compound_classes(self) -> None:
         """Test case for get_best_matching_compound_classes
 

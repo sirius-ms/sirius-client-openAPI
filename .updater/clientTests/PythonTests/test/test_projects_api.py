@@ -49,21 +49,6 @@ class TestProjectsApi(unittest.TestCase):
         """
         pass
 
-    def test_copy_project_space(self) -> None:
-        """Test case for copy_project_space
-
-        Move an existing (opened) project-space to another location.
-        """
-        # # DEPRECATED
-        # copy_project_id = "test_copy_project_space_copied"
-        # copy_path_to_project = f"{os.environ.get('HOME')}/test_copy_project_space_dir_copied"
-        # response = self.api.copy_project_space(self.project_id, copy_path_to_project, copy_project_id)
-
-        # self.api.close_project_space(copy_project_id)
-        # shutil.rmtree(copy_path_to_project)
-
-        # self.assertIsInstance(response, ProjectInfo)
-
     def test_create_project_space(self) -> None:
         """Test case for create_project_space
 
@@ -137,30 +122,6 @@ class TestProjectsApi(unittest.TestCase):
         response = self.api.import_ms_run_data_as_job(self.project_id, parameters, input_files=input_files)
         self.assertIsInstance(response, Job)
 
-    def test_import_ms_run_data_as_job_locally(self) -> None:
-        """Test case for import_ms_run_data_as_job_locally
-
-        Import and Align full MS-Runs from various formats into the specified project as background job
-        """
-        input_files = [self.full_ms_file]
-        parameters = LcmsSubmissionParameters()
-        response = self.api.import_ms_run_data_as_job_locally(self.project_id, parameters, request_body=input_files)
-        self.assertIsInstance(response, Job)
-
-    def test_import_ms_run_data_locally(self) -> None:
-        """Test case for import_ms_run_data_locally
-
-        Import and Align full MS-Runs from various formats into the specified project  Possible formats (mzML, mzXML)
-        """
-        # TODO
-        # {"timestamp": "2024-07-12T13:12:57.748+00:00", "status": 500, "error": "Internal Server Error",
-        # "message": "jakarta.servlet.ServletException: Request processing failed: java.lang.RuntimeException: java.lang.NullPointerException: Cannot invoke \"de.unijena.bioinf.ms.frontend.subtools.lcms_align.DataSmoothing.ordinal()\" because \"filter\" is null",
-        # "path": "/api/projects/test_projects_api/import/ms-data-files"}
-        # input_files = [self.full_ms_file]
-        # parameters = LcmsSubmissionParameters()
-        # response = self.api.import_ms_run_data_locally(self.project_id, parameters=parameters, request_body=input_files)
-        # self.assertIsInstance(response, ImportResult)
-
     def test_import_preprocessed_data(self) -> None:
         """Test case for import_preprocessed_data
 
@@ -178,24 +139,6 @@ class TestProjectsApi(unittest.TestCase):
         input_files = [self.preproc_ms2_file_1, self.preproc_ms2_file_2]
         response = self.api.import_preprocessed_data_as_job(self.project_id, input_files=input_files)
         self.assertIsInstance(response, Job)
-
-    def test_import_preprocessed_data_as_job_locally(self) -> None:
-        """Test case for import_preprocessed_data_as_job_locally
-
-        Import ms/ms data from the given format into the specified project-space as background job
-        """
-        input_files = [self.preproc_ms2_file_1, self.preproc_ms2_file_2]
-        response = self.api.import_preprocessed_data_as_job_locally(self.project_id, request_body=input_files)
-        self.assertIsInstance(response, Job)
-
-    def test_import_preprocessed_data_locally(self) -> None:
-        """Test case for import_preprocessed_data_locally
-
-        Import already preprocessed ms/ms data from various formats into the specified project  Possible formats (ms, mgf, cef, msp)
-        """
-        input_files = [self.preproc_ms2_file_1, self.preproc_ms2_file_2]
-        response = self.api.import_preprocessed_data_locally(self.project_id, request_body=input_files)
-        self.assertIsInstance(response, ImportResult)
 
     def test_open_project_space(self) -> None:
         """Test case for open_project_space
