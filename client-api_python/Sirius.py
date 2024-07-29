@@ -122,7 +122,7 @@ class SiriusSDK:
             print("Some attributes of SiriusSDK are not None."
                   "If you are sure that no other SIRIUS instance is running and you do not need the current"
                   "attributes of SiriusSDK, you can use reset_sdk_class() before calling this function again.")
-            return
+            return None
         
         if sirius_port is not None:
             SiriusSDK.port = sirius_port
@@ -131,7 +131,7 @@ class SiriusSDK:
             if not found:
                 print("No port file matching ~/.sirius/sirius-X.X.port was found.")
                 print("Please try providing the port.")
-                return
+                return None
 
         SiriusSDK.host = f'http://localhost:{SiriusSDK.port}'
         SiriusSDK.configuration = PySirius.Configuration(SiriusSDK.host)
