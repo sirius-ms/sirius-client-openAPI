@@ -46,9 +46,17 @@ Please follow the [installation procedure](#installation--usage) and then run th
 
 ```python
 from PySirius import SiriusSDK
-project_space = "PATH_TO_EMPTY_OR_PROJECT_FOLDER"
-sirius_executable = "PATH_TO_THE_SIRIUS_EXECUTEABLE"
-api = SiriusSDK.start(sirius_executable=sirius_executable, project_space=project_space)
+sdk = SiriusSDK()
+
+projectspace = "PATH_TO_EMPTY_OR_PROJECT_FOLDER"
+sirius_path = "PATH_TO_THE_SIRIUS_EXECUTEABLE"
+# Start new sirius
+api = sdk.start(sirius_path=sirius_path, projectspace=projectspace)
+
+# Or attach to a running sirius by srecifying major version or port
+# api = sdk.attach_to_running_sirius(sirius_major_version=6)
+# api = sdk.attach_to_running_sirius(sirius_port=8080)
+
 print(api.get_JobsApi().get_default_job_config())
 print(api.get_ProjectsApi().get_project_spaces())
 ```
@@ -58,10 +66,10 @@ print(api.get_ProjectsApi().get_project_spaces())
 Please follow the [installation procedure](#installation--usage) and then run the following (while replacing address and port with the Remote address specifications):
 
 ```python
-from PySirius import PySiriusAPI, ApiClient
-address = "http://localhost"
-port = 8080
-api = PySiriusAPI(ApiClient())
+from PySirius import SiriusSDK
+
+api = SiriusSDK.connect_remote("http://localhost:8080")
+
 print(api.get_JobsApi().get_default_job_config())
 print(api.get_ProjectsApi().get_project_spaces())
 ```

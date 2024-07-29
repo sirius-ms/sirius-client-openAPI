@@ -4,6 +4,7 @@ import os
 import time
 import glob
 import signal
+import shutil
 import subprocess
 import PySirius
 
@@ -54,13 +55,10 @@ class SiriusSDK:
                 time.sleep(1)
                 try:
                     if SiriusSDK.process.poll() is None:
-                        if self.workspace is None:
-                            found = self.__cycle_find_sirius_pid_and_port_from_folder__()
-                        else:
-                            found = self.__cycle_find_sirius_pid_and_port_from_folder__(folder=self.workspace)
+                        found = self.__cycle_find_sirius_pid_and_port__()
                         if not found:
                             print(
-                                "Could not find sirius.port file. Please terminate SIRIUS if needed and try specifying a port")
+                                "Could not find sirius port file. Please terminate SIRIUS if needed and try specifying a port")
                             print(
                                 "Alternatively, try attaching to a running SIRIUS instance with attach_to_running_sirius()")
                             return None
@@ -83,27 +81,32 @@ class SiriusSDK:
         print("Could not attempt REST restart, run_command, process or api_client are None.")
         return None
 
-    def __find_sirius_pid_and_port_from_folder__(self, folder=os.path.expanduser("~")):
-        pattern = os.path.join(folder, ".sirius-[0-9].[0-9]")
-        directories = glob.glob(pattern)
-        for directory in directories:
-            port_file_path = os.path.join(directory, "sirius.port")
-            if os.path.isfile(port_file_path):
-                try:
-                    directory, filename = os.path.split(port_file_path)
-                    SiriusSDK.port = int(open(port_file_path).read())
-                    SiriusSDK.process_id = int(open(os.path.join(directory, 'sirius.pid')).read())
-                    return True
-                except Exception as e:
-                    print(str(e))
-                    return False
-        return False
+    def __find_sirius_pid_and_port__(self, sirius_version = None):
+        global_workspace = os.path.expanduser("~/.sirius")
+        port_pattern = os.path.join(global_workspace, "sirius-" + (sirius_version or "[0-9]*") + ".port")
+        port_files = glob.glob(port_pattern)
+        if not port_files:
+            return False
+        if len(port_files) > 1:
+            print("Following sirius port files detected:")
+            for f in port_files:
+                print(f)
+        port_file = sorted(port_files)[-1]
+        pid_file = port_file.replace(".port", ".pid")
+        with open(port_file, "r", encoding="utf8") as file:
+            port = int(file.read())
+        with open(pid_file, "r", encoding="utf8") as file:
+            pid = int(file.read())
+        SiriusSDK.port = port
+        SiriusSDK.process_id = pid
+        print("Using port", port, "from file", port_file)
+        return True
 
-    def __cycle_find_sirius_pid_and_port_from_folder__(self, folder=os.path.expanduser("~")):
+    def __cycle_find_sirius_pid_and_port__(self):
         found = False
         for _ in range(10):
             time.sleep(1)
-            found = self.__find_sirius_pid_and_port_from_folder__(folder=folder)
+            found = self.__find_sirius_pid_and_port__()
             if found:
                 break
         return found
@@ -113,39 +116,22 @@ class SiriusSDK:
         return all(
             value is None for key, value in vars(cls).items() if not key.startswith('__') and not callable(value))
 
-    def attach_to_running_sirius(self, sirius_version_dot_subversion=None, sirius_port_file_total_path=None):
+    def attach_to_running_sirius(self, sirius_major_version=None, sirius_port=None):
+        """Attaches to a running local sirius either by specifying a port or major version, e.g. '6'"""
         if not self.__are_all_vars_none__():
             print("Some attributes of SiriusSDK are not None."
                   "If you are sure that no other SIRIUS instance is running and you do not need the current"
                   "attributes of SiriusSDK, you can use reset_sdk_class() before calling this function again.")
-            return
-
-        if sirius_version_dot_subversion is not None and sirius_port_file_total_path is None:
-            try:
-                SiriusSDK.process_id = int(
-                    open(os.path.join(os.path.expanduser("~"), f'sirius-{sirius_version_dot_subversion}',
-                                      'sirius.pid')).read())
-                SiriusSDK.port = int(
-                    open(os.path.join(os.path.expanduser("~"), f'sirius-{sirius_version_dot_subversion}',
-                                      'sirius.port')).read())
-            except Exception as e:
-                print(str(e))
-                return
-
-        if sirius_port_file_total_path is not None:
-            try:
-                directory, filename = os.path.split(sirius_port_file_total_path)
-                SiriusSDK.process_id = int(open(os.path.join(directory, 'sirius.pid')).read())
-                SiriusSDK.port = int(open(sirius_port_file_total_path).read())
-            except Exception as e:
-                print(str(e))
-                return
-
-        if not sirius_version_dot_subversion and not sirius_port_file_total_path:
-            if not self.__find_sirius_pid_and_port_from_folder__():
-                print("No folder matching .sirius-X.X was found in your HOME directory.")
-                print("Please try setting the version yourself (i.e. 5.8) or providing the absolute path to the file.")
-                return
+            return None
+        
+        if sirius_port is not None:
+            SiriusSDK.port = sirius_port
+        else:
+            found = self.__find_sirius_pid_and_port__(str(sirius_major_version))
+            if not found:
+                print("No port file matching ~/.sirius/sirius-X.X.port was found.")
+                print("Please try providing the port.")
+                return None
 
         SiriusSDK.host = f'http://localhost:{SiriusSDK.port}'
         SiriusSDK.configuration = PySirius.Configuration(SiriusSDK.host)
@@ -176,7 +162,7 @@ class SiriusSDK:
                 return None
             SiriusSDK.sirius_path = os.path.abspath(sirius_path)
         else:
-            if os.getenv("PATH").find("sirius") == -1:
+            if not shutil.which("sirius"):
                 print("Please provide a path to the sirius executable if not declared in PATH!")
                 SiriusSDK.reset_sdk_class(self)
                 return None
@@ -211,8 +197,7 @@ class SiriusSDK:
             SiriusSDK.host = f'http://localhost:{SiriusSDK.port}'
             SiriusSDK.configuration = PySirius.Configuration(SiriusSDK.host)
             SiriusSDK.api_client = PySirius.ApiClient(SiriusSDK.configuration)
-            run_command.insert(len(run_command), "-p")
-            run_command.insert(len(run_command), str(port))
+            run_command.extend(["-p", str(port)])
 
         SiriusSDK.run_command = run_command
         # run Command
@@ -221,13 +206,10 @@ class SiriusSDK:
 
         # try to get port from sirius.port file
         if port is None:
-            print("SIRIUS was started without specifying --port (-p), trying to find the sirius.port file.")
-            if workspace is None:
-                found = self.__cycle_find_sirius_pid_and_port_from_folder__()
-            else:
-                found = self.__cycle_find_sirius_pid_and_port_from_folder__(folder=workspace)
+            print("SIRIUS was started without specifying --port (-p), trying to find the sirius port file.")
+            found = self.__cycle_find_sirius_pid_and_port__()
             if not found:
-                print("Could not find sirius.port file. Please terminate SIRIUS if needed and try specifying a port")
+                print("Could not find sirius port file. Please terminate SIRIUS if needed and try specifying a port")
                 print("Alternatively, try attaching to a running SIRIUS instance with attach_to_running_sirius()")
                 return None
 
@@ -322,3 +304,10 @@ class SiriusSDK:
         else:
             print("There does not seem to be any process or process_id to shut down...")
             return False
+
+    @classmethod
+    def connect_remote(cls, address):
+        """Connect to a remote (or local) running sirius by providing the address, e.g. 'http://localhost:8080'."""
+        config = PySirius.Configuration(address)
+        api_client = PySirius.ApiClient(config)
+        return PySirius.PySiriusAPI(api_client=api_client)
