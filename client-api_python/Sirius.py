@@ -81,9 +81,9 @@ class SiriusSDK:
         print("Could not attempt REST restart, run_command, process or api_client are None.")
         return None
 
-    def __find_sirius_pid_and_port__(self, sirius_version_dot_subversion = None):
+    def __find_sirius_pid_and_port__(self, sirius_version = None):
         global_workspace = os.path.expanduser("~/.sirius")
-        port_pattern = os.path.join(global_workspace, "sirius-" + (sirius_version_dot_subversion or "[0-9]*") + ".port")
+        port_pattern = os.path.join(global_workspace, "sirius-" + (sirius_version or "[0-9]*") + ".port")
         port_files = glob.glob(port_pattern)
         if not port_files:
             return False
@@ -116,21 +116,22 @@ class SiriusSDK:
         return all(
             value is None for key, value in vars(cls).items() if not key.startswith('__') and not callable(value))
 
-    def attach_to_running_sirius(self, sirius_version_dot_subversion=None, sirius_port=None):
+    def attach_to_running_sirius(self, sirius_major_version=None, sirius_port=None):
+        """Attaches to a running local sirius either by specifying a port or major version, e.g. '6'."""
         if not self.__are_all_vars_none__():
             print("Some attributes of SiriusSDK are not None."
                   "If you are sure that no other SIRIUS instance is running and you do not need the current"
                   "attributes of SiriusSDK, you can use reset_sdk_class() before calling this function again.")
-            return
+            return None
         
         if sirius_port is not None:
             SiriusSDK.port = sirius_port
         else:
-            found = self.__find_sirius_pid_and_port__(sirius_version_dot_subversion)
+            found = self.__find_sirius_pid_and_port__(sirius_major_version)
             if not found:
                 print("No port file matching ~/.sirius/sirius-X.X.port was found.")
                 print("Please try providing the port.")
-                return
+                return None
 
         SiriusSDK.host = f'http://localhost:{SiriusSDK.port}'
         SiriusSDK.configuration = PySirius.Configuration(SiriusSDK.host)
@@ -138,7 +139,8 @@ class SiriusSDK:
         return PySirius.PySiriusAPI(api_client=SiriusSDK.api_client)
 
     def start(self, sirius_path=None, port=None, projectspace=None, workspace=None, forceStart=False):
-        """starts the Sirius rest service and returns an API instance that allows access to the API endpoints"""
+        """Starts the Sirius rest service and returns an API instance that allows access to the API endpoints.
+        The path to the binary should either be provided, or sirius should be on PATH."""
 
         # Fail if started already
         if (SiriusSDK.process is not None) and not forceStart:
