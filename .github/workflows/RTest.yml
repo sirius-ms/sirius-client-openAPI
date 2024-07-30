@@ -38,18 +38,6 @@ jobs:
         path: .updater/api/sirius
         key: sirius
         fail-on-cache-miss: true
-    - name: Download latest Sirius Release
-      uses: nick-fields/retry@v2
-      with:
-        max_attempts: 5
-        timeout_minutes: 5
-        command: |
-          cd .updater/api
-          # TODO get most recent instead of hardcoded stable
-          wget https://github.com/sirius-ms/sirius/releases/download/v6.0.0/sirius-6.0.0-linux64.zip
-          echo "Download Complete"
-          unzip *.zip
-          echo "Api Ready"
     - name: Download tomato_small project space
       run: wget ${{ secrets.TOMATO_SMALL_DOWNLOAD_LINK }} -O tomato_small.sirius
     - name: Change HOME to working directory of runner
