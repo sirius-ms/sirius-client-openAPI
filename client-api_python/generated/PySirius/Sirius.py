@@ -161,6 +161,8 @@ class SiriusSDK:
                 SiriusSDK.reset_sdk_class(self)
                 return None
             SiriusSDK.sirius_path = os.path.abspath(sirius_path)
+        elif os.getenv('SIRIUS_EXE') is not None:
+            SiriusSDK.sirius_path = os.path.abspath(os.getenv('SIRIUS_EXE'))
         else:
             if not shutil.which("sirius"):
                 print("Please provide a path to the sirius executable if not declared in PATH!")
