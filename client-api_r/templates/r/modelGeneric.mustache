@@ -127,9 +127,10 @@
       if (!is.null(`{{name}}`)) {
         {{^isContainer}}
         {{#isEnumOrRef}}
-        if (!(`{{name}}` %in% c({{#_enum}}"{{{.}}}"{{^-last}}, {{/-last}}{{/_enum}}))) {
-          stop(paste("Error! \"", `{{name}}`, "\" cannot be assigned to `{{name}}`. Must be {{#_enum}}\"{{{.}}}\"{{^-last}}, {{/-last}}{{/_enum}}.", sep = ""))
-        }
+        # disabled, as it is broken and checks for `{{name}}` %in% c()
+        # if (!(`{{name}}` %in% c({{#_enum}}"{{{.}}}"{{^-last}}, {{/-last}}{{/_enum}}))) {
+        #  stop(paste("Error! \"", `{{name}}`, "\" cannot be assigned to `{{name}}`. Must be {{#_enum}}\"{{{.}}}\"{{^-last}}, {{/-last}}{{/_enum}}.", sep = ""))
+        # }
         {{/isEnumOrRef}}
         {{#isInteger}}
         if (!(is.numeric(`{{name}}`) && length(`{{name}}`) == 1)) {
@@ -238,7 +239,13 @@
           self$`{{name}}`
           {{/isPrimitiveType}}
           {{^isPrimitiveType}}
-          self$`{{name}}`$toJSON()
+          if (is.list(self$`{{name}}`$toJSON()) && length(self$`{{name}}`$toJSON()) == 0L){
+            NULL
+          } else if (length(names(self$`{{name}}`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`{{name}}`$toJSON()))) {
+            jsonlite::fromJSON(self$`{{name}}`$toJSON())
+          } else {
+            self$`{{name}}`$toJSON()
+          }
           {{/isPrimitiveType}}
           {{/isContainer}}
       }
@@ -289,9 +296,9 @@
         self$`{{name}}` <- this_object$`{{baseName}}`
         {{/isPrimitiveType}}
         {{^isPrimitiveType}}
-        {{#lambda.lowercase}}{{{name}}}{{/lambda.lowercase}}_object <- {{dataType}}$new()
-        {{#lambda.lowercase}}{{{name}}}{{/lambda.lowercase}}_object$fromJSON(jsonlite::toJSON(this_object${{baseName}}, auto_unbox = TRUE, digits = NA))
-        self$`{{name}}` <- {{#lambda.lowercase}}{{{name}}}{{/lambda.lowercase}}_object
+        `{{#lambda.lowercase}}{{{name}}}{{/lambda.lowercase}}_object` <- {{dataType}}$new()
+        `{{#lambda.lowercase}}{{{name}}}{{/lambda.lowercase}}_object`$fromJSON(jsonlite::toJSON(this_object$`{{baseName}}`, auto_unbox = TRUE, digits = NA))
+        self$`{{name}}` <- `{{#lambda.lowercase}}{{{name}}}{{/lambda.lowercase}}_object`
         {{/isPrimitiveType}}
         {{/isContainer}}
       }
@@ -323,7 +330,7 @@
           {{#isContainer}}
           {{#isArray}}
           {{#isPrimitiveType}}
-             {{#isNumeric}}[%d]{{/isNumeric}}{{^isNumeric}}[%s]{{/isNumeric}}
+             {{#isNumeric}}[%f]{{/isNumeric}}{{^isNumeric}}[%s]{{/isNumeric}}
           {{/isPrimitiveType}}
           {{^isPrimitiveType}}[%s]
           {{/isPrimitiveType}}
@@ -374,6 +381,10 @@
       {{/vars}}
       )
       jsoncontent <- paste(jsoncontent, collapse = ",")
+      # remove c() occurences and reduce resulting double escaped quotes \"\" into \"
+      jsoncontent <- gsub('\\\"c\\((.*?)\\\"\\)', '\\1', jsoncontent)
+      # fix wrong serialization of "\"ENUM\"" to "ENUM"
+      jsoncontent <- gsub("\\\\\"([A-Z]+)\\\\\"", "\\1", jsoncontent)
       json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
       {{#isAdditionalPropertiesTrue}}
       json_obj <- jsonlite::fromJSON(json_string)
@@ -421,7 +432,7 @@
       self$`{{name}}` <- this_object$`{{name}}`
       {{/isPrimitiveType}}
       {{^isPrimitiveType}}
-      self$`{{name}}` <- {{dataType}}$new()$fromJSON(jsonlite::toJSON(this_object${{name}}, auto_unbox = TRUE, digits = NA))
+      self$`{{name}}` <- {{dataType}}$new()$fromJSON(jsonlite::toJSON(this_object$`{{name}}`, auto_unbox = TRUE, digits = NA))
       {{/isPrimitiveType}}
       {{/isContainer}}
       {{/vars}}

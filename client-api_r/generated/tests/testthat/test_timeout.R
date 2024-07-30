@@ -18,10 +18,3 @@ test_that("numberOfSecondsPerInstance", {
   # uncomment below to test the property
   #expect_equal(model.instance$`numberOfSecondsPerInstance`, "EXPECTED_RESULT")
 })
-
-test_that("identifier", {
-  # tests for the property `identifier` (character)
-
-  # uncomment below to test the property
-  #expect_equal(model.instance$`identifier`, "EXPECTED_RESULT")
-})

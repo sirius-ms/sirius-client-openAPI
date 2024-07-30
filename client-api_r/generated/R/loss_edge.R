@@ -1,14 +1,14 @@
 #' Create a new LossEdge
 #'
 #' @description
-#' 
+#' LossEdge Class
 #'
 #' @docType class
 #' @title LossEdge
 #' @description LossEdge Class
 #' @format An \code{R6Class} generator object
-#' @field sourceFragment  \link{FragmentNode} [optional]
-#' @field targetFragment  \link{FragmentNode} [optional]
+#' @field sourceFragmentIdx  integer [optional]
+#' @field targetFragmentIdx  integer [optional]
 #' @field molecularFormula  character [optional]
 #' @field score  numeric [optional]
 #' @importFrom R6 R6Class
@@ -17,8 +17,8 @@
 LossEdge <- R6::R6Class(
   "LossEdge",
   public = list(
-    `sourceFragment` = NULL,
-    `targetFragment` = NULL,
+    `sourceFragmentIdx` = NULL,
+    `targetFragmentIdx` = NULL,
     `molecularFormula` = NULL,
     `score` = NULL,
     #' Initialize a new LossEdge class.
@@ -26,20 +26,24 @@ LossEdge <- R6::R6Class(
     #' @description
     #' Initialize a new LossEdge class.
     #'
-    #' @param sourceFragment sourceFragment
-    #' @param targetFragment targetFragment
+    #' @param sourceFragmentIdx sourceFragmentIdx
+    #' @param targetFragmentIdx targetFragmentIdx
     #' @param molecularFormula molecularFormula
     #' @param score score
     #' @param ... Other optional arguments.
     #' @export
-    initialize = function(`sourceFragment` = NULL, `targetFragment` = NULL, `molecularFormula` = NULL, `score` = NULL, ...) {
-      if (!is.null(`sourceFragment`)) {
-        stopifnot(R6::is.R6(`sourceFragment`))
-        self$`sourceFragment` <- `sourceFragment`
+    initialize = function(`sourceFragmentIdx` = NULL, `targetFragmentIdx` = NULL, `molecularFormula` = NULL, `score` = NULL, ...) {
+      if (!is.null(`sourceFragmentIdx`)) {
+        if (!(is.numeric(`sourceFragmentIdx`) && length(`sourceFragmentIdx`) == 1)) {
+          stop(paste("Error! Invalid data for `sourceFragmentIdx`. Must be an integer:", `sourceFragmentIdx`))
+        }
+        self$`sourceFragmentIdx` <- `sourceFragmentIdx`
       }
-      if (!is.null(`targetFragment`)) {
-        stopifnot(R6::is.R6(`targetFragment`))
-        self$`targetFragment` <- `targetFragment`
+      if (!is.null(`targetFragmentIdx`)) {
+        if (!(is.numeric(`targetFragmentIdx`) && length(`targetFragmentIdx`) == 1)) {
+          stop(paste("Error! Invalid data for `targetFragmentIdx`. Must be an integer:", `targetFragmentIdx`))
+        }
+        self$`targetFragmentIdx` <- `targetFragmentIdx`
       }
       if (!is.null(`molecularFormula`)) {
         if (!(is.character(`molecularFormula`) && length(`molecularFormula`) == 1)) {
@@ -63,13 +67,13 @@ LossEdge <- R6::R6Class(
     #' @export
     toJSON = function() {
       LossEdgeObject <- list()
-      if (!is.null(self$`sourceFragment`)) {
-        LossEdgeObject[["sourceFragment"]] <-
-          self$`sourceFragment`$toJSON()
+      if (!is.null(self$`sourceFragmentIdx`)) {
+        LossEdgeObject[["sourceFragmentIdx"]] <-
+          self$`sourceFragmentIdx`
       }
-      if (!is.null(self$`targetFragment`)) {
-        LossEdgeObject[["targetFragment"]] <-
-          self$`targetFragment`$toJSON()
+      if (!is.null(self$`targetFragmentIdx`)) {
+        LossEdgeObject[["targetFragmentIdx"]] <-
+          self$`targetFragmentIdx`
       }
       if (!is.null(self$`molecularFormula`)) {
         LossEdgeObject[["molecularFormula"]] <-
@@ -91,15 +95,11 @@ LossEdge <- R6::R6Class(
     #' @export
     fromJSON = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
-      if (!is.null(this_object$`sourceFragment`)) {
-        sourcefragment_object <- FragmentNode$new()
-        sourcefragment_object$fromJSON(jsonlite::toJSON(this_object$sourceFragment, auto_unbox = TRUE, digits = NA))
-        self$`sourceFragment` <- sourcefragment_object
+      if (!is.null(this_object$`sourceFragmentIdx`)) {
+        self$`sourceFragmentIdx` <- this_object$`sourceFragmentIdx`
       }
-      if (!is.null(this_object$`targetFragment`)) {
-        targetfragment_object <- FragmentNode$new()
-        targetfragment_object$fromJSON(jsonlite::toJSON(this_object$targetFragment, auto_unbox = TRUE, digits = NA))
-        self$`targetFragment` <- targetfragment_object
+      if (!is.null(this_object$`targetFragmentIdx`)) {
+        self$`targetFragmentIdx` <- this_object$`targetFragmentIdx`
       }
       if (!is.null(this_object$`molecularFormula`)) {
         self$`molecularFormula` <- this_object$`molecularFormula`
@@ -118,20 +118,20 @@ LossEdge <- R6::R6Class(
     #' @export
     toJSONString = function() {
       jsoncontent <- c(
-        if (!is.null(self$`sourceFragment`)) {
+        if (!is.null(self$`sourceFragmentIdx`)) {
           sprintf(
-          '"sourceFragment":
-          %s
-          ',
-          jsonlite::toJSON(self$`sourceFragment`$toJSON(), auto_unbox = TRUE, digits = NA)
+          '"sourceFragmentIdx":
+            %f
+                    ',
+          self$`sourceFragmentIdx`
           )
         },
-        if (!is.null(self$`targetFragment`)) {
+        if (!is.null(self$`targetFragmentIdx`)) {
           sprintf(
-          '"targetFragment":
-          %s
-          ',
-          jsonlite::toJSON(self$`targetFragment`$toJSON(), auto_unbox = TRUE, digits = NA)
+          '"targetFragmentIdx":
+            %f
+                    ',
+          self$`targetFragmentIdx`
           )
         },
         if (!is.null(self$`molecularFormula`)) {
@@ -152,6 +152,10 @@ LossEdge <- R6::R6Class(
         }
       )
       jsoncontent <- paste(jsoncontent, collapse = ",")
+      # remove c() occurences and reduce resulting double escaped quotes \"\" into \"
+      jsoncontent <- gsub('\\\"c\\((.*?)\\\"\\)', '\\1', jsoncontent)
+      # fix wrong serialization of "\"ENUM\"" to "ENUM"
+      jsoncontent <- gsub("\\\\\"([A-Z]+)\\\\\"", "\\1", jsoncontent)
       json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
     },
     #' Deserialize JSON string into an instance of LossEdge
@@ -164,8 +168,8 @@ LossEdge <- R6::R6Class(
     #' @export
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
-      self$`sourceFragment` <- FragmentNode$new()$fromJSON(jsonlite::toJSON(this_object$sourceFragment, auto_unbox = TRUE, digits = NA))
-      self$`targetFragment` <- FragmentNode$new()$fromJSON(jsonlite::toJSON(this_object$targetFragment, auto_unbox = TRUE, digits = NA))
+      self$`sourceFragmentIdx` <- this_object$`sourceFragmentIdx`
+      self$`targetFragmentIdx` <- this_object$`targetFragmentIdx`
       self$`molecularFormula` <- this_object$`molecularFormula`
       self$`score` <- this_object$`score`
       self

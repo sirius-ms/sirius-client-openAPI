@@ -1,22 +1,22 @@
 #' Create a new AnnotatedPeak
 #'
 #' @description
-#' 
+#' AnnotatedPeak Class
 #'
 #' @docType class
 #' @title AnnotatedPeak
 #' @description AnnotatedPeak Class
 #' @format An \code{R6Class} generator object
-#' @field mass  numeric [optional]
+#' @field mz  numeric [optional]
 #' @field intensity  numeric [optional]
-#' @field peakAnnotation  object [optional]
+#' @field peakAnnotation  \link{PeakAnnotation} [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
 #' @export
 AnnotatedPeak <- R6::R6Class(
   "AnnotatedPeak",
   public = list(
-    `mass` = NULL,
+    `mz` = NULL,
     `intensity` = NULL,
     `peakAnnotation` = NULL,
     #' Initialize a new AnnotatedPeak class.
@@ -24,17 +24,17 @@ AnnotatedPeak <- R6::R6Class(
     #' @description
     #' Initialize a new AnnotatedPeak class.
     #'
-    #' @param mass mass
+    #' @param mz mz
     #' @param intensity intensity
     #' @param peakAnnotation peakAnnotation
     #' @param ... Other optional arguments.
     #' @export
-    initialize = function(`mass` = NULL, `intensity` = NULL, `peakAnnotation` = NULL, ...) {
-      if (!is.null(`mass`)) {
-        if (!(is.numeric(`mass`) && length(`mass`) == 1)) {
-          stop(paste("Error! Invalid data for `mass`. Must be a number:", `mass`))
+    initialize = function(`mz` = NULL, `intensity` = NULL, `peakAnnotation` = NULL, ...) {
+      if (!is.null(`mz`)) {
+        if (!(is.numeric(`mz`) && length(`mz`) == 1)) {
+          stop(paste("Error! Invalid data for `mz`. Must be a number:", `mz`))
         }
-        self$`mass` <- `mass`
+        self$`mz` <- `mz`
       }
       if (!is.null(`intensity`)) {
         if (!(is.numeric(`intensity`) && length(`intensity`) == 1)) {
@@ -43,6 +43,7 @@ AnnotatedPeak <- R6::R6Class(
         self$`intensity` <- `intensity`
       }
       if (!is.null(`peakAnnotation`)) {
+        stopifnot(R6::is.R6(`peakAnnotation`))
         self$`peakAnnotation` <- `peakAnnotation`
       }
     },
@@ -55,9 +56,9 @@ AnnotatedPeak <- R6::R6Class(
     #' @export
     toJSON = function() {
       AnnotatedPeakObject <- list()
-      if (!is.null(self$`mass`)) {
-        AnnotatedPeakObject[["mass"]] <-
-          self$`mass`
+      if (!is.null(self$`mz`)) {
+        AnnotatedPeakObject[["mz"]] <-
+          self$`mz`
       }
       if (!is.null(self$`intensity`)) {
         AnnotatedPeakObject[["intensity"]] <-
@@ -65,7 +66,13 @@ AnnotatedPeak <- R6::R6Class(
       }
       if (!is.null(self$`peakAnnotation`)) {
         AnnotatedPeakObject[["peakAnnotation"]] <-
-          self$`peakAnnotation`
+          if (is.list(self$`peakAnnotation`$toJSON()) && length(self$`peakAnnotation`$toJSON()) == 0L){
+            NULL
+          } else if (length(names(self$`peakAnnotation`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`peakAnnotation`$toJSON()))) {
+            jsonlite::fromJSON(self$`peakAnnotation`$toJSON())
+          } else {
+            self$`peakAnnotation`$toJSON()
+          }
       }
       AnnotatedPeakObject
     },
@@ -79,14 +86,16 @@ AnnotatedPeak <- R6::R6Class(
     #' @export
     fromJSON = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
-      if (!is.null(this_object$`mass`)) {
-        self$`mass` <- this_object$`mass`
+      if (!is.null(this_object$`mz`)) {
+        self$`mz` <- this_object$`mz`
       }
       if (!is.null(this_object$`intensity`)) {
         self$`intensity` <- this_object$`intensity`
       }
       if (!is.null(this_object$`peakAnnotation`)) {
-        self$`peakAnnotation` <- this_object$`peakAnnotation`
+        `peakannotation_object` <- PeakAnnotation$new()
+        `peakannotation_object`$fromJSON(jsonlite::toJSON(this_object$`peakAnnotation`, auto_unbox = TRUE, digits = NA))
+        self$`peakAnnotation` <- `peakannotation_object`
       }
       self
     },
@@ -99,12 +108,12 @@ AnnotatedPeak <- R6::R6Class(
     #' @export
     toJSONString = function() {
       jsoncontent <- c(
-        if (!is.null(self$`mass`)) {
+        if (!is.null(self$`mz`)) {
           sprintf(
-          '"mass":
+          '"mz":
             %f
                     ',
-          self$`mass`
+          self$`mz`
           )
         },
         if (!is.null(self$`intensity`)) {
@@ -118,13 +127,17 @@ AnnotatedPeak <- R6::R6Class(
         if (!is.null(self$`peakAnnotation`)) {
           sprintf(
           '"peakAnnotation":
-            "%s"
-                    ',
-          self$`peakAnnotation`
+          %s
+          ',
+          jsonlite::toJSON(self$`peakAnnotation`$toJSON(), auto_unbox = TRUE, digits = NA)
           )
         }
       )
       jsoncontent <- paste(jsoncontent, collapse = ",")
+      # remove c() occurences and reduce resulting double escaped quotes \"\" into \"
+      jsoncontent <- gsub('\\\"c\\((.*?)\\\"\\)', '\\1', jsoncontent)
+      # fix wrong serialization of "\"ENUM\"" to "ENUM"
+      jsoncontent <- gsub("\\\\\"([A-Z]+)\\\\\"", "\\1", jsoncontent)
       json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
     },
     #' Deserialize JSON string into an instance of AnnotatedPeak
@@ -137,9 +150,9 @@ AnnotatedPeak <- R6::R6Class(
     #' @export
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
-      self$`mass` <- this_object$`mass`
+      self$`mz` <- this_object$`mz`
       self$`intensity` <- this_object$`intensity`
-      self$`peakAnnotation` <- this_object$`peakAnnotation`
+      self$`peakAnnotation` <- PeakAnnotation$new()$fromJSON(jsonlite::toJSON(this_object$`peakAnnotation`, auto_unbox = TRUE, digits = NA))
       self
     },
     #' Validate JSON input with respect to AnnotatedPeak

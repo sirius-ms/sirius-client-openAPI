@@ -1,7 +1,7 @@
 #' Create a new Canopus
 #'
 #' @description
-#' User/developer friendly parameter subset for the CANOPUS tool  CANOPUS is parameter free, so this Object is just a flag that canopus should be executed.
+#' User/developer friendly parameter subset for the CANOPUS tool  CANOPUS is parameter free, so this Object is just a flag that canopus should be executed.  Needs results from FingerprintPrediction Tool
 #'
 #' @docType class
 #' @title Canopus
@@ -80,6 +80,10 @@ Canopus <- R6::R6Class(
         }
       )
       jsoncontent <- paste(jsoncontent, collapse = ",")
+      # remove c() occurences and reduce resulting double escaped quotes \"\" into \"
+      jsoncontent <- gsub('\\\"c\\((.*?)\\\"\\)', '\\1', jsoncontent)
+      # fix wrong serialization of "\"ENUM\"" to "ENUM"
+      jsoncontent <- gsub("\\\\\"([A-Z]+)\\\\\"", "\\1", jsoncontent)
       json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
     },
     #' Deserialize JSON string into an instance of Canopus

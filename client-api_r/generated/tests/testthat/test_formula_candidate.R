@@ -5,8 +5,40 @@ context("Test FormulaCandidate")
 
 model_instance <- FormulaCandidate$new()
 
+test_that("formulaId", {
+  # tests for the property `formulaId` (character)
+  # Unique identifier of this formula candidate
+
+  # uncomment below to test the property
+  #expect_equal(model.instance$`formulaId`, "EXPECTED_RESULT")
+})
+
+test_that("molecularFormula", {
+  # tests for the property `molecularFormula` (character)
+  # molecular formula of this formula candidate
+
+  # uncomment below to test the property
+  #expect_equal(model.instance$`molecularFormula`, "EXPECTED_RESULT")
+})
+
+test_that("adduct", {
+  # tests for the property `adduct` (character)
+  # Adduct of this formula candidate
+
+  # uncomment below to test the property
+  #expect_equal(model.instance$`adduct`, "EXPECTED_RESULT")
+})
+
+test_that("rank", {
+  # tests for the property `rank` (integer)
+
+  # uncomment below to test the property
+  #expect_equal(model.instance$`rank`, "EXPECTED_RESULT")
+})
+
 test_that("siriusScore", {
   # tests for the property `siriusScore` (numeric)
+  # Sirius Score (isotope + tree score) of the formula candidate.  If NULL result is not available
 
   # uncomment below to test the property
   #expect_equal(model.instance$`siriusScore`, "EXPECTED_RESULT")
@@ -28,37 +60,24 @@ test_that("treeScore", {
 
 test_that("zodiacScore", {
   # tests for the property `zodiacScore` (numeric)
+  # Zodiac Score of the formula candidate.  If NULL result is not available
 
   # uncomment below to test the property
   #expect_equal(model.instance$`zodiacScore`, "EXPECTED_RESULT")
 })
 
-test_that("molecularFormula", {
-  # tests for the property `molecularFormula` (character)
+test_that("numOfExplainedPeaks", {
+  # tests for the property `numOfExplainedPeaks` (integer)
 
   # uncomment below to test the property
-  #expect_equal(model.instance$`molecularFormula`, "EXPECTED_RESULT")
+  #expect_equal(model.instance$`numOfExplainedPeaks`, "EXPECTED_RESULT")
 })
 
-test_that("adduct", {
-  # tests for the property `adduct` (character)
+test_that("numOfExplainablePeaks", {
+  # tests for the property `numOfExplainablePeaks` (integer)
 
   # uncomment below to test the property
-  #expect_equal(model.instance$`adduct`, "EXPECTED_RESULT")
-})
-
-test_that("numOfexplainedPeaks", {
-  # tests for the property `numOfexplainedPeaks` (integer)
-
-  # uncomment below to test the property
-  #expect_equal(model.instance$`numOfexplainedPeaks`, "EXPECTED_RESULT")
-})
-
-test_that("numOfexplainablePeaks", {
-  # tests for the property `numOfexplainablePeaks` (integer)
-
-  # uncomment below to test the property
-  #expect_equal(model.instance$`numOfexplainablePeaks`, "EXPECTED_RESULT")
+  #expect_equal(model.instance$`numOfExplainablePeaks`, "EXPECTED_RESULT")
 })
 
 test_that("totalExplainedIntensity", {
@@ -73,4 +92,54 @@ test_that("medianMassDeviation", {
 
   # uncomment below to test the property
   #expect_equal(model.instance$`medianMassDeviation`, "EXPECTED_RESULT")
+})
+
+test_that("fragmentationTree", {
+  # tests for the property `fragmentationTree` (FragmentationTree)
+
+  # uncomment below to test the property
+  #expect_equal(model.instance$`fragmentationTree`, "EXPECTED_RESULT")
+})
+
+test_that("annotatedSpectrum", {
+  # tests for the property `annotatedSpectrum` (AnnotatedSpectrum)
+
+  # uncomment below to test the property
+  #expect_equal(model.instance$`annotatedSpectrum`, "EXPECTED_RESULT")
+})
+
+test_that("isotopePatternAnnotation", {
+  # tests for the property `isotopePatternAnnotation` (IsotopePatternAnnotation)
+
+  # uncomment below to test the property
+  #expect_equal(model.instance$`isotopePatternAnnotation`, "EXPECTED_RESULT")
+})
+
+test_that("lipidAnnotation", {
+  # tests for the property `lipidAnnotation` (LipidAnnotation)
+
+  # uncomment below to test the property
+  #expect_equal(model.instance$`lipidAnnotation`, "EXPECTED_RESULT")
+})
+
+test_that("predictedFingerprint", {
+  # tests for the property `predictedFingerprint` (array[numeric])
+  # Probabilistic molecular fingerprint predicted by CSI:FingerID
+
+  # uncomment below to test the property
+  #expect_equal(model.instance$`predictedFingerprint`, "EXPECTED_RESULT")
+})
+
+test_that("compoundClasses", {
+  # tests for the property `compoundClasses` (CompoundClasses)
+
+  # uncomment below to test the property
+  #expect_equal(model.instance$`compoundClasses`, "EXPECTED_RESULT")
+})
+
+test_that("canopusPrediction", {
+  # tests for the property `canopusPrediction` (CanopusPrediction)
+
+  # uncomment below to test the property
+  #expect_equal(model.instance$`canopusPrediction`, "EXPECTED_RESULT")
 })

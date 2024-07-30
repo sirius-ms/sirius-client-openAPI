@@ -1,6 +1,6 @@
 # Rsirius::CompoundClasses
 
-Container class that holds the best matching compound class for different levels of each ontology for a  certain compound/feature/predicted fingerprint.
+Container class that holds the most likely compound class for different levels of each ontology for a  certain Compound/Feature/FormulaCandidate/PredictedFingerprint.
 
 ## Properties
 Name | Type | Description | Notes
@@ -8,10 +8,7 @@ Name | Type | Description | Notes
 **npcPathway** | [**CompoundClass**](CompoundClass.md) |  | [optional] 
 **npcSuperclass** | [**CompoundClass**](CompoundClass.md) |  | [optional] 
 **npcClass** | [**CompoundClass**](CompoundClass.md) |  | [optional] 
-**classyFireMostSpecific** | [**CompoundClass**](CompoundClass.md) |  | [optional] 
-**classyFireLevel5** | [**CompoundClass**](CompoundClass.md) |  | [optional] 
-**classyFireClass** | [**CompoundClass**](CompoundClass.md) |  | [optional] 
-**classyFireSubClass** | [**CompoundClass**](CompoundClass.md) |  | [optional] 
-**classyFireSuperClass** | [**CompoundClass**](CompoundClass.md) |  | [optional] 
+**classyFireLineage** | [**array[CompoundClass]**](CompoundClass.md) | Most likely ClassyFire lineage from ordered from least specific to most specific class  classyFireLineage.get(classyFireLineage.size() - 1) gives the most specific ClassyFire compound class annotation | [optional] 
+**classyFireAlternatives** | [**array[CompoundClass]**](CompoundClass.md) | Alternative ClassyFire classes with high probability that do not fit into the linage | [optional] 
 
 

@@ -17,14 +17,11 @@ jobs:
     # Runs using the runners shell
     - name: checkout repo
       uses: actions/checkout@v3.1.0
-    - name: Download latest generator
+    - name: Download latest generators
       run: |
         cd .updater/openapi_generator
-        wget https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/6.5.0/openapi-generator-cli-6.5.0.jar -O openapi-generator-cli.jar
+        wget https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/7.6.0/openapi-generator-cli-7.6.0.jar -O openapi-generator-cli.jar
         java -jar openapi-generator-cli.jar version > version
-        cd ./../swagger
-        wget https://repo1.maven.org/maven2/io/swagger/codegen/v3/swagger-codegen-cli/3.0.35/swagger-codegen-cli-3.0.35.jar -O swagger-codegen-cli.jar
-        java -jar swagger-codegen-cli.jar version > version
     - name: Download latest Sirius Release
       uses: nick-fields/retry@v2
       with:
@@ -32,80 +29,60 @@ jobs:
         timeout_minutes: 5
         command: |
             cd .updater/api
-            curl -s  https://api.github.com/repos/boecker-lab/sirius/releases | grep 'browser_download_url.*linux64.zip\"' | sort | tac | head -n 1 | cut -d : -f 2,3 | tr -d \" | wget -i -
+            curl -s  https://api.github.com/repositories/94561614/releases | grep 'browser_download_url.*linux64.zip\"' | sort | tac | head -n 1 | cut -d : -f 2,3 | tr -d \" | wget -i -
             echo "Download Complete"
             unzip *.zip
             echo "Api Ready"
     - name: Run Rest Api
       run: |
-        bash .updater/api/sirius/bin/sirius REST -p 8080 -s &
+        bash .updater/api/sirius/bin/sirius REST --stableDocOnly -p 8080 -s &
     - name: Update api-docs.json
       run: |
         while ! nc -z localhost 8080; do sleep 0.1; done
         cd .updater/api
-        wget http://localhost:8080/v3/api-docs
-        mv api-docs api-docs.json
+        wget http://localhost:8080/v3/api-docs -O api-docs.json
     - name: Update Clients
       run: |
-        echo "generating Java Code"
-        rm -rf client-api_java/generated/*
-        java -jar .updater/openapi_generator/openapi-generator-cli.jar generate -i .updater/api/api-docs.json -c .updater/config/Java/config.json -g java -o client-api_java/generated
+        # echo "generating Java Code"
+        # rm -rf client-api_java/generated/*
+        # java -jar .updater/openapi_generator/openapi-generator-cli.jar generate -i .updater/api/api-docs.json -c .updater/config/Java/config.json -g java -o client-api_java/generated
         
         echo "generating Python Code"
         rm -rf client-api_python/generated/*
-        java -jar .updater/swagger/swagger-codegen-cli.jar generate -i .updater/api/api-docs.json -c .updater/config/Python/config.json -l python -o client-api_python/generated
+        java -jar .updater/openapi_generator/openapi-generator-cli.jar generate -i .updater/api/api-docs.json -c .updater/config/Python/config.json -g python -o client-api_python/generated -t client-api_python/templates/python
         
-        echo "temporarily move R manual folder"
-        mv client-api_r/generated/man/ client-api_r/
+        # echo "temporarily move R manual folder"
+        # mv client-api_r/generated/man/ client-api_r/
         
         echo "generating R Code"
         rm -rf client-api_r/generated/*
         java -jar .updater/openapi_generator/openapi-generator-cli.jar generate -i .updater/api/api-docs.json -c .updater/config/R/config.json -g r -o client-api_r/generated -t client-api_r/templates/r
         
-        echo "recover R manual folder"
-        mv client-api_r/man/ client-api_r/generated/
+        # echo "recover R manual folder"
+        # mv client-api_r/man/ client-api_r/generated/
         
-        #echo "generating Ruby Code"
-        #rm -rf client-api_ruby/generated/*
-        #java -jar .updater/openapi_generator/openapi-generator-cli.jar generate -i .updater/api/api-docs.json -c .updater/config/Ruby/config.json -g ruby -o client-api_ruby/generated
+        # echo "generating Ruby Code"
+        # rm -rf client-api_ruby/generated/*
+        # java -jar .updater/openapi_generator/openapi-generator-cli.jar generate -i .updater/api/api-docs.json -c .updater/config/Ruby/config.json -g ruby -o client-api_ruby/generated
         echo "generating Finished!"
     - name: Format Python Package
       run: |
          cp client-api_python/sirius_api.py client-api_python/generated/PySirius
          cp client-api_python/Sirius.py client-api_python/generated/PySirius
-        
+
          echo "from PySirius.sirius_api import PySiriusAPI" >> client-api_python/generated/PySirius/__init__.py
          echo "from PySirius.Sirius import SiriusSDK" >> client-api_python/generated/PySirius/__init__.py
-         
-         cd client-api_python/generated
-         sed '/## Installation & Usage/Q' README.md > tempor
-         echo "## Documentation for API Endpoints" >> tempor
-         sed '1,/## Documentation for API Endpoints/d' README.md >> tempor
-         cat tempor > README.md
-         rm tempor
     - name: Format R package
       run: |
+        # rm -r client-api_r/generated/tests
+        
         cp client-api_r/SiriusSDK.R  client-api_r/generated/R/SiriusSDK.R
         echo >> client-api_r/generated/NAMESPACE
         echo "# SDK" >> client-api_r/generated/NAMESPACE
         echo "export(SiriusSDK)" >> client-api_r/generated/NAMESPACE
         
-        cp -r client-api_r/testthat client-api_r/generated/tests
-        
-        chmod +x ./client-api_r/api_response_fix.sh
-        ./client-api_r/api_response_fix.sh ./client-api_r/generated/R/api_response.R
-        
-        chmod +x ./client-api_r/api_client_fix.sh
-        ./client-api_r/api_client_fix.sh ./client-api_r/generated/R/api_client.R
-        
-        chmod +x ./client-api_r/compounds_api_fix.sh
-        ./client-api_r/compounds_api_fix.sh ./client-api_r/generated/R/compounds_api.R
-        
-        chmod +x ./client-api_r/computations_api_fix.sh
-        ./client-api_r/computations_api_fix.sh ./client-api_r/generated/R/computations_api.R
-        
-        chmod +x ./client-api_r/add_to_docu.sh
-        ./client-api_r/add_to_docu.sh ./client-api_r/generated/docs/CompoundsApi.md
+        chmod +x ./client-api_r/patches/list_syntax_fix.sh
+        ./client-api_r/patches/list_syntax_fix.sh
     - name: Remove Sirius Rest Api
       run: |
         cd .updater/api
@@ -120,25 +97,25 @@ jobs:
       uses: stefanzweifel/git-auto-commit-action@v4.15.2
       with:
         commit_message: Auto-Updated OpenAPI Clients
-    - name: Run RManualGeneration
-      run: |
-        gh workflow run RManualGeneration.yml --ref ${GITHUB_REF##*/}
-        echo "dispatched workflow"
-        echo "sleeping for 30s to make sure it started"
-        sleep 30
-        list=$(gh run list --workflow RManualGeneration --branch ${GITHUB_REF##*/})
-        id=$(echo $list | grep -oP 'in_progress RManualGeneration RManualGeneration [^ ]* workflow_dispatch \K\d+')
-        echo "run ID of RManualGeneration is: $id"
-        gh run watch $id --exit-status --interval 30
-        echo "generation done!"
-      env:
-        GH_TOKEN: ${{ github.token }}
+#    - name: Run RManualGeneration
+#      run: |
+#        gh workflow run RManualGeneration.yml --ref ${GITHUB_REF##*/}
+#        echo "dispatched workflow"
+#        echo "sleeping for 30s to make sure it started"
+#        sleep 30
+#        list=$(gh run list --workflow RManualGeneration --branch ${GITHUB_REF##*/})
+#        id=$(echo $list | grep -oP 'in_progress RManualGeneration RManualGeneration [^ ]* workflow_dispatch \K\d+')
+#        echo "run ID of RManualGeneration is: $id"
+#        gh run watch $id --exit-status --interval 3
+#        echo "generation done!"
+#      env:
+#        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: update file and create pull request
       id: open-pr
       uses: repo-sync/pull-request@v2
       with:
           destination_branch: ${{ inputs.target_branch }}
-          github_token: ${{ secrets.MERGE_REQUEST_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           pr_label: "Feature"
           pr_title: "AutoUpdated"
           pr_allow_empty: true
@@ -149,13 +126,13 @@ jobs:
       id: lockpull
       uses: sudo-bot/action-pull-request-lock@v1.1.0
       with:
-        github-token: ${{ secrets.MERGE_REQUEST_TOKEN }}
+        github-token: ${{ secrets.GITHUB_TOKEN }}
         number: ${{steps.open-pr.outputs.pr_number}}
         lock-reason: resolved
     - name: Run tests if no changes occure
       env:
-        GH_TOKEN: ${{ github.token }}
-      if: steps.lockpull.outcome == 'failure'
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#      if: steps.lockpull.outcome == 'failure'
       run: |
         gh workflow run RunTests.yml --ref ${GITHUB_REF##*/}
         echo "sleeping for 30min before temp branch removal"
@@ -164,6 +141,6 @@ jobs:
       if: steps.lockpull.outcome == 'failure'
       uses: dawidd6/action-delete-branch@v3
       with:
-        github_token: ${{github.token}}
+        github_token: ${{ secrets.GITHUB_TOKEN }}
         prefix: temp_
         soft_fail: true

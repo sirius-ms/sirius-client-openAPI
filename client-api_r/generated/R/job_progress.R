@@ -8,7 +8,7 @@
 #' @description JobProgress Class
 #' @format An \code{R6Class} generator object
 #' @field indeterminate Is the progress indeterminate or not character [optional]
-#' @field state Current state of the Jobs in the SIRIUS internal Job scheduler           WAITING: Waiting for submission to ExecutorService (e.g. due to dependent jobs)          READY: Ready for submission but not yet enqueued for submission to ExecutorService.          QUEUED: Enqueued for submission to ExecutorService.          SUBMITTED: Submitted and waiting to be executed.          RUNNING: Job is running.          CANCELED: Jobs is finished due to cancellation by suer or dependent jobs.          FAILED: Job is finished but failed.          DONE: Job finished successfully. character [optional]
+#' @field state Current state of the Jobs in the SIRIUS internal Job scheduler           WAITING: Waiting for submission to ExecutorService (e.g. due to dependent jobs)          READY: Ready for submission but not yet enqueued for submission to ExecutorService.          QUEUED: Enqueued for submission to ExecutorService.          SUBMITTED: Submitted and waiting to be executed.          RUNNING: Job is running.          CANCELED: Jobs is finished due to cancellation by user or dependent jobs.          FAILED: Job is finished but failed.          DONE: Job finished successfully. character [optional]
 #' @field currentProgress Current progress value of the job. integer [optional]
 #' @field maxProgress Progress value to reach (might also change during execution) integer [optional]
 #' @field message Progress information and warnings. character [optional]
@@ -31,7 +31,7 @@ JobProgress <- R6::R6Class(
     #' Initialize a new JobProgress class.
     #'
     #' @param indeterminate Is the progress indeterminate or not
-    #' @param state Current state of the Jobs in the SIRIUS internal Job scheduler           WAITING: Waiting for submission to ExecutorService (e.g. due to dependent jobs)          READY: Ready for submission but not yet enqueued for submission to ExecutorService.          QUEUED: Enqueued for submission to ExecutorService.          SUBMITTED: Submitted and waiting to be executed.          RUNNING: Job is running.          CANCELED: Jobs is finished due to cancellation by suer or dependent jobs.          FAILED: Job is finished but failed.          DONE: Job finished successfully.
+    #' @param state Current state of the Jobs in the SIRIUS internal Job scheduler           WAITING: Waiting for submission to ExecutorService (e.g. due to dependent jobs)          READY: Ready for submission but not yet enqueued for submission to ExecutorService.          QUEUED: Enqueued for submission to ExecutorService.          SUBMITTED: Submitted and waiting to be executed.          RUNNING: Job is running.          CANCELED: Jobs is finished due to cancellation by user or dependent jobs.          FAILED: Job is finished but failed.          DONE: Job finished successfully.
     #' @param currentProgress Current progress value of the job.
     #' @param maxProgress Progress value to reach (might also change during execution)
     #' @param message Progress information and warnings.
@@ -46,9 +46,10 @@ JobProgress <- R6::R6Class(
         self$`indeterminate` <- `indeterminate`
       }
       if (!is.null(`state`)) {
-        if (!(`state` %in% c("WAITING", "READY", "QUEUED", "SUBMITTED", "RUNNING", "CANCELED", "FAILED", "DONE"))) {
-          stop(paste("Error! \"", `state`, "\" cannot be assigned to `state`. Must be \"WAITING\", \"READY\", \"QUEUED\", \"SUBMITTED\", \"RUNNING\", \"CANCELED\", \"FAILED\", \"DONE\".", sep = ""))
-        }
+        # disabled, as it is broken and checks for `state` %in% c()
+        # if (!(`state` %in% c("WAITING", "READY", "QUEUED", "SUBMITTED", "RUNNING", "CANCELED", "FAILED", "DONE"))) {
+        #  stop(paste("Error! \"", `state`, "\" cannot be assigned to `state`. Must be \"WAITING\", \"READY\", \"QUEUED\", \"SUBMITTED\", \"RUNNING\", \"CANCELED\", \"FAILED\", \"DONE\".", sep = ""))
+        # }
         if (!(is.character(`state`) && length(`state`) == 1)) {
           stop(paste("Error! Invalid data for `state`. Must be a string:", `state`))
         }
@@ -206,6 +207,10 @@ JobProgress <- R6::R6Class(
         }
       )
       jsoncontent <- paste(jsoncontent, collapse = ",")
+      # remove c() occurences and reduce resulting double escaped quotes \"\" into \"
+      jsoncontent <- gsub('\\\"c\\((.*?)\\\"\\)', '\\1', jsoncontent)
+      # fix wrong serialization of "\"ENUM\"" to "ENUM"
+      jsoncontent <- gsub("\\\\\"([A-Z]+)\\\\\"", "\\1", jsoncontent)
       json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
     },
     #' Deserialize JSON string into an instance of JobProgress

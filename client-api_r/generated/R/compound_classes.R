@@ -1,7 +1,7 @@
 #' Create a new CompoundClasses
 #'
 #' @description
-#' Container class that holds the best matching compound class for different levels of each ontology for a  certain compound/feature/predicted fingerprint.
+#' Container class that holds the most likely compound class for different levels of each ontology for a  certain Compound/Feature/FormulaCandidate/PredictedFingerprint.
 #'
 #' @docType class
 #' @title CompoundClasses
@@ -10,11 +10,8 @@
 #' @field npcPathway  \link{CompoundClass} [optional]
 #' @field npcSuperclass  \link{CompoundClass} [optional]
 #' @field npcClass  \link{CompoundClass} [optional]
-#' @field classyFireMostSpecific  \link{CompoundClass} [optional]
-#' @field classyFireLevel5  \link{CompoundClass} [optional]
-#' @field classyFireClass  \link{CompoundClass} [optional]
-#' @field classyFireSubClass  \link{CompoundClass} [optional]
-#' @field classyFireSuperClass  \link{CompoundClass} [optional]
+#' @field classyFireLineage Most likely ClassyFire lineage from ordered from least specific to most specific class  classyFireLineage.get(classyFireLineage.size() - 1) gives the most specific ClassyFire compound class annotation list(\link{CompoundClass}) [optional]
+#' @field classyFireAlternatives Alternative ClassyFire classes with high probability that do not fit into the linage list(\link{CompoundClass}) [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
 #' @export
@@ -24,11 +21,8 @@ CompoundClasses <- R6::R6Class(
     `npcPathway` = NULL,
     `npcSuperclass` = NULL,
     `npcClass` = NULL,
-    `classyFireMostSpecific` = NULL,
-    `classyFireLevel5` = NULL,
-    `classyFireClass` = NULL,
-    `classyFireSubClass` = NULL,
-    `classyFireSuperClass` = NULL,
+    `classyFireLineage` = NULL,
+    `classyFireAlternatives` = NULL,
     #' Initialize a new CompoundClasses class.
     #'
     #' @description
@@ -37,14 +31,11 @@ CompoundClasses <- R6::R6Class(
     #' @param npcPathway npcPathway
     #' @param npcSuperclass npcSuperclass
     #' @param npcClass npcClass
-    #' @param classyFireMostSpecific classyFireMostSpecific
-    #' @param classyFireLevel5 classyFireLevel5
-    #' @param classyFireClass classyFireClass
-    #' @param classyFireSubClass classyFireSubClass
-    #' @param classyFireSuperClass classyFireSuperClass
+    #' @param classyFireLineage Most likely ClassyFire lineage from ordered from least specific to most specific class  classyFireLineage.get(classyFireLineage.size() - 1) gives the most specific ClassyFire compound class annotation
+    #' @param classyFireAlternatives Alternative ClassyFire classes with high probability that do not fit into the linage
     #' @param ... Other optional arguments.
     #' @export
-    initialize = function(`npcPathway` = NULL, `npcSuperclass` = NULL, `npcClass` = NULL, `classyFireMostSpecific` = NULL, `classyFireLevel5` = NULL, `classyFireClass` = NULL, `classyFireSubClass` = NULL, `classyFireSuperClass` = NULL, ...) {
+    initialize = function(`npcPathway` = NULL, `npcSuperclass` = NULL, `npcClass` = NULL, `classyFireLineage` = NULL, `classyFireAlternatives` = NULL, ...) {
       if (!is.null(`npcPathway`)) {
         stopifnot(R6::is.R6(`npcPathway`))
         self$`npcPathway` <- `npcPathway`
@@ -57,25 +48,15 @@ CompoundClasses <- R6::R6Class(
         stopifnot(R6::is.R6(`npcClass`))
         self$`npcClass` <- `npcClass`
       }
-      if (!is.null(`classyFireMostSpecific`)) {
-        stopifnot(R6::is.R6(`classyFireMostSpecific`))
-        self$`classyFireMostSpecific` <- `classyFireMostSpecific`
+      if (!is.null(`classyFireLineage`)) {
+        stopifnot(is.vector(`classyFireLineage`), length(`classyFireLineage`) != 0)
+        sapply(`classyFireLineage`, function(x) stopifnot(R6::is.R6(x)))
+        self$`classyFireLineage` <- `classyFireLineage`
       }
-      if (!is.null(`classyFireLevel5`)) {
-        stopifnot(R6::is.R6(`classyFireLevel5`))
-        self$`classyFireLevel5` <- `classyFireLevel5`
-      }
-      if (!is.null(`classyFireClass`)) {
-        stopifnot(R6::is.R6(`classyFireClass`))
-        self$`classyFireClass` <- `classyFireClass`
-      }
-      if (!is.null(`classyFireSubClass`)) {
-        stopifnot(R6::is.R6(`classyFireSubClass`))
-        self$`classyFireSubClass` <- `classyFireSubClass`
-      }
-      if (!is.null(`classyFireSuperClass`)) {
-        stopifnot(R6::is.R6(`classyFireSuperClass`))
-        self$`classyFireSuperClass` <- `classyFireSuperClass`
+      if (!is.null(`classyFireAlternatives`)) {
+        stopifnot(is.vector(`classyFireAlternatives`), length(`classyFireAlternatives`) != 0)
+        sapply(`classyFireAlternatives`, function(x) stopifnot(R6::is.R6(x)))
+        self$`classyFireAlternatives` <- `classyFireAlternatives`
       }
     },
     #' To JSON string
@@ -89,35 +70,41 @@ CompoundClasses <- R6::R6Class(
       CompoundClassesObject <- list()
       if (!is.null(self$`npcPathway`)) {
         CompoundClassesObject[["npcPathway"]] <-
-          self$`npcPathway`$toJSON()
+          if (is.list(self$`npcPathway`$toJSON()) && length(self$`npcPathway`$toJSON()) == 0L){
+            NULL
+          } else if (length(names(self$`npcPathway`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`npcPathway`$toJSON()))) {
+            jsonlite::fromJSON(self$`npcPathway`$toJSON())
+          } else {
+            self$`npcPathway`$toJSON()
+          }
       }
       if (!is.null(self$`npcSuperclass`)) {
         CompoundClassesObject[["npcSuperclass"]] <-
-          self$`npcSuperclass`$toJSON()
+          if (is.list(self$`npcSuperclass`$toJSON()) && length(self$`npcSuperclass`$toJSON()) == 0L){
+            NULL
+          } else if (length(names(self$`npcSuperclass`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`npcSuperclass`$toJSON()))) {
+            jsonlite::fromJSON(self$`npcSuperclass`$toJSON())
+          } else {
+            self$`npcSuperclass`$toJSON()
+          }
       }
       if (!is.null(self$`npcClass`)) {
         CompoundClassesObject[["npcClass"]] <-
-          self$`npcClass`$toJSON()
+          if (is.list(self$`npcClass`$toJSON()) && length(self$`npcClass`$toJSON()) == 0L){
+            NULL
+          } else if (length(names(self$`npcClass`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`npcClass`$toJSON()))) {
+            jsonlite::fromJSON(self$`npcClass`$toJSON())
+          } else {
+            self$`npcClass`$toJSON()
+          }
       }
-      if (!is.null(self$`classyFireMostSpecific`)) {
-        CompoundClassesObject[["classyFireMostSpecific"]] <-
-          self$`classyFireMostSpecific`$toJSON()
+      if (!is.null(self$`classyFireLineage`)) {
+        CompoundClassesObject[["classyFireLineage"]] <-
+          lapply(self$`classyFireLineage`, function(x) x$toJSON())
       }
-      if (!is.null(self$`classyFireLevel5`)) {
-        CompoundClassesObject[["classyFireLevel5"]] <-
-          self$`classyFireLevel5`$toJSON()
-      }
-      if (!is.null(self$`classyFireClass`)) {
-        CompoundClassesObject[["classyFireClass"]] <-
-          self$`classyFireClass`$toJSON()
-      }
-      if (!is.null(self$`classyFireSubClass`)) {
-        CompoundClassesObject[["classyFireSubClass"]] <-
-          self$`classyFireSubClass`$toJSON()
-      }
-      if (!is.null(self$`classyFireSuperClass`)) {
-        CompoundClassesObject[["classyFireSuperClass"]] <-
-          self$`classyFireSuperClass`$toJSON()
+      if (!is.null(self$`classyFireAlternatives`)) {
+        CompoundClassesObject[["classyFireAlternatives"]] <-
+          lapply(self$`classyFireAlternatives`, function(x) x$toJSON())
       }
       CompoundClassesObject
     },
@@ -132,44 +119,25 @@ CompoundClasses <- R6::R6Class(
     fromJSON = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       if (!is.null(this_object$`npcPathway`)) {
-        npcpathway_object <- CompoundClass$new()
-        npcpathway_object$fromJSON(jsonlite::toJSON(this_object$npcPathway, auto_unbox = TRUE, digits = NA))
-        self$`npcPathway` <- npcpathway_object
+        `npcpathway_object` <- CompoundClass$new()
+        `npcpathway_object`$fromJSON(jsonlite::toJSON(this_object$`npcPathway`, auto_unbox = TRUE, digits = NA))
+        self$`npcPathway` <- `npcpathway_object`
       }
       if (!is.null(this_object$`npcSuperclass`)) {
-        npcsuperclass_object <- CompoundClass$new()
-        npcsuperclass_object$fromJSON(jsonlite::toJSON(this_object$npcSuperclass, auto_unbox = TRUE, digits = NA))
-        self$`npcSuperclass` <- npcsuperclass_object
+        `npcsuperclass_object` <- CompoundClass$new()
+        `npcsuperclass_object`$fromJSON(jsonlite::toJSON(this_object$`npcSuperclass`, auto_unbox = TRUE, digits = NA))
+        self$`npcSuperclass` <- `npcsuperclass_object`
       }
       if (!is.null(this_object$`npcClass`)) {
-        npcclass_object <- CompoundClass$new()
-        npcclass_object$fromJSON(jsonlite::toJSON(this_object$npcClass, auto_unbox = TRUE, digits = NA))
-        self$`npcClass` <- npcclass_object
+        `npcclass_object` <- CompoundClass$new()
+        `npcclass_object`$fromJSON(jsonlite::toJSON(this_object$`npcClass`, auto_unbox = TRUE, digits = NA))
+        self$`npcClass` <- `npcclass_object`
       }
-      if (!is.null(this_object$`classyFireMostSpecific`)) {
-        classyfiremostspecific_object <- CompoundClass$new()
-        classyfiremostspecific_object$fromJSON(jsonlite::toJSON(this_object$classyFireMostSpecific, auto_unbox = TRUE, digits = NA))
-        self$`classyFireMostSpecific` <- classyfiremostspecific_object
+      if (!is.null(this_object$`classyFireLineage`)) {
+        self$`classyFireLineage` <- ApiClient$new()$deserializeObj(this_object$`classyFireLineage`, "array[CompoundClass]", loadNamespace("Rsirius"))
       }
-      if (!is.null(this_object$`classyFireLevel5`)) {
-        classyfirelevel5_object <- CompoundClass$new()
-        classyfirelevel5_object$fromJSON(jsonlite::toJSON(this_object$classyFireLevel5, auto_unbox = TRUE, digits = NA))
-        self$`classyFireLevel5` <- classyfirelevel5_object
-      }
-      if (!is.null(this_object$`classyFireClass`)) {
-        classyfireclass_object <- CompoundClass$new()
-        classyfireclass_object$fromJSON(jsonlite::toJSON(this_object$classyFireClass, auto_unbox = TRUE, digits = NA))
-        self$`classyFireClass` <- classyfireclass_object
-      }
-      if (!is.null(this_object$`classyFireSubClass`)) {
-        classyfiresubclass_object <- CompoundClass$new()
-        classyfiresubclass_object$fromJSON(jsonlite::toJSON(this_object$classyFireSubClass, auto_unbox = TRUE, digits = NA))
-        self$`classyFireSubClass` <- classyfiresubclass_object
-      }
-      if (!is.null(this_object$`classyFireSuperClass`)) {
-        classyfiresuperclass_object <- CompoundClass$new()
-        classyfiresuperclass_object$fromJSON(jsonlite::toJSON(this_object$classyFireSuperClass, auto_unbox = TRUE, digits = NA))
-        self$`classyFireSuperClass` <- classyfiresuperclass_object
+      if (!is.null(this_object$`classyFireAlternatives`)) {
+        self$`classyFireAlternatives` <- ApiClient$new()$deserializeObj(this_object$`classyFireAlternatives`, "array[CompoundClass]", loadNamespace("Rsirius"))
       }
       self
     },
@@ -206,48 +174,28 @@ CompoundClasses <- R6::R6Class(
           jsonlite::toJSON(self$`npcClass`$toJSON(), auto_unbox = TRUE, digits = NA)
           )
         },
-        if (!is.null(self$`classyFireMostSpecific`)) {
+        if (!is.null(self$`classyFireLineage`)) {
           sprintf(
-          '"classyFireMostSpecific":
-          %s
-          ',
-          jsonlite::toJSON(self$`classyFireMostSpecific`$toJSON(), auto_unbox = TRUE, digits = NA)
+          '"classyFireLineage":
+          [%s]
+',
+          paste(sapply(self$`classyFireLineage`, function(x) jsonlite::toJSON(x$toJSON(), auto_unbox = TRUE, digits = NA)), collapse = ",")
           )
         },
-        if (!is.null(self$`classyFireLevel5`)) {
+        if (!is.null(self$`classyFireAlternatives`)) {
           sprintf(
-          '"classyFireLevel5":
-          %s
-          ',
-          jsonlite::toJSON(self$`classyFireLevel5`$toJSON(), auto_unbox = TRUE, digits = NA)
-          )
-        },
-        if (!is.null(self$`classyFireClass`)) {
-          sprintf(
-          '"classyFireClass":
-          %s
-          ',
-          jsonlite::toJSON(self$`classyFireClass`$toJSON(), auto_unbox = TRUE, digits = NA)
-          )
-        },
-        if (!is.null(self$`classyFireSubClass`)) {
-          sprintf(
-          '"classyFireSubClass":
-          %s
-          ',
-          jsonlite::toJSON(self$`classyFireSubClass`$toJSON(), auto_unbox = TRUE, digits = NA)
-          )
-        },
-        if (!is.null(self$`classyFireSuperClass`)) {
-          sprintf(
-          '"classyFireSuperClass":
-          %s
-          ',
-          jsonlite::toJSON(self$`classyFireSuperClass`$toJSON(), auto_unbox = TRUE, digits = NA)
+          '"classyFireAlternatives":
+          [%s]
+',
+          paste(sapply(self$`classyFireAlternatives`, function(x) jsonlite::toJSON(x$toJSON(), auto_unbox = TRUE, digits = NA)), collapse = ",")
           )
         }
       )
       jsoncontent <- paste(jsoncontent, collapse = ",")
+      # remove c() occurences and reduce resulting double escaped quotes \"\" into \"
+      jsoncontent <- gsub('\\\"c\\((.*?)\\\"\\)', '\\1', jsoncontent)
+      # fix wrong serialization of "\"ENUM\"" to "ENUM"
+      jsoncontent <- gsub("\\\\\"([A-Z]+)\\\\\"", "\\1", jsoncontent)
       json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
     },
     #' Deserialize JSON string into an instance of CompoundClasses
@@ -260,14 +208,11 @@ CompoundClasses <- R6::R6Class(
     #' @export
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
-      self$`npcPathway` <- CompoundClass$new()$fromJSON(jsonlite::toJSON(this_object$npcPathway, auto_unbox = TRUE, digits = NA))
-      self$`npcSuperclass` <- CompoundClass$new()$fromJSON(jsonlite::toJSON(this_object$npcSuperclass, auto_unbox = TRUE, digits = NA))
-      self$`npcClass` <- CompoundClass$new()$fromJSON(jsonlite::toJSON(this_object$npcClass, auto_unbox = TRUE, digits = NA))
-      self$`classyFireMostSpecific` <- CompoundClass$new()$fromJSON(jsonlite::toJSON(this_object$classyFireMostSpecific, auto_unbox = TRUE, digits = NA))
-      self$`classyFireLevel5` <- CompoundClass$new()$fromJSON(jsonlite::toJSON(this_object$classyFireLevel5, auto_unbox = TRUE, digits = NA))
-      self$`classyFireClass` <- CompoundClass$new()$fromJSON(jsonlite::toJSON(this_object$classyFireClass, auto_unbox = TRUE, digits = NA))
-      self$`classyFireSubClass` <- CompoundClass$new()$fromJSON(jsonlite::toJSON(this_object$classyFireSubClass, auto_unbox = TRUE, digits = NA))
-      self$`classyFireSuperClass` <- CompoundClass$new()$fromJSON(jsonlite::toJSON(this_object$classyFireSuperClass, auto_unbox = TRUE, digits = NA))
+      self$`npcPathway` <- CompoundClass$new()$fromJSON(jsonlite::toJSON(this_object$`npcPathway`, auto_unbox = TRUE, digits = NA))
+      self$`npcSuperclass` <- CompoundClass$new()$fromJSON(jsonlite::toJSON(this_object$`npcSuperclass`, auto_unbox = TRUE, digits = NA))
+      self$`npcClass` <- CompoundClass$new()$fromJSON(jsonlite::toJSON(this_object$`npcClass`, auto_unbox = TRUE, digits = NA))
+      self$`classyFireLineage` <- ApiClient$new()$deserializeObj(this_object$`classyFireLineage`, "array[CompoundClass]", loadNamespace("Rsirius"))
+      self$`classyFireAlternatives` <- ApiClient$new()$deserializeObj(this_object$`classyFireAlternatives`, "array[CompoundClass]", loadNamespace("Rsirius"))
       self
     },
     #' Validate JSON input with respect to CompoundClasses

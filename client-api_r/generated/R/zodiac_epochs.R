@@ -1,7 +1,7 @@
 #' Create a new ZodiacEpochs
 #'
 #' @description
-#' 
+#' ZodiacEpochs Class
 #'
 #' @docType class
 #' @title ZodiacEpochs
@@ -10,7 +10,6 @@
 #' @field iterations  integer [optional]
 #' @field burnInPeriod  integer [optional]
 #' @field numberOfMarkovChains  integer [optional]
-#' @field identifier  character [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
 #' @export
@@ -20,7 +19,6 @@ ZodiacEpochs <- R6::R6Class(
     `iterations` = NULL,
     `burnInPeriod` = NULL,
     `numberOfMarkovChains` = NULL,
-    `identifier` = NULL,
     #' Initialize a new ZodiacEpochs class.
     #'
     #' @description
@@ -29,10 +27,9 @@ ZodiacEpochs <- R6::R6Class(
     #' @param iterations iterations
     #' @param burnInPeriod burnInPeriod
     #' @param numberOfMarkovChains numberOfMarkovChains
-    #' @param identifier identifier
     #' @param ... Other optional arguments.
     #' @export
-    initialize = function(`iterations` = NULL, `burnInPeriod` = NULL, `numberOfMarkovChains` = NULL, `identifier` = NULL, ...) {
+    initialize = function(`iterations` = NULL, `burnInPeriod` = NULL, `numberOfMarkovChains` = NULL, ...) {
       if (!is.null(`iterations`)) {
         if (!(is.numeric(`iterations`) && length(`iterations`) == 1)) {
           stop(paste("Error! Invalid data for `iterations`. Must be an integer:", `iterations`))
@@ -50,12 +47,6 @@ ZodiacEpochs <- R6::R6Class(
           stop(paste("Error! Invalid data for `numberOfMarkovChains`. Must be an integer:", `numberOfMarkovChains`))
         }
         self$`numberOfMarkovChains` <- `numberOfMarkovChains`
-      }
-      if (!is.null(`identifier`)) {
-        if (!(is.character(`identifier`) && length(`identifier`) == 1)) {
-          stop(paste("Error! Invalid data for `identifier`. Must be a string:", `identifier`))
-        }
-        self$`identifier` <- `identifier`
       }
     },
     #' To JSON string
@@ -79,10 +70,6 @@ ZodiacEpochs <- R6::R6Class(
         ZodiacEpochsObject[["numberOfMarkovChains"]] <-
           self$`numberOfMarkovChains`
       }
-      if (!is.null(self$`identifier`)) {
-        ZodiacEpochsObject[["identifier"]] <-
-          self$`identifier`
-      }
       ZodiacEpochsObject
     },
     #' Deserialize JSON string into an instance of ZodiacEpochs
@@ -103,9 +90,6 @@ ZodiacEpochs <- R6::R6Class(
       }
       if (!is.null(this_object$`numberOfMarkovChains`)) {
         self$`numberOfMarkovChains` <- this_object$`numberOfMarkovChains`
-      }
-      if (!is.null(this_object$`identifier`)) {
-        self$`identifier` <- this_object$`identifier`
       }
       self
     },
@@ -141,17 +125,13 @@ ZodiacEpochs <- R6::R6Class(
                     ',
           self$`numberOfMarkovChains`
           )
-        },
-        if (!is.null(self$`identifier`)) {
-          sprintf(
-          '"identifier":
-            "%s"
-                    ',
-          self$`identifier`
-          )
         }
       )
       jsoncontent <- paste(jsoncontent, collapse = ",")
+      # remove c() occurences and reduce resulting double escaped quotes \"\" into \"
+      jsoncontent <- gsub('\\\"c\\((.*?)\\\"\\)', '\\1', jsoncontent)
+      # fix wrong serialization of "\"ENUM\"" to "ENUM"
+      jsoncontent <- gsub("\\\\\"([A-Z]+)\\\\\"", "\\1", jsoncontent)
       json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
     },
     #' Deserialize JSON string into an instance of ZodiacEpochs
@@ -167,7 +147,6 @@ ZodiacEpochs <- R6::R6Class(
       self$`iterations` <- this_object$`iterations`
       self$`burnInPeriod` <- this_object$`burnInPeriod`
       self$`numberOfMarkovChains` <- this_object$`numberOfMarkovChains`
-      self$`identifier` <- this_object$`identifier`
       self
     },
     #' Validate JSON input with respect to ZodiacEpochs

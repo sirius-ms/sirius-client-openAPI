@@ -7,6 +7,7 @@ model_instance <- Subscription$new()
 
 test_that("sid", {
   # tests for the property `sid` (character)
+  # Unique identifier of this subscription
 
   # uncomment below to test the property
   #expect_equal(model.instance$`sid`, "EXPECTED_RESULT")
@@ -14,6 +15,7 @@ test_that("sid", {
 
 test_that("subscriberId", {
   # tests for the property `subscriberId` (character)
+  # ID of the owner of the subscription.  This can be the ID of any SubscriptionOwner (e.g.  Group or  User)  depending on the level on which a subscription should be is valid.
 
   # uncomment below to test the property
   #expect_equal(model.instance$`subscriberId`, "EXPECTED_RESULT")
@@ -21,6 +23,7 @@ test_that("subscriberId", {
 
 test_that("subscriberName", {
   # tests for the property `subscriberName` (character)
+  # Optional name of the owner of this subscription
 
   # uncomment below to test the property
   #expect_equal(model.instance$`subscriberName`, "EXPECTED_RESULT")
@@ -47,25 +50,28 @@ test_that("countQueries", {
   #expect_equal(model.instance$`countQueries`, "EXPECTED_RESULT")
 })
 
-test_that("compoundLimit", {
-  # tests for the property `compoundLimit` (integer)
+test_that("instanceLimit", {
+  # tests for the property `instanceLimit` (integer)
+  # Limit of instances (features) that can be computed with this subscription
 
   # uncomment below to test the property
-  #expect_equal(model.instance$`compoundLimit`, "EXPECTED_RESULT")
+  #expect_equal(model.instance$`instanceLimit`, "EXPECTED_RESULT")
 })
 
-test_that("compoundHashRecordingTime", {
-  # tests for the property `compoundHashRecordingTime` (integer)
+test_that("instanceHashRecordingTime", {
+  # tests for the property `instanceHashRecordingTime` (integer)
+  # Hash is used to allow recomputing identical data without increasing counted instances (features).  The recording time is the amount of time an instance is memorized is
 
   # uncomment below to test the property
-  #expect_equal(model.instance$`compoundHashRecordingTime`, "EXPECTED_RESULT")
+  #expect_equal(model.instance$`instanceHashRecordingTime`, "EXPECTED_RESULT")
 })
 
-test_that("maxQueriesPerCompound", {
-  # tests for the property `maxQueriesPerCompound` (integer)
+test_that("maxQueriesPerInstance", {
+  # tests for the property `maxQueriesPerInstance` (integer)
+  # Maximum number of queries (e.g. prediction) that can be performed  for one instance before it is counted another time.
 
   # uncomment below to test the property
-  #expect_equal(model.instance$`maxQueriesPerCompound`, "EXPECTED_RESULT")
+  #expect_equal(model.instance$`maxQueriesPerInstance`, "EXPECTED_RESULT")
 })
 
 test_that("maxUserAccounts", {

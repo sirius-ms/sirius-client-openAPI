@@ -7,16 +7,19 @@
 #' @title JobSubmission
 #' @description JobSubmission Class
 #' @format An \code{R6Class} generator object
-#' @field compoundIds Compounds that should be the input for this Job list(character) [optional]
+#' @field compoundIds Compounds that should be the input for this Job  Will be converted to the respective alignedFeatureIds for computation.   At least one compoundId or alignedFeatureId needs to be specified. list(character) [optional]
+#' @field alignedFeatureIds Features (aligned over runs) that should be the input for this Job   At least one compoundId or alignedFeatureId needs to be specified. list(character) [optional]
 #' @field fallbackAdducts Describes how to deal with Adducts: Fallback adducts are considered if the auto detection did not find any indication for an ion mode.  Pos Examples: [M+H]+,[M]+,[M+K]+,[M+Na]+,[M+H-H2O]+,[M+Na2-H]+,[M+2K-H]+,[M+NH4]+,[M+H3O]+,[M+MeOH+H]+,[M+ACN+H]+,[M+2ACN+H]+,[M+IPA+H]+,[M+ACN+Na]+,[M+DMSO+H]+  Neg Examples: [M-H]-,[M]-,[M+K-2H]-,[M+Cl]-,[M-H2O-H]-,[M+Na-2H]-,M+FA-H]-,[M+Br]-,[M+HAc-H]-,[M+TFA-H]-,[M+ACN-H]- list(character) [optional]
 #' @field enforcedAdducts Describes how to deal with Adducts:  Enforced adducts that are always considered.  Pos Examples: [M+H]+,[M]+,[M+K]+,[M+Na]+,[M+H-H2O]+,[M+Na2-H]+,[M+2K-H]+,[M+NH4]+,[M+H3O]+,[M+MeOH+H]+,[M+ACN+H]+,[M+2ACN+H]+,[M+IPA+H]+,[M+ACN+Na]+,[M+DMSO+H]+  Neg Examples: [M-H]-,[M]-,[M+K-2H]-,[M+Cl]-,[M-H2O-H]-,[M+Na-2H]-,M+FA-H]-,[M+Br]-,[M+HAc-H]-,[M+TFA-H]-,[M+ACN-H]- list(character) [optional]
 #' @field detectableAdducts Describes how to deal with Adducts: Detectable adducts which are only considered if there is an indication in the MS1 scan (e.g. correct mass delta).  Pos Examples: [M+H]+,[M]+,[M+K]+,[M+Na]+,[M+H-H2O]+,[M+Na2-H]+,[M+2K-H]+,[M+NH4]+,[M+H3O]+,[M+MeOH+H]+,[M+ACN+H]+,[M+2ACN+H]+,[M+IPA+H]+,[M+ACN+Na]+,[M+DMSO+H]+  Neg Examples: [M-H]-,[M]-,[M+K-2H]-,[M+Cl]-,[M-H2O-H]-,[M+Na-2H]-,M+FA-H]-,[M+Br]-,[M+HAc-H]-,[M+TFA-H]-,[M+ACN-H]- list(character) [optional]
 #' @field recompute Indicate if already existing result for a tool to be executed should be overwritten or not. character [optional]
-#' @field formulaIdParas  \link{Sirius} [optional]
-#' @field zodiacParas  \link{Zodiac} [optional]
-#' @field fingerprintPredictionParas  \link{FingerprintPrediction} [optional]
-#' @field structureDbSearchParas  \link{StructureDbSearch} [optional]
-#' @field canopusParas  \link{Canopus} [optional]
+#' @field spectraSearchParams  \link{SpectralLibrarySearch} [optional]
+#' @field formulaIdParams  \link{Sirius} [optional]
+#' @field zodiacParams  \link{Zodiac} [optional]
+#' @field fingerprintPredictionParams  \link{FingerprintPrediction} [optional]
+#' @field canopusParams  \link{Canopus} [optional]
+#' @field structureDbSearchParams  \link{StructureDbSearch} [optional]
+#' @field msNovelistParams  \link{MsNovelist} [optional]
 #' @field configMap As an alternative to the object based parameters, this map allows to store key value pairs  of ALL SIRIUS parameters. All possible parameters can be retrieved from SIRIUS via the respective endpoint. named list(character) [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
@@ -25,39 +28,50 @@ JobSubmission <- R6::R6Class(
   "JobSubmission",
   public = list(
     `compoundIds` = NULL,
+    `alignedFeatureIds` = NULL,
     `fallbackAdducts` = NULL,
     `enforcedAdducts` = NULL,
     `detectableAdducts` = NULL,
     `recompute` = NULL,
-    `formulaIdParas` = NULL,
-    `zodiacParas` = NULL,
-    `fingerprintPredictionParas` = NULL,
-    `structureDbSearchParas` = NULL,
-    `canopusParas` = NULL,
+    `spectraSearchParams` = NULL,
+    `formulaIdParams` = NULL,
+    `zodiacParams` = NULL,
+    `fingerprintPredictionParams` = NULL,
+    `canopusParams` = NULL,
+    `structureDbSearchParams` = NULL,
+    `msNovelistParams` = NULL,
     `configMap` = NULL,
     #' Initialize a new JobSubmission class.
     #'
     #' @description
     #' Initialize a new JobSubmission class.
     #'
-    #' @param compoundIds Compounds that should be the input for this Job
+    #' @param compoundIds Compounds that should be the input for this Job  Will be converted to the respective alignedFeatureIds for computation.   At least one compoundId or alignedFeatureId needs to be specified.
+    #' @param alignedFeatureIds Features (aligned over runs) that should be the input for this Job   At least one compoundId or alignedFeatureId needs to be specified.
     #' @param fallbackAdducts Describes how to deal with Adducts: Fallback adducts are considered if the auto detection did not find any indication for an ion mode.  Pos Examples: [M+H]+,[M]+,[M+K]+,[M+Na]+,[M+H-H2O]+,[M+Na2-H]+,[M+2K-H]+,[M+NH4]+,[M+H3O]+,[M+MeOH+H]+,[M+ACN+H]+,[M+2ACN+H]+,[M+IPA+H]+,[M+ACN+Na]+,[M+DMSO+H]+  Neg Examples: [M-H]-,[M]-,[M+K-2H]-,[M+Cl]-,[M-H2O-H]-,[M+Na-2H]-,M+FA-H]-,[M+Br]-,[M+HAc-H]-,[M+TFA-H]-,[M+ACN-H]-
     #' @param enforcedAdducts Describes how to deal with Adducts:  Enforced adducts that are always considered.  Pos Examples: [M+H]+,[M]+,[M+K]+,[M+Na]+,[M+H-H2O]+,[M+Na2-H]+,[M+2K-H]+,[M+NH4]+,[M+H3O]+,[M+MeOH+H]+,[M+ACN+H]+,[M+2ACN+H]+,[M+IPA+H]+,[M+ACN+Na]+,[M+DMSO+H]+  Neg Examples: [M-H]-,[M]-,[M+K-2H]-,[M+Cl]-,[M-H2O-H]-,[M+Na-2H]-,M+FA-H]-,[M+Br]-,[M+HAc-H]-,[M+TFA-H]-,[M+ACN-H]-
     #' @param detectableAdducts Describes how to deal with Adducts: Detectable adducts which are only considered if there is an indication in the MS1 scan (e.g. correct mass delta).  Pos Examples: [M+H]+,[M]+,[M+K]+,[M+Na]+,[M+H-H2O]+,[M+Na2-H]+,[M+2K-H]+,[M+NH4]+,[M+H3O]+,[M+MeOH+H]+,[M+ACN+H]+,[M+2ACN+H]+,[M+IPA+H]+,[M+ACN+Na]+,[M+DMSO+H]+  Neg Examples: [M-H]-,[M]-,[M+K-2H]-,[M+Cl]-,[M-H2O-H]-,[M+Na-2H]-,M+FA-H]-,[M+Br]-,[M+HAc-H]-,[M+TFA-H]-,[M+ACN-H]-
     #' @param recompute Indicate if already existing result for a tool to be executed should be overwritten or not.
-    #' @param formulaIdParas formulaIdParas
-    #' @param zodiacParas zodiacParas
-    #' @param fingerprintPredictionParas fingerprintPredictionParas
-    #' @param structureDbSearchParas structureDbSearchParas
-    #' @param canopusParas canopusParas
+    #' @param spectraSearchParams spectraSearchParams
+    #' @param formulaIdParams formulaIdParams
+    #' @param zodiacParams zodiacParams
+    #' @param fingerprintPredictionParams fingerprintPredictionParams
+    #' @param canopusParams canopusParams
+    #' @param structureDbSearchParams structureDbSearchParams
+    #' @param msNovelistParams msNovelistParams
     #' @param configMap As an alternative to the object based parameters, this map allows to store key value pairs  of ALL SIRIUS parameters. All possible parameters can be retrieved from SIRIUS via the respective endpoint.
     #' @param ... Other optional arguments.
     #' @export
-    initialize = function(`compoundIds` = NULL, `fallbackAdducts` = NULL, `enforcedAdducts` = NULL, `detectableAdducts` = NULL, `recompute` = NULL, `formulaIdParas` = NULL, `zodiacParas` = NULL, `fingerprintPredictionParas` = NULL, `structureDbSearchParas` = NULL, `canopusParas` = NULL, `configMap` = NULL, ...) {
+    initialize = function(`compoundIds` = NULL, `alignedFeatureIds` = NULL, `fallbackAdducts` = NULL, `enforcedAdducts` = NULL, `detectableAdducts` = NULL, `recompute` = NULL, `spectraSearchParams` = NULL, `formulaIdParams` = NULL, `zodiacParams` = NULL, `fingerprintPredictionParams` = NULL, `canopusParams` = NULL, `structureDbSearchParams` = NULL, `msNovelistParams` = NULL, `configMap` = NULL, ...) {
       if (!is.null(`compoundIds`)) {
         stopifnot(is.vector(`compoundIds`), length(`compoundIds`) != 0)
         sapply(`compoundIds`, function(x) stopifnot(is.character(x)))
         self$`compoundIds` <- `compoundIds`
+      }
+      if (!is.null(`alignedFeatureIds`)) {
+        stopifnot(is.vector(`alignedFeatureIds`), length(`alignedFeatureIds`) != 0)
+        sapply(`alignedFeatureIds`, function(x) stopifnot(is.character(x)))
+        self$`alignedFeatureIds` <- `alignedFeatureIds`
       }
       if (!is.null(`fallbackAdducts`)) {
         stopifnot(is.vector(`fallbackAdducts`), length(`fallbackAdducts`) != 0)
@@ -80,25 +94,33 @@ JobSubmission <- R6::R6Class(
         }
         self$`recompute` <- `recompute`
       }
-      if (!is.null(`formulaIdParas`)) {
-        stopifnot(R6::is.R6(`formulaIdParas`))
-        self$`formulaIdParas` <- `formulaIdParas`
+      if (!is.null(`spectraSearchParams`)) {
+        stopifnot(R6::is.R6(`spectraSearchParams`))
+        self$`spectraSearchParams` <- `spectraSearchParams`
       }
-      if (!is.null(`zodiacParas`)) {
-        stopifnot(R6::is.R6(`zodiacParas`))
-        self$`zodiacParas` <- `zodiacParas`
+      if (!is.null(`formulaIdParams`)) {
+        stopifnot(R6::is.R6(`formulaIdParams`))
+        self$`formulaIdParams` <- `formulaIdParams`
       }
-      if (!is.null(`fingerprintPredictionParas`)) {
-        stopifnot(R6::is.R6(`fingerprintPredictionParas`))
-        self$`fingerprintPredictionParas` <- `fingerprintPredictionParas`
+      if (!is.null(`zodiacParams`)) {
+        stopifnot(R6::is.R6(`zodiacParams`))
+        self$`zodiacParams` <- `zodiacParams`
       }
-      if (!is.null(`structureDbSearchParas`)) {
-        stopifnot(R6::is.R6(`structureDbSearchParas`))
-        self$`structureDbSearchParas` <- `structureDbSearchParas`
+      if (!is.null(`fingerprintPredictionParams`)) {
+        stopifnot(R6::is.R6(`fingerprintPredictionParams`))
+        self$`fingerprintPredictionParams` <- `fingerprintPredictionParams`
       }
-      if (!is.null(`canopusParas`)) {
-        stopifnot(R6::is.R6(`canopusParas`))
-        self$`canopusParas` <- `canopusParas`
+      if (!is.null(`canopusParams`)) {
+        stopifnot(R6::is.R6(`canopusParams`))
+        self$`canopusParams` <- `canopusParams`
+      }
+      if (!is.null(`structureDbSearchParams`)) {
+        stopifnot(R6::is.R6(`structureDbSearchParams`))
+        self$`structureDbSearchParams` <- `structureDbSearchParams`
+      }
+      if (!is.null(`msNovelistParams`)) {
+        stopifnot(R6::is.R6(`msNovelistParams`))
+        self$`msNovelistParams` <- `msNovelistParams`
       }
       if (!is.null(`configMap`)) {
         stopifnot(is.vector(`configMap`), length(`configMap`) != 0)
@@ -119,6 +141,10 @@ JobSubmission <- R6::R6Class(
         JobSubmissionObject[["compoundIds"]] <-
           self$`compoundIds`
       }
+      if (!is.null(self$`alignedFeatureIds`)) {
+        JobSubmissionObject[["alignedFeatureIds"]] <-
+          self$`alignedFeatureIds`
+      }
       if (!is.null(self$`fallbackAdducts`)) {
         JobSubmissionObject[["fallbackAdducts"]] <-
           self$`fallbackAdducts`
@@ -135,25 +161,75 @@ JobSubmission <- R6::R6Class(
         JobSubmissionObject[["recompute"]] <-
           self$`recompute`
       }
-      if (!is.null(self$`formulaIdParas`)) {
-        JobSubmissionObject[["formulaIdParas"]] <-
-          self$`formulaIdParas`$toJSON()
+      if (!is.null(self$`spectraSearchParams`)) {
+        JobSubmissionObject[["spectraSearchParams"]] <-
+          if (is.list(self$`spectraSearchParams`$toJSON()) && length(self$`spectraSearchParams`$toJSON()) == 0L){
+            NULL
+          } else if (length(names(self$`spectraSearchParams`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`spectraSearchParams`$toJSON()))) {
+            jsonlite::fromJSON(self$`spectraSearchParams`$toJSON())
+          } else {
+            self$`spectraSearchParams`$toJSON()
+          }
       }
-      if (!is.null(self$`zodiacParas`)) {
-        JobSubmissionObject[["zodiacParas"]] <-
-          self$`zodiacParas`$toJSON()
+      if (!is.null(self$`formulaIdParams`)) {
+        JobSubmissionObject[["formulaIdParams"]] <-
+          if (is.list(self$`formulaIdParams`$toJSON()) && length(self$`formulaIdParams`$toJSON()) == 0L){
+            NULL
+          } else if (length(names(self$`formulaIdParams`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`formulaIdParams`$toJSON()))) {
+            jsonlite::fromJSON(self$`formulaIdParams`$toJSON())
+          } else {
+            self$`formulaIdParams`$toJSON()
+          }
       }
-      if (!is.null(self$`fingerprintPredictionParas`)) {
-        JobSubmissionObject[["fingerprintPredictionParas"]] <-
-          self$`fingerprintPredictionParas`$toJSON()
+      if (!is.null(self$`zodiacParams`)) {
+        JobSubmissionObject[["zodiacParams"]] <-
+          if (is.list(self$`zodiacParams`$toJSON()) && length(self$`zodiacParams`$toJSON()) == 0L){
+            NULL
+          } else if (length(names(self$`zodiacParams`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`zodiacParams`$toJSON()))) {
+            jsonlite::fromJSON(self$`zodiacParams`$toJSON())
+          } else {
+            self$`zodiacParams`$toJSON()
+          }
       }
-      if (!is.null(self$`structureDbSearchParas`)) {
-        JobSubmissionObject[["structureDbSearchParas"]] <-
-          self$`structureDbSearchParas`$toJSON()
+      if (!is.null(self$`fingerprintPredictionParams`)) {
+        JobSubmissionObject[["fingerprintPredictionParams"]] <-
+          if (is.list(self$`fingerprintPredictionParams`$toJSON()) && length(self$`fingerprintPredictionParams`$toJSON()) == 0L){
+            NULL
+          } else if (length(names(self$`fingerprintPredictionParams`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`fingerprintPredictionParams`$toJSON()))) {
+            jsonlite::fromJSON(self$`fingerprintPredictionParams`$toJSON())
+          } else {
+            self$`fingerprintPredictionParams`$toJSON()
+          }
       }
-      if (!is.null(self$`canopusParas`)) {
-        JobSubmissionObject[["canopusParas"]] <-
-          self$`canopusParas`$toJSON()
+      if (!is.null(self$`canopusParams`)) {
+        JobSubmissionObject[["canopusParams"]] <-
+          if (is.list(self$`canopusParams`$toJSON()) && length(self$`canopusParams`$toJSON()) == 0L){
+            NULL
+          } else if (length(names(self$`canopusParams`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`canopusParams`$toJSON()))) {
+            jsonlite::fromJSON(self$`canopusParams`$toJSON())
+          } else {
+            self$`canopusParams`$toJSON()
+          }
+      }
+      if (!is.null(self$`structureDbSearchParams`)) {
+        JobSubmissionObject[["structureDbSearchParams"]] <-
+          if (is.list(self$`structureDbSearchParams`$toJSON()) && length(self$`structureDbSearchParams`$toJSON()) == 0L){
+            NULL
+          } else if (length(names(self$`structureDbSearchParams`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`structureDbSearchParams`$toJSON()))) {
+            jsonlite::fromJSON(self$`structureDbSearchParams`$toJSON())
+          } else {
+            self$`structureDbSearchParams`$toJSON()
+          }
+      }
+      if (!is.null(self$`msNovelistParams`)) {
+        JobSubmissionObject[["msNovelistParams"]] <-
+          if (is.list(self$`msNovelistParams`$toJSON()) && length(self$`msNovelistParams`$toJSON()) == 0L){
+            NULL
+          } else if (length(names(self$`msNovelistParams`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`msNovelistParams`$toJSON()))) {
+            jsonlite::fromJSON(self$`msNovelistParams`$toJSON())
+          } else {
+            self$`msNovelistParams`$toJSON()
+          }
       }
       if (!is.null(self$`configMap`)) {
         JobSubmissionObject[["configMap"]] <-
@@ -174,6 +250,9 @@ JobSubmission <- R6::R6Class(
       if (!is.null(this_object$`compoundIds`)) {
         self$`compoundIds` <- ApiClient$new()$deserializeObj(this_object$`compoundIds`, "array[character]", loadNamespace("Rsirius"))
       }
+      if (!is.null(this_object$`alignedFeatureIds`)) {
+        self$`alignedFeatureIds` <- ApiClient$new()$deserializeObj(this_object$`alignedFeatureIds`, "array[character]", loadNamespace("Rsirius"))
+      }
       if (!is.null(this_object$`fallbackAdducts`)) {
         self$`fallbackAdducts` <- ApiClient$new()$deserializeObj(this_object$`fallbackAdducts`, "array[character]", loadNamespace("Rsirius"))
       }
@@ -186,30 +265,40 @@ JobSubmission <- R6::R6Class(
       if (!is.null(this_object$`recompute`)) {
         self$`recompute` <- this_object$`recompute`
       }
-      if (!is.null(this_object$`formulaIdParas`)) {
-        formulaidparas_object <- Sirius$new()
-        formulaidparas_object$fromJSON(jsonlite::toJSON(this_object$formulaIdParas, auto_unbox = TRUE, digits = NA))
-        self$`formulaIdParas` <- formulaidparas_object
+      if (!is.null(this_object$`spectraSearchParams`)) {
+        `spectrasearchparams_object` <- SpectralLibrarySearch$new()
+        `spectrasearchparams_object`$fromJSON(jsonlite::toJSON(this_object$`spectraSearchParams`, auto_unbox = TRUE, digits = NA))
+        self$`spectraSearchParams` <- `spectrasearchparams_object`
       }
-      if (!is.null(this_object$`zodiacParas`)) {
-        zodiacparas_object <- Zodiac$new()
-        zodiacparas_object$fromJSON(jsonlite::toJSON(this_object$zodiacParas, auto_unbox = TRUE, digits = NA))
-        self$`zodiacParas` <- zodiacparas_object
+      if (!is.null(this_object$`formulaIdParams`)) {
+        `formulaidparams_object` <- Sirius$new()
+        `formulaidparams_object`$fromJSON(jsonlite::toJSON(this_object$`formulaIdParams`, auto_unbox = TRUE, digits = NA))
+        self$`formulaIdParams` <- `formulaidparams_object`
       }
-      if (!is.null(this_object$`fingerprintPredictionParas`)) {
-        fingerprintpredictionparas_object <- FingerprintPrediction$new()
-        fingerprintpredictionparas_object$fromJSON(jsonlite::toJSON(this_object$fingerprintPredictionParas, auto_unbox = TRUE, digits = NA))
-        self$`fingerprintPredictionParas` <- fingerprintpredictionparas_object
+      if (!is.null(this_object$`zodiacParams`)) {
+        `zodiacparams_object` <- Zodiac$new()
+        `zodiacparams_object`$fromJSON(jsonlite::toJSON(this_object$`zodiacParams`, auto_unbox = TRUE, digits = NA))
+        self$`zodiacParams` <- `zodiacparams_object`
       }
-      if (!is.null(this_object$`structureDbSearchParas`)) {
-        structuredbsearchparas_object <- StructureDbSearch$new()
-        structuredbsearchparas_object$fromJSON(jsonlite::toJSON(this_object$structureDbSearchParas, auto_unbox = TRUE, digits = NA))
-        self$`structureDbSearchParas` <- structuredbsearchparas_object
+      if (!is.null(this_object$`fingerprintPredictionParams`)) {
+        `fingerprintpredictionparams_object` <- FingerprintPrediction$new()
+        `fingerprintpredictionparams_object`$fromJSON(jsonlite::toJSON(this_object$`fingerprintPredictionParams`, auto_unbox = TRUE, digits = NA))
+        self$`fingerprintPredictionParams` <- `fingerprintpredictionparams_object`
       }
-      if (!is.null(this_object$`canopusParas`)) {
-        canopusparas_object <- Canopus$new()
-        canopusparas_object$fromJSON(jsonlite::toJSON(this_object$canopusParas, auto_unbox = TRUE, digits = NA))
-        self$`canopusParas` <- canopusparas_object
+      if (!is.null(this_object$`canopusParams`)) {
+        `canopusparams_object` <- Canopus$new()
+        `canopusparams_object`$fromJSON(jsonlite::toJSON(this_object$`canopusParams`, auto_unbox = TRUE, digits = NA))
+        self$`canopusParams` <- `canopusparams_object`
+      }
+      if (!is.null(this_object$`structureDbSearchParams`)) {
+        `structuredbsearchparams_object` <- StructureDbSearch$new()
+        `structuredbsearchparams_object`$fromJSON(jsonlite::toJSON(this_object$`structureDbSearchParams`, auto_unbox = TRUE, digits = NA))
+        self$`structureDbSearchParams` <- `structuredbsearchparams_object`
+      }
+      if (!is.null(this_object$`msNovelistParams`)) {
+        `msnovelistparams_object` <- MsNovelist$new()
+        `msnovelistparams_object`$fromJSON(jsonlite::toJSON(this_object$`msNovelistParams`, auto_unbox = TRUE, digits = NA))
+        self$`msNovelistParams` <- `msnovelistparams_object`
       }
       if (!is.null(this_object$`configMap`)) {
         self$`configMap` <- ApiClient$new()$deserializeObj(this_object$`configMap`, "map(character)", loadNamespace("Rsirius"))
@@ -231,6 +320,14 @@ JobSubmission <- R6::R6Class(
              [%s]
           ',
           paste(unlist(lapply(self$`compoundIds`, function(x) paste0('"', x, '"'))), collapse = ",")
+          )
+        },
+        if (!is.null(self$`alignedFeatureIds`)) {
+          sprintf(
+          '"alignedFeatureIds":
+             [%s]
+          ',
+          paste(unlist(lapply(self$`alignedFeatureIds`, function(x) paste0('"', x, '"'))), collapse = ",")
           )
         },
         if (!is.null(self$`fallbackAdducts`)) {
@@ -265,44 +362,60 @@ JobSubmission <- R6::R6Class(
           tolower(self$`recompute`)
           )
         },
-        if (!is.null(self$`formulaIdParas`)) {
+        if (!is.null(self$`spectraSearchParams`)) {
           sprintf(
-          '"formulaIdParas":
+          '"spectraSearchParams":
           %s
           ',
-          jsonlite::toJSON(self$`formulaIdParas`$toJSON(), auto_unbox = TRUE, digits = NA)
+          jsonlite::toJSON(self$`spectraSearchParams`$toJSON(), auto_unbox = TRUE, digits = NA)
           )
         },
-        if (!is.null(self$`zodiacParas`)) {
+        if (!is.null(self$`formulaIdParams`)) {
           sprintf(
-          '"zodiacParas":
+          '"formulaIdParams":
           %s
           ',
-          jsonlite::toJSON(self$`zodiacParas`$toJSON(), auto_unbox = TRUE, digits = NA)
+          jsonlite::toJSON(self$`formulaIdParams`$toJSON(), auto_unbox = TRUE, digits = NA)
           )
         },
-        if (!is.null(self$`fingerprintPredictionParas`)) {
+        if (!is.null(self$`zodiacParams`)) {
           sprintf(
-          '"fingerprintPredictionParas":
+          '"zodiacParams":
           %s
           ',
-          jsonlite::toJSON(self$`fingerprintPredictionParas`$toJSON(), auto_unbox = TRUE, digits = NA)
+          jsonlite::toJSON(self$`zodiacParams`$toJSON(), auto_unbox = TRUE, digits = NA)
           )
         },
-        if (!is.null(self$`structureDbSearchParas`)) {
+        if (!is.null(self$`fingerprintPredictionParams`)) {
           sprintf(
-          '"structureDbSearchParas":
+          '"fingerprintPredictionParams":
           %s
           ',
-          jsonlite::toJSON(self$`structureDbSearchParas`$toJSON(), auto_unbox = TRUE, digits = NA)
+          jsonlite::toJSON(self$`fingerprintPredictionParams`$toJSON(), auto_unbox = TRUE, digits = NA)
           )
         },
-        if (!is.null(self$`canopusParas`)) {
+        if (!is.null(self$`canopusParams`)) {
           sprintf(
-          '"canopusParas":
+          '"canopusParams":
           %s
           ',
-          jsonlite::toJSON(self$`canopusParas`$toJSON(), auto_unbox = TRUE, digits = NA)
+          jsonlite::toJSON(self$`canopusParams`$toJSON(), auto_unbox = TRUE, digits = NA)
+          )
+        },
+        if (!is.null(self$`structureDbSearchParams`)) {
+          sprintf(
+          '"structureDbSearchParams":
+          %s
+          ',
+          jsonlite::toJSON(self$`structureDbSearchParams`$toJSON(), auto_unbox = TRUE, digits = NA)
+          )
+        },
+        if (!is.null(self$`msNovelistParams`)) {
+          sprintf(
+          '"msNovelistParams":
+          %s
+          ',
+          jsonlite::toJSON(self$`msNovelistParams`$toJSON(), auto_unbox = TRUE, digits = NA)
           )
         },
         if (!is.null(self$`configMap`)) {
@@ -315,6 +428,10 @@ JobSubmission <- R6::R6Class(
         }
       )
       jsoncontent <- paste(jsoncontent, collapse = ",")
+      # remove c() occurences and reduce resulting double escaped quotes \"\" into \"
+      jsoncontent <- gsub('\\\"c\\((.*?)\\\"\\)', '\\1', jsoncontent)
+      # fix wrong serialization of "\"ENUM\"" to "ENUM"
+      jsoncontent <- gsub("\\\\\"([A-Z]+)\\\\\"", "\\1", jsoncontent)
       json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
     },
     #' Deserialize JSON string into an instance of JobSubmission
@@ -328,15 +445,18 @@ JobSubmission <- R6::R6Class(
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       self$`compoundIds` <- ApiClient$new()$deserializeObj(this_object$`compoundIds`, "array[character]", loadNamespace("Rsirius"))
+      self$`alignedFeatureIds` <- ApiClient$new()$deserializeObj(this_object$`alignedFeatureIds`, "array[character]", loadNamespace("Rsirius"))
       self$`fallbackAdducts` <- ApiClient$new()$deserializeObj(this_object$`fallbackAdducts`, "array[character]", loadNamespace("Rsirius"))
       self$`enforcedAdducts` <- ApiClient$new()$deserializeObj(this_object$`enforcedAdducts`, "array[character]", loadNamespace("Rsirius"))
       self$`detectableAdducts` <- ApiClient$new()$deserializeObj(this_object$`detectableAdducts`, "array[character]", loadNamespace("Rsirius"))
       self$`recompute` <- this_object$`recompute`
-      self$`formulaIdParas` <- Sirius$new()$fromJSON(jsonlite::toJSON(this_object$formulaIdParas, auto_unbox = TRUE, digits = NA))
-      self$`zodiacParas` <- Zodiac$new()$fromJSON(jsonlite::toJSON(this_object$zodiacParas, auto_unbox = TRUE, digits = NA))
-      self$`fingerprintPredictionParas` <- FingerprintPrediction$new()$fromJSON(jsonlite::toJSON(this_object$fingerprintPredictionParas, auto_unbox = TRUE, digits = NA))
-      self$`structureDbSearchParas` <- StructureDbSearch$new()$fromJSON(jsonlite::toJSON(this_object$structureDbSearchParas, auto_unbox = TRUE, digits = NA))
-      self$`canopusParas` <- Canopus$new()$fromJSON(jsonlite::toJSON(this_object$canopusParas, auto_unbox = TRUE, digits = NA))
+      self$`spectraSearchParams` <- SpectralLibrarySearch$new()$fromJSON(jsonlite::toJSON(this_object$`spectraSearchParams`, auto_unbox = TRUE, digits = NA))
+      self$`formulaIdParams` <- Sirius$new()$fromJSON(jsonlite::toJSON(this_object$`formulaIdParams`, auto_unbox = TRUE, digits = NA))
+      self$`zodiacParams` <- Zodiac$new()$fromJSON(jsonlite::toJSON(this_object$`zodiacParams`, auto_unbox = TRUE, digits = NA))
+      self$`fingerprintPredictionParams` <- FingerprintPrediction$new()$fromJSON(jsonlite::toJSON(this_object$`fingerprintPredictionParams`, auto_unbox = TRUE, digits = NA))
+      self$`canopusParams` <- Canopus$new()$fromJSON(jsonlite::toJSON(this_object$`canopusParams`, auto_unbox = TRUE, digits = NA))
+      self$`structureDbSearchParams` <- StructureDbSearch$new()$fromJSON(jsonlite::toJSON(this_object$`structureDbSearchParams`, auto_unbox = TRUE, digits = NA))
+      self$`msNovelistParams` <- MsNovelist$new()$fromJSON(jsonlite::toJSON(this_object$`msNovelistParams`, auto_unbox = TRUE, digits = NA))
       self$`configMap` <- ApiClient$new()$deserializeObj(this_object$`configMap`, "map(character)", loadNamespace("Rsirius"))
       self
     },

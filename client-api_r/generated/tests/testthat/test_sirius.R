@@ -14,8 +14,7 @@ test_that("enabled", {
 })
 
 test_that("profile", {
-  # tests for the property `profile` (character)
-  # Instrument specific profile for internal algorithms  Just select what comes closest to the instrument that was used for measuring the data.
+  # tests for the property `profile` (InstrumentProfile)
 
   # uncomment below to test the property
   #expect_equal(model.instance$`profile`, "EXPECTED_RESULT")
@@ -29,17 +28,17 @@ test_that("numberOfCandidates", {
   #expect_equal(model.instance$`numberOfCandidates`, "EXPECTED_RESULT")
 })
 
-test_that("numberOfCandidatesPerIon", {
-  # tests for the property `numberOfCandidatesPerIon` (integer)
-  # Use this parameter if you want to force SIRIUS to report at least  NumberOfCandidatesPerIon results per ionization.  if &lt;&#x3D; 0, this parameter will have no effect and just the top  NumberOfCandidates results will be reported.
+test_that("numberOfCandidatesPerIonization", {
+  # tests for the property `numberOfCandidatesPerIonization` (integer)
+  # Use this parameter if you want to force SIRIUS to report at least  NumberOfCandidatesPerIonization results per ionization.  if &lt;&#x3D; 0, this parameter will have no effect and just the top  NumberOfCandidates results will be reported.
 
   # uncomment below to test the property
-  #expect_equal(model.instance$`numberOfCandidatesPerIon`, "EXPECTED_RESULT")
+  #expect_equal(model.instance$`numberOfCandidatesPerIonization`, "EXPECTED_RESULT")
 })
 
 test_that("massAccuracyMS2ppm", {
   # tests for the property `massAccuracyMS2ppm` (numeric)
-  # Maximum allowed mass accuracy. Only molecular formulas within this mass window are considered.
+  # Maximum allowed mass deviation. Only molecular formulas within this mass window are considered.
 
   # uncomment below to test the property
   #expect_equal(model.instance$`massAccuracyMS2ppm`, "EXPECTED_RESULT")
@@ -53,12 +52,52 @@ test_that("isotopeMs2Settings", {
   #expect_equal(model.instance$`isotopeMs2Settings`, "EXPECTED_RESULT")
 })
 
+test_that("filterByIsotopePattern", {
+  # tests for the property `filterByIsotopePattern` (character)
+  # When filtering is enabled, molecular formulas are excluded if their theoretical isotope pattern does not match the theoretical one, even if their MS/MS pattern has high score.
+
+  # uncomment below to test the property
+  #expect_equal(model.instance$`filterByIsotopePattern`, "EXPECTED_RESULT")
+})
+
+test_that("enforceElGordoFormula", {
+  # tests for the property `enforceElGordoFormula` (character)
+  # El Gordo may predict that an MS/MS spectrum is a lipid spectrum. If enabled, the corresponding molecular formula will be enforeced as molecular formula candidate.
+
+  # uncomment below to test the property
+  #expect_equal(model.instance$`enforceElGordoFormula`, "EXPECTED_RESULT")
+})
+
+test_that("performBottomUpSearch", {
+  # tests for the property `performBottomUpSearch` (character)
+  # If true, molecular formula generation via bottom up search is enabled.
+
+  # uncomment below to test the property
+  #expect_equal(model.instance$`performBottomUpSearch`, "EXPECTED_RESULT")
+})
+
+test_that("performDenovoBelowMz", {
+  # tests for the property `performDenovoBelowMz` (numeric)
+  # Specifies the m/z below which de novo molecular formula generation is enabled. Set to 0 to disable de novo molecular formula generation.
+
+  # uncomment below to test the property
+  #expect_equal(model.instance$`performDenovoBelowMz`, "EXPECTED_RESULT")
+})
+
 test_that("formulaSearchDBs", {
   # tests for the property `formulaSearchDBs` (array[character])
   # List Structure database to extract molecular formulas from to reduce formula search space.  SIRIUS is quite good at de novo formula annotation, so only enable if you have a good reason.
 
   # uncomment below to test the property
   #expect_equal(model.instance$`formulaSearchDBs`, "EXPECTED_RESULT")
+})
+
+test_that("applyFormulaConstraintsToDBAndBottomUpSearch", {
+  # tests for the property `applyFormulaConstraintsToDBAndBottomUpSearch` (character)
+  # By default, the formula (element) constraints are only applied to de novo molecular formula generation.  If true, the constraints are as well applied to database search and bottom up search.
+
+  # uncomment below to test the property
+  #expect_equal(model.instance$`applyFormulaConstraintsToDBAndBottomUpSearch`, "EXPECTED_RESULT")
 })
 
 test_that("enforcedFormulaConstraints", {
@@ -97,4 +136,28 @@ test_that("useHeuristic", {
 
   # uncomment below to test the property
   #expect_equal(model.instance$`useHeuristic`, "EXPECTED_RESULT")
+})
+
+test_that("injectSpecLibMatchFormulas", {
+  # tests for the property `injectSpecLibMatchFormulas` (character)
+  # If true formula candidates that belong to spectral library matches above a certain threshold will  we inject/preserved for further analyses no matter which score they have or which filter is applied
+
+  # uncomment below to test the property
+  #expect_equal(model.instance$`injectSpecLibMatchFormulas`, "EXPECTED_RESULT")
+})
+
+test_that("minScoreToInjectSpecLibMatch", {
+  # tests for the property `minScoreToInjectSpecLibMatch` (numeric)
+  # Similarity Threshold to inject formula candidates no matter which score/rank they have or which filter settings are applied.  If threshold &gt;&#x3D; 0 formulas candidates with reference spectrum similarity above the threshold will be injected.
+
+  # uncomment below to test the property
+  #expect_equal(model.instance$`minScoreToInjectSpecLibMatch`, "EXPECTED_RESULT")
+})
+
+test_that("minPeaksToInjectSpecLibMatch", {
+  # tests for the property `minPeaksToInjectSpecLibMatch` (integer)
+  # Matching peaks threshold to inject formula candidates no matter which score they have or which filter is applied.
+
+  # uncomment below to test the property
+  #expect_equal(model.instance$`minPeaksToInjectSpecLibMatch`, "EXPECTED_RESULT")
 })

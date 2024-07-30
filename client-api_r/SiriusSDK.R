@@ -1,337 +1,338 @@
-SiriusSDK = R6::R6Class(
-  classname = "SiriusSDK",
+library(R6)
+library(processx)
+
+SiriusSDK <- R6Class(
+  "SiriusSDK",
   public = list(
-    
-    pid = NULL,
     port = NULL,
     host = NULL,
-    pidFile = "",
-    portFile = "",
-    basePath = "",
-    baseDirectory = "",
-    
-    start = function(pathToSirius = "sirius", projectSpace = NULL, host = "http://localhost:", port = 8080, workSpace = NULL, force=FALSE){
-      
-      # reset SDK params to default when failing on early stage, i.e. when providing a port as non integer
-      resetSDK <- function(){
-        self$pid = NULL
-        self$port = NULL
-        self$host = NULL
-        self$pidFile = ""
-        self$portFile = ""
-        self$basePath = ""
-        self$baseDirectory = ""
+    sirius_path = NULL,
+    projectspace = NULL,
+    workspace = NULL,
+    process = NULL,
+    process_id = NULL,
+    api_client = NULL,
+    run_command = NULL,
+    run_args = NULL,
+
+    reset_sdk_class = function() {
+      self$port <- NULL
+      self$host <- NULL
+      self$sirius_path <- NULL
+      self$projectspace <- NULL
+      self$workspace <- NULL
+      self$process <- NULL
+      self$process_id <- NULL
+      self$api_client <- NULL
+      self$run_command <- NULL
+      self$run_args <- NULL
+    },
+
+    reset_sdk_process = function() {
+      self$process <- NULL
+    },
+
+    reconnect = function() {
+      if (!is.null(self$api_client) && !is.null(self$process) && self$process$is_alive()) {
+        return(self$api_client)
       }
-      
-      # if Sirius is installed via sirius-ms conda package under Windows,
-      # find executable and use path as pathToSirius
-      if(all(pathToSirius=="sirius", Sys.info()['sysname']=="Windows")){
-        tryCatch({
-          # average home computer path
-          root_dir <- file.path(Sys.getenv("USERPROFILE"), "*conda*")
-          file_pattern <- file.path("envs", "*", "bin", "sirius.bat")
-          matching_file <- Sys.glob(file.path(root_dir, file_pattern))
-          # most trivial try
-          if(length(matching_file)==0){
-            root_dir <- Sys.getenv("USERPROFILE")
-            file_pattern <- "sirius.bat"
-            matching_file <- Sys.glob(file.path(root_dir, file_pattern))
-          }
-          pathToSirius <- matching_file
-          # default back to "sirius" if nothing found
-          # will work if user is in env directory
-          # works for conda-forge checks
-          if(length(matching_file)==0){
-            pathToSirius <- "sirius"
-          }
-        }, error = function(e){
-          resetSDK()
-          stop("Could not find sirius from 'sirius-ms' package in any conda environment. Please install the package using 'conda install -c conda-forge sirius-ms' or provide a valid path to your own Sirius executable.")
-        })
-      }
-      
-      # extract the (major) version of Sirius from the .jar file
-      getVersion <- function(){
-        
-        # try to get Sirius from PATH
-        if(pathToSirius == "sirius"){
+      cat("Cannot reconnect, api_client and/or process are NULL or process has terminated.\n")
+      return(NULL)
+    },
+
+    restart_service_only = function() {
+      if (!is.null(self$run_command) && !is.null(self$run_args) && !is.null(self$process) && !is.null(self$api_client)) {
+        if (inherits(self$shutdown(), "logical")) {
+          cat("Shutdown seems to have gone wrong, aborting restart...\n")
+          return(NULL)
+        }
+
+        self$process <- process$new(command = self$run_command, args = self$run_args)
+        for (i in 1:60) {
+          Sys.sleep(1)
           tryCatch({
-            if (Sys.info()['sysname'] %in% c("Linux","Darwin", "Windows")){
-              out <- system("sirius --version", intern=TRUE, show.output.on.console=FALSE)
-              numbers <- regmatches(out[1], gregexpr("\\d+", out[1]))[[1]]
-              return(paste(numbers[1], numbers[2], sep = "."))
+            if (self$process$is_alive()) {
+              if (is.null(self$workspace)) {
+                found <- private$cycle_find_sirius_pid_and_port_from_folder()
+              } else {
+                found <- private$cycle_find_sirius_pid_and_port_from_folder(folder = self$workspace)
+              }
+              if (!found) {
+                cat("Could not find sirius.port file. Please terminate SIRIUS if needed and try specifying a port\n")
+                cat("Alternatively, try attaching to a running SIRIUS instance with attach_to_running_sirius()\n")
+                return(NULL)
+              }
+              self$host <- paste0('http://localhost:', self$port)
+              self$api_client <- Rsirius::ApiClient$new(self$host)
+              if (Rsirius::ActuatorApi$new(self$api_client)$Health()$status == "UP") {
+                self$process_id <- self$process$get_pid()
+                return(NULL)
+              }
             } else {
-              stop("Your OS is currently not supported for automatically getting Sirius from PATH or from a sirius-ms installation. Please call start() again and specify the total path to Sirius.")
+              cat("The SIRIUS process seems to have exited during startup. Please investigate this error.\n")
+              self$reset_sdk_class()
             }
-          },error = function(e){
-            resetSDK()
-            stop("Could not find Sirius in PATH. The 'sirius-ms' package seems not to be installed in this environment. Please install the package using 'conda install -c conda-forge sirius-ms' or privide a valid path to your own Sirius executable.")
+          }, error = function(e) {
+            cat(e$message, "\n")
           })
         }
-        
-        # get Sirius from given directory
-        wd <- getwd()
-        setwd(dirname(pathToSirius))
-        if(Sys.info()['sysname'] %in% c("Linux","Darwin")){
-          out <- system("./sirius --version", intern=TRUE)
-        } else if (Sys.info()['sysname'] == "Windows"){
-          out <- system("sirius.bat --version", intern=TRUE, show.output.on.console=FALSE)
-        } else {
-          # reset working directory
-          setwd(wd)
-          resetSDK()
-          stop("Unsupported operating system.")
-        }
-	# --version command has different output formatting depending on OS
-	# on Linux: [1] "SIRIUS X.X.X"
-	# on Windows: [13] "SIRIUS X.X.X" 
-	if (Sys.info()['sysname'] == "Windows"){
-          numbers <- regmatches(out[13], gregexpr("\\d+", out[13]))[[1]]
-        } else {
-          numbers <- regmatches(out[1], gregexpr("\\d+", out[1]))[[1]]
-	}
-        # reset working directory
-        setwd(wd)
-        if (length(numbers) < 2){
-          stop("Could not find .jar file to get Sirius version from or found faulty .jar file name.")
-        }
-        return(paste(numbers[1], numbers[2], sep = "."))
+
+        cat("SIRIUS seems to have problems starting. Resetting SiriusSDK...\n")
+        self$reset_sdk_class()
+        return(NULL)
       }
-      
-      
-      # get the path to the sirius.pid and sirius.port files to extract the PID
-      # and to display them to the user in case he needs to delete them manually
-      getPidPortFiles <- function(compliant_workSpace=FALSE){
-        sirius_version <- getVersion()
-        if (compliant_workSpace){
-          wd <- getwd()
-          # workspace may be total or relative path, so use setwd and then getwd
-          setwd(workSpace)
-          workSpace_path = getwd()
-          # reset working directory
-          setwd(wd)
-          self$pidFile <- paste(workSpace_path,"/.sirius-",sirius_version,"/sirius.pid",sep = "")
-          self$portFile <- paste(workSpace_path,"/.sirius-",sirius_version,"/sirius.port",sep = "")
-        } else {
-          if(Sys.info()['sysname']=="Windows"){
-            home_path = Sys.getenv("USERPROFILE")
-          } else if (Sys.info()['sysname'] %in% c("Linux","Darwin")){
-            home_path = Sys.getenv("HOME")
-          } else {
-            resetSDK()
-            stop("Unsupported operating system.")
-          }
-          self$pidFile <- paste(home_path,"/.sirius-",sirius_version,"/sirius.pid",sep = "")
-          self$portFile <- paste(home_path,"/.sirius-",sirius_version,"/sirius.port",sep = "")
-        }
-      }
-      
-      self$baseDirectory = getwd()
-      
-      if(!is.null(self$pid)){
-        stop(paste("Sirius has already been started with PID: ", self$pid, sep = ""))
-      }
-      
-      
-      if(all(is.character(host),length(host) == 1)){
-        if(is.numeric(port)){
-          self$port <- as.integer(port)
-          self$host <- host
-          self$basePath <- paste(self$host,self$port, sep = "")
-        }else{
-          resetSDK()
-          stop("The given parameter 'port' has to be an integer value.")
-        }
-      }else{
-        resetSDK()
-        stop("The given parameter 'host' has to be a valid domain name. 'host' has to be a character vector of length one.")
-      }
-      
-      
-      if(all(is.character(pathToSirius),length(pathToSirius) == 1)){
-        if(all(file.exists(pathToSirius),!dir.exists(pathToSirius)) || pathToSirius == "sirius"){
-          # the file which has to be executed
-          sirius <- basename(pathToSirius)
-          if(!(pathToSirius == "sirius")) {
-            sirius_call <- paste("./",sirius, sep = "")
-          } else {
-            sirius_call <- paste(sirius, sep = "")
-          }
-          
-          if(!is.null(projectSpace)){
-            if(all(is.character(projectSpace),length(projectSpace) == 1)){
-              if(file.exists(projectSpace)){
-                sirius_call <- paste(sirius_call," --output ","\"",projectSpace,"\"",sep = "")
-              }else{
-                stop("The string 'projectSpace' should represent a valid path to your project space.")
-              }
-            }else{
-              stop("The given parameter 'projectSpace' has to be a character vector of length 1.")
-            }
-          }
-          
-          compliant = FALSE
-          if(!is.null(workSpace)){
-            if(all(is.character(workSpace),length(workSpace) == 1)){
-              if(file.exists(workSpace)){
-                compliant = TRUE
-                sirius_call <- paste(sirius_call," --workspace ","\"",workSpace,"\"",sep = "")
-              }else{
-                stop("The string 'workSpace' should represent a valid path to your work space.")
-              }
-            }else{
-              stop("The given parameter 'workSpace' has to be a character vector of length 1.")
-            }
-          }
-          getPidPortFiles(compliant)
-          
-          if(all(file.exists(self$pidFile),!force)){
-            stop(paste("Found existing sirius.pid file (", self$pidFile, ") with PID ",
-                       self$pid, " and sirius.port file (", self$portFile, ") with PORT ",
-                       self$port,". If you are sure no instance of Sirius is currently running on your computer, call start again using the 'force=TRUE' parameter.",
-                       sep=""))
-          }
-          
-          sirius_call <- paste(sirius_call," rest -s -p ",self$port,sep = "")
-          
-          dir_sirius <- dirname(pathToSirius)
-          # Change working directory to the directory which contains SIRIUS.
-          setwd(dir_sirius)
-          
-          # Call SIRIUS as background service in commando line:
-          system(sirius_call, wait=FALSE)
-          setwd(self$baseDirectory)
-          for (i in 1:30){
-            Sys.sleep(1)
-            if(file.exists(self$pidFile)){
-              self$pid <- strtoi(readLines(self$pidFile, warn=FALSE))
-              while(!self$is_active()){
-		Sys.sleep(1)
-	      }
-	      return(rsirius_api$new(api_client = ApiClient$new(base_path = self$basePath)))
-            }
-          }
-        }else{
-          stop("The given string 'pathToSirius' should represent a valid path to the executable SIRIUS file.")
-        }
-      }else{
-        stop("The parameter 'pathToSirius' does not meet the requirements. It has to be a character vector of length 1.")
-      }
+      cat("Could not attempt REST restart, run_command, run_args, process or api_client are NULL.\n")
+      return(NULL)
     },
-    
-    is_active = function(){
-      tryCatch(
-        {
-          req <- request(paste(self$basePath,"/actuator/health", sep = ""))
-          resp <- req_perform(req)
-          if(resp_status(resp) >= 200 && resp_status(resp) <= 299){
-            if(resp_body_json(resp) == "UP"){
-              return(TRUE)
-            }else{
-              return(FALSE)
-            }
-          }else{
-            print("The request was not completely successfull.")
-            return(FALSE)
-          }
-        },error = function(e){
-          return(FALSE)
-        },warning = function(w){
-          return(FALSE)
+
+    attach_to_running_sirius = function(sirius_version_dot_subversion = NULL, sirius_port_file_total_path = NULL) {
+      if (!private$are_all_vars_none()) {
+        cat("Some attributes of SiriusSDK are not NULL.\n")
+        cat("If you are sure that no other SIRIUS instance is running and you do not need the current\n")
+        cat("attributes of SiriusSDK, you can use reset_sdk_class() before calling this function again.\n")
+        return(NULL)
+      }
+
+      if (!is.null(sirius_version_dot_subversion) && is.null(sirius_port_file_total_path)) {
+        tryCatch({
+          self$process_id <- as.integer(readLines(file.path(path.expand("~"), paste0('sirius-', sirius_version_dot_subversion), 'sirius.pid'), warn=FALSE))
+          self$port <- as.integer(readLines(file.path(path.expand("~"), paste0('sirius-', sirius_version_dot_subversion), 'sirius.port'), warn=FALSE))
+        }, error = function(e) {
+          cat(e$message, "\n")
+          return(NULL)
         })
+      }
+
+      if (!is.null(sirius_port_file_total_path)) {
+        tryCatch({
+          directory <- dirname(sirius_port_file_total_path)
+          self$process_id <- as.integer(readLines(file.path(directory, 'sirius.pid'), warn=FALSE))
+          self$port <- as.integer(readLines(sirius_port_file_total_path, warn=FALSE))
+        }, error = function(e) {
+          cat(e$message, "\n")
+          return(NULL)
+        })
+      }
+
+      if (is.null(sirius_version_dot_subversion) && is.null(sirius_port_file_total_path)) {
+        if (!private$find_sirius_pid_and_port_from_folder()) {
+          cat("No folder matching .sirius-X.X was found in your HOME directory.\n")
+          cat("Please try setting the version yourself (i.e. 5.8) or providing the absolute path to the file.\n")
+          return(NULL)
+        }
+      }
+
+      self$host <- paste0('http://localhost:', self$port)
+      self$api_client <- Rsirius::ApiClient$new(self$host)
+      return(self$api_client)
     },
-    
-    shutdown = function(){
-      
-      terminationResponse = function(killed = FALSE){
-        print("The SIRIUS REST service ended successfully. ")
-        if (killed){
-          file.remove(self$pidFile)
-          file.remove(self$portFile)
-        }
-        self$pid = NULL
-        self$port = NULL
-        self$host = NULL
-        self$pidFile = ""
-        self$portFile = ""
-        self$basePath = ""
-        self$baseDirectory = ""
+
+    start = function(sirius_path = NULL, port = NULL, projectspace = NULL, workspace = NULL, forceStart = FALSE) {
+      if (!is.null(self$process) && !forceStart) {
+        cat("Sirius seems to have already been started with PID:", self$process$get_pid(), ".\n")
+        cat("Use reconnect() to get a new API instance for your current SIRIUS.\n")
+        cat("Use shutdown() and then start() to restart SIRIUS and get a new API instance.\n")
+        cat("If you are sure the process is not running anymore, use reset_sdk_process() or reset the complete SDK using reset_sdk_class() before calling start() again.\n")
+        cat("[NOT RECOMMENDED] Use start with forceStart=TRUE to skip this warning and start a second service.\n")
+        return(NULL)
       }
-      
-      darwinLinuxShutdown = function(){
-        # kill defaults to signal value 15: TERM, Termination signal - allow an orderly shutdown; equiv. SIGTERM
-        print("Trying to end Sirius via 'kill' ...")
-        # resp should be 0 on success, otherwise for Mac -1, according to
-        # https://developer.apple.com/library/archive/documentation/System/Conceptual/ManPages_iPhoneOS/man2/kill.2.html
-        # and 1 in Linux
-        resp <- system(paste("kill ", self$pid, sep = ""))
-        Sys.sleep(2)
-        
-        if(resp!=0){
-          # singal value 9: KILL,       Kill signal; equiv. SIGSTOP
-          print("'kill' did not work. Trying to end Sirius forcefully via 'kill -9' ...")
-          resp <- system(paste("kill -9 ", self$pid, sep = ""))
-          Sys.sleep(2)
-          
-          if(resp!=0){
-            print(paste("'kill -9' did not work. Please shut down your running Sirius and delete the sirius.pid and sirius.port files:
-                        sirius.pid file (", self$pidFile, ") with PID ",self$pid,
-                        " and sirius.port file (", self$portFile, ") with PORT ", self$port,sep=""))
-          } else {
-            terminationResponse(killed = TRUE)
-          }
+
+      self$workspace <- workspace
+
+      if (!is.null(sirius_path)) {
+        if (!file.exists(sirius_path)) {
+          cat("Wrong path to executable.\n")
+          self$reset_sdk_class()
+          return(NULL)
+        }
+        self$sirius_path <- normalizePath(sirius_path)
+      } else {
+        if (Sys.getenv("PATH") == "" || !grepl("sirius", Sys.getenv("PATH"))) {
+          cat("Please provide a path to the sirius executable if not declared in PATH!\n")
+          self$reset_sdk_class()
+          return(NULL)
+        }
+        cat("Found SIRIUS in PATH! Using this information to start the application.\n")
+        self$sirius_path <- 'sirius'
+      }
+
+      if (!is.null(projectspace)) {
+        if (!file.exists(projectspace)) {
+          cat("Wrong path to project space.\n")
+          self$reset_sdk_class()
+          return(NULL)
+        }
+        self$projectspace <- normalizePath(projectspace)
+        run_args <- c("--output", self$projectspace, "REST", "-s")
+      } else {
+        run_args <- c("REST", "-s")
+      }
+
+      if (!is.null(workspace)) {
+        if (!file.exists(workspace)) {
+          cat("Wrong path to workspace\n")
+          self$reset_sdk_class()
+          return(NULL)
+        }
+        cat("[WARNING] Overwriting workspace location [NOT RECOMMENDED]\n")
+        self$workspace <- normalizePath(workspace)
+        run_args <- append(run_args, c("--workspace", workspace), 3)
+      }
+
+      if (!is.null(port)) {
+        self$port <- port
+        self$host <- paste0('http://localhost:', self$port)
+        self$api_client <- Rsirius::ApiClient$new(self$host)
+        run_args <- append(run_args, c("-p", as.character(port)))
+      }
+
+      self$run_command <- self$sirius_path
+      self$run_args <- run_args
+      self$process <- process$new(command = self$run_command, args = self$run_args)
+      self$process_id <- self$process$get_pid()
+
+      if (is.null(port)) {
+        cat("SIRIUS was started without specifying --port (-p), trying to find the sirius.port file.\n")
+        if (is.null(workspace)) {
+          found <- private$cycle_find_sirius_pid_and_port_from_folder()
         } else {
-          terminationResponse()
+          found <- private$cycle_find_sirius_pid_and_port_from_folder(folder = workspace)
+        }
+        if (!found) {
+          cat("Could not find sirius.port file. Please terminate SIRIUS if needed and try specifying a port\n")
+          cat("Alternatively, try attaching to a running SIRIUS instance with attach_to_running_sirius()\n")
+          return(NULL)
         }
       }
-      
-      windowsShutdown = function(){
-        print("Trying to end Sirius via 'taskkill' ...")
-        # resp is either 0 (success), 1 (access denied) or 128 (no such process)
-        resp <- system(paste("taskkill /pid ", self$pid, sep = ""))
-        Sys.sleep(2)
-        
-        if(resp!=0){
-          print("'taskkill' did not work. Trying to end Sirius forcefully via 'taskkill /f' ...")
-          resp <- system(paste("taskkill /pid ", self$pid, " /f", sep = ""))
-          Sys.sleep(2)
-          
-          if(resp!=0){
-            print(paste("'taskkill /f' did not work. Please shut down your running Sirius and delete the sirius.pid and sirius.port files:
-                        sirius.pid file (", self$pidFile, ") with PID ",self$pid,
-                        " and sirius.port file (", self$portFile, ") with PORT ", self$port,sep=""))
+
+      self$host <- paste0('http://localhost:', self$port)
+      self$api_client <- Rsirius::ApiClient$new(self$host)
+
+      for (i in 1:30) {
+        Sys.sleep(1)
+        tryCatch({
+          if (self$process$is_alive()) {
+            if (Rsirius::ActuatorApi$new(self$api_client)$Health()$status == "UP") {
+              return(self$api_client)
+            }
           } else {
-            terminationResponse(killed = TRUE)
+            cat("The SIRIUS process seems to have exited during startup. Please investigate this error.\n")
+            self$reset_sdk_class()
           }
-        } else {
-          terminationResponse()
+        }, error = function(e) {
+          cat(e$message, "\n")
+        })
+      }
+
+      cat("SIRIUS seems to have problems starting. Resetting SiriusSDK...\n")
+      self$reset_sdk_class()
+      return(NULL)
+    },
+
+    shutdown = function() {
+      if (!is.null(self$process)) {
+        tryCatch({
+          Rsirius::ActuatorApi$new(self$api_client)$Shutdown()
+          Sys.sleep(3)
+          if (!self$process$is_alive()) {
+            cat("Sirius was shut down successfully\n")
+            self$process <- NULL
+            self$process_id <- NULL
+            return(NULL)
+          }
+        }, error = function(e) {
+          cat("An Exception occurred while trying to gracefully shutdown SIRIUS!\n")
+          cat(e$message, "\n")
+        })
+
+        self$process$interrupt()
+        Sys.sleep(3)
+        if (!self$process$is_alive()) {
+          cat("Sirius process has been terminated.\n")
+          self$process <- NULL
+          self$process_id <- NULL
+          return(NULL)
+        }
+
+        self$process$kill()
+        Sys.sleep(3)
+        if (!self$process$is_alive()) {
+          cat("Sirius process has been killed.\n")
+          self$process <- NULL
+          self$process_id <- NULL
+          return(NULL)
+        }
+
+        cat("Unable to stop Sirius! - Please manually terminate the process with PID ", self$process$get_pid(), "\n")
+        cat("After terminating the process, use start() to start a new instance of SIRIUS.\n")
+        return(FALSE)
+      } else if (!is.null(self$process_id)) {
+        system(paste("kill -SIGTERM", self$process_id))
+        Sys.sleep(3)
+        tryCatch({
+          system(paste("kill -0", self$process_id))
+        }, error = function(e) {
+          cat("Sirius process has been terminated.\n")
+          self$process <- NULL
+          self$process_id <- NULL
+          return(NULL)
+        })
+
+        system(paste("kill -SIGKILL", self$process_id))
+        Sys.sleep(3)
+        tryCatch({
+          system(paste("kill -0", self$process_id))
+        }, error = function(e) {
+          cat("Sirius process has been killed.\n")
+          self$process <- NULL
+          self$process_id <- NULL
+          return(NULL)
+        })
+
+        cat("Unable to stop Sirius! - Please manually terminate the process with PID ", self$process_id, "\n")
+        cat("After terminating the process, use start() to start a new instance of SIRIUS.\n")
+        return(FALSE)
+      } else {
+        cat("There does not seem to be any process or process_id to shut down...\n")
+        return(FALSE)
+      }
+    }
+  ),
+
+  private = list(
+    are_all_vars_none = function() {
+      all_names <- ls(envir = self, all.names = TRUE)
+      # exclude functions
+      field_names <- all_names[sapply(all_names, function(name) !is.function(self[[name]]))]
+      # exclude ".__enclos_env__"
+      field_names <- field_names[-1]
+      all(sapply(field_names, function(name) is.null(self[[name]])))
+    },
+
+    find_sirius_pid_and_port_from_folder = function() {
+      home_directory <- path.expand("~")
+      sirius_folders <- list.dirs(home_directory, recursive=FALSE)
+      sirius_folders <- sirius_folders[grepl(".sirius-[0-9].[0-9]", sirius_folders)]
+      for (folder in sirius_folders) {
+        pid_file <- file.path(folder, 'sirius.pid')
+        port_file <- file.path(folder, 'sirius.port')
+        if (file.exists(pid_file) && file.exists(port_file)) {
+          self$process_id <- as.integer(readLines(pid_file, warn=FALSE))
+          self$port <- as.integer(readLines(port_file, warn=FALSE))
+          return(TRUE)
         }
       }
-      
-      
-      if(self$is_active()){
-        req_shutdown <- req_method(request(paste(self$basePath,"/actuator/shutdown",sep = "")), "POST")
-        resp_shutdown <- req_perform(req_shutdown)
-        Sys.sleep(2)
-        
-        if(resp_status(resp_shutdown) == 200){
-          terminationResponse()
-          
-        } else {
-          print("SIRIUS REST service seems not to have shut down as intended.")
-          
-          if(Sys.info()['sysname'] %in% c("Linux","Darwin")){
-            darwinLinuxShutdown()
-          } else if (Sys.info()['sysname']=="Windows"){
-            windowsShutdown()
-          } else {
-            stop("Unsupported operating system.")
-          }
+      return(FALSE)
+    },
+
+    cycle_find_sirius_pid_and_port_from_folder = function(folder = NULL) {
+      for (i in 1:30) {
+        Sys.sleep(1)
+        if (private$find_sirius_pid_and_port_from_folder()) {
+          return(TRUE)
         }
-        
-      }else{
-        print("SIRIUS does not run as REST service at this moment.")
       }
+      return(FALSE)
     }
   )
 )

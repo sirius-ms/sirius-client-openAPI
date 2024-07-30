@@ -7,10 +7,18 @@ model_instance <- JobSubmission$new()
 
 test_that("compoundIds", {
   # tests for the property `compoundIds` (array[character])
-  # Compounds that should be the input for this Job
+  # Compounds that should be the input for this Job  Will be converted to the respective alignedFeatureIds for computation.   At least one compoundId or alignedFeatureId needs to be specified.
 
   # uncomment below to test the property
   #expect_equal(model.instance$`compoundIds`, "EXPECTED_RESULT")
+})
+
+test_that("alignedFeatureIds", {
+  # tests for the property `alignedFeatureIds` (array[character])
+  # Features (aligned over runs) that should be the input for this Job   At least one compoundId or alignedFeatureId needs to be specified.
+
+  # uncomment below to test the property
+  #expect_equal(model.instance$`alignedFeatureIds`, "EXPECTED_RESULT")
 })
 
 test_that("fallbackAdducts", {
@@ -45,39 +53,53 @@ test_that("recompute", {
   #expect_equal(model.instance$`recompute`, "EXPECTED_RESULT")
 })
 
-test_that("formulaIdParas", {
-  # tests for the property `formulaIdParas` (Sirius)
+test_that("spectraSearchParams", {
+  # tests for the property `spectraSearchParams` (SpectralLibrarySearch)
 
   # uncomment below to test the property
-  #expect_equal(model.instance$`formulaIdParas`, "EXPECTED_RESULT")
+  #expect_equal(model.instance$`spectraSearchParams`, "EXPECTED_RESULT")
 })
 
-test_that("zodiacParas", {
-  # tests for the property `zodiacParas` (Zodiac)
+test_that("formulaIdParams", {
+  # tests for the property `formulaIdParams` (Sirius)
 
   # uncomment below to test the property
-  #expect_equal(model.instance$`zodiacParas`, "EXPECTED_RESULT")
+  #expect_equal(model.instance$`formulaIdParams`, "EXPECTED_RESULT")
 })
 
-test_that("fingerprintPredictionParas", {
-  # tests for the property `fingerprintPredictionParas` (FingerprintPrediction)
+test_that("zodiacParams", {
+  # tests for the property `zodiacParams` (Zodiac)
 
   # uncomment below to test the property
-  #expect_equal(model.instance$`fingerprintPredictionParas`, "EXPECTED_RESULT")
+  #expect_equal(model.instance$`zodiacParams`, "EXPECTED_RESULT")
 })
 
-test_that("structureDbSearchParas", {
-  # tests for the property `structureDbSearchParas` (StructureDbSearch)
+test_that("fingerprintPredictionParams", {
+  # tests for the property `fingerprintPredictionParams` (FingerprintPrediction)
 
   # uncomment below to test the property
-  #expect_equal(model.instance$`structureDbSearchParas`, "EXPECTED_RESULT")
+  #expect_equal(model.instance$`fingerprintPredictionParams`, "EXPECTED_RESULT")
 })
 
-test_that("canopusParas", {
-  # tests for the property `canopusParas` (Canopus)
+test_that("canopusParams", {
+  # tests for the property `canopusParams` (Canopus)
 
   # uncomment below to test the property
-  #expect_equal(model.instance$`canopusParas`, "EXPECTED_RESULT")
+  #expect_equal(model.instance$`canopusParams`, "EXPECTED_RESULT")
+})
+
+test_that("structureDbSearchParams", {
+  # tests for the property `structureDbSearchParams` (StructureDbSearch)
+
+  # uncomment below to test the property
+  #expect_equal(model.instance$`structureDbSearchParams`, "EXPECTED_RESULT")
+})
+
+test_that("msNovelistParams", {
+  # tests for the property `msNovelistParams` (MsNovelist)
+
+  # uncomment below to test the property
+  #expect_equal(model.instance$`msNovelistParams`, "EXPECTED_RESULT")
 })
 
 test_that("configMap", {

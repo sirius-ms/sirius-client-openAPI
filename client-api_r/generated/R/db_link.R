@@ -1,13 +1,13 @@
 #' Create a new DBLink
 #'
 #' @description
-#' 
+#' DBLink Class
 #'
 #' @docType class
 #' @title DBLink
 #' @description DBLink Class
 #' @format An \code{R6Class} generator object
-#' @field name  character [optional]
+#' @field name  character
 #' @field id  character [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
@@ -26,8 +26,8 @@ DBLink <- R6::R6Class(
     #' @param id id
     #' @param ... Other optional arguments.
     #' @export
-    initialize = function(`name` = NULL, `id` = NULL, ...) {
-      if (!is.null(`name`)) {
+    initialize = function(`name`, `id` = NULL, ...) {
+      if (!missing(`name`)) {
         if (!(is.character(`name`) && length(`name`) == 1)) {
           stop(paste("Error! Invalid data for `name`. Must be a string:", `name`))
         }
@@ -104,6 +104,10 @@ DBLink <- R6::R6Class(
         }
       )
       jsoncontent <- paste(jsoncontent, collapse = ",")
+      # remove c() occurences and reduce resulting double escaped quotes \"\" into \"
+      jsoncontent <- gsub('\\\"c\\((.*?)\\\"\\)', '\\1', jsoncontent)
+      # fix wrong serialization of "\"ENUM\"" to "ENUM"
+      jsoncontent <- gsub("\\\\\"([A-Z]+)\\\\\"", "\\1", jsoncontent)
       json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
     },
     #' Deserialize JSON string into an instance of DBLink
@@ -129,6 +133,14 @@ DBLink <- R6::R6Class(
     #' @export
     validateJSON = function(input) {
       input_json <- jsonlite::fromJSON(input)
+      # check the required field `name`
+      if (!is.null(input_json$`name`)) {
+        if (!(is.character(input_json$`name`) && length(input_json$`name`) == 1)) {
+          stop(paste("Error! Invalid data for `name`. Must be a string:", input_json$`name`))
+        }
+      } else {
+        stop(paste("The JSON input `", input, "` is invalid for DBLink: the required field `name` is missing."))
+      }
     },
     #' To string (JSON format)
     #'
@@ -148,6 +160,11 @@ DBLink <- R6::R6Class(
     #' @return true if the values in all fields are valid.
     #' @export
     isValid = function() {
+      # check if the required `name` is null
+      if (is.null(self$`name`)) {
+        return(FALSE)
+      }
+
       TRUE
     },
     #' Return a list of invalid fields (if any).
@@ -159,6 +176,11 @@ DBLink <- R6::R6Class(
     #' @export
     getInvalidFields = function() {
       invalid_fields <- list()
+      # check if the required `name` is null
+      if (is.null(self$`name`)) {
+        invalid_fields["name"] <- "Non-nullable required field `name` cannot be null."
+      }
+
       invalid_fields
     },
     #' Print the object

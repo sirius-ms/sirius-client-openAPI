@@ -1,7 +1,7 @@
 #' Create a new FragmentationTree
 #'
 #' @description
-#' 
+#' Simple and easy serializable fragmentation tree model with annotated fragments/nodes abd losses/edges  Root fragment has index 0;
 #'
 #' @docType class
 #' @title FragmentationTree
@@ -10,7 +10,6 @@
 #' @field fragments  list(\link{FragmentNode}) [optional]
 #' @field losses  list(\link{LossEdge}) [optional]
 #' @field treeScore  numeric [optional]
-#' @field root  \link{FragmentNode} [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
 #' @export
@@ -20,7 +19,6 @@ FragmentationTree <- R6::R6Class(
     `fragments` = NULL,
     `losses` = NULL,
     `treeScore` = NULL,
-    `root` = NULL,
     #' Initialize a new FragmentationTree class.
     #'
     #' @description
@@ -29,10 +27,9 @@ FragmentationTree <- R6::R6Class(
     #' @param fragments fragments
     #' @param losses losses
     #' @param treeScore treeScore
-    #' @param root root
     #' @param ... Other optional arguments.
     #' @export
-    initialize = function(`fragments` = NULL, `losses` = NULL, `treeScore` = NULL, `root` = NULL, ...) {
+    initialize = function(`fragments` = NULL, `losses` = NULL, `treeScore` = NULL, ...) {
       if (!is.null(`fragments`)) {
         stopifnot(is.vector(`fragments`), length(`fragments`) != 0)
         sapply(`fragments`, function(x) stopifnot(R6::is.R6(x)))
@@ -48,10 +45,6 @@ FragmentationTree <- R6::R6Class(
           stop(paste("Error! Invalid data for `treeScore`. Must be a number:", `treeScore`))
         }
         self$`treeScore` <- `treeScore`
-      }
-      if (!is.null(`root`)) {
-        stopifnot(R6::is.R6(`root`))
-        self$`root` <- `root`
       }
     },
     #' To JSON string
@@ -75,10 +68,6 @@ FragmentationTree <- R6::R6Class(
         FragmentationTreeObject[["treeScore"]] <-
           self$`treeScore`
       }
-      if (!is.null(self$`root`)) {
-        FragmentationTreeObject[["root"]] <-
-          self$`root`$toJSON()
-      }
       FragmentationTreeObject
     },
     #' Deserialize JSON string into an instance of FragmentationTree
@@ -99,11 +88,6 @@ FragmentationTree <- R6::R6Class(
       }
       if (!is.null(this_object$`treeScore`)) {
         self$`treeScore` <- this_object$`treeScore`
-      }
-      if (!is.null(this_object$`root`)) {
-        root_object <- FragmentNode$new()
-        root_object$fromJSON(jsonlite::toJSON(this_object$root, auto_unbox = TRUE, digits = NA))
-        self$`root` <- root_object
       }
       self
     },
@@ -139,17 +123,13 @@ FragmentationTree <- R6::R6Class(
                     ',
           self$`treeScore`
           )
-        },
-        if (!is.null(self$`root`)) {
-          sprintf(
-          '"root":
-          %s
-          ',
-          jsonlite::toJSON(self$`root`$toJSON(), auto_unbox = TRUE, digits = NA)
-          )
         }
       )
       jsoncontent <- paste(jsoncontent, collapse = ",")
+      # remove c() occurences and reduce resulting double escaped quotes \"\" into \"
+      jsoncontent <- gsub('\\\"c\\((.*?)\\\"\\)', '\\1', jsoncontent)
+      # fix wrong serialization of "\"ENUM\"" to "ENUM"
+      jsoncontent <- gsub("\\\\\"([A-Z]+)\\\\\"", "\\1", jsoncontent)
       json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
     },
     #' Deserialize JSON string into an instance of FragmentationTree
@@ -165,7 +145,6 @@ FragmentationTree <- R6::R6Class(
       self$`fragments` <- ApiClient$new()$deserializeObj(this_object$`fragments`, "array[FragmentNode]", loadNamespace("Rsirius"))
       self$`losses` <- ApiClient$new()$deserializeObj(this_object$`losses`, "array[LossEdge]", loadNamespace("Rsirius"))
       self$`treeScore` <- this_object$`treeScore`
-      self$`root` <- FragmentNode$new()$fromJSON(jsonlite::toJSON(this_object$root, auto_unbox = TRUE, digits = NA))
       self
     },
     #' Validate JSON input with respect to FragmentationTree

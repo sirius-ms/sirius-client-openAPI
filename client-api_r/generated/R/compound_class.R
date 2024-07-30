@@ -1,17 +1,19 @@
 #' Create a new CompoundClass
 #'
 #' @description
-#' Predicted compound class with name, probability and id if available.  (ClassyFire and NPC). This can be seen as the set of classes a compound most likely belongs to
+#' Predicted compound class with name, probability and id if available.  (ClassyFire and NPC). This can be seen as the set of classes a feature most likely belongs to
 #'
 #' @docType class
 #' @title CompoundClass
 #' @description CompoundClass Class
 #' @format An \code{R6Class} generator object
-#' @field type Specifies the classification ontology the CompoundClass belongs to. character [optional]
+#' @field type  \link{CompoundClassType} [optional]
+#' @field level Name of the level this compound class belongs to character [optional]
 #' @field name Name of the compound class. character [optional]
 #' @field description Description of the compound class. character [optional]
 #' @field id Unique id of the class. Might be undefined for certain classification ontologies. integer [optional]
 #' @field probability prediction probability numeric [optional]
+#' @field index Absolute index of this property in the predicted vector/embedding integer [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
 #' @export
@@ -19,31 +21,40 @@ CompoundClass <- R6::R6Class(
   "CompoundClass",
   public = list(
     `type` = NULL,
+    `level` = NULL,
     `name` = NULL,
     `description` = NULL,
     `id` = NULL,
     `probability` = NULL,
+    `index` = NULL,
     #' Initialize a new CompoundClass class.
     #'
     #' @description
     #' Initialize a new CompoundClass class.
     #'
-    #' @param type Specifies the classification ontology the CompoundClass belongs to.
+    #' @param type type
+    #' @param level Name of the level this compound class belongs to
     #' @param name Name of the compound class.
     #' @param description Description of the compound class.
     #' @param id Unique id of the class. Might be undefined for certain classification ontologies.
     #' @param probability prediction probability
+    #' @param index Absolute index of this property in the predicted vector/embedding
     #' @param ... Other optional arguments.
     #' @export
-    initialize = function(`type` = NULL, `name` = NULL, `description` = NULL, `id` = NULL, `probability` = NULL, ...) {
+    initialize = function(`type` = NULL, `level` = NULL, `name` = NULL, `description` = NULL, `id` = NULL, `probability` = NULL, `index` = NULL, ...) {
       if (!is.null(`type`)) {
-        if (!(`type` %in% c("ClassyFire", "NPC"))) {
-          stop(paste("Error! \"", `type`, "\" cannot be assigned to `type`. Must be \"ClassyFire\", \"NPC\".", sep = ""))
-        }
-        if (!(is.character(`type`) && length(`type`) == 1)) {
-          stop(paste("Error! Invalid data for `type`. Must be a string:", `type`))
-        }
+        # disabled, as it is broken and checks for `type` %in% c()
+        # if (!(`type` %in% c())) {
+        #  stop(paste("Error! \"", `type`, "\" cannot be assigned to `type`. Must be .", sep = ""))
+        # }
+        stopifnot(R6::is.R6(`type`))
         self$`type` <- `type`
+      }
+      if (!is.null(`level`)) {
+        if (!(is.character(`level`) && length(`level`) == 1)) {
+          stop(paste("Error! Invalid data for `level`. Must be a string:", `level`))
+        }
+        self$`level` <- `level`
       }
       if (!is.null(`name`)) {
         if (!(is.character(`name`) && length(`name`) == 1)) {
@@ -69,6 +80,12 @@ CompoundClass <- R6::R6Class(
         }
         self$`probability` <- `probability`
       }
+      if (!is.null(`index`)) {
+        if (!(is.numeric(`index`) && length(`index`) == 1)) {
+          stop(paste("Error! Invalid data for `index`. Must be an integer:", `index`))
+        }
+        self$`index` <- `index`
+      }
     },
     #' To JSON string
     #'
@@ -81,7 +98,17 @@ CompoundClass <- R6::R6Class(
       CompoundClassObject <- list()
       if (!is.null(self$`type`)) {
         CompoundClassObject[["type"]] <-
-          self$`type`
+          if (is.list(self$`type`$toJSON()) && length(self$`type`$toJSON()) == 0L){
+            NULL
+          } else if (length(names(self$`type`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`type`$toJSON()))) {
+            jsonlite::fromJSON(self$`type`$toJSON())
+          } else {
+            self$`type`$toJSON()
+          }
+      }
+      if (!is.null(self$`level`)) {
+        CompoundClassObject[["level"]] <-
+          self$`level`
       }
       if (!is.null(self$`name`)) {
         CompoundClassObject[["name"]] <-
@@ -99,6 +126,10 @@ CompoundClass <- R6::R6Class(
         CompoundClassObject[["probability"]] <-
           self$`probability`
       }
+      if (!is.null(self$`index`)) {
+        CompoundClassObject[["index"]] <-
+          self$`index`
+      }
       CompoundClassObject
     },
     #' Deserialize JSON string into an instance of CompoundClass
@@ -112,10 +143,12 @@ CompoundClass <- R6::R6Class(
     fromJSON = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       if (!is.null(this_object$`type`)) {
-        if (!is.null(this_object$`type`) && !(this_object$`type` %in% c("ClassyFire", "NPC"))) {
-          stop(paste("Error! \"", this_object$`type`, "\" cannot be assigned to `type`. Must be \"ClassyFire\", \"NPC\".", sep = ""))
-        }
-        self$`type` <- this_object$`type`
+        `type_object` <- CompoundClassType$new()
+        `type_object`$fromJSON(jsonlite::toJSON(this_object$`type`, auto_unbox = TRUE, digits = NA))
+        self$`type` <- `type_object`
+      }
+      if (!is.null(this_object$`level`)) {
+        self$`level` <- this_object$`level`
       }
       if (!is.null(this_object$`name`)) {
         self$`name` <- this_object$`name`
@@ -128,6 +161,9 @@ CompoundClass <- R6::R6Class(
       }
       if (!is.null(this_object$`probability`)) {
         self$`probability` <- this_object$`probability`
+      }
+      if (!is.null(this_object$`index`)) {
+        self$`index` <- this_object$`index`
       }
       self
     },
@@ -143,9 +179,17 @@ CompoundClass <- R6::R6Class(
         if (!is.null(self$`type`)) {
           sprintf(
           '"type":
+          %s
+          ',
+          jsonlite::toJSON(self$`type`$toJSON(), auto_unbox = TRUE, digits = NA)
+          )
+        },
+        if (!is.null(self$`level`)) {
+          sprintf(
+          '"level":
             "%s"
                     ',
-          self$`type`
+          self$`level`
           )
         },
         if (!is.null(self$`name`)) {
@@ -179,9 +223,21 @@ CompoundClass <- R6::R6Class(
                     ',
           self$`probability`
           )
+        },
+        if (!is.null(self$`index`)) {
+          sprintf(
+          '"index":
+            %f
+                    ',
+          self$`index`
+          )
         }
       )
       jsoncontent <- paste(jsoncontent, collapse = ",")
+      # remove c() occurences and reduce resulting double escaped quotes \"\" into \"
+      jsoncontent <- gsub('\\\"c\\((.*?)\\\"\\)', '\\1', jsoncontent)
+      # fix wrong serialization of "\"ENUM\"" to "ENUM"
+      jsoncontent <- gsub("\\\\\"([A-Z]+)\\\\\"", "\\1", jsoncontent)
       json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
     },
     #' Deserialize JSON string into an instance of CompoundClass
@@ -194,14 +250,13 @@ CompoundClass <- R6::R6Class(
     #' @export
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
-      if (!is.null(this_object$`type`) && !(this_object$`type` %in% c("ClassyFire", "NPC"))) {
-        stop(paste("Error! \"", this_object$`type`, "\" cannot be assigned to `type`. Must be \"ClassyFire\", \"NPC\".", sep = ""))
-      }
-      self$`type` <- this_object$`type`
+      self$`type` <- CompoundClassType$new()$fromJSON(jsonlite::toJSON(this_object$`type`, auto_unbox = TRUE, digits = NA))
+      self$`level` <- this_object$`level`
       self$`name` <- this_object$`name`
       self$`description` <- this_object$`description`
       self$`id` <- this_object$`id`
       self$`probability` <- this_object$`probability`
+      self$`index` <- this_object$`index`
       self
     },
     #' Validate JSON input with respect to CompoundClass

@@ -1,12 +1,11 @@
 # Rsirius::AnnotatedPeak
 
 
-
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**mass** | **numeric** |  | [optional] 
+**mz** | **numeric** |  | [optional] 
 **intensity** | **numeric** |  | [optional] 
-**peakAnnotation** | **object** |  | [optional] 
+**peakAnnotation** | [**PeakAnnotation**](PeakAnnotation.md) |  | [optional] 
 
 

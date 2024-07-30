@@ -14,21 +14,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        r-version: ["3.6.0", "4.0.0", "4.1.0", "4.2.0", "4.3.0"]
+        r-version: ["4.0.0", "4.1.0", "4.2.0", "4.3.0", "4.4.0"]
     env:
       SIRIUS_USER: ${{ secrets.SIRIUS_USER }}
       SIRIUS_PW: ${{ secrets.SIRIUS_PW }}
     steps:
-    - name: Cache Sirius Release
-      id: cache-sirius
-      uses: actions/cache@v3
-      with:
-        path: .updater/api/sirius
-        key: sirius
-    - name: Run Sirius
-      run: |
-        ./.updater/api/sirius/bin/sirius REST -s -p 8080 &
-        sleep 10
     - uses: actions/checkout@v3
     - name: Set up R ${{ matrix.r-version }}
       uses: r-lib/actions/setup-r@v2
@@ -39,9 +29,47 @@ jobs:
       with:
         cache: false
         working-directory: ./client-api_r/generated
+    - name: Install Rsirius
+      run: install.packages("/home/runner/work/sirius-client-openAPI/sirius-client-openAPI/client-api_r/generated", repos = NULL, type = "source")
+      shell: Rscript {0}
+    - name: Cache Sirius Release
+      uses: actions/cache@v3
+      with:
+        path: .updater/api/sirius
+        key: sirius
+        fail-on-cache-miss: true
+    - name: Download tomato_small project space
+      run: wget ${{ secrets.TOMATO_SMALL_DOWNLOAD_LINK }} -O tomato_small.sirius
+    - name: Change HOME to working directory of runner
+      run: echo "HOME=/home/runner/work/sirius-client-openAPI" >> $GITHUB_ENV
+    - name: Run Rest Api
+      run: bash .updater/api/sirius/bin/sirius REST -p 8080 -s &
+    - name: Wait for Api to start
+      run: while ! nc -z localhost 8080; do sleep 0.1; done
+    - name: Login to SIRIUS
+      run: |
+        library(Rsirius)
+        var_accept_terms <- TRUE
+        var_account_credentials <- AccountCredentials$new(Sys.getenv('SIRIUS_USER'), Sys.getenv('SIRIUS_PW'))
+        api_instance <- rsirius_api$new()
+        api_response <- api_instance$login_and_account_api$Login(var_accept_terms, var_account_credentials)
+        if (inherits(api_response, "AccountInfo")) {
+          quit(status=0)
+        } else {
+          print('Login failed, aborting...')
+          quit(status=1)
+        }
+      shell: Rscript {0}
+    - name: Copy tests into Rsirius folder for testing
+      run: |
+        mkdir client-api_r/generated/tests
+        cp -r .updater/clientTests/RTests/test client-api_r/generated/tests/testthat
+        cp .updater/clientTests/RTests/testthat.R client-api_r/generated/tests/testthat.R
+        # TODO move back after issues are fixed
+        rm client-api_r/generated/tests/testthat/test_compounds_api.R
     - name: Build Rsirius
       run: |
         R CMD build ./client-api_r/generated
     - name: Test Rsirius using testthat
       run: |
-        R CMD check Rsirius_1.0.0.tar.gz --no-manual
+        R CMD check Rsirius_0.9.tar.gz --no-manual

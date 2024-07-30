@@ -1,7 +1,7 @@
 #' Create a new ZodiacEdgeFilterThresholds
 #'
 #' @description
-#' 
+#' ZodiacEdgeFilterThresholds Class
 #'
 #' @docType class
 #' @title ZodiacEdgeFilterThresholds
@@ -10,7 +10,6 @@
 #' @field thresholdFilter  numeric [optional]
 #' @field minLocalCandidates  integer [optional]
 #' @field minLocalConnections  integer [optional]
-#' @field identifier  character [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
 #' @export
@@ -20,7 +19,6 @@ ZodiacEdgeFilterThresholds <- R6::R6Class(
     `thresholdFilter` = NULL,
     `minLocalCandidates` = NULL,
     `minLocalConnections` = NULL,
-    `identifier` = NULL,
     #' Initialize a new ZodiacEdgeFilterThresholds class.
     #'
     #' @description
@@ -29,10 +27,9 @@ ZodiacEdgeFilterThresholds <- R6::R6Class(
     #' @param thresholdFilter thresholdFilter
     #' @param minLocalCandidates minLocalCandidates
     #' @param minLocalConnections minLocalConnections
-    #' @param identifier identifier
     #' @param ... Other optional arguments.
     #' @export
-    initialize = function(`thresholdFilter` = NULL, `minLocalCandidates` = NULL, `minLocalConnections` = NULL, `identifier` = NULL, ...) {
+    initialize = function(`thresholdFilter` = NULL, `minLocalCandidates` = NULL, `minLocalConnections` = NULL, ...) {
       if (!is.null(`thresholdFilter`)) {
         if (!(is.numeric(`thresholdFilter`) && length(`thresholdFilter`) == 1)) {
           stop(paste("Error! Invalid data for `thresholdFilter`. Must be a number:", `thresholdFilter`))
@@ -50,12 +47,6 @@ ZodiacEdgeFilterThresholds <- R6::R6Class(
           stop(paste("Error! Invalid data for `minLocalConnections`. Must be an integer:", `minLocalConnections`))
         }
         self$`minLocalConnections` <- `minLocalConnections`
-      }
-      if (!is.null(`identifier`)) {
-        if (!(is.character(`identifier`) && length(`identifier`) == 1)) {
-          stop(paste("Error! Invalid data for `identifier`. Must be a string:", `identifier`))
-        }
-        self$`identifier` <- `identifier`
       }
     },
     #' To JSON string
@@ -79,10 +70,6 @@ ZodiacEdgeFilterThresholds <- R6::R6Class(
         ZodiacEdgeFilterThresholdsObject[["minLocalConnections"]] <-
           self$`minLocalConnections`
       }
-      if (!is.null(self$`identifier`)) {
-        ZodiacEdgeFilterThresholdsObject[["identifier"]] <-
-          self$`identifier`
-      }
       ZodiacEdgeFilterThresholdsObject
     },
     #' Deserialize JSON string into an instance of ZodiacEdgeFilterThresholds
@@ -103,9 +90,6 @@ ZodiacEdgeFilterThresholds <- R6::R6Class(
       }
       if (!is.null(this_object$`minLocalConnections`)) {
         self$`minLocalConnections` <- this_object$`minLocalConnections`
-      }
-      if (!is.null(this_object$`identifier`)) {
-        self$`identifier` <- this_object$`identifier`
       }
       self
     },
@@ -141,17 +125,13 @@ ZodiacEdgeFilterThresholds <- R6::R6Class(
                     ',
           self$`minLocalConnections`
           )
-        },
-        if (!is.null(self$`identifier`)) {
-          sprintf(
-          '"identifier":
-            "%s"
-                    ',
-          self$`identifier`
-          )
         }
       )
       jsoncontent <- paste(jsoncontent, collapse = ",")
+      # remove c() occurences and reduce resulting double escaped quotes \"\" into \"
+      jsoncontent <- gsub('\\\"c\\((.*?)\\\"\\)', '\\1', jsoncontent)
+      # fix wrong serialization of "\"ENUM\"" to "ENUM"
+      jsoncontent <- gsub("\\\\\"([A-Z]+)\\\\\"", "\\1", jsoncontent)
       json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
     },
     #' Deserialize JSON string into an instance of ZodiacEdgeFilterThresholds
@@ -167,7 +147,6 @@ ZodiacEdgeFilterThresholds <- R6::R6Class(
       self$`thresholdFilter` <- this_object$`thresholdFilter`
       self$`minLocalCandidates` <- this_object$`minLocalCandidates`
       self$`minLocalConnections` <- this_object$`minLocalConnections`
-      self$`identifier` <- this_object$`identifier`
       self
     },
     #' Validate JSON input with respect to ZodiacEdgeFilterThresholds

@@ -1,56 +1,107 @@
 #' Create a new FormulaCandidate
 #'
 #' @description
-#' 
+#' Molecular formula candidate that holds a unique identifier (molecular formula + adduct).  It can be extended with optional scoring metrics and the raw results  such as fragmentation trees and simulated isotope pattern.
 #'
 #' @docType class
 #' @title FormulaCandidate
 #' @description FormulaCandidate Class
 #' @format An \code{R6Class} generator object
-#' @field siriusScore  numeric [optional]
+#' @field formulaId Unique identifier of this formula candidate character [optional]
+#' @field molecularFormula molecular formula of this formula candidate character [optional]
+#' @field adduct Adduct of this formula candidate character [optional]
+#' @field rank  integer [optional]
+#' @field siriusScore Sirius Score (isotope + tree score) of the formula candidate.  If NULL result is not available numeric [optional]
 #' @field isotopeScore  numeric [optional]
 #' @field treeScore  numeric [optional]
-#' @field zodiacScore  numeric [optional]
-#' @field molecularFormula  character [optional]
-#' @field adduct  character [optional]
-#' @field numOfexplainedPeaks  integer [optional]
-#' @field numOfexplainablePeaks  integer [optional]
+#' @field zodiacScore Zodiac Score of the formula candidate.  If NULL result is not available numeric [optional]
+#' @field numOfExplainedPeaks  integer [optional]
+#' @field numOfExplainablePeaks  integer [optional]
 #' @field totalExplainedIntensity  numeric [optional]
 #' @field medianMassDeviation  \link{Deviation} [optional]
+#' @field fragmentationTree  \link{FragmentationTree} [optional]
+#' @field annotatedSpectrum  \link{AnnotatedSpectrum} [optional]
+#' @field isotopePatternAnnotation  \link{IsotopePatternAnnotation} [optional]
+#' @field lipidAnnotation  \link{LipidAnnotation} [optional]
+#' @field predictedFingerprint Probabilistic molecular fingerprint predicted by CSI:FingerID list(numeric) [optional]
+#' @field compoundClasses  \link{CompoundClasses} [optional]
+#' @field canopusPrediction  \link{CanopusPrediction} [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
 #' @export
 FormulaCandidate <- R6::R6Class(
   "FormulaCandidate",
   public = list(
+    `formulaId` = NULL,
+    `molecularFormula` = NULL,
+    `adduct` = NULL,
+    `rank` = NULL,
     `siriusScore` = NULL,
     `isotopeScore` = NULL,
     `treeScore` = NULL,
     `zodiacScore` = NULL,
-    `molecularFormula` = NULL,
-    `adduct` = NULL,
-    `numOfexplainedPeaks` = NULL,
-    `numOfexplainablePeaks` = NULL,
+    `numOfExplainedPeaks` = NULL,
+    `numOfExplainablePeaks` = NULL,
     `totalExplainedIntensity` = NULL,
     `medianMassDeviation` = NULL,
+    `fragmentationTree` = NULL,
+    `annotatedSpectrum` = NULL,
+    `isotopePatternAnnotation` = NULL,
+    `lipidAnnotation` = NULL,
+    `predictedFingerprint` = NULL,
+    `compoundClasses` = NULL,
+    `canopusPrediction` = NULL,
     #' Initialize a new FormulaCandidate class.
     #'
     #' @description
     #' Initialize a new FormulaCandidate class.
     #'
-    #' @param siriusScore siriusScore
+    #' @param formulaId Unique identifier of this formula candidate
+    #' @param molecularFormula molecular formula of this formula candidate
+    #' @param adduct Adduct of this formula candidate
+    #' @param rank rank
+    #' @param siriusScore Sirius Score (isotope + tree score) of the formula candidate.  If NULL result is not available
     #' @param isotopeScore isotopeScore
     #' @param treeScore treeScore
-    #' @param zodiacScore zodiacScore
-    #' @param molecularFormula molecularFormula
-    #' @param adduct adduct
-    #' @param numOfexplainedPeaks numOfexplainedPeaks
-    #' @param numOfexplainablePeaks numOfexplainablePeaks
+    #' @param zodiacScore Zodiac Score of the formula candidate.  If NULL result is not available
+    #' @param numOfExplainedPeaks numOfExplainedPeaks
+    #' @param numOfExplainablePeaks numOfExplainablePeaks
     #' @param totalExplainedIntensity totalExplainedIntensity
     #' @param medianMassDeviation medianMassDeviation
+    #' @param fragmentationTree fragmentationTree
+    #' @param annotatedSpectrum annotatedSpectrum
+    #' @param isotopePatternAnnotation isotopePatternAnnotation
+    #' @param lipidAnnotation lipidAnnotation
+    #' @param predictedFingerprint Probabilistic molecular fingerprint predicted by CSI:FingerID
+    #' @param compoundClasses compoundClasses
+    #' @param canopusPrediction canopusPrediction
     #' @param ... Other optional arguments.
     #' @export
-    initialize = function(`siriusScore` = NULL, `isotopeScore` = NULL, `treeScore` = NULL, `zodiacScore` = NULL, `molecularFormula` = NULL, `adduct` = NULL, `numOfexplainedPeaks` = NULL, `numOfexplainablePeaks` = NULL, `totalExplainedIntensity` = NULL, `medianMassDeviation` = NULL, ...) {
+    initialize = function(`formulaId` = NULL, `molecularFormula` = NULL, `adduct` = NULL, `rank` = NULL, `siriusScore` = NULL, `isotopeScore` = NULL, `treeScore` = NULL, `zodiacScore` = NULL, `numOfExplainedPeaks` = NULL, `numOfExplainablePeaks` = NULL, `totalExplainedIntensity` = NULL, `medianMassDeviation` = NULL, `fragmentationTree` = NULL, `annotatedSpectrum` = NULL, `isotopePatternAnnotation` = NULL, `lipidAnnotation` = NULL, `predictedFingerprint` = NULL, `compoundClasses` = NULL, `canopusPrediction` = NULL, ...) {
+      if (!is.null(`formulaId`)) {
+        if (!(is.character(`formulaId`) && length(`formulaId`) == 1)) {
+          stop(paste("Error! Invalid data for `formulaId`. Must be a string:", `formulaId`))
+        }
+        self$`formulaId` <- `formulaId`
+      }
+      if (!is.null(`molecularFormula`)) {
+        if (!(is.character(`molecularFormula`) && length(`molecularFormula`) == 1)) {
+          stop(paste("Error! Invalid data for `molecularFormula`. Must be a string:", `molecularFormula`))
+        }
+        self$`molecularFormula` <- `molecularFormula`
+      }
+      if (!is.null(`adduct`)) {
+        if (!(is.character(`adduct`) && length(`adduct`) == 1)) {
+          stop(paste("Error! Invalid data for `adduct`. Must be a string:", `adduct`))
+        }
+        self$`adduct` <- `adduct`
+      }
+      if (!is.null(`rank`)) {
+        if (!(is.numeric(`rank`) && length(`rank`) == 1)) {
+          stop(paste("Error! Invalid data for `rank`. Must be an integer:", `rank`))
+        }
+        self$`rank` <- `rank`
+      }
       if (!is.null(`siriusScore`)) {
         if (!(is.numeric(`siriusScore`) && length(`siriusScore`) == 1)) {
           stop(paste("Error! Invalid data for `siriusScore`. Must be a number:", `siriusScore`))
@@ -75,29 +126,17 @@ FormulaCandidate <- R6::R6Class(
         }
         self$`zodiacScore` <- `zodiacScore`
       }
-      if (!is.null(`molecularFormula`)) {
-        if (!(is.character(`molecularFormula`) && length(`molecularFormula`) == 1)) {
-          stop(paste("Error! Invalid data for `molecularFormula`. Must be a string:", `molecularFormula`))
+      if (!is.null(`numOfExplainedPeaks`)) {
+        if (!(is.numeric(`numOfExplainedPeaks`) && length(`numOfExplainedPeaks`) == 1)) {
+          stop(paste("Error! Invalid data for `numOfExplainedPeaks`. Must be an integer:", `numOfExplainedPeaks`))
         }
-        self$`molecularFormula` <- `molecularFormula`
+        self$`numOfExplainedPeaks` <- `numOfExplainedPeaks`
       }
-      if (!is.null(`adduct`)) {
-        if (!(is.character(`adduct`) && length(`adduct`) == 1)) {
-          stop(paste("Error! Invalid data for `adduct`. Must be a string:", `adduct`))
+      if (!is.null(`numOfExplainablePeaks`)) {
+        if (!(is.numeric(`numOfExplainablePeaks`) && length(`numOfExplainablePeaks`) == 1)) {
+          stop(paste("Error! Invalid data for `numOfExplainablePeaks`. Must be an integer:", `numOfExplainablePeaks`))
         }
-        self$`adduct` <- `adduct`
-      }
-      if (!is.null(`numOfexplainedPeaks`)) {
-        if (!(is.numeric(`numOfexplainedPeaks`) && length(`numOfexplainedPeaks`) == 1)) {
-          stop(paste("Error! Invalid data for `numOfexplainedPeaks`. Must be an integer:", `numOfexplainedPeaks`))
-        }
-        self$`numOfexplainedPeaks` <- `numOfexplainedPeaks`
-      }
-      if (!is.null(`numOfexplainablePeaks`)) {
-        if (!(is.numeric(`numOfexplainablePeaks`) && length(`numOfexplainablePeaks`) == 1)) {
-          stop(paste("Error! Invalid data for `numOfexplainablePeaks`. Must be an integer:", `numOfexplainablePeaks`))
-        }
-        self$`numOfexplainablePeaks` <- `numOfexplainablePeaks`
+        self$`numOfExplainablePeaks` <- `numOfExplainablePeaks`
       }
       if (!is.null(`totalExplainedIntensity`)) {
         if (!(is.numeric(`totalExplainedIntensity`) && length(`totalExplainedIntensity`) == 1)) {
@@ -109,6 +148,35 @@ FormulaCandidate <- R6::R6Class(
         stopifnot(R6::is.R6(`medianMassDeviation`))
         self$`medianMassDeviation` <- `medianMassDeviation`
       }
+      if (!is.null(`fragmentationTree`)) {
+        stopifnot(R6::is.R6(`fragmentationTree`))
+        self$`fragmentationTree` <- `fragmentationTree`
+      }
+      if (!is.null(`annotatedSpectrum`)) {
+        stopifnot(R6::is.R6(`annotatedSpectrum`))
+        self$`annotatedSpectrum` <- `annotatedSpectrum`
+      }
+      if (!is.null(`isotopePatternAnnotation`)) {
+        stopifnot(R6::is.R6(`isotopePatternAnnotation`))
+        self$`isotopePatternAnnotation` <- `isotopePatternAnnotation`
+      }
+      if (!is.null(`lipidAnnotation`)) {
+        stopifnot(R6::is.R6(`lipidAnnotation`))
+        self$`lipidAnnotation` <- `lipidAnnotation`
+      }
+      if (!is.null(`predictedFingerprint`)) {
+        stopifnot(is.vector(`predictedFingerprint`), length(`predictedFingerprint`) != 0)
+        sapply(`predictedFingerprint`, function(x) stopifnot(is.character(x)))
+        self$`predictedFingerprint` <- `predictedFingerprint`
+      }
+      if (!is.null(`compoundClasses`)) {
+        stopifnot(R6::is.R6(`compoundClasses`))
+        self$`compoundClasses` <- `compoundClasses`
+      }
+      if (!is.null(`canopusPrediction`)) {
+        stopifnot(R6::is.R6(`canopusPrediction`))
+        self$`canopusPrediction` <- `canopusPrediction`
+      }
     },
     #' To JSON string
     #'
@@ -119,6 +187,22 @@ FormulaCandidate <- R6::R6Class(
     #' @export
     toJSON = function() {
       FormulaCandidateObject <- list()
+      if (!is.null(self$`formulaId`)) {
+        FormulaCandidateObject[["formulaId"]] <-
+          self$`formulaId`
+      }
+      if (!is.null(self$`molecularFormula`)) {
+        FormulaCandidateObject[["molecularFormula"]] <-
+          self$`molecularFormula`
+      }
+      if (!is.null(self$`adduct`)) {
+        FormulaCandidateObject[["adduct"]] <-
+          self$`adduct`
+      }
+      if (!is.null(self$`rank`)) {
+        FormulaCandidateObject[["rank"]] <-
+          self$`rank`
+      }
       if (!is.null(self$`siriusScore`)) {
         FormulaCandidateObject[["siriusScore"]] <-
           self$`siriusScore`
@@ -135,21 +219,13 @@ FormulaCandidate <- R6::R6Class(
         FormulaCandidateObject[["zodiacScore"]] <-
           self$`zodiacScore`
       }
-      if (!is.null(self$`molecularFormula`)) {
-        FormulaCandidateObject[["molecularFormula"]] <-
-          self$`molecularFormula`
+      if (!is.null(self$`numOfExplainedPeaks`)) {
+        FormulaCandidateObject[["numOfExplainedPeaks"]] <-
+          self$`numOfExplainedPeaks`
       }
-      if (!is.null(self$`adduct`)) {
-        FormulaCandidateObject[["adduct"]] <-
-          self$`adduct`
-      }
-      if (!is.null(self$`numOfexplainedPeaks`)) {
-        FormulaCandidateObject[["numOfexplainedPeaks"]] <-
-          self$`numOfexplainedPeaks`
-      }
-      if (!is.null(self$`numOfexplainablePeaks`)) {
-        FormulaCandidateObject[["numOfexplainablePeaks"]] <-
-          self$`numOfexplainablePeaks`
+      if (!is.null(self$`numOfExplainablePeaks`)) {
+        FormulaCandidateObject[["numOfExplainablePeaks"]] <-
+          self$`numOfExplainablePeaks`
       }
       if (!is.null(self$`totalExplainedIntensity`)) {
         FormulaCandidateObject[["totalExplainedIntensity"]] <-
@@ -157,7 +233,77 @@ FormulaCandidate <- R6::R6Class(
       }
       if (!is.null(self$`medianMassDeviation`)) {
         FormulaCandidateObject[["medianMassDeviation"]] <-
-          self$`medianMassDeviation`$toJSON()
+          if (is.list(self$`medianMassDeviation`$toJSON()) && length(self$`medianMassDeviation`$toJSON()) == 0L){
+            NULL
+          } else if (length(names(self$`medianMassDeviation`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`medianMassDeviation`$toJSON()))) {
+            jsonlite::fromJSON(self$`medianMassDeviation`$toJSON())
+          } else {
+            self$`medianMassDeviation`$toJSON()
+          }
+      }
+      if (!is.null(self$`fragmentationTree`)) {
+        FormulaCandidateObject[["fragmentationTree"]] <-
+          if (is.list(self$`fragmentationTree`$toJSON()) && length(self$`fragmentationTree`$toJSON()) == 0L){
+            NULL
+          } else if (length(names(self$`fragmentationTree`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`fragmentationTree`$toJSON()))) {
+            jsonlite::fromJSON(self$`fragmentationTree`$toJSON())
+          } else {
+            self$`fragmentationTree`$toJSON()
+          }
+      }
+      if (!is.null(self$`annotatedSpectrum`)) {
+        FormulaCandidateObject[["annotatedSpectrum"]] <-
+          if (is.list(self$`annotatedSpectrum`$toJSON()) && length(self$`annotatedSpectrum`$toJSON()) == 0L){
+            NULL
+          } else if (length(names(self$`annotatedSpectrum`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`annotatedSpectrum`$toJSON()))) {
+            jsonlite::fromJSON(self$`annotatedSpectrum`$toJSON())
+          } else {
+            self$`annotatedSpectrum`$toJSON()
+          }
+      }
+      if (!is.null(self$`isotopePatternAnnotation`)) {
+        FormulaCandidateObject[["isotopePatternAnnotation"]] <-
+          if (is.list(self$`isotopePatternAnnotation`$toJSON()) && length(self$`isotopePatternAnnotation`$toJSON()) == 0L){
+            NULL
+          } else if (length(names(self$`isotopePatternAnnotation`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`isotopePatternAnnotation`$toJSON()))) {
+            jsonlite::fromJSON(self$`isotopePatternAnnotation`$toJSON())
+          } else {
+            self$`isotopePatternAnnotation`$toJSON()
+          }
+      }
+      if (!is.null(self$`lipidAnnotation`)) {
+        FormulaCandidateObject[["lipidAnnotation"]] <-
+          if (is.list(self$`lipidAnnotation`$toJSON()) && length(self$`lipidAnnotation`$toJSON()) == 0L){
+            NULL
+          } else if (length(names(self$`lipidAnnotation`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`lipidAnnotation`$toJSON()))) {
+            jsonlite::fromJSON(self$`lipidAnnotation`$toJSON())
+          } else {
+            self$`lipidAnnotation`$toJSON()
+          }
+      }
+      if (!is.null(self$`predictedFingerprint`)) {
+        FormulaCandidateObject[["predictedFingerprint"]] <-
+          self$`predictedFingerprint`
+      }
+      if (!is.null(self$`compoundClasses`)) {
+        FormulaCandidateObject[["compoundClasses"]] <-
+          if (is.list(self$`compoundClasses`$toJSON()) && length(self$`compoundClasses`$toJSON()) == 0L){
+            NULL
+          } else if (length(names(self$`compoundClasses`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`compoundClasses`$toJSON()))) {
+            jsonlite::fromJSON(self$`compoundClasses`$toJSON())
+          } else {
+            self$`compoundClasses`$toJSON()
+          }
+      }
+      if (!is.null(self$`canopusPrediction`)) {
+        FormulaCandidateObject[["canopusPrediction"]] <-
+          if (is.list(self$`canopusPrediction`$toJSON()) && length(self$`canopusPrediction`$toJSON()) == 0L){
+            NULL
+          } else if (length(names(self$`canopusPrediction`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`canopusPrediction`$toJSON()))) {
+            jsonlite::fromJSON(self$`canopusPrediction`$toJSON())
+          } else {
+            self$`canopusPrediction`$toJSON()
+          }
       }
       FormulaCandidateObject
     },
@@ -171,6 +317,18 @@ FormulaCandidate <- R6::R6Class(
     #' @export
     fromJSON = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
+      if (!is.null(this_object$`formulaId`)) {
+        self$`formulaId` <- this_object$`formulaId`
+      }
+      if (!is.null(this_object$`molecularFormula`)) {
+        self$`molecularFormula` <- this_object$`molecularFormula`
+      }
+      if (!is.null(this_object$`adduct`)) {
+        self$`adduct` <- this_object$`adduct`
+      }
+      if (!is.null(this_object$`rank`)) {
+        self$`rank` <- this_object$`rank`
+      }
       if (!is.null(this_object$`siriusScore`)) {
         self$`siriusScore` <- this_object$`siriusScore`
       }
@@ -183,25 +341,52 @@ FormulaCandidate <- R6::R6Class(
       if (!is.null(this_object$`zodiacScore`)) {
         self$`zodiacScore` <- this_object$`zodiacScore`
       }
-      if (!is.null(this_object$`molecularFormula`)) {
-        self$`molecularFormula` <- this_object$`molecularFormula`
+      if (!is.null(this_object$`numOfExplainedPeaks`)) {
+        self$`numOfExplainedPeaks` <- this_object$`numOfExplainedPeaks`
       }
-      if (!is.null(this_object$`adduct`)) {
-        self$`adduct` <- this_object$`adduct`
-      }
-      if (!is.null(this_object$`numOfexplainedPeaks`)) {
-        self$`numOfexplainedPeaks` <- this_object$`numOfexplainedPeaks`
-      }
-      if (!is.null(this_object$`numOfexplainablePeaks`)) {
-        self$`numOfexplainablePeaks` <- this_object$`numOfexplainablePeaks`
+      if (!is.null(this_object$`numOfExplainablePeaks`)) {
+        self$`numOfExplainablePeaks` <- this_object$`numOfExplainablePeaks`
       }
       if (!is.null(this_object$`totalExplainedIntensity`)) {
         self$`totalExplainedIntensity` <- this_object$`totalExplainedIntensity`
       }
       if (!is.null(this_object$`medianMassDeviation`)) {
-        medianmassdeviation_object <- Deviation$new()
-        medianmassdeviation_object$fromJSON(jsonlite::toJSON(this_object$medianMassDeviation, auto_unbox = TRUE, digits = NA))
-        self$`medianMassDeviation` <- medianmassdeviation_object
+        `medianmassdeviation_object` <- Deviation$new()
+        `medianmassdeviation_object`$fromJSON(jsonlite::toJSON(this_object$`medianMassDeviation`, auto_unbox = TRUE, digits = NA))
+        self$`medianMassDeviation` <- `medianmassdeviation_object`
+      }
+      if (!is.null(this_object$`fragmentationTree`)) {
+        `fragmentationtree_object` <- FragmentationTree$new()
+        `fragmentationtree_object`$fromJSON(jsonlite::toJSON(this_object$`fragmentationTree`, auto_unbox = TRUE, digits = NA))
+        self$`fragmentationTree` <- `fragmentationtree_object`
+      }
+      if (!is.null(this_object$`annotatedSpectrum`)) {
+        `annotatedspectrum_object` <- AnnotatedSpectrum$new()
+        `annotatedspectrum_object`$fromJSON(jsonlite::toJSON(this_object$`annotatedSpectrum`, auto_unbox = TRUE, digits = NA))
+        self$`annotatedSpectrum` <- `annotatedspectrum_object`
+      }
+      if (!is.null(this_object$`isotopePatternAnnotation`)) {
+        `isotopepatternannotation_object` <- IsotopePatternAnnotation$new()
+        `isotopepatternannotation_object`$fromJSON(jsonlite::toJSON(this_object$`isotopePatternAnnotation`, auto_unbox = TRUE, digits = NA))
+        self$`isotopePatternAnnotation` <- `isotopepatternannotation_object`
+      }
+      if (!is.null(this_object$`lipidAnnotation`)) {
+        `lipidannotation_object` <- LipidAnnotation$new()
+        `lipidannotation_object`$fromJSON(jsonlite::toJSON(this_object$`lipidAnnotation`, auto_unbox = TRUE, digits = NA))
+        self$`lipidAnnotation` <- `lipidannotation_object`
+      }
+      if (!is.null(this_object$`predictedFingerprint`)) {
+        self$`predictedFingerprint` <- ApiClient$new()$deserializeObj(this_object$`predictedFingerprint`, "array[numeric]", loadNamespace("Rsirius"))
+      }
+      if (!is.null(this_object$`compoundClasses`)) {
+        `compoundclasses_object` <- CompoundClasses$new()
+        `compoundclasses_object`$fromJSON(jsonlite::toJSON(this_object$`compoundClasses`, auto_unbox = TRUE, digits = NA))
+        self$`compoundClasses` <- `compoundclasses_object`
+      }
+      if (!is.null(this_object$`canopusPrediction`)) {
+        `canopusprediction_object` <- CanopusPrediction$new()
+        `canopusprediction_object`$fromJSON(jsonlite::toJSON(this_object$`canopusPrediction`, auto_unbox = TRUE, digits = NA))
+        self$`canopusPrediction` <- `canopusprediction_object`
       }
       self
     },
@@ -214,6 +399,38 @@ FormulaCandidate <- R6::R6Class(
     #' @export
     toJSONString = function() {
       jsoncontent <- c(
+        if (!is.null(self$`formulaId`)) {
+          sprintf(
+          '"formulaId":
+            "%s"
+                    ',
+          self$`formulaId`
+          )
+        },
+        if (!is.null(self$`molecularFormula`)) {
+          sprintf(
+          '"molecularFormula":
+            "%s"
+                    ',
+          self$`molecularFormula`
+          )
+        },
+        if (!is.null(self$`adduct`)) {
+          sprintf(
+          '"adduct":
+            "%s"
+                    ',
+          self$`adduct`
+          )
+        },
+        if (!is.null(self$`rank`)) {
+          sprintf(
+          '"rank":
+            %f
+                    ',
+          self$`rank`
+          )
+        },
         if (!is.null(self$`siriusScore`)) {
           sprintf(
           '"siriusScore":
@@ -246,36 +463,20 @@ FormulaCandidate <- R6::R6Class(
           self$`zodiacScore`
           )
         },
-        if (!is.null(self$`molecularFormula`)) {
+        if (!is.null(self$`numOfExplainedPeaks`)) {
           sprintf(
-          '"molecularFormula":
-            "%s"
-                    ',
-          self$`molecularFormula`
-          )
-        },
-        if (!is.null(self$`adduct`)) {
-          sprintf(
-          '"adduct":
-            "%s"
-                    ',
-          self$`adduct`
-          )
-        },
-        if (!is.null(self$`numOfexplainedPeaks`)) {
-          sprintf(
-          '"numOfexplainedPeaks":
+          '"numOfExplainedPeaks":
             %f
                     ',
-          self$`numOfexplainedPeaks`
+          self$`numOfExplainedPeaks`
           )
         },
-        if (!is.null(self$`numOfexplainablePeaks`)) {
+        if (!is.null(self$`numOfExplainablePeaks`)) {
           sprintf(
-          '"numOfexplainablePeaks":
+          '"numOfExplainablePeaks":
             %f
                     ',
-          self$`numOfexplainablePeaks`
+          self$`numOfExplainablePeaks`
           )
         },
         if (!is.null(self$`totalExplainedIntensity`)) {
@@ -293,9 +494,69 @@ FormulaCandidate <- R6::R6Class(
           ',
           jsonlite::toJSON(self$`medianMassDeviation`$toJSON(), auto_unbox = TRUE, digits = NA)
           )
+        },
+        if (!is.null(self$`fragmentationTree`)) {
+          sprintf(
+          '"fragmentationTree":
+          %s
+          ',
+          jsonlite::toJSON(self$`fragmentationTree`$toJSON(), auto_unbox = TRUE, digits = NA)
+          )
+        },
+        if (!is.null(self$`annotatedSpectrum`)) {
+          sprintf(
+          '"annotatedSpectrum":
+          %s
+          ',
+          jsonlite::toJSON(self$`annotatedSpectrum`$toJSON(), auto_unbox = TRUE, digits = NA)
+          )
+        },
+        if (!is.null(self$`isotopePatternAnnotation`)) {
+          sprintf(
+          '"isotopePatternAnnotation":
+          %s
+          ',
+          jsonlite::toJSON(self$`isotopePatternAnnotation`$toJSON(), auto_unbox = TRUE, digits = NA)
+          )
+        },
+        if (!is.null(self$`lipidAnnotation`)) {
+          sprintf(
+          '"lipidAnnotation":
+          %s
+          ',
+          jsonlite::toJSON(self$`lipidAnnotation`$toJSON(), auto_unbox = TRUE, digits = NA)
+          )
+        },
+        if (!is.null(self$`predictedFingerprint`)) {
+          sprintf(
+          '"predictedFingerprint":
+             [%s]
+          ',
+          paste(unlist(lapply(self$`predictedFingerprint`, function(x) paste0('"', x, '"'))), collapse = ",")
+          )
+        },
+        if (!is.null(self$`compoundClasses`)) {
+          sprintf(
+          '"compoundClasses":
+          %s
+          ',
+          jsonlite::toJSON(self$`compoundClasses`$toJSON(), auto_unbox = TRUE, digits = NA)
+          )
+        },
+        if (!is.null(self$`canopusPrediction`)) {
+          sprintf(
+          '"canopusPrediction":
+          %s
+          ',
+          jsonlite::toJSON(self$`canopusPrediction`$toJSON(), auto_unbox = TRUE, digits = NA)
+          )
         }
       )
       jsoncontent <- paste(jsoncontent, collapse = ",")
+      # remove c() occurences and reduce resulting double escaped quotes \"\" into \"
+      jsoncontent <- gsub('\\\"c\\((.*?)\\\"\\)', '\\1', jsoncontent)
+      # fix wrong serialization of "\"ENUM\"" to "ENUM"
+      jsoncontent <- gsub("\\\\\"([A-Z]+)\\\\\"", "\\1", jsoncontent)
       json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
     },
     #' Deserialize JSON string into an instance of FormulaCandidate
@@ -308,16 +569,25 @@ FormulaCandidate <- R6::R6Class(
     #' @export
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
+      self$`formulaId` <- this_object$`formulaId`
+      self$`molecularFormula` <- this_object$`molecularFormula`
+      self$`adduct` <- this_object$`adduct`
+      self$`rank` <- this_object$`rank`
       self$`siriusScore` <- this_object$`siriusScore`
       self$`isotopeScore` <- this_object$`isotopeScore`
       self$`treeScore` <- this_object$`treeScore`
       self$`zodiacScore` <- this_object$`zodiacScore`
-      self$`molecularFormula` <- this_object$`molecularFormula`
-      self$`adduct` <- this_object$`adduct`
-      self$`numOfexplainedPeaks` <- this_object$`numOfexplainedPeaks`
-      self$`numOfexplainablePeaks` <- this_object$`numOfexplainablePeaks`
+      self$`numOfExplainedPeaks` <- this_object$`numOfExplainedPeaks`
+      self$`numOfExplainablePeaks` <- this_object$`numOfExplainablePeaks`
       self$`totalExplainedIntensity` <- this_object$`totalExplainedIntensity`
-      self$`medianMassDeviation` <- Deviation$new()$fromJSON(jsonlite::toJSON(this_object$medianMassDeviation, auto_unbox = TRUE, digits = NA))
+      self$`medianMassDeviation` <- Deviation$new()$fromJSON(jsonlite::toJSON(this_object$`medianMassDeviation`, auto_unbox = TRUE, digits = NA))
+      self$`fragmentationTree` <- FragmentationTree$new()$fromJSON(jsonlite::toJSON(this_object$`fragmentationTree`, auto_unbox = TRUE, digits = NA))
+      self$`annotatedSpectrum` <- AnnotatedSpectrum$new()$fromJSON(jsonlite::toJSON(this_object$`annotatedSpectrum`, auto_unbox = TRUE, digits = NA))
+      self$`isotopePatternAnnotation` <- IsotopePatternAnnotation$new()$fromJSON(jsonlite::toJSON(this_object$`isotopePatternAnnotation`, auto_unbox = TRUE, digits = NA))
+      self$`lipidAnnotation` <- LipidAnnotation$new()$fromJSON(jsonlite::toJSON(this_object$`lipidAnnotation`, auto_unbox = TRUE, digits = NA))
+      self$`predictedFingerprint` <- ApiClient$new()$deserializeObj(this_object$`predictedFingerprint`, "array[numeric]", loadNamespace("Rsirius"))
+      self$`compoundClasses` <- CompoundClasses$new()$fromJSON(jsonlite::toJSON(this_object$`compoundClasses`, auto_unbox = TRUE, digits = NA))
+      self$`canopusPrediction` <- CanopusPrediction$new()$fromJSON(jsonlite::toJSON(this_object$`canopusPrediction`, auto_unbox = TRUE, digits = NA))
       self
     },
     #' Validate JSON input with respect to FormulaCandidate
