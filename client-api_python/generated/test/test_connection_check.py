@@ -70,8 +70,8 @@ class TestConnectionCheck(unittest.TestCase):
                         sirius_message = '', 
                         server_response_error_code = 56, 
                         server_response_error_message = '', 
-                        warning = True, 
-                        error = True, )
+                        error = True, 
+                        warning = True, )
                     ]
             )
         else:
@@ -111,8 +111,8 @@ class TestConnectionCheck(unittest.TestCase):
                         sirius_message = '', 
                         server_response_error_code = 56, 
                         server_response_error_message = '', 
-                        warning = True, 
-                        error = True, )
+                        error = True, 
+                        warning = True, )
                     ],
         )
         """

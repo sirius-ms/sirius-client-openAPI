@@ -13,8 +13,8 @@
 #' @field siriusMessage  character
 #' @field serverResponseErrorCode  integer [optional]
 #' @field serverResponseErrorMessage  character [optional]
-#' @field warning  character [optional]
 #' @field error  character [optional]
+#' @field warning  character [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
 #' @export
@@ -27,8 +27,8 @@ ConnectionError <- R6::R6Class(
     `siriusMessage` = NULL,
     `serverResponseErrorCode` = NULL,
     `serverResponseErrorMessage` = NULL,
-    `warning` = NULL,
     `error` = NULL,
+    `warning` = NULL,
     #' Initialize a new ConnectionError class.
     #'
     #' @description
@@ -40,11 +40,11 @@ ConnectionError <- R6::R6Class(
     #' @param siriusMessage siriusMessage
     #' @param serverResponseErrorCode serverResponseErrorCode
     #' @param serverResponseErrorMessage serverResponseErrorMessage
-    #' @param warning warning
     #' @param error error
+    #' @param warning warning
     #' @param ... Other optional arguments.
     #' @export
-    initialize = function(`errorType`, `errorKlass`, `siriusErrorCode`, `siriusMessage`, `serverResponseErrorCode` = NULL, `serverResponseErrorMessage` = NULL, `warning` = NULL, `error` = NULL, ...) {
+    initialize = function(`errorType`, `errorKlass`, `siriusErrorCode`, `siriusMessage`, `serverResponseErrorCode` = NULL, `serverResponseErrorMessage` = NULL, `error` = NULL, `warning` = NULL, ...) {
       if (!missing(`errorType`)) {
         if (!(`errorType` %in% c("WARNING", "ERROR"))) {
           stop(paste("Error! \"", `errorType`, "\" cannot be assigned to `errorType`. Must be \"WARNING\", \"ERROR\".", sep = ""))
@@ -87,17 +87,17 @@ ConnectionError <- R6::R6Class(
         }
         self$`serverResponseErrorMessage` <- `serverResponseErrorMessage`
       }
-      if (!is.null(`warning`)) {
-        if (!(is.logical(`warning`) && length(`warning`) == 1)) {
-          stop(paste("Error! Invalid data for `warning`. Must be a boolean:", `warning`))
-        }
-        self$`warning` <- `warning`
-      }
       if (!is.null(`error`)) {
         if (!(is.logical(`error`) && length(`error`) == 1)) {
           stop(paste("Error! Invalid data for `error`. Must be a boolean:", `error`))
         }
         self$`error` <- `error`
+      }
+      if (!is.null(`warning`)) {
+        if (!(is.logical(`warning`) && length(`warning`) == 1)) {
+          stop(paste("Error! Invalid data for `warning`. Must be a boolean:", `warning`))
+        }
+        self$`warning` <- `warning`
       }
     },
     #' To JSON string
@@ -133,13 +133,13 @@ ConnectionError <- R6::R6Class(
         ConnectionErrorObject[["serverResponseErrorMessage"]] <-
           self$`serverResponseErrorMessage`
       }
-      if (!is.null(self$`warning`)) {
-        ConnectionErrorObject[["warning"]] <-
-          self$`warning`
-      }
       if (!is.null(self$`error`)) {
         ConnectionErrorObject[["error"]] <-
           self$`error`
+      }
+      if (!is.null(self$`warning`)) {
+        ConnectionErrorObject[["warning"]] <-
+          self$`warning`
       }
       ConnectionErrorObject
     },
@@ -177,11 +177,11 @@ ConnectionError <- R6::R6Class(
       if (!is.null(this_object$`serverResponseErrorMessage`)) {
         self$`serverResponseErrorMessage` <- this_object$`serverResponseErrorMessage`
       }
-      if (!is.null(this_object$`warning`)) {
-        self$`warning` <- this_object$`warning`
-      }
       if (!is.null(this_object$`error`)) {
         self$`error` <- this_object$`error`
+      }
+      if (!is.null(this_object$`warning`)) {
+        self$`warning` <- this_object$`warning`
       }
       self
     },
@@ -242,20 +242,20 @@ ConnectionError <- R6::R6Class(
           self$`serverResponseErrorMessage`
           )
         },
-        if (!is.null(self$`warning`)) {
-          sprintf(
-          '"warning":
-            %s
-                    ',
-          tolower(self$`warning`)
-          )
-        },
         if (!is.null(self$`error`)) {
           sprintf(
           '"error":
             %s
                     ',
           tolower(self$`error`)
+          )
+        },
+        if (!is.null(self$`warning`)) {
+          sprintf(
+          '"warning":
+            %s
+                    ',
+          tolower(self$`warning`)
           )
         }
       )
@@ -288,8 +288,8 @@ ConnectionError <- R6::R6Class(
       self$`siriusMessage` <- this_object$`siriusMessage`
       self$`serverResponseErrorCode` <- this_object$`serverResponseErrorCode`
       self$`serverResponseErrorMessage` <- this_object$`serverResponseErrorMessage`
-      self$`warning` <- this_object$`warning`
       self$`error` <- this_object$`error`
+      self$`warning` <- this_object$`warning`
       self
     },
     #' Validate JSON input with respect to ConnectionError
