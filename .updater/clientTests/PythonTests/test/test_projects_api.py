@@ -19,7 +19,6 @@ from PySirius.models.job import Job
 from PySirius.models.project_info import ProjectInfo
 from PySirius.models.import_result import ImportResult
 from PySirius.models.lcms_submission_parameters import LcmsSubmissionParameters
-from PySirius.models.data_smoothing import DataSmoothing
 
 
 class TestProjectsApi(unittest.TestCase):
@@ -104,11 +103,10 @@ class TestProjectsApi(unittest.TestCase):
         """
         # TODO
         # {"timestamp": "2024-07-12T13:12:57.748+00:00", "status": 500, "error": "Internal Server Error",
-        # "message": "jakarta.servlet.ServletException: Request processing failed: java.lang.RuntimeException: java.lang.NullPointerException: Cannot invoke \"de.unijena.bioinf.ms.frontend.subtools.lcms_align.DataSmoothing.ordinal()\" because \"filter\" is null",
         # "path": "/api/projects/test_projects_api/import/ms-data-files"}
         # input_files = [self.full_ms_file]
         # print(self.full_ms_file)
-        # parameters = LcmsSubmissionParameters(filter=DataSmoothing.AUTO)
+        # parameters = LcmsSubmissionParameters()
         # response = self.api.import_ms_run_data(self.project_id, parameters, input_files=input_files)
         # self.assertIsInstance(response, ImportResult)
 
