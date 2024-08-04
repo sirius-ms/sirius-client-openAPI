@@ -49,9 +49,11 @@ class TestJobsApi(unittest.TestCase):
         Delete job.
         """
         response_before = self.api.get_JobsApi().get_jobs(self.project_id)
+        print(response_before)
         self.api.get_JobsApi().delete_job(self.project_id, response_before[0].id, cancel_if_running=True, await_deletion=True)
         for i in range(0,1000):
             if len(self.api.get_JobsApi().get_jobs(self.project_id)) > 0:
+                print(self.api.get_JobsApi().get_jobs(self.project_id))
                 time.sleep(0.1)
             else: break
         response_after = self.api.get_JobsApi().get_jobs(self.project_id)
