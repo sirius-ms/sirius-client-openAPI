@@ -9,7 +9,7 @@ If you are interested in contributing and help maintaining prebuild SDKs for add
 
 [**Python**](client-api_python)  
 [**R**](client-api_r)  
-**Java**(https://github.com/sirius-ms/sirius/tree/stable/sirius_nightsky_sdk)
+[**Java**](https://github.com/sirius-ms/sirius/tree/stable/sirius_nightsky_sdk)
   - The java SDK is part of the [SIRIUS project](https://github.com/sirius-ms/sirius) and will be updated with every SIRIUS release.
   - A prebuild library is available via our Maven repository:
 
