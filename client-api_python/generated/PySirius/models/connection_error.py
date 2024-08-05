@@ -32,9 +32,9 @@ class ConnectionError(BaseModel):
     sirius_message: StrictStr = Field(alias="siriusMessage")
     server_response_error_code: Optional[StrictInt] = Field(default=None, alias="serverResponseErrorCode")
     server_response_error_message: Optional[StrictStr] = Field(default=None, alias="serverResponseErrorMessage")
-    warning: Optional[StrictBool] = None
     error: Optional[StrictBool] = None
-    __properties: ClassVar[List[str]] = ["errorType", "errorKlass", "siriusErrorCode", "siriusMessage", "serverResponseErrorCode", "serverResponseErrorMessage", "warning", "error"]
+    warning: Optional[StrictBool] = None
+    __properties: ClassVar[List[str]] = ["errorType", "errorKlass", "siriusErrorCode", "siriusMessage", "serverResponseErrorCode", "serverResponseErrorMessage", "error", "warning"]
 
     @field_validator('error_type')
     def error_type_validate_enum(cls, value):
@@ -117,8 +117,8 @@ class ConnectionError(BaseModel):
             "siriusMessage": obj.get("siriusMessage"),
             "serverResponseErrorCode": obj.get("serverResponseErrorCode"),
             "serverResponseErrorMessage": obj.get("serverResponseErrorMessage"),
-            "warning": obj.get("warning"),
-            "error": obj.get("error")
+            "error": obj.get("error"),
+            "warning": obj.get("warning")
         })
         return _obj
 

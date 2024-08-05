@@ -10,7 +10,7 @@ Name | Type | Description | Notes
 **siriusMessage** | **character** |  | 
 **serverResponseErrorCode** | **integer** |  | [optional] 
 **serverResponseErrorMessage** | **character** |  | [optional] 
-**warning** | **character** |  | [optional] 
 **error** | **character** |  | [optional] 
+**warning** | **character** |  | [optional] 
 
 

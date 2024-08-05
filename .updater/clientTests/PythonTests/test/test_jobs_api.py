@@ -30,7 +30,7 @@ class TestJobsApi(unittest.TestCase):
     def setUp(self) -> None:
         self.api = PySiriusAPI(PySirius.ApiClient())
         self.project_id = "test_jobs_api"
-        self.path_to_project = f"{os.environ.get('HOME')}/test_jobs_api_dir"
+        self.path_to_project = f"{os.environ.get('HOME')}/test_jobs_api.sirius"
         self.api.get_ProjectsApi().create_project_space(self.project_id, self.path_to_project)
 
         path_to_demo_data = f"{os.environ.get('HOME')}/sirius-client-openAPI/.updater/clientTests/Data"
@@ -49,9 +49,11 @@ class TestJobsApi(unittest.TestCase):
         Delete job.
         """
         response_before = self.api.get_JobsApi().get_jobs(self.project_id)
-        self.api.get_JobsApi().delete_job(self.project_id, response_before[0].id)
+        print(response_before)
+        self.api.get_JobsApi().delete_job(self.project_id, response_before[0].id, cancel_if_running=True, await_deletion=True)
         for i in range(0,1000):
             if len(self.api.get_JobsApi().get_jobs(self.project_id)) > 0:
+                print(self.api.get_JobsApi().get_jobs(self.project_id))
                 time.sleep(0.1)
             else: break
         response_after = self.api.get_JobsApi().get_jobs(self.project_id)
