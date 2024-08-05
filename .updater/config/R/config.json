@@ -2,5 +2,5 @@
 	"packageName" : "Rsirius",
 	"generateWrapper": true,
 	"library": "httr2",
-	"packageVersion": "0.9"
+	"packageVersion": "2.1sirius6.0.2"
 }

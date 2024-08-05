@@ -1,6 +1,0 @@
-{
-	"modelPackage" : "JSirius.model",
-	"apiPackage" : "JSirius.api",
-	"invokerPackage" : "JSirius",
-	"hideGenerationTimestamp" : true	
-}
