@@ -40,9 +40,9 @@ class TestPageableObject(unittest.TestCase):
                     empty = True, 
                     sorted = True, 
                     unsorted = True, ),
+                paged = True,
                 page_number = 56,
                 page_size = 56,
-                paged = True,
                 unpaged = True
             )
         else:

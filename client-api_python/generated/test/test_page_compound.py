@@ -37,8 +37,8 @@ class TestPageCompound(unittest.TestCase):
             return PageCompound(
                 total_pages = 56,
                 total_elements = 56,
-                first = True,
                 last = True,
+                first = True,
                 size = 56,
                 content = [
                     PySirius.models.compound.Compound(
@@ -294,9 +294,9 @@ class TestPageCompound(unittest.TestCase):
                         empty = True, 
                         sorted = True, 
                         unsorted = True, ), 
+                    paged = True, 
                     page_number = 56, 
                     page_size = 56, 
-                    paged = True, 
                     unpaged = True, ),
                 empty = True
             )
