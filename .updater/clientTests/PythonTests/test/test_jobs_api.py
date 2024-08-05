@@ -30,7 +30,7 @@ class TestJobsApi(unittest.TestCase):
     def setUp(self) -> None:
         self.api = PySiriusAPI(PySirius.ApiClient())
         self.project_id = "test_jobs_api"
-        self.path_to_project = f"{os.environ.get('HOME')}/test_jobs_api_dir"
+        self.path_to_project = f"{os.environ.get('HOME')}/test_jobs_api.sirius"
         self.api.get_ProjectsApi().create_project_space(self.project_id, self.path_to_project)
 
         path_to_demo_data = f"{os.environ.get('HOME')}/sirius-client-openAPI/.updater/clientTests/Data"

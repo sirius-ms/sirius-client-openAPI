@@ -32,7 +32,7 @@ class TestCompoundsApi(unittest.TestCase):
     def setUp(self) -> None:
         self.api = PySiriusAPI(PySirius.ApiClient())
         self.project_id = "test_compounds_api"
-        self.path_to_project = f"{os.environ.get('HOME')}/test_compounds_api_dir"
+        self.path_to_project = f"{os.environ.get('HOME')}/test_compounds_api.sirius"
         self.api.get_ProjectsApi().create_project_space(self.project_id, self.path_to_project)
 
         # equals test_add_compounds

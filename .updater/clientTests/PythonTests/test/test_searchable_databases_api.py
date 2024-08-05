@@ -11,12 +11,11 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 import os
 import unittest
 
 from PySirius.api.searchable_databases_api import SearchableDatabasesApi
-from PySirius.models.job import Job
+from PySirius.exceptions import ServiceException
 from PySirius.models.searchable_database import SearchableDatabase
 
 
@@ -83,9 +82,8 @@ class TestSearchableDatabasesApi(unittest.TestCase):
 
         Start import of structure and spectra files into the specified database.
         """
-        ## TODO currently broken
-        # response = self.api.import_into_database(self.database_id, input_files=[self.test_file])
-        # self.assertIsInstance(response, SearchableDatabase)
+        response = self.api.import_into_database(self.database_id, input_files=[self.test_file])
+        self.assertIsInstance(response, SearchableDatabase)
 
     def test_remove_database(self) -> None:
         """Test case for remove_database
@@ -97,10 +95,13 @@ class TestSearchableDatabasesApi(unittest.TestCase):
         """Test case for update_database
 
         """
-        # # TODO Updating Custom databases is not yet supported
-        # response = self.api.update_database(self.database_id)
-        # self.assertIsInstance(response, SearchableDatabase)
-
+        try:
+            response = self.api.update_database_with_http_info(self.database_id)
+            # self.assertIsInstance(response, SearchableDatabase)
+        except ServiceException as ex:
+            # Updating Custom databases is not yet supported
+            self.assertTrue('UnsupportedOperationException' in ex.body, 'UnsupportedOperationException not found!')
+            self.assertEqual(ex.status, 500, 'Status is not 500!')
 
 if __name__ == '__main__':
     unittest.main()

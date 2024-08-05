@@ -33,7 +33,7 @@ class TestProjectsApi(unittest.TestCase):
 
         # equals test_create_project_space
         self.project_id = "test_projects_api"
-        self.path_to_project = f"{os.environ.get('HOME')}/test_projects_api_dir"
+        self.path_to_project = f"{os.environ.get('HOME')}/test_projects_api.sirius"
         self.create_response = self.api.create_project_space(self.project_id, self.path_to_project)
 
     def tearDown(self) -> None:
