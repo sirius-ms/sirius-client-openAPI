@@ -78,8 +78,13 @@ class SiriusSDK:
 
     def __find_sirius_pid_and_port__(self, sirius_version=None):
         global_workspace = os.path.expanduser("~/.sirius")
+
+        if not sirius_version or sirius_version == "None":
+            port_pattern_match = "[0-9]*"
+        else:
+            port_pattern_match = sirius_version
         port_pattern = os.path.join(global_workspace, "sirius-"
-                                    + (sirius_version if sirius_version is None else "[0-9]*")
+                                    + port_pattern_match
                                     + ".port")
 
         port_files = glob.glob(port_pattern)
@@ -102,7 +107,7 @@ class SiriusSDK:
 
     def __cycle_find_sirius_pid_and_port__(self):
         found = False
-        for _ in range(10):
+        for _ in range(60):
             time.sleep(1)
             found = self.__find_sirius_pid_and_port__()
             if found:
@@ -142,7 +147,7 @@ class SiriusSDK:
         if sirius_port is not None:
             SiriusSDK.port = sirius_port
         else:
-            found = self.__find_sirius_pid_and_port__(str(sirius_major_version))
+            found = self.__find_sirius_pid_and_port__(sirius_major_version)
             if not found:
                 print("No port file matching ~/.sirius/sirius-X.X.port was found.", file=sys.stderr)
                 print("Please try providing the port.", file=sys.stderr)
