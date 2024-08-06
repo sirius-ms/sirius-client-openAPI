@@ -14,6 +14,7 @@
 
 import unittest
 
+from PySirius import SiriusSDK
 from PySirius.api.info_api import InfoApi
 from PySirius.models.info import Info
 from PySirius.models.connection_check import ConnectionCheck
@@ -23,7 +24,7 @@ class TestInfoApi(unittest.TestCase):
     """InfoApi unit test stubs"""
 
     def setUp(self) -> None:
-        self.api = InfoApi()
+        self.infoApi = SiriusSDK().attach_or_start_sirius().infos()
 
     def tearDown(self) -> None:
         pass
@@ -32,14 +33,14 @@ class TestInfoApi(unittest.TestCase):
         """Test case for get_connection_check
 
         """
-        response = self.api.get_connection_check()
+        response = self.infoApi.get_connection_check()
         self.assertIsInstance(response, ConnectionCheck)
 
     def test_get_info(self) -> None:
         """Test case for get_info
 
         """
-        response = self.api.get_info()
+        response = self.infoApi.get_info()
         self.assertIsInstance(response, Info)
 
 

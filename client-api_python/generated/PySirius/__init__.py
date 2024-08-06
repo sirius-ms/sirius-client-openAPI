@@ -136,4 +136,4 @@ from PySirius.models.zodiac import Zodiac
 from PySirius.models.zodiac_edge_filter_thresholds import ZodiacEdgeFilterThresholds
 from PySirius.models.zodiac_epochs import ZodiacEpochs
 from PySirius.sirius_api import PySiriusAPI
-from PySirius.Sirius import SiriusSDK
+from PySirius.sirius import SiriusSDK

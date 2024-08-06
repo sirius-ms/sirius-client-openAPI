@@ -68,10 +68,10 @@ jobs:
     - name: Format Python Package
       run: |
          cp client-api_python/sirius_api.py client-api_python/generated/PySirius
-         cp client-api_python/Sirius.py client-api_python/generated/PySirius
+         cp client-api_python/sirius.py client-api_python/generated/PySirius
 
          echo "from PySirius.sirius_api import PySiriusAPI" >> client-api_python/generated/PySirius/__init__.py
-         echo "from PySirius.Sirius import SiriusSDK" >> client-api_python/generated/PySirius/__init__.py
+         echo "from PySirius.sirius import SiriusSDK" >> client-api_python/generated/PySirius/__init__.py
     - name: Format R package
       run: |
         # rm -r client-api_r/generated/tests

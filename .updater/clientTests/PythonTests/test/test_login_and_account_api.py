@@ -15,7 +15,7 @@
 import unittest
 
 import PySirius
-from PySirius import PySiriusAPI
+from PySirius import PySiriusAPI, SiriusSDK
 from PySirius.models.account_info import AccountInfo
 
 
@@ -23,8 +23,8 @@ class TestLoginAndAccountApi(unittest.TestCase):
     """LoginAndAccountApi unit test stubs"""
 
     def setUp(self) -> None:
-        self.api = PySiriusAPI(PySirius.ApiClient())
-        self.long_api = self.api.get_LoginAndAccountApi()
+        self.api = SiriusSDK().attach_or_start_sirius()
+        self.login_api = self.api.account()
 
 
     def tearDown(self) -> None:
@@ -35,7 +35,7 @@ class TestLoginAndAccountApi(unittest.TestCase):
 
         Get information about the account currently logged in.
         """
-        response = self.long_api.get_account_info()
+        response = self.login_api.get_account_info()
         self.assertIsInstance(response, AccountInfo)
 
     def test_get_sign_up_url(self) -> None:
@@ -43,7 +43,7 @@ class TestLoginAndAccountApi(unittest.TestCase):
 
         Get SignUp URL (For signUp via web browser)
         """
-        response = self.long_api.get_sign_up_url()
+        response = self.login_api.get_sign_up_url()
         self.assertIn(response, 'https://portal.bright-giant.com/auth/register/')
 
     def test_get_subscriptions(self) -> None:
@@ -51,7 +51,7 @@ class TestLoginAndAccountApi(unittest.TestCase):
 
         Get available subscriptions of the account currently logged in.
         """
-        response = self.long_api.get_subscriptions()
+        response = self.login_api.get_subscriptions()
         self.assertIsInstance(response, list)
 
     def test_is_logged_in(self) -> None:
@@ -59,7 +59,7 @@ class TestLoginAndAccountApi(unittest.TestCase):
 
         Check if a user is logged in.
         """
-        response = self.long_api.is_logged_in()
+        response = self.login_api.is_logged_in()
         self.assertIsInstance(response, bool)
 
     def test_login(self) -> None:

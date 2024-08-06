@@ -14,14 +14,15 @@
 
 import unittest
 
-from PySirius.api.actuator_api import ActuatorApi
+import PySirius
+from PySirius import SiriusSDK
 
 
 class TestActuatorApi(unittest.TestCase):
     """ActuatorApi unit test stubs"""
 
     def setUp(self) -> None:
-        self.api = ActuatorApi()
+        self.api = PySirius.ActuatorApi(SiriusSDK().attach_or_start_sirius().get_client())
 
     def tearDown(self) -> None:
         pass

@@ -14,6 +14,7 @@
 import os
 import unittest
 
+from PySirius import SiriusSDK
 from PySirius.api.searchable_databases_api import SearchableDatabasesApi
 from PySirius.exceptions import ServiceException
 from PySirius.models.searchable_database import SearchableDatabase
@@ -23,15 +24,15 @@ class TestSearchableDatabasesApi(unittest.TestCase):
     """SearchableDatabasesApi unit test stubs"""
 
     def setUp(self) -> None:
-        self.api = SearchableDatabasesApi()
+        self.dbs = SiriusSDK().attach_or_start_sirius().databases()
         self.database_id = 'create_database'
-        self.create_response = self.api.create_database(self.database_id)
+        self.create_response = self.dbs.create_database(self.database_id)
 
         path_to_demo_data = f"{os.environ.get('HOME')}/sirius-client-openAPI/.updater/clientTests/Data"
         self.test_file = path_to_demo_data + "/Kaempferol.ms"
 
     def tearDown(self) -> None:
-        self.api.remove_database(self.database_id)
+        self.dbs.remove_database(self.database_id)
 
     def test_add_databases(self) -> None:
         """Test case for add_databases
@@ -50,7 +51,7 @@ class TestSearchableDatabasesApi(unittest.TestCase):
         """Test case for get_custom_databases
 
         """
-        response = self.api.get_custom_databases()
+        response = self.dbs.get_custom_databases()
         self.assertIsInstance(response, list)
         self.assertIsInstance(response[0], SearchableDatabase)
 
@@ -58,14 +59,14 @@ class TestSearchableDatabasesApi(unittest.TestCase):
         """Test case for get_database
 
         """
-        response = self.api.get_database(self.database_id)
+        response = self.dbs.get_database(self.database_id)
         self.assertIsInstance(response, SearchableDatabase)
 
     def test_get_databases(self) -> None:
         """Test case for get_databases
 
         """
-        response = self.api.get_databases()
+        response = self.dbs.get_databases()
         self.assertIsInstance(response, list)
         self.assertIsInstance(response[0], SearchableDatabase)
 
@@ -73,7 +74,7 @@ class TestSearchableDatabasesApi(unittest.TestCase):
         """Test case for get_included_databases
 
         """
-        response = self.api.get_included_databases()
+        response = self.dbs.get_included_databases()
         self.assertIsInstance(response, list)
         self.assertIsInstance(response[0], SearchableDatabase)
 
@@ -82,7 +83,7 @@ class TestSearchableDatabasesApi(unittest.TestCase):
 
         Start import of structure and spectra files into the specified database.
         """
-        response = self.api.import_into_database(self.database_id, input_files=[self.test_file])
+        response = self.dbs.import_into_database(self.database_id, input_files=[self.test_file])
         self.assertIsInstance(response, SearchableDatabase)
 
     def test_remove_database(self) -> None:
@@ -96,7 +97,7 @@ class TestSearchableDatabasesApi(unittest.TestCase):
 
         """
         try:
-            response = self.api.update_database_with_http_info(self.database_id)
+            response = self.dbs.update_database_with_http_info(self.database_id)
             # self.assertIsInstance(response, SearchableDatabase)
         except ServiceException as ex:
             # Updating Custom databases is not yet supported

@@ -18,22 +18,21 @@ import shutil
 import unittest
 
 import PySirius
-from PySirius import PySiriusAPI
+from PySirius import PySiriusAPI, SiriusSDK
 from PySirius.models.compound import Compound
 from PySirius.models.trace_set import TraceSet
 from PySirius.models.page_compound import PageCompound
 from PySirius.models.compound_import import CompoundImport
 
 
-
 class TestCompoundsApi(unittest.TestCase):
     """CompoundsApi unit test stubs"""
 
     def setUp(self) -> None:
-        self.api = PySiriusAPI(PySirius.ApiClient())
+        self.api = SiriusSDK().attach_or_start_sirius()
         self.project_id = "test_compounds_api"
         self.path_to_project = f"{os.environ.get('HOME')}/test_compounds_api.sirius"
-        self.api.get_ProjectsApi().create_project_space(self.project_id, self.path_to_project)
+        self.api.projects().create_project_space(self.project_id, self.path_to_project)
 
         # equals test_add_compounds
         simple_peak_json = {
@@ -67,10 +66,10 @@ class TestCompoundsApi(unittest.TestCase):
 
         compound_import_instance = CompoundImport.from_json(json.dumps(compound_import_json))
         compound_import = [compound_import_instance]
-        self.api.get_CompoundsApi().add_compounds(self.project_id, compound_import)
+        self.api.compounds().add_compounds(self.project_id, compound_import)
 
     def tearDown(self) -> None:
-        self.api.get_ProjectsApi().close_project_space(self.project_id)
+        self.api.projects().close_project_space(self.project_id)
         os.remove(self.path_to_project)
 
     def test_add_compounds(self) -> None:
@@ -85,10 +84,10 @@ class TestCompoundsApi(unittest.TestCase):
 
         Delete compound (group of ion identities) with the given identifier (and the included features) from the  specified project-space.
         """
-        compound_id = self.api.get_CompoundsApi().get_compounds(self.project_id)[0].compound_id
-        response_before = self.api.get_CompoundsApi().get_compounds(self.project_id)
-        self.api.get_CompoundsApi().delete_compound(self.project_id, compound_id)
-        response_after = self.api.get_CompoundsApi().get_compounds(self.project_id)
+        compound_id = self.api.compounds().get_compounds(self.project_id)[0].compound_id
+        response_before = self.api.compounds().get_compounds(self.project_id)
+        self.api.compounds().delete_compound(self.project_id, compound_id)
+        response_after = self.api.compounds().get_compounds(self.project_id)
 
         self.assertIsInstance(response_before, list)
         self.assertEqual(len(response_before), 1)
@@ -102,8 +101,8 @@ class TestCompoundsApi(unittest.TestCase):
 
         Get compound (group of ion identities) with the given identifier from the specified project-space.
         """
-        compound_id = self.api.get_CompoundsApi().get_compounds(self.project_id)[0].compound_id
-        response = self.api.get_CompoundsApi().get_compound(self.project_id, compound_id)
+        compound_id = self.api.compounds().get_compounds(self.project_id)[0].compound_id
+        response = self.api.compounds().get_compound(self.project_id, compound_id)
         self.assertIsInstance(response, Compound)
 
     def test_get_compounds(self) -> None:
@@ -111,7 +110,7 @@ class TestCompoundsApi(unittest.TestCase):
 
         List of all available compounds (group of ion identities) in the given project-space.
         """
-        response = self.api.get_CompoundsApi().get_compounds(self.project_id)
+        response = self.api.compounds().get_compounds(self.project_id)
         self.assertIsInstance(response, list)
         self.assertEqual(len(response), 1)
         self.assertIsInstance(response[0], Compound)
@@ -121,7 +120,7 @@ class TestCompoundsApi(unittest.TestCase):
 
         Page of available compounds (group of ion identities) in the given project-space.
         """
-        response = self.api.get_CompoundsApi().get_compounds_paged(self.project_id)
+        response = self.api.compounds().get_compounds_paged(self.project_id)
         self.assertIsInstance(response, PageCompound)
 
     def test_get_traces(self) -> None:
@@ -129,8 +128,8 @@ class TestCompoundsApi(unittest.TestCase):
 
         """
         # TODO "No trace information available for project id = test_compounds_api and compound id = 599595888450877371"
-        # compound_id = self.api.get_CompoundsApi().get_compounds(self.project_id)[0].compound_id
-        # response = self.api.get_CompoundsApi().get_traces(self.project_id, compound_id)
+        # compound_id = self.api.compounds().get_compounds(self.project_id)[0].compound_id
+        # response = self.api.compounds().get_traces(self.project_id, compound_id)
         # self.assertIsInstance(response, TraceSet)
 
 if __name__ == '__main__':

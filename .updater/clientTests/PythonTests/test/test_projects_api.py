@@ -14,6 +14,7 @@
 import os
 import unittest
 
+from PySirius import SiriusSDK
 from PySirius.api.projects_api import ProjectsApi
 from PySirius.models.job import Job
 from PySirius.models.project_info import ProjectInfo
@@ -25,7 +26,7 @@ class TestProjectsApi(unittest.TestCase):
     """ProjectsApi unit test stubs"""
 
     def setUp(self) -> None:
-        self.api = ProjectsApi()
+        self.projects = SiriusSDK().attach_or_start_sirius().projects()
         path_to_demo_data = f"{os.environ.get('HOME')}/sirius-client-openAPI/.updater/clientTests/Data"
         self.preproc_ms2_file_1 = path_to_demo_data + "/Kaempferol.ms"
         self.preproc_ms2_file_2 = path_to_demo_data + "/laudanosine.mgf"
@@ -34,11 +35,11 @@ class TestProjectsApi(unittest.TestCase):
         # equals test_create_project_space
         self.project_id = "test_projects_api"
         self.path_to_project = f"{os.environ.get('HOME')}/test_projects_api.sirius"
-        self.create_response = self.api.create_project_space(self.project_id, self.path_to_project)
+        self.create_response = self.projects.create_project_space(self.project_id, self.path_to_project)
 
     def tearDown(self) -> None:
         # equals test_close_project_space
-        self.api.close_project_space(self.project_id)
+        self.projects.close_project_space(self.project_id)
         os.remove(self.path_to_project)
 
     def test_close_project_space(self) -> None:
@@ -60,7 +61,7 @@ class TestProjectsApi(unittest.TestCase):
 
         Get CANOPUS prediction vector definition for ClassyFire classes
         """
-        response = self.api.get_canopus_classy_fire_data(self.project_id, 0)
+        response = self.projects.get_canopus_classy_fire_data(self.project_id, 0)
         self.assertIsInstance(response, str)
 
     def test_get_canopus_npc_data(self) -> None:
@@ -68,7 +69,7 @@ class TestProjectsApi(unittest.TestCase):
 
         Get CANOPUS prediction vector definition for NPC classes
         """
-        response = self.api.get_canopus_npc_data(self.project_id, 0)
+        response = self.projects.get_canopus_npc_data(self.project_id, 0)
         self.assertIsInstance(response, str)
 
     def test_get_finger_id_data(self) -> None:
@@ -76,7 +77,7 @@ class TestProjectsApi(unittest.TestCase):
 
         Get CSI:FingerID fingerprint (prediction vector) definition
         """
-        response = self.api.get_finger_id_data(self.project_id, 0)
+        response = self.projects.get_finger_id_data(self.project_id, 0)
         self.assertIsInstance(response, str)
 
     def test_get_project_space(self) -> None:
@@ -84,7 +85,7 @@ class TestProjectsApi(unittest.TestCase):
 
         Get project space info by its projectId.
         """
-        response = self.api.get_project_space(self.project_id)
+        response = self.projects.get_project_space(self.project_id)
         self.assertIsInstance(response, ProjectInfo)
 
     def test_get_project_spaces(self) -> None:
@@ -92,7 +93,7 @@ class TestProjectsApi(unittest.TestCase):
 
         List opened project spaces.
         """
-        response = self.api.get_project_spaces()
+        response = self.projects.get_project_spaces()
         self.assertIsInstance(response, list)
         self.assertIsInstance(response[0], ProjectInfo)
 
@@ -117,7 +118,7 @@ class TestProjectsApi(unittest.TestCase):
         """
         input_files = [self.full_ms_file]
         parameters = LcmsSubmissionParameters()
-        response = self.api.import_ms_run_data_as_job(self.project_id, parameters, input_files=input_files)
+        response = self.projects.import_ms_run_data_as_job(self.project_id, parameters, input_files=input_files)
         self.assertIsInstance(response, Job)
 
     def test_import_preprocessed_data(self) -> None:
@@ -126,7 +127,7 @@ class TestProjectsApi(unittest.TestCase):
         Import already preprocessed ms/ms data from various formats into the specified project  Possible formats (ms, mgf, cef, msp)
         """
         input_files = [self.preproc_ms2_file_1, self.preproc_ms2_file_2]
-        response = self.api.import_preprocessed_data(self.project_id, input_files=input_files)
+        response = self.projects.import_preprocessed_data(self.project_id, input_files=input_files)
         self.assertIsInstance(response, ImportResult)
 
     def test_import_preprocessed_data_as_job(self) -> None:
@@ -135,7 +136,7 @@ class TestProjectsApi(unittest.TestCase):
         Import ms/ms data from the given format into the specified project-space as background job.
         """
         input_files = [self.preproc_ms2_file_1, self.preproc_ms2_file_2]
-        response = self.api.import_preprocessed_data_as_job(self.project_id, input_files=input_files)
+        response = self.projects.import_preprocessed_data_as_job(self.project_id, input_files=input_files)
         self.assertIsInstance(response, Job)
 
     def test_open_project_space(self) -> None:
@@ -143,8 +144,8 @@ class TestProjectsApi(unittest.TestCase):
 
         Open an existing project-space and make it accessible via the given projectId.
         """
-        response = self.api.open_project_space("tomato", f"{os.environ.get('HOME')}/tomato_small.sirius")
-        self.api.close_project_space("tomato")
+        response = self.projects.open_project_space("tomato", f"{os.environ.get('HOME')}/tomato_small.sirius")
+        self.projects.close_project_space("tomato")
         self.assertIsInstance(response, ProjectInfo)
 
 if __name__ == '__main__':
