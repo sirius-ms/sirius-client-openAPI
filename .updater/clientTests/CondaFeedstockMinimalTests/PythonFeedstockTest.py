@@ -1,37 +1,36 @@
-from PySirius import *
+from PySirius import SiriusSDK, AlignedFeatureOptField
 import os
-import json
 import time
 
-sdk = SiriusSDK()
-api_instance = sdk.start(port=8080)
-project_id = project_dir = "test_fragtree"
-api_instance.get_ProjectsApi().create_project_space(project_id, project_dir)
-my_compound = [os.path.abspath(os.getenv('RECIPE_DIR') + "/Kaempferol.ms")]
-api_instance.get_ProjectsApi().import_preprocessed_data(project_id, input_files=my_compound)
-aligned_feature_id = api_instance.get_FeaturesApi().get_aligned_features(project_id)[0].aligned_feature_id
-sirius_json = {
-    "enabled": True,
-    "profile": "QTOF"
-}
-job_submission_json = {
-    "alignedFeatureIds": [
-        aligned_feature_id
-    ],
-    "formulaIdParams":
-        sirius_json
-}
-job_submission = JobSubmission.from_json(json.dumps(job_submission_json))
-job = api_instance.get_JobsApi().start_job(project_id, job_submission)
-while api_instance.get_JobsApi().get_job(project_id, job.id).progress.state == "RUNNING":
-    time.sleep(1)
-formula_candidates = api_instance.get_FeaturesApi().get_formula_candidates(project_id, aligned_feature_id)
-formula_id = formula_candidates[0].formula_id
-fragtree = api_instance.get_FeaturesApi().get_frag_tree(project_id, aligned_feature_id, formula_id)
-api_instance.get_ProjectsApi().close_project_space(project_id)
-os.remove(project_dir)
-sdk.shutdown()
+api = SiriusSDK().attach_or_start_sirius()
 
-if isinstance(fragtree, FragmentationTree):
-    with open('test_fragtree.txt', 'w') as f:
-        f.write(fragtree.to_str())
+time.sleep(10)
+ps_info = api.projects().create_project_space("testProject", os.path.abspath("./testProject.sirius"))
+path = os.getenv('RECIPE_DIR') + "/Kaempferol.ms"
+path = os.path.abspath(path)
+api.projects().import_preprocessed_data(ps_info.project_id, ignore_formulas=True, input_files=[path])
+
+featureId = api.features().get_aligned_features(ps_info.project_id)[0].aligned_feature_id
+
+jobSub = api.jobs().get_default_job_config()
+jobSub.formula_id_params.enabled = True
+jobSub.fingerprint_prediction_params.enabled = False
+jobSub.structure_db_search_params.enabled = False
+jobSub.canopus_params.enabled = False
+jobSub.ms_novelist_params.enabled = False
+
+job = api.jobs().start_job(project_id=ps_info.project_id, job_submission=jobSub)
+while True:
+    if api.jobs().get_job(ps_info.project_id, job.id).progress.state != 'DONE':
+        time.sleep(10)
+    else:
+        break
+
+formula_id = api.features().get_aligned_feature(ps_info.project_id, featureId, [AlignedFeatureOptField.TOPANNOTATIONS]
+                                          ).top_annotations.formula_annotation.formula_id
+tree = api.features().get_frag_tree(ps_info.project_id, featureId, formula_id)
+print(tree.to_json())
+SiriusSDK().shutdown_sirius()
+
+with open('test_fragtree.json', 'w') as f:
+    f.write(tree.to_json())
