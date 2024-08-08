@@ -1,4 +1,5 @@
 {
 	"packageName" : "PySirius",
-	"packageVersion" : "6.0.2"
+	"packageVersion" : "6.0.2",
+	"mapNumberTo" : "float"
 }
