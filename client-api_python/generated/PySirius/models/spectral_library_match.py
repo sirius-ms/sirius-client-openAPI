@@ -17,8 +17,8 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional, Union
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional
 from PySirius.models.basic_spectrum import BasicSpectrum
 from typing import Optional, Set
 from typing_extensions import Self
@@ -29,7 +29,7 @@ class SpectralLibraryMatch(BaseModel):
     """ # noqa: E501
     spec_match_id: Optional[StrictStr] = Field(default=None, alias="specMatchId")
     rank: Optional[StrictInt] = None
-    similarity: Union[StrictFloat, StrictInt]
+    similarity: float
     shared_peaks: Optional[StrictInt] = Field(default=None, alias="sharedPeaks")
     query_spectrum_index: StrictInt = Field(alias="querySpectrumIndex")
     db_name: Optional[StrictStr] = Field(default=None, alias="dbName")

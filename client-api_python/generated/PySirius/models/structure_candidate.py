@@ -17,8 +17,8 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional, Union
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional
 from PySirius.models.db_link import DBLink
 from PySirius.models.spectral_library_match import SpectralLibraryMatch
 from typing import Optional, Set
@@ -31,7 +31,7 @@ class StructureCandidate(BaseModel):
     inchi_key: Optional[StrictStr] = Field(default=None, alias="inchiKey")
     smiles: Optional[StrictStr] = None
     structure_name: Optional[StrictStr] = Field(default=None, alias="structureName")
-    xlog_p: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="xlogP")
+    xlog_p: Optional[float] = Field(default=None, alias="xlogP")
     db_links: Optional[List[Optional[DBLink]]] = Field(default=None, description="List of structure database links belonging to this structure candidate  OPTIONAL: needs to be added by parameter", alias="dbLinks")
     spectral_library_matches: Optional[List[Optional[SpectralLibraryMatch]]] = Field(default=None, description="List of spectral library matches belonging to this structure candidate  OPTIONAL: needs to be added by parameter", alias="spectralLibraryMatches")
     __properties: ClassVar[List[str]] = ["inchiKey", "smiles", "structureName", "xlogP", "dbLinks", "spectralLibraryMatches"]

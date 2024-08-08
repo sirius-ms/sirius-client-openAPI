@@ -17,8 +17,8 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional, Union
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -29,11 +29,11 @@ class FragmentNode(BaseModel):
     fragment_id: Optional[StrictInt] = Field(default=None, alias="fragmentId")
     molecular_formula: Optional[StrictStr] = Field(default=None, alias="molecularFormula")
     ion_type: Optional[StrictStr] = Field(default=None, alias="ionType")
-    mass_deviation_da: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="massDeviationDa")
-    mass_deviation_ppm: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="massDeviationPpm")
-    score: Optional[Union[StrictFloat, StrictInt]] = None
-    intensity: Optional[Union[StrictFloat, StrictInt]] = None
-    mz: Optional[Union[StrictFloat, StrictInt]] = None
+    mass_deviation_da: Optional[float] = Field(default=None, alias="massDeviationDa")
+    mass_deviation_ppm: Optional[float] = Field(default=None, alias="massDeviationPpm")
+    score: Optional[float] = None
+    intensity: Optional[float] = None
+    mz: Optional[float] = None
     __properties: ClassVar[List[str]] = ["fragmentId", "molecularFormula", "ionType", "massDeviationDa", "massDeviationPpm", "score", "intensity", "mz"]
 
     model_config = ConfigDict(

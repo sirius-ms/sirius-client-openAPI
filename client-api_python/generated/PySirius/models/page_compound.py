@@ -31,8 +31,8 @@ class PageCompound(BaseModel):
     """ # noqa: E501
     total_pages: Optional[StrictInt] = Field(default=None, alias="totalPages")
     total_elements: Optional[StrictInt] = Field(default=None, alias="totalElements")
-    first: Optional[StrictBool] = None
     last: Optional[StrictBool] = None
+    first: Optional[StrictBool] = None
     size: Optional[StrictInt] = None
     content: Optional[List[Compound]] = None
     number: Optional[StrictInt] = None
@@ -40,7 +40,7 @@ class PageCompound(BaseModel):
     number_of_elements: Optional[StrictInt] = Field(default=None, alias="numberOfElements")
     pageable: Optional[PageableObject] = None
     empty: Optional[StrictBool] = None
-    __properties: ClassVar[List[str]] = ["totalPages", "totalElements", "first", "last", "size", "content", "number", "sort", "numberOfElements", "pageable", "empty"]
+    __properties: ClassVar[List[str]] = ["totalPages", "totalElements", "last", "first", "size", "content", "number", "sort", "numberOfElements", "pageable", "empty"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -108,8 +108,8 @@ class PageCompound(BaseModel):
         _obj = cls.model_validate({
             "totalPages": obj.get("totalPages"),
             "totalElements": obj.get("totalElements"),
-            "first": obj.get("first"),
             "last": obj.get("last"),
+            "first": obj.get("first"),
             "size": obj.get("size"),
             "content": [Compound.from_dict(_item) for _item in obj["content"]] if obj.get("content") is not None else None,
             "number": obj.get("number"),

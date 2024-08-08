@@ -17,8 +17,8 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional, Union
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional
 from PySirius.models.basic_spectrum import BasicSpectrum
 from typing import Optional, Set
 from typing_extensions import Self
@@ -29,11 +29,11 @@ class FeatureImport(BaseModel):
     """ # noqa: E501
     name: Optional[StrictStr] = None
     external_feature_id: Optional[StrictStr] = Field(default=None, description="Externally provided FeatureId (by some preprocessing tool). This FeatureId is NOT used by SIRIUS but is stored to ease mapping information back to the source.", alias="externalFeatureId")
-    ion_mass: Union[StrictFloat, StrictInt] = Field(alias="ionMass")
+    ion_mass: float = Field(alias="ionMass")
     charge: StrictInt
     detected_adducts: Optional[List[Optional[StrictStr]]] = Field(default=None, description="Detected adducts of this feature. Can be NULL or empty if no adducts are known.", alias="detectedAdducts")
-    rt_start_seconds: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="rtStartSeconds")
-    rt_end_seconds: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="rtEndSeconds")
+    rt_start_seconds: Optional[float] = Field(default=None, alias="rtStartSeconds")
+    rt_end_seconds: Optional[float] = Field(default=None, alias="rtEndSeconds")
     merged_ms1: Optional[BasicSpectrum] = Field(default=None, alias="mergedMs1")
     ms1_spectra: Optional[List[Optional[BasicSpectrum]]] = Field(default=None, description="List of MS1Spectra belonging to this feature. These spectra will be merged an only a representative  mergedMs1 spectrum will be stored in SIRIUS. At least one of these spectra should contain the  isotope pattern of the precursor ion.  Note: Will be ignored if 'mergedMs1' is given.", alias="ms1Spectra")
     ms2_spectra: Optional[List[Optional[BasicSpectrum]]] = Field(default=None, description="List of MS/MS spectra that belong to this feature.", alias="ms2Spectra")
