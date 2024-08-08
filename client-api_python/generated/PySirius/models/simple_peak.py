@@ -17,8 +17,8 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictFloat, StrictInt
-from typing import Any, ClassVar, Dict, List, Optional, Union
+from pydantic import BaseModel, ConfigDict
+from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -26,8 +26,8 @@ class SimplePeak(BaseModel):
     """
     SimplePeak
     """ # noqa: E501
-    mz: Optional[Union[StrictFloat, StrictInt]] = None
-    intensity: Optional[Union[StrictFloat, StrictInt]] = None
+    mz: Optional[float] = None
+    intensity: Optional[float] = None
     __properties: ClassVar[List[str]] = ["mz", "intensity"]
 
     model_config = ConfigDict(

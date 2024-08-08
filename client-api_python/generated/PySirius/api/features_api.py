@@ -16,8 +16,8 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from pydantic import Field, StrictFloat, StrictInt, StrictStr, field_validator
-from typing import List, Optional, Union
+from pydantic import Field, StrictInt, StrictStr, field_validator
+from typing import List, Optional
 from typing_extensions import Annotated
 from PySirius.models.aligned_feature import AlignedFeature
 from PySirius.models.aligned_feature_opt_field import AlignedFeatureOptField
@@ -7237,7 +7237,7 @@ class FeaturesApi:
         project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
         aligned_feature_id: Annotated[StrictStr, Field(description="feature (aligned over runs) the structure candidates belong to.")],
         min_shared_peaks: Optional[StrictInt] = None,
-        min_similarity: Optional[Union[StrictFloat, StrictInt]] = None,
+        min_similarity: Optional[float] = None,
         candidate_in_chi_key: Optional[StrictStr] = None,
         opt_fields: Optional[List[Optional[SpectralLibraryMatchOptField]]] = None,
         _request_timeout: Union[
@@ -7324,7 +7324,7 @@ class FeaturesApi:
         project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
         aligned_feature_id: Annotated[StrictStr, Field(description="feature (aligned over runs) the structure candidates belong to.")],
         min_shared_peaks: Optional[StrictInt] = None,
-        min_similarity: Optional[Union[StrictFloat, StrictInt]] = None,
+        min_similarity: Optional[float] = None,
         candidate_in_chi_key: Optional[StrictStr] = None,
         opt_fields: Optional[List[Optional[SpectralLibraryMatchOptField]]] = None,
         _request_timeout: Union[
@@ -7411,7 +7411,7 @@ class FeaturesApi:
         project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
         aligned_feature_id: Annotated[StrictStr, Field(description="feature (aligned over runs) the structure candidates belong to.")],
         min_shared_peaks: Optional[StrictInt] = None,
-        min_similarity: Optional[Union[StrictFloat, StrictInt]] = None,
+        min_similarity: Optional[float] = None,
         candidate_in_chi_key: Optional[StrictStr] = None,
         opt_fields: Optional[List[Optional[SpectralLibraryMatchOptField]]] = None,
         _request_timeout: Union[
@@ -7581,7 +7581,7 @@ class FeaturesApi:
         size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
         sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
         min_shared_peaks: Optional[StrictInt] = None,
-        min_similarity: Optional[Union[StrictFloat, StrictInt]] = None,
+        min_similarity: Optional[float] = None,
         candidate_in_chi_key: Optional[StrictStr] = None,
         opt_fields: Optional[List[Optional[SpectralLibraryMatchOptField]]] = None,
         _request_timeout: Union[
@@ -7680,7 +7680,7 @@ class FeaturesApi:
         size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
         sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
         min_shared_peaks: Optional[StrictInt] = None,
-        min_similarity: Optional[Union[StrictFloat, StrictInt]] = None,
+        min_similarity: Optional[float] = None,
         candidate_in_chi_key: Optional[StrictStr] = None,
         opt_fields: Optional[List[Optional[SpectralLibraryMatchOptField]]] = None,
         _request_timeout: Union[
@@ -7779,7 +7779,7 @@ class FeaturesApi:
         size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
         sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
         min_shared_peaks: Optional[StrictInt] = None,
-        min_similarity: Optional[Union[StrictFloat, StrictInt]] = None,
+        min_similarity: Optional[float] = None,
         candidate_in_chi_key: Optional[StrictStr] = None,
         opt_fields: Optional[List[Optional[SpectralLibraryMatchOptField]]] = None,
         _request_timeout: Union[
@@ -7971,7 +7971,7 @@ class FeaturesApi:
         project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
         aligned_feature_id: Annotated[StrictStr, Field(description="feature (aligned over runs) the structure candidates belong to.")],
         min_shared_peaks: Annotated[Optional[StrictInt], Field(description="min threshold of shared peaks.")] = None,
-        min_similarity: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="min spectral similarity threshold.")] = None,
+        min_similarity: Annotated[Optional[float], Field(description="min spectral similarity threshold.")] = None,
         candidate_in_chi_key: Annotated[Optional[StrictStr], Field(description="inchi key of the database compound.")] = None,
         _request_timeout: Union[
             None,
@@ -8054,7 +8054,7 @@ class FeaturesApi:
         project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
         aligned_feature_id: Annotated[StrictStr, Field(description="feature (aligned over runs) the structure candidates belong to.")],
         min_shared_peaks: Annotated[Optional[StrictInt], Field(description="min threshold of shared peaks.")] = None,
-        min_similarity: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="min spectral similarity threshold.")] = None,
+        min_similarity: Annotated[Optional[float], Field(description="min spectral similarity threshold.")] = None,
         candidate_in_chi_key: Annotated[Optional[StrictStr], Field(description="inchi key of the database compound.")] = None,
         _request_timeout: Union[
             None,
@@ -8137,7 +8137,7 @@ class FeaturesApi:
         project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
         aligned_feature_id: Annotated[StrictStr, Field(description="feature (aligned over runs) the structure candidates belong to.")],
         min_shared_peaks: Annotated[Optional[StrictInt], Field(description="min threshold of shared peaks.")] = None,
-        min_similarity: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="min spectral similarity threshold.")] = None,
+        min_similarity: Annotated[Optional[float], Field(description="min spectral similarity threshold.")] = None,
         candidate_in_chi_key: Annotated[Optional[StrictStr], Field(description="inchi key of the database compound.")] = None,
         _request_timeout: Union[
             None,

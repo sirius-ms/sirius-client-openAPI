@@ -17,8 +17,8 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt
-from typing import Any, ClassVar, Dict, List, Optional, Union
+from pydantic import BaseModel, ConfigDict, Field, StrictInt
+from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -26,7 +26,7 @@ class ZodiacEdgeFilterThresholds(BaseModel):
     """
     ZodiacEdgeFilterThresholds
     """ # noqa: E501
-    threshold_filter: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="thresholdFilter")
+    threshold_filter: Optional[float] = Field(default=None, alias="thresholdFilter")
     min_local_candidates: Optional[StrictInt] = Field(default=None, alias="minLocalCandidates")
     min_local_connections: Optional[StrictInt] = Field(default=None, alias="minLocalConnections")
     __properties: ClassVar[List[str]] = ["thresholdFilter", "minLocalCandidates", "minLocalConnections"]

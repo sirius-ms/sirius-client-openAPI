@@ -17,8 +17,8 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional, Union
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional
 from PySirius.models.aligned_feature import AlignedFeature
 from PySirius.models.consensus_annotations_csi import ConsensusAnnotationsCSI
 from PySirius.models.consensus_annotations_de_novo import ConsensusAnnotationsDeNovo
@@ -31,9 +31,9 @@ class Compound(BaseModel):
     """ # noqa: E501
     compound_id: Optional[StrictStr] = Field(default=None, description="uid of this compound Entity", alias="compoundId")
     name: Optional[StrictStr] = Field(default=None, description="Some (optional) human-readable name")
-    rt_start_seconds: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="The merged/consensus retention time start (earliest rt) of this compound", alias="rtStartSeconds")
-    rt_end_seconds: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="The merged/consensus retention time end (latest rt) of this compound", alias="rtEndSeconds")
-    neutral_mass: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Neutral mass of this compound. Ion masse minus the mass of the assigned adduct of each feature of  this compound should result in the same neutral mass", alias="neutralMass")
+    rt_start_seconds: Optional[float] = Field(default=None, description="The merged/consensus retention time start (earliest rt) of this compound", alias="rtStartSeconds")
+    rt_end_seconds: Optional[float] = Field(default=None, description="The merged/consensus retention time end (latest rt) of this compound", alias="rtEndSeconds")
+    neutral_mass: Optional[float] = Field(default=None, description="Neutral mass of this compound. Ion masse minus the mass of the assigned adduct of each feature of  this compound should result in the same neutral mass", alias="neutralMass")
     features: Optional[List[AlignedFeature]] = Field(default=None, description="List of aligned features (adducts) that belong to the same (this) compound")
     consensus_annotations: Optional[ConsensusAnnotationsCSI] = Field(default=None, alias="consensusAnnotations")
     consensus_annotations_de_novo: Optional[ConsensusAnnotationsDeNovo] = Field(default=None, alias="consensusAnnotationsDeNovo")

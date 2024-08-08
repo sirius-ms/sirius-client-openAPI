@@ -17,8 +17,8 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr, field_validator
-from typing import Any, ClassVar, Dict, List, Optional, Union
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr, field_validator
+from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -33,7 +33,7 @@ class QuantificationTable(BaseModel):
     column_ids: Optional[List[Optional[StrictInt]]] = Field(default=None, alias="columnIds")
     row_names: Optional[List[Optional[StrictStr]]] = Field(default=None, alias="rowNames")
     column_names: Optional[List[Optional[StrictStr]]] = Field(default=None, alias="columnNames")
-    values: Optional[List[List[Union[StrictFloat, StrictInt]]]] = None
+    values: Optional[List[List[float]]] = None
     __properties: ClassVar[List[str]] = ["quantificationType", "rowType", "columnType", "rowIds", "columnIds", "rowNames", "columnNames", "values"]
 
     @field_validator('quantification_type')
