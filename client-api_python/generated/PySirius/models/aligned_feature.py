@@ -17,8 +17,8 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictFloat, StrictInt, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional, Union
 from PySirius.models.data_quality import DataQuality
 from PySirius.models.feature_annotations import FeatureAnnotations
 from PySirius.models.ms_data import MsData
@@ -33,11 +33,11 @@ class AlignedFeature(BaseModel):
     compound_id: Optional[StrictStr] = Field(default=None, alias="compoundId")
     name: Optional[StrictStr] = None
     external_feature_id: Optional[StrictStr] = Field(default=None, description="Externally provided FeatureId (e.g. by some preprocessing tool).  This FeatureId is NOT used by SIRIUS but is stored to ease mapping information back to the source.", alias="externalFeatureId")
-    ion_mass: Optional[float] = Field(default=None, alias="ionMass")
+    ion_mass: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="ionMass")
     charge: StrictInt = Field(description="Ion mode (charge) this feature has been measured in.")
     detected_adducts: List[StrictStr] = Field(description="Adducts of this feature that have been detected during preprocessing.", alias="detectedAdducts")
-    rt_start_seconds: Optional[float] = Field(default=None, alias="rtStartSeconds")
-    rt_end_seconds: Optional[float] = Field(default=None, alias="rtEndSeconds")
+    rt_start_seconds: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="rtStartSeconds")
+    rt_end_seconds: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="rtEndSeconds")
     quality: Optional[DataQuality] = None
     has_ms1: Optional[StrictBool] = Field(default=None, description="If true, the feature has at lease one MS1 spectrum", alias="hasMs1")
     has_ms_ms: Optional[StrictBool] = Field(default=None, description="If true, the feature has at lease one MS/MS spectrum", alias="hasMsMs")

@@ -17,8 +17,8 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
+from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -28,11 +28,11 @@ class SpectrumAnnotation(BaseModel):
     """ # noqa: E501
     molecular_formula: Optional[StrictStr] = Field(default=None, description="Molecular formula that has been annotated to this spectrum", alias="molecularFormula")
     ionization: Optional[StrictStr] = Field(default=None, description="Ionization that has been annotated to this spectrum")
-    exact_mass: Optional[float] = Field(default=None, description="Exact mass based on the annotated molecular formula and ionization", alias="exactMass")
-    mass_deviation_mz: Optional[float] = Field(default=None, description="Absolute mass deviation of the exact mass to the precursor mass (precursorMz) of this spectrum in mDa", alias="massDeviationMz")
-    mass_deviation_ppm: Optional[float] = Field(default=None, description="Relative mass deviation of the exact mass to the precursor mass (precursorMz) of this spectrum in ppm", alias="massDeviationPpm")
+    exact_mass: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Exact mass based on the annotated molecular formula and ionization", alias="exactMass")
+    mass_deviation_mz: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Absolute mass deviation of the exact mass to the precursor mass (precursorMz) of this spectrum in mDa", alias="massDeviationMz")
+    mass_deviation_ppm: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Relative mass deviation of the exact mass to the precursor mass (precursorMz) of this spectrum in ppm", alias="massDeviationPpm")
     structure_annotation_smiles: Optional[StrictStr] = Field(default=None, description="Smiles of the structure candidate used to derive substructure peak annotations via epimetheus insilico fragmentation  Substructure highlighting (bond and atom indices) refer to this specific SMILES.  If you standardize or canonicalize this SMILES in any way the indices of substructure highlighting might  not match correctly anymore.   Null if substructure annotation not available or not requested.", alias="structureAnnotationSmiles")
-    structure_annotation_score: Optional[float] = Field(default=None, description="Overall score of all substructure annotations computed for this structure candidate (structureAnnotationSmiles)   Null if substructure annotation not available or not requested.", alias="structureAnnotationScore")
+    structure_annotation_score: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Overall score of all substructure annotations computed for this structure candidate (structureAnnotationSmiles)   Null if substructure annotation not available or not requested.", alias="structureAnnotationScore")
     __properties: ClassVar[List[str]] = ["molecularFormula", "ionization", "exactMass", "massDeviationMz", "massDeviationPpm", "structureAnnotationSmiles", "structureAnnotationScore"]
 
     model_config = ConfigDict(

@@ -17,8 +17,8 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
+from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional, Union
 from PySirius.models.annotated_peak import AnnotatedPeak
 from PySirius.models.spectrum_annotation import SpectrumAnnotation
 from typing import Optional, Set
@@ -31,10 +31,10 @@ class AnnotatedSpectrum(BaseModel):
     name: Optional[StrictStr] = Field(default=None, description="Optional Displayable name of this spectrum.")
     ms_level: Optional[StrictInt] = Field(default=None, description="MS level of the measured spectrum.  Artificial spectra with no msLevel (e.g. Simulated Isotope patterns) use null or zero", alias="msLevel")
     collision_energy: Optional[StrictStr] = Field(default=None, description="Collision energy used for MS/MS spectra  Null for spectra where collision energy is not applicable", alias="collisionEnergy")
-    precursor_mz: Optional[float] = Field(default=None, description="Precursor m/z of the MS/MS spectrum  Null for spectra where precursor m/z is not applicable", alias="precursorMz")
+    precursor_mz: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Precursor m/z of the MS/MS spectrum  Null for spectra where precursor m/z is not applicable", alias="precursorMz")
     scan_number: Optional[StrictInt] = Field(default=None, description="Scan number of the spectrum.  Might be null for artificial spectra with no scan number (e.g. Simulated Isotope patterns or merged spectra)", alias="scanNumber")
     peaks: List[AnnotatedPeak] = Field(description="The peaks of this spectrum which might contain additional annotations such as molecular formulas.")
-    abs_intensity_factor: Optional[float] = Field(default=None, description="Factor to convert relative intensities to absolute intensities.  Might be null or 1 for spectra where absolute intensities are not available (E.g. artificial or merged spectra)", alias="absIntensityFactor")
+    abs_intensity_factor: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Factor to convert relative intensities to absolute intensities.  Might be null or 1 for spectra where absolute intensities are not available (E.g. artificial or merged spectra)", alias="absIntensityFactor")
     spectrum_annotation: Optional[SpectrumAnnotation] = Field(default=None, alias="spectrumAnnotation")
     __properties: ClassVar[List[str]] = ["name", "msLevel", "collisionEnergy", "precursorMz", "scanNumber", "peaks", "absIntensityFactor", "spectrumAnnotation"]
 

@@ -17,8 +17,8 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
+from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional, Union
 from PySirius.models.compound_classes import CompoundClasses
 from PySirius.models.consensus_criterion_csi import ConsensusCriterionCSI
 from PySirius.models.structure_candidate import StructureCandidate
@@ -34,8 +34,8 @@ class ConsensusAnnotationsCSI(BaseModel):
     supporting_feature_ids: Optional[List[Optional[StrictStr]]] = Field(default=None, description="FeatureIds where the topAnnotation supports this annotation.", alias="supportingFeatureIds")
     selection_criterion: Optional[ConsensusCriterionCSI] = Field(default=None, alias="selectionCriterion")
     csi_finger_id_structure: Optional[StructureCandidate] = Field(default=None, alias="csiFingerIdStructure")
-    confidence_exact_match: Optional[float] = Field(default=None, description="Confidence value that represents the certainty that reported consensus structure is exactly the measured one  If multiple features support this consensus structure the maximum confidence is reported", alias="confidenceExactMatch")
-    confidence_approx_match: Optional[float] = Field(default=None, description="Confidence value that represents the certainty that the exact consensus structure or a very similar  structure (e.g. measured by Maximum Common Edge Subgraph Distance) is the measured one.  If multiple features support this consensus structure the maximum confidence is reported", alias="confidenceApproxMatch")
+    confidence_exact_match: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Confidence value that represents the certainty that reported consensus structure is exactly the measured one  If multiple features support this consensus structure the maximum confidence is reported", alias="confidenceExactMatch")
+    confidence_approx_match: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Confidence value that represents the certainty that the exact consensus structure or a very similar  structure (e.g. measured by Maximum Common Edge Subgraph Distance) is the measured one.  If multiple features support this consensus structure the maximum confidence is reported", alias="confidenceApproxMatch")
     __properties: ClassVar[List[str]] = ["molecularFormula", "compoundClasses", "supportingFeatureIds", "selectionCriterion", "csiFingerIdStructure", "confidenceExactMatch", "confidenceApproxMatch"]
 
     model_config = ConfigDict(

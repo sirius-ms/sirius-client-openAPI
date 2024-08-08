@@ -136,6 +136,7 @@
 #' \itemize{
 #' \item \emph{ @param } project_id character
 #' \item \emph{ @param } parameters \link{LcmsSubmissionParameters}
+#' \item \emph{ @param } allow_ms1_only character
 #' \item \emph{ @param } input_files list( data.frame )
 #' \item \emph{ @returnType } \link{ImportResult} \cr
 #'
@@ -155,6 +156,7 @@
 #' \itemize{
 #' \item \emph{ @param } project_id character
 #' \item \emph{ @param } parameters \link{LcmsSubmissionParameters}
+#' \item \emph{ @param } allow_ms1_only character
 #' \item \emph{ @param } opt_fields list( \link{JobOptField} )
 #' \item \emph{ @param } input_files list( data.frame )
 #' \item \emph{ @returnType } \link{Job} \cr
@@ -339,14 +341,15 @@
 #' library(Rsirius)
 #' var_project_id <- "project_id_example" # character | Project-space to import into.
 #' var_parameters <- LcmsSubmissionParameters$new("alignLCMSRuns_example") # LcmsSubmissionParameters | Parameters for feature alignment and feature finding.
+#' var_allow_ms1_only <- TRUE # character | Import data without MS/MS. (Optional)
 #' var_input_files <- c(123) # array[data.frame] |  (Optional)
 #'
 #' #Import and Align full MS-Runs from various formats into the specified project  Possible formats (mzML, mzXML)
 #' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-#' # result <- api_instance$ImportMsRunData(var_project_id, var_parameters, input_files = var_input_filesdata_file = "result.txt")
-#' result <- api_instance$projects_api$ImportMsRunData(var_project_id, var_parameters, input_files = var_input_files)
+#' # result <- api_instance$ImportMsRunData(var_project_id, var_parameters, allow_ms1_only = var_allow_ms1_only, input_files = var_input_filesdata_file = "result.txt")
+#' result <- api_instance$projects_api$ImportMsRunData(var_project_id, var_parameters, allow_ms1_only = var_allow_ms1_only, input_files = var_input_files)
 #' dput(result)
 #'
 #'
@@ -355,6 +358,7 @@
 #' library(Rsirius)
 #' var_project_id <- "project_id_example" # character | Project-space to import into.
 #' var_parameters <- LcmsSubmissionParameters$new("alignLCMSRuns_example") # LcmsSubmissionParameters | Parameters for feature alignment and feature finding.
+#' var_allow_ms1_only <- TRUE # character | Import data without MS/MS. (Optional)
 #' var_opt_fields <- c(JobOptField$new()) # array[JobOptField] | Set of optional fields to be included. Use 'none' only to override defaults. (Optional)
 #' var_input_files <- c(123) # array[data.frame] |  (Optional)
 #'
@@ -362,8 +366,8 @@
 #' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-#' # result <- api_instance$ImportMsRunDataAsJob(var_project_id, var_parameters, opt_fields = var_opt_fields, input_files = var_input_filesdata_file = "result.txt")
-#' result <- api_instance$projects_api$ImportMsRunDataAsJob(var_project_id, var_parameters, opt_fields = var_opt_fields, input_files = var_input_files)
+#' # result <- api_instance$ImportMsRunDataAsJob(var_project_id, var_parameters, allow_ms1_only = var_allow_ms1_only, opt_fields = var_opt_fields, input_files = var_input_filesdata_file = "result.txt")
+#' result <- api_instance$projects_api$ImportMsRunDataAsJob(var_project_id, var_parameters, allow_ms1_only = var_allow_ms1_only, opt_fields = var_opt_fields, input_files = var_input_files)
 #' dput(result)
 #'
 #'
@@ -1150,13 +1154,14 @@ ProjectsApi <- R6::R6Class(
     #'
     #' @param project_id Project-space to import into.
     #' @param parameters Parameters for feature alignment and feature finding.
+    #' @param allow_ms1_only (optional) Import data without MS/MS. (default value: TRUE)
     #' @param input_files (optional) No description
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #' @return ImportResult
     #' @export
-    ImportMsRunData = function(project_id, parameters, input_files = NULL, data_file = NULL, ...) {
-      local_var_response <- self$ImportMsRunDataWithHttpInfo(project_id, parameters, input_files, data_file = data_file, ...)
+    ImportMsRunData = function(project_id, parameters, allow_ms1_only = TRUE, input_files = NULL, data_file = NULL, ...) {
+      local_var_response <- self$ImportMsRunDataWithHttpInfo(project_id, parameters, allow_ms1_only, input_files, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
@@ -1174,12 +1179,13 @@ ProjectsApi <- R6::R6Class(
     #'
     #' @param project_id Project-space to import into.
     #' @param parameters Parameters for feature alignment and feature finding.
+    #' @param allow_ms1_only (optional) Import data without MS/MS. (default value: TRUE)
     #' @param input_files (optional) No description
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #' @return API response (ImportResult) with additional information such as HTTP status code, headers
     #' @export
-    ImportMsRunDataWithHttpInfo = function(project_id, parameters, input_files = NULL, data_file = NULL, ...) {
+    ImportMsRunDataWithHttpInfo = function(project_id, parameters, allow_ms1_only = TRUE, input_files = NULL, data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -1200,7 +1206,10 @@ ProjectsApi <- R6::R6Class(
 
 
 
+
       query_params[["parameters"]] <- `parameters`
+
+      query_params[["allowMs1Only"]] <- `allow_ms1_only`
 
       file_params[["inputFiles"]] <- curl::form_file(`input_files`)
       local_var_url_path <- "/api/projects/{projectId}/import/ms-data-files"
@@ -1260,14 +1269,15 @@ ProjectsApi <- R6::R6Class(
     #'
     #' @param project_id Project-space to import into.
     #' @param parameters Parameters for feature alignment and feature finding.
+    #' @param allow_ms1_only (optional) Import data without MS/MS. (default value: TRUE)
     #' @param opt_fields (optional) Set of optional fields to be included. Use 'none' only to override defaults. (default value: ["progress"])
     #' @param input_files (optional) No description
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #' @return Job
     #' @export
-    ImportMsRunDataAsJob = function(project_id, parameters, opt_fields = list("progress"), input_files = NULL, data_file = NULL, ...) {
-      local_var_response <- self$ImportMsRunDataAsJobWithHttpInfo(project_id, parameters, opt_fields, input_files, data_file = data_file, ...)
+    ImportMsRunDataAsJob = function(project_id, parameters, allow_ms1_only = TRUE, opt_fields = list("progress"), input_files = NULL, data_file = NULL, ...) {
+      local_var_response <- self$ImportMsRunDataAsJobWithHttpInfo(project_id, parameters, allow_ms1_only, opt_fields, input_files, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
@@ -1285,13 +1295,14 @@ ProjectsApi <- R6::R6Class(
     #'
     #' @param project_id Project-space to import into.
     #' @param parameters Parameters for feature alignment and feature finding.
+    #' @param allow_ms1_only (optional) Import data without MS/MS. (default value: TRUE)
     #' @param opt_fields (optional) Set of optional fields to be included. Use 'none' only to override defaults. (default value: ["progress"])
     #' @param input_files (optional) No description
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #' @return API response (Job) with additional information such as HTTP status code, headers
     #' @export
-    ImportMsRunDataAsJobWithHttpInfo = function(project_id, parameters, opt_fields = list("progress"), input_files = NULL, data_file = NULL, ...) {
+    ImportMsRunDataAsJobWithHttpInfo = function(project_id, parameters, allow_ms1_only = TRUE, opt_fields = list("progress"), input_files = NULL, data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -1313,7 +1324,10 @@ ProjectsApi <- R6::R6Class(
 
 
 
+
       query_params[["parameters"]] <- `parameters`
+
+      query_params[["allowMs1Only"]] <- `allow_ms1_only`
 
       # explore
       for (query_item in `opt_fields`) {

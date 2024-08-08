@@ -17,8 +17,8 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field
-from typing import Any, ClassVar, Dict, List, Optional
+from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt
+from typing import Any, ClassVar, Dict, List, Optional, Union
 from PySirius.models.peak_annotation import PeakAnnotation
 from typing import Optional, Set
 from typing_extensions import Self
@@ -27,8 +27,8 @@ class AnnotatedPeak(BaseModel):
     """
     AnnotatedPeak
     """ # noqa: E501
-    mz: Optional[float] = None
-    intensity: Optional[float] = None
+    mz: Optional[Union[StrictFloat, StrictInt]] = None
+    intensity: Optional[Union[StrictFloat, StrictInt]] = None
     peak_annotation: Optional[PeakAnnotation] = Field(default=None, alias="peakAnnotation")
     __properties: ClassVar[List[str]] = ["mz", "intensity", "peakAnnotation"]
 

@@ -17,8 +17,8 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
+from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional, Union
 from PySirius.models.annotated_spectrum import AnnotatedSpectrum
 from PySirius.models.canopus_prediction import CanopusPrediction
 from PySirius.models.compound_classes import CompoundClasses
@@ -37,19 +37,19 @@ class FormulaCandidate(BaseModel):
     molecular_formula: Optional[StrictStr] = Field(default=None, description="molecular formula of this formula candidate", alias="molecularFormula")
     adduct: Optional[StrictStr] = Field(default=None, description="Adduct of this formula candidate")
     rank: Optional[StrictInt] = None
-    sirius_score: Optional[float] = Field(default=None, description="Sirius Score (isotope + tree score) of the formula candidate.  If NULL result is not available", alias="siriusScore")
-    isotope_score: Optional[float] = Field(default=None, alias="isotopeScore")
-    tree_score: Optional[float] = Field(default=None, alias="treeScore")
-    zodiac_score: Optional[float] = Field(default=None, description="Zodiac Score of the formula candidate.  If NULL result is not available", alias="zodiacScore")
+    sirius_score: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Sirius Score (isotope + tree score) of the formula candidate.  If NULL result is not available", alias="siriusScore")
+    isotope_score: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="isotopeScore")
+    tree_score: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="treeScore")
+    zodiac_score: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Zodiac Score of the formula candidate.  If NULL result is not available", alias="zodiacScore")
     num_of_explained_peaks: Optional[StrictInt] = Field(default=None, alias="numOfExplainedPeaks")
     num_of_explainable_peaks: Optional[StrictInt] = Field(default=None, alias="numOfExplainablePeaks")
-    total_explained_intensity: Optional[float] = Field(default=None, alias="totalExplainedIntensity")
+    total_explained_intensity: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="totalExplainedIntensity")
     median_mass_deviation: Optional[Deviation] = Field(default=None, alias="medianMassDeviation")
     fragmentation_tree: Optional[FragmentationTree] = Field(default=None, alias="fragmentationTree")
     annotated_spectrum: Optional[AnnotatedSpectrum] = Field(default=None, alias="annotatedSpectrum")
     isotope_pattern_annotation: Optional[IsotopePatternAnnotation] = Field(default=None, alias="isotopePatternAnnotation")
     lipid_annotation: Optional[LipidAnnotation] = Field(default=None, alias="lipidAnnotation")
-    predicted_fingerprint: Optional[List[Optional[float]]] = Field(default=None, description="Probabilistic molecular fingerprint predicted by CSI:FingerID", alias="predictedFingerprint")
+    predicted_fingerprint: Optional[List[Optional[Union[StrictFloat, StrictInt]]]] = Field(default=None, description="Probabilistic molecular fingerprint predicted by CSI:FingerID", alias="predictedFingerprint")
     compound_classes: Optional[CompoundClasses] = Field(default=None, alias="compoundClasses")
     canopus_prediction: Optional[CanopusPrediction] = Field(default=None, alias="canopusPrediction")
     __properties: ClassVar[List[str]] = ["formulaId", "molecularFormula", "adduct", "rank", "siriusScore", "isotopeScore", "treeScore", "zodiacScore", "numOfExplainedPeaks", "numOfExplainablePeaks", "totalExplainedIntensity", "medianMassDeviation", "fragmentationTree", "annotatedSpectrum", "isotopePatternAnnotation", "lipidAnnotation", "predictedFingerprint", "compoundClasses", "canopusPrediction"]

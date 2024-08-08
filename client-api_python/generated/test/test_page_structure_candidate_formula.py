@@ -37,8 +37,8 @@ class TestPageStructureCandidateFormula(unittest.TestCase):
             return PageStructureCandidateFormula(
                 total_pages = 56,
                 total_elements = 56,
-                last = True,
                 first = True,
+                last = True,
                 size = 56,
                 content = [
                     PySirius.models.structure_candidate_formula.StructureCandidateFormula(
@@ -105,9 +105,9 @@ class TestPageStructureCandidateFormula(unittest.TestCase):
                         empty = True, 
                         sorted = True, 
                         unsorted = True, ), 
-                    paged = True, 
                     page_number = 56, 
                     page_size = 56, 
+                    paged = True, 
                     unpaged = True, ),
                 empty = True
             )

@@ -37,8 +37,8 @@ class TestPageAlignedFeature(unittest.TestCase):
             return PageAlignedFeature(
                 total_pages = 56,
                 total_elements = 56,
-                last = True,
                 first = True,
+                last = True,
                 size = 56,
                 content = [
                     PySirius.models.aligned_feature.AlignedFeature(
@@ -267,9 +267,9 @@ class TestPageAlignedFeature(unittest.TestCase):
                         empty = True, 
                         sorted = True, 
                         unsorted = True, ), 
-                    paged = True, 
                     page_number = 56, 
                     page_size = 56, 
+                    paged = True, 
                     unpaged = True, ),
                 empty = True
             )

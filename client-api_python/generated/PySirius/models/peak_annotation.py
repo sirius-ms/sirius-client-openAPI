@@ -17,8 +17,8 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
+from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional, Union
 from PySirius.models.parent_peak import ParentPeak
 from typing import Optional, Set
 from typing_extensions import Self
@@ -30,16 +30,16 @@ class PeakAnnotation(BaseModel):
     fragment_id: StrictInt = Field(description="Identifier of the peak/fragment. Can be used to map fragments and peaks  among fragmentation trees and spectra.", alias="fragmentId")
     molecular_formula: Optional[StrictStr] = Field(default=None, description="Molecular formula that has been annotated to this peak", alias="molecularFormula")
     ionization: Optional[StrictStr] = Field(default=None, description="Ionization that has been annotated to this peak")
-    exact_mass: Optional[float] = Field(default=None, description="Exact mass of the annotated molecular formula and ionization", alias="exactMass")
-    mass_deviation_mz: Optional[float] = Field(default=None, description="Absolute mass deviation of the exact mass to the measured peak mass in mDa", alias="massDeviationMz")
-    mass_deviation_ppm: Optional[float] = Field(default=None, description="Relative mass deviation of the exact mass to the measured peak mass in ppm", alias="massDeviationPpm")
-    recalibrated_mass_deviation_mz: Optional[float] = Field(default=None, description="Absolute mass deviation of the exact mass to the recalibrated peak mass in mDa", alias="recalibratedMassDeviationMz")
-    recalibrated_mass_deviation_ppm: Optional[float] = Field(default=None, description="Relative mass deviation of the exact mass to the recalibrated peak mass in ppm", alias="recalibratedMassDeviationPpm")
+    exact_mass: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Exact mass of the annotated molecular formula and ionization", alias="exactMass")
+    mass_deviation_mz: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Absolute mass deviation of the exact mass to the measured peak mass in mDa", alias="massDeviationMz")
+    mass_deviation_ppm: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Relative mass deviation of the exact mass to the measured peak mass in ppm", alias="massDeviationPpm")
+    recalibrated_mass_deviation_mz: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Absolute mass deviation of the exact mass to the recalibrated peak mass in mDa", alias="recalibratedMassDeviationMz")
+    recalibrated_mass_deviation_ppm: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Relative mass deviation of the exact mass to the recalibrated peak mass in ppm", alias="recalibratedMassDeviationPpm")
     parent_peak: Optional[ParentPeak] = Field(default=None, alias="parentPeak")
     substructure_atoms: Optional[List[Optional[StrictInt]]] = Field(default=None, description="Array/List of indices of the atoms of the structure candidate that are part of this fragments substructure  (highlighted atoms)", alias="substructureAtoms")
     substructure_bonds: Optional[List[Optional[StrictInt]]] = Field(default=None, description="Array/List of indices of the bonds of the structure candidate that are part of this fragments substructure  (highlighted bonds)   Null if substructure annotation not available or not requested.", alias="substructureBonds")
     substructure_bonds_cut: Optional[List[Optional[StrictInt]]] = Field(default=None, description="Array/List of indices of the bonds of the structure candidate that need to be cut to produce this fragments  substructure (highlighted cutted bonds).   Null if substructure annotation not available or not requested.", alias="substructureBondsCut")
-    substructure_score: Optional[float] = Field(default=None, description="This score roughly reflects the probability of this fragment forming.   This is the score of the path from root to this node which has the maximal score or \"profit\".  The score of a path is equal to the sum of scores of its contained fragments and edges.  Note: Refers to 'totalScore' in CombinatorialNode   Null if substructure annotation not available or not requested.", alias="substructureScore")
+    substructure_score: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="This score roughly reflects the probability of this fragment forming.   This is the score of the path from root to this node which has the maximal score or \"profit\".  The score of a path is equal to the sum of scores of its contained fragments and edges.  Note: Refers to 'totalScore' in CombinatorialNode   Null if substructure annotation not available or not requested.", alias="substructureScore")
     hydrogen_rearrangements: Optional[StrictInt] = Field(default=None, description="Number of hydrogens rearrangements needed to match the substructure to the fragment formula.   Null if substructure annotation not available or not requested.", alias="hydrogenRearrangements")
     __properties: ClassVar[List[str]] = ["fragmentId", "molecularFormula", "ionization", "exactMass", "massDeviationMz", "massDeviationPpm", "recalibratedMassDeviationMz", "recalibratedMassDeviationPpm", "parentPeak", "substructureAtoms", "substructureBonds", "substructureBondsCut", "substructureScore", "hydrogenRearrangements"]
 

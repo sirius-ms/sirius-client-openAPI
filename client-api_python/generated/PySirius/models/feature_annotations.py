@@ -17,8 +17,8 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field
-from typing import Any, ClassVar, Dict, List, Optional
+from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt
+from typing import Any, ClassVar, Dict, List, Optional, Union
 from PySirius.models.compound_classes import CompoundClasses
 from PySirius.models.confidence_mode import ConfidenceMode
 from PySirius.models.formula_candidate import FormulaCandidate
@@ -33,8 +33,8 @@ class FeatureAnnotations(BaseModel):
     formula_annotation: Optional[FormulaCandidate] = Field(default=None, alias="formulaAnnotation")
     structure_annotation: Optional[StructureCandidateScored] = Field(default=None, alias="structureAnnotation")
     compound_class_annotation: Optional[CompoundClasses] = Field(default=None, alias="compoundClassAnnotation")
-    confidence_exact_match: Optional[float] = Field(default=None, description="Confidence Score that represents the confidence whether the top hit is correct.", alias="confidenceExactMatch")
-    confidence_approx_match: Optional[float] = Field(default=None, description="Confidence Score that represents the confidence whether the top hit or a very similar hit (estimated by MCES distance) is correct.", alias="confidenceApproxMatch")
+    confidence_exact_match: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Confidence Score that represents the confidence whether the top hit is correct.", alias="confidenceExactMatch")
+    confidence_approx_match: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Confidence Score that represents the confidence whether the top hit or a very similar hit (estimated by MCES distance) is correct.", alias="confidenceApproxMatch")
     expansive_search_state: Optional[ConfidenceMode] = Field(default=None, alias="expansiveSearchState")
     __properties: ClassVar[List[str]] = ["formulaAnnotation", "structureAnnotation", "compoundClassAnnotation", "confidenceExactMatch", "confidenceApproxMatch", "expansiveSearchState"]
 

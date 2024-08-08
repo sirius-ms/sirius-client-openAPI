@@ -17,8 +17,8 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field
-from typing import Any, ClassVar, Dict, List, Optional
+from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt
+from typing import Any, ClassVar, Dict, List, Optional, Union
 from PySirius.models.fragment_node import FragmentNode
 from PySirius.models.loss_edge import LossEdge
 from typing import Optional, Set
@@ -30,7 +30,7 @@ class FragmentationTree(BaseModel):
     """ # noqa: E501
     fragments: Optional[List[FragmentNode]] = None
     losses: Optional[List[LossEdge]] = None
-    tree_score: Optional[float] = Field(default=None, alias="treeScore")
+    tree_score: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="treeScore")
     __properties: ClassVar[List[str]] = ["fragments", "losses", "treeScore"]
 
     model_config = ConfigDict(

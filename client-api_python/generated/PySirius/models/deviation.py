@@ -17,8 +17,8 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict
-from typing import Any, ClassVar, Dict, List, Optional
+from pydantic import BaseModel, ConfigDict, StrictFloat, StrictInt
+from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -26,8 +26,8 @@ class Deviation(BaseModel):
     """
     Deviation
     """ # noqa: E501
-    ppm: Optional[float] = None
-    absolute: Optional[float] = None
+    ppm: Optional[Union[StrictFloat, StrictInt]] = None
+    absolute: Optional[Union[StrictFloat, StrictInt]] = None
     __properties: ClassVar[List[str]] = ["ppm", "absolute"]
 
     model_config = ConfigDict(

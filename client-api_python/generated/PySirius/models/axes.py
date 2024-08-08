@@ -17,8 +17,8 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
+from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -28,7 +28,7 @@ class Axes(BaseModel):
     """ # noqa: E501
     scan_number: Optional[List[StrictInt]] = Field(default=None, alias="scanNumber")
     scan_ids: Optional[List[StrictStr]] = Field(default=None, alias="scanIds")
-    retention_time_in_seconds: Optional[List[float]] = Field(default=None, alias="retentionTimeInSeconds")
+    retention_time_in_seconds: Optional[List[Union[StrictFloat, StrictInt]]] = Field(default=None, alias="retentionTimeInSeconds")
     __properties: ClassVar[List[str]] = ["scanNumber", "scanIds", "retentionTimeInSeconds"]
 
     model_config = ConfigDict(

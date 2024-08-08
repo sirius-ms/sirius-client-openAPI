@@ -17,8 +17,8 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
+from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -29,7 +29,7 @@ class LossEdge(BaseModel):
     source_fragment_idx: Optional[StrictInt] = Field(default=None, alias="sourceFragmentIdx")
     target_fragment_idx: Optional[StrictInt] = Field(default=None, alias="targetFragmentIdx")
     molecular_formula: Optional[StrictStr] = Field(default=None, alias="molecularFormula")
-    score: Optional[float] = None
+    score: Optional[Union[StrictFloat, StrictInt]] = None
     __properties: ClassVar[List[str]] = ["sourceFragmentIdx", "targetFragmentIdx", "molecularFormula", "score"]
 
     model_config = ConfigDict(

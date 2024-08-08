@@ -17,8 +17,8 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
+from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional, Union
 from PySirius.models.compound_class_type import CompoundClassType
 from typing import Optional, Set
 from typing_extensions import Self
@@ -32,7 +32,7 @@ class CompoundClass(BaseModel):
     name: Optional[StrictStr] = Field(default=None, description="Name of the compound class.")
     description: Optional[StrictStr] = Field(default=None, description="Description of the compound class.")
     id: Optional[StrictInt] = Field(default=None, description="Unique id of the class. Might be undefined for certain classification ontologies.")
-    probability: Optional[float] = Field(default=None, description="prediction probability")
+    probability: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="prediction probability")
     index: Optional[StrictInt] = Field(default=None, description="Absolute index of this property in the predicted vector/embedding")
     __properties: ClassVar[List[str]] = ["type", "level", "name", "description", "id", "probability", "index"]
 

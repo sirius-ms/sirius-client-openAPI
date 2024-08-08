@@ -17,8 +17,8 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
+from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional, Union
 from PySirius.models.binary_fingerprint import BinaryFingerprint
 from PySirius.models.db_link import DBLink
 from PySirius.models.spectral_library_match import SpectralLibraryMatch
@@ -32,13 +32,13 @@ class StructureCandidateScored(BaseModel):
     inchi_key: Optional[StrictStr] = Field(default=None, alias="inchiKey")
     smiles: Optional[StrictStr] = None
     structure_name: Optional[StrictStr] = Field(default=None, alias="structureName")
-    xlog_p: Optional[float] = Field(default=None, alias="xlogP")
+    xlog_p: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="xlogP")
     db_links: Optional[List[Optional[DBLink]]] = Field(default=None, description="List of structure database links belonging to this structure candidate  OPTIONAL: needs to be added by parameter", alias="dbLinks")
     spectral_library_matches: Optional[List[Optional[SpectralLibraryMatch]]] = Field(default=None, description="List of spectral library matches belonging to this structure candidate  OPTIONAL: needs to be added by parameter", alias="spectralLibraryMatches")
     rank: Optional[StrictInt] = Field(default=None, description="the overall rank of this candidate among all candidates of this feature")
-    csi_score: Optional[float] = Field(default=None, description="CSI:FingerID score of the fingerprint of this compound to the predicted fingerprint of CSI:FingerID  This is the score used for ranking structure candidates", alias="csiScore")
-    tanimoto_similarity: Optional[float] = Field(default=None, description="Tanimoto similarly of the fingerprint of this compound to the predicted fingerprint of CSI:FingerID", alias="tanimotoSimilarity")
-    mces_dist_to_top_hit: Optional[float] = Field(default=None, description="Maximum Common Edge Subgraph (MCES) distance to the top scoring hit (CSI:FingerID) in a candidate list.", alias="mcesDistToTopHit")
+    csi_score: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="CSI:FingerID score of the fingerprint of this compound to the predicted fingerprint of CSI:FingerID  This is the score used for ranking structure candidates", alias="csiScore")
+    tanimoto_similarity: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Tanimoto similarly of the fingerprint of this compound to the predicted fingerprint of CSI:FingerID", alias="tanimotoSimilarity")
+    mces_dist_to_top_hit: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Maximum Common Edge Subgraph (MCES) distance to the top scoring hit (CSI:FingerID) in a candidate list.", alias="mcesDistToTopHit")
     fingerprint: Optional[BinaryFingerprint] = None
     __properties: ClassVar[List[str]] = ["inchiKey", "smiles", "structureName", "xlogP", "dbLinks", "spectralLibraryMatches", "rank", "csiScore", "tanimotoSimilarity", "mcesDistToTopHit", "fingerprint"]
 

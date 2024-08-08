@@ -17,8 +17,8 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictFloat, StrictInt, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional, Union
 from PySirius.models.annotation import Annotation
 from typing import Optional, Set
 from typing_extensions import Self
@@ -31,12 +31,12 @@ class Trace(BaseModel):
     sample_id: Optional[StrictInt] = Field(default=None, alias="sampleId")
     sample_name: Optional[StrictStr] = Field(default=None, alias="sampleName")
     label: Optional[StrictStr] = None
-    intensities: Optional[List[float]] = None
+    intensities: Optional[List[Union[StrictFloat, StrictInt]]] = None
     annotations: Optional[List[Annotation]] = None
-    mz: Optional[float] = None
+    mz: Optional[Union[StrictFloat, StrictInt]] = None
     merged: Optional[StrictBool] = None
-    normalization_factor: Optional[float] = Field(default=None, description="Traces are stored with raw intensity values. The normalization factor maps them to relative intensities,  such that traces from different samples can be compared.", alias="normalizationFactor")
-    noise_level: Optional[float] = Field(default=None, description="The noise level is estimated from the median noise in the surrounding scans. It can be used to  calculate signal-to-noise ratios.", alias="noiseLevel")
+    normalization_factor: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Traces are stored with raw intensity values. The normalization factor maps them to relative intensities,  such that traces from different samples can be compared.", alias="normalizationFactor")
+    noise_level: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="The noise level is estimated from the median noise in the surrounding scans. It can be used to  calculate signal-to-noise ratios.", alias="noiseLevel")
     __properties: ClassVar[List[str]] = ["id", "sampleId", "sampleName", "label", "intensities", "annotations", "mz", "merged", "normalizationFactor", "noiseLevel"]
 
     model_config = ConfigDict(
