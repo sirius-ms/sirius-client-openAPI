@@ -98,7 +98,6 @@ test_that("ImportMsRunData", {
   # Import and Align full MS-Runs from various formats into the specified project  Possible formats (mzML, mzXML)
   # @param project_id character Project-space to import into.
   # @param parameters LcmsSubmissionParameters Parameters for feature alignment and feature finding.
-  # @param allow_ms1_only character Import data without MS/MS. (optional)
   # @param input_files array[data.frame]  (optional)
   # @return [ImportResult]
 
@@ -113,7 +112,6 @@ test_that("ImportMsRunDataAsJob", {
   # Import and Align full MS-Runs from various formats into the specified project as background job.  Possible formats (mzML, mzXML)
   # @param project_id character Project-space to import into.
   # @param parameters LcmsSubmissionParameters Parameters for feature alignment and feature finding.
-  # @param allow_ms1_only character Import data without MS/MS. (optional)
   # @param opt_fields array[JobOptField] Set of optional fields to be included. Use 'none' only to override defaults. (optional)
   # @param input_files array[data.frame]  (optional)
   # @return [Job]
