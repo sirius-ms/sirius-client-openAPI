@@ -2,6 +2,6 @@
 	"packageName" : "Rsirius",
 	"generateWrapper": true,
 	"library": "httr2",
-	"packageVersion": "6.0.2",
+	"packageVersion": "6.0.3",
 	"hideGenerationTimestamp": true
 }
