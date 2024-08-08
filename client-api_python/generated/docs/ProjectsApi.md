@@ -493,7 +493,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **import_ms_run_data**
-> ImportResult import_ms_run_data(project_id, parameters, allow_ms1_only=allow_ms1_only, input_files=input_files)
+> ImportResult import_ms_run_data(project_id, parameters, input_files=input_files)
 
 Import and Align full MS-Runs from various formats into the specified project  Possible formats (mzML, mzXML)
 
@@ -522,12 +522,11 @@ with PySirius.ApiClient(configuration) as api_client:
     api_instance = PySirius.ProjectsApi(api_client)
     project_id = 'project_id_example' # str | Project-space to import into.
     parameters = PySirius.LcmsSubmissionParameters() # LcmsSubmissionParameters | Parameters for feature alignment and feature finding.
-    allow_ms1_only = True # bool | Import data without MS/MS. (optional) (default to True)
     input_files = None # List[bytearray] |  (optional)
 
     try:
         # Import and Align full MS-Runs from various formats into the specified project  Possible formats (mzML, mzXML)
-        api_response = api_instance.import_ms_run_data(project_id, parameters, allow_ms1_only=allow_ms1_only, input_files=input_files)
+        api_response = api_instance.import_ms_run_data(project_id, parameters, input_files=input_files)
         print("The response of ProjectsApi->import_ms_run_data:\n")
         pprint(api_response)
     except Exception as e:
@@ -543,7 +542,6 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **str**| Project-space to import into. | 
  **parameters** | [**LcmsSubmissionParameters**](.md)| Parameters for feature alignment and feature finding. | 
- **allow_ms1_only** | **bool**| Import data without MS/MS. | [optional] [default to True]
  **input_files** | **List[bytearray]**|  | [optional] 
 
 ### Return type
@@ -568,7 +566,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **import_ms_run_data_as_job**
-> Job import_ms_run_data_as_job(project_id, parameters, allow_ms1_only=allow_ms1_only, opt_fields=opt_fields, input_files=input_files)
+> Job import_ms_run_data_as_job(project_id, parameters, opt_fields=opt_fields, input_files=input_files)
 
 Import and Align full MS-Runs from various formats into the specified project as background job.
 
@@ -598,13 +596,12 @@ with PySirius.ApiClient(configuration) as api_client:
     api_instance = PySirius.ProjectsApi(api_client)
     project_id = 'project_id_example' # str | Project-space to import into.
     parameters = PySirius.LcmsSubmissionParameters() # LcmsSubmissionParameters | Parameters for feature alignment and feature finding.
-    allow_ms1_only = True # bool | Import data without MS/MS. (optional) (default to True)
     opt_fields = ["progress"] # List[JobOptField] | Set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to ["progress"])
     input_files = None # List[bytearray] |  (optional)
 
     try:
         # Import and Align full MS-Runs from various formats into the specified project as background job.
-        api_response = api_instance.import_ms_run_data_as_job(project_id, parameters, allow_ms1_only=allow_ms1_only, opt_fields=opt_fields, input_files=input_files)
+        api_response = api_instance.import_ms_run_data_as_job(project_id, parameters, opt_fields=opt_fields, input_files=input_files)
         print("The response of ProjectsApi->import_ms_run_data_as_job:\n")
         pprint(api_response)
     except Exception as e:
@@ -620,7 +617,6 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **str**| Project-space to import into. | 
  **parameters** | [**LcmsSubmissionParameters**](.md)| Parameters for feature alignment and feature finding. | 
- **allow_ms1_only** | **bool**| Import data without MS/MS. | [optional] [default to True]
  **opt_fields** | [**List[JobOptField]**](JobOptField.md)| Set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;progress&quot;]]
  **input_files** | **List[bytearray]**|  | [optional] 
 

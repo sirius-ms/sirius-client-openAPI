@@ -27,7 +27,7 @@ class TestPageSpectralLibraryMatch(unittest.TestCase):
 
     def make_instance(self, include_optional) -> PageSpectralLibraryMatch:
         """Test PageSpectralLibraryMatch
-            include_optional is a boolean, when False only required
+            include_option is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
         # uncomment below to create an instance of `PageSpectralLibraryMatch`
@@ -81,9 +81,9 @@ class TestPageSpectralLibraryMatch(unittest.TestCase):
                         empty = True, 
                         sorted = True, 
                         unsorted = True, ), 
+                    paged = True, 
                     page_number = 56, 
                     page_size = 56, 
-                    paged = True, 
                     unpaged = True, ),
                 empty = True
             )
