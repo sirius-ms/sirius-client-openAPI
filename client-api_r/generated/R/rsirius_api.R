@@ -22,7 +22,6 @@
 #' @field compounds_api an instance of CompoundsApi
 #' @field experimental_api an instance of EXPERIMENTALApi
 #' @field features_api an instance of FeaturesApi
-#' @field gui_api an instance of GuiApi
 #' @field info_api an instance of InfoApi
 #' @field jobs_api an instance of JobsApi
 #' @field login_and_account_api an instance of LoginAndAccountApi
@@ -37,7 +36,6 @@ rsirius_api <- R6::R6Class(
     compounds_api = NULL,
     experimental_api = NULL,
     features_api = NULL,
-    gui_api = NULL,
     info_api = NULL,
     jobs_api = NULL,
     login_and_account_api = NULL,
@@ -64,8 +62,6 @@ rsirius_api <- R6::R6Class(
       self$experimental_api <- EXPERIMENTALApi$new(self$api_client)
 
       self$features_api <- FeaturesApi$new(self$api_client)
-
-      self$gui_api <- GuiApi$new(self$api_client)
 
       self$info_api <- InfoApi$new(self$api_client)
 

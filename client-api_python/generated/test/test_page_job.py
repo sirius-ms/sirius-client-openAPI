@@ -37,8 +37,8 @@ class TestPageJob(unittest.TestCase):
             return PageJob(
                 total_pages = 56,
                 total_elements = 56,
-                first = True,
                 last = True,
+                first = True,
                 size = 56,
                 content = [
                     PySirius.models.job.Job(

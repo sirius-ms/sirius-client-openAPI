@@ -127,9 +127,6 @@ Class | Method | HTTP request | Description
 *FeaturesApi* | [**get_structure_candidates_by_formula_paged**](docs/FeaturesApi.md#get_structure_candidates_by_formula_paged) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/db-structures/page | Page of CSI:FingerID structure database search candidates for the given &#39;formulaId&#39; with minimal information.
 *FeaturesApi* | [**get_structure_candidates_paged**](docs/FeaturesApi.md#get_structure_candidates_paged) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/db-structures/page | Page of structure database search candidates ranked by CSI:FingerID score for the given &#39;alignedFeatureId&#39; with minimal information.
 *FeaturesApi* | [**get_traces1**](docs/FeaturesApi.md#get_traces1) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/traces | 
-*GuiApi* | [**close_gui**](docs/GuiApi.md#close_gui) | **DELETE** /api/projects/{projectId}/gui | Close GUI instance of given project-space if available.
-*GuiApi* | [**get_guis**](docs/GuiApi.md#get_guis) | **GET** /api/guis | Get list of currently running gui windows, managed by this SIRIUS instance.
-*GuiApi* | [**open_gui**](docs/GuiApi.md#open_gui) | **POST** /api/projects/{projectId}/gui | Open GUI instance on specified project-space and bring the GUI window to foreground.
 *InfoApi* | [**get_connection_check**](docs/InfoApi.md#get_connection_check) | **GET** /api/connection-status | 
 *InfoApi* | [**get_info**](docs/InfoApi.md#get_info) | **GET** /api/info | 
 *JobsApi* | [**delete_job**](docs/JobsApi.md#delete_job) | **DELETE** /api/projects/{projectId}/jobs/{jobId} | Delete job.
@@ -218,7 +215,6 @@ Class | Method | HTTP request | Description
  - [FormulaCandidateOptField](docs/FormulaCandidateOptField.md)
  - [FragmentNode](docs/FragmentNode.md)
  - [FragmentationTree](docs/FragmentationTree.md)
- - [GuiInfo](docs/GuiInfo.md)
  - [ImportResult](docs/ImportResult.md)
  - [Info](docs/Info.md)
  - [InstrumentProfile](docs/InstrumentProfile.md)

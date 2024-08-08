@@ -37,8 +37,8 @@ class TestPageStructureCandidateScored(unittest.TestCase):
             return PageStructureCandidateScored(
                 total_pages = 56,
                 total_elements = 56,
-                first = True,
                 last = True,
+                first = True,
                 size = 56,
                 content = [
                     PySirius.models.structure_candidate_scored.StructureCandidateScored(

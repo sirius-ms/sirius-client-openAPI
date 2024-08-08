@@ -21,7 +21,6 @@ from PySirius.api.actuator_api import ActuatorApi
 from PySirius.api.compounds_api import CompoundsApi
 from PySirius.api.experimental_api import EXPERIMENTALApi
 from PySirius.api.features_api import FeaturesApi
-from PySirius.api.gui_api import GuiApi
 from PySirius.api.info_api import InfoApi
 from PySirius.api.jobs_api import JobsApi
 from PySirius.api.login_and_account_api import LoginAndAccountApi
@@ -79,7 +78,6 @@ from PySirius.models.formula_candidate import FormulaCandidate
 from PySirius.models.formula_candidate_opt_field import FormulaCandidateOptField
 from PySirius.models.fragment_node import FragmentNode
 from PySirius.models.fragmentation_tree import FragmentationTree
-from PySirius.models.gui_info import GuiInfo
 from PySirius.models.import_result import ImportResult
 from PySirius.models.info import Info
 from PySirius.models.instrument_profile import InstrumentProfile

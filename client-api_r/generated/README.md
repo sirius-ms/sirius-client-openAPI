@@ -116,9 +116,6 @@ Class | Method | HTTP request | Description
 *FeaturesApi* | [**GetStructureCandidatesByFormulaPaged**](docs/FeaturesApi.md#GetStructureCandidatesByFormulaPaged) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/db-structures/page | Page of CSI:FingerID structure database search candidates for the given 'formulaId' with minimal information.
 *FeaturesApi* | [**GetStructureCandidatesPaged**](docs/FeaturesApi.md#GetStructureCandidatesPaged) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/db-structures/page | Page of structure database search candidates ranked by CSI:FingerID score for the given 'alignedFeatureId' with minimal information.
 *FeaturesApi* | [**GetTraces1**](docs/FeaturesApi.md#GetTraces1) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/traces | 
-*GuiApi* | [**CloseGui**](docs/GuiApi.md#CloseGui) | **DELETE** /api/projects/{projectId}/gui | Close GUI instance of given project-space if available.
-*GuiApi* | [**GetGuis**](docs/GuiApi.md#GetGuis) | **GET** /api/guis | Get list of currently running gui windows, managed by this SIRIUS instance.
-*GuiApi* | [**OpenGui**](docs/GuiApi.md#OpenGui) | **POST** /api/projects/{projectId}/gui | Open GUI instance on specified project-space and bring the GUI window to foreground.
 *InfoApi* | [**GetConnectionCheck**](docs/InfoApi.md#GetConnectionCheck) | **GET** /api/connection-status | 
 *InfoApi* | [**GetInfo**](docs/InfoApi.md#GetInfo) | **GET** /api/info | 
 *JobsApi* | [**DeleteJob**](docs/JobsApi.md#DeleteJob) | **DELETE** /api/projects/{projectId}/jobs/{jobId} | Delete job.
@@ -207,7 +204,6 @@ Class | Method | HTTP request | Description
  - [FormulaCandidateOptField](docs/FormulaCandidateOptField.md)
  - [FragmentNode](docs/FragmentNode.md)
  - [FragmentationTree](docs/FragmentationTree.md)
- - [GuiInfo](docs/GuiInfo.md)
  - [ImportResult](docs/ImportResult.md)
  - [Info](docs/Info.md)
  - [InstrumentProfile](docs/InstrumentProfile.md)
