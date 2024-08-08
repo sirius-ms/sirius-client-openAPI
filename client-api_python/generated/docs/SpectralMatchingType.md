@@ -1,13 +1,10 @@
 # SpectralMatchingType
 
 
-## Enum
+## Properties
 
-* `INTENSITY` (value: `'INTENSITY'`)
-
-* `GAUSSIAN` (value: `'GAUSSIAN'`)
-
-* `MODIFIED_COSINE` (value: `'MODIFIED_COSINE'`)
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
