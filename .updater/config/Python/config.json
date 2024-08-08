@@ -1,6 +1,5 @@
 {
 	"packageName" : "PySirius",
-	"packageVersion" : "6.0.3",
 	"mapNumberTo" : "float",
 	"hideGenerationTimestamp": true
 }
