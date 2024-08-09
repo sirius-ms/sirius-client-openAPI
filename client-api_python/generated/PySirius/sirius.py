@@ -219,9 +219,9 @@ class SiriusSDK:
             run_command.extend(["-p", str(port)])
 
         if headless is True:
-            run_command.extend("--headless")
+            run_command.extend(["--headless"])
         elif headless is False:
-            run_command.extend("--no-headless")
+            run_command.extend(["--no-headless"])
 
         SiriusSDK.run_command = run_command
         # run Command
