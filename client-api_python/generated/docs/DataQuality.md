@@ -1,17 +1,10 @@
 # DataQuality
 
 
-## Enum
+## Properties
 
-* `NOT_APPLICABLE` (value: `'NOT_APPLICABLE'`)
-
-* `LOWEST` (value: `'LOWEST'`)
-
-* `BAD` (value: `'BAD'`)
-
-* `DECENT` (value: `'DECENT'`)
-
-* `GOOD` (value: `'GOOD'`)
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
