@@ -346,7 +346,7 @@ No authorization required
 | **200** | OK |  -  |
 
 # **ImportMsRunData**
-> ImportResult ImportMsRunData(project_id, parameters, allow_ms1_only = TRUE, input_files = var.input_files)
+> ImportResult ImportMsRunData(project_id, parameters, input_files = var.input_files)
 
 Import and Align full MS-Runs from various formats into the specified project  Possible formats (mzML, mzXML)
 
@@ -361,13 +361,12 @@ library(Rsirius)
 # prepare function argument(s)
 var_project_id <- "project_id_example" # character | Project-space to import into.
 var_parameters <- LcmsSubmissionParameters$new("alignLCMSRuns_example") # LcmsSubmissionParameters | Parameters for feature alignment and feature finding.
-var_allow_ms1_only <- TRUE # character | Import data without MS/MS. (Optional)
 var_input_files <- c(123) # array[data.frame] |  (Optional)
 
 api_instance <- rsirius_api$new()
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$ImportMsRunData(var_project_id, var_parameters, allow_ms1_only = var_allow_ms1_only, input_files = var_input_filesdata_file = "result.txt")
-result <- api_instance$projects_api$ImportMsRunData(var_project_id, var_parameters, allow_ms1_only = var_allow_ms1_only, input_files = var_input_files)
+# result <- api_instance$ImportMsRunData(var_project_id, var_parameters, input_files = var_input_filesdata_file = "result.txt")
+result <- api_instance$projects_api$ImportMsRunData(var_project_id, var_parameters, input_files = var_input_files)
 dput(result)
 ```
 
@@ -377,7 +376,6 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **character**| Project-space to import into. | 
  **parameters** | [**LcmsSubmissionParameters**](.md)| Parameters for feature alignment and feature finding. | 
- **allow_ms1_only** | **character**| Import data without MS/MS. | [optional] [default to TRUE]
  **input_files** | list( **data.frame** )|  | [optional] 
 
 ### Return type
@@ -399,7 +397,7 @@ No authorization required
 | **200** | OK |  -  |
 
 # **ImportMsRunDataAsJob**
-> Job ImportMsRunDataAsJob(project_id, parameters, allow_ms1_only = TRUE, opt_fields = ["progress"], input_files = var.input_files)
+> Job ImportMsRunDataAsJob(project_id, parameters, opt_fields = ["progress"], input_files = var.input_files)
 
 Import and Align full MS-Runs from various formats into the specified project as background job.
 
@@ -414,14 +412,13 @@ library(Rsirius)
 # prepare function argument(s)
 var_project_id <- "project_id_example" # character | Project-space to import into.
 var_parameters <- LcmsSubmissionParameters$new("alignLCMSRuns_example") # LcmsSubmissionParameters | Parameters for feature alignment and feature finding.
-var_allow_ms1_only <- TRUE # character | Import data without MS/MS. (Optional)
 var_opt_fields <- c(JobOptField$new()) # array[JobOptField] | Set of optional fields to be included. Use 'none' only to override defaults. (Optional)
 var_input_files <- c(123) # array[data.frame] |  (Optional)
 
 api_instance <- rsirius_api$new()
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$ImportMsRunDataAsJob(var_project_id, var_parameters, allow_ms1_only = var_allow_ms1_only, opt_fields = var_opt_fields, input_files = var_input_filesdata_file = "result.txt")
-result <- api_instance$projects_api$ImportMsRunDataAsJob(var_project_id, var_parameters, allow_ms1_only = var_allow_ms1_only, opt_fields = var_opt_fields, input_files = var_input_files)
+# result <- api_instance$ImportMsRunDataAsJob(var_project_id, var_parameters, opt_fields = var_opt_fields, input_files = var_input_filesdata_file = "result.txt")
+result <- api_instance$projects_api$ImportMsRunDataAsJob(var_project_id, var_parameters, opt_fields = var_opt_fields, input_files = var_input_files)
 dput(result)
 ```
 
@@ -431,7 +428,6 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **character**| Project-space to import into. | 
  **parameters** | [**LcmsSubmissionParameters**](.md)| Parameters for feature alignment and feature finding. | 
- **allow_ms1_only** | **character**| Import data without MS/MS. | [optional] [default to TRUE]
  **opt_fields** | list( [**JobOptField**](JobOptField.md) )| Set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;progress&quot;]]
  **input_files** | list( **data.frame** )|  | [optional] 
 

@@ -1681,7 +1681,7 @@ with PySirius.ApiClient(configuration) as api_client:
     api_instance = PySirius.FeaturesApi(api_client)
     project_id = 'project_id_example' # str | 
     aligned_feature_id = 'aligned_feature_id_example' # str | 
-    type = APEX_HEIGHT # str |  (optional) (default to APEX_HEIGHT)
+    type = 'APEX_HEIGHT' # str |  (optional) (default to 'APEX_HEIGHT')
 
     try:
         api_response = api_instance.get_quantification(project_id, aligned_feature_id, type=type)
@@ -1700,7 +1700,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **str**|  | 
  **aligned_feature_id** | **str**|  | 
- **type** | **str**|  | [optional] [default to APEX_HEIGHT]
+ **type** | **str**|  | [optional] [default to &#39;APEX_HEIGHT&#39;]
 
 ### Return type
 

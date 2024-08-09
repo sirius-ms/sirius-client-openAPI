@@ -127,11 +127,11 @@ class SiriusSDK:
                 and cls.api_client is None
                 and cls.run_command is None)
 
-    def attach_or_start_sirius(self):
+    def attach_or_start_sirius(self, headless=None):
         """Attaches to a running local sirius if available or starts a new SIRIUS instance if not."""
         api = self.attach_to_sirius()
         if api is None:
-            api = self.start_sirius()
+            api = self.start_sirius(headless=headless)
         return api
 
     def attach_to_sirius(self, sirius_major_version=None, sirius_port=None):
@@ -159,11 +159,11 @@ class SiriusSDK:
 
         return sirius_api
 
-    def start_sirius(self, sirius_path=None, port=None, projectspace=None, workspace=None, forceStart=False):
+    def start_sirius(self, sirius_path=None, port=None, projectspace=None, workspace=None, force_start=False, headless=None):
         """starts the Sirius rest service and returns an API instance that allows access to the API endpoints"""
 
         # Fail if started already
-        if (SiriusSDK.process is not None) and not forceStart:
+        if (SiriusSDK.process is not None) and not force_start:
             print(f"\033[93m Sirius seems to have already been started with PID: {str(SiriusSDK.process.pid)}.", file=sys.stderr)
             print("\033[93m Use reconnect() to get a new API instance for your current SIRIUS.", file=sys.stderr)
             print("\033[93m Use shutdown() and then start() to restart SIRIUS and get a new API instance.", file=sys.stderr)
@@ -217,6 +217,11 @@ class SiriusSDK:
             SiriusSDK.port = port
             SiriusSDK.host = f'http://localhost:{SiriusSDK.port}'
             run_command.extend(["-p", str(port)])
+
+        if headless is True:
+            run_command.extend("--headless")
+        elif headless is False:
+            run_command.extend("--no-headless")
 
         SiriusSDK.run_command = run_command
         # run Command

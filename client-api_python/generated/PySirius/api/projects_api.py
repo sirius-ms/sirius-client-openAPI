@@ -1922,7 +1922,6 @@ class ProjectsApi:
         self,
         project_id: Annotated[StrictStr, Field(description="Project-space to import into.")],
         parameters: Annotated[LcmsSubmissionParameters, Field(description="Parameters for feature alignment and feature finding.")],
-        allow_ms1_only: Annotated[Optional[StrictBool], Field(description="Import data without MS/MS.")] = None,
         input_files: Optional[List[Union[StrictBytes, StrictStr]]] = None,
         _request_timeout: Union[
             None,
@@ -1945,8 +1944,6 @@ class ProjectsApi:
         :type project_id: str
         :param parameters: Parameters for feature alignment and feature finding. (required)
         :type parameters: LcmsSubmissionParameters
-        :param allow_ms1_only: Import data without MS/MS.
-        :type allow_ms1_only: bool
         :param input_files:
         :type input_files: List[bytearray]
         :param _request_timeout: timeout setting for this request. If one
@@ -1974,7 +1971,6 @@ class ProjectsApi:
         _param = self._import_ms_run_data_serialize(
             project_id=project_id,
             parameters=parameters,
-            allow_ms1_only=allow_ms1_only,
             input_files=input_files,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -2001,7 +1997,6 @@ class ProjectsApi:
         self,
         project_id: Annotated[StrictStr, Field(description="Project-space to import into.")],
         parameters: Annotated[LcmsSubmissionParameters, Field(description="Parameters for feature alignment and feature finding.")],
-        allow_ms1_only: Annotated[Optional[StrictBool], Field(description="Import data without MS/MS.")] = None,
         input_files: Optional[List[Union[StrictBytes, StrictStr]]] = None,
         _request_timeout: Union[
             None,
@@ -2024,8 +2019,6 @@ class ProjectsApi:
         :type project_id: str
         :param parameters: Parameters for feature alignment and feature finding. (required)
         :type parameters: LcmsSubmissionParameters
-        :param allow_ms1_only: Import data without MS/MS.
-        :type allow_ms1_only: bool
         :param input_files:
         :type input_files: List[bytearray]
         :param _request_timeout: timeout setting for this request. If one
@@ -2053,7 +2046,6 @@ class ProjectsApi:
         _param = self._import_ms_run_data_serialize(
             project_id=project_id,
             parameters=parameters,
-            allow_ms1_only=allow_ms1_only,
             input_files=input_files,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -2080,7 +2072,6 @@ class ProjectsApi:
         self,
         project_id: Annotated[StrictStr, Field(description="Project-space to import into.")],
         parameters: Annotated[LcmsSubmissionParameters, Field(description="Parameters for feature alignment and feature finding.")],
-        allow_ms1_only: Annotated[Optional[StrictBool], Field(description="Import data without MS/MS.")] = None,
         input_files: Optional[List[Union[StrictBytes, StrictStr]]] = None,
         _request_timeout: Union[
             None,
@@ -2103,8 +2094,6 @@ class ProjectsApi:
         :type project_id: str
         :param parameters: Parameters for feature alignment and feature finding. (required)
         :type parameters: LcmsSubmissionParameters
-        :param allow_ms1_only: Import data without MS/MS.
-        :type allow_ms1_only: bool
         :param input_files:
         :type input_files: List[bytearray]
         :param _request_timeout: timeout setting for this request. If one
@@ -2132,7 +2121,6 @@ class ProjectsApi:
         _param = self._import_ms_run_data_serialize(
             project_id=project_id,
             parameters=parameters,
-            allow_ms1_only=allow_ms1_only,
             input_files=input_files,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -2154,7 +2142,6 @@ class ProjectsApi:
         self,
         project_id,
         parameters,
-        allow_ms1_only,
         input_files,
         _request_auth,
         _content_type,
@@ -2182,10 +2169,6 @@ class ProjectsApi:
         if parameters is not None:
             
             _query_params.append(('parameters', parameters))
-            
-        if allow_ms1_only is not None:
-            
-            _query_params.append(('allowMs1Only', allow_ms1_only))
             
         # process the header parameters
         # process the form parameters
@@ -2242,7 +2225,6 @@ class ProjectsApi:
         self,
         project_id: Annotated[StrictStr, Field(description="Project-space to import into.")],
         parameters: Annotated[LcmsSubmissionParameters, Field(description="Parameters for feature alignment and feature finding.")],
-        allow_ms1_only: Annotated[Optional[StrictBool], Field(description="Import data without MS/MS.")] = None,
         opt_fields: Annotated[Optional[List[Optional[JobOptField]]], Field(description="Set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         input_files: Optional[List[Union[StrictBytes, StrictStr]]] = None,
         _request_timeout: Union[
@@ -2266,8 +2248,6 @@ class ProjectsApi:
         :type project_id: str
         :param parameters: Parameters for feature alignment and feature finding. (required)
         :type parameters: LcmsSubmissionParameters
-        :param allow_ms1_only: Import data without MS/MS.
-        :type allow_ms1_only: bool
         :param opt_fields: Set of optional fields to be included. Use 'none' only to override defaults.
         :type opt_fields: List[JobOptField]
         :param input_files:
@@ -2297,7 +2277,6 @@ class ProjectsApi:
         _param = self._import_ms_run_data_as_job_serialize(
             project_id=project_id,
             parameters=parameters,
-            allow_ms1_only=allow_ms1_only,
             opt_fields=opt_fields,
             input_files=input_files,
             _request_auth=_request_auth,
@@ -2325,7 +2304,6 @@ class ProjectsApi:
         self,
         project_id: Annotated[StrictStr, Field(description="Project-space to import into.")],
         parameters: Annotated[LcmsSubmissionParameters, Field(description="Parameters for feature alignment and feature finding.")],
-        allow_ms1_only: Annotated[Optional[StrictBool], Field(description="Import data without MS/MS.")] = None,
         opt_fields: Annotated[Optional[List[Optional[JobOptField]]], Field(description="Set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         input_files: Optional[List[Union[StrictBytes, StrictStr]]] = None,
         _request_timeout: Union[
@@ -2349,8 +2327,6 @@ class ProjectsApi:
         :type project_id: str
         :param parameters: Parameters for feature alignment and feature finding. (required)
         :type parameters: LcmsSubmissionParameters
-        :param allow_ms1_only: Import data without MS/MS.
-        :type allow_ms1_only: bool
         :param opt_fields: Set of optional fields to be included. Use 'none' only to override defaults.
         :type opt_fields: List[JobOptField]
         :param input_files:
@@ -2380,7 +2356,6 @@ class ProjectsApi:
         _param = self._import_ms_run_data_as_job_serialize(
             project_id=project_id,
             parameters=parameters,
-            allow_ms1_only=allow_ms1_only,
             opt_fields=opt_fields,
             input_files=input_files,
             _request_auth=_request_auth,
@@ -2408,7 +2383,6 @@ class ProjectsApi:
         self,
         project_id: Annotated[StrictStr, Field(description="Project-space to import into.")],
         parameters: Annotated[LcmsSubmissionParameters, Field(description="Parameters for feature alignment and feature finding.")],
-        allow_ms1_only: Annotated[Optional[StrictBool], Field(description="Import data without MS/MS.")] = None,
         opt_fields: Annotated[Optional[List[Optional[JobOptField]]], Field(description="Set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         input_files: Optional[List[Union[StrictBytes, StrictStr]]] = None,
         _request_timeout: Union[
@@ -2432,8 +2406,6 @@ class ProjectsApi:
         :type project_id: str
         :param parameters: Parameters for feature alignment and feature finding. (required)
         :type parameters: LcmsSubmissionParameters
-        :param allow_ms1_only: Import data without MS/MS.
-        :type allow_ms1_only: bool
         :param opt_fields: Set of optional fields to be included. Use 'none' only to override defaults.
         :type opt_fields: List[JobOptField]
         :param input_files:
@@ -2463,7 +2435,6 @@ class ProjectsApi:
         _param = self._import_ms_run_data_as_job_serialize(
             project_id=project_id,
             parameters=parameters,
-            allow_ms1_only=allow_ms1_only,
             opt_fields=opt_fields,
             input_files=input_files,
             _request_auth=_request_auth,
@@ -2486,7 +2457,6 @@ class ProjectsApi:
         self,
         project_id,
         parameters,
-        allow_ms1_only,
         opt_fields,
         input_files,
         _request_auth,
@@ -2516,10 +2486,6 @@ class ProjectsApi:
         if parameters is not None:
             
             _query_params.append(('parameters', parameters))
-            
-        if allow_ms1_only is not None:
-            
-            _query_params.append(('allowMs1Only', allow_ms1_only))
             
         if opt_fields is not None:
             
