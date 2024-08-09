@@ -31,6 +31,8 @@ jobs:
             cd .updater/api
             curl -s https://api.github.com/repositories/94561614/releases > ./releases.json
             packageVersion=$(cat ./releases.json  | grep 'name.*linux64.zip\"' | sort | tac | head -n 1 | cut -d - -f 2)
+            echo "Writing Version files: $packageVersion"
+            echo $packageVersion > ./packageVersion.txt
             echo "Downloading Version: $packageVersion"
             cat ./releases.json | grep 'browser_download_url.*linux64.zip\"' | sort | tac | head -n 1 | cut -d : -f 2,3 | tr -d \" | wget -i -
             echo "Download Complete"
@@ -46,6 +48,9 @@ jobs:
         wget http://localhost:8080/v3/api-docs -O api-docs.json
     - name: Update Clients
       run: |
+        # load package version from file
+        packageVersion = $(cat .updater/api/packageVersion.txt)
+        
         # echo "generating Java Code with packageVersion=$packageVersion"
         # rm -rf client-api_java/generated/*
         # java -jar .updater/openapi_generator/openapi-generator-cli.jar generate -i .updater/api/api-docs.json -c .updater/config/Java/config.json -g java -o client-api_java/generated
@@ -91,6 +96,7 @@ jobs:
         cd .updater/api
         rm -rf *sirius*
         rm -rf releases.json
+        rm -rf packageVersion.txt
         echo "Done"
     - name: Remove Openapi Generator Files
       run: |
