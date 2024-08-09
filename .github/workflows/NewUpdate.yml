@@ -49,7 +49,7 @@ jobs:
     - name: Update Clients
       run: |
         # load package version from file
-        packageVersion = $(cat .updater/api/packageVersion.txt)
+        packageVersion=$(cat .updater/api/packageVersion.txt)
         
         # echo "generating Java Code with packageVersion=$packageVersion"
         # rm -rf client-api_java/generated/*
