@@ -208,8 +208,17 @@ test_that("SaveJobConfig", {
   # @param override_existing character  (optional)
   # @return [character]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  project_id <- "SaveJobConfig"
+  project_dir <- paste(Sys.getenv("HOME"), project_id, sep="/")
+  projects_api$CreateProjectSpace(project_id, project_dir)
+  job_submission <- api_instance$GetDefaultJobConfig(TRUE)
+
+  response <- api_instance$SaveJobConfig(project_id, job_submission, TRUE)
+  expect_true(inherits(response, "character"))
+
+  withr::defer(api_instance$DeleteJobConfig(project_id))
+  withr::defer(projects_api$CloseProjectSpace(project_id))
+  withr::defer(unlink(project_dir, recursive=TRUE))
 })
 
 test_that("StartJob", {
