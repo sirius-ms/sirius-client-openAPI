@@ -107,19 +107,19 @@ jobs:
       uses: stefanzweifel/git-auto-commit-action@v4.15.2
       with:
         commit_message: Auto-Updated OpenAPI Clients
-#    - name: Run RManualGeneration
-#      run: |
-#        gh workflow run RManualGeneration.yml --ref ${GITHUB_REF##*/}
-#        echo "dispatched workflow"
-#        echo "sleeping for 30s to make sure it started"
-#        sleep 30
-#        list=$(gh run list --workflow RManualGeneration --branch ${GITHUB_REF##*/})
-#        id=$(echo $list | grep -oP 'in_progress RManualGeneration RManualGeneration [^ ]* workflow_dispatch \K\d+')
-#        echo "run ID of RManualGeneration is: $id"
-#        gh run watch $id --exit-status --interval 3
-#        echo "generation done!"
-#      env:
-#        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Run RManualGeneration
+      run: |
+        gh workflow run RManualGeneration.yml --ref ${GITHUB_REF##*/}
+        echo "dispatched workflow"
+        echo "sleeping for 30s to make sure it started"
+        sleep 30
+        list=$(gh run list --workflow RManualGeneration --branch ${GITHUB_REF##*/})
+        id=$(echo $list | grep -oP 'in_progress RManualGeneration RManualGeneration [^ ]* workflow_dispatch \K\d+')
+        echo "run ID of RManualGeneration is: $id"
+        gh run watch $id --exit-status --interval 3
+        echo "generation done!"
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: update file and create pull request
       id: open-pr
       uses: repo-sync/pull-request@v2
