@@ -103,6 +103,7 @@ class SiriusSDK:
         SiriusSDK.port = port
         SiriusSDK.process_id = pid
         print("Using port", port, "from file", port_file, file=sys.stderr)
+        print("Using PID", pid, "from file", pid_file, file=sys.stderr)
         return True
 
     def __cycle_find_sirius_pid_and_port__(self):
