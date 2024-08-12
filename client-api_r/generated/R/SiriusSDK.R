@@ -307,7 +307,11 @@ SiriusSDK <- R6::R6Class(
     },
 
     find_sirius_pid_and_port = function(sirius_version = NULL) {
-      global_workspace <- path.expand("~/.sirius")
+      if (Sys.info()['sysname']=="Windows")) {
+        global_workspace <- file.path(Sys.getenv("USERPROFILE"), ".sirius")
+      } else {
+        global_workspace <- path.expand("~/.sirius")
+      }
 
       if (is.null(sirius_version) || sirius_version == "None") {
         port_pattern_match <- "[0-9]*"
