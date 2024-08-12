@@ -1,7 +1,4 @@
-library(R6)
-library(processx)
-
-SiriusSDK <- R6Class(
+SiriusSDK <- R6::R6Class(
   "SiriusSDK",
   public = list(
     port = NULL,
@@ -53,7 +50,7 @@ SiriusSDK <- R6Class(
           return(NULL)
         }
 
-        self$process <- process$new(command = self$run_command, args = self$run_args)
+        self$process <- processx::process$new(command = self$run_command, args = self$run_args)
         for (i in 1:60) {
           Sys.sleep(1)
           tryCatch({
@@ -187,7 +184,7 @@ SiriusSDK <- R6Class(
 
       self$run_command <- self$sirius_path
       self$run_args <- run_args
-      self$process <- process$new(command = self$run_command, args = self$run_args)
+      self$process <- processx::process$new(command = self$run_command, args = self$run_args)
       self$process_id <- self$process$get_pid()
 
       if (is.null(port)) {
