@@ -19,6 +19,13 @@ test_that("sort", {
   #expect_equal(model.instance$`sort`, "EXPECTED_RESULT")
 })
 
+test_that("paged", {
+  # tests for the property `paged` (character)
+
+  # uncomment below to test the property
+  #expect_equal(model.instance$`paged`, "EXPECTED_RESULT")
+})
+
 test_that("pageNumber", {
   # tests for the property `pageNumber` (integer)
 
@@ -31,13 +38,6 @@ test_that("pageSize", {
 
   # uncomment below to test the property
   #expect_equal(model.instance$`pageSize`, "EXPECTED_RESULT")
-})
-
-test_that("paged", {
-  # tests for the property `paged` (character)
-
-  # uncomment below to test the property
-  #expect_equal(model.instance$`paged`, "EXPECTED_RESULT")
 })
 
 test_that("unpaged", {
