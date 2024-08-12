@@ -11,7 +11,7 @@ path_to_demo_data <- paste(Sys.getenv("HOME"), "sirius-client-openAPI/.updater/c
 preproc_ms2_file_1 = paste(path_to_demo_data, "Kaempferol.ms", sep="/")
 preproc_ms2_file_2 = paste(path_to_demo_data, "laudanosine.mgf", sep="/")
 
-tomato_project = path_to_demo_data <- paste(Sys.getenv("HOME"), "tomato_small.sirius", sep="/")
+tomato_project <- paste(Sys.getenv("HOME"), "tomato_small.sirius", sep="/")
 basic_spectrum <- c(BasicSpectrum$new(peaks = c(SimplePeak$new(1.23, 4.56)), precursorMz = 1.23))
 feature_import <- c(FeatureImport$new(name = "testfeature", feature_id = "testfeature", ionMass = 1.23, adduct = "[M+?]+", ms1Spectra = basic_spectrum, ms2Spectra = basic_spectrum))
 
