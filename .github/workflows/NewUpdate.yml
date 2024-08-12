@@ -33,7 +33,7 @@ jobs:
             echo "Writing Version files: $packageVersion"
             echo $packageVersion > ./packageVersion.txt
             echo "Downloading Version: $packageVersion"
-            https://github.com/sirius-ms/sirius/releases/download/v6.0.4/sirius-6.0.4-linux64.zip
+            wget https://github.com/sirius-ms/sirius/releases/download/v6.0.4/sirius-6.0.4-linux64.zip
             unzip *.zip
             echo "Api Ready"
     - name: Run Rest Api
