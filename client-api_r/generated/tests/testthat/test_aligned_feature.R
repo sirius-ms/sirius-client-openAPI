@@ -71,6 +71,13 @@ test_that("rtEndSeconds", {
   #expect_equal(model.instance$`rtEndSeconds`, "EXPECTED_RESULT")
 })
 
+test_that("rtApexSeconds", {
+  # tests for the property `rtApexSeconds` (numeric)
+
+  # uncomment below to test the property
+  #expect_equal(model.instance$`rtApexSeconds`, "EXPECTED_RESULT")
+})
+
 test_that("quality", {
   # tests for the property `quality` (DataQuality)
 

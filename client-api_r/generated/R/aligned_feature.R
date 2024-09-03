@@ -16,6 +16,7 @@
 #' @field detectedAdducts Adducts of this feature that have been detected during preprocessing. list(character)
 #' @field rtStartSeconds  numeric [optional]
 #' @field rtEndSeconds  numeric [optional]
+#' @field rtApexSeconds  numeric [optional]
 #' @field quality  \link{DataQuality} [optional]
 #' @field hasMs1 If true, the feature has at lease one MS1 spectrum character [optional]
 #' @field hasMsMs If true, the feature has at lease one MS/MS spectrum character [optional]
@@ -38,6 +39,7 @@ AlignedFeature <- R6::R6Class(
     `detectedAdducts` = NULL,
     `rtStartSeconds` = NULL,
     `rtEndSeconds` = NULL,
+    `rtApexSeconds` = NULL,
     `quality` = NULL,
     `hasMs1` = NULL,
     `hasMsMs` = NULL,
@@ -59,6 +61,7 @@ AlignedFeature <- R6::R6Class(
     #' @param ionMass ionMass
     #' @param rtStartSeconds rtStartSeconds
     #' @param rtEndSeconds rtEndSeconds
+    #' @param rtApexSeconds rtApexSeconds
     #' @param quality quality
     #' @param hasMs1 If true, the feature has at lease one MS1 spectrum
     #' @param hasMsMs If true, the feature has at lease one MS/MS spectrum
@@ -68,7 +71,7 @@ AlignedFeature <- R6::R6Class(
     #' @param computing Write lock for this feature. If the feature is locked no write operations are possible.  True if any computation is modifying this feature or its results
     #' @param ... Other optional arguments.
     #' @export
-    initialize = function(`charge`, `detectedAdducts`, `alignedFeatureId` = NULL, `compoundId` = NULL, `name` = NULL, `externalFeatureId` = NULL, `ionMass` = NULL, `rtStartSeconds` = NULL, `rtEndSeconds` = NULL, `quality` = NULL, `hasMs1` = NULL, `hasMsMs` = NULL, `msData` = NULL, `topAnnotations` = NULL, `topAnnotationsDeNovo` = NULL, `computing` = NULL, ...) {
+    initialize = function(`charge`, `detectedAdducts`, `alignedFeatureId` = NULL, `compoundId` = NULL, `name` = NULL, `externalFeatureId` = NULL, `ionMass` = NULL, `rtStartSeconds` = NULL, `rtEndSeconds` = NULL, `rtApexSeconds` = NULL, `quality` = NULL, `hasMs1` = NULL, `hasMsMs` = NULL, `msData` = NULL, `topAnnotations` = NULL, `topAnnotationsDeNovo` = NULL, `computing` = NULL, ...) {
       if (!missing(`charge`)) {
         if (!(is.numeric(`charge`) && length(`charge`) == 1)) {
           stop(paste("Error! Invalid data for `charge`. Must be an integer:", `charge`))
@@ -124,6 +127,12 @@ AlignedFeature <- R6::R6Class(
           stop(paste("Error! Invalid data for `rtEndSeconds`. Must be a number:", `rtEndSeconds`))
         }
         self$`rtEndSeconds` <- `rtEndSeconds`
+      }
+      if (!is.null(`rtApexSeconds`)) {
+        if (!(is.numeric(`rtApexSeconds`) && length(`rtApexSeconds`) == 1)) {
+          stop(paste("Error! Invalid data for `rtApexSeconds`. Must be a number:", `rtApexSeconds`))
+        }
+        self$`rtApexSeconds` <- `rtApexSeconds`
       }
       if (!is.null(`quality`)) {
         # disabled, as it is broken and checks for `quality` %in% c()
@@ -208,6 +217,10 @@ AlignedFeature <- R6::R6Class(
       if (!is.null(self$`rtEndSeconds`)) {
         AlignedFeatureObject[["rtEndSeconds"]] <-
           self$`rtEndSeconds`
+      }
+      if (!is.null(self$`rtApexSeconds`)) {
+        AlignedFeatureObject[["rtApexSeconds"]] <-
+          self$`rtApexSeconds`
       }
       if (!is.null(self$`quality`)) {
         AlignedFeatureObject[["quality"]] <-
@@ -302,6 +315,9 @@ AlignedFeature <- R6::R6Class(
       }
       if (!is.null(this_object$`rtEndSeconds`)) {
         self$`rtEndSeconds` <- this_object$`rtEndSeconds`
+      }
+      if (!is.null(this_object$`rtApexSeconds`)) {
+        self$`rtApexSeconds` <- this_object$`rtApexSeconds`
       }
       if (!is.null(this_object$`quality`)) {
         `quality_object` <- DataQuality$new()
@@ -415,6 +431,14 @@ AlignedFeature <- R6::R6Class(
           self$`rtEndSeconds`
           )
         },
+        if (!is.null(self$`rtApexSeconds`)) {
+          sprintf(
+          '"rtApexSeconds":
+            %f
+                    ',
+          self$`rtApexSeconds`
+          )
+        },
         if (!is.null(self$`quality`)) {
           sprintf(
           '"quality":
@@ -501,6 +525,7 @@ AlignedFeature <- R6::R6Class(
       }
       self$`rtStartSeconds` <- this_object$`rtStartSeconds`
       self$`rtEndSeconds` <- this_object$`rtEndSeconds`
+      self$`rtApexSeconds` <- this_object$`rtApexSeconds`
       self$`quality` <- DataQuality$new()$fromJSON(jsonlite::toJSON(this_object$`quality`, auto_unbox = TRUE, digits = NA))
       self$`hasMs1` <- this_object$`hasMs1`
       self$`hasMsMs` <- this_object$`hasMsMs`

@@ -14,6 +14,7 @@ Name | Type | Description | Notes
 **detectedAdducts** | **set[character]** | Adducts of this feature that have been detected during preprocessing. | 
 **rtStartSeconds** | **numeric** |  | [optional] 
 **rtEndSeconds** | **numeric** |  | [optional] 
+**rtApexSeconds** | **numeric** |  | [optional] 
 **quality** | [**DataQuality**](DataQuality.md) |  | [optional] [Enum: ] 
 **hasMs1** | **character** | If true, the feature has at lease one MS1 spectrum | [optional] 
 **hasMsMs** | **character** | If true, the feature has at lease one MS/MS spectrum | [optional] 
