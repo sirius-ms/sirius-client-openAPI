@@ -22,8 +22,6 @@ Create a new PageAlignedFeature
 
 \item{\code{totalElements}}{integer [optional]}
 
-\item{\code{last}}{character [optional]}
-
 \item{\code{first}}{character [optional]}
 
 \item{\code{size}}{integer [optional]}
@@ -33,6 +31,8 @@ Create a new PageAlignedFeature
 \item{\code{number}}{integer [optional]}
 
 \item{\code{sort}}{\link{SortObject} [optional]}
+
+\item{\code{last}}{character [optional]}
 
 \item{\code{numberOfElements}}{integer [optional]}
 
@@ -67,12 +67,12 @@ Initialize a new PageAlignedFeature class.
 \if{html}{\out{<div class="r">}}\preformatted{PageAlignedFeature$new(
   totalPages = NULL,
   totalElements = NULL,
-  last = NULL,
   first = NULL,
   size = NULL,
   content = NULL,
   number = NULL,
   sort = NULL,
+  last = NULL,
   numberOfElements = NULL,
   pageable = NULL,
   empty = NULL,
@@ -87,8 +87,6 @@ Initialize a new PageAlignedFeature class.
 
 \item{\code{totalElements}}{totalElements}
 
-\item{\code{last}}{last}
-
 \item{\code{first}}{first}
 
 \item{\code{size}}{size}
@@ -98,6 +96,8 @@ Initialize a new PageAlignedFeature class.
 \item{\code{number}}{number}
 
 \item{\code{sort}}{sort}
+
+\item{\code{last}}{last}
 
 \item{\code{numberOfElements}}{numberOfElements}
 
