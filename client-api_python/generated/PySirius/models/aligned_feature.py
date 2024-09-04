@@ -38,6 +38,7 @@ class AlignedFeature(BaseModel):
     detected_adducts: List[StrictStr] = Field(description="Adducts of this feature that have been detected during preprocessing.", alias="detectedAdducts")
     rt_start_seconds: Optional[float] = Field(default=None, alias="rtStartSeconds")
     rt_end_seconds: Optional[float] = Field(default=None, alias="rtEndSeconds")
+    rt_apex_seconds: Optional[float] = Field(default=None, alias="rtApexSeconds")
     quality: Optional[DataQuality] = None
     has_ms1: Optional[StrictBool] = Field(default=None, description="If true, the feature has at lease one MS1 spectrum", alias="hasMs1")
     has_ms_ms: Optional[StrictBool] = Field(default=None, description="If true, the feature has at lease one MS/MS spectrum", alias="hasMsMs")
@@ -45,7 +46,7 @@ class AlignedFeature(BaseModel):
     top_annotations: Optional[FeatureAnnotations] = Field(default=None, alias="topAnnotations")
     top_annotations_de_novo: Optional[FeatureAnnotations] = Field(default=None, alias="topAnnotationsDeNovo")
     computing: Optional[StrictBool] = Field(default=None, description="Write lock for this feature. If the feature is locked no write operations are possible.  True if any computation is modifying this feature or its results")
-    __properties: ClassVar[List[str]] = ["alignedFeatureId", "compoundId", "name", "externalFeatureId", "ionMass", "charge", "detectedAdducts", "rtStartSeconds", "rtEndSeconds", "quality", "hasMs1", "hasMsMs", "msData", "topAnnotations", "topAnnotationsDeNovo", "computing"]
+    __properties: ClassVar[List[str]] = ["alignedFeatureId", "compoundId", "name", "externalFeatureId", "ionMass", "charge", "detectedAdducts", "rtStartSeconds", "rtEndSeconds", "rtApexSeconds", "quality", "hasMs1", "hasMsMs", "msData", "topAnnotations", "topAnnotationsDeNovo", "computing"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -105,6 +106,11 @@ class AlignedFeature(BaseModel):
         if self.rt_end_seconds is None and "rt_end_seconds" in self.model_fields_set:
             _dict['rtEndSeconds'] = None
 
+        # set to None if rt_apex_seconds (nullable) is None
+        # and model_fields_set contains the field
+        if self.rt_apex_seconds is None and "rt_apex_seconds" in self.model_fields_set:
+            _dict['rtApexSeconds'] = None
+
         # set to None if quality (nullable) is None
         # and model_fields_set contains the field
         if self.quality is None and "quality" in self.model_fields_set:
@@ -146,6 +152,7 @@ class AlignedFeature(BaseModel):
             "detectedAdducts": obj.get("detectedAdducts"),
             "rtStartSeconds": obj.get("rtStartSeconds"),
             "rtEndSeconds": obj.get("rtEndSeconds"),
+            "rtApexSeconds": obj.get("rtApexSeconds"),
             "quality": obj.get("quality"),
             "hasMs1": obj.get("hasMs1"),
             "hasMsMs": obj.get("hasMsMs"),

@@ -36,6 +36,8 @@ Create a new AlignedFeature
 
 \item{\code{rtEndSeconds}}{numeric [optional]}
 
+\item{\code{rtApexSeconds}}{numeric [optional]}
+
 \item{\code{quality}}{\link{DataQuality} [optional]}
 
 \item{\code{hasMs1}}{If true, the feature has at lease one MS1 spectrum character [optional]}
@@ -84,6 +86,7 @@ Initialize a new AlignedFeature class.
   ionMass = NULL,
   rtStartSeconds = NULL,
   rtEndSeconds = NULL,
+  rtApexSeconds = NULL,
   quality = NULL,
   hasMs1 = NULL,
   hasMsMs = NULL,
@@ -115,6 +118,8 @@ Initialize a new AlignedFeature class.
 \item{\code{rtStartSeconds}}{rtStartSeconds}
 
 \item{\code{rtEndSeconds}}{rtEndSeconds}
+
+\item{\code{rtApexSeconds}}{rtApexSeconds}
 
 \item{\code{quality}}{quality}
 

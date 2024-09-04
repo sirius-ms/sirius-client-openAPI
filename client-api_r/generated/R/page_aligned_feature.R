@@ -9,12 +9,12 @@
 #' @format An \code{R6Class} generator object
 #' @field totalPages  integer [optional]
 #' @field totalElements  integer [optional]
-#' @field last  character [optional]
 #' @field first  character [optional]
 #' @field size  integer [optional]
 #' @field content  list(\link{AlignedFeature}) [optional]
 #' @field number  integer [optional]
 #' @field sort  \link{SortObject} [optional]
+#' @field last  character [optional]
 #' @field numberOfElements  integer [optional]
 #' @field pageable  \link{PageableObject} [optional]
 #' @field empty  character [optional]
@@ -26,12 +26,12 @@ PageAlignedFeature <- R6::R6Class(
   public = list(
     `totalPages` = NULL,
     `totalElements` = NULL,
-    `last` = NULL,
     `first` = NULL,
     `size` = NULL,
     `content` = NULL,
     `number` = NULL,
     `sort` = NULL,
+    `last` = NULL,
     `numberOfElements` = NULL,
     `pageable` = NULL,
     `empty` = NULL,
@@ -42,18 +42,18 @@ PageAlignedFeature <- R6::R6Class(
     #'
     #' @param totalPages totalPages
     #' @param totalElements totalElements
-    #' @param last last
     #' @param first first
     #' @param size size
     #' @param content content
     #' @param number number
     #' @param sort sort
+    #' @param last last
     #' @param numberOfElements numberOfElements
     #' @param pageable pageable
     #' @param empty empty
     #' @param ... Other optional arguments.
     #' @export
-    initialize = function(`totalPages` = NULL, `totalElements` = NULL, `last` = NULL, `first` = NULL, `size` = NULL, `content` = NULL, `number` = NULL, `sort` = NULL, `numberOfElements` = NULL, `pageable` = NULL, `empty` = NULL, ...) {
+    initialize = function(`totalPages` = NULL, `totalElements` = NULL, `first` = NULL, `size` = NULL, `content` = NULL, `number` = NULL, `sort` = NULL, `last` = NULL, `numberOfElements` = NULL, `pageable` = NULL, `empty` = NULL, ...) {
       if (!is.null(`totalPages`)) {
         if (!(is.numeric(`totalPages`) && length(`totalPages`) == 1)) {
           stop(paste("Error! Invalid data for `totalPages`. Must be an integer:", `totalPages`))
@@ -65,12 +65,6 @@ PageAlignedFeature <- R6::R6Class(
           stop(paste("Error! Invalid data for `totalElements`. Must be an integer:", `totalElements`))
         }
         self$`totalElements` <- `totalElements`
-      }
-      if (!is.null(`last`)) {
-        if (!(is.logical(`last`) && length(`last`) == 1)) {
-          stop(paste("Error! Invalid data for `last`. Must be a boolean:", `last`))
-        }
-        self$`last` <- `last`
       }
       if (!is.null(`first`)) {
         if (!(is.logical(`first`) && length(`first`) == 1)) {
@@ -98,6 +92,12 @@ PageAlignedFeature <- R6::R6Class(
       if (!is.null(`sort`)) {
         stopifnot(R6::is.R6(`sort`))
         self$`sort` <- `sort`
+      }
+      if (!is.null(`last`)) {
+        if (!(is.logical(`last`) && length(`last`) == 1)) {
+          stop(paste("Error! Invalid data for `last`. Must be a boolean:", `last`))
+        }
+        self$`last` <- `last`
       }
       if (!is.null(`numberOfElements`)) {
         if (!(is.numeric(`numberOfElements`) && length(`numberOfElements`) == 1)) {
@@ -133,10 +133,6 @@ PageAlignedFeature <- R6::R6Class(
         PageAlignedFeatureObject[["totalElements"]] <-
           self$`totalElements`
       }
-      if (!is.null(self$`last`)) {
-        PageAlignedFeatureObject[["last"]] <-
-          self$`last`
-      }
       if (!is.null(self$`first`)) {
         PageAlignedFeatureObject[["first"]] <-
           self$`first`
@@ -162,6 +158,10 @@ PageAlignedFeature <- R6::R6Class(
           } else {
             self$`sort`$toJSON()
           }
+      }
+      if (!is.null(self$`last`)) {
+        PageAlignedFeatureObject[["last"]] <-
+          self$`last`
       }
       if (!is.null(self$`numberOfElements`)) {
         PageAlignedFeatureObject[["numberOfElements"]] <-
@@ -199,9 +199,6 @@ PageAlignedFeature <- R6::R6Class(
       if (!is.null(this_object$`totalElements`)) {
         self$`totalElements` <- this_object$`totalElements`
       }
-      if (!is.null(this_object$`last`)) {
-        self$`last` <- this_object$`last`
-      }
       if (!is.null(this_object$`first`)) {
         self$`first` <- this_object$`first`
       }
@@ -218,6 +215,9 @@ PageAlignedFeature <- R6::R6Class(
         `sort_object` <- SortObject$new()
         `sort_object`$fromJSON(jsonlite::toJSON(this_object$`sort`, auto_unbox = TRUE, digits = NA))
         self$`sort` <- `sort_object`
+      }
+      if (!is.null(this_object$`last`)) {
+        self$`last` <- this_object$`last`
       }
       if (!is.null(this_object$`numberOfElements`)) {
         self$`numberOfElements` <- this_object$`numberOfElements`
@@ -255,14 +255,6 @@ PageAlignedFeature <- R6::R6Class(
             %f
                     ',
           self$`totalElements`
-          )
-        },
-        if (!is.null(self$`last`)) {
-          sprintf(
-          '"last":
-            %s
-                    ',
-          tolower(self$`last`)
           )
         },
         if (!is.null(self$`first`)) {
@@ -303,6 +295,14 @@ PageAlignedFeature <- R6::R6Class(
           %s
           ',
           jsonlite::toJSON(self$`sort`$toJSON(), auto_unbox = TRUE, digits = NA)
+          )
+        },
+        if (!is.null(self$`last`)) {
+          sprintf(
+          '"last":
+            %s
+                    ',
+          tolower(self$`last`)
           )
         },
         if (!is.null(self$`numberOfElements`)) {
@@ -349,12 +349,12 @@ PageAlignedFeature <- R6::R6Class(
       this_object <- jsonlite::fromJSON(input_json)
       self$`totalPages` <- this_object$`totalPages`
       self$`totalElements` <- this_object$`totalElements`
-      self$`last` <- this_object$`last`
       self$`first` <- this_object$`first`
       self$`size` <- this_object$`size`
       self$`content` <- ApiClient$new()$deserializeObj(this_object$`content`, "array[AlignedFeature]", loadNamespace("Rsirius"))
       self$`number` <- this_object$`number`
       self$`sort` <- SortObject$new()$fromJSON(jsonlite::toJSON(this_object$`sort`, auto_unbox = TRUE, digits = NA))
+      self$`last` <- this_object$`last`
       self$`numberOfElements` <- this_object$`numberOfElements`
       self$`pageable` <- PageableObject$new()$fromJSON(jsonlite::toJSON(this_object$`pageable`, auto_unbox = TRUE, digits = NA))
       self$`empty` <- this_object$`empty`
