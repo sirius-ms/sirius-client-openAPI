@@ -48,17 +48,13 @@ Please follow the [installation procedure](#installation--usage) and then run th
 from PySirius import SiriusSDK
 sdk = SiriusSDK()
 
-projectspace = "PATH_TO_EMPTY_OR_PROJECT_FOLDER"
-sirius_path = "PATH_TO_THE_SIRIUS_EXECUTEABLE"
-# Start new sirius
-api = sdk.start(sirius_path=sirius_path, projectspace=projectspace)
+# Or attach to a running sirius or start new sirius if none is running
+# SIRIUS must be in the path or the SIRIUS_EXE must be specified.
+# Is automatically configured when installing via conda or windows ms installer
+api = sdk.attach_or_start_sirius()
 
-# Or attach to a running sirius by srecifying major version or port
-# api = sdk.attach_to_running_sirius(sirius_major_version=6)
-# api = sdk.attach_to_running_sirius(sirius_port=8080)
-
-print(api.get_JobsApi().get_default_job_config())
-print(api.get_ProjectsApi().get_project_spaces())
+print(api.jobs().get_default_job_config())
+print(api.projects().get_project_spaces())
 ```
 
 ### Remote Endpoint
@@ -68,10 +64,10 @@ Please follow the [installation procedure](#installation--usage) and then run th
 ```python
 from PySirius import SiriusSDK
 
-api = SiriusSDK.connect_remote("http://localhost:8080")
+api = SiriusSDK.connect("http://localhost:8080")
 
-print(api.get_JobsApi().get_default_job_config())
-print(api.get_ProjectsApi().get_project_spaces())
+print(api.jobs().get_default_job_config())
+print(api.projects().get_project_spaces())
 ```
 
 ## Documentation for API Endpoints
