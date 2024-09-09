@@ -2,21 +2,36 @@
 REST API that provides the full functionality of SIRIUS and its web services as background service. It is intended as entry-point for scripting languages and software integration SDKs.
 
 ## Installation & Usage
+
+### conda install (preferred)
+
+Install the `py-sirius-ms` package from conda-forge using
+```shell
+conda install -c conda-forge py-sirius-ms
+```
+or
+```shell
+conda install conda-forge::py-sirius-ms
+```
+
+This will automatically install all dependencies, including the `sirius-ms` package including SIRIUS itself and set an environment variable for SIRIUS when activating the respective conda environment.
+The conda-forge install is the preferred method due to quality-of-life features (see [Getting Started](#getting-started)).
+
 ### pip install
 
 #### Specific Version
 Replace v0.0.0 with your api version
-```sh
-pip install git+https://github.com/boecker-lab/sirius-client-openAPI@v0.0.0#subdirectory=client-api_python/generated
+```shell
+pip install git+https://github.com/sirius-ms/sirius-client-openAPI@v0.0.0#subdirectory=client-api_python/generated
 ```
 
 #### Latest (unstable) Version
 
-```sh
-pip install git+https://github.com/boecker-lab/sirius-client-openAPI#subdirectory=client-api_python/generated
+```shell
+pip install git+https://github.com/sirius-ms/sirius-client-openAPI#subdirectory=client-api_python/generated
 ```
 
-(you may need to run `pip` with root permission: `sudo pip install git+https://github.com/boecker-lab/sirius-client-openAPI#subdirectory=client-api_python/generated`)
+(you may need to run `pip` with root permission: `sudo pip install git+https://github.com/sirius-ms/sirius-client-openAPI#subdirectory=client-api_python/generated`)
 
 Then import the package:
 ```python
@@ -29,7 +44,7 @@ import PySirius
 
 Install via [Setuptools](http://pypi.python.org/pypi/setuptools).
 
-```sh
+```shell
 python setup.py install --user
 ```
 (or `sudo python setup.py install` to install the package for all users)
@@ -42,19 +57,41 @@ import PySirius
 ## Getting Started
 
 ### Local Endpoint
-Please follow the [installation procedure](#installation--usage) and then run the following (while replacing the Strings for project_space and sirius_executable):
+Please follow the [installation procedure](#installation--usage) and then run the following (while replacing the Strings for project_space and sirius_executable).
+
+NOTE: the SIRIUS REST service automatically allocates a random available port on your machine. 
+`SiriusSDK` will always try to get this information **automatically**, but you can set a port manually to make sure.
+
+If you installed via conda-forge **or** have SIRIUS in your path, you should be able to activate your environment and simply use:
 
 ```python
 from PySirius import SiriusSDK
 sdk = SiriusSDK()
-
-# Or attach to a running sirius or start new sirius if none is running
-# SIRIUS must be in the path or the SIRIUS_EXE must be specified.
+# SIRIUS must be in the path or the SIRIUS_EXE environment variable must be specified.
 # Is automatically configured when installing via conda or windows ms installer
 api = sdk.attach_or_start_sirius()
 
 print(api.jobs().get_default_job_config())
 print(api.projects().get_project_spaces())
+
+# Optional
+sdk.shutdown_sirius()
+```
+
+If you installed from GitHub or a local folder manually and do **not** have SIRIUS in path, you can go the manual way:
+
+```python
+from PySirius import SiriusSDK
+sdk = SiriusSDK()
+api = sdk.start_sirius(sirius_path="your/path/to/sirius", port=8080)
+```
+
+You can also attach to a running SIRIUS instance:
+
+```python
+from PySirius import SiriusSDK
+sdk = SiriusSDK()
+api = sdk.attach_to_sirius(sirius_major_version=6, port=8080)
 ```
 
 ### Remote Endpoint
@@ -63,12 +100,13 @@ Please follow the [installation procedure](#installation--usage) and then run th
 
 ```python
 from PySirius import SiriusSDK
-
+sdk = SiriusSDK()
 api = SiriusSDK.connect("http://localhost:8080")
-
-print(api.jobs().get_default_job_config())
-print(api.projects().get_project_spaces())
 ```
+
+### SiriusSDK class
+
+For more niche functionality and insights, find the SiriusSDK class [here](sirius.py).
 
 ## Documentation for API Endpoints
 Please click [here](generated/README.md#documentation-for-api-endpoints)
