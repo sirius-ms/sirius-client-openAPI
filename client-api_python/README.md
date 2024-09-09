@@ -101,7 +101,7 @@ Please follow the [installation procedure](#installation--usage) and then run th
 ```python
 from PySirius import SiriusSDK
 sdk = SiriusSDK()
-api = SiriusSDK.connect("http://localhost:8080")
+api = sdk.connect("http://localhost:8080")
 ```
 
 ### SiriusSDK class
