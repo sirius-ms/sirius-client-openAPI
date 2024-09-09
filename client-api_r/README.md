@@ -91,6 +91,11 @@ api = sdk$connect("http://localhost:8080")
 
 For more niche functionality and insights, find the SiriusSDK class [here](SiriusSDK.R).
 
+### Example code
+Our feedstocks for the conda-forge packages are running an automated minimal test.
+We included the scripts [here](../.updater/clientTests/CondaFeedstockMinimalTests). 
+Feel free to take them as example usages of the packages.
+
 ## Documentation for API Endpoints
 Please click [here](generated/README.md#documentation-for-api-endpoints)
 
