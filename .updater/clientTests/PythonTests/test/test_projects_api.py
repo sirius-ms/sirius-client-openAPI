@@ -102,14 +102,10 @@ class TestProjectsApi(unittest.TestCase):
 
         Import and Align full MS-Runs from various formats into the specified project  Possible formats (mzML, mzXML)
         """
-        # TODO
-        # {"timestamp": "2024-07-12T13:12:57.748+00:00", "status": 500, "error": "Internal Server Error",
-        # "path": "/api/projects/test_projects_api/import/ms-data-files"}
-        # input_files = [self.full_ms_file]
-        # print(self.full_ms_file)
-        # parameters = LcmsSubmissionParameters()
-        # response = self.api.import_ms_run_data(self.project_id, parameters, input_files=input_files)
-        # self.assertIsInstance(response, ImportResult)
+        input_files = [self.full_ms_file]
+        parameters = LcmsSubmissionParameters()
+        response = self.projects.import_ms_run_data(self.project_id, parameters, input_files=input_files)
+        self.assertIsInstance(response, ImportResult)
 
     def test_import_ms_run_data_as_job(self) -> None:
         """Test case for import_ms_run_data_as_job
