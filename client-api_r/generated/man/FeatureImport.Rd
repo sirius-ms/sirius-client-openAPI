@@ -32,6 +32,10 @@ Create a new FeatureImport
 
 \item{\code{rtEndSeconds}}{numeric [optional]}
 
+\item{\code{rtApexSeconds}}{numeric [optional]}
+
+\item{\code{dataQuality}}{\link{DataQuality} [optional]}
+
 \item{\code{mergedMs1}}{\link{BasicSpectrum} [optional]}
 
 \item{\code{ms1Spectra}}{List of MS1Spectra belonging to this feature. These spectra will be merged an only a representative  mergedMs1 spectrum will be stored in SIRIUS. At least one of these spectra should contain the  isotope pattern of the precursor ion.  Note: Will be ignored if 'mergedMs1' is given. list(\link{BasicSpectrum}) [optional]}
@@ -70,6 +74,8 @@ Initialize a new FeatureImport class.
   detectedAdducts = NULL,
   rtStartSeconds = NULL,
   rtEndSeconds = NULL,
+  rtApexSeconds = NULL,
+  dataQuality = NULL,
   mergedMs1 = NULL,
   ms1Spectra = NULL,
   ms2Spectra = NULL,
@@ -93,6 +99,10 @@ Initialize a new FeatureImport class.
 \item{\code{rtStartSeconds}}{rtStartSeconds}
 
 \item{\code{rtEndSeconds}}{rtEndSeconds}
+
+\item{\code{rtApexSeconds}}{rtApexSeconds}
+
+\item{\code{dataQuality}}{dataQuality}
 
 \item{\code{mergedMs1}}{mergedMs1}
 

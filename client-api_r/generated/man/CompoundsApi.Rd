@@ -79,6 +79,24 @@ Get compound (group of ion identities) with the given identifier from the specif
 }
 }
 
+\strong{ GetCompoundTraces } \emph{  }
+
+\itemize{
+\item \emph{ @param } project_id character
+\item \emph{ @param } compound_id character
+\item \emph{ @param } feature_id character
+\item \emph{ @returnType } \link{TraceSet} \cr
+
+
+\item status code : 200 | OK
+
+\item return type : TraceSet
+\item response headers :
+
+\tabular{ll}{
+}
+}
+
 \strong{ GetCompounds } \emph{ List of all available compounds (group of ion identities) in the given project-space. }
 List of all available compounds (group of ion identities) in the given project-space.
 
@@ -120,23 +138,6 @@ Page of available compounds (group of ion identities) in the given project-space
 }
 }
 
-\strong{ GetTraces } \emph{  }
-
-\itemize{
-\item \emph{ @param } project_id character
-\item \emph{ @param } compound_id character
-\item \emph{ @returnType } \link{TraceSet} \cr
-
-
-\item status code : 200 | OK
-
-\item return type : TraceSet
-\item response headers :
-
-\tabular{ll}{
-}
-}
-
 }
 }
 
@@ -146,7 +147,7 @@ Page of available compounds (group of ion identities) in the given project-space
 
 library(Rsirius)
 var_project_id <- "project_id_example" # character | project-space to import into.
-var_compound_import <- c(CompoundImport$new(c(FeatureImport$new(123, 123, "name_example", "externalFeatureId_example", c("detectedAdducts_example"), 123, 123, BasicSpectrum$new(c(SimplePeak$new(123, 123)), "name_example", 123, "collisionEnergy_example", 123, 123, 123), c(BasicSpectrum$new(c(SimplePeak$new(..., ...)), "name_example", 123, "collisionEnergy_example", 123, 123, 123)), c(BasicSpectrum$new(c(SimplePeak$new(..., ...)), "name_example", 123, "collisionEnergy_example", 123, 123, 123)))), "name_example")) # array[CompoundImport] | the compound data to be imported
+var_compound_import <- c(CompoundImport$new(c(FeatureImport$new(123, 123, "name_example", "externalFeatureId_example", c("detectedAdducts_example"), 123, 123, 123, DataQuality$new(), BasicSpectrum$new(c(SimplePeak$new(123, 123)), "name_example", 123, "collisionEnergy_example", 123, 123, 123), c(BasicSpectrum$new(c(SimplePeak$new(..., ...)), "name_example", 123, "collisionEnergy_example", 123, 123, 123)), c(BasicSpectrum$new(c(SimplePeak$new(..., ...)), "name_example", 123, "collisionEnergy_example", 123, 123, 123)))), "name_example")) # array[CompoundImport] | the compound data to be imported
 var_profile <- InstrumentProfile$new() # InstrumentProfile | profile describing the instrument used to measure the data. Used to merge spectra. (Optional)
 var_opt_fields <- c(CompoundOptField$new()) # array[CompoundOptField] | set of optional fields to be included. Use 'none' to override defaults. (Optional)
 var_opt_fields_features <- c(AlignedFeatureOptField$new()) # array[AlignedFeatureOptField] | set of optional fields of the nested features to be included. Use 'none' to override defaults. (Optional)
@@ -189,6 +190,21 @@ result <- api_instance$compounds_api$GetCompound(var_project_id, var_compound_id
 dput(result)
 
 
+####################  GetCompoundTraces  ####################
+
+library(Rsirius)
+var_project_id <- "project_id_example" # character | 
+var_compound_id <- "compound_id_example" # character | 
+var_feature_id <- "" # character |  (Optional)
+
+api_instance <- rsirius_api$new()
+
+# to save the result into a file, simply add the optional `data_file` parameter, e.g.
+# result <- api_instance$GetCompoundTraces(var_project_id, var_compound_id, feature_id = var_feature_iddata_file = "result.txt")
+result <- api_instance$compounds_api$GetCompoundTraces(var_project_id, var_compound_id, feature_id = var_feature_id)
+dput(result)
+
+
 ####################  GetCompounds  ####################
 
 library(Rsirius)
@@ -224,20 +240,6 @@ result <- api_instance$compounds_api$GetCompoundsPaged(var_project_id, page = va
 dput(result)
 
 
-####################  GetTraces  ####################
-
-library(Rsirius)
-var_project_id <- "project_id_example" # character | 
-var_compound_id <- "compound_id_example" # character | 
-
-api_instance <- rsirius_api$new()
-
-# to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$GetTraces(var_project_id, var_compound_iddata_file = "result.txt")
-result <- api_instance$compounds_api$GetTraces(var_project_id, var_compound_id)
-dput(result)
-
-
 }
 }
 \section{Public fields}{
@@ -257,12 +259,12 @@ dput(result)
 \item \href{#method-CompoundsApi-DeleteCompoundWithHttpInfo}{\code{CompoundsApi$DeleteCompoundWithHttpInfo()}}
 \item \href{#method-CompoundsApi-GetCompound}{\code{CompoundsApi$GetCompound()}}
 \item \href{#method-CompoundsApi-GetCompoundWithHttpInfo}{\code{CompoundsApi$GetCompoundWithHttpInfo()}}
+\item \href{#method-CompoundsApi-GetCompoundTraces}{\code{CompoundsApi$GetCompoundTraces()}}
+\item \href{#method-CompoundsApi-GetCompoundTracesWithHttpInfo}{\code{CompoundsApi$GetCompoundTracesWithHttpInfo()}}
 \item \href{#method-CompoundsApi-GetCompounds}{\code{CompoundsApi$GetCompounds()}}
 \item \href{#method-CompoundsApi-GetCompoundsWithHttpInfo}{\code{CompoundsApi$GetCompoundsWithHttpInfo()}}
 \item \href{#method-CompoundsApi-GetCompoundsPaged}{\code{CompoundsApi$GetCompoundsPaged()}}
 \item \href{#method-CompoundsApi-GetCompoundsPagedWithHttpInfo}{\code{CompoundsApi$GetCompoundsPagedWithHttpInfo()}}
-\item \href{#method-CompoundsApi-GetTraces}{\code{CompoundsApi$GetTraces()}}
-\item \href{#method-CompoundsApi-GetTracesWithHttpInfo}{\code{CompoundsApi$GetTracesWithHttpInfo()}}
 \item \href{#method-CompoundsApi-clone}{\code{CompoundsApi$clone()}}
 }
 }
@@ -486,6 +488,72 @@ API response (Compound) with additional information such as HTTP status code, he
 }
 }
 \if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-CompoundsApi-GetCompoundTraces"></a>}}
+\if{latex}{\out{\hypertarget{method-CompoundsApi-GetCompoundTraces}{}}}
+\subsection{Method \code{GetCompoundTraces()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{CompoundsApi$GetCompoundTraces(
+  project_id,
+  compound_id,
+  feature_id = "",
+  data_file = NULL,
+  ...
+)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{project_id}}{}
+
+\item{\code{compound_id}}{}
+
+\item{\code{feature_id}}{(optional) No description (default value: "")}
+
+\item{\code{data_file}}{(optional) name of the data file to save the result}
+
+\item{\code{...}}{Other optional arguments}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+TraceSet
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-CompoundsApi-GetCompoundTracesWithHttpInfo"></a>}}
+\if{latex}{\out{\hypertarget{method-CompoundsApi-GetCompoundTracesWithHttpInfo}{}}}
+\subsection{Method \code{GetCompoundTracesWithHttpInfo()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{CompoundsApi$GetCompoundTracesWithHttpInfo(
+  project_id,
+  compound_id,
+  feature_id = "",
+  data_file = NULL,
+  ...
+)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{project_id}}{}
+
+\item{\code{compound_id}}{}
+
+\item{\code{feature_id}}{(optional) No description (default value: "")}
+
+\item{\code{data_file}}{(optional) name of the data file to save the result}
+
+\item{\code{...}}{Other optional arguments}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+API response (TraceSet) with additional information such as HTTP status code, headers
+}
+}
+\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-CompoundsApi-GetCompounds"></a>}}
 \if{latex}{\out{\hypertarget{method-CompoundsApi-GetCompounds}{}}}
 \subsection{Method \code{GetCompounds()}}{
@@ -637,61 +705,6 @@ Page of available compounds (group of ion identities) in the given project-space
 }
 \subsection{Returns}{
 API response (PageCompound) with additional information such as HTTP status code, headers
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-CompoundsApi-GetTraces"></a>}}
-\if{latex}{\out{\hypertarget{method-CompoundsApi-GetTraces}{}}}
-\subsection{Method \code{GetTraces()}}{
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{CompoundsApi$GetTraces(project_id, compound_id, data_file = NULL, ...)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{project_id}}{}
-
-\item{\code{compound_id}}{}
-
-\item{\code{data_file}}{(optional) name of the data file to save the result}
-
-\item{\code{...}}{Other optional arguments}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-TraceSet
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-CompoundsApi-GetTracesWithHttpInfo"></a>}}
-\if{latex}{\out{\hypertarget{method-CompoundsApi-GetTracesWithHttpInfo}{}}}
-\subsection{Method \code{GetTracesWithHttpInfo()}}{
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{CompoundsApi$GetTracesWithHttpInfo(
-  project_id,
-  compound_id,
-  data_file = NULL,
-  ...
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{project_id}}{}
-
-\item{\code{compound_id}}{}
-
-\item{\code{data_file}}{(optional) name of the data file to save the result}
-
-\item{\code{...}}{Other optional arguments}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-API response (TraceSet) with additional information such as HTTP status code, headers
 }
 }
 \if{html}{\out{<hr>}}

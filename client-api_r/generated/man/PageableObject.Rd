@@ -22,11 +22,11 @@ Create a new PageableObject
 
 \item{\code{sort}}{\link{SortObject} [optional]}
 
+\item{\code{paged}}{character [optional]}
+
 \item{\code{pageNumber}}{integer [optional]}
 
 \item{\code{pageSize}}{integer [optional]}
-
-\item{\code{paged}}{character [optional]}
 
 \item{\code{unpaged}}{character [optional]}
 }
@@ -57,9 +57,9 @@ Initialize a new PageableObject class.
 \if{html}{\out{<div class="r">}}\preformatted{PageableObject$new(
   offset = NULL,
   sort = NULL,
+  paged = NULL,
   pageNumber = NULL,
   pageSize = NULL,
-  paged = NULL,
   unpaged = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -72,11 +72,11 @@ Initialize a new PageableObject class.
 
 \item{\code{sort}}{sort}
 
+\item{\code{paged}}{paged}
+
 \item{\code{pageNumber}}{pageNumber}
 
 \item{\code{pageSize}}{pageSize}
-
-\item{\code{paged}}{paged}
 
 \item{\code{unpaged}}{unpaged}
 
