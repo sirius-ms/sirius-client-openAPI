@@ -56,6 +56,20 @@ test_that("rtEndSeconds", {
   #expect_equal(model.instance$`rtEndSeconds`, "EXPECTED_RESULT")
 })
 
+test_that("rtApexSeconds", {
+  # tests for the property `rtApexSeconds` (numeric)
+
+  # uncomment below to test the property
+  #expect_equal(model.instance$`rtApexSeconds`, "EXPECTED_RESULT")
+})
+
+test_that("dataQuality", {
+  # tests for the property `dataQuality` (DataQuality)
+
+  # uncomment below to test the property
+  #expect_equal(model.instance$`dataQuality`, "EXPECTED_RESULT")
+})
+
 test_that("mergedMs1", {
   # tests for the property `mergedMs1` (BasicSpectrum)
 

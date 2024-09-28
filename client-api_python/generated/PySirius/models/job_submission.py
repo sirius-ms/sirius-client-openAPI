@@ -46,7 +46,7 @@ class JobSubmission(BaseModel):
     canopus_params: Optional[Canopus] = Field(default=None, alias="canopusParams")
     structure_db_search_params: Optional[StructureDbSearch] = Field(default=None, alias="structureDbSearchParams")
     ms_novelist_params: Optional[MsNovelist] = Field(default=None, alias="msNovelistParams")
-    config_map: Optional[Dict[str, StrictStr]] = Field(default=None, description="As an alternative to the object based parameters, this map allows to store key value pairs  of ALL SIRIUS parameters. All possible parameters can be retrieved from SIRIUS via the respective endpoint.", alias="configMap")
+    config_map: Optional[Dict[str, Optional[StrictStr]]] = Field(default=None, description="As an alternative to the object based parameters, this map allows to store key value pairs  of ALL SIRIUS parameters. All possible parameters can be retrieved from SIRIUS via the respective endpoint.", alias="configMap")
     __properties: ClassVar[List[str]] = ["compoundIds", "alignedFeatureIds", "fallbackAdducts", "enforcedAdducts", "detectableAdducts", "recompute", "spectraSearchParams", "formulaIdParams", "zodiacParams", "fingerprintPredictionParams", "canopusParams", "structureDbSearchParams", "msNovelistParams", "configMap"]
 
     model_config = ConfigDict(
@@ -173,6 +173,11 @@ class JobSubmission(BaseModel):
         # and model_fields_set contains the field
         if self.ms_novelist_params is None and "ms_novelist_params" in self.model_fields_set:
             _dict['msNovelistParams'] = None
+
+        # set to None if config_map (nullable) is None
+        # and model_fields_set contains the field
+        if self.config_map is None and "config_map" in self.model_fields_set:
+            _dict['configMap'] = None
 
         return _dict
 

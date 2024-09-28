@@ -440,7 +440,8 @@
 #' }
 #' }
 #'
-#' \strong{ GetQuantification } \emph{  }
+#' \strong{ GetQuantification } \emph{ Returns a single quantification table row for the given feature. }
+#' Returns a single quantification table row for the given feature. The quantification table contains the intensity of the feature within all  samples it is contained in.
 #'
 #' \itemize{
 #' \item \emph{ @param } project_id character
@@ -671,11 +672,13 @@
 #' }
 #' }
 #'
-#' \strong{ GetTraces1 } \emph{  }
+#' \strong{ GetTraces } \emph{ Returns the traces of the given feature. }
+#' Returns the traces of the given feature. A trace consists of m/z and intensity values over the retention  time axis. All the returned traces are 'projected', which means they refer not to the original retention time axis,  but to a recalibrated axis. This means the data points in the trace are not exactly the same as in the raw data.  However, this also means that all traces can be directly compared against each other, as they all lie in the same  retention time axis.  By default, this method only returns traces of samples the aligned feature appears in. When includeAll is set,  it also includes samples in which the same trace appears in.
 #'
 #' \itemize{
 #' \item \emph{ @param } project_id character
 #' \item \emph{ @param } aligned_feature_id character
+#' \item \emph{ @param } include_all character
 #' \item \emph{ @returnType } \link{TraceSet} \cr
 #'
 #'
@@ -697,7 +700,7 @@
 #'
 #' library(Rsirius)
 #' var_project_id <- "project_id_example" # character | project-space to import into.
-#' var_feature_import <- c(FeatureImport$new(123, 123, "name_example", "externalFeatureId_example", c("detectedAdducts_example"), 123, 123, BasicSpectrum$new(c(SimplePeak$new(123, 123)), "name_example", 123, "collisionEnergy_example", 123, 123, 123), c(BasicSpectrum$new(c(SimplePeak$new(123, 123)), "name_example", 123, "collisionEnergy_example", 123, 123, 123)), c(BasicSpectrum$new(c(SimplePeak$new(123, 123)), "name_example", 123, "collisionEnergy_example", 123, 123, 123)))) # array[FeatureImport] | the feature data to be imported
+#' var_feature_import <- c(FeatureImport$new(123, 123, "name_example", "externalFeatureId_example", c("detectedAdducts_example"), 123, 123, 123, DataQuality$new(), BasicSpectrum$new(c(SimplePeak$new(123, 123)), "name_example", 123, "collisionEnergy_example", 123, 123, 123), c(BasicSpectrum$new(c(SimplePeak$new(123, 123)), "name_example", 123, "collisionEnergy_example", 123, 123, 123)), c(BasicSpectrum$new(c(SimplePeak$new(123, 123)), "name_example", 123, "collisionEnergy_example", 123, 123, 123)))) # array[FeatureImport] | the feature data to be imported
 #' var_profile <- InstrumentProfile$new() # InstrumentProfile | profile describing the instrument used to measure the data. Used to merge spectra. (Optional)
 #' var_opt_fields <- c(AlignedFeatureOptField$new()) # array[AlignedFeatureOptField] | set of optional fields to be included. Use 'none' to override defaults. (Optional)
 #'
@@ -1054,10 +1057,11 @@
 #' ####################  GetQuantification  ####################
 #'
 #' library(Rsirius)
-#' var_project_id <- "project_id_example" # character | 
-#' var_aligned_feature_id <- "aligned_feature_id_example" # character | 
-#' var_type <- "APEX_HEIGHT" # character |  (Optional)
+#' var_project_id <- "project_id_example" # character | project-space to read from.
+#' var_aligned_feature_id <- "aligned_feature_id_example" # character | feature which intensities should be read out
+#' var_type <- "APEX_HEIGHT" # character | quantification type. Currently, only APEX_HEIGHT is supported, which is the intensity of the feature at its apex. (Optional)
 #'
+#' #Returns a single quantification table row for the given feature.
 #' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
@@ -1249,17 +1253,19 @@
 #' dput(result)
 #'
 #'
-#' ####################  GetTraces1  ####################
+#' ####################  GetTraces  ####################
 #'
 #' library(Rsirius)
-#' var_project_id <- "project_id_example" # character | 
-#' var_aligned_feature_id <- "aligned_feature_id_example" # character | 
+#' var_project_id <- "project_id_example" # character | project-space to read from.
+#' var_aligned_feature_id <- "aligned_feature_id_example" # character | feature which intensities should be read out
+#' var_include_all <- FALSE # character | when true, return all samples that belong to the same merged trace. when false, only return samples which contain the aligned feature. (Optional)
 #'
+#' #Returns the traces of the given feature.
 #' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-#' # result <- api_instance$GetTraces1(var_project_id, var_aligned_feature_iddata_file = "result.txt")
-#' result <- api_instance$features_api$GetTraces1(var_project_id, var_aligned_feature_id)
+#' # result <- api_instance$GetTraces(var_project_id, var_aligned_feature_id, include_all = var_include_alldata_file = "result.txt")
+#' result <- api_instance$features_api$GetTraces(var_project_id, var_aligned_feature_id, include_all = var_include_all)
 #' dput(result)
 #'
 #'
@@ -3938,14 +3944,14 @@ FeaturesApi <- R6::R6Class(
         local_var_resp
       }
     },
-    #' 
+    #' Returns a single quantification table row for the given feature.
     #'
     #' @description
-    #' 
+    #' Returns a single quantification table row for the given feature.
     #'
-    #' @param project_id 
-    #' @param aligned_feature_id 
-    #' @param type (optional) No description (default value: "APEX_HEIGHT")
+    #' @param project_id project-space to read from.
+    #' @param aligned_feature_id feature which intensities should be read out
+    #' @param type (optional) quantification type. Currently, only APEX_HEIGHT is supported, which is the intensity of the feature at its apex. (default value: "APEX_HEIGHT")
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #' @return QuantificationTable
@@ -3962,14 +3968,14 @@ FeaturesApi <- R6::R6Class(
         local_var_response
       }
     },
-    #' 
+    #' Returns a single quantification table row for the given feature.
     #'
     #' @description
-    #' 
+    #' Returns a single quantification table row for the given feature.
     #'
-    #' @param project_id 
-    #' @param aligned_feature_id 
-    #' @param type (optional) No description (default value: "APEX_HEIGHT")
+    #' @param project_id project-space to read from.
+    #' @param aligned_feature_id feature which intensities should be read out
+    #' @param type (optional) quantification type. Currently, only APEX_HEIGHT is supported, which is the intensity of the feature at its apex. (default value: "APEX_HEIGHT")
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #' @return API response (QuantificationTable) with additional information such as HTTP status code, headers
@@ -5389,19 +5395,20 @@ FeaturesApi <- R6::R6Class(
         local_var_resp
       }
     },
-    #' 
+    #' Returns the traces of the given feature.
     #'
     #' @description
-    #' 
+    #' Returns the traces of the given feature.
     #'
-    #' @param project_id 
-    #' @param aligned_feature_id 
+    #' @param project_id project-space to read from.
+    #' @param aligned_feature_id feature which intensities should be read out
+    #' @param include_all (optional) when true, return all samples that belong to the same merged trace. when false, only return samples which contain the aligned feature. (default value: FALSE)
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #' @return TraceSet
     #' @export
-    GetTraces1 = function(project_id, aligned_feature_id, data_file = NULL, ...) {
-      local_var_response <- self$GetTraces1WithHttpInfo(project_id, aligned_feature_id, data_file = data_file, ...)
+    GetTraces = function(project_id, aligned_feature_id, include_all = FALSE, data_file = NULL, ...) {
+      local_var_response <- self$GetTracesWithHttpInfo(project_id, aligned_feature_id, include_all, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
@@ -5412,18 +5419,19 @@ FeaturesApi <- R6::R6Class(
         local_var_response
       }
     },
-    #' 
+    #' Returns the traces of the given feature.
     #'
     #' @description
-    #' 
+    #' Returns the traces of the given feature.
     #'
-    #' @param project_id 
-    #' @param aligned_feature_id 
+    #' @param project_id project-space to read from.
+    #' @param aligned_feature_id feature which intensities should be read out
+    #' @param include_all (optional) when true, return all samples that belong to the same merged trace. when false, only return samples which contain the aligned feature. (default value: FALSE)
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #' @return API response (TraceSet) with additional information such as HTTP status code, headers
     #' @export
-    GetTraces1WithHttpInfo = function(project_id, aligned_feature_id, data_file = NULL, ...) {
+    GetTracesWithHttpInfo = function(project_id, aligned_feature_id, include_all = FALSE, data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -5442,6 +5450,9 @@ FeaturesApi <- R6::R6Class(
       }
 
 
+
+
+      query_params[["includeAll"]] <- `include_all`
 
       local_var_url_path <- "/api/projects/{projectId}/aligned-features/{alignedFeatureId}/traces"
       if (!missing(`project_id`)) {

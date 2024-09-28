@@ -7,9 +7,9 @@ Method | HTTP request | Description
 [**add_compounds**](CompoundsApi.md#add_compounds) | **POST** /api/projects/{projectId}/compounds | Import Compounds and its contained features.
 [**delete_compound**](CompoundsApi.md#delete_compound) | **DELETE** /api/projects/{projectId}/compounds/{compoundId} | Delete compound (group of ion identities) with the given identifier (and the included features) from the  specified project-space.
 [**get_compound**](CompoundsApi.md#get_compound) | **GET** /api/projects/{projectId}/compounds/{compoundId} | Get compound (group of ion identities) with the given identifier from the specified project-space.
+[**get_compound_traces**](CompoundsApi.md#get_compound_traces) | **GET** /api/projects/{projectId}/compounds/{compoundId}/traces | 
 [**get_compounds**](CompoundsApi.md#get_compounds) | **GET** /api/projects/{projectId}/compounds | List of all available compounds (group of ion identities) in the given project-space.
 [**get_compounds_paged**](CompoundsApi.md#get_compounds_paged) | **GET** /api/projects/{projectId}/compounds/page | Page of available compounds (group of ion identities) in the given project-space.
-[**get_traces**](CompoundsApi.md#get_traces) | **GET** /api/projects/{projectId}/compounds/{compoundId}/traces | 
 
 
 # **add_compounds**
@@ -235,6 +235,75 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **get_compound_traces**
+> TraceSet get_compound_traces(project_id, compound_id, feature_id=feature_id)
+
+
+
+### Example
+
+
+```python
+import PySirius
+from PySirius.models.trace_set import TraceSet
+from PySirius.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to http://localhost:8080
+# See configuration.py for a list of all supported configuration parameters.
+configuration = PySirius.Configuration(
+    host = "http://localhost:8080"
+)
+
+
+# Enter a context with an instance of the API client
+with PySirius.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = PySirius.CompoundsApi(api_client)
+    project_id = 'project_id_example' # str | 
+    compound_id = 'compound_id_example' # str | 
+    feature_id = '' # str |  (optional) (default to '')
+
+    try:
+        api_response = api_instance.get_compound_traces(project_id, compound_id, feature_id=feature_id)
+        print("The response of CompoundsApi->get_compound_traces:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling CompoundsApi->get_compound_traces: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **project_id** | **str**|  | 
+ **compound_id** | **str**|  | 
+ **feature_id** | **str**|  | [optional] [default to &#39;&#39;]
+
+### Return type
+
+[**TraceSet**](TraceSet.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **get_compounds**
 > List[Compound] get_compounds(project_id, opt_fields=opt_fields, opt_fields_features=opt_fields_features)
 
@@ -386,73 +455,6 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Compounds with additional optional fields (if specified). |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **get_traces**
-> TraceSet get_traces(project_id, compound_id)
-
-
-
-### Example
-
-
-```python
-import PySirius
-from PySirius.models.trace_set import TraceSet
-from PySirius.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to http://localhost:8080
-# See configuration.py for a list of all supported configuration parameters.
-configuration = PySirius.Configuration(
-    host = "http://localhost:8080"
-)
-
-
-# Enter a context with an instance of the API client
-with PySirius.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = PySirius.CompoundsApi(api_client)
-    project_id = 'project_id_example' # str | 
-    compound_id = 'compound_id_example' # str | 
-
-    try:
-        api_response = api_instance.get_traces(project_id, compound_id)
-        print("The response of CompoundsApi->get_traces:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling CompoundsApi->get_traces: %s\n" % e)
-```
-
-
-
-### Parameters
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **project_id** | **str**|  | 
- **compound_id** | **str**|  | 
-
-### Return type
-
-[**TraceSet**](TraceSet.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | OK |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

@@ -26,7 +26,7 @@ Method | HTTP request | Description
 [**get_isotope_pattern_annotation**](FeaturesApi.md#get_isotope_pattern_annotation) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/isotope-pattern | Returns Isotope pattern information (simulated isotope pattern, measured isotope pattern, isotope pattern highlighting)  for the given formula result identifier.
 [**get_lipid_annotation**](FeaturesApi.md#get_lipid_annotation) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/lipid-annotation | Returns Lipid annotation (ElGordo) for the given formula result identifier.
 [**get_ms_data**](FeaturesApi.md#get_ms_data) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/ms-data | Mass Spec data (input data) for the given &#39;alignedFeatureId&#39; .
-[**get_quantification**](FeaturesApi.md#get_quantification) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/quantification | 
+[**get_quantification**](FeaturesApi.md#get_quantification) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/quantification | Returns a single quantification table row for the given feature.
 [**get_spectral_library_match**](FeaturesApi.md#get_spectral_library_match) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/spectral-library-matches/{matchId} | List of spectral library matches for the given &#39;alignedFeatureId&#39;.
 [**get_spectral_library_matches**](FeaturesApi.md#get_spectral_library_matches) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/spectral-library-matches | List of spectral library matches for the given &#39;alignedFeatureId&#39;.
 [**get_spectral_library_matches_paged**](FeaturesApi.md#get_spectral_library_matches_paged) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/spectral-library-matches/page | Page of spectral library matches for the given &#39;alignedFeatureId&#39;.
@@ -37,7 +37,7 @@ Method | HTTP request | Description
 [**get_structure_candidates_by_formula**](FeaturesApi.md#get_structure_candidates_by_formula) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/db-structures | List of CSI:FingerID structure database search candidates for the given &#39;formulaId&#39; with minimal information.
 [**get_structure_candidates_by_formula_paged**](FeaturesApi.md#get_structure_candidates_by_formula_paged) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/db-structures/page | Page of CSI:FingerID structure database search candidates for the given &#39;formulaId&#39; with minimal information.
 [**get_structure_candidates_paged**](FeaturesApi.md#get_structure_candidates_paged) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/db-structures/page | Page of structure database search candidates ranked by CSI:FingerID score for the given &#39;alignedFeatureId&#39; with minimal information.
-[**get_traces1**](FeaturesApi.md#get_traces1) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/traces | 
+[**get_traces**](FeaturesApi.md#get_traces) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/traces | Returns the traces of the given feature.
 
 
 # **add_aligned_features**
@@ -1657,7 +1657,9 @@ No authorization required
 # **get_quantification**
 > QuantificationTable get_quantification(project_id, aligned_feature_id, type=type)
 
+Returns a single quantification table row for the given feature.
 
+Returns a single quantification table row for the given feature. The quantification table contains the intensity of the feature within all  samples it is contained in.
 
 ### Example
 
@@ -1679,11 +1681,12 @@ configuration = PySirius.Configuration(
 with PySirius.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = PySirius.FeaturesApi(api_client)
-    project_id = 'project_id_example' # str | 
-    aligned_feature_id = 'aligned_feature_id_example' # str | 
-    type = 'APEX_HEIGHT' # str |  (optional) (default to 'APEX_HEIGHT')
+    project_id = 'project_id_example' # str | project-space to read from.
+    aligned_feature_id = 'aligned_feature_id_example' # str | feature which intensities should be read out
+    type = 'APEX_HEIGHT' # str | quantification type. Currently, only APEX_HEIGHT is supported, which is the intensity of the feature at its apex. (optional) (default to 'APEX_HEIGHT')
 
     try:
+        # Returns a single quantification table row for the given feature.
         api_response = api_instance.get_quantification(project_id, aligned_feature_id, type=type)
         print("The response of FeaturesApi->get_quantification:\n")
         pprint(api_response)
@@ -1698,9 +1701,9 @@ with PySirius.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **project_id** | **str**|  | 
- **aligned_feature_id** | **str**|  | 
- **type** | **str**|  | [optional] [default to &#39;APEX_HEIGHT&#39;]
+ **project_id** | **str**| project-space to read from. | 
+ **aligned_feature_id** | **str**| feature which intensities should be read out | 
+ **type** | **str**| quantification type. Currently, only APEX_HEIGHT is supported, which is the intensity of the feature at its apex. | [optional] [default to &#39;APEX_HEIGHT&#39;]
 
 ### Return type
 
@@ -2496,10 +2499,12 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_traces1**
-> TraceSet get_traces1(project_id, aligned_feature_id)
+# **get_traces**
+> TraceSet get_traces(project_id, aligned_feature_id, include_all=include_all)
 
+Returns the traces of the given feature.
 
+Returns the traces of the given feature. A trace consists of m/z and intensity values over the retention  time axis. All the returned traces are 'projected', which means they refer not to the original retention time axis,  but to a recalibrated axis. This means the data points in the trace are not exactly the same as in the raw data.  However, this also means that all traces can be directly compared against each other, as they all lie in the same  retention time axis.  By default, this method only returns traces of samples the aligned feature appears in. When includeAll is set,  it also includes samples in which the same trace appears in.
 
 ### Example
 
@@ -2521,15 +2526,17 @@ configuration = PySirius.Configuration(
 with PySirius.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = PySirius.FeaturesApi(api_client)
-    project_id = 'project_id_example' # str | 
-    aligned_feature_id = 'aligned_feature_id_example' # str | 
+    project_id = 'project_id_example' # str | project-space to read from.
+    aligned_feature_id = 'aligned_feature_id_example' # str | feature which intensities should be read out
+    include_all = False # bool | when true, return all samples that belong to the same merged trace. when false, only return samples which contain the aligned feature. (optional) (default to False)
 
     try:
-        api_response = api_instance.get_traces1(project_id, aligned_feature_id)
-        print("The response of FeaturesApi->get_traces1:\n")
+        # Returns the traces of the given feature.
+        api_response = api_instance.get_traces(project_id, aligned_feature_id, include_all=include_all)
+        print("The response of FeaturesApi->get_traces:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling FeaturesApi->get_traces1: %s\n" % e)
+        print("Exception when calling FeaturesApi->get_traces: %s\n" % e)
 ```
 
 
@@ -2539,8 +2546,9 @@ with PySirius.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **project_id** | **str**|  | 
- **aligned_feature_id** | **str**|  | 
+ **project_id** | **str**| project-space to read from. | 
+ **aligned_feature_id** | **str**| feature which intensities should be read out | 
+ **include_all** | **bool**| when true, return all samples that belong to the same merged trace. when false, only return samples which contain the aligned feature. | [optional] [default to False]
 
 ### Return type
 

@@ -19,7 +19,7 @@ Name | Type | Description | Notes
 **canopus_params** | [**Canopus**](Canopus.md) |  | [optional] 
 **structure_db_search_params** | [**StructureDbSearch**](StructureDbSearch.md) |  | [optional] 
 **ms_novelist_params** | [**MsNovelist**](MsNovelist.md) |  | [optional] 
-**config_map** | **Dict[str, str]** | As an alternative to the object based parameters, this map allows to store key value pairs  of ALL SIRIUS parameters. All possible parameters can be retrieved from SIRIUS via the respective endpoint. | [optional] 
+**config_map** | **Dict[str, Optional[str]]** | As an alternative to the object based parameters, this map allows to store key value pairs  of ALL SIRIUS parameters. All possible parameters can be retrieved from SIRIUS via the respective endpoint. | [optional] 
 
 ## Example
 

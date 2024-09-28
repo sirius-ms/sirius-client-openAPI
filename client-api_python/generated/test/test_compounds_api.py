@@ -47,6 +47,12 @@ class TestCompoundsApi(unittest.TestCase):
         """
         pass
 
+    def test_get_compound_traces(self) -> None:
+        """Test case for get_compound_traces
+
+        """
+        pass
+
     def test_get_compounds(self) -> None:
         """Test case for get_compounds
 
@@ -58,12 +64,6 @@ class TestCompoundsApi(unittest.TestCase):
         """Test case for get_compounds_paged
 
         Page of available compounds (group of ion identities) in the given project-space.
-        """
-        pass
-
-    def test_get_traces(self) -> None:
-        """Test case for get_traces
-
         """
         pass
 

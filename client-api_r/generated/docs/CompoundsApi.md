@@ -7,9 +7,9 @@ Method | HTTP request | Description
 [**AddCompounds**](CompoundsApi.md#AddCompounds) | **POST** /api/projects/{projectId}/compounds | Import Compounds and its contained features.
 [**DeleteCompound**](CompoundsApi.md#DeleteCompound) | **DELETE** /api/projects/{projectId}/compounds/{compoundId} | Delete compound (group of ion identities) with the given identifier (and the included features) from the  specified project-space.
 [**GetCompound**](CompoundsApi.md#GetCompound) | **GET** /api/projects/{projectId}/compounds/{compoundId} | Get compound (group of ion identities) with the given identifier from the specified project-space.
+[**GetCompoundTraces**](CompoundsApi.md#GetCompoundTraces) | **GET** /api/projects/{projectId}/compounds/{compoundId}/traces | 
 [**GetCompounds**](CompoundsApi.md#GetCompounds) | **GET** /api/projects/{projectId}/compounds | List of all available compounds (group of ion identities) in the given project-space.
 [**GetCompoundsPaged**](CompoundsApi.md#GetCompoundsPaged) | **GET** /api/projects/{projectId}/compounds/page | Page of available compounds (group of ion identities) in the given project-space.
-[**GetTraces**](CompoundsApi.md#GetTraces) | **GET** /api/projects/{projectId}/compounds/{compoundId}/traces | 
 
 
 # **AddCompounds**
@@ -27,7 +27,7 @@ library(Rsirius)
 #
 # prepare function argument(s)
 var_project_id <- "project_id_example" # character | project-space to import into.
-var_compound_import <- c(CompoundImport$new(c(FeatureImport$new(123, 123, "name_example", "externalFeatureId_example", c("detectedAdducts_example"), 123, 123, BasicSpectrum$new(c(SimplePeak$new(123, 123)), "name_example", 123, "collisionEnergy_example", 123, 123, 123), c(BasicSpectrum$new(c(SimplePeak$new(..., ...)), "name_example", 123, "collisionEnergy_example", 123, 123, 123)), c(BasicSpectrum$new(c(SimplePeak$new(..., ...)), "name_example", 123, "collisionEnergy_example", 123, 123, 123)))), "name_example")) # array[CompoundImport] | the compound data to be imported
+var_compound_import <- c(CompoundImport$new(c(FeatureImport$new(123, 123, "name_example", "externalFeatureId_example", c("detectedAdducts_example"), 123, 123, 123, DataQuality$new(), BasicSpectrum$new(c(SimplePeak$new(123, 123)), "name_example", 123, "collisionEnergy_example", 123, 123, 123), c(BasicSpectrum$new(c(SimplePeak$new(..., ...)), "name_example", 123, "collisionEnergy_example", 123, 123, 123)), c(BasicSpectrum$new(c(SimplePeak$new(..., ...)), "name_example", 123, "collisionEnergy_example", 123, 123, 123)))), "name_example")) # array[CompoundImport] | the compound data to be imported
 var_profile <- InstrumentProfile$new() # InstrumentProfile | profile describing the instrument used to measure the data. Used to merge spectra. (Optional)
 var_opt_fields <- c(CompoundOptField$new()) # array[CompoundOptField] | set of optional fields to be included. Use 'none' to override defaults. (Optional)
 var_opt_fields_features <- c(AlignedFeatureOptField$new()) # array[AlignedFeatureOptField] | set of optional fields of the nested features to be included. Use 'none' to override defaults. (Optional)
@@ -166,6 +166,53 @@ No authorization required
 |-------------|-------------|------------------|
 | **200** | Compounds with additional optional fields (if specified). |  -  |
 
+# **GetCompoundTraces**
+> TraceSet GetCompoundTraces(project_id, compound_id, feature_id = "")
+
+
+
+### Example
+```R
+library(Rsirius)
+
+# prepare function argument(s)
+var_project_id <- "project_id_example" # character | 
+var_compound_id <- "compound_id_example" # character | 
+var_feature_id <- "" # character |  (Optional)
+
+api_instance <- rsirius_api$new()
+# to save the result into a file, simply add the optional `data_file` parameter, e.g.
+# result <- api_instance$GetCompoundTraces(var_project_id, var_compound_id, feature_id = var_feature_iddata_file = "result.txt")
+result <- api_instance$compounds_api$GetCompoundTraces(var_project_id, var_compound_id, feature_id = var_feature_id)
+dput(result)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **project_id** | **character**|  | 
+ **compound_id** | **character**|  | 
+ **feature_id** | **character**|  | [optional] [default to &quot;&quot;]
+
+### Return type
+
+[**TraceSet**](TraceSet.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | OK |  -  |
+
 # **GetCompounds**
 > array[Compound] GetCompounds(project_id, opt_fields = [], opt_fields_features = [])
 
@@ -273,49 +320,4 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Compounds with additional optional fields (if specified). |  -  |
-
-# **GetTraces**
-> TraceSet GetTraces(project_id, compound_id)
-
-
-
-### Example
-```R
-library(Rsirius)
-
-# prepare function argument(s)
-var_project_id <- "project_id_example" # character | 
-var_compound_id <- "compound_id_example" # character | 
-
-api_instance <- rsirius_api$new()
-# to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$GetTraces(var_project_id, var_compound_iddata_file = "result.txt")
-result <- api_instance$compounds_api$GetTraces(var_project_id, var_compound_id)
-dput(result)
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **project_id** | **character**|  | 
- **compound_id** | **character**|  | 
-
-### Return type
-
-[**TraceSet**](TraceSet.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **200** | OK |  -  |
 

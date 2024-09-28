@@ -71,6 +71,24 @@
 #' }
 #' }
 #'
+#' \strong{ GetCompoundTraces } \emph{  }
+#'
+#' \itemize{
+#' \item \emph{ @param } project_id character
+#' \item \emph{ @param } compound_id character
+#' \item \emph{ @param } feature_id character
+#' \item \emph{ @returnType } \link{TraceSet} \cr
+#'
+#'
+#' \item status code : 200 | OK
+#'
+#' \item return type : TraceSet
+#' \item response headers :
+#'
+#' \tabular{ll}{
+#' }
+#' }
+#'
 #' \strong{ GetCompounds } \emph{ List of all available compounds (group of ion identities) in the given project-space. }
 #' List of all available compounds (group of ion identities) in the given project-space.
 #'
@@ -112,23 +130,6 @@
 #' }
 #' }
 #'
-#' \strong{ GetTraces } \emph{  }
-#'
-#' \itemize{
-#' \item \emph{ @param } project_id character
-#' \item \emph{ @param } compound_id character
-#' \item \emph{ @returnType } \link{TraceSet} \cr
-#'
-#'
-#' \item status code : 200 | OK
-#'
-#' \item return type : TraceSet
-#' \item response headers :
-#'
-#' \tabular{ll}{
-#' }
-#' }
-#'
 #' }
 #'
 #'
@@ -138,7 +139,7 @@
 #'
 #' library(Rsirius)
 #' var_project_id <- "project_id_example" # character | project-space to import into.
-#' var_compound_import <- c(CompoundImport$new(c(FeatureImport$new(123, 123, "name_example", "externalFeatureId_example", c("detectedAdducts_example"), 123, 123, BasicSpectrum$new(c(SimplePeak$new(123, 123)), "name_example", 123, "collisionEnergy_example", 123, 123, 123), c(BasicSpectrum$new(c(SimplePeak$new(..., ...)), "name_example", 123, "collisionEnergy_example", 123, 123, 123)), c(BasicSpectrum$new(c(SimplePeak$new(..., ...)), "name_example", 123, "collisionEnergy_example", 123, 123, 123)))), "name_example")) # array[CompoundImport] | the compound data to be imported
+#' var_compound_import <- c(CompoundImport$new(c(FeatureImport$new(123, 123, "name_example", "externalFeatureId_example", c("detectedAdducts_example"), 123, 123, 123, DataQuality$new(), BasicSpectrum$new(c(SimplePeak$new(123, 123)), "name_example", 123, "collisionEnergy_example", 123, 123, 123), c(BasicSpectrum$new(c(SimplePeak$new(..., ...)), "name_example", 123, "collisionEnergy_example", 123, 123, 123)), c(BasicSpectrum$new(c(SimplePeak$new(..., ...)), "name_example", 123, "collisionEnergy_example", 123, 123, 123)))), "name_example")) # array[CompoundImport] | the compound data to be imported
 #' var_profile <- InstrumentProfile$new() # InstrumentProfile | profile describing the instrument used to measure the data. Used to merge spectra. (Optional)
 #' var_opt_fields <- c(CompoundOptField$new()) # array[CompoundOptField] | set of optional fields to be included. Use 'none' to override defaults. (Optional)
 #' var_opt_fields_features <- c(AlignedFeatureOptField$new()) # array[AlignedFeatureOptField] | set of optional fields of the nested features to be included. Use 'none' to override defaults. (Optional)
@@ -181,6 +182,21 @@
 #' dput(result)
 #'
 #'
+#' ####################  GetCompoundTraces  ####################
+#'
+#' library(Rsirius)
+#' var_project_id <- "project_id_example" # character | 
+#' var_compound_id <- "compound_id_example" # character | 
+#' var_feature_id <- "" # character |  (Optional)
+#'
+#' api_instance <- rsirius_api$new()
+#'
+#' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
+#' # result <- api_instance$GetCompoundTraces(var_project_id, var_compound_id, feature_id = var_feature_iddata_file = "result.txt")
+#' result <- api_instance$compounds_api$GetCompoundTraces(var_project_id, var_compound_id, feature_id = var_feature_id)
+#' dput(result)
+#'
+#'
 #' ####################  GetCompounds  ####################
 #'
 #' library(Rsirius)
@@ -213,20 +229,6 @@
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
 #' # result <- api_instance$GetCompoundsPaged(var_project_id, page = var_page, size = var_size, sort = var_sort, opt_fields = var_opt_fields, opt_fields_features = var_opt_fields_featuresdata_file = "result.txt")
 #' result <- api_instance$compounds_api$GetCompoundsPaged(var_project_id, page = var_page, size = var_size, sort = var_sort, opt_fields = var_opt_fields, opt_fields_features = var_opt_fields_features)
-#' dput(result)
-#'
-#'
-#' ####################  GetTraces  ####################
-#'
-#' library(Rsirius)
-#' var_project_id <- "project_id_example" # character | 
-#' var_compound_id <- "compound_id_example" # character | 
-#'
-#' api_instance <- rsirius_api$new()
-#'
-#' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-#' # result <- api_instance$GetTraces(var_project_id, var_compound_iddata_file = "result.txt")
-#' result <- api_instance$compounds_api$GetTraces(var_project_id, var_compound_id)
 #' dput(result)
 #'
 #'
@@ -605,6 +607,119 @@ CompoundsApi <- R6::R6Class(
         local_var_resp
       }
     },
+    #' 
+    #'
+    #' @description
+    #' 
+    #'
+    #' @param project_id 
+    #' @param compound_id 
+    #' @param feature_id (optional) No description (default value: "")
+    #' @param data_file (optional) name of the data file to save the result
+    #' @param ... Other optional arguments
+    #' @return TraceSet
+    #' @export
+    GetCompoundTraces = function(project_id, compound_id, feature_id = "", data_file = NULL, ...) {
+      local_var_response <- self$GetCompoundTracesWithHttpInfo(project_id, compound_id, feature_id, data_file = data_file, ...)
+      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
+        local_var_response$content
+      } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
+        local_var_response
+      } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
+        local_var_response
+      } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
+        local_var_response
+      }
+    },
+    #' 
+    #'
+    #' @description
+    #' 
+    #'
+    #' @param project_id 
+    #' @param compound_id 
+    #' @param feature_id (optional) No description (default value: "")
+    #' @param data_file (optional) name of the data file to save the result
+    #' @param ... Other optional arguments
+    #' @return API response (TraceSet) with additional information such as HTTP status code, headers
+    #' @export
+    GetCompoundTracesWithHttpInfo = function(project_id, compound_id, feature_id = "", data_file = NULL, ...) {
+      args <- list(...)
+      query_params <- list()
+      header_params <- c()
+      form_params <- list()
+      file_params <- list()
+      local_var_body <- NULL
+      oauth_scopes <- NULL
+      is_oauth <- FALSE
+
+      if (missing(`project_id`)) {
+        stop("Missing required parameter `project_id`.")
+      }
+
+      if (missing(`compound_id`)) {
+        stop("Missing required parameter `compound_id`.")
+      }
+
+
+
+
+      query_params[["featureId"]] <- `feature_id`
+
+      local_var_url_path <- "/api/projects/{projectId}/compounds/{compoundId}/traces"
+      if (!missing(`project_id`)) {
+        local_var_url_path <- gsub("\\{projectId\\}", URLencode(as.character(`project_id`), reserved = TRUE), local_var_url_path)
+      }
+
+      if (!missing(`compound_id`)) {
+        local_var_url_path <- gsub("\\{compoundId\\}", URLencode(as.character(`compound_id`), reserved = TRUE), local_var_url_path)
+      }
+
+
+      # The Accept request HTTP header
+      local_var_accepts <- list("application/json")
+
+      # The Content-Type representation header
+      local_var_content_types <- list()
+
+      local_var_resp <- self$api_client$CallApi(url = paste0(self$api_client$base_path, local_var_url_path),
+                                 method = "GET",
+                                 query_params = query_params,
+                                 header_params = header_params,
+                                 form_params = form_params,
+                                 file_params = file_params,
+                                 accepts = local_var_accepts,
+                                 content_types = local_var_content_types,
+                                 body = local_var_body,
+                                 is_oauth = is_oauth,
+                                 oauth_scopes = oauth_scopes,
+                                 ...)
+
+      if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
+        # save response in a file
+        if (!is.null(data_file)) {
+          write(local_var_resp$response, data_file)
+        }
+
+        deserialized_resp_obj <- tryCatch(
+          self$api_client$deserialize(local_var_resp$response_as_text(), "TraceSet", loadNamespace("Rsirius")),
+          error = function(e) {
+            stop("Failed to deserialize response")
+          }
+        )
+        local_var_resp$content <- deserialized_resp_obj
+        local_var_resp
+      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
+      } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
+        ApiResponse$new("API client error", local_var_resp)
+      } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
+        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
+          local_var_resp$response <- "API server error"
+        }
+        local_var_resp
+      }
+    },
     #' List of all available compounds (group of ion identities) in the given project-space.
     #'
     #' @description
@@ -838,114 +953,6 @@ CompoundsApi <- R6::R6Class(
 
         deserialized_resp_obj <- tryCatch(
           self$api_client$deserialize(local_var_resp$response_as_text(), "PageCompound", loadNamespace("Rsirius")),
-          error = function(e) {
-            stop("Failed to deserialize response")
-          }
-        )
-        local_var_resp$content <- deserialized_resp_obj
-        local_var_resp
-      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
-        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
-      } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
-        ApiResponse$new("API client error", local_var_resp)
-      } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
-        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
-          local_var_resp$response <- "API server error"
-        }
-        local_var_resp
-      }
-    },
-    #' 
-    #'
-    #' @description
-    #' 
-    #'
-    #' @param project_id 
-    #' @param compound_id 
-    #' @param data_file (optional) name of the data file to save the result
-    #' @param ... Other optional arguments
-    #' @return TraceSet
-    #' @export
-    GetTraces = function(project_id, compound_id, data_file = NULL, ...) {
-      local_var_response <- self$GetTracesWithHttpInfo(project_id, compound_id, data_file = data_file, ...)
-      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
-        local_var_response$content
-      } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
-        local_var_response
-      } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
-        local_var_response
-      } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
-        local_var_response
-      }
-    },
-    #' 
-    #'
-    #' @description
-    #' 
-    #'
-    #' @param project_id 
-    #' @param compound_id 
-    #' @param data_file (optional) name of the data file to save the result
-    #' @param ... Other optional arguments
-    #' @return API response (TraceSet) with additional information such as HTTP status code, headers
-    #' @export
-    GetTracesWithHttpInfo = function(project_id, compound_id, data_file = NULL, ...) {
-      args <- list(...)
-      query_params <- list()
-      header_params <- c()
-      form_params <- list()
-      file_params <- list()
-      local_var_body <- NULL
-      oauth_scopes <- NULL
-      is_oauth <- FALSE
-
-      if (missing(`project_id`)) {
-        stop("Missing required parameter `project_id`.")
-      }
-
-      if (missing(`compound_id`)) {
-        stop("Missing required parameter `compound_id`.")
-      }
-
-
-
-      local_var_url_path <- "/api/projects/{projectId}/compounds/{compoundId}/traces"
-      if (!missing(`project_id`)) {
-        local_var_url_path <- gsub("\\{projectId\\}", URLencode(as.character(`project_id`), reserved = TRUE), local_var_url_path)
-      }
-
-      if (!missing(`compound_id`)) {
-        local_var_url_path <- gsub("\\{compoundId\\}", URLencode(as.character(`compound_id`), reserved = TRUE), local_var_url_path)
-      }
-
-
-      # The Accept request HTTP header
-      local_var_accepts <- list("application/json")
-
-      # The Content-Type representation header
-      local_var_content_types <- list()
-
-      local_var_resp <- self$api_client$CallApi(url = paste0(self$api_client$base_path, local_var_url_path),
-                                 method = "GET",
-                                 query_params = query_params,
-                                 header_params = header_params,
-                                 form_params = form_params,
-                                 file_params = file_params,
-                                 accepts = local_var_accepts,
-                                 content_types = local_var_content_types,
-                                 body = local_var_body,
-                                 is_oauth = is_oauth,
-                                 oauth_scopes = oauth_scopes,
-                                 ...)
-
-      if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
-        # save response in a file
-        if (!is.null(data_file)) {
-          write(local_var_resp$response, data_file)
-        }
-
-        deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "TraceSet", loadNamespace("Rsirius")),
           error = function(e) {
             stop("Failed to deserialize response")
           }

@@ -26,7 +26,7 @@ Method | HTTP request | Description
 [**GetIsotopePatternAnnotation**](FeaturesApi.md#GetIsotopePatternAnnotation) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/isotope-pattern | Returns Isotope pattern information (simulated isotope pattern, measured isotope pattern, isotope pattern highlighting)  for the given formula result identifier.
 [**GetLipidAnnotation**](FeaturesApi.md#GetLipidAnnotation) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/lipid-annotation | Returns Lipid annotation (ElGordo) for the given formula result identifier.
 [**GetMsData**](FeaturesApi.md#GetMsData) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/ms-data | Mass Spec data (input data) for the given &#39;alignedFeatureId&#39; .
-[**GetQuantification**](FeaturesApi.md#GetQuantification) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/quantification | 
+[**GetQuantification**](FeaturesApi.md#GetQuantification) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/quantification | Returns a single quantification table row for the given feature.
 [**GetSpectralLibraryMatch**](FeaturesApi.md#GetSpectralLibraryMatch) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/spectral-library-matches/{matchId} | List of spectral library matches for the given &#39;alignedFeatureId&#39;.
 [**GetSpectralLibraryMatches**](FeaturesApi.md#GetSpectralLibraryMatches) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/spectral-library-matches | List of spectral library matches for the given &#39;alignedFeatureId&#39;.
 [**GetSpectralLibraryMatchesPaged**](FeaturesApi.md#GetSpectralLibraryMatchesPaged) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/spectral-library-matches/page | Page of spectral library matches for the given &#39;alignedFeatureId&#39;.
@@ -37,7 +37,7 @@ Method | HTTP request | Description
 [**GetStructureCandidatesByFormula**](FeaturesApi.md#GetStructureCandidatesByFormula) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/db-structures | List of CSI:FingerID structure database search candidates for the given &#39;formulaId&#39; with minimal information.
 [**GetStructureCandidatesByFormulaPaged**](FeaturesApi.md#GetStructureCandidatesByFormulaPaged) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/db-structures/page | Page of CSI:FingerID structure database search candidates for the given &#39;formulaId&#39; with minimal information.
 [**GetStructureCandidatesPaged**](FeaturesApi.md#GetStructureCandidatesPaged) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/db-structures/page | Page of structure database search candidates ranked by CSI:FingerID score for the given &#39;alignedFeatureId&#39; with minimal information.
-[**GetTraces1**](FeaturesApi.md#GetTraces1) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/traces | 
+[**GetTraces**](FeaturesApi.md#GetTraces) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/traces | Returns the traces of the given feature.
 
 
 # **AddAlignedFeatures**
@@ -55,7 +55,7 @@ library(Rsirius)
 #
 # prepare function argument(s)
 var_project_id <- "project_id_example" # character | project-space to import into.
-var_feature_import <- c(FeatureImport$new(123, 123, "name_example", "externalFeatureId_example", c("detectedAdducts_example"), 123, 123, BasicSpectrum$new(c(SimplePeak$new(123, 123)), "name_example", 123, "collisionEnergy_example", 123, 123, 123), c(BasicSpectrum$new(c(SimplePeak$new(123, 123)), "name_example", 123, "collisionEnergy_example", 123, 123, 123)), c(BasicSpectrum$new(c(SimplePeak$new(123, 123)), "name_example", 123, "collisionEnergy_example", 123, 123, 123)))) # array[FeatureImport] | the feature data to be imported
+var_feature_import <- c(FeatureImport$new(123, 123, "name_example", "externalFeatureId_example", c("detectedAdducts_example"), 123, 123, 123, DataQuality$new(), BasicSpectrum$new(c(SimplePeak$new(123, 123)), "name_example", 123, "collisionEnergy_example", 123, 123, 123), c(BasicSpectrum$new(c(SimplePeak$new(123, 123)), "name_example", 123, "collisionEnergy_example", 123, 123, 123)), c(BasicSpectrum$new(c(SimplePeak$new(123, 123)), "name_example", 123, "collisionEnergy_example", 123, 123, 123)))) # array[FeatureImport] | the feature data to be imported
 var_profile <- InstrumentProfile$new() # InstrumentProfile | profile describing the instrument used to measure the data. Used to merge spectra. (Optional)
 var_opt_fields <- c(AlignedFeatureOptField$new()) # array[AlignedFeatureOptField] | set of optional fields to be included. Use 'none' to override defaults. (Optional)
 
@@ -1183,16 +1183,20 @@ No authorization required
 # **GetQuantification**
 > QuantificationTable GetQuantification(project_id, aligned_feature_id, type = "APEX_HEIGHT")
 
+Returns a single quantification table row for the given feature.
 
+Returns a single quantification table row for the given feature. The quantification table contains the intensity of the feature within all  samples it is contained in.
 
 ### Example
 ```R
 library(Rsirius)
 
+# Returns a single quantification table row for the given feature.
+#
 # prepare function argument(s)
-var_project_id <- "project_id_example" # character | 
-var_aligned_feature_id <- "aligned_feature_id_example" # character | 
-var_type <- "APEX_HEIGHT" # character |  (Optional)
+var_project_id <- "project_id_example" # character | project-space to read from.
+var_aligned_feature_id <- "aligned_feature_id_example" # character | feature which intensities should be read out
+var_type <- "APEX_HEIGHT" # character | quantification type. Currently, only APEX_HEIGHT is supported, which is the intensity of the feature at its apex. (Optional)
 
 api_instance <- rsirius_api$new()
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
@@ -1205,9 +1209,9 @@ dput(result)
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **project_id** | **character**|  | 
- **aligned_feature_id** | **character**|  | 
- **type** | Enum [APEX_HEIGHT] |  | [optional] [default to &quot;APEX_HEIGHT&quot;]
+ **project_id** | **character**| project-space to read from. | 
+ **aligned_feature_id** | **character**| feature which intensities should be read out | 
+ **type** | Enum [APEX_HEIGHT] | quantification type. Currently, only APEX_HEIGHT is supported, which is the intensity of the feature at its apex. | [optional] [default to &quot;APEX_HEIGHT&quot;]
 
 ### Return type
 
@@ -1783,23 +1787,28 @@ No authorization required
 |-------------|-------------|------------------|
 | **200** | StructureCandidate of this feature (aligned over runs) candidate with specified optional fields. |  -  |
 
-# **GetTraces1**
-> TraceSet GetTraces1(project_id, aligned_feature_id)
+# **GetTraces**
+> TraceSet GetTraces(project_id, aligned_feature_id, include_all = FALSE)
 
+Returns the traces of the given feature.
 
+Returns the traces of the given feature. A trace consists of m/z and intensity values over the retention  time axis. All the returned traces are 'projected', which means they refer not to the original retention time axis,  but to a recalibrated axis. This means the data points in the trace are not exactly the same as in the raw data.  However, this also means that all traces can be directly compared against each other, as they all lie in the same  retention time axis.  By default, this method only returns traces of samples the aligned feature appears in. When includeAll is set,  it also includes samples in which the same trace appears in.
 
 ### Example
 ```R
 library(Rsirius)
 
+# Returns the traces of the given feature.
+#
 # prepare function argument(s)
-var_project_id <- "project_id_example" # character | 
-var_aligned_feature_id <- "aligned_feature_id_example" # character | 
+var_project_id <- "project_id_example" # character | project-space to read from.
+var_aligned_feature_id <- "aligned_feature_id_example" # character | feature which intensities should be read out
+var_include_all <- FALSE # character | when true, return all samples that belong to the same merged trace. when false, only return samples which contain the aligned feature. (Optional)
 
 api_instance <- rsirius_api$new()
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$GetTraces1(var_project_id, var_aligned_feature_iddata_file = "result.txt")
-result <- api_instance$features_api$GetTraces1(var_project_id, var_aligned_feature_id)
+# result <- api_instance$GetTraces(var_project_id, var_aligned_feature_id, include_all = var_include_alldata_file = "result.txt")
+result <- api_instance$features_api$GetTraces(var_project_id, var_aligned_feature_id, include_all = var_include_all)
 dput(result)
 ```
 
@@ -1807,8 +1816,9 @@ dput(result)
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **project_id** | **character**|  | 
- **aligned_feature_id** | **character**|  | 
+ **project_id** | **character**| project-space to read from. | 
+ **aligned_feature_id** | **character**| feature which intensities should be read out | 
+ **include_all** | **character**| when true, return all samples that belong to the same merged trace. when false, only return samples which contain the aligned feature. | [optional] [default to FALSE]
 
 ### Return type
 
