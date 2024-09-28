@@ -13,15 +13,5 @@ If you are interested in contributing and help maintaining prebuild SDKs for add
 #### [**R**](client-api_r)
   - For installation from this repository see [here](client-api_r#getting-rsirius)
   - For installation via **conda** (conda-forge) see [here](https://anaconda.org/conda-forge/r-sirius-ms) 
-#### [**Java**](https://github.com/sirius-ms/sirius/tree/stable/sirius_nightsky_sdk)
-  - The java SDK is part of the [SIRIUS project](https://github.com/sirius-ms/sirius) and will be updated with every SIRIUS release.
-  - A prebuild library is available via our Maven repository:
-
-    ``` XML
-    <dependency>
-        <groupId>de.unijena.bioinf.ms</groupId>
-        <artifactId>sirius_nightsky_sdk</artifactId>
-        <version>6.0.4</version>
-    </dependency>
-    ```
-
+#### [**Java**](https://github.com/sirius-ms/sirius/tree/stable/sirius-sdk)
+The java SDK is part of the [SIRIUS project](https://github.com/sirius-ms/sirius) and will be updated with every SIRIUS release. Further instruction can be found [here](https://github.com/sirius-ms/sirius/tree/stable/sirius-sdk/README.md).
