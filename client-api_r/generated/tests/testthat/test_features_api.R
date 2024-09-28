@@ -328,9 +328,11 @@ test_that("GetMsData", {
 test_that("GetQuantification", {
   # tests for GetQuantification
   # base path: http://localhost:8080
-  # @param project_id character 
-  # @param aligned_feature_id character 
-  # @param type character  (optional)
+  # Returns a single quantification table row for the given feature.
+  # Returns a single quantification table row for the given feature. The quantification table contains the intensity of the feature within all  samples it is contained in.
+  # @param project_id character project-space to read from.
+  # @param aligned_feature_id character feature which intensities should be read out
+  # @param type character quantification type. Currently, only APEX_HEIGHT is supported, which is the intensity of the feature at its apex. (optional)
   # @return [QuantificationTable]
 
   # uncomment below to test the operation
@@ -500,11 +502,14 @@ test_that("GetStructureCandidatesPaged", {
   #expect_equal(result, "EXPECTED_RESULT")
 })
 
-test_that("GetTraces1", {
-  # tests for GetTraces1
+test_that("GetTraces", {
+  # tests for GetTraces
   # base path: http://localhost:8080
-  # @param project_id character 
-  # @param aligned_feature_id character 
+  # Returns the traces of the given feature.
+  # Returns the traces of the given feature. A trace consists of m/z and intensity values over the retention  time axis. All the returned traces are &#39;projected&#39;, which means they refer not to the original retention time axis,  but to a recalibrated axis. This means the data points in the trace are not exactly the same as in the raw data.  However, this also means that all traces can be directly compared against each other, as they all lie in the same  retention time axis.  By default, this method only returns traces of samples the aligned feature appears in. When includeAll is set,  it also includes samples in which the same trace appears in.
+  # @param project_id character project-space to read from.
+  # @param aligned_feature_id character feature which intensities should be read out
+  # @param include_all character when true, return all samples that belong to the same merged trace. when false, only return samples which contain the aligned feature. (optional)
   # @return [TraceSet]
 
   # uncomment below to test the operation

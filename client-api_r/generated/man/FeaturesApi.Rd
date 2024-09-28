@@ -448,7 +448,8 @@ Mass Spec data (input data) for the given 'alignedFeatureId' .
 }
 }
 
-\strong{ GetQuantification } \emph{  }
+\strong{ GetQuantification } \emph{ Returns a single quantification table row for the given feature. }
+Returns a single quantification table row for the given feature. The quantification table contains the intensity of the feature within all  samples it is contained in.
 
 \itemize{
 \item \emph{ @param } project_id character
@@ -679,11 +680,13 @@ Page of structure database search candidates ranked by CSI:FingerID score for th
 }
 }
 
-\strong{ GetTraces1 } \emph{  }
+\strong{ GetTraces } \emph{ Returns the traces of the given feature. }
+Returns the traces of the given feature. A trace consists of m/z and intensity values over the retention  time axis. All the returned traces are 'projected', which means they refer not to the original retention time axis,  but to a recalibrated axis. This means the data points in the trace are not exactly the same as in the raw data.  However, this also means that all traces can be directly compared against each other, as they all lie in the same  retention time axis.  By default, this method only returns traces of samples the aligned feature appears in. When includeAll is set,  it also includes samples in which the same trace appears in.
 
 \itemize{
 \item \emph{ @param } project_id character
 \item \emph{ @param } aligned_feature_id character
+\item \emph{ @param } include_all character
 \item \emph{ @returnType } \link{TraceSet} \cr
 
 
@@ -705,7 +708,7 @@ Page of structure database search candidates ranked by CSI:FingerID score for th
 
 library(Rsirius)
 var_project_id <- "project_id_example" # character | project-space to import into.
-var_feature_import <- c(FeatureImport$new(123, 123, "name_example", "externalFeatureId_example", c("detectedAdducts_example"), 123, 123, BasicSpectrum$new(c(SimplePeak$new(123, 123)), "name_example", 123, "collisionEnergy_example", 123, 123, 123), c(BasicSpectrum$new(c(SimplePeak$new(123, 123)), "name_example", 123, "collisionEnergy_example", 123, 123, 123)), c(BasicSpectrum$new(c(SimplePeak$new(123, 123)), "name_example", 123, "collisionEnergy_example", 123, 123, 123)))) # array[FeatureImport] | the feature data to be imported
+var_feature_import <- c(FeatureImport$new(123, 123, "name_example", "externalFeatureId_example", c("detectedAdducts_example"), 123, 123, 123, DataQuality$new(), BasicSpectrum$new(c(SimplePeak$new(123, 123)), "name_example", 123, "collisionEnergy_example", 123, 123, 123), c(BasicSpectrum$new(c(SimplePeak$new(123, 123)), "name_example", 123, "collisionEnergy_example", 123, 123, 123)), c(BasicSpectrum$new(c(SimplePeak$new(123, 123)), "name_example", 123, "collisionEnergy_example", 123, 123, 123)))) # array[FeatureImport] | the feature data to be imported
 var_profile <- InstrumentProfile$new() # InstrumentProfile | profile describing the instrument used to measure the data. Used to merge spectra. (Optional)
 var_opt_fields <- c(AlignedFeatureOptField$new()) # array[AlignedFeatureOptField] | set of optional fields to be included. Use 'none' to override defaults. (Optional)
 
@@ -1062,10 +1065,11 @@ dput(result)
 ####################  GetQuantification  ####################
 
 library(Rsirius)
-var_project_id <- "project_id_example" # character | 
-var_aligned_feature_id <- "aligned_feature_id_example" # character | 
-var_type <- "APEX_HEIGHT" # character |  (Optional)
+var_project_id <- "project_id_example" # character | project-space to read from.
+var_aligned_feature_id <- "aligned_feature_id_example" # character | feature which intensities should be read out
+var_type <- "APEX_HEIGHT" # character | quantification type. Currently, only APEX_HEIGHT is supported, which is the intensity of the feature at its apex. (Optional)
 
+#Returns a single quantification table row for the given feature.
 api_instance <- rsirius_api$new()
 
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
@@ -1257,17 +1261,19 @@ result <- api_instance$features_api$GetStructureCandidatesPaged(var_project_id, 
 dput(result)
 
 
-####################  GetTraces1  ####################
+####################  GetTraces  ####################
 
 library(Rsirius)
-var_project_id <- "project_id_example" # character | 
-var_aligned_feature_id <- "aligned_feature_id_example" # character | 
+var_project_id <- "project_id_example" # character | project-space to read from.
+var_aligned_feature_id <- "aligned_feature_id_example" # character | feature which intensities should be read out
+var_include_all <- FALSE # character | when true, return all samples that belong to the same merged trace. when false, only return samples which contain the aligned feature. (Optional)
 
+#Returns the traces of the given feature.
 api_instance <- rsirius_api$new()
 
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$GetTraces1(var_project_id, var_aligned_feature_iddata_file = "result.txt")
-result <- api_instance$features_api$GetTraces1(var_project_id, var_aligned_feature_id)
+# result <- api_instance$GetTraces(var_project_id, var_aligned_feature_id, include_all = var_include_alldata_file = "result.txt")
+result <- api_instance$features_api$GetTraces(var_project_id, var_aligned_feature_id, include_all = var_include_all)
 dput(result)
 
 
@@ -1350,8 +1356,8 @@ dput(result)
 \item \href{#method-FeaturesApi-GetStructureCandidatesByFormulaPagedWithHttpInfo}{\code{FeaturesApi$GetStructureCandidatesByFormulaPagedWithHttpInfo()}}
 \item \href{#method-FeaturesApi-GetStructureCandidatesPaged}{\code{FeaturesApi$GetStructureCandidatesPaged()}}
 \item \href{#method-FeaturesApi-GetStructureCandidatesPagedWithHttpInfo}{\code{FeaturesApi$GetStructureCandidatesPagedWithHttpInfo()}}
-\item \href{#method-FeaturesApi-GetTraces1}{\code{FeaturesApi$GetTraces1()}}
-\item \href{#method-FeaturesApi-GetTraces1WithHttpInfo}{\code{FeaturesApi$GetTraces1WithHttpInfo()}}
+\item \href{#method-FeaturesApi-GetTraces}{\code{FeaturesApi$GetTraces()}}
+\item \href{#method-FeaturesApi-GetTracesWithHttpInfo}{\code{FeaturesApi$GetTracesWithHttpInfo()}}
 \item \href{#method-FeaturesApi-clone}{\code{FeaturesApi$clone()}}
 }
 }
@@ -2915,6 +2921,7 @@ API response (MsData) with additional information such as HTTP status code, head
 \if{html}{\out{<a id="method-FeaturesApi-GetQuantification"></a>}}
 \if{latex}{\out{\hypertarget{method-FeaturesApi-GetQuantification}{}}}
 \subsection{Method \code{GetQuantification()}}{
+Returns a single quantification table row for the given feature.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{FeaturesApi$GetQuantification(
   project_id,
@@ -2928,11 +2935,11 @@ API response (MsData) with additional information such as HTTP status code, head
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{project_id}}{}
+\item{\code{project_id}}{project-space to read from.}
 
-\item{\code{aligned_feature_id}}{}
+\item{\code{aligned_feature_id}}{feature which intensities should be read out}
 
-\item{\code{type}}{(optional) No description (default value: "APEX_HEIGHT")}
+\item{\code{type}}{(optional) quantification type. Currently, only APEX_HEIGHT is supported, which is the intensity of the feature at its apex. (default value: "APEX_HEIGHT")}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 
@@ -2948,6 +2955,7 @@ QuantificationTable
 \if{html}{\out{<a id="method-FeaturesApi-GetQuantificationWithHttpInfo"></a>}}
 \if{latex}{\out{\hypertarget{method-FeaturesApi-GetQuantificationWithHttpInfo}{}}}
 \subsection{Method \code{GetQuantificationWithHttpInfo()}}{
+Returns a single quantification table row for the given feature.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{FeaturesApi$GetQuantificationWithHttpInfo(
   project_id,
@@ -2961,11 +2969,11 @@ QuantificationTable
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{project_id}}{}
+\item{\code{project_id}}{project-space to read from.}
 
-\item{\code{aligned_feature_id}}{}
+\item{\code{aligned_feature_id}}{feature which intensities should be read out}
 
-\item{\code{type}}{(optional) No description (default value: "APEX_HEIGHT")}
+\item{\code{type}}{(optional) quantification type. Currently, only APEX_HEIGHT is supported, which is the intensity of the feature at its apex. (default value: "APEX_HEIGHT")}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 
@@ -3796,19 +3804,28 @@ API response (PageStructureCandidateFormula) with additional information such as
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-FeaturesApi-GetTraces1"></a>}}
-\if{latex}{\out{\hypertarget{method-FeaturesApi-GetTraces1}{}}}
-\subsection{Method \code{GetTraces1()}}{
+\if{html}{\out{<a id="method-FeaturesApi-GetTraces"></a>}}
+\if{latex}{\out{\hypertarget{method-FeaturesApi-GetTraces}{}}}
+\subsection{Method \code{GetTraces()}}{
+Returns the traces of the given feature.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FeaturesApi$GetTraces1(project_id, aligned_feature_id, data_file = NULL, ...)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{FeaturesApi$GetTraces(
+  project_id,
+  aligned_feature_id,
+  include_all = FALSE,
+  data_file = NULL,
+  ...
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{project_id}}{}
+\item{\code{project_id}}{project-space to read from.}
 
-\item{\code{aligned_feature_id}}{}
+\item{\code{aligned_feature_id}}{feature which intensities should be read out}
+
+\item{\code{include_all}}{(optional) when true, return all samples that belong to the same merged trace. when false, only return samples which contain the aligned feature. (default value: FALSE)}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 
@@ -3821,13 +3838,15 @@ TraceSet
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-FeaturesApi-GetTraces1WithHttpInfo"></a>}}
-\if{latex}{\out{\hypertarget{method-FeaturesApi-GetTraces1WithHttpInfo}{}}}
-\subsection{Method \code{GetTraces1WithHttpInfo()}}{
+\if{html}{\out{<a id="method-FeaturesApi-GetTracesWithHttpInfo"></a>}}
+\if{latex}{\out{\hypertarget{method-FeaturesApi-GetTracesWithHttpInfo}{}}}
+\subsection{Method \code{GetTracesWithHttpInfo()}}{
+Returns the traces of the given feature.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FeaturesApi$GetTraces1WithHttpInfo(
+\if{html}{\out{<div class="r">}}\preformatted{FeaturesApi$GetTracesWithHttpInfo(
   project_id,
   aligned_feature_id,
+  include_all = FALSE,
   data_file = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -3836,9 +3855,11 @@ TraceSet
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{project_id}}{}
+\item{\code{project_id}}{project-space to read from.}
 
-\item{\code{aligned_feature_id}}{}
+\item{\code{aligned_feature_id}}{feature which intensities should be read out}
+
+\item{\code{include_all}}{(optional) when true, return all samples that belong to the same merged trace. when false, only return samples which contain the aligned feature. (default value: FALSE)}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 

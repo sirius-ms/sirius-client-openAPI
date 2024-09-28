@@ -14,6 +14,8 @@
 #' @field detectedAdducts Detected adducts of this feature. Can be NULL or empty if no adducts are known. list(character) [optional]
 #' @field rtStartSeconds  numeric [optional]
 #' @field rtEndSeconds  numeric [optional]
+#' @field rtApexSeconds  numeric [optional]
+#' @field dataQuality  \link{DataQuality} [optional]
 #' @field mergedMs1  \link{BasicSpectrum} [optional]
 #' @field ms1Spectra List of MS1Spectra belonging to this feature. These spectra will be merged an only a representative  mergedMs1 spectrum will be stored in SIRIUS. At least one of these spectra should contain the  isotope pattern of the precursor ion.  Note: Will be ignored if 'mergedMs1' is given. list(\link{BasicSpectrum}) [optional]
 #' @field ms2Spectra List of MS/MS spectra that belong to this feature. list(\link{BasicSpectrum}) [optional]
@@ -30,6 +32,8 @@ FeatureImport <- R6::R6Class(
     `detectedAdducts` = NULL,
     `rtStartSeconds` = NULL,
     `rtEndSeconds` = NULL,
+    `rtApexSeconds` = NULL,
+    `dataQuality` = NULL,
     `mergedMs1` = NULL,
     `ms1Spectra` = NULL,
     `ms2Spectra` = NULL,
@@ -45,12 +49,14 @@ FeatureImport <- R6::R6Class(
     #' @param detectedAdducts Detected adducts of this feature. Can be NULL or empty if no adducts are known.
     #' @param rtStartSeconds rtStartSeconds
     #' @param rtEndSeconds rtEndSeconds
+    #' @param rtApexSeconds rtApexSeconds
+    #' @param dataQuality dataQuality
     #' @param mergedMs1 mergedMs1
     #' @param ms1Spectra List of MS1Spectra belonging to this feature. These spectra will be merged an only a representative  mergedMs1 spectrum will be stored in SIRIUS. At least one of these spectra should contain the  isotope pattern of the precursor ion.  Note: Will be ignored if 'mergedMs1' is given.
     #' @param ms2Spectra List of MS/MS spectra that belong to this feature.
     #' @param ... Other optional arguments.
     #' @export
-    initialize = function(`ionMass`, `charge`, `name` = NULL, `externalFeatureId` = NULL, `detectedAdducts` = NULL, `rtStartSeconds` = NULL, `rtEndSeconds` = NULL, `mergedMs1` = NULL, `ms1Spectra` = NULL, `ms2Spectra` = NULL, ...) {
+    initialize = function(`ionMass`, `charge`, `name` = NULL, `externalFeatureId` = NULL, `detectedAdducts` = NULL, `rtStartSeconds` = NULL, `rtEndSeconds` = NULL, `rtApexSeconds` = NULL, `dataQuality` = NULL, `mergedMs1` = NULL, `ms1Spectra` = NULL, `ms2Spectra` = NULL, ...) {
       if (!missing(`ionMass`)) {
         if (!(is.numeric(`ionMass`) && length(`ionMass`) == 1)) {
           stop(paste("Error! Invalid data for `ionMass`. Must be a number:", `ionMass`))
@@ -94,6 +100,20 @@ FeatureImport <- R6::R6Class(
           stop(paste("Error! Invalid data for `rtEndSeconds`. Must be a number:", `rtEndSeconds`))
         }
         self$`rtEndSeconds` <- `rtEndSeconds`
+      }
+      if (!is.null(`rtApexSeconds`)) {
+        if (!(is.numeric(`rtApexSeconds`) && length(`rtApexSeconds`) == 1)) {
+          stop(paste("Error! Invalid data for `rtApexSeconds`. Must be a number:", `rtApexSeconds`))
+        }
+        self$`rtApexSeconds` <- `rtApexSeconds`
+      }
+      if (!is.null(`dataQuality`)) {
+        # disabled, as it is broken and checks for `dataQuality` %in% c()
+        # if (!(`dataQuality` %in% c())) {
+        #  stop(paste("Error! \"", `dataQuality`, "\" cannot be assigned to `dataQuality`. Must be .", sep = ""))
+        # }
+        stopifnot(R6::is.R6(`dataQuality`))
+        self$`dataQuality` <- `dataQuality`
       }
       if (!is.null(`mergedMs1`)) {
         stopifnot(R6::is.R6(`mergedMs1`))
@@ -146,6 +166,20 @@ FeatureImport <- R6::R6Class(
       if (!is.null(self$`rtEndSeconds`)) {
         FeatureImportObject[["rtEndSeconds"]] <-
           self$`rtEndSeconds`
+      }
+      if (!is.null(self$`rtApexSeconds`)) {
+        FeatureImportObject[["rtApexSeconds"]] <-
+          self$`rtApexSeconds`
+      }
+      if (!is.null(self$`dataQuality`)) {
+        FeatureImportObject[["dataQuality"]] <-
+          if (is.list(self$`dataQuality`$toJSON()) && length(self$`dataQuality`$toJSON()) == 0L){
+            NULL
+          } else if (length(names(self$`dataQuality`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`dataQuality`$toJSON()))) {
+            jsonlite::fromJSON(self$`dataQuality`$toJSON())
+          } else {
+            self$`dataQuality`$toJSON()
+          }
       }
       if (!is.null(self$`mergedMs1`)) {
         FeatureImportObject[["mergedMs1"]] <-
@@ -200,6 +234,14 @@ FeatureImport <- R6::R6Class(
       }
       if (!is.null(this_object$`rtEndSeconds`)) {
         self$`rtEndSeconds` <- this_object$`rtEndSeconds`
+      }
+      if (!is.null(this_object$`rtApexSeconds`)) {
+        self$`rtApexSeconds` <- this_object$`rtApexSeconds`
+      }
+      if (!is.null(this_object$`dataQuality`)) {
+        `dataquality_object` <- DataQuality$new()
+        `dataquality_object`$fromJSON(jsonlite::toJSON(this_object$`dataQuality`, auto_unbox = TRUE, digits = NA))
+        self$`dataQuality` <- `dataquality_object`
       }
       if (!is.null(this_object$`mergedMs1`)) {
         `mergedms1_object` <- BasicSpectrum$new()
@@ -279,6 +321,22 @@ FeatureImport <- R6::R6Class(
           self$`rtEndSeconds`
           )
         },
+        if (!is.null(self$`rtApexSeconds`)) {
+          sprintf(
+          '"rtApexSeconds":
+            %f
+                    ',
+          self$`rtApexSeconds`
+          )
+        },
+        if (!is.null(self$`dataQuality`)) {
+          sprintf(
+          '"dataQuality":
+          %s
+          ',
+          jsonlite::toJSON(self$`dataQuality`$toJSON(), auto_unbox = TRUE, digits = NA)
+          )
+        },
         if (!is.null(self$`mergedMs1`)) {
           sprintf(
           '"mergedMs1":
@@ -331,6 +389,8 @@ FeatureImport <- R6::R6Class(
       }
       self$`rtStartSeconds` <- this_object$`rtStartSeconds`
       self$`rtEndSeconds` <- this_object$`rtEndSeconds`
+      self$`rtApexSeconds` <- this_object$`rtApexSeconds`
+      self$`dataQuality` <- DataQuality$new()$fromJSON(jsonlite::toJSON(this_object$`dataQuality`, auto_unbox = TRUE, digits = NA))
       self$`mergedMs1` <- BasicSpectrum$new()$fromJSON(jsonlite::toJSON(this_object$`mergedMs1`, auto_unbox = TRUE, digits = NA))
       self$`ms1Spectra` <- ApiClient$new()$deserializeObj(this_object$`ms1Spectra`, "array[BasicSpectrum]", loadNamespace("Rsirius"))
       self$`ms2Spectra` <- ApiClient$new()$deserializeObj(this_object$`ms2Spectra`, "array[BasicSpectrum]", loadNamespace("Rsirius"))

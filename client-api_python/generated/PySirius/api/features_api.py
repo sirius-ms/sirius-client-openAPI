@@ -16,7 +16,7 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from pydantic import Field, StrictInt, StrictStr, field_validator
+from pydantic import Field, StrictBool, StrictInt, StrictStr, field_validator
 from typing import List, Optional
 from typing_extensions import Annotated
 from PySirius.models.aligned_feature import AlignedFeature
@@ -6643,9 +6643,9 @@ class FeaturesApi:
     @validate_call
     def get_quantification(
         self,
-        project_id: StrictStr,
-        aligned_feature_id: StrictStr,
-        type: Optional[StrictStr] = None,
+        project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
+        aligned_feature_id: Annotated[StrictStr, Field(description="feature which intensities should be read out")],
+        type: Annotated[Optional[StrictStr], Field(description="quantification type. Currently, only APEX_HEIGHT is supported, which is the intensity of the feature at its apex.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -6659,14 +6659,15 @@ class FeaturesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> QuantificationTable:
-        """get_quantification
+        """Returns a single quantification table row for the given feature.
 
+        Returns a single quantification table row for the given feature. The quantification table contains the intensity of the feature within all  samples it is contained in.
 
-        :param project_id: (required)
+        :param project_id: project-space to read from. (required)
         :type project_id: str
-        :param aligned_feature_id: (required)
+        :param aligned_feature_id: feature which intensities should be read out (required)
         :type aligned_feature_id: str
-        :param type:
+        :param type: quantification type. Currently, only APEX_HEIGHT is supported, which is the intensity of the feature at its apex.
         :type type: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -6717,9 +6718,9 @@ class FeaturesApi:
     @validate_call
     def get_quantification_with_http_info(
         self,
-        project_id: StrictStr,
-        aligned_feature_id: StrictStr,
-        type: Optional[StrictStr] = None,
+        project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
+        aligned_feature_id: Annotated[StrictStr, Field(description="feature which intensities should be read out")],
+        type: Annotated[Optional[StrictStr], Field(description="quantification type. Currently, only APEX_HEIGHT is supported, which is the intensity of the feature at its apex.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -6733,14 +6734,15 @@ class FeaturesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[QuantificationTable]:
-        """get_quantification
+        """Returns a single quantification table row for the given feature.
 
+        Returns a single quantification table row for the given feature. The quantification table contains the intensity of the feature within all  samples it is contained in.
 
-        :param project_id: (required)
+        :param project_id: project-space to read from. (required)
         :type project_id: str
-        :param aligned_feature_id: (required)
+        :param aligned_feature_id: feature which intensities should be read out (required)
         :type aligned_feature_id: str
-        :param type:
+        :param type: quantification type. Currently, only APEX_HEIGHT is supported, which is the intensity of the feature at its apex.
         :type type: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -6791,9 +6793,9 @@ class FeaturesApi:
     @validate_call
     def get_quantification_without_preload_content(
         self,
-        project_id: StrictStr,
-        aligned_feature_id: StrictStr,
-        type: Optional[StrictStr] = None,
+        project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
+        aligned_feature_id: Annotated[StrictStr, Field(description="feature which intensities should be read out")],
+        type: Annotated[Optional[StrictStr], Field(description="quantification type. Currently, only APEX_HEIGHT is supported, which is the intensity of the feature at its apex.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -6807,14 +6809,15 @@ class FeaturesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """get_quantification
+        """Returns a single quantification table row for the given feature.
 
+        Returns a single quantification table row for the given feature. The quantification table contains the intensity of the feature within all  samples it is contained in.
 
-        :param project_id: (required)
+        :param project_id: project-space to read from. (required)
         :type project_id: str
-        :param aligned_feature_id: (required)
+        :param aligned_feature_id: feature which intensities should be read out (required)
         :type aligned_feature_id: str
-        :param type:
+        :param type: quantification type. Currently, only APEX_HEIGHT is supported, which is the intensity of the feature at its apex.
         :type type: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -10204,10 +10207,11 @@ class FeaturesApi:
 
 
     @validate_call
-    def get_traces1(
+    def get_traces(
         self,
-        project_id: StrictStr,
-        aligned_feature_id: StrictStr,
+        project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
+        aligned_feature_id: Annotated[StrictStr, Field(description="feature which intensities should be read out")],
+        include_all: Annotated[Optional[StrictBool], Field(description="when true, return all samples that belong to the same merged trace. when false, only return samples which contain the aligned feature.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -10221,13 +10225,16 @@ class FeaturesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> TraceSet:
-        """get_traces1
+        """Returns the traces of the given feature.
 
+        Returns the traces of the given feature. A trace consists of m/z and intensity values over the retention  time axis. All the returned traces are 'projected', which means they refer not to the original retention time axis,  but to a recalibrated axis. This means the data points in the trace are not exactly the same as in the raw data.  However, this also means that all traces can be directly compared against each other, as they all lie in the same  retention time axis.  By default, this method only returns traces of samples the aligned feature appears in. When includeAll is set,  it also includes samples in which the same trace appears in.
 
-        :param project_id: (required)
+        :param project_id: project-space to read from. (required)
         :type project_id: str
-        :param aligned_feature_id: (required)
+        :param aligned_feature_id: feature which intensities should be read out (required)
         :type aligned_feature_id: str
+        :param include_all: when true, return all samples that belong to the same merged trace. when false, only return samples which contain the aligned feature.
+        :type include_all: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -10250,9 +10257,10 @@ class FeaturesApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._get_traces1_serialize(
+        _param = self._get_traces_serialize(
             project_id=project_id,
             aligned_feature_id=aligned_feature_id,
+            include_all=include_all,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -10274,10 +10282,11 @@ class FeaturesApi:
 
 
     @validate_call
-    def get_traces1_with_http_info(
+    def get_traces_with_http_info(
         self,
-        project_id: StrictStr,
-        aligned_feature_id: StrictStr,
+        project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
+        aligned_feature_id: Annotated[StrictStr, Field(description="feature which intensities should be read out")],
+        include_all: Annotated[Optional[StrictBool], Field(description="when true, return all samples that belong to the same merged trace. when false, only return samples which contain the aligned feature.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -10291,13 +10300,16 @@ class FeaturesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[TraceSet]:
-        """get_traces1
+        """Returns the traces of the given feature.
 
+        Returns the traces of the given feature. A trace consists of m/z and intensity values over the retention  time axis. All the returned traces are 'projected', which means they refer not to the original retention time axis,  but to a recalibrated axis. This means the data points in the trace are not exactly the same as in the raw data.  However, this also means that all traces can be directly compared against each other, as they all lie in the same  retention time axis.  By default, this method only returns traces of samples the aligned feature appears in. When includeAll is set,  it also includes samples in which the same trace appears in.
 
-        :param project_id: (required)
+        :param project_id: project-space to read from. (required)
         :type project_id: str
-        :param aligned_feature_id: (required)
+        :param aligned_feature_id: feature which intensities should be read out (required)
         :type aligned_feature_id: str
+        :param include_all: when true, return all samples that belong to the same merged trace. when false, only return samples which contain the aligned feature.
+        :type include_all: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -10320,9 +10332,10 @@ class FeaturesApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._get_traces1_serialize(
+        _param = self._get_traces_serialize(
             project_id=project_id,
             aligned_feature_id=aligned_feature_id,
+            include_all=include_all,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -10344,10 +10357,11 @@ class FeaturesApi:
 
 
     @validate_call
-    def get_traces1_without_preload_content(
+    def get_traces_without_preload_content(
         self,
-        project_id: StrictStr,
-        aligned_feature_id: StrictStr,
+        project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
+        aligned_feature_id: Annotated[StrictStr, Field(description="feature which intensities should be read out")],
+        include_all: Annotated[Optional[StrictBool], Field(description="when true, return all samples that belong to the same merged trace. when false, only return samples which contain the aligned feature.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -10361,13 +10375,16 @@ class FeaturesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """get_traces1
+        """Returns the traces of the given feature.
 
+        Returns the traces of the given feature. A trace consists of m/z and intensity values over the retention  time axis. All the returned traces are 'projected', which means they refer not to the original retention time axis,  but to a recalibrated axis. This means the data points in the trace are not exactly the same as in the raw data.  However, this also means that all traces can be directly compared against each other, as they all lie in the same  retention time axis.  By default, this method only returns traces of samples the aligned feature appears in. When includeAll is set,  it also includes samples in which the same trace appears in.
 
-        :param project_id: (required)
+        :param project_id: project-space to read from. (required)
         :type project_id: str
-        :param aligned_feature_id: (required)
+        :param aligned_feature_id: feature which intensities should be read out (required)
         :type aligned_feature_id: str
+        :param include_all: when true, return all samples that belong to the same merged trace. when false, only return samples which contain the aligned feature.
+        :type include_all: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -10390,9 +10407,10 @@ class FeaturesApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._get_traces1_serialize(
+        _param = self._get_traces_serialize(
             project_id=project_id,
             aligned_feature_id=aligned_feature_id,
+            include_all=include_all,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -10409,10 +10427,11 @@ class FeaturesApi:
         return response_data.response
 
 
-    def _get_traces1_serialize(
+    def _get_traces_serialize(
         self,
         project_id,
         aligned_feature_id,
+        include_all,
         _request_auth,
         _content_type,
         _headers,
@@ -10437,6 +10456,10 @@ class FeaturesApi:
         if aligned_feature_id is not None:
             _path_params['alignedFeatureId'] = aligned_feature_id
         # process the query parameters
+        if include_all is not None:
+            
+            _query_params.append(('includeAll', include_all))
+            
         # process the header parameters
         # process the form parameters
         # process the body parameter

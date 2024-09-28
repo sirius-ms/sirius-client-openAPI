@@ -183,6 +183,7 @@ class TestFeaturesApi(unittest.TestCase):
     def test_get_quantification(self) -> None:
         """Test case for get_quantification
 
+        Returns a single quantification table row for the given feature.
         """
         pass
 
@@ -256,9 +257,10 @@ class TestFeaturesApi(unittest.TestCase):
         """
         pass
 
-    def test_get_traces1(self) -> None:
-        """Test case for get_traces1
+    def test_get_traces(self) -> None:
+        """Test case for get_traces
 
+        Returns the traces of the given feature.
         """
         pass
 

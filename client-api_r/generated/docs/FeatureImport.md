@@ -12,6 +12,8 @@ Name | Type | Description | Notes
 **detectedAdducts** | **set[character]** | Detected adducts of this feature. Can be NULL or empty if no adducts are known. | [optional] 
 **rtStartSeconds** | **numeric** |  | [optional] 
 **rtEndSeconds** | **numeric** |  | [optional] 
+**rtApexSeconds** | **numeric** |  | [optional] 
+**dataQuality** | [**DataQuality**](DataQuality.md) |  | [optional] [Enum: ] 
 **mergedMs1** | [**BasicSpectrum**](BasicSpectrum.md) |  | [optional] 
 **ms1Spectra** | [**array[BasicSpectrum]**](BasicSpectrum.md) | List of MS1Spectra belonging to this feature. These spectra will be merged an only a representative  mergedMs1 spectrum will be stored in SIRIUS. At least one of these spectra should contain the  isotope pattern of the precursor ion.  Note: Will be ignored if &#39;mergedMs1&#39; is given. | [optional] 
 **ms2Spectra** | [**array[BasicSpectrum]**](BasicSpectrum.md) | List of MS/MS spectra that belong to this feature. | [optional] 

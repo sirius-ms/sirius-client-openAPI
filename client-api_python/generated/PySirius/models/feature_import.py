@@ -20,6 +20,7 @@ import json
 from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from PySirius.models.basic_spectrum import BasicSpectrum
+from PySirius.models.data_quality import DataQuality
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -34,10 +35,12 @@ class FeatureImport(BaseModel):
     detected_adducts: Optional[List[Optional[StrictStr]]] = Field(default=None, description="Detected adducts of this feature. Can be NULL or empty if no adducts are known.", alias="detectedAdducts")
     rt_start_seconds: Optional[float] = Field(default=None, alias="rtStartSeconds")
     rt_end_seconds: Optional[float] = Field(default=None, alias="rtEndSeconds")
+    rt_apex_seconds: Optional[float] = Field(default=None, alias="rtApexSeconds")
+    data_quality: Optional[DataQuality] = Field(default=None, alias="dataQuality")
     merged_ms1: Optional[BasicSpectrum] = Field(default=None, alias="mergedMs1")
     ms1_spectra: Optional[List[Optional[BasicSpectrum]]] = Field(default=None, description="List of MS1Spectra belonging to this feature. These spectra will be merged an only a representative  mergedMs1 spectrum will be stored in SIRIUS. At least one of these spectra should contain the  isotope pattern of the precursor ion.  Note: Will be ignored if 'mergedMs1' is given.", alias="ms1Spectra")
     ms2_spectra: Optional[List[Optional[BasicSpectrum]]] = Field(default=None, description="List of MS/MS spectra that belong to this feature.", alias="ms2Spectra")
-    __properties: ClassVar[List[str]] = ["name", "externalFeatureId", "ionMass", "charge", "detectedAdducts", "rtStartSeconds", "rtEndSeconds", "mergedMs1", "ms1Spectra", "ms2Spectra"]
+    __properties: ClassVar[List[str]] = ["name", "externalFeatureId", "ionMass", "charge", "detectedAdducts", "rtStartSeconds", "rtEndSeconds", "rtApexSeconds", "dataQuality", "mergedMs1", "ms1Spectra", "ms2Spectra"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -120,6 +123,16 @@ class FeatureImport(BaseModel):
         if self.rt_end_seconds is None and "rt_end_seconds" in self.model_fields_set:
             _dict['rtEndSeconds'] = None
 
+        # set to None if rt_apex_seconds (nullable) is None
+        # and model_fields_set contains the field
+        if self.rt_apex_seconds is None and "rt_apex_seconds" in self.model_fields_set:
+            _dict['rtApexSeconds'] = None
+
+        # set to None if data_quality (nullable) is None
+        # and model_fields_set contains the field
+        if self.data_quality is None and "data_quality" in self.model_fields_set:
+            _dict['dataQuality'] = None
+
         # set to None if merged_ms1 (nullable) is None
         # and model_fields_set contains the field
         if self.merged_ms1 is None and "merged_ms1" in self.model_fields_set:
@@ -154,6 +167,8 @@ class FeatureImport(BaseModel):
             "detectedAdducts": obj.get("detectedAdducts"),
             "rtStartSeconds": obj.get("rtStartSeconds"),
             "rtEndSeconds": obj.get("rtEndSeconds"),
+            "rtApexSeconds": obj.get("rtApexSeconds"),
+            "dataQuality": obj.get("dataQuality"),
             "mergedMs1": BasicSpectrum.from_dict(obj["mergedMs1"]) if obj.get("mergedMs1") is not None else None,
             "ms1Spectra": [BasicSpectrum.from_dict(_item) for _item in obj["ms1Spectra"]] if obj.get("ms1Spectra") is not None else None,
             "ms2Spectra": [BasicSpectrum.from_dict(_item) for _item in obj["ms2Spectra"]] if obj.get("ms2Spectra") is not None else None

@@ -25,13 +25,13 @@ from typing_extensions import Self
 
 class Job(BaseModel):
     """
-    Identifier created by the SIRIUS Nightsky API for a newly created Job.  Object can be enriched with Job status/progress information ({@link JobProgress JobProgress}) and/or Job command information.
+    Identifier created by the SIRIUS Nightsky API for a newly created Job.  Object can be enriched with Job status/progress information ({@link JobProgress JobProgress}) and/or Job command information.  This is a return value of the API. So nullable values can also be NOT_REQUIRED to allow for easy removal.
     """ # noqa: E501
     id: Optional[StrictStr] = Field(default=None, description="Unique identifier to access the job via the API")
     command: Optional[StrictStr] = Field(default=None, description="Command string of the executed Task")
     progress: Optional[JobProgress] = None
-    affected_compound_ids: Optional[List[StrictStr]] = Field(default=None, description="List of compoundIds that are affected by this job.  This lis will also contain compoundIds where not all features of the compound are affected by the job.  If this job is creating compounds (e.g. data import jobs) this value will be NULL until the jobs has finished", alias="affectedCompoundIds")
-    affected_aligned_feature_ids: Optional[List[StrictStr]] = Field(default=None, description="List of alignedFeatureIds that are affected by this job.  If this job is creating features (e.g. data import jobs) this value will be NULL until the jobs has finished", alias="affectedAlignedFeatureIds")
+    affected_compound_ids: Optional[List[Optional[StrictStr]]] = Field(default=None, description="List of compoundIds that are affected by this job.  This lis will also contain compoundIds where not all features of the compound are affected by the job.  If this job is creating compounds (e.g. data import jobs) this value will be NULL until the jobs has finished", alias="affectedCompoundIds")
+    affected_aligned_feature_ids: Optional[List[Optional[StrictStr]]] = Field(default=None, description="List of alignedFeatureIds that are affected by this job.  If this job is creating features (e.g. data import jobs) this value will be NULL until the jobs has finished", alias="affectedAlignedFeatureIds")
     __properties: ClassVar[List[str]] = ["id", "command", "progress", "affectedCompoundIds", "affectedAlignedFeatureIds"]
 
     model_config = ConfigDict(
@@ -76,6 +76,26 @@ class Job(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of progress
         if self.progress:
             _dict['progress'] = self.progress.to_dict()
+        # set to None if command (nullable) is None
+        # and model_fields_set contains the field
+        if self.command is None and "command" in self.model_fields_set:
+            _dict['command'] = None
+
+        # set to None if progress (nullable) is None
+        # and model_fields_set contains the field
+        if self.progress is None and "progress" in self.model_fields_set:
+            _dict['progress'] = None
+
+        # set to None if affected_compound_ids (nullable) is None
+        # and model_fields_set contains the field
+        if self.affected_compound_ids is None and "affected_compound_ids" in self.model_fields_set:
+            _dict['affectedCompoundIds'] = None
+
+        # set to None if affected_aligned_feature_ids (nullable) is None
+        # and model_fields_set contains the field
+        if self.affected_aligned_feature_ids is None and "affected_aligned_feature_ids" in self.model_fields_set:
+            _dict['affectedAlignedFeatureIds'] = None
+
         return _dict
 
     @classmethod

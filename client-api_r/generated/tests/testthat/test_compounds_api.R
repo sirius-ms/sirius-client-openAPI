@@ -49,6 +49,18 @@ test_that("GetCompound", {
   #expect_equal(result, "EXPECTED_RESULT")
 })
 
+test_that("GetCompoundTraces", {
+  # tests for GetCompoundTraces
+  # base path: http://localhost:8080
+  # @param project_id character 
+  # @param compound_id character 
+  # @param feature_id character  (optional)
+  # @return [TraceSet]
+
+  # uncomment below to test the operation
+  #expect_equal(result, "EXPECTED_RESULT")
+})
+
 test_that("GetCompounds", {
   # tests for GetCompounds
   # base path: http://localhost:8080
@@ -75,17 +87,6 @@ test_that("GetCompoundsPaged", {
   # @param opt_fields array[CompoundOptField] set of optional fields to be included. Use 'none' only to override defaults. (optional)
   # @param opt_fields_features array[AlignedFeatureOptField]  (optional)
   # @return [PageCompound]
-
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
-})
-
-test_that("GetTraces", {
-  # tests for GetTraces
-  # base path: http://localhost:8080
-  # @param project_id character 
-  # @param compound_id character 
-  # @return [TraceSet]
 
   # uncomment below to test the operation
   #expect_equal(result, "EXPECTED_RESULT")
