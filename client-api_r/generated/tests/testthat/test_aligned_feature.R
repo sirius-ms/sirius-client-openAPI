@@ -129,3 +129,10 @@ test_that("computing", {
   # uncomment below to test the property
   #expect_equal(model.instance$`computing`, "EXPECTED_RESULT")
 })
+
+test_that("computedTools", {
+  # tests for the property `computedTools` (ComputedSubtools)
+
+  # uncomment below to test the property
+  #expect_equal(model.instance$`computedTools`, "EXPECTED_RESULT")
+})

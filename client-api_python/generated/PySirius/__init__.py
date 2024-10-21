@@ -14,7 +14,7 @@
 """  # noqa: E501
 
 
-__version__ = "6.0.6"
+__version__ = "6.0.7"
 
 # import apis into sdk package
 from PySirius.api.actuator_api import ActuatorApi
@@ -62,6 +62,7 @@ from PySirius.models.compound_class_type import CompoundClassType
 from PySirius.models.compound_classes import CompoundClasses
 from PySirius.models.compound_import import CompoundImport
 from PySirius.models.compound_opt_field import CompoundOptField
+from PySirius.models.computed_subtools import ComputedSubtools
 from PySirius.models.confidence_mode import ConfidenceMode
 from PySirius.models.connection_check import ConnectionCheck
 from PySirius.models.connection_error import ConnectionError

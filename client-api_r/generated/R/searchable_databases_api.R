@@ -50,6 +50,7 @@
 #'
 #' \itemize{
 #' \item \emph{ @param } include_stats character
+#' \item \emph{ @param } include_with_errors character
 #' \item \emph{ @returnType } list( \link{SearchableDatabase} ) \cr
 #'
 #'
@@ -83,6 +84,7 @@
 #'
 #' \itemize{
 #' \item \emph{ @param } include_stats character
+#' \item \emph{ @param } include_with_errors character
 #' \item \emph{ @returnType } list( \link{SearchableDatabase} ) \cr
 #'
 #'
@@ -199,12 +201,13 @@
 #'
 #' library(Rsirius)
 #' var_include_stats <- FALSE # character |  (Optional)
+#' var_include_with_errors <- FALSE # character |  (Optional)
 #'
 #' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-#' # result <- api_instance$GetCustomDatabases(include_stats = var_include_statsdata_file = "result.txt")
-#' result <- api_instance$searchable_databases_api$GetCustomDatabases(include_stats = var_include_stats)
+#' # result <- api_instance$GetCustomDatabases(include_stats = var_include_stats, include_with_errors = var_include_with_errorsdata_file = "result.txt")
+#' result <- api_instance$searchable_databases_api$GetCustomDatabases(include_stats = var_include_stats, include_with_errors = var_include_with_errors)
 #' dput(result)
 #'
 #'
@@ -226,12 +229,13 @@
 #'
 #' library(Rsirius)
 #' var_include_stats <- FALSE # character |  (Optional)
+#' var_include_with_errors <- FALSE # character |  (Optional)
 #'
 #' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-#' # result <- api_instance$GetDatabases(include_stats = var_include_statsdata_file = "result.txt")
-#' result <- api_instance$searchable_databases_api$GetDatabases(include_stats = var_include_stats)
+#' # result <- api_instance$GetDatabases(include_stats = var_include_stats, include_with_errors = var_include_with_errorsdata_file = "result.txt")
+#' result <- api_instance$searchable_databases_api$GetDatabases(include_stats = var_include_stats, include_with_errors = var_include_with_errors)
 #' dput(result)
 #'
 #'
@@ -528,12 +532,13 @@ SearchableDatabasesApi <- R6::R6Class(
     #' 
     #'
     #' @param include_stats (optional) No description (default value: FALSE)
+    #' @param include_with_errors (optional) No description (default value: FALSE)
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #' @return array[SearchableDatabase]
     #' @export
-    GetCustomDatabases = function(include_stats = FALSE, data_file = NULL, ...) {
-      local_var_response <- self$GetCustomDatabasesWithHttpInfo(include_stats, data_file = data_file, ...)
+    GetCustomDatabases = function(include_stats = FALSE, include_with_errors = FALSE, data_file = NULL, ...) {
+      local_var_response <- self$GetCustomDatabasesWithHttpInfo(include_stats, include_with_errors, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
@@ -550,11 +555,12 @@ SearchableDatabasesApi <- R6::R6Class(
     #' 
     #'
     #' @param include_stats (optional) No description (default value: FALSE)
+    #' @param include_with_errors (optional) No description (default value: FALSE)
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #' @return API response (array[SearchableDatabase]) with additional information such as HTTP status code, headers
     #' @export
-    GetCustomDatabasesWithHttpInfo = function(include_stats = FALSE, data_file = NULL, ...) {
+    GetCustomDatabasesWithHttpInfo = function(include_stats = FALSE, include_with_errors = FALSE, data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -565,7 +571,10 @@ SearchableDatabasesApi <- R6::R6Class(
       is_oauth <- FALSE
 
 
+
       query_params[["includeStats"]] <- `include_stats`
+
+      query_params[["includeWithErrors"]] <- `include_with_errors`
 
       local_var_url_path <- "/api/databases/custom"
 
@@ -721,12 +730,13 @@ SearchableDatabasesApi <- R6::R6Class(
     #' 
     #'
     #' @param include_stats (optional) No description (default value: FALSE)
+    #' @param include_with_errors (optional) No description (default value: FALSE)
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #' @return array[SearchableDatabase]
     #' @export
-    GetDatabases = function(include_stats = FALSE, data_file = NULL, ...) {
-      local_var_response <- self$GetDatabasesWithHttpInfo(include_stats, data_file = data_file, ...)
+    GetDatabases = function(include_stats = FALSE, include_with_errors = FALSE, data_file = NULL, ...) {
+      local_var_response <- self$GetDatabasesWithHttpInfo(include_stats, include_with_errors, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
@@ -743,11 +753,12 @@ SearchableDatabasesApi <- R6::R6Class(
     #' 
     #'
     #' @param include_stats (optional) No description (default value: FALSE)
+    #' @param include_with_errors (optional) No description (default value: FALSE)
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #' @return API response (array[SearchableDatabase]) with additional information such as HTTP status code, headers
     #' @export
-    GetDatabasesWithHttpInfo = function(include_stats = FALSE, data_file = NULL, ...) {
+    GetDatabasesWithHttpInfo = function(include_stats = FALSE, include_with_errors = FALSE, data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -758,7 +769,10 @@ SearchableDatabasesApi <- R6::R6Class(
       is_oauth <- FALSE
 
 
+
       query_params[["includeStats"]] <- `include_stats`
+
+      query_params[["includeWithErrors"]] <- `include_with_errors`
 
       local_var_url_path <- "/api/databases"
 

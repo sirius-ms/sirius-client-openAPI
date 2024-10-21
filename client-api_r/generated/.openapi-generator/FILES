@@ -31,6 +31,7 @@ R/compound_classes.R
 R/compound_import.R
 R/compound_opt_field.R
 R/compounds_api.R
+R/computed_subtools.R
 R/confidence_mode.R
 R/connection_check.R
 R/connection_error.R
@@ -138,6 +139,7 @@ docs/CompoundClasses.md
 docs/CompoundImport.md
 docs/CompoundOptField.md
 docs/CompoundsApi.md
+docs/ComputedSubtools.md
 docs/ConfidenceMode.md
 docs/ConnectionCheck.md
 docs/ConnectionError.md
@@ -245,6 +247,7 @@ tests/testthat/test_compound_classes.R
 tests/testthat/test_compound_import.R
 tests/testthat/test_compound_opt_field.R
 tests/testthat/test_compounds_api.R
+tests/testthat/test_computed_subtools.R
 tests/testthat/test_confidence_mode.R
 tests/testthat/test_connection_check.R
 tests/testthat/test_connection_error.R

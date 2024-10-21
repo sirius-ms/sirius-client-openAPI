@@ -30,6 +30,7 @@ test_that("GetCustomDatabases", {
   # tests for GetCustomDatabases
   # base path: http://localhost:8080
   # @param include_stats character  (optional)
+  # @param include_with_errors character  (optional)
   # @return [array[SearchableDatabase]]
 
   # uncomment below to test the operation
@@ -51,6 +52,7 @@ test_that("GetDatabases", {
   # tests for GetDatabases
   # base path: http://localhost:8080
   # @param include_stats character  (optional)
+  # @param include_with_errors character  (optional)
   # @return [array[SearchableDatabase]]
 
   # uncomment below to test the operation

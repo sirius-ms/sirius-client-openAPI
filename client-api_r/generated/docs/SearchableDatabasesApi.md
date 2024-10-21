@@ -104,7 +104,7 @@ No authorization required
 | **200** | OK |  -  |
 
 # **GetCustomDatabases**
-> array[SearchableDatabase] GetCustomDatabases(include_stats = FALSE)
+> array[SearchableDatabase] GetCustomDatabases(include_stats = FALSE, include_with_errors = FALSE)
 
 
 
@@ -114,11 +114,12 @@ library(Rsirius)
 
 # prepare function argument(s)
 var_include_stats <- FALSE # character |  (Optional)
+var_include_with_errors <- FALSE # character |  (Optional)
 
 api_instance <- rsirius_api$new()
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$GetCustomDatabases(include_stats = var_include_statsdata_file = "result.txt")
-result <- api_instance$searchable_databases_api$GetCustomDatabases(include_stats = var_include_stats)
+# result <- api_instance$GetCustomDatabases(include_stats = var_include_stats, include_with_errors = var_include_with_errorsdata_file = "result.txt")
+result <- api_instance$searchable_databases_api$GetCustomDatabases(include_stats = var_include_stats, include_with_errors = var_include_with_errors)
 dput(result)
 ```
 
@@ -127,6 +128,7 @@ dput(result)
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **include_stats** | **character**|  | [optional] [default to FALSE]
+ **include_with_errors** | **character**|  | [optional] [default to FALSE]
 
 ### Return type
 
@@ -192,7 +194,7 @@ No authorization required
 | **200** | OK |  -  |
 
 # **GetDatabases**
-> array[SearchableDatabase] GetDatabases(include_stats = FALSE)
+> array[SearchableDatabase] GetDatabases(include_stats = FALSE, include_with_errors = FALSE)
 
 
 
@@ -202,11 +204,12 @@ library(Rsirius)
 
 # prepare function argument(s)
 var_include_stats <- FALSE # character |  (Optional)
+var_include_with_errors <- FALSE # character |  (Optional)
 
 api_instance <- rsirius_api$new()
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$GetDatabases(include_stats = var_include_statsdata_file = "result.txt")
-result <- api_instance$searchable_databases_api$GetDatabases(include_stats = var_include_stats)
+# result <- api_instance$GetDatabases(include_stats = var_include_stats, include_with_errors = var_include_with_errorsdata_file = "result.txt")
+result <- api_instance$searchable_databases_api$GetDatabases(include_stats = var_include_stats, include_with_errors = var_include_with_errors)
 dput(result)
 ```
 
@@ -215,6 +218,7 @@ dput(result)
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **include_stats** | **character**|  | [optional] [default to FALSE]
+ **include_with_errors** | **character**|  | [optional] [default to FALSE]
 
 ### Return type
 

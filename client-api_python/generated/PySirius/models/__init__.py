@@ -36,6 +36,7 @@ from PySirius.models.compound_class_type import CompoundClassType
 from PySirius.models.compound_classes import CompoundClasses
 from PySirius.models.compound_import import CompoundImport
 from PySirius.models.compound_opt_field import CompoundOptField
+from PySirius.models.computed_subtools import ComputedSubtools
 from PySirius.models.confidence_mode import ConfidenceMode
 from PySirius.models.connection_check import ConnectionCheck
 from PySirius.models.connection_error import ConnectionError

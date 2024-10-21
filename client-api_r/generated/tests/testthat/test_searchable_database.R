@@ -100,3 +100,11 @@ test_that("numberOfReferenceSpectra", {
   # uncomment below to test the property
   #expect_equal(model.instance$`numberOfReferenceSpectra`, "EXPECTED_RESULT")
 })
+
+test_that("errorMessage", {
+  # tests for the property `errorMessage` (character)
+  # Error message if the database could not be loaded
+
+  # uncomment below to test the property
+  #expect_equal(model.instance$`errorMessage`, "EXPECTED_RESULT")
+})

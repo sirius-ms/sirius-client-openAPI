@@ -597,6 +597,7 @@ class SearchableDatabasesApi:
     def get_custom_databases(
         self,
         include_stats: Optional[StrictBool] = None,
+        include_with_errors: Optional[StrictBool] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -615,6 +616,8 @@ class SearchableDatabasesApi:
 
         :param include_stats:
         :type include_stats: bool
+        :param include_with_errors:
+        :type include_with_errors: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -639,6 +642,7 @@ class SearchableDatabasesApi:
 
         _param = self._get_custom_databases_serialize(
             include_stats=include_stats,
+            include_with_errors=include_with_errors,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -663,6 +667,7 @@ class SearchableDatabasesApi:
     def get_custom_databases_with_http_info(
         self,
         include_stats: Optional[StrictBool] = None,
+        include_with_errors: Optional[StrictBool] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -681,6 +686,8 @@ class SearchableDatabasesApi:
 
         :param include_stats:
         :type include_stats: bool
+        :param include_with_errors:
+        :type include_with_errors: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -705,6 +712,7 @@ class SearchableDatabasesApi:
 
         _param = self._get_custom_databases_serialize(
             include_stats=include_stats,
+            include_with_errors=include_with_errors,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -729,6 +737,7 @@ class SearchableDatabasesApi:
     def get_custom_databases_without_preload_content(
         self,
         include_stats: Optional[StrictBool] = None,
+        include_with_errors: Optional[StrictBool] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -747,6 +756,8 @@ class SearchableDatabasesApi:
 
         :param include_stats:
         :type include_stats: bool
+        :param include_with_errors:
+        :type include_with_errors: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -771,6 +782,7 @@ class SearchableDatabasesApi:
 
         _param = self._get_custom_databases_serialize(
             include_stats=include_stats,
+            include_with_errors=include_with_errors,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -790,6 +802,7 @@ class SearchableDatabasesApi:
     def _get_custom_databases_serialize(
         self,
         include_stats,
+        include_with_errors,
         _request_auth,
         _content_type,
         _headers,
@@ -813,6 +826,10 @@ class SearchableDatabasesApi:
         if include_stats is not None:
             
             _query_params.append(('includeStats', include_stats))
+            
+        if include_with_errors is not None:
+            
+            _query_params.append(('includeWithErrors', include_with_errors))
             
         # process the header parameters
         # process the form parameters
@@ -1124,6 +1141,7 @@ class SearchableDatabasesApi:
     def get_databases(
         self,
         include_stats: Optional[StrictBool] = None,
+        include_with_errors: Optional[StrictBool] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1142,6 +1160,8 @@ class SearchableDatabasesApi:
 
         :param include_stats:
         :type include_stats: bool
+        :param include_with_errors:
+        :type include_with_errors: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1166,6 +1186,7 @@ class SearchableDatabasesApi:
 
         _param = self._get_databases_serialize(
             include_stats=include_stats,
+            include_with_errors=include_with_errors,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1190,6 +1211,7 @@ class SearchableDatabasesApi:
     def get_databases_with_http_info(
         self,
         include_stats: Optional[StrictBool] = None,
+        include_with_errors: Optional[StrictBool] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1208,6 +1230,8 @@ class SearchableDatabasesApi:
 
         :param include_stats:
         :type include_stats: bool
+        :param include_with_errors:
+        :type include_with_errors: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1232,6 +1256,7 @@ class SearchableDatabasesApi:
 
         _param = self._get_databases_serialize(
             include_stats=include_stats,
+            include_with_errors=include_with_errors,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1256,6 +1281,7 @@ class SearchableDatabasesApi:
     def get_databases_without_preload_content(
         self,
         include_stats: Optional[StrictBool] = None,
+        include_with_errors: Optional[StrictBool] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1274,6 +1300,8 @@ class SearchableDatabasesApi:
 
         :param include_stats:
         :type include_stats: bool
+        :param include_with_errors:
+        :type include_with_errors: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1298,6 +1326,7 @@ class SearchableDatabasesApi:
 
         _param = self._get_databases_serialize(
             include_stats=include_stats,
+            include_with_errors=include_with_errors,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1317,6 +1346,7 @@ class SearchableDatabasesApi:
     def _get_databases_serialize(
         self,
         include_stats,
+        include_with_errors,
         _request_auth,
         _content_type,
         _headers,
@@ -1340,6 +1370,10 @@ class SearchableDatabasesApi:
         if include_stats is not None:
             
             _query_params.append(('includeStats', include_stats))
+            
+        if include_with_errors is not None:
+            
+            _query_params.append(('includeWithErrors', include_with_errors))
             
         # process the header parameters
         # process the form parameters
