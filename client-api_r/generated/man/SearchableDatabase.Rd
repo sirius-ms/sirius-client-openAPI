@@ -41,6 +41,8 @@ Create a new SearchableDatabase
 \item{\code{numberOfFormulas}}{Number of different molecular formulas available in this database. integer [optional]}
 
 \item{\code{numberOfReferenceSpectra}}{Number of reference spectra available in this database integer [optional]}
+
+\item{\code{errorMessage}}{Error message if the database could not be loaded character [optional]}
 }
 \if{html}{\out{</div>}}
 }
@@ -79,6 +81,7 @@ Initialize a new SearchableDatabase class.
   numberOfStructures = NULL,
   numberOfFormulas = NULL,
   numberOfReferenceSpectra = NULL,
+  errorMessage = NULL,
   ...
 )}\if{html}{\out{</div>}}
 }
@@ -109,6 +112,8 @@ Initialize a new SearchableDatabase class.
 \item{\code{numberOfFormulas}}{Number of different molecular formulas available in this database.}
 
 \item{\code{numberOfReferenceSpectra}}{Number of reference spectra available in this database}
+
+\item{\code{errorMessage}}{Error message if the database could not be loaded}
 
 \item{\code{...}}{Other optional arguments.}
 }

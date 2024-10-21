@@ -19,6 +19,7 @@
 #' @field numberOfStructures Number of unique compounds available in this database. integer [optional]
 #' @field numberOfFormulas Number of different molecular formulas available in this database. integer [optional]
 #' @field numberOfReferenceSpectra Number of reference spectra available in this database integer [optional]
+#' @field errorMessage Error message if the database could not be loaded character [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
 #' @export
@@ -37,6 +38,7 @@ SearchableDatabase <- R6::R6Class(
     `numberOfStructures` = NULL,
     `numberOfFormulas` = NULL,
     `numberOfReferenceSpectra` = NULL,
+    `errorMessage` = NULL,
     #' Initialize a new SearchableDatabase class.
     #'
     #' @description
@@ -54,9 +56,10 @@ SearchableDatabase <- R6::R6Class(
     #' @param numberOfStructures Number of unique compounds available in this database.
     #' @param numberOfFormulas Number of different molecular formulas available in this database.
     #' @param numberOfReferenceSpectra Number of reference spectra available in this database
+    #' @param errorMessage Error message if the database could not be loaded
     #' @param ... Other optional arguments.
     #' @export
-    initialize = function(`databaseId`, `customDb`, `searchable`, `updateNeeded`, `displayName` = NULL, `location` = NULL, `matchRtOfReferenceSpectra` = FALSE, `dbDate` = NULL, `dbVersion` = NULL, `numberOfStructures` = NULL, `numberOfFormulas` = NULL, `numberOfReferenceSpectra` = NULL, ...) {
+    initialize = function(`databaseId`, `customDb`, `searchable`, `updateNeeded`, `displayName` = NULL, `location` = NULL, `matchRtOfReferenceSpectra` = FALSE, `dbDate` = NULL, `dbVersion` = NULL, `numberOfStructures` = NULL, `numberOfFormulas` = NULL, `numberOfReferenceSpectra` = NULL, `errorMessage` = NULL, ...) {
       if (!missing(`databaseId`)) {
         if (!(is.character(`databaseId`) && length(`databaseId`) == 1)) {
           stop(paste("Error! Invalid data for `databaseId`. Must be a string:", `databaseId`))
@@ -129,6 +132,12 @@ SearchableDatabase <- R6::R6Class(
         }
         self$`numberOfReferenceSpectra` <- `numberOfReferenceSpectra`
       }
+      if (!is.null(`errorMessage`)) {
+        if (!(is.character(`errorMessage`) && length(`errorMessage`) == 1)) {
+          stop(paste("Error! Invalid data for `errorMessage`. Must be a string:", `errorMessage`))
+        }
+        self$`errorMessage` <- `errorMessage`
+      }
     },
     #' To JSON string
     #'
@@ -187,6 +196,10 @@ SearchableDatabase <- R6::R6Class(
         SearchableDatabaseObject[["numberOfReferenceSpectra"]] <-
           self$`numberOfReferenceSpectra`
       }
+      if (!is.null(self$`errorMessage`)) {
+        SearchableDatabaseObject[["errorMessage"]] <-
+          self$`errorMessage`
+      }
       SearchableDatabaseObject
     },
     #' Deserialize JSON string into an instance of SearchableDatabase
@@ -234,6 +247,9 @@ SearchableDatabase <- R6::R6Class(
       }
       if (!is.null(this_object$`numberOfReferenceSpectra`)) {
         self$`numberOfReferenceSpectra` <- this_object$`numberOfReferenceSpectra`
+      }
+      if (!is.null(this_object$`errorMessage`)) {
+        self$`errorMessage` <- this_object$`errorMessage`
       }
       self
     },
@@ -341,6 +357,14 @@ SearchableDatabase <- R6::R6Class(
                     ',
           self$`numberOfReferenceSpectra`
           )
+        },
+        if (!is.null(self$`errorMessage`)) {
+          sprintf(
+          '"errorMessage":
+            "%s"
+                    ',
+          self$`errorMessage`
+          )
         }
       )
       jsoncontent <- paste(jsoncontent, collapse = ",")
@@ -372,6 +396,7 @@ SearchableDatabase <- R6::R6Class(
       self$`numberOfStructures` <- this_object$`numberOfStructures`
       self$`numberOfFormulas` <- this_object$`numberOfFormulas`
       self$`numberOfReferenceSpectra` <- this_object$`numberOfReferenceSpectra`
+      self$`errorMessage` <- this_object$`errorMessage`
       self
     },
     #' Validate JSON input with respect to SearchableDatabase

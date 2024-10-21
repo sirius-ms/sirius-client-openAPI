@@ -149,7 +149,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_custom_databases**
-> List[SearchableDatabase] get_custom_databases(include_stats=include_stats)
+> List[SearchableDatabase] get_custom_databases(include_stats=include_stats, include_with_errors=include_with_errors)
 
 
 
@@ -174,9 +174,10 @@ with PySirius.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = PySirius.SearchableDatabasesApi(api_client)
     include_stats = False # bool |  (optional) (default to False)
+    include_with_errors = False # bool |  (optional) (default to False)
 
     try:
-        api_response = api_instance.get_custom_databases(include_stats=include_stats)
+        api_response = api_instance.get_custom_databases(include_stats=include_stats, include_with_errors=include_with_errors)
         print("The response of SearchableDatabasesApi->get_custom_databases:\n")
         pprint(api_response)
     except Exception as e:
@@ -191,6 +192,7 @@ with PySirius.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **include_stats** | **bool**|  | [optional] [default to False]
+ **include_with_errors** | **bool**|  | [optional] [default to False]
 
 ### Return type
 
@@ -281,7 +283,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_databases**
-> List[SearchableDatabase] get_databases(include_stats=include_stats)
+> List[SearchableDatabase] get_databases(include_stats=include_stats, include_with_errors=include_with_errors)
 
 
 
@@ -306,9 +308,10 @@ with PySirius.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = PySirius.SearchableDatabasesApi(api_client)
     include_stats = False # bool |  (optional) (default to False)
+    include_with_errors = False # bool |  (optional) (default to False)
 
     try:
-        api_response = api_instance.get_databases(include_stats=include_stats)
+        api_response = api_instance.get_databases(include_stats=include_stats, include_with_errors=include_with_errors)
         print("The response of SearchableDatabasesApi->get_databases:\n")
         pprint(api_response)
     except Exception as e:
@@ -323,6 +326,7 @@ with PySirius.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **include_stats** | **bool**|  | [optional] [default to False]
+ **include_with_errors** | **bool**|  | [optional] [default to False]
 
 ### Return type
 

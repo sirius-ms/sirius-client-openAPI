@@ -41,6 +41,7 @@ PySirius/models/compound_class_type.py
 PySirius/models/compound_classes.py
 PySirius/models/compound_import.py
 PySirius/models/compound_opt_field.py
+PySirius/models/computed_subtools.py
 PySirius/models/confidence_mode.py
 PySirius/models/connection_check.py
 PySirius/models/connection_error.py
@@ -141,6 +142,7 @@ docs/CompoundClasses.md
 docs/CompoundImport.md
 docs/CompoundOptField.md
 docs/CompoundsApi.md
+docs/ComputedSubtools.md
 docs/ConfidenceMode.md
 docs/ConnectionCheck.md
 docs/ConnectionError.md

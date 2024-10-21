@@ -91,7 +91,7 @@ AlignedFeatureOptField <- R6::R6Class(
 
 # add to utils.R
 .parse_AlignedFeatureOptField <- function(vals) {
-  res <- gsub("^\\[|\\]$", "", "[none, msData, topAnnotations, topAnnotationsDeNovo]")
+  res <- gsub("^\\[|\\]$", "", "[none, msData, topAnnotations, topAnnotationsDeNovo, computedTools]")
   unlist(strsplit(res, ", "))
 }
 

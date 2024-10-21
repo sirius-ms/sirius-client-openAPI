@@ -17,6 +17,7 @@ Name | Type | Description | Notes
 **number_of_structures** | **int** | Number of unique compounds available in this database. | [optional] 
 **number_of_formulas** | **int** | Number of different molecular formulas available in this database. | [optional] 
 **number_of_reference_spectra** | **int** | Number of reference spectra available in this database | [optional] 
+**error_message** | **str** | Error message if the database could not be loaded | [optional] 
 
 ## Example
 

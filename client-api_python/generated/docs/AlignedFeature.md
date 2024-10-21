@@ -23,6 +23,7 @@ Name | Type | Description | Notes
 **top_annotations** | [**FeatureAnnotations**](FeatureAnnotations.md) |  | [optional] 
 **top_annotations_de_novo** | [**FeatureAnnotations**](FeatureAnnotations.md) |  | [optional] 
 **computing** | **bool** | Write lock for this feature. If the feature is locked no write operations are possible.  True if any computation is modifying this feature or its results | [optional] 
+**computed_tools** | [**ComputedSubtools**](ComputedSubtools.md) |  | [optional] 
 
 ## Example
 

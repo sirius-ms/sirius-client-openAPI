@@ -38,7 +38,8 @@ class SearchableDatabase(BaseModel):
     number_of_structures: Optional[StrictInt] = Field(default=None, description="Number of unique compounds available in this database.", alias="numberOfStructures")
     number_of_formulas: Optional[StrictInt] = Field(default=None, description="Number of different molecular formulas available in this database.", alias="numberOfFormulas")
     number_of_reference_spectra: Optional[StrictInt] = Field(default=None, description="Number of reference spectra available in this database", alias="numberOfReferenceSpectra")
-    __properties: ClassVar[List[str]] = ["displayName", "location", "matchRtOfReferenceSpectra", "databaseId", "customDb", "searchable", "dbDate", "dbVersion", "updateNeeded", "numberOfStructures", "numberOfFormulas", "numberOfReferenceSpectra"]
+    error_message: Optional[StrictStr] = Field(default=None, description="Error message if the database could not be loaded", alias="errorMessage")
+    __properties: ClassVar[List[str]] = ["displayName", "location", "matchRtOfReferenceSpectra", "databaseId", "customDb", "searchable", "dbDate", "dbVersion", "updateNeeded", "numberOfStructures", "numberOfFormulas", "numberOfReferenceSpectra", "errorMessage"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -119,6 +120,11 @@ class SearchableDatabase(BaseModel):
         if self.number_of_reference_spectra is None and "number_of_reference_spectra" in self.model_fields_set:
             _dict['numberOfReferenceSpectra'] = None
 
+        # set to None if error_message (nullable) is None
+        # and model_fields_set contains the field
+        if self.error_message is None and "error_message" in self.model_fields_set:
+            _dict['errorMessage'] = None
+
         return _dict
 
     @classmethod
@@ -142,7 +148,8 @@ class SearchableDatabase(BaseModel):
             "updateNeeded": obj.get("updateNeeded"),
             "numberOfStructures": obj.get("numberOfStructures"),
             "numberOfFormulas": obj.get("numberOfFormulas"),
-            "numberOfReferenceSpectra": obj.get("numberOfReferenceSpectra")
+            "numberOfReferenceSpectra": obj.get("numberOfReferenceSpectra"),
+            "errorMessage": obj.get("errorMessage")
         })
         return _obj
 

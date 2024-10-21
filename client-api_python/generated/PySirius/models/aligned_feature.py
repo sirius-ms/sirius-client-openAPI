@@ -19,6 +19,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
+from PySirius.models.computed_subtools import ComputedSubtools
 from PySirius.models.data_quality import DataQuality
 from PySirius.models.feature_annotations import FeatureAnnotations
 from PySirius.models.ms_data import MsData
@@ -46,7 +47,8 @@ class AlignedFeature(BaseModel):
     top_annotations: Optional[FeatureAnnotations] = Field(default=None, alias="topAnnotations")
     top_annotations_de_novo: Optional[FeatureAnnotations] = Field(default=None, alias="topAnnotationsDeNovo")
     computing: Optional[StrictBool] = Field(default=None, description="Write lock for this feature. If the feature is locked no write operations are possible.  True if any computation is modifying this feature or its results")
-    __properties: ClassVar[List[str]] = ["alignedFeatureId", "compoundId", "name", "externalFeatureId", "ionMass", "charge", "detectedAdducts", "rtStartSeconds", "rtEndSeconds", "rtApexSeconds", "quality", "hasMs1", "hasMsMs", "msData", "topAnnotations", "topAnnotationsDeNovo", "computing"]
+    computed_tools: Optional[ComputedSubtools] = Field(default=None, alias="computedTools")
+    __properties: ClassVar[List[str]] = ["alignedFeatureId", "compoundId", "name", "externalFeatureId", "ionMass", "charge", "detectedAdducts", "rtStartSeconds", "rtEndSeconds", "rtApexSeconds", "quality", "hasMs1", "hasMsMs", "msData", "topAnnotations", "topAnnotationsDeNovo", "computing", "computedTools"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -96,6 +98,9 @@ class AlignedFeature(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of top_annotations_de_novo
         if self.top_annotations_de_novo:
             _dict['topAnnotationsDeNovo'] = self.top_annotations_de_novo.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of computed_tools
+        if self.computed_tools:
+            _dict['computedTools'] = self.computed_tools.to_dict()
         # set to None if rt_start_seconds (nullable) is None
         # and model_fields_set contains the field
         if self.rt_start_seconds is None and "rt_start_seconds" in self.model_fields_set:
@@ -131,6 +136,11 @@ class AlignedFeature(BaseModel):
         if self.top_annotations_de_novo is None and "top_annotations_de_novo" in self.model_fields_set:
             _dict['topAnnotationsDeNovo'] = None
 
+        # set to None if computed_tools (nullable) is None
+        # and model_fields_set contains the field
+        if self.computed_tools is None and "computed_tools" in self.model_fields_set:
+            _dict['computedTools'] = None
+
         return _dict
 
     @classmethod
@@ -159,7 +169,8 @@ class AlignedFeature(BaseModel):
             "msData": MsData.from_dict(obj["msData"]) if obj.get("msData") is not None else None,
             "topAnnotations": FeatureAnnotations.from_dict(obj["topAnnotations"]) if obj.get("topAnnotations") is not None else None,
             "topAnnotationsDeNovo": FeatureAnnotations.from_dict(obj["topAnnotationsDeNovo"]) if obj.get("topAnnotationsDeNovo") is not None else None,
-            "computing": obj.get("computing")
+            "computing": obj.get("computing"),
+            "computedTools": ComputedSubtools.from_dict(obj["computedTools"]) if obj.get("computedTools") is not None else None
         })
         return _obj
 

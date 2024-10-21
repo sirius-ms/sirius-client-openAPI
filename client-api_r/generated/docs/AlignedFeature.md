@@ -22,5 +22,6 @@ Name | Type | Description | Notes
 **topAnnotations** | [**FeatureAnnotations**](FeatureAnnotations.md) |  | [optional] 
 **topAnnotationsDeNovo** | [**FeatureAnnotations**](FeatureAnnotations.md) |  | [optional] 
 **computing** | **character** | Write lock for this feature. If the feature is locked no write operations are possible.  True if any computation is modifying this feature or its results | [optional] 
+**computedTools** | [**ComputedSubtools**](ComputedSubtools.md) |  | [optional] 
 
 
