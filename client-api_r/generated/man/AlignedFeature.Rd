@@ -51,6 +51,8 @@ Create a new AlignedFeature
 \item{\code{topAnnotationsDeNovo}}{\link{FeatureAnnotations} [optional]}
 
 \item{\code{computing}}{Write lock for this feature. If the feature is locked no write operations are possible.  True if any computation is modifying this feature or its results character [optional]}
+
+\item{\code{computedTools}}{\link{ComputedSubtools} [optional]}
 }
 \if{html}{\out{</div>}}
 }
@@ -94,6 +96,7 @@ Initialize a new AlignedFeature class.
   topAnnotations = NULL,
   topAnnotationsDeNovo = NULL,
   computing = NULL,
+  computedTools = NULL,
   ...
 )}\if{html}{\out{</div>}}
 }
@@ -134,6 +137,8 @@ Initialize a new AlignedFeature class.
 \item{\code{topAnnotationsDeNovo}}{topAnnotationsDeNovo}
 
 \item{\code{computing}}{Write lock for this feature. If the feature is locked no write operations are possible.  True if any computation is modifying this feature or its results}
+
+\item{\code{computedTools}}{computedTools}
 
 \item{\code{...}}{Other optional arguments.}
 }
