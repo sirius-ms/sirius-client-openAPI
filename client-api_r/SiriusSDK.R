@@ -86,20 +86,66 @@ SiriusSDK <- R6::R6Class(
 
     attach_or_start_sirius = function(headless = NULL) {
       sirius_api <- self$attach_to_sirius()
-      if (is.null(sirius_api)) {
+      # attachment encountered issue
+      if (is.logical(sirius_api)) {
+        return(NULL)
+      }
+      # attachment did not encounter issue but also found no SIRIUS
+      else if (is.null(sirius_api)) {
         sirius_api <- self$start_sirius(headless = headless)
+      }
+      # attachment successful
+      else {
+         message("Attached to running SIRIUS instance.")
       }
       return(sirius_api)
     },
 
     attach_to_sirius = function(sirius_major_version = NULL, sirius_port = NULL) {
+
+      # check if connection to API client is possible
       if (!is.null(self$api_client)) {
-        return(Rsirius::rsirius_api$new(self$api_client))
+        tryCatch({
+          if (Rsirius::ActuatorApi$new(self$api_client)$Health()$status == "UP") {
+            return(Rsirius::ActuatorApi$new(self$api_client))
+          }
+        }, error = function(e) {
+          message("Found existing API Client, but could not reach API.")
+        })
       }
 
-      if (!private$are_all_vars_none()) {
-        stop("Illegal State: Some attributes of SiriusSDK are not NULL but no valid API client could be found! If you are sure that no other SIRIUS instance is running and you do not need the current attributes of SiriusSDK, you can use reset_sdk_class() before calling this function again.")
+      # create and check API client from existing port
+      if (!is.null(self$port)) {
+        self$host <- paste0('http://localhost:', self$port)
+        sirius_api <- self$connect(self$host)
+        self$api_client <- sirius_api$api_client
+        tryCatch({
+          if (Rsirius::ActuatorApi$new(self$api_client)$Health()$status == "UP") {
+            return(Rsirius::ActuatorApi$new(self$api_client))
+          }
+        }, error = function(e) {
+          message("Found existing port, but could not reach API under this port.")
+        })
       }
+
+      # if client is not reachable, search for process and kill if necessary
+      if (!is.null(self$process)) {
+        if (self$process$is_alive()) {
+          message("The SIRIUS process still seems to be lingering, but no connection could be made to the API.")
+          message("Shutting down the process...")
+          if (inherits(self$shutdown_sirius(), "logical")) {
+            # before error messages will be done by shutdown function
+            message("Aborting....")
+            return(FALSE)
+          }
+          message("Process shut down successfully.")
+        } else {
+          message("Known process seems to have terminated at some time.")
+        }
+      }
+
+      self$reset_sdk_class()
+      message("SiriusSDK has been reset. Continuing with search for new SIRIUS instance...")
 
       if (!is.null(sirius_port)) {
         self$port <- sirius_port
@@ -116,7 +162,20 @@ SiriusSDK <- R6::R6Class(
       sirius_api <- self$connect(self$host)
       self$api_client <- sirius_api$api_client
 
-      return(sirius_api)
+      tryCatch({
+        if (Rsirius::ActuatorApi$new(self$api_client)$Health()$status == "UP") {
+            return(Rsirius::ActuatorApi$new(self$api_client))
+        }
+      }, error = function(e) {
+        message("Created API client from process_id and port, but could not reach API.")
+      })
+
+      message("Files for SIRIUS process_id and port have been found, but do not belong to an alive API.")
+      message("Process_id and port files will be deleted and start_sirius will be called.")
+      private$delete_sirius_pid_and_port(sirius_major_version)
+      self$reset_sdk_class()
+
+      return(NULL)
     },
 
     start_sirius = function(sirius_path = NULL, port = NULL, projectspace = NULL, workspace = NULL, forceStart = FALSE, headless = NULL) {
@@ -233,8 +292,7 @@ SiriusSDK <- R6::R6Class(
           Sys.sleep(3)
           if (!self$process$is_alive()) {
             cat("Sirius was shut down successfully\n")
-            self$process <- NULL
-            self$process_id <- NULL
+            self$reset_sdk_class()
             return(NULL)
           }
         }, error = function(e) {
@@ -246,8 +304,7 @@ SiriusSDK <- R6::R6Class(
         Sys.sleep(3)
         if (!self$process$is_alive()) {
           cat("Sirius process has been terminated.\n")
-          self$process <- NULL
-          self$process_id <- NULL
+          self$reset_sdk_class()
           return(NULL)
         }
 
@@ -255,8 +312,7 @@ SiriusSDK <- R6::R6Class(
         Sys.sleep(3)
         if (!self$process$is_alive()) {
           cat("Sirius process has been killed.\n")
-          self$process <- NULL
-          self$process_id <- NULL
+          self$reset_sdk_class()
           return(NULL)
         }
 
@@ -270,8 +326,7 @@ SiriusSDK <- R6::R6Class(
           system(paste("kill -0", self$process_id))
         }, error = function(e) {
           cat("Sirius process has been terminated.\n")
-          self$process <- NULL
-          self$process_id <- NULL
+          self$reset_sdk_class()
           return(NULL)
         })
 
@@ -281,8 +336,7 @@ SiriusSDK <- R6::R6Class(
           system(paste("kill -0", self$process_id))
         }, error = function(e) {
           cat("Sirius process has been killed.\n")
-          self$process <- NULL
-          self$process_id <- NULL
+          self$reset_sdk_class()
           return(NULL)
         })
 
@@ -307,6 +361,35 @@ SiriusSDK <- R6::R6Class(
     },
 
     find_sirius_pid_and_port = function(sirius_version = NULL) {
+      result = private$get_sirius_pid_and_port(sirius_version)
+      if (is.logical(result)) {
+        return(FALSE)
+      }
+      pid_file = result[[1]]
+      port_file = result[[2]]
+      pid <- as.integer(readLines(pid_file, warn = FALSE))
+      port <- as.integer(readLines(port_file, warn = FALSE))
+
+      self$process_id <- pid
+      self$port <- port
+
+      message("Using port ", port, " from file ", port_file)
+      message("Using PID ", pid, " from file ", pid_file)
+      return(TRUE)
+    },
+
+    delete_sirius_pid_and_port = function(sirius_version = NULL) {
+      result = private$get_sirius_pid_and_port(sirius_version)
+      if (is.logical(result)) {
+        return(FALSE)
+      }
+      pid_file = result[[1]]
+      port_file = result[[2]]
+      file.remove(pid_file)
+      file.remove (port_file)
+    },
+
+    get_sirius_pid_and_port = function(sirius_version = NULL) {
       if (Sys.info()['sysname']=="Windows") {
         global_workspace <- file.path(Sys.getenv("USERPROFILE"), ".sirius")
       } else {
@@ -336,15 +419,7 @@ SiriusSDK <- R6::R6Class(
       port_file <- sort(port_files)[length(port_files)]
       pid_file <- sub(".port$", ".pid", port_file)
 
-      port <- as.integer(readLines(port_file, warn = FALSE))
-      pid <- as.integer(readLines(pid_file, warn = FALSE))
-
-      self$port <- port
-      self$process_id <- pid
-
-      message("Using port ", port, " from file ", port_file)
-      message("Using PID ", pid, " from file ", pid_file)
-      return(TRUE)
+      return(c(pid_file, port_file))
     },
 
     cycle_find_sirius_pid_and_port = function() {
