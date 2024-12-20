@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **molecularFormula** | **character** | molecular formula of this formula candidate | [optional] 
 **adduct** | **character** | Adduct of this formula candidate | [optional] 
 **rank** | **integer** |  | [optional] 
+**siriusScoreNormalized** | **numeric** | Normalized Sirius Score of the formula candidate.  If NULL result is not available | [optional] 
 **siriusScore** | **numeric** | Sirius Score (isotope + tree score) of the formula candidate.  If NULL result is not available | [optional] 
 **isotopeScore** | **numeric** |  | [optional] 
 **treeScore** | **numeric** |  | [optional] 

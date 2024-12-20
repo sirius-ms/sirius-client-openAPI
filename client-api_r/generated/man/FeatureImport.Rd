@@ -34,7 +34,7 @@ Create a new FeatureImport
 
 \item{\code{rtApexSeconds}}{numeric [optional]}
 
-\item{\code{dataQuality}}{\link{DataQuality} [optional]}
+\item{\code{dataQuality}}{A optional feature quality flag that can be used to filter features to be shown in the gui or to be considered for further analysis. character [optional]}
 
 \item{\code{mergedMs1}}{\link{BasicSpectrum} [optional]}
 
@@ -102,7 +102,7 @@ Initialize a new FeatureImport class.
 
 \item{\code{rtApexSeconds}}{rtApexSeconds}
 
-\item{\code{dataQuality}}{dataQuality}
+\item{\code{dataQuality}}{A optional feature quality flag that can be used to filter features to be shown in the gui or to be considered for further analysis.}
 
 \item{\code{mergedMs1}}{mergedMs1}
 

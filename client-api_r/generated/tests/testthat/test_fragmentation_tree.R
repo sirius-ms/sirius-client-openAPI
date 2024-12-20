@@ -25,3 +25,17 @@ test_that("treeScore", {
   # uncomment below to test the property
   #expect_equal(model.instance$`treeScore`, "EXPECTED_RESULT")
 })
+
+test_that("molecularFormula", {
+  # tests for the property `molecularFormula` (character)
+
+  # uncomment below to test the property
+  #expect_equal(model.instance$`molecularFormula`, "EXPECTED_RESULT")
+})
+
+test_that("adduct", {
+  # tests for the property `adduct` (character)
+
+  # uncomment below to test the property
+  #expect_equal(model.instance$`adduct`, "EXPECTED_RESULT")
+})

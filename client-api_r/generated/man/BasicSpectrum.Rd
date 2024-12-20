@@ -24,6 +24,8 @@ Create a new BasicSpectrum
 
 \item{\code{collisionEnergy}}{Collision energy used for MS/MS spectra  Null for spectra where collision energy is not applicable character [optional]}
 
+\item{\code{instrument}}{Instrument information. character [optional]}
+
 \item{\code{precursorMz}}{Precursor m/z of the MS/MS spectrum  Null for spectra where precursor m/z is not applicable numeric [optional]}
 
 \item{\code{scanNumber}}{Scan number of the spectrum.  Might be null for artificial spectra with no scan number (e.g. Simulated Isotope patterns or merged spectra) integer [optional]}
@@ -61,6 +63,7 @@ Initialize a new BasicSpectrum class.
   name = NULL,
   msLevel = NULL,
   collisionEnergy = NULL,
+  instrument = NULL,
   precursorMz = NULL,
   scanNumber = NULL,
   absIntensityFactor = NULL,
@@ -78,6 +81,8 @@ Initialize a new BasicSpectrum class.
 \item{\code{msLevel}}{MS level of the measured spectrum.  Artificial spectra with no msLevel (e.g. Simulated Isotope patterns) use null or zero}
 
 \item{\code{collisionEnergy}}{Collision energy used for MS/MS spectra  Null for spectra where collision energy is not applicable}
+
+\item{\code{instrument}}{Instrument information.}
 
 \item{\code{precursorMz}}{Precursor m/z of the MS/MS spectrum  Null for spectra where precursor m/z is not applicable}
 

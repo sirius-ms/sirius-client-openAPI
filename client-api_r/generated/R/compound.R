@@ -31,8 +31,7 @@ Compound <- R6::R6Class(
     `consensusAnnotations` = NULL,
     `consensusAnnotationsDeNovo` = NULL,
     `customAnnotations` = NULL,
-    #' Initialize a new Compound class.
-    #'
+
     #' @description
     #' Initialize a new Compound class.
     #'
@@ -46,7 +45,6 @@ Compound <- R6::R6Class(
     #' @param consensusAnnotationsDeNovo consensusAnnotationsDeNovo
     #' @param customAnnotations customAnnotations
     #' @param ... Other optional arguments.
-    #' @export
     initialize = function(`compoundId` = NULL, `name` = NULL, `rtStartSeconds` = NULL, `rtEndSeconds` = NULL, `neutralMass` = NULL, `features` = NULL, `consensusAnnotations` = NULL, `consensusAnnotationsDeNovo` = NULL, `customAnnotations` = NULL, ...) {
       if (!is.null(`compoundId`)) {
         if (!(is.character(`compoundId`) && length(`compoundId`) == 1)) {
@@ -96,13 +94,11 @@ Compound <- R6::R6Class(
         self$`customAnnotations` <- `customAnnotations`
       }
     },
-    #' To JSON string
-    #'
+
     #' @description
     #' To JSON String
     #'
     #' @return Compound in JSON format
-    #' @export
     toJSON = function() {
       CompoundObject <- list()
       if (!is.null(self$`compoundId`)) {
@@ -131,44 +127,24 @@ Compound <- R6::R6Class(
       }
       if (!is.null(self$`consensusAnnotations`)) {
         CompoundObject[["consensusAnnotations"]] <-
-          if (is.list(self$`consensusAnnotations`$toJSON()) && length(self$`consensusAnnotations`$toJSON()) == 0L){
-            NULL
-          } else if (length(names(self$`consensusAnnotations`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`consensusAnnotations`$toJSON()))) {
-            jsonlite::fromJSON(self$`consensusAnnotations`$toJSON())
-          } else {
-            self$`consensusAnnotations`$toJSON()
-          }
+          self$`consensusAnnotations`$toJSON()
       }
       if (!is.null(self$`consensusAnnotationsDeNovo`)) {
         CompoundObject[["consensusAnnotationsDeNovo"]] <-
-          if (is.list(self$`consensusAnnotationsDeNovo`$toJSON()) && length(self$`consensusAnnotationsDeNovo`$toJSON()) == 0L){
-            NULL
-          } else if (length(names(self$`consensusAnnotationsDeNovo`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`consensusAnnotationsDeNovo`$toJSON()))) {
-            jsonlite::fromJSON(self$`consensusAnnotationsDeNovo`$toJSON())
-          } else {
-            self$`consensusAnnotationsDeNovo`$toJSON()
-          }
+          self$`consensusAnnotationsDeNovo`$toJSON()
       }
       if (!is.null(self$`customAnnotations`)) {
         CompoundObject[["customAnnotations"]] <-
-          if (is.list(self$`customAnnotations`$toJSON()) && length(self$`customAnnotations`$toJSON()) == 0L){
-            NULL
-          } else if (length(names(self$`customAnnotations`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`customAnnotations`$toJSON()))) {
-            jsonlite::fromJSON(self$`customAnnotations`$toJSON())
-          } else {
-            self$`customAnnotations`$toJSON()
-          }
+          self$`customAnnotations`$toJSON()
       }
       CompoundObject
     },
-    #' Deserialize JSON string into an instance of Compound
-    #'
+
     #' @description
     #' Deserialize JSON string into an instance of Compound
     #'
     #' @param input_json the JSON input
     #' @return the instance of Compound
-    #' @export
     fromJSON = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       if (!is.null(this_object$`compoundId`)) {
@@ -206,13 +182,11 @@ Compound <- R6::R6Class(
       }
       self
     },
-    #' To JSON string
-    #'
+
     #' @description
     #' To JSON String
     #'
     #' @return Compound in JSON format
-    #' @export
     toJSONString = function() {
       jsoncontent <- c(
         if (!is.null(self$`compoundId`)) {
@@ -234,7 +208,7 @@ Compound <- R6::R6Class(
         if (!is.null(self$`rtStartSeconds`)) {
           sprintf(
           '"rtStartSeconds":
-            %f
+            %d
                     ',
           self$`rtStartSeconds`
           )
@@ -242,7 +216,7 @@ Compound <- R6::R6Class(
         if (!is.null(self$`rtEndSeconds`)) {
           sprintf(
           '"rtEndSeconds":
-            %f
+            %d
                     ',
           self$`rtEndSeconds`
           )
@@ -250,7 +224,7 @@ Compound <- R6::R6Class(
         if (!is.null(self$`neutralMass`)) {
           sprintf(
           '"neutralMass":
-            %f
+            %d
                     ',
           self$`neutralMass`
           )
@@ -289,20 +263,14 @@ Compound <- R6::R6Class(
         }
       )
       jsoncontent <- paste(jsoncontent, collapse = ",")
-      # remove c() occurences and reduce resulting double escaped quotes \"\" into \"
-      jsoncontent <- gsub('\\\"c\\((.*?)\\\"\\)', '\\1', jsoncontent)
-      # fix wrong serialization of "\"ENUM\"" to "ENUM"
-      jsoncontent <- gsub("\\\\\"([A-Z]+)\\\\\"", "\\1", jsoncontent)
       json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
     },
-    #' Deserialize JSON string into an instance of Compound
-    #'
+
     #' @description
     #' Deserialize JSON string into an instance of Compound
     #'
     #' @param input_json the JSON input
     #' @return the instance of Compound
-    #' @export
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       self$`compoundId` <- this_object$`compoundId`
@@ -316,53 +284,42 @@ Compound <- R6::R6Class(
       self$`customAnnotations` <- ConsensusAnnotationsCSI$new()$fromJSON(jsonlite::toJSON(this_object$`customAnnotations`, auto_unbox = TRUE, digits = NA))
       self
     },
-    #' Validate JSON input with respect to Compound
-    #'
+
     #' @description
     #' Validate JSON input with respect to Compound and throw an exception if invalid
     #'
     #' @param input the JSON input
-    #' @export
     validateJSON = function(input) {
       input_json <- jsonlite::fromJSON(input)
     },
-    #' To string (JSON format)
-    #'
+
     #' @description
     #' To string (JSON format)
     #'
     #' @return String representation of Compound
-    #' @export
     toString = function() {
       self$toJSONString()
     },
-    #' Return true if the values in all fields are valid.
-    #'
+
     #' @description
     #' Return true if the values in all fields are valid.
     #'
     #' @return true if the values in all fields are valid.
-    #' @export
     isValid = function() {
       TRUE
     },
-    #' Return a list of invalid fields (if any).
-    #'
+
     #' @description
     #' Return a list of invalid fields (if any).
     #'
     #' @return A list of invalid fields (if any).
-    #' @export
     getInvalidFields = function() {
       invalid_fields <- list()
       invalid_fields
     },
-    #' Print the object
-    #'
+
     #' @description
     #' Print the object
-    #'
-    #' @export
     print = function() {
       print(jsonlite::prettify(self$toJSONString()))
       invisible(self)

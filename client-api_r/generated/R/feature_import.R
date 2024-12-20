@@ -15,7 +15,7 @@
 #' @field rtStartSeconds  numeric [optional]
 #' @field rtEndSeconds  numeric [optional]
 #' @field rtApexSeconds  numeric [optional]
-#' @field dataQuality  \link{DataQuality} [optional]
+#' @field dataQuality A optional feature quality flag that can be used to filter features to be shown in the gui or to be considered for further analysis. character [optional]
 #' @field mergedMs1  \link{BasicSpectrum} [optional]
 #' @field ms1Spectra List of MS1Spectra belonging to this feature. These spectra will be merged an only a representative  mergedMs1 spectrum will be stored in SIRIUS. At least one of these spectra should contain the  isotope pattern of the precursor ion.  Note: Will be ignored if 'mergedMs1' is given. list(\link{BasicSpectrum}) [optional]
 #' @field ms2Spectra List of MS/MS spectra that belong to this feature. list(\link{BasicSpectrum}) [optional]
@@ -37,8 +37,7 @@ FeatureImport <- R6::R6Class(
     `mergedMs1` = NULL,
     `ms1Spectra` = NULL,
     `ms2Spectra` = NULL,
-    #' Initialize a new FeatureImport class.
-    #'
+
     #' @description
     #' Initialize a new FeatureImport class.
     #'
@@ -50,12 +49,11 @@ FeatureImport <- R6::R6Class(
     #' @param rtStartSeconds rtStartSeconds
     #' @param rtEndSeconds rtEndSeconds
     #' @param rtApexSeconds rtApexSeconds
-    #' @param dataQuality dataQuality
+    #' @param dataQuality A optional feature quality flag that can be used to filter features to be shown in the gui or to be considered for further analysis.
     #' @param mergedMs1 mergedMs1
     #' @param ms1Spectra List of MS1Spectra belonging to this feature. These spectra will be merged an only a representative  mergedMs1 spectrum will be stored in SIRIUS. At least one of these spectra should contain the  isotope pattern of the precursor ion.  Note: Will be ignored if 'mergedMs1' is given.
     #' @param ms2Spectra List of MS/MS spectra that belong to this feature.
     #' @param ... Other optional arguments.
-    #' @export
     initialize = function(`ionMass`, `charge`, `name` = NULL, `externalFeatureId` = NULL, `detectedAdducts` = NULL, `rtStartSeconds` = NULL, `rtEndSeconds` = NULL, `rtApexSeconds` = NULL, `dataQuality` = NULL, `mergedMs1` = NULL, `ms1Spectra` = NULL, `ms2Spectra` = NULL, ...) {
       if (!missing(`ionMass`)) {
         if (!(is.numeric(`ionMass`) && length(`ionMass`) == 1)) {
@@ -108,11 +106,12 @@ FeatureImport <- R6::R6Class(
         self$`rtApexSeconds` <- `rtApexSeconds`
       }
       if (!is.null(`dataQuality`)) {
-        # disabled, as it is broken and checks for `dataQuality` %in% c()
-        # if (!(`dataQuality` %in% c())) {
-        #  stop(paste("Error! \"", `dataQuality`, "\" cannot be assigned to `dataQuality`. Must be .", sep = ""))
-        # }
-        stopifnot(R6::is.R6(`dataQuality`))
+        if (!(`dataQuality` %in% c("NOT_APPLICABLE", "LOWEST", "BAD", "DECENT", "GOOD"))) {
+          stop(paste("Error! \"", `dataQuality`, "\" cannot be assigned to `dataQuality`. Must be \"NOT_APPLICABLE\", \"LOWEST\", \"BAD\", \"DECENT\", \"GOOD\".", sep = ""))
+        }
+        if (!(is.character(`dataQuality`) && length(`dataQuality`) == 1)) {
+          stop(paste("Error! Invalid data for `dataQuality`. Must be a string:", `dataQuality`))
+        }
         self$`dataQuality` <- `dataQuality`
       }
       if (!is.null(`mergedMs1`)) {
@@ -130,13 +129,11 @@ FeatureImport <- R6::R6Class(
         self$`ms2Spectra` <- `ms2Spectra`
       }
     },
-    #' To JSON string
-    #'
+
     #' @description
     #' To JSON String
     #'
     #' @return FeatureImport in JSON format
-    #' @export
     toJSON = function() {
       FeatureImportObject <- list()
       if (!is.null(self$`name`)) {
@@ -173,23 +170,11 @@ FeatureImport <- R6::R6Class(
       }
       if (!is.null(self$`dataQuality`)) {
         FeatureImportObject[["dataQuality"]] <-
-          if (is.list(self$`dataQuality`$toJSON()) && length(self$`dataQuality`$toJSON()) == 0L){
-            NULL
-          } else if (length(names(self$`dataQuality`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`dataQuality`$toJSON()))) {
-            jsonlite::fromJSON(self$`dataQuality`$toJSON())
-          } else {
-            self$`dataQuality`$toJSON()
-          }
+          self$`dataQuality`
       }
       if (!is.null(self$`mergedMs1`)) {
         FeatureImportObject[["mergedMs1"]] <-
-          if (is.list(self$`mergedMs1`$toJSON()) && length(self$`mergedMs1`$toJSON()) == 0L){
-            NULL
-          } else if (length(names(self$`mergedMs1`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`mergedMs1`$toJSON()))) {
-            jsonlite::fromJSON(self$`mergedMs1`$toJSON())
-          } else {
-            self$`mergedMs1`$toJSON()
-          }
+          self$`mergedMs1`$toJSON()
       }
       if (!is.null(self$`ms1Spectra`)) {
         FeatureImportObject[["ms1Spectra"]] <-
@@ -201,14 +186,12 @@ FeatureImport <- R6::R6Class(
       }
       FeatureImportObject
     },
-    #' Deserialize JSON string into an instance of FeatureImport
-    #'
+
     #' @description
     #' Deserialize JSON string into an instance of FeatureImport
     #'
     #' @param input_json the JSON input
     #' @return the instance of FeatureImport
-    #' @export
     fromJSON = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       if (!is.null(this_object$`name`)) {
@@ -239,9 +222,10 @@ FeatureImport <- R6::R6Class(
         self$`rtApexSeconds` <- this_object$`rtApexSeconds`
       }
       if (!is.null(this_object$`dataQuality`)) {
-        `dataquality_object` <- DataQuality$new()
-        `dataquality_object`$fromJSON(jsonlite::toJSON(this_object$`dataQuality`, auto_unbox = TRUE, digits = NA))
-        self$`dataQuality` <- `dataquality_object`
+        if (!is.null(this_object$`dataQuality`) && !(this_object$`dataQuality` %in% c("NOT_APPLICABLE", "LOWEST", "BAD", "DECENT", "GOOD"))) {
+          stop(paste("Error! \"", this_object$`dataQuality`, "\" cannot be assigned to `dataQuality`. Must be \"NOT_APPLICABLE\", \"LOWEST\", \"BAD\", \"DECENT\", \"GOOD\".", sep = ""))
+        }
+        self$`dataQuality` <- this_object$`dataQuality`
       }
       if (!is.null(this_object$`mergedMs1`)) {
         `mergedms1_object` <- BasicSpectrum$new()
@@ -256,13 +240,11 @@ FeatureImport <- R6::R6Class(
       }
       self
     },
-    #' To JSON string
-    #'
+
     #' @description
     #' To JSON String
     #'
     #' @return FeatureImport in JSON format
-    #' @export
     toJSONString = function() {
       jsoncontent <- c(
         if (!is.null(self$`name`)) {
@@ -284,7 +266,7 @@ FeatureImport <- R6::R6Class(
         if (!is.null(self$`ionMass`)) {
           sprintf(
           '"ionMass":
-            %f
+            %d
                     ',
           self$`ionMass`
           )
@@ -292,7 +274,7 @@ FeatureImport <- R6::R6Class(
         if (!is.null(self$`charge`)) {
           sprintf(
           '"charge":
-            %f
+            %d
                     ',
           self$`charge`
           )
@@ -308,7 +290,7 @@ FeatureImport <- R6::R6Class(
         if (!is.null(self$`rtStartSeconds`)) {
           sprintf(
           '"rtStartSeconds":
-            %f
+            %d
                     ',
           self$`rtStartSeconds`
           )
@@ -316,7 +298,7 @@ FeatureImport <- R6::R6Class(
         if (!is.null(self$`rtEndSeconds`)) {
           sprintf(
           '"rtEndSeconds":
-            %f
+            %d
                     ',
           self$`rtEndSeconds`
           )
@@ -324,7 +306,7 @@ FeatureImport <- R6::R6Class(
         if (!is.null(self$`rtApexSeconds`)) {
           sprintf(
           '"rtApexSeconds":
-            %f
+            %d
                     ',
           self$`rtApexSeconds`
           )
@@ -332,9 +314,9 @@ FeatureImport <- R6::R6Class(
         if (!is.null(self$`dataQuality`)) {
           sprintf(
           '"dataQuality":
-          %s
-          ',
-          jsonlite::toJSON(self$`dataQuality`$toJSON(), auto_unbox = TRUE, digits = NA)
+            "%s"
+                    ',
+          self$`dataQuality`
           )
         },
         if (!is.null(self$`mergedMs1`)) {
@@ -363,20 +345,14 @@ FeatureImport <- R6::R6Class(
         }
       )
       jsoncontent <- paste(jsoncontent, collapse = ",")
-      # remove c() occurences and reduce resulting double escaped quotes \"\" into \"
-      jsoncontent <- gsub('\\\"c\\((.*?)\\\"\\)', '\\1', jsoncontent)
-      # fix wrong serialization of "\"ENUM\"" to "ENUM"
-      jsoncontent <- gsub("\\\\\"([A-Z]+)\\\\\"", "\\1", jsoncontent)
       json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
     },
-    #' Deserialize JSON string into an instance of FeatureImport
-    #'
+
     #' @description
     #' Deserialize JSON string into an instance of FeatureImport
     #'
     #' @param input_json the JSON input
     #' @return the instance of FeatureImport
-    #' @export
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       self$`name` <- this_object$`name`
@@ -390,19 +366,20 @@ FeatureImport <- R6::R6Class(
       self$`rtStartSeconds` <- this_object$`rtStartSeconds`
       self$`rtEndSeconds` <- this_object$`rtEndSeconds`
       self$`rtApexSeconds` <- this_object$`rtApexSeconds`
-      self$`dataQuality` <- DataQuality$new()$fromJSON(jsonlite::toJSON(this_object$`dataQuality`, auto_unbox = TRUE, digits = NA))
+      if (!is.null(this_object$`dataQuality`) && !(this_object$`dataQuality` %in% c("NOT_APPLICABLE", "LOWEST", "BAD", "DECENT", "GOOD"))) {
+        stop(paste("Error! \"", this_object$`dataQuality`, "\" cannot be assigned to `dataQuality`. Must be \"NOT_APPLICABLE\", \"LOWEST\", \"BAD\", \"DECENT\", \"GOOD\".", sep = ""))
+      }
+      self$`dataQuality` <- this_object$`dataQuality`
       self$`mergedMs1` <- BasicSpectrum$new()$fromJSON(jsonlite::toJSON(this_object$`mergedMs1`, auto_unbox = TRUE, digits = NA))
       self$`ms1Spectra` <- ApiClient$new()$deserializeObj(this_object$`ms1Spectra`, "array[BasicSpectrum]", loadNamespace("Rsirius"))
       self$`ms2Spectra` <- ApiClient$new()$deserializeObj(this_object$`ms2Spectra`, "array[BasicSpectrum]", loadNamespace("Rsirius"))
       self
     },
-    #' Validate JSON input with respect to FeatureImport
-    #'
+
     #' @description
     #' Validate JSON input with respect to FeatureImport and throw an exception if invalid
     #'
     #' @param input the JSON input
-    #' @export
     validateJSON = function(input) {
       input_json <- jsonlite::fromJSON(input)
       # check the required field `ionMass`
@@ -422,23 +399,19 @@ FeatureImport <- R6::R6Class(
         stop(paste("The JSON input `", input, "` is invalid for FeatureImport: the required field `charge` is missing."))
       }
     },
-    #' To string (JSON format)
-    #'
+
     #' @description
     #' To string (JSON format)
     #'
     #' @return String representation of FeatureImport
-    #' @export
     toString = function() {
       self$toJSONString()
     },
-    #' Return true if the values in all fields are valid.
-    #'
+
     #' @description
     #' Return true if the values in all fields are valid.
     #'
     #' @return true if the values in all fields are valid.
-    #' @export
     isValid = function() {
       # check if the required `ionMass` is null
       if (is.null(self$`ionMass`)) {
@@ -453,13 +426,11 @@ FeatureImport <- R6::R6Class(
 
       TRUE
     },
-    #' Return a list of invalid fields (if any).
-    #'
+
     #' @description
     #' Return a list of invalid fields (if any).
     #'
     #' @return A list of invalid fields (if any).
-    #' @export
     getInvalidFields = function() {
       invalid_fields <- list()
       # check if the required `ionMass` is null
@@ -475,12 +446,9 @@ FeatureImport <- R6::R6Class(
 
       invalid_fields
     },
-    #' Print the object
-    #'
+
     #' @description
     #' Print the object
-    #'
-    #' @export
     print = function() {
       print(jsonlite::prettify(self$toJSONString()))
       invisible(self)
