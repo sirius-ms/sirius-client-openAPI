@@ -10,6 +10,7 @@ Method | HTTP request | Description
 [**GetDefaultJobConfig**](JobsApi.md#GetDefaultJobConfig) | **GET** /api/default-job-config | Request default job configuration
 [**GetJob**](JobsApi.md#GetJob) | **GET** /api/projects/{projectId}/jobs/{jobId} | Get job information and its current state and progress (if available).
 [**GetJobConfig**](JobsApi.md#GetJobConfig) | **GET** /api/job-configs/{name} | Request job configuration with given name.
+[**GetJobConfigNames**](JobsApi.md#GetJobConfigNames) | **GET** /api/job-config-names | Get all (non-default) job configuration names
 [**GetJobConfigs**](JobsApi.md#GetJobConfigs) | **GET** /api/job-configs | Request all available job configurations
 [**GetJobs**](JobsApi.md#GetJobs) | **GET** /api/projects/{projectId}/jobs | Get List of all available jobs with information such as current state and progress (if available).
 [**GetJobsPaged**](JobsApi.md#GetJobsPaged) | **GET** /api/projects/{projectId}/jobs/page | Get Page of jobs with information such as current state and progress (if available).
@@ -35,8 +36,8 @@ library(Rsirius)
 # prepare function argument(s)
 var_project_id <- "project_id_example" # character | project-space to delete job from
 var_job_id <- "job_id_example" # character | of the job to be deleted
-var_cancel_if_running <- TRUE # character | If true job will be canceled if it is not finished. Otherwise,                         deletion will fail for running jobs or request will block until job has finished. (Optional)
-var_await_deletion <- TRUE # character | If true request will block until deletion succeeded or failed.                         If the job is still running the request will wait until the job has finished. (Optional)
+var_cancel_if_running <- TRUE # character | If true, job will be canceled if it is not finished. Otherwise,                         deletion will fail for running jobs or request will block until job has finished. (Optional)
+var_await_deletion <- TRUE # character | If true, request will block until deletion succeeded or failed.                         If the job is still running the request will wait until the job has finished. (Optional)
 
 api_instance <- rsirius_api$new()
 api_instance$jobs_api$DeleteJob(var_project_id, var_job_id, cancel_if_running = var_cancel_if_running, await_deletion = var_await_deletion)
@@ -48,8 +49,8 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **character**| project-space to delete job from | 
  **job_id** | **character**| of the job to be deleted | 
- **cancel_if_running** | **character**| If true job will be canceled if it is not finished. Otherwise,                         deletion will fail for running jobs or request will block until job has finished. | [optional] [default to TRUE]
- **await_deletion** | **character**| If true request will block until deletion succeeded or failed.                         If the job is still running the request will wait until the job has finished. | [optional] [default to TRUE]
+ **cancel_if_running** | **character**| If true, job will be canceled if it is not finished. Otherwise,                         deletion will fail for running jobs or request will block until job has finished. | [optional] [default to TRUE]
+ **await_deletion** | **character**| If true, request will block until deletion succeeded or failed.                         If the job is still running the request will wait until the job has finished. | [optional] [default to TRUE]
 
 ### Return type
 
@@ -128,8 +129,8 @@ library(Rsirius)
 #
 # prepare function argument(s)
 var_project_id <- "project_id_example" # character | project-space to delete jobs from
-var_cancel_if_running <- TRUE # character | If true job will be canceled if it is not finished. Otherwise,                         deletion will fail for running jobs or request will block until job has finished. (Optional)
-var_await_deletion <- TRUE # character | If true request will block until deletion succeeded or failed.                         If the job is still running the request will wait until the job has finished. (Optional)
+var_cancel_if_running <- TRUE # character | If true, job will be canceled if it is not finished. Otherwise,                         deletion will fail for running jobs or request will block until job has finished. (Optional)
+var_await_deletion <- TRUE # character | If true, request will block until deletion succeeded or failed.                         If the job is still running the request will wait until the job has finished. (Optional)
 
 api_instance <- rsirius_api$new()
 api_instance$jobs_api$DeleteJobs(var_project_id, cancel_if_running = var_cancel_if_running, await_deletion = var_await_deletion)
@@ -140,8 +141,8 @@ api_instance$jobs_api$DeleteJobs(var_project_id, cancel_if_running = var_cancel_
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **character**| project-space to delete jobs from | 
- **cancel_if_running** | **character**| If true job will be canceled if it is not finished. Otherwise,                         deletion will fail for running jobs or request will block until job has finished. | [optional] [default to TRUE]
- **await_deletion** | **character**| If true request will block until deletion succeeded or failed.                         If the job is still running the request will wait until the job has finished. | [optional] [default to TRUE]
+ **cancel_if_running** | **character**| If true, job will be canceled if it is not finished. Otherwise,                         deletion will fail for running jobs or request will block until job has finished. | [optional] [default to TRUE]
+ **await_deletion** | **character**| If true, request will block until deletion succeeded or failed.                         If the job is still running the request will wait until the job has finished. | [optional] [default to TRUE]
 
 ### Return type
 
@@ -162,7 +163,7 @@ No authorization required
 | **202** | Accepted |  -  |
 
 # **GetDefaultJobConfig**
-> JobSubmission GetDefaultJobConfig(include_config_map = FALSE)
+> JobSubmission GetDefaultJobConfig(include_config_map = FALSE, move_parameters_to_config_map = FALSE, include_custom_dbs_for_structure_search = FALSE)
 
 Request default job configuration
 
@@ -176,11 +177,13 @@ library(Rsirius)
 #
 # prepare function argument(s)
 var_include_config_map <- FALSE # character | if true, generic configmap with-defaults will be included (Optional)
+var_move_parameters_to_config_map <- FALSE # character | if true, object-based parameters will be converted to and added to the generic configMap parameters (Optional)
+var_include_custom_dbs_for_structure_search <- FALSE # character | if true, default database selection of structure db search contains also all available custom DB. (Optional)
 
 api_instance <- rsirius_api$new()
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$GetDefaultJobConfig(include_config_map = var_include_config_mapdata_file = "result.txt")
-result <- api_instance$jobs_api$GetDefaultJobConfig(include_config_map = var_include_config_map)
+# result <- api_instance$GetDefaultJobConfig(include_config_map = var_include_config_map, move_parameters_to_config_map = var_move_parameters_to_config_map, include_custom_dbs_for_structure_search = var_include_custom_dbs_for_structure_searchdata_file = "result.txt")
+result <- api_instance$jobs_api$GetDefaultJobConfig(include_config_map = var_include_config_map, move_parameters_to_config_map = var_move_parameters_to_config_map, include_custom_dbs_for_structure_search = var_include_custom_dbs_for_structure_search)
 dput(result)
 ```
 
@@ -189,6 +192,8 @@ dput(result)
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **include_config_map** | **character**| if true, generic configmap with-defaults will be included | [optional] [default to FALSE]
+ **move_parameters_to_config_map** | **character**| if true, object-based parameters will be converted to and added to the generic configMap parameters | [optional] [default to FALSE]
+ **include_custom_dbs_for_structure_search** | **character**| if true, default database selection of structure db search contains also all available custom DB. | [optional] [default to FALSE]
 
 ### Return type
 
@@ -224,7 +229,7 @@ library(Rsirius)
 # prepare function argument(s)
 var_project_id <- "project_id_example" # character | project-space to run jobs on
 var_job_id <- "job_id_example" # character | of the job to be returned
-var_opt_fields <- c(JobOptField$new()) # array[JobOptField] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
+var_opt_fields <- c("none") # array[character] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
 
 api_instance <- rsirius_api$new()
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
@@ -239,7 +244,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **character**| project-space to run jobs on | 
  **job_id** | **character**| of the job to be returned | 
- **opt_fields** | list( [**JobOptField**](JobOptField.md) )| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;progress&quot;]]
+ **opt_fields** | Enum [none, command, progress, affectedIds] | set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;progress&quot;]]
 
 ### Return type
 
@@ -260,7 +265,7 @@ No authorization required
 | **200** | OK |  -  |
 
 # **GetJobConfig**
-> JobSubmission GetJobConfig(name, include_config_map = FALSE)
+> JobSubmission GetJobConfig(name, move_parameters_to_config_map = FALSE)
 
 Request job configuration with given name.
 
@@ -274,12 +279,12 @@ library(Rsirius)
 #
 # prepare function argument(s)
 var_name <- "name_example" # character | name of the job-config to return
-var_include_config_map <- FALSE # character | if true the generic configmap will be part of the output (Optional)
+var_move_parameters_to_config_map <- FALSE # character | if true, object-based parameters will be converted to and added to the generic configMap parameters (Optional)
 
 api_instance <- rsirius_api$new()
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$GetJobConfig(var_name, include_config_map = var_include_config_mapdata_file = "result.txt")
-result <- api_instance$jobs_api$GetJobConfig(var_name, include_config_map = var_include_config_map)
+# result <- api_instance$GetJobConfig(var_name, move_parameters_to_config_map = var_move_parameters_to_config_mapdata_file = "result.txt")
+result <- api_instance$jobs_api$GetJobConfig(var_name, move_parameters_to_config_map = var_move_parameters_to_config_map)
 dput(result)
 ```
 
@@ -288,7 +293,7 @@ dput(result)
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **name** | **character**| name of the job-config to return | 
- **include_config_map** | **character**| if true the generic configmap will be part of the output | [optional] [default to FALSE]
+ **move_parameters_to_config_map** | **character**| if true, object-based parameters will be converted to and added to the generic configMap parameters | [optional] [default to FALSE]
 
 ### Return type
 
@@ -308,8 +313,50 @@ No authorization required
 |-------------|-------------|------------------|
 | **200** | {@link JobSubmission JobSubmission} for given name. |  -  |
 
+# **GetJobConfigNames**
+> array[character] GetJobConfigNames()
+
+Get all (non-default) job configuration names
+
+Get all (non-default) job configuration names
+
+### Example
+```R
+library(Rsirius)
+
+# Get all (non-default) job configuration names
+#
+
+api_instance <- rsirius_api$new()
+# to save the result into a file, simply add the optional `data_file` parameter, e.g.
+# result <- api_instance$GetJobConfigNames(data_file = "result.txt")
+result <- api_instance$jobs_api$GetJobConfigNames()
+dput(result)
+```
+
+### Parameters
+This endpoint does not need any parameter.
+
+### Return type
+
+**array[character]**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | OK |  -  |
+
 # **GetJobConfigs**
-> array[JobSubmission] GetJobConfigs(include_config_map = FALSE)
+> array[JobSubmission] GetJobConfigs()
 
 Request all available job configurations
 
@@ -321,21 +368,16 @@ library(Rsirius)
 
 # Request all available job configurations
 #
-# prepare function argument(s)
-var_include_config_map <- FALSE # character | if true the generic configmap will be part of the output (Optional)
 
 api_instance <- rsirius_api$new()
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$GetJobConfigs(include_config_map = var_include_config_mapdata_file = "result.txt")
-result <- api_instance$jobs_api$GetJobConfigs(include_config_map = var_include_config_map)
+# result <- api_instance$GetJobConfigs(data_file = "result.txt")
+result <- api_instance$jobs_api$GetJobConfigs()
 dput(result)
 ```
 
 ### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **include_config_map** | **character**| if true the generic configmap will be part of the output | [optional] [default to FALSE]
+This endpoint does not need any parameter.
 
 ### Return type
 
@@ -370,7 +412,7 @@ library(Rsirius)
 #
 # prepare function argument(s)
 var_project_id <- "project_id_example" # character | project-space to run jobs on
-var_opt_fields <- c(JobOptField$new()) # array[JobOptField] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
+var_opt_fields <- c("none") # array[character] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
 
 api_instance <- rsirius_api$new()
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
@@ -384,7 +426,7 @@ dput(result)
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **character**| project-space to run jobs on | 
- **opt_fields** | list( [**JobOptField**](JobOptField.md) )| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to []]
+ **opt_fields** | Enum [none, command, progress, affectedIds] | set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to []]
 
 ### Return type
 
@@ -405,7 +447,7 @@ No authorization required
 | **200** | OK |  -  |
 
 # **GetJobsPaged**
-> PageJob GetJobsPaged(project_id, page = 0, size = 20, sort = var.sort, opt_fields = [])
+> PagedModelJob GetJobsPaged(project_id, page = 0, size = 20, sort = var.sort, opt_fields = [])
 
 Get Page of jobs with information such as current state and progress (if available).
 
@@ -422,7 +464,7 @@ var_project_id <- "project_id_example" # character | project-space to run jobs o
 var_page <- 0 # integer | Zero-based page index (0..N) (Optional)
 var_size <- 20 # integer | The size of the page to be returned (Optional)
 var_sort <- c("inner_example") # array[character] | Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (Optional)
-var_opt_fields <- c(JobOptField$new()) # array[JobOptField] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
+var_opt_fields <- c("none") # array[character] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
 
 api_instance <- rsirius_api$new()
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
@@ -439,11 +481,11 @@ Name | Type | Description  | Notes
  **page** | **integer**| Zero-based page index (0..N) | [optional] [default to 0]
  **size** | **integer**| The size of the page to be returned | [optional] [default to 20]
  **sort** | list( **character** )| Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. | [optional] 
- **opt_fields** | list( [**JobOptField**](JobOptField.md) )| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to []]
+ **opt_fields** | Enum [none, command, progress, affectedIds] | set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to []]
 
 ### Return type
 
-[**PageJob**](PageJob.md)
+[**PagedModelJob**](PagedModelJob.md)
 
 ### Authorization
 
@@ -519,7 +561,7 @@ library(Rsirius)
 #
 # prepare function argument(s)
 var_name <- "name_example" # character | name of the job-config to add
-var_job_submission <- JobSubmission$new(c("compoundIds_example"), c("alignedFeatureIds_example"), c("fallbackAdducts_example"), c("enforcedAdducts_example"), c("detectableAdducts_example"), "recompute_example", SpectralLibrarySearch$new("enabled_example", c("spectraSearchDBs_example"), 123, 123, SpectralMatchingType$new()), Sirius$new("enabled_example", InstrumentProfile$new(), 123, 123, 123, "IGNORE", "filterByIsotopePattern_example", "enforceElGordoFormula_example", "performBottomUpSearch_example", 123, c("formulaSearchDBs_example"), "applyFormulaConstraintsToDBAndBottomUpSearch_example", "enforcedFormulaConstraints_example", "fallbackFormulaConstraints_example", c("detectableElements_example"), Timeout$new(123, 123), UseHeuristic$new(123, 123), "injectSpecLibMatchFormulas_example", 123, 123), Zodiac$new("enabled_example", 123, 123, "runInTwoSteps_example", ZodiacEdgeFilterThresholds$new(123, 123, 123), ZodiacEpochs$new(123, 123, 123)), FingerprintPrediction$new("enabled_example", "useScoreThreshold_example", "alwaysPredictHighRefMatches_example"), Canopus$new("enabled_example"), StructureDbSearch$new("enabled_example", c("structureSearchDBs_example"), "tagStructuresWithLipidClass_example", ConfidenceMode$new()), MsNovelist$new("enabled_example", 123), c(key = "inner_example")) # JobSubmission | to add
+var_job_submission <- JobSubmission$new(c("compoundIds_example"), c("alignedFeatureIds_example"), c("fallbackAdducts_example"), c("enforcedAdducts_example"), c("detectableAdducts_example"), "recompute_example", SpectralLibrarySearch$new("enabled_example", c("spectraSearchDBs_example"), 123, 123, "INTENSITY"), Sirius$new("enabled_example", "QTOF", 123, 123, 123, "IGNORE", "filterByIsotopePattern_example", "enforceElGordoFormula_example", "performBottomUpSearch_example", 123, c("formulaSearchDBs_example"), "applyFormulaConstraintsToDBAndBottomUpSearch_example", "enforcedFormulaConstraints_example", "fallbackFormulaConstraints_example", c("detectableElements_example"), Timeout$new(123, 123), UseHeuristic$new(123, 123), "injectSpecLibMatchFormulas_example", 123, 123), Zodiac$new("enabled_example", 123, 123, "runInTwoSteps_example", ZodiacEdgeFilterThresholds$new(123, 123, 123), ZodiacEpochs$new(123, 123, 123)), FingerprintPrediction$new("enabled_example", "useScoreThreshold_example", "alwaysPredictHighRefMatches_example"), Canopus$new("enabled_example"), StructureDbSearch$new("enabled_example", c("structureSearchDBs_example"), "tagStructuresWithLipidClass_example", "OFF"), MsNovelist$new("enabled_example", 123), c(key = "inner_example")) # JobSubmission | to add
 var_override_existing <- FALSE # character |  (Optional)
 
 api_instance <- rsirius_api$new()
@@ -548,7 +590,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: text/plain
+ - **Accept**: application/problem+json, text/plain
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -570,8 +612,8 @@ library(Rsirius)
 #
 # prepare function argument(s)
 var_project_id <- "project_id_example" # character | project-space to run jobs on
-var_job_submission <- JobSubmission$new(c("compoundIds_example"), c("alignedFeatureIds_example"), c("fallbackAdducts_example"), c("enforcedAdducts_example"), c("detectableAdducts_example"), "recompute_example", SpectralLibrarySearch$new("enabled_example", c("spectraSearchDBs_example"), 123, 123, SpectralMatchingType$new()), Sirius$new("enabled_example", InstrumentProfile$new(), 123, 123, 123, "IGNORE", "filterByIsotopePattern_example", "enforceElGordoFormula_example", "performBottomUpSearch_example", 123, c("formulaSearchDBs_example"), "applyFormulaConstraintsToDBAndBottomUpSearch_example", "enforcedFormulaConstraints_example", "fallbackFormulaConstraints_example", c("detectableElements_example"), Timeout$new(123, 123), UseHeuristic$new(123, 123), "injectSpecLibMatchFormulas_example", 123, 123), Zodiac$new("enabled_example", 123, 123, "runInTwoSteps_example", ZodiacEdgeFilterThresholds$new(123, 123, 123), ZodiacEpochs$new(123, 123, 123)), FingerprintPrediction$new("enabled_example", "useScoreThreshold_example", "alwaysPredictHighRefMatches_example"), Canopus$new("enabled_example"), StructureDbSearch$new("enabled_example", c("structureSearchDBs_example"), "tagStructuresWithLipidClass_example", ConfidenceMode$new()), MsNovelist$new("enabled_example", 123), c(key = "inner_example")) # JobSubmission | configuration of the job that will be submitted of the job to be returned
-var_opt_fields <- c(JobOptField$new()) # array[JobOptField] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
+var_job_submission <- JobSubmission$new(c("compoundIds_example"), c("alignedFeatureIds_example"), c("fallbackAdducts_example"), c("enforcedAdducts_example"), c("detectableAdducts_example"), "recompute_example", SpectralLibrarySearch$new("enabled_example", c("spectraSearchDBs_example"), 123, 123, "INTENSITY"), Sirius$new("enabled_example", "QTOF", 123, 123, 123, "IGNORE", "filterByIsotopePattern_example", "enforceElGordoFormula_example", "performBottomUpSearch_example", 123, c("formulaSearchDBs_example"), "applyFormulaConstraintsToDBAndBottomUpSearch_example", "enforcedFormulaConstraints_example", "fallbackFormulaConstraints_example", c("detectableElements_example"), Timeout$new(123, 123), UseHeuristic$new(123, 123), "injectSpecLibMatchFormulas_example", 123, 123), Zodiac$new("enabled_example", 123, 123, "runInTwoSteps_example", ZodiacEdgeFilterThresholds$new(123, 123, 123), ZodiacEpochs$new(123, 123, 123)), FingerprintPrediction$new("enabled_example", "useScoreThreshold_example", "alwaysPredictHighRefMatches_example"), Canopus$new("enabled_example"), StructureDbSearch$new("enabled_example", c("structureSearchDBs_example"), "tagStructuresWithLipidClass_example", "OFF"), MsNovelist$new("enabled_example", 123), c(key = "inner_example")) # JobSubmission | configuration of the job that will be submitted of the job to be returned
+var_opt_fields <- c("none") # array[character] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
 
 api_instance <- rsirius_api$new()
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
@@ -586,7 +628,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **character**| project-space to run jobs on | 
  **job_submission** | [**JobSubmission**](JobSubmission.md)| configuration of the job that will be submitted of the job to be returned | 
- **opt_fields** | list( [**JobOptField**](JobOptField.md) )| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;command&quot;,&quot;progress&quot;]]
+ **opt_fields** | Enum [none, command, progress, affectedIds] | set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;command&quot;,&quot;progress&quot;]]
 
 ### Return type
 
@@ -624,7 +666,7 @@ var_project_id <- "project_id_example" # character | project-space to run jobs o
 var_job_config_name <- "job_config_name_example" # character | name if the config to be used
 var_request_body <- c("property_example") # array[character] | List of alignedFeatureIds to be computed
 var_recompute <- "recompute_example" # character | enable or disable recompute. If null the stored value will be used. (Optional)
-var_opt_fields <- c(JobOptField$new()) # array[JobOptField] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
+var_opt_fields <- c("none") # array[character] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
 
 api_instance <- rsirius_api$new()
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
@@ -641,7 +683,7 @@ Name | Type | Description  | Notes
  **job_config_name** | **character**| name if the config to be used | 
  **request_body** | list( **character** )| List of alignedFeatureIds to be computed | 
  **recompute** | **character**| enable or disable recompute. If null the stored value will be used. | [optional] 
- **opt_fields** | list( [**JobOptField**](JobOptField.md) )| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;command&quot;,&quot;progress&quot;]]
+ **opt_fields** | Enum [none, command, progress, affectedIds] | set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;command&quot;,&quot;progress&quot;]]
 
 ### Return type
 

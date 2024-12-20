@@ -6,7 +6,8 @@ context("Test CompoundClass")
 model_instance <- CompoundClass$new()
 
 test_that("type", {
-  # tests for the property `type` (CompoundClassType)
+  # tests for the property `type` (character)
+  # Specifies the classification ontology the CompoundClass belongs to.
 
   # uncomment below to test the property
   #expect_equal(model.instance$`type`, "EXPECTED_RESULT")
@@ -18,6 +19,14 @@ test_that("level", {
 
   # uncomment below to test the property
   #expect_equal(model.instance$`level`, "EXPECTED_RESULT")
+})
+
+test_that("levelIndex", {
+  # tests for the property `levelIndex` (integer)
+  # Index of the level this compound class belongs to
+
+  # uncomment below to test the property
+  #expect_equal(model.instance$`levelIndex`, "EXPECTED_RESULT")
 })
 
 test_that("name", {
@@ -58,4 +67,20 @@ test_that("index", {
 
   # uncomment below to test the property
   #expect_equal(model.instance$`index`, "EXPECTED_RESULT")
+})
+
+test_that("parentId", {
+  # tests for the property `parentId` (integer)
+  # Unique id of the parent class. Might be undefined for certain classification ontologies.
+
+  # uncomment below to test the property
+  #expect_equal(model.instance$`parentId`, "EXPECTED_RESULT")
+})
+
+test_that("parentName", {
+  # tests for the property `parentName` (character)
+  # Name of the parent compound class.
+
+  # uncomment below to test the property
+  #expect_equal(model.instance$`parentName`, "EXPECTED_RESULT")
 })

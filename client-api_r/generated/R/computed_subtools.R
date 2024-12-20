@@ -27,8 +27,7 @@ ComputedSubtools <- R6::R6Class(
     `canopus` = NULL,
     `structureSearch` = NULL,
     `deNovoSearch` = NULL,
-    #' Initialize a new ComputedSubtools class.
-    #'
+
     #' @description
     #' Initialize a new ComputedSubtools class.
     #'
@@ -40,7 +39,6 @@ ComputedSubtools <- R6::R6Class(
     #' @param structureSearch structureSearch
     #' @param deNovoSearch deNovoSearch
     #' @param ... Other optional arguments.
-    #' @export
     initialize = function(`librarySearch` = NULL, `formulaSearch` = NULL, `zodiac` = NULL, `fingerprint` = NULL, `canopus` = NULL, `structureSearch` = NULL, `deNovoSearch` = NULL, ...) {
       if (!is.null(`librarySearch`)) {
         if (!(is.logical(`librarySearch`) && length(`librarySearch`) == 1)) {
@@ -85,13 +83,11 @@ ComputedSubtools <- R6::R6Class(
         self$`deNovoSearch` <- `deNovoSearch`
       }
     },
-    #' To JSON string
-    #'
+
     #' @description
     #' To JSON String
     #'
     #' @return ComputedSubtools in JSON format
-    #' @export
     toJSON = function() {
       ComputedSubtoolsObject <- list()
       if (!is.null(self$`librarySearch`)) {
@@ -124,14 +120,12 @@ ComputedSubtools <- R6::R6Class(
       }
       ComputedSubtoolsObject
     },
-    #' Deserialize JSON string into an instance of ComputedSubtools
-    #'
+
     #' @description
     #' Deserialize JSON string into an instance of ComputedSubtools
     #'
     #' @param input_json the JSON input
     #' @return the instance of ComputedSubtools
-    #' @export
     fromJSON = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       if (!is.null(this_object$`librarySearch`)) {
@@ -157,13 +151,11 @@ ComputedSubtools <- R6::R6Class(
       }
       self
     },
-    #' To JSON string
-    #'
+
     #' @description
     #' To JSON String
     #'
     #' @return ComputedSubtools in JSON format
-    #' @export
     toJSONString = function() {
       jsoncontent <- c(
         if (!is.null(self$`librarySearch`)) {
@@ -224,20 +216,14 @@ ComputedSubtools <- R6::R6Class(
         }
       )
       jsoncontent <- paste(jsoncontent, collapse = ",")
-      # remove c() occurences and reduce resulting double escaped quotes \"\" into \"
-      jsoncontent <- gsub('\\\"c\\((.*?)\\\"\\)', '\\1', jsoncontent)
-      # fix wrong serialization of "\"ENUM\"" to "ENUM"
-      jsoncontent <- gsub("\\\\\"([A-Z]+)\\\\\"", "\\1", jsoncontent)
       json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
     },
-    #' Deserialize JSON string into an instance of ComputedSubtools
-    #'
+
     #' @description
     #' Deserialize JSON string into an instance of ComputedSubtools
     #'
     #' @param input_json the JSON input
     #' @return the instance of ComputedSubtools
-    #' @export
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       self$`librarySearch` <- this_object$`librarySearch`
@@ -249,53 +235,42 @@ ComputedSubtools <- R6::R6Class(
       self$`deNovoSearch` <- this_object$`deNovoSearch`
       self
     },
-    #' Validate JSON input with respect to ComputedSubtools
-    #'
+
     #' @description
     #' Validate JSON input with respect to ComputedSubtools and throw an exception if invalid
     #'
     #' @param input the JSON input
-    #' @export
     validateJSON = function(input) {
       input_json <- jsonlite::fromJSON(input)
     },
-    #' To string (JSON format)
-    #'
+
     #' @description
     #' To string (JSON format)
     #'
     #' @return String representation of ComputedSubtools
-    #' @export
     toString = function() {
       self$toJSONString()
     },
-    #' Return true if the values in all fields are valid.
-    #'
+
     #' @description
     #' Return true if the values in all fields are valid.
     #'
     #' @return true if the values in all fields are valid.
-    #' @export
     isValid = function() {
       TRUE
     },
-    #' Return a list of invalid fields (if any).
-    #'
+
     #' @description
     #' Return a list of invalid fields (if any).
     #'
     #' @return A list of invalid fields (if any).
-    #' @export
     getInvalidFields = function() {
       invalid_fields <- list()
       invalid_fields
     },
-    #' Print the object
-    #'
+
     #' @description
     #' Print the object
-    #'
-    #' @export
     print = function() {
       print(jsonlite::prettify(self$toJSONString()))
       invisible(self)

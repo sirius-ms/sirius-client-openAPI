@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **category_name** | **str** |  | [optional] 
 **overall_quality** | [**DataQuality**](DataQuality.md) |  | [optional] 
-**items** | [**List[Item]**](Item.md) |  | [optional] 
+**items** | [**List[QualityItem]**](QualityItem.md) |  | [optional] 
 
 ## Example
 

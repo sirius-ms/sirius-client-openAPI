@@ -29,8 +29,7 @@ ConnectionError <- R6::R6Class(
     `serverResponseErrorMessage` = NULL,
     `error` = NULL,
     `warning` = NULL,
-    #' Initialize a new ConnectionError class.
-    #'
+
     #' @description
     #' Initialize a new ConnectionError class.
     #'
@@ -43,7 +42,6 @@ ConnectionError <- R6::R6Class(
     #' @param error error
     #' @param warning warning
     #' @param ... Other optional arguments.
-    #' @export
     initialize = function(`errorType`, `errorKlass`, `siriusErrorCode`, `siriusMessage`, `serverResponseErrorCode` = NULL, `serverResponseErrorMessage` = NULL, `error` = NULL, `warning` = NULL, ...) {
       if (!missing(`errorType`)) {
         if (!(`errorType` %in% c("WARNING", "ERROR"))) {
@@ -100,13 +98,11 @@ ConnectionError <- R6::R6Class(
         self$`warning` <- `warning`
       }
     },
-    #' To JSON string
-    #'
+
     #' @description
     #' To JSON String
     #'
     #' @return ConnectionError in JSON format
-    #' @export
     toJSON = function() {
       ConnectionErrorObject <- list()
       if (!is.null(self$`errorType`)) {
@@ -143,14 +139,12 @@ ConnectionError <- R6::R6Class(
       }
       ConnectionErrorObject
     },
-    #' Deserialize JSON string into an instance of ConnectionError
-    #'
+
     #' @description
     #' Deserialize JSON string into an instance of ConnectionError
     #'
     #' @param input_json the JSON input
     #' @return the instance of ConnectionError
-    #' @export
     fromJSON = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       if (!is.null(this_object$`errorType`)) {
@@ -185,13 +179,11 @@ ConnectionError <- R6::R6Class(
       }
       self
     },
-    #' To JSON string
-    #'
+
     #' @description
     #' To JSON String
     #'
     #' @return ConnectionError in JSON format
-    #' @export
     toJSONString = function() {
       jsoncontent <- c(
         if (!is.null(self$`errorType`)) {
@@ -213,7 +205,7 @@ ConnectionError <- R6::R6Class(
         if (!is.null(self$`siriusErrorCode`)) {
           sprintf(
           '"siriusErrorCode":
-            %f
+            %d
                     ',
           self$`siriusErrorCode`
           )
@@ -229,7 +221,7 @@ ConnectionError <- R6::R6Class(
         if (!is.null(self$`serverResponseErrorCode`)) {
           sprintf(
           '"serverResponseErrorCode":
-            %f
+            %d
                     ',
           self$`serverResponseErrorCode`
           )
@@ -260,20 +252,14 @@ ConnectionError <- R6::R6Class(
         }
       )
       jsoncontent <- paste(jsoncontent, collapse = ",")
-      # remove c() occurences and reduce resulting double escaped quotes \"\" into \"
-      jsoncontent <- gsub('\\\"c\\((.*?)\\\"\\)', '\\1', jsoncontent)
-      # fix wrong serialization of "\"ENUM\"" to "ENUM"
-      jsoncontent <- gsub("\\\\\"([A-Z]+)\\\\\"", "\\1", jsoncontent)
       json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
     },
-    #' Deserialize JSON string into an instance of ConnectionError
-    #'
+
     #' @description
     #' Deserialize JSON string into an instance of ConnectionError
     #'
     #' @param input_json the JSON input
     #' @return the instance of ConnectionError
-    #' @export
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       if (!is.null(this_object$`errorType`) && !(this_object$`errorType` %in% c("WARNING", "ERROR"))) {
@@ -292,13 +278,11 @@ ConnectionError <- R6::R6Class(
       self$`warning` <- this_object$`warning`
       self
     },
-    #' Validate JSON input with respect to ConnectionError
-    #'
+
     #' @description
     #' Validate JSON input with respect to ConnectionError and throw an exception if invalid
     #'
     #' @param input the JSON input
-    #' @export
     validateJSON = function(input) {
       input_json <- jsonlite::fromJSON(input)
       # check the required field `errorType`
@@ -334,23 +318,19 @@ ConnectionError <- R6::R6Class(
         stop(paste("The JSON input `", input, "` is invalid for ConnectionError: the required field `siriusMessage` is missing."))
       }
     },
-    #' To string (JSON format)
-    #'
+
     #' @description
     #' To string (JSON format)
     #'
     #' @return String representation of ConnectionError
-    #' @export
     toString = function() {
       self$toJSONString()
     },
-    #' Return true if the values in all fields are valid.
-    #'
+
     #' @description
     #' Return true if the values in all fields are valid.
     #'
     #' @return true if the values in all fields are valid.
-    #' @export
     isValid = function() {
       # check if the required `errorType` is null
       if (is.null(self$`errorType`)) {
@@ -374,13 +354,11 @@ ConnectionError <- R6::R6Class(
 
       TRUE
     },
-    #' Return a list of invalid fields (if any).
-    #'
+
     #' @description
     #' Return a list of invalid fields (if any).
     #'
     #' @return A list of invalid fields (if any).
-    #' @export
     getInvalidFields = function() {
       invalid_fields <- list()
       # check if the required `errorType` is null
@@ -405,12 +383,9 @@ ConnectionError <- R6::R6Class(
 
       invalid_fields
     },
-    #' Print the object
-    #'
+
     #' @description
     #' Print the object
-    #'
-    #' @export
     print = function() {
       print(jsonlite::prettify(self$toJSONString()))
       invisible(self)

@@ -17,15 +17,13 @@ Deviation <- R6::R6Class(
   public = list(
     `ppm` = NULL,
     `absolute` = NULL,
-    #' Initialize a new Deviation class.
-    #'
+
     #' @description
     #' Initialize a new Deviation class.
     #'
     #' @param ppm ppm
     #' @param absolute absolute
     #' @param ... Other optional arguments.
-    #' @export
     initialize = function(`ppm` = NULL, `absolute` = NULL, ...) {
       if (!is.null(`ppm`)) {
         if (!(is.numeric(`ppm`) && length(`ppm`) == 1)) {
@@ -40,13 +38,11 @@ Deviation <- R6::R6Class(
         self$`absolute` <- `absolute`
       }
     },
-    #' To JSON string
-    #'
+
     #' @description
     #' To JSON String
     #'
     #' @return Deviation in JSON format
-    #' @export
     toJSON = function() {
       DeviationObject <- list()
       if (!is.null(self$`ppm`)) {
@@ -59,14 +55,12 @@ Deviation <- R6::R6Class(
       }
       DeviationObject
     },
-    #' Deserialize JSON string into an instance of Deviation
-    #'
+
     #' @description
     #' Deserialize JSON string into an instance of Deviation
     #'
     #' @param input_json the JSON input
     #' @return the instance of Deviation
-    #' @export
     fromJSON = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       if (!is.null(this_object$`ppm`)) {
@@ -77,19 +71,17 @@ Deviation <- R6::R6Class(
       }
       self
     },
-    #' To JSON string
-    #'
+
     #' @description
     #' To JSON String
     #'
     #' @return Deviation in JSON format
-    #' @export
     toJSONString = function() {
       jsoncontent <- c(
         if (!is.null(self$`ppm`)) {
           sprintf(
           '"ppm":
-            %f
+            %d
                     ',
           self$`ppm`
           )
@@ -97,80 +89,63 @@ Deviation <- R6::R6Class(
         if (!is.null(self$`absolute`)) {
           sprintf(
           '"absolute":
-            %f
+            %d
                     ',
           self$`absolute`
           )
         }
       )
       jsoncontent <- paste(jsoncontent, collapse = ",")
-      # remove c() occurences and reduce resulting double escaped quotes \"\" into \"
-      jsoncontent <- gsub('\\\"c\\((.*?)\\\"\\)', '\\1', jsoncontent)
-      # fix wrong serialization of "\"ENUM\"" to "ENUM"
-      jsoncontent <- gsub("\\\\\"([A-Z]+)\\\\\"", "\\1", jsoncontent)
       json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
     },
-    #' Deserialize JSON string into an instance of Deviation
-    #'
+
     #' @description
     #' Deserialize JSON string into an instance of Deviation
     #'
     #' @param input_json the JSON input
     #' @return the instance of Deviation
-    #' @export
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       self$`ppm` <- this_object$`ppm`
       self$`absolute` <- this_object$`absolute`
       self
     },
-    #' Validate JSON input with respect to Deviation
-    #'
+
     #' @description
     #' Validate JSON input with respect to Deviation and throw an exception if invalid
     #'
     #' @param input the JSON input
-    #' @export
     validateJSON = function(input) {
       input_json <- jsonlite::fromJSON(input)
     },
-    #' To string (JSON format)
-    #'
+
     #' @description
     #' To string (JSON format)
     #'
     #' @return String representation of Deviation
-    #' @export
     toString = function() {
       self$toJSONString()
     },
-    #' Return true if the values in all fields are valid.
-    #'
+
     #' @description
     #' Return true if the values in all fields are valid.
     #'
     #' @return true if the values in all fields are valid.
-    #' @export
     isValid = function() {
       TRUE
     },
-    #' Return a list of invalid fields (if any).
-    #'
+
     #' @description
     #' Return a list of invalid fields (if any).
     #'
     #' @return A list of invalid fields (if any).
-    #' @export
     getInvalidFields = function() {
       invalid_fields <- list()
       invalid_fields
     },
-    #' Print the object
-    #'
+
     #' @description
     #' Print the object
-    #'
-    #' @export
     print = function() {
       print(jsonlite::prettify(self$toJSONString()))
       invisible(self)

@@ -41,8 +41,7 @@ StructureCandidateFormula <- R6::R6Class(
     `molecularFormula` = NULL,
     `adduct` = NULL,
     `formulaId` = NULL,
-    #' Initialize a new StructureCandidateFormula class.
-    #'
+
     #' @description
     #' Initialize a new StructureCandidateFormula class.
     #'
@@ -61,7 +60,6 @@ StructureCandidateFormula <- R6::R6Class(
     #' @param adduct Adduct of this candidate
     #' @param formulaId Id of the corresponding Formula candidate
     #' @param ... Other optional arguments.
-    #' @export
     initialize = function(`inchiKey` = NULL, `smiles` = NULL, `structureName` = NULL, `xlogP` = NULL, `dbLinks` = NULL, `spectralLibraryMatches` = NULL, `rank` = NULL, `csiScore` = NULL, `tanimotoSimilarity` = NULL, `mcesDistToTopHit` = NULL, `fingerprint` = NULL, `molecularFormula` = NULL, `adduct` = NULL, `formulaId` = NULL, ...) {
       if (!is.null(`inchiKey`)) {
         if (!(is.character(`inchiKey`) && length(`inchiKey`) == 1)) {
@@ -144,13 +142,11 @@ StructureCandidateFormula <- R6::R6Class(
         self$`formulaId` <- `formulaId`
       }
     },
-    #' To JSON string
-    #'
+
     #' @description
     #' To JSON String
     #'
     #' @return StructureCandidateFormula in JSON format
-    #' @export
     toJSON = function() {
       StructureCandidateFormulaObject <- list()
       if (!is.null(self$`inchiKey`)) {
@@ -195,13 +191,7 @@ StructureCandidateFormula <- R6::R6Class(
       }
       if (!is.null(self$`fingerprint`)) {
         StructureCandidateFormulaObject[["fingerprint"]] <-
-          if (is.list(self$`fingerprint`$toJSON()) && length(self$`fingerprint`$toJSON()) == 0L){
-            NULL
-          } else if (length(names(self$`fingerprint`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`fingerprint`$toJSON()))) {
-            jsonlite::fromJSON(self$`fingerprint`$toJSON())
-          } else {
-            self$`fingerprint`$toJSON()
-          }
+          self$`fingerprint`$toJSON()
       }
       if (!is.null(self$`molecularFormula`)) {
         StructureCandidateFormulaObject[["molecularFormula"]] <-
@@ -217,14 +207,12 @@ StructureCandidateFormula <- R6::R6Class(
       }
       StructureCandidateFormulaObject
     },
-    #' Deserialize JSON string into an instance of StructureCandidateFormula
-    #'
+
     #' @description
     #' Deserialize JSON string into an instance of StructureCandidateFormula
     #'
     #' @param input_json the JSON input
     #' @return the instance of StructureCandidateFormula
-    #' @export
     fromJSON = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       if (!is.null(this_object$`inchiKey`)) {
@@ -273,13 +261,11 @@ StructureCandidateFormula <- R6::R6Class(
       }
       self
     },
-    #' To JSON string
-    #'
+
     #' @description
     #' To JSON String
     #'
     #' @return StructureCandidateFormula in JSON format
-    #' @export
     toJSONString = function() {
       jsoncontent <- c(
         if (!is.null(self$`inchiKey`)) {
@@ -309,7 +295,7 @@ StructureCandidateFormula <- R6::R6Class(
         if (!is.null(self$`xlogP`)) {
           sprintf(
           '"xlogP":
-            %f
+            %d
                     ',
           self$`xlogP`
           )
@@ -333,7 +319,7 @@ StructureCandidateFormula <- R6::R6Class(
         if (!is.null(self$`rank`)) {
           sprintf(
           '"rank":
-            %f
+            %d
                     ',
           self$`rank`
           )
@@ -341,7 +327,7 @@ StructureCandidateFormula <- R6::R6Class(
         if (!is.null(self$`csiScore`)) {
           sprintf(
           '"csiScore":
-            %f
+            %d
                     ',
           self$`csiScore`
           )
@@ -349,7 +335,7 @@ StructureCandidateFormula <- R6::R6Class(
         if (!is.null(self$`tanimotoSimilarity`)) {
           sprintf(
           '"tanimotoSimilarity":
-            %f
+            %d
                     ',
           self$`tanimotoSimilarity`
           )
@@ -357,7 +343,7 @@ StructureCandidateFormula <- R6::R6Class(
         if (!is.null(self$`mcesDistToTopHit`)) {
           sprintf(
           '"mcesDistToTopHit":
-            %f
+            %d
                     ',
           self$`mcesDistToTopHit`
           )
@@ -396,20 +382,14 @@ StructureCandidateFormula <- R6::R6Class(
         }
       )
       jsoncontent <- paste(jsoncontent, collapse = ",")
-      # remove c() occurences and reduce resulting double escaped quotes \"\" into \"
-      jsoncontent <- gsub('\\\"c\\((.*?)\\\"\\)', '\\1', jsoncontent)
-      # fix wrong serialization of "\"ENUM\"" to "ENUM"
-      jsoncontent <- gsub("\\\\\"([A-Z]+)\\\\\"", "\\1", jsoncontent)
       json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
     },
-    #' Deserialize JSON string into an instance of StructureCandidateFormula
-    #'
+
     #' @description
     #' Deserialize JSON string into an instance of StructureCandidateFormula
     #'
     #' @param input_json the JSON input
     #' @return the instance of StructureCandidateFormula
-    #' @export
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       self$`inchiKey` <- this_object$`inchiKey`
@@ -428,53 +408,42 @@ StructureCandidateFormula <- R6::R6Class(
       self$`formulaId` <- this_object$`formulaId`
       self
     },
-    #' Validate JSON input with respect to StructureCandidateFormula
-    #'
+
     #' @description
     #' Validate JSON input with respect to StructureCandidateFormula and throw an exception if invalid
     #'
     #' @param input the JSON input
-    #' @export
     validateJSON = function(input) {
       input_json <- jsonlite::fromJSON(input)
     },
-    #' To string (JSON format)
-    #'
+
     #' @description
     #' To string (JSON format)
     #'
     #' @return String representation of StructureCandidateFormula
-    #' @export
     toString = function() {
       self$toJSONString()
     },
-    #' Return true if the values in all fields are valid.
-    #'
+
     #' @description
     #' Return true if the values in all fields are valid.
     #'
     #' @return true if the values in all fields are valid.
-    #' @export
     isValid = function() {
       TRUE
     },
-    #' Return a list of invalid fields (if any).
-    #'
+
     #' @description
     #' Return a list of invalid fields (if any).
     #'
     #' @return A list of invalid fields (if any).
-    #' @export
     getInvalidFields = function() {
       invalid_fields <- list()
       invalid_fields
     },
-    #' Print the object
-    #'
+
     #' @description
     #' Print the object
-    #'
-    #' @export
     print = function() {
       print(jsonlite::prettify(self$toJSONString()))
       invisible(self)

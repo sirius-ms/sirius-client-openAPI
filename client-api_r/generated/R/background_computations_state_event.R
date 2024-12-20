@@ -21,8 +21,7 @@ BackgroundComputationsStateEvent <- R6::R6Class(
     `numberOfJobs` = NULL,
     `numberOfRunningJobs` = NULL,
     `numberOfFinishedJobs` = NULL,
-    #' Initialize a new BackgroundComputationsStateEvent class.
-    #'
+
     #' @description
     #' Initialize a new BackgroundComputationsStateEvent class.
     #'
@@ -31,7 +30,6 @@ BackgroundComputationsStateEvent <- R6::R6Class(
     #' @param numberOfRunningJobs numberOfRunningJobs
     #' @param numberOfFinishedJobs numberOfFinishedJobs
     #' @param ... Other optional arguments.
-    #' @export
     initialize = function(`affectedJobs`, `numberOfJobs`, `numberOfRunningJobs`, `numberOfFinishedJobs`, ...) {
       if (!missing(`affectedJobs`)) {
         stopifnot(is.vector(`affectedJobs`), length(`affectedJobs`) != 0)
@@ -57,13 +55,11 @@ BackgroundComputationsStateEvent <- R6::R6Class(
         self$`numberOfFinishedJobs` <- `numberOfFinishedJobs`
       }
     },
-    #' To JSON string
-    #'
+
     #' @description
     #' To JSON String
     #'
     #' @return BackgroundComputationsStateEvent in JSON format
-    #' @export
     toJSON = function() {
       BackgroundComputationsStateEventObject <- list()
       if (!is.null(self$`affectedJobs`)) {
@@ -84,14 +80,12 @@ BackgroundComputationsStateEvent <- R6::R6Class(
       }
       BackgroundComputationsStateEventObject
     },
-    #' Deserialize JSON string into an instance of BackgroundComputationsStateEvent
-    #'
+
     #' @description
     #' Deserialize JSON string into an instance of BackgroundComputationsStateEvent
     #'
     #' @param input_json the JSON input
     #' @return the instance of BackgroundComputationsStateEvent
-    #' @export
     fromJSON = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       if (!is.null(this_object$`affectedJobs`)) {
@@ -108,13 +102,11 @@ BackgroundComputationsStateEvent <- R6::R6Class(
       }
       self
     },
-    #' To JSON string
-    #'
+
     #' @description
     #' To JSON String
     #'
     #' @return BackgroundComputationsStateEvent in JSON format
-    #' @export
     toJSONString = function() {
       jsoncontent <- c(
         if (!is.null(self$`affectedJobs`)) {
@@ -128,7 +120,7 @@ BackgroundComputationsStateEvent <- R6::R6Class(
         if (!is.null(self$`numberOfJobs`)) {
           sprintf(
           '"numberOfJobs":
-            %f
+            %d
                     ',
           self$`numberOfJobs`
           )
@@ -136,7 +128,7 @@ BackgroundComputationsStateEvent <- R6::R6Class(
         if (!is.null(self$`numberOfRunningJobs`)) {
           sprintf(
           '"numberOfRunningJobs":
-            %f
+            %d
                     ',
           self$`numberOfRunningJobs`
           )
@@ -144,27 +136,21 @@ BackgroundComputationsStateEvent <- R6::R6Class(
         if (!is.null(self$`numberOfFinishedJobs`)) {
           sprintf(
           '"numberOfFinishedJobs":
-            %f
+            %d
                     ',
           self$`numberOfFinishedJobs`
           )
         }
       )
       jsoncontent <- paste(jsoncontent, collapse = ",")
-      # remove c() occurences and reduce resulting double escaped quotes \"\" into \"
-      jsoncontent <- gsub('\\\"c\\((.*?)\\\"\\)', '\\1', jsoncontent)
-      # fix wrong serialization of "\"ENUM\"" to "ENUM"
-      jsoncontent <- gsub("\\\\\"([A-Z]+)\\\\\"", "\\1", jsoncontent)
       json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
     },
-    #' Deserialize JSON string into an instance of BackgroundComputationsStateEvent
-    #'
+
     #' @description
     #' Deserialize JSON string into an instance of BackgroundComputationsStateEvent
     #'
     #' @param input_json the JSON input
     #' @return the instance of BackgroundComputationsStateEvent
-    #' @export
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       self$`affectedJobs` <- ApiClient$new()$deserializeObj(this_object$`affectedJobs`, "array[Job]", loadNamespace("Rsirius"))
@@ -173,13 +159,11 @@ BackgroundComputationsStateEvent <- R6::R6Class(
       self$`numberOfFinishedJobs` <- this_object$`numberOfFinishedJobs`
       self
     },
-    #' Validate JSON input with respect to BackgroundComputationsStateEvent
-    #'
+
     #' @description
     #' Validate JSON input with respect to BackgroundComputationsStateEvent and throw an exception if invalid
     #'
     #' @param input the JSON input
-    #' @export
     validateJSON = function(input) {
       input_json <- jsonlite::fromJSON(input)
       # check the required field `affectedJobs`
@@ -214,23 +198,19 @@ BackgroundComputationsStateEvent <- R6::R6Class(
         stop(paste("The JSON input `", input, "` is invalid for BackgroundComputationsStateEvent: the required field `numberOfFinishedJobs` is missing."))
       }
     },
-    #' To string (JSON format)
-    #'
+
     #' @description
     #' To string (JSON format)
     #'
     #' @return String representation of BackgroundComputationsStateEvent
-    #' @export
     toString = function() {
       self$toJSONString()
     },
-    #' Return true if the values in all fields are valid.
-    #'
+
     #' @description
     #' Return true if the values in all fields are valid.
     #'
     #' @return true if the values in all fields are valid.
-    #' @export
     isValid = function() {
       # check if the required `affectedJobs` is null
       if (is.null(self$`affectedJobs`)) {
@@ -254,13 +234,11 @@ BackgroundComputationsStateEvent <- R6::R6Class(
 
       TRUE
     },
-    #' Return a list of invalid fields (if any).
-    #'
+
     #' @description
     #' Return a list of invalid fields (if any).
     #'
     #' @return A list of invalid fields (if any).
-    #' @export
     getInvalidFields = function() {
       invalid_fields <- list()
       # check if the required `affectedJobs` is null
@@ -285,12 +263,9 @@ BackgroundComputationsStateEvent <- R6::R6Class(
 
       invalid_fields
     },
-    #' Print the object
-    #'
+
     #' @description
     #' Print the object
-    #'
-    #' @export
     print = function() {
       print(jsonlite::prettify(self$toJSONString()))
       invisible(self)

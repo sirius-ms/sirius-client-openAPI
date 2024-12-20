@@ -15,7 +15,7 @@ Name | Type | Description | Notes
 **chem_db_version** | **str** | Version of the Chemical Database available via SIRIUS web services | [optional] 
 **finger_id_model_version** | **str** | Version of the Machine learning models used for Fingerprint, Compound Class and Structure Prediction  Not available if web service is not reachable. | [optional] 
 **fingerprint_id** | **str** | Version of the Molecular Fingerprint used by SIRIUS | [optional] 
-**available_ilp_solvers** | **List[str]** | Set of solvers that are configured correctly and can be loaded | 
+**available_ilp_solvers** | [**List[Solver]**](Solver.md) | Set of solvers that are configured correctly and can be loaded | 
 **supported_ilp_solvers** | **Dict[str, str]** | Set of ILP Solvers that are Supported and their version information | 
 
 ## Example

@@ -24,7 +24,7 @@ test_that("CreateProjectSpace", {
   # Create and open a new project-space at given location and make it accessible via the given projectId.
   # @param project_id character unique name/identifier that shall be used to access the newly created project-space. Must consist only of [a-zA-Z0-9_-].
   # @param path_to_project character local file path where the project will be created. If NULL, project will be stored by its projectId in default project location. DEPRECATED: This parameter relies on the local filesystem and will likely be removed in later versions of this API to allow for more flexible use cases. (optional)
-  # @param opt_fields array[ProjectInfoOptField]  (optional)
+  # @param opt_fields array[character]  (optional)
   # @return [ProjectInfo]
 
   # uncomment below to test the operation
@@ -73,7 +73,7 @@ test_that("GetProjectSpace", {
   # Get project space info by its projectId.
   # Get project space info by its projectId.
   # @param project_id character unique name/identifier tof the project-space to be accessed.
-  # @param opt_fields array[ProjectInfoOptField]  (optional)
+  # @param opt_fields array[character]  (optional)
   # @return [ProjectInfo]
 
   # uncomment below to test the operation
@@ -97,8 +97,8 @@ test_that("ImportMsRunData", {
   # Import and Align full MS-Runs from various formats into the specified project  Possible formats (mzML, mzXML)
   # Import and Align full MS-Runs from various formats into the specified project  Possible formats (mzML, mzXML)
   # @param project_id character Project-space to import into.
-  # @param parameters LcmsSubmissionParameters Parameters for feature alignment and feature finding.
   # @param input_files array[data.frame]  (optional)
+  # @param parameters LcmsSubmissionParameters  (optional)
   # @return [ImportResult]
 
   # uncomment below to test the operation
@@ -111,9 +111,9 @@ test_that("ImportMsRunDataAsJob", {
   # Import and Align full MS-Runs from various formats into the specified project as background job.
   # Import and Align full MS-Runs from various formats into the specified project as background job.  Possible formats (mzML, mzXML)
   # @param project_id character Project-space to import into.
-  # @param parameters LcmsSubmissionParameters Parameters for feature alignment and feature finding.
-  # @param opt_fields array[JobOptField] Set of optional fields to be included. Use 'none' only to override defaults. (optional)
+  # @param opt_fields array[character] Set of optional fields to be included. Use 'none' only to override defaults. (optional)
   # @param input_files array[data.frame]  (optional)
+  # @param parameters LcmsSubmissionParameters  (optional)
   # @return [Job]
 
   # uncomment below to test the operation
@@ -143,7 +143,7 @@ test_that("ImportPreprocessedDataAsJob", {
   # @param project_id character project-space to import into.
   # @param ignore_formulas character  (optional)
   # @param allow_ms1_only character  (optional)
-  # @param opt_fields array[JobOptField] set of optional fields to be included. Use 'none' only to override defaults. (optional)
+  # @param opt_fields array[character] set of optional fields to be included. Use 'none' only to override defaults. (optional)
   # @param input_files array[data.frame]  (optional)
   # @return [Job]
 
@@ -158,7 +158,7 @@ test_that("OpenProjectSpace", {
   # Open an existing project-space and make it accessible via the given projectId.
   # @param project_id character unique name/identifier that shall be used to access the opened project-space. Must consist only of [a-zA-Z0-9_-].
   # @param path_to_project character local file path to open the project from. If NULL, project will be loaded by it projectId from default project location.  DEPRECATED: This parameter relies on the local filesystem and will likely be removed in later versions of this API to allow for more flexible use cases. (optional)
-  # @param opt_fields array[ProjectInfoOptField]  (optional)
+  # @param opt_fields array[character]  (optional)
   # @return [ProjectInfo]
 
   # uncomment below to test the operation

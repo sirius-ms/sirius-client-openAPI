@@ -24,6 +24,8 @@ Create a new ProjectInfo
 
 \item{\code{description}}{Description of this project. character [optional]}
 
+\item{\code{type}}{Type of this project.  NULL if project type has not yet been specified by importing data. character [optional]}
+
 \item{\code{compatible}}{Indicates whether computed results (e.g. fingerprints, compounds classes) are compatible with the backend.  If true project is up-to-date and there are no restrictions regarding usage.  If false project is incompatible and therefore \"read only\" until the incompatible results have been removed. See updateProject endpoint for further information  If NULL the information has not been requested. character [optional]}
 
 \item{\code{numOfFeatures}}{Number of features (aligned over runs) in this project. If NULL, information has not been requested (See OptField 'sizeInformation'). integer [optional]}
@@ -60,6 +62,7 @@ Initialize a new ProjectInfo class.
   projectId = NULL,
   location = NULL,
   description = NULL,
+  type = NULL,
   compatible = NULL,
   numOfFeatures = NULL,
   numOfCompounds = NULL,
@@ -76,6 +79,8 @@ Initialize a new ProjectInfo class.
 \item{\code{location}}{storage location of the project.}
 
 \item{\code{description}}{Description of this project.}
+
+\item{\code{type}}{Type of this project.  NULL if project type has not yet been specified by importing data.}
 
 \item{\code{compatible}}{Indicates whether computed results (e.g. fingerprints, compounds classes) are compatible with the backend.  If true project is up-to-date and there are no restrictions regarding usage.  If false project is incompatible and therefore \"read only\" until the incompatible results have been removed. See updateProject endpoint for further information  If NULL the information has not been requested.}
 

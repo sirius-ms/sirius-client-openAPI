@@ -5,8 +5,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**error_type** | **str** |  | 
-**error_klass** | **str** |  | 
+**error_type** | [**ConnectionErrorType**](ConnectionErrorType.md) |  | 
+**error_klass** | [**ConnectionErrorClass**](ConnectionErrorClass.md) |  | 
 **sirius_error_code** | **int** |  | 
 **sirius_message** | **str** |  | 
 **server_response_error_code** | **int** |  | [optional] 

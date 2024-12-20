@@ -22,9 +22,9 @@ Create a new PeakAnnotation
 
 \item{\code{molecularFormula}}{Molecular formula that has been annotated to this peak character [optional]}
 
-\item{\code{ionization}}{Ionization that has been annotated to this peak character [optional]}
+\item{\code{adduct}}{Adduct that has been annotated to this peak character [optional]}
 
-\item{\code{exactMass}}{Exact mass of the annotated molecular formula and ionization numeric [optional]}
+\item{\code{exactMass}}{Exact mass of the annotated molecular formula and adduct numeric [optional]}
 
 \item{\code{massDeviationMz}}{Absolute mass deviation of the exact mass to the measured peak mass in mDa numeric [optional]}
 
@@ -36,15 +36,15 @@ Create a new PeakAnnotation
 
 \item{\code{parentPeak}}{\link{ParentPeak} [optional]}
 
-\item{\code{substructureAtoms}}{Array/List of indices of the atoms of the structure candidate that are part of this fragments substructure  (highlighted atoms) list(integer) [optional]}
+\item{\code{substructureAtoms}}{EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.   Array/List of indices of the atoms of the structure candidate that are part of this fragments substructure  (highlighted atoms) list(integer) [optional]}
 
-\item{\code{substructureBonds}}{Array/List of indices of the bonds of the structure candidate that are part of this fragments substructure  (highlighted bonds)   Null if substructure annotation not available or not requested. list(integer) [optional]}
+\item{\code{substructureBonds}}{EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.   Array/List of indices of the bonds of the structure candidate that are part of this fragments substructure  (highlighted bonds)   Null if substructure annotation not available or not requested. list(integer) [optional]}
 
-\item{\code{substructureBondsCut}}{Array/List of indices of the bonds of the structure candidate that need to be cut to produce this fragments  substructure (highlighted cutted bonds).   Null if substructure annotation not available or not requested. list(integer) [optional]}
+\item{\code{substructureBondsCut}}{EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.   Array/List of indices of the bonds of the structure candidate that need to be cut to produce this fragments  substructure (highlighted cutted bonds).   Null if substructure annotation not available or not requested. list(integer) [optional]}
 
-\item{\code{substructureScore}}{This score roughly reflects the probability of this fragment forming.   This is the score of the path from root to this node which has the maximal score or \"profit\".  The score of a path is equal to the sum of scores of its contained fragments and edges.  Note: Refers to 'totalScore' in CombinatorialNode   Null if substructure annotation not available or not requested. numeric [optional]}
+\item{\code{substructureScore}}{EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.   This score roughly reflects the probability of this fragment forming.   This is the score of the path from root to this node which has the maximal score or \"profit\".  The score of a path is equal to the sum of scores of its contained fragments and edges.  Note: Refers to 'totalScore' in CombinatorialNode   Null if substructure annotation not available or not requested. numeric [optional]}
 
-\item{\code{hydrogenRearrangements}}{Number of hydrogens rearrangements needed to match the substructure to the fragment formula.   Null if substructure annotation not available or not requested. integer [optional]}
+\item{\code{hydrogenRearrangements}}{EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.   Number of hydrogens rearrangements needed to match the substructure to the fragment formula.   Null if substructure annotation not available or not requested. integer [optional]}
 }
 \if{html}{\out{</div>}}
 }
@@ -73,7 +73,7 @@ Initialize a new PeakAnnotation class.
 \if{html}{\out{<div class="r">}}\preformatted{PeakAnnotation$new(
   fragmentId,
   molecularFormula = NULL,
-  ionization = NULL,
+  adduct = NULL,
   exactMass = NULL,
   massDeviationMz = NULL,
   massDeviationPpm = NULL,
@@ -96,9 +96,9 @@ Initialize a new PeakAnnotation class.
 
 \item{\code{molecularFormula}}{Molecular formula that has been annotated to this peak}
 
-\item{\code{ionization}}{Ionization that has been annotated to this peak}
+\item{\code{adduct}}{Adduct that has been annotated to this peak}
 
-\item{\code{exactMass}}{Exact mass of the annotated molecular formula and ionization}
+\item{\code{exactMass}}{Exact mass of the annotated molecular formula and adduct}
 
 \item{\code{massDeviationMz}}{Absolute mass deviation of the exact mass to the measured peak mass in mDa}
 
@@ -110,15 +110,15 @@ Initialize a new PeakAnnotation class.
 
 \item{\code{parentPeak}}{parentPeak}
 
-\item{\code{substructureAtoms}}{Array/List of indices of the atoms of the structure candidate that are part of this fragments substructure  (highlighted atoms)}
+\item{\code{substructureAtoms}}{EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.   Array/List of indices of the atoms of the structure candidate that are part of this fragments substructure  (highlighted atoms)}
 
-\item{\code{substructureBonds}}{Array/List of indices of the bonds of the structure candidate that are part of this fragments substructure  (highlighted bonds)   Null if substructure annotation not available or not requested.}
+\item{\code{substructureBonds}}{EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.   Array/List of indices of the bonds of the structure candidate that are part of this fragments substructure  (highlighted bonds)   Null if substructure annotation not available or not requested.}
 
-\item{\code{substructureBondsCut}}{Array/List of indices of the bonds of the structure candidate that need to be cut to produce this fragments  substructure (highlighted cutted bonds).   Null if substructure annotation not available or not requested.}
+\item{\code{substructureBondsCut}}{EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.   Array/List of indices of the bonds of the structure candidate that need to be cut to produce this fragments  substructure (highlighted cutted bonds).   Null if substructure annotation not available or not requested.}
 
-\item{\code{substructureScore}}{This score roughly reflects the probability of this fragment forming.   This is the score of the path from root to this node which has the maximal score or \"profit\".  The score of a path is equal to the sum of scores of its contained fragments and edges.  Note: Refers to 'totalScore' in CombinatorialNode   Null if substructure annotation not available or not requested.}
+\item{\code{substructureScore}}{EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.   This score roughly reflects the probability of this fragment forming.   This is the score of the path from root to this node which has the maximal score or \"profit\".  The score of a path is equal to the sum of scores of its contained fragments and edges.  Note: Refers to 'totalScore' in CombinatorialNode   Null if substructure annotation not available or not requested.}
 
-\item{\code{hydrogenRearrangements}}{Number of hydrogens rearrangements needed to match the substructure to the fragment formula.   Null if substructure annotation not available or not requested.}
+\item{\code{hydrogenRearrangements}}{EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.   Number of hydrogens rearrangements needed to match the substructure to the fragment formula.   Null if substructure annotation not available or not requested.}
 
 \item{\code{...}}{Other optional arguments.}
 }

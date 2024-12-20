@@ -19,8 +19,7 @@ FingerprintPrediction <- R6::R6Class(
     `enabled` = NULL,
     `useScoreThreshold` = NULL,
     `alwaysPredictHighRefMatches` = NULL,
-    #' Initialize a new FingerprintPrediction class.
-    #'
+
     #' @description
     #' Initialize a new FingerprintPrediction class.
     #'
@@ -28,7 +27,6 @@ FingerprintPrediction <- R6::R6Class(
     #' @param useScoreThreshold If true, an adaptive soft threshold will be applied to only compute Fingerprints for promising formula candidates  Enabling is highly recommended.
     #' @param alwaysPredictHighRefMatches If true Fingerprint/Classes/Structures will be predicted for formulas candidates with  reference spectrum similarity > Sirius.minReferenceMatchScoreToInject will be predicted no matter which  score threshold rules apply.  If NULL default value will be used.
     #' @param ... Other optional arguments.
-    #' @export
     initialize = function(`enabled` = NULL, `useScoreThreshold` = NULL, `alwaysPredictHighRefMatches` = NULL, ...) {
       if (!is.null(`enabled`)) {
         if (!(is.logical(`enabled`) && length(`enabled`) == 1)) {
@@ -49,13 +47,11 @@ FingerprintPrediction <- R6::R6Class(
         self$`alwaysPredictHighRefMatches` <- `alwaysPredictHighRefMatches`
       }
     },
-    #' To JSON string
-    #'
+
     #' @description
     #' To JSON String
     #'
     #' @return FingerprintPrediction in JSON format
-    #' @export
     toJSON = function() {
       FingerprintPredictionObject <- list()
       if (!is.null(self$`enabled`)) {
@@ -72,14 +68,12 @@ FingerprintPrediction <- R6::R6Class(
       }
       FingerprintPredictionObject
     },
-    #' Deserialize JSON string into an instance of FingerprintPrediction
-    #'
+
     #' @description
     #' Deserialize JSON string into an instance of FingerprintPrediction
     #'
     #' @param input_json the JSON input
     #' @return the instance of FingerprintPrediction
-    #' @export
     fromJSON = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       if (!is.null(this_object$`enabled`)) {
@@ -93,13 +87,11 @@ FingerprintPrediction <- R6::R6Class(
       }
       self
     },
-    #' To JSON string
-    #'
+
     #' @description
     #' To JSON String
     #'
     #' @return FingerprintPrediction in JSON format
-    #' @export
     toJSONString = function() {
       jsoncontent <- c(
         if (!is.null(self$`enabled`)) {
@@ -128,20 +120,14 @@ FingerprintPrediction <- R6::R6Class(
         }
       )
       jsoncontent <- paste(jsoncontent, collapse = ",")
-      # remove c() occurences and reduce resulting double escaped quotes \"\" into \"
-      jsoncontent <- gsub('\\\"c\\((.*?)\\\"\\)', '\\1', jsoncontent)
-      # fix wrong serialization of "\"ENUM\"" to "ENUM"
-      jsoncontent <- gsub("\\\\\"([A-Z]+)\\\\\"", "\\1", jsoncontent)
       json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
     },
-    #' Deserialize JSON string into an instance of FingerprintPrediction
-    #'
+
     #' @description
     #' Deserialize JSON string into an instance of FingerprintPrediction
     #'
     #' @param input_json the JSON input
     #' @return the instance of FingerprintPrediction
-    #' @export
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       self$`enabled` <- this_object$`enabled`
@@ -149,53 +135,42 @@ FingerprintPrediction <- R6::R6Class(
       self$`alwaysPredictHighRefMatches` <- this_object$`alwaysPredictHighRefMatches`
       self
     },
-    #' Validate JSON input with respect to FingerprintPrediction
-    #'
+
     #' @description
     #' Validate JSON input with respect to FingerprintPrediction and throw an exception if invalid
     #'
     #' @param input the JSON input
-    #' @export
     validateJSON = function(input) {
       input_json <- jsonlite::fromJSON(input)
     },
-    #' To string (JSON format)
-    #'
+
     #' @description
     #' To string (JSON format)
     #'
     #' @return String representation of FingerprintPrediction
-    #' @export
     toString = function() {
       self$toJSONString()
     },
-    #' Return true if the values in all fields are valid.
-    #'
+
     #' @description
     #' Return true if the values in all fields are valid.
     #'
     #' @return true if the values in all fields are valid.
-    #' @export
     isValid = function() {
       TRUE
     },
-    #' Return a list of invalid fields (if any).
-    #'
+
     #' @description
     #' Return a list of invalid fields (if any).
     #'
     #' @return A list of invalid fields (if any).
-    #' @export
     getInvalidFields = function() {
       invalid_fields <- list()
       invalid_fields
     },
-    #' Print the object
-    #'
+
     #' @description
     #' Print the object
-    #'
-    #' @export
     print = function() {
       print(jsonlite::prettify(self$toJSONString()))
       invisible(self)
