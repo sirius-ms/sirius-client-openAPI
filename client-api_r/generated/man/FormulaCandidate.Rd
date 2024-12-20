@@ -26,6 +26,8 @@ Create a new FormulaCandidate
 
 \item{\code{rank}}{integer [optional]}
 
+\item{\code{siriusScoreNormalized}}{Normalized Sirius Score of the formula candidate.  If NULL result is not available numeric [optional]}
+
 \item{\code{siriusScore}}{Sirius Score (isotope + tree score) of the formula candidate.  If NULL result is not available numeric [optional]}
 
 \item{\code{isotopeScore}}{numeric [optional]}
@@ -85,6 +87,7 @@ Initialize a new FormulaCandidate class.
   molecularFormula = NULL,
   adduct = NULL,
   rank = NULL,
+  siriusScoreNormalized = NULL,
   siriusScore = NULL,
   isotopeScore = NULL,
   treeScore = NULL,
@@ -114,6 +117,8 @@ Initialize a new FormulaCandidate class.
 \item{\code{adduct}}{Adduct of this formula candidate}
 
 \item{\code{rank}}{rank}
+
+\item{\code{siriusScoreNormalized}}{Normalized Sirius Score of the formula candidate.  If NULL result is not available}
 
 \item{\code{siriusScore}}{Sirius Score (isotope + tree score) of the formula candidate.  If NULL result is not available}
 

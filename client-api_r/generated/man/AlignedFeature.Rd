@@ -38,7 +38,7 @@ Create a new AlignedFeature
 
 \item{\code{rtApexSeconds}}{numeric [optional]}
 
-\item{\code{quality}}{\link{DataQuality} [optional]}
+\item{\code{quality}}{Quality of this feature. character [optional]}
 
 \item{\code{hasMs1}}{If true, the feature has at lease one MS1 spectrum character [optional]}
 
@@ -124,7 +124,7 @@ Initialize a new AlignedFeature class.
 
 \item{\code{rtApexSeconds}}{rtApexSeconds}
 
-\item{\code{quality}}{quality}
+\item{\code{quality}}{Quality of this feature.}
 
 \item{\code{hasMs1}}{If true, the feature has at lease one MS1 spectrum}
 

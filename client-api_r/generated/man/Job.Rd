@@ -27,6 +27,8 @@ Create a new Job
 \item{\code{affectedCompoundIds}}{List of compoundIds that are affected by this job.  This lis will also contain compoundIds where not all features of the compound are affected by the job.  If this job is creating compounds (e.g. data import jobs) this value will be NULL until the jobs has finished list(character) [optional]}
 
 \item{\code{affectedAlignedFeatureIds}}{List of alignedFeatureIds that are affected by this job.  If this job is creating features (e.g. data import jobs) this value will be NULL until the jobs has finished list(character) [optional]}
+
+\item{\code{jobEffect}}{Effect this job has. The affected ids are added, removed or modified.  Null if job does not affect features/compounds  Not available/null if affected Ids are not requested character [optional]}
 }
 \if{html}{\out{</div>}}
 }
@@ -58,6 +60,7 @@ Initialize a new Job class.
   progress = NULL,
   affectedCompoundIds = NULL,
   affectedAlignedFeatureIds = NULL,
+  jobEffect = NULL,
   ...
 )}\if{html}{\out{</div>}}
 }
@@ -74,6 +77,8 @@ Initialize a new Job class.
 \item{\code{affectedCompoundIds}}{List of compoundIds that are affected by this job.  This lis will also contain compoundIds where not all features of the compound are affected by the job.  If this job is creating compounds (e.g. data import jobs) this value will be NULL until the jobs has finished}
 
 \item{\code{affectedAlignedFeatureIds}}{List of alignedFeatureIds that are affected by this job.  If this job is creating features (e.g. data import jobs) this value will be NULL until the jobs has finished}
+
+\item{\code{jobEffect}}{Effect this job has. The affected ids are added, removed or modified.  Null if job does not affect features/compounds  Not available/null if affected Ids are not requested}
 
 \item{\code{...}}{Other optional arguments.}
 }
