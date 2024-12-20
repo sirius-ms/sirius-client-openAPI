@@ -44,7 +44,7 @@ Create a new SpectralLibraryMatch
 
 \item{\code{smiles}}{character [optional]}
 
-\item{\code{candidateInChiKey}}{character}
+\item{\code{inchiKey}}{character}
 
 \item{\code{referenceSpectrum}}{\link{BasicSpectrum} [optional]}
 }
@@ -76,7 +76,7 @@ Initialize a new SpectralLibraryMatch class.
   similarity,
   querySpectrumIndex,
   uuid,
-  candidateInChiKey,
+  inchiKey,
   specMatchId = NULL,
   rank = NULL,
   sharedPeaks = NULL,
@@ -101,7 +101,7 @@ Initialize a new SpectralLibraryMatch class.
 
 \item{\code{uuid}}{uuid}
 
-\item{\code{candidateInChiKey}}{candidateInChiKey}
+\item{\code{inchiKey}}{inchiKey}
 
 \item{\code{specMatchId}}{specMatchId}
 
