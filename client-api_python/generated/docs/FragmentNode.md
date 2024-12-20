@@ -6,8 +6,8 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **fragment_id** | **int** |  | [optional] 
-**molecular_formula** | **str** |  | [optional] 
-**ion_type** | **str** |  | [optional] 
+**molecular_formula** | **str** | neutral molecular formula of the fragment without adduct | [optional] 
+**adduct** | **str** | This combines the ionization plus adduct of the fragment. In contrast to the {@link FragmentationTree FragmentationTree}s adduct,  this adduct may not include any in-source loss. | [optional] 
 **mass_deviation_da** | **float** |  | [optional] 
 **mass_deviation_ppm** | **float** |  | [optional] 
 **score** | **float** |  | [optional] 

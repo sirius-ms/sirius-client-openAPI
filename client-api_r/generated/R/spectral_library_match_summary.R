@@ -21,8 +21,7 @@ SpectralLibraryMatchSummary <- R6::R6Class(
     `spectralMatchCount` = NULL,
     `referenceSpectraCount` = NULL,
     `databaseCompoundCount` = NULL,
-    #' Initialize a new SpectralLibraryMatchSummary class.
-    #'
+
     #' @description
     #' Initialize a new SpectralLibraryMatchSummary class.
     #'
@@ -31,7 +30,6 @@ SpectralLibraryMatchSummary <- R6::R6Class(
     #' @param databaseCompoundCount databaseCompoundCount
     #' @param bestMatch bestMatch
     #' @param ... Other optional arguments.
-    #' @export
     initialize = function(`spectralMatchCount`, `referenceSpectraCount`, `databaseCompoundCount`, `bestMatch` = NULL, ...) {
       if (!missing(`spectralMatchCount`)) {
         if (!(is.numeric(`spectralMatchCount`) && length(`spectralMatchCount`) == 1)) {
@@ -56,24 +54,16 @@ SpectralLibraryMatchSummary <- R6::R6Class(
         self$`bestMatch` <- `bestMatch`
       }
     },
-    #' To JSON string
-    #'
+
     #' @description
     #' To JSON String
     #'
     #' @return SpectralLibraryMatchSummary in JSON format
-    #' @export
     toJSON = function() {
       SpectralLibraryMatchSummaryObject <- list()
       if (!is.null(self$`bestMatch`)) {
         SpectralLibraryMatchSummaryObject[["bestMatch"]] <-
-          if (is.list(self$`bestMatch`$toJSON()) && length(self$`bestMatch`$toJSON()) == 0L){
-            NULL
-          } else if (length(names(self$`bestMatch`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`bestMatch`$toJSON()))) {
-            jsonlite::fromJSON(self$`bestMatch`$toJSON())
-          } else {
-            self$`bestMatch`$toJSON()
-          }
+          self$`bestMatch`$toJSON()
       }
       if (!is.null(self$`spectralMatchCount`)) {
         SpectralLibraryMatchSummaryObject[["spectralMatchCount"]] <-
@@ -89,14 +79,12 @@ SpectralLibraryMatchSummary <- R6::R6Class(
       }
       SpectralLibraryMatchSummaryObject
     },
-    #' Deserialize JSON string into an instance of SpectralLibraryMatchSummary
-    #'
+
     #' @description
     #' Deserialize JSON string into an instance of SpectralLibraryMatchSummary
     #'
     #' @param input_json the JSON input
     #' @return the instance of SpectralLibraryMatchSummary
-    #' @export
     fromJSON = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       if (!is.null(this_object$`bestMatch`)) {
@@ -115,13 +103,11 @@ SpectralLibraryMatchSummary <- R6::R6Class(
       }
       self
     },
-    #' To JSON string
-    #'
+
     #' @description
     #' To JSON String
     #'
     #' @return SpectralLibraryMatchSummary in JSON format
-    #' @export
     toJSONString = function() {
       jsoncontent <- c(
         if (!is.null(self$`bestMatch`)) {
@@ -135,7 +121,7 @@ SpectralLibraryMatchSummary <- R6::R6Class(
         if (!is.null(self$`spectralMatchCount`)) {
           sprintf(
           '"spectralMatchCount":
-            %f
+            %d
                     ',
           self$`spectralMatchCount`
           )
@@ -143,7 +129,7 @@ SpectralLibraryMatchSummary <- R6::R6Class(
         if (!is.null(self$`referenceSpectraCount`)) {
           sprintf(
           '"referenceSpectraCount":
-            %f
+            %d
                     ',
           self$`referenceSpectraCount`
           )
@@ -151,27 +137,21 @@ SpectralLibraryMatchSummary <- R6::R6Class(
         if (!is.null(self$`databaseCompoundCount`)) {
           sprintf(
           '"databaseCompoundCount":
-            %f
+            %d
                     ',
           self$`databaseCompoundCount`
           )
         }
       )
       jsoncontent <- paste(jsoncontent, collapse = ",")
-      # remove c() occurences and reduce resulting double escaped quotes \"\" into \"
-      jsoncontent <- gsub('\\\"c\\((.*?)\\\"\\)', '\\1', jsoncontent)
-      # fix wrong serialization of "\"ENUM\"" to "ENUM"
-      jsoncontent <- gsub("\\\\\"([A-Z]+)\\\\\"", "\\1", jsoncontent)
       json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
     },
-    #' Deserialize JSON string into an instance of SpectralLibraryMatchSummary
-    #'
+
     #' @description
     #' Deserialize JSON string into an instance of SpectralLibraryMatchSummary
     #'
     #' @param input_json the JSON input
     #' @return the instance of SpectralLibraryMatchSummary
-    #' @export
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       self$`bestMatch` <- SpectralLibraryMatch$new()$fromJSON(jsonlite::toJSON(this_object$`bestMatch`, auto_unbox = TRUE, digits = NA))
@@ -180,13 +160,11 @@ SpectralLibraryMatchSummary <- R6::R6Class(
       self$`databaseCompoundCount` <- this_object$`databaseCompoundCount`
       self
     },
-    #' Validate JSON input with respect to SpectralLibraryMatchSummary
-    #'
+
     #' @description
     #' Validate JSON input with respect to SpectralLibraryMatchSummary and throw an exception if invalid
     #'
     #' @param input the JSON input
-    #' @export
     validateJSON = function(input) {
       input_json <- jsonlite::fromJSON(input)
       # check the required field `spectralMatchCount`
@@ -214,23 +192,19 @@ SpectralLibraryMatchSummary <- R6::R6Class(
         stop(paste("The JSON input `", input, "` is invalid for SpectralLibraryMatchSummary: the required field `databaseCompoundCount` is missing."))
       }
     },
-    #' To string (JSON format)
-    #'
+
     #' @description
     #' To string (JSON format)
     #'
     #' @return String representation of SpectralLibraryMatchSummary
-    #' @export
     toString = function() {
       self$toJSONString()
     },
-    #' Return true if the values in all fields are valid.
-    #'
+
     #' @description
     #' Return true if the values in all fields are valid.
     #'
     #' @return true if the values in all fields are valid.
-    #' @export
     isValid = function() {
       # check if the required `spectralMatchCount` is null
       if (is.null(self$`spectralMatchCount`)) {
@@ -249,13 +223,11 @@ SpectralLibraryMatchSummary <- R6::R6Class(
 
       TRUE
     },
-    #' Return a list of invalid fields (if any).
-    #'
+
     #' @description
     #' Return a list of invalid fields (if any).
     #'
     #' @return A list of invalid fields (if any).
-    #' @export
     getInvalidFields = function() {
       invalid_fields <- list()
       # check if the required `spectralMatchCount` is null
@@ -275,12 +247,9 @@ SpectralLibraryMatchSummary <- R6::R6Class(
 
       invalid_fields
     },
-    #' Print the object
-    #'
+
     #' @description
     #' Print the object
-    #'
-    #' @export
     print = function() {
       print(jsonlite::prettify(self$toJSONString()))
       invisible(self)

@@ -10,6 +10,7 @@
 #' @field projectId a user selected unique name of the project for easy access. character [optional]
 #' @field location storage location of the project. character [optional]
 #' @field description Description of this project. character [optional]
+#' @field type Type of this project.  NULL if project type has not yet been specified by importing data. character [optional]
 #' @field compatible Indicates whether computed results (e.g. fingerprints, compounds classes) are compatible with the backend.  If true project is up-to-date and there are no restrictions regarding usage.  If false project is incompatible and therefore \"read only\" until the incompatible results have been removed. See updateProject endpoint for further information  If NULL the information has not been requested. character [optional]
 #' @field numOfFeatures Number of features (aligned over runs) in this project. If NULL, information has not been requested (See OptField 'sizeInformation'). integer [optional]
 #' @field numOfCompounds Number of compounds (group of ion identities) in this project. If NULL, Information has not been requested (See OptField 'sizeInformation') or might be unavailable for this project type. integer [optional]
@@ -23,25 +24,25 @@ ProjectInfo <- R6::R6Class(
     `projectId` = NULL,
     `location` = NULL,
     `description` = NULL,
+    `type` = NULL,
     `compatible` = NULL,
     `numOfFeatures` = NULL,
     `numOfCompounds` = NULL,
     `numOfBytes` = NULL,
-    #' Initialize a new ProjectInfo class.
-    #'
+
     #' @description
     #' Initialize a new ProjectInfo class.
     #'
     #' @param projectId a user selected unique name of the project for easy access.
     #' @param location storage location of the project.
     #' @param description Description of this project.
+    #' @param type Type of this project.  NULL if project type has not yet been specified by importing data.
     #' @param compatible Indicates whether computed results (e.g. fingerprints, compounds classes) are compatible with the backend.  If true project is up-to-date and there are no restrictions regarding usage.  If false project is incompatible and therefore \"read only\" until the incompatible results have been removed. See updateProject endpoint for further information  If NULL the information has not been requested.
     #' @param numOfFeatures Number of features (aligned over runs) in this project. If NULL, information has not been requested (See OptField 'sizeInformation').
     #' @param numOfCompounds Number of compounds (group of ion identities) in this project. If NULL, Information has not been requested (See OptField 'sizeInformation') or might be unavailable for this project type.
     #' @param numOfBytes Size in Bytes this project consumes on disk If NULL, Information has not been requested (See OptField 'sizeInformation').
     #' @param ... Other optional arguments.
-    #' @export
-    initialize = function(`projectId` = NULL, `location` = NULL, `description` = NULL, `compatible` = NULL, `numOfFeatures` = NULL, `numOfCompounds` = NULL, `numOfBytes` = NULL, ...) {
+    initialize = function(`projectId` = NULL, `location` = NULL, `description` = NULL, `type` = NULL, `compatible` = NULL, `numOfFeatures` = NULL, `numOfCompounds` = NULL, `numOfBytes` = NULL, ...) {
       if (!is.null(`projectId`)) {
         if (!(is.character(`projectId`) && length(`projectId`) == 1)) {
           stop(paste("Error! Invalid data for `projectId`. Must be a string:", `projectId`))
@@ -59,6 +60,15 @@ ProjectInfo <- R6::R6Class(
           stop(paste("Error! Invalid data for `description`. Must be a string:", `description`))
         }
         self$`description` <- `description`
+      }
+      if (!is.null(`type`)) {
+        if (!(`type` %in% c("DIRECT_IMPORT", "PEAKLISTS", "ALIGNED_RUNS", "UNALIGNED_RUNS"))) {
+          stop(paste("Error! \"", `type`, "\" cannot be assigned to `type`. Must be \"DIRECT_IMPORT\", \"PEAKLISTS\", \"ALIGNED_RUNS\", \"UNALIGNED_RUNS\".", sep = ""))
+        }
+        if (!(is.character(`type`) && length(`type`) == 1)) {
+          stop(paste("Error! Invalid data for `type`. Must be a string:", `type`))
+        }
+        self$`type` <- `type`
       }
       if (!is.null(`compatible`)) {
         if (!(is.logical(`compatible`) && length(`compatible`) == 1)) {
@@ -85,13 +95,11 @@ ProjectInfo <- R6::R6Class(
         self$`numOfBytes` <- `numOfBytes`
       }
     },
-    #' To JSON string
-    #'
+
     #' @description
     #' To JSON String
     #'
     #' @return ProjectInfo in JSON format
-    #' @export
     toJSON = function() {
       ProjectInfoObject <- list()
       if (!is.null(self$`projectId`)) {
@@ -105,6 +113,10 @@ ProjectInfo <- R6::R6Class(
       if (!is.null(self$`description`)) {
         ProjectInfoObject[["description"]] <-
           self$`description`
+      }
+      if (!is.null(self$`type`)) {
+        ProjectInfoObject[["type"]] <-
+          self$`type`
       }
       if (!is.null(self$`compatible`)) {
         ProjectInfoObject[["compatible"]] <-
@@ -124,14 +136,12 @@ ProjectInfo <- R6::R6Class(
       }
       ProjectInfoObject
     },
-    #' Deserialize JSON string into an instance of ProjectInfo
-    #'
+
     #' @description
     #' Deserialize JSON string into an instance of ProjectInfo
     #'
     #' @param input_json the JSON input
     #' @return the instance of ProjectInfo
-    #' @export
     fromJSON = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       if (!is.null(this_object$`projectId`)) {
@@ -142,6 +152,12 @@ ProjectInfo <- R6::R6Class(
       }
       if (!is.null(this_object$`description`)) {
         self$`description` <- this_object$`description`
+      }
+      if (!is.null(this_object$`type`)) {
+        if (!is.null(this_object$`type`) && !(this_object$`type` %in% c("DIRECT_IMPORT", "PEAKLISTS", "ALIGNED_RUNS", "UNALIGNED_RUNS"))) {
+          stop(paste("Error! \"", this_object$`type`, "\" cannot be assigned to `type`. Must be \"DIRECT_IMPORT\", \"PEAKLISTS\", \"ALIGNED_RUNS\", \"UNALIGNED_RUNS\".", sep = ""))
+        }
+        self$`type` <- this_object$`type`
       }
       if (!is.null(this_object$`compatible`)) {
         self$`compatible` <- this_object$`compatible`
@@ -157,13 +173,11 @@ ProjectInfo <- R6::R6Class(
       }
       self
     },
-    #' To JSON string
-    #'
+
     #' @description
     #' To JSON String
     #'
     #' @return ProjectInfo in JSON format
-    #' @export
     toJSONString = function() {
       jsoncontent <- c(
         if (!is.null(self$`projectId`)) {
@@ -190,6 +204,14 @@ ProjectInfo <- R6::R6Class(
           self$`description`
           )
         },
+        if (!is.null(self$`type`)) {
+          sprintf(
+          '"type":
+            "%s"
+                    ',
+          self$`type`
+          )
+        },
         if (!is.null(self$`compatible`)) {
           sprintf(
           '"compatible":
@@ -201,7 +223,7 @@ ProjectInfo <- R6::R6Class(
         if (!is.null(self$`numOfFeatures`)) {
           sprintf(
           '"numOfFeatures":
-            %f
+            %d
                     ',
           self$`numOfFeatures`
           )
@@ -209,7 +231,7 @@ ProjectInfo <- R6::R6Class(
         if (!is.null(self$`numOfCompounds`)) {
           sprintf(
           '"numOfCompounds":
-            %f
+            %d
                     ',
           self$`numOfCompounds`
           )
@@ -217,85 +239,72 @@ ProjectInfo <- R6::R6Class(
         if (!is.null(self$`numOfBytes`)) {
           sprintf(
           '"numOfBytes":
-            %f
+            %d
                     ',
           self$`numOfBytes`
           )
         }
       )
       jsoncontent <- paste(jsoncontent, collapse = ",")
-      # remove c() occurences and reduce resulting double escaped quotes \"\" into \"
-      jsoncontent <- gsub('\\\"c\\((.*?)\\\"\\)', '\\1', jsoncontent)
-      # fix wrong serialization of "\"ENUM\"" to "ENUM"
-      jsoncontent <- gsub("\\\\\"([A-Z]+)\\\\\"", "\\1", jsoncontent)
       json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
     },
-    #' Deserialize JSON string into an instance of ProjectInfo
-    #'
+
     #' @description
     #' Deserialize JSON string into an instance of ProjectInfo
     #'
     #' @param input_json the JSON input
     #' @return the instance of ProjectInfo
-    #' @export
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       self$`projectId` <- this_object$`projectId`
       self$`location` <- this_object$`location`
       self$`description` <- this_object$`description`
+      if (!is.null(this_object$`type`) && !(this_object$`type` %in% c("DIRECT_IMPORT", "PEAKLISTS", "ALIGNED_RUNS", "UNALIGNED_RUNS"))) {
+        stop(paste("Error! \"", this_object$`type`, "\" cannot be assigned to `type`. Must be \"DIRECT_IMPORT\", \"PEAKLISTS\", \"ALIGNED_RUNS\", \"UNALIGNED_RUNS\".", sep = ""))
+      }
+      self$`type` <- this_object$`type`
       self$`compatible` <- this_object$`compatible`
       self$`numOfFeatures` <- this_object$`numOfFeatures`
       self$`numOfCompounds` <- this_object$`numOfCompounds`
       self$`numOfBytes` <- this_object$`numOfBytes`
       self
     },
-    #' Validate JSON input with respect to ProjectInfo
-    #'
+
     #' @description
     #' Validate JSON input with respect to ProjectInfo and throw an exception if invalid
     #'
     #' @param input the JSON input
-    #' @export
     validateJSON = function(input) {
       input_json <- jsonlite::fromJSON(input)
     },
-    #' To string (JSON format)
-    #'
+
     #' @description
     #' To string (JSON format)
     #'
     #' @return String representation of ProjectInfo
-    #' @export
     toString = function() {
       self$toJSONString()
     },
-    #' Return true if the values in all fields are valid.
-    #'
+
     #' @description
     #' Return true if the values in all fields are valid.
     #'
     #' @return true if the values in all fields are valid.
-    #' @export
     isValid = function() {
       TRUE
     },
-    #' Return a list of invalid fields (if any).
-    #'
+
     #' @description
     #' Return a list of invalid fields (if any).
     #'
     #' @return A list of invalid fields (if any).
-    #' @export
     getInvalidFields = function() {
       invalid_fields <- list()
       invalid_fields
     },
-    #' Print the object
-    #'
+
     #' @description
     #' Print the object
-    #'
-    #' @export
     print = function() {
       print(jsonlite::prettify(self$toJSONString()))
       invisible(self)

@@ -21,17 +21,17 @@ test_that("molecularFormula", {
   #expect_equal(model.instance$`molecularFormula`, "EXPECTED_RESULT")
 })
 
-test_that("ionization", {
-  # tests for the property `ionization` (character)
-  # Ionization that has been annotated to this peak
+test_that("adduct", {
+  # tests for the property `adduct` (character)
+  # Adduct that has been annotated to this peak
 
   # uncomment below to test the property
-  #expect_equal(model.instance$`ionization`, "EXPECTED_RESULT")
+  #expect_equal(model.instance$`adduct`, "EXPECTED_RESULT")
 })
 
 test_that("exactMass", {
   # tests for the property `exactMass` (numeric)
-  # Exact mass of the annotated molecular formula and ionization
+  # Exact mass of the annotated molecular formula and adduct
 
   # uncomment below to test the property
   #expect_equal(model.instance$`exactMass`, "EXPECTED_RESULT")
@@ -78,7 +78,7 @@ test_that("parentPeak", {
 
 test_that("substructureAtoms", {
   # tests for the property `substructureAtoms` (array[integer])
-  # Array/List of indices of the atoms of the structure candidate that are part of this fragments substructure  (highlighted atoms)
+  # EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.   Array/List of indices of the atoms of the structure candidate that are part of this fragments substructure  (highlighted atoms)
 
   # uncomment below to test the property
   #expect_equal(model.instance$`substructureAtoms`, "EXPECTED_RESULT")
@@ -86,7 +86,7 @@ test_that("substructureAtoms", {
 
 test_that("substructureBonds", {
   # tests for the property `substructureBonds` (array[integer])
-  # Array/List of indices of the bonds of the structure candidate that are part of this fragments substructure  (highlighted bonds)   Null if substructure annotation not available or not requested.
+  # EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.   Array/List of indices of the bonds of the structure candidate that are part of this fragments substructure  (highlighted bonds)   Null if substructure annotation not available or not requested.
 
   # uncomment below to test the property
   #expect_equal(model.instance$`substructureBonds`, "EXPECTED_RESULT")
@@ -94,7 +94,7 @@ test_that("substructureBonds", {
 
 test_that("substructureBondsCut", {
   # tests for the property `substructureBondsCut` (array[integer])
-  # Array/List of indices of the bonds of the structure candidate that need to be cut to produce this fragments  substructure (highlighted cutted bonds).   Null if substructure annotation not available or not requested.
+  # EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.   Array/List of indices of the bonds of the structure candidate that need to be cut to produce this fragments  substructure (highlighted cutted bonds).   Null if substructure annotation not available or not requested.
 
   # uncomment below to test the property
   #expect_equal(model.instance$`substructureBondsCut`, "EXPECTED_RESULT")
@@ -102,7 +102,7 @@ test_that("substructureBondsCut", {
 
 test_that("substructureScore", {
   # tests for the property `substructureScore` (numeric)
-  # This score roughly reflects the probability of this fragment forming.   This is the score of the path from root to this node which has the maximal score or \&quot;profit\&quot;.  The score of a path is equal to the sum of scores of its contained fragments and edges.  Note: Refers to &#39;totalScore&#39; in CombinatorialNode   Null if substructure annotation not available or not requested.
+  # EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.   This score roughly reflects the probability of this fragment forming.   This is the score of the path from root to this node which has the maximal score or \&quot;profit\&quot;.  The score of a path is equal to the sum of scores of its contained fragments and edges.  Note: Refers to &#39;totalScore&#39; in CombinatorialNode   Null if substructure annotation not available or not requested.
 
   # uncomment below to test the property
   #expect_equal(model.instance$`substructureScore`, "EXPECTED_RESULT")
@@ -110,7 +110,7 @@ test_that("substructureScore", {
 
 test_that("hydrogenRearrangements", {
   # tests for the property `hydrogenRearrangements` (integer)
-  # Number of hydrogens rearrangements needed to match the substructure to the fragment formula.   Null if substructure annotation not available or not requested.
+  # EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.   Number of hydrogens rearrangements needed to match the substructure to the fragment formula.   Null if substructure annotation not available or not requested.
 
   # uncomment below to test the property
   #expect_equal(model.instance$`hydrogenRearrangements`, "EXPECTED_RESULT")

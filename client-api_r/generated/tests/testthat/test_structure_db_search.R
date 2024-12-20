@@ -30,7 +30,8 @@ test_that("tagStructuresWithLipidClass", {
 })
 
 test_that("expansiveSearchConfidenceMode", {
-  # tests for the property `expansiveSearchConfidenceMode` (ConfidenceMode)
+  # tests for the property `expansiveSearchConfidenceMode` (character)
+  # Expansive search mode.  Expansive search will expand the search space to whole PubChem in case no hit with reasonable confidence was  found in one of the specified databases (structureSearchDBs).  &lt;p&gt;  Possible Values  OFF - No expansive search is performed  EXACT - Use confidence score in exact mode: Only molecular structures identical to the true structure should count as correct identification.  APPROXIMATE - Use confidence score in approximate mode: Molecular structures hits that are close to the true structure should count as correct identification.
 
   # uncomment below to test the property
   #expect_equal(model.instance$`expansiveSearchConfidenceMode`, "EXPECTED_RESULT")

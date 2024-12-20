@@ -29,6 +29,14 @@ test_that("description", {
   #expect_equal(model.instance$`description`, "EXPECTED_RESULT")
 })
 
+test_that("type", {
+  # tests for the property `type` (character)
+  # Type of this project.  NULL if project type has not yet been specified by importing data.
+
+  # uncomment below to test the property
+  #expect_equal(model.instance$`type`, "EXPECTED_RESULT")
+})
+
 test_that("compatible", {
   # tests for the property `compatible` (character)
   # Indicates whether computed results (e.g. fingerprints, compounds classes) are compatible with the backend.  If true project is up-to-date and there are no restrictions regarding usage.  If false project is incompatible and therefore \&quot;read only\&quot; until the incompatible results have been removed. See updateProject endpoint for further information  If NULL the information has not been requested.
