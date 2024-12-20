@@ -12,9 +12,9 @@ test_that("AddCompounds", {
   # Import Compounds and its contained features. Compounds and Features must not exist in the project.  Otherwise, they will exist twice.
   # @param project_id character project-space to import into.
   # @param compound_import array[CompoundImport] the compound data to be imported
-  # @param profile InstrumentProfile profile describing the instrument used to measure the data. Used to merge spectra. (optional)
-  # @param opt_fields array[CompoundOptField] set of optional fields to be included. Use 'none' to override defaults. (optional)
-  # @param opt_fields_features array[AlignedFeatureOptField] set of optional fields of the nested features to be included. Use 'none' to override defaults. (optional)
+  # @param profile character profile describing the instrument used to measure the data. Used to merge spectra. (optional)
+  # @param opt_fields array[character] set of optional fields to be included. Use 'none' to override defaults. (optional)
+  # @param opt_fields_features array[character] set of optional fields of the nested features to be included. Use 'none' to override defaults. (optional)
   # @return [array[Compound]]
 
   # uncomment below to test the operation
@@ -41,21 +41,23 @@ test_that("GetCompound", {
   # Get compound (group of ion identities) with the given identifier from the specified project-space.
   # @param project_id character project-space to read from.
   # @param compound_id character identifier of the compound (group of ion identities) to access.
-  # @param opt_fields array[CompoundOptField] set of optional fields to be included. Use 'none' only to override defaults. (optional)
-  # @param opt_fields_features array[AlignedFeatureOptField]  (optional)
+  # @param opt_fields array[character] set of optional fields to be included. Use 'none' only to override defaults. (optional)
+  # @param opt_fields_features array[character]  (optional)
   # @return [Compound]
 
   # uncomment below to test the operation
   #expect_equal(result, "EXPECTED_RESULT")
 })
 
-test_that("GetCompoundTraces", {
-  # tests for GetCompoundTraces
+test_that("GetCompoundTracesExperimental", {
+  # tests for GetCompoundTracesExperimental
   # base path: http://localhost:8080
-  # @param project_id character 
-  # @param compound_id character 
+  # EXPERIMENTAL: This endpoint is experimental and may be changed (or even removed) without notice until it is declared stable.
+  # Returns the traces of the given compound. A trace consists of m/z and intensity values over the retention  time axis. All the returned traces are &#39;projected&#39;, which means they refer not to the original retention time axis,  but to a recalibrated axis. This means the data points in the trace are not exactly the same as in the raw data.  However, this also means that all traces can be directly compared against each other, as they all lie in the same  retention time axis.
+  # @param project_id character project-space to read from.
+  # @param compound_id character compound which intensities should be read out
   # @param feature_id character  (optional)
-  # @return [TraceSet]
+  # @return [TraceSetExperimental]
 
   # uncomment below to test the operation
   #expect_equal(result, "EXPECTED_RESULT")
@@ -67,8 +69,8 @@ test_that("GetCompounds", {
   # List of all available compounds (group of ion identities) in the given project-space.
   # List of all available compounds (group of ion identities) in the given project-space.
   # @param project_id character project-space to read from.
-  # @param opt_fields array[CompoundOptField] set of optional fields to be included. Use 'none' only to override defaults. (optional)
-  # @param opt_fields_features array[AlignedFeatureOptField]  (optional)
+  # @param opt_fields array[character] set of optional fields to be included. Use 'none' only to override defaults. (optional)
+  # @param opt_fields_features array[character]  (optional)
   # @return [array[Compound]]
 
   # uncomment below to test the operation
@@ -84,9 +86,9 @@ test_that("GetCompoundsPaged", {
   # @param page integer Zero-based page index (0..N) (optional)
   # @param size integer The size of the page to be returned (optional)
   # @param sort array[character] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (optional)
-  # @param opt_fields array[CompoundOptField] set of optional fields to be included. Use 'none' only to override defaults. (optional)
-  # @param opt_fields_features array[AlignedFeatureOptField]  (optional)
-  # @return [PageCompound]
+  # @param opt_fields array[character] set of optional fields to be included. Use 'none' only to override defaults. (optional)
+  # @param opt_fields_features array[character]  (optional)
+  # @return [PagedModelCompound]
 
   # uncomment below to test the operation
   #expect_equal(result, "EXPECTED_RESULT")

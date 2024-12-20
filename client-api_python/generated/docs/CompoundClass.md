@@ -8,11 +8,14 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **type** | [**CompoundClassType**](CompoundClassType.md) |  | [optional] 
 **level** | **str** | Name of the level this compound class belongs to | [optional] 
+**level_index** | **int** | Index of the level this compound class belongs to | [optional] 
 **name** | **str** | Name of the compound class. | [optional] 
 **description** | **str** | Description of the compound class. | [optional] 
 **id** | **int** | Unique id of the class. Might be undefined for certain classification ontologies. | [optional] 
 **probability** | **float** | prediction probability | [optional] 
 **index** | **int** | Absolute index of this property in the predicted vector/embedding | [optional] 
+**parent_id** | **int** | Unique id of the parent class. Might be undefined for certain classification ontologies. | [optional] 
+**parent_name** | **str** | Name of the parent compound class. | [optional] 
 
 ## Example
 

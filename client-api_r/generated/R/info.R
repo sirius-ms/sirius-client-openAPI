@@ -37,8 +37,7 @@ Info <- R6::R6Class(
     `fingerprintId` = NULL,
     `availableILPSolvers` = NULL,
     `supportedILPSolvers` = NULL,
-    #' Initialize a new Info class.
-    #'
+
     #' @description
     #' Initialize a new Info class.
     #'
@@ -55,7 +54,6 @@ Info <- R6::R6Class(
     #' @param fingerIdModelVersion Version of the Machine learning models used for Fingerprint, Compound Class and Structure Prediction  Not available if web service is not reachable.
     #' @param fingerprintId Version of the Molecular Fingerprint used by SIRIUS
     #' @param ... Other optional arguments.
-    #' @export
     initialize = function(`availableILPSolvers`, `supportedILPSolvers`, `nightSkyApiVersion` = NULL, `siriusVersion` = NULL, `latestSiriusVersion` = NULL, `latestSiriusLink` = NULL, `updateAvailable` = NULL, `siriusLibVersion` = NULL, `fingerIdLibVersion` = NULL, `chemDbVersion` = NULL, `fingerIdModelVersion` = NULL, `fingerprintId` = NULL, ...) {
       if (!missing(`availableILPSolvers`)) {
         stopifnot(is.vector(`availableILPSolvers`), length(`availableILPSolvers`) != 0)
@@ -128,13 +126,11 @@ Info <- R6::R6Class(
         self$`fingerprintId` <- `fingerprintId`
       }
     },
-    #' To JSON string
-    #'
+
     #' @description
     #' To JSON String
     #'
     #' @return Info in JSON format
-    #' @export
     toJSON = function() {
       InfoObject <- list()
       if (!is.null(self$`nightSkyApiVersion`)) {
@@ -187,14 +183,12 @@ Info <- R6::R6Class(
       }
       InfoObject
     },
-    #' Deserialize JSON string into an instance of Info
-    #'
+
     #' @description
     #' Deserialize JSON string into an instance of Info
     #'
     #' @param input_json the JSON input
     #' @return the instance of Info
-    #' @export
     fromJSON = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       if (!is.null(this_object$`nightSkyApiVersion`)) {
@@ -235,13 +229,11 @@ Info <- R6::R6Class(
       }
       self
     },
-    #' To JSON string
-    #'
+
     #' @description
     #' To JSON String
     #'
     #' @return Info in JSON format
-    #' @export
     toJSONString = function() {
       jsoncontent <- c(
         if (!is.null(self$`nightSkyApiVersion`)) {
@@ -342,20 +334,14 @@ Info <- R6::R6Class(
         }
       )
       jsoncontent <- paste(jsoncontent, collapse = ",")
-      # remove c() occurences and reduce resulting double escaped quotes \"\" into \"
-      jsoncontent <- gsub('\\\"c\\((.*?)\\\"\\)', '\\1', jsoncontent)
-      # fix wrong serialization of "\"ENUM\"" to "ENUM"
-      jsoncontent <- gsub("\\\\\"([A-Z]+)\\\\\"", "\\1", jsoncontent)
       json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
     },
-    #' Deserialize JSON string into an instance of Info
-    #'
+
     #' @description
     #' Deserialize JSON string into an instance of Info
     #'
     #' @param input_json the JSON input
     #' @return the instance of Info
-    #' @export
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       self$`nightSkyApiVersion` <- this_object$`nightSkyApiVersion`
@@ -372,13 +358,11 @@ Info <- R6::R6Class(
       self$`supportedILPSolvers` <- ApiClient$new()$deserializeObj(this_object$`supportedILPSolvers`, "map(character)", loadNamespace("Rsirius"))
       self
     },
-    #' Validate JSON input with respect to Info
-    #'
+
     #' @description
     #' Validate JSON input with respect to Info and throw an exception if invalid
     #'
     #' @param input the JSON input
-    #' @export
     validateJSON = function(input) {
       input_json <- jsonlite::fromJSON(input)
       # check the required field `availableILPSolvers`
@@ -396,23 +380,19 @@ Info <- R6::R6Class(
         stop(paste("The JSON input `", input, "` is invalid for Info: the required field `supportedILPSolvers` is missing."))
       }
     },
-    #' To string (JSON format)
-    #'
+
     #' @description
     #' To string (JSON format)
     #'
     #' @return String representation of Info
-    #' @export
     toString = function() {
       self$toJSONString()
     },
-    #' Return true if the values in all fields are valid.
-    #'
+
     #' @description
     #' Return true if the values in all fields are valid.
     #'
     #' @return true if the values in all fields are valid.
-    #' @export
     isValid = function() {
       # check if the required `availableILPSolvers` is null
       if (is.null(self$`availableILPSolvers`)) {
@@ -426,13 +406,11 @@ Info <- R6::R6Class(
 
       TRUE
     },
-    #' Return a list of invalid fields (if any).
-    #'
+
     #' @description
     #' Return a list of invalid fields (if any).
     #'
     #' @return A list of invalid fields (if any).
-    #' @export
     getInvalidFields = function() {
       invalid_fields <- list()
       # check if the required `availableILPSolvers` is null
@@ -447,12 +425,9 @@ Info <- R6::R6Class(
 
       invalid_fields
     },
-    #' Print the object
-    #'
+
     #' @description
     #' Print the object
-    #'
-    #' @export
     print = function() {
       print(jsonlite::prettify(self$toJSONString()))
       invisible(self)

@@ -29,7 +29,8 @@ test_that("supportingFeatureIds", {
 })
 
 test_that("selectionCriterion", {
-  # tests for the property `selectionCriterion` (ConsensusCriterionCSI)
+  # tests for the property `selectionCriterion` (character)
+  # Null if this is a custom selection
 
   # uncomment below to test the property
   #expect_equal(model.instance$`selectionCriterion`, "EXPECTED_RESULT")

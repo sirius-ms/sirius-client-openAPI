@@ -20,7 +20,7 @@
 #' @field adduct  character [optional]
 #' @field exactMass  character [optional]
 #' @field smiles  character [optional]
-#' @field candidateInChiKey  character
+#' @field inchiKey  character
 #' @field referenceSpectrum  \link{BasicSpectrum} [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
@@ -41,17 +41,16 @@ SpectralLibraryMatch <- R6::R6Class(
     `adduct` = NULL,
     `exactMass` = NULL,
     `smiles` = NULL,
-    `candidateInChiKey` = NULL,
+    `inchiKey` = NULL,
     `referenceSpectrum` = NULL,
-    #' Initialize a new SpectralLibraryMatch class.
-    #'
+
     #' @description
     #' Initialize a new SpectralLibraryMatch class.
     #'
     #' @param similarity similarity
     #' @param querySpectrumIndex querySpectrumIndex
     #' @param uuid uuid
-    #' @param candidateInChiKey candidateInChiKey
+    #' @param inchiKey inchiKey
     #' @param specMatchId specMatchId
     #' @param rank rank
     #' @param sharedPeaks sharedPeaks
@@ -64,8 +63,7 @@ SpectralLibraryMatch <- R6::R6Class(
     #' @param smiles smiles
     #' @param referenceSpectrum referenceSpectrum
     #' @param ... Other optional arguments.
-    #' @export
-    initialize = function(`similarity`, `querySpectrumIndex`, `uuid`, `candidateInChiKey`, `specMatchId` = NULL, `rank` = NULL, `sharedPeaks` = NULL, `dbName` = NULL, `dbId` = NULL, `splash` = NULL, `molecularFormula` = NULL, `adduct` = NULL, `exactMass` = NULL, `smiles` = NULL, `referenceSpectrum` = NULL, ...) {
+    initialize = function(`similarity`, `querySpectrumIndex`, `uuid`, `inchiKey`, `specMatchId` = NULL, `rank` = NULL, `sharedPeaks` = NULL, `dbName` = NULL, `dbId` = NULL, `splash` = NULL, `molecularFormula` = NULL, `adduct` = NULL, `exactMass` = NULL, `smiles` = NULL, `referenceSpectrum` = NULL, ...) {
       if (!missing(`similarity`)) {
         if (!(is.numeric(`similarity`) && length(`similarity`) == 1)) {
           stop(paste("Error! Invalid data for `similarity`. Must be a number:", `similarity`))
@@ -84,11 +82,11 @@ SpectralLibraryMatch <- R6::R6Class(
         }
         self$`uuid` <- `uuid`
       }
-      if (!missing(`candidateInChiKey`)) {
-        if (!(is.character(`candidateInChiKey`) && length(`candidateInChiKey`) == 1)) {
-          stop(paste("Error! Invalid data for `candidateInChiKey`. Must be a string:", `candidateInChiKey`))
+      if (!missing(`inchiKey`)) {
+        if (!(is.character(`inchiKey`) && length(`inchiKey`) == 1)) {
+          stop(paste("Error! Invalid data for `inchiKey`. Must be a string:", `inchiKey`))
         }
-        self$`candidateInChiKey` <- `candidateInChiKey`
+        self$`inchiKey` <- `inchiKey`
       }
       if (!is.null(`specMatchId`)) {
         if (!(is.character(`specMatchId`) && length(`specMatchId`) == 1)) {
@@ -155,13 +153,11 @@ SpectralLibraryMatch <- R6::R6Class(
         self$`referenceSpectrum` <- `referenceSpectrum`
       }
     },
-    #' To JSON string
-    #'
+
     #' @description
     #' To JSON String
     #'
     #' @return SpectralLibraryMatch in JSON format
-    #' @export
     toJSON = function() {
       SpectralLibraryMatchObject <- list()
       if (!is.null(self$`specMatchId`)) {
@@ -216,30 +212,22 @@ SpectralLibraryMatch <- R6::R6Class(
         SpectralLibraryMatchObject[["smiles"]] <-
           self$`smiles`
       }
-      if (!is.null(self$`candidateInChiKey`)) {
-        SpectralLibraryMatchObject[["candidateInChiKey"]] <-
-          self$`candidateInChiKey`
+      if (!is.null(self$`inchiKey`)) {
+        SpectralLibraryMatchObject[["inchiKey"]] <-
+          self$`inchiKey`
       }
       if (!is.null(self$`referenceSpectrum`)) {
         SpectralLibraryMatchObject[["referenceSpectrum"]] <-
-          if (is.list(self$`referenceSpectrum`$toJSON()) && length(self$`referenceSpectrum`$toJSON()) == 0L){
-            NULL
-          } else if (length(names(self$`referenceSpectrum`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`referenceSpectrum`$toJSON()))) {
-            jsonlite::fromJSON(self$`referenceSpectrum`$toJSON())
-          } else {
-            self$`referenceSpectrum`$toJSON()
-          }
+          self$`referenceSpectrum`$toJSON()
       }
       SpectralLibraryMatchObject
     },
-    #' Deserialize JSON string into an instance of SpectralLibraryMatch
-    #'
+
     #' @description
     #' Deserialize JSON string into an instance of SpectralLibraryMatch
     #'
     #' @param input_json the JSON input
     #' @return the instance of SpectralLibraryMatch
-    #' @export
     fromJSON = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       if (!is.null(this_object$`specMatchId`)) {
@@ -281,8 +269,8 @@ SpectralLibraryMatch <- R6::R6Class(
       if (!is.null(this_object$`smiles`)) {
         self$`smiles` <- this_object$`smiles`
       }
-      if (!is.null(this_object$`candidateInChiKey`)) {
-        self$`candidateInChiKey` <- this_object$`candidateInChiKey`
+      if (!is.null(this_object$`inchiKey`)) {
+        self$`inchiKey` <- this_object$`inchiKey`
       }
       if (!is.null(this_object$`referenceSpectrum`)) {
         `referencespectrum_object` <- BasicSpectrum$new()
@@ -291,13 +279,11 @@ SpectralLibraryMatch <- R6::R6Class(
       }
       self
     },
-    #' To JSON string
-    #'
+
     #' @description
     #' To JSON String
     #'
     #' @return SpectralLibraryMatch in JSON format
-    #' @export
     toJSONString = function() {
       jsoncontent <- c(
         if (!is.null(self$`specMatchId`)) {
@@ -311,7 +297,7 @@ SpectralLibraryMatch <- R6::R6Class(
         if (!is.null(self$`rank`)) {
           sprintf(
           '"rank":
-            %f
+            %d
                     ',
           self$`rank`
           )
@@ -319,7 +305,7 @@ SpectralLibraryMatch <- R6::R6Class(
         if (!is.null(self$`similarity`)) {
           sprintf(
           '"similarity":
-            %f
+            %d
                     ',
           self$`similarity`
           )
@@ -327,7 +313,7 @@ SpectralLibraryMatch <- R6::R6Class(
         if (!is.null(self$`sharedPeaks`)) {
           sprintf(
           '"sharedPeaks":
-            %f
+            %d
                     ',
           self$`sharedPeaks`
           )
@@ -335,7 +321,7 @@ SpectralLibraryMatch <- R6::R6Class(
         if (!is.null(self$`querySpectrumIndex`)) {
           sprintf(
           '"querySpectrumIndex":
-            %f
+            %d
                     ',
           self$`querySpectrumIndex`
           )
@@ -359,7 +345,7 @@ SpectralLibraryMatch <- R6::R6Class(
         if (!is.null(self$`uuid`)) {
           sprintf(
           '"uuid":
-            %f
+            %d
                     ',
           self$`uuid`
           )
@@ -404,12 +390,12 @@ SpectralLibraryMatch <- R6::R6Class(
           self$`smiles`
           )
         },
-        if (!is.null(self$`candidateInChiKey`)) {
+        if (!is.null(self$`inchiKey`)) {
           sprintf(
-          '"candidateInChiKey":
+          '"inchiKey":
             "%s"
                     ',
-          self$`candidateInChiKey`
+          self$`inchiKey`
           )
         },
         if (!is.null(self$`referenceSpectrum`)) {
@@ -422,20 +408,14 @@ SpectralLibraryMatch <- R6::R6Class(
         }
       )
       jsoncontent <- paste(jsoncontent, collapse = ",")
-      # remove c() occurences and reduce resulting double escaped quotes \"\" into \"
-      jsoncontent <- gsub('\\\"c\\((.*?)\\\"\\)', '\\1', jsoncontent)
-      # fix wrong serialization of "\"ENUM\"" to "ENUM"
-      jsoncontent <- gsub("\\\\\"([A-Z]+)\\\\\"", "\\1", jsoncontent)
       json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
     },
-    #' Deserialize JSON string into an instance of SpectralLibraryMatch
-    #'
+
     #' @description
     #' Deserialize JSON string into an instance of SpectralLibraryMatch
     #'
     #' @param input_json the JSON input
     #' @return the instance of SpectralLibraryMatch
-    #' @export
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       self$`specMatchId` <- this_object$`specMatchId`
@@ -451,17 +431,15 @@ SpectralLibraryMatch <- R6::R6Class(
       self$`adduct` <- this_object$`adduct`
       self$`exactMass` <- this_object$`exactMass`
       self$`smiles` <- this_object$`smiles`
-      self$`candidateInChiKey` <- this_object$`candidateInChiKey`
+      self$`inchiKey` <- this_object$`inchiKey`
       self$`referenceSpectrum` <- BasicSpectrum$new()$fromJSON(jsonlite::toJSON(this_object$`referenceSpectrum`, auto_unbox = TRUE, digits = NA))
       self
     },
-    #' Validate JSON input with respect to SpectralLibraryMatch
-    #'
+
     #' @description
     #' Validate JSON input with respect to SpectralLibraryMatch and throw an exception if invalid
     #'
     #' @param input the JSON input
-    #' @export
     validateJSON = function(input) {
       input_json <- jsonlite::fromJSON(input)
       # check the required field `similarity`
@@ -488,32 +466,28 @@ SpectralLibraryMatch <- R6::R6Class(
       } else {
         stop(paste("The JSON input `", input, "` is invalid for SpectralLibraryMatch: the required field `uuid` is missing."))
       }
-      # check the required field `candidateInChiKey`
-      if (!is.null(input_json$`candidateInChiKey`)) {
-        if (!(is.character(input_json$`candidateInChiKey`) && length(input_json$`candidateInChiKey`) == 1)) {
-          stop(paste("Error! Invalid data for `candidateInChiKey`. Must be a string:", input_json$`candidateInChiKey`))
+      # check the required field `inchiKey`
+      if (!is.null(input_json$`inchiKey`)) {
+        if (!(is.character(input_json$`inchiKey`) && length(input_json$`inchiKey`) == 1)) {
+          stop(paste("Error! Invalid data for `inchiKey`. Must be a string:", input_json$`inchiKey`))
         }
       } else {
-        stop(paste("The JSON input `", input, "` is invalid for SpectralLibraryMatch: the required field `candidateInChiKey` is missing."))
+        stop(paste("The JSON input `", input, "` is invalid for SpectralLibraryMatch: the required field `inchiKey` is missing."))
       }
     },
-    #' To string (JSON format)
-    #'
+
     #' @description
     #' To string (JSON format)
     #'
     #' @return String representation of SpectralLibraryMatch
-    #' @export
     toString = function() {
       self$toJSONString()
     },
-    #' Return true if the values in all fields are valid.
-    #'
+
     #' @description
     #' Return true if the values in all fields are valid.
     #'
     #' @return true if the values in all fields are valid.
-    #' @export
     isValid = function() {
       # check if the required `similarity` is null
       if (is.null(self$`similarity`)) {
@@ -530,20 +504,18 @@ SpectralLibraryMatch <- R6::R6Class(
         return(FALSE)
       }
 
-      # check if the required `candidateInChiKey` is null
-      if (is.null(self$`candidateInChiKey`)) {
+      # check if the required `inchiKey` is null
+      if (is.null(self$`inchiKey`)) {
         return(FALSE)
       }
 
       TRUE
     },
-    #' Return a list of invalid fields (if any).
-    #'
+
     #' @description
     #' Return a list of invalid fields (if any).
     #'
     #' @return A list of invalid fields (if any).
-    #' @export
     getInvalidFields = function() {
       invalid_fields <- list()
       # check if the required `similarity` is null
@@ -561,19 +533,16 @@ SpectralLibraryMatch <- R6::R6Class(
         invalid_fields["uuid"] <- "Non-nullable required field `uuid` cannot be null."
       }
 
-      # check if the required `candidateInChiKey` is null
-      if (is.null(self$`candidateInChiKey`)) {
-        invalid_fields["candidateInChiKey"] <- "Non-nullable required field `candidateInChiKey` cannot be null."
+      # check if the required `inchiKey` is null
+      if (is.null(self$`inchiKey`)) {
+        invalid_fields["inchiKey"] <- "Non-nullable required field `inchiKey` cannot be null."
       }
 
       invalid_fields
     },
-    #' Print the object
-    #'
+
     #' @description
     #' Print the object
-    #'
-    #' @export
     print = function() {
       print(jsonlite::prettify(self$toJSONString()))
       invisible(self)

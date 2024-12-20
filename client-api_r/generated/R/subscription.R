@@ -43,8 +43,7 @@ Subscription <- R6::R6Class(
     `name` = NULL,
     `tos` = NULL,
     `pp` = NULL,
-    #' Initialize a new Subscription class.
-    #'
+
     #' @description
     #' Initialize a new Subscription class.
     #'
@@ -64,7 +63,6 @@ Subscription <- R6::R6Class(
     #' @param tos tos
     #' @param pp pp
     #' @param ... Other optional arguments.
-    #' @export
     initialize = function(`sid` = NULL, `subscriberId` = NULL, `subscriberName` = NULL, `expirationDate` = NULL, `startDate` = NULL, `countQueries` = NULL, `instanceLimit` = NULL, `instanceHashRecordingTime` = NULL, `maxQueriesPerInstance` = NULL, `maxUserAccounts` = NULL, `serviceUrl` = NULL, `description` = NULL, `name` = NULL, `tos` = NULL, `pp` = NULL, ...) {
       if (!is.null(`sid`)) {
         if (!(is.character(`sid`) && length(`sid`) == 1)) {
@@ -157,13 +155,11 @@ Subscription <- R6::R6Class(
         self$`pp` <- `pp`
       }
     },
-    #' To JSON string
-    #'
+
     #' @description
     #' To JSON String
     #'
     #' @return Subscription in JSON format
-    #' @export
     toJSON = function() {
       SubscriptionObject <- list()
       if (!is.null(self$`sid`)) {
@@ -228,14 +224,12 @@ Subscription <- R6::R6Class(
       }
       SubscriptionObject
     },
-    #' Deserialize JSON string into an instance of Subscription
-    #'
+
     #' @description
     #' Deserialize JSON string into an instance of Subscription
     #'
     #' @param input_json the JSON input
     #' @return the instance of Subscription
-    #' @export
     fromJSON = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       if (!is.null(this_object$`sid`)) {
@@ -285,13 +279,11 @@ Subscription <- R6::R6Class(
       }
       self
     },
-    #' To JSON string
-    #'
+
     #' @description
     #' To JSON String
     #'
     #' @return Subscription in JSON format
-    #' @export
     toJSONString = function() {
       jsoncontent <- c(
         if (!is.null(self$`sid`)) {
@@ -345,7 +337,7 @@ Subscription <- R6::R6Class(
         if (!is.null(self$`instanceLimit`)) {
           sprintf(
           '"instanceLimit":
-            %f
+            %d
                     ',
           self$`instanceLimit`
           )
@@ -353,7 +345,7 @@ Subscription <- R6::R6Class(
         if (!is.null(self$`instanceHashRecordingTime`)) {
           sprintf(
           '"instanceHashRecordingTime":
-            %f
+            %d
                     ',
           self$`instanceHashRecordingTime`
           )
@@ -361,7 +353,7 @@ Subscription <- R6::R6Class(
         if (!is.null(self$`maxQueriesPerInstance`)) {
           sprintf(
           '"maxQueriesPerInstance":
-            %f
+            %d
                     ',
           self$`maxQueriesPerInstance`
           )
@@ -369,7 +361,7 @@ Subscription <- R6::R6Class(
         if (!is.null(self$`maxUserAccounts`)) {
           sprintf(
           '"maxUserAccounts":
-            %f
+            %d
                     ',
           self$`maxUserAccounts`
           )
@@ -416,20 +408,14 @@ Subscription <- R6::R6Class(
         }
       )
       jsoncontent <- paste(jsoncontent, collapse = ",")
-      # remove c() occurences and reduce resulting double escaped quotes \"\" into \"
-      jsoncontent <- gsub('\\\"c\\((.*?)\\\"\\)', '\\1', jsoncontent)
-      # fix wrong serialization of "\"ENUM\"" to "ENUM"
-      jsoncontent <- gsub("\\\\\"([A-Z]+)\\\\\"", "\\1", jsoncontent)
       json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
     },
-    #' Deserialize JSON string into an instance of Subscription
-    #'
+
     #' @description
     #' Deserialize JSON string into an instance of Subscription
     #'
     #' @param input_json the JSON input
     #' @return the instance of Subscription
-    #' @export
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       self$`sid` <- this_object$`sid`
@@ -449,53 +435,42 @@ Subscription <- R6::R6Class(
       self$`pp` <- this_object$`pp`
       self
     },
-    #' Validate JSON input with respect to Subscription
-    #'
+
     #' @description
     #' Validate JSON input with respect to Subscription and throw an exception if invalid
     #'
     #' @param input the JSON input
-    #' @export
     validateJSON = function(input) {
       input_json <- jsonlite::fromJSON(input)
     },
-    #' To string (JSON format)
-    #'
+
     #' @description
     #' To string (JSON format)
     #'
     #' @return String representation of Subscription
-    #' @export
     toString = function() {
       self$toJSONString()
     },
-    #' Return true if the values in all fields are valid.
-    #'
+
     #' @description
     #' Return true if the values in all fields are valid.
     #'
     #' @return true if the values in all fields are valid.
-    #' @export
     isValid = function() {
       TRUE
     },
-    #' Return a list of invalid fields (if any).
-    #'
+
     #' @description
     #' Return a list of invalid fields (if any).
     #'
     #' @return A list of invalid fields (if any).
-    #' @export
     getInvalidFields = function() {
       invalid_fields <- list()
       invalid_fields
     },
-    #' Print the object
-    #'
+
     #' @description
     #' Print the object
-    #'
-    #' @export
     print = function() {
       print(jsonlite::prettify(self$toJSONString()))
       invisible(self)
