@@ -38,14 +38,24 @@ jobs:
             echo "Download Complete"
             unzip *.zip
             echo "Api Ready"
-    - name: Run Rest Api
+    - name: Run Rest Api with strings
       run: |
         bash .updater/api/sirius/bin/sirius REST --no-headless --api-mode=STABLE -p 8080 -s &
-    - name: Update api-docs.json
+    - name: Update api-docs-strings.json
       run: |
         while ! nc -z localhost 8080; do sleep 0.1; done
         cd .updater/api
-        wget http://localhost:8080/v3/api-docs -O api-docs.json
+        wget http://localhost:8080/v3/api-docs -O api-docs-strings.json
+    - name: Shutdown SIRIUS
+      run: curl -X POST http://localhost:8080/actuator/shutdown
+    - name: Run Rest Api with enums
+      run: |
+        bash .updater/api/sirius/bin/sirius REST --no-headless --api-mode=STABLE --enums-as-ref -p 8080 -s &
+    - name: Update api-docs-enums.json
+      run: |
+        while ! nc -z localhost 8080; do sleep 0.1; done
+        cd .updater/api
+        wget http://localhost:8080/v3/api-docs -O api-docs-enums.json
     - name: Update Clients
       run: |
         # load package version from file
@@ -57,14 +67,14 @@ jobs:
         
         echo "generating Python Code with packageVersion=$packageVersion"
         rm -rf client-api_python/generated/*
-        java -jar .updater/openapi_generator/openapi-generator-cli.jar generate -i .updater/api/api-docs.json -c .updater/config/Python/config.json -g python -o client-api_python/generated -t client-api_python/templates/python --additional-properties=packageVersion=$packageVersion
+        java -jar .updater/openapi_generator/openapi-generator-cli.jar generate -i .updater/api/api-docs-enums.json -c .updater/config/Python/config.json -g python -o client-api_python/generated -t client-api_python/templates/python --additional-properties=packageVersion=$packageVersion
         
         echo "temporarily move R manual folder"
         mv client-api_r/generated/man/ client-api_r/
         
         echo "generating R Code with packageVersion=$packageVersion"
         rm -rf client-api_r/generated/*
-        java -jar .updater/openapi_generator/openapi-generator-cli.jar generate -i .updater/api/api-docs.json -c .updater/config/R/config.json -g r -o client-api_r/generated -t client-api_r/templates/r --additional-properties=packageVersion=$packageVersion
+        java -jar .updater/openapi_generator/openapi-generator-cli.jar generate -i .updater/api/api-docs-strings.json -c .updater/config/R/config.json -g r -o client-api_r/generated -t client-api_r/templates/r --additional-properties=packageVersion=$packageVersion
         
         echo "recover R manual folder"
         mv client-api_r/man/ client-api_r/generated/
