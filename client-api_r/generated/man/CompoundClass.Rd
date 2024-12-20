@@ -18,9 +18,11 @@ Create a new CompoundClass
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{type}}{\link{CompoundClassType} [optional]}
+\item{\code{type}}{Specifies the classification ontology the CompoundClass belongs to. character [optional]}
 
 \item{\code{level}}{Name of the level this compound class belongs to character [optional]}
+
+\item{\code{levelIndex}}{Index of the level this compound class belongs to integer [optional]}
 
 \item{\code{name}}{Name of the compound class. character [optional]}
 
@@ -31,6 +33,10 @@ Create a new CompoundClass
 \item{\code{probability}}{prediction probability numeric [optional]}
 
 \item{\code{index}}{Absolute index of this property in the predicted vector/embedding integer [optional]}
+
+\item{\code{parentId}}{Unique id of the parent class. Might be undefined for certain classification ontologies. integer [optional]}
+
+\item{\code{parentName}}{Name of the parent compound class. character [optional]}
 }
 \if{html}{\out{</div>}}
 }
@@ -59,11 +65,14 @@ Initialize a new CompoundClass class.
 \if{html}{\out{<div class="r">}}\preformatted{CompoundClass$new(
   type = NULL,
   level = NULL,
+  levelIndex = NULL,
   name = NULL,
   description = NULL,
   id = NULL,
   probability = NULL,
   index = NULL,
+  parentId = NULL,
+  parentName = NULL,
   ...
 )}\if{html}{\out{</div>}}
 }
@@ -71,9 +80,11 @@ Initialize a new CompoundClass class.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{type}}{type}
+\item{\code{type}}{Specifies the classification ontology the CompoundClass belongs to.}
 
 \item{\code{level}}{Name of the level this compound class belongs to}
+
+\item{\code{levelIndex}}{Index of the level this compound class belongs to}
 
 \item{\code{name}}{Name of the compound class.}
 
@@ -84,6 +95,10 @@ Initialize a new CompoundClass class.
 \item{\code{probability}}{prediction probability}
 
 \item{\code{index}}{Absolute index of this property in the predicted vector/embedding}
+
+\item{\code{parentId}}{Unique id of the parent class. Might be undefined for certain classification ontologies.}
+
+\item{\code{parentName}}{Name of the parent compound class.}
 
 \item{\code{...}}{Other optional arguments.}
 }

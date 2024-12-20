@@ -24,7 +24,7 @@ Create a new ConsensusAnnotationsDeNovo
 
 \item{\code{supportingFeatureIds}}{FeatureIds where the topAnnotation supports this annotation. list(character) [optional]}
 
-\item{\code{selectionCriterion}}{\link{ConsensusCriterionDeNovo} [optional]}
+\item{\code{selectionCriterion}}{Criterion that was used to select the consensus annotation. character [optional]}
 }
 \if{html}{\out{</div>}}
 }
@@ -68,7 +68,7 @@ Initialize a new ConsensusAnnotationsDeNovo class.
 
 \item{\code{supportingFeatureIds}}{FeatureIds where the topAnnotation supports this annotation.}
 
-\item{\code{selectionCriterion}}{selectionCriterion}
+\item{\code{selectionCriterion}}{Criterion that was used to select the consensus annotation.}
 
 \item{\code{...}}{Other optional arguments.}
 }
