@@ -177,7 +177,7 @@ test_that("ImportMsRunDataAsJob", {
 
   var_input_files <- full_ms_file
   var_parameters <- LcmsSubmissionParameters$new(TRUE)$toJSONString()
-  response <- api_instance$ImportMsRunDataAsJob(project_id, parameters=var_parameters, input_files=var_input_files, opt_fields=c("none"))
+  response <- api_instance$ImportMsRunDataAsJob(project_id, parameters=var_parameters, input_files=var_input_files)
   expect_true(inherits(response, "Job"))
 
   withr::defer(api_instance$CloseProjectSpace(project_id))
