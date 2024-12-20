@@ -20,7 +20,7 @@ jobs:
     - name: Download latest generators
       run: |
         cd .updater/openapi_generator
-        wget https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/7.6.0/openapi-generator-cli-7.6.0.jar -O openapi-generator-cli.jar
+        wget https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/7.10.0/openapi-generator-cli-7.10.0.jar -O openapi-generator-cli.jar
         java -jar openapi-generator-cli.jar version > version
     - name: Download latest Sirius Release
       uses: nick-fields/retry@v2
@@ -56,6 +56,8 @@ jobs:
         while ! nc -z localhost 8080; do sleep 0.1; done
         cd .updater/api
         wget http://localhost:8080/v3/api-docs -O api-docs-enums.json
+    - name: Shutdown SIRIUS
+      run: curl -X POST http://localhost:8080/actuator/shutdown
     - name: Update Clients
       run: |
         # load package version from file
@@ -74,7 +76,7 @@ jobs:
         
         echo "generating R Code with packageVersion=$packageVersion"
         rm -rf client-api_r/generated/*
-        java -jar .updater/openapi_generator/openapi-generator-cli.jar generate -i .updater/api/api-docs-strings.json -c .updater/config/R/config.json -g r -o client-api_r/generated -t client-api_r/templates/r --additional-properties=packageVersion=$packageVersion
+        java -jar .updater/openapi_generator/openapi-generator-cli.jar generate -i .updater/api/api-docs-strings.json -c .updater/config/R/config.json -g r -o client-api_r/generated --additional-properties=packageVersion=$packageVersion
         
         echo "recover R manual folder"
         mv client-api_r/man/ client-api_r/generated/
