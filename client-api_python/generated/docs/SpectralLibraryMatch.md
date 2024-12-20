@@ -18,7 +18,7 @@ Name | Type | Description | Notes
 **adduct** | **str** |  | [optional] 
 **exact_mass** | **str** |  | [optional] 
 **smiles** | **str** |  | [optional] 
-**candidate_in_chi_key** | **str** |  | 
+**inchi_key** | **str** |  | 
 **reference_spectrum** | [**BasicSpectrum**](BasicSpectrum.md) |  | [optional] 
 
 ## Example

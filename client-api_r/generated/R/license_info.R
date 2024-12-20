@@ -23,8 +23,7 @@ LicenseInfo <- R6::R6Class(
     `subscription` = NULL,
     `consumables` = NULL,
     `terms` = NULL,
-    #' Initialize a new LicenseInfo class.
-    #'
+
     #' @description
     #' Initialize a new LicenseInfo class.
     #'
@@ -34,7 +33,6 @@ LicenseInfo <- R6::R6Class(
     #' @param consumables consumables
     #' @param terms terms
     #' @param ... Other optional arguments.
-    #' @export
     initialize = function(`userEmail` = NULL, `userId` = NULL, `subscription` = NULL, `consumables` = NULL, `terms` = NULL, ...) {
       if (!is.null(`userEmail`)) {
         if (!(is.character(`userEmail`) && length(`userEmail`) == 1)) {
@@ -62,13 +60,11 @@ LicenseInfo <- R6::R6Class(
         self$`terms` <- `terms`
       }
     },
-    #' To JSON string
-    #'
+
     #' @description
     #' To JSON String
     #'
     #' @return LicenseInfo in JSON format
-    #' @export
     toJSON = function() {
       LicenseInfoObject <- list()
       if (!is.null(self$`userEmail`)) {
@@ -81,23 +77,11 @@ LicenseInfo <- R6::R6Class(
       }
       if (!is.null(self$`subscription`)) {
         LicenseInfoObject[["subscription"]] <-
-          if (is.list(self$`subscription`$toJSON()) && length(self$`subscription`$toJSON()) == 0L){
-            NULL
-          } else if (length(names(self$`subscription`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`subscription`$toJSON()))) {
-            jsonlite::fromJSON(self$`subscription`$toJSON())
-          } else {
-            self$`subscription`$toJSON()
-          }
+          self$`subscription`$toJSON()
       }
       if (!is.null(self$`consumables`)) {
         LicenseInfoObject[["consumables"]] <-
-          if (is.list(self$`consumables`$toJSON()) && length(self$`consumables`$toJSON()) == 0L){
-            NULL
-          } else if (length(names(self$`consumables`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`consumables`$toJSON()))) {
-            jsonlite::fromJSON(self$`consumables`$toJSON())
-          } else {
-            self$`consumables`$toJSON()
-          }
+          self$`consumables`$toJSON()
       }
       if (!is.null(self$`terms`)) {
         LicenseInfoObject[["terms"]] <-
@@ -105,14 +89,12 @@ LicenseInfo <- R6::R6Class(
       }
       LicenseInfoObject
     },
-    #' Deserialize JSON string into an instance of LicenseInfo
-    #'
+
     #' @description
     #' Deserialize JSON string into an instance of LicenseInfo
     #'
     #' @param input_json the JSON input
     #' @return the instance of LicenseInfo
-    #' @export
     fromJSON = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       if (!is.null(this_object$`userEmail`)) {
@@ -136,13 +118,11 @@ LicenseInfo <- R6::R6Class(
       }
       self
     },
-    #' To JSON string
-    #'
+
     #' @description
     #' To JSON String
     #'
     #' @return LicenseInfo in JSON format
-    #' @export
     toJSONString = function() {
       jsoncontent <- c(
         if (!is.null(self$`userEmail`)) {
@@ -187,20 +167,14 @@ LicenseInfo <- R6::R6Class(
         }
       )
       jsoncontent <- paste(jsoncontent, collapse = ",")
-      # remove c() occurences and reduce resulting double escaped quotes \"\" into \"
-      jsoncontent <- gsub('\\\"c\\((.*?)\\\"\\)', '\\1', jsoncontent)
-      # fix wrong serialization of "\"ENUM\"" to "ENUM"
-      jsoncontent <- gsub("\\\\\"([A-Z]+)\\\\\"", "\\1", jsoncontent)
       json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
     },
-    #' Deserialize JSON string into an instance of LicenseInfo
-    #'
+
     #' @description
     #' Deserialize JSON string into an instance of LicenseInfo
     #'
     #' @param input_json the JSON input
     #' @return the instance of LicenseInfo
-    #' @export
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       self$`userEmail` <- this_object$`userEmail`
@@ -210,53 +184,42 @@ LicenseInfo <- R6::R6Class(
       self$`terms` <- ApiClient$new()$deserializeObj(this_object$`terms`, "array[Term]", loadNamespace("Rsirius"))
       self
     },
-    #' Validate JSON input with respect to LicenseInfo
-    #'
+
     #' @description
     #' Validate JSON input with respect to LicenseInfo and throw an exception if invalid
     #'
     #' @param input the JSON input
-    #' @export
     validateJSON = function(input) {
       input_json <- jsonlite::fromJSON(input)
     },
-    #' To string (JSON format)
-    #'
+
     #' @description
     #' To string (JSON format)
     #'
     #' @return String representation of LicenseInfo
-    #' @export
     toString = function() {
       self$toJSONString()
     },
-    #' Return true if the values in all fields are valid.
-    #'
+
     #' @description
     #' Return true if the values in all fields are valid.
     #'
     #' @return true if the values in all fields are valid.
-    #' @export
     isValid = function() {
       TRUE
     },
-    #' Return a list of invalid fields (if any).
-    #'
+
     #' @description
     #' Return a list of invalid fields (if any).
     #'
     #' @return A list of invalid fields (if any).
-    #' @export
     getInvalidFields = function() {
       invalid_fields <- list()
       invalid_fields
     },
-    #' Print the object
-    #'
+
     #' @description
     #' Print the object
-    #'
-    #' @export
     print = function() {
       print(jsonlite::prettify(self$toJSONString()))
       invisible(self)

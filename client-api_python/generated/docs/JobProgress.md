@@ -7,7 +7,7 @@ Progress information of a computation job that has already been submitted to SIR
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **indeterminate** | **bool** | Is the progress indeterminate or not | [optional] 
-**state** | **str** | Current state of the Jobs in the SIRIUS internal Job scheduler           WAITING: Waiting for submission to ExecutorService (e.g. due to dependent jobs)          READY: Ready for submission but not yet enqueued for submission to ExecutorService.          QUEUED: Enqueued for submission to ExecutorService.          SUBMITTED: Submitted and waiting to be executed.          RUNNING: Job is running.          CANCELED: Jobs is finished due to cancellation by user or dependent jobs.          FAILED: Job is finished but failed.          DONE: Job finished successfully. | [optional] 
+**state** | [**JobState**](JobState.md) |  | [optional] 
 **current_progress** | **int** | Current progress value of the job. | [optional] 
 **max_progress** | **int** | Progress value to reach (might also change during execution) | [optional] 
 **message** | **str** | Progress information and warnings. | [optional] 

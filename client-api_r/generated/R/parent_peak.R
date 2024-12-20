@@ -19,8 +19,7 @@ ParentPeak <- R6::R6Class(
     `parentIdx` = NULL,
     `parentFragmentId` = NULL,
     `lossFormula` = NULL,
-    #' Initialize a new ParentPeak class.
-    #'
+
     #' @description
     #' Initialize a new ParentPeak class.
     #'
@@ -28,7 +27,6 @@ ParentPeak <- R6::R6Class(
     #' @param parentFragmentId Identifier of the parent fragment connected via this loss. Can be used to map fragments and peaks  among fragmentation trees and spectra.
     #' @param lossFormula Molecular formula of the neutral loss that connects these two peaks.
     #' @param ... Other optional arguments.
-    #' @export
     initialize = function(`parentIdx`, `parentFragmentId`, `lossFormula`, ...) {
       if (!missing(`parentIdx`)) {
         if (!(is.numeric(`parentIdx`) && length(`parentIdx`) == 1)) {
@@ -49,13 +47,11 @@ ParentPeak <- R6::R6Class(
         self$`lossFormula` <- `lossFormula`
       }
     },
-    #' To JSON string
-    #'
+
     #' @description
     #' To JSON String
     #'
     #' @return ParentPeak in JSON format
-    #' @export
     toJSON = function() {
       ParentPeakObject <- list()
       if (!is.null(self$`parentIdx`)) {
@@ -72,14 +68,12 @@ ParentPeak <- R6::R6Class(
       }
       ParentPeakObject
     },
-    #' Deserialize JSON string into an instance of ParentPeak
-    #'
+
     #' @description
     #' Deserialize JSON string into an instance of ParentPeak
     #'
     #' @param input_json the JSON input
     #' @return the instance of ParentPeak
-    #' @export
     fromJSON = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       if (!is.null(this_object$`parentIdx`)) {
@@ -93,19 +87,17 @@ ParentPeak <- R6::R6Class(
       }
       self
     },
-    #' To JSON string
-    #'
+
     #' @description
     #' To JSON String
     #'
     #' @return ParentPeak in JSON format
-    #' @export
     toJSONString = function() {
       jsoncontent <- c(
         if (!is.null(self$`parentIdx`)) {
           sprintf(
           '"parentIdx":
-            %f
+            %d
                     ',
           self$`parentIdx`
           )
@@ -113,7 +105,7 @@ ParentPeak <- R6::R6Class(
         if (!is.null(self$`parentFragmentId`)) {
           sprintf(
           '"parentFragmentId":
-            %f
+            %d
                     ',
           self$`parentFragmentId`
           )
@@ -128,20 +120,14 @@ ParentPeak <- R6::R6Class(
         }
       )
       jsoncontent <- paste(jsoncontent, collapse = ",")
-      # remove c() occurences and reduce resulting double escaped quotes \"\" into \"
-      jsoncontent <- gsub('\\\"c\\((.*?)\\\"\\)', '\\1', jsoncontent)
-      # fix wrong serialization of "\"ENUM\"" to "ENUM"
-      jsoncontent <- gsub("\\\\\"([A-Z]+)\\\\\"", "\\1", jsoncontent)
       json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
     },
-    #' Deserialize JSON string into an instance of ParentPeak
-    #'
+
     #' @description
     #' Deserialize JSON string into an instance of ParentPeak
     #'
     #' @param input_json the JSON input
     #' @return the instance of ParentPeak
-    #' @export
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       self$`parentIdx` <- this_object$`parentIdx`
@@ -149,13 +135,11 @@ ParentPeak <- R6::R6Class(
       self$`lossFormula` <- this_object$`lossFormula`
       self
     },
-    #' Validate JSON input with respect to ParentPeak
-    #'
+
     #' @description
     #' Validate JSON input with respect to ParentPeak and throw an exception if invalid
     #'
     #' @param input the JSON input
-    #' @export
     validateJSON = function(input) {
       input_json <- jsonlite::fromJSON(input)
       # check the required field `parentIdx`
@@ -183,23 +167,19 @@ ParentPeak <- R6::R6Class(
         stop(paste("The JSON input `", input, "` is invalid for ParentPeak: the required field `lossFormula` is missing."))
       }
     },
-    #' To string (JSON format)
-    #'
+
     #' @description
     #' To string (JSON format)
     #'
     #' @return String representation of ParentPeak
-    #' @export
     toString = function() {
       self$toJSONString()
     },
-    #' Return true if the values in all fields are valid.
-    #'
+
     #' @description
     #' Return true if the values in all fields are valid.
     #'
     #' @return true if the values in all fields are valid.
-    #' @export
     isValid = function() {
       # check if the required `parentIdx` is null
       if (is.null(self$`parentIdx`)) {
@@ -218,13 +198,11 @@ ParentPeak <- R6::R6Class(
 
       TRUE
     },
-    #' Return a list of invalid fields (if any).
-    #'
+
     #' @description
     #' Return a list of invalid fields (if any).
     #'
     #' @return A list of invalid fields (if any).
-    #' @export
     getInvalidFields = function() {
       invalid_fields <- list()
       # check if the required `parentIdx` is null
@@ -244,12 +222,9 @@ ParentPeak <- R6::R6Class(
 
       invalid_fields
     },
-    #' Print the object
-    #'
+
     #' @description
     #' Print the object
-    #'
-    #' @export
     print = function() {
       print(jsonlite::prettify(self$toJSONString()))
       invisible(self)

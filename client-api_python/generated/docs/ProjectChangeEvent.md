@@ -5,7 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**event_type** | **str** |  | [optional] 
+**event_type** | [**ProjectEventType**](ProjectEventType.md) |  | [optional] 
 **project_id** | **str** |  | [optional] 
 **compound_id** | **str** |  | [optional] 
 **featured_id** | **str** |  | [optional] 

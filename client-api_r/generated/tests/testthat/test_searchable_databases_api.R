@@ -8,6 +8,7 @@ api_instance <- SearchableDatabasesApi$new()
 test_that("AddDatabases", {
   # tests for AddDatabases
   # base path: http://localhost:8080
+  # DEPRECATED: this endpoint is based on local file paths and will likely be replaced in future versions of this API.
   # @param request_body array[character] 
   # @return [array[SearchableDatabase]]
 
@@ -64,20 +65,6 @@ test_that("GetIncludedDatabases", {
   # base path: http://localhost:8080
   # @param include_stats character  (optional)
   # @return [array[SearchableDatabase]]
-
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
-})
-
-test_that("ImportIntoDatabase", {
-  # tests for ImportIntoDatabase
-  # base path: http://localhost:8080
-  # Start import of structure and spectra files into the specified database.
-  # Start import of structure and spectra files into the specified database.
-  # @param database_id character database to import into
-  # @param buffer_size integer  (optional)
-  # @param input_files array[data.frame]  (optional)
-  # @return [SearchableDatabase]
 
   # uncomment below to test the operation
   #expect_equal(result, "EXPECTED_RESULT")

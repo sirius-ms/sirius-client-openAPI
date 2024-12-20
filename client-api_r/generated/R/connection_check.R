@@ -17,15 +17,13 @@ ConnectionCheck <- R6::R6Class(
   public = list(
     `licenseInfo` = NULL,
     `errors` = NULL,
-    #' Initialize a new ConnectionCheck class.
-    #'
+
     #' @description
     #' Initialize a new ConnectionCheck class.
     #'
     #' @param licenseInfo licenseInfo
     #' @param errors List of errors ordered by significance. first error should be reported and addressed first.  Following errors might just be follow-up errors
     #' @param ... Other optional arguments.
-    #' @export
     initialize = function(`licenseInfo`, `errors`, ...) {
       if (!missing(`licenseInfo`)) {
         stopifnot(R6::is.R6(`licenseInfo`))
@@ -37,24 +35,16 @@ ConnectionCheck <- R6::R6Class(
         self$`errors` <- `errors`
       }
     },
-    #' To JSON string
-    #'
+
     #' @description
     #' To JSON String
     #'
     #' @return ConnectionCheck in JSON format
-    #' @export
     toJSON = function() {
       ConnectionCheckObject <- list()
       if (!is.null(self$`licenseInfo`)) {
         ConnectionCheckObject[["licenseInfo"]] <-
-          if (is.list(self$`licenseInfo`$toJSON()) && length(self$`licenseInfo`$toJSON()) == 0L){
-            NULL
-          } else if (length(names(self$`licenseInfo`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`licenseInfo`$toJSON()))) {
-            jsonlite::fromJSON(self$`licenseInfo`$toJSON())
-          } else {
-            self$`licenseInfo`$toJSON()
-          }
+          self$`licenseInfo`$toJSON()
       }
       if (!is.null(self$`errors`)) {
         ConnectionCheckObject[["errors"]] <-
@@ -62,14 +52,12 @@ ConnectionCheck <- R6::R6Class(
       }
       ConnectionCheckObject
     },
-    #' Deserialize JSON string into an instance of ConnectionCheck
-    #'
+
     #' @description
     #' Deserialize JSON string into an instance of ConnectionCheck
     #'
     #' @param input_json the JSON input
     #' @return the instance of ConnectionCheck
-    #' @export
     fromJSON = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       if (!is.null(this_object$`licenseInfo`)) {
@@ -82,13 +70,11 @@ ConnectionCheck <- R6::R6Class(
       }
       self
     },
-    #' To JSON string
-    #'
+
     #' @description
     #' To JSON String
     #'
     #' @return ConnectionCheck in JSON format
-    #' @export
     toJSONString = function() {
       jsoncontent <- c(
         if (!is.null(self$`licenseInfo`)) {
@@ -109,33 +95,25 @@ ConnectionCheck <- R6::R6Class(
         }
       )
       jsoncontent <- paste(jsoncontent, collapse = ",")
-      # remove c() occurences and reduce resulting double escaped quotes \"\" into \"
-      jsoncontent <- gsub('\\\"c\\((.*?)\\\"\\)', '\\1', jsoncontent)
-      # fix wrong serialization of "\"ENUM\"" to "ENUM"
-      jsoncontent <- gsub("\\\\\"([A-Z]+)\\\\\"", "\\1", jsoncontent)
       json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
     },
-    #' Deserialize JSON string into an instance of ConnectionCheck
-    #'
+
     #' @description
     #' Deserialize JSON string into an instance of ConnectionCheck
     #'
     #' @param input_json the JSON input
     #' @return the instance of ConnectionCheck
-    #' @export
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       self$`licenseInfo` <- LicenseInfo$new()$fromJSON(jsonlite::toJSON(this_object$`licenseInfo`, auto_unbox = TRUE, digits = NA))
       self$`errors` <- ApiClient$new()$deserializeObj(this_object$`errors`, "array[ConnectionError]", loadNamespace("Rsirius"))
       self
     },
-    #' Validate JSON input with respect to ConnectionCheck
-    #'
+
     #' @description
     #' Validate JSON input with respect to ConnectionCheck and throw an exception if invalid
     #'
     #' @param input the JSON input
-    #' @export
     validateJSON = function(input) {
       input_json <- jsonlite::fromJSON(input)
       # check the required field `licenseInfo`
@@ -152,23 +130,19 @@ ConnectionCheck <- R6::R6Class(
         stop(paste("The JSON input `", input, "` is invalid for ConnectionCheck: the required field `errors` is missing."))
       }
     },
-    #' To string (JSON format)
-    #'
+
     #' @description
     #' To string (JSON format)
     #'
     #' @return String representation of ConnectionCheck
-    #' @export
     toString = function() {
       self$toJSONString()
     },
-    #' Return true if the values in all fields are valid.
-    #'
+
     #' @description
     #' Return true if the values in all fields are valid.
     #'
     #' @return true if the values in all fields are valid.
-    #' @export
     isValid = function() {
       # check if the required `licenseInfo` is null
       if (is.null(self$`licenseInfo`)) {
@@ -182,13 +156,11 @@ ConnectionCheck <- R6::R6Class(
 
       TRUE
     },
-    #' Return a list of invalid fields (if any).
-    #'
+
     #' @description
     #' Return a list of invalid fields (if any).
     #'
     #' @return A list of invalid fields (if any).
-    #' @export
     getInvalidFields = function() {
       invalid_fields <- list()
       # check if the required `licenseInfo` is null
@@ -203,12 +175,9 @@ ConnectionCheck <- R6::R6Class(
 
       invalid_fields
     },
-    #' Print the object
-    #'
+
     #' @description
     #' Print the object
-    #'
-    #' @export
     print = function() {
       print(jsonlite::prettify(self$toJSONString()))
       invisible(self)

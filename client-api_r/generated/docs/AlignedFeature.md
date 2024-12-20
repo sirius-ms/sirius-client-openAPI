@@ -15,7 +15,7 @@ Name | Type | Description | Notes
 **rtStartSeconds** | **numeric** |  | [optional] 
 **rtEndSeconds** | **numeric** |  | [optional] 
 **rtApexSeconds** | **numeric** |  | [optional] 
-**quality** | [**DataQuality**](DataQuality.md) |  | [optional] [Enum: ] 
+**quality** | **character** | Quality of this feature. | [optional] [Enum: [NOT_APPLICABLE, LOWEST, BAD, DECENT, GOOD]] 
 **hasMs1** | **character** | If true, the feature has at lease one MS1 spectrum | [optional] 
 **hasMsMs** | **character** | If true, the feature has at lease one MS/MS spectrum | [optional] 
 **msData** | [**MsData**](MsData.md) |  | [optional] 
