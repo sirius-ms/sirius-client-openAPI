@@ -417,7 +417,7 @@ ApiClient  <- R6::R6Class(
           return_obj <- return_type$new()
         }
         return_obj$fromJSON(
-          jsonlite::toJSON(obj, digits = NA, auto_unbox = TRUE)
+          jsonlite::toJSON(obj, digits = NA, auto_unbox = TRUE, null = 'null')
         )
       } else {
         # To handle primitive type

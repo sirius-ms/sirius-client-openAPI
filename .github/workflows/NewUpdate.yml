@@ -76,7 +76,7 @@ jobs:
         
         echo "generating R Code with packageVersion=$packageVersion"
         rm -rf client-api_r/generated/*
-        java -jar .updater/openapi_generator/openapi-generator-cli.jar generate -i .updater/api/api-docs-strings.json -c .updater/config/R/config.json -g r -o client-api_r/generated --additional-properties=packageVersion=$packageVersion
+        java -jar .updater/openapi_generator/openapi-generator-cli.jar generate -i .updater/api/api-docs-strings.json -c .updater/config/R/config.json -g r -o client-api_r/generated -t client-api_r/templates/r --additional-properties=packageVersion=$packageVersion
         
         echo "recover R manual folder"
         mv client-api_r/man/ client-api_r/generated/
