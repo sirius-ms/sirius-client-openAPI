@@ -8,8 +8,8 @@
 #' @description FragmentNode Class
 #' @format An \code{R6Class} generator object
 #' @field fragmentId  integer [optional]
-#' @field molecularFormula  character [optional]
-#' @field ionType  character [optional]
+#' @field molecularFormula neutral molecular formula of the fragment without adduct character [optional]
+#' @field adduct This combines the ionization plus adduct of the fragment. In contrast to the {@link FragmentationTree FragmentationTree}s adduct,  this adduct may not include any in-source loss. character [optional]
 #' @field massDeviationDa  numeric [optional]
 #' @field massDeviationPpm  numeric [optional]
 #' @field score  numeric [optional]
@@ -23,7 +23,7 @@ FragmentNode <- R6::R6Class(
   public = list(
     `fragmentId` = NULL,
     `molecularFormula` = NULL,
-    `ionType` = NULL,
+    `adduct` = NULL,
     `massDeviationDa` = NULL,
     `massDeviationPpm` = NULL,
     `score` = NULL,
@@ -35,8 +35,8 @@ FragmentNode <- R6::R6Class(
     #' Initialize a new FragmentNode class.
     #'
     #' @param fragmentId fragmentId
-    #' @param molecularFormula molecularFormula
-    #' @param ionType ionType
+    #' @param molecularFormula neutral molecular formula of the fragment without adduct
+    #' @param adduct This combines the ionization plus adduct of the fragment. In contrast to the {@link FragmentationTree FragmentationTree}s adduct,  this adduct may not include any in-source loss.
     #' @param massDeviationDa massDeviationDa
     #' @param massDeviationPpm massDeviationPpm
     #' @param score score
@@ -44,7 +44,7 @@ FragmentNode <- R6::R6Class(
     #' @param mz mz
     #' @param ... Other optional arguments.
     #' @export
-    initialize = function(`fragmentId` = NULL, `molecularFormula` = NULL, `ionType` = NULL, `massDeviationDa` = NULL, `massDeviationPpm` = NULL, `score` = NULL, `intensity` = NULL, `mz` = NULL, ...) {
+    initialize = function(`fragmentId` = NULL, `molecularFormula` = NULL, `adduct` = NULL, `massDeviationDa` = NULL, `massDeviationPpm` = NULL, `score` = NULL, `intensity` = NULL, `mz` = NULL, ...) {
       if (!is.null(`fragmentId`)) {
         if (!(is.numeric(`fragmentId`) && length(`fragmentId`) == 1)) {
           stop(paste("Error! Invalid data for `fragmentId`. Must be an integer:", `fragmentId`))
@@ -57,11 +57,11 @@ FragmentNode <- R6::R6Class(
         }
         self$`molecularFormula` <- `molecularFormula`
       }
-      if (!is.null(`ionType`)) {
-        if (!(is.character(`ionType`) && length(`ionType`) == 1)) {
-          stop(paste("Error! Invalid data for `ionType`. Must be a string:", `ionType`))
+      if (!is.null(`adduct`)) {
+        if (!(is.character(`adduct`) && length(`adduct`) == 1)) {
+          stop(paste("Error! Invalid data for `adduct`. Must be a string:", `adduct`))
         }
-        self$`ionType` <- `ionType`
+        self$`adduct` <- `adduct`
       }
       if (!is.null(`massDeviationDa`)) {
         if (!(is.numeric(`massDeviationDa`) && length(`massDeviationDa`) == 1)) {
@@ -111,9 +111,9 @@ FragmentNode <- R6::R6Class(
         FragmentNodeObject[["molecularFormula"]] <-
           self$`molecularFormula`
       }
-      if (!is.null(self$`ionType`)) {
-        FragmentNodeObject[["ionType"]] <-
-          self$`ionType`
+      if (!is.null(self$`adduct`)) {
+        FragmentNodeObject[["adduct"]] <-
+          self$`adduct`
       }
       if (!is.null(self$`massDeviationDa`)) {
         FragmentNodeObject[["massDeviationDa"]] <-
@@ -153,8 +153,8 @@ FragmentNode <- R6::R6Class(
       if (!is.null(this_object$`molecularFormula`)) {
         self$`molecularFormula` <- this_object$`molecularFormula`
       }
-      if (!is.null(this_object$`ionType`)) {
-        self$`ionType` <- this_object$`ionType`
+      if (!is.null(this_object$`adduct`)) {
+        self$`adduct` <- this_object$`adduct`
       }
       if (!is.null(this_object$`massDeviationDa`)) {
         self$`massDeviationDa` <- this_object$`massDeviationDa`
@@ -198,12 +198,12 @@ FragmentNode <- R6::R6Class(
           self$`molecularFormula`
           )
         },
-        if (!is.null(self$`ionType`)) {
+        if (!is.null(self$`adduct`)) {
           sprintf(
-          '"ionType":
+          '"adduct":
             "%s"
                     ',
-          self$`ionType`
+          self$`adduct`
           )
         },
         if (!is.null(self$`massDeviationDa`)) {
@@ -266,7 +266,7 @@ FragmentNode <- R6::R6Class(
       this_object <- jsonlite::fromJSON(input_json)
       self$`fragmentId` <- this_object$`fragmentId`
       self$`molecularFormula` <- this_object$`molecularFormula`
-      self$`ionType` <- this_object$`ionType`
+      self$`adduct` <- this_object$`adduct`
       self$`massDeviationDa` <- this_object$`massDeviationDa`
       self$`massDeviationPpm` <- this_object$`massDeviationPpm`
       self$`score` <- this_object$`score`

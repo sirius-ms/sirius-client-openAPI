@@ -11,6 +11,7 @@
 #' @field molecularFormula molecular formula of this formula candidate character [optional]
 #' @field adduct Adduct of this formula candidate character [optional]
 #' @field rank  integer [optional]
+#' @field siriusScoreNormalized Normalized Sirius Score of the formula candidate.  If NULL result is not available numeric [optional]
 #' @field siriusScore Sirius Score (isotope + tree score) of the formula candidate.  If NULL result is not available numeric [optional]
 #' @field isotopeScore  numeric [optional]
 #' @field treeScore  numeric [optional]
@@ -36,6 +37,7 @@ FormulaCandidate <- R6::R6Class(
     `molecularFormula` = NULL,
     `adduct` = NULL,
     `rank` = NULL,
+    `siriusScoreNormalized` = NULL,
     `siriusScore` = NULL,
     `isotopeScore` = NULL,
     `treeScore` = NULL,
@@ -60,6 +62,7 @@ FormulaCandidate <- R6::R6Class(
     #' @param molecularFormula molecular formula of this formula candidate
     #' @param adduct Adduct of this formula candidate
     #' @param rank rank
+    #' @param siriusScoreNormalized Normalized Sirius Score of the formula candidate.  If NULL result is not available
     #' @param siriusScore Sirius Score (isotope + tree score) of the formula candidate.  If NULL result is not available
     #' @param isotopeScore isotopeScore
     #' @param treeScore treeScore
@@ -77,7 +80,7 @@ FormulaCandidate <- R6::R6Class(
     #' @param canopusPrediction canopusPrediction
     #' @param ... Other optional arguments.
     #' @export
-    initialize = function(`formulaId` = NULL, `molecularFormula` = NULL, `adduct` = NULL, `rank` = NULL, `siriusScore` = NULL, `isotopeScore` = NULL, `treeScore` = NULL, `zodiacScore` = NULL, `numOfExplainedPeaks` = NULL, `numOfExplainablePeaks` = NULL, `totalExplainedIntensity` = NULL, `medianMassDeviation` = NULL, `fragmentationTree` = NULL, `annotatedSpectrum` = NULL, `isotopePatternAnnotation` = NULL, `lipidAnnotation` = NULL, `predictedFingerprint` = NULL, `compoundClasses` = NULL, `canopusPrediction` = NULL, ...) {
+    initialize = function(`formulaId` = NULL, `molecularFormula` = NULL, `adduct` = NULL, `rank` = NULL, `siriusScoreNormalized` = NULL, `siriusScore` = NULL, `isotopeScore` = NULL, `treeScore` = NULL, `zodiacScore` = NULL, `numOfExplainedPeaks` = NULL, `numOfExplainablePeaks` = NULL, `totalExplainedIntensity` = NULL, `medianMassDeviation` = NULL, `fragmentationTree` = NULL, `annotatedSpectrum` = NULL, `isotopePatternAnnotation` = NULL, `lipidAnnotation` = NULL, `predictedFingerprint` = NULL, `compoundClasses` = NULL, `canopusPrediction` = NULL, ...) {
       if (!is.null(`formulaId`)) {
         if (!(is.character(`formulaId`) && length(`formulaId`) == 1)) {
           stop(paste("Error! Invalid data for `formulaId`. Must be a string:", `formulaId`))
@@ -101,6 +104,12 @@ FormulaCandidate <- R6::R6Class(
           stop(paste("Error! Invalid data for `rank`. Must be an integer:", `rank`))
         }
         self$`rank` <- `rank`
+      }
+      if (!is.null(`siriusScoreNormalized`)) {
+        if (!(is.numeric(`siriusScoreNormalized`) && length(`siriusScoreNormalized`) == 1)) {
+          stop(paste("Error! Invalid data for `siriusScoreNormalized`. Must be a number:", `siriusScoreNormalized`))
+        }
+        self$`siriusScoreNormalized` <- `siriusScoreNormalized`
       }
       if (!is.null(`siriusScore`)) {
         if (!(is.numeric(`siriusScore`) && length(`siriusScore`) == 1)) {
@@ -202,6 +211,10 @@ FormulaCandidate <- R6::R6Class(
       if (!is.null(self$`rank`)) {
         FormulaCandidateObject[["rank"]] <-
           self$`rank`
+      }
+      if (!is.null(self$`siriusScoreNormalized`)) {
+        FormulaCandidateObject[["siriusScoreNormalized"]] <-
+          self$`siriusScoreNormalized`
       }
       if (!is.null(self$`siriusScore`)) {
         FormulaCandidateObject[["siriusScore"]] <-
@@ -329,6 +342,9 @@ FormulaCandidate <- R6::R6Class(
       if (!is.null(this_object$`rank`)) {
         self$`rank` <- this_object$`rank`
       }
+      if (!is.null(this_object$`siriusScoreNormalized`)) {
+        self$`siriusScoreNormalized` <- this_object$`siriusScoreNormalized`
+      }
       if (!is.null(this_object$`siriusScore`)) {
         self$`siriusScore` <- this_object$`siriusScore`
       }
@@ -429,6 +445,14 @@ FormulaCandidate <- R6::R6Class(
             %f
                     ',
           self$`rank`
+          )
+        },
+        if (!is.null(self$`siriusScoreNormalized`)) {
+          sprintf(
+          '"siriusScoreNormalized":
+            %f
+                    ',
+          self$`siriusScoreNormalized`
           )
         },
         if (!is.null(self$`siriusScore`)) {
@@ -573,6 +597,7 @@ FormulaCandidate <- R6::R6Class(
       self$`molecularFormula` <- this_object$`molecularFormula`
       self$`adduct` <- this_object$`adduct`
       self$`rank` <- this_object$`rank`
+      self$`siriusScoreNormalized` <- this_object$`siriusScoreNormalized`
       self$`siriusScore` <- this_object$`siriusScore`
       self$`isotopeScore` <- this_object$`isotopeScore`
       self$`treeScore` <- this_object$`treeScore`

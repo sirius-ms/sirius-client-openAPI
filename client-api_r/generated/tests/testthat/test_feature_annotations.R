@@ -43,8 +43,25 @@ test_that("confidenceApproxMatch", {
 })
 
 test_that("expansiveSearchState", {
-  # tests for the property `expansiveSearchState` (ConfidenceMode)
+  # tests for the property `expansiveSearchState` (character)
+  # Result that shows if structure annotation was expanded by using PubChem as fallback and if so, which confidence mode was used (as per input paramter)
 
   # uncomment below to test the property
   #expect_equal(model.instance$`expansiveSearchState`, "EXPECTED_RESULT")
+})
+
+test_that("specifiedDatabases", {
+  # tests for the property `specifiedDatabases` (array[character])
+  # List of databases that have been specified by for structure db search. Null if no structure db search has been performed.
+
+  # uncomment below to test the property
+  #expect_equal(model.instance$`specifiedDatabases`, "EXPECTED_RESULT")
+})
+
+test_that("expandedDatabases", {
+  # tests for the property `expandedDatabases` (array[character])
+  # List of databases that have been used to expand search space during expansive search. Null if no structure db search has been performed.
+
+  # uncomment below to test the property
+  #expect_equal(model.instance$`expandedDatabases`, "EXPECTED_RESULT")
 })

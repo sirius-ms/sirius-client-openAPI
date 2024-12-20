@@ -10,7 +10,7 @@
 #' @field molecularFormula Molecular formula of the consensus annotation  Might be null if no consensus formula is available. character [optional]
 #' @field compoundClasses  \link{CompoundClasses} [optional]
 #' @field supportingFeatureIds FeatureIds where the topAnnotation supports this annotation. list(character) [optional]
-#' @field selectionCriterion  \link{ConsensusCriterionCSI} [optional]
+#' @field selectionCriterion Null if this is a custom selection character [optional]
 #' @field csiFingerIdStructure  \link{StructureCandidate} [optional]
 #' @field confidenceExactMatch Confidence value that represents the certainty that reported consensus structure is exactly the measured one  If multiple features support this consensus structure the maximum confidence is reported numeric [optional]
 #' @field confidenceApproxMatch Confidence value that represents the certainty that the exact consensus structure or a very similar  structure (e.g. measured by Maximum Common Edge Subgraph Distance) is the measured one.  If multiple features support this consensus structure the maximum confidence is reported numeric [optional]
@@ -35,7 +35,7 @@ ConsensusAnnotationsCSI <- R6::R6Class(
     #' @param molecularFormula Molecular formula of the consensus annotation  Might be null if no consensus formula is available.
     #' @param compoundClasses compoundClasses
     #' @param supportingFeatureIds FeatureIds where the topAnnotation supports this annotation.
-    #' @param selectionCriterion selectionCriterion
+    #' @param selectionCriterion Null if this is a custom selection
     #' @param csiFingerIdStructure csiFingerIdStructure
     #' @param confidenceExactMatch Confidence value that represents the certainty that reported consensus structure is exactly the measured one  If multiple features support this consensus structure the maximum confidence is reported
     #' @param confidenceApproxMatch Confidence value that represents the certainty that the exact consensus structure or a very similar  structure (e.g. measured by Maximum Common Edge Subgraph Distance) is the measured one.  If multiple features support this consensus structure the maximum confidence is reported
@@ -59,10 +59,12 @@ ConsensusAnnotationsCSI <- R6::R6Class(
       }
       if (!is.null(`selectionCriterion`)) {
         # disabled, as it is broken and checks for `selectionCriterion` %in% c()
-        # if (!(`selectionCriterion` %in% c())) {
-        #  stop(paste("Error! \"", `selectionCriterion`, "\" cannot be assigned to `selectionCriterion`. Must be .", sep = ""))
+        # if (!(`selectionCriterion` %in% c("MAJORITY_STRUCTURE", "CONFIDENCE_STRUCTURE", "SINGLETON_STRUCTURE", "MAJORITY_FORMULA", "TOP_FORMULA", "SINGLETON_FORMULA"))) {
+        #  stop(paste("Error! \"", `selectionCriterion`, "\" cannot be assigned to `selectionCriterion`. Must be \"MAJORITY_STRUCTURE\", \"CONFIDENCE_STRUCTURE\", \"SINGLETON_STRUCTURE\", \"MAJORITY_FORMULA\", \"TOP_FORMULA\", \"SINGLETON_FORMULA\".", sep = ""))
         # }
-        stopifnot(R6::is.R6(`selectionCriterion`))
+        if (!(is.character(`selectionCriterion`) && length(`selectionCriterion`) == 1)) {
+          stop(paste("Error! Invalid data for `selectionCriterion`. Must be a string:", `selectionCriterion`))
+        }
         self$`selectionCriterion` <- `selectionCriterion`
       }
       if (!is.null(`csiFingerIdStructure`)) {
@@ -111,13 +113,7 @@ ConsensusAnnotationsCSI <- R6::R6Class(
       }
       if (!is.null(self$`selectionCriterion`)) {
         ConsensusAnnotationsCSIObject[["selectionCriterion"]] <-
-          if (is.list(self$`selectionCriterion`$toJSON()) && length(self$`selectionCriterion`$toJSON()) == 0L){
-            NULL
-          } else if (length(names(self$`selectionCriterion`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`selectionCriterion`$toJSON()))) {
-            jsonlite::fromJSON(self$`selectionCriterion`$toJSON())
-          } else {
-            self$`selectionCriterion`$toJSON()
-          }
+          self$`selectionCriterion`
       }
       if (!is.null(self$`csiFingerIdStructure`)) {
         ConsensusAnnotationsCSIObject[["csiFingerIdStructure"]] <-
@@ -161,9 +157,10 @@ ConsensusAnnotationsCSI <- R6::R6Class(
         self$`supportingFeatureIds` <- ApiClient$new()$deserializeObj(this_object$`supportingFeatureIds`, "array[character]", loadNamespace("Rsirius"))
       }
       if (!is.null(this_object$`selectionCriterion`)) {
-        `selectioncriterion_object` <- ConsensusCriterionCSI$new()
-        `selectioncriterion_object`$fromJSON(jsonlite::toJSON(this_object$`selectionCriterion`, auto_unbox = TRUE, digits = NA))
-        self$`selectionCriterion` <- `selectioncriterion_object`
+        if (!is.null(this_object$`selectionCriterion`) && !(this_object$`selectionCriterion` %in% c("MAJORITY_STRUCTURE", "CONFIDENCE_STRUCTURE", "SINGLETON_STRUCTURE", "MAJORITY_FORMULA", "TOP_FORMULA", "SINGLETON_FORMULA"))) {
+          stop(paste("Error! \"", this_object$`selectionCriterion`, "\" cannot be assigned to `selectionCriterion`. Must be \"MAJORITY_STRUCTURE\", \"CONFIDENCE_STRUCTURE\", \"SINGLETON_STRUCTURE\", \"MAJORITY_FORMULA\", \"TOP_FORMULA\", \"SINGLETON_FORMULA\".", sep = ""))
+        }
+        self$`selectionCriterion` <- this_object$`selectionCriterion`
       }
       if (!is.null(this_object$`csiFingerIdStructure`)) {
         `csifingeridstructure_object` <- StructureCandidate$new()
@@ -214,9 +211,9 @@ ConsensusAnnotationsCSI <- R6::R6Class(
         if (!is.null(self$`selectionCriterion`)) {
           sprintf(
           '"selectionCriterion":
-          %s
-          ',
-          jsonlite::toJSON(self$`selectionCriterion`$toJSON(), auto_unbox = TRUE, digits = NA)
+            "%s"
+                    ',
+          self$`selectionCriterion`
           )
         },
         if (!is.null(self$`csiFingerIdStructure`)) {
@@ -264,7 +261,10 @@ ConsensusAnnotationsCSI <- R6::R6Class(
       self$`molecularFormula` <- this_object$`molecularFormula`
       self$`compoundClasses` <- CompoundClasses$new()$fromJSON(jsonlite::toJSON(this_object$`compoundClasses`, auto_unbox = TRUE, digits = NA))
       self$`supportingFeatureIds` <- ApiClient$new()$deserializeObj(this_object$`supportingFeatureIds`, "array[character]", loadNamespace("Rsirius"))
-      self$`selectionCriterion` <- ConsensusCriterionCSI$new()$fromJSON(jsonlite::toJSON(this_object$`selectionCriterion`, auto_unbox = TRUE, digits = NA))
+      if (!is.null(this_object$`selectionCriterion`) && !(this_object$`selectionCriterion` %in% c("MAJORITY_STRUCTURE", "CONFIDENCE_STRUCTURE", "SINGLETON_STRUCTURE", "MAJORITY_FORMULA", "TOP_FORMULA", "SINGLETON_FORMULA"))) {
+        stop(paste("Error! \"", this_object$`selectionCriterion`, "\" cannot be assigned to `selectionCriterion`. Must be \"MAJORITY_STRUCTURE\", \"CONFIDENCE_STRUCTURE\", \"SINGLETON_STRUCTURE\", \"MAJORITY_FORMULA\", \"TOP_FORMULA\", \"SINGLETON_FORMULA\".", sep = ""))
+      }
+      self$`selectionCriterion` <- this_object$`selectionCriterion`
       self$`csiFingerIdStructure` <- StructureCandidate$new()$fromJSON(jsonlite::toJSON(this_object$`csiFingerIdStructure`, auto_unbox = TRUE, digits = NA))
       self$`confidenceExactMatch` <- this_object$`confidenceExactMatch`
       self$`confidenceApproxMatch` <- this_object$`confidenceApproxMatch`

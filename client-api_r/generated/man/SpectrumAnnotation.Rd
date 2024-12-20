@@ -20,7 +20,7 @@ Create a new SpectrumAnnotation
 \describe{
 \item{\code{molecularFormula}}{Molecular formula that has been annotated to this spectrum character [optional]}
 
-\item{\code{ionization}}{Ionization that has been annotated to this spectrum character [optional]}
+\item{\code{adduct}}{Adduct that has been annotated to this spectrum character [optional]}
 
 \item{\code{exactMass}}{Exact mass based on the annotated molecular formula and ionization numeric [optional]}
 
@@ -28,9 +28,9 @@ Create a new SpectrumAnnotation
 
 \item{\code{massDeviationPpm}}{Relative mass deviation of the exact mass to the precursor mass (precursorMz) of this spectrum in ppm numeric [optional]}
 
-\item{\code{structureAnnotationSmiles}}{Smiles of the structure candidate used to derive substructure peak annotations via epimetheus insilico fragmentation  Substructure highlighting (bond and atom indices) refer to this specific SMILES.  If you standardize or canonicalize this SMILES in any way the indices of substructure highlighting might  not match correctly anymore.   Null if substructure annotation not available or not requested. character [optional]}
+\item{\code{structureAnnotationSmiles}}{EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.   Smiles of the structure candidate used to derive substructure peak annotations via epimetheus insilico fragmentation  Substructure highlighting (bond and atom indices) refer to this specific SMILES.  If you standardize or canonicalize this SMILES in any way the indices of substructure highlighting might  not match correctly anymore.   Null if substructure annotation not available or not requested. character [optional]}
 
-\item{\code{structureAnnotationScore}}{Overall score of all substructure annotations computed for this structure candidate (structureAnnotationSmiles)   Null if substructure annotation not available or not requested. numeric [optional]}
+\item{\code{structureAnnotationScore}}{EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.   Overall score of all substructure annotations computed for this structure candidate (structureAnnotationSmiles)   Null if substructure annotation not available or not requested. numeric [optional]}
 }
 \if{html}{\out{</div>}}
 }
@@ -58,7 +58,7 @@ Initialize a new SpectrumAnnotation class.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{SpectrumAnnotation$new(
   molecularFormula = NULL,
-  ionization = NULL,
+  adduct = NULL,
   exactMass = NULL,
   massDeviationMz = NULL,
   massDeviationPpm = NULL,
@@ -73,7 +73,7 @@ Initialize a new SpectrumAnnotation class.
 \describe{
 \item{\code{molecularFormula}}{Molecular formula that has been annotated to this spectrum}
 
-\item{\code{ionization}}{Ionization that has been annotated to this spectrum}
+\item{\code{adduct}}{Adduct that has been annotated to this spectrum}
 
 \item{\code{exactMass}}{Exact mass based on the annotated molecular formula and ionization}
 
@@ -81,9 +81,9 @@ Initialize a new SpectrumAnnotation class.
 
 \item{\code{massDeviationPpm}}{Relative mass deviation of the exact mass to the precursor mass (precursorMz) of this spectrum in ppm}
 
-\item{\code{structureAnnotationSmiles}}{Smiles of the structure candidate used to derive substructure peak annotations via epimetheus insilico fragmentation  Substructure highlighting (bond and atom indices) refer to this specific SMILES.  If you standardize or canonicalize this SMILES in any way the indices of substructure highlighting might  not match correctly anymore.   Null if substructure annotation not available or not requested.}
+\item{\code{structureAnnotationSmiles}}{EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.   Smiles of the structure candidate used to derive substructure peak annotations via epimetheus insilico fragmentation  Substructure highlighting (bond and atom indices) refer to this specific SMILES.  If you standardize or canonicalize this SMILES in any way the indices of substructure highlighting might  not match correctly anymore.   Null if substructure annotation not available or not requested.}
 
-\item{\code{structureAnnotationScore}}{Overall score of all substructure annotations computed for this structure candidate (structureAnnotationSmiles)   Null if substructure annotation not available or not requested.}
+\item{\code{structureAnnotationScore}}{EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.   Overall score of all substructure annotations computed for this structure candidate (structureAnnotationSmiles)   Null if substructure annotation not available or not requested.}
 
 \item{\code{...}}{Other optional arguments.}
 }

@@ -11,7 +11,7 @@
 #' @field spectraSearchDBs Structure Databases with Reference spectra to search in.  <p>  Defaults to BIO + Custom Databases. Possible values are available to Database API. list(character) [optional]
 #' @field peakDeviationPpm Maximum allowed mass deviation in ppm for matching peaks. numeric [optional]
 #' @field precursorDeviationPpm Maximum allowed mass deviation in ppm for matching the precursor. If not specified, the same value as for the peaks is used. numeric [optional]
-#' @field scoring  \link{SpectralMatchingType} [optional]
+#' @field scoring Specify scoring method to match spectra  INTENSITY: Intensity weighted. Each peak matches at most one peak in the other spectrum.  GAUSSIAN: Treat peaks as (un-normalized) Gaussians and score overlapping areas of PDFs. Each peak might score against multiple peaks in the other spectrum.  MODIFIED_COSINE:  This algorithm requires that there is at most one pair of peaks (u,v) where the m/z of u and v are within the allowed mass tolerance. To be used for analog search with different precursor masses. character [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
 #' @export
@@ -32,7 +32,7 @@ SpectralLibrarySearch <- R6::R6Class(
     #' @param spectraSearchDBs Structure Databases with Reference spectra to search in.  <p>  Defaults to BIO + Custom Databases. Possible values are available to Database API.
     #' @param peakDeviationPpm Maximum allowed mass deviation in ppm for matching peaks.
     #' @param precursorDeviationPpm Maximum allowed mass deviation in ppm for matching the precursor. If not specified, the same value as for the peaks is used.
-    #' @param scoring scoring
+    #' @param scoring Specify scoring method to match spectra  INTENSITY: Intensity weighted. Each peak matches at most one peak in the other spectrum.  GAUSSIAN: Treat peaks as (un-normalized) Gaussians and score overlapping areas of PDFs. Each peak might score against multiple peaks in the other spectrum.  MODIFIED_COSINE:  This algorithm requires that there is at most one pair of peaks (u,v) where the m/z of u and v are within the allowed mass tolerance. To be used for analog search with different precursor masses.
     #' @param ... Other optional arguments.
     #' @export
     initialize = function(`enabled` = NULL, `spectraSearchDBs` = NULL, `peakDeviationPpm` = NULL, `precursorDeviationPpm` = NULL, `scoring` = NULL, ...) {
@@ -61,10 +61,12 @@ SpectralLibrarySearch <- R6::R6Class(
       }
       if (!is.null(`scoring`)) {
         # disabled, as it is broken and checks for `scoring` %in% c()
-        # if (!(`scoring` %in% c())) {
-        #  stop(paste("Error! \"", `scoring`, "\" cannot be assigned to `scoring`. Must be .", sep = ""))
+        # if (!(`scoring` %in% c("INTENSITY", "GAUSSIAN", "MODIFIED_COSINE"))) {
+        #  stop(paste("Error! \"", `scoring`, "\" cannot be assigned to `scoring`. Must be \"INTENSITY\", \"GAUSSIAN\", \"MODIFIED_COSINE\".", sep = ""))
         # }
-        stopifnot(R6::is.R6(`scoring`))
+        if (!(is.character(`scoring`) && length(`scoring`) == 1)) {
+          stop(paste("Error! Invalid data for `scoring`. Must be a string:", `scoring`))
+        }
         self$`scoring` <- `scoring`
       }
     },
@@ -95,13 +97,7 @@ SpectralLibrarySearch <- R6::R6Class(
       }
       if (!is.null(self$`scoring`)) {
         SpectralLibrarySearchObject[["scoring"]] <-
-          if (is.list(self$`scoring`$toJSON()) && length(self$`scoring`$toJSON()) == 0L){
-            NULL
-          } else if (length(names(self$`scoring`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`scoring`$toJSON()))) {
-            jsonlite::fromJSON(self$`scoring`$toJSON())
-          } else {
-            self$`scoring`$toJSON()
-          }
+          self$`scoring`
       }
       SpectralLibrarySearchObject
     },
@@ -128,9 +124,10 @@ SpectralLibrarySearch <- R6::R6Class(
         self$`precursorDeviationPpm` <- this_object$`precursorDeviationPpm`
       }
       if (!is.null(this_object$`scoring`)) {
-        `scoring_object` <- SpectralMatchingType$new()
-        `scoring_object`$fromJSON(jsonlite::toJSON(this_object$`scoring`, auto_unbox = TRUE, digits = NA))
-        self$`scoring` <- `scoring_object`
+        if (!is.null(this_object$`scoring`) && !(this_object$`scoring` %in% c("INTENSITY", "GAUSSIAN", "MODIFIED_COSINE"))) {
+          stop(paste("Error! \"", this_object$`scoring`, "\" cannot be assigned to `scoring`. Must be \"INTENSITY\", \"GAUSSIAN\", \"MODIFIED_COSINE\".", sep = ""))
+        }
+        self$`scoring` <- this_object$`scoring`
       }
       self
     },
@@ -178,9 +175,9 @@ SpectralLibrarySearch <- R6::R6Class(
         if (!is.null(self$`scoring`)) {
           sprintf(
           '"scoring":
-          %s
-          ',
-          jsonlite::toJSON(self$`scoring`$toJSON(), auto_unbox = TRUE, digits = NA)
+            "%s"
+                    ',
+          self$`scoring`
           )
         }
       )
@@ -205,7 +202,10 @@ SpectralLibrarySearch <- R6::R6Class(
       self$`spectraSearchDBs` <- ApiClient$new()$deserializeObj(this_object$`spectraSearchDBs`, "array[character]", loadNamespace("Rsirius"))
       self$`peakDeviationPpm` <- this_object$`peakDeviationPpm`
       self$`precursorDeviationPpm` <- this_object$`precursorDeviationPpm`
-      self$`scoring` <- SpectralMatchingType$new()$fromJSON(jsonlite::toJSON(this_object$`scoring`, auto_unbox = TRUE, digits = NA))
+      if (!is.null(this_object$`scoring`) && !(this_object$`scoring` %in% c("INTENSITY", "GAUSSIAN", "MODIFIED_COSINE"))) {
+        stop(paste("Error! \"", this_object$`scoring`, "\" cannot be assigned to `scoring`. Must be \"INTENSITY\", \"GAUSSIAN\", \"MODIFIED_COSINE\".", sep = ""))
+      }
+      self$`scoring` <- this_object$`scoring`
       self
     },
     #' Validate JSON input with respect to SpectralLibrarySearch

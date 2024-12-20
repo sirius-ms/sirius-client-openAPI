@@ -17,7 +17,7 @@ Name | Type | Description | Notes
 **adduct** | **character** |  | [optional] 
 **exactMass** | **character** |  | [optional] 
 **smiles** | **character** |  | [optional] 
-**candidateInChiKey** | **character** |  | 
+**inchiKey** | **character** |  | 
 **referenceSpectrum** | [**BasicSpectrum**](BasicSpectrum.md) |  | [optional] 
 
 

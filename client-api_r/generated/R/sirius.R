@@ -8,7 +8,7 @@
 #' @description Sirius Class
 #' @format An \code{R6Class} generator object
 #' @field enabled tags whether the tool is enabled character [optional]
-#' @field profile  \link{InstrumentProfile} [optional]
+#' @field profile Instrument specific profile for internal algorithms  Just select what comes closest to the instrument that was used for measuring the data. character [optional]
 #' @field numberOfCandidates Number of formula candidates to keep as result list (Formula Candidates). integer [optional]
 #' @field numberOfCandidatesPerIonization Use this parameter if you want to force SIRIUS to report at least  NumberOfCandidatesPerIonization results per ionization.  if <= 0, this parameter will have no effect and just the top  NumberOfCandidates results will be reported. integer [optional]
 #' @field massAccuracyMS2ppm Maximum allowed mass deviation. Only molecular formulas within this mass window are considered. numeric [optional]
@@ -59,7 +59,7 @@ Sirius <- R6::R6Class(
     #' Initialize a new Sirius class.
     #'
     #' @param enabled tags whether the tool is enabled
-    #' @param profile profile
+    #' @param profile Instrument specific profile for internal algorithms  Just select what comes closest to the instrument that was used for measuring the data.
     #' @param numberOfCandidates Number of formula candidates to keep as result list (Formula Candidates).
     #' @param numberOfCandidatesPerIonization Use this parameter if you want to force SIRIUS to report at least  NumberOfCandidatesPerIonization results per ionization.  if <= 0, this parameter will have no effect and just the top  NumberOfCandidates results will be reported.
     #' @param massAccuracyMS2ppm Maximum allowed mass deviation. Only molecular formulas within this mass window are considered.
@@ -89,10 +89,12 @@ Sirius <- R6::R6Class(
       }
       if (!is.null(`profile`)) {
         # disabled, as it is broken and checks for `profile` %in% c()
-        # if (!(`profile` %in% c())) {
-        #  stop(paste("Error! \"", `profile`, "\" cannot be assigned to `profile`. Must be .", sep = ""))
+        # if (!(`profile` %in% c("QTOF", "ORBITRAP"))) {
+        #  stop(paste("Error! \"", `profile`, "\" cannot be assigned to `profile`. Must be \"QTOF\", \"ORBITRAP\".", sep = ""))
         # }
-        stopifnot(R6::is.R6(`profile`))
+        if (!(is.character(`profile`) && length(`profile`) == 1)) {
+          stop(paste("Error! Invalid data for `profile`. Must be a string:", `profile`))
+        }
         self$`profile` <- `profile`
       }
       if (!is.null(`numberOfCandidates`)) {
@@ -217,13 +219,7 @@ Sirius <- R6::R6Class(
       }
       if (!is.null(self$`profile`)) {
         SiriusObject[["profile"]] <-
-          if (is.list(self$`profile`$toJSON()) && length(self$`profile`$toJSON()) == 0L){
-            NULL
-          } else if (length(names(self$`profile`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`profile`$toJSON()))) {
-            jsonlite::fromJSON(self$`profile`$toJSON())
-          } else {
-            self$`profile`$toJSON()
-          }
+          self$`profile`
       }
       if (!is.null(self$`numberOfCandidates`)) {
         SiriusObject[["numberOfCandidates"]] <-
@@ -325,9 +321,10 @@ Sirius <- R6::R6Class(
         self$`enabled` <- this_object$`enabled`
       }
       if (!is.null(this_object$`profile`)) {
-        `profile_object` <- InstrumentProfile$new()
-        `profile_object`$fromJSON(jsonlite::toJSON(this_object$`profile`, auto_unbox = TRUE, digits = NA))
-        self$`profile` <- `profile_object`
+        if (!is.null(this_object$`profile`) && !(this_object$`profile` %in% c("QTOF", "ORBITRAP"))) {
+          stop(paste("Error! \"", this_object$`profile`, "\" cannot be assigned to `profile`. Must be \"QTOF\", \"ORBITRAP\".", sep = ""))
+        }
+        self$`profile` <- this_object$`profile`
       }
       if (!is.null(this_object$`numberOfCandidates`)) {
         self$`numberOfCandidates` <- this_object$`numberOfCandidates`
@@ -412,9 +409,9 @@ Sirius <- R6::R6Class(
         if (!is.null(self$`profile`)) {
           sprintf(
           '"profile":
-          %s
-          ',
-          jsonlite::toJSON(self$`profile`$toJSON(), auto_unbox = TRUE, digits = NA)
+            "%s"
+                    ',
+          self$`profile`
           )
         },
         if (!is.null(self$`numberOfCandidates`)) {
@@ -580,7 +577,10 @@ Sirius <- R6::R6Class(
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       self$`enabled` <- this_object$`enabled`
-      self$`profile` <- InstrumentProfile$new()$fromJSON(jsonlite::toJSON(this_object$`profile`, auto_unbox = TRUE, digits = NA))
+      if (!is.null(this_object$`profile`) && !(this_object$`profile` %in% c("QTOF", "ORBITRAP"))) {
+        stop(paste("Error! \"", this_object$`profile`, "\" cannot be assigned to `profile`. Must be \"QTOF\", \"ORBITRAP\".", sep = ""))
+      }
+      self$`profile` <- this_object$`profile`
       self$`numberOfCandidates` <- this_object$`numberOfCandidates`
       self$`numberOfCandidatesPerIonization` <- this_object$`numberOfCandidatesPerIonization`
       self$`massAccuracyMS2ppm` <- this_object$`massAccuracyMS2ppm`

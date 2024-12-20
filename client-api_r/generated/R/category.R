@@ -8,8 +8,8 @@
 #' @description Category Class
 #' @format An \code{R6Class} generator object
 #' @field categoryName  character [optional]
-#' @field overallQuality  \link{DataQuality} [optional]
-#' @field items  list(\link{Item}) [optional]
+#' @field overallQuality  character [optional]
+#' @field items  list(\link{QualityItem}) [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
 #' @export
@@ -38,10 +38,12 @@ Category <- R6::R6Class(
       }
       if (!is.null(`overallQuality`)) {
         # disabled, as it is broken and checks for `overallQuality` %in% c()
-        # if (!(`overallQuality` %in% c())) {
-        #  stop(paste("Error! \"", `overallQuality`, "\" cannot be assigned to `overallQuality`. Must be .", sep = ""))
+        # if (!(`overallQuality` %in% c("NOT_APPLICABLE", "LOWEST", "BAD", "DECENT", "GOOD"))) {
+        #  stop(paste("Error! \"", `overallQuality`, "\" cannot be assigned to `overallQuality`. Must be \"NOT_APPLICABLE\", \"LOWEST\", \"BAD\", \"DECENT\", \"GOOD\".", sep = ""))
         # }
-        stopifnot(R6::is.R6(`overallQuality`))
+        if (!(is.character(`overallQuality`) && length(`overallQuality`) == 1)) {
+          stop(paste("Error! Invalid data for `overallQuality`. Must be a string:", `overallQuality`))
+        }
         self$`overallQuality` <- `overallQuality`
       }
       if (!is.null(`items`)) {
@@ -65,13 +67,7 @@ Category <- R6::R6Class(
       }
       if (!is.null(self$`overallQuality`)) {
         CategoryObject[["overallQuality"]] <-
-          if (is.list(self$`overallQuality`$toJSON()) && length(self$`overallQuality`$toJSON()) == 0L){
-            NULL
-          } else if (length(names(self$`overallQuality`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`overallQuality`$toJSON()))) {
-            jsonlite::fromJSON(self$`overallQuality`$toJSON())
-          } else {
-            self$`overallQuality`$toJSON()
-          }
+          self$`overallQuality`
       }
       if (!is.null(self$`items`)) {
         CategoryObject[["items"]] <-
@@ -93,12 +89,13 @@ Category <- R6::R6Class(
         self$`categoryName` <- this_object$`categoryName`
       }
       if (!is.null(this_object$`overallQuality`)) {
-        `overallquality_object` <- DataQuality$new()
-        `overallquality_object`$fromJSON(jsonlite::toJSON(this_object$`overallQuality`, auto_unbox = TRUE, digits = NA))
-        self$`overallQuality` <- `overallquality_object`
+        if (!is.null(this_object$`overallQuality`) && !(this_object$`overallQuality` %in% c("NOT_APPLICABLE", "LOWEST", "BAD", "DECENT", "GOOD"))) {
+          stop(paste("Error! \"", this_object$`overallQuality`, "\" cannot be assigned to `overallQuality`. Must be \"NOT_APPLICABLE\", \"LOWEST\", \"BAD\", \"DECENT\", \"GOOD\".", sep = ""))
+        }
+        self$`overallQuality` <- this_object$`overallQuality`
       }
       if (!is.null(this_object$`items`)) {
-        self$`items` <- ApiClient$new()$deserializeObj(this_object$`items`, "array[Item]", loadNamespace("Rsirius"))
+        self$`items` <- ApiClient$new()$deserializeObj(this_object$`items`, "array[QualityItem]", loadNamespace("Rsirius"))
       }
       self
     },
@@ -122,9 +119,9 @@ Category <- R6::R6Class(
         if (!is.null(self$`overallQuality`)) {
           sprintf(
           '"overallQuality":
-          %s
-          ',
-          jsonlite::toJSON(self$`overallQuality`$toJSON(), auto_unbox = TRUE, digits = NA)
+            "%s"
+                    ',
+          self$`overallQuality`
           )
         },
         if (!is.null(self$`items`)) {
@@ -154,8 +151,11 @@ Category <- R6::R6Class(
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       self$`categoryName` <- this_object$`categoryName`
-      self$`overallQuality` <- DataQuality$new()$fromJSON(jsonlite::toJSON(this_object$`overallQuality`, auto_unbox = TRUE, digits = NA))
-      self$`items` <- ApiClient$new()$deserializeObj(this_object$`items`, "array[Item]", loadNamespace("Rsirius"))
+      if (!is.null(this_object$`overallQuality`) && !(this_object$`overallQuality` %in% c("NOT_APPLICABLE", "LOWEST", "BAD", "DECENT", "GOOD"))) {
+        stop(paste("Error! \"", this_object$`overallQuality`, "\" cannot be assigned to `overallQuality`. Must be \"NOT_APPLICABLE\", \"LOWEST\", \"BAD\", \"DECENT\", \"GOOD\".", sep = ""))
+      }
+      self$`overallQuality` <- this_object$`overallQuality`
+      self$`items` <- ApiClient$new()$deserializeObj(this_object$`items`, "array[QualityItem]", loadNamespace("Rsirius"))
       self
     },
     #' Validate JSON input with respect to Category

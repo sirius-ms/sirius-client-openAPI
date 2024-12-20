@@ -79,7 +79,8 @@ test_that("rtApexSeconds", {
 })
 
 test_that("quality", {
-  # tests for the property `quality` (DataQuality)
+  # tests for the property `quality` (character)
+  # Quality of this feature.
 
   # uncomment below to test the property
   #expect_equal(model.instance$`quality`, "EXPECTED_RESULT")

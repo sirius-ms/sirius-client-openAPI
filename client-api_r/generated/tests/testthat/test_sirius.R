@@ -14,7 +14,8 @@ test_that("enabled", {
 })
 
 test_that("profile", {
-  # tests for the property `profile` (InstrumentProfile)
+  # tests for the property `profile` (character)
+  # Instrument specific profile for internal algorithms  Just select what comes closest to the instrument that was used for measuring the data.
 
   # uncomment below to test the property
   #expect_equal(model.instance$`profile`, "EXPECTED_RESULT")

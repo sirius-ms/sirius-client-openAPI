@@ -38,7 +38,8 @@ test_that("precursorDeviationPpm", {
 })
 
 test_that("scoring", {
-  # tests for the property `scoring` (SpectralMatchingType)
+  # tests for the property `scoring` (character)
+  # Specify scoring method to match spectra  INTENSITY: Intensity weighted. Each peak matches at most one peak in the other spectrum.  GAUSSIAN: Treat peaks as (un-normalized) Gaussians and score overlapping areas of PDFs. Each peak might score against multiple peaks in the other spectrum.  MODIFIED_COSINE:  This algorithm requires that there is at most one pair of peaks (u,v) where the m/z of u and v are within the allowed mass tolerance. To be used for analog search with different precursor masses.
 
   # uncomment below to test the property
   #expect_equal(model.instance$`scoring`, "EXPECTED_RESULT")

@@ -8,7 +8,7 @@
 An \code{R6Class} generator object
 }
 \description{
-AnnotatedSpectrum Class
+Spectrum model with peak annotations based on the fragmentation tree and Epimetheus substructure annotations.  Molecular formula and adduct of the spectrum are identical to the ones of the corresponding molecular formula candidate and FragmentationTree.  Fragment molecular formulas and adducts correspond to the FragmentationTree's FragmentNodes
 
 AnnotatedSpectrum Class
 }
@@ -23,6 +23,8 @@ Create a new AnnotatedSpectrum
 \item{\code{msLevel}}{MS level of the measured spectrum.  Artificial spectra with no msLevel (e.g. Simulated Isotope patterns) use null or zero integer [optional]}
 
 \item{\code{collisionEnergy}}{Collision energy used for MS/MS spectra  Null for spectra where collision energy is not applicable character [optional]}
+
+\item{\code{instrument}}{Instrument information. character [optional]}
 
 \item{\code{precursorMz}}{Precursor m/z of the MS/MS spectrum  Null for spectra where precursor m/z is not applicable numeric [optional]}
 
@@ -63,6 +65,7 @@ Initialize a new AnnotatedSpectrum class.
   name = NULL,
   msLevel = NULL,
   collisionEnergy = NULL,
+  instrument = NULL,
   precursorMz = NULL,
   scanNumber = NULL,
   absIntensityFactor = NULL,
@@ -81,6 +84,8 @@ Initialize a new AnnotatedSpectrum class.
 \item{\code{msLevel}}{MS level of the measured spectrum.  Artificial spectra with no msLevel (e.g. Simulated Isotope patterns) use null or zero}
 
 \item{\code{collisionEnergy}}{Collision energy used for MS/MS spectra  Null for spectra where collision energy is not applicable}
+
+\item{\code{instrument}}{Instrument information.}
 
 \item{\code{precursorMz}}{Precursor m/z of the MS/MS spectrum  Null for spectra where precursor m/z is not applicable}
 

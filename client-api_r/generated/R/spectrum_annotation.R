@@ -8,12 +8,12 @@
 #' @description SpectrumAnnotation Class
 #' @format An \code{R6Class} generator object
 #' @field molecularFormula Molecular formula that has been annotated to this spectrum character [optional]
-#' @field ionization Ionization that has been annotated to this spectrum character [optional]
+#' @field adduct Adduct that has been annotated to this spectrum character [optional]
 #' @field exactMass Exact mass based on the annotated molecular formula and ionization numeric [optional]
 #' @field massDeviationMz Absolute mass deviation of the exact mass to the precursor mass (precursorMz) of this spectrum in mDa numeric [optional]
 #' @field massDeviationPpm Relative mass deviation of the exact mass to the precursor mass (precursorMz) of this spectrum in ppm numeric [optional]
-#' @field structureAnnotationSmiles Smiles of the structure candidate used to derive substructure peak annotations via epimetheus insilico fragmentation  Substructure highlighting (bond and atom indices) refer to this specific SMILES.  If you standardize or canonicalize this SMILES in any way the indices of substructure highlighting might  not match correctly anymore.   Null if substructure annotation not available or not requested. character [optional]
-#' @field structureAnnotationScore Overall score of all substructure annotations computed for this structure candidate (structureAnnotationSmiles)   Null if substructure annotation not available or not requested. numeric [optional]
+#' @field structureAnnotationSmiles EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.   Smiles of the structure candidate used to derive substructure peak annotations via epimetheus insilico fragmentation  Substructure highlighting (bond and atom indices) refer to this specific SMILES.  If you standardize or canonicalize this SMILES in any way the indices of substructure highlighting might  not match correctly anymore.   Null if substructure annotation not available or not requested. character [optional]
+#' @field structureAnnotationScore EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.   Overall score of all substructure annotations computed for this structure candidate (structureAnnotationSmiles)   Null if substructure annotation not available or not requested. numeric [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
 #' @export
@@ -21,7 +21,7 @@ SpectrumAnnotation <- R6::R6Class(
   "SpectrumAnnotation",
   public = list(
     `molecularFormula` = NULL,
-    `ionization` = NULL,
+    `adduct` = NULL,
     `exactMass` = NULL,
     `massDeviationMz` = NULL,
     `massDeviationPpm` = NULL,
@@ -33,26 +33,26 @@ SpectrumAnnotation <- R6::R6Class(
     #' Initialize a new SpectrumAnnotation class.
     #'
     #' @param molecularFormula Molecular formula that has been annotated to this spectrum
-    #' @param ionization Ionization that has been annotated to this spectrum
+    #' @param adduct Adduct that has been annotated to this spectrum
     #' @param exactMass Exact mass based on the annotated molecular formula and ionization
     #' @param massDeviationMz Absolute mass deviation of the exact mass to the precursor mass (precursorMz) of this spectrum in mDa
     #' @param massDeviationPpm Relative mass deviation of the exact mass to the precursor mass (precursorMz) of this spectrum in ppm
-    #' @param structureAnnotationSmiles Smiles of the structure candidate used to derive substructure peak annotations via epimetheus insilico fragmentation  Substructure highlighting (bond and atom indices) refer to this specific SMILES.  If you standardize or canonicalize this SMILES in any way the indices of substructure highlighting might  not match correctly anymore.   Null if substructure annotation not available or not requested.
-    #' @param structureAnnotationScore Overall score of all substructure annotations computed for this structure candidate (structureAnnotationSmiles)   Null if substructure annotation not available or not requested.
+    #' @param structureAnnotationSmiles EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.   Smiles of the structure candidate used to derive substructure peak annotations via epimetheus insilico fragmentation  Substructure highlighting (bond and atom indices) refer to this specific SMILES.  If you standardize or canonicalize this SMILES in any way the indices of substructure highlighting might  not match correctly anymore.   Null if substructure annotation not available or not requested.
+    #' @param structureAnnotationScore EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.   Overall score of all substructure annotations computed for this structure candidate (structureAnnotationSmiles)   Null if substructure annotation not available or not requested.
     #' @param ... Other optional arguments.
     #' @export
-    initialize = function(`molecularFormula` = NULL, `ionization` = NULL, `exactMass` = NULL, `massDeviationMz` = NULL, `massDeviationPpm` = NULL, `structureAnnotationSmiles` = NULL, `structureAnnotationScore` = NULL, ...) {
+    initialize = function(`molecularFormula` = NULL, `adduct` = NULL, `exactMass` = NULL, `massDeviationMz` = NULL, `massDeviationPpm` = NULL, `structureAnnotationSmiles` = NULL, `structureAnnotationScore` = NULL, ...) {
       if (!is.null(`molecularFormula`)) {
         if (!(is.character(`molecularFormula`) && length(`molecularFormula`) == 1)) {
           stop(paste("Error! Invalid data for `molecularFormula`. Must be a string:", `molecularFormula`))
         }
         self$`molecularFormula` <- `molecularFormula`
       }
-      if (!is.null(`ionization`)) {
-        if (!(is.character(`ionization`) && length(`ionization`) == 1)) {
-          stop(paste("Error! Invalid data for `ionization`. Must be a string:", `ionization`))
+      if (!is.null(`adduct`)) {
+        if (!(is.character(`adduct`) && length(`adduct`) == 1)) {
+          stop(paste("Error! Invalid data for `adduct`. Must be a string:", `adduct`))
         }
-        self$`ionization` <- `ionization`
+        self$`adduct` <- `adduct`
       }
       if (!is.null(`exactMass`)) {
         if (!(is.numeric(`exactMass`) && length(`exactMass`) == 1)) {
@@ -98,9 +98,9 @@ SpectrumAnnotation <- R6::R6Class(
         SpectrumAnnotationObject[["molecularFormula"]] <-
           self$`molecularFormula`
       }
-      if (!is.null(self$`ionization`)) {
-        SpectrumAnnotationObject[["ionization"]] <-
-          self$`ionization`
+      if (!is.null(self$`adduct`)) {
+        SpectrumAnnotationObject[["adduct"]] <-
+          self$`adduct`
       }
       if (!is.null(self$`exactMass`)) {
         SpectrumAnnotationObject[["exactMass"]] <-
@@ -137,8 +137,8 @@ SpectrumAnnotation <- R6::R6Class(
       if (!is.null(this_object$`molecularFormula`)) {
         self$`molecularFormula` <- this_object$`molecularFormula`
       }
-      if (!is.null(this_object$`ionization`)) {
-        self$`ionization` <- this_object$`ionization`
+      if (!is.null(this_object$`adduct`)) {
+        self$`adduct` <- this_object$`adduct`
       }
       if (!is.null(this_object$`exactMass`)) {
         self$`exactMass` <- this_object$`exactMass`
@@ -174,12 +174,12 @@ SpectrumAnnotation <- R6::R6Class(
           self$`molecularFormula`
           )
         },
-        if (!is.null(self$`ionization`)) {
+        if (!is.null(self$`adduct`)) {
           sprintf(
-          '"ionization":
+          '"adduct":
             "%s"
                     ',
-          self$`ionization`
+          self$`adduct`
           )
         },
         if (!is.null(self$`exactMass`)) {
@@ -241,7 +241,7 @@ SpectrumAnnotation <- R6::R6Class(
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       self$`molecularFormula` <- this_object$`molecularFormula`
-      self$`ionization` <- this_object$`ionization`
+      self$`adduct` <- this_object$`adduct`
       self$`exactMass` <- this_object$`exactMass`
       self$`massDeviationMz` <- this_object$`massDeviationMz`
       self$`massDeviationPpm` <- this_object$`massDeviationPpm`

@@ -10,7 +10,7 @@
 #' @field enabled tags whether the tool is enabled character [optional]
 #' @field structureSearchDBs Structure databases to search in, If expansive search is enabled this DB selection will be expanded to PubChem  if not high confidence hit was found in the selected databases.  <p>  Defaults to BIO + Custom Databases. Possible values are available to Database API. list(character) [optional]
 #' @field tagStructuresWithLipidClass Candidates matching the lipid class estimated by El Gordo will be tagged.  The lipid class will only be available if El Gordo predicts that the MS/MS is a lipid spectrum.  If this parameter is set to 'false' El Gordo will still be executed and e.g. improve the fragmentation  tree, but the matching structure candidates will not be tagged if they match lipid class. character [optional]
-#' @field expansiveSearchConfidenceMode  \link{ConfidenceMode} [optional]
+#' @field expansiveSearchConfidenceMode Expansive search mode.  Expansive search will expand the search space to whole PubChem in case no hit with reasonable confidence was  found in one of the specified databases (structureSearchDBs).  <p>  Possible Values  OFF - No expansive search is performed  EXACT - Use confidence score in exact mode: Only molecular structures identical to the true structure should count as correct identification.  APPROXIMATE - Use confidence score in approximate mode: Molecular structures hits that are close to the true structure should count as correct identification. character [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
 #' @export
@@ -29,7 +29,7 @@ StructureDbSearch <- R6::R6Class(
     #' @param enabled tags whether the tool is enabled
     #' @param structureSearchDBs Structure databases to search in, If expansive search is enabled this DB selection will be expanded to PubChem  if not high confidence hit was found in the selected databases.  <p>  Defaults to BIO + Custom Databases. Possible values are available to Database API.
     #' @param tagStructuresWithLipidClass Candidates matching the lipid class estimated by El Gordo will be tagged.  The lipid class will only be available if El Gordo predicts that the MS/MS is a lipid spectrum.  If this parameter is set to 'false' El Gordo will still be executed and e.g. improve the fragmentation  tree, but the matching structure candidates will not be tagged if they match lipid class.
-    #' @param expansiveSearchConfidenceMode expansiveSearchConfidenceMode
+    #' @param expansiveSearchConfidenceMode Expansive search mode.  Expansive search will expand the search space to whole PubChem in case no hit with reasonable confidence was  found in one of the specified databases (structureSearchDBs).  <p>  Possible Values  OFF - No expansive search is performed  EXACT - Use confidence score in exact mode: Only molecular structures identical to the true structure should count as correct identification.  APPROXIMATE - Use confidence score in approximate mode: Molecular structures hits that are close to the true structure should count as correct identification.
     #' @param ... Other optional arguments.
     #' @export
     initialize = function(`enabled` = NULL, `structureSearchDBs` = NULL, `tagStructuresWithLipidClass` = NULL, `expansiveSearchConfidenceMode` = NULL, ...) {
@@ -52,10 +52,12 @@ StructureDbSearch <- R6::R6Class(
       }
       if (!is.null(`expansiveSearchConfidenceMode`)) {
         # disabled, as it is broken and checks for `expansiveSearchConfidenceMode` %in% c()
-        # if (!(`expansiveSearchConfidenceMode` %in% c())) {
-        #  stop(paste("Error! \"", `expansiveSearchConfidenceMode`, "\" cannot be assigned to `expansiveSearchConfidenceMode`. Must be .", sep = ""))
+        # if (!(`expansiveSearchConfidenceMode` %in% c("OFF", "EXACT", "APPROXIMATE"))) {
+        #  stop(paste("Error! \"", `expansiveSearchConfidenceMode`, "\" cannot be assigned to `expansiveSearchConfidenceMode`. Must be \"OFF\", \"EXACT\", \"APPROXIMATE\".", sep = ""))
         # }
-        stopifnot(R6::is.R6(`expansiveSearchConfidenceMode`))
+        if (!(is.character(`expansiveSearchConfidenceMode`) && length(`expansiveSearchConfidenceMode`) == 1)) {
+          stop(paste("Error! Invalid data for `expansiveSearchConfidenceMode`. Must be a string:", `expansiveSearchConfidenceMode`))
+        }
         self$`expansiveSearchConfidenceMode` <- `expansiveSearchConfidenceMode`
       }
     },
@@ -82,13 +84,7 @@ StructureDbSearch <- R6::R6Class(
       }
       if (!is.null(self$`expansiveSearchConfidenceMode`)) {
         StructureDbSearchObject[["expansiveSearchConfidenceMode"]] <-
-          if (is.list(self$`expansiveSearchConfidenceMode`$toJSON()) && length(self$`expansiveSearchConfidenceMode`$toJSON()) == 0L){
-            NULL
-          } else if (length(names(self$`expansiveSearchConfidenceMode`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`expansiveSearchConfidenceMode`$toJSON()))) {
-            jsonlite::fromJSON(self$`expansiveSearchConfidenceMode`$toJSON())
-          } else {
-            self$`expansiveSearchConfidenceMode`$toJSON()
-          }
+          self$`expansiveSearchConfidenceMode`
       }
       StructureDbSearchObject
     },
@@ -112,9 +108,10 @@ StructureDbSearch <- R6::R6Class(
         self$`tagStructuresWithLipidClass` <- this_object$`tagStructuresWithLipidClass`
       }
       if (!is.null(this_object$`expansiveSearchConfidenceMode`)) {
-        `expansivesearchconfidencemode_object` <- ConfidenceMode$new()
-        `expansivesearchconfidencemode_object`$fromJSON(jsonlite::toJSON(this_object$`expansiveSearchConfidenceMode`, auto_unbox = TRUE, digits = NA))
-        self$`expansiveSearchConfidenceMode` <- `expansivesearchconfidencemode_object`
+        if (!is.null(this_object$`expansiveSearchConfidenceMode`) && !(this_object$`expansiveSearchConfidenceMode` %in% c("OFF", "EXACT", "APPROXIMATE"))) {
+          stop(paste("Error! \"", this_object$`expansiveSearchConfidenceMode`, "\" cannot be assigned to `expansiveSearchConfidenceMode`. Must be \"OFF\", \"EXACT\", \"APPROXIMATE\".", sep = ""))
+        }
+        self$`expansiveSearchConfidenceMode` <- this_object$`expansiveSearchConfidenceMode`
       }
       self
     },
@@ -154,9 +151,9 @@ StructureDbSearch <- R6::R6Class(
         if (!is.null(self$`expansiveSearchConfidenceMode`)) {
           sprintf(
           '"expansiveSearchConfidenceMode":
-          %s
-          ',
-          jsonlite::toJSON(self$`expansiveSearchConfidenceMode`$toJSON(), auto_unbox = TRUE, digits = NA)
+            "%s"
+                    ',
+          self$`expansiveSearchConfidenceMode`
           )
         }
       )
@@ -180,7 +177,10 @@ StructureDbSearch <- R6::R6Class(
       self$`enabled` <- this_object$`enabled`
       self$`structureSearchDBs` <- ApiClient$new()$deserializeObj(this_object$`structureSearchDBs`, "array[character]", loadNamespace("Rsirius"))
       self$`tagStructuresWithLipidClass` <- this_object$`tagStructuresWithLipidClass`
-      self$`expansiveSearchConfidenceMode` <- ConfidenceMode$new()$fromJSON(jsonlite::toJSON(this_object$`expansiveSearchConfidenceMode`, auto_unbox = TRUE, digits = NA))
+      if (!is.null(this_object$`expansiveSearchConfidenceMode`) && !(this_object$`expansiveSearchConfidenceMode` %in% c("OFF", "EXACT", "APPROXIMATE"))) {
+        stop(paste("Error! \"", this_object$`expansiveSearchConfidenceMode`, "\" cannot be assigned to `expansiveSearchConfidenceMode`. Must be \"OFF\", \"EXACT\", \"APPROXIMATE\".", sep = ""))
+      }
+      self$`expansiveSearchConfidenceMode` <- this_object$`expansiveSearchConfidenceMode`
       self
     },
     #' Validate JSON input with respect to StructureDbSearch

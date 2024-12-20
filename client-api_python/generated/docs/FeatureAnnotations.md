@@ -12,6 +12,8 @@ Name | Type | Description | Notes
 **confidence_exact_match** | **float** | Confidence Score that represents the confidence whether the top hit is correct. | [optional] 
 **confidence_approx_match** | **float** | Confidence Score that represents the confidence whether the top hit or a very similar hit (estimated by MCES distance) is correct. | [optional] 
 **expansive_search_state** | [**ConfidenceMode**](ConfidenceMode.md) |  | [optional] 
+**specified_databases** | **List[Optional[str]]** | List of databases that have been specified by for structure db search. Null if no structure db search has been performed. | [optional] 
+**expanded_databases** | **List[Optional[str]]** | List of databases that have been used to expand search space during expansive search. Null if no structure db search has been performed. | [optional] 
 
 ## Example
 

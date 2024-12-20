@@ -20,7 +20,7 @@ Create a new Sirius
 \describe{
 \item{\code{enabled}}{tags whether the tool is enabled character [optional]}
 
-\item{\code{profile}}{\link{InstrumentProfile} [optional]}
+\item{\code{profile}}{Instrument specific profile for internal algorithms  Just select what comes closest to the instrument that was used for measuring the data. character [optional]}
 
 \item{\code{numberOfCandidates}}{Number of formula candidates to keep as result list (Formula Candidates). integer [optional]}
 
@@ -112,7 +112,7 @@ Initialize a new Sirius class.
 \describe{
 \item{\code{enabled}}{tags whether the tool is enabled}
 
-\item{\code{profile}}{profile}
+\item{\code{profile}}{Instrument specific profile for internal algorithms  Just select what comes closest to the instrument that was used for measuring the data.}
 
 \item{\code{numberOfCandidates}}{Number of formula candidates to keep as result list (Formula Candidates).}
 

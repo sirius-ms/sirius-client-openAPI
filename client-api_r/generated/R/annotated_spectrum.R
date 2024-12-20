@@ -1,7 +1,7 @@
 #' Create a new AnnotatedSpectrum
 #'
 #' @description
-#' AnnotatedSpectrum Class
+#' Spectrum model with peak annotations based on the fragmentation tree and Epimetheus substructure annotations.  Molecular formula and adduct of the spectrum are identical to the ones of the corresponding molecular formula candidate and FragmentationTree.  Fragment molecular formulas and adducts correspond to the FragmentationTree's FragmentNodes
 #'
 #' @docType class
 #' @title AnnotatedSpectrum
@@ -10,6 +10,7 @@
 #' @field name Optional Displayable name of this spectrum. character [optional]
 #' @field msLevel MS level of the measured spectrum.  Artificial spectra with no msLevel (e.g. Simulated Isotope patterns) use null or zero integer [optional]
 #' @field collisionEnergy Collision energy used for MS/MS spectra  Null for spectra where collision energy is not applicable character [optional]
+#' @field instrument Instrument information. character [optional]
 #' @field precursorMz Precursor m/z of the MS/MS spectrum  Null for spectra where precursor m/z is not applicable numeric [optional]
 #' @field scanNumber Scan number of the spectrum.  Might be null for artificial spectra with no scan number (e.g. Simulated Isotope patterns or merged spectra) integer [optional]
 #' @field peaks The peaks of this spectrum which might contain additional annotations such as molecular formulas. list(\link{AnnotatedPeak})
@@ -24,6 +25,7 @@ AnnotatedSpectrum <- R6::R6Class(
     `name` = NULL,
     `msLevel` = NULL,
     `collisionEnergy` = NULL,
+    `instrument` = NULL,
     `precursorMz` = NULL,
     `scanNumber` = NULL,
     `peaks` = NULL,
@@ -38,13 +40,14 @@ AnnotatedSpectrum <- R6::R6Class(
     #' @param name Optional Displayable name of this spectrum.
     #' @param msLevel MS level of the measured spectrum.  Artificial spectra with no msLevel (e.g. Simulated Isotope patterns) use null or zero
     #' @param collisionEnergy Collision energy used for MS/MS spectra  Null for spectra where collision energy is not applicable
+    #' @param instrument Instrument information.
     #' @param precursorMz Precursor m/z of the MS/MS spectrum  Null for spectra where precursor m/z is not applicable
     #' @param scanNumber Scan number of the spectrum.  Might be null for artificial spectra with no scan number (e.g. Simulated Isotope patterns or merged spectra)
     #' @param absIntensityFactor Factor to convert relative intensities to absolute intensities.  Might be null or 1 for spectra where absolute intensities are not available (E.g. artificial or merged spectra)
     #' @param spectrumAnnotation spectrumAnnotation
     #' @param ... Other optional arguments.
     #' @export
-    initialize = function(`peaks`, `name` = NULL, `msLevel` = NULL, `collisionEnergy` = NULL, `precursorMz` = NULL, `scanNumber` = NULL, `absIntensityFactor` = NULL, `spectrumAnnotation` = NULL, ...) {
+    initialize = function(`peaks`, `name` = NULL, `msLevel` = NULL, `collisionEnergy` = NULL, `instrument` = NULL, `precursorMz` = NULL, `scanNumber` = NULL, `absIntensityFactor` = NULL, `spectrumAnnotation` = NULL, ...) {
       if (!missing(`peaks`)) {
         stopifnot(is.vector(`peaks`), length(`peaks`) != 0)
         sapply(`peaks`, function(x) stopifnot(R6::is.R6(x)))
@@ -67,6 +70,12 @@ AnnotatedSpectrum <- R6::R6Class(
           stop(paste("Error! Invalid data for `collisionEnergy`. Must be a string:", `collisionEnergy`))
         }
         self$`collisionEnergy` <- `collisionEnergy`
+      }
+      if (!is.null(`instrument`)) {
+        if (!(is.character(`instrument`) && length(`instrument`) == 1)) {
+          stop(paste("Error! Invalid data for `instrument`. Must be a string:", `instrument`))
+        }
+        self$`instrument` <- `instrument`
       }
       if (!is.null(`precursorMz`)) {
         if (!(is.numeric(`precursorMz`) && length(`precursorMz`) == 1)) {
@@ -111,6 +120,10 @@ AnnotatedSpectrum <- R6::R6Class(
       if (!is.null(self$`collisionEnergy`)) {
         AnnotatedSpectrumObject[["collisionEnergy"]] <-
           self$`collisionEnergy`
+      }
+      if (!is.null(self$`instrument`)) {
+        AnnotatedSpectrumObject[["instrument"]] <-
+          self$`instrument`
       }
       if (!is.null(self$`precursorMz`)) {
         AnnotatedSpectrumObject[["precursorMz"]] <-
@@ -158,6 +171,9 @@ AnnotatedSpectrum <- R6::R6Class(
       }
       if (!is.null(this_object$`collisionEnergy`)) {
         self$`collisionEnergy` <- this_object$`collisionEnergy`
+      }
+      if (!is.null(this_object$`instrument`)) {
+        self$`instrument` <- this_object$`instrument`
       }
       if (!is.null(this_object$`precursorMz`)) {
         self$`precursorMz` <- this_object$`precursorMz`
@@ -209,6 +225,14 @@ AnnotatedSpectrum <- R6::R6Class(
             "%s"
                     ',
           self$`collisionEnergy`
+          )
+        },
+        if (!is.null(self$`instrument`)) {
+          sprintf(
+          '"instrument":
+            "%s"
+                    ',
+          self$`instrument`
           )
         },
         if (!is.null(self$`precursorMz`)) {
@@ -272,6 +296,7 @@ AnnotatedSpectrum <- R6::R6Class(
       self$`name` <- this_object$`name`
       self$`msLevel` <- this_object$`msLevel`
       self$`collisionEnergy` <- this_object$`collisionEnergy`
+      self$`instrument` <- this_object$`instrument`
       self$`precursorMz` <- this_object$`precursorMz`
       self$`scanNumber` <- this_object$`scanNumber`
       self$`peaks` <- ApiClient$new()$deserializeObj(this_object$`peaks`, "array[AnnotatedPeak]", loadNamespace("Rsirius"))

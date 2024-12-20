@@ -12,7 +12,9 @@
 #' @field compoundClassAnnotation  \link{CompoundClasses} [optional]
 #' @field confidenceExactMatch Confidence Score that represents the confidence whether the top hit is correct. numeric [optional]
 #' @field confidenceApproxMatch Confidence Score that represents the confidence whether the top hit or a very similar hit (estimated by MCES distance) is correct. numeric [optional]
-#' @field expansiveSearchState  \link{ConfidenceMode} [optional]
+#' @field expansiveSearchState Result that shows if structure annotation was expanded by using PubChem as fallback and if so, which confidence mode was used (as per input paramter) character [optional]
+#' @field specifiedDatabases List of databases that have been specified by for structure db search. Null if no structure db search has been performed. list(character) [optional]
+#' @field expandedDatabases List of databases that have been used to expand search space during expansive search. Null if no structure db search has been performed. list(character) [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
 #' @export
@@ -25,6 +27,8 @@ FeatureAnnotations <- R6::R6Class(
     `confidenceExactMatch` = NULL,
     `confidenceApproxMatch` = NULL,
     `expansiveSearchState` = NULL,
+    `specifiedDatabases` = NULL,
+    `expandedDatabases` = NULL,
     #' Initialize a new FeatureAnnotations class.
     #'
     #' @description
@@ -35,10 +39,12 @@ FeatureAnnotations <- R6::R6Class(
     #' @param compoundClassAnnotation compoundClassAnnotation
     #' @param confidenceExactMatch Confidence Score that represents the confidence whether the top hit is correct.
     #' @param confidenceApproxMatch Confidence Score that represents the confidence whether the top hit or a very similar hit (estimated by MCES distance) is correct.
-    #' @param expansiveSearchState expansiveSearchState
+    #' @param expansiveSearchState Result that shows if structure annotation was expanded by using PubChem as fallback and if so, which confidence mode was used (as per input paramter)
+    #' @param specifiedDatabases List of databases that have been specified by for structure db search. Null if no structure db search has been performed.
+    #' @param expandedDatabases List of databases that have been used to expand search space during expansive search. Null if no structure db search has been performed.
     #' @param ... Other optional arguments.
     #' @export
-    initialize = function(`formulaAnnotation` = NULL, `structureAnnotation` = NULL, `compoundClassAnnotation` = NULL, `confidenceExactMatch` = NULL, `confidenceApproxMatch` = NULL, `expansiveSearchState` = NULL, ...) {
+    initialize = function(`formulaAnnotation` = NULL, `structureAnnotation` = NULL, `compoundClassAnnotation` = NULL, `confidenceExactMatch` = NULL, `confidenceApproxMatch` = NULL, `expansiveSearchState` = NULL, `specifiedDatabases` = NULL, `expandedDatabases` = NULL, ...) {
       if (!is.null(`formulaAnnotation`)) {
         stopifnot(R6::is.R6(`formulaAnnotation`))
         self$`formulaAnnotation` <- `formulaAnnotation`
@@ -65,11 +71,23 @@ FeatureAnnotations <- R6::R6Class(
       }
       if (!is.null(`expansiveSearchState`)) {
         # disabled, as it is broken and checks for `expansiveSearchState` %in% c()
-        # if (!(`expansiveSearchState` %in% c())) {
-        #  stop(paste("Error! \"", `expansiveSearchState`, "\" cannot be assigned to `expansiveSearchState`. Must be .", sep = ""))
+        # if (!(`expansiveSearchState` %in% c("OFF", "EXACT", "APPROXIMATE"))) {
+        #  stop(paste("Error! \"", `expansiveSearchState`, "\" cannot be assigned to `expansiveSearchState`. Must be \"OFF\", \"EXACT\", \"APPROXIMATE\".", sep = ""))
         # }
-        stopifnot(R6::is.R6(`expansiveSearchState`))
+        if (!(is.character(`expansiveSearchState`) && length(`expansiveSearchState`) == 1)) {
+          stop(paste("Error! Invalid data for `expansiveSearchState`. Must be a string:", `expansiveSearchState`))
+        }
         self$`expansiveSearchState` <- `expansiveSearchState`
+      }
+      if (!is.null(`specifiedDatabases`)) {
+        stopifnot(is.vector(`specifiedDatabases`), length(`specifiedDatabases`) != 0)
+        sapply(`specifiedDatabases`, function(x) stopifnot(is.character(x)))
+        self$`specifiedDatabases` <- `specifiedDatabases`
+      }
+      if (!is.null(`expandedDatabases`)) {
+        stopifnot(is.vector(`expandedDatabases`), length(`expandedDatabases`) != 0)
+        sapply(`expandedDatabases`, function(x) stopifnot(is.character(x)))
+        self$`expandedDatabases` <- `expandedDatabases`
       }
     },
     #' To JSON string
@@ -121,13 +139,15 @@ FeatureAnnotations <- R6::R6Class(
       }
       if (!is.null(self$`expansiveSearchState`)) {
         FeatureAnnotationsObject[["expansiveSearchState"]] <-
-          if (is.list(self$`expansiveSearchState`$toJSON()) && length(self$`expansiveSearchState`$toJSON()) == 0L){
-            NULL
-          } else if (length(names(self$`expansiveSearchState`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`expansiveSearchState`$toJSON()))) {
-            jsonlite::fromJSON(self$`expansiveSearchState`$toJSON())
-          } else {
-            self$`expansiveSearchState`$toJSON()
-          }
+          self$`expansiveSearchState`
+      }
+      if (!is.null(self$`specifiedDatabases`)) {
+        FeatureAnnotationsObject[["specifiedDatabases"]] <-
+          self$`specifiedDatabases`
+      }
+      if (!is.null(self$`expandedDatabases`)) {
+        FeatureAnnotationsObject[["expandedDatabases"]] <-
+          self$`expandedDatabases`
       }
       FeatureAnnotationsObject
     },
@@ -163,9 +183,16 @@ FeatureAnnotations <- R6::R6Class(
         self$`confidenceApproxMatch` <- this_object$`confidenceApproxMatch`
       }
       if (!is.null(this_object$`expansiveSearchState`)) {
-        `expansivesearchstate_object` <- ConfidenceMode$new()
-        `expansivesearchstate_object`$fromJSON(jsonlite::toJSON(this_object$`expansiveSearchState`, auto_unbox = TRUE, digits = NA))
-        self$`expansiveSearchState` <- `expansivesearchstate_object`
+        if (!is.null(this_object$`expansiveSearchState`) && !(this_object$`expansiveSearchState` %in% c("OFF", "EXACT", "APPROXIMATE"))) {
+          stop(paste("Error! \"", this_object$`expansiveSearchState`, "\" cannot be assigned to `expansiveSearchState`. Must be \"OFF\", \"EXACT\", \"APPROXIMATE\".", sep = ""))
+        }
+        self$`expansiveSearchState` <- this_object$`expansiveSearchState`
+      }
+      if (!is.null(this_object$`specifiedDatabases`)) {
+        self$`specifiedDatabases` <- ApiClient$new()$deserializeObj(this_object$`specifiedDatabases`, "array[character]", loadNamespace("Rsirius"))
+      }
+      if (!is.null(this_object$`expandedDatabases`)) {
+        self$`expandedDatabases` <- ApiClient$new()$deserializeObj(this_object$`expandedDatabases`, "array[character]", loadNamespace("Rsirius"))
       }
       self
     },
@@ -221,9 +248,25 @@ FeatureAnnotations <- R6::R6Class(
         if (!is.null(self$`expansiveSearchState`)) {
           sprintf(
           '"expansiveSearchState":
-          %s
+            "%s"
+                    ',
+          self$`expansiveSearchState`
+          )
+        },
+        if (!is.null(self$`specifiedDatabases`)) {
+          sprintf(
+          '"specifiedDatabases":
+             [%s]
           ',
-          jsonlite::toJSON(self$`expansiveSearchState`$toJSON(), auto_unbox = TRUE, digits = NA)
+          paste(unlist(lapply(self$`specifiedDatabases`, function(x) paste0('"', x, '"'))), collapse = ",")
+          )
+        },
+        if (!is.null(self$`expandedDatabases`)) {
+          sprintf(
+          '"expandedDatabases":
+             [%s]
+          ',
+          paste(unlist(lapply(self$`expandedDatabases`, function(x) paste0('"', x, '"'))), collapse = ",")
           )
         }
       )
@@ -249,7 +292,12 @@ FeatureAnnotations <- R6::R6Class(
       self$`compoundClassAnnotation` <- CompoundClasses$new()$fromJSON(jsonlite::toJSON(this_object$`compoundClassAnnotation`, auto_unbox = TRUE, digits = NA))
       self$`confidenceExactMatch` <- this_object$`confidenceExactMatch`
       self$`confidenceApproxMatch` <- this_object$`confidenceApproxMatch`
-      self$`expansiveSearchState` <- ConfidenceMode$new()$fromJSON(jsonlite::toJSON(this_object$`expansiveSearchState`, auto_unbox = TRUE, digits = NA))
+      if (!is.null(this_object$`expansiveSearchState`) && !(this_object$`expansiveSearchState` %in% c("OFF", "EXACT", "APPROXIMATE"))) {
+        stop(paste("Error! \"", this_object$`expansiveSearchState`, "\" cannot be assigned to `expansiveSearchState`. Must be \"OFF\", \"EXACT\", \"APPROXIMATE\".", sep = ""))
+      }
+      self$`expansiveSearchState` <- this_object$`expansiveSearchState`
+      self$`specifiedDatabases` <- ApiClient$new()$deserializeObj(this_object$`specifiedDatabases`, "array[character]", loadNamespace("Rsirius"))
+      self$`expandedDatabases` <- ApiClient$new()$deserializeObj(this_object$`expandedDatabases`, "array[character]", loadNamespace("Rsirius"))
       self
     },
     #' Validate JSON input with respect to FeatureAnnotations
