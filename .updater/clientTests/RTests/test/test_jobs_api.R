@@ -128,9 +128,19 @@ test_that("GetJobConfigs", {
   # @param include_config_map character if true the generic configmap will be part of the output (optional)
   # @return [array[JobSubmission]]
 
+  project_id <- "GetJobConfigs"
+  project_dir <- paste(Sys.getenv("HOME"), project_id, sep="/")
+  projects_api$CreateProjectSpace(project_id, project_dir)
+  job_submission <- api_instance$GetDefaultJobConfig(TRUE)
+  api_instance$SaveJobConfig(project_id, job_submission, TRUE)
+
   response <- api_instance$GetJobConfigs()
   expect_true(inherits(response, "list"))
   expect_true(inherits(response[[1]], "JobSubmission"))
+
+  withr::defer(api_instance$DeleteJobConfig(project_id))
+  withr::defer(projects_api$CloseProjectSpace(project_id))
+  withr::defer(unlink(project_dir, recursive=TRUE))
 })
 
 test_that("GetJobs", {
@@ -173,7 +183,7 @@ test_that("GetJobsPaged", {
   projects_api$ImportPreprocessedDataAsJob(project_id, input_files=input_file)
 
   response <- api_instance$GetJobsPaged(project_id)
-  expect_true(inherits(response, "PageJob"))
+  expect_true(inherits(response, "PagedModelJob"))
 
   withr::defer(projects_api$CloseProjectSpace(project_id))
   withr::defer(unlink(project_dir, recursive=TRUE))
@@ -237,7 +247,7 @@ test_that("StartJob", {
   projects_api$ImportPreprocessedDataAsJob(project_id, input_files=input_file)
   Sys.sleep(1)
   var_alignedFeatureIds <- c(features_api$GetAlignedFeatures(project_id)[[1]]$alignedFeatureId)
-  var_profile <- InstrumentProfile$new("QTOF")
+  var_profile <- "QTOF"
   var_formulaIdParams <- Sirius$new(enabled = TRUE, profile = var_profile)
   job_submission <- JobSubmission$new(alignedFeatureIds = var_alignedFeatureIds, formulaIdParams = var_formulaIdParams)
 
