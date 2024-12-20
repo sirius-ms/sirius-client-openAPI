@@ -24,7 +24,7 @@ Create a new StructureDbSearch
 
 \item{\code{tagStructuresWithLipidClass}}{Candidates matching the lipid class estimated by El Gordo will be tagged.  The lipid class will only be available if El Gordo predicts that the MS/MS is a lipid spectrum.  If this parameter is set to 'false' El Gordo will still be executed and e.g. improve the fragmentation  tree, but the matching structure candidates will not be tagged if they match lipid class. character [optional]}
 
-\item{\code{expansiveSearchConfidenceMode}}{\link{ConfidenceMode} [optional]}
+\item{\code{expansiveSearchConfidenceMode}}{Expansive search mode.  Expansive search will expand the search space to whole PubChem in case no hit with reasonable confidence was  found in one of the specified databases (structureSearchDBs).  <p>  Possible Values  OFF - No expansive search is performed  EXACT - Use confidence score in exact mode: Only molecular structures identical to the true structure should count as correct identification.  APPROXIMATE - Use confidence score in approximate mode: Molecular structures hits that are close to the true structure should count as correct identification. character [optional]}
 }
 \if{html}{\out{</div>}}
 }
@@ -68,7 +68,7 @@ Initialize a new StructureDbSearch class.
 
 \item{\code{tagStructuresWithLipidClass}}{Candidates matching the lipid class estimated by El Gordo will be tagged.  The lipid class will only be available if El Gordo predicts that the MS/MS is a lipid spectrum.  If this parameter is set to 'false' El Gordo will still be executed and e.g. improve the fragmentation  tree, but the matching structure candidates will not be tagged if they match lipid class.}
 
-\item{\code{expansiveSearchConfidenceMode}}{expansiveSearchConfidenceMode}
+\item{\code{expansiveSearchConfidenceMode}}{Expansive search mode.  Expansive search will expand the search space to whole PubChem in case no hit with reasonable confidence was  found in one of the specified databases (structureSearchDBs).  <p>  Possible Values  OFF - No expansive search is performed  EXACT - Use confidence score in exact mode: Only molecular structures identical to the true structure should count as correct identification.  APPROXIMATE - Use confidence score in approximate mode: Molecular structures hits that are close to the true structure should count as correct identification.}
 
 \item{\code{...}}{Other optional arguments.}
 }
