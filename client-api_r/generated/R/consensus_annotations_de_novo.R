@@ -10,7 +10,7 @@
 #' @field molecularFormula Molecular formula of the consensus annotation  Might be null if no consensus formula is available. character [optional]
 #' @field compoundClasses  \link{CompoundClasses} [optional]
 #' @field supportingFeatureIds FeatureIds where the topAnnotation supports this annotation. list(character) [optional]
-#' @field selectionCriterion  \link{ConsensusCriterionDeNovo} [optional]
+#' @field selectionCriterion Criterion that was used to select the consensus annotation. character [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
 #' @export
@@ -29,7 +29,7 @@ ConsensusAnnotationsDeNovo <- R6::R6Class(
     #' @param molecularFormula Molecular formula of the consensus annotation  Might be null if no consensus formula is available.
     #' @param compoundClasses compoundClasses
     #' @param supportingFeatureIds FeatureIds where the topAnnotation supports this annotation.
-    #' @param selectionCriterion selectionCriterion
+    #' @param selectionCriterion Criterion that was used to select the consensus annotation.
     #' @param ... Other optional arguments.
     #' @export
     initialize = function(`molecularFormula` = NULL, `compoundClasses` = NULL, `supportingFeatureIds` = NULL, `selectionCriterion` = NULL, ...) {
@@ -50,10 +50,12 @@ ConsensusAnnotationsDeNovo <- R6::R6Class(
       }
       if (!is.null(`selectionCriterion`)) {
         # disabled, as it is broken and checks for `selectionCriterion` %in% c()
-        # if (!(`selectionCriterion` %in% c())) {
-        #  stop(paste("Error! \"", `selectionCriterion`, "\" cannot be assigned to `selectionCriterion`. Must be .", sep = ""))
+        # if (!(`selectionCriterion` %in% c("MAJORITY_FORMULA", "TOP_FORMULA", "SINGLETON_FORMULA"))) {
+        #  stop(paste("Error! \"", `selectionCriterion`, "\" cannot be assigned to `selectionCriterion`. Must be \"MAJORITY_FORMULA\", \"TOP_FORMULA\", \"SINGLETON_FORMULA\".", sep = ""))
         # }
-        stopifnot(R6::is.R6(`selectionCriterion`))
+        if (!(is.character(`selectionCriterion`) && length(`selectionCriterion`) == 1)) {
+          stop(paste("Error! Invalid data for `selectionCriterion`. Must be a string:", `selectionCriterion`))
+        }
         self$`selectionCriterion` <- `selectionCriterion`
       }
     },
@@ -86,13 +88,7 @@ ConsensusAnnotationsDeNovo <- R6::R6Class(
       }
       if (!is.null(self$`selectionCriterion`)) {
         ConsensusAnnotationsDeNovoObject[["selectionCriterion"]] <-
-          if (is.list(self$`selectionCriterion`$toJSON()) && length(self$`selectionCriterion`$toJSON()) == 0L){
-            NULL
-          } else if (length(names(self$`selectionCriterion`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`selectionCriterion`$toJSON()))) {
-            jsonlite::fromJSON(self$`selectionCriterion`$toJSON())
-          } else {
-            self$`selectionCriterion`$toJSON()
-          }
+          self$`selectionCriterion`
       }
       ConsensusAnnotationsDeNovoObject
     },
@@ -118,9 +114,10 @@ ConsensusAnnotationsDeNovo <- R6::R6Class(
         self$`supportingFeatureIds` <- ApiClient$new()$deserializeObj(this_object$`supportingFeatureIds`, "array[character]", loadNamespace("Rsirius"))
       }
       if (!is.null(this_object$`selectionCriterion`)) {
-        `selectioncriterion_object` <- ConsensusCriterionDeNovo$new()
-        `selectioncriterion_object`$fromJSON(jsonlite::toJSON(this_object$`selectionCriterion`, auto_unbox = TRUE, digits = NA))
-        self$`selectionCriterion` <- `selectioncriterion_object`
+        if (!is.null(this_object$`selectionCriterion`) && !(this_object$`selectionCriterion` %in% c("MAJORITY_FORMULA", "TOP_FORMULA", "SINGLETON_FORMULA"))) {
+          stop(paste("Error! \"", this_object$`selectionCriterion`, "\" cannot be assigned to `selectionCriterion`. Must be \"MAJORITY_FORMULA\", \"TOP_FORMULA\", \"SINGLETON_FORMULA\".", sep = ""))
+        }
+        self$`selectionCriterion` <- this_object$`selectionCriterion`
       }
       self
     },
@@ -160,9 +157,9 @@ ConsensusAnnotationsDeNovo <- R6::R6Class(
         if (!is.null(self$`selectionCriterion`)) {
           sprintf(
           '"selectionCriterion":
-          %s
-          ',
-          jsonlite::toJSON(self$`selectionCriterion`$toJSON(), auto_unbox = TRUE, digits = NA)
+            "%s"
+                    ',
+          self$`selectionCriterion`
           )
         }
       )
@@ -186,7 +183,10 @@ ConsensusAnnotationsDeNovo <- R6::R6Class(
       self$`molecularFormula` <- this_object$`molecularFormula`
       self$`compoundClasses` <- CompoundClasses$new()$fromJSON(jsonlite::toJSON(this_object$`compoundClasses`, auto_unbox = TRUE, digits = NA))
       self$`supportingFeatureIds` <- ApiClient$new()$deserializeObj(this_object$`supportingFeatureIds`, "array[character]", loadNamespace("Rsirius"))
-      self$`selectionCriterion` <- ConsensusCriterionDeNovo$new()$fromJSON(jsonlite::toJSON(this_object$`selectionCriterion`, auto_unbox = TRUE, digits = NA))
+      if (!is.null(this_object$`selectionCriterion`) && !(this_object$`selectionCriterion` %in% c("MAJORITY_FORMULA", "TOP_FORMULA", "SINGLETON_FORMULA"))) {
+        stop(paste("Error! \"", this_object$`selectionCriterion`, "\" cannot be assigned to `selectionCriterion`. Must be \"MAJORITY_FORMULA\", \"TOP_FORMULA\", \"SINGLETON_FORMULA\".", sep = ""))
+      }
+      self$`selectionCriterion` <- this_object$`selectionCriterion`
       self
     },
     #' Validate JSON input with respect to ConsensusAnnotationsDeNovo

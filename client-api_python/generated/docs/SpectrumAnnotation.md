@@ -6,12 +6,12 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **molecular_formula** | **str** | Molecular formula that has been annotated to this spectrum | [optional] 
-**ionization** | **str** | Ionization that has been annotated to this spectrum | [optional] 
+**adduct** | **str** | Adduct that has been annotated to this spectrum | [optional] 
 **exact_mass** | **float** | Exact mass based on the annotated molecular formula and ionization | [optional] 
 **mass_deviation_mz** | **float** | Absolute mass deviation of the exact mass to the precursor mass (precursorMz) of this spectrum in mDa | [optional] 
 **mass_deviation_ppm** | **float** | Relative mass deviation of the exact mass to the precursor mass (precursorMz) of this spectrum in ppm | [optional] 
-**structure_annotation_smiles** | **str** | Smiles of the structure candidate used to derive substructure peak annotations via epimetheus insilico fragmentation  Substructure highlighting (bond and atom indices) refer to this specific SMILES.  If you standardize or canonicalize this SMILES in any way the indices of substructure highlighting might  not match correctly anymore.   Null if substructure annotation not available or not requested. | [optional] 
-**structure_annotation_score** | **float** | Overall score of all substructure annotations computed for this structure candidate (structureAnnotationSmiles)   Null if substructure annotation not available or not requested. | [optional] 
+**structure_annotation_smiles** | **str** | EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.   Smiles of the structure candidate used to derive substructure peak annotations via epimetheus insilico fragmentation  Substructure highlighting (bond and atom indices) refer to this specific SMILES.  If you standardize or canonicalize this SMILES in any way the indices of substructure highlighting might  not match correctly anymore.   Null if substructure annotation not available or not requested. | [optional] 
+**structure_annotation_score** | **float** | EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.   Overall score of all substructure annotations computed for this structure candidate (structureAnnotationSmiles)   Null if substructure annotation not available or not requested. | [optional] 
 
 ## Example
 

@@ -17,7 +17,7 @@
 #' @field rtStartSeconds  numeric [optional]
 #' @field rtEndSeconds  numeric [optional]
 #' @field rtApexSeconds  numeric [optional]
-#' @field quality  \link{DataQuality} [optional]
+#' @field quality Quality of this feature. character [optional]
 #' @field hasMs1 If true, the feature has at lease one MS1 spectrum character [optional]
 #' @field hasMsMs If true, the feature has at lease one MS/MS spectrum character [optional]
 #' @field msData  \link{MsData} [optional]
@@ -64,7 +64,7 @@ AlignedFeature <- R6::R6Class(
     #' @param rtStartSeconds rtStartSeconds
     #' @param rtEndSeconds rtEndSeconds
     #' @param rtApexSeconds rtApexSeconds
-    #' @param quality quality
+    #' @param quality Quality of this feature.
     #' @param hasMs1 If true, the feature has at lease one MS1 spectrum
     #' @param hasMsMs If true, the feature has at lease one MS/MS spectrum
     #' @param msData msData
@@ -139,10 +139,12 @@ AlignedFeature <- R6::R6Class(
       }
       if (!is.null(`quality`)) {
         # disabled, as it is broken and checks for `quality` %in% c()
-        # if (!(`quality` %in% c())) {
-        #  stop(paste("Error! \"", `quality`, "\" cannot be assigned to `quality`. Must be .", sep = ""))
+        # if (!(`quality` %in% c("NOT_APPLICABLE", "LOWEST", "BAD", "DECENT", "GOOD"))) {
+        #  stop(paste("Error! \"", `quality`, "\" cannot be assigned to `quality`. Must be \"NOT_APPLICABLE\", \"LOWEST\", \"BAD\", \"DECENT\", \"GOOD\".", sep = ""))
         # }
-        stopifnot(R6::is.R6(`quality`))
+        if (!(is.character(`quality`) && length(`quality`) == 1)) {
+          stop(paste("Error! Invalid data for `quality`. Must be a string:", `quality`))
+        }
         self$`quality` <- `quality`
       }
       if (!is.null(`hasMs1`)) {
@@ -231,13 +233,7 @@ AlignedFeature <- R6::R6Class(
       }
       if (!is.null(self$`quality`)) {
         AlignedFeatureObject[["quality"]] <-
-          if (is.list(self$`quality`$toJSON()) && length(self$`quality`$toJSON()) == 0L){
-            NULL
-          } else if (length(names(self$`quality`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`quality`$toJSON()))) {
-            jsonlite::fromJSON(self$`quality`$toJSON())
-          } else {
-            self$`quality`$toJSON()
-          }
+          self$`quality`
       }
       if (!is.null(self$`hasMs1`)) {
         AlignedFeatureObject[["hasMs1"]] <-
@@ -337,9 +333,10 @@ AlignedFeature <- R6::R6Class(
         self$`rtApexSeconds` <- this_object$`rtApexSeconds`
       }
       if (!is.null(this_object$`quality`)) {
-        `quality_object` <- DataQuality$new()
-        `quality_object`$fromJSON(jsonlite::toJSON(this_object$`quality`, auto_unbox = TRUE, digits = NA))
-        self$`quality` <- `quality_object`
+        if (!is.null(this_object$`quality`) && !(this_object$`quality` %in% c("NOT_APPLICABLE", "LOWEST", "BAD", "DECENT", "GOOD"))) {
+          stop(paste("Error! \"", this_object$`quality`, "\" cannot be assigned to `quality`. Must be \"NOT_APPLICABLE\", \"LOWEST\", \"BAD\", \"DECENT\", \"GOOD\".", sep = ""))
+        }
+        self$`quality` <- this_object$`quality`
       }
       if (!is.null(this_object$`hasMs1`)) {
         self$`hasMs1` <- this_object$`hasMs1`
@@ -464,9 +461,9 @@ AlignedFeature <- R6::R6Class(
         if (!is.null(self$`quality`)) {
           sprintf(
           '"quality":
-          %s
-          ',
-          jsonlite::toJSON(self$`quality`$toJSON(), auto_unbox = TRUE, digits = NA)
+            "%s"
+                    ',
+          self$`quality`
           )
         },
         if (!is.null(self$`hasMs1`)) {
@@ -556,7 +553,10 @@ AlignedFeature <- R6::R6Class(
       self$`rtStartSeconds` <- this_object$`rtStartSeconds`
       self$`rtEndSeconds` <- this_object$`rtEndSeconds`
       self$`rtApexSeconds` <- this_object$`rtApexSeconds`
-      self$`quality` <- DataQuality$new()$fromJSON(jsonlite::toJSON(this_object$`quality`, auto_unbox = TRUE, digits = NA))
+      if (!is.null(this_object$`quality`) && !(this_object$`quality` %in% c("NOT_APPLICABLE", "LOWEST", "BAD", "DECENT", "GOOD"))) {
+        stop(paste("Error! \"", this_object$`quality`, "\" cannot be assigned to `quality`. Must be \"NOT_APPLICABLE\", \"LOWEST\", \"BAD\", \"DECENT\", \"GOOD\".", sep = ""))
+      }
+      self$`quality` <- this_object$`quality`
       self$`hasMs1` <- this_object$`hasMs1`
       self$`hasMsMs` <- this_object$`hasMsMs`
       self$`msData` <- MsData$new()$fromJSON(jsonlite::toJSON(this_object$`msData`, auto_unbox = TRUE, digits = NA))

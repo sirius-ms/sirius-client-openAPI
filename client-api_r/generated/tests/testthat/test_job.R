@@ -43,3 +43,11 @@ test_that("affectedAlignedFeatureIds", {
   # uncomment below to test the property
   #expect_equal(model.instance$`affectedAlignedFeatureIds`, "EXPECTED_RESULT")
 })
+
+test_that("jobEffect", {
+  # tests for the property `jobEffect` (character)
+  # Effect this job has. The affected ids are added, removed or modified.  Null if job does not affect features/compounds  Not available/null if affected Ids are not requested
+
+  # uncomment below to test the property
+  #expect_equal(model.instance$`jobEffect`, "EXPECTED_RESULT")
+})

@@ -1,0 +1,242 @@
+#' Create a new PageMetadata
+#'
+#' @description
+#' PageMetadata Class
+#'
+#' @docType class
+#' @title PageMetadata
+#' @description PageMetadata Class
+#' @format An \code{R6Class} generator object
+#' @field size  integer [optional]
+#' @field number  integer [optional]
+#' @field totalElements  integer [optional]
+#' @field totalPages  integer [optional]
+#' @importFrom R6 R6Class
+#' @importFrom jsonlite fromJSON toJSON
+#' @export
+PageMetadata <- R6::R6Class(
+  "PageMetadata",
+  public = list(
+    `size` = NULL,
+    `number` = NULL,
+    `totalElements` = NULL,
+    `totalPages` = NULL,
+    #' Initialize a new PageMetadata class.
+    #'
+    #' @description
+    #' Initialize a new PageMetadata class.
+    #'
+    #' @param size size
+    #' @param number number
+    #' @param totalElements totalElements
+    #' @param totalPages totalPages
+    #' @param ... Other optional arguments.
+    #' @export
+    initialize = function(`size` = NULL, `number` = NULL, `totalElements` = NULL, `totalPages` = NULL, ...) {
+      if (!is.null(`size`)) {
+        if (!(is.numeric(`size`) && length(`size`) == 1)) {
+          stop(paste("Error! Invalid data for `size`. Must be an integer:", `size`))
+        }
+        self$`size` <- `size`
+      }
+      if (!is.null(`number`)) {
+        if (!(is.numeric(`number`) && length(`number`) == 1)) {
+          stop(paste("Error! Invalid data for `number`. Must be an integer:", `number`))
+        }
+        self$`number` <- `number`
+      }
+      if (!is.null(`totalElements`)) {
+        if (!(is.numeric(`totalElements`) && length(`totalElements`) == 1)) {
+          stop(paste("Error! Invalid data for `totalElements`. Must be an integer:", `totalElements`))
+        }
+        self$`totalElements` <- `totalElements`
+      }
+      if (!is.null(`totalPages`)) {
+        if (!(is.numeric(`totalPages`) && length(`totalPages`) == 1)) {
+          stop(paste("Error! Invalid data for `totalPages`. Must be an integer:", `totalPages`))
+        }
+        self$`totalPages` <- `totalPages`
+      }
+    },
+    #' To JSON string
+    #'
+    #' @description
+    #' To JSON String
+    #'
+    #' @return PageMetadata in JSON format
+    #' @export
+    toJSON = function() {
+      PageMetadataObject <- list()
+      if (!is.null(self$`size`)) {
+        PageMetadataObject[["size"]] <-
+          self$`size`
+      }
+      if (!is.null(self$`number`)) {
+        PageMetadataObject[["number"]] <-
+          self$`number`
+      }
+      if (!is.null(self$`totalElements`)) {
+        PageMetadataObject[["totalElements"]] <-
+          self$`totalElements`
+      }
+      if (!is.null(self$`totalPages`)) {
+        PageMetadataObject[["totalPages"]] <-
+          self$`totalPages`
+      }
+      PageMetadataObject
+    },
+    #' Deserialize JSON string into an instance of PageMetadata
+    #'
+    #' @description
+    #' Deserialize JSON string into an instance of PageMetadata
+    #'
+    #' @param input_json the JSON input
+    #' @return the instance of PageMetadata
+    #' @export
+    fromJSON = function(input_json) {
+      this_object <- jsonlite::fromJSON(input_json)
+      if (!is.null(this_object$`size`)) {
+        self$`size` <- this_object$`size`
+      }
+      if (!is.null(this_object$`number`)) {
+        self$`number` <- this_object$`number`
+      }
+      if (!is.null(this_object$`totalElements`)) {
+        self$`totalElements` <- this_object$`totalElements`
+      }
+      if (!is.null(this_object$`totalPages`)) {
+        self$`totalPages` <- this_object$`totalPages`
+      }
+      self
+    },
+    #' To JSON string
+    #'
+    #' @description
+    #' To JSON String
+    #'
+    #' @return PageMetadata in JSON format
+    #' @export
+    toJSONString = function() {
+      jsoncontent <- c(
+        if (!is.null(self$`size`)) {
+          sprintf(
+          '"size":
+            %f
+                    ',
+          self$`size`
+          )
+        },
+        if (!is.null(self$`number`)) {
+          sprintf(
+          '"number":
+            %f
+                    ',
+          self$`number`
+          )
+        },
+        if (!is.null(self$`totalElements`)) {
+          sprintf(
+          '"totalElements":
+            %f
+                    ',
+          self$`totalElements`
+          )
+        },
+        if (!is.null(self$`totalPages`)) {
+          sprintf(
+          '"totalPages":
+            %f
+                    ',
+          self$`totalPages`
+          )
+        }
+      )
+      jsoncontent <- paste(jsoncontent, collapse = ",")
+      # remove c() occurences and reduce resulting double escaped quotes \"\" into \"
+      jsoncontent <- gsub('\\\"c\\((.*?)\\\"\\)', '\\1', jsoncontent)
+      # fix wrong serialization of "\"ENUM\"" to "ENUM"
+      jsoncontent <- gsub("\\\\\"([A-Z]+)\\\\\"", "\\1", jsoncontent)
+      json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
+    },
+    #' Deserialize JSON string into an instance of PageMetadata
+    #'
+    #' @description
+    #' Deserialize JSON string into an instance of PageMetadata
+    #'
+    #' @param input_json the JSON input
+    #' @return the instance of PageMetadata
+    #' @export
+    fromJSONString = function(input_json) {
+      this_object <- jsonlite::fromJSON(input_json)
+      self$`size` <- this_object$`size`
+      self$`number` <- this_object$`number`
+      self$`totalElements` <- this_object$`totalElements`
+      self$`totalPages` <- this_object$`totalPages`
+      self
+    },
+    #' Validate JSON input with respect to PageMetadata
+    #'
+    #' @description
+    #' Validate JSON input with respect to PageMetadata and throw an exception if invalid
+    #'
+    #' @param input the JSON input
+    #' @export
+    validateJSON = function(input) {
+      input_json <- jsonlite::fromJSON(input)
+    },
+    #' To string (JSON format)
+    #'
+    #' @description
+    #' To string (JSON format)
+    #'
+    #' @return String representation of PageMetadata
+    #' @export
+    toString = function() {
+      self$toJSONString()
+    },
+    #' Return true if the values in all fields are valid.
+    #'
+    #' @description
+    #' Return true if the values in all fields are valid.
+    #'
+    #' @return true if the values in all fields are valid.
+    #' @export
+    isValid = function() {
+      TRUE
+    },
+    #' Return a list of invalid fields (if any).
+    #'
+    #' @description
+    #' Return a list of invalid fields (if any).
+    #'
+    #' @return A list of invalid fields (if any).
+    #' @export
+    getInvalidFields = function() {
+      invalid_fields <- list()
+      invalid_fields
+    },
+    #' Print the object
+    #'
+    #' @description
+    #' Print the object
+    #'
+    #' @export
+    print = function() {
+      print(jsonlite::prettify(self$toJSONString()))
+      invisible(self)
+    }
+  ),
+  # Lock the class to prevent modifications to the method or field
+  lock_class = TRUE
+)
+## Uncomment below to unlock the class to allow modifications of the method or field
+# PageMetadata$unlock()
+#
+## Below is an example to define the print function
+# PageMetadata$set("public", "print", function(...) {
+#   print(jsonlite::prettify(self$toJSONString()))
+#   invisible(self)
+# })
+## Uncomment below to lock the class to prevent modifications to the method or field
+# PageMetadata$lock()
+

@@ -10,6 +10,7 @@ Name | Type | Description | Notes
 **molecular_formula** | **str** | molecular formula of this formula candidate | [optional] 
 **adduct** | **str** | Adduct of this formula candidate | [optional] 
 **rank** | **int** |  | [optional] 
+**sirius_score_normalized** | **float** | Normalized Sirius Score of the formula candidate.  If NULL result is not available | [optional] 
 **sirius_score** | **float** | Sirius Score (isotope + tree score) of the formula candidate.  If NULL result is not available | [optional] 
 **isotope_score** | **float** |  | [optional] 
 **tree_score** | **float** |  | [optional] 

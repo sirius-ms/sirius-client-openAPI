@@ -7,7 +7,7 @@ Method | HTTP request | Description
 [**AddCompounds**](CompoundsApi.md#AddCompounds) | **POST** /api/projects/{projectId}/compounds | Import Compounds and its contained features.
 [**DeleteCompound**](CompoundsApi.md#DeleteCompound) | **DELETE** /api/projects/{projectId}/compounds/{compoundId} | Delete compound (group of ion identities) with the given identifier (and the included features) from the  specified project-space.
 [**GetCompound**](CompoundsApi.md#GetCompound) | **GET** /api/projects/{projectId}/compounds/{compoundId} | Get compound (group of ion identities) with the given identifier from the specified project-space.
-[**GetCompoundTraces**](CompoundsApi.md#GetCompoundTraces) | **GET** /api/projects/{projectId}/compounds/{compoundId}/traces | 
+[**GetCompoundTracesExperimental**](CompoundsApi.md#GetCompoundTracesExperimental) | **GET** /api/projects/{projectId}/compounds/{compoundId}/traces | EXPERIMENTAL: This endpoint is experimental and may be changed (or even removed) without notice until it is declared stable.
 [**GetCompounds**](CompoundsApi.md#GetCompounds) | **GET** /api/projects/{projectId}/compounds | List of all available compounds (group of ion identities) in the given project-space.
 [**GetCompoundsPaged**](CompoundsApi.md#GetCompoundsPaged) | **GET** /api/projects/{projectId}/compounds/page | Page of available compounds (group of ion identities) in the given project-space.
 
@@ -27,10 +27,10 @@ library(Rsirius)
 #
 # prepare function argument(s)
 var_project_id <- "project_id_example" # character | project-space to import into.
-var_compound_import <- c(CompoundImport$new(c(FeatureImport$new(123, 123, "name_example", "externalFeatureId_example", c("detectedAdducts_example"), 123, 123, 123, DataQuality$new(), BasicSpectrum$new(c(SimplePeak$new(123, 123)), "name_example", 123, "collisionEnergy_example", 123, 123, 123), c(BasicSpectrum$new(c(SimplePeak$new(..., ...)), "name_example", 123, "collisionEnergy_example", 123, 123, 123)), c(BasicSpectrum$new(c(SimplePeak$new(..., ...)), "name_example", 123, "collisionEnergy_example", 123, 123, 123)))), "name_example")) # array[CompoundImport] | the compound data to be imported
-var_profile <- InstrumentProfile$new() # InstrumentProfile | profile describing the instrument used to measure the data. Used to merge spectra. (Optional)
-var_opt_fields <- c(CompoundOptField$new()) # array[CompoundOptField] | set of optional fields to be included. Use 'none' to override defaults. (Optional)
-var_opt_fields_features <- c(AlignedFeatureOptField$new()) # array[AlignedFeatureOptField] | set of optional fields of the nested features to be included. Use 'none' to override defaults. (Optional)
+var_compound_import <- c(CompoundImport$new(c(FeatureImport$new(123, 123, "name_example", "externalFeatureId_example", c("detectedAdducts_example"), 123, 123, 123, "NOT_APPLICABLE", BasicSpectrum$new(c(SimplePeak$new(123, 123)), "name_example", 123, "collisionEnergy_example", "instrument_example", 123, 123, 123), c(BasicSpectrum$new(c(SimplePeak$new(..., ...)), "name_example", 123, "collisionEnergy_example", "instrument_example", 123, 123, 123)), c(BasicSpectrum$new(c(SimplePeak$new(..., ...)), "name_example", 123, "collisionEnergy_example", "instrument_example", 123, 123, 123)))), "name_example")) # array[CompoundImport] | the compound data to be imported
+var_profile <- "profile_example" # character | profile describing the instrument used to measure the data. Used to merge spectra. (Optional)
+var_opt_fields <- c("none") # array[character] | set of optional fields to be included. Use 'none' to override defaults. (Optional)
+var_opt_fields_features <- c("none") # array[character] | set of optional fields of the nested features to be included. Use 'none' to override defaults. (Optional)
 
 api_instance <- rsirius_api$new()
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
@@ -45,9 +45,9 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **character**| project-space to import into. | 
  **compound_import** | list( [**CompoundImport**](CompoundImport.md) )| the compound data to be imported | 
- **profile** | [**InstrumentProfile**](.md)| profile describing the instrument used to measure the data. Used to merge spectra. | [optional] 
- **opt_fields** | list( [**CompoundOptField**](CompoundOptField.md) )| set of optional fields to be included. Use &#39;none&#39; to override defaults. | [optional] [default to []]
- **opt_fields_features** | list( [**AlignedFeatureOptField**](AlignedFeatureOptField.md) )| set of optional fields of the nested features to be included. Use &#39;none&#39; to override defaults. | [optional] [default to []]
+ **profile** | Enum [QTOF, ORBITRAP] | profile describing the instrument used to measure the data. Used to merge spectra. | [optional] 
+ **opt_fields** | Enum [none, consensusAnnotations, consensusAnnotationsDeNovo, customAnnotations] | set of optional fields to be included. Use &#39;none&#39; to override defaults. | [optional] [default to []]
+ **opt_fields_features** | Enum [none, msData, topAnnotations, topAnnotationsDeNovo, computedTools] | set of optional fields of the nested features to be included. Use &#39;none&#39; to override defaults. | [optional] [default to []]
 
 ### Return type
 
@@ -129,8 +129,8 @@ library(Rsirius)
 # prepare function argument(s)
 var_project_id <- "project_id_example" # character | project-space to read from.
 var_compound_id <- "compound_id_example" # character | identifier of the compound (group of ion identities) to access.
-var_opt_fields <- c(CompoundOptField$new()) # array[CompoundOptField] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
-var_opt_fields_features <- c(AlignedFeatureOptField$new()) # array[AlignedFeatureOptField] |  (Optional)
+var_opt_fields <- c("none") # array[character] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
+var_opt_fields_features <- c("none") # array[character] |  (Optional)
 
 api_instance <- rsirius_api$new()
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
@@ -145,8 +145,8 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **character**| project-space to read from. | 
  **compound_id** | **character**| identifier of the compound (group of ion identities) to access. | 
- **opt_fields** | list( [**CompoundOptField**](CompoundOptField.md) )| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to []]
- **opt_fields_features** | list( [**AlignedFeatureOptField**](AlignedFeatureOptField.md) )|  | [optional] [default to []]
+ **opt_fields** | Enum [none, consensusAnnotations, consensusAnnotationsDeNovo, customAnnotations] | set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to []]
+ **opt_fields_features** | Enum [none, msData, topAnnotations, topAnnotationsDeNovo, computedTools] |  | [optional] [default to []]
 
 ### Return type
 
@@ -166,24 +166,28 @@ No authorization required
 |-------------|-------------|------------------|
 | **200** | Compounds with additional optional fields (if specified). |  -  |
 
-# **GetCompoundTraces**
-> TraceSet GetCompoundTraces(project_id, compound_id, feature_id = "")
+# **GetCompoundTracesExperimental**
+> TraceSetExperimental GetCompoundTracesExperimental(project_id, compound_id, feature_id = "")
 
+EXPERIMENTAL: This endpoint is experimental and may be changed (or even removed) without notice until it is declared stable.
 
+Returns the traces of the given compound. A trace consists of m/z and intensity values over the retention  time axis. All the returned traces are 'projected', which means they refer not to the original retention time axis,  but to a recalibrated axis. This means the data points in the trace are not exactly the same as in the raw data.  However, this also means that all traces can be directly compared against each other, as they all lie in the same  retention time axis.
 
 ### Example
 ```R
 library(Rsirius)
 
+# EXPERIMENTAL: This endpoint is experimental and may be changed (or even removed) without notice until it is declared stable.
+#
 # prepare function argument(s)
-var_project_id <- "project_id_example" # character | 
-var_compound_id <- "compound_id_example" # character | 
+var_project_id <- "project_id_example" # character | project-space to read from.
+var_compound_id <- "compound_id_example" # character | compound which intensities should be read out
 var_feature_id <- "" # character |  (Optional)
 
 api_instance <- rsirius_api$new()
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$GetCompoundTraces(var_project_id, var_compound_id, feature_id = var_feature_iddata_file = "result.txt")
-result <- api_instance$compounds_api$GetCompoundTraces(var_project_id, var_compound_id, feature_id = var_feature_id)
+# result <- api_instance$GetCompoundTracesExperimental(var_project_id, var_compound_id, feature_id = var_feature_iddata_file = "result.txt")
+result <- api_instance$compounds_api$GetCompoundTracesExperimental(var_project_id, var_compound_id, feature_id = var_feature_id)
 dput(result)
 ```
 
@@ -191,13 +195,13 @@ dput(result)
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **project_id** | **character**|  | 
- **compound_id** | **character**|  | 
+ **project_id** | **character**| project-space to read from. | 
+ **compound_id** | **character**| compound which intensities should be read out | 
  **feature_id** | **character**|  | [optional] [default to &quot;&quot;]
 
 ### Return type
 
-[**TraceSet**](TraceSet.md)
+[**TraceSetExperimental**](TraceSetExperimental.md)
 
 ### Authorization
 
@@ -211,7 +215,7 @@ No authorization required
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** | OK |  -  |
+| **200** | Traces of the given compound. |  -  |
 
 # **GetCompounds**
 > array[Compound] GetCompounds(project_id, opt_fields = [], opt_fields_features = [])
@@ -228,8 +232,8 @@ library(Rsirius)
 #
 # prepare function argument(s)
 var_project_id <- "project_id_example" # character | project-space to read from.
-var_opt_fields <- c(CompoundOptField$new()) # array[CompoundOptField] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
-var_opt_fields_features <- c(AlignedFeatureOptField$new()) # array[AlignedFeatureOptField] |  (Optional)
+var_opt_fields <- c("none") # array[character] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
+var_opt_fields_features <- c("none") # array[character] |  (Optional)
 
 api_instance <- rsirius_api$new()
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
@@ -243,8 +247,8 @@ dput(result)
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **character**| project-space to read from. | 
- **opt_fields** | list( [**CompoundOptField**](CompoundOptField.md) )| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to []]
- **opt_fields_features** | list( [**AlignedFeatureOptField**](AlignedFeatureOptField.md) )|  | [optional] [default to []]
+ **opt_fields** | Enum [none, consensusAnnotations, consensusAnnotationsDeNovo, customAnnotations] | set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to []]
+ **opt_fields_features** | Enum [none, msData, topAnnotations, topAnnotationsDeNovo, computedTools] |  | [optional] [default to []]
 
 ### Return type
 
@@ -265,7 +269,7 @@ No authorization required
 | **200** | Compounds with additional optional fields (if specified). |  -  |
 
 # **GetCompoundsPaged**
-> PageCompound GetCompoundsPaged(project_id, page = 0, size = 20, sort = var.sort, opt_fields = [], opt_fields_features = [])
+> PagedModelCompound GetCompoundsPaged(project_id, page = 0, size = 20, sort = var.sort, opt_fields = [], opt_fields_features = [])
 
 Page of available compounds (group of ion identities) in the given project-space.
 
@@ -282,8 +286,8 @@ var_project_id <- "project_id_example" # character | project-space to read from.
 var_page <- 0 # integer | Zero-based page index (0..N) (Optional)
 var_size <- 20 # integer | The size of the page to be returned (Optional)
 var_sort <- c("inner_example") # array[character] | Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (Optional)
-var_opt_fields <- c(CompoundOptField$new()) # array[CompoundOptField] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
-var_opt_fields_features <- c(AlignedFeatureOptField$new()) # array[AlignedFeatureOptField] |  (Optional)
+var_opt_fields <- c("none") # array[character] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
+var_opt_fields_features <- c("none") # array[character] |  (Optional)
 
 api_instance <- rsirius_api$new()
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
@@ -300,12 +304,12 @@ Name | Type | Description  | Notes
  **page** | **integer**| Zero-based page index (0..N) | [optional] [default to 0]
  **size** | **integer**| The size of the page to be returned | [optional] [default to 20]
  **sort** | list( **character** )| Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. | [optional] 
- **opt_fields** | list( [**CompoundOptField**](CompoundOptField.md) )| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to []]
- **opt_fields_features** | list( [**AlignedFeatureOptField**](AlignedFeatureOptField.md) )|  | [optional] [default to []]
+ **opt_fields** | Enum [none, consensusAnnotations, consensusAnnotationsDeNovo, customAnnotations] | set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to []]
+ **opt_fields_features** | Enum [none, msData, topAnnotations, topAnnotationsDeNovo, computedTools] |  | [optional] [default to []]
 
 ### Return type
 
-[**PageCompound**](PageCompound.md)
+[**PagedModelCompound**](PagedModelCompound.md)
 
 ### Authorization
 

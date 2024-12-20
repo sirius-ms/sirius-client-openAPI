@@ -36,6 +36,14 @@ test_that("rank", {
   #expect_equal(model.instance$`rank`, "EXPECTED_RESULT")
 })
 
+test_that("siriusScoreNormalized", {
+  # tests for the property `siriusScoreNormalized` (numeric)
+  # Normalized Sirius Score of the formula candidate.  If NULL result is not available
+
+  # uncomment below to test the property
+  #expect_equal(model.instance$`siriusScoreNormalized`, "EXPECTED_RESULT")
+})
+
 test_that("siriusScore", {
   # tests for the property `siriusScore` (numeric)
   # Sirius Score (isotope + tree score) of the formula candidate.  If NULL result is not available

@@ -20,7 +20,7 @@
 #' @field adduct  character [optional]
 #' @field exactMass  character [optional]
 #' @field smiles  character [optional]
-#' @field candidateInChiKey  character
+#' @field inchiKey  character
 #' @field referenceSpectrum  \link{BasicSpectrum} [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
@@ -41,7 +41,7 @@ SpectralLibraryMatch <- R6::R6Class(
     `adduct` = NULL,
     `exactMass` = NULL,
     `smiles` = NULL,
-    `candidateInChiKey` = NULL,
+    `inchiKey` = NULL,
     `referenceSpectrum` = NULL,
     #' Initialize a new SpectralLibraryMatch class.
     #'
@@ -51,7 +51,7 @@ SpectralLibraryMatch <- R6::R6Class(
     #' @param similarity similarity
     #' @param querySpectrumIndex querySpectrumIndex
     #' @param uuid uuid
-    #' @param candidateInChiKey candidateInChiKey
+    #' @param inchiKey inchiKey
     #' @param specMatchId specMatchId
     #' @param rank rank
     #' @param sharedPeaks sharedPeaks
@@ -65,7 +65,7 @@ SpectralLibraryMatch <- R6::R6Class(
     #' @param referenceSpectrum referenceSpectrum
     #' @param ... Other optional arguments.
     #' @export
-    initialize = function(`similarity`, `querySpectrumIndex`, `uuid`, `candidateInChiKey`, `specMatchId` = NULL, `rank` = NULL, `sharedPeaks` = NULL, `dbName` = NULL, `dbId` = NULL, `splash` = NULL, `molecularFormula` = NULL, `adduct` = NULL, `exactMass` = NULL, `smiles` = NULL, `referenceSpectrum` = NULL, ...) {
+    initialize = function(`similarity`, `querySpectrumIndex`, `uuid`, `inchiKey`, `specMatchId` = NULL, `rank` = NULL, `sharedPeaks` = NULL, `dbName` = NULL, `dbId` = NULL, `splash` = NULL, `molecularFormula` = NULL, `adduct` = NULL, `exactMass` = NULL, `smiles` = NULL, `referenceSpectrum` = NULL, ...) {
       if (!missing(`similarity`)) {
         if (!(is.numeric(`similarity`) && length(`similarity`) == 1)) {
           stop(paste("Error! Invalid data for `similarity`. Must be a number:", `similarity`))
@@ -84,11 +84,11 @@ SpectralLibraryMatch <- R6::R6Class(
         }
         self$`uuid` <- `uuid`
       }
-      if (!missing(`candidateInChiKey`)) {
-        if (!(is.character(`candidateInChiKey`) && length(`candidateInChiKey`) == 1)) {
-          stop(paste("Error! Invalid data for `candidateInChiKey`. Must be a string:", `candidateInChiKey`))
+      if (!missing(`inchiKey`)) {
+        if (!(is.character(`inchiKey`) && length(`inchiKey`) == 1)) {
+          stop(paste("Error! Invalid data for `inchiKey`. Must be a string:", `inchiKey`))
         }
-        self$`candidateInChiKey` <- `candidateInChiKey`
+        self$`inchiKey` <- `inchiKey`
       }
       if (!is.null(`specMatchId`)) {
         if (!(is.character(`specMatchId`) && length(`specMatchId`) == 1)) {
@@ -216,9 +216,9 @@ SpectralLibraryMatch <- R6::R6Class(
         SpectralLibraryMatchObject[["smiles"]] <-
           self$`smiles`
       }
-      if (!is.null(self$`candidateInChiKey`)) {
-        SpectralLibraryMatchObject[["candidateInChiKey"]] <-
-          self$`candidateInChiKey`
+      if (!is.null(self$`inchiKey`)) {
+        SpectralLibraryMatchObject[["inchiKey"]] <-
+          self$`inchiKey`
       }
       if (!is.null(self$`referenceSpectrum`)) {
         SpectralLibraryMatchObject[["referenceSpectrum"]] <-
@@ -281,8 +281,8 @@ SpectralLibraryMatch <- R6::R6Class(
       if (!is.null(this_object$`smiles`)) {
         self$`smiles` <- this_object$`smiles`
       }
-      if (!is.null(this_object$`candidateInChiKey`)) {
-        self$`candidateInChiKey` <- this_object$`candidateInChiKey`
+      if (!is.null(this_object$`inchiKey`)) {
+        self$`inchiKey` <- this_object$`inchiKey`
       }
       if (!is.null(this_object$`referenceSpectrum`)) {
         `referencespectrum_object` <- BasicSpectrum$new()
@@ -404,12 +404,12 @@ SpectralLibraryMatch <- R6::R6Class(
           self$`smiles`
           )
         },
-        if (!is.null(self$`candidateInChiKey`)) {
+        if (!is.null(self$`inchiKey`)) {
           sprintf(
-          '"candidateInChiKey":
+          '"inchiKey":
             "%s"
                     ',
-          self$`candidateInChiKey`
+          self$`inchiKey`
           )
         },
         if (!is.null(self$`referenceSpectrum`)) {
@@ -451,7 +451,7 @@ SpectralLibraryMatch <- R6::R6Class(
       self$`adduct` <- this_object$`adduct`
       self$`exactMass` <- this_object$`exactMass`
       self$`smiles` <- this_object$`smiles`
-      self$`candidateInChiKey` <- this_object$`candidateInChiKey`
+      self$`inchiKey` <- this_object$`inchiKey`
       self$`referenceSpectrum` <- BasicSpectrum$new()$fromJSON(jsonlite::toJSON(this_object$`referenceSpectrum`, auto_unbox = TRUE, digits = NA))
       self
     },
@@ -488,13 +488,13 @@ SpectralLibraryMatch <- R6::R6Class(
       } else {
         stop(paste("The JSON input `", input, "` is invalid for SpectralLibraryMatch: the required field `uuid` is missing."))
       }
-      # check the required field `candidateInChiKey`
-      if (!is.null(input_json$`candidateInChiKey`)) {
-        if (!(is.character(input_json$`candidateInChiKey`) && length(input_json$`candidateInChiKey`) == 1)) {
-          stop(paste("Error! Invalid data for `candidateInChiKey`. Must be a string:", input_json$`candidateInChiKey`))
+      # check the required field `inchiKey`
+      if (!is.null(input_json$`inchiKey`)) {
+        if (!(is.character(input_json$`inchiKey`) && length(input_json$`inchiKey`) == 1)) {
+          stop(paste("Error! Invalid data for `inchiKey`. Must be a string:", input_json$`inchiKey`))
         }
       } else {
-        stop(paste("The JSON input `", input, "` is invalid for SpectralLibraryMatch: the required field `candidateInChiKey` is missing."))
+        stop(paste("The JSON input `", input, "` is invalid for SpectralLibraryMatch: the required field `inchiKey` is missing."))
       }
     },
     #' To string (JSON format)
@@ -530,8 +530,8 @@ SpectralLibraryMatch <- R6::R6Class(
         return(FALSE)
       }
 
-      # check if the required `candidateInChiKey` is null
-      if (is.null(self$`candidateInChiKey`)) {
+      # check if the required `inchiKey` is null
+      if (is.null(self$`inchiKey`)) {
         return(FALSE)
       }
 
@@ -561,9 +561,9 @@ SpectralLibraryMatch <- R6::R6Class(
         invalid_fields["uuid"] <- "Non-nullable required field `uuid` cannot be null."
       }
 
-      # check if the required `candidateInChiKey` is null
-      if (is.null(self$`candidateInChiKey`)) {
-        invalid_fields["candidateInChiKey"] <- "Non-nullable required field `candidateInChiKey` cannot be null."
+      # check if the required `inchiKey` is null
+      if (is.null(self$`inchiKey`)) {
+        invalid_fields["inchiKey"] <- "Non-nullable required field `inchiKey` cannot be null."
       }
 
       invalid_fields

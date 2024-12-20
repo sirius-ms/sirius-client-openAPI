@@ -9,18 +9,18 @@
 #' @format An \code{R6Class} generator object
 #' @field fragmentId Identifier of the peak/fragment. Can be used to map fragments and peaks  among fragmentation trees and spectra. integer
 #' @field molecularFormula Molecular formula that has been annotated to this peak character [optional]
-#' @field ionization Ionization that has been annotated to this peak character [optional]
-#' @field exactMass Exact mass of the annotated molecular formula and ionization numeric [optional]
+#' @field adduct Adduct that has been annotated to this peak character [optional]
+#' @field exactMass Exact mass of the annotated molecular formula and adduct numeric [optional]
 #' @field massDeviationMz Absolute mass deviation of the exact mass to the measured peak mass in mDa numeric [optional]
 #' @field massDeviationPpm Relative mass deviation of the exact mass to the measured peak mass in ppm numeric [optional]
 #' @field recalibratedMassDeviationMz Absolute mass deviation of the exact mass to the recalibrated peak mass in mDa numeric [optional]
 #' @field recalibratedMassDeviationPpm Relative mass deviation of the exact mass to the recalibrated peak mass in ppm numeric [optional]
 #' @field parentPeak  \link{ParentPeak} [optional]
-#' @field substructureAtoms Array/List of indices of the atoms of the structure candidate that are part of this fragments substructure  (highlighted atoms) list(integer) [optional]
-#' @field substructureBonds Array/List of indices of the bonds of the structure candidate that are part of this fragments substructure  (highlighted bonds)   Null if substructure annotation not available or not requested. list(integer) [optional]
-#' @field substructureBondsCut Array/List of indices of the bonds of the structure candidate that need to be cut to produce this fragments  substructure (highlighted cutted bonds).   Null if substructure annotation not available or not requested. list(integer) [optional]
-#' @field substructureScore This score roughly reflects the probability of this fragment forming.   This is the score of the path from root to this node which has the maximal score or \"profit\".  The score of a path is equal to the sum of scores of its contained fragments and edges.  Note: Refers to 'totalScore' in CombinatorialNode   Null if substructure annotation not available or not requested. numeric [optional]
-#' @field hydrogenRearrangements Number of hydrogens rearrangements needed to match the substructure to the fragment formula.   Null if substructure annotation not available or not requested. integer [optional]
+#' @field substructureAtoms EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.   Array/List of indices of the atoms of the structure candidate that are part of this fragments substructure  (highlighted atoms) list(integer) [optional]
+#' @field substructureBonds EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.   Array/List of indices of the bonds of the structure candidate that are part of this fragments substructure  (highlighted bonds)   Null if substructure annotation not available or not requested. list(integer) [optional]
+#' @field substructureBondsCut EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.   Array/List of indices of the bonds of the structure candidate that need to be cut to produce this fragments  substructure (highlighted cutted bonds).   Null if substructure annotation not available or not requested. list(integer) [optional]
+#' @field substructureScore EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.   This score roughly reflects the probability of this fragment forming.   This is the score of the path from root to this node which has the maximal score or \"profit\".  The score of a path is equal to the sum of scores of its contained fragments and edges.  Note: Refers to 'totalScore' in CombinatorialNode   Null if substructure annotation not available or not requested. numeric [optional]
+#' @field hydrogenRearrangements EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.   Number of hydrogens rearrangements needed to match the substructure to the fragment formula.   Null if substructure annotation not available or not requested. integer [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
 #' @export
@@ -29,7 +29,7 @@ PeakAnnotation <- R6::R6Class(
   public = list(
     `fragmentId` = NULL,
     `molecularFormula` = NULL,
-    `ionization` = NULL,
+    `adduct` = NULL,
     `exactMass` = NULL,
     `massDeviationMz` = NULL,
     `massDeviationPpm` = NULL,
@@ -48,21 +48,21 @@ PeakAnnotation <- R6::R6Class(
     #'
     #' @param fragmentId Identifier of the peak/fragment. Can be used to map fragments and peaks  among fragmentation trees and spectra.
     #' @param molecularFormula Molecular formula that has been annotated to this peak
-    #' @param ionization Ionization that has been annotated to this peak
-    #' @param exactMass Exact mass of the annotated molecular formula and ionization
+    #' @param adduct Adduct that has been annotated to this peak
+    #' @param exactMass Exact mass of the annotated molecular formula and adduct
     #' @param massDeviationMz Absolute mass deviation of the exact mass to the measured peak mass in mDa
     #' @param massDeviationPpm Relative mass deviation of the exact mass to the measured peak mass in ppm
     #' @param recalibratedMassDeviationMz Absolute mass deviation of the exact mass to the recalibrated peak mass in mDa
     #' @param recalibratedMassDeviationPpm Relative mass deviation of the exact mass to the recalibrated peak mass in ppm
     #' @param parentPeak parentPeak
-    #' @param substructureAtoms Array/List of indices of the atoms of the structure candidate that are part of this fragments substructure  (highlighted atoms)
-    #' @param substructureBonds Array/List of indices of the bonds of the structure candidate that are part of this fragments substructure  (highlighted bonds)   Null if substructure annotation not available or not requested.
-    #' @param substructureBondsCut Array/List of indices of the bonds of the structure candidate that need to be cut to produce this fragments  substructure (highlighted cutted bonds).   Null if substructure annotation not available or not requested.
-    #' @param substructureScore This score roughly reflects the probability of this fragment forming.   This is the score of the path from root to this node which has the maximal score or \"profit\".  The score of a path is equal to the sum of scores of its contained fragments and edges.  Note: Refers to 'totalScore' in CombinatorialNode   Null if substructure annotation not available or not requested.
-    #' @param hydrogenRearrangements Number of hydrogens rearrangements needed to match the substructure to the fragment formula.   Null if substructure annotation not available or not requested.
+    #' @param substructureAtoms EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.   Array/List of indices of the atoms of the structure candidate that are part of this fragments substructure  (highlighted atoms)
+    #' @param substructureBonds EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.   Array/List of indices of the bonds of the structure candidate that are part of this fragments substructure  (highlighted bonds)   Null if substructure annotation not available or not requested.
+    #' @param substructureBondsCut EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.   Array/List of indices of the bonds of the structure candidate that need to be cut to produce this fragments  substructure (highlighted cutted bonds).   Null if substructure annotation not available or not requested.
+    #' @param substructureScore EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.   This score roughly reflects the probability of this fragment forming.   This is the score of the path from root to this node which has the maximal score or \"profit\".  The score of a path is equal to the sum of scores of its contained fragments and edges.  Note: Refers to 'totalScore' in CombinatorialNode   Null if substructure annotation not available or not requested.
+    #' @param hydrogenRearrangements EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.   Number of hydrogens rearrangements needed to match the substructure to the fragment formula.   Null if substructure annotation not available or not requested.
     #' @param ... Other optional arguments.
     #' @export
-    initialize = function(`fragmentId`, `molecularFormula` = NULL, `ionization` = NULL, `exactMass` = NULL, `massDeviationMz` = NULL, `massDeviationPpm` = NULL, `recalibratedMassDeviationMz` = NULL, `recalibratedMassDeviationPpm` = NULL, `parentPeak` = NULL, `substructureAtoms` = NULL, `substructureBonds` = NULL, `substructureBondsCut` = NULL, `substructureScore` = NULL, `hydrogenRearrangements` = NULL, ...) {
+    initialize = function(`fragmentId`, `molecularFormula` = NULL, `adduct` = NULL, `exactMass` = NULL, `massDeviationMz` = NULL, `massDeviationPpm` = NULL, `recalibratedMassDeviationMz` = NULL, `recalibratedMassDeviationPpm` = NULL, `parentPeak` = NULL, `substructureAtoms` = NULL, `substructureBonds` = NULL, `substructureBondsCut` = NULL, `substructureScore` = NULL, `hydrogenRearrangements` = NULL, ...) {
       if (!missing(`fragmentId`)) {
         if (!(is.numeric(`fragmentId`) && length(`fragmentId`) == 1)) {
           stop(paste("Error! Invalid data for `fragmentId`. Must be an integer:", `fragmentId`))
@@ -75,11 +75,11 @@ PeakAnnotation <- R6::R6Class(
         }
         self$`molecularFormula` <- `molecularFormula`
       }
-      if (!is.null(`ionization`)) {
-        if (!(is.character(`ionization`) && length(`ionization`) == 1)) {
-          stop(paste("Error! Invalid data for `ionization`. Must be a string:", `ionization`))
+      if (!is.null(`adduct`)) {
+        if (!(is.character(`adduct`) && length(`adduct`) == 1)) {
+          stop(paste("Error! Invalid data for `adduct`. Must be a string:", `adduct`))
         }
-        self$`ionization` <- `ionization`
+        self$`adduct` <- `adduct`
       }
       if (!is.null(`exactMass`)) {
         if (!(is.numeric(`exactMass`) && length(`exactMass`) == 1)) {
@@ -160,9 +160,9 @@ PeakAnnotation <- R6::R6Class(
         PeakAnnotationObject[["molecularFormula"]] <-
           self$`molecularFormula`
       }
-      if (!is.null(self$`ionization`)) {
-        PeakAnnotationObject[["ionization"]] <-
-          self$`ionization`
+      if (!is.null(self$`adduct`)) {
+        PeakAnnotationObject[["adduct"]] <-
+          self$`adduct`
       }
       if (!is.null(self$`exactMass`)) {
         PeakAnnotationObject[["exactMass"]] <-
@@ -232,8 +232,8 @@ PeakAnnotation <- R6::R6Class(
       if (!is.null(this_object$`molecularFormula`)) {
         self$`molecularFormula` <- this_object$`molecularFormula`
       }
-      if (!is.null(this_object$`ionization`)) {
-        self$`ionization` <- this_object$`ionization`
+      if (!is.null(this_object$`adduct`)) {
+        self$`adduct` <- this_object$`adduct`
       }
       if (!is.null(this_object$`exactMass`)) {
         self$`exactMass` <- this_object$`exactMass`
@@ -297,12 +297,12 @@ PeakAnnotation <- R6::R6Class(
           self$`molecularFormula`
           )
         },
-        if (!is.null(self$`ionization`)) {
+        if (!is.null(self$`adduct`)) {
           sprintf(
-          '"ionization":
+          '"adduct":
             "%s"
                     ',
-          self$`ionization`
+          self$`adduct`
           )
         },
         if (!is.null(self$`exactMass`)) {
@@ -413,7 +413,7 @@ PeakAnnotation <- R6::R6Class(
       this_object <- jsonlite::fromJSON(input_json)
       self$`fragmentId` <- this_object$`fragmentId`
       self$`molecularFormula` <- this_object$`molecularFormula`
-      self$`ionization` <- this_object$`ionization`
+      self$`adduct` <- this_object$`adduct`
       self$`exactMass` <- this_object$`exactMass`
       self$`massDeviationMz` <- this_object$`massDeviationMz`
       self$`massDeviationPpm` <- this_object$`massDeviationPpm`

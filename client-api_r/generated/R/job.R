@@ -12,6 +12,7 @@
 #' @field progress  \link{JobProgress} [optional]
 #' @field affectedCompoundIds List of compoundIds that are affected by this job.  This lis will also contain compoundIds where not all features of the compound are affected by the job.  If this job is creating compounds (e.g. data import jobs) this value will be NULL until the jobs has finished list(character) [optional]
 #' @field affectedAlignedFeatureIds List of alignedFeatureIds that are affected by this job.  If this job is creating features (e.g. data import jobs) this value will be NULL until the jobs has finished list(character) [optional]
+#' @field jobEffect Effect this job has. The affected ids are added, removed or modified.  Null if job does not affect features/compounds  Not available/null if affected Ids are not requested character [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
 #' @export
@@ -23,6 +24,7 @@ Job <- R6::R6Class(
     `progress` = NULL,
     `affectedCompoundIds` = NULL,
     `affectedAlignedFeatureIds` = NULL,
+    `jobEffect` = NULL,
     #' Initialize a new Job class.
     #'
     #' @description
@@ -33,9 +35,10 @@ Job <- R6::R6Class(
     #' @param progress progress
     #' @param affectedCompoundIds List of compoundIds that are affected by this job.  This lis will also contain compoundIds where not all features of the compound are affected by the job.  If this job is creating compounds (e.g. data import jobs) this value will be NULL until the jobs has finished
     #' @param affectedAlignedFeatureIds List of alignedFeatureIds that are affected by this job.  If this job is creating features (e.g. data import jobs) this value will be NULL until the jobs has finished
+    #' @param jobEffect Effect this job has. The affected ids are added, removed or modified.  Null if job does not affect features/compounds  Not available/null if affected Ids are not requested
     #' @param ... Other optional arguments.
     #' @export
-    initialize = function(`id` = NULL, `command` = NULL, `progress` = NULL, `affectedCompoundIds` = NULL, `affectedAlignedFeatureIds` = NULL, ...) {
+    initialize = function(`id` = NULL, `command` = NULL, `progress` = NULL, `affectedCompoundIds` = NULL, `affectedAlignedFeatureIds` = NULL, `jobEffect` = NULL, ...) {
       if (!is.null(`id`)) {
         if (!(is.character(`id`) && length(`id`) == 1)) {
           stop(paste("Error! Invalid data for `id`. Must be a string:", `id`))
@@ -61,6 +64,16 @@ Job <- R6::R6Class(
         stopifnot(is.vector(`affectedAlignedFeatureIds`), length(`affectedAlignedFeatureIds`) != 0)
         sapply(`affectedAlignedFeatureIds`, function(x) stopifnot(is.character(x)))
         self$`affectedAlignedFeatureIds` <- `affectedAlignedFeatureIds`
+      }
+      if (!is.null(`jobEffect`)) {
+        # disabled, as it is broken and checks for `jobEffect` %in% c()
+        # if (!(`jobEffect` %in% c("IMPORT", "COMPUTATION", "DELETION"))) {
+        #  stop(paste("Error! \"", `jobEffect`, "\" cannot be assigned to `jobEffect`. Must be \"IMPORT\", \"COMPUTATION\", \"DELETION\".", sep = ""))
+        # }
+        if (!(is.character(`jobEffect`) && length(`jobEffect`) == 1)) {
+          stop(paste("Error! Invalid data for `jobEffect`. Must be a string:", `jobEffect`))
+        }
+        self$`jobEffect` <- `jobEffect`
       }
     },
     #' To JSON string
@@ -98,6 +111,10 @@ Job <- R6::R6Class(
         JobObject[["affectedAlignedFeatureIds"]] <-
           self$`affectedAlignedFeatureIds`
       }
+      if (!is.null(self$`jobEffect`)) {
+        JobObject[["jobEffect"]] <-
+          self$`jobEffect`
+      }
       JobObject
     },
     #' Deserialize JSON string into an instance of Job
@@ -126,6 +143,12 @@ Job <- R6::R6Class(
       }
       if (!is.null(this_object$`affectedAlignedFeatureIds`)) {
         self$`affectedAlignedFeatureIds` <- ApiClient$new()$deserializeObj(this_object$`affectedAlignedFeatureIds`, "array[character]", loadNamespace("Rsirius"))
+      }
+      if (!is.null(this_object$`jobEffect`)) {
+        if (!is.null(this_object$`jobEffect`) && !(this_object$`jobEffect` %in% c("IMPORT", "COMPUTATION", "DELETION"))) {
+          stop(paste("Error! \"", this_object$`jobEffect`, "\" cannot be assigned to `jobEffect`. Must be \"IMPORT\", \"COMPUTATION\", \"DELETION\".", sep = ""))
+        }
+        self$`jobEffect` <- this_object$`jobEffect`
       }
       self
     },
@@ -177,6 +200,14 @@ Job <- R6::R6Class(
           ',
           paste(unlist(lapply(self$`affectedAlignedFeatureIds`, function(x) paste0('"', x, '"'))), collapse = ",")
           )
+        },
+        if (!is.null(self$`jobEffect`)) {
+          sprintf(
+          '"jobEffect":
+            "%s"
+                    ',
+          self$`jobEffect`
+          )
         }
       )
       jsoncontent <- paste(jsoncontent, collapse = ",")
@@ -201,6 +232,10 @@ Job <- R6::R6Class(
       self$`progress` <- JobProgress$new()$fromJSON(jsonlite::toJSON(this_object$`progress`, auto_unbox = TRUE, digits = NA))
       self$`affectedCompoundIds` <- ApiClient$new()$deserializeObj(this_object$`affectedCompoundIds`, "array[character]", loadNamespace("Rsirius"))
       self$`affectedAlignedFeatureIds` <- ApiClient$new()$deserializeObj(this_object$`affectedAlignedFeatureIds`, "array[character]", loadNamespace("Rsirius"))
+      if (!is.null(this_object$`jobEffect`) && !(this_object$`jobEffect` %in% c("IMPORT", "COMPUTATION", "DELETION"))) {
+        stop(paste("Error! \"", this_object$`jobEffect`, "\" cannot be assigned to `jobEffect`. Must be \"IMPORT\", \"COMPUTATION\", \"DELETION\".", sep = ""))
+      }
+      self$`jobEffect` <- this_object$`jobEffect`
       self
     },
     #' Validate JSON input with respect to Job
