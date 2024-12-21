@@ -103,6 +103,22 @@ result <- api_instance$searchable_databases_api$GetIncludedDatabases(include_sta
 dput(result)
 
 
+####################  ImportIntoDatabase  ####################
+
+library(Rsirius)
+var_database_id <- "database_id_example" # character | database to import into
+var_buffer_size <- 1000 # integer |  (Optional)
+var_input_files <- c(123) # array[data.frame] |  (Optional)
+
+#Start import of structure and spectra files into the specified database.
+api_instance <- rsirius_api$new()
+
+# to save the result into a file, simply add the optional `data_file` parameter, e.g.
+# result <- api_instance$ImportIntoDatabase(var_database_id, buffer_size = var_buffer_size, input_files = var_input_filesdata_file = "result.txt")
+result <- api_instance$searchable_databases_api$ImportIntoDatabase(var_database_id, buffer_size = var_buffer_size, input_files = var_input_files)
+dput(result)
+
+
 ####################  RemoveDatabase  ####################
 
 library(Rsirius)
@@ -153,6 +169,8 @@ dput(result)
 \item \href{#method-SearchableDatabasesApi-GetDatabasesWithHttpInfo}{\code{SearchableDatabasesApi$GetDatabasesWithHttpInfo()}}
 \item \href{#method-SearchableDatabasesApi-GetIncludedDatabases}{\code{SearchableDatabasesApi$GetIncludedDatabases()}}
 \item \href{#method-SearchableDatabasesApi-GetIncludedDatabasesWithHttpInfo}{\code{SearchableDatabasesApi$GetIncludedDatabasesWithHttpInfo()}}
+\item \href{#method-SearchableDatabasesApi-ImportIntoDatabase}{\code{SearchableDatabasesApi$ImportIntoDatabase()}}
+\item \href{#method-SearchableDatabasesApi-ImportIntoDatabaseWithHttpInfo}{\code{SearchableDatabasesApi$ImportIntoDatabaseWithHttpInfo()}}
 \item \href{#method-SearchableDatabasesApi-RemoveDatabase}{\code{SearchableDatabasesApi$RemoveDatabase()}}
 \item \href{#method-SearchableDatabasesApi-RemoveDatabaseWithHttpInfo}{\code{SearchableDatabasesApi$RemoveDatabaseWithHttpInfo()}}
 \item \href{#method-SearchableDatabasesApi-UpdateDatabase}{\code{SearchableDatabasesApi$UpdateDatabase()}}
@@ -521,6 +539,74 @@ array[SearchableDatabase]
 }
 \subsection{Returns}{
 API response (array[SearchableDatabase]) with additional information such as HTTP status code, headers
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-SearchableDatabasesApi-ImportIntoDatabase"></a>}}
+\if{latex}{\out{\hypertarget{method-SearchableDatabasesApi-ImportIntoDatabase}{}}}
+\subsection{Method \code{ImportIntoDatabase()}}{
+Start import of structure and spectra files into the specified database.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{SearchableDatabasesApi$ImportIntoDatabase(
+  database_id,
+  buffer_size = 1000,
+  input_files = NULL,
+  data_file = NULL,
+  ...
+)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{database_id}}{database to import into}
+
+\item{\code{buffer_size}}{(optional) No description (default value: 1000)}
+
+\item{\code{input_files}}{(optional) No description}
+
+\item{\code{data_file}}{(optional) name of the data file to save the result}
+
+\item{\code{...}}{Other optional arguments}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+SearchableDatabase
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-SearchableDatabasesApi-ImportIntoDatabaseWithHttpInfo"></a>}}
+\if{latex}{\out{\hypertarget{method-SearchableDatabasesApi-ImportIntoDatabaseWithHttpInfo}{}}}
+\subsection{Method \code{ImportIntoDatabaseWithHttpInfo()}}{
+Start import of structure and spectra files into the specified database.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{SearchableDatabasesApi$ImportIntoDatabaseWithHttpInfo(
+  database_id,
+  buffer_size = 1000,
+  input_files = NULL,
+  data_file = NULL,
+  ...
+)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{database_id}}{database to import into}
+
+\item{\code{buffer_size}}{(optional) No description (default value: 1000)}
+
+\item{\code{input_files}}{(optional) No description}
+
+\item{\code{data_file}}{(optional) name of the data file to save the result}
+
+\item{\code{...}}{Other optional arguments}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+API response (SearchableDatabase) with additional information such as HTTP status code, headers
 }
 }
 \if{html}{\out{<hr>}}
