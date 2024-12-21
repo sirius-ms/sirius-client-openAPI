@@ -10,8 +10,8 @@ preproc_ms2_file_2 = paste(path_to_demo_data, "laudanosine.mgf", sep="/")
 full_ms_file = paste(path_to_demo_data, "SPF4_Eso3_GH6_01_22643.mzXML", sep="/")
 
 
-test_that("CloseProjectSpace", {
-  # tests for CloseProjectSpace
+test_that("CloseProject", {
+  # tests for CloseProject
   # base path: http://localhost:8080
   # Close project-space and remove it from application
   # Close project-space and remove it from application. Project will NOT be deleted from disk.  &lt;p&gt;  ATTENTION: This will cancel and remove all jobs running on this Project before closing it.  If there are many jobs, this might take some time.
@@ -22,8 +22,8 @@ test_that("CloseProjectSpace", {
   #expect_equal(result, "EXPECTED_RESULT")
 })
 
-test_that("CreateProjectSpace", {
-  # tests for CreateProjectSpace
+test_that("CreateProject", {
+  # tests for CreateProject
   # base path: http://localhost:8080
   # Create and open a new project-space at given location and make it accessible via the given projectId.
   # Create and open a new project-space at given location and make it accessible via the given projectId.
@@ -31,13 +31,13 @@ test_that("CreateProjectSpace", {
   # @param path_to_project character local file path where the project will be created. If NULL, project will be stored by its projectId in default project location. DEPRECATED: This parameter relies on the local filesystem and will likely be removed in later versions of this API to allow for more flexible use cases. (optional)
   # @return [ProjectInfo]
 
-  project_id <- "CreateProjectSpace"
+  project_id <- "CreateProject"
   project_dir <- paste(Sys.getenv("HOME"), project_id, sep="/")
 
-  response <- api_instance$CreateProjectSpace(project_id, project_dir)
+  response <- api_instance$CreateProject(project_id, project_dir)
   expect_true(inherits(response, "ProjectInfo"))
 
-  withr::defer(api_instance$CloseProjectSpace(project_id))
+  withr::defer(api_instance$CloseProject(project_id))
   withr::defer(unlink(project_dir, recursive=TRUE))
 })
 
@@ -51,12 +51,12 @@ test_that("GetCanopusClassyFireData", {
 
   project_id <- "GetCanopusClassyFireData"
   project_dir <- paste(Sys.getenv("HOME"), "tomato_small.sirius", sep="/")
-  api_instance$OpenProjectSpace(project_id, project_dir)
+  api_instance$OpenProject(project_id, project_dir)
 
   response <- api_instance$GetCanopusClassyFireData(project_id, 56)
   expect_true(inherits(response, "character"))
 
-  withr::defer(api_instance$CloseProjectSpace(project_id))
+  withr::defer(api_instance$CloseProject(project_id))
 })
 
 test_that("GetCanopusNpcData", {
@@ -69,12 +69,12 @@ test_that("GetCanopusNpcData", {
 
   project_id <- "GetCanopusNpcData"
   project_dir <- paste(Sys.getenv("HOME"), "tomato_small.sirius", sep="/")
-  api_instance$OpenProjectSpace(project_id, project_dir)
+  api_instance$OpenProject(project_id, project_dir)
 
   response <- api_instance$GetCanopusNpcData(project_id, 56)
   expect_true(inherits(response, "character"))
 
-  withr::defer(api_instance$CloseProjectSpace(project_id))
+  withr::defer(api_instance$CloseProject(project_id))
 })
 
 test_that("GetFingerIdData", {
@@ -87,16 +87,16 @@ test_that("GetFingerIdData", {
 
   project_id <- "GetFingerIdData"
   project_dir <- paste(Sys.getenv("HOME"), "tomato_small.sirius", sep="/")
-  api_instance$OpenProjectSpace(project_id, project_dir)
+  api_instance$OpenProject(project_id, project_dir)
 
   response <- api_instance$GetFingerIdData(project_id, 56)
   expect_true(inherits(response, "character"))
 
-  withr::defer(api_instance$CloseProjectSpace(project_id))
+  withr::defer(api_instance$CloseProject(project_id))
 })
 
-test_that("GetProjectSpace", {
-  # tests for GetProjectSpace
+test_that("GetProject", {
+  # tests for GetProject
   # base path: http://localhost:8080
   # Get project space info by its projectId.
   # Get project space info by its projectId.
@@ -104,33 +104,33 @@ test_that("GetProjectSpace", {
   # @param opt_fields array[ProjectInfoOptField]  (optional)
   # @return [ProjectInfo]
 
-  project_id <- "GetProjectSpace"
+  project_id <- "GetProject"
   project_dir <- paste(Sys.getenv("HOME"), project_id, sep="/")
-  api_instance$CreateProjectSpace(project_id, project_dir)
+  api_instance$CreateProject(project_id, project_dir)
 
-  response <- api_instance$GetProjectSpace(project_id)
+  response <- api_instance$GetProject(project_id)
   expect_true(inherits(response, "ProjectInfo"))
 
-  withr::defer(api_instance$CloseProjectSpace(project_id))
+  withr::defer(api_instance$CloseProject(project_id))
   withr::defer(unlink(project_dir, recursive=TRUE))
 })
 
-test_that("GetProjectSpaces", {
-  # tests for GetProjectSpaces
+test_that("GetProjects", {
+  # tests for GetProjects
   # base path: http://localhost:8080
   # List opened project spaces.
   # List opened project spaces.
   # @return [array[ProjectInfo]]
 
-  project_id <- "GetProjectSpaces"
+  project_id <- "GetProjects"
   project_dir <- paste(Sys.getenv("HOME"), project_id, sep="/")
-  api_instance$CreateProjectSpace(project_id, project_dir)
+  api_instance$CreateProject(project_id, project_dir)
 
-  response <- api_instance$GetProjectSpaces()
+  response <- api_instance$GetProjects()
   expect_true(inherits(response, "list"))
   expect_true(inherits(response[[1]], "ProjectInfo"))
 
-  withr::defer(api_instance$CloseProjectSpace(project_id))
+  withr::defer(api_instance$CloseProject(project_id))
   withr::defer(unlink(project_dir, recursive=TRUE))
 })
 
@@ -148,14 +148,14 @@ test_that("ImportMsRunData", {
 #   Request processing failed: java.lang.RuntimeException: java.lang.NullPointerException: Cannot invoke "de.unijena.bioinf.ms.frontend.subtools.lcms_align.DataSmoothing.ordinal()" because "filter" is null
 #   project_id <- "ImportMsRunData"
 #   project_dir <- paste(Sys.getenv("HOME"), project_id, sep="/")
-#   api_instance$CreateProjectSpace(project_id, project_dir)
+#   api_instance$CreateProject(project_id, project_dir)
 #
 #   var_input_files <- full_ms_file
 #   var_parameters <- LcmsSubmissionParameters$new()$toJSON()
 #   response <- api_instance$ImportMsRunData(project_id, var_parameters, input_files=var_input_files)
 #   expect_true(inherits(response, "ImportResult"))
 #
-#   withr::defer(api_instance$CloseProjectSpace(project_id))
+#   withr::defer(api_instance$CloseProject(project_id))
 #   withr::defer(unlink(project_dir, recursive=TRUE))
 })
 
@@ -173,14 +173,14 @@ test_that("ImportMsRunDataAsJob", {
 
   project_id <- "ImportMsRunDataAsJob"
   project_dir <- paste(Sys.getenv("HOME"), project_id, sep="/")
-  api_instance$CreateProjectSpace(project_id, project_dir)
+  api_instance$CreateProject(project_id, project_dir)
 
   var_input_files <- full_ms_file
   var_parameters <- LcmsSubmissionParameters$new(TRUE)$toJSONString()
   response <- api_instance$ImportMsRunDataAsJob(project_id, parameters=var_parameters, input_files=var_input_files)
   expect_true(inherits(response, "Job"))
 
-  withr::defer(api_instance$CloseProjectSpace(project_id))
+  withr::defer(api_instance$CloseProject(project_id))
   withr::defer(unlink(project_dir, recursive=TRUE))
 })
 
@@ -197,13 +197,13 @@ test_that("ImportPreprocessedData", {
 
   project_id <- "ImportPreprocessedData"
   project_dir <- paste(Sys.getenv("HOME"), project_id, sep="/")
-  api_instance$CreateProjectSpace(project_id, project_dir)
+  api_instance$CreateProject(project_id, project_dir)
 
   var_input_files <- preproc_ms2_file_1
   response <- api_instance$ImportPreprocessedData(project_id, input_files=var_input_files)
   expect_true(inherits(response, "ImportResult"))
 
-  withr::defer(api_instance$CloseProjectSpace(project_id))
+  withr::defer(api_instance$CloseProject(project_id))
   withr::defer(unlink(project_dir, recursive=TRUE))
 })
 
@@ -221,18 +221,18 @@ test_that("ImportPreprocessedDataAsJob", {
 
   project_id <- "ImportPreprocessedDataAsJob"
   project_dir <- paste(Sys.getenv("HOME"), project_id, sep="/")
-  api_instance$CreateProjectSpace(project_id, project_dir)
+  api_instance$CreateProject(project_id, project_dir)
 
   var_input_files <- preproc_ms2_file_1
   response <- api_instance$ImportPreprocessedDataAsJob(project_id, input_files=var_input_files)
   expect_true(inherits(response, "Job"))
 
-  withr::defer(api_instance$CloseProjectSpace(project_id))
+  withr::defer(api_instance$CloseProject(project_id))
   withr::defer(unlink(project_dir, recursive=TRUE))
 })
 
-test_that("OpenProjectSpace", {
-  # tests for OpenProjectSpace
+test_that("OpenProject", {
+  # tests for OpenProject
   # base path: http://localhost:8080
   # Open an existing project-space and make it accessible via the given projectId.
   # Open an existing project-space and make it accessible via the given projectId.
@@ -241,11 +241,11 @@ test_that("OpenProjectSpace", {
   # @param opt_fields array[ProjectInfoOptField]  (optional)
   # @return [ProjectInfo]
 
-  project_id <- "OpenProjectSpace"
+  project_id <- "OpenProject"
   project_dir <- paste(Sys.getenv("HOME"), "tomato_small.sirius", sep="/")
 
-  response <- api_instance$OpenProjectSpace(project_id, project_dir)
+  response <- api_instance$OpenProject(project_id, project_dir)
   expect_true(inherits(response, "ProjectInfo"))
 
-  withr::defer(api_instance$CloseProjectSpace(project_id))
+  withr::defer(api_instance$CloseProject(project_id))
 })
