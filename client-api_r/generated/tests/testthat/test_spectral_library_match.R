@@ -96,11 +96,11 @@ test_that("smiles", {
   #expect_equal(model.instance$`smiles`, "EXPECTED_RESULT")
 })
 
-test_that("candidateInChiKey", {
-  # tests for the property `candidateInChiKey` (character)
+test_that("inchiKey", {
+  # tests for the property `inchiKey` (character)
 
   # uncomment below to test the property
-  #expect_equal(model.instance$`candidateInChiKey`, "EXPECTED_RESULT")
+  #expect_equal(model.instance$`inchiKey`, "EXPECTED_RESULT")
 })
 
 test_that("referenceSpectrum", {

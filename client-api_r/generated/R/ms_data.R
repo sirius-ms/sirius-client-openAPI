@@ -21,8 +21,7 @@ MsData <- R6::R6Class(
     `mergedMs2` = NULL,
     `ms1Spectra` = NULL,
     `ms2Spectra` = NULL,
-    #' Initialize a new MsData class.
-    #'
+
     #' @description
     #' Initialize a new MsData class.
     #'
@@ -31,7 +30,6 @@ MsData <- R6::R6Class(
     #' @param ms1Spectra ms1Spectra
     #' @param ms2Spectra ms2Spectra
     #' @param ... Other optional arguments.
-    #' @export
     initialize = function(`mergedMs1` = NULL, `mergedMs2` = NULL, `ms1Spectra` = NULL, `ms2Spectra` = NULL, ...) {
       if (!is.null(`mergedMs1`)) {
         stopifnot(R6::is.R6(`mergedMs1`))
@@ -52,63 +50,72 @@ MsData <- R6::R6Class(
         self$`ms2Spectra` <- `ms2Spectra`
       }
     },
-    #' To JSON string
-    #'
+
     #' @description
-    #' To JSON String
-    #'
-    #' @return MsData in JSON format
-    #' @export
+    #' Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
     toJSON = function() {
+      .Deprecated(new = "toSimpleType", msg = "Use the '$toSimpleType()' method instead since that is more clearly named. Use '$toJSONString()' to get a JSON string")
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert to a List
+    #'
+    #' Convert the R6 object to a list to work more easily with other tooling.
+    #'
+    #' @return MsData as a base R list.
+    #' @examples
+    #' # convert array of MsData (x) to a data frame
+    #' \dontrun{
+    #' library(purrr)
+    #' library(tibble)
+    #' df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+    #' df
+    #' }
+    toList = function() {
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert MsData to a base R type
+    #'
+    #' @return A base R type, e.g. a list or numeric/character array.
+    toSimpleType = function() {
       MsDataObject <- list()
       if (!is.null(self$`mergedMs1`)) {
         MsDataObject[["mergedMs1"]] <-
-          if (is.list(self$`mergedMs1`$toJSON()) && length(self$`mergedMs1`$toJSON()) == 0L){
-            NULL
-          } else if (length(names(self$`mergedMs1`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`mergedMs1`$toJSON()))) {
-            jsonlite::fromJSON(self$`mergedMs1`$toJSON())
-          } else {
-            self$`mergedMs1`$toJSON()
-          }
+          self$`mergedMs1`$toSimpleType()
       }
       if (!is.null(self$`mergedMs2`)) {
         MsDataObject[["mergedMs2"]] <-
-          if (is.list(self$`mergedMs2`$toJSON()) && length(self$`mergedMs2`$toJSON()) == 0L){
-            NULL
-          } else if (length(names(self$`mergedMs2`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`mergedMs2`$toJSON()))) {
-            jsonlite::fromJSON(self$`mergedMs2`$toJSON())
-          } else {
-            self$`mergedMs2`$toJSON()
-          }
+          self$`mergedMs2`$toSimpleType()
       }
       if (!is.null(self$`ms1Spectra`)) {
         MsDataObject[["ms1Spectra"]] <-
-          lapply(self$`ms1Spectra`, function(x) x$toJSON())
+          lapply(self$`ms1Spectra`, function(x) x$toSimpleType())
       }
       if (!is.null(self$`ms2Spectra`)) {
         MsDataObject[["ms2Spectra"]] <-
-          lapply(self$`ms2Spectra`, function(x) x$toJSON())
+          lapply(self$`ms2Spectra`, function(x) x$toSimpleType())
       }
-      MsDataObject
+      return(MsDataObject)
     },
-    #' Deserialize JSON string into an instance of MsData
-    #'
+
     #' @description
     #' Deserialize JSON string into an instance of MsData
     #'
     #' @param input_json the JSON input
     #' @return the instance of MsData
-    #' @export
     fromJSON = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       if (!is.null(this_object$`mergedMs1`)) {
         `mergedms1_object` <- BasicSpectrum$new()
-        `mergedms1_object`$fromJSON(jsonlite::toJSON(this_object$`mergedMs1`, auto_unbox = TRUE, digits = NA))
+        `mergedms1_object`$fromJSON(jsonlite::toJSON(this_object$`mergedMs1`, auto_unbox = TRUE, digits = NA, null = 'null'))
         self$`mergedMs1` <- `mergedms1_object`
       }
       if (!is.null(this_object$`mergedMs2`)) {
         `mergedms2_object` <- BasicSpectrum$new()
-        `mergedms2_object`$fromJSON(jsonlite::toJSON(this_object$`mergedMs2`, auto_unbox = TRUE, digits = NA))
+        `mergedms2_object`$fromJSON(jsonlite::toJSON(this_object$`mergedMs2`, auto_unbox = TRUE, digits = NA, null = 'null'))
         self$`mergedMs2` <- `mergedms2_object`
       }
       if (!is.null(this_object$`ms1Spectra`)) {
@@ -119,118 +126,67 @@ MsData <- R6::R6Class(
       }
       self
     },
-    #' To JSON string
-    #'
+
     #' @description
     #' To JSON String
-    #'
+    #' 
+    #' @param ... Parameters passed to `jsonlite::toJSON`
     #' @return MsData in JSON format
-    #' @export
-    toJSONString = function() {
-      jsoncontent <- c(
-        if (!is.null(self$`mergedMs1`)) {
-          sprintf(
-          '"mergedMs1":
-          %s
-          ',
-          jsonlite::toJSON(self$`mergedMs1`$toJSON(), auto_unbox = TRUE, digits = NA)
-          )
-        },
-        if (!is.null(self$`mergedMs2`)) {
-          sprintf(
-          '"mergedMs2":
-          %s
-          ',
-          jsonlite::toJSON(self$`mergedMs2`$toJSON(), auto_unbox = TRUE, digits = NA)
-          )
-        },
-        if (!is.null(self$`ms1Spectra`)) {
-          sprintf(
-          '"ms1Spectra":
-          [%s]
-',
-          paste(sapply(self$`ms1Spectra`, function(x) jsonlite::toJSON(x$toJSON(), auto_unbox = TRUE, digits = NA)), collapse = ",")
-          )
-        },
-        if (!is.null(self$`ms2Spectra`)) {
-          sprintf(
-          '"ms2Spectra":
-          [%s]
-',
-          paste(sapply(self$`ms2Spectra`, function(x) jsonlite::toJSON(x$toJSON(), auto_unbox = TRUE, digits = NA)), collapse = ",")
-          )
-        }
-      )
-      jsoncontent <- paste(jsoncontent, collapse = ",")
-      # remove c() occurences and reduce resulting double escaped quotes \"\" into \"
-      jsoncontent <- gsub('\\\"c\\((.*?)\\\"\\)', '\\1', jsoncontent)
-      # fix wrong serialization of "\"ENUM\"" to "ENUM"
-      jsoncontent <- gsub("\\\\\"([A-Z]+)\\\\\"", "\\1", jsoncontent)
-      json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
+    toJSONString = function(...) {
+      simple <- self$toSimpleType()
+      json <- jsonlite::toJSON(simple, auto_unbox = TRUE, digits = NA, null = 'null', ...)
+      return(as.character(jsonlite::minify(json)))
     },
-    #' Deserialize JSON string into an instance of MsData
-    #'
+
     #' @description
     #' Deserialize JSON string into an instance of MsData
     #'
     #' @param input_json the JSON input
     #' @return the instance of MsData
-    #' @export
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
-      self$`mergedMs1` <- BasicSpectrum$new()$fromJSON(jsonlite::toJSON(this_object$`mergedMs1`, auto_unbox = TRUE, digits = NA))
-      self$`mergedMs2` <- BasicSpectrum$new()$fromJSON(jsonlite::toJSON(this_object$`mergedMs2`, auto_unbox = TRUE, digits = NA))
+      self$`mergedMs1` <- BasicSpectrum$new()$fromJSON(jsonlite::toJSON(this_object$`mergedMs1`, auto_unbox = TRUE, digits = NA, null = 'null'))
+      self$`mergedMs2` <- BasicSpectrum$new()$fromJSON(jsonlite::toJSON(this_object$`mergedMs2`, auto_unbox = TRUE, digits = NA, null = 'null'))
       self$`ms1Spectra` <- ApiClient$new()$deserializeObj(this_object$`ms1Spectra`, "array[BasicSpectrum]", loadNamespace("Rsirius"))
       self$`ms2Spectra` <- ApiClient$new()$deserializeObj(this_object$`ms2Spectra`, "array[BasicSpectrum]", loadNamespace("Rsirius"))
       self
     },
-    #' Validate JSON input with respect to MsData
-    #'
+
     #' @description
     #' Validate JSON input with respect to MsData and throw an exception if invalid
     #'
     #' @param input the JSON input
-    #' @export
     validateJSON = function(input) {
       input_json <- jsonlite::fromJSON(input)
     },
-    #' To string (JSON format)
-    #'
+
     #' @description
     #' To string (JSON format)
     #'
     #' @return String representation of MsData
-    #' @export
     toString = function() {
       self$toJSONString()
     },
-    #' Return true if the values in all fields are valid.
-    #'
+
     #' @description
     #' Return true if the values in all fields are valid.
     #'
     #' @return true if the values in all fields are valid.
-    #' @export
     isValid = function() {
       TRUE
     },
-    #' Return a list of invalid fields (if any).
-    #'
+
     #' @description
     #' Return a list of invalid fields (if any).
     #'
     #' @return A list of invalid fields (if any).
-    #' @export
     getInvalidFields = function() {
       invalid_fields <- list()
       invalid_fields
     },
-    #' Print the object
-    #'
+
     #' @description
     #' Print the object
-    #'
-    #' @export
     print = function() {
       print(jsonlite::prettify(self$toJSONString()))
       invisible(self)

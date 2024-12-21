@@ -8,6 +8,7 @@ api_instance <- SearchableDatabasesApi$new()
 test_that("AddDatabases", {
   # tests for AddDatabases
   # base path: http://localhost:8080
+  # DEPRECATED: this endpoint is based on local file paths and will likely be replaced in future versions of this API.
   # @param request_body array[character] 
   # @return [array[SearchableDatabase]]
 

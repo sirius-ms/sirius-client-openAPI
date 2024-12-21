@@ -25,8 +25,7 @@ JobProgress <- R6::R6Class(
     `maxProgress` = NULL,
     `message` = NULL,
     `errorMessage` = NULL,
-    #' Initialize a new JobProgress class.
-    #'
+
     #' @description
     #' Initialize a new JobProgress class.
     #'
@@ -37,7 +36,6 @@ JobProgress <- R6::R6Class(
     #' @param message Progress information and warnings.
     #' @param errorMessage Error message if the job did not finish successfully failed.
     #' @param ... Other optional arguments.
-    #' @export
     initialize = function(`indeterminate` = NULL, `state` = NULL, `currentProgress` = NULL, `maxProgress` = NULL, `message` = NULL, `errorMessage` = NULL, ...) {
       if (!is.null(`indeterminate`)) {
         if (!(is.logical(`indeterminate`) && length(`indeterminate`) == 1)) {
@@ -46,10 +44,9 @@ JobProgress <- R6::R6Class(
         self$`indeterminate` <- `indeterminate`
       }
       if (!is.null(`state`)) {
-        # disabled, as it is broken and checks for `state` %in% c()
-        # if (!(`state` %in% c("WAITING", "READY", "QUEUED", "SUBMITTED", "RUNNING", "CANCELED", "FAILED", "DONE"))) {
-        #  stop(paste("Error! \"", `state`, "\" cannot be assigned to `state`. Must be \"WAITING\", \"READY\", \"QUEUED\", \"SUBMITTED\", \"RUNNING\", \"CANCELED\", \"FAILED\", \"DONE\".", sep = ""))
-        # }
+        if (!(`state` %in% c("WAITING", "READY", "QUEUED", "SUBMITTED", "RUNNING", "CANCELED", "FAILED", "DONE"))) {
+          stop(paste("Error! \"", `state`, "\" cannot be assigned to `state`. Must be \"WAITING\", \"READY\", \"QUEUED\", \"SUBMITTED\", \"RUNNING\", \"CANCELED\", \"FAILED\", \"DONE\".", sep = ""))
+        }
         if (!(is.character(`state`) && length(`state`) == 1)) {
           stop(paste("Error! Invalid data for `state`. Must be a string:", `state`))
         }
@@ -80,14 +77,37 @@ JobProgress <- R6::R6Class(
         self$`errorMessage` <- `errorMessage`
       }
     },
-    #' To JSON string
-    #'
+
     #' @description
-    #' To JSON String
-    #'
-    #' @return JobProgress in JSON format
-    #' @export
+    #' Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
     toJSON = function() {
+      .Deprecated(new = "toSimpleType", msg = "Use the '$toSimpleType()' method instead since that is more clearly named. Use '$toJSONString()' to get a JSON string")
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert to a List
+    #'
+    #' Convert the R6 object to a list to work more easily with other tooling.
+    #'
+    #' @return JobProgress as a base R list.
+    #' @examples
+    #' # convert array of JobProgress (x) to a data frame
+    #' \dontrun{
+    #' library(purrr)
+    #' library(tibble)
+    #' df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+    #' df
+    #' }
+    toList = function() {
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert JobProgress to a base R type
+    #'
+    #' @return A base R type, e.g. a list or numeric/character array.
+    toSimpleType = function() {
       JobProgressObject <- list()
       if (!is.null(self$`indeterminate`)) {
         JobProgressObject[["indeterminate"]] <-
@@ -113,16 +133,14 @@ JobProgress <- R6::R6Class(
         JobProgressObject[["errorMessage"]] <-
           self$`errorMessage`
       }
-      JobProgressObject
+      return(JobProgressObject)
     },
-    #' Deserialize JSON string into an instance of JobProgress
-    #'
+
     #' @description
     #' Deserialize JSON string into an instance of JobProgress
     #'
     #' @param input_json the JSON input
     #' @return the instance of JobProgress
-    #' @export
     fromJSON = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       if (!is.null(this_object$`indeterminate`)) {
@@ -148,79 +166,23 @@ JobProgress <- R6::R6Class(
       }
       self
     },
-    #' To JSON string
-    #'
+
     #' @description
     #' To JSON String
-    #'
+    #' 
+    #' @param ... Parameters passed to `jsonlite::toJSON`
     #' @return JobProgress in JSON format
-    #' @export
-    toJSONString = function() {
-      jsoncontent <- c(
-        if (!is.null(self$`indeterminate`)) {
-          sprintf(
-          '"indeterminate":
-            %s
-                    ',
-          tolower(self$`indeterminate`)
-          )
-        },
-        if (!is.null(self$`state`)) {
-          sprintf(
-          '"state":
-            "%s"
-                    ',
-          self$`state`
-          )
-        },
-        if (!is.null(self$`currentProgress`)) {
-          sprintf(
-          '"currentProgress":
-            %f
-                    ',
-          self$`currentProgress`
-          )
-        },
-        if (!is.null(self$`maxProgress`)) {
-          sprintf(
-          '"maxProgress":
-            %f
-                    ',
-          self$`maxProgress`
-          )
-        },
-        if (!is.null(self$`message`)) {
-          sprintf(
-          '"message":
-            "%s"
-                    ',
-          self$`message`
-          )
-        },
-        if (!is.null(self$`errorMessage`)) {
-          sprintf(
-          '"errorMessage":
-            "%s"
-                    ',
-          self$`errorMessage`
-          )
-        }
-      )
-      jsoncontent <- paste(jsoncontent, collapse = ",")
-      # remove c() occurences and reduce resulting double escaped quotes \"\" into \"
-      jsoncontent <- gsub('\\\"c\\((.*?)\\\"\\)', '\\1', jsoncontent)
-      # fix wrong serialization of "\"ENUM\"" to "ENUM"
-      jsoncontent <- gsub("\\\\\"([A-Z]+)\\\\\"", "\\1", jsoncontent)
-      json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
+    toJSONString = function(...) {
+      simple <- self$toSimpleType()
+      json <- jsonlite::toJSON(simple, auto_unbox = TRUE, digits = NA, null = 'null', ...)
+      return(as.character(jsonlite::minify(json)))
     },
-    #' Deserialize JSON string into an instance of JobProgress
-    #'
+
     #' @description
     #' Deserialize JSON string into an instance of JobProgress
     #'
     #' @param input_json the JSON input
     #' @return the instance of JobProgress
-    #' @export
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       self$`indeterminate` <- this_object$`indeterminate`
@@ -234,53 +196,42 @@ JobProgress <- R6::R6Class(
       self$`errorMessage` <- this_object$`errorMessage`
       self
     },
-    #' Validate JSON input with respect to JobProgress
-    #'
+
     #' @description
     #' Validate JSON input with respect to JobProgress and throw an exception if invalid
     #'
     #' @param input the JSON input
-    #' @export
     validateJSON = function(input) {
       input_json <- jsonlite::fromJSON(input)
     },
-    #' To string (JSON format)
-    #'
+
     #' @description
     #' To string (JSON format)
     #'
     #' @return String representation of JobProgress
-    #' @export
     toString = function() {
       self$toJSONString()
     },
-    #' Return true if the values in all fields are valid.
-    #'
+
     #' @description
     #' Return true if the values in all fields are valid.
     #'
     #' @return true if the values in all fields are valid.
-    #' @export
     isValid = function() {
       TRUE
     },
-    #' Return a list of invalid fields (if any).
-    #'
+
     #' @description
     #' Return a list of invalid fields (if any).
     #'
     #' @return A list of invalid fields (if any).
-    #' @export
     getInvalidFields = function() {
       invalid_fields <- list()
       invalid_fields
     },
-    #' Print the object
-    #'
+
     #' @description
     #' Print the object
-    #'
-    #' @export
     print = function() {
       print(jsonlite::prettify(self$toJSONString()))
       invisible(self)

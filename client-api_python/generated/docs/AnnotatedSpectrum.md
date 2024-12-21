@@ -1,5 +1,6 @@
 # AnnotatedSpectrum
 
+Spectrum model with peak annotations based on the fragmentation tree and Epimetheus substructure annotations.  Molecular formula and adduct of the spectrum are identical to the ones of the corresponding molecular formula candidate and FragmentationTree.  Fragment molecular formulas and adducts correspond to the FragmentationTree's FragmentNodes
 
 ## Properties
 
@@ -8,6 +9,7 @@ Name | Type | Description | Notes
 **name** | **str** | Optional Displayable name of this spectrum. | [optional] 
 **ms_level** | **int** | MS level of the measured spectrum.  Artificial spectra with no msLevel (e.g. Simulated Isotope patterns) use null or zero | [optional] 
 **collision_energy** | **str** | Collision energy used for MS/MS spectra  Null for spectra where collision energy is not applicable | [optional] 
+**instrument** | **str** | Instrument information. | [optional] 
 **precursor_mz** | **float** | Precursor m/z of the MS/MS spectrum  Null for spectra where precursor m/z is not applicable | [optional] 
 **scan_number** | **int** | Scan number of the spectrum.  Might be null for artificial spectra with no scan number (e.g. Simulated Isotope patterns or merged spectra) | [optional] 
 **peaks** | [**List[AnnotatedPeak]**](AnnotatedPeak.md) | The peaks of this spectrum which might contain additional annotations such as molecular formulas. | 

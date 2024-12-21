@@ -4,22 +4,22 @@ All URIs are relative to *http://localhost:8080*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**close_project_space**](ProjectsApi.md#close_project_space) | **DELETE** /api/projects/{projectId} | Close project-space and remove it from application
-[**create_project_space**](ProjectsApi.md#create_project_space) | **POST** /api/projects/{projectId} | Create and open a new project-space at given location and make it accessible via the given projectId.
+[**close_project**](ProjectsApi.md#close_project) | **DELETE** /api/projects/{projectId} | Close project-space and remove it from application
+[**create_project**](ProjectsApi.md#create_project) | **POST** /api/projects/{projectId} | Create and open a new project-space at given location and make it accessible via the given projectId.
 [**get_canopus_classy_fire_data**](ProjectsApi.md#get_canopus_classy_fire_data) | **GET** /api/projects/{projectId}/cf-data | Get CANOPUS prediction vector definition for ClassyFire classes
 [**get_canopus_npc_data**](ProjectsApi.md#get_canopus_npc_data) | **GET** /api/projects/{projectId}/npc-data | Get CANOPUS prediction vector definition for NPC classes
 [**get_finger_id_data**](ProjectsApi.md#get_finger_id_data) | **GET** /api/projects/{projectId}/fingerid-data | Get CSI:FingerID fingerprint (prediction vector) definition
-[**get_project_space**](ProjectsApi.md#get_project_space) | **GET** /api/projects/{projectId} | Get project space info by its projectId.
-[**get_project_spaces**](ProjectsApi.md#get_project_spaces) | **GET** /api/projects | List opened project spaces.
+[**get_project**](ProjectsApi.md#get_project) | **GET** /api/projects/{projectId} | Get project space info by its projectId.
+[**get_projects**](ProjectsApi.md#get_projects) | **GET** /api/projects | List opened project spaces.
 [**import_ms_run_data**](ProjectsApi.md#import_ms_run_data) | **POST** /api/projects/{projectId}/import/ms-data-files | Import and Align full MS-Runs from various formats into the specified project  Possible formats (mzML, mzXML)
 [**import_ms_run_data_as_job**](ProjectsApi.md#import_ms_run_data_as_job) | **POST** /api/projects/{projectId}/import/ms-data-files-job | Import and Align full MS-Runs from various formats into the specified project as background job.
 [**import_preprocessed_data**](ProjectsApi.md#import_preprocessed_data) | **POST** /api/projects/{projectId}/import/preprocessed-data-files | Import already preprocessed ms/ms data from various formats into the specified project  Possible formats (ms, mgf, cef, msp)
 [**import_preprocessed_data_as_job**](ProjectsApi.md#import_preprocessed_data_as_job) | **POST** /api/projects/{projectId}/import/preprocessed-data-files-job | Import ms/ms data from the given format into the specified project-space as background job.
-[**open_project_space**](ProjectsApi.md#open_project_space) | **PUT** /api/projects/{projectId} | Open an existing project-space and make it accessible via the given projectId.
+[**open_project**](ProjectsApi.md#open_project) | **PUT** /api/projects/{projectId} | Open an existing project-space and make it accessible via the given projectId.
 
 
-# **close_project_space**
-> close_project_space(project_id)
+# **close_project**
+> close_project(project_id)
 
 Close project-space and remove it from application
 
@@ -48,9 +48,9 @@ with PySirius.ApiClient(configuration) as api_client:
 
     try:
         # Close project-space and remove it from application
-        api_instance.close_project_space(project_id)
+        api_instance.close_project(project_id)
     except Exception as e:
-        print("Exception when calling ProjectsApi->close_project_space: %s\n" % e)
+        print("Exception when calling ProjectsApi->close_project: %s\n" % e)
 ```
 
 
@@ -83,8 +83,8 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **create_project_space**
-> ProjectInfo create_project_space(project_id, path_to_project=path_to_project, opt_fields=opt_fields)
+# **create_project**
+> ProjectInfo create_project(project_id, path_to_project=path_to_project, opt_fields=opt_fields)
 
 Create and open a new project-space at given location and make it accessible via the given projectId.
 
@@ -113,15 +113,15 @@ with PySirius.ApiClient(configuration) as api_client:
     api_instance = PySirius.ProjectsApi(api_client)
     project_id = 'project_id_example' # str | unique name/identifier that shall be used to access the newly created project-space. Must consist only of [a-zA-Z0-9_-].
     path_to_project = 'path_to_project_example' # str | local file path where the project will be created. If NULL, project will be stored by its projectId in default project location. DEPRECATED: This parameter relies on the local filesystem and will likely be removed in later versions of this API to allow for more flexible use cases. (optional)
-    opt_fields = [] # List[ProjectInfoOptField] |  (optional) (default to [])
+    opt_fields = ["none"] # List[ProjectInfoOptField] |  (optional) (default to ["none"])
 
     try:
         # Create and open a new project-space at given location and make it accessible via the given projectId.
-        api_response = api_instance.create_project_space(project_id, path_to_project=path_to_project, opt_fields=opt_fields)
-        print("The response of ProjectsApi->create_project_space:\n")
+        api_response = api_instance.create_project(project_id, path_to_project=path_to_project, opt_fields=opt_fields)
+        print("The response of ProjectsApi->create_project:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling ProjectsApi->create_project_space: %s\n" % e)
+        print("Exception when calling ProjectsApi->create_project: %s\n" % e)
 ```
 
 
@@ -133,7 +133,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **str**| unique name/identifier that shall be used to access the newly created project-space. Must consist only of [a-zA-Z0-9_-]. | 
  **path_to_project** | **str**| local file path where the project will be created. If NULL, project will be stored by its projectId in default project location. DEPRECATED: This parameter relies on the local filesystem and will likely be removed in later versions of this API to allow for more flexible use cases. | [optional] 
- **opt_fields** | [**List[ProjectInfoOptField]**](ProjectInfoOptField.md)|  | [optional] [default to []]
+ **opt_fields** | [**List[ProjectInfoOptField]**](ProjectInfoOptField.md)|  | [optional] [default to [&quot;none&quot;]]
 
 ### Return type
 
@@ -213,7 +213,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/csv
+ - **Accept**: application/csv, application/CSV
 
 ### HTTP response details
 
@@ -280,7 +280,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/csv
+ - **Accept**: application/csv, application/CSV
 
 ### HTTP response details
 
@@ -347,7 +347,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/csv
+ - **Accept**: application/csv, application/CSV
 
 ### HTTP response details
 
@@ -357,8 +357,8 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_project_space**
-> ProjectInfo get_project_space(project_id, opt_fields=opt_fields)
+# **get_project**
+> ProjectInfo get_project(project_id, opt_fields=opt_fields)
 
 Get project space info by its projectId.
 
@@ -386,15 +386,15 @@ with PySirius.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = PySirius.ProjectsApi(api_client)
     project_id = 'project_id_example' # str | unique name/identifier tof the project-space to be accessed.
-    opt_fields = [] # List[ProjectInfoOptField] |  (optional) (default to [])
+    opt_fields = ["none"] # List[ProjectInfoOptField] |  (optional) (default to ["none"])
 
     try:
         # Get project space info by its projectId.
-        api_response = api_instance.get_project_space(project_id, opt_fields=opt_fields)
-        print("The response of ProjectsApi->get_project_space:\n")
+        api_response = api_instance.get_project(project_id, opt_fields=opt_fields)
+        print("The response of ProjectsApi->get_project:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling ProjectsApi->get_project_space: %s\n" % e)
+        print("Exception when calling ProjectsApi->get_project: %s\n" % e)
 ```
 
 
@@ -405,7 +405,7 @@ with PySirius.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **str**| unique name/identifier tof the project-space to be accessed. | 
- **opt_fields** | [**List[ProjectInfoOptField]**](ProjectInfoOptField.md)|  | [optional] [default to []]
+ **opt_fields** | [**List[ProjectInfoOptField]**](ProjectInfoOptField.md)|  | [optional] [default to [&quot;none&quot;]]
 
 ### Return type
 
@@ -428,8 +428,8 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_project_spaces**
-> List[ProjectInfo] get_project_spaces()
+# **get_projects**
+> List[ProjectInfo] get_projects()
 
 List opened project spaces.
 
@@ -458,11 +458,11 @@ with PySirius.ApiClient(configuration) as api_client:
 
     try:
         # List opened project spaces.
-        api_response = api_instance.get_project_spaces()
-        print("The response of ProjectsApi->get_project_spaces:\n")
+        api_response = api_instance.get_projects()
+        print("The response of ProjectsApi->get_projects:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling ProjectsApi->get_project_spaces: %s\n" % e)
+        print("Exception when calling ProjectsApi->get_projects: %s\n" % e)
 ```
 
 
@@ -493,7 +493,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **import_ms_run_data**
-> ImportResult import_ms_run_data(project_id, parameters, input_files=input_files)
+> ImportResult import_ms_run_data(project_id, input_files=input_files, parameters=parameters)
 
 Import and Align full MS-Runs from various formats into the specified project  Possible formats (mzML, mzXML)
 
@@ -521,12 +521,12 @@ with PySirius.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = PySirius.ProjectsApi(api_client)
     project_id = 'project_id_example' # str | Project-space to import into.
-    parameters = PySirius.LcmsSubmissionParameters() # LcmsSubmissionParameters | Parameters for feature alignment and feature finding.
     input_files = None # List[bytearray] |  (optional)
+    parameters = PySirius.LcmsSubmissionParameters() # LcmsSubmissionParameters |  (optional)
 
     try:
         # Import and Align full MS-Runs from various formats into the specified project  Possible formats (mzML, mzXML)
-        api_response = api_instance.import_ms_run_data(project_id, parameters, input_files=input_files)
+        api_response = api_instance.import_ms_run_data(project_id, input_files=input_files, parameters=parameters)
         print("The response of ProjectsApi->import_ms_run_data:\n")
         pprint(api_response)
     except Exception as e:
@@ -541,8 +541,8 @@ with PySirius.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **str**| Project-space to import into. | 
- **parameters** | [**LcmsSubmissionParameters**](.md)| Parameters for feature alignment and feature finding. | 
  **input_files** | **List[bytearray]**|  | [optional] 
+ **parameters** | [**LcmsSubmissionParameters**](LcmsSubmissionParameters.md)|  | [optional] 
 
 ### Return type
 
@@ -566,7 +566,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **import_ms_run_data_as_job**
-> Job import_ms_run_data_as_job(project_id, parameters, opt_fields=opt_fields, input_files=input_files)
+> Job import_ms_run_data_as_job(project_id, opt_fields=opt_fields, input_files=input_files, parameters=parameters)
 
 Import and Align full MS-Runs from various formats into the specified project as background job.
 
@@ -595,13 +595,13 @@ with PySirius.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = PySirius.ProjectsApi(api_client)
     project_id = 'project_id_example' # str | Project-space to import into.
-    parameters = PySirius.LcmsSubmissionParameters() # LcmsSubmissionParameters | Parameters for feature alignment and feature finding.
     opt_fields = ["progress"] # List[JobOptField] | Set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to ["progress"])
     input_files = None # List[bytearray] |  (optional)
+    parameters = PySirius.LcmsSubmissionParameters() # LcmsSubmissionParameters |  (optional)
 
     try:
         # Import and Align full MS-Runs from various formats into the specified project as background job.
-        api_response = api_instance.import_ms_run_data_as_job(project_id, parameters, opt_fields=opt_fields, input_files=input_files)
+        api_response = api_instance.import_ms_run_data_as_job(project_id, opt_fields=opt_fields, input_files=input_files, parameters=parameters)
         print("The response of ProjectsApi->import_ms_run_data_as_job:\n")
         pprint(api_response)
     except Exception as e:
@@ -616,9 +616,9 @@ with PySirius.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **str**| Project-space to import into. | 
- **parameters** | [**LcmsSubmissionParameters**](.md)| Parameters for feature alignment and feature finding. | 
  **opt_fields** | [**List[JobOptField]**](JobOptField.md)| Set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;progress&quot;]]
  **input_files** | **List[bytearray]**|  | [optional] 
+ **parameters** | [**LcmsSubmissionParameters**](LcmsSubmissionParameters.md)|  | [optional] 
 
 ### Return type
 
@@ -792,8 +792,8 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **open_project_space**
-> ProjectInfo open_project_space(project_id, path_to_project=path_to_project, opt_fields=opt_fields)
+# **open_project**
+> ProjectInfo open_project(project_id, path_to_project=path_to_project, opt_fields=opt_fields)
 
 Open an existing project-space and make it accessible via the given projectId.
 
@@ -822,15 +822,15 @@ with PySirius.ApiClient(configuration) as api_client:
     api_instance = PySirius.ProjectsApi(api_client)
     project_id = 'project_id_example' # str | unique name/identifier that shall be used to access the opened project-space. Must consist only of [a-zA-Z0-9_-].
     path_to_project = 'path_to_project_example' # str | local file path to open the project from. If NULL, project will be loaded by it projectId from default project location.  DEPRECATED: This parameter relies on the local filesystem and will likely be removed in later versions of this API to allow for more flexible use cases. (optional)
-    opt_fields = [] # List[ProjectInfoOptField] |  (optional) (default to [])
+    opt_fields = ["none"] # List[ProjectInfoOptField] |  (optional) (default to ["none"])
 
     try:
         # Open an existing project-space and make it accessible via the given projectId.
-        api_response = api_instance.open_project_space(project_id, path_to_project=path_to_project, opt_fields=opt_fields)
-        print("The response of ProjectsApi->open_project_space:\n")
+        api_response = api_instance.open_project(project_id, path_to_project=path_to_project, opt_fields=opt_fields)
+        print("The response of ProjectsApi->open_project:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling ProjectsApi->open_project_space: %s\n" % e)
+        print("Exception when calling ProjectsApi->open_project: %s\n" % e)
 ```
 
 
@@ -842,7 +842,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **str**| unique name/identifier that shall be used to access the opened project-space. Must consist only of [a-zA-Z0-9_-]. | 
  **path_to_project** | **str**| local file path to open the project from. If NULL, project will be loaded by it projectId from default project location.  DEPRECATED: This parameter relies on the local filesystem and will likely be removed in later versions of this API to allow for more flexible use cases. | [optional] 
- **opt_fields** | [**List[ProjectInfoOptField]**](ProjectInfoOptField.md)|  | [optional] [default to []]
+ **opt_fields** | [**List[ProjectInfoOptField]**](ProjectInfoOptField.md)|  | [optional] [default to [&quot;none&quot;]]
 
 ### Return type
 

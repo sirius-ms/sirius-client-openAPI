@@ -19,8 +19,7 @@ ZodiacEpochs <- R6::R6Class(
     `iterations` = NULL,
     `burnInPeriod` = NULL,
     `numberOfMarkovChains` = NULL,
-    #' Initialize a new ZodiacEpochs class.
-    #'
+
     #' @description
     #' Initialize a new ZodiacEpochs class.
     #'
@@ -28,7 +27,6 @@ ZodiacEpochs <- R6::R6Class(
     #' @param burnInPeriod burnInPeriod
     #' @param numberOfMarkovChains numberOfMarkovChains
     #' @param ... Other optional arguments.
-    #' @export
     initialize = function(`iterations` = NULL, `burnInPeriod` = NULL, `numberOfMarkovChains` = NULL, ...) {
       if (!is.null(`iterations`)) {
         if (!(is.numeric(`iterations`) && length(`iterations`) == 1)) {
@@ -49,14 +47,37 @@ ZodiacEpochs <- R6::R6Class(
         self$`numberOfMarkovChains` <- `numberOfMarkovChains`
       }
     },
-    #' To JSON string
-    #'
+
     #' @description
-    #' To JSON String
-    #'
-    #' @return ZodiacEpochs in JSON format
-    #' @export
+    #' Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
     toJSON = function() {
+      .Deprecated(new = "toSimpleType", msg = "Use the '$toSimpleType()' method instead since that is more clearly named. Use '$toJSONString()' to get a JSON string")
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert to a List
+    #'
+    #' Convert the R6 object to a list to work more easily with other tooling.
+    #'
+    #' @return ZodiacEpochs as a base R list.
+    #' @examples
+    #' # convert array of ZodiacEpochs (x) to a data frame
+    #' \dontrun{
+    #' library(purrr)
+    #' library(tibble)
+    #' df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+    #' df
+    #' }
+    toList = function() {
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert ZodiacEpochs to a base R type
+    #'
+    #' @return A base R type, e.g. a list or numeric/character array.
+    toSimpleType = function() {
       ZodiacEpochsObject <- list()
       if (!is.null(self$`iterations`)) {
         ZodiacEpochsObject[["iterations"]] <-
@@ -70,16 +91,14 @@ ZodiacEpochs <- R6::R6Class(
         ZodiacEpochsObject[["numberOfMarkovChains"]] <-
           self$`numberOfMarkovChains`
       }
-      ZodiacEpochsObject
+      return(ZodiacEpochsObject)
     },
-    #' Deserialize JSON string into an instance of ZodiacEpochs
-    #'
+
     #' @description
     #' Deserialize JSON string into an instance of ZodiacEpochs
     #'
     #' @param input_json the JSON input
     #' @return the instance of ZodiacEpochs
-    #' @export
     fromJSON = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       if (!is.null(this_object$`iterations`)) {
@@ -93,55 +112,23 @@ ZodiacEpochs <- R6::R6Class(
       }
       self
     },
-    #' To JSON string
-    #'
+
     #' @description
     #' To JSON String
-    #'
+    #' 
+    #' @param ... Parameters passed to `jsonlite::toJSON`
     #' @return ZodiacEpochs in JSON format
-    #' @export
-    toJSONString = function() {
-      jsoncontent <- c(
-        if (!is.null(self$`iterations`)) {
-          sprintf(
-          '"iterations":
-            %f
-                    ',
-          self$`iterations`
-          )
-        },
-        if (!is.null(self$`burnInPeriod`)) {
-          sprintf(
-          '"burnInPeriod":
-            %f
-                    ',
-          self$`burnInPeriod`
-          )
-        },
-        if (!is.null(self$`numberOfMarkovChains`)) {
-          sprintf(
-          '"numberOfMarkovChains":
-            %f
-                    ',
-          self$`numberOfMarkovChains`
-          )
-        }
-      )
-      jsoncontent <- paste(jsoncontent, collapse = ",")
-      # remove c() occurences and reduce resulting double escaped quotes \"\" into \"
-      jsoncontent <- gsub('\\\"c\\((.*?)\\\"\\)', '\\1', jsoncontent)
-      # fix wrong serialization of "\"ENUM\"" to "ENUM"
-      jsoncontent <- gsub("\\\\\"([A-Z]+)\\\\\"", "\\1", jsoncontent)
-      json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
+    toJSONString = function(...) {
+      simple <- self$toSimpleType()
+      json <- jsonlite::toJSON(simple, auto_unbox = TRUE, digits = NA, null = 'null', ...)
+      return(as.character(jsonlite::minify(json)))
     },
-    #' Deserialize JSON string into an instance of ZodiacEpochs
-    #'
+
     #' @description
     #' Deserialize JSON string into an instance of ZodiacEpochs
     #'
     #' @param input_json the JSON input
     #' @return the instance of ZodiacEpochs
-    #' @export
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       self$`iterations` <- this_object$`iterations`
@@ -149,53 +136,42 @@ ZodiacEpochs <- R6::R6Class(
       self$`numberOfMarkovChains` <- this_object$`numberOfMarkovChains`
       self
     },
-    #' Validate JSON input with respect to ZodiacEpochs
-    #'
+
     #' @description
     #' Validate JSON input with respect to ZodiacEpochs and throw an exception if invalid
     #'
     #' @param input the JSON input
-    #' @export
     validateJSON = function(input) {
       input_json <- jsonlite::fromJSON(input)
     },
-    #' To string (JSON format)
-    #'
+
     #' @description
     #' To string (JSON format)
     #'
     #' @return String representation of ZodiacEpochs
-    #' @export
     toString = function() {
       self$toJSONString()
     },
-    #' Return true if the values in all fields are valid.
-    #'
+
     #' @description
     #' Return true if the values in all fields are valid.
     #'
     #' @return true if the values in all fields are valid.
-    #' @export
     isValid = function() {
       TRUE
     },
-    #' Return a list of invalid fields (if any).
-    #'
+
     #' @description
     #' Return a list of invalid fields (if any).
     #'
     #' @return A list of invalid fields (if any).
-    #' @export
     getInvalidFields = function() {
       invalid_fields <- list()
       invalid_fields
     },
-    #' Print the object
-    #'
+
     #' @description
     #' Print the object
-    #'
-    #' @export
     print = function() {
       print(jsonlite::prettify(self$toJSONString()))
       invisible(self)

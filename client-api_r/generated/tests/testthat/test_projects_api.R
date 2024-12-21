@@ -5,8 +5,8 @@ context("Test ProjectsApi")
 
 api_instance <- ProjectsApi$new()
 
-test_that("CloseProjectSpace", {
-  # tests for CloseProjectSpace
+test_that("CloseProject", {
+  # tests for CloseProject
   # base path: http://localhost:8080
   # Close project-space and remove it from application
   # Close project-space and remove it from application. Project will NOT be deleted from disk.  &lt;p&gt;  ATTENTION: This will cancel and remove all jobs running on this Project before closing it.  If there are many jobs, this might take some time.
@@ -17,14 +17,14 @@ test_that("CloseProjectSpace", {
   #expect_equal(result, "EXPECTED_RESULT")
 })
 
-test_that("CreateProjectSpace", {
-  # tests for CreateProjectSpace
+test_that("CreateProject", {
+  # tests for CreateProject
   # base path: http://localhost:8080
   # Create and open a new project-space at given location and make it accessible via the given projectId.
   # Create and open a new project-space at given location and make it accessible via the given projectId.
   # @param project_id character unique name/identifier that shall be used to access the newly created project-space. Must consist only of [a-zA-Z0-9_-].
   # @param path_to_project character local file path where the project will be created. If NULL, project will be stored by its projectId in default project location. DEPRECATED: This parameter relies on the local filesystem and will likely be removed in later versions of this API to allow for more flexible use cases. (optional)
-  # @param opt_fields array[ProjectInfoOptField]  (optional)
+  # @param opt_fields array[character]  (optional)
   # @return [ProjectInfo]
 
   # uncomment below to test the operation
@@ -67,21 +67,21 @@ test_that("GetFingerIdData", {
   #expect_equal(result, "EXPECTED_RESULT")
 })
 
-test_that("GetProjectSpace", {
-  # tests for GetProjectSpace
+test_that("GetProject", {
+  # tests for GetProject
   # base path: http://localhost:8080
   # Get project space info by its projectId.
   # Get project space info by its projectId.
   # @param project_id character unique name/identifier tof the project-space to be accessed.
-  # @param opt_fields array[ProjectInfoOptField]  (optional)
+  # @param opt_fields array[character]  (optional)
   # @return [ProjectInfo]
 
   # uncomment below to test the operation
   #expect_equal(result, "EXPECTED_RESULT")
 })
 
-test_that("GetProjectSpaces", {
-  # tests for GetProjectSpaces
+test_that("GetProjects", {
+  # tests for GetProjects
   # base path: http://localhost:8080
   # List opened project spaces.
   # List opened project spaces.
@@ -97,8 +97,8 @@ test_that("ImportMsRunData", {
   # Import and Align full MS-Runs from various formats into the specified project  Possible formats (mzML, mzXML)
   # Import and Align full MS-Runs from various formats into the specified project  Possible formats (mzML, mzXML)
   # @param project_id character Project-space to import into.
-  # @param parameters LcmsSubmissionParameters Parameters for feature alignment and feature finding.
   # @param input_files array[data.frame]  (optional)
+  # @param parameters LcmsSubmissionParameters  (optional)
   # @return [ImportResult]
 
   # uncomment below to test the operation
@@ -111,9 +111,9 @@ test_that("ImportMsRunDataAsJob", {
   # Import and Align full MS-Runs from various formats into the specified project as background job.
   # Import and Align full MS-Runs from various formats into the specified project as background job.  Possible formats (mzML, mzXML)
   # @param project_id character Project-space to import into.
-  # @param parameters LcmsSubmissionParameters Parameters for feature alignment and feature finding.
-  # @param opt_fields array[JobOptField] Set of optional fields to be included. Use 'none' only to override defaults. (optional)
+  # @param opt_fields array[character] Set of optional fields to be included. Use 'none' only to override defaults. (optional)
   # @param input_files array[data.frame]  (optional)
+  # @param parameters LcmsSubmissionParameters  (optional)
   # @return [Job]
 
   # uncomment below to test the operation
@@ -143,7 +143,7 @@ test_that("ImportPreprocessedDataAsJob", {
   # @param project_id character project-space to import into.
   # @param ignore_formulas character  (optional)
   # @param allow_ms1_only character  (optional)
-  # @param opt_fields array[JobOptField] set of optional fields to be included. Use 'none' only to override defaults. (optional)
+  # @param opt_fields array[character] set of optional fields to be included. Use 'none' only to override defaults. (optional)
   # @param input_files array[data.frame]  (optional)
   # @return [Job]
 
@@ -151,14 +151,14 @@ test_that("ImportPreprocessedDataAsJob", {
   #expect_equal(result, "EXPECTED_RESULT")
 })
 
-test_that("OpenProjectSpace", {
-  # tests for OpenProjectSpace
+test_that("OpenProject", {
+  # tests for OpenProject
   # base path: http://localhost:8080
   # Open an existing project-space and make it accessible via the given projectId.
   # Open an existing project-space and make it accessible via the given projectId.
   # @param project_id character unique name/identifier that shall be used to access the opened project-space. Must consist only of [a-zA-Z0-9_-].
   # @param path_to_project character local file path to open the project from. If NULL, project will be loaded by it projectId from default project location.  DEPRECATED: This parameter relies on the local filesystem and will likely be removed in later versions of this API to allow for more flexible use cases. (optional)
-  # @param opt_fields array[ProjectInfoOptField]  (optional)
+  # @param opt_fields array[character]  (optional)
   # @return [ProjectInfo]
 
   # uncomment below to test the operation

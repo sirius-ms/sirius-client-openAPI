@@ -17,15 +17,13 @@ ImportResult <- R6::R6Class(
   public = list(
     `affectedCompoundIds` = NULL,
     `affectedAlignedFeatureIds` = NULL,
-    #' Initialize a new ImportResult class.
-    #'
+
     #' @description
     #' Initialize a new ImportResult class.
     #'
     #' @param affectedCompoundIds List of compoundIds that have been imported.
     #' @param affectedAlignedFeatureIds List of alignedFeatureIds that have been imported..
     #' @param ... Other optional arguments.
-    #' @export
     initialize = function(`affectedCompoundIds`, `affectedAlignedFeatureIds`, ...) {
       if (!missing(`affectedCompoundIds`)) {
         stopifnot(is.vector(`affectedCompoundIds`), length(`affectedCompoundIds`) != 0)
@@ -38,14 +36,37 @@ ImportResult <- R6::R6Class(
         self$`affectedAlignedFeatureIds` <- `affectedAlignedFeatureIds`
       }
     },
-    #' To JSON string
-    #'
+
     #' @description
-    #' To JSON String
-    #'
-    #' @return ImportResult in JSON format
-    #' @export
+    #' Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
     toJSON = function() {
+      .Deprecated(new = "toSimpleType", msg = "Use the '$toSimpleType()' method instead since that is more clearly named. Use '$toJSONString()' to get a JSON string")
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert to a List
+    #'
+    #' Convert the R6 object to a list to work more easily with other tooling.
+    #'
+    #' @return ImportResult as a base R list.
+    #' @examples
+    #' # convert array of ImportResult (x) to a data frame
+    #' \dontrun{
+    #' library(purrr)
+    #' library(tibble)
+    #' df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+    #' df
+    #' }
+    toList = function() {
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert ImportResult to a base R type
+    #'
+    #' @return A base R type, e.g. a list or numeric/character array.
+    toSimpleType = function() {
       ImportResultObject <- list()
       if (!is.null(self$`affectedCompoundIds`)) {
         ImportResultObject[["affectedCompoundIds"]] <-
@@ -55,16 +76,14 @@ ImportResult <- R6::R6Class(
         ImportResultObject[["affectedAlignedFeatureIds"]] <-
           self$`affectedAlignedFeatureIds`
       }
-      ImportResultObject
+      return(ImportResultObject)
     },
-    #' Deserialize JSON string into an instance of ImportResult
-    #'
+
     #' @description
     #' Deserialize JSON string into an instance of ImportResult
     #'
     #' @param input_json the JSON input
     #' @return the instance of ImportResult
-    #' @export
     fromJSON = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       if (!is.null(this_object$`affectedCompoundIds`)) {
@@ -75,60 +94,34 @@ ImportResult <- R6::R6Class(
       }
       self
     },
-    #' To JSON string
-    #'
+
     #' @description
     #' To JSON String
-    #'
+    #' 
+    #' @param ... Parameters passed to `jsonlite::toJSON`
     #' @return ImportResult in JSON format
-    #' @export
-    toJSONString = function() {
-      jsoncontent <- c(
-        if (!is.null(self$`affectedCompoundIds`)) {
-          sprintf(
-          '"affectedCompoundIds":
-             [%s]
-          ',
-          paste(unlist(lapply(self$`affectedCompoundIds`, function(x) paste0('"', x, '"'))), collapse = ",")
-          )
-        },
-        if (!is.null(self$`affectedAlignedFeatureIds`)) {
-          sprintf(
-          '"affectedAlignedFeatureIds":
-             [%s]
-          ',
-          paste(unlist(lapply(self$`affectedAlignedFeatureIds`, function(x) paste0('"', x, '"'))), collapse = ",")
-          )
-        }
-      )
-      jsoncontent <- paste(jsoncontent, collapse = ",")
-      # remove c() occurences and reduce resulting double escaped quotes \"\" into \"
-      jsoncontent <- gsub('\\\"c\\((.*?)\\\"\\)', '\\1', jsoncontent)
-      # fix wrong serialization of "\"ENUM\"" to "ENUM"
-      jsoncontent <- gsub("\\\\\"([A-Z]+)\\\\\"", "\\1", jsoncontent)
-      json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
+    toJSONString = function(...) {
+      simple <- self$toSimpleType()
+      json <- jsonlite::toJSON(simple, auto_unbox = TRUE, digits = NA, null = 'null', ...)
+      return(as.character(jsonlite::minify(json)))
     },
-    #' Deserialize JSON string into an instance of ImportResult
-    #'
+
     #' @description
     #' Deserialize JSON string into an instance of ImportResult
     #'
     #' @param input_json the JSON input
     #' @return the instance of ImportResult
-    #' @export
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       self$`affectedCompoundIds` <- ApiClient$new()$deserializeObj(this_object$`affectedCompoundIds`, "array[character]", loadNamespace("Rsirius"))
       self$`affectedAlignedFeatureIds` <- ApiClient$new()$deserializeObj(this_object$`affectedAlignedFeatureIds`, "array[character]", loadNamespace("Rsirius"))
       self
     },
-    #' Validate JSON input with respect to ImportResult
-    #'
+
     #' @description
     #' Validate JSON input with respect to ImportResult and throw an exception if invalid
     #'
     #' @param input the JSON input
-    #' @export
     validateJSON = function(input) {
       input_json <- jsonlite::fromJSON(input)
       # check the required field `affectedCompoundIds`
@@ -146,23 +139,19 @@ ImportResult <- R6::R6Class(
         stop(paste("The JSON input `", input, "` is invalid for ImportResult: the required field `affectedAlignedFeatureIds` is missing."))
       }
     },
-    #' To string (JSON format)
-    #'
+
     #' @description
     #' To string (JSON format)
     #'
     #' @return String representation of ImportResult
-    #' @export
     toString = function() {
       self$toJSONString()
     },
-    #' Return true if the values in all fields are valid.
-    #'
+
     #' @description
     #' Return true if the values in all fields are valid.
     #'
     #' @return true if the values in all fields are valid.
-    #' @export
     isValid = function() {
       # check if the required `affectedCompoundIds` is null
       if (is.null(self$`affectedCompoundIds`)) {
@@ -176,13 +165,11 @@ ImportResult <- R6::R6Class(
 
       TRUE
     },
-    #' Return a list of invalid fields (if any).
-    #'
+
     #' @description
     #' Return a list of invalid fields (if any).
     #'
     #' @return A list of invalid fields (if any).
-    #' @export
     getInvalidFields = function() {
       invalid_fields <- list()
       # check if the required `affectedCompoundIds` is null
@@ -197,12 +184,9 @@ ImportResult <- R6::R6Class(
 
       invalid_fields
     },
-    #' Print the object
-    #'
+
     #' @description
     #' Print the object
-    #'
-    #' @export
     print = function() {
       print(jsonlite::prettify(self$toJSONString()))
       invisible(self)

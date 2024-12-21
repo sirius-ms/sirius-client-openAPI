@@ -4,7 +4,7 @@ All URIs are relative to *http://localhost:8080*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**add_databases**](SearchableDatabasesApi.md#add_databases) | **POST** /api/databases | 
+[**add_databases**](SearchableDatabasesApi.md#add_databases) | **POST** /api/databases | DEPRECATED: this endpoint is based on local file paths and will likely be replaced in future versions of this API.
 [**create_database**](SearchableDatabasesApi.md#create_database) | **POST** /api/databases/{databaseId} | 
 [**get_custom_databases**](SearchableDatabasesApi.md#get_custom_databases) | **GET** /api/databases/custom | 
 [**get_database**](SearchableDatabasesApi.md#get_database) | **GET** /api/databases/{databaseId} | 
@@ -18,7 +18,7 @@ Method | HTTP request | Description
 # **add_databases**
 > List[SearchableDatabase] add_databases(request_body)
 
-
+DEPRECATED: this endpoint is based on local file paths and will likely be replaced in future versions of this API.
 
 ### Example
 
@@ -43,6 +43,7 @@ with PySirius.ApiClient(configuration) as api_client:
     request_body = ['request_body_example'] # List[str] | 
 
     try:
+        # DEPRECATED: this endpoint is based on local file paths and will likely be replaced in future versions of this API.
         api_response = api_instance.add_databases(request_body)
         print("The response of SearchableDatabasesApi->add_databases:\n")
         pprint(api_response)

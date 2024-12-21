@@ -12,6 +12,7 @@
 #' @field progress  \link{JobProgress} [optional]
 #' @field affectedCompoundIds List of compoundIds that are affected by this job.  This lis will also contain compoundIds where not all features of the compound are affected by the job.  If this job is creating compounds (e.g. data import jobs) this value will be NULL until the jobs has finished list(character) [optional]
 #' @field affectedAlignedFeatureIds List of alignedFeatureIds that are affected by this job.  If this job is creating features (e.g. data import jobs) this value will be NULL until the jobs has finished list(character) [optional]
+#' @field jobEffect Effect this job has. The affected ids are added, removed or modified.  Null if job does not affect features/compounds  Not available/null if affected Ids are not requested character [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
 #' @export
@@ -23,8 +24,8 @@ Job <- R6::R6Class(
     `progress` = NULL,
     `affectedCompoundIds` = NULL,
     `affectedAlignedFeatureIds` = NULL,
-    #' Initialize a new Job class.
-    #'
+    `jobEffect` = NULL,
+
     #' @description
     #' Initialize a new Job class.
     #'
@@ -33,9 +34,9 @@ Job <- R6::R6Class(
     #' @param progress progress
     #' @param affectedCompoundIds List of compoundIds that are affected by this job.  This lis will also contain compoundIds where not all features of the compound are affected by the job.  If this job is creating compounds (e.g. data import jobs) this value will be NULL until the jobs has finished
     #' @param affectedAlignedFeatureIds List of alignedFeatureIds that are affected by this job.  If this job is creating features (e.g. data import jobs) this value will be NULL until the jobs has finished
+    #' @param jobEffect Effect this job has. The affected ids are added, removed or modified.  Null if job does not affect features/compounds  Not available/null if affected Ids are not requested
     #' @param ... Other optional arguments.
-    #' @export
-    initialize = function(`id` = NULL, `command` = NULL, `progress` = NULL, `affectedCompoundIds` = NULL, `affectedAlignedFeatureIds` = NULL, ...) {
+    initialize = function(`id` = NULL, `command` = NULL, `progress` = NULL, `affectedCompoundIds` = NULL, `affectedAlignedFeatureIds` = NULL, `jobEffect` = NULL, ...) {
       if (!is.null(`id`)) {
         if (!(is.character(`id`) && length(`id`) == 1)) {
           stop(paste("Error! Invalid data for `id`. Must be a string:", `id`))
@@ -62,15 +63,47 @@ Job <- R6::R6Class(
         sapply(`affectedAlignedFeatureIds`, function(x) stopifnot(is.character(x)))
         self$`affectedAlignedFeatureIds` <- `affectedAlignedFeatureIds`
       }
+      if (!is.null(`jobEffect`)) {
+        if (!(`jobEffect` %in% c("IMPORT", "COMPUTATION", "DELETION"))) {
+          stop(paste("Error! \"", `jobEffect`, "\" cannot be assigned to `jobEffect`. Must be \"IMPORT\", \"COMPUTATION\", \"DELETION\".", sep = ""))
+        }
+        if (!(is.character(`jobEffect`) && length(`jobEffect`) == 1)) {
+          stop(paste("Error! Invalid data for `jobEffect`. Must be a string:", `jobEffect`))
+        }
+        self$`jobEffect` <- `jobEffect`
+      }
     },
-    #' To JSON string
-    #'
+
     #' @description
-    #' To JSON String
-    #'
-    #' @return Job in JSON format
-    #' @export
+    #' Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
     toJSON = function() {
+      .Deprecated(new = "toSimpleType", msg = "Use the '$toSimpleType()' method instead since that is more clearly named. Use '$toJSONString()' to get a JSON string")
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert to a List
+    #'
+    #' Convert the R6 object to a list to work more easily with other tooling.
+    #'
+    #' @return Job as a base R list.
+    #' @examples
+    #' # convert array of Job (x) to a data frame
+    #' \dontrun{
+    #' library(purrr)
+    #' library(tibble)
+    #' df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+    #' df
+    #' }
+    toList = function() {
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert Job to a base R type
+    #'
+    #' @return A base R type, e.g. a list or numeric/character array.
+    toSimpleType = function() {
       JobObject <- list()
       if (!is.null(self$`id`)) {
         JobObject[["id"]] <-
@@ -82,13 +115,7 @@ Job <- R6::R6Class(
       }
       if (!is.null(self$`progress`)) {
         JobObject[["progress"]] <-
-          if (is.list(self$`progress`$toJSON()) && length(self$`progress`$toJSON()) == 0L){
-            NULL
-          } else if (length(names(self$`progress`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`progress`$toJSON()))) {
-            jsonlite::fromJSON(self$`progress`$toJSON())
-          } else {
-            self$`progress`$toJSON()
-          }
+          self$`progress`$toSimpleType()
       }
       if (!is.null(self$`affectedCompoundIds`)) {
         JobObject[["affectedCompoundIds"]] <-
@@ -98,16 +125,18 @@ Job <- R6::R6Class(
         JobObject[["affectedAlignedFeatureIds"]] <-
           self$`affectedAlignedFeatureIds`
       }
-      JobObject
+      if (!is.null(self$`jobEffect`)) {
+        JobObject[["jobEffect"]] <-
+          self$`jobEffect`
+      }
+      return(JobObject)
     },
-    #' Deserialize JSON string into an instance of Job
-    #'
+
     #' @description
     #' Deserialize JSON string into an instance of Job
     #'
     #' @param input_json the JSON input
     #' @return the instance of Job
-    #' @export
     fromJSON = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       if (!is.null(this_object$`id`)) {
@@ -118,7 +147,7 @@ Job <- R6::R6Class(
       }
       if (!is.null(this_object$`progress`)) {
         `progress_object` <- JobProgress$new()
-        `progress_object`$fromJSON(jsonlite::toJSON(this_object$`progress`, auto_unbox = TRUE, digits = NA))
+        `progress_object`$fromJSON(jsonlite::toJSON(this_object$`progress`, auto_unbox = TRUE, digits = NA, null = 'null'))
         self$`progress` <- `progress_object`
       }
       if (!is.null(this_object$`affectedCompoundIds`)) {
@@ -127,129 +156,80 @@ Job <- R6::R6Class(
       if (!is.null(this_object$`affectedAlignedFeatureIds`)) {
         self$`affectedAlignedFeatureIds` <- ApiClient$new()$deserializeObj(this_object$`affectedAlignedFeatureIds`, "array[character]", loadNamespace("Rsirius"))
       }
+      if (!is.null(this_object$`jobEffect`)) {
+        if (!is.null(this_object$`jobEffect`) && !(this_object$`jobEffect` %in% c("IMPORT", "COMPUTATION", "DELETION"))) {
+          stop(paste("Error! \"", this_object$`jobEffect`, "\" cannot be assigned to `jobEffect`. Must be \"IMPORT\", \"COMPUTATION\", \"DELETION\".", sep = ""))
+        }
+        self$`jobEffect` <- this_object$`jobEffect`
+      }
       self
     },
-    #' To JSON string
-    #'
+
     #' @description
     #' To JSON String
-    #'
+    #' 
+    #' @param ... Parameters passed to `jsonlite::toJSON`
     #' @return Job in JSON format
-    #' @export
-    toJSONString = function() {
-      jsoncontent <- c(
-        if (!is.null(self$`id`)) {
-          sprintf(
-          '"id":
-            "%s"
-                    ',
-          self$`id`
-          )
-        },
-        if (!is.null(self$`command`)) {
-          sprintf(
-          '"command":
-            "%s"
-                    ',
-          self$`command`
-          )
-        },
-        if (!is.null(self$`progress`)) {
-          sprintf(
-          '"progress":
-          %s
-          ',
-          jsonlite::toJSON(self$`progress`$toJSON(), auto_unbox = TRUE, digits = NA)
-          )
-        },
-        if (!is.null(self$`affectedCompoundIds`)) {
-          sprintf(
-          '"affectedCompoundIds":
-             [%s]
-          ',
-          paste(unlist(lapply(self$`affectedCompoundIds`, function(x) paste0('"', x, '"'))), collapse = ",")
-          )
-        },
-        if (!is.null(self$`affectedAlignedFeatureIds`)) {
-          sprintf(
-          '"affectedAlignedFeatureIds":
-             [%s]
-          ',
-          paste(unlist(lapply(self$`affectedAlignedFeatureIds`, function(x) paste0('"', x, '"'))), collapse = ",")
-          )
-        }
-      )
-      jsoncontent <- paste(jsoncontent, collapse = ",")
-      # remove c() occurences and reduce resulting double escaped quotes \"\" into \"
-      jsoncontent <- gsub('\\\"c\\((.*?)\\\"\\)', '\\1', jsoncontent)
-      # fix wrong serialization of "\"ENUM\"" to "ENUM"
-      jsoncontent <- gsub("\\\\\"([A-Z]+)\\\\\"", "\\1", jsoncontent)
-      json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
+    toJSONString = function(...) {
+      simple <- self$toSimpleType()
+      json <- jsonlite::toJSON(simple, auto_unbox = TRUE, digits = NA, null = 'null', ...)
+      return(as.character(jsonlite::minify(json)))
     },
-    #' Deserialize JSON string into an instance of Job
-    #'
+
     #' @description
     #' Deserialize JSON string into an instance of Job
     #'
     #' @param input_json the JSON input
     #' @return the instance of Job
-    #' @export
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       self$`id` <- this_object$`id`
       self$`command` <- this_object$`command`
-      self$`progress` <- JobProgress$new()$fromJSON(jsonlite::toJSON(this_object$`progress`, auto_unbox = TRUE, digits = NA))
+      self$`progress` <- JobProgress$new()$fromJSON(jsonlite::toJSON(this_object$`progress`, auto_unbox = TRUE, digits = NA, null = 'null'))
       self$`affectedCompoundIds` <- ApiClient$new()$deserializeObj(this_object$`affectedCompoundIds`, "array[character]", loadNamespace("Rsirius"))
       self$`affectedAlignedFeatureIds` <- ApiClient$new()$deserializeObj(this_object$`affectedAlignedFeatureIds`, "array[character]", loadNamespace("Rsirius"))
+      if (!is.null(this_object$`jobEffect`) && !(this_object$`jobEffect` %in% c("IMPORT", "COMPUTATION", "DELETION"))) {
+        stop(paste("Error! \"", this_object$`jobEffect`, "\" cannot be assigned to `jobEffect`. Must be \"IMPORT\", \"COMPUTATION\", \"DELETION\".", sep = ""))
+      }
+      self$`jobEffect` <- this_object$`jobEffect`
       self
     },
-    #' Validate JSON input with respect to Job
-    #'
+
     #' @description
     #' Validate JSON input with respect to Job and throw an exception if invalid
     #'
     #' @param input the JSON input
-    #' @export
     validateJSON = function(input) {
       input_json <- jsonlite::fromJSON(input)
     },
-    #' To string (JSON format)
-    #'
+
     #' @description
     #' To string (JSON format)
     #'
     #' @return String representation of Job
-    #' @export
     toString = function() {
       self$toJSONString()
     },
-    #' Return true if the values in all fields are valid.
-    #'
+
     #' @description
     #' Return true if the values in all fields are valid.
     #'
     #' @return true if the values in all fields are valid.
-    #' @export
     isValid = function() {
       TRUE
     },
-    #' Return a list of invalid fields (if any).
-    #'
+
     #' @description
     #' Return a list of invalid fields (if any).
     #'
     #' @return A list of invalid fields (if any).
-    #' @export
     getInvalidFields = function() {
       invalid_fields <- list()
       invalid_fields
     },
-    #' Print the object
-    #'
+
     #' @description
     #' Print the object
-    #'
-    #' @export
     print = function() {
       print(jsonlite::prettify(self$toJSONString()))
       invisible(self)

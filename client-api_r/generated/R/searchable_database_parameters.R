@@ -19,8 +19,7 @@ SearchableDatabaseParameters <- R6::R6Class(
     `displayName` = NULL,
     `location` = NULL,
     `matchRtOfReferenceSpectra` = NULL,
-    #' Initialize a new SearchableDatabaseParameters class.
-    #'
+
     #' @description
     #' Initialize a new SearchableDatabaseParameters class.
     #'
@@ -28,7 +27,6 @@ SearchableDatabaseParameters <- R6::R6Class(
     #' @param location Storage location of user database  Might be NULL for non-user databases or if default location is used.
     #' @param matchRtOfReferenceSpectra Indicates whether this database shall be used to use retention time information for library matching.  Typically used for in-house spectral libraries that have been measured on. Default to FALSE.
     #' @param ... Other optional arguments.
-    #' @export
     initialize = function(`displayName` = NULL, `location` = NULL, `matchRtOfReferenceSpectra` = FALSE, ...) {
       if (!is.null(`displayName`)) {
         if (!(is.character(`displayName`) && length(`displayName`) == 1)) {
@@ -49,14 +47,37 @@ SearchableDatabaseParameters <- R6::R6Class(
         self$`matchRtOfReferenceSpectra` <- `matchRtOfReferenceSpectra`
       }
     },
-    #' To JSON string
-    #'
+
     #' @description
-    #' To JSON String
-    #'
-    #' @return SearchableDatabaseParameters in JSON format
-    #' @export
+    #' Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
     toJSON = function() {
+      .Deprecated(new = "toSimpleType", msg = "Use the '$toSimpleType()' method instead since that is more clearly named. Use '$toJSONString()' to get a JSON string")
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert to a List
+    #'
+    #' Convert the R6 object to a list to work more easily with other tooling.
+    #'
+    #' @return SearchableDatabaseParameters as a base R list.
+    #' @examples
+    #' # convert array of SearchableDatabaseParameters (x) to a data frame
+    #' \dontrun{
+    #' library(purrr)
+    #' library(tibble)
+    #' df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+    #' df
+    #' }
+    toList = function() {
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert SearchableDatabaseParameters to a base R type
+    #'
+    #' @return A base R type, e.g. a list or numeric/character array.
+    toSimpleType = function() {
       SearchableDatabaseParametersObject <- list()
       if (!is.null(self$`displayName`)) {
         SearchableDatabaseParametersObject[["displayName"]] <-
@@ -70,16 +91,14 @@ SearchableDatabaseParameters <- R6::R6Class(
         SearchableDatabaseParametersObject[["matchRtOfReferenceSpectra"]] <-
           self$`matchRtOfReferenceSpectra`
       }
-      SearchableDatabaseParametersObject
+      return(SearchableDatabaseParametersObject)
     },
-    #' Deserialize JSON string into an instance of SearchableDatabaseParameters
-    #'
+
     #' @description
     #' Deserialize JSON string into an instance of SearchableDatabaseParameters
     #'
     #' @param input_json the JSON input
     #' @return the instance of SearchableDatabaseParameters
-    #' @export
     fromJSON = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       if (!is.null(this_object$`displayName`)) {
@@ -93,55 +112,23 @@ SearchableDatabaseParameters <- R6::R6Class(
       }
       self
     },
-    #' To JSON string
-    #'
+
     #' @description
     #' To JSON String
-    #'
+    #' 
+    #' @param ... Parameters passed to `jsonlite::toJSON`
     #' @return SearchableDatabaseParameters in JSON format
-    #' @export
-    toJSONString = function() {
-      jsoncontent <- c(
-        if (!is.null(self$`displayName`)) {
-          sprintf(
-          '"displayName":
-            "%s"
-                    ',
-          self$`displayName`
-          )
-        },
-        if (!is.null(self$`location`)) {
-          sprintf(
-          '"location":
-            "%s"
-                    ',
-          self$`location`
-          )
-        },
-        if (!is.null(self$`matchRtOfReferenceSpectra`)) {
-          sprintf(
-          '"matchRtOfReferenceSpectra":
-            %s
-                    ',
-          tolower(self$`matchRtOfReferenceSpectra`)
-          )
-        }
-      )
-      jsoncontent <- paste(jsoncontent, collapse = ",")
-      # remove c() occurences and reduce resulting double escaped quotes \"\" into \"
-      jsoncontent <- gsub('\\\"c\\((.*?)\\\"\\)', '\\1', jsoncontent)
-      # fix wrong serialization of "\"ENUM\"" to "ENUM"
-      jsoncontent <- gsub("\\\\\"([A-Z]+)\\\\\"", "\\1", jsoncontent)
-      json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
+    toJSONString = function(...) {
+      simple <- self$toSimpleType()
+      json <- jsonlite::toJSON(simple, auto_unbox = TRUE, digits = NA, null = 'null', ...)
+      return(as.character(jsonlite::minify(json)))
     },
-    #' Deserialize JSON string into an instance of SearchableDatabaseParameters
-    #'
+
     #' @description
     #' Deserialize JSON string into an instance of SearchableDatabaseParameters
     #'
     #' @param input_json the JSON input
     #' @return the instance of SearchableDatabaseParameters
-    #' @export
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       self$`displayName` <- this_object$`displayName`
@@ -149,53 +136,42 @@ SearchableDatabaseParameters <- R6::R6Class(
       self$`matchRtOfReferenceSpectra` <- this_object$`matchRtOfReferenceSpectra`
       self
     },
-    #' Validate JSON input with respect to SearchableDatabaseParameters
-    #'
+
     #' @description
     #' Validate JSON input with respect to SearchableDatabaseParameters and throw an exception if invalid
     #'
     #' @param input the JSON input
-    #' @export
     validateJSON = function(input) {
       input_json <- jsonlite::fromJSON(input)
     },
-    #' To string (JSON format)
-    #'
+
     #' @description
     #' To string (JSON format)
     #'
     #' @return String representation of SearchableDatabaseParameters
-    #' @export
     toString = function() {
       self$toJSONString()
     },
-    #' Return true if the values in all fields are valid.
-    #'
+
     #' @description
     #' Return true if the values in all fields are valid.
     #'
     #' @return true if the values in all fields are valid.
-    #' @export
     isValid = function() {
       TRUE
     },
-    #' Return a list of invalid fields (if any).
-    #'
+
     #' @description
     #' Return a list of invalid fields (if any).
     #'
     #' @return A list of invalid fields (if any).
-    #' @export
     getInvalidFields = function() {
       invalid_fields <- list()
       invalid_fields
     },
-    #' Print the object
-    #'
+
     #' @description
     #' Print the object
-    #'
-    #' @export
     print = function() {
       print(jsonlite::prettify(self$toJSONString()))
       invisible(self)

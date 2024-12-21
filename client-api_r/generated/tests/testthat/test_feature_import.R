@@ -64,7 +64,8 @@ test_that("rtApexSeconds", {
 })
 
 test_that("dataQuality", {
-  # tests for the property `dataQuality` (DataQuality)
+  # tests for the property `dataQuality` (character)
+  # A optional feature quality flag that can be used to filter features to be shown in the gui or to be considered for further analysis.
 
   # uncomment below to test the property
   #expect_equal(model.instance$`dataQuality`, "EXPECTED_RESULT")
