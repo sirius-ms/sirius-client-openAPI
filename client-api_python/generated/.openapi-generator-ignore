@@ -22,3 +22,6 @@
 # Then explicitly reverse the ignore rule for a single file:
 #!docs/README.md
 test/*
+.travis.yml
+git_push.sh
+.gitlab-ci.yml
