@@ -15,6 +15,20 @@ JobSubmission Class
 \details{
 Create a new JobSubmission
 }
+\examples{
+
+## ------------------------------------------------
+## Method `JobSubmission$toList`
+## ------------------------------------------------
+
+# convert array of JobSubmission (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
@@ -53,6 +67,8 @@ Create a new JobSubmission
 \itemize{
 \item \href{#method-JobSubmission-new}{\code{JobSubmission$new()}}
 \item \href{#method-JobSubmission-toJSON}{\code{JobSubmission$toJSON()}}
+\item \href{#method-JobSubmission-toList}{\code{JobSubmission$toList()}}
+\item \href{#method-JobSubmission-toSimpleType}{\code{JobSubmission$toSimpleType()}}
 \item \href{#method-JobSubmission-fromJSON}{\code{JobSubmission$fromJSON()}}
 \item \href{#method-JobSubmission-toJSONString}{\code{JobSubmission$toJSONString()}}
 \item \href{#method-JobSubmission-fromJSONString}{\code{JobSubmission$fromJSONString()}}
@@ -129,13 +145,52 @@ Initialize a new JobSubmission class.
 \if{html}{\out{<a id="method-JobSubmission-toJSON"></a>}}
 \if{latex}{\out{\hypertarget{method-JobSubmission-toJSON}{}}}
 \subsection{Method \code{toJSON()}}{
-To JSON String
+Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{JobSubmission$toJSON()}\if{html}{\out{</div>}}
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-JobSubmission-toList"></a>}}
+\if{latex}{\out{\hypertarget{method-JobSubmission-toList}{}}}
+\subsection{Method \code{toList()}}{
+Convert to a List
+
+Convert the R6 object to a list to work more easily with other tooling.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{JobSubmission$toList()}\if{html}{\out{</div>}}
+}
+
 \subsection{Returns}{
-JobSubmission in JSON format
+JobSubmission as a base R list.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{# convert array of JobSubmission (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-JobSubmission-toSimpleType"></a>}}
+\if{latex}{\out{\hypertarget{method-JobSubmission-toSimpleType}{}}}
+\subsection{Method \code{toSimpleType()}}{
+Convert JobSubmission to a base R type
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{JobSubmission$toSimpleType()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A base R type, e.g. a list or numeric/character array.
 }
 }
 \if{html}{\out{<hr>}}
@@ -164,9 +219,16 @@ the instance of JobSubmission
 \subsection{Method \code{toJSONString()}}{
 To JSON String
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{JobSubmission$toJSONString()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{JobSubmission$toJSONString(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Parameters passed to `jsonlite::toJSON`}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
 JobSubmission in JSON format
 }

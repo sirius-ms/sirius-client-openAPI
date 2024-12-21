@@ -15,6 +15,20 @@ JobProgress Class
 \details{
 Create a new JobProgress
 }
+\examples{
+
+## ------------------------------------------------
+## Method `JobProgress$toList`
+## ------------------------------------------------
+
+# convert array of JobProgress (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
@@ -37,6 +51,8 @@ Create a new JobProgress
 \itemize{
 \item \href{#method-JobProgress-new}{\code{JobProgress$new()}}
 \item \href{#method-JobProgress-toJSON}{\code{JobProgress$toJSON()}}
+\item \href{#method-JobProgress-toList}{\code{JobProgress$toList()}}
+\item \href{#method-JobProgress-toSimpleType}{\code{JobProgress$toSimpleType()}}
 \item \href{#method-JobProgress-fromJSON}{\code{JobProgress$fromJSON()}}
 \item \href{#method-JobProgress-toJSONString}{\code{JobProgress$toJSONString()}}
 \item \href{#method-JobProgress-fromJSONString}{\code{JobProgress$fromJSONString()}}
@@ -89,13 +105,52 @@ Initialize a new JobProgress class.
 \if{html}{\out{<a id="method-JobProgress-toJSON"></a>}}
 \if{latex}{\out{\hypertarget{method-JobProgress-toJSON}{}}}
 \subsection{Method \code{toJSON()}}{
-To JSON String
+Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{JobProgress$toJSON()}\if{html}{\out{</div>}}
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-JobProgress-toList"></a>}}
+\if{latex}{\out{\hypertarget{method-JobProgress-toList}{}}}
+\subsection{Method \code{toList()}}{
+Convert to a List
+
+Convert the R6 object to a list to work more easily with other tooling.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{JobProgress$toList()}\if{html}{\out{</div>}}
+}
+
 \subsection{Returns}{
-JobProgress in JSON format
+JobProgress as a base R list.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{# convert array of JobProgress (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-JobProgress-toSimpleType"></a>}}
+\if{latex}{\out{\hypertarget{method-JobProgress-toSimpleType}{}}}
+\subsection{Method \code{toSimpleType()}}{
+Convert JobProgress to a base R type
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{JobProgress$toSimpleType()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A base R type, e.g. a list or numeric/character array.
 }
 }
 \if{html}{\out{<hr>}}
@@ -124,9 +179,16 @@ the instance of JobProgress
 \subsection{Method \code{toJSONString()}}{
 To JSON String
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{JobProgress$toJSONString()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{JobProgress$toJSONString(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Parameters passed to `jsonlite::toJSON`}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
 JobProgress in JSON format
 }

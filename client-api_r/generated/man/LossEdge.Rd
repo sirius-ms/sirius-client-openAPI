@@ -15,6 +15,20 @@ LossEdge Class
 \details{
 Create a new LossEdge
 }
+\examples{
+
+## ------------------------------------------------
+## Method `LossEdge$toList`
+## ------------------------------------------------
+
+# convert array of LossEdge (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
@@ -33,6 +47,8 @@ Create a new LossEdge
 \itemize{
 \item \href{#method-LossEdge-new}{\code{LossEdge$new()}}
 \item \href{#method-LossEdge-toJSON}{\code{LossEdge$toJSON()}}
+\item \href{#method-LossEdge-toList}{\code{LossEdge$toList()}}
+\item \href{#method-LossEdge-toSimpleType}{\code{LossEdge$toSimpleType()}}
 \item \href{#method-LossEdge-fromJSON}{\code{LossEdge$fromJSON()}}
 \item \href{#method-LossEdge-toJSONString}{\code{LossEdge$toJSONString()}}
 \item \href{#method-LossEdge-fromJSONString}{\code{LossEdge$fromJSONString()}}
@@ -79,13 +95,52 @@ Initialize a new LossEdge class.
 \if{html}{\out{<a id="method-LossEdge-toJSON"></a>}}
 \if{latex}{\out{\hypertarget{method-LossEdge-toJSON}{}}}
 \subsection{Method \code{toJSON()}}{
-To JSON String
+Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{LossEdge$toJSON()}\if{html}{\out{</div>}}
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-LossEdge-toList"></a>}}
+\if{latex}{\out{\hypertarget{method-LossEdge-toList}{}}}
+\subsection{Method \code{toList()}}{
+Convert to a List
+
+Convert the R6 object to a list to work more easily with other tooling.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{LossEdge$toList()}\if{html}{\out{</div>}}
+}
+
 \subsection{Returns}{
-LossEdge in JSON format
+LossEdge as a base R list.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{# convert array of LossEdge (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-LossEdge-toSimpleType"></a>}}
+\if{latex}{\out{\hypertarget{method-LossEdge-toSimpleType}{}}}
+\subsection{Method \code{toSimpleType()}}{
+Convert LossEdge to a base R type
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{LossEdge$toSimpleType()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A base R type, e.g. a list or numeric/character array.
 }
 }
 \if{html}{\out{<hr>}}
@@ -114,9 +169,16 @@ the instance of LossEdge
 \subsection{Method \code{toJSONString()}}{
 To JSON String
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{LossEdge$toJSONString()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{LossEdge$toJSONString(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Parameters passed to `jsonlite::toJSON`}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
 LossEdge in JSON format
 }

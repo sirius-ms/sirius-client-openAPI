@@ -15,6 +15,20 @@ ConsensusAnnotationsDeNovo Class
 \details{
 Create a new ConsensusAnnotationsDeNovo
 }
+\examples{
+
+## ------------------------------------------------
+## Method `ConsensusAnnotationsDeNovo$toList`
+## ------------------------------------------------
+
+# convert array of ConsensusAnnotationsDeNovo (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
@@ -24,7 +38,7 @@ Create a new ConsensusAnnotationsDeNovo
 
 \item{\code{supportingFeatureIds}}{FeatureIds where the topAnnotation supports this annotation. list(character) [optional]}
 
-\item{\code{selectionCriterion}}{\link{ConsensusCriterionDeNovo} [optional]}
+\item{\code{selectionCriterion}}{Criterion that was used to select the consensus annotation. character [optional]}
 }
 \if{html}{\out{</div>}}
 }
@@ -33,6 +47,8 @@ Create a new ConsensusAnnotationsDeNovo
 \itemize{
 \item \href{#method-ConsensusAnnotationsDeNovo-new}{\code{ConsensusAnnotationsDeNovo$new()}}
 \item \href{#method-ConsensusAnnotationsDeNovo-toJSON}{\code{ConsensusAnnotationsDeNovo$toJSON()}}
+\item \href{#method-ConsensusAnnotationsDeNovo-toList}{\code{ConsensusAnnotationsDeNovo$toList()}}
+\item \href{#method-ConsensusAnnotationsDeNovo-toSimpleType}{\code{ConsensusAnnotationsDeNovo$toSimpleType()}}
 \item \href{#method-ConsensusAnnotationsDeNovo-fromJSON}{\code{ConsensusAnnotationsDeNovo$fromJSON()}}
 \item \href{#method-ConsensusAnnotationsDeNovo-toJSONString}{\code{ConsensusAnnotationsDeNovo$toJSONString()}}
 \item \href{#method-ConsensusAnnotationsDeNovo-fromJSONString}{\code{ConsensusAnnotationsDeNovo$fromJSONString()}}
@@ -68,7 +84,7 @@ Initialize a new ConsensusAnnotationsDeNovo class.
 
 \item{\code{supportingFeatureIds}}{FeatureIds where the topAnnotation supports this annotation.}
 
-\item{\code{selectionCriterion}}{selectionCriterion}
+\item{\code{selectionCriterion}}{Criterion that was used to select the consensus annotation.}
 
 \item{\code{...}}{Other optional arguments.}
 }
@@ -79,13 +95,52 @@ Initialize a new ConsensusAnnotationsDeNovo class.
 \if{html}{\out{<a id="method-ConsensusAnnotationsDeNovo-toJSON"></a>}}
 \if{latex}{\out{\hypertarget{method-ConsensusAnnotationsDeNovo-toJSON}{}}}
 \subsection{Method \code{toJSON()}}{
-To JSON String
+Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ConsensusAnnotationsDeNovo$toJSON()}\if{html}{\out{</div>}}
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ConsensusAnnotationsDeNovo-toList"></a>}}
+\if{latex}{\out{\hypertarget{method-ConsensusAnnotationsDeNovo-toList}{}}}
+\subsection{Method \code{toList()}}{
+Convert to a List
+
+Convert the R6 object to a list to work more easily with other tooling.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ConsensusAnnotationsDeNovo$toList()}\if{html}{\out{</div>}}
+}
+
 \subsection{Returns}{
-ConsensusAnnotationsDeNovo in JSON format
+ConsensusAnnotationsDeNovo as a base R list.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{# convert array of ConsensusAnnotationsDeNovo (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ConsensusAnnotationsDeNovo-toSimpleType"></a>}}
+\if{latex}{\out{\hypertarget{method-ConsensusAnnotationsDeNovo-toSimpleType}{}}}
+\subsection{Method \code{toSimpleType()}}{
+Convert ConsensusAnnotationsDeNovo to a base R type
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ConsensusAnnotationsDeNovo$toSimpleType()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A base R type, e.g. a list or numeric/character array.
 }
 }
 \if{html}{\out{<hr>}}
@@ -114,9 +169,16 @@ the instance of ConsensusAnnotationsDeNovo
 \subsection{Method \code{toJSONString()}}{
 To JSON String
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ConsensusAnnotationsDeNovo$toJSONString()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ConsensusAnnotationsDeNovo$toJSONString(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Parameters passed to `jsonlite::toJSON`}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
 ConsensusAnnotationsDeNovo in JSON format
 }

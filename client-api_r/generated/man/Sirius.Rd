@@ -15,12 +15,26 @@ Sirius Class
 \details{
 Create a new Sirius
 }
+\examples{
+
+## ------------------------------------------------
+## Method `Sirius$toList`
+## ------------------------------------------------
+
+# convert array of Sirius (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
 \item{\code{enabled}}{tags whether the tool is enabled character [optional]}
 
-\item{\code{profile}}{\link{InstrumentProfile} [optional]}
+\item{\code{profile}}{Instrument specific profile for internal algorithms  Just select what comes closest to the instrument that was used for measuring the data. character [optional]}
 
 \item{\code{numberOfCandidates}}{Number of formula candidates to keep as result list (Formula Candidates). integer [optional]}
 
@@ -65,6 +79,8 @@ Create a new Sirius
 \itemize{
 \item \href{#method-Sirius-new}{\code{Sirius$new()}}
 \item \href{#method-Sirius-toJSON}{\code{Sirius$toJSON()}}
+\item \href{#method-Sirius-toList}{\code{Sirius$toList()}}
+\item \href{#method-Sirius-toSimpleType}{\code{Sirius$toSimpleType()}}
 \item \href{#method-Sirius-fromJSON}{\code{Sirius$fromJSON()}}
 \item \href{#method-Sirius-toJSONString}{\code{Sirius$toJSONString()}}
 \item \href{#method-Sirius-fromJSONString}{\code{Sirius$fromJSONString()}}
@@ -112,7 +128,7 @@ Initialize a new Sirius class.
 \describe{
 \item{\code{enabled}}{tags whether the tool is enabled}
 
-\item{\code{profile}}{profile}
+\item{\code{profile}}{Instrument specific profile for internal algorithms  Just select what comes closest to the instrument that was used for measuring the data.}
 
 \item{\code{numberOfCandidates}}{Number of formula candidates to keep as result list (Formula Candidates).}
 
@@ -159,13 +175,52 @@ Initialize a new Sirius class.
 \if{html}{\out{<a id="method-Sirius-toJSON"></a>}}
 \if{latex}{\out{\hypertarget{method-Sirius-toJSON}{}}}
 \subsection{Method \code{toJSON()}}{
-To JSON String
+Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Sirius$toJSON()}\if{html}{\out{</div>}}
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Sirius-toList"></a>}}
+\if{latex}{\out{\hypertarget{method-Sirius-toList}{}}}
+\subsection{Method \code{toList()}}{
+Convert to a List
+
+Convert the R6 object to a list to work more easily with other tooling.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Sirius$toList()}\if{html}{\out{</div>}}
+}
+
 \subsection{Returns}{
-Sirius in JSON format
+Sirius as a base R list.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{# convert array of Sirius (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Sirius-toSimpleType"></a>}}
+\if{latex}{\out{\hypertarget{method-Sirius-toSimpleType}{}}}
+\subsection{Method \code{toSimpleType()}}{
+Convert Sirius to a base R type
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Sirius$toSimpleType()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A base R type, e.g. a list or numeric/character array.
 }
 }
 \if{html}{\out{<hr>}}
@@ -194,9 +249,16 @@ the instance of Sirius
 \subsection{Method \code{toJSONString()}}{
 To JSON String
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Sirius$toJSONString()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Sirius$toJSONString(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Parameters passed to `jsonlite::toJSON`}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
 Sirius in JSON format
 }
