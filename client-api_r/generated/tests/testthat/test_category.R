@@ -13,14 +13,14 @@ test_that("categoryName", {
 })
 
 test_that("overallQuality", {
-  # tests for the property `overallQuality` (DataQuality)
+  # tests for the property `overallQuality` (character)
 
   # uncomment below to test the property
   #expect_equal(model.instance$`overallQuality`, "EXPECTED_RESULT")
 })
 
 test_that("items", {
-  # tests for the property `items` (array[Item])
+  # tests for the property `items` (array[QualityItem])
 
   # uncomment below to test the property
   #expect_equal(model.instance$`items`, "EXPECTED_RESULT")

@@ -20,9 +20,9 @@ Create a new FragmentNode
 \describe{
 \item{\code{fragmentId}}{integer [optional]}
 
-\item{\code{molecularFormula}}{character [optional]}
+\item{\code{molecularFormula}}{neutral molecular formula of the fragment without adduct character [optional]}
 
-\item{\code{ionType}}{character [optional]}
+\item{\code{adduct}}{This combines the ionization plus adduct of the fragment. In contrast to the {@link FragmentationTree FragmentationTree}s adduct,  this adduct may not include any in-source loss. character [optional]}
 
 \item{\code{massDeviationDa}}{numeric [optional]}
 
@@ -61,7 +61,7 @@ Initialize a new FragmentNode class.
 \if{html}{\out{<div class="r">}}\preformatted{FragmentNode$new(
   fragmentId = NULL,
   molecularFormula = NULL,
-  ionType = NULL,
+  adduct = NULL,
   massDeviationDa = NULL,
   massDeviationPpm = NULL,
   score = NULL,
@@ -76,9 +76,9 @@ Initialize a new FragmentNode class.
 \describe{
 \item{\code{fragmentId}}{fragmentId}
 
-\item{\code{molecularFormula}}{molecularFormula}
+\item{\code{molecularFormula}}{neutral molecular formula of the fragment without adduct}
 
-\item{\code{ionType}}{ionType}
+\item{\code{adduct}}{This combines the ionization plus adduct of the fragment. In contrast to the {@link FragmentationTree FragmentationTree}s adduct,  this adduct may not include any in-source loss.}
 
 \item{\code{massDeviationDa}}{massDeviationDa}
 

@@ -8,7 +8,7 @@
 An \code{R6Class} generator object
 }
 \description{
-Simple and easy serializable fragmentation tree model with annotated fragments/nodes abd losses/edges  Root fragment has index 0;
+Simple and easy serializable fragmentation tree model with annotated fragments/nodes abd losses/edges  Root fragment has index 0;  Molecular formula and adduct are identical to the ones of the corresponding molecular formula candidate and SpectrumAnnotation
 
 FragmentationTree Class
 }
@@ -23,6 +23,10 @@ Create a new FragmentationTree
 \item{\code{losses}}{list(\link{LossEdge}) [optional]}
 
 \item{\code{treeScore}}{numeric [optional]}
+
+\item{\code{molecularFormula}}{character [optional]}
+
+\item{\code{adduct}}{character [optional]}
 }
 \if{html}{\out{</div>}}
 }
@@ -48,7 +52,14 @@ Create a new FragmentationTree
 \subsection{Method \code{new()}}{
 Initialize a new FragmentationTree class.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FragmentationTree$new(fragments = NULL, losses = NULL, treeScore = NULL, ...)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{FragmentationTree$new(
+  fragments = NULL,
+  losses = NULL,
+  treeScore = NULL,
+  molecularFormula = NULL,
+  adduct = NULL,
+  ...
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -59,6 +70,10 @@ Initialize a new FragmentationTree class.
 \item{\code{losses}}{losses}
 
 \item{\code{treeScore}}{treeScore}
+
+\item{\code{molecularFormula}}{molecularFormula}
+
+\item{\code{adduct}}{adduct}
 
 \item{\code{...}}{Other optional arguments.}
 }

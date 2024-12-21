@@ -29,6 +29,14 @@ test_that("collisionEnergy", {
   #expect_equal(model.instance$`collisionEnergy`, "EXPECTED_RESULT")
 })
 
+test_that("instrument", {
+  # tests for the property `instrument` (character)
+  # Instrument information.
+
+  # uncomment below to test the property
+  #expect_equal(model.instance$`instrument`, "EXPECTED_RESULT")
+})
+
 test_that("precursorMz", {
   # tests for the property `precursorMz` (numeric)
   # Precursor m/z of the MS/MS spectrum  Null for spectra where precursor m/z is not applicable

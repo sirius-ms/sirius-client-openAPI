@@ -8,8 +8,8 @@
 #' @description Category Class
 #' @format An \code{R6Class} generator object
 #' @field categoryName  character [optional]
-#' @field overallQuality  \link{DataQuality} [optional]
-#' @field items  list(\link{Item}) [optional]
+#' @field overallQuality  character [optional]
+#' @field items  list(\link{QualityItem}) [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
 #' @export
@@ -19,8 +19,7 @@ Category <- R6::R6Class(
     `categoryName` = NULL,
     `overallQuality` = NULL,
     `items` = NULL,
-    #' Initialize a new Category class.
-    #'
+
     #' @description
     #' Initialize a new Category class.
     #'
@@ -28,7 +27,6 @@ Category <- R6::R6Class(
     #' @param overallQuality overallQuality
     #' @param items items
     #' @param ... Other optional arguments.
-    #' @export
     initialize = function(`categoryName` = NULL, `overallQuality` = NULL, `items` = NULL, ...) {
       if (!is.null(`categoryName`)) {
         if (!(is.character(`categoryName`) && length(`categoryName`) == 1)) {
@@ -37,11 +35,12 @@ Category <- R6::R6Class(
         self$`categoryName` <- `categoryName`
       }
       if (!is.null(`overallQuality`)) {
-        # disabled, as it is broken and checks for `overallQuality` %in% c()
-        # if (!(`overallQuality` %in% c())) {
-        #  stop(paste("Error! \"", `overallQuality`, "\" cannot be assigned to `overallQuality`. Must be .", sep = ""))
-        # }
-        stopifnot(R6::is.R6(`overallQuality`))
+        if (!(`overallQuality` %in% c("NOT_APPLICABLE", "LOWEST", "BAD", "DECENT", "GOOD"))) {
+          stop(paste("Error! \"", `overallQuality`, "\" cannot be assigned to `overallQuality`. Must be \"NOT_APPLICABLE\", \"LOWEST\", \"BAD\", \"DECENT\", \"GOOD\".", sep = ""))
+        }
+        if (!(is.character(`overallQuality`) && length(`overallQuality`) == 1)) {
+          stop(paste("Error! Invalid data for `overallQuality`. Must be a string:", `overallQuality`))
+        }
         self$`overallQuality` <- `overallQuality`
       }
       if (!is.null(`items`)) {
@@ -50,13 +49,11 @@ Category <- R6::R6Class(
         self$`items` <- `items`
       }
     },
-    #' To JSON string
-    #'
+
     #' @description
     #' To JSON String
     #'
     #' @return Category in JSON format
-    #' @export
     toJSON = function() {
       CategoryObject <- list()
       if (!is.null(self$`categoryName`)) {
@@ -65,13 +62,7 @@ Category <- R6::R6Class(
       }
       if (!is.null(self$`overallQuality`)) {
         CategoryObject[["overallQuality"]] <-
-          if (is.list(self$`overallQuality`$toJSON()) && length(self$`overallQuality`$toJSON()) == 0L){
-            NULL
-          } else if (length(names(self$`overallQuality`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`overallQuality`$toJSON()))) {
-            jsonlite::fromJSON(self$`overallQuality`$toJSON())
-          } else {
-            self$`overallQuality`$toJSON()
-          }
+          self$`overallQuality`
       }
       if (!is.null(self$`items`)) {
         CategoryObject[["items"]] <-
@@ -79,36 +70,33 @@ Category <- R6::R6Class(
       }
       CategoryObject
     },
-    #' Deserialize JSON string into an instance of Category
-    #'
+
     #' @description
     #' Deserialize JSON string into an instance of Category
     #'
     #' @param input_json the JSON input
     #' @return the instance of Category
-    #' @export
     fromJSON = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       if (!is.null(this_object$`categoryName`)) {
         self$`categoryName` <- this_object$`categoryName`
       }
       if (!is.null(this_object$`overallQuality`)) {
-        `overallquality_object` <- DataQuality$new()
-        `overallquality_object`$fromJSON(jsonlite::toJSON(this_object$`overallQuality`, auto_unbox = TRUE, digits = NA))
-        self$`overallQuality` <- `overallquality_object`
+        if (!is.null(this_object$`overallQuality`) && !(this_object$`overallQuality` %in% c("NOT_APPLICABLE", "LOWEST", "BAD", "DECENT", "GOOD"))) {
+          stop(paste("Error! \"", this_object$`overallQuality`, "\" cannot be assigned to `overallQuality`. Must be \"NOT_APPLICABLE\", \"LOWEST\", \"BAD\", \"DECENT\", \"GOOD\".", sep = ""))
+        }
+        self$`overallQuality` <- this_object$`overallQuality`
       }
       if (!is.null(this_object$`items`)) {
-        self$`items` <- ApiClient$new()$deserializeObj(this_object$`items`, "array[Item]", loadNamespace("Rsirius"))
+        self$`items` <- ApiClient$new()$deserializeObj(this_object$`items`, "array[QualityItem]", loadNamespace("Rsirius"))
       }
       self
     },
-    #' To JSON string
-    #'
+
     #' @description
     #' To JSON String
     #'
     #' @return Category in JSON format
-    #' @export
     toJSONString = function() {
       jsoncontent <- c(
         if (!is.null(self$`categoryName`)) {
@@ -122,9 +110,9 @@ Category <- R6::R6Class(
         if (!is.null(self$`overallQuality`)) {
           sprintf(
           '"overallQuality":
-          %s
-          ',
-          jsonlite::toJSON(self$`overallQuality`$toJSON(), auto_unbox = TRUE, digits = NA)
+            "%s"
+                    ',
+          self$`overallQuality`
           )
         },
         if (!is.null(self$`items`)) {
@@ -137,74 +125,60 @@ Category <- R6::R6Class(
         }
       )
       jsoncontent <- paste(jsoncontent, collapse = ",")
-      # remove c() occurences and reduce resulting double escaped quotes \"\" into \"
-      jsoncontent <- gsub('\\\"c\\((.*?)\\\"\\)', '\\1', jsoncontent)
-      # fix wrong serialization of "\"ENUM\"" to "ENUM"
-      jsoncontent <- gsub("\\\\\"([A-Z]+)\\\\\"", "\\1", jsoncontent)
       json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
     },
-    #' Deserialize JSON string into an instance of Category
-    #'
+
     #' @description
     #' Deserialize JSON string into an instance of Category
     #'
     #' @param input_json the JSON input
     #' @return the instance of Category
-    #' @export
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       self$`categoryName` <- this_object$`categoryName`
-      self$`overallQuality` <- DataQuality$new()$fromJSON(jsonlite::toJSON(this_object$`overallQuality`, auto_unbox = TRUE, digits = NA))
-      self$`items` <- ApiClient$new()$deserializeObj(this_object$`items`, "array[Item]", loadNamespace("Rsirius"))
+      if (!is.null(this_object$`overallQuality`) && !(this_object$`overallQuality` %in% c("NOT_APPLICABLE", "LOWEST", "BAD", "DECENT", "GOOD"))) {
+        stop(paste("Error! \"", this_object$`overallQuality`, "\" cannot be assigned to `overallQuality`. Must be \"NOT_APPLICABLE\", \"LOWEST\", \"BAD\", \"DECENT\", \"GOOD\".", sep = ""))
+      }
+      self$`overallQuality` <- this_object$`overallQuality`
+      self$`items` <- ApiClient$new()$deserializeObj(this_object$`items`, "array[QualityItem]", loadNamespace("Rsirius"))
       self
     },
-    #' Validate JSON input with respect to Category
-    #'
+
     #' @description
     #' Validate JSON input with respect to Category and throw an exception if invalid
     #'
     #' @param input the JSON input
-    #' @export
     validateJSON = function(input) {
       input_json <- jsonlite::fromJSON(input)
     },
-    #' To string (JSON format)
-    #'
+
     #' @description
     #' To string (JSON format)
     #'
     #' @return String representation of Category
-    #' @export
     toString = function() {
       self$toJSONString()
     },
-    #' Return true if the values in all fields are valid.
-    #'
+
     #' @description
     #' Return true if the values in all fields are valid.
     #'
     #' @return true if the values in all fields are valid.
-    #' @export
     isValid = function() {
       TRUE
     },
-    #' Return a list of invalid fields (if any).
-    #'
+
     #' @description
     #' Return a list of invalid fields (if any).
     #'
     #' @return A list of invalid fields (if any).
-    #' @export
     getInvalidFields = function() {
       invalid_fields <- list()
       invalid_fields
     },
-    #' Print the object
-    #'
+
     #' @description
     #' Print the object
-    #'
-    #' @export
     print = function() {
       print(jsonlite::prettify(self$toJSONString()))
       invisible(self)

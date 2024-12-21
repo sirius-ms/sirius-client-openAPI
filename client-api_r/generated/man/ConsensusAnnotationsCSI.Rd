@@ -24,7 +24,7 @@ Create a new ConsensusAnnotationsCSI
 
 \item{\code{supportingFeatureIds}}{FeatureIds where the topAnnotation supports this annotation. list(character) [optional]}
 
-\item{\code{selectionCriterion}}{\link{ConsensusCriterionCSI} [optional]}
+\item{\code{selectionCriterion}}{Null if this is a custom selection character [optional]}
 
 \item{\code{csiFingerIdStructure}}{\link{StructureCandidate} [optional]}
 
@@ -77,7 +77,7 @@ Initialize a new ConsensusAnnotationsCSI class.
 
 \item{\code{supportingFeatureIds}}{FeatureIds where the topAnnotation supports this annotation.}
 
-\item{\code{selectionCriterion}}{selectionCriterion}
+\item{\code{selectionCriterion}}{Null if this is a custom selection}
 
 \item{\code{csiFingerIdStructure}}{csiFingerIdStructure}
 

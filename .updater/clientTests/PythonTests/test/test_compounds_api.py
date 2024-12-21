@@ -18,7 +18,7 @@ import shutil
 import unittest
 
 import PySirius
-from PySirius import PySiriusAPI, SiriusSDK
+from PySirius import PySiriusAPI, SiriusSDK, PagedModelCompound
 from PySirius.models.compound import Compound
 from PySirius.models.trace_set import TraceSet
 from PySirius.models.page_compound import PageCompound
@@ -121,7 +121,7 @@ class TestCompoundsApi(unittest.TestCase):
         Page of available compounds (group of ion identities) in the given project-space.
         """
         response = self.api.compounds().get_compounds_paged(self.project_id)
-        self.assertIsInstance(response, PageCompound)
+        self.assertIsInstance(response, PagedModelCompound)
 
     def test_get_traces(self) -> None:
         """Test case for get_traces

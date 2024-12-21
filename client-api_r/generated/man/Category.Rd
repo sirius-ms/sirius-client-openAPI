@@ -20,9 +20,9 @@ Create a new Category
 \describe{
 \item{\code{categoryName}}{character [optional]}
 
-\item{\code{overallQuality}}{\link{DataQuality} [optional]}
+\item{\code{overallQuality}}{character [optional]}
 
-\item{\code{items}}{list(\link{Item}) [optional]}
+\item{\code{items}}{list(\link{QualityItem}) [optional]}
 }
 \if{html}{\out{</div>}}
 }

@@ -14,16 +14,18 @@ test_that("fragmentId", {
 
 test_that("molecularFormula", {
   # tests for the property `molecularFormula` (character)
+  # neutral molecular formula of the fragment without adduct
 
   # uncomment below to test the property
   #expect_equal(model.instance$`molecularFormula`, "EXPECTED_RESULT")
 })
 
-test_that("ionType", {
-  # tests for the property `ionType` (character)
+test_that("adduct", {
+  # tests for the property `adduct` (character)
+  # This combines the ionization plus adduct of the fragment. In contrast to the {@link FragmentationTree FragmentationTree}s adduct,  this adduct may not include any in-source loss.
 
   # uncomment below to test the property
-  #expect_equal(model.instance$`ionType`, "EXPECTED_RESULT")
+  #expect_equal(model.instance$`adduct`, "EXPECTED_RESULT")
 })
 
 test_that("massDeviationDa", {

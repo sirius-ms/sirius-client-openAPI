@@ -123,7 +123,7 @@ test_that("GetCompoundsPaged", {
   projects_api$CreateProjectSpace(project_id, project_dir)
 
   response <- api_instance$GetCompoundsPaged(project_id)
-  expect_true(inherits(response, "PageCompound"))
+  expect_true(inherits(response, "PagedModelCompound"))
 
   withr::defer(projects_api$CloseProjectSpace(project_id))
   withr::defer(unlink(project_dir, recursive=TRUE))

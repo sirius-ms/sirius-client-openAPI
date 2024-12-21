@@ -79,7 +79,7 @@ test_that("GetAlignedFeature", {
   projects_api$OpenProjectSpace(project_id, tomato_project)
   aligned_feature_id <- api_instance$GetAlignedFeatures(project_id)[[1]]$alignedFeatureId
 
-  response <- api_instance$GetAlignedFeature(project_id, aligned_feature_id)
+  response <- api_instance$GetAlignedFeature(project_id, aligned_feature_id, c("none"))
   expect_true(inherits(response, "AlignedFeature"))
 
   withr::defer(projects_api$CloseProjectSpace(project_id))
@@ -119,7 +119,7 @@ test_that("GetAlignedFeaturesPaged", {
   projects_api$OpenProjectSpace(project_id, tomato_project)
 
   response <- api_instance$GetAlignedFeaturesPaged(project_id)
-  expect_true(inherits(response, "PageAlignedFeature"))
+  expect_true(inherits(response, "PagedModelAlignedFeature"))
 
   withr::defer(projects_api$CloseProjectSpace(project_id))
 })
@@ -230,7 +230,7 @@ test_that("GetDeNovoStructureCandidatesByFormulaPaged", {
   formula_id <- api_instance$GetFormulaCandidates(project_id, aligned_feature_id)[[1]]$formulaId
 
   response <- api_instance$GetDeNovoStructureCandidatesByFormulaPaged(project_id, aligned_feature_id, formula_id)
-  expect_true(inherits(response, "PageStructureCandidateScored"))
+  expect_true(inherits(response, "PagedModelStructureCandidateScored"))
 
   withr::defer(projects_api$CloseProjectSpace(project_id))
 })
@@ -253,7 +253,7 @@ test_that("GetDeNovoStructureCandidatesPaged", {
   aligned_feature_id <- "586487307819356741"
 
   response <- api_instance$GetDeNovoStructureCandidatesPaged(project_id, aligned_feature_id)
-  expect_true(inherits(response, "PageStructureCandidateFormula"))
+  expect_true(inherits(response, "PagedModelStructureCandidateFormula"))
 
   withr::defer(projects_api$CloseProjectSpace(project_id))
 })
@@ -384,7 +384,7 @@ test_that("GetFormulaCandidatesPaged", {
   aligned_feature_id <- api_instance$GetAlignedFeatures(project_id)[[1]]$alignedFeatureId
 
   response <- api_instance$GetFormulaCandidatesPaged(project_id, aligned_feature_id)
-  expect_true(inherits(response, "PageFormulaCandidate"))
+  expect_true(inherits(response, "PagedModelFormulaCandidate"))
 
   withr::defer(projects_api$CloseProjectSpace(project_id))
 })
@@ -559,7 +559,7 @@ test_that("GetSpectralLibraryMatchesPaged", {
   aligned_feature_id <- api_instance$GetAlignedFeatures(project_id)[[1]]$alignedFeatureId
 
   response <- api_instance$GetSpectralLibraryMatchesPaged(project_id, aligned_feature_id)
-  expect_true(inherits(response, "PageSpectralLibraryMatch"))
+  expect_true(inherits(response, "PagedModelSpectralLibraryMatch"))
 
   withr::defer(projects_api$CloseProjectSpace(project_id))
 })
@@ -681,7 +681,7 @@ test_that("GetStructureCandidatesByFormulaPaged", {
   formula_id <- api_instance$GetFormulaCandidates(project_id, aligned_feature_id)[[1]]$formulaId
 
   response <- api_instance$GetStructureCandidatesByFormulaPaged(project_id, aligned_feature_id, formula_id)
-  expect_true(inherits(response, "PageStructureCandidateScored"))
+  expect_true(inherits(response, "PagedModelStructureCandidateScored"))
 
   withr::defer(projects_api$CloseProjectSpace(project_id))
 })
@@ -704,7 +704,7 @@ test_that("GetStructureCandidatesPaged", {
   aligned_feature_id <- api_instance$GetAlignedFeatures(project_id)[[1]]$alignedFeatureId
 
   response <- api_instance$GetStructureCandidatesPaged(project_id, aligned_feature_id)
-  expect_true(inherits(response, "PageStructureCandidateFormula"))
+  expect_true(inherits(response, "PagedModelStructureCandidateFormula"))
 
   withr::defer(projects_api$CloseProjectSpace(project_id))
 })

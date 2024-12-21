@@ -25,8 +25,7 @@ StructureCandidate <- R6::R6Class(
     `xlogP` = NULL,
     `dbLinks` = NULL,
     `spectralLibraryMatches` = NULL,
-    #' Initialize a new StructureCandidate class.
-    #'
+
     #' @description
     #' Initialize a new StructureCandidate class.
     #'
@@ -37,7 +36,6 @@ StructureCandidate <- R6::R6Class(
     #' @param dbLinks List of structure database links belonging to this structure candidate  OPTIONAL: needs to be added by parameter
     #' @param spectralLibraryMatches List of spectral library matches belonging to this structure candidate  OPTIONAL: needs to be added by parameter
     #' @param ... Other optional arguments.
-    #' @export
     initialize = function(`inchiKey` = NULL, `smiles` = NULL, `structureName` = NULL, `xlogP` = NULL, `dbLinks` = NULL, `spectralLibraryMatches` = NULL, ...) {
       if (!is.null(`inchiKey`)) {
         if (!(is.character(`inchiKey`) && length(`inchiKey`) == 1)) {
@@ -74,13 +72,11 @@ StructureCandidate <- R6::R6Class(
         self$`spectralLibraryMatches` <- `spectralLibraryMatches`
       }
     },
-    #' To JSON string
-    #'
+
     #' @description
     #' To JSON String
     #'
     #' @return StructureCandidate in JSON format
-    #' @export
     toJSON = function() {
       StructureCandidateObject <- list()
       if (!is.null(self$`inchiKey`)) {
@@ -109,14 +105,12 @@ StructureCandidate <- R6::R6Class(
       }
       StructureCandidateObject
     },
-    #' Deserialize JSON string into an instance of StructureCandidate
-    #'
+
     #' @description
     #' Deserialize JSON string into an instance of StructureCandidate
     #'
     #' @param input_json the JSON input
     #' @return the instance of StructureCandidate
-    #' @export
     fromJSON = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       if (!is.null(this_object$`inchiKey`)) {
@@ -139,13 +133,11 @@ StructureCandidate <- R6::R6Class(
       }
       self
     },
-    #' To JSON string
-    #'
+
     #' @description
     #' To JSON String
     #'
     #' @return StructureCandidate in JSON format
-    #' @export
     toJSONString = function() {
       jsoncontent <- c(
         if (!is.null(self$`inchiKey`)) {
@@ -175,7 +167,7 @@ StructureCandidate <- R6::R6Class(
         if (!is.null(self$`xlogP`)) {
           sprintf(
           '"xlogP":
-            %f
+            %d
                     ',
           self$`xlogP`
           )
@@ -198,20 +190,14 @@ StructureCandidate <- R6::R6Class(
         }
       )
       jsoncontent <- paste(jsoncontent, collapse = ",")
-      # remove c() occurences and reduce resulting double escaped quotes \"\" into \"
-      jsoncontent <- gsub('\\\"c\\((.*?)\\\"\\)', '\\1', jsoncontent)
-      # fix wrong serialization of "\"ENUM\"" to "ENUM"
-      jsoncontent <- gsub("\\\\\"([A-Z]+)\\\\\"", "\\1", jsoncontent)
       json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
     },
-    #' Deserialize JSON string into an instance of StructureCandidate
-    #'
+
     #' @description
     #' Deserialize JSON string into an instance of StructureCandidate
     #'
     #' @param input_json the JSON input
     #' @return the instance of StructureCandidate
-    #' @export
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       self$`inchiKey` <- this_object$`inchiKey`
@@ -222,53 +208,42 @@ StructureCandidate <- R6::R6Class(
       self$`spectralLibraryMatches` <- ApiClient$new()$deserializeObj(this_object$`spectralLibraryMatches`, "array[SpectralLibraryMatch]", loadNamespace("Rsirius"))
       self
     },
-    #' Validate JSON input with respect to StructureCandidate
-    #'
+
     #' @description
     #' Validate JSON input with respect to StructureCandidate and throw an exception if invalid
     #'
     #' @param input the JSON input
-    #' @export
     validateJSON = function(input) {
       input_json <- jsonlite::fromJSON(input)
     },
-    #' To string (JSON format)
-    #'
+
     #' @description
     #' To string (JSON format)
     #'
     #' @return String representation of StructureCandidate
-    #' @export
     toString = function() {
       self$toJSONString()
     },
-    #' Return true if the values in all fields are valid.
-    #'
+
     #' @description
     #' Return true if the values in all fields are valid.
     #'
     #' @return true if the values in all fields are valid.
-    #' @export
     isValid = function() {
       TRUE
     },
-    #' Return a list of invalid fields (if any).
-    #'
+
     #' @description
     #' Return a list of invalid fields (if any).
     #'
     #' @return A list of invalid fields (if any).
-    #' @export
     getInvalidFields = function() {
       invalid_fields <- list()
       invalid_fields
     },
-    #' Print the object
-    #'
+
     #' @description
     #' Print the object
-    #'
-    #' @export
     print = function() {
       print(jsonlite::prettify(self$toJSONString()))
       invisible(self)

@@ -29,7 +29,8 @@ test_that("supportingFeatureIds", {
 })
 
 test_that("selectionCriterion", {
-  # tests for the property `selectionCriterion` (ConsensusCriterionDeNovo)
+  # tests for the property `selectionCriterion` (character)
+  # Criterion that was used to select the consensus annotation.
 
   # uncomment below to test the property
   #expect_equal(model.instance$`selectionCriterion`, "EXPECTED_RESULT")

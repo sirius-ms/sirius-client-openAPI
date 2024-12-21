@@ -23,8 +23,7 @@ LipidAnnotation <- R6::R6Class(
     `lipidClassName` = NULL,
     `hypotheticalStructure` = NULL,
     `chainsUnknown` = NULL,
-    #' Initialize a new LipidAnnotation class.
-    #'
+
     #' @description
     #' Initialize a new LipidAnnotation class.
     #'
@@ -34,7 +33,6 @@ LipidAnnotation <- R6::R6Class(
     #' @param hypotheticalStructure Hypothetical molecular structure of the predicted lipid species as SMILES.  NULL if hypothetical structure not available.
     #' @param chainsUnknown True of the formula composition of the chains could not be determined from the MS/MS.
     #' @param ... Other optional arguments.
-    #' @export
     initialize = function(`lipidSpecies` = NULL, `lipidMapsId` = NULL, `lipidClassName` = NULL, `hypotheticalStructure` = NULL, `chainsUnknown` = NULL, ...) {
       if (!is.null(`lipidSpecies`)) {
         if (!(is.character(`lipidSpecies`) && length(`lipidSpecies`) == 1)) {
@@ -67,13 +65,11 @@ LipidAnnotation <- R6::R6Class(
         self$`chainsUnknown` <- `chainsUnknown`
       }
     },
-    #' To JSON string
-    #'
+
     #' @description
     #' To JSON String
     #'
     #' @return LipidAnnotation in JSON format
-    #' @export
     toJSON = function() {
       LipidAnnotationObject <- list()
       if (!is.null(self$`lipidSpecies`)) {
@@ -98,14 +94,12 @@ LipidAnnotation <- R6::R6Class(
       }
       LipidAnnotationObject
     },
-    #' Deserialize JSON string into an instance of LipidAnnotation
-    #'
+
     #' @description
     #' Deserialize JSON string into an instance of LipidAnnotation
     #'
     #' @param input_json the JSON input
     #' @return the instance of LipidAnnotation
-    #' @export
     fromJSON = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       if (!is.null(this_object$`lipidSpecies`)) {
@@ -125,13 +119,11 @@ LipidAnnotation <- R6::R6Class(
       }
       self
     },
-    #' To JSON string
-    #'
+
     #' @description
     #' To JSON String
     #'
     #' @return LipidAnnotation in JSON format
-    #' @export
     toJSONString = function() {
       jsoncontent <- c(
         if (!is.null(self$`lipidSpecies`)) {
@@ -176,20 +168,14 @@ LipidAnnotation <- R6::R6Class(
         }
       )
       jsoncontent <- paste(jsoncontent, collapse = ",")
-      # remove c() occurences and reduce resulting double escaped quotes \"\" into \"
-      jsoncontent <- gsub('\\\"c\\((.*?)\\\"\\)', '\\1', jsoncontent)
-      # fix wrong serialization of "\"ENUM\"" to "ENUM"
-      jsoncontent <- gsub("\\\\\"([A-Z]+)\\\\\"", "\\1", jsoncontent)
       json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
     },
-    #' Deserialize JSON string into an instance of LipidAnnotation
-    #'
+
     #' @description
     #' Deserialize JSON string into an instance of LipidAnnotation
     #'
     #' @param input_json the JSON input
     #' @return the instance of LipidAnnotation
-    #' @export
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       self$`lipidSpecies` <- this_object$`lipidSpecies`
@@ -199,53 +185,42 @@ LipidAnnotation <- R6::R6Class(
       self$`chainsUnknown` <- this_object$`chainsUnknown`
       self
     },
-    #' Validate JSON input with respect to LipidAnnotation
-    #'
+
     #' @description
     #' Validate JSON input with respect to LipidAnnotation and throw an exception if invalid
     #'
     #' @param input the JSON input
-    #' @export
     validateJSON = function(input) {
       input_json <- jsonlite::fromJSON(input)
     },
-    #' To string (JSON format)
-    #'
+
     #' @description
     #' To string (JSON format)
     #'
     #' @return String representation of LipidAnnotation
-    #' @export
     toString = function() {
       self$toJSONString()
     },
-    #' Return true if the values in all fields are valid.
-    #'
+
     #' @description
     #' Return true if the values in all fields are valid.
     #'
     #' @return true if the values in all fields are valid.
-    #' @export
     isValid = function() {
       TRUE
     },
-    #' Return a list of invalid fields (if any).
-    #'
+
     #' @description
     #' Return a list of invalid fields (if any).
     #'
     #' @return A list of invalid fields (if any).
-    #' @export
     getInvalidFields = function() {
       invalid_fields <- list()
       invalid_fields
     },
-    #' Print the object
-    #'
+
     #' @description
     #' Print the object
-    #'
-    #' @export
     print = function() {
       print(jsonlite::prettify(self$toJSONString()))
       invisible(self)

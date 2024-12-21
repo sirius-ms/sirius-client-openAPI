@@ -13,7 +13,7 @@ Name | Type | Description | Notes
 **rtStartSeconds** | **numeric** |  | [optional] 
 **rtEndSeconds** | **numeric** |  | [optional] 
 **rtApexSeconds** | **numeric** |  | [optional] 
-**dataQuality** | [**DataQuality**](DataQuality.md) |  | [optional] [Enum: ] 
+**dataQuality** | **character** | A optional feature quality flag that can be used to filter features to be shown in the gui or to be considered for further analysis. | [optional] [Enum: [NOT_APPLICABLE, LOWEST, BAD, DECENT, GOOD]] 
 **mergedMs1** | [**BasicSpectrum**](BasicSpectrum.md) |  | [optional] 
 **ms1Spectra** | [**array[BasicSpectrum]**](BasicSpectrum.md) | List of MS1Spectra belonging to this feature. These spectra will be merged an only a representative  mergedMs1 spectrum will be stored in SIRIUS. At least one of these spectra should contain the  isotope pattern of the precursor ion.  Note: Will be ignored if &#39;mergedMs1&#39; is given. | [optional] 
 **ms2Spectra** | [**array[BasicSpectrum]**](BasicSpectrum.md) | List of MS/MS spectra that belong to this feature. | [optional] 

@@ -13,12 +13,12 @@ test_that("molecularFormula", {
   #expect_equal(model.instance$`molecularFormula`, "EXPECTED_RESULT")
 })
 
-test_that("ionization", {
-  # tests for the property `ionization` (character)
-  # Ionization that has been annotated to this spectrum
+test_that("adduct", {
+  # tests for the property `adduct` (character)
+  # Adduct that has been annotated to this spectrum
 
   # uncomment below to test the property
-  #expect_equal(model.instance$`ionization`, "EXPECTED_RESULT")
+  #expect_equal(model.instance$`adduct`, "EXPECTED_RESULT")
 })
 
 test_that("exactMass", {
@@ -47,7 +47,7 @@ test_that("massDeviationPpm", {
 
 test_that("structureAnnotationSmiles", {
   # tests for the property `structureAnnotationSmiles` (character)
-  # Smiles of the structure candidate used to derive substructure peak annotations via epimetheus insilico fragmentation  Substructure highlighting (bond and atom indices) refer to this specific SMILES.  If you standardize or canonicalize this SMILES in any way the indices of substructure highlighting might  not match correctly anymore.   Null if substructure annotation not available or not requested.
+  # EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.   Smiles of the structure candidate used to derive substructure peak annotations via epimetheus insilico fragmentation  Substructure highlighting (bond and atom indices) refer to this specific SMILES.  If you standardize or canonicalize this SMILES in any way the indices of substructure highlighting might  not match correctly anymore.   Null if substructure annotation not available or not requested.
 
   # uncomment below to test the property
   #expect_equal(model.instance$`structureAnnotationSmiles`, "EXPECTED_RESULT")
@@ -55,7 +55,7 @@ test_that("structureAnnotationSmiles", {
 
 test_that("structureAnnotationScore", {
   # tests for the property `structureAnnotationScore` (numeric)
-  # Overall score of all substructure annotations computed for this structure candidate (structureAnnotationSmiles)   Null if substructure annotation not available or not requested.
+  # EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.   Overall score of all substructure annotations computed for this structure candidate (structureAnnotationSmiles)   Null if substructure annotation not available or not requested.
 
   # uncomment below to test the property
   #expect_equal(model.instance$`structureAnnotationScore`, "EXPECTED_RESULT")
