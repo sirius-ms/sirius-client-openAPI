@@ -15,6 +15,20 @@ Subscription Class
 \details{
 Create a new Subscription
 }
+\examples{
+
+## ------------------------------------------------
+## Method `Subscription$toList`
+## ------------------------------------------------
+
+# convert array of Subscription (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
@@ -55,6 +69,8 @@ Create a new Subscription
 \itemize{
 \item \href{#method-Subscription-new}{\code{Subscription$new()}}
 \item \href{#method-Subscription-toJSON}{\code{Subscription$toJSON()}}
+\item \href{#method-Subscription-toList}{\code{Subscription$toList()}}
+\item \href{#method-Subscription-toSimpleType}{\code{Subscription$toSimpleType()}}
 \item \href{#method-Subscription-fromJSON}{\code{Subscription$fromJSON()}}
 \item \href{#method-Subscription-toJSONString}{\code{Subscription$toJSONString()}}
 \item \href{#method-Subscription-fromJSONString}{\code{Subscription$fromJSONString()}}
@@ -134,13 +150,52 @@ Initialize a new Subscription class.
 \if{html}{\out{<a id="method-Subscription-toJSON"></a>}}
 \if{latex}{\out{\hypertarget{method-Subscription-toJSON}{}}}
 \subsection{Method \code{toJSON()}}{
-To JSON String
+Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Subscription$toJSON()}\if{html}{\out{</div>}}
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Subscription-toList"></a>}}
+\if{latex}{\out{\hypertarget{method-Subscription-toList}{}}}
+\subsection{Method \code{toList()}}{
+Convert to a List
+
+Convert the R6 object to a list to work more easily with other tooling.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Subscription$toList()}\if{html}{\out{</div>}}
+}
+
 \subsection{Returns}{
-Subscription in JSON format
+Subscription as a base R list.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{# convert array of Subscription (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Subscription-toSimpleType"></a>}}
+\if{latex}{\out{\hypertarget{method-Subscription-toSimpleType}{}}}
+\subsection{Method \code{toSimpleType()}}{
+Convert Subscription to a base R type
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Subscription$toSimpleType()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A base R type, e.g. a list or numeric/character array.
 }
 }
 \if{html}{\out{<hr>}}
@@ -169,9 +224,16 @@ the instance of Subscription
 \subsection{Method \code{toJSONString()}}{
 To JSON String
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Subscription$toJSONString()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Subscription$toJSONString(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Parameters passed to `jsonlite::toJSON`}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
 Subscription in JSON format
 }

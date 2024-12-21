@@ -15,6 +15,20 @@ DBLink Class
 \details{
 Create a new DBLink
 }
+\examples{
+
+## ------------------------------------------------
+## Method `DBLink$toList`
+## ------------------------------------------------
+
+# convert array of DBLink (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
@@ -29,6 +43,8 @@ Create a new DBLink
 \itemize{
 \item \href{#method-DBLink-new}{\code{DBLink$new()}}
 \item \href{#method-DBLink-toJSON}{\code{DBLink$toJSON()}}
+\item \href{#method-DBLink-toList}{\code{DBLink$toList()}}
+\item \href{#method-DBLink-toSimpleType}{\code{DBLink$toSimpleType()}}
 \item \href{#method-DBLink-fromJSON}{\code{DBLink$fromJSON()}}
 \item \href{#method-DBLink-toJSONString}{\code{DBLink$toJSONString()}}
 \item \href{#method-DBLink-fromJSONString}{\code{DBLink$fromJSONString()}}
@@ -65,13 +81,52 @@ Initialize a new DBLink class.
 \if{html}{\out{<a id="method-DBLink-toJSON"></a>}}
 \if{latex}{\out{\hypertarget{method-DBLink-toJSON}{}}}
 \subsection{Method \code{toJSON()}}{
-To JSON String
+Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{DBLink$toJSON()}\if{html}{\out{</div>}}
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-DBLink-toList"></a>}}
+\if{latex}{\out{\hypertarget{method-DBLink-toList}{}}}
+\subsection{Method \code{toList()}}{
+Convert to a List
+
+Convert the R6 object to a list to work more easily with other tooling.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{DBLink$toList()}\if{html}{\out{</div>}}
+}
+
 \subsection{Returns}{
-DBLink in JSON format
+DBLink as a base R list.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{# convert array of DBLink (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-DBLink-toSimpleType"></a>}}
+\if{latex}{\out{\hypertarget{method-DBLink-toSimpleType}{}}}
+\subsection{Method \code{toSimpleType()}}{
+Convert DBLink to a base R type
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{DBLink$toSimpleType()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A base R type, e.g. a list or numeric/character array.
 }
 }
 \if{html}{\out{<hr>}}
@@ -100,9 +155,16 @@ the instance of DBLink
 \subsection{Method \code{toJSONString()}}{
 To JSON String
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{DBLink$toJSONString()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{DBLink$toJSONString(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Parameters passed to `jsonlite::toJSON`}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
 DBLink in JSON format
 }

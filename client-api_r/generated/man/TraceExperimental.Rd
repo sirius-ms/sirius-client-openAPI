@@ -15,6 +15,20 @@ TraceExperimental Class
 \details{
 Create a new TraceExperimental
 }
+\examples{
+
+## ------------------------------------------------
+## Method `TraceExperimental$toList`
+## ------------------------------------------------
+
+# convert array of TraceExperimental (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
@@ -45,6 +59,8 @@ Create a new TraceExperimental
 \itemize{
 \item \href{#method-TraceExperimental-new}{\code{TraceExperimental$new()}}
 \item \href{#method-TraceExperimental-toJSON}{\code{TraceExperimental$toJSON()}}
+\item \href{#method-TraceExperimental-toList}{\code{TraceExperimental$toList()}}
+\item \href{#method-TraceExperimental-toSimpleType}{\code{TraceExperimental$toSimpleType()}}
 \item \href{#method-TraceExperimental-fromJSON}{\code{TraceExperimental$fromJSON()}}
 \item \href{#method-TraceExperimental-toJSONString}{\code{TraceExperimental$toJSONString()}}
 \item \href{#method-TraceExperimental-fromJSONString}{\code{TraceExperimental$fromJSONString()}}
@@ -109,13 +125,52 @@ Initialize a new TraceExperimental class.
 \if{html}{\out{<a id="method-TraceExperimental-toJSON"></a>}}
 \if{latex}{\out{\hypertarget{method-TraceExperimental-toJSON}{}}}
 \subsection{Method \code{toJSON()}}{
-To JSON String
+Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{TraceExperimental$toJSON()}\if{html}{\out{</div>}}
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-TraceExperimental-toList"></a>}}
+\if{latex}{\out{\hypertarget{method-TraceExperimental-toList}{}}}
+\subsection{Method \code{toList()}}{
+Convert to a List
+
+Convert the R6 object to a list to work more easily with other tooling.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{TraceExperimental$toList()}\if{html}{\out{</div>}}
+}
+
 \subsection{Returns}{
-TraceExperimental in JSON format
+TraceExperimental as a base R list.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{# convert array of TraceExperimental (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-TraceExperimental-toSimpleType"></a>}}
+\if{latex}{\out{\hypertarget{method-TraceExperimental-toSimpleType}{}}}
+\subsection{Method \code{toSimpleType()}}{
+Convert TraceExperimental to a base R type
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{TraceExperimental$toSimpleType()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A base R type, e.g. a list or numeric/character array.
 }
 }
 \if{html}{\out{<hr>}}
@@ -144,9 +199,16 @@ the instance of TraceExperimental
 \subsection{Method \code{toJSONString()}}{
 To JSON String
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TraceExperimental$toJSONString()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{TraceExperimental$toJSONString(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Parameters passed to `jsonlite::toJSON`}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
 TraceExperimental in JSON format
 }

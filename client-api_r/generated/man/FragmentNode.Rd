@@ -15,6 +15,20 @@ FragmentNode Class
 \details{
 Create a new FragmentNode
 }
+\examples{
+
+## ------------------------------------------------
+## Method `FragmentNode$toList`
+## ------------------------------------------------
+
+# convert array of FragmentNode (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
@@ -41,6 +55,8 @@ Create a new FragmentNode
 \itemize{
 \item \href{#method-FragmentNode-new}{\code{FragmentNode$new()}}
 \item \href{#method-FragmentNode-toJSON}{\code{FragmentNode$toJSON()}}
+\item \href{#method-FragmentNode-toList}{\code{FragmentNode$toList()}}
+\item \href{#method-FragmentNode-toSimpleType}{\code{FragmentNode$toSimpleType()}}
 \item \href{#method-FragmentNode-fromJSON}{\code{FragmentNode$fromJSON()}}
 \item \href{#method-FragmentNode-toJSONString}{\code{FragmentNode$toJSONString()}}
 \item \href{#method-FragmentNode-fromJSONString}{\code{FragmentNode$fromJSONString()}}
@@ -99,13 +115,52 @@ Initialize a new FragmentNode class.
 \if{html}{\out{<a id="method-FragmentNode-toJSON"></a>}}
 \if{latex}{\out{\hypertarget{method-FragmentNode-toJSON}{}}}
 \subsection{Method \code{toJSON()}}{
-To JSON String
+Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{FragmentNode$toJSON()}\if{html}{\out{</div>}}
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-FragmentNode-toList"></a>}}
+\if{latex}{\out{\hypertarget{method-FragmentNode-toList}{}}}
+\subsection{Method \code{toList()}}{
+Convert to a List
+
+Convert the R6 object to a list to work more easily with other tooling.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{FragmentNode$toList()}\if{html}{\out{</div>}}
+}
+
 \subsection{Returns}{
-FragmentNode in JSON format
+FragmentNode as a base R list.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{# convert array of FragmentNode (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-FragmentNode-toSimpleType"></a>}}
+\if{latex}{\out{\hypertarget{method-FragmentNode-toSimpleType}{}}}
+\subsection{Method \code{toSimpleType()}}{
+Convert FragmentNode to a base R type
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{FragmentNode$toSimpleType()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A base R type, e.g. a list or numeric/character array.
 }
 }
 \if{html}{\out{<hr>}}
@@ -134,9 +189,16 @@ the instance of FragmentNode
 \subsection{Method \code{toJSONString()}}{
 To JSON String
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FragmentNode$toJSONString()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{FragmentNode$toJSONString(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Parameters passed to `jsonlite::toJSON`}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
 FragmentNode in JSON format
 }

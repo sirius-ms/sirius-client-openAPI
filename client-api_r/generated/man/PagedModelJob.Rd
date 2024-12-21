@@ -15,6 +15,20 @@ PagedModelJob Class
 \details{
 Create a new PagedModelJob
 }
+\examples{
+
+## ------------------------------------------------
+## Method `PagedModelJob$toList`
+## ------------------------------------------------
+
+# convert array of PagedModelJob (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
@@ -29,6 +43,8 @@ Create a new PagedModelJob
 \itemize{
 \item \href{#method-PagedModelJob-new}{\code{PagedModelJob$new()}}
 \item \href{#method-PagedModelJob-toJSON}{\code{PagedModelJob$toJSON()}}
+\item \href{#method-PagedModelJob-toList}{\code{PagedModelJob$toList()}}
+\item \href{#method-PagedModelJob-toSimpleType}{\code{PagedModelJob$toSimpleType()}}
 \item \href{#method-PagedModelJob-fromJSON}{\code{PagedModelJob$fromJSON()}}
 \item \href{#method-PagedModelJob-toJSONString}{\code{PagedModelJob$toJSONString()}}
 \item \href{#method-PagedModelJob-fromJSONString}{\code{PagedModelJob$fromJSONString()}}
@@ -65,13 +81,52 @@ Initialize a new PagedModelJob class.
 \if{html}{\out{<a id="method-PagedModelJob-toJSON"></a>}}
 \if{latex}{\out{\hypertarget{method-PagedModelJob-toJSON}{}}}
 \subsection{Method \code{toJSON()}}{
-To JSON String
+Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{PagedModelJob$toJSON()}\if{html}{\out{</div>}}
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-PagedModelJob-toList"></a>}}
+\if{latex}{\out{\hypertarget{method-PagedModelJob-toList}{}}}
+\subsection{Method \code{toList()}}{
+Convert to a List
+
+Convert the R6 object to a list to work more easily with other tooling.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{PagedModelJob$toList()}\if{html}{\out{</div>}}
+}
+
 \subsection{Returns}{
-PagedModelJob in JSON format
+PagedModelJob as a base R list.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{# convert array of PagedModelJob (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-PagedModelJob-toSimpleType"></a>}}
+\if{latex}{\out{\hypertarget{method-PagedModelJob-toSimpleType}{}}}
+\subsection{Method \code{toSimpleType()}}{
+Convert PagedModelJob to a base R type
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{PagedModelJob$toSimpleType()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A base R type, e.g. a list or numeric/character array.
 }
 }
 \if{html}{\out{<hr>}}
@@ -100,9 +155,16 @@ the instance of PagedModelJob
 \subsection{Method \code{toJSONString()}}{
 To JSON String
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{PagedModelJob$toJSONString()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{PagedModelJob$toJSONString(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Parameters passed to `jsonlite::toJSON`}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
 PagedModelJob in JSON format
 }

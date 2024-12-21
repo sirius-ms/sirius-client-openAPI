@@ -15,6 +15,20 @@ AccountCredentials Class
 \details{
 Create a new AccountCredentials
 }
+\examples{
+
+## ------------------------------------------------
+## Method `AccountCredentials$toList`
+## ------------------------------------------------
+
+# convert array of AccountCredentials (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
@@ -31,6 +45,8 @@ Create a new AccountCredentials
 \itemize{
 \item \href{#method-AccountCredentials-new}{\code{AccountCredentials$new()}}
 \item \href{#method-AccountCredentials-toJSON}{\code{AccountCredentials$toJSON()}}
+\item \href{#method-AccountCredentials-toList}{\code{AccountCredentials$toList()}}
+\item \href{#method-AccountCredentials-toSimpleType}{\code{AccountCredentials$toSimpleType()}}
 \item \href{#method-AccountCredentials-fromJSON}{\code{AccountCredentials$fromJSON()}}
 \item \href{#method-AccountCredentials-toJSONString}{\code{AccountCredentials$toJSONString()}}
 \item \href{#method-AccountCredentials-fromJSONString}{\code{AccountCredentials$fromJSONString()}}
@@ -74,13 +90,52 @@ Initialize a new AccountCredentials class.
 \if{html}{\out{<a id="method-AccountCredentials-toJSON"></a>}}
 \if{latex}{\out{\hypertarget{method-AccountCredentials-toJSON}{}}}
 \subsection{Method \code{toJSON()}}{
-To JSON String
+Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{AccountCredentials$toJSON()}\if{html}{\out{</div>}}
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-AccountCredentials-toList"></a>}}
+\if{latex}{\out{\hypertarget{method-AccountCredentials-toList}{}}}
+\subsection{Method \code{toList()}}{
+Convert to a List
+
+Convert the R6 object to a list to work more easily with other tooling.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{AccountCredentials$toList()}\if{html}{\out{</div>}}
+}
+
 \subsection{Returns}{
-AccountCredentials in JSON format
+AccountCredentials as a base R list.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{# convert array of AccountCredentials (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-AccountCredentials-toSimpleType"></a>}}
+\if{latex}{\out{\hypertarget{method-AccountCredentials-toSimpleType}{}}}
+\subsection{Method \code{toSimpleType()}}{
+Convert AccountCredentials to a base R type
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{AccountCredentials$toSimpleType()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A base R type, e.g. a list or numeric/character array.
 }
 }
 \if{html}{\out{<hr>}}
@@ -109,9 +164,16 @@ the instance of AccountCredentials
 \subsection{Method \code{toJSONString()}}{
 To JSON String
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{AccountCredentials$toJSONString()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{AccountCredentials$toJSONString(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Parameters passed to `jsonlite::toJSON`}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
 AccountCredentials in JSON format
 }

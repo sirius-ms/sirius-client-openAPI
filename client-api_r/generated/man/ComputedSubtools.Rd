@@ -15,6 +15,20 @@ ComputedSubtools Class
 \details{
 Create a new ComputedSubtools
 }
+\examples{
+
+## ------------------------------------------------
+## Method `ComputedSubtools$toList`
+## ------------------------------------------------
+
+# convert array of ComputedSubtools (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
@@ -39,6 +53,8 @@ Create a new ComputedSubtools
 \itemize{
 \item \href{#method-ComputedSubtools-new}{\code{ComputedSubtools$new()}}
 \item \href{#method-ComputedSubtools-toJSON}{\code{ComputedSubtools$toJSON()}}
+\item \href{#method-ComputedSubtools-toList}{\code{ComputedSubtools$toList()}}
+\item \href{#method-ComputedSubtools-toSimpleType}{\code{ComputedSubtools$toSimpleType()}}
 \item \href{#method-ComputedSubtools-fromJSON}{\code{ComputedSubtools$fromJSON()}}
 \item \href{#method-ComputedSubtools-toJSONString}{\code{ComputedSubtools$toJSONString()}}
 \item \href{#method-ComputedSubtools-fromJSONString}{\code{ComputedSubtools$fromJSONString()}}
@@ -94,13 +110,52 @@ Initialize a new ComputedSubtools class.
 \if{html}{\out{<a id="method-ComputedSubtools-toJSON"></a>}}
 \if{latex}{\out{\hypertarget{method-ComputedSubtools-toJSON}{}}}
 \subsection{Method \code{toJSON()}}{
-To JSON String
+Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ComputedSubtools$toJSON()}\if{html}{\out{</div>}}
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ComputedSubtools-toList"></a>}}
+\if{latex}{\out{\hypertarget{method-ComputedSubtools-toList}{}}}
+\subsection{Method \code{toList()}}{
+Convert to a List
+
+Convert the R6 object to a list to work more easily with other tooling.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ComputedSubtools$toList()}\if{html}{\out{</div>}}
+}
+
 \subsection{Returns}{
-ComputedSubtools in JSON format
+ComputedSubtools as a base R list.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{# convert array of ComputedSubtools (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ComputedSubtools-toSimpleType"></a>}}
+\if{latex}{\out{\hypertarget{method-ComputedSubtools-toSimpleType}{}}}
+\subsection{Method \code{toSimpleType()}}{
+Convert ComputedSubtools to a base R type
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ComputedSubtools$toSimpleType()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A base R type, e.g. a list or numeric/character array.
 }
 }
 \if{html}{\out{<hr>}}
@@ -129,9 +184,16 @@ the instance of ComputedSubtools
 \subsection{Method \code{toJSONString()}}{
 To JSON String
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ComputedSubtools$toJSONString()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ComputedSubtools$toJSONString(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Parameters passed to `jsonlite::toJSON`}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
 ComputedSubtools in JSON format
 }

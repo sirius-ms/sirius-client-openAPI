@@ -15,6 +15,20 @@ ParentPeak Class
 \details{
 Create a new ParentPeak
 }
+\examples{
+
+## ------------------------------------------------
+## Method `ParentPeak$toList`
+## ------------------------------------------------
+
+# convert array of ParentPeak (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
@@ -31,6 +45,8 @@ Create a new ParentPeak
 \itemize{
 \item \href{#method-ParentPeak-new}{\code{ParentPeak$new()}}
 \item \href{#method-ParentPeak-toJSON}{\code{ParentPeak$toJSON()}}
+\item \href{#method-ParentPeak-toList}{\code{ParentPeak$toList()}}
+\item \href{#method-ParentPeak-toSimpleType}{\code{ParentPeak$toSimpleType()}}
 \item \href{#method-ParentPeak-fromJSON}{\code{ParentPeak$fromJSON()}}
 \item \href{#method-ParentPeak-toJSONString}{\code{ParentPeak$toJSONString()}}
 \item \href{#method-ParentPeak-fromJSONString}{\code{ParentPeak$fromJSONString()}}
@@ -69,13 +85,52 @@ Initialize a new ParentPeak class.
 \if{html}{\out{<a id="method-ParentPeak-toJSON"></a>}}
 \if{latex}{\out{\hypertarget{method-ParentPeak-toJSON}{}}}
 \subsection{Method \code{toJSON()}}{
-To JSON String
+Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ParentPeak$toJSON()}\if{html}{\out{</div>}}
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ParentPeak-toList"></a>}}
+\if{latex}{\out{\hypertarget{method-ParentPeak-toList}{}}}
+\subsection{Method \code{toList()}}{
+Convert to a List
+
+Convert the R6 object to a list to work more easily with other tooling.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ParentPeak$toList()}\if{html}{\out{</div>}}
+}
+
 \subsection{Returns}{
-ParentPeak in JSON format
+ParentPeak as a base R list.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{# convert array of ParentPeak (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ParentPeak-toSimpleType"></a>}}
+\if{latex}{\out{\hypertarget{method-ParentPeak-toSimpleType}{}}}
+\subsection{Method \code{toSimpleType()}}{
+Convert ParentPeak to a base R type
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ParentPeak$toSimpleType()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A base R type, e.g. a list or numeric/character array.
 }
 }
 \if{html}{\out{<hr>}}
@@ -104,9 +159,16 @@ the instance of ParentPeak
 \subsection{Method \code{toJSONString()}}{
 To JSON String
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ParentPeak$toJSONString()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ParentPeak$toJSONString(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Parameters passed to `jsonlite::toJSON`}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
 ParentPeak in JSON format
 }
