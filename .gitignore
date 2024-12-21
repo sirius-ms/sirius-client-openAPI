@@ -11,3 +11,4 @@
 .updater/clientTests/PythonTests/test/__pycache__
 Rsirius_*.tar.gz
 Rsirius.Rcheck
+.Rproj.user
