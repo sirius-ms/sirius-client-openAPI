@@ -12,34 +12,23 @@
 """  # noqa: E501
 
 import os
-import json
 import unittest
 
-import PySirius
-from PySirius import PySiriusAPI, SiriusSDK
-from PySirius.models.ms_data import MsData
-from PySirius.models.feature_import import FeatureImport
+from PySirius import SiriusSDK, PagedModelAlignedFeature, PagedModelStructureCandidateScored, \
+    PagedModelStructureCandidateFormula, PagedModelFormulaCandidate, QuantificationTableExperimental, \
+    PagedModelSpectralLibraryMatch, TraceSetExperimental
 from PySirius.models.aligned_feature import AlignedFeature
-from PySirius.models.aligned_feature_quality import AlignedFeatureQuality
-from PySirius.models.compound_classes import CompoundClasses
-from PySirius.models.quantification_table import QuantificationTable
-from PySirius.models.canopus_prediction import CanopusPrediction
 from PySirius.models.annotated_ms_ms_data import AnnotatedMsMsData
-from PySirius.models.page_aligned_feature import PageAlignedFeature
 from PySirius.models.annotated_spectrum import AnnotatedSpectrum
+from PySirius.models.canopus_prediction import CanopusPrediction
+from PySirius.models.compound_classes import CompoundClasses
 from PySirius.models.formula_candidate import FormulaCandidate
-from PySirius.models.page_formula_candidate import PageFormulaCandidate
 from PySirius.models.fragmentation_tree import FragmentationTree
 from PySirius.models.isotope_pattern_annotation import IsotopePatternAnnotation
 from PySirius.models.lipid_annotation import LipidAnnotation
-# from PySirius.models.spectral_library_match import SpectralLibraryMatch
-from PySirius.models.page_spectral_library_match import PageSpectralLibraryMatch
 from PySirius.models.spectral_library_match_summary import SpectralLibraryMatchSummary
 from PySirius.models.structure_candidate_formula import StructureCandidateFormula
 from PySirius.models.structure_candidate_scored import StructureCandidateScored
-from PySirius.models.page_structure_candidate_formula import PageStructureCandidateFormula
-from PySirius.models.page_structure_candidate_scored import PageStructureCandidateScored
-from PySirius.models.trace_set import TraceSet
 
 
 class TestFeaturesApi(unittest.TestCase):
@@ -49,7 +38,9 @@ class TestFeaturesApi(unittest.TestCase):
         self.api = SiriusSDK().attach_or_start_sirius()
         self.project_id = "test_features_api"
         self.path_to_project = f"{os.environ.get('HOME')}/tomato_small.sirius"
-        self.api.projects().open_project_space(self.project_id, self.path_to_project)
+        # check if test project already open -> allows to run tests in independent calls.
+        if self.api.projects().get_project_space_without_preload_content(self.project_id).status == 404:
+            self.api.projects().open_project_space(self.project_id, self.path_to_project)
         # the single one ID with MSNovelist results computed
         self.aligned_feature_id = "586487307819356741"
 
@@ -103,32 +94,31 @@ class TestFeaturesApi(unittest.TestCase):
 
         Delete feature (aligned over runs) with the given identifier from the specified project-space.
         """
-        path_to_demo_data = f"{os.environ.get('HOME')}/sirius-client-openAPI/.updater/clientTests/Data"
-        preproc_ms2_file_1 = path_to_demo_data + "/Kaempferol.ms"
-        preproc_ms2_file_2 = path_to_demo_data + "/laudanosine.mgf"
-        input_files = [preproc_ms2_file_1, preproc_ms2_file_2]
-        import_result = self.api.projects().import_preprocessed_data(self.project_id, input_files=input_files)
-        feature_ids = import_result.affected_aligned_feature_ids
+        project_info = self.api.projects().create_project_space(project_id="delete-project")
+        project_id = project_info.project_id
+        try:
+            path_to_demo_data = f"{os.environ.get('HOME')}/sirius-client-openAPI/.updater/clientTests/Data"
+            preproc_ms2_file_1 = path_to_demo_data + "/Kaempferol.ms"
+            preproc_ms2_file_2 = path_to_demo_data + "/laudanosine.mgf"
+            input_files = [preproc_ms2_file_1, preproc_ms2_file_2]
+            import_result = self.api.projects().import_preprocessed_data(project_id, input_files=input_files)
+            feature_ids = import_result.affected_aligned_feature_ids
 
-        response_before = self.api.features().get_aligned_features(self.project_id)
-        self.api.features().delete_aligned_feature(self.project_id, feature_ids[0])
-        self.api.features().delete_aligned_feature(self.project_id, feature_ids[1])
-        response_after = self.api.features().get_aligned_features(self.project_id)
+            response_before = self.api.features().get_aligned_features(project_id)
+            self.api.features().delete_aligned_feature(project_id, feature_ids[0])
+            self.api.features().delete_aligned_feature(project_id, feature_ids[1])
+            response_after = self.api.features().get_aligned_features(project_id)
 
-        self.assertIsInstance(response_before, list)
-        self.assertIsInstance(response_before[0], AlignedFeature)
+            self.assertIsInstance(response_before, list)
+            self.assertIsInstance(response_before[0], AlignedFeature)
 
-        self.assertIsInstance(response_after, list)
-        self.assertIsInstance(response_after[0], AlignedFeature)
+            self.assertIsInstance(response_after, list)
+            self.assertEqual(len(response_after), 0)
 
-        self.assertEqual(len(response_before) - len(response_after), 2)
-
-    def test_delete_aligned_features(self) -> None:
-        """Test case for delete_aligned_features
-
-        Delete feature (aligned over runs) with the given identifier from the specified project-space.
-        """
-        pass
+            self.assertEqual(len(response_before) - len(response_after), 2)
+        finally:
+            self.api.projects().close_project_space(project_id)
+            os.remove(project_info.location)
 
     def test_get_aligned_feature(self) -> None:
         """Test case for get_aligned_feature
@@ -153,7 +143,7 @@ class TestFeaturesApi(unittest.TestCase):
         Get all available features (aligned over runs) in the given project-space.
         """
         response = self.api.features().get_aligned_features_paged(self.project_id)
-        self.assertIsInstance(response, PageAlignedFeature)
+        self.assertIsInstance(response, PagedModelAlignedFeature)
 
     def test_get_best_matching_compound_classes(self) -> None:
         """Test case for get_best_matching_compound_classes
@@ -200,7 +190,7 @@ class TestFeaturesApi(unittest.TestCase):
         response = self.api.features().get_de_novo_structure_candidates_by_formula_paged(self.project_id,
                                                                                          self.aligned_feature_id,
                                                                                          self.formula_id)
-        self.assertIsInstance(response, PageStructureCandidateScored)
+        self.assertIsInstance(response, PagedModelStructureCandidateScored)
 
     def test_get_de_novo_structure_candidates_paged(self) -> None:
         """Test case for get_de_novo_structure_candidates_paged
@@ -208,7 +198,7 @@ class TestFeaturesApi(unittest.TestCase):
         Page of de novo structure candidates (e.g. generated by MsNovelist) ranked by CSI:FingerID score for the given 'alignedFeatureId' with minimal information.  StructureCandidates can be enriched with molecular fingerprint.
         """
         response = self.api.features().get_de_novo_structure_candidates_paged(self.project_id, self.aligned_feature_id)
-        self.assertIsInstance(response, PageStructureCandidateFormula)
+        self.assertIsInstance(response, PagedModelStructureCandidateFormula)
 
     def test_get_fingerprint_prediction(self) -> None:
         """Test case for get_fingerprint_prediction
@@ -259,7 +249,7 @@ class TestFeaturesApi(unittest.TestCase):
         Page of FormulaResultContainers available for this feature with minimal information.
         """
         response = self.api.features().get_formula_candidates_paged(self.project_id, self.aligned_feature_id)
-        self.assertIsInstance(response, PageFormulaCandidate)
+        self.assertIsInstance(response, PagedModelFormulaCandidate)
 
     def test_get_frag_tree(self) -> None:
         """Test case for get_frag_tree
@@ -301,8 +291,8 @@ class TestFeaturesApi(unittest.TestCase):
         """Test case for get_quantification
 
         """
-        response = self.api.features().get_quantification(self.project_id, self.aligned_feature_id)
-        self.assertIsInstance(response, QuantificationTable)
+        response = self.api.features().get_quantification_experimental(self.project_id, self.aligned_feature_id)
+        self.assertIsInstance(response, QuantificationTableExperimental)
 
     def test_get_spectral_library_match(self) -> None:
         """Test case for get_spectral_library_match
@@ -326,7 +316,7 @@ class TestFeaturesApi(unittest.TestCase):
         Page of spectral library matches for the given 'alignedFeatureId'.
         """
         response = self.api.features().get_spectral_library_matches_paged(self.project_id, self.aligned_feature_id)
-        self.assertIsInstance(response, PageSpectralLibraryMatch)
+        self.assertIsInstance(response, PagedModelSpectralLibraryMatch)
 
     def test_get_spectral_library_matches_summary(self) -> None:
         """Test case for get_spectral_library_matches_summary
@@ -377,7 +367,7 @@ class TestFeaturesApi(unittest.TestCase):
         response = self.api.features().get_structure_candidates_by_formula_paged(self.project_id,
                                                                                  self.aligned_feature_id,
                                                                                  self.formula_id)
-        self.assertIsInstance(response, PageStructureCandidateScored)
+        self.assertIsInstance(response, PagedModelStructureCandidateScored)
 
     def test_get_structure_candidates_paged(self) -> None:
         """Test case for get_structure_candidates_paged
@@ -385,14 +375,14 @@ class TestFeaturesApi(unittest.TestCase):
         Page of structure database search candidates ranked by CSI:FingerID score for the given 'alignedFeatureId' with minimal information.
         """
         response = self.api.features().get_structure_candidates_paged(self.project_id, self.aligned_feature_id)
-        self.assertIsInstance(response, PageStructureCandidateFormula)
+        self.assertIsInstance(response, PagedModelStructureCandidateFormula)
 
     def test_get_traces1(self) -> None:
         """Test case for get_traces1
 
         """
-        response = self.api.features().get_traces1(self.project_id, self.aligned_feature_id)
-        self.assertIsInstance(response, TraceSet)
+        response = self.api.features().get_traces_experimental(self.project_id, self.aligned_feature_id)
+        self.assertIsInstance(response, TraceSetExperimental)
 
 
 if __name__ == '__main__':

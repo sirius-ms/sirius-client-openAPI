@@ -20,7 +20,7 @@ import unittest
 import PySirius
 from PySirius import PySiriusAPI, SiriusSDK
 from PySirius.models.job import Job
-from PySirius.models.page_job import PageJob
+from PySirius.models.paged_model_job import PagedModelJob
 from PySirius.models.job_submission import JobSubmission
 
 
@@ -31,7 +31,10 @@ class TestJobsApi(unittest.TestCase):
         self.api = SiriusSDK().attach_or_start_sirius()
         self.project_id = "test_jobs_api"
         self.path_to_project = f"{os.environ.get('HOME')}/test_jobs_api.sirius"
-        self.api.projects().create_project_space(self.project_id, self.path_to_project)
+        if self.api.projects().get_project_space_without_preload_content(self.project_id).status == 404:
+            if os.path.exists(self.path_to_project):
+                os.remove(self.path_to_project)
+            self.api.projects().create_project_space(self.project_id, self.path_to_project)
 
         path_to_demo_data = f"{os.environ.get('HOME')}/sirius-client-openAPI/.updater/clientTests/Data"
         preproc_ms2_file_1 = path_to_demo_data + "/Kaempferol.ms"
@@ -157,7 +160,7 @@ class TestJobsApi(unittest.TestCase):
         Get Page of jobs with information such as current state and progress (if available).
         """
         response = self.api.jobs().get_jobs_paged(self.project_id)
-        self.assertIsInstance(response, PageJob)
+        self.assertIsInstance(response, PagedModelJob)
 
     def test_has_jobs(self) -> None:
         """Test case for has_jobs

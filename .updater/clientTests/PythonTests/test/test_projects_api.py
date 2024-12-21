@@ -14,8 +14,7 @@
 import os
 import unittest
 
-from PySirius import SiriusSDK
-from PySirius.api.projects_api import ProjectsApi
+from PySirius import SiriusSDK, JobOptField
 from PySirius.models.job import Job
 from PySirius.models.project_info import ProjectInfo
 from PySirius.models.import_result import ImportResult
@@ -26,7 +25,8 @@ class TestProjectsApi(unittest.TestCase):
     """ProjectsApi unit test stubs"""
 
     def setUp(self) -> None:
-        self.projects = SiriusSDK().attach_or_start_sirius().projects()
+        self.api = SiriusSDK().attach_or_start_sirius()
+        self.projects = self.api.projects()
         path_to_demo_data = f"{os.environ.get('HOME')}/sirius-client-openAPI/.updater/clientTests/Data"
         self.preproc_ms2_file_1 = path_to_demo_data + "/Kaempferol.ms"
         self.preproc_ms2_file_2 = path_to_demo_data + "/laudanosine.mgf"
@@ -35,7 +35,11 @@ class TestProjectsApi(unittest.TestCase):
         # equals test_create_project_space
         self.project_id = "test_projects_api"
         self.path_to_project = f"{os.environ.get('HOME')}/test_projects_api.sirius"
-        self.create_response = self.projects.create_project_space(self.project_id, self.path_to_project)
+
+        if self.api.projects().get_project_space_without_preload_content(self.project_id).status == 404:
+            if os.path.exists(self.path_to_project):
+                os.remove(self.path_to_project)
+            self.create_response = self.projects.create_project_space(self.project_id, self.path_to_project)
 
     def tearDown(self) -> None:
         # equals test_close_project_space
@@ -103,8 +107,8 @@ class TestProjectsApi(unittest.TestCase):
         Import and Align full MS-Runs from various formats into the specified project  Possible formats (mzML, mzXML)
         """
         input_files = [self.full_ms_file]
-        parameters = LcmsSubmissionParameters()
-        response = self.projects.import_ms_run_data(self.project_id, parameters, input_files=input_files)
+        parameters = LcmsSubmissionParameters(align_lcms_runs=False)
+        response = self.projects.import_ms_run_data(project_id=self.project_id, parameters=parameters, input_files=input_files)
         self.assertIsInstance(response, ImportResult)
 
     def test_import_ms_run_data_as_job(self) -> None:
@@ -113,8 +117,8 @@ class TestProjectsApi(unittest.TestCase):
         Import and Align full MS-Runs from various formats into the specified project as background job.
         """
         input_files = [self.full_ms_file]
-        parameters = LcmsSubmissionParameters()
-        response = self.projects.import_ms_run_data_as_job(self.project_id, parameters, input_files=input_files)
+        parameters = LcmsSubmissionParameters(align_lcms_runs=False)
+        response = self.projects.import_ms_run_data_as_job(project_id=self.project_id, parameters=parameters, input_files=input_files)
         self.assertIsInstance(response, Job)
 
     def test_import_preprocessed_data(self) -> None:
