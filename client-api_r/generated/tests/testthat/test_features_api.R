@@ -15,6 +15,12 @@ tomato_project <- paste(Sys.getenv("HOME"), "tomato_small.sirius", sep="/")
 basic_spectrum <- c(BasicSpectrum$new(peaks = c(SimplePeak$new(1.23, 4.56)), precursorMz = 1.23))
 feature_import <- c(FeatureImport$new(name = "testfeature", feature_id = "testfeature", ionMass = 1.23, adduct = "[M+?]+", ms1Spectra = basic_spectrum, ms2Spectra = basic_spectrum))
 
+delete_if_exists <- function(path){
+  if (file.exists(path)) {
+    file.remove(path)
+  }
+}
+
 test_that("AddAlignedFeatures", {
   # tests for AddAlignedFeatures
   # base path: http://localhost:8080
@@ -39,7 +45,12 @@ test_that("DeleteAlignedFeature", {
   # @return [Void]
 
   project_id <- "DeleteAlignedFeature"
-  projects_api$OpenProject(project_id, tomato_project)
+
+  # we create a new project since we cannot just add data to an existing
+  # project that is of different data type like tomato
+  project_dir <- paste(Sys.getenv("HOME"), project_id, sep="/")
+  project_info <- projects_api$CreateProject(project_id, project_dir)
+ 
   var_input_files <- preproc_ms2_file_1
   import <- projects_api$ImportPreprocessedData(project_id, input_files=var_input_files)
   feature_id <- import$affectedAlignedFeatureIds[[1]]
@@ -50,6 +61,7 @@ test_that("DeleteAlignedFeature", {
 
   expect_equal(length(response_before) - length(response_after), 1)
   withr::defer(projects_api$CloseProject(project_id))
+  withr::defer(delete_if_exists(project_info$location))
 })
 
 test_that("DeleteAlignedFeatures", {
@@ -483,8 +495,8 @@ test_that("GetQuantification", {
   projects_api$OpenProject(project_id, tomato_project)
   aligned_feature_id <- api_instance$GetAlignedFeatures(project_id)[[1]]$alignedFeatureId
 
-  response <- api_instance$GetQuantification(project_id, aligned_feature_id)
-  expect_true(inherits(response, "QuantificationTable"))
+  response <- api_instance$GetQuantificationExperimental(project_id, aligned_feature_id)
+  expect_true(inherits(response, "QuantificationTableExperimental"))
 
   withr::defer(projects_api$CloseProject(project_id))
 })
@@ -716,12 +728,12 @@ test_that("GetTraces1", {
   # @param aligned_feature_id character
   # @return [TraceSet]
 
-  project_id <- "GetTraces1"
+  project_id <- "GetTraces"
   projects_api$OpenProject(project_id, tomato_project)
   aligned_feature_id <- api_instance$GetAlignedFeatures(project_id)[[1]]$alignedFeatureId
 
-  response <- api_instance$GetTraces1(project_id, aligned_feature_id)
-  expect_true(inherits(response, "TraceSet"))
+  response <- api_instance$GetTracesExperimental(project_id, aligned_feature_id)
+  expect_true(inherits(response, "TraceSetExperimental"))
 
   withr::defer(projects_api$CloseProject(project_id))
 })
