@@ -4,6 +4,11 @@
 context("Test CompoundsApi")
 
 api_instance <- CompoundsApi$new()
+projects_api <- ProjectsApi$new()
+
+basic_spectrum <- c(BasicSpectrum$new(peaks = c(SimplePeak$new(1.23, 4.56)), precursorMz = 1.23))
+feature_import <- c(FeatureImport$new(ionMass = 1.23, charge = 1, ms1Spectra = basic_spectrum, ms2Spectra = basic_spectrum))
+compound_import <- c(CompoundImport$new(features = feature_import))
 
 test_that("AddCompounds", {
   # tests for AddCompounds
@@ -12,13 +17,20 @@ test_that("AddCompounds", {
   # Import Compounds and its contained features. Compounds and Features must not exist in the project.  Otherwise, they will exist twice.
   # @param project_id character project-space to import into.
   # @param compound_import array[CompoundImport] the compound data to be imported
-  # @param profile character profile describing the instrument used to measure the data. Used to merge spectra. (optional)
-  # @param opt_fields array[character] set of optional fields to be included. Use 'none' to override defaults. (optional)
-  # @param opt_fields_features array[character] set of optional fields of the nested features to be included. Use 'none' to override defaults. (optional)
+  # @param opt_fields array[CompoundOptField] set of optional fields to be included. Use 'none' to override defaults. (optional)
+  # @param opt_fields_features array[AlignedFeatureOptField] set of optional fields of the nested features to be included. Use 'none' to override defaults. (optional)
   # @return [array[Compound]]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  project_id <- "AddCompounds"
+  project_dir <- paste(Sys.getenv("HOME"), "AddCompounds", sep="/")
+  projects_api$CreateProject(project_id, project_dir)
+
+  response <- api_instance$AddCompounds(project_id, compound_import)
+  expect_true(inherits(response, "list"))
+  expect_true(inherits(response[[1]], "Compound"))
+
+  withr::defer(projects_api$CloseProject(project_id))
+  withr::defer(unlink(project_dir, recursive=TRUE))
 })
 
 test_that("DeleteCompound", {
@@ -30,8 +42,20 @@ test_that("DeleteCompound", {
   # @param compound_id character identifier of the compound to delete.
   # @return [Void]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  project_id <- "DeleteCompound"
+  project_dir <- paste(Sys.getenv("HOME"), "DeleteCompound", sep="/")
+  projects_api$CreateProject(project_id, project_dir)
+  api_instance$AddCompounds(project_id, compound_import)
+  compound_id <- api_instance$GetCompounds(project_id)[[1]]$compoundId
+
+  response_before <- api_instance$GetCompounds(project_id)
+  api_instance$DeleteCompound(project_id, compound_id)
+  response_after <- api_instance$GetCompounds(project_id)
+
+  expect_equal(length(response_before) - length(response_after), 1)
+
+  withr::defer(projects_api$CloseProject(project_id))
+  withr::defer(unlink(project_dir, recursive=TRUE))
 })
 
 test_that("GetCompound", {
@@ -41,26 +65,21 @@ test_that("GetCompound", {
   # Get compound (group of ion identities) with the given identifier from the specified project-space.
   # @param project_id character project-space to read from.
   # @param compound_id character identifier of the compound (group of ion identities) to access.
-  # @param opt_fields array[character] set of optional fields to be included. Use 'none' only to override defaults. (optional)
-  # @param opt_fields_features array[character]  (optional)
+  # @param opt_fields array[CompoundOptField] set of optional fields to be included. Use 'none' only to override defaults. (optional)
+  # @param opt_fields_features array[AlignedFeatureOptField]  (optional)
   # @return [Compound]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
-})
+  project_id <- "GetCompound"
+  project_dir <- paste(Sys.getenv("HOME"), "GetCompound", sep="/")
+  projects_api$CreateProject(project_id, project_dir)
+  api_instance$AddCompounds(project_id, compound_import)
+  compound_id <- api_instance$GetCompounds(project_id)[[1]]$compoundId
 
-test_that("GetCompoundTracesExperimental", {
-  # tests for GetCompoundTracesExperimental
-  # base path: http://localhost:8080
-  # EXPERIMENTAL: This endpoint is experimental and may be changed (or even removed) without notice until it is declared stable.
-  # Returns the traces of the given compound. A trace consists of m/z and intensity values over the retention  time axis. All the returned traces are &#39;projected&#39;, which means they refer not to the original retention time axis,  but to a recalibrated axis. This means the data points in the trace are not exactly the same as in the raw data.  However, this also means that all traces can be directly compared against each other, as they all lie in the same  retention time axis.
-  # @param project_id character project-space to read from.
-  # @param compound_id character compound which intensities should be read out
-  # @param feature_id character  (optional)
-  # @return [TraceSetExperimental]
+  response <- api_instance$GetCompound(project_id, compound_id)
+  expect_true(inherits(response, "Compound"))
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  withr::defer(projects_api$CloseProject(project_id))
+  withr::defer(unlink(project_dir, recursive=TRUE))
 })
 
 test_that("GetCompounds", {
@@ -69,12 +88,21 @@ test_that("GetCompounds", {
   # List of all available compounds (group of ion identities) in the given project-space.
   # List of all available compounds (group of ion identities) in the given project-space.
   # @param project_id character project-space to read from.
-  # @param opt_fields array[character] set of optional fields to be included. Use 'none' only to override defaults. (optional)
-  # @param opt_fields_features array[character]  (optional)
+  # @param opt_fields array[CompoundOptField] set of optional fields to be included. Use 'none' only to override defaults. (optional)
+  # @param opt_fields_features array[AlignedFeatureOptField]  (optional)
   # @return [array[Compound]]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  project_id <- "GetCompounds"
+  project_dir <- paste(Sys.getenv("HOME"), "GetCompounds", sep="/")
+  projects_api$CreateProject(project_id, project_dir)
+  api_instance$AddCompounds(project_id, compound_import)
+
+  response <- api_instance$GetCompounds(project_id)
+  expect_true(inherits(response, "list"))
+  expect_true(inherits(response[[1]], "Compound"))
+
+  withr::defer(projects_api$CloseProject(project_id))
+  withr::defer(unlink(project_dir, recursive=TRUE))
 })
 
 test_that("GetCompoundsPaged", {
@@ -86,10 +114,38 @@ test_that("GetCompoundsPaged", {
   # @param page integer Zero-based page index (0..N) (optional)
   # @param size integer The size of the page to be returned (optional)
   # @param sort array[character] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (optional)
-  # @param opt_fields array[character] set of optional fields to be included. Use 'none' only to override defaults. (optional)
-  # @param opt_fields_features array[character]  (optional)
-  # @return [PagedModelCompound]
+  # @param opt_fields array[CompoundOptField] set of optional fields to be included. Use 'none' only to override defaults. (optional)
+  # @param opt_fields_features array[AlignedFeatureOptField]  (optional)
+  # @return [PageCompound]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  project_id <- "GetCompoundsPaged"
+  project_dir <- paste(Sys.getenv("HOME"), "GetCompoundsPaged", sep="/")
+  projects_api$CreateProject(project_id, project_dir)
+
+  response <- api_instance$GetCompoundsPaged(project_id)
+  expect_true(inherits(response, "PagedModelCompound"))
+
+  withr::defer(projects_api$CloseProject(project_id))
+  withr::defer(unlink(project_dir, recursive=TRUE))
+})
+
+test_that("GetTraces", {
+  # tests for GetTraces
+  # base path: http://localhost:8080
+  # @param project_id character
+  # @param compound_id character
+  # @return [TraceSet]
+
+#   TODO feature has no trace
+#   project_id <- "GetTraces"
+#   project_dir <- paste(Sys.getenv("HOME"), "GetTraces", sep="/")
+#   projects_api$CreateProject(project_id, project_dir)
+#   api_instance$AddCompounds(project_id, compound_import)
+#   compound_id <- api_instance$GetCompounds(project_id)[[1]]$compoundId
+#
+#   response <- api_instance$GetTraces(project_id, compound_id)
+#   expect_true(inherits(response, "TraceSet"))
+#
+#   withr::defer(projects_api$CloseProject(project_id))
+#   withr::defer(unlink(project_dir, recursive=TRUE))
 })

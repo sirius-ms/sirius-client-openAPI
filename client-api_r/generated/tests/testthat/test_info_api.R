@@ -10,17 +10,15 @@ test_that("GetConnectionCheck", {
   # base path: http://localhost:8080
   # @return [ConnectionCheck]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  response <- api_instance$GetConnectionCheck()
+  expect_true(inherits(api_instance$GetConnectionCheck(), "ConnectionCheck"))
 })
 
 test_that("GetInfo", {
   # tests for GetInfo
   # base path: http://localhost:8080
-  # @param server_info character  (optional)
-  # @param update_info character  (optional)
   # @return [Info]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  response <- api_instance$GetInfo()
+  expect_true(inherits(api_instance$GetInfo(), "Info"))
 })

@@ -60,16 +60,10 @@ jobs:
           quit(status=1)
         }
       shell: Rscript {0}
-    - name: Copy tests into Rsirius folder for testing
-      run: |
-        mkdir -p client-api_r/generated/tests
-        cp -r .updater/clientTests/RTests/test client-api_r/generated/tests/testthat
-        cp .updater/clientTests/RTests/testthat.R client-api_r/generated/tests/testthat.R
-        # TODO move back after issues are fixed
-        rm client-api_r/generated/tests/testthat/test_compounds_api.R
     - name: Build Rsirius
       run: |
         R CMD build ./client-api_r/generated
     - name: Test Rsirius using testthat
       run: |
-        R CMD check Rsirius_0.9.tar.gz --no-manual
+        packageVersion=$(cat .updater/api/packageVersion.txt)
+        R CMD check "Rsirius_$packageVersion.tar.gz" --no-manual

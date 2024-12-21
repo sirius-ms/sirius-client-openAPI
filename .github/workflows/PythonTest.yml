@@ -78,32 +78,32 @@ jobs:
     - name: Test actuator API
       if: always() && steps.api_start.outcome == 'success' && steps.pysirius_install.outcome == 'success' && steps.login.outcome == 'success'
       run: python test_actuator_api.py
-      working-directory: .updater/clientTests/PythonTests/test
+      working-directory: client-api_python/generated/test
     - name: Test compounds API
       if: always() && steps.api_start.outcome == 'success' && steps.pysirius_install.outcome == 'success' && steps.login.outcome == 'success'
       run: python test_compounds_api.py
-      working-directory: .updater/clientTests/PythonTests/test
+      working-directory: client-api_python/generated/test
     - name: Test features API
       if: always() && steps.api_start.outcome == 'success' && steps.pysirius_install.outcome == 'success' && steps.login.outcome == 'success'
       run: python test_features_api.py
-      working-directory: .updater/clientTests/PythonTests/test
+      working-directory: client-api_python/generated/test
     - name: Test info API
       if: always() && steps.api_start.outcome == 'success' && steps.pysirius_install.outcome == 'success' && steps.login.outcome == 'success'
       run: python test_info_api.py
-      working-directory: .updater/clientTests/PythonTests/test
+      working-directory: client-api_python/generated/test
     - name: Test jobs API
       if: always() && steps.api_start.outcome == 'success' && steps.pysirius_install.outcome == 'success' && steps.login.outcome == 'success'
       run: python test_jobs_api.py
-      working-directory: .updater/clientTests/PythonTests/test
+      working-directory: client-api_python/generated/test
     - name: Test login_and_account API
       if: always() && steps.api_start.outcome == 'success' && steps.pysirius_install.outcome == 'success' && steps.login.outcome == 'success'
       run: python test_login_and_account_api.py
-      working-directory: .updater/clientTests/PythonTests/test
+      working-directory: client-api_python/generated/test
     - name: Test projects API
       if: always() && steps.api_start.outcome == 'success' && steps.pysirius_install.outcome == 'success' && steps.login.outcome == 'success'
       run: python test_projects_api.py
-      working-directory: .updater/clientTests/PythonTests/test
+      working-directory: client-api_python/generated/test
     - name: Test searchable_databases API
       if: always() && steps.api_start.outcome == 'success' && steps.pysirius_install.outcome == 'success' && steps.login.outcome == 'success'
       run: python test_searchable_databases_api.py
-      working-directory: .updater/clientTests/PythonTests/test
+      working-directory: client-api_python/generated/test

@@ -63,10 +63,6 @@ jobs:
         # load package version from file
         packageVersion=$(cat .updater/api/packageVersion.txt)
         
-        # echo "generating Java Code with packageVersion=$packageVersion"
-        # rm -rf client-api_java/generated/*
-        # java -jar .updater/openapi_generator/openapi-generator-cli.jar generate -i .updater/api/api-docs.json -c .updater/config/Java/config.json -g java -o client-api_java/generated
-        
         echo "generating Python Code with packageVersion=$packageVersion"
         rm -rf client-api_python/generated/*
         java -jar .updater/openapi_generator/openapi-generator-cli.jar generate -i .updater/api/api-docs-enums.json -c .updater/config/Python/config.json -g python -o client-api_python/generated -t client-api_python/templates/python --additional-properties=packageVersion=$packageVersion
@@ -108,7 +104,6 @@ jobs:
         cd .updater/api
         rm -rf *sirius*
         rm -rf releases.json
-        rm -rf packageVersion.txt
         echo "Done"
     - name: Remove Openapi Generator Files
       run: |
