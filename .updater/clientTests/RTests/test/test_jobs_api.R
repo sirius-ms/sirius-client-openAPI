@@ -24,7 +24,7 @@ test_that("DeleteJob", {
 
   project_id <- "DeleteJob"
   project_dir <- paste(Sys.getenv("HOME"), project_id, sep="/")
-  projects_api$CreateProjectSpace(project_id, project_dir)
+  projects_api$CreateProject(project_id, project_dir)
   projects_api$ImportPreprocessedDataAsJob(project_id, input_files=input_file)
 
   response_before <- api_instance$GetJobs(project_id)
@@ -32,7 +32,7 @@ test_that("DeleteJob", {
   response_after <- api_instance$GetJobs(project_id)
   expect_equal(length(response_before), length(response_after)+1)
 
-  withr::defer(projects_api$CloseProjectSpace(project_id))
+  withr::defer(projects_api$CloseProject(project_id))
   withr::defer(unlink(project_dir, recursive=TRUE))
 })
 
@@ -60,7 +60,7 @@ test_that("DeleteJobs", {
 
   project_id <- "DeleteJob"
   project_dir <- paste(Sys.getenv("HOME"), project_id, sep="/")
-  projects_api$CreateProjectSpace(project_id, project_dir)
+  projects_api$CreateProject(project_id, project_dir)
   projects_api$ImportPreprocessedDataAsJob(project_id, input_files=input_file)
 
   response_before <- api_instance$GetJobs(project_id)
@@ -68,7 +68,7 @@ test_that("DeleteJobs", {
   response_after <- api_instance$GetJobs(project_id)
   expect_equal(length(response_before), length(response_after)+1)
 
-  withr::defer(projects_api$CloseProjectSpace(project_id))
+  withr::defer(projects_api$CloseProject(project_id))
   withr::defer(unlink(project_dir, recursive=TRUE))
 })
 
@@ -96,14 +96,14 @@ test_that("GetJob", {
 
   project_id <- "GetJob"
   project_dir <- paste(Sys.getenv("HOME"), project_id, sep="/")
-  projects_api$CreateProjectSpace(project_id, project_dir)
+  projects_api$CreateProject(project_id, project_dir)
   projects_api$ImportPreprocessedDataAsJob(project_id, input_files=input_file)
   job_id <- api_instance$GetJobs(project_id)[[1]]$id
 
   response <- api_instance$GetJob(project_id, job_id)
   expect_true(inherits(response, "Job"))
 
-  withr::defer(projects_api$CloseProjectSpace(project_id))
+  withr::defer(projects_api$CloseProject(project_id))
   withr::defer(unlink(project_dir, recursive=TRUE))
 })
 
@@ -130,7 +130,7 @@ test_that("GetJobConfigs", {
 
   project_id <- "GetJobConfigs"
   project_dir <- paste(Sys.getenv("HOME"), project_id, sep="/")
-  projects_api$CreateProjectSpace(project_id, project_dir)
+  projects_api$CreateProject(project_id, project_dir)
   job_submission <- api_instance$GetDefaultJobConfig(TRUE)
   api_instance$SaveJobConfig(project_id, job_submission, TRUE)
 
@@ -139,7 +139,7 @@ test_that("GetJobConfigs", {
   expect_true(inherits(response[[1]], "JobSubmission"))
 
   withr::defer(api_instance$DeleteJobConfig(project_id))
-  withr::defer(projects_api$CloseProjectSpace(project_id))
+  withr::defer(projects_api$CloseProject(project_id))
   withr::defer(unlink(project_dir, recursive=TRUE))
 })
 
@@ -154,14 +154,14 @@ test_that("GetJobs", {
 
   project_id <- "GetJobs"
   project_dir <- paste(Sys.getenv("HOME"), project_id, sep="/")
-  projects_api$CreateProjectSpace(project_id, project_dir)
+  projects_api$CreateProject(project_id, project_dir)
   projects_api$ImportPreprocessedDataAsJob(project_id, input_files=input_file)
 
   response <- api_instance$GetJobs(project_id)
   expect_true(inherits(response, "list"))
   expect_true(inherits(response[[1]], "Job"))
 
-  withr::defer(projects_api$CloseProjectSpace(project_id))
+  withr::defer(projects_api$CloseProject(project_id))
   withr::defer(unlink(project_dir, recursive=TRUE))
 })
 
@@ -179,13 +179,13 @@ test_that("GetJobsPaged", {
 
   project_id <- "GetJobsPaged"
   project_dir <- paste(Sys.getenv("HOME"), project_id, sep="/")
-  projects_api$CreateProjectSpace(project_id, project_dir)
+  projects_api$CreateProject(project_id, project_dir)
   projects_api$ImportPreprocessedDataAsJob(project_id, input_files=input_file)
 
   response <- api_instance$GetJobsPaged(project_id)
   expect_true(inherits(response, "PagedModelJob"))
 
-  withr::defer(projects_api$CloseProjectSpace(project_id))
+  withr::defer(projects_api$CloseProject(project_id))
   withr::defer(unlink(project_dir, recursive=TRUE))
 })
 
@@ -198,13 +198,13 @@ test_that("HasJobs", {
 
   project_id <- "HasJobs"
   project_dir <- paste(Sys.getenv("HOME"), project_id, sep="/")
-  projects_api$CreateProjectSpace(project_id, project_dir)
+  projects_api$CreateProject(project_id, project_dir)
   projects_api$ImportPreprocessedDataAsJob(project_id, input_files=input_file)
 
   response <- api_instance$HasJobs(project_id)
   expect_true(inherits(response, "logical"))
 
-  withr::defer(projects_api$CloseProjectSpace(project_id))
+  withr::defer(projects_api$CloseProject(project_id))
   withr::defer(unlink(project_dir, recursive=TRUE))
 })
 
@@ -220,14 +220,14 @@ test_that("SaveJobConfig", {
 
   project_id <- "SaveJobConfig"
   project_dir <- paste(Sys.getenv("HOME"), project_id, sep="/")
-  projects_api$CreateProjectSpace(project_id, project_dir)
+  projects_api$CreateProject(project_id, project_dir)
   job_submission <- api_instance$GetDefaultJobConfig(TRUE)
 
   response <- api_instance$SaveJobConfig(project_id, job_submission, TRUE)
   expect_true(inherits(response, "character"))
 
   withr::defer(api_instance$DeleteJobConfig(project_id))
-  withr::defer(projects_api$CloseProjectSpace(project_id))
+  withr::defer(projects_api$CloseProject(project_id))
   withr::defer(unlink(project_dir, recursive=TRUE))
 })
 
@@ -243,7 +243,7 @@ test_that("StartJob", {
 
   project_id <- "StartJob"
   project_dir <- paste(Sys.getenv("HOME"), project_id, sep="/")
-  projects_api$CreateProjectSpace(project_id, project_dir)
+  projects_api$CreateProject(project_id, project_dir)
   projects_api$ImportPreprocessedDataAsJob(project_id, input_files=input_file)
   Sys.sleep(1)
   var_alignedFeatureIds <- c(features_api$GetAlignedFeatures(project_id)[[1]]$alignedFeatureId)
@@ -254,7 +254,7 @@ test_that("StartJob", {
   response <- api_instance$StartJob(project_id, job_submission)
   expect_true(inherits(response, "Job"))
 
-  withr::defer(projects_api$CloseProjectSpace(project_id))
+  withr::defer(projects_api$CloseProject(project_id))
   withr::defer(unlink(project_dir, recursive=TRUE))
 })
 

@@ -23,13 +23,13 @@ test_that("AddCompounds", {
 
   project_id <- "AddCompounds"
   project_dir <- paste(Sys.getenv("HOME"), "AddCompounds", sep="/")
-  projects_api$CreateProjectSpace(project_id, project_dir)
+  projects_api$CreateProject(project_id, project_dir)
 
   response <- api_instance$AddCompounds(project_id, compound_import)
   expect_true(inherits(response, "list"))
   expect_true(inherits(response[[1]], "Compound"))
 
-  withr::defer(projects_api$CloseProjectSpace(project_id))
+  withr::defer(projects_api$CloseProject(project_id))
   withr::defer(unlink(project_dir, recursive=TRUE))
 })
 
@@ -44,7 +44,7 @@ test_that("DeleteCompound", {
 
   project_id <- "DeleteCompound"
   project_dir <- paste(Sys.getenv("HOME"), "DeleteCompound", sep="/")
-  projects_api$CreateProjectSpace(project_id, project_dir)
+  projects_api$CreateProject(project_id, project_dir)
   api_instance$AddCompounds(project_id, compound_import)
   compound_id <- api_instance$GetCompounds(project_id)[[1]]$compoundId
 
@@ -54,7 +54,7 @@ test_that("DeleteCompound", {
 
   expect_equal(length(response_before) - length(response_after), 1)
 
-  withr::defer(projects_api$CloseProjectSpace(project_id))
+  withr::defer(projects_api$CloseProject(project_id))
   withr::defer(unlink(project_dir, recursive=TRUE))
 })
 
@@ -71,14 +71,14 @@ test_that("GetCompound", {
 
   project_id <- "GetCompound"
   project_dir <- paste(Sys.getenv("HOME"), "GetCompound", sep="/")
-  projects_api$CreateProjectSpace(project_id, project_dir)
+  projects_api$CreateProject(project_id, project_dir)
   api_instance$AddCompounds(project_id, compound_import)
   compound_id <- api_instance$GetCompounds(project_id)[[1]]$compoundId
 
   response <- api_instance$GetCompound(project_id, compound_id)
   expect_true(inherits(response, "Compound"))
 
-  withr::defer(projects_api$CloseProjectSpace(project_id))
+  withr::defer(projects_api$CloseProject(project_id))
   withr::defer(unlink(project_dir, recursive=TRUE))
 })
 
@@ -94,14 +94,14 @@ test_that("GetCompounds", {
 
   project_id <- "GetCompounds"
   project_dir <- paste(Sys.getenv("HOME"), "GetCompounds", sep="/")
-  projects_api$CreateProjectSpace(project_id, project_dir)
+  projects_api$CreateProject(project_id, project_dir)
   api_instance$AddCompounds(project_id, compound_import)
 
   response <- api_instance$GetCompounds(project_id)
   expect_true(inherits(response, "list"))
   expect_true(inherits(response[[1]], "Compound"))
 
-  withr::defer(projects_api$CloseProjectSpace(project_id))
+  withr::defer(projects_api$CloseProject(project_id))
   withr::defer(unlink(project_dir, recursive=TRUE))
 })
 
@@ -120,12 +120,12 @@ test_that("GetCompoundsPaged", {
 
   project_id <- "GetCompoundsPaged"
   project_dir <- paste(Sys.getenv("HOME"), "GetCompoundsPaged", sep="/")
-  projects_api$CreateProjectSpace(project_id, project_dir)
+  projects_api$CreateProject(project_id, project_dir)
 
   response <- api_instance$GetCompoundsPaged(project_id)
   expect_true(inherits(response, "PagedModelCompound"))
 
-  withr::defer(projects_api$CloseProjectSpace(project_id))
+  withr::defer(projects_api$CloseProject(project_id))
   withr::defer(unlink(project_dir, recursive=TRUE))
 })
 
@@ -139,13 +139,13 @@ test_that("GetTraces", {
 #   TODO feature has no trace
 #   project_id <- "GetTraces"
 #   project_dir <- paste(Sys.getenv("HOME"), "GetTraces", sep="/")
-#   projects_api$CreateProjectSpace(project_id, project_dir)
+#   projects_api$CreateProject(project_id, project_dir)
 #   api_instance$AddCompounds(project_id, compound_import)
 #   compound_id <- api_instance$GetCompounds(project_id)[[1]]$compoundId
 #
 #   response <- api_instance$GetTraces(project_id, compound_id)
 #   expect_true(inherits(response, "TraceSet"))
 #
-#   withr::defer(projects_api$CloseProjectSpace(project_id))
+#   withr::defer(projects_api$CloseProject(project_id))
 #   withr::defer(unlink(project_dir, recursive=TRUE))
 })

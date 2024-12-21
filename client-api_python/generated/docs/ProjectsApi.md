@@ -4,22 +4,22 @@ All URIs are relative to *http://localhost:8080*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**close_project_space**](ProjectsApi.md#close_project_space) | **DELETE** /api/projects/{projectId} | Close project-space and remove it from application
-[**create_project_space**](ProjectsApi.md#create_project_space) | **POST** /api/projects/{projectId} | Create and open a new project-space at given location and make it accessible via the given projectId.
+[**close_project**](ProjectsApi.md#close_project) | **DELETE** /api/projects/{projectId} | Close project-space and remove it from application
+[**create_project**](ProjectsApi.md#create_project) | **POST** /api/projects/{projectId} | Create and open a new project-space at given location and make it accessible via the given projectId.
 [**get_canopus_classy_fire_data**](ProjectsApi.md#get_canopus_classy_fire_data) | **GET** /api/projects/{projectId}/cf-data | Get CANOPUS prediction vector definition for ClassyFire classes
 [**get_canopus_npc_data**](ProjectsApi.md#get_canopus_npc_data) | **GET** /api/projects/{projectId}/npc-data | Get CANOPUS prediction vector definition for NPC classes
 [**get_finger_id_data**](ProjectsApi.md#get_finger_id_data) | **GET** /api/projects/{projectId}/fingerid-data | Get CSI:FingerID fingerprint (prediction vector) definition
-[**get_project_space**](ProjectsApi.md#get_project_space) | **GET** /api/projects/{projectId} | Get project space info by its projectId.
-[**get_project_spaces**](ProjectsApi.md#get_project_spaces) | **GET** /api/projects | List opened project spaces.
+[**get_project**](ProjectsApi.md#get_project) | **GET** /api/projects/{projectId} | Get project space info by its projectId.
+[**get_projects**](ProjectsApi.md#get_projects) | **GET** /api/projects | List opened project spaces.
 [**import_ms_run_data**](ProjectsApi.md#import_ms_run_data) | **POST** /api/projects/{projectId}/import/ms-data-files | Import and Align full MS-Runs from various formats into the specified project  Possible formats (mzML, mzXML)
 [**import_ms_run_data_as_job**](ProjectsApi.md#import_ms_run_data_as_job) | **POST** /api/projects/{projectId}/import/ms-data-files-job | Import and Align full MS-Runs from various formats into the specified project as background job.
 [**import_preprocessed_data**](ProjectsApi.md#import_preprocessed_data) | **POST** /api/projects/{projectId}/import/preprocessed-data-files | Import already preprocessed ms/ms data from various formats into the specified project  Possible formats (ms, mgf, cef, msp)
 [**import_preprocessed_data_as_job**](ProjectsApi.md#import_preprocessed_data_as_job) | **POST** /api/projects/{projectId}/import/preprocessed-data-files-job | Import ms/ms data from the given format into the specified project-space as background job.
-[**open_project_space**](ProjectsApi.md#open_project_space) | **PUT** /api/projects/{projectId} | Open an existing project-space and make it accessible via the given projectId.
+[**open_project**](ProjectsApi.md#open_project) | **PUT** /api/projects/{projectId} | Open an existing project-space and make it accessible via the given projectId.
 
 
-# **close_project_space**
-> close_project_space(project_id)
+# **close_project**
+> close_project(project_id)
 
 Close project-space and remove it from application
 
@@ -48,9 +48,9 @@ with PySirius.ApiClient(configuration) as api_client:
 
     try:
         # Close project-space and remove it from application
-        api_instance.close_project_space(project_id)
+        api_instance.close_project(project_id)
     except Exception as e:
-        print("Exception when calling ProjectsApi->close_project_space: %s\n" % e)
+        print("Exception when calling ProjectsApi->close_project: %s\n" % e)
 ```
 
 
@@ -83,8 +83,8 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **create_project_space**
-> ProjectInfo create_project_space(project_id, path_to_project=path_to_project, opt_fields=opt_fields)
+# **create_project**
+> ProjectInfo create_project(project_id, path_to_project=path_to_project, opt_fields=opt_fields)
 
 Create and open a new project-space at given location and make it accessible via the given projectId.
 
@@ -117,11 +117,11 @@ with PySirius.ApiClient(configuration) as api_client:
 
     try:
         # Create and open a new project-space at given location and make it accessible via the given projectId.
-        api_response = api_instance.create_project_space(project_id, path_to_project=path_to_project, opt_fields=opt_fields)
-        print("The response of ProjectsApi->create_project_space:\n")
+        api_response = api_instance.create_project(project_id, path_to_project=path_to_project, opt_fields=opt_fields)
+        print("The response of ProjectsApi->create_project:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling ProjectsApi->create_project_space: %s\n" % e)
+        print("Exception when calling ProjectsApi->create_project: %s\n" % e)
 ```
 
 
@@ -357,8 +357,8 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_project_space**
-> ProjectInfo get_project_space(project_id, opt_fields=opt_fields)
+# **get_project**
+> ProjectInfo get_project(project_id, opt_fields=opt_fields)
 
 Get project space info by its projectId.
 
@@ -390,11 +390,11 @@ with PySirius.ApiClient(configuration) as api_client:
 
     try:
         # Get project space info by its projectId.
-        api_response = api_instance.get_project_space(project_id, opt_fields=opt_fields)
-        print("The response of ProjectsApi->get_project_space:\n")
+        api_response = api_instance.get_project(project_id, opt_fields=opt_fields)
+        print("The response of ProjectsApi->get_project:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling ProjectsApi->get_project_space: %s\n" % e)
+        print("Exception when calling ProjectsApi->get_project: %s\n" % e)
 ```
 
 
@@ -428,8 +428,8 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_project_spaces**
-> List[ProjectInfo] get_project_spaces()
+# **get_projects**
+> List[ProjectInfo] get_projects()
 
 List opened project spaces.
 
@@ -458,11 +458,11 @@ with PySirius.ApiClient(configuration) as api_client:
 
     try:
         # List opened project spaces.
-        api_response = api_instance.get_project_spaces()
-        print("The response of ProjectsApi->get_project_spaces:\n")
+        api_response = api_instance.get_projects()
+        print("The response of ProjectsApi->get_projects:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling ProjectsApi->get_project_spaces: %s\n" % e)
+        print("Exception when calling ProjectsApi->get_projects: %s\n" % e)
 ```
 
 
@@ -792,8 +792,8 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **open_project_space**
-> ProjectInfo open_project_space(project_id, path_to_project=path_to_project, opt_fields=opt_fields)
+# **open_project**
+> ProjectInfo open_project(project_id, path_to_project=path_to_project, opt_fields=opt_fields)
 
 Open an existing project-space and make it accessible via the given projectId.
 
@@ -826,11 +826,11 @@ with PySirius.ApiClient(configuration) as api_client:
 
     try:
         # Open an existing project-space and make it accessible via the given projectId.
-        api_response = api_instance.open_project_space(project_id, path_to_project=path_to_project, opt_fields=opt_fields)
-        print("The response of ProjectsApi->open_project_space:\n")
+        api_response = api_instance.open_project(project_id, path_to_project=path_to_project, opt_fields=opt_fields)
+        print("The response of ProjectsApi->open_project:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling ProjectsApi->open_project_space: %s\n" % e)
+        print("Exception when calling ProjectsApi->open_project: %s\n" % e)
 ```
 
 

@@ -83,7 +83,7 @@ class TestSearchableDatabasesApi(unittest.TestCase):
 
         Start import of structure and spectra files into the specified database.
         """
-        response = self.dbs.import_into_database_e(self.database_id, input_files=[self.test_file])
+        response = self.dbs.import_into_database(self.database_id, input_files=[self.test_file])
         self.assertIsInstance(response, SearchableDatabase)
 
     def test_remove_database(self) -> None:

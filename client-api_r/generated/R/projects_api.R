@@ -13,7 +13,7 @@
 #'
 #' @examples
 #' \dontrun{
-#' ####################  CloseProjectSpace  ####################
+#' ####################  CloseProject  ####################
 #'
 #' library(Rsirius)
 #' var_project_id <- "project_id_example" # character | unique name/identifier of the  project-space to be closed.
@@ -21,10 +21,10 @@
 #' #Close project-space and remove it from application
 #' api_instance <- rsirius_api$new()
 #'
-#' api_instance$projects_api$CloseProjectSpace(var_project_id)
+#' api_instance$projects_api$CloseProject(var_project_id)
 #'
 #'
-#' ####################  CreateProjectSpace  ####################
+#' ####################  CreateProject  ####################
 #'
 #' library(Rsirius)
 #' var_project_id <- "project_id_example" # character | unique name/identifier that shall be used to access the newly created project-space. Must consist only of [a-zA-Z0-9_-].
@@ -35,8 +35,8 @@
 #' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-#' # result <- api_instance$CreateProjectSpace(var_project_id, path_to_project = var_path_to_project, opt_fields = var_opt_fieldsdata_file = "result.txt")
-#' result <- api_instance$projects_api$CreateProjectSpace(var_project_id, path_to_project = var_path_to_project, opt_fields = var_opt_fields)
+#' # result <- api_instance$CreateProject(var_project_id, path_to_project = var_path_to_project, opt_fields = var_opt_fieldsdata_file = "result.txt")
+#' result <- api_instance$projects_api$CreateProject(var_project_id, path_to_project = var_path_to_project, opt_fields = var_opt_fields)
 #' dput(result)
 #'
 #'
@@ -85,7 +85,7 @@
 #' dput(result)
 #'
 #'
-#' ####################  GetProjectSpace  ####################
+#' ####################  GetProject  ####################
 #'
 #' library(Rsirius)
 #' var_project_id <- "project_id_example" # character | unique name/identifier tof the project-space to be accessed.
@@ -95,12 +95,12 @@
 #' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-#' # result <- api_instance$GetProjectSpace(var_project_id, opt_fields = var_opt_fieldsdata_file = "result.txt")
-#' result <- api_instance$projects_api$GetProjectSpace(var_project_id, opt_fields = var_opt_fields)
+#' # result <- api_instance$GetProject(var_project_id, opt_fields = var_opt_fieldsdata_file = "result.txt")
+#' result <- api_instance$projects_api$GetProject(var_project_id, opt_fields = var_opt_fields)
 #' dput(result)
 #'
 #'
-#' ####################  GetProjectSpaces  ####################
+#' ####################  GetProjects  ####################
 #'
 #' library(Rsirius)
 #'
@@ -108,8 +108,8 @@
 #' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-#' # result <- api_instance$GetProjectSpaces(data_file = "result.txt")
-#' result <- api_instance$projects_api$GetProjectSpaces()
+#' # result <- api_instance$GetProjects(data_file = "result.txt")
+#' result <- api_instance$projects_api$GetProjects()
 #' dput(result)
 #'
 #'
@@ -181,7 +181,7 @@
 #' dput(result)
 #'
 #'
-#' ####################  OpenProjectSpace  ####################
+#' ####################  OpenProject  ####################
 #'
 #' library(Rsirius)
 #' var_project_id <- "project_id_example" # character | unique name/identifier that shall be used to access the opened project-space. Must consist only of [a-zA-Z0-9_-].
@@ -192,8 +192,8 @@
 #' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-#' # result <- api_instance$OpenProjectSpace(var_project_id, path_to_project = var_path_to_project, opt_fields = var_opt_fieldsdata_file = "result.txt")
-#' result <- api_instance$projects_api$OpenProjectSpace(var_project_id, path_to_project = var_path_to_project, opt_fields = var_opt_fields)
+#' # result <- api_instance$OpenProject(var_project_id, path_to_project = var_path_to_project, opt_fields = var_opt_fieldsdata_file = "result.txt")
+#' result <- api_instance$projects_api$OpenProject(var_project_id, path_to_project = var_path_to_project, opt_fields = var_opt_fields)
 #' dput(result)
 #'
 #'
@@ -225,8 +225,8 @@ ProjectsApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #'
     #' @return void
-    CloseProjectSpace = function(project_id, ...) {
-      local_var_response <- self$CloseProjectSpaceWithHttpInfo(project_id, ...)
+    CloseProject = function(project_id, ...) {
+      local_var_response <- self$CloseProjectWithHttpInfo(project_id, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
@@ -245,7 +245,7 @@ ProjectsApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #'
     #' @return API response (void) with additional information such as HTTP status code, headers
-    CloseProjectSpaceWithHttpInfo = function(project_id, ...) {
+    CloseProjectWithHttpInfo = function(project_id, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -310,8 +310,8 @@ ProjectsApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #'
     #' @return ProjectInfo
-    CreateProjectSpace = function(project_id, path_to_project = NULL, opt_fields = list("none"), data_file = NULL, ...) {
-      local_var_response <- self$CreateProjectSpaceWithHttpInfo(project_id, path_to_project, opt_fields, data_file = data_file, ...)
+    CreateProject = function(project_id, path_to_project = NULL, opt_fields = list("none"), data_file = NULL, ...) {
+      local_var_response <- self$CreateProjectWithHttpInfo(project_id, path_to_project, opt_fields, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
@@ -333,7 +333,7 @@ ProjectsApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #'
     #' @return API response (ProjectInfo) with additional information such as HTTP status code, headers
-    CreateProjectSpaceWithHttpInfo = function(project_id, path_to_project = NULL, opt_fields = list("none"), data_file = NULL, ...) {
+    CreateProjectWithHttpInfo = function(project_id, path_to_project = NULL, opt_fields = list("none"), data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -356,7 +356,7 @@ ProjectsApi <- R6::R6Class(
       for (query_item in `opt_fields`) {
         # validate enum values
         if (!is.null(query_item) && !(query_item %in% c("none", "compatibilityInfo", "sizeInformation"))) {
-          stop("Invalid value for opt_fields when calling ProjectsApi$CreateProjectSpace. Must be [none, compatibilityInfo, sizeInformation].")
+          stop("Invalid value for opt_fields when calling ProjectsApi$CreateProject. Must be [none, compatibilityInfo, sizeInformation].")
         }
         query_params[["optFields"]] <- c(query_params[["optFields"]], list(`optFields` = query_item))
       }
@@ -733,8 +733,8 @@ ProjectsApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #'
     #' @return ProjectInfo
-    GetProjectSpace = function(project_id, opt_fields = list("none"), data_file = NULL, ...) {
-      local_var_response <- self$GetProjectSpaceWithHttpInfo(project_id, opt_fields, data_file = data_file, ...)
+    GetProject = function(project_id, opt_fields = list("none"), data_file = NULL, ...) {
+      local_var_response <- self$GetProjectWithHttpInfo(project_id, opt_fields, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
@@ -755,7 +755,7 @@ ProjectsApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #'
     #' @return API response (ProjectInfo) with additional information such as HTTP status code, headers
-    GetProjectSpaceWithHttpInfo = function(project_id, opt_fields = list("none"), data_file = NULL, ...) {
+    GetProjectWithHttpInfo = function(project_id, opt_fields = list("none"), data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -775,7 +775,7 @@ ProjectsApi <- R6::R6Class(
       for (query_item in `opt_fields`) {
         # validate enum values
         if (!is.null(query_item) && !(query_item %in% c("none", "compatibilityInfo", "sizeInformation"))) {
-          stop("Invalid value for opt_fields when calling ProjectsApi$GetProjectSpace. Must be [none, compatibilityInfo, sizeInformation].")
+          stop("Invalid value for opt_fields when calling ProjectsApi$GetProject. Must be [none, compatibilityInfo, sizeInformation].")
         }
         query_params[["optFields"]] <- c(query_params[["optFields"]], list(`optFields` = query_item))
       }
@@ -838,8 +838,8 @@ ProjectsApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #'
     #' @return array[ProjectInfo]
-    GetProjectSpaces = function(data_file = NULL, ...) {
-      local_var_response <- self$GetProjectSpacesWithHttpInfo(data_file = data_file, ...)
+    GetProjects = function(data_file = NULL, ...) {
+      local_var_response <- self$GetProjectsWithHttpInfo(data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
@@ -858,7 +858,7 @@ ProjectsApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #'
     #' @return API response (array[ProjectInfo]) with additional information such as HTTP status code, headers
-    GetProjectSpacesWithHttpInfo = function(data_file = NULL, ...) {
+    GetProjectsWithHttpInfo = function(data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -1373,8 +1373,8 @@ ProjectsApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #'
     #' @return ProjectInfo
-    OpenProjectSpace = function(project_id, path_to_project = NULL, opt_fields = list("none"), data_file = NULL, ...) {
-      local_var_response <- self$OpenProjectSpaceWithHttpInfo(project_id, path_to_project, opt_fields, data_file = data_file, ...)
+    OpenProject = function(project_id, path_to_project = NULL, opt_fields = list("none"), data_file = NULL, ...) {
+      local_var_response <- self$OpenProjectWithHttpInfo(project_id, path_to_project, opt_fields, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
@@ -1396,7 +1396,7 @@ ProjectsApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #'
     #' @return API response (ProjectInfo) with additional information such as HTTP status code, headers
-    OpenProjectSpaceWithHttpInfo = function(project_id, path_to_project = NULL, opt_fields = list("none"), data_file = NULL, ...) {
+    OpenProjectWithHttpInfo = function(project_id, path_to_project = NULL, opt_fields = list("none"), data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -1419,7 +1419,7 @@ ProjectsApi <- R6::R6Class(
       for (query_item in `opt_fields`) {
         # validate enum values
         if (!is.null(query_item) && !(query_item %in% c("none", "compatibilityInfo", "sizeInformation"))) {
-          stop("Invalid value for opt_fields when calling ProjectsApi$OpenProjectSpace. Must be [none, compatibilityInfo, sizeInformation].")
+          stop("Invalid value for opt_fields when calling ProjectsApi$OpenProject. Must be [none, compatibilityInfo, sizeInformation].")
         }
         query_params[["optFields"]] <- c(query_params[["optFields"]], list(`optFields` = query_item))
       }

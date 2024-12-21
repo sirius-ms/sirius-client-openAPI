@@ -45,7 +45,7 @@ class ProjectsApi:
 
 
     @validate_call
-    def close_project_space(
+    def close_project(
         self,
         project_id: Annotated[StrictStr, Field(description="unique name/identifier of the  project-space to be closed.")],
         _request_timeout: Union[
@@ -89,7 +89,7 @@ class ProjectsApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._close_project_space_serialize(
+        _param = self._close_project_serialize(
             project_id=project_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -112,7 +112,7 @@ class ProjectsApi:
 
 
     @validate_call
-    def close_project_space_with_http_info(
+    def close_project_with_http_info(
         self,
         project_id: Annotated[StrictStr, Field(description="unique name/identifier of the  project-space to be closed.")],
         _request_timeout: Union[
@@ -156,7 +156,7 @@ class ProjectsApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._close_project_space_serialize(
+        _param = self._close_project_serialize(
             project_id=project_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -179,7 +179,7 @@ class ProjectsApi:
 
 
     @validate_call
-    def close_project_space_without_preload_content(
+    def close_project_without_preload_content(
         self,
         project_id: Annotated[StrictStr, Field(description="unique name/identifier of the  project-space to be closed.")],
         _request_timeout: Union[
@@ -223,7 +223,7 @@ class ProjectsApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._close_project_space_serialize(
+        _param = self._close_project_serialize(
             project_id=project_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -241,7 +241,7 @@ class ProjectsApi:
         return response_data.response
 
 
-    def _close_project_space_serialize(
+    def _close_project_serialize(
         self,
         project_id,
         _request_auth,
@@ -296,7 +296,7 @@ class ProjectsApi:
 
 
     @validate_call
-    def create_project_space(
+    def create_project(
         self,
         project_id: Annotated[StrictStr, Field(description="unique name/identifier that shall be used to access the newly created project-space. Must consist only of [a-zA-Z0-9_-].")],
         path_to_project: Annotated[Optional[StrictStr], Field(description="local file path where the project will be created. If NULL, project will be stored by its projectId in default project location. DEPRECATED: This parameter relies on the local filesystem and will likely be removed in later versions of this API to allow for more flexible use cases.")] = None,
@@ -346,7 +346,7 @@ class ProjectsApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._create_project_space_serialize(
+        _param = self._create_project_serialize(
             project_id=project_id,
             path_to_project=path_to_project,
             opt_fields=opt_fields,
@@ -371,7 +371,7 @@ class ProjectsApi:
 
 
     @validate_call
-    def create_project_space_with_http_info(
+    def create_project_with_http_info(
         self,
         project_id: Annotated[StrictStr, Field(description="unique name/identifier that shall be used to access the newly created project-space. Must consist only of [a-zA-Z0-9_-].")],
         path_to_project: Annotated[Optional[StrictStr], Field(description="local file path where the project will be created. If NULL, project will be stored by its projectId in default project location. DEPRECATED: This parameter relies on the local filesystem and will likely be removed in later versions of this API to allow for more flexible use cases.")] = None,
@@ -421,7 +421,7 @@ class ProjectsApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._create_project_space_serialize(
+        _param = self._create_project_serialize(
             project_id=project_id,
             path_to_project=path_to_project,
             opt_fields=opt_fields,
@@ -446,7 +446,7 @@ class ProjectsApi:
 
 
     @validate_call
-    def create_project_space_without_preload_content(
+    def create_project_without_preload_content(
         self,
         project_id: Annotated[StrictStr, Field(description="unique name/identifier that shall be used to access the newly created project-space. Must consist only of [a-zA-Z0-9_-].")],
         path_to_project: Annotated[Optional[StrictStr], Field(description="local file path where the project will be created. If NULL, project will be stored by its projectId in default project location. DEPRECATED: This parameter relies on the local filesystem and will likely be removed in later versions of this API to allow for more flexible use cases.")] = None,
@@ -496,7 +496,7 @@ class ProjectsApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._create_project_space_serialize(
+        _param = self._create_project_serialize(
             project_id=project_id,
             path_to_project=path_to_project,
             opt_fields=opt_fields,
@@ -516,7 +516,7 @@ class ProjectsApi:
         return response_data.response
 
 
-    def _create_project_space_serialize(
+    def _create_project_serialize(
         self,
         project_id,
         path_to_project,
@@ -1404,7 +1404,7 @@ class ProjectsApi:
 
 
     @validate_call
-    def get_project_space(
+    def get_project(
         self,
         project_id: Annotated[StrictStr, Field(description="unique name/identifier tof the project-space to be accessed.")],
         opt_fields: Optional[List[Optional[ProjectInfoOptField]]] = None,
@@ -1451,7 +1451,7 @@ class ProjectsApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._get_project_space_serialize(
+        _param = self._get_project_serialize(
             project_id=project_id,
             opt_fields=opt_fields,
             _request_auth=_request_auth,
@@ -1475,7 +1475,7 @@ class ProjectsApi:
 
 
     @validate_call
-    def get_project_space_with_http_info(
+    def get_project_with_http_info(
         self,
         project_id: Annotated[StrictStr, Field(description="unique name/identifier tof the project-space to be accessed.")],
         opt_fields: Optional[List[Optional[ProjectInfoOptField]]] = None,
@@ -1522,7 +1522,7 @@ class ProjectsApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._get_project_space_serialize(
+        _param = self._get_project_serialize(
             project_id=project_id,
             opt_fields=opt_fields,
             _request_auth=_request_auth,
@@ -1546,7 +1546,7 @@ class ProjectsApi:
 
 
     @validate_call
-    def get_project_space_without_preload_content(
+    def get_project_without_preload_content(
         self,
         project_id: Annotated[StrictStr, Field(description="unique name/identifier tof the project-space to be accessed.")],
         opt_fields: Optional[List[Optional[ProjectInfoOptField]]] = None,
@@ -1593,7 +1593,7 @@ class ProjectsApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._get_project_space_serialize(
+        _param = self._get_project_serialize(
             project_id=project_id,
             opt_fields=opt_fields,
             _request_auth=_request_auth,
@@ -1612,7 +1612,7 @@ class ProjectsApi:
         return response_data.response
 
 
-    def _get_project_space_serialize(
+    def _get_project_serialize(
         self,
         project_id,
         opt_fields,
@@ -1679,7 +1679,7 @@ class ProjectsApi:
 
 
     @validate_call
-    def get_project_spaces(
+    def get_projects(
         self,
         _request_timeout: Union[
             None,
@@ -1720,7 +1720,7 @@ class ProjectsApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._get_project_spaces_serialize(
+        _param = self._get_projects_serialize(
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1742,7 +1742,7 @@ class ProjectsApi:
 
 
     @validate_call
-    def get_project_spaces_with_http_info(
+    def get_projects_with_http_info(
         self,
         _request_timeout: Union[
             None,
@@ -1783,7 +1783,7 @@ class ProjectsApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._get_project_spaces_serialize(
+        _param = self._get_projects_serialize(
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1805,7 +1805,7 @@ class ProjectsApi:
 
 
     @validate_call
-    def get_project_spaces_without_preload_content(
+    def get_projects_without_preload_content(
         self,
         _request_timeout: Union[
             None,
@@ -1846,7 +1846,7 @@ class ProjectsApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._get_project_spaces_serialize(
+        _param = self._get_projects_serialize(
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1863,7 +1863,7 @@ class ProjectsApi:
         return response_data.response
 
 
-    def _get_project_spaces_serialize(
+    def _get_projects_serialize(
         self,
         _request_auth,
         _content_type,
@@ -3199,7 +3199,7 @@ class ProjectsApi:
 
 
     @validate_call
-    def open_project_space(
+    def open_project(
         self,
         project_id: Annotated[StrictStr, Field(description="unique name/identifier that shall be used to access the opened project-space. Must consist only of [a-zA-Z0-9_-].")],
         path_to_project: Annotated[Optional[StrictStr], Field(description="local file path to open the project from. If NULL, project will be loaded by it projectId from default project location.  DEPRECATED: This parameter relies on the local filesystem and will likely be removed in later versions of this API to allow for more flexible use cases.")] = None,
@@ -3249,7 +3249,7 @@ class ProjectsApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._open_project_space_serialize(
+        _param = self._open_project_serialize(
             project_id=project_id,
             path_to_project=path_to_project,
             opt_fields=opt_fields,
@@ -3274,7 +3274,7 @@ class ProjectsApi:
 
 
     @validate_call
-    def open_project_space_with_http_info(
+    def open_project_with_http_info(
         self,
         project_id: Annotated[StrictStr, Field(description="unique name/identifier that shall be used to access the opened project-space. Must consist only of [a-zA-Z0-9_-].")],
         path_to_project: Annotated[Optional[StrictStr], Field(description="local file path to open the project from. If NULL, project will be loaded by it projectId from default project location.  DEPRECATED: This parameter relies on the local filesystem and will likely be removed in later versions of this API to allow for more flexible use cases.")] = None,
@@ -3324,7 +3324,7 @@ class ProjectsApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._open_project_space_serialize(
+        _param = self._open_project_serialize(
             project_id=project_id,
             path_to_project=path_to_project,
             opt_fields=opt_fields,
@@ -3349,7 +3349,7 @@ class ProjectsApi:
 
 
     @validate_call
-    def open_project_space_without_preload_content(
+    def open_project_without_preload_content(
         self,
         project_id: Annotated[StrictStr, Field(description="unique name/identifier that shall be used to access the opened project-space. Must consist only of [a-zA-Z0-9_-].")],
         path_to_project: Annotated[Optional[StrictStr], Field(description="local file path to open the project from. If NULL, project will be loaded by it projectId from default project location.  DEPRECATED: This parameter relies on the local filesystem and will likely be removed in later versions of this API to allow for more flexible use cases.")] = None,
@@ -3399,7 +3399,7 @@ class ProjectsApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._open_project_space_serialize(
+        _param = self._open_project_serialize(
             project_id=project_id,
             path_to_project=path_to_project,
             opt_fields=opt_fields,
@@ -3419,7 +3419,7 @@ class ProjectsApi:
         return response_data.response
 
 
-    def _open_project_space_serialize(
+    def _open_project_serialize(
         self,
         project_id,
         path_to_project,
