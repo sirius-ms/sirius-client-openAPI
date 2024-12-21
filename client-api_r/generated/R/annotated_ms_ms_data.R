@@ -37,20 +37,45 @@ AnnotatedMsMsData <- R6::R6Class(
     },
 
     #' @description
-    #' To JSON String
-    #'
-    #' @return AnnotatedMsMsData in JSON format
+    #' Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
     toJSON = function() {
+      .Deprecated(new = "toSimpleType", msg = "Use the '$toSimpleType()' method instead since that is more clearly named. Use '$toJSONString()' to get a JSON string")
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert to a List
+    #'
+    #' Convert the R6 object to a list to work more easily with other tooling.
+    #'
+    #' @return AnnotatedMsMsData as a base R list.
+    #' @examples
+    #' # convert array of AnnotatedMsMsData (x) to a data frame
+    #' \dontrun{
+    #' library(purrr)
+    #' library(tibble)
+    #' df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+    #' df
+    #' }
+    toList = function() {
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert AnnotatedMsMsData to a base R type
+    #'
+    #' @return A base R type, e.g. a list or numeric/character array.
+    toSimpleType = function() {
       AnnotatedMsMsDataObject <- list()
       if (!is.null(self$`mergedMs2`)) {
         AnnotatedMsMsDataObject[["mergedMs2"]] <-
-          self$`mergedMs2`$toJSON()
+          self$`mergedMs2`$toSimpleType()
       }
       if (!is.null(self$`ms2Spectra`)) {
         AnnotatedMsMsDataObject[["ms2Spectra"]] <-
-          lapply(self$`ms2Spectra`, function(x) x$toJSON())
+          lapply(self$`ms2Spectra`, function(x) x$toSimpleType())
       }
-      AnnotatedMsMsDataObject
+      return(AnnotatedMsMsDataObject)
     },
 
     #' @description
@@ -62,7 +87,7 @@ AnnotatedMsMsData <- R6::R6Class(
       this_object <- jsonlite::fromJSON(input_json)
       if (!is.null(this_object$`mergedMs2`)) {
         `mergedms2_object` <- AnnotatedSpectrum$new()
-        `mergedms2_object`$fromJSON(jsonlite::toJSON(this_object$`mergedMs2`, auto_unbox = TRUE, digits = NA))
+        `mergedms2_object`$fromJSON(jsonlite::toJSON(this_object$`mergedMs2`, auto_unbox = TRUE, digits = NA, null = 'null'))
         self$`mergedMs2` <- `mergedms2_object`
       }
       if (!is.null(this_object$`ms2Spectra`)) {
@@ -73,29 +98,13 @@ AnnotatedMsMsData <- R6::R6Class(
 
     #' @description
     #' To JSON String
-    #'
+    #' 
+    #' @param ... Parameters passed to `jsonlite::toJSON`
     #' @return AnnotatedMsMsData in JSON format
-    toJSONString = function() {
-      jsoncontent <- c(
-        if (!is.null(self$`mergedMs2`)) {
-          sprintf(
-          '"mergedMs2":
-          %s
-          ',
-          jsonlite::toJSON(self$`mergedMs2`$toJSON(), auto_unbox = TRUE, digits = NA)
-          )
-        },
-        if (!is.null(self$`ms2Spectra`)) {
-          sprintf(
-          '"ms2Spectra":
-          [%s]
-',
-          paste(sapply(self$`ms2Spectra`, function(x) jsonlite::toJSON(x$toJSON(), auto_unbox = TRUE, digits = NA)), collapse = ",")
-          )
-        }
-      )
-      jsoncontent <- paste(jsoncontent, collapse = ",")
-      json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
+    toJSONString = function(...) {
+      simple <- self$toSimpleType()
+      json <- jsonlite::toJSON(simple, auto_unbox = TRUE, digits = NA, null = 'null', ...)
+      return(as.character(jsonlite::minify(json)))
     },
 
     #' @description
@@ -105,7 +114,7 @@ AnnotatedMsMsData <- R6::R6Class(
     #' @return the instance of AnnotatedMsMsData
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
-      self$`mergedMs2` <- AnnotatedSpectrum$new()$fromJSON(jsonlite::toJSON(this_object$`mergedMs2`, auto_unbox = TRUE, digits = NA))
+      self$`mergedMs2` <- AnnotatedSpectrum$new()$fromJSON(jsonlite::toJSON(this_object$`mergedMs2`, auto_unbox = TRUE, digits = NA, null = 'null'))
       self$`ms2Spectra` <- ApiClient$new()$deserializeObj(this_object$`ms2Spectra`, "array[AnnotatedSpectrum]", loadNamespace("Rsirius"))
       self
     },

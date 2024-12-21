@@ -75,10 +75,35 @@ Job <- R6::R6Class(
     },
 
     #' @description
-    #' To JSON String
-    #'
-    #' @return Job in JSON format
+    #' Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
     toJSON = function() {
+      .Deprecated(new = "toSimpleType", msg = "Use the '$toSimpleType()' method instead since that is more clearly named. Use '$toJSONString()' to get a JSON string")
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert to a List
+    #'
+    #' Convert the R6 object to a list to work more easily with other tooling.
+    #'
+    #' @return Job as a base R list.
+    #' @examples
+    #' # convert array of Job (x) to a data frame
+    #' \dontrun{
+    #' library(purrr)
+    #' library(tibble)
+    #' df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+    #' df
+    #' }
+    toList = function() {
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert Job to a base R type
+    #'
+    #' @return A base R type, e.g. a list or numeric/character array.
+    toSimpleType = function() {
       JobObject <- list()
       if (!is.null(self$`id`)) {
         JobObject[["id"]] <-
@@ -90,7 +115,7 @@ Job <- R6::R6Class(
       }
       if (!is.null(self$`progress`)) {
         JobObject[["progress"]] <-
-          self$`progress`$toJSON()
+          self$`progress`$toSimpleType()
       }
       if (!is.null(self$`affectedCompoundIds`)) {
         JobObject[["affectedCompoundIds"]] <-
@@ -104,7 +129,7 @@ Job <- R6::R6Class(
         JobObject[["jobEffect"]] <-
           self$`jobEffect`
       }
-      JobObject
+      return(JobObject)
     },
 
     #' @description
@@ -122,7 +147,7 @@ Job <- R6::R6Class(
       }
       if (!is.null(this_object$`progress`)) {
         `progress_object` <- JobProgress$new()
-        `progress_object`$fromJSON(jsonlite::toJSON(this_object$`progress`, auto_unbox = TRUE, digits = NA))
+        `progress_object`$fromJSON(jsonlite::toJSON(this_object$`progress`, auto_unbox = TRUE, digits = NA, null = 'null'))
         self$`progress` <- `progress_object`
       }
       if (!is.null(this_object$`affectedCompoundIds`)) {
@@ -142,61 +167,13 @@ Job <- R6::R6Class(
 
     #' @description
     #' To JSON String
-    #'
+    #' 
+    #' @param ... Parameters passed to `jsonlite::toJSON`
     #' @return Job in JSON format
-    toJSONString = function() {
-      jsoncontent <- c(
-        if (!is.null(self$`id`)) {
-          sprintf(
-          '"id":
-            "%s"
-                    ',
-          self$`id`
-          )
-        },
-        if (!is.null(self$`command`)) {
-          sprintf(
-          '"command":
-            "%s"
-                    ',
-          self$`command`
-          )
-        },
-        if (!is.null(self$`progress`)) {
-          sprintf(
-          '"progress":
-          %s
-          ',
-          jsonlite::toJSON(self$`progress`$toJSON(), auto_unbox = TRUE, digits = NA)
-          )
-        },
-        if (!is.null(self$`affectedCompoundIds`)) {
-          sprintf(
-          '"affectedCompoundIds":
-             [%s]
-          ',
-          paste(unlist(lapply(self$`affectedCompoundIds`, function(x) paste0('"', x, '"'))), collapse = ",")
-          )
-        },
-        if (!is.null(self$`affectedAlignedFeatureIds`)) {
-          sprintf(
-          '"affectedAlignedFeatureIds":
-             [%s]
-          ',
-          paste(unlist(lapply(self$`affectedAlignedFeatureIds`, function(x) paste0('"', x, '"'))), collapse = ",")
-          )
-        },
-        if (!is.null(self$`jobEffect`)) {
-          sprintf(
-          '"jobEffect":
-            "%s"
-                    ',
-          self$`jobEffect`
-          )
-        }
-      )
-      jsoncontent <- paste(jsoncontent, collapse = ",")
-      json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
+    toJSONString = function(...) {
+      simple <- self$toSimpleType()
+      json <- jsonlite::toJSON(simple, auto_unbox = TRUE, digits = NA, null = 'null', ...)
+      return(as.character(jsonlite::minify(json)))
     },
 
     #' @description
@@ -208,7 +185,7 @@ Job <- R6::R6Class(
       this_object <- jsonlite::fromJSON(input_json)
       self$`id` <- this_object$`id`
       self$`command` <- this_object$`command`
-      self$`progress` <- JobProgress$new()$fromJSON(jsonlite::toJSON(this_object$`progress`, auto_unbox = TRUE, digits = NA))
+      self$`progress` <- JobProgress$new()$fromJSON(jsonlite::toJSON(this_object$`progress`, auto_unbox = TRUE, digits = NA, null = 'null'))
       self$`affectedCompoundIds` <- ApiClient$new()$deserializeObj(this_object$`affectedCompoundIds`, "array[character]", loadNamespace("Rsirius"))
       self$`affectedAlignedFeatureIds` <- ApiClient$new()$deserializeObj(this_object$`affectedAlignedFeatureIds`, "array[character]", loadNamespace("Rsirius"))
       if (!is.null(this_object$`jobEffect`) && !(this_object$`jobEffect` %in% c("IMPORT", "COMPUTATION", "DELETION"))) {

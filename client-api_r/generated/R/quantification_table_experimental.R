@@ -98,10 +98,35 @@ QuantificationTableExperimental <- R6::R6Class(
     },
 
     #' @description
-    #' To JSON String
-    #'
-    #' @return QuantificationTableExperimental in JSON format
+    #' Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
     toJSON = function() {
+      .Deprecated(new = "toSimpleType", msg = "Use the '$toSimpleType()' method instead since that is more clearly named. Use '$toJSONString()' to get a JSON string")
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert to a List
+    #'
+    #' Convert the R6 object to a list to work more easily with other tooling.
+    #'
+    #' @return QuantificationTableExperimental as a base R list.
+    #' @examples
+    #' # convert array of QuantificationTableExperimental (x) to a data frame
+    #' \dontrun{
+    #' library(purrr)
+    #' library(tibble)
+    #' df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+    #' df
+    #' }
+    toList = function() {
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert QuantificationTableExperimental to a base R type
+    #'
+    #' @return A base R type, e.g. a list or numeric/character array.
+    toSimpleType = function() {
       QuantificationTableExperimentalObject <- list()
       if (!is.null(self$`quantificationType`)) {
         QuantificationTableExperimentalObject[["quantificationType"]] <-
@@ -133,9 +158,9 @@ QuantificationTableExperimental <- R6::R6Class(
       }
       if (!is.null(self$`values`)) {
         QuantificationTableExperimentalObject[["values"]] <-
-          lapply(self$`values`, function(x) x$toJSON())
+          lapply(self$`values`, function(x) x$toSimpleType())
       }
-      QuantificationTableExperimentalObject
+      return(QuantificationTableExperimentalObject)
     },
 
     #' @description
@@ -183,77 +208,13 @@ QuantificationTableExperimental <- R6::R6Class(
 
     #' @description
     #' To JSON String
-    #'
+    #' 
+    #' @param ... Parameters passed to `jsonlite::toJSON`
     #' @return QuantificationTableExperimental in JSON format
-    toJSONString = function() {
-      jsoncontent <- c(
-        if (!is.null(self$`quantificationType`)) {
-          sprintf(
-          '"quantificationType":
-            "%s"
-                    ',
-          self$`quantificationType`
-          )
-        },
-        if (!is.null(self$`rowType`)) {
-          sprintf(
-          '"rowType":
-            "%s"
-                    ',
-          self$`rowType`
-          )
-        },
-        if (!is.null(self$`columnType`)) {
-          sprintf(
-          '"columnType":
-            "%s"
-                    ',
-          self$`columnType`
-          )
-        },
-        if (!is.null(self$`rowIds`)) {
-          sprintf(
-          '"rowIds":
-             [%s]
-          ',
-          paste(unlist(lapply(self$`rowIds`, function(x) paste0('"', x, '"'))), collapse = ",")
-          )
-        },
-        if (!is.null(self$`columnIds`)) {
-          sprintf(
-          '"columnIds":
-             [%s]
-          ',
-          paste(unlist(lapply(self$`columnIds`, function(x) paste0('"', x, '"'))), collapse = ",")
-          )
-        },
-        if (!is.null(self$`rowNames`)) {
-          sprintf(
-          '"rowNames":
-             [%s]
-          ',
-          paste(unlist(lapply(self$`rowNames`, function(x) paste0('"', x, '"'))), collapse = ",")
-          )
-        },
-        if (!is.null(self$`columnNames`)) {
-          sprintf(
-          '"columnNames":
-             [%s]
-          ',
-          paste(unlist(lapply(self$`columnNames`, function(x) paste0('"', x, '"'))), collapse = ",")
-          )
-        },
-        if (!is.null(self$`values`)) {
-          sprintf(
-          '"values":
-          [%s]
-',
-          paste(sapply(self$`values`, function(x) jsonlite::toJSON(x$toJSON(), auto_unbox = TRUE, digits = NA)), collapse = ",")
-          )
-        }
-      )
-      jsoncontent <- paste(jsoncontent, collapse = ",")
-      json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
+    toJSONString = function(...) {
+      simple <- self$toSimpleType()
+      json <- jsonlite::toJSON(simple, auto_unbox = TRUE, digits = NA, null = 'null', ...)
+      return(as.character(jsonlite::minify(json)))
     },
 
     #' @description

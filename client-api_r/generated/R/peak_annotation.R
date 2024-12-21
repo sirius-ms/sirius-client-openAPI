@@ -143,10 +143,35 @@ PeakAnnotation <- R6::R6Class(
     },
 
     #' @description
-    #' To JSON String
-    #'
-    #' @return PeakAnnotation in JSON format
+    #' Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
     toJSON = function() {
+      .Deprecated(new = "toSimpleType", msg = "Use the '$toSimpleType()' method instead since that is more clearly named. Use '$toJSONString()' to get a JSON string")
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert to a List
+    #'
+    #' Convert the R6 object to a list to work more easily with other tooling.
+    #'
+    #' @return PeakAnnotation as a base R list.
+    #' @examples
+    #' # convert array of PeakAnnotation (x) to a data frame
+    #' \dontrun{
+    #' library(purrr)
+    #' library(tibble)
+    #' df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+    #' df
+    #' }
+    toList = function() {
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert PeakAnnotation to a base R type
+    #'
+    #' @return A base R type, e.g. a list or numeric/character array.
+    toSimpleType = function() {
       PeakAnnotationObject <- list()
       if (!is.null(self$`fragmentId`)) {
         PeakAnnotationObject[["fragmentId"]] <-
@@ -182,7 +207,7 @@ PeakAnnotation <- R6::R6Class(
       }
       if (!is.null(self$`parentPeak`)) {
         PeakAnnotationObject[["parentPeak"]] <-
-          self$`parentPeak`$toJSON()
+          self$`parentPeak`$toSimpleType()
       }
       if (!is.null(self$`substructureAtoms`)) {
         PeakAnnotationObject[["substructureAtoms"]] <-
@@ -204,7 +229,7 @@ PeakAnnotation <- R6::R6Class(
         PeakAnnotationObject[["hydrogenRearrangements"]] <-
           self$`hydrogenRearrangements`
       }
-      PeakAnnotationObject
+      return(PeakAnnotationObject)
     },
 
     #' @description
@@ -240,7 +265,7 @@ PeakAnnotation <- R6::R6Class(
       }
       if (!is.null(this_object$`parentPeak`)) {
         `parentpeak_object` <- ParentPeak$new()
-        `parentpeak_object`$fromJSON(jsonlite::toJSON(this_object$`parentPeak`, auto_unbox = TRUE, digits = NA))
+        `parentpeak_object`$fromJSON(jsonlite::toJSON(this_object$`parentPeak`, auto_unbox = TRUE, digits = NA, null = 'null'))
         self$`parentPeak` <- `parentpeak_object`
       }
       if (!is.null(this_object$`substructureAtoms`)) {
@@ -263,125 +288,13 @@ PeakAnnotation <- R6::R6Class(
 
     #' @description
     #' To JSON String
-    #'
+    #' 
+    #' @param ... Parameters passed to `jsonlite::toJSON`
     #' @return PeakAnnotation in JSON format
-    toJSONString = function() {
-      jsoncontent <- c(
-        if (!is.null(self$`fragmentId`)) {
-          sprintf(
-          '"fragmentId":
-            %d
-                    ',
-          self$`fragmentId`
-          )
-        },
-        if (!is.null(self$`molecularFormula`)) {
-          sprintf(
-          '"molecularFormula":
-            "%s"
-                    ',
-          self$`molecularFormula`
-          )
-        },
-        if (!is.null(self$`adduct`)) {
-          sprintf(
-          '"adduct":
-            "%s"
-                    ',
-          self$`adduct`
-          )
-        },
-        if (!is.null(self$`exactMass`)) {
-          sprintf(
-          '"exactMass":
-            %d
-                    ',
-          self$`exactMass`
-          )
-        },
-        if (!is.null(self$`massDeviationMz`)) {
-          sprintf(
-          '"massDeviationMz":
-            %d
-                    ',
-          self$`massDeviationMz`
-          )
-        },
-        if (!is.null(self$`massDeviationPpm`)) {
-          sprintf(
-          '"massDeviationPpm":
-            %d
-                    ',
-          self$`massDeviationPpm`
-          )
-        },
-        if (!is.null(self$`recalibratedMassDeviationMz`)) {
-          sprintf(
-          '"recalibratedMassDeviationMz":
-            %d
-                    ',
-          self$`recalibratedMassDeviationMz`
-          )
-        },
-        if (!is.null(self$`recalibratedMassDeviationPpm`)) {
-          sprintf(
-          '"recalibratedMassDeviationPpm":
-            %d
-                    ',
-          self$`recalibratedMassDeviationPpm`
-          )
-        },
-        if (!is.null(self$`parentPeak`)) {
-          sprintf(
-          '"parentPeak":
-          %s
-          ',
-          jsonlite::toJSON(self$`parentPeak`$toJSON(), auto_unbox = TRUE, digits = NA)
-          )
-        },
-        if (!is.null(self$`substructureAtoms`)) {
-          sprintf(
-          '"substructureAtoms":
-             [%s]
-          ',
-          paste(unlist(lapply(self$`substructureAtoms`, function(x) paste0('"', x, '"'))), collapse = ",")
-          )
-        },
-        if (!is.null(self$`substructureBonds`)) {
-          sprintf(
-          '"substructureBonds":
-             [%s]
-          ',
-          paste(unlist(lapply(self$`substructureBonds`, function(x) paste0('"', x, '"'))), collapse = ",")
-          )
-        },
-        if (!is.null(self$`substructureBondsCut`)) {
-          sprintf(
-          '"substructureBondsCut":
-             [%s]
-          ',
-          paste(unlist(lapply(self$`substructureBondsCut`, function(x) paste0('"', x, '"'))), collapse = ",")
-          )
-        },
-        if (!is.null(self$`substructureScore`)) {
-          sprintf(
-          '"substructureScore":
-            %d
-                    ',
-          self$`substructureScore`
-          )
-        },
-        if (!is.null(self$`hydrogenRearrangements`)) {
-          sprintf(
-          '"hydrogenRearrangements":
-            %d
-                    ',
-          self$`hydrogenRearrangements`
-          )
-        }
-      )
-      jsoncontent <- paste(jsoncontent, collapse = ",")
-      json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
+    toJSONString = function(...) {
+      simple <- self$toSimpleType()
+      json <- jsonlite::toJSON(simple, auto_unbox = TRUE, digits = NA, null = 'null', ...)
+      return(as.character(jsonlite::minify(json)))
     },
 
     #' @description
@@ -399,7 +312,7 @@ PeakAnnotation <- R6::R6Class(
       self$`massDeviationPpm` <- this_object$`massDeviationPpm`
       self$`recalibratedMassDeviationMz` <- this_object$`recalibratedMassDeviationMz`
       self$`recalibratedMassDeviationPpm` <- this_object$`recalibratedMassDeviationPpm`
-      self$`parentPeak` <- ParentPeak$new()$fromJSON(jsonlite::toJSON(this_object$`parentPeak`, auto_unbox = TRUE, digits = NA))
+      self$`parentPeak` <- ParentPeak$new()$fromJSON(jsonlite::toJSON(this_object$`parentPeak`, auto_unbox = TRUE, digits = NA, null = 'null'))
       self$`substructureAtoms` <- ApiClient$new()$deserializeObj(this_object$`substructureAtoms`, "array[integer]", loadNamespace("Rsirius"))
       self$`substructureBonds` <- ApiClient$new()$deserializeObj(this_object$`substructureBonds`, "array[integer]", loadNamespace("Rsirius"))
       self$`substructureBondsCut` <- ApiClient$new()$deserializeObj(this_object$`substructureBondsCut`, "array[integer]", loadNamespace("Rsirius"))

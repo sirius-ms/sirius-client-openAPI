@@ -100,10 +100,35 @@ AnnotatedSpectrum <- R6::R6Class(
     },
 
     #' @description
-    #' To JSON String
-    #'
-    #' @return AnnotatedSpectrum in JSON format
+    #' Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
     toJSON = function() {
+      .Deprecated(new = "toSimpleType", msg = "Use the '$toSimpleType()' method instead since that is more clearly named. Use '$toJSONString()' to get a JSON string")
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert to a List
+    #'
+    #' Convert the R6 object to a list to work more easily with other tooling.
+    #'
+    #' @return AnnotatedSpectrum as a base R list.
+    #' @examples
+    #' # convert array of AnnotatedSpectrum (x) to a data frame
+    #' \dontrun{
+    #' library(purrr)
+    #' library(tibble)
+    #' df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+    #' df
+    #' }
+    toList = function() {
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert AnnotatedSpectrum to a base R type
+    #'
+    #' @return A base R type, e.g. a list or numeric/character array.
+    toSimpleType = function() {
       AnnotatedSpectrumObject <- list()
       if (!is.null(self$`name`)) {
         AnnotatedSpectrumObject[["name"]] <-
@@ -131,7 +156,7 @@ AnnotatedSpectrum <- R6::R6Class(
       }
       if (!is.null(self$`peaks`)) {
         AnnotatedSpectrumObject[["peaks"]] <-
-          lapply(self$`peaks`, function(x) x$toJSON())
+          lapply(self$`peaks`, function(x) x$toSimpleType())
       }
       if (!is.null(self$`absIntensityFactor`)) {
         AnnotatedSpectrumObject[["absIntensityFactor"]] <-
@@ -139,9 +164,9 @@ AnnotatedSpectrum <- R6::R6Class(
       }
       if (!is.null(self$`spectrumAnnotation`)) {
         AnnotatedSpectrumObject[["spectrumAnnotation"]] <-
-          self$`spectrumAnnotation`$toJSON()
+          self$`spectrumAnnotation`$toSimpleType()
       }
-      AnnotatedSpectrumObject
+      return(AnnotatedSpectrumObject)
     },
 
     #' @description
@@ -177,7 +202,7 @@ AnnotatedSpectrum <- R6::R6Class(
       }
       if (!is.null(this_object$`spectrumAnnotation`)) {
         `spectrumannotation_object` <- SpectrumAnnotation$new()
-        `spectrumannotation_object`$fromJSON(jsonlite::toJSON(this_object$`spectrumAnnotation`, auto_unbox = TRUE, digits = NA))
+        `spectrumannotation_object`$fromJSON(jsonlite::toJSON(this_object$`spectrumAnnotation`, auto_unbox = TRUE, digits = NA, null = 'null'))
         self$`spectrumAnnotation` <- `spectrumannotation_object`
       }
       self
@@ -185,85 +210,13 @@ AnnotatedSpectrum <- R6::R6Class(
 
     #' @description
     #' To JSON String
-    #'
+    #' 
+    #' @param ... Parameters passed to `jsonlite::toJSON`
     #' @return AnnotatedSpectrum in JSON format
-    toJSONString = function() {
-      jsoncontent <- c(
-        if (!is.null(self$`name`)) {
-          sprintf(
-          '"name":
-            "%s"
-                    ',
-          self$`name`
-          )
-        },
-        if (!is.null(self$`msLevel`)) {
-          sprintf(
-          '"msLevel":
-            %d
-                    ',
-          self$`msLevel`
-          )
-        },
-        if (!is.null(self$`collisionEnergy`)) {
-          sprintf(
-          '"collisionEnergy":
-            "%s"
-                    ',
-          self$`collisionEnergy`
-          )
-        },
-        if (!is.null(self$`instrument`)) {
-          sprintf(
-          '"instrument":
-            "%s"
-                    ',
-          self$`instrument`
-          )
-        },
-        if (!is.null(self$`precursorMz`)) {
-          sprintf(
-          '"precursorMz":
-            %d
-                    ',
-          self$`precursorMz`
-          )
-        },
-        if (!is.null(self$`scanNumber`)) {
-          sprintf(
-          '"scanNumber":
-            %d
-                    ',
-          self$`scanNumber`
-          )
-        },
-        if (!is.null(self$`peaks`)) {
-          sprintf(
-          '"peaks":
-          [%s]
-',
-          paste(sapply(self$`peaks`, function(x) jsonlite::toJSON(x$toJSON(), auto_unbox = TRUE, digits = NA)), collapse = ",")
-          )
-        },
-        if (!is.null(self$`absIntensityFactor`)) {
-          sprintf(
-          '"absIntensityFactor":
-            %d
-                    ',
-          self$`absIntensityFactor`
-          )
-        },
-        if (!is.null(self$`spectrumAnnotation`)) {
-          sprintf(
-          '"spectrumAnnotation":
-          %s
-          ',
-          jsonlite::toJSON(self$`spectrumAnnotation`$toJSON(), auto_unbox = TRUE, digits = NA)
-          )
-        }
-      )
-      jsoncontent <- paste(jsoncontent, collapse = ",")
-      json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
+    toJSONString = function(...) {
+      simple <- self$toSimpleType()
+      json <- jsonlite::toJSON(simple, auto_unbox = TRUE, digits = NA, null = 'null', ...)
+      return(as.character(jsonlite::minify(json)))
     },
 
     #' @description
@@ -281,7 +234,7 @@ AnnotatedSpectrum <- R6::R6Class(
       self$`scanNumber` <- this_object$`scanNumber`
       self$`peaks` <- ApiClient$new()$deserializeObj(this_object$`peaks`, "array[AnnotatedPeak]", loadNamespace("Rsirius"))
       self$`absIntensityFactor` <- this_object$`absIntensityFactor`
-      self$`spectrumAnnotation` <- SpectrumAnnotation$new()$fromJSON(jsonlite::toJSON(this_object$`spectrumAnnotation`, auto_unbox = TRUE, digits = NA))
+      self$`spectrumAnnotation` <- SpectrumAnnotation$new()$fromJSON(jsonlite::toJSON(this_object$`spectrumAnnotation`, auto_unbox = TRUE, digits = NA, null = 'null'))
       self
     },
 

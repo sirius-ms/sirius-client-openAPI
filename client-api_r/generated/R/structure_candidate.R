@@ -74,10 +74,35 @@ StructureCandidate <- R6::R6Class(
     },
 
     #' @description
-    #' To JSON String
-    #'
-    #' @return StructureCandidate in JSON format
+    #' Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
     toJSON = function() {
+      .Deprecated(new = "toSimpleType", msg = "Use the '$toSimpleType()' method instead since that is more clearly named. Use '$toJSONString()' to get a JSON string")
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert to a List
+    #'
+    #' Convert the R6 object to a list to work more easily with other tooling.
+    #'
+    #' @return StructureCandidate as a base R list.
+    #' @examples
+    #' # convert array of StructureCandidate (x) to a data frame
+    #' \dontrun{
+    #' library(purrr)
+    #' library(tibble)
+    #' df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+    #' df
+    #' }
+    toList = function() {
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert StructureCandidate to a base R type
+    #'
+    #' @return A base R type, e.g. a list or numeric/character array.
+    toSimpleType = function() {
       StructureCandidateObject <- list()
       if (!is.null(self$`inchiKey`)) {
         StructureCandidateObject[["inchiKey"]] <-
@@ -97,13 +122,13 @@ StructureCandidate <- R6::R6Class(
       }
       if (!is.null(self$`dbLinks`)) {
         StructureCandidateObject[["dbLinks"]] <-
-          lapply(self$`dbLinks`, function(x) x$toJSON())
+          lapply(self$`dbLinks`, function(x) x$toSimpleType())
       }
       if (!is.null(self$`spectralLibraryMatches`)) {
         StructureCandidateObject[["spectralLibraryMatches"]] <-
-          lapply(self$`spectralLibraryMatches`, function(x) x$toJSON())
+          lapply(self$`spectralLibraryMatches`, function(x) x$toSimpleType())
       }
-      StructureCandidateObject
+      return(StructureCandidateObject)
     },
 
     #' @description
@@ -136,61 +161,13 @@ StructureCandidate <- R6::R6Class(
 
     #' @description
     #' To JSON String
-    #'
+    #' 
+    #' @param ... Parameters passed to `jsonlite::toJSON`
     #' @return StructureCandidate in JSON format
-    toJSONString = function() {
-      jsoncontent <- c(
-        if (!is.null(self$`inchiKey`)) {
-          sprintf(
-          '"inchiKey":
-            "%s"
-                    ',
-          self$`inchiKey`
-          )
-        },
-        if (!is.null(self$`smiles`)) {
-          sprintf(
-          '"smiles":
-            "%s"
-                    ',
-          self$`smiles`
-          )
-        },
-        if (!is.null(self$`structureName`)) {
-          sprintf(
-          '"structureName":
-            "%s"
-                    ',
-          self$`structureName`
-          )
-        },
-        if (!is.null(self$`xlogP`)) {
-          sprintf(
-          '"xlogP":
-            %d
-                    ',
-          self$`xlogP`
-          )
-        },
-        if (!is.null(self$`dbLinks`)) {
-          sprintf(
-          '"dbLinks":
-          [%s]
-',
-          paste(sapply(self$`dbLinks`, function(x) jsonlite::toJSON(x$toJSON(), auto_unbox = TRUE, digits = NA)), collapse = ",")
-          )
-        },
-        if (!is.null(self$`spectralLibraryMatches`)) {
-          sprintf(
-          '"spectralLibraryMatches":
-          [%s]
-',
-          paste(sapply(self$`spectralLibraryMatches`, function(x) jsonlite::toJSON(x$toJSON(), auto_unbox = TRUE, digits = NA)), collapse = ",")
-          )
-        }
-      )
-      jsoncontent <- paste(jsoncontent, collapse = ",")
-      json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
+    toJSONString = function(...) {
+      simple <- self$toSimpleType()
+      json <- jsonlite::toJSON(simple, auto_unbox = TRUE, digits = NA, null = 'null', ...)
+      return(as.character(jsonlite::minify(json)))
     },
 
     #' @description
