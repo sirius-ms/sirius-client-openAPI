@@ -20,8 +20,6 @@ import unittest
 import PySirius
 from PySirius import PySiriusAPI, SiriusSDK, PagedModelCompound
 from PySirius.models.compound import Compound
-from PySirius.models.trace_set import TraceSet
-from PySirius.models.page_compound import PageCompound
 from PySirius.models.compound_import import CompoundImport
 
 
@@ -32,7 +30,7 @@ class TestCompoundsApi(unittest.TestCase):
         self.api = SiriusSDK().attach_or_start_sirius()
         self.project_id = "test_compounds_api"
         self.path_to_project = f"{os.environ.get('HOME')}/test_compounds_api.sirius"
-        self.api.projects().create_project_space(self.project_id, self.path_to_project)
+        self.api.projects().create_project(self.project_id, self.path_to_project)
 
         # equals test_add_compounds
         simple_peak_json = {
@@ -69,7 +67,7 @@ class TestCompoundsApi(unittest.TestCase):
         self.api.compounds().add_compounds(self.project_id, compound_import)
 
     def tearDown(self) -> None:
-        self.api.projects().close_project_space(self.project_id)
+        self.api.projects().close_project(self.project_id)
         os.remove(self.path_to_project)
 
     def test_add_compounds(self) -> None:

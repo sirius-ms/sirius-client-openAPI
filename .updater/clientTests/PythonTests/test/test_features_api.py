@@ -39,8 +39,8 @@ class TestFeaturesApi(unittest.TestCase):
         self.project_id = "test_features_api"
         self.path_to_project = f"{os.environ.get('HOME')}/tomato_small.sirius"
         # check if test project already open -> allows to run tests in independent calls.
-        if self.api.projects().get_project_space_without_preload_content(self.project_id).status == 404:
-            self.api.projects().open_project_space(self.project_id, self.path_to_project)
+        if self.api.projects().get_project_without_preload_content(self.project_id).status == 404:
+            self.api.projects().open_project(self.project_id, self.path_to_project)
         # the single one ID with MSNovelist results computed
         self.aligned_feature_id = "586487307819356741"
 
@@ -48,7 +48,7 @@ class TestFeaturesApi(unittest.TestCase):
         self.formula_id = self.formula_candidates[0].formula_id
 
     def tearDown(self) -> None:
-        self.api.projects().close_project_space(self.project_id)
+        self.api.projects().close_project(self.project_id)
 
     def test_add_aligned_features(self) -> None:
         """Test case for add_aligned_features
@@ -94,7 +94,7 @@ class TestFeaturesApi(unittest.TestCase):
 
         Delete feature (aligned over runs) with the given identifier from the specified project-space.
         """
-        project_info = self.api.projects().create_project_space(project_id="delete-project")
+        project_info = self.api.projects().create_project(project_id="delete-project")
         project_id = project_info.project_id
         try:
             path_to_demo_data = f"{os.environ.get('HOME')}/sirius-client-openAPI/.updater/clientTests/Data"
@@ -117,7 +117,7 @@ class TestFeaturesApi(unittest.TestCase):
 
             self.assertEqual(len(response_before) - len(response_after), 2)
         finally:
-            self.api.projects().close_project_space(project_id)
+            self.api.projects().close_project(project_id)
             os.remove(project_info.location)
 
     def test_get_aligned_feature(self) -> None:
