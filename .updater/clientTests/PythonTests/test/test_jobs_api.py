@@ -31,10 +31,10 @@ class TestJobsApi(unittest.TestCase):
         self.api = SiriusSDK().attach_or_start_sirius()
         self.project_id = "test_jobs_api"
         self.path_to_project = f"{os.environ.get('HOME')}/test_jobs_api.sirius"
-        if self.api.projects().get_project_space_without_preload_content(self.project_id).status == 404:
+        if self.api.projects().get_project_without_preload_content(self.project_id).status == 404:
             if os.path.exists(self.path_to_project):
                 os.remove(self.path_to_project)
-            self.api.projects().create_project_space(self.project_id, self.path_to_project)
+            self.api.projects().create_project(self.project_id, self.path_to_project)
 
         path_to_demo_data = f"{os.environ.get('HOME')}/sirius-client-openAPI/.updater/clientTests/Data"
         preproc_ms2_file_1 = path_to_demo_data + "/Kaempferol.ms"
@@ -43,7 +43,7 @@ class TestJobsApi(unittest.TestCase):
         self.api.projects().import_preprocessed_data_as_job(self.project_id, input_files=input_files)
 
     def tearDown(self) -> None:
-        self.api.projects().close_project_space(self.project_id)
+        self.api.projects().close_project(self.project_id)
         os.remove(self.path_to_project)
 
     def test_delete_job(self) -> None:

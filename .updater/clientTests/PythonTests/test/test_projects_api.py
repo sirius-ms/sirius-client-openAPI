@@ -32,29 +32,29 @@ class TestProjectsApi(unittest.TestCase):
         self.preproc_ms2_file_2 = path_to_demo_data + "/laudanosine.mgf"
         self.full_ms_file = path_to_demo_data + "/SPF4_Eso3_GH6_01_22643.mzXML"
 
-        # equals test_create_project_space
+        # equals test_create_project
         self.project_id = "test_projects_api"
         self.path_to_project = f"{os.environ.get('HOME')}/test_projects_api.sirius"
 
-        if self.api.projects().get_project_space_without_preload_content(self.project_id).status == 404:
+        if self.api.projects().get_project_without_preload_content(self.project_id).status == 404:
             if os.path.exists(self.path_to_project):
                 os.remove(self.path_to_project)
-            self.create_response = self.projects.create_project_space(self.project_id, self.path_to_project)
+            self.create_response = self.projects.create_project(self.project_id, self.path_to_project)
 
     def tearDown(self) -> None:
-        # equals test_close_project_space
-        self.projects.close_project_space(self.project_id)
+        # equals test_close_project
+        self.projects.close_project(self.project_id)
         os.remove(self.path_to_project)
 
-    def test_close_project_space(self) -> None:
-        """Test case for close_project_space
+    def test_close_project(self) -> None:
+        """Test case for close_project
 
         Close project-space and remove it from application
         """
         pass
 
-    def test_create_project_space(self) -> None:
-        """Test case for create_project_space
+    def test_create_project(self) -> None:
+        """Test case for create_project
 
         Create and open a new project-space at given location and make it accessible via the given projectId.
         """
@@ -84,20 +84,20 @@ class TestProjectsApi(unittest.TestCase):
         response = self.projects.get_finger_id_data(self.project_id, 0)
         self.assertIsInstance(response, str)
 
-    def test_get_project_space(self) -> None:
-        """Test case for get_project_space
+    def test_get_project(self) -> None:
+        """Test case for get_project
 
         Get project space info by its projectId.
         """
-        response = self.projects.get_project_space(self.project_id)
+        response = self.projects.get_project(self.project_id)
         self.assertIsInstance(response, ProjectInfo)
 
-    def test_get_project_spaces(self) -> None:
-        """Test case for get_project_spaces
+    def test_get_projects(self) -> None:
+        """Test case for get_projects
 
         List opened project spaces.
         """
-        response = self.projects.get_project_spaces()
+        response = self.projects.get_projects()
         self.assertIsInstance(response, list)
         self.assertIsInstance(response[0], ProjectInfo)
 
@@ -139,13 +139,13 @@ class TestProjectsApi(unittest.TestCase):
         response = self.projects.import_preprocessed_data_as_job(self.project_id, input_files=input_files)
         self.assertIsInstance(response, Job)
 
-    def test_open_project_space(self) -> None:
-        """Test case for open_project_space
+    def test_open_project(self) -> None:
+        """Test case for open_project
 
         Open an existing project-space and make it accessible via the given projectId.
         """
-        response = self.projects.open_project_space("tomato", f"{os.environ.get('HOME')}/tomato_small.sirius")
-        self.projects.close_project_space("tomato")
+        response = self.projects.open_project("tomato", f"{os.environ.get('HOME')}/tomato_small.sirius")
+        self.projects.close_project("tomato")
         self.assertIsInstance(response, ProjectInfo)
 
 if __name__ == '__main__':

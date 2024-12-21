@@ -156,24 +156,25 @@ Class | Method | HTTP request | Description
 *LoginAndAccountApi* | [**open_portal**](docs/LoginAndAccountApi.md#open_portal) | **GET** /api/account/openPortal | Open User portal in browser.
 *LoginAndAccountApi* | [**select_subscription**](docs/LoginAndAccountApi.md#select_subscription) | **PUT** /api/account/subscriptions/select-active | Select a subscription as active subscription to be used for computations.
 *LoginAndAccountApi* | [**sign_up**](docs/LoginAndAccountApi.md#sign_up) | **GET** /api/account/signUp | Open SignUp window in system browser and return signUp link.
-*ProjectsApi* | [**close_project_space**](docs/ProjectsApi.md#close_project_space) | **DELETE** /api/projects/{projectId} | Close project-space and remove it from application
-*ProjectsApi* | [**create_project_space**](docs/ProjectsApi.md#create_project_space) | **POST** /api/projects/{projectId} | Create and open a new project-space at given location and make it accessible via the given projectId.
+*ProjectsApi* | [**close_project**](docs/ProjectsApi.md#close_project) | **DELETE** /api/projects/{projectId} | Close project-space and remove it from application
+*ProjectsApi* | [**create_project**](docs/ProjectsApi.md#create_project) | **POST** /api/projects/{projectId} | Create and open a new project-space at given location and make it accessible via the given projectId.
 *ProjectsApi* | [**get_canopus_classy_fire_data**](docs/ProjectsApi.md#get_canopus_classy_fire_data) | **GET** /api/projects/{projectId}/cf-data | Get CANOPUS prediction vector definition for ClassyFire classes
 *ProjectsApi* | [**get_canopus_npc_data**](docs/ProjectsApi.md#get_canopus_npc_data) | **GET** /api/projects/{projectId}/npc-data | Get CANOPUS prediction vector definition for NPC classes
 *ProjectsApi* | [**get_finger_id_data**](docs/ProjectsApi.md#get_finger_id_data) | **GET** /api/projects/{projectId}/fingerid-data | Get CSI:FingerID fingerprint (prediction vector) definition
-*ProjectsApi* | [**get_project_space**](docs/ProjectsApi.md#get_project_space) | **GET** /api/projects/{projectId} | Get project space info by its projectId.
-*ProjectsApi* | [**get_project_spaces**](docs/ProjectsApi.md#get_project_spaces) | **GET** /api/projects | List opened project spaces.
+*ProjectsApi* | [**get_project**](docs/ProjectsApi.md#get_project) | **GET** /api/projects/{projectId} | Get project space info by its projectId.
+*ProjectsApi* | [**get_projects**](docs/ProjectsApi.md#get_projects) | **GET** /api/projects | List opened project spaces.
 *ProjectsApi* | [**import_ms_run_data**](docs/ProjectsApi.md#import_ms_run_data) | **POST** /api/projects/{projectId}/import/ms-data-files | Import and Align full MS-Runs from various formats into the specified project  Possible formats (mzML, mzXML)
 *ProjectsApi* | [**import_ms_run_data_as_job**](docs/ProjectsApi.md#import_ms_run_data_as_job) | **POST** /api/projects/{projectId}/import/ms-data-files-job | Import and Align full MS-Runs from various formats into the specified project as background job.
 *ProjectsApi* | [**import_preprocessed_data**](docs/ProjectsApi.md#import_preprocessed_data) | **POST** /api/projects/{projectId}/import/preprocessed-data-files | Import already preprocessed ms/ms data from various formats into the specified project  Possible formats (ms, mgf, cef, msp)
 *ProjectsApi* | [**import_preprocessed_data_as_job**](docs/ProjectsApi.md#import_preprocessed_data_as_job) | **POST** /api/projects/{projectId}/import/preprocessed-data-files-job | Import ms/ms data from the given format into the specified project-space as background job.
-*ProjectsApi* | [**open_project_space**](docs/ProjectsApi.md#open_project_space) | **PUT** /api/projects/{projectId} | Open an existing project-space and make it accessible via the given projectId.
+*ProjectsApi* | [**open_project**](docs/ProjectsApi.md#open_project) | **PUT** /api/projects/{projectId} | Open an existing project-space and make it accessible via the given projectId.
 *SearchableDatabasesApi* | [**add_databases**](docs/SearchableDatabasesApi.md#add_databases) | **POST** /api/databases | DEPRECATED: this endpoint is based on local file paths and will likely be replaced in future versions of this API.
 *SearchableDatabasesApi* | [**create_database**](docs/SearchableDatabasesApi.md#create_database) | **POST** /api/databases/{databaseId} | 
 *SearchableDatabasesApi* | [**get_custom_databases**](docs/SearchableDatabasesApi.md#get_custom_databases) | **GET** /api/databases/custom | 
 *SearchableDatabasesApi* | [**get_database**](docs/SearchableDatabasesApi.md#get_database) | **GET** /api/databases/{databaseId} | 
 *SearchableDatabasesApi* | [**get_databases**](docs/SearchableDatabasesApi.md#get_databases) | **GET** /api/databases | 
 *SearchableDatabasesApi* | [**get_included_databases**](docs/SearchableDatabasesApi.md#get_included_databases) | **GET** /api/databases/included | 
+*SearchableDatabasesApi* | [**import_into_database**](docs/SearchableDatabasesApi.md#import_into_database) | **POST** /api/databases/{databaseId}/import/from-files | Start import of structure and spectra files into the specified database.
 *SearchableDatabasesApi* | [**remove_database**](docs/SearchableDatabasesApi.md#remove_database) | **DELETE** /api/databases/{databaseId} | 
 *SearchableDatabasesApi* | [**update_database**](docs/SearchableDatabasesApi.md#update_database) | **PUT** /api/databases/{databaseId} | 
 
