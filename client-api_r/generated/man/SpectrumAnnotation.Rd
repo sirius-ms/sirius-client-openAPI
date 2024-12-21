@@ -15,6 +15,20 @@ SpectrumAnnotation Class
 \details{
 Create a new SpectrumAnnotation
 }
+\examples{
+
+## ------------------------------------------------
+## Method `SpectrumAnnotation$toList`
+## ------------------------------------------------
+
+# convert array of SpectrumAnnotation (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
@@ -39,6 +53,8 @@ Create a new SpectrumAnnotation
 \itemize{
 \item \href{#method-SpectrumAnnotation-new}{\code{SpectrumAnnotation$new()}}
 \item \href{#method-SpectrumAnnotation-toJSON}{\code{SpectrumAnnotation$toJSON()}}
+\item \href{#method-SpectrumAnnotation-toList}{\code{SpectrumAnnotation$toList()}}
+\item \href{#method-SpectrumAnnotation-toSimpleType}{\code{SpectrumAnnotation$toSimpleType()}}
 \item \href{#method-SpectrumAnnotation-fromJSON}{\code{SpectrumAnnotation$fromJSON()}}
 \item \href{#method-SpectrumAnnotation-toJSONString}{\code{SpectrumAnnotation$toJSONString()}}
 \item \href{#method-SpectrumAnnotation-fromJSONString}{\code{SpectrumAnnotation$fromJSONString()}}
@@ -94,13 +110,52 @@ Initialize a new SpectrumAnnotation class.
 \if{html}{\out{<a id="method-SpectrumAnnotation-toJSON"></a>}}
 \if{latex}{\out{\hypertarget{method-SpectrumAnnotation-toJSON}{}}}
 \subsection{Method \code{toJSON()}}{
-To JSON String
+Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{SpectrumAnnotation$toJSON()}\if{html}{\out{</div>}}
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-SpectrumAnnotation-toList"></a>}}
+\if{latex}{\out{\hypertarget{method-SpectrumAnnotation-toList}{}}}
+\subsection{Method \code{toList()}}{
+Convert to a List
+
+Convert the R6 object to a list to work more easily with other tooling.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{SpectrumAnnotation$toList()}\if{html}{\out{</div>}}
+}
+
 \subsection{Returns}{
-SpectrumAnnotation in JSON format
+SpectrumAnnotation as a base R list.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{# convert array of SpectrumAnnotation (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-SpectrumAnnotation-toSimpleType"></a>}}
+\if{latex}{\out{\hypertarget{method-SpectrumAnnotation-toSimpleType}{}}}
+\subsection{Method \code{toSimpleType()}}{
+Convert SpectrumAnnotation to a base R type
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{SpectrumAnnotation$toSimpleType()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A base R type, e.g. a list or numeric/character array.
 }
 }
 \if{html}{\out{<hr>}}
@@ -129,9 +184,16 @@ the instance of SpectrumAnnotation
 \subsection{Method \code{toJSONString()}}{
 To JSON String
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{SpectrumAnnotation$toJSONString()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{SpectrumAnnotation$toJSONString(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Parameters passed to `jsonlite::toJSON`}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
 SpectrumAnnotation in JSON format
 }

@@ -15,6 +15,20 @@ PeakAnnotation Class
 \details{
 Create a new PeakAnnotation
 }
+\examples{
+
+## ------------------------------------------------
+## Method `PeakAnnotation$toList`
+## ------------------------------------------------
+
+# convert array of PeakAnnotation (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
@@ -53,6 +67,8 @@ Create a new PeakAnnotation
 \itemize{
 \item \href{#method-PeakAnnotation-new}{\code{PeakAnnotation$new()}}
 \item \href{#method-PeakAnnotation-toJSON}{\code{PeakAnnotation$toJSON()}}
+\item \href{#method-PeakAnnotation-toList}{\code{PeakAnnotation$toList()}}
+\item \href{#method-PeakAnnotation-toSimpleType}{\code{PeakAnnotation$toSimpleType()}}
 \item \href{#method-PeakAnnotation-fromJSON}{\code{PeakAnnotation$fromJSON()}}
 \item \href{#method-PeakAnnotation-toJSONString}{\code{PeakAnnotation$toJSONString()}}
 \item \href{#method-PeakAnnotation-fromJSONString}{\code{PeakAnnotation$fromJSONString()}}
@@ -129,13 +145,52 @@ Initialize a new PeakAnnotation class.
 \if{html}{\out{<a id="method-PeakAnnotation-toJSON"></a>}}
 \if{latex}{\out{\hypertarget{method-PeakAnnotation-toJSON}{}}}
 \subsection{Method \code{toJSON()}}{
-To JSON String
+Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{PeakAnnotation$toJSON()}\if{html}{\out{</div>}}
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-PeakAnnotation-toList"></a>}}
+\if{latex}{\out{\hypertarget{method-PeakAnnotation-toList}{}}}
+\subsection{Method \code{toList()}}{
+Convert to a List
+
+Convert the R6 object to a list to work more easily with other tooling.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{PeakAnnotation$toList()}\if{html}{\out{</div>}}
+}
+
 \subsection{Returns}{
-PeakAnnotation in JSON format
+PeakAnnotation as a base R list.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{# convert array of PeakAnnotation (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-PeakAnnotation-toSimpleType"></a>}}
+\if{latex}{\out{\hypertarget{method-PeakAnnotation-toSimpleType}{}}}
+\subsection{Method \code{toSimpleType()}}{
+Convert PeakAnnotation to a base R type
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{PeakAnnotation$toSimpleType()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A base R type, e.g. a list or numeric/character array.
 }
 }
 \if{html}{\out{<hr>}}
@@ -164,9 +219,16 @@ the instance of PeakAnnotation
 \subsection{Method \code{toJSONString()}}{
 To JSON String
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{PeakAnnotation$toJSONString()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{PeakAnnotation$toJSONString(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Parameters passed to `jsonlite::toJSON`}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
 PeakAnnotation in JSON format
 }

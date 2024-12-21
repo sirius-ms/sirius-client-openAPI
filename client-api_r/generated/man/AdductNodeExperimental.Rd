@@ -15,6 +15,20 @@ AdductNodeExperimental Class
 \details{
 Create a new AdductNodeExperimental
 }
+\examples{
+
+## ------------------------------------------------
+## Method `AdductNodeExperimental$toList`
+## ------------------------------------------------
+
+# convert array of AdductNodeExperimental (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
@@ -31,6 +45,8 @@ Create a new AdductNodeExperimental
 \itemize{
 \item \href{#method-AdductNodeExperimental-new}{\code{AdductNodeExperimental$new()}}
 \item \href{#method-AdductNodeExperimental-toJSON}{\code{AdductNodeExperimental$toJSON()}}
+\item \href{#method-AdductNodeExperimental-toList}{\code{AdductNodeExperimental$toList()}}
+\item \href{#method-AdductNodeExperimental-toSimpleType}{\code{AdductNodeExperimental$toSimpleType()}}
 \item \href{#method-AdductNodeExperimental-fromJSON}{\code{AdductNodeExperimental$fromJSON()}}
 \item \href{#method-AdductNodeExperimental-toJSONString}{\code{AdductNodeExperimental$toJSONString()}}
 \item \href{#method-AdductNodeExperimental-fromJSONString}{\code{AdductNodeExperimental$fromJSONString()}}
@@ -74,13 +90,52 @@ Initialize a new AdductNodeExperimental class.
 \if{html}{\out{<a id="method-AdductNodeExperimental-toJSON"></a>}}
 \if{latex}{\out{\hypertarget{method-AdductNodeExperimental-toJSON}{}}}
 \subsection{Method \code{toJSON()}}{
-To JSON String
+Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{AdductNodeExperimental$toJSON()}\if{html}{\out{</div>}}
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-AdductNodeExperimental-toList"></a>}}
+\if{latex}{\out{\hypertarget{method-AdductNodeExperimental-toList}{}}}
+\subsection{Method \code{toList()}}{
+Convert to a List
+
+Convert the R6 object to a list to work more easily with other tooling.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{AdductNodeExperimental$toList()}\if{html}{\out{</div>}}
+}
+
 \subsection{Returns}{
-AdductNodeExperimental in JSON format
+AdductNodeExperimental as a base R list.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{# convert array of AdductNodeExperimental (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-AdductNodeExperimental-toSimpleType"></a>}}
+\if{latex}{\out{\hypertarget{method-AdductNodeExperimental-toSimpleType}{}}}
+\subsection{Method \code{toSimpleType()}}{
+Convert AdductNodeExperimental to a base R type
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{AdductNodeExperimental$toSimpleType()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A base R type, e.g. a list or numeric/character array.
 }
 }
 \if{html}{\out{<hr>}}
@@ -109,9 +164,16 @@ the instance of AdductNodeExperimental
 \subsection{Method \code{toJSONString()}}{
 To JSON String
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{AdductNodeExperimental$toJSONString()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{AdductNodeExperimental$toJSONString(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Parameters passed to `jsonlite::toJSON`}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
 AdductNodeExperimental in JSON format
 }

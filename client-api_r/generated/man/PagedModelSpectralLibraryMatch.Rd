@@ -15,6 +15,20 @@ PagedModelSpectralLibraryMatch Class
 \details{
 Create a new PagedModelSpectralLibraryMatch
 }
+\examples{
+
+## ------------------------------------------------
+## Method `PagedModelSpectralLibraryMatch$toList`
+## ------------------------------------------------
+
+# convert array of PagedModelSpectralLibraryMatch (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
@@ -29,6 +43,8 @@ Create a new PagedModelSpectralLibraryMatch
 \itemize{
 \item \href{#method-PagedModelSpectralLibraryMatch-new}{\code{PagedModelSpectralLibraryMatch$new()}}
 \item \href{#method-PagedModelSpectralLibraryMatch-toJSON}{\code{PagedModelSpectralLibraryMatch$toJSON()}}
+\item \href{#method-PagedModelSpectralLibraryMatch-toList}{\code{PagedModelSpectralLibraryMatch$toList()}}
+\item \href{#method-PagedModelSpectralLibraryMatch-toSimpleType}{\code{PagedModelSpectralLibraryMatch$toSimpleType()}}
 \item \href{#method-PagedModelSpectralLibraryMatch-fromJSON}{\code{PagedModelSpectralLibraryMatch$fromJSON()}}
 \item \href{#method-PagedModelSpectralLibraryMatch-toJSONString}{\code{PagedModelSpectralLibraryMatch$toJSONString()}}
 \item \href{#method-PagedModelSpectralLibraryMatch-fromJSONString}{\code{PagedModelSpectralLibraryMatch$fromJSONString()}}
@@ -65,13 +81,52 @@ Initialize a new PagedModelSpectralLibraryMatch class.
 \if{html}{\out{<a id="method-PagedModelSpectralLibraryMatch-toJSON"></a>}}
 \if{latex}{\out{\hypertarget{method-PagedModelSpectralLibraryMatch-toJSON}{}}}
 \subsection{Method \code{toJSON()}}{
-To JSON String
+Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{PagedModelSpectralLibraryMatch$toJSON()}\if{html}{\out{</div>}}
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-PagedModelSpectralLibraryMatch-toList"></a>}}
+\if{latex}{\out{\hypertarget{method-PagedModelSpectralLibraryMatch-toList}{}}}
+\subsection{Method \code{toList()}}{
+Convert to a List
+
+Convert the R6 object to a list to work more easily with other tooling.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{PagedModelSpectralLibraryMatch$toList()}\if{html}{\out{</div>}}
+}
+
 \subsection{Returns}{
-PagedModelSpectralLibraryMatch in JSON format
+PagedModelSpectralLibraryMatch as a base R list.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{# convert array of PagedModelSpectralLibraryMatch (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-PagedModelSpectralLibraryMatch-toSimpleType"></a>}}
+\if{latex}{\out{\hypertarget{method-PagedModelSpectralLibraryMatch-toSimpleType}{}}}
+\subsection{Method \code{toSimpleType()}}{
+Convert PagedModelSpectralLibraryMatch to a base R type
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{PagedModelSpectralLibraryMatch$toSimpleType()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A base R type, e.g. a list or numeric/character array.
 }
 }
 \if{html}{\out{<hr>}}
@@ -100,9 +155,16 @@ the instance of PagedModelSpectralLibraryMatch
 \subsection{Method \code{toJSONString()}}{
 To JSON String
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{PagedModelSpectralLibraryMatch$toJSONString()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{PagedModelSpectralLibraryMatch$toJSONString(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Parameters passed to `jsonlite::toJSON`}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
 PagedModelSpectralLibraryMatch in JSON format
 }

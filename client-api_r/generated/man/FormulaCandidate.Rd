@@ -15,6 +15,20 @@ FormulaCandidate Class
 \details{
 Create a new FormulaCandidate
 }
+\examples{
+
+## ------------------------------------------------
+## Method `FormulaCandidate$toList`
+## ------------------------------------------------
+
+# convert array of FormulaCandidate (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
@@ -65,6 +79,8 @@ Create a new FormulaCandidate
 \itemize{
 \item \href{#method-FormulaCandidate-new}{\code{FormulaCandidate$new()}}
 \item \href{#method-FormulaCandidate-toJSON}{\code{FormulaCandidate$toJSON()}}
+\item \href{#method-FormulaCandidate-toList}{\code{FormulaCandidate$toList()}}
+\item \href{#method-FormulaCandidate-toSimpleType}{\code{FormulaCandidate$toSimpleType()}}
 \item \href{#method-FormulaCandidate-fromJSON}{\code{FormulaCandidate$fromJSON()}}
 \item \href{#method-FormulaCandidate-toJSONString}{\code{FormulaCandidate$toJSONString()}}
 \item \href{#method-FormulaCandidate-fromJSONString}{\code{FormulaCandidate$fromJSONString()}}
@@ -159,13 +175,52 @@ Initialize a new FormulaCandidate class.
 \if{html}{\out{<a id="method-FormulaCandidate-toJSON"></a>}}
 \if{latex}{\out{\hypertarget{method-FormulaCandidate-toJSON}{}}}
 \subsection{Method \code{toJSON()}}{
-To JSON String
+Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{FormulaCandidate$toJSON()}\if{html}{\out{</div>}}
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-FormulaCandidate-toList"></a>}}
+\if{latex}{\out{\hypertarget{method-FormulaCandidate-toList}{}}}
+\subsection{Method \code{toList()}}{
+Convert to a List
+
+Convert the R6 object to a list to work more easily with other tooling.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{FormulaCandidate$toList()}\if{html}{\out{</div>}}
+}
+
 \subsection{Returns}{
-FormulaCandidate in JSON format
+FormulaCandidate as a base R list.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{# convert array of FormulaCandidate (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-FormulaCandidate-toSimpleType"></a>}}
+\if{latex}{\out{\hypertarget{method-FormulaCandidate-toSimpleType}{}}}
+\subsection{Method \code{toSimpleType()}}{
+Convert FormulaCandidate to a base R type
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{FormulaCandidate$toSimpleType()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A base R type, e.g. a list or numeric/character array.
 }
 }
 \if{html}{\out{<hr>}}
@@ -194,9 +249,16 @@ the instance of FormulaCandidate
 \subsection{Method \code{toJSONString()}}{
 To JSON String
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FormulaCandidate$toJSONString()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{FormulaCandidate$toJSONString(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Parameters passed to `jsonlite::toJSON`}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
 FormulaCandidate in JSON format
 }

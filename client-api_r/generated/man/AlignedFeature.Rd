@@ -15,6 +15,20 @@ AlignedFeature Class
 \details{
 Create a new AlignedFeature
 }
+\examples{
+
+## ------------------------------------------------
+## Method `AlignedFeature$toList`
+## ------------------------------------------------
+
+# convert array of AlignedFeature (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
@@ -61,6 +75,8 @@ Create a new AlignedFeature
 \itemize{
 \item \href{#method-AlignedFeature-new}{\code{AlignedFeature$new()}}
 \item \href{#method-AlignedFeature-toJSON}{\code{AlignedFeature$toJSON()}}
+\item \href{#method-AlignedFeature-toList}{\code{AlignedFeature$toList()}}
+\item \href{#method-AlignedFeature-toSimpleType}{\code{AlignedFeature$toSimpleType()}}
 \item \href{#method-AlignedFeature-fromJSON}{\code{AlignedFeature$fromJSON()}}
 \item \href{#method-AlignedFeature-toJSONString}{\code{AlignedFeature$toJSONString()}}
 \item \href{#method-AlignedFeature-fromJSONString}{\code{AlignedFeature$fromJSONString()}}
@@ -149,13 +165,52 @@ Initialize a new AlignedFeature class.
 \if{html}{\out{<a id="method-AlignedFeature-toJSON"></a>}}
 \if{latex}{\out{\hypertarget{method-AlignedFeature-toJSON}{}}}
 \subsection{Method \code{toJSON()}}{
-To JSON String
+Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{AlignedFeature$toJSON()}\if{html}{\out{</div>}}
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-AlignedFeature-toList"></a>}}
+\if{latex}{\out{\hypertarget{method-AlignedFeature-toList}{}}}
+\subsection{Method \code{toList()}}{
+Convert to a List
+
+Convert the R6 object to a list to work more easily with other tooling.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{AlignedFeature$toList()}\if{html}{\out{</div>}}
+}
+
 \subsection{Returns}{
-AlignedFeature in JSON format
+AlignedFeature as a base R list.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{# convert array of AlignedFeature (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-AlignedFeature-toSimpleType"></a>}}
+\if{latex}{\out{\hypertarget{method-AlignedFeature-toSimpleType}{}}}
+\subsection{Method \code{toSimpleType()}}{
+Convert AlignedFeature to a base R type
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{AlignedFeature$toSimpleType()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A base R type, e.g. a list or numeric/character array.
 }
 }
 \if{html}{\out{<hr>}}
@@ -184,9 +239,16 @@ the instance of AlignedFeature
 \subsection{Method \code{toJSONString()}}{
 To JSON String
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{AlignedFeature$toJSONString()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{AlignedFeature$toJSONString(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Parameters passed to `jsonlite::toJSON`}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
 AlignedFeature in JSON format
 }

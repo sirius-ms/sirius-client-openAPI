@@ -15,6 +15,20 @@ QuantificationTableExperimental Class
 \details{
 Create a new QuantificationTableExperimental
 }
+\examples{
+
+## ------------------------------------------------
+## Method `QuantificationTableExperimental$toList`
+## ------------------------------------------------
+
+# convert array of QuantificationTableExperimental (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
@@ -41,6 +55,8 @@ Create a new QuantificationTableExperimental
 \itemize{
 \item \href{#method-QuantificationTableExperimental-new}{\code{QuantificationTableExperimental$new()}}
 \item \href{#method-QuantificationTableExperimental-toJSON}{\code{QuantificationTableExperimental$toJSON()}}
+\item \href{#method-QuantificationTableExperimental-toList}{\code{QuantificationTableExperimental$toList()}}
+\item \href{#method-QuantificationTableExperimental-toSimpleType}{\code{QuantificationTableExperimental$toSimpleType()}}
 \item \href{#method-QuantificationTableExperimental-fromJSON}{\code{QuantificationTableExperimental$fromJSON()}}
 \item \href{#method-QuantificationTableExperimental-toJSONString}{\code{QuantificationTableExperimental$toJSONString()}}
 \item \href{#method-QuantificationTableExperimental-fromJSONString}{\code{QuantificationTableExperimental$fromJSONString()}}
@@ -99,13 +115,52 @@ Initialize a new QuantificationTableExperimental class.
 \if{html}{\out{<a id="method-QuantificationTableExperimental-toJSON"></a>}}
 \if{latex}{\out{\hypertarget{method-QuantificationTableExperimental-toJSON}{}}}
 \subsection{Method \code{toJSON()}}{
-To JSON String
+Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{QuantificationTableExperimental$toJSON()}\if{html}{\out{</div>}}
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-QuantificationTableExperimental-toList"></a>}}
+\if{latex}{\out{\hypertarget{method-QuantificationTableExperimental-toList}{}}}
+\subsection{Method \code{toList()}}{
+Convert to a List
+
+Convert the R6 object to a list to work more easily with other tooling.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{QuantificationTableExperimental$toList()}\if{html}{\out{</div>}}
+}
+
 \subsection{Returns}{
-QuantificationTableExperimental in JSON format
+QuantificationTableExperimental as a base R list.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{# convert array of QuantificationTableExperimental (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-QuantificationTableExperimental-toSimpleType"></a>}}
+\if{latex}{\out{\hypertarget{method-QuantificationTableExperimental-toSimpleType}{}}}
+\subsection{Method \code{toSimpleType()}}{
+Convert QuantificationTableExperimental to a base R type
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{QuantificationTableExperimental$toSimpleType()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A base R type, e.g. a list or numeric/character array.
 }
 }
 \if{html}{\out{<hr>}}
@@ -134,9 +189,16 @@ the instance of QuantificationTableExperimental
 \subsection{Method \code{toJSONString()}}{
 To JSON String
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{QuantificationTableExperimental$toJSONString()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{QuantificationTableExperimental$toJSONString(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Parameters passed to `jsonlite::toJSON`}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
 QuantificationTableExperimental in JSON format
 }
