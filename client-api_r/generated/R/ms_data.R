@@ -52,28 +52,53 @@ MsData <- R6::R6Class(
     },
 
     #' @description
-    #' To JSON String
-    #'
-    #' @return MsData in JSON format
+    #' Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
     toJSON = function() {
+      .Deprecated(new = "toSimpleType", msg = "Use the '$toSimpleType()' method instead since that is more clearly named. Use '$toJSONString()' to get a JSON string")
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert to a List
+    #'
+    #' Convert the R6 object to a list to work more easily with other tooling.
+    #'
+    #' @return MsData as a base R list.
+    #' @examples
+    #' # convert array of MsData (x) to a data frame
+    #' \dontrun{
+    #' library(purrr)
+    #' library(tibble)
+    #' df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+    #' df
+    #' }
+    toList = function() {
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert MsData to a base R type
+    #'
+    #' @return A base R type, e.g. a list or numeric/character array.
+    toSimpleType = function() {
       MsDataObject <- list()
       if (!is.null(self$`mergedMs1`)) {
         MsDataObject[["mergedMs1"]] <-
-          self$`mergedMs1`$toJSON()
+          self$`mergedMs1`$toSimpleType()
       }
       if (!is.null(self$`mergedMs2`)) {
         MsDataObject[["mergedMs2"]] <-
-          self$`mergedMs2`$toJSON()
+          self$`mergedMs2`$toSimpleType()
       }
       if (!is.null(self$`ms1Spectra`)) {
         MsDataObject[["ms1Spectra"]] <-
-          lapply(self$`ms1Spectra`, function(x) x$toJSON())
+          lapply(self$`ms1Spectra`, function(x) x$toSimpleType())
       }
       if (!is.null(self$`ms2Spectra`)) {
         MsDataObject[["ms2Spectra"]] <-
-          lapply(self$`ms2Spectra`, function(x) x$toJSON())
+          lapply(self$`ms2Spectra`, function(x) x$toSimpleType())
       }
-      MsDataObject
+      return(MsDataObject)
     },
 
     #' @description
@@ -85,12 +110,12 @@ MsData <- R6::R6Class(
       this_object <- jsonlite::fromJSON(input_json)
       if (!is.null(this_object$`mergedMs1`)) {
         `mergedms1_object` <- BasicSpectrum$new()
-        `mergedms1_object`$fromJSON(jsonlite::toJSON(this_object$`mergedMs1`, auto_unbox = TRUE, digits = NA))
+        `mergedms1_object`$fromJSON(jsonlite::toJSON(this_object$`mergedMs1`, auto_unbox = TRUE, digits = NA, null = 'null'))
         self$`mergedMs1` <- `mergedms1_object`
       }
       if (!is.null(this_object$`mergedMs2`)) {
         `mergedms2_object` <- BasicSpectrum$new()
-        `mergedms2_object`$fromJSON(jsonlite::toJSON(this_object$`mergedMs2`, auto_unbox = TRUE, digits = NA))
+        `mergedms2_object`$fromJSON(jsonlite::toJSON(this_object$`mergedMs2`, auto_unbox = TRUE, digits = NA, null = 'null'))
         self$`mergedMs2` <- `mergedms2_object`
       }
       if (!is.null(this_object$`ms1Spectra`)) {
@@ -104,45 +129,13 @@ MsData <- R6::R6Class(
 
     #' @description
     #' To JSON String
-    #'
+    #' 
+    #' @param ... Parameters passed to `jsonlite::toJSON`
     #' @return MsData in JSON format
-    toJSONString = function() {
-      jsoncontent <- c(
-        if (!is.null(self$`mergedMs1`)) {
-          sprintf(
-          '"mergedMs1":
-          %s
-          ',
-          jsonlite::toJSON(self$`mergedMs1`$toJSON(), auto_unbox = TRUE, digits = NA)
-          )
-        },
-        if (!is.null(self$`mergedMs2`)) {
-          sprintf(
-          '"mergedMs2":
-          %s
-          ',
-          jsonlite::toJSON(self$`mergedMs2`$toJSON(), auto_unbox = TRUE, digits = NA)
-          )
-        },
-        if (!is.null(self$`ms1Spectra`)) {
-          sprintf(
-          '"ms1Spectra":
-          [%s]
-',
-          paste(sapply(self$`ms1Spectra`, function(x) jsonlite::toJSON(x$toJSON(), auto_unbox = TRUE, digits = NA)), collapse = ",")
-          )
-        },
-        if (!is.null(self$`ms2Spectra`)) {
-          sprintf(
-          '"ms2Spectra":
-          [%s]
-',
-          paste(sapply(self$`ms2Spectra`, function(x) jsonlite::toJSON(x$toJSON(), auto_unbox = TRUE, digits = NA)), collapse = ",")
-          )
-        }
-      )
-      jsoncontent <- paste(jsoncontent, collapse = ",")
-      json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
+    toJSONString = function(...) {
+      simple <- self$toSimpleType()
+      json <- jsonlite::toJSON(simple, auto_unbox = TRUE, digits = NA, null = 'null', ...)
+      return(as.character(jsonlite::minify(json)))
     },
 
     #' @description
@@ -152,8 +145,8 @@ MsData <- R6::R6Class(
     #' @return the instance of MsData
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
-      self$`mergedMs1` <- BasicSpectrum$new()$fromJSON(jsonlite::toJSON(this_object$`mergedMs1`, auto_unbox = TRUE, digits = NA))
-      self$`mergedMs2` <- BasicSpectrum$new()$fromJSON(jsonlite::toJSON(this_object$`mergedMs2`, auto_unbox = TRUE, digits = NA))
+      self$`mergedMs1` <- BasicSpectrum$new()$fromJSON(jsonlite::toJSON(this_object$`mergedMs1`, auto_unbox = TRUE, digits = NA, null = 'null'))
+      self$`mergedMs2` <- BasicSpectrum$new()$fromJSON(jsonlite::toJSON(this_object$`mergedMs2`, auto_unbox = TRUE, digits = NA, null = 'null'))
       self$`ms1Spectra` <- ApiClient$new()$deserializeObj(this_object$`ms1Spectra`, "array[BasicSpectrum]", loadNamespace("Rsirius"))
       self$`ms2Spectra` <- ApiClient$new()$deserializeObj(this_object$`ms2Spectra`, "array[BasicSpectrum]", loadNamespace("Rsirius"))
       self

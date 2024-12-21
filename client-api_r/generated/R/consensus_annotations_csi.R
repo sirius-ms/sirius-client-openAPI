@@ -83,10 +83,35 @@ ConsensusAnnotationsCSI <- R6::R6Class(
     },
 
     #' @description
-    #' To JSON String
-    #'
-    #' @return ConsensusAnnotationsCSI in JSON format
+    #' Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
     toJSON = function() {
+      .Deprecated(new = "toSimpleType", msg = "Use the '$toSimpleType()' method instead since that is more clearly named. Use '$toJSONString()' to get a JSON string")
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert to a List
+    #'
+    #' Convert the R6 object to a list to work more easily with other tooling.
+    #'
+    #' @return ConsensusAnnotationsCSI as a base R list.
+    #' @examples
+    #' # convert array of ConsensusAnnotationsCSI (x) to a data frame
+    #' \dontrun{
+    #' library(purrr)
+    #' library(tibble)
+    #' df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+    #' df
+    #' }
+    toList = function() {
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert ConsensusAnnotationsCSI to a base R type
+    #'
+    #' @return A base R type, e.g. a list or numeric/character array.
+    toSimpleType = function() {
       ConsensusAnnotationsCSIObject <- list()
       if (!is.null(self$`molecularFormula`)) {
         ConsensusAnnotationsCSIObject[["molecularFormula"]] <-
@@ -94,7 +119,7 @@ ConsensusAnnotationsCSI <- R6::R6Class(
       }
       if (!is.null(self$`compoundClasses`)) {
         ConsensusAnnotationsCSIObject[["compoundClasses"]] <-
-          self$`compoundClasses`$toJSON()
+          self$`compoundClasses`$toSimpleType()
       }
       if (!is.null(self$`supportingFeatureIds`)) {
         ConsensusAnnotationsCSIObject[["supportingFeatureIds"]] <-
@@ -106,7 +131,7 @@ ConsensusAnnotationsCSI <- R6::R6Class(
       }
       if (!is.null(self$`csiFingerIdStructure`)) {
         ConsensusAnnotationsCSIObject[["csiFingerIdStructure"]] <-
-          self$`csiFingerIdStructure`$toJSON()
+          self$`csiFingerIdStructure`$toSimpleType()
       }
       if (!is.null(self$`confidenceExactMatch`)) {
         ConsensusAnnotationsCSIObject[["confidenceExactMatch"]] <-
@@ -116,7 +141,7 @@ ConsensusAnnotationsCSI <- R6::R6Class(
         ConsensusAnnotationsCSIObject[["confidenceApproxMatch"]] <-
           self$`confidenceApproxMatch`
       }
-      ConsensusAnnotationsCSIObject
+      return(ConsensusAnnotationsCSIObject)
     },
 
     #' @description
@@ -131,7 +156,7 @@ ConsensusAnnotationsCSI <- R6::R6Class(
       }
       if (!is.null(this_object$`compoundClasses`)) {
         `compoundclasses_object` <- CompoundClasses$new()
-        `compoundclasses_object`$fromJSON(jsonlite::toJSON(this_object$`compoundClasses`, auto_unbox = TRUE, digits = NA))
+        `compoundclasses_object`$fromJSON(jsonlite::toJSON(this_object$`compoundClasses`, auto_unbox = TRUE, digits = NA, null = 'null'))
         self$`compoundClasses` <- `compoundclasses_object`
       }
       if (!is.null(this_object$`supportingFeatureIds`)) {
@@ -145,7 +170,7 @@ ConsensusAnnotationsCSI <- R6::R6Class(
       }
       if (!is.null(this_object$`csiFingerIdStructure`)) {
         `csifingeridstructure_object` <- StructureCandidate$new()
-        `csifingeridstructure_object`$fromJSON(jsonlite::toJSON(this_object$`csiFingerIdStructure`, auto_unbox = TRUE, digits = NA))
+        `csifingeridstructure_object`$fromJSON(jsonlite::toJSON(this_object$`csiFingerIdStructure`, auto_unbox = TRUE, digits = NA, null = 'null'))
         self$`csiFingerIdStructure` <- `csifingeridstructure_object`
       }
       if (!is.null(this_object$`confidenceExactMatch`)) {
@@ -159,69 +184,13 @@ ConsensusAnnotationsCSI <- R6::R6Class(
 
     #' @description
     #' To JSON String
-    #'
+    #' 
+    #' @param ... Parameters passed to `jsonlite::toJSON`
     #' @return ConsensusAnnotationsCSI in JSON format
-    toJSONString = function() {
-      jsoncontent <- c(
-        if (!is.null(self$`molecularFormula`)) {
-          sprintf(
-          '"molecularFormula":
-            "%s"
-                    ',
-          self$`molecularFormula`
-          )
-        },
-        if (!is.null(self$`compoundClasses`)) {
-          sprintf(
-          '"compoundClasses":
-          %s
-          ',
-          jsonlite::toJSON(self$`compoundClasses`$toJSON(), auto_unbox = TRUE, digits = NA)
-          )
-        },
-        if (!is.null(self$`supportingFeatureIds`)) {
-          sprintf(
-          '"supportingFeatureIds":
-             [%s]
-          ',
-          paste(unlist(lapply(self$`supportingFeatureIds`, function(x) paste0('"', x, '"'))), collapse = ",")
-          )
-        },
-        if (!is.null(self$`selectionCriterion`)) {
-          sprintf(
-          '"selectionCriterion":
-            "%s"
-                    ',
-          self$`selectionCriterion`
-          )
-        },
-        if (!is.null(self$`csiFingerIdStructure`)) {
-          sprintf(
-          '"csiFingerIdStructure":
-          %s
-          ',
-          jsonlite::toJSON(self$`csiFingerIdStructure`$toJSON(), auto_unbox = TRUE, digits = NA)
-          )
-        },
-        if (!is.null(self$`confidenceExactMatch`)) {
-          sprintf(
-          '"confidenceExactMatch":
-            %d
-                    ',
-          self$`confidenceExactMatch`
-          )
-        },
-        if (!is.null(self$`confidenceApproxMatch`)) {
-          sprintf(
-          '"confidenceApproxMatch":
-            %d
-                    ',
-          self$`confidenceApproxMatch`
-          )
-        }
-      )
-      jsoncontent <- paste(jsoncontent, collapse = ",")
-      json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
+    toJSONString = function(...) {
+      simple <- self$toSimpleType()
+      json <- jsonlite::toJSON(simple, auto_unbox = TRUE, digits = NA, null = 'null', ...)
+      return(as.character(jsonlite::minify(json)))
     },
 
     #' @description
@@ -232,13 +201,13 @@ ConsensusAnnotationsCSI <- R6::R6Class(
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       self$`molecularFormula` <- this_object$`molecularFormula`
-      self$`compoundClasses` <- CompoundClasses$new()$fromJSON(jsonlite::toJSON(this_object$`compoundClasses`, auto_unbox = TRUE, digits = NA))
+      self$`compoundClasses` <- CompoundClasses$new()$fromJSON(jsonlite::toJSON(this_object$`compoundClasses`, auto_unbox = TRUE, digits = NA, null = 'null'))
       self$`supportingFeatureIds` <- ApiClient$new()$deserializeObj(this_object$`supportingFeatureIds`, "array[character]", loadNamespace("Rsirius"))
       if (!is.null(this_object$`selectionCriterion`) && !(this_object$`selectionCriterion` %in% c("MAJORITY_STRUCTURE", "CONFIDENCE_STRUCTURE", "SINGLETON_STRUCTURE", "MAJORITY_FORMULA", "TOP_FORMULA", "SINGLETON_FORMULA"))) {
         stop(paste("Error! \"", this_object$`selectionCriterion`, "\" cannot be assigned to `selectionCriterion`. Must be \"MAJORITY_STRUCTURE\", \"CONFIDENCE_STRUCTURE\", \"SINGLETON_STRUCTURE\", \"MAJORITY_FORMULA\", \"TOP_FORMULA\", \"SINGLETON_FORMULA\".", sep = ""))
       }
       self$`selectionCriterion` <- this_object$`selectionCriterion`
-      self$`csiFingerIdStructure` <- StructureCandidate$new()$fromJSON(jsonlite::toJSON(this_object$`csiFingerIdStructure`, auto_unbox = TRUE, digits = NA))
+      self$`csiFingerIdStructure` <- StructureCandidate$new()$fromJSON(jsonlite::toJSON(this_object$`csiFingerIdStructure`, auto_unbox = TRUE, digits = NA, null = 'null'))
       self$`confidenceExactMatch` <- this_object$`confidenceExactMatch`
       self$`confidenceApproxMatch` <- this_object$`confidenceApproxMatch`
       self

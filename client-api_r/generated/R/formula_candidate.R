@@ -187,10 +187,35 @@ FormulaCandidate <- R6::R6Class(
     },
 
     #' @description
-    #' To JSON String
-    #'
-    #' @return FormulaCandidate in JSON format
+    #' Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
     toJSON = function() {
+      .Deprecated(new = "toSimpleType", msg = "Use the '$toSimpleType()' method instead since that is more clearly named. Use '$toJSONString()' to get a JSON string")
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert to a List
+    #'
+    #' Convert the R6 object to a list to work more easily with other tooling.
+    #'
+    #' @return FormulaCandidate as a base R list.
+    #' @examples
+    #' # convert array of FormulaCandidate (x) to a data frame
+    #' \dontrun{
+    #' library(purrr)
+    #' library(tibble)
+    #' df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+    #' df
+    #' }
+    toList = function() {
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert FormulaCandidate to a base R type
+    #'
+    #' @return A base R type, e.g. a list or numeric/character array.
+    toSimpleType = function() {
       FormulaCandidateObject <- list()
       if (!is.null(self$`formulaId`)) {
         FormulaCandidateObject[["formulaId"]] <-
@@ -242,23 +267,23 @@ FormulaCandidate <- R6::R6Class(
       }
       if (!is.null(self$`medianMassDeviation`)) {
         FormulaCandidateObject[["medianMassDeviation"]] <-
-          self$`medianMassDeviation`$toJSON()
+          self$`medianMassDeviation`$toSimpleType()
       }
       if (!is.null(self$`fragmentationTree`)) {
         FormulaCandidateObject[["fragmentationTree"]] <-
-          self$`fragmentationTree`$toJSON()
+          self$`fragmentationTree`$toSimpleType()
       }
       if (!is.null(self$`annotatedSpectrum`)) {
         FormulaCandidateObject[["annotatedSpectrum"]] <-
-          self$`annotatedSpectrum`$toJSON()
+          self$`annotatedSpectrum`$toSimpleType()
       }
       if (!is.null(self$`isotopePatternAnnotation`)) {
         FormulaCandidateObject[["isotopePatternAnnotation"]] <-
-          self$`isotopePatternAnnotation`$toJSON()
+          self$`isotopePatternAnnotation`$toSimpleType()
       }
       if (!is.null(self$`lipidAnnotation`)) {
         FormulaCandidateObject[["lipidAnnotation"]] <-
-          self$`lipidAnnotation`$toJSON()
+          self$`lipidAnnotation`$toSimpleType()
       }
       if (!is.null(self$`predictedFingerprint`)) {
         FormulaCandidateObject[["predictedFingerprint"]] <-
@@ -266,13 +291,13 @@ FormulaCandidate <- R6::R6Class(
       }
       if (!is.null(self$`compoundClasses`)) {
         FormulaCandidateObject[["compoundClasses"]] <-
-          self$`compoundClasses`$toJSON()
+          self$`compoundClasses`$toSimpleType()
       }
       if (!is.null(self$`canopusPrediction`)) {
         FormulaCandidateObject[["canopusPrediction"]] <-
-          self$`canopusPrediction`$toJSON()
+          self$`canopusPrediction`$toSimpleType()
       }
-      FormulaCandidateObject
+      return(FormulaCandidateObject)
     },
 
     #' @description
@@ -320,27 +345,27 @@ FormulaCandidate <- R6::R6Class(
       }
       if (!is.null(this_object$`medianMassDeviation`)) {
         `medianmassdeviation_object` <- Deviation$new()
-        `medianmassdeviation_object`$fromJSON(jsonlite::toJSON(this_object$`medianMassDeviation`, auto_unbox = TRUE, digits = NA))
+        `medianmassdeviation_object`$fromJSON(jsonlite::toJSON(this_object$`medianMassDeviation`, auto_unbox = TRUE, digits = NA, null = 'null'))
         self$`medianMassDeviation` <- `medianmassdeviation_object`
       }
       if (!is.null(this_object$`fragmentationTree`)) {
         `fragmentationtree_object` <- FragmentationTree$new()
-        `fragmentationtree_object`$fromJSON(jsonlite::toJSON(this_object$`fragmentationTree`, auto_unbox = TRUE, digits = NA))
+        `fragmentationtree_object`$fromJSON(jsonlite::toJSON(this_object$`fragmentationTree`, auto_unbox = TRUE, digits = NA, null = 'null'))
         self$`fragmentationTree` <- `fragmentationtree_object`
       }
       if (!is.null(this_object$`annotatedSpectrum`)) {
         `annotatedspectrum_object` <- AnnotatedSpectrum$new()
-        `annotatedspectrum_object`$fromJSON(jsonlite::toJSON(this_object$`annotatedSpectrum`, auto_unbox = TRUE, digits = NA))
+        `annotatedspectrum_object`$fromJSON(jsonlite::toJSON(this_object$`annotatedSpectrum`, auto_unbox = TRUE, digits = NA, null = 'null'))
         self$`annotatedSpectrum` <- `annotatedspectrum_object`
       }
       if (!is.null(this_object$`isotopePatternAnnotation`)) {
         `isotopepatternannotation_object` <- IsotopePatternAnnotation$new()
-        `isotopepatternannotation_object`$fromJSON(jsonlite::toJSON(this_object$`isotopePatternAnnotation`, auto_unbox = TRUE, digits = NA))
+        `isotopepatternannotation_object`$fromJSON(jsonlite::toJSON(this_object$`isotopePatternAnnotation`, auto_unbox = TRUE, digits = NA, null = 'null'))
         self$`isotopePatternAnnotation` <- `isotopepatternannotation_object`
       }
       if (!is.null(this_object$`lipidAnnotation`)) {
         `lipidannotation_object` <- LipidAnnotation$new()
-        `lipidannotation_object`$fromJSON(jsonlite::toJSON(this_object$`lipidAnnotation`, auto_unbox = TRUE, digits = NA))
+        `lipidannotation_object`$fromJSON(jsonlite::toJSON(this_object$`lipidAnnotation`, auto_unbox = TRUE, digits = NA, null = 'null'))
         self$`lipidAnnotation` <- `lipidannotation_object`
       }
       if (!is.null(this_object$`predictedFingerprint`)) {
@@ -348,12 +373,12 @@ FormulaCandidate <- R6::R6Class(
       }
       if (!is.null(this_object$`compoundClasses`)) {
         `compoundclasses_object` <- CompoundClasses$new()
-        `compoundclasses_object`$fromJSON(jsonlite::toJSON(this_object$`compoundClasses`, auto_unbox = TRUE, digits = NA))
+        `compoundclasses_object`$fromJSON(jsonlite::toJSON(this_object$`compoundClasses`, auto_unbox = TRUE, digits = NA, null = 'null'))
         self$`compoundClasses` <- `compoundclasses_object`
       }
       if (!is.null(this_object$`canopusPrediction`)) {
         `canopusprediction_object` <- CanopusPrediction$new()
-        `canopusprediction_object`$fromJSON(jsonlite::toJSON(this_object$`canopusPrediction`, auto_unbox = TRUE, digits = NA))
+        `canopusprediction_object`$fromJSON(jsonlite::toJSON(this_object$`canopusPrediction`, auto_unbox = TRUE, digits = NA, null = 'null'))
         self$`canopusPrediction` <- `canopusprediction_object`
       }
       self
@@ -361,173 +386,13 @@ FormulaCandidate <- R6::R6Class(
 
     #' @description
     #' To JSON String
-    #'
+    #' 
+    #' @param ... Parameters passed to `jsonlite::toJSON`
     #' @return FormulaCandidate in JSON format
-    toJSONString = function() {
-      jsoncontent <- c(
-        if (!is.null(self$`formulaId`)) {
-          sprintf(
-          '"formulaId":
-            "%s"
-                    ',
-          self$`formulaId`
-          )
-        },
-        if (!is.null(self$`molecularFormula`)) {
-          sprintf(
-          '"molecularFormula":
-            "%s"
-                    ',
-          self$`molecularFormula`
-          )
-        },
-        if (!is.null(self$`adduct`)) {
-          sprintf(
-          '"adduct":
-            "%s"
-                    ',
-          self$`adduct`
-          )
-        },
-        if (!is.null(self$`rank`)) {
-          sprintf(
-          '"rank":
-            %d
-                    ',
-          self$`rank`
-          )
-        },
-        if (!is.null(self$`siriusScoreNormalized`)) {
-          sprintf(
-          '"siriusScoreNormalized":
-            %d
-                    ',
-          self$`siriusScoreNormalized`
-          )
-        },
-        if (!is.null(self$`siriusScore`)) {
-          sprintf(
-          '"siriusScore":
-            %d
-                    ',
-          self$`siriusScore`
-          )
-        },
-        if (!is.null(self$`isotopeScore`)) {
-          sprintf(
-          '"isotopeScore":
-            %d
-                    ',
-          self$`isotopeScore`
-          )
-        },
-        if (!is.null(self$`treeScore`)) {
-          sprintf(
-          '"treeScore":
-            %d
-                    ',
-          self$`treeScore`
-          )
-        },
-        if (!is.null(self$`zodiacScore`)) {
-          sprintf(
-          '"zodiacScore":
-            %d
-                    ',
-          self$`zodiacScore`
-          )
-        },
-        if (!is.null(self$`numOfExplainedPeaks`)) {
-          sprintf(
-          '"numOfExplainedPeaks":
-            %d
-                    ',
-          self$`numOfExplainedPeaks`
-          )
-        },
-        if (!is.null(self$`numOfExplainablePeaks`)) {
-          sprintf(
-          '"numOfExplainablePeaks":
-            %d
-                    ',
-          self$`numOfExplainablePeaks`
-          )
-        },
-        if (!is.null(self$`totalExplainedIntensity`)) {
-          sprintf(
-          '"totalExplainedIntensity":
-            %d
-                    ',
-          self$`totalExplainedIntensity`
-          )
-        },
-        if (!is.null(self$`medianMassDeviation`)) {
-          sprintf(
-          '"medianMassDeviation":
-          %s
-          ',
-          jsonlite::toJSON(self$`medianMassDeviation`$toJSON(), auto_unbox = TRUE, digits = NA)
-          )
-        },
-        if (!is.null(self$`fragmentationTree`)) {
-          sprintf(
-          '"fragmentationTree":
-          %s
-          ',
-          jsonlite::toJSON(self$`fragmentationTree`$toJSON(), auto_unbox = TRUE, digits = NA)
-          )
-        },
-        if (!is.null(self$`annotatedSpectrum`)) {
-          sprintf(
-          '"annotatedSpectrum":
-          %s
-          ',
-          jsonlite::toJSON(self$`annotatedSpectrum`$toJSON(), auto_unbox = TRUE, digits = NA)
-          )
-        },
-        if (!is.null(self$`isotopePatternAnnotation`)) {
-          sprintf(
-          '"isotopePatternAnnotation":
-          %s
-          ',
-          jsonlite::toJSON(self$`isotopePatternAnnotation`$toJSON(), auto_unbox = TRUE, digits = NA)
-          )
-        },
-        if (!is.null(self$`lipidAnnotation`)) {
-          sprintf(
-          '"lipidAnnotation":
-          %s
-          ',
-          jsonlite::toJSON(self$`lipidAnnotation`$toJSON(), auto_unbox = TRUE, digits = NA)
-          )
-        },
-        if (!is.null(self$`predictedFingerprint`)) {
-          sprintf(
-          '"predictedFingerprint":
-             [%s]
-          ',
-          paste(unlist(lapply(self$`predictedFingerprint`, function(x) paste0('"', x, '"'))), collapse = ",")
-          )
-        },
-        if (!is.null(self$`compoundClasses`)) {
-          sprintf(
-          '"compoundClasses":
-          %s
-          ',
-          jsonlite::toJSON(self$`compoundClasses`$toJSON(), auto_unbox = TRUE, digits = NA)
-          )
-        },
-        if (!is.null(self$`canopusPrediction`)) {
-          sprintf(
-          '"canopusPrediction":
-          %s
-          ',
-          jsonlite::toJSON(self$`canopusPrediction`$toJSON(), auto_unbox = TRUE, digits = NA)
-          )
-        }
-      )
-      jsoncontent <- paste(jsoncontent, collapse = ",")
-      json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
+    toJSONString = function(...) {
+      simple <- self$toSimpleType()
+      json <- jsonlite::toJSON(simple, auto_unbox = TRUE, digits = NA, null = 'null', ...)
+      return(as.character(jsonlite::minify(json)))
     },
 
     #' @description
@@ -549,14 +414,14 @@ FormulaCandidate <- R6::R6Class(
       self$`numOfExplainedPeaks` <- this_object$`numOfExplainedPeaks`
       self$`numOfExplainablePeaks` <- this_object$`numOfExplainablePeaks`
       self$`totalExplainedIntensity` <- this_object$`totalExplainedIntensity`
-      self$`medianMassDeviation` <- Deviation$new()$fromJSON(jsonlite::toJSON(this_object$`medianMassDeviation`, auto_unbox = TRUE, digits = NA))
-      self$`fragmentationTree` <- FragmentationTree$new()$fromJSON(jsonlite::toJSON(this_object$`fragmentationTree`, auto_unbox = TRUE, digits = NA))
-      self$`annotatedSpectrum` <- AnnotatedSpectrum$new()$fromJSON(jsonlite::toJSON(this_object$`annotatedSpectrum`, auto_unbox = TRUE, digits = NA))
-      self$`isotopePatternAnnotation` <- IsotopePatternAnnotation$new()$fromJSON(jsonlite::toJSON(this_object$`isotopePatternAnnotation`, auto_unbox = TRUE, digits = NA))
-      self$`lipidAnnotation` <- LipidAnnotation$new()$fromJSON(jsonlite::toJSON(this_object$`lipidAnnotation`, auto_unbox = TRUE, digits = NA))
+      self$`medianMassDeviation` <- Deviation$new()$fromJSON(jsonlite::toJSON(this_object$`medianMassDeviation`, auto_unbox = TRUE, digits = NA, null = 'null'))
+      self$`fragmentationTree` <- FragmentationTree$new()$fromJSON(jsonlite::toJSON(this_object$`fragmentationTree`, auto_unbox = TRUE, digits = NA, null = 'null'))
+      self$`annotatedSpectrum` <- AnnotatedSpectrum$new()$fromJSON(jsonlite::toJSON(this_object$`annotatedSpectrum`, auto_unbox = TRUE, digits = NA, null = 'null'))
+      self$`isotopePatternAnnotation` <- IsotopePatternAnnotation$new()$fromJSON(jsonlite::toJSON(this_object$`isotopePatternAnnotation`, auto_unbox = TRUE, digits = NA, null = 'null'))
+      self$`lipidAnnotation` <- LipidAnnotation$new()$fromJSON(jsonlite::toJSON(this_object$`lipidAnnotation`, auto_unbox = TRUE, digits = NA, null = 'null'))
       self$`predictedFingerprint` <- ApiClient$new()$deserializeObj(this_object$`predictedFingerprint`, "array[numeric]", loadNamespace("Rsirius"))
-      self$`compoundClasses` <- CompoundClasses$new()$fromJSON(jsonlite::toJSON(this_object$`compoundClasses`, auto_unbox = TRUE, digits = NA))
-      self$`canopusPrediction` <- CanopusPrediction$new()$fromJSON(jsonlite::toJSON(this_object$`canopusPrediction`, auto_unbox = TRUE, digits = NA))
+      self$`compoundClasses` <- CompoundClasses$new()$fromJSON(jsonlite::toJSON(this_object$`compoundClasses`, auto_unbox = TRUE, digits = NA, null = 'null'))
+      self$`canopusPrediction` <- CanopusPrediction$new()$fromJSON(jsonlite::toJSON(this_object$`canopusPrediction`, auto_unbox = TRUE, digits = NA, null = 'null'))
       self
     },
 

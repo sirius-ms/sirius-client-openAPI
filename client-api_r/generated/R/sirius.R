@@ -202,10 +202,35 @@ Sirius <- R6::R6Class(
     },
 
     #' @description
-    #' To JSON String
-    #'
-    #' @return Sirius in JSON format
+    #' Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
     toJSON = function() {
+      .Deprecated(new = "toSimpleType", msg = "Use the '$toSimpleType()' method instead since that is more clearly named. Use '$toJSONString()' to get a JSON string")
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert to a List
+    #'
+    #' Convert the R6 object to a list to work more easily with other tooling.
+    #'
+    #' @return Sirius as a base R list.
+    #' @examples
+    #' # convert array of Sirius (x) to a data frame
+    #' \dontrun{
+    #' library(purrr)
+    #' library(tibble)
+    #' df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+    #' df
+    #' }
+    toList = function() {
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert Sirius to a base R type
+    #'
+    #' @return A base R type, e.g. a list or numeric/character array.
+    toSimpleType = function() {
       SiriusObject <- list()
       if (!is.null(self$`enabled`)) {
         SiriusObject[["enabled"]] <-
@@ -269,11 +294,11 @@ Sirius <- R6::R6Class(
       }
       if (!is.null(self$`ilpTimeout`)) {
         SiriusObject[["ilpTimeout"]] <-
-          self$`ilpTimeout`$toJSON()
+          self$`ilpTimeout`$toSimpleType()
       }
       if (!is.null(self$`useHeuristic`)) {
         SiriusObject[["useHeuristic"]] <-
-          self$`useHeuristic`$toJSON()
+          self$`useHeuristic`$toSimpleType()
       }
       if (!is.null(self$`injectSpecLibMatchFormulas`)) {
         SiriusObject[["injectSpecLibMatchFormulas"]] <-
@@ -287,7 +312,7 @@ Sirius <- R6::R6Class(
         SiriusObject[["minPeaksToInjectSpecLibMatch"]] <-
           self$`minPeaksToInjectSpecLibMatch`
       }
-      SiriusObject
+      return(SiriusObject)
     },
 
     #' @description
@@ -350,12 +375,12 @@ Sirius <- R6::R6Class(
       }
       if (!is.null(this_object$`ilpTimeout`)) {
         `ilptimeout_object` <- Timeout$new()
-        `ilptimeout_object`$fromJSON(jsonlite::toJSON(this_object$`ilpTimeout`, auto_unbox = TRUE, digits = NA))
+        `ilptimeout_object`$fromJSON(jsonlite::toJSON(this_object$`ilpTimeout`, auto_unbox = TRUE, digits = NA, null = 'null'))
         self$`ilpTimeout` <- `ilptimeout_object`
       }
       if (!is.null(this_object$`useHeuristic`)) {
         `useheuristic_object` <- UseHeuristic$new()
-        `useheuristic_object`$fromJSON(jsonlite::toJSON(this_object$`useHeuristic`, auto_unbox = TRUE, digits = NA))
+        `useheuristic_object`$fromJSON(jsonlite::toJSON(this_object$`useHeuristic`, auto_unbox = TRUE, digits = NA, null = 'null'))
         self$`useHeuristic` <- `useheuristic_object`
       }
       if (!is.null(this_object$`injectSpecLibMatchFormulas`)) {
@@ -372,173 +397,13 @@ Sirius <- R6::R6Class(
 
     #' @description
     #' To JSON String
-    #'
+    #' 
+    #' @param ... Parameters passed to `jsonlite::toJSON`
     #' @return Sirius in JSON format
-    toJSONString = function() {
-      jsoncontent <- c(
-        if (!is.null(self$`enabled`)) {
-          sprintf(
-          '"enabled":
-            %s
-                    ',
-          tolower(self$`enabled`)
-          )
-        },
-        if (!is.null(self$`profile`)) {
-          sprintf(
-          '"profile":
-            "%s"
-                    ',
-          self$`profile`
-          )
-        },
-        if (!is.null(self$`numberOfCandidates`)) {
-          sprintf(
-          '"numberOfCandidates":
-            %d
-                    ',
-          self$`numberOfCandidates`
-          )
-        },
-        if (!is.null(self$`numberOfCandidatesPerIonization`)) {
-          sprintf(
-          '"numberOfCandidatesPerIonization":
-            %d
-                    ',
-          self$`numberOfCandidatesPerIonization`
-          )
-        },
-        if (!is.null(self$`massAccuracyMS2ppm`)) {
-          sprintf(
-          '"massAccuracyMS2ppm":
-            %d
-                    ',
-          self$`massAccuracyMS2ppm`
-          )
-        },
-        if (!is.null(self$`isotopeMs2Settings`)) {
-          sprintf(
-          '"isotopeMs2Settings":
-            "%s"
-                    ',
-          self$`isotopeMs2Settings`
-          )
-        },
-        if (!is.null(self$`filterByIsotopePattern`)) {
-          sprintf(
-          '"filterByIsotopePattern":
-            %s
-                    ',
-          tolower(self$`filterByIsotopePattern`)
-          )
-        },
-        if (!is.null(self$`enforceElGordoFormula`)) {
-          sprintf(
-          '"enforceElGordoFormula":
-            %s
-                    ',
-          tolower(self$`enforceElGordoFormula`)
-          )
-        },
-        if (!is.null(self$`performBottomUpSearch`)) {
-          sprintf(
-          '"performBottomUpSearch":
-            %s
-                    ',
-          tolower(self$`performBottomUpSearch`)
-          )
-        },
-        if (!is.null(self$`performDenovoBelowMz`)) {
-          sprintf(
-          '"performDenovoBelowMz":
-            %d
-                    ',
-          self$`performDenovoBelowMz`
-          )
-        },
-        if (!is.null(self$`formulaSearchDBs`)) {
-          sprintf(
-          '"formulaSearchDBs":
-             [%s]
-          ',
-          paste(unlist(lapply(self$`formulaSearchDBs`, function(x) paste0('"', x, '"'))), collapse = ",")
-          )
-        },
-        if (!is.null(self$`applyFormulaConstraintsToDBAndBottomUpSearch`)) {
-          sprintf(
-          '"applyFormulaConstraintsToDBAndBottomUpSearch":
-            %s
-                    ',
-          tolower(self$`applyFormulaConstraintsToDBAndBottomUpSearch`)
-          )
-        },
-        if (!is.null(self$`enforcedFormulaConstraints`)) {
-          sprintf(
-          '"enforcedFormulaConstraints":
-            "%s"
-                    ',
-          self$`enforcedFormulaConstraints`
-          )
-        },
-        if (!is.null(self$`fallbackFormulaConstraints`)) {
-          sprintf(
-          '"fallbackFormulaConstraints":
-            "%s"
-                    ',
-          self$`fallbackFormulaConstraints`
-          )
-        },
-        if (!is.null(self$`detectableElements`)) {
-          sprintf(
-          '"detectableElements":
-             [%s]
-          ',
-          paste(unlist(lapply(self$`detectableElements`, function(x) paste0('"', x, '"'))), collapse = ",")
-          )
-        },
-        if (!is.null(self$`ilpTimeout`)) {
-          sprintf(
-          '"ilpTimeout":
-          %s
-          ',
-          jsonlite::toJSON(self$`ilpTimeout`$toJSON(), auto_unbox = TRUE, digits = NA)
-          )
-        },
-        if (!is.null(self$`useHeuristic`)) {
-          sprintf(
-          '"useHeuristic":
-          %s
-          ',
-          jsonlite::toJSON(self$`useHeuristic`$toJSON(), auto_unbox = TRUE, digits = NA)
-          )
-        },
-        if (!is.null(self$`injectSpecLibMatchFormulas`)) {
-          sprintf(
-          '"injectSpecLibMatchFormulas":
-            %s
-                    ',
-          tolower(self$`injectSpecLibMatchFormulas`)
-          )
-        },
-        if (!is.null(self$`minScoreToInjectSpecLibMatch`)) {
-          sprintf(
-          '"minScoreToInjectSpecLibMatch":
-            %d
-                    ',
-          self$`minScoreToInjectSpecLibMatch`
-          )
-        },
-        if (!is.null(self$`minPeaksToInjectSpecLibMatch`)) {
-          sprintf(
-          '"minPeaksToInjectSpecLibMatch":
-            %d
-                    ',
-          self$`minPeaksToInjectSpecLibMatch`
-          )
-        }
-      )
-      jsoncontent <- paste(jsoncontent, collapse = ",")
-      json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
+    toJSONString = function(...) {
+      simple <- self$toSimpleType()
+      json <- jsonlite::toJSON(simple, auto_unbox = TRUE, digits = NA, null = 'null', ...)
+      return(as.character(jsonlite::minify(json)))
     },
 
     #' @description
@@ -569,8 +434,8 @@ Sirius <- R6::R6Class(
       self$`enforcedFormulaConstraints` <- this_object$`enforcedFormulaConstraints`
       self$`fallbackFormulaConstraints` <- this_object$`fallbackFormulaConstraints`
       self$`detectableElements` <- ApiClient$new()$deserializeObj(this_object$`detectableElements`, "array[character]", loadNamespace("Rsirius"))
-      self$`ilpTimeout` <- Timeout$new()$fromJSON(jsonlite::toJSON(this_object$`ilpTimeout`, auto_unbox = TRUE, digits = NA))
-      self$`useHeuristic` <- UseHeuristic$new()$fromJSON(jsonlite::toJSON(this_object$`useHeuristic`, auto_unbox = TRUE, digits = NA))
+      self$`ilpTimeout` <- Timeout$new()$fromJSON(jsonlite::toJSON(this_object$`ilpTimeout`, auto_unbox = TRUE, digits = NA, null = 'null'))
+      self$`useHeuristic` <- UseHeuristic$new()$fromJSON(jsonlite::toJSON(this_object$`useHeuristic`, auto_unbox = TRUE, digits = NA, null = 'null'))
       self$`injectSpecLibMatchFormulas` <- this_object$`injectSpecLibMatchFormulas`
       self$`minScoreToInjectSpecLibMatch` <- this_object$`minScoreToInjectSpecLibMatch`
       self$`minPeaksToInjectSpecLibMatch` <- this_object$`minPeaksToInjectSpecLibMatch`
