@@ -15,6 +15,20 @@ PageMetadata Class
 \details{
 Create a new PageMetadata
 }
+\examples{
+
+## ------------------------------------------------
+## Method `PageMetadata$toList`
+## ------------------------------------------------
+
+# convert array of PageMetadata (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
@@ -33,6 +47,8 @@ Create a new PageMetadata
 \itemize{
 \item \href{#method-PageMetadata-new}{\code{PageMetadata$new()}}
 \item \href{#method-PageMetadata-toJSON}{\code{PageMetadata$toJSON()}}
+\item \href{#method-PageMetadata-toList}{\code{PageMetadata$toList()}}
+\item \href{#method-PageMetadata-toSimpleType}{\code{PageMetadata$toSimpleType()}}
 \item \href{#method-PageMetadata-fromJSON}{\code{PageMetadata$fromJSON()}}
 \item \href{#method-PageMetadata-toJSONString}{\code{PageMetadata$toJSONString()}}
 \item \href{#method-PageMetadata-fromJSONString}{\code{PageMetadata$fromJSONString()}}
@@ -79,13 +95,52 @@ Initialize a new PageMetadata class.
 \if{html}{\out{<a id="method-PageMetadata-toJSON"></a>}}
 \if{latex}{\out{\hypertarget{method-PageMetadata-toJSON}{}}}
 \subsection{Method \code{toJSON()}}{
-To JSON String
+Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{PageMetadata$toJSON()}\if{html}{\out{</div>}}
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-PageMetadata-toList"></a>}}
+\if{latex}{\out{\hypertarget{method-PageMetadata-toList}{}}}
+\subsection{Method \code{toList()}}{
+Convert to a List
+
+Convert the R6 object to a list to work more easily with other tooling.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{PageMetadata$toList()}\if{html}{\out{</div>}}
+}
+
 \subsection{Returns}{
-PageMetadata in JSON format
+PageMetadata as a base R list.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{# convert array of PageMetadata (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-PageMetadata-toSimpleType"></a>}}
+\if{latex}{\out{\hypertarget{method-PageMetadata-toSimpleType}{}}}
+\subsection{Method \code{toSimpleType()}}{
+Convert PageMetadata to a base R type
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{PageMetadata$toSimpleType()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A base R type, e.g. a list or numeric/character array.
 }
 }
 \if{html}{\out{<hr>}}
@@ -114,9 +169,16 @@ the instance of PageMetadata
 \subsection{Method \code{toJSONString()}}{
 To JSON String
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{PageMetadata$toJSONString()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{PageMetadata$toJSONString(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Parameters passed to `jsonlite::toJSON`}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
 PageMetadata in JSON format
 }

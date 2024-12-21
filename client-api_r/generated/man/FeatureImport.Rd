@@ -15,6 +15,20 @@ FeatureImport Class
 \details{
 Create a new FeatureImport
 }
+\examples{
+
+## ------------------------------------------------
+## Method `FeatureImport$toList`
+## ------------------------------------------------
+
+# convert array of FeatureImport (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
@@ -49,6 +63,8 @@ Create a new FeatureImport
 \itemize{
 \item \href{#method-FeatureImport-new}{\code{FeatureImport$new()}}
 \item \href{#method-FeatureImport-toJSON}{\code{FeatureImport$toJSON()}}
+\item \href{#method-FeatureImport-toList}{\code{FeatureImport$toList()}}
+\item \href{#method-FeatureImport-toSimpleType}{\code{FeatureImport$toSimpleType()}}
 \item \href{#method-FeatureImport-fromJSON}{\code{FeatureImport$fromJSON()}}
 \item \href{#method-FeatureImport-toJSONString}{\code{FeatureImport$toJSONString()}}
 \item \href{#method-FeatureImport-fromJSONString}{\code{FeatureImport$fromJSONString()}}
@@ -119,13 +135,52 @@ Initialize a new FeatureImport class.
 \if{html}{\out{<a id="method-FeatureImport-toJSON"></a>}}
 \if{latex}{\out{\hypertarget{method-FeatureImport-toJSON}{}}}
 \subsection{Method \code{toJSON()}}{
-To JSON String
+Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{FeatureImport$toJSON()}\if{html}{\out{</div>}}
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-FeatureImport-toList"></a>}}
+\if{latex}{\out{\hypertarget{method-FeatureImport-toList}{}}}
+\subsection{Method \code{toList()}}{
+Convert to a List
+
+Convert the R6 object to a list to work more easily with other tooling.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{FeatureImport$toList()}\if{html}{\out{</div>}}
+}
+
 \subsection{Returns}{
-FeatureImport in JSON format
+FeatureImport as a base R list.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{# convert array of FeatureImport (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-FeatureImport-toSimpleType"></a>}}
+\if{latex}{\out{\hypertarget{method-FeatureImport-toSimpleType}{}}}
+\subsection{Method \code{toSimpleType()}}{
+Convert FeatureImport to a base R type
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{FeatureImport$toSimpleType()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A base R type, e.g. a list or numeric/character array.
 }
 }
 \if{html}{\out{<hr>}}
@@ -154,9 +209,16 @@ the instance of FeatureImport
 \subsection{Method \code{toJSONString()}}{
 To JSON String
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FeatureImport$toJSONString()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{FeatureImport$toJSONString(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Parameters passed to `jsonlite::toJSON`}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
 FeatureImport in JSON format
 }

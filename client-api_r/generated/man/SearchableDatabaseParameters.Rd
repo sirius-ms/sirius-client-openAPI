@@ -15,6 +15,20 @@ SearchableDatabaseParameters Class
 \details{
 Create a new SearchableDatabaseParameters
 }
+\examples{
+
+## ------------------------------------------------
+## Method `SearchableDatabaseParameters$toList`
+## ------------------------------------------------
+
+# convert array of SearchableDatabaseParameters (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
@@ -31,6 +45,8 @@ Create a new SearchableDatabaseParameters
 \itemize{
 \item \href{#method-SearchableDatabaseParameters-new}{\code{SearchableDatabaseParameters$new()}}
 \item \href{#method-SearchableDatabaseParameters-toJSON}{\code{SearchableDatabaseParameters$toJSON()}}
+\item \href{#method-SearchableDatabaseParameters-toList}{\code{SearchableDatabaseParameters$toList()}}
+\item \href{#method-SearchableDatabaseParameters-toSimpleType}{\code{SearchableDatabaseParameters$toSimpleType()}}
 \item \href{#method-SearchableDatabaseParameters-fromJSON}{\code{SearchableDatabaseParameters$fromJSON()}}
 \item \href{#method-SearchableDatabaseParameters-toJSONString}{\code{SearchableDatabaseParameters$toJSONString()}}
 \item \href{#method-SearchableDatabaseParameters-fromJSONString}{\code{SearchableDatabaseParameters$fromJSONString()}}
@@ -74,13 +90,52 @@ Initialize a new SearchableDatabaseParameters class.
 \if{html}{\out{<a id="method-SearchableDatabaseParameters-toJSON"></a>}}
 \if{latex}{\out{\hypertarget{method-SearchableDatabaseParameters-toJSON}{}}}
 \subsection{Method \code{toJSON()}}{
-To JSON String
+Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{SearchableDatabaseParameters$toJSON()}\if{html}{\out{</div>}}
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-SearchableDatabaseParameters-toList"></a>}}
+\if{latex}{\out{\hypertarget{method-SearchableDatabaseParameters-toList}{}}}
+\subsection{Method \code{toList()}}{
+Convert to a List
+
+Convert the R6 object to a list to work more easily with other tooling.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{SearchableDatabaseParameters$toList()}\if{html}{\out{</div>}}
+}
+
 \subsection{Returns}{
-SearchableDatabaseParameters in JSON format
+SearchableDatabaseParameters as a base R list.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{# convert array of SearchableDatabaseParameters (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-SearchableDatabaseParameters-toSimpleType"></a>}}
+\if{latex}{\out{\hypertarget{method-SearchableDatabaseParameters-toSimpleType}{}}}
+\subsection{Method \code{toSimpleType()}}{
+Convert SearchableDatabaseParameters to a base R type
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{SearchableDatabaseParameters$toSimpleType()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A base R type, e.g. a list or numeric/character array.
 }
 }
 \if{html}{\out{<hr>}}
@@ -109,9 +164,16 @@ the instance of SearchableDatabaseParameters
 \subsection{Method \code{toJSONString()}}{
 To JSON String
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{SearchableDatabaseParameters$toJSONString()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{SearchableDatabaseParameters$toJSONString(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Parameters passed to `jsonlite::toJSON`}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
 SearchableDatabaseParameters in JSON format
 }

@@ -15,6 +15,20 @@ PagedModelAlignedFeature Class
 \details{
 Create a new PagedModelAlignedFeature
 }
+\examples{
+
+## ------------------------------------------------
+## Method `PagedModelAlignedFeature$toList`
+## ------------------------------------------------
+
+# convert array of PagedModelAlignedFeature (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
@@ -29,6 +43,8 @@ Create a new PagedModelAlignedFeature
 \itemize{
 \item \href{#method-PagedModelAlignedFeature-new}{\code{PagedModelAlignedFeature$new()}}
 \item \href{#method-PagedModelAlignedFeature-toJSON}{\code{PagedModelAlignedFeature$toJSON()}}
+\item \href{#method-PagedModelAlignedFeature-toList}{\code{PagedModelAlignedFeature$toList()}}
+\item \href{#method-PagedModelAlignedFeature-toSimpleType}{\code{PagedModelAlignedFeature$toSimpleType()}}
 \item \href{#method-PagedModelAlignedFeature-fromJSON}{\code{PagedModelAlignedFeature$fromJSON()}}
 \item \href{#method-PagedModelAlignedFeature-toJSONString}{\code{PagedModelAlignedFeature$toJSONString()}}
 \item \href{#method-PagedModelAlignedFeature-fromJSONString}{\code{PagedModelAlignedFeature$fromJSONString()}}
@@ -65,13 +81,52 @@ Initialize a new PagedModelAlignedFeature class.
 \if{html}{\out{<a id="method-PagedModelAlignedFeature-toJSON"></a>}}
 \if{latex}{\out{\hypertarget{method-PagedModelAlignedFeature-toJSON}{}}}
 \subsection{Method \code{toJSON()}}{
-To JSON String
+Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{PagedModelAlignedFeature$toJSON()}\if{html}{\out{</div>}}
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-PagedModelAlignedFeature-toList"></a>}}
+\if{latex}{\out{\hypertarget{method-PagedModelAlignedFeature-toList}{}}}
+\subsection{Method \code{toList()}}{
+Convert to a List
+
+Convert the R6 object to a list to work more easily with other tooling.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{PagedModelAlignedFeature$toList()}\if{html}{\out{</div>}}
+}
+
 \subsection{Returns}{
-PagedModelAlignedFeature in JSON format
+PagedModelAlignedFeature as a base R list.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{# convert array of PagedModelAlignedFeature (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-PagedModelAlignedFeature-toSimpleType"></a>}}
+\if{latex}{\out{\hypertarget{method-PagedModelAlignedFeature-toSimpleType}{}}}
+\subsection{Method \code{toSimpleType()}}{
+Convert PagedModelAlignedFeature to a base R type
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{PagedModelAlignedFeature$toSimpleType()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A base R type, e.g. a list or numeric/character array.
 }
 }
 \if{html}{\out{<hr>}}
@@ -100,9 +155,16 @@ the instance of PagedModelAlignedFeature
 \subsection{Method \code{toJSONString()}}{
 To JSON String
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{PagedModelAlignedFeature$toJSONString()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{PagedModelAlignedFeature$toJSONString(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Parameters passed to `jsonlite::toJSON`}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
 PagedModelAlignedFeature in JSON format
 }

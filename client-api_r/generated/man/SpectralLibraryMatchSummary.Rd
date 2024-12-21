@@ -15,6 +15,20 @@ SpectralLibraryMatchSummary Class
 \details{
 Create a new SpectralLibraryMatchSummary
 }
+\examples{
+
+## ------------------------------------------------
+## Method `SpectralLibraryMatchSummary$toList`
+## ------------------------------------------------
+
+# convert array of SpectralLibraryMatchSummary (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
@@ -33,6 +47,8 @@ Create a new SpectralLibraryMatchSummary
 \itemize{
 \item \href{#method-SpectralLibraryMatchSummary-new}{\code{SpectralLibraryMatchSummary$new()}}
 \item \href{#method-SpectralLibraryMatchSummary-toJSON}{\code{SpectralLibraryMatchSummary$toJSON()}}
+\item \href{#method-SpectralLibraryMatchSummary-toList}{\code{SpectralLibraryMatchSummary$toList()}}
+\item \href{#method-SpectralLibraryMatchSummary-toSimpleType}{\code{SpectralLibraryMatchSummary$toSimpleType()}}
 \item \href{#method-SpectralLibraryMatchSummary-fromJSON}{\code{SpectralLibraryMatchSummary$fromJSON()}}
 \item \href{#method-SpectralLibraryMatchSummary-toJSONString}{\code{SpectralLibraryMatchSummary$toJSONString()}}
 \item \href{#method-SpectralLibraryMatchSummary-fromJSONString}{\code{SpectralLibraryMatchSummary$fromJSONString()}}
@@ -79,13 +95,52 @@ Initialize a new SpectralLibraryMatchSummary class.
 \if{html}{\out{<a id="method-SpectralLibraryMatchSummary-toJSON"></a>}}
 \if{latex}{\out{\hypertarget{method-SpectralLibraryMatchSummary-toJSON}{}}}
 \subsection{Method \code{toJSON()}}{
-To JSON String
+Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{SpectralLibraryMatchSummary$toJSON()}\if{html}{\out{</div>}}
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-SpectralLibraryMatchSummary-toList"></a>}}
+\if{latex}{\out{\hypertarget{method-SpectralLibraryMatchSummary-toList}{}}}
+\subsection{Method \code{toList()}}{
+Convert to a List
+
+Convert the R6 object to a list to work more easily with other tooling.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{SpectralLibraryMatchSummary$toList()}\if{html}{\out{</div>}}
+}
+
 \subsection{Returns}{
-SpectralLibraryMatchSummary in JSON format
+SpectralLibraryMatchSummary as a base R list.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{# convert array of SpectralLibraryMatchSummary (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-SpectralLibraryMatchSummary-toSimpleType"></a>}}
+\if{latex}{\out{\hypertarget{method-SpectralLibraryMatchSummary-toSimpleType}{}}}
+\subsection{Method \code{toSimpleType()}}{
+Convert SpectralLibraryMatchSummary to a base R type
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{SpectralLibraryMatchSummary$toSimpleType()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A base R type, e.g. a list or numeric/character array.
 }
 }
 \if{html}{\out{<hr>}}
@@ -114,9 +169,16 @@ the instance of SpectralLibraryMatchSummary
 \subsection{Method \code{toJSONString()}}{
 To JSON String
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{SpectralLibraryMatchSummary$toJSONString()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{SpectralLibraryMatchSummary$toJSONString(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Parameters passed to `jsonlite::toJSON`}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
 SpectralLibraryMatchSummary in JSON format
 }
