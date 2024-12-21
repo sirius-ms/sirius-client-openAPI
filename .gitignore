@@ -9,3 +9,8 @@
 **/gradlew.bat
 **/build/**
 client_api_r/Rsirius/
+.Rproj.user
+client-api_r/.Rproj.user
+sirius-client-openAPI.Rproj
+client-api_rsirius-client-openAPI.Rproj
+.updater/clientTests/PythonTests/test/__pycache__
