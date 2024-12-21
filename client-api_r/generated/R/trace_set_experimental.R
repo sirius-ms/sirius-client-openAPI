@@ -62,14 +62,39 @@ TraceSetExperimental <- R6::R6Class(
     },
 
     #' @description
-    #' To JSON String
-    #'
-    #' @return TraceSetExperimental in JSON format
+    #' Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
     toJSON = function() {
+      .Deprecated(new = "toSimpleType", msg = "Use the '$toSimpleType()' method instead since that is more clearly named. Use '$toJSONString()' to get a JSON string")
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert to a List
+    #'
+    #' Convert the R6 object to a list to work more easily with other tooling.
+    #'
+    #' @return TraceSetExperimental as a base R list.
+    #' @examples
+    #' # convert array of TraceSetExperimental (x) to a data frame
+    #' \dontrun{
+    #' library(purrr)
+    #' library(tibble)
+    #' df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+    #' df
+    #' }
+    toList = function() {
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert TraceSetExperimental to a base R type
+    #'
+    #' @return A base R type, e.g. a list or numeric/character array.
+    toSimpleType = function() {
       TraceSetExperimentalObject <- list()
       if (!is.null(self$`adductNetwork`)) {
         TraceSetExperimentalObject[["adductNetwork"]] <-
-          self$`adductNetwork`$toJSON()
+          self$`adductNetwork`$toSimpleType()
       }
       if (!is.null(self$`sampleId`)) {
         TraceSetExperimentalObject[["sampleId"]] <-
@@ -81,13 +106,13 @@ TraceSetExperimental <- R6::R6Class(
       }
       if (!is.null(self$`axes`)) {
         TraceSetExperimentalObject[["axes"]] <-
-          self$`axes`$toJSON()
+          self$`axes`$toSimpleType()
       }
       if (!is.null(self$`traces`)) {
         TraceSetExperimentalObject[["traces"]] <-
-          lapply(self$`traces`, function(x) x$toJSON())
+          lapply(self$`traces`, function(x) x$toSimpleType())
       }
-      TraceSetExperimentalObject
+      return(TraceSetExperimentalObject)
     },
 
     #' @description
@@ -99,7 +124,7 @@ TraceSetExperimental <- R6::R6Class(
       this_object <- jsonlite::fromJSON(input_json)
       if (!is.null(this_object$`adductNetwork`)) {
         `adductnetwork_object` <- AdductNetworkExperimental$new()
-        `adductnetwork_object`$fromJSON(jsonlite::toJSON(this_object$`adductNetwork`, auto_unbox = TRUE, digits = NA))
+        `adductnetwork_object`$fromJSON(jsonlite::toJSON(this_object$`adductNetwork`, auto_unbox = TRUE, digits = NA, null = 'null'))
         self$`adductNetwork` <- `adductnetwork_object`
       }
       if (!is.null(this_object$`sampleId`)) {
@@ -110,7 +135,7 @@ TraceSetExperimental <- R6::R6Class(
       }
       if (!is.null(this_object$`axes`)) {
         `axes_object` <- Axes$new()
-        `axes_object`$fromJSON(jsonlite::toJSON(this_object$`axes`, auto_unbox = TRUE, digits = NA))
+        `axes_object`$fromJSON(jsonlite::toJSON(this_object$`axes`, auto_unbox = TRUE, digits = NA, null = 'null'))
         self$`axes` <- `axes_object`
       }
       if (!is.null(this_object$`traces`)) {
@@ -121,53 +146,13 @@ TraceSetExperimental <- R6::R6Class(
 
     #' @description
     #' To JSON String
-    #'
+    #' 
+    #' @param ... Parameters passed to `jsonlite::toJSON`
     #' @return TraceSetExperimental in JSON format
-    toJSONString = function() {
-      jsoncontent <- c(
-        if (!is.null(self$`adductNetwork`)) {
-          sprintf(
-          '"adductNetwork":
-          %s
-          ',
-          jsonlite::toJSON(self$`adductNetwork`$toJSON(), auto_unbox = TRUE, digits = NA)
-          )
-        },
-        if (!is.null(self$`sampleId`)) {
-          sprintf(
-          '"sampleId":
-            "%s"
-                    ',
-          self$`sampleId`
-          )
-        },
-        if (!is.null(self$`sampleName`)) {
-          sprintf(
-          '"sampleName":
-            "%s"
-                    ',
-          self$`sampleName`
-          )
-        },
-        if (!is.null(self$`axes`)) {
-          sprintf(
-          '"axes":
-          %s
-          ',
-          jsonlite::toJSON(self$`axes`$toJSON(), auto_unbox = TRUE, digits = NA)
-          )
-        },
-        if (!is.null(self$`traces`)) {
-          sprintf(
-          '"traces":
-          [%s]
-',
-          paste(sapply(self$`traces`, function(x) jsonlite::toJSON(x$toJSON(), auto_unbox = TRUE, digits = NA)), collapse = ",")
-          )
-        }
-      )
-      jsoncontent <- paste(jsoncontent, collapse = ",")
-      json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
+    toJSONString = function(...) {
+      simple <- self$toSimpleType()
+      json <- jsonlite::toJSON(simple, auto_unbox = TRUE, digits = NA, null = 'null', ...)
+      return(as.character(jsonlite::minify(json)))
     },
 
     #' @description
@@ -177,10 +162,10 @@ TraceSetExperimental <- R6::R6Class(
     #' @return the instance of TraceSetExperimental
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
-      self$`adductNetwork` <- AdductNetworkExperimental$new()$fromJSON(jsonlite::toJSON(this_object$`adductNetwork`, auto_unbox = TRUE, digits = NA))
+      self$`adductNetwork` <- AdductNetworkExperimental$new()$fromJSON(jsonlite::toJSON(this_object$`adductNetwork`, auto_unbox = TRUE, digits = NA, null = 'null'))
       self$`sampleId` <- this_object$`sampleId`
       self$`sampleName` <- this_object$`sampleName`
-      self$`axes` <- Axes$new()$fromJSON(jsonlite::toJSON(this_object$`axes`, auto_unbox = TRUE, digits = NA))
+      self$`axes` <- Axes$new()$fromJSON(jsonlite::toJSON(this_object$`axes`, auto_unbox = TRUE, digits = NA, null = 'null'))
       self$`traces` <- ApiClient$new()$deserializeObj(this_object$`traces`, "array[TraceExperimental]", loadNamespace("Rsirius"))
       self
     },

@@ -85,10 +85,35 @@ SpectrumAnnotation <- R6::R6Class(
     },
 
     #' @description
-    #' To JSON String
-    #'
-    #' @return SpectrumAnnotation in JSON format
+    #' Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
     toJSON = function() {
+      .Deprecated(new = "toSimpleType", msg = "Use the '$toSimpleType()' method instead since that is more clearly named. Use '$toJSONString()' to get a JSON string")
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert to a List
+    #'
+    #' Convert the R6 object to a list to work more easily with other tooling.
+    #'
+    #' @return SpectrumAnnotation as a base R list.
+    #' @examples
+    #' # convert array of SpectrumAnnotation (x) to a data frame
+    #' \dontrun{
+    #' library(purrr)
+    #' library(tibble)
+    #' df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+    #' df
+    #' }
+    toList = function() {
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert SpectrumAnnotation to a base R type
+    #'
+    #' @return A base R type, e.g. a list or numeric/character array.
+    toSimpleType = function() {
       SpectrumAnnotationObject <- list()
       if (!is.null(self$`molecularFormula`)) {
         SpectrumAnnotationObject[["molecularFormula"]] <-
@@ -118,7 +143,7 @@ SpectrumAnnotation <- R6::R6Class(
         SpectrumAnnotationObject[["structureAnnotationScore"]] <-
           self$`structureAnnotationScore`
       }
-      SpectrumAnnotationObject
+      return(SpectrumAnnotationObject)
     },
 
     #' @description
@@ -154,69 +179,13 @@ SpectrumAnnotation <- R6::R6Class(
 
     #' @description
     #' To JSON String
-    #'
+    #' 
+    #' @param ... Parameters passed to `jsonlite::toJSON`
     #' @return SpectrumAnnotation in JSON format
-    toJSONString = function() {
-      jsoncontent <- c(
-        if (!is.null(self$`molecularFormula`)) {
-          sprintf(
-          '"molecularFormula":
-            "%s"
-                    ',
-          self$`molecularFormula`
-          )
-        },
-        if (!is.null(self$`adduct`)) {
-          sprintf(
-          '"adduct":
-            "%s"
-                    ',
-          self$`adduct`
-          )
-        },
-        if (!is.null(self$`exactMass`)) {
-          sprintf(
-          '"exactMass":
-            %d
-                    ',
-          self$`exactMass`
-          )
-        },
-        if (!is.null(self$`massDeviationMz`)) {
-          sprintf(
-          '"massDeviationMz":
-            %d
-                    ',
-          self$`massDeviationMz`
-          )
-        },
-        if (!is.null(self$`massDeviationPpm`)) {
-          sprintf(
-          '"massDeviationPpm":
-            %d
-                    ',
-          self$`massDeviationPpm`
-          )
-        },
-        if (!is.null(self$`structureAnnotationSmiles`)) {
-          sprintf(
-          '"structureAnnotationSmiles":
-            "%s"
-                    ',
-          self$`structureAnnotationSmiles`
-          )
-        },
-        if (!is.null(self$`structureAnnotationScore`)) {
-          sprintf(
-          '"structureAnnotationScore":
-            %d
-                    ',
-          self$`structureAnnotationScore`
-          )
-        }
-      )
-      jsoncontent <- paste(jsoncontent, collapse = ",")
-      json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
+    toJSONString = function(...) {
+      simple <- self$toSimpleType()
+      json <- jsonlite::toJSON(simple, auto_unbox = TRUE, digits = NA, null = 'null', ...)
+      return(as.character(jsonlite::minify(json)))
     },
 
     #' @description

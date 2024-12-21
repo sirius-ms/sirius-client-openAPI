@@ -51,10 +51,35 @@ Category <- R6::R6Class(
     },
 
     #' @description
-    #' To JSON String
-    #'
-    #' @return Category in JSON format
+    #' Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
     toJSON = function() {
+      .Deprecated(new = "toSimpleType", msg = "Use the '$toSimpleType()' method instead since that is more clearly named. Use '$toJSONString()' to get a JSON string")
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert to a List
+    #'
+    #' Convert the R6 object to a list to work more easily with other tooling.
+    #'
+    #' @return Category as a base R list.
+    #' @examples
+    #' # convert array of Category (x) to a data frame
+    #' \dontrun{
+    #' library(purrr)
+    #' library(tibble)
+    #' df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+    #' df
+    #' }
+    toList = function() {
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert Category to a base R type
+    #'
+    #' @return A base R type, e.g. a list or numeric/character array.
+    toSimpleType = function() {
       CategoryObject <- list()
       if (!is.null(self$`categoryName`)) {
         CategoryObject[["categoryName"]] <-
@@ -66,9 +91,9 @@ Category <- R6::R6Class(
       }
       if (!is.null(self$`items`)) {
         CategoryObject[["items"]] <-
-          lapply(self$`items`, function(x) x$toJSON())
+          lapply(self$`items`, function(x) x$toSimpleType())
       }
-      CategoryObject
+      return(CategoryObject)
     },
 
     #' @description
@@ -95,37 +120,13 @@ Category <- R6::R6Class(
 
     #' @description
     #' To JSON String
-    #'
+    #' 
+    #' @param ... Parameters passed to `jsonlite::toJSON`
     #' @return Category in JSON format
-    toJSONString = function() {
-      jsoncontent <- c(
-        if (!is.null(self$`categoryName`)) {
-          sprintf(
-          '"categoryName":
-            "%s"
-                    ',
-          self$`categoryName`
-          )
-        },
-        if (!is.null(self$`overallQuality`)) {
-          sprintf(
-          '"overallQuality":
-            "%s"
-                    ',
-          self$`overallQuality`
-          )
-        },
-        if (!is.null(self$`items`)) {
-          sprintf(
-          '"items":
-          [%s]
-',
-          paste(sapply(self$`items`, function(x) jsonlite::toJSON(x$toJSON(), auto_unbox = TRUE, digits = NA)), collapse = ",")
-          )
-        }
-      )
-      jsoncontent <- paste(jsoncontent, collapse = ",")
-      json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
+    toJSONString = function(...) {
+      simple <- self$toSimpleType()
+      json <- jsonlite::toJSON(simple, auto_unbox = TRUE, digits = NA, null = 'null', ...)
+      return(as.character(jsonlite::minify(json)))
     },
 
     #' @description

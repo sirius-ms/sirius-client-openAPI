@@ -58,10 +58,35 @@ ConsensusAnnotationsDeNovo <- R6::R6Class(
     },
 
     #' @description
-    #' To JSON String
-    #'
-    #' @return ConsensusAnnotationsDeNovo in JSON format
+    #' Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
     toJSON = function() {
+      .Deprecated(new = "toSimpleType", msg = "Use the '$toSimpleType()' method instead since that is more clearly named. Use '$toJSONString()' to get a JSON string")
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert to a List
+    #'
+    #' Convert the R6 object to a list to work more easily with other tooling.
+    #'
+    #' @return ConsensusAnnotationsDeNovo as a base R list.
+    #' @examples
+    #' # convert array of ConsensusAnnotationsDeNovo (x) to a data frame
+    #' \dontrun{
+    #' library(purrr)
+    #' library(tibble)
+    #' df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+    #' df
+    #' }
+    toList = function() {
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert ConsensusAnnotationsDeNovo to a base R type
+    #'
+    #' @return A base R type, e.g. a list or numeric/character array.
+    toSimpleType = function() {
       ConsensusAnnotationsDeNovoObject <- list()
       if (!is.null(self$`molecularFormula`)) {
         ConsensusAnnotationsDeNovoObject[["molecularFormula"]] <-
@@ -69,7 +94,7 @@ ConsensusAnnotationsDeNovo <- R6::R6Class(
       }
       if (!is.null(self$`compoundClasses`)) {
         ConsensusAnnotationsDeNovoObject[["compoundClasses"]] <-
-          self$`compoundClasses`$toJSON()
+          self$`compoundClasses`$toSimpleType()
       }
       if (!is.null(self$`supportingFeatureIds`)) {
         ConsensusAnnotationsDeNovoObject[["supportingFeatureIds"]] <-
@@ -79,7 +104,7 @@ ConsensusAnnotationsDeNovo <- R6::R6Class(
         ConsensusAnnotationsDeNovoObject[["selectionCriterion"]] <-
           self$`selectionCriterion`
       }
-      ConsensusAnnotationsDeNovoObject
+      return(ConsensusAnnotationsDeNovoObject)
     },
 
     #' @description
@@ -94,7 +119,7 @@ ConsensusAnnotationsDeNovo <- R6::R6Class(
       }
       if (!is.null(this_object$`compoundClasses`)) {
         `compoundclasses_object` <- CompoundClasses$new()
-        `compoundclasses_object`$fromJSON(jsonlite::toJSON(this_object$`compoundClasses`, auto_unbox = TRUE, digits = NA))
+        `compoundclasses_object`$fromJSON(jsonlite::toJSON(this_object$`compoundClasses`, auto_unbox = TRUE, digits = NA, null = 'null'))
         self$`compoundClasses` <- `compoundclasses_object`
       }
       if (!is.null(this_object$`supportingFeatureIds`)) {
@@ -111,45 +136,13 @@ ConsensusAnnotationsDeNovo <- R6::R6Class(
 
     #' @description
     #' To JSON String
-    #'
+    #' 
+    #' @param ... Parameters passed to `jsonlite::toJSON`
     #' @return ConsensusAnnotationsDeNovo in JSON format
-    toJSONString = function() {
-      jsoncontent <- c(
-        if (!is.null(self$`molecularFormula`)) {
-          sprintf(
-          '"molecularFormula":
-            "%s"
-                    ',
-          self$`molecularFormula`
-          )
-        },
-        if (!is.null(self$`compoundClasses`)) {
-          sprintf(
-          '"compoundClasses":
-          %s
-          ',
-          jsonlite::toJSON(self$`compoundClasses`$toJSON(), auto_unbox = TRUE, digits = NA)
-          )
-        },
-        if (!is.null(self$`supportingFeatureIds`)) {
-          sprintf(
-          '"supportingFeatureIds":
-             [%s]
-          ',
-          paste(unlist(lapply(self$`supportingFeatureIds`, function(x) paste0('"', x, '"'))), collapse = ",")
-          )
-        },
-        if (!is.null(self$`selectionCriterion`)) {
-          sprintf(
-          '"selectionCriterion":
-            "%s"
-                    ',
-          self$`selectionCriterion`
-          )
-        }
-      )
-      jsoncontent <- paste(jsoncontent, collapse = ",")
-      json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
+    toJSONString = function(...) {
+      simple <- self$toSimpleType()
+      json <- jsonlite::toJSON(simple, auto_unbox = TRUE, digits = NA, null = 'null', ...)
+      return(as.character(jsonlite::minify(json)))
     },
 
     #' @description
@@ -160,7 +153,7 @@ ConsensusAnnotationsDeNovo <- R6::R6Class(
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       self$`molecularFormula` <- this_object$`molecularFormula`
-      self$`compoundClasses` <- CompoundClasses$new()$fromJSON(jsonlite::toJSON(this_object$`compoundClasses`, auto_unbox = TRUE, digits = NA))
+      self$`compoundClasses` <- CompoundClasses$new()$fromJSON(jsonlite::toJSON(this_object$`compoundClasses`, auto_unbox = TRUE, digits = NA, null = 'null'))
       self$`supportingFeatureIds` <- ApiClient$new()$deserializeObj(this_object$`supportingFeatureIds`, "array[character]", loadNamespace("Rsirius"))
       if (!is.null(this_object$`selectionCriterion`) && !(this_object$`selectionCriterion` %in% c("MAJORITY_FORMULA", "TOP_FORMULA", "SINGLETON_FORMULA"))) {
         stop(paste("Error! \"", this_object$`selectionCriterion`, "\" cannot be assigned to `selectionCriterion`. Must be \"MAJORITY_FORMULA\", \"TOP_FORMULA\", \"SINGLETON_FORMULA\".", sep = ""))
