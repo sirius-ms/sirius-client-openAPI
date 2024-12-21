@@ -38,3 +38,4 @@ vignettes/*.pdf
 Rsirius/
 
 
+/tests/testthat/testthat-problems.rds
