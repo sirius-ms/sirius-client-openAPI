@@ -18,7 +18,7 @@
 
 # RStudio files
 .Rproj.user/
-*.Rproj
+
 # produced vignettes
 vignettes/*.html
 vignettes/*.pdf
@@ -33,9 +33,3 @@ vignettes/*.pdf
 # Temporary files created by R markdown
 *.utf8.md
 *.knit.md
-
-# built package
-Rsirius/
-
-
-/tests/testthat/testthat-problems.rds
