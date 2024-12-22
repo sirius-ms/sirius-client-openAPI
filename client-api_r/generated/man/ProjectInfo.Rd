@@ -15,6 +15,20 @@ ProjectInfo Class
 \details{
 Create a new ProjectInfo
 }
+\examples{
+
+## ------------------------------------------------
+## Method `ProjectInfo$toList`
+## ------------------------------------------------
+
+# convert array of ProjectInfo (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
@@ -41,6 +55,8 @@ Create a new ProjectInfo
 \itemize{
 \item \href{#method-ProjectInfo-new}{\code{ProjectInfo$new()}}
 \item \href{#method-ProjectInfo-toJSON}{\code{ProjectInfo$toJSON()}}
+\item \href{#method-ProjectInfo-toList}{\code{ProjectInfo$toList()}}
+\item \href{#method-ProjectInfo-toSimpleType}{\code{ProjectInfo$toSimpleType()}}
 \item \href{#method-ProjectInfo-fromJSON}{\code{ProjectInfo$fromJSON()}}
 \item \href{#method-ProjectInfo-toJSONString}{\code{ProjectInfo$toJSONString()}}
 \item \href{#method-ProjectInfo-fromJSONString}{\code{ProjectInfo$fromJSONString()}}
@@ -99,13 +115,52 @@ Initialize a new ProjectInfo class.
 \if{html}{\out{<a id="method-ProjectInfo-toJSON"></a>}}
 \if{latex}{\out{\hypertarget{method-ProjectInfo-toJSON}{}}}
 \subsection{Method \code{toJSON()}}{
-To JSON String
+Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ProjectInfo$toJSON()}\if{html}{\out{</div>}}
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ProjectInfo-toList"></a>}}
+\if{latex}{\out{\hypertarget{method-ProjectInfo-toList}{}}}
+\subsection{Method \code{toList()}}{
+Convert to a List
+
+Convert the R6 object to a list to work more easily with other tooling.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ProjectInfo$toList()}\if{html}{\out{</div>}}
+}
+
 \subsection{Returns}{
-ProjectInfo in JSON format
+ProjectInfo as a base R list.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{# convert array of ProjectInfo (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ProjectInfo-toSimpleType"></a>}}
+\if{latex}{\out{\hypertarget{method-ProjectInfo-toSimpleType}{}}}
+\subsection{Method \code{toSimpleType()}}{
+Convert ProjectInfo to a base R type
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ProjectInfo$toSimpleType()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A base R type, e.g. a list or numeric/character array.
 }
 }
 \if{html}{\out{<hr>}}
@@ -134,9 +189,16 @@ the instance of ProjectInfo
 \subsection{Method \code{toJSONString()}}{
 To JSON String
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ProjectInfo$toJSONString()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ProjectInfo$toJSONString(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Parameters passed to `jsonlite::toJSON`}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
 ProjectInfo in JSON format
 }

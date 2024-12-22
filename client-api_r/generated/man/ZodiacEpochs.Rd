@@ -15,6 +15,20 @@ ZodiacEpochs Class
 \details{
 Create a new ZodiacEpochs
 }
+\examples{
+
+## ------------------------------------------------
+## Method `ZodiacEpochs$toList`
+## ------------------------------------------------
+
+# convert array of ZodiacEpochs (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
@@ -31,6 +45,8 @@ Create a new ZodiacEpochs
 \itemize{
 \item \href{#method-ZodiacEpochs-new}{\code{ZodiacEpochs$new()}}
 \item \href{#method-ZodiacEpochs-toJSON}{\code{ZodiacEpochs$toJSON()}}
+\item \href{#method-ZodiacEpochs-toList}{\code{ZodiacEpochs$toList()}}
+\item \href{#method-ZodiacEpochs-toSimpleType}{\code{ZodiacEpochs$toSimpleType()}}
 \item \href{#method-ZodiacEpochs-fromJSON}{\code{ZodiacEpochs$fromJSON()}}
 \item \href{#method-ZodiacEpochs-toJSONString}{\code{ZodiacEpochs$toJSONString()}}
 \item \href{#method-ZodiacEpochs-fromJSONString}{\code{ZodiacEpochs$fromJSONString()}}
@@ -74,13 +90,52 @@ Initialize a new ZodiacEpochs class.
 \if{html}{\out{<a id="method-ZodiacEpochs-toJSON"></a>}}
 \if{latex}{\out{\hypertarget{method-ZodiacEpochs-toJSON}{}}}
 \subsection{Method \code{toJSON()}}{
-To JSON String
+Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ZodiacEpochs$toJSON()}\if{html}{\out{</div>}}
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ZodiacEpochs-toList"></a>}}
+\if{latex}{\out{\hypertarget{method-ZodiacEpochs-toList}{}}}
+\subsection{Method \code{toList()}}{
+Convert to a List
+
+Convert the R6 object to a list to work more easily with other tooling.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ZodiacEpochs$toList()}\if{html}{\out{</div>}}
+}
+
 \subsection{Returns}{
-ZodiacEpochs in JSON format
+ZodiacEpochs as a base R list.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{# convert array of ZodiacEpochs (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ZodiacEpochs-toSimpleType"></a>}}
+\if{latex}{\out{\hypertarget{method-ZodiacEpochs-toSimpleType}{}}}
+\subsection{Method \code{toSimpleType()}}{
+Convert ZodiacEpochs to a base R type
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ZodiacEpochs$toSimpleType()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A base R type, e.g. a list or numeric/character array.
 }
 }
 \if{html}{\out{<hr>}}
@@ -109,9 +164,16 @@ the instance of ZodiacEpochs
 \subsection{Method \code{toJSONString()}}{
 To JSON String
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ZodiacEpochs$toJSONString()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ZodiacEpochs$toJSONString(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Parameters passed to `jsonlite::toJSON`}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
 ZodiacEpochs in JSON format
 }
