@@ -12,7 +12,9 @@
 #' @field compoundClassAnnotation  \link{CompoundClasses} [optional]
 #' @field confidenceExactMatch Confidence Score that represents the confidence whether the top hit is correct. numeric [optional]
 #' @field confidenceApproxMatch Confidence Score that represents the confidence whether the top hit or a very similar hit (estimated by MCES distance) is correct. numeric [optional]
-#' @field expansiveSearchState  \link{ConfidenceMode} [optional]
+#' @field expansiveSearchState Result that shows if structure annotation was expanded by using PubChem as fallback and if so, which confidence mode was used (as per input paramter) character [optional]
+#' @field specifiedDatabases List of databases that have been specified by for structure db search. Null if no structure db search has been performed. list(character) [optional]
+#' @field expandedDatabases List of databases that have been used to expand search space during expansive search. Null if no structure db search has been performed. list(character) [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
 #' @export
@@ -25,8 +27,9 @@ FeatureAnnotations <- R6::R6Class(
     `confidenceExactMatch` = NULL,
     `confidenceApproxMatch` = NULL,
     `expansiveSearchState` = NULL,
-    #' Initialize a new FeatureAnnotations class.
-    #'
+    `specifiedDatabases` = NULL,
+    `expandedDatabases` = NULL,
+
     #' @description
     #' Initialize a new FeatureAnnotations class.
     #'
@@ -35,10 +38,11 @@ FeatureAnnotations <- R6::R6Class(
     #' @param compoundClassAnnotation compoundClassAnnotation
     #' @param confidenceExactMatch Confidence Score that represents the confidence whether the top hit is correct.
     #' @param confidenceApproxMatch Confidence Score that represents the confidence whether the top hit or a very similar hit (estimated by MCES distance) is correct.
-    #' @param expansiveSearchState expansiveSearchState
+    #' @param expansiveSearchState Result that shows if structure annotation was expanded by using PubChem as fallback and if so, which confidence mode was used (as per input paramter)
+    #' @param specifiedDatabases List of databases that have been specified by for structure db search. Null if no structure db search has been performed.
+    #' @param expandedDatabases List of databases that have been used to expand search space during expansive search. Null if no structure db search has been performed.
     #' @param ... Other optional arguments.
-    #' @export
-    initialize = function(`formulaAnnotation` = NULL, `structureAnnotation` = NULL, `compoundClassAnnotation` = NULL, `confidenceExactMatch` = NULL, `confidenceApproxMatch` = NULL, `expansiveSearchState` = NULL, ...) {
+    initialize = function(`formulaAnnotation` = NULL, `structureAnnotation` = NULL, `compoundClassAnnotation` = NULL, `confidenceExactMatch` = NULL, `confidenceApproxMatch` = NULL, `expansiveSearchState` = NULL, `specifiedDatabases` = NULL, `expandedDatabases` = NULL, ...) {
       if (!is.null(`formulaAnnotation`)) {
         stopifnot(R6::is.R6(`formulaAnnotation`))
         self$`formulaAnnotation` <- `formulaAnnotation`
@@ -64,52 +68,68 @@ FeatureAnnotations <- R6::R6Class(
         self$`confidenceApproxMatch` <- `confidenceApproxMatch`
       }
       if (!is.null(`expansiveSearchState`)) {
-        # disabled, as it is broken and checks for `expansiveSearchState` %in% c()
-        # if (!(`expansiveSearchState` %in% c())) {
-        #  stop(paste("Error! \"", `expansiveSearchState`, "\" cannot be assigned to `expansiveSearchState`. Must be .", sep = ""))
-        # }
-        stopifnot(R6::is.R6(`expansiveSearchState`))
+        if (!(`expansiveSearchState` %in% c("OFF", "EXACT", "APPROXIMATE"))) {
+          stop(paste("Error! \"", `expansiveSearchState`, "\" cannot be assigned to `expansiveSearchState`. Must be \"OFF\", \"EXACT\", \"APPROXIMATE\".", sep = ""))
+        }
+        if (!(is.character(`expansiveSearchState`) && length(`expansiveSearchState`) == 1)) {
+          stop(paste("Error! Invalid data for `expansiveSearchState`. Must be a string:", `expansiveSearchState`))
+        }
         self$`expansiveSearchState` <- `expansiveSearchState`
       }
+      if (!is.null(`specifiedDatabases`)) {
+        stopifnot(is.vector(`specifiedDatabases`), length(`specifiedDatabases`) != 0)
+        sapply(`specifiedDatabases`, function(x) stopifnot(is.character(x)))
+        self$`specifiedDatabases` <- `specifiedDatabases`
+      }
+      if (!is.null(`expandedDatabases`)) {
+        stopifnot(is.vector(`expandedDatabases`), length(`expandedDatabases`) != 0)
+        sapply(`expandedDatabases`, function(x) stopifnot(is.character(x)))
+        self$`expandedDatabases` <- `expandedDatabases`
+      }
     },
-    #' To JSON string
-    #'
+
     #' @description
-    #' To JSON String
-    #'
-    #' @return FeatureAnnotations in JSON format
-    #' @export
+    #' Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
     toJSON = function() {
+      .Deprecated(new = "toSimpleType", msg = "Use the '$toSimpleType()' method instead since that is more clearly named. Use '$toJSONString()' to get a JSON string")
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert to a List
+    #'
+    #' Convert the R6 object to a list to work more easily with other tooling.
+    #'
+    #' @return FeatureAnnotations as a base R list.
+    #' @examples
+    #' # convert array of FeatureAnnotations (x) to a data frame
+    #' \dontrun{
+    #' library(purrr)
+    #' library(tibble)
+    #' df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+    #' df
+    #' }
+    toList = function() {
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert FeatureAnnotations to a base R type
+    #'
+    #' @return A base R type, e.g. a list or numeric/character array.
+    toSimpleType = function() {
       FeatureAnnotationsObject <- list()
       if (!is.null(self$`formulaAnnotation`)) {
         FeatureAnnotationsObject[["formulaAnnotation"]] <-
-          if (is.list(self$`formulaAnnotation`$toJSON()) && length(self$`formulaAnnotation`$toJSON()) == 0L){
-            NULL
-          } else if (length(names(self$`formulaAnnotation`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`formulaAnnotation`$toJSON()))) {
-            jsonlite::fromJSON(self$`formulaAnnotation`$toJSON())
-          } else {
-            self$`formulaAnnotation`$toJSON()
-          }
+          self$`formulaAnnotation`$toSimpleType()
       }
       if (!is.null(self$`structureAnnotation`)) {
         FeatureAnnotationsObject[["structureAnnotation"]] <-
-          if (is.list(self$`structureAnnotation`$toJSON()) && length(self$`structureAnnotation`$toJSON()) == 0L){
-            NULL
-          } else if (length(names(self$`structureAnnotation`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`structureAnnotation`$toJSON()))) {
-            jsonlite::fromJSON(self$`structureAnnotation`$toJSON())
-          } else {
-            self$`structureAnnotation`$toJSON()
-          }
+          self$`structureAnnotation`$toSimpleType()
       }
       if (!is.null(self$`compoundClassAnnotation`)) {
         FeatureAnnotationsObject[["compoundClassAnnotation"]] <-
-          if (is.list(self$`compoundClassAnnotation`$toJSON()) && length(self$`compoundClassAnnotation`$toJSON()) == 0L){
-            NULL
-          } else if (length(names(self$`compoundClassAnnotation`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`compoundClassAnnotation`$toJSON()))) {
-            jsonlite::fromJSON(self$`compoundClassAnnotation`$toJSON())
-          } else {
-            self$`compoundClassAnnotation`$toJSON()
-          }
+          self$`compoundClassAnnotation`$toSimpleType()
       }
       if (!is.null(self$`confidenceExactMatch`)) {
         FeatureAnnotationsObject[["confidenceExactMatch"]] <-
@@ -121,39 +141,39 @@ FeatureAnnotations <- R6::R6Class(
       }
       if (!is.null(self$`expansiveSearchState`)) {
         FeatureAnnotationsObject[["expansiveSearchState"]] <-
-          if (is.list(self$`expansiveSearchState`$toJSON()) && length(self$`expansiveSearchState`$toJSON()) == 0L){
-            NULL
-          } else if (length(names(self$`expansiveSearchState`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`expansiveSearchState`$toJSON()))) {
-            jsonlite::fromJSON(self$`expansiveSearchState`$toJSON())
-          } else {
-            self$`expansiveSearchState`$toJSON()
-          }
+          self$`expansiveSearchState`
       }
-      FeatureAnnotationsObject
+      if (!is.null(self$`specifiedDatabases`)) {
+        FeatureAnnotationsObject[["specifiedDatabases"]] <-
+          self$`specifiedDatabases`
+      }
+      if (!is.null(self$`expandedDatabases`)) {
+        FeatureAnnotationsObject[["expandedDatabases"]] <-
+          self$`expandedDatabases`
+      }
+      return(FeatureAnnotationsObject)
     },
-    #' Deserialize JSON string into an instance of FeatureAnnotations
-    #'
+
     #' @description
     #' Deserialize JSON string into an instance of FeatureAnnotations
     #'
     #' @param input_json the JSON input
     #' @return the instance of FeatureAnnotations
-    #' @export
     fromJSON = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       if (!is.null(this_object$`formulaAnnotation`)) {
         `formulaannotation_object` <- FormulaCandidate$new()
-        `formulaannotation_object`$fromJSON(jsonlite::toJSON(this_object$`formulaAnnotation`, auto_unbox = TRUE, digits = NA))
+        `formulaannotation_object`$fromJSON(jsonlite::toJSON(this_object$`formulaAnnotation`, auto_unbox = TRUE, digits = NA, null = 'null'))
         self$`formulaAnnotation` <- `formulaannotation_object`
       }
       if (!is.null(this_object$`structureAnnotation`)) {
         `structureannotation_object` <- StructureCandidateScored$new()
-        `structureannotation_object`$fromJSON(jsonlite::toJSON(this_object$`structureAnnotation`, auto_unbox = TRUE, digits = NA))
+        `structureannotation_object`$fromJSON(jsonlite::toJSON(this_object$`structureAnnotation`, auto_unbox = TRUE, digits = NA, null = 'null'))
         self$`structureAnnotation` <- `structureannotation_object`
       }
       if (!is.null(this_object$`compoundClassAnnotation`)) {
         `compoundclassannotation_object` <- CompoundClasses$new()
-        `compoundclassannotation_object`$fromJSON(jsonlite::toJSON(this_object$`compoundClassAnnotation`, auto_unbox = TRUE, digits = NA))
+        `compoundclassannotation_object`$fromJSON(jsonlite::toJSON(this_object$`compoundClassAnnotation`, auto_unbox = TRUE, digits = NA, null = 'null'))
         self$`compoundClassAnnotation` <- `compoundclassannotation_object`
       }
       if (!is.null(this_object$`confidenceExactMatch`)) {
@@ -163,142 +183,87 @@ FeatureAnnotations <- R6::R6Class(
         self$`confidenceApproxMatch` <- this_object$`confidenceApproxMatch`
       }
       if (!is.null(this_object$`expansiveSearchState`)) {
-        `expansivesearchstate_object` <- ConfidenceMode$new()
-        `expansivesearchstate_object`$fromJSON(jsonlite::toJSON(this_object$`expansiveSearchState`, auto_unbox = TRUE, digits = NA))
-        self$`expansiveSearchState` <- `expansivesearchstate_object`
+        if (!is.null(this_object$`expansiveSearchState`) && !(this_object$`expansiveSearchState` %in% c("OFF", "EXACT", "APPROXIMATE"))) {
+          stop(paste("Error! \"", this_object$`expansiveSearchState`, "\" cannot be assigned to `expansiveSearchState`. Must be \"OFF\", \"EXACT\", \"APPROXIMATE\".", sep = ""))
+        }
+        self$`expansiveSearchState` <- this_object$`expansiveSearchState`
+      }
+      if (!is.null(this_object$`specifiedDatabases`)) {
+        self$`specifiedDatabases` <- ApiClient$new()$deserializeObj(this_object$`specifiedDatabases`, "array[character]", loadNamespace("Rsirius"))
+      }
+      if (!is.null(this_object$`expandedDatabases`)) {
+        self$`expandedDatabases` <- ApiClient$new()$deserializeObj(this_object$`expandedDatabases`, "array[character]", loadNamespace("Rsirius"))
       }
       self
     },
-    #' To JSON string
-    #'
+
     #' @description
     #' To JSON String
-    #'
+    #' 
+    #' @param ... Parameters passed to `jsonlite::toJSON`
     #' @return FeatureAnnotations in JSON format
-    #' @export
-    toJSONString = function() {
-      jsoncontent <- c(
-        if (!is.null(self$`formulaAnnotation`)) {
-          sprintf(
-          '"formulaAnnotation":
-          %s
-          ',
-          jsonlite::toJSON(self$`formulaAnnotation`$toJSON(), auto_unbox = TRUE, digits = NA)
-          )
-        },
-        if (!is.null(self$`structureAnnotation`)) {
-          sprintf(
-          '"structureAnnotation":
-          %s
-          ',
-          jsonlite::toJSON(self$`structureAnnotation`$toJSON(), auto_unbox = TRUE, digits = NA)
-          )
-        },
-        if (!is.null(self$`compoundClassAnnotation`)) {
-          sprintf(
-          '"compoundClassAnnotation":
-          %s
-          ',
-          jsonlite::toJSON(self$`compoundClassAnnotation`$toJSON(), auto_unbox = TRUE, digits = NA)
-          )
-        },
-        if (!is.null(self$`confidenceExactMatch`)) {
-          sprintf(
-          '"confidenceExactMatch":
-            %f
-                    ',
-          self$`confidenceExactMatch`
-          )
-        },
-        if (!is.null(self$`confidenceApproxMatch`)) {
-          sprintf(
-          '"confidenceApproxMatch":
-            %f
-                    ',
-          self$`confidenceApproxMatch`
-          )
-        },
-        if (!is.null(self$`expansiveSearchState`)) {
-          sprintf(
-          '"expansiveSearchState":
-          %s
-          ',
-          jsonlite::toJSON(self$`expansiveSearchState`$toJSON(), auto_unbox = TRUE, digits = NA)
-          )
-        }
-      )
-      jsoncontent <- paste(jsoncontent, collapse = ",")
-      # remove c() occurences and reduce resulting double escaped quotes \"\" into \"
-      jsoncontent <- gsub('\\\"c\\((.*?)\\\"\\)', '\\1', jsoncontent)
-      # fix wrong serialization of "\"ENUM\"" to "ENUM"
-      jsoncontent <- gsub("\\\\\"([A-Z]+)\\\\\"", "\\1", jsoncontent)
-      json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
+    toJSONString = function(...) {
+      simple <- self$toSimpleType()
+      json <- jsonlite::toJSON(simple, auto_unbox = TRUE, digits = NA, null = 'null', ...)
+      return(as.character(jsonlite::minify(json)))
     },
-    #' Deserialize JSON string into an instance of FeatureAnnotations
-    #'
+
     #' @description
     #' Deserialize JSON string into an instance of FeatureAnnotations
     #'
     #' @param input_json the JSON input
     #' @return the instance of FeatureAnnotations
-    #' @export
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
-      self$`formulaAnnotation` <- FormulaCandidate$new()$fromJSON(jsonlite::toJSON(this_object$`formulaAnnotation`, auto_unbox = TRUE, digits = NA))
-      self$`structureAnnotation` <- StructureCandidateScored$new()$fromJSON(jsonlite::toJSON(this_object$`structureAnnotation`, auto_unbox = TRUE, digits = NA))
-      self$`compoundClassAnnotation` <- CompoundClasses$new()$fromJSON(jsonlite::toJSON(this_object$`compoundClassAnnotation`, auto_unbox = TRUE, digits = NA))
+      self$`formulaAnnotation` <- FormulaCandidate$new()$fromJSON(jsonlite::toJSON(this_object$`formulaAnnotation`, auto_unbox = TRUE, digits = NA, null = 'null'))
+      self$`structureAnnotation` <- StructureCandidateScored$new()$fromJSON(jsonlite::toJSON(this_object$`structureAnnotation`, auto_unbox = TRUE, digits = NA, null = 'null'))
+      self$`compoundClassAnnotation` <- CompoundClasses$new()$fromJSON(jsonlite::toJSON(this_object$`compoundClassAnnotation`, auto_unbox = TRUE, digits = NA, null = 'null'))
       self$`confidenceExactMatch` <- this_object$`confidenceExactMatch`
       self$`confidenceApproxMatch` <- this_object$`confidenceApproxMatch`
-      self$`expansiveSearchState` <- ConfidenceMode$new()$fromJSON(jsonlite::toJSON(this_object$`expansiveSearchState`, auto_unbox = TRUE, digits = NA))
+      if (!is.null(this_object$`expansiveSearchState`) && !(this_object$`expansiveSearchState` %in% c("OFF", "EXACT", "APPROXIMATE"))) {
+        stop(paste("Error! \"", this_object$`expansiveSearchState`, "\" cannot be assigned to `expansiveSearchState`. Must be \"OFF\", \"EXACT\", \"APPROXIMATE\".", sep = ""))
+      }
+      self$`expansiveSearchState` <- this_object$`expansiveSearchState`
+      self$`specifiedDatabases` <- ApiClient$new()$deserializeObj(this_object$`specifiedDatabases`, "array[character]", loadNamespace("Rsirius"))
+      self$`expandedDatabases` <- ApiClient$new()$deserializeObj(this_object$`expandedDatabases`, "array[character]", loadNamespace("Rsirius"))
       self
     },
-    #' Validate JSON input with respect to FeatureAnnotations
-    #'
+
     #' @description
     #' Validate JSON input with respect to FeatureAnnotations and throw an exception if invalid
     #'
     #' @param input the JSON input
-    #' @export
     validateJSON = function(input) {
       input_json <- jsonlite::fromJSON(input)
     },
-    #' To string (JSON format)
-    #'
+
     #' @description
     #' To string (JSON format)
     #'
     #' @return String representation of FeatureAnnotations
-    #' @export
     toString = function() {
       self$toJSONString()
     },
-    #' Return true if the values in all fields are valid.
-    #'
+
     #' @description
     #' Return true if the values in all fields are valid.
     #'
     #' @return true if the values in all fields are valid.
-    #' @export
     isValid = function() {
       TRUE
     },
-    #' Return a list of invalid fields (if any).
-    #'
+
     #' @description
     #' Return a list of invalid fields (if any).
     #'
     #' @return A list of invalid fields (if any).
-    #' @export
     getInvalidFields = function() {
       invalid_fields <- list()
       invalid_fields
     },
-    #' Print the object
-    #'
+
     #' @description
     #' Print the object
-    #'
-    #' @export
     print = function() {
       print(jsonlite::prettify(self$toJSONString()))
       invisible(self)

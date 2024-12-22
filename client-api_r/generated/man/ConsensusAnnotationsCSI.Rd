@@ -15,6 +15,20 @@ ConsensusAnnotationsCSI Class
 \details{
 Create a new ConsensusAnnotationsCSI
 }
+\examples{
+
+## ------------------------------------------------
+## Method `ConsensusAnnotationsCSI$toList`
+## ------------------------------------------------
+
+# convert array of ConsensusAnnotationsCSI (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
@@ -24,7 +38,7 @@ Create a new ConsensusAnnotationsCSI
 
 \item{\code{supportingFeatureIds}}{FeatureIds where the topAnnotation supports this annotation. list(character) [optional]}
 
-\item{\code{selectionCriterion}}{\link{ConsensusCriterionCSI} [optional]}
+\item{\code{selectionCriterion}}{Null if this is a custom selection character [optional]}
 
 \item{\code{csiFingerIdStructure}}{\link{StructureCandidate} [optional]}
 
@@ -39,6 +53,8 @@ Create a new ConsensusAnnotationsCSI
 \itemize{
 \item \href{#method-ConsensusAnnotationsCSI-new}{\code{ConsensusAnnotationsCSI$new()}}
 \item \href{#method-ConsensusAnnotationsCSI-toJSON}{\code{ConsensusAnnotationsCSI$toJSON()}}
+\item \href{#method-ConsensusAnnotationsCSI-toList}{\code{ConsensusAnnotationsCSI$toList()}}
+\item \href{#method-ConsensusAnnotationsCSI-toSimpleType}{\code{ConsensusAnnotationsCSI$toSimpleType()}}
 \item \href{#method-ConsensusAnnotationsCSI-fromJSON}{\code{ConsensusAnnotationsCSI$fromJSON()}}
 \item \href{#method-ConsensusAnnotationsCSI-toJSONString}{\code{ConsensusAnnotationsCSI$toJSONString()}}
 \item \href{#method-ConsensusAnnotationsCSI-fromJSONString}{\code{ConsensusAnnotationsCSI$fromJSONString()}}
@@ -77,7 +93,7 @@ Initialize a new ConsensusAnnotationsCSI class.
 
 \item{\code{supportingFeatureIds}}{FeatureIds where the topAnnotation supports this annotation.}
 
-\item{\code{selectionCriterion}}{selectionCriterion}
+\item{\code{selectionCriterion}}{Null if this is a custom selection}
 
 \item{\code{csiFingerIdStructure}}{csiFingerIdStructure}
 
@@ -94,13 +110,52 @@ Initialize a new ConsensusAnnotationsCSI class.
 \if{html}{\out{<a id="method-ConsensusAnnotationsCSI-toJSON"></a>}}
 \if{latex}{\out{\hypertarget{method-ConsensusAnnotationsCSI-toJSON}{}}}
 \subsection{Method \code{toJSON()}}{
-To JSON String
+Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ConsensusAnnotationsCSI$toJSON()}\if{html}{\out{</div>}}
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ConsensusAnnotationsCSI-toList"></a>}}
+\if{latex}{\out{\hypertarget{method-ConsensusAnnotationsCSI-toList}{}}}
+\subsection{Method \code{toList()}}{
+Convert to a List
+
+Convert the R6 object to a list to work more easily with other tooling.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ConsensusAnnotationsCSI$toList()}\if{html}{\out{</div>}}
+}
+
 \subsection{Returns}{
-ConsensusAnnotationsCSI in JSON format
+ConsensusAnnotationsCSI as a base R list.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{# convert array of ConsensusAnnotationsCSI (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ConsensusAnnotationsCSI-toSimpleType"></a>}}
+\if{latex}{\out{\hypertarget{method-ConsensusAnnotationsCSI-toSimpleType}{}}}
+\subsection{Method \code{toSimpleType()}}{
+Convert ConsensusAnnotationsCSI to a base R type
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ConsensusAnnotationsCSI$toSimpleType()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A base R type, e.g. a list or numeric/character array.
 }
 }
 \if{html}{\out{<hr>}}
@@ -129,9 +184,16 @@ the instance of ConsensusAnnotationsCSI
 \subsection{Method \code{toJSONString()}}{
 To JSON String
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ConsensusAnnotationsCSI$toJSONString()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ConsensusAnnotationsCSI$toJSONString(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Parameters passed to `jsonlite::toJSON`}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
 ConsensusAnnotationsCSI in JSON format
 }

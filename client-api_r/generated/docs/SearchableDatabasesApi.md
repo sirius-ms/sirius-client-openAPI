@@ -4,7 +4,7 @@ All URIs are relative to *http://localhost:8080*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**AddDatabases**](SearchableDatabasesApi.md#AddDatabases) | **POST** /api/databases | 
+[**AddDatabases**](SearchableDatabasesApi.md#AddDatabases) | **POST** /api/databases | DEPRECATED: this endpoint is based on local file paths and will likely be replaced in future versions of this API.
 [**CreateDatabase**](SearchableDatabasesApi.md#CreateDatabase) | **POST** /api/databases/{databaseId} | 
 [**GetCustomDatabases**](SearchableDatabasesApi.md#GetCustomDatabases) | **GET** /api/databases/custom | 
 [**GetDatabase**](SearchableDatabasesApi.md#GetDatabase) | **GET** /api/databases/{databaseId} | 
@@ -18,12 +18,14 @@ Method | HTTP request | Description
 # **AddDatabases**
 > array[SearchableDatabase] AddDatabases(request_body)
 
-
+DEPRECATED: this endpoint is based on local file paths and will likely be replaced in future versions of this API.
 
 ### Example
 ```R
 library(Rsirius)
 
+# DEPRECATED: this endpoint is based on local file paths and will likely be replaced in future versions of this API.
+#
 # prepare function argument(s)
 var_request_body <- c("property_example") # array[character] | 
 

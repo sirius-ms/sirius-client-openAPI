@@ -15,12 +15,26 @@ SpectrumAnnotation Class
 \details{
 Create a new SpectrumAnnotation
 }
+\examples{
+
+## ------------------------------------------------
+## Method `SpectrumAnnotation$toList`
+## ------------------------------------------------
+
+# convert array of SpectrumAnnotation (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
 \item{\code{molecularFormula}}{Molecular formula that has been annotated to this spectrum character [optional]}
 
-\item{\code{ionization}}{Ionization that has been annotated to this spectrum character [optional]}
+\item{\code{adduct}}{Adduct that has been annotated to this spectrum character [optional]}
 
 \item{\code{exactMass}}{Exact mass based on the annotated molecular formula and ionization numeric [optional]}
 
@@ -28,9 +42,9 @@ Create a new SpectrumAnnotation
 
 \item{\code{massDeviationPpm}}{Relative mass deviation of the exact mass to the precursor mass (precursorMz) of this spectrum in ppm numeric [optional]}
 
-\item{\code{structureAnnotationSmiles}}{Smiles of the structure candidate used to derive substructure peak annotations via epimetheus insilico fragmentation  Substructure highlighting (bond and atom indices) refer to this specific SMILES.  If you standardize or canonicalize this SMILES in any way the indices of substructure highlighting might  not match correctly anymore.   Null if substructure annotation not available or not requested. character [optional]}
+\item{\code{structureAnnotationSmiles}}{EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.   Smiles of the structure candidate used to derive substructure peak annotations via epimetheus insilico fragmentation  Substructure highlighting (bond and atom indices) refer to this specific SMILES.  If you standardize or canonicalize this SMILES in any way the indices of substructure highlighting might  not match correctly anymore.   Null if substructure annotation not available or not requested. character [optional]}
 
-\item{\code{structureAnnotationScore}}{Overall score of all substructure annotations computed for this structure candidate (structureAnnotationSmiles)   Null if substructure annotation not available or not requested. numeric [optional]}
+\item{\code{structureAnnotationScore}}{EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.   Overall score of all substructure annotations computed for this structure candidate (structureAnnotationSmiles)   Null if substructure annotation not available or not requested. numeric [optional]}
 }
 \if{html}{\out{</div>}}
 }
@@ -39,6 +53,8 @@ Create a new SpectrumAnnotation
 \itemize{
 \item \href{#method-SpectrumAnnotation-new}{\code{SpectrumAnnotation$new()}}
 \item \href{#method-SpectrumAnnotation-toJSON}{\code{SpectrumAnnotation$toJSON()}}
+\item \href{#method-SpectrumAnnotation-toList}{\code{SpectrumAnnotation$toList()}}
+\item \href{#method-SpectrumAnnotation-toSimpleType}{\code{SpectrumAnnotation$toSimpleType()}}
 \item \href{#method-SpectrumAnnotation-fromJSON}{\code{SpectrumAnnotation$fromJSON()}}
 \item \href{#method-SpectrumAnnotation-toJSONString}{\code{SpectrumAnnotation$toJSONString()}}
 \item \href{#method-SpectrumAnnotation-fromJSONString}{\code{SpectrumAnnotation$fromJSONString()}}
@@ -58,7 +74,7 @@ Initialize a new SpectrumAnnotation class.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{SpectrumAnnotation$new(
   molecularFormula = NULL,
-  ionization = NULL,
+  adduct = NULL,
   exactMass = NULL,
   massDeviationMz = NULL,
   massDeviationPpm = NULL,
@@ -73,7 +89,7 @@ Initialize a new SpectrumAnnotation class.
 \describe{
 \item{\code{molecularFormula}}{Molecular formula that has been annotated to this spectrum}
 
-\item{\code{ionization}}{Ionization that has been annotated to this spectrum}
+\item{\code{adduct}}{Adduct that has been annotated to this spectrum}
 
 \item{\code{exactMass}}{Exact mass based on the annotated molecular formula and ionization}
 
@@ -81,9 +97,9 @@ Initialize a new SpectrumAnnotation class.
 
 \item{\code{massDeviationPpm}}{Relative mass deviation of the exact mass to the precursor mass (precursorMz) of this spectrum in ppm}
 
-\item{\code{structureAnnotationSmiles}}{Smiles of the structure candidate used to derive substructure peak annotations via epimetheus insilico fragmentation  Substructure highlighting (bond and atom indices) refer to this specific SMILES.  If you standardize or canonicalize this SMILES in any way the indices of substructure highlighting might  not match correctly anymore.   Null if substructure annotation not available or not requested.}
+\item{\code{structureAnnotationSmiles}}{EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.   Smiles of the structure candidate used to derive substructure peak annotations via epimetheus insilico fragmentation  Substructure highlighting (bond and atom indices) refer to this specific SMILES.  If you standardize or canonicalize this SMILES in any way the indices of substructure highlighting might  not match correctly anymore.   Null if substructure annotation not available or not requested.}
 
-\item{\code{structureAnnotationScore}}{Overall score of all substructure annotations computed for this structure candidate (structureAnnotationSmiles)   Null if substructure annotation not available or not requested.}
+\item{\code{structureAnnotationScore}}{EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.   Overall score of all substructure annotations computed for this structure candidate (structureAnnotationSmiles)   Null if substructure annotation not available or not requested.}
 
 \item{\code{...}}{Other optional arguments.}
 }
@@ -94,13 +110,52 @@ Initialize a new SpectrumAnnotation class.
 \if{html}{\out{<a id="method-SpectrumAnnotation-toJSON"></a>}}
 \if{latex}{\out{\hypertarget{method-SpectrumAnnotation-toJSON}{}}}
 \subsection{Method \code{toJSON()}}{
-To JSON String
+Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{SpectrumAnnotation$toJSON()}\if{html}{\out{</div>}}
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-SpectrumAnnotation-toList"></a>}}
+\if{latex}{\out{\hypertarget{method-SpectrumAnnotation-toList}{}}}
+\subsection{Method \code{toList()}}{
+Convert to a List
+
+Convert the R6 object to a list to work more easily with other tooling.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{SpectrumAnnotation$toList()}\if{html}{\out{</div>}}
+}
+
 \subsection{Returns}{
-SpectrumAnnotation in JSON format
+SpectrumAnnotation as a base R list.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{# convert array of SpectrumAnnotation (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-SpectrumAnnotation-toSimpleType"></a>}}
+\if{latex}{\out{\hypertarget{method-SpectrumAnnotation-toSimpleType}{}}}
+\subsection{Method \code{toSimpleType()}}{
+Convert SpectrumAnnotation to a base R type
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{SpectrumAnnotation$toSimpleType()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A base R type, e.g. a list or numeric/character array.
 }
 }
 \if{html}{\out{<hr>}}
@@ -129,9 +184,16 @@ the instance of SpectrumAnnotation
 \subsection{Method \code{toJSONString()}}{
 To JSON String
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{SpectrumAnnotation$toJSONString()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{SpectrumAnnotation$toJSONString(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Parameters passed to `jsonlite::toJSON`}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
 SpectrumAnnotation in JSON format
 }

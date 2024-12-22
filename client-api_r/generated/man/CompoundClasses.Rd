@@ -15,6 +15,20 @@ CompoundClasses Class
 \details{
 Create a new CompoundClasses
 }
+\examples{
+
+## ------------------------------------------------
+## Method `CompoundClasses$toList`
+## ------------------------------------------------
+
+# convert array of CompoundClasses (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
@@ -35,6 +49,8 @@ Create a new CompoundClasses
 \itemize{
 \item \href{#method-CompoundClasses-new}{\code{CompoundClasses$new()}}
 \item \href{#method-CompoundClasses-toJSON}{\code{CompoundClasses$toJSON()}}
+\item \href{#method-CompoundClasses-toList}{\code{CompoundClasses$toList()}}
+\item \href{#method-CompoundClasses-toSimpleType}{\code{CompoundClasses$toSimpleType()}}
 \item \href{#method-CompoundClasses-fromJSON}{\code{CompoundClasses$fromJSON()}}
 \item \href{#method-CompoundClasses-toJSONString}{\code{CompoundClasses$toJSONString()}}
 \item \href{#method-CompoundClasses-fromJSONString}{\code{CompoundClasses$fromJSONString()}}
@@ -84,13 +100,52 @@ Initialize a new CompoundClasses class.
 \if{html}{\out{<a id="method-CompoundClasses-toJSON"></a>}}
 \if{latex}{\out{\hypertarget{method-CompoundClasses-toJSON}{}}}
 \subsection{Method \code{toJSON()}}{
-To JSON String
+Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{CompoundClasses$toJSON()}\if{html}{\out{</div>}}
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-CompoundClasses-toList"></a>}}
+\if{latex}{\out{\hypertarget{method-CompoundClasses-toList}{}}}
+\subsection{Method \code{toList()}}{
+Convert to a List
+
+Convert the R6 object to a list to work more easily with other tooling.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{CompoundClasses$toList()}\if{html}{\out{</div>}}
+}
+
 \subsection{Returns}{
-CompoundClasses in JSON format
+CompoundClasses as a base R list.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{# convert array of CompoundClasses (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-CompoundClasses-toSimpleType"></a>}}
+\if{latex}{\out{\hypertarget{method-CompoundClasses-toSimpleType}{}}}
+\subsection{Method \code{toSimpleType()}}{
+Convert CompoundClasses to a base R type
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{CompoundClasses$toSimpleType()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A base R type, e.g. a list or numeric/character array.
 }
 }
 \if{html}{\out{<hr>}}
@@ -119,9 +174,16 @@ the instance of CompoundClasses
 \subsection{Method \code{toJSONString()}}{
 To JSON String
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{CompoundClasses$toJSONString()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{CompoundClasses$toJSONString(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Parameters passed to `jsonlite::toJSON`}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
 CompoundClasses in JSON format
 }

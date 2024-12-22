@@ -15,6 +15,20 @@ ProjectChangeEvent Class
 \details{
 Create a new ProjectChangeEvent
 }
+\examples{
+
+## ------------------------------------------------
+## Method `ProjectChangeEvent$toList`
+## ------------------------------------------------
+
+# convert array of ProjectChangeEvent (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
@@ -37,6 +51,8 @@ Create a new ProjectChangeEvent
 \itemize{
 \item \href{#method-ProjectChangeEvent-new}{\code{ProjectChangeEvent$new()}}
 \item \href{#method-ProjectChangeEvent-toJSON}{\code{ProjectChangeEvent$toJSON()}}
+\item \href{#method-ProjectChangeEvent-toList}{\code{ProjectChangeEvent$toList()}}
+\item \href{#method-ProjectChangeEvent-toSimpleType}{\code{ProjectChangeEvent$toSimpleType()}}
 \item \href{#method-ProjectChangeEvent-fromJSON}{\code{ProjectChangeEvent$fromJSON()}}
 \item \href{#method-ProjectChangeEvent-toJSONString}{\code{ProjectChangeEvent$toJSONString()}}
 \item \href{#method-ProjectChangeEvent-fromJSONString}{\code{ProjectChangeEvent$fromJSONString()}}
@@ -89,13 +105,52 @@ Initialize a new ProjectChangeEvent class.
 \if{html}{\out{<a id="method-ProjectChangeEvent-toJSON"></a>}}
 \if{latex}{\out{\hypertarget{method-ProjectChangeEvent-toJSON}{}}}
 \subsection{Method \code{toJSON()}}{
-To JSON String
+Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ProjectChangeEvent$toJSON()}\if{html}{\out{</div>}}
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ProjectChangeEvent-toList"></a>}}
+\if{latex}{\out{\hypertarget{method-ProjectChangeEvent-toList}{}}}
+\subsection{Method \code{toList()}}{
+Convert to a List
+
+Convert the R6 object to a list to work more easily with other tooling.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ProjectChangeEvent$toList()}\if{html}{\out{</div>}}
+}
+
 \subsection{Returns}{
-ProjectChangeEvent in JSON format
+ProjectChangeEvent as a base R list.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{# convert array of ProjectChangeEvent (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ProjectChangeEvent-toSimpleType"></a>}}
+\if{latex}{\out{\hypertarget{method-ProjectChangeEvent-toSimpleType}{}}}
+\subsection{Method \code{toSimpleType()}}{
+Convert ProjectChangeEvent to a base R type
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ProjectChangeEvent$toSimpleType()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A base R type, e.g. a list or numeric/character array.
 }
 }
 \if{html}{\out{<hr>}}
@@ -124,9 +179,16 @@ the instance of ProjectChangeEvent
 \subsection{Method \code{toJSONString()}}{
 To JSON String
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ProjectChangeEvent$toJSONString()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ProjectChangeEvent$toJSONString(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Parameters passed to `jsonlite::toJSON`}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
 ProjectChangeEvent in JSON format
 }

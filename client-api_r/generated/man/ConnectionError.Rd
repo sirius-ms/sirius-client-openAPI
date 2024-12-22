@@ -15,6 +15,20 @@ ConnectionError Class
 \details{
 Create a new ConnectionError
 }
+\examples{
+
+## ------------------------------------------------
+## Method `ConnectionError$toList`
+## ------------------------------------------------
+
+# convert array of ConnectionError (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
@@ -41,6 +55,8 @@ Create a new ConnectionError
 \itemize{
 \item \href{#method-ConnectionError-new}{\code{ConnectionError$new()}}
 \item \href{#method-ConnectionError-toJSON}{\code{ConnectionError$toJSON()}}
+\item \href{#method-ConnectionError-toList}{\code{ConnectionError$toList()}}
+\item \href{#method-ConnectionError-toSimpleType}{\code{ConnectionError$toSimpleType()}}
 \item \href{#method-ConnectionError-fromJSON}{\code{ConnectionError$fromJSON()}}
 \item \href{#method-ConnectionError-toJSONString}{\code{ConnectionError$toJSONString()}}
 \item \href{#method-ConnectionError-fromJSONString}{\code{ConnectionError$fromJSONString()}}
@@ -99,13 +115,52 @@ Initialize a new ConnectionError class.
 \if{html}{\out{<a id="method-ConnectionError-toJSON"></a>}}
 \if{latex}{\out{\hypertarget{method-ConnectionError-toJSON}{}}}
 \subsection{Method \code{toJSON()}}{
-To JSON String
+Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ConnectionError$toJSON()}\if{html}{\out{</div>}}
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ConnectionError-toList"></a>}}
+\if{latex}{\out{\hypertarget{method-ConnectionError-toList}{}}}
+\subsection{Method \code{toList()}}{
+Convert to a List
+
+Convert the R6 object to a list to work more easily with other tooling.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ConnectionError$toList()}\if{html}{\out{</div>}}
+}
+
 \subsection{Returns}{
-ConnectionError in JSON format
+ConnectionError as a base R list.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{# convert array of ConnectionError (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ConnectionError-toSimpleType"></a>}}
+\if{latex}{\out{\hypertarget{method-ConnectionError-toSimpleType}{}}}
+\subsection{Method \code{toSimpleType()}}{
+Convert ConnectionError to a base R type
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ConnectionError$toSimpleType()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A base R type, e.g. a list or numeric/character array.
 }
 }
 \if{html}{\out{<hr>}}
@@ -134,9 +189,16 @@ the instance of ConnectionError
 \subsection{Method \code{toJSONString()}}{
 To JSON String
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ConnectionError$toJSONString()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ConnectionError$toJSONString(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Parameters passed to `jsonlite::toJSON`}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
 ConnectionError in JSON format
 }

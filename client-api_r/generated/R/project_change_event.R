@@ -25,8 +25,7 @@ ProjectChangeEvent <- R6::R6Class(
     `featuredId` = NULL,
     `formulaId` = NULL,
     `structureInChIKey` = NULL,
-    #' Initialize a new ProjectChangeEvent class.
-    #'
+
     #' @description
     #' Initialize a new ProjectChangeEvent class.
     #'
@@ -37,13 +36,11 @@ ProjectChangeEvent <- R6::R6Class(
     #' @param formulaId formulaId
     #' @param structureInChIKey structureInChIKey
     #' @param ... Other optional arguments.
-    #' @export
     initialize = function(`eventType` = NULL, `projectId` = NULL, `compoundId` = NULL, `featuredId` = NULL, `formulaId` = NULL, `structureInChIKey` = NULL, ...) {
       if (!is.null(`eventType`)) {
-        # disabled, as it is broken and checks for `eventType` %in% c()
-        # if (!(`eventType` %in% c("PROJECT_OPENED", "PROJECT_MOVED", "PROJECT_CLOSED", "FEATURE_CREATED", "FEATURE_UPDATED", "FEATURE_DELETED", "RESULT_CREATED", "RESULT_UPDATED", "RESULT_DELETED"))) {
-        #  stop(paste("Error! \"", `eventType`, "\" cannot be assigned to `eventType`. Must be \"PROJECT_OPENED\", \"PROJECT_MOVED\", \"PROJECT_CLOSED\", \"FEATURE_CREATED\", \"FEATURE_UPDATED\", \"FEATURE_DELETED\", \"RESULT_CREATED\", \"RESULT_UPDATED\", \"RESULT_DELETED\".", sep = ""))
-        # }
+        if (!(`eventType` %in% c("PROJECT_OPENED", "PROJECT_MOVED", "PROJECT_CLOSED", "FEATURE_CREATED", "FEATURE_UPDATED", "FEATURE_DELETED", "RESULT_CREATED", "RESULT_UPDATED", "RESULT_DELETED"))) {
+          stop(paste("Error! \"", `eventType`, "\" cannot be assigned to `eventType`. Must be \"PROJECT_OPENED\", \"PROJECT_MOVED\", \"PROJECT_CLOSED\", \"FEATURE_CREATED\", \"FEATURE_UPDATED\", \"FEATURE_DELETED\", \"RESULT_CREATED\", \"RESULT_UPDATED\", \"RESULT_DELETED\".", sep = ""))
+        }
         if (!(is.character(`eventType`) && length(`eventType`) == 1)) {
           stop(paste("Error! Invalid data for `eventType`. Must be a string:", `eventType`))
         }
@@ -80,14 +77,37 @@ ProjectChangeEvent <- R6::R6Class(
         self$`structureInChIKey` <- `structureInChIKey`
       }
     },
-    #' To JSON string
-    #'
+
     #' @description
-    #' To JSON String
-    #'
-    #' @return ProjectChangeEvent in JSON format
-    #' @export
+    #' Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
     toJSON = function() {
+      .Deprecated(new = "toSimpleType", msg = "Use the '$toSimpleType()' method instead since that is more clearly named. Use '$toJSONString()' to get a JSON string")
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert to a List
+    #'
+    #' Convert the R6 object to a list to work more easily with other tooling.
+    #'
+    #' @return ProjectChangeEvent as a base R list.
+    #' @examples
+    #' # convert array of ProjectChangeEvent (x) to a data frame
+    #' \dontrun{
+    #' library(purrr)
+    #' library(tibble)
+    #' df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+    #' df
+    #' }
+    toList = function() {
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert ProjectChangeEvent to a base R type
+    #'
+    #' @return A base R type, e.g. a list or numeric/character array.
+    toSimpleType = function() {
       ProjectChangeEventObject <- list()
       if (!is.null(self$`eventType`)) {
         ProjectChangeEventObject[["eventType"]] <-
@@ -113,16 +133,14 @@ ProjectChangeEvent <- R6::R6Class(
         ProjectChangeEventObject[["structureInChIKey"]] <-
           self$`structureInChIKey`
       }
-      ProjectChangeEventObject
+      return(ProjectChangeEventObject)
     },
-    #' Deserialize JSON string into an instance of ProjectChangeEvent
-    #'
+
     #' @description
     #' Deserialize JSON string into an instance of ProjectChangeEvent
     #'
     #' @param input_json the JSON input
     #' @return the instance of ProjectChangeEvent
-    #' @export
     fromJSON = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       if (!is.null(this_object$`eventType`)) {
@@ -148,79 +166,23 @@ ProjectChangeEvent <- R6::R6Class(
       }
       self
     },
-    #' To JSON string
-    #'
+
     #' @description
     #' To JSON String
-    #'
+    #' 
+    #' @param ... Parameters passed to `jsonlite::toJSON`
     #' @return ProjectChangeEvent in JSON format
-    #' @export
-    toJSONString = function() {
-      jsoncontent <- c(
-        if (!is.null(self$`eventType`)) {
-          sprintf(
-          '"eventType":
-            "%s"
-                    ',
-          self$`eventType`
-          )
-        },
-        if (!is.null(self$`projectId`)) {
-          sprintf(
-          '"projectId":
-            "%s"
-                    ',
-          self$`projectId`
-          )
-        },
-        if (!is.null(self$`compoundId`)) {
-          sprintf(
-          '"compoundId":
-            "%s"
-                    ',
-          self$`compoundId`
-          )
-        },
-        if (!is.null(self$`featuredId`)) {
-          sprintf(
-          '"featuredId":
-            "%s"
-                    ',
-          self$`featuredId`
-          )
-        },
-        if (!is.null(self$`formulaId`)) {
-          sprintf(
-          '"formulaId":
-            "%s"
-                    ',
-          self$`formulaId`
-          )
-        },
-        if (!is.null(self$`structureInChIKey`)) {
-          sprintf(
-          '"structureInChIKey":
-            "%s"
-                    ',
-          self$`structureInChIKey`
-          )
-        }
-      )
-      jsoncontent <- paste(jsoncontent, collapse = ",")
-      # remove c() occurences and reduce resulting double escaped quotes \"\" into \"
-      jsoncontent <- gsub('\\\"c\\((.*?)\\\"\\)', '\\1', jsoncontent)
-      # fix wrong serialization of "\"ENUM\"" to "ENUM"
-      jsoncontent <- gsub("\\\\\"([A-Z]+)\\\\\"", "\\1", jsoncontent)
-      json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
+    toJSONString = function(...) {
+      simple <- self$toSimpleType()
+      json <- jsonlite::toJSON(simple, auto_unbox = TRUE, digits = NA, null = 'null', ...)
+      return(as.character(jsonlite::minify(json)))
     },
-    #' Deserialize JSON string into an instance of ProjectChangeEvent
-    #'
+
     #' @description
     #' Deserialize JSON string into an instance of ProjectChangeEvent
     #'
     #' @param input_json the JSON input
     #' @return the instance of ProjectChangeEvent
-    #' @export
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       if (!is.null(this_object$`eventType`) && !(this_object$`eventType` %in% c("PROJECT_OPENED", "PROJECT_MOVED", "PROJECT_CLOSED", "FEATURE_CREATED", "FEATURE_UPDATED", "FEATURE_DELETED", "RESULT_CREATED", "RESULT_UPDATED", "RESULT_DELETED"))) {
@@ -234,53 +196,42 @@ ProjectChangeEvent <- R6::R6Class(
       self$`structureInChIKey` <- this_object$`structureInChIKey`
       self
     },
-    #' Validate JSON input with respect to ProjectChangeEvent
-    #'
+
     #' @description
     #' Validate JSON input with respect to ProjectChangeEvent and throw an exception if invalid
     #'
     #' @param input the JSON input
-    #' @export
     validateJSON = function(input) {
       input_json <- jsonlite::fromJSON(input)
     },
-    #' To string (JSON format)
-    #'
+
     #' @description
     #' To string (JSON format)
     #'
     #' @return String representation of ProjectChangeEvent
-    #' @export
     toString = function() {
       self$toJSONString()
     },
-    #' Return true if the values in all fields are valid.
-    #'
+
     #' @description
     #' Return true if the values in all fields are valid.
     #'
     #' @return true if the values in all fields are valid.
-    #' @export
     isValid = function() {
       TRUE
     },
-    #' Return a list of invalid fields (if any).
-    #'
+
     #' @description
     #' Return a list of invalid fields (if any).
     #'
     #' @return A list of invalid fields (if any).
-    #' @export
     getInvalidFields = function() {
       invalid_fields <- list()
       invalid_fields
     },
-    #' Print the object
-    #'
+
     #' @description
     #' Print the object
-    #'
-    #' @export
     print = function() {
       print(jsonlite::prettify(self$toJSONString()))
       invisible(self)

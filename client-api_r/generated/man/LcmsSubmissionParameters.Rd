@@ -15,6 +15,20 @@ LcmsSubmissionParameters Class
 \details{
 Create a new LcmsSubmissionParameters
 }
+\examples{
+
+## ------------------------------------------------
+## Method `LcmsSubmissionParameters$toList`
+## ------------------------------------------------
+
+# convert array of LcmsSubmissionParameters (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
@@ -27,6 +41,8 @@ Create a new LcmsSubmissionParameters
 \itemize{
 \item \href{#method-LcmsSubmissionParameters-new}{\code{LcmsSubmissionParameters$new()}}
 \item \href{#method-LcmsSubmissionParameters-toJSON}{\code{LcmsSubmissionParameters$toJSON()}}
+\item \href{#method-LcmsSubmissionParameters-toList}{\code{LcmsSubmissionParameters$toList()}}
+\item \href{#method-LcmsSubmissionParameters-toSimpleType}{\code{LcmsSubmissionParameters$toSimpleType()}}
 \item \href{#method-LcmsSubmissionParameters-fromJSON}{\code{LcmsSubmissionParameters$fromJSON()}}
 \item \href{#method-LcmsSubmissionParameters-toJSONString}{\code{LcmsSubmissionParameters$toJSONString()}}
 \item \href{#method-LcmsSubmissionParameters-fromJSONString}{\code{LcmsSubmissionParameters$fromJSONString()}}
@@ -61,13 +77,52 @@ Initialize a new LcmsSubmissionParameters class.
 \if{html}{\out{<a id="method-LcmsSubmissionParameters-toJSON"></a>}}
 \if{latex}{\out{\hypertarget{method-LcmsSubmissionParameters-toJSON}{}}}
 \subsection{Method \code{toJSON()}}{
-To JSON String
+Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{LcmsSubmissionParameters$toJSON()}\if{html}{\out{</div>}}
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-LcmsSubmissionParameters-toList"></a>}}
+\if{latex}{\out{\hypertarget{method-LcmsSubmissionParameters-toList}{}}}
+\subsection{Method \code{toList()}}{
+Convert to a List
+
+Convert the R6 object to a list to work more easily with other tooling.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{LcmsSubmissionParameters$toList()}\if{html}{\out{</div>}}
+}
+
 \subsection{Returns}{
-LcmsSubmissionParameters in JSON format
+LcmsSubmissionParameters as a base R list.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{# convert array of LcmsSubmissionParameters (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-LcmsSubmissionParameters-toSimpleType"></a>}}
+\if{latex}{\out{\hypertarget{method-LcmsSubmissionParameters-toSimpleType}{}}}
+\subsection{Method \code{toSimpleType()}}{
+Convert LcmsSubmissionParameters to a base R type
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{LcmsSubmissionParameters$toSimpleType()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A base R type, e.g. a list or numeric/character array.
 }
 }
 \if{html}{\out{<hr>}}
@@ -96,9 +151,16 @@ the instance of LcmsSubmissionParameters
 \subsection{Method \code{toJSONString()}}{
 To JSON String
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{LcmsSubmissionParameters$toJSONString()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{LcmsSubmissionParameters$toJSONString(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Parameters passed to `jsonlite::toJSON`}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
 LcmsSubmissionParameters in JSON format
 }

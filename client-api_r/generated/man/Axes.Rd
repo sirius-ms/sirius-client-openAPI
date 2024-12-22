@@ -15,6 +15,20 @@ Axes Class
 \details{
 Create a new Axes
 }
+\examples{
+
+## ------------------------------------------------
+## Method `Axes$toList`
+## ------------------------------------------------
+
+# convert array of Axes (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
@@ -31,6 +45,8 @@ Create a new Axes
 \itemize{
 \item \href{#method-Axes-new}{\code{Axes$new()}}
 \item \href{#method-Axes-toJSON}{\code{Axes$toJSON()}}
+\item \href{#method-Axes-toList}{\code{Axes$toList()}}
+\item \href{#method-Axes-toSimpleType}{\code{Axes$toSimpleType()}}
 \item \href{#method-Axes-fromJSON}{\code{Axes$fromJSON()}}
 \item \href{#method-Axes-toJSONString}{\code{Axes$toJSONString()}}
 \item \href{#method-Axes-fromJSONString}{\code{Axes$fromJSONString()}}
@@ -69,13 +85,52 @@ Initialize a new Axes class.
 \if{html}{\out{<a id="method-Axes-toJSON"></a>}}
 \if{latex}{\out{\hypertarget{method-Axes-toJSON}{}}}
 \subsection{Method \code{toJSON()}}{
-To JSON String
+Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Axes$toJSON()}\if{html}{\out{</div>}}
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Axes-toList"></a>}}
+\if{latex}{\out{\hypertarget{method-Axes-toList}{}}}
+\subsection{Method \code{toList()}}{
+Convert to a List
+
+Convert the R6 object to a list to work more easily with other tooling.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Axes$toList()}\if{html}{\out{</div>}}
+}
+
 \subsection{Returns}{
-Axes in JSON format
+Axes as a base R list.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{# convert array of Axes (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Axes-toSimpleType"></a>}}
+\if{latex}{\out{\hypertarget{method-Axes-toSimpleType}{}}}
+\subsection{Method \code{toSimpleType()}}{
+Convert Axes to a base R type
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Axes$toSimpleType()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A base R type, e.g. a list or numeric/character array.
 }
 }
 \if{html}{\out{<hr>}}
@@ -104,9 +159,16 @@ the instance of Axes
 \subsection{Method \code{toJSONString()}}{
 To JSON String
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Axes$toJSONString()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Axes$toJSONString(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Parameters passed to `jsonlite::toJSON`}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
 Axes in JSON format
 }

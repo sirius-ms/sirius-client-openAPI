@@ -15,6 +15,20 @@ ZodiacEdgeFilterThresholds Class
 \details{
 Create a new ZodiacEdgeFilterThresholds
 }
+\examples{
+
+## ------------------------------------------------
+## Method `ZodiacEdgeFilterThresholds$toList`
+## ------------------------------------------------
+
+# convert array of ZodiacEdgeFilterThresholds (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
@@ -31,6 +45,8 @@ Create a new ZodiacEdgeFilterThresholds
 \itemize{
 \item \href{#method-ZodiacEdgeFilterThresholds-new}{\code{ZodiacEdgeFilterThresholds$new()}}
 \item \href{#method-ZodiacEdgeFilterThresholds-toJSON}{\code{ZodiacEdgeFilterThresholds$toJSON()}}
+\item \href{#method-ZodiacEdgeFilterThresholds-toList}{\code{ZodiacEdgeFilterThresholds$toList()}}
+\item \href{#method-ZodiacEdgeFilterThresholds-toSimpleType}{\code{ZodiacEdgeFilterThresholds$toSimpleType()}}
 \item \href{#method-ZodiacEdgeFilterThresholds-fromJSON}{\code{ZodiacEdgeFilterThresholds$fromJSON()}}
 \item \href{#method-ZodiacEdgeFilterThresholds-toJSONString}{\code{ZodiacEdgeFilterThresholds$toJSONString()}}
 \item \href{#method-ZodiacEdgeFilterThresholds-fromJSONString}{\code{ZodiacEdgeFilterThresholds$fromJSONString()}}
@@ -74,13 +90,52 @@ Initialize a new ZodiacEdgeFilterThresholds class.
 \if{html}{\out{<a id="method-ZodiacEdgeFilterThresholds-toJSON"></a>}}
 \if{latex}{\out{\hypertarget{method-ZodiacEdgeFilterThresholds-toJSON}{}}}
 \subsection{Method \code{toJSON()}}{
-To JSON String
+Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ZodiacEdgeFilterThresholds$toJSON()}\if{html}{\out{</div>}}
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ZodiacEdgeFilterThresholds-toList"></a>}}
+\if{latex}{\out{\hypertarget{method-ZodiacEdgeFilterThresholds-toList}{}}}
+\subsection{Method \code{toList()}}{
+Convert to a List
+
+Convert the R6 object to a list to work more easily with other tooling.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ZodiacEdgeFilterThresholds$toList()}\if{html}{\out{</div>}}
+}
+
 \subsection{Returns}{
-ZodiacEdgeFilterThresholds in JSON format
+ZodiacEdgeFilterThresholds as a base R list.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{# convert array of ZodiacEdgeFilterThresholds (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ZodiacEdgeFilterThresholds-toSimpleType"></a>}}
+\if{latex}{\out{\hypertarget{method-ZodiacEdgeFilterThresholds-toSimpleType}{}}}
+\subsection{Method \code{toSimpleType()}}{
+Convert ZodiacEdgeFilterThresholds to a base R type
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ZodiacEdgeFilterThresholds$toSimpleType()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A base R type, e.g. a list or numeric/character array.
 }
 }
 \if{html}{\out{<hr>}}
@@ -109,9 +164,16 @@ the instance of ZodiacEdgeFilterThresholds
 \subsection{Method \code{toJSONString()}}{
 To JSON String
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ZodiacEdgeFilterThresholds$toJSONString()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ZodiacEdgeFilterThresholds$toJSONString(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Parameters passed to `jsonlite::toJSON`}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
 ZodiacEdgeFilterThresholds in JSON format
 }

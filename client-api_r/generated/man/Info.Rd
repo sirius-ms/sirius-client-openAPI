@@ -15,6 +15,20 @@ Info Class
 \details{
 Create a new Info
 }
+\examples{
+
+## ------------------------------------------------
+## Method `Info$toList`
+## ------------------------------------------------
+
+# convert array of Info (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
@@ -49,6 +63,8 @@ Create a new Info
 \itemize{
 \item \href{#method-Info-new}{\code{Info$new()}}
 \item \href{#method-Info-toJSON}{\code{Info$toJSON()}}
+\item \href{#method-Info-toList}{\code{Info$toList()}}
+\item \href{#method-Info-toSimpleType}{\code{Info$toSimpleType()}}
 \item \href{#method-Info-fromJSON}{\code{Info$fromJSON()}}
 \item \href{#method-Info-toJSONString}{\code{Info$toJSONString()}}
 \item \href{#method-Info-fromJSONString}{\code{Info$fromJSONString()}}
@@ -119,13 +135,52 @@ Initialize a new Info class.
 \if{html}{\out{<a id="method-Info-toJSON"></a>}}
 \if{latex}{\out{\hypertarget{method-Info-toJSON}{}}}
 \subsection{Method \code{toJSON()}}{
-To JSON String
+Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Info$toJSON()}\if{html}{\out{</div>}}
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Info-toList"></a>}}
+\if{latex}{\out{\hypertarget{method-Info-toList}{}}}
+\subsection{Method \code{toList()}}{
+Convert to a List
+
+Convert the R6 object to a list to work more easily with other tooling.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Info$toList()}\if{html}{\out{</div>}}
+}
+
 \subsection{Returns}{
-Info in JSON format
+Info as a base R list.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{# convert array of Info (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Info-toSimpleType"></a>}}
+\if{latex}{\out{\hypertarget{method-Info-toSimpleType}{}}}
+\subsection{Method \code{toSimpleType()}}{
+Convert Info to a base R type
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Info$toSimpleType()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A base R type, e.g. a list or numeric/character array.
 }
 }
 \if{html}{\out{<hr>}}
@@ -154,9 +209,16 @@ the instance of Info
 \subsection{Method \code{toJSONString()}}{
 To JSON String
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Info$toJSONString()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Info$toJSONString(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Parameters passed to `jsonlite::toJSON`}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
 Info in JSON format
 }

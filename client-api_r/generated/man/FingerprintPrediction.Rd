@@ -15,6 +15,20 @@ FingerprintPrediction Class
 \details{
 Create a new FingerprintPrediction
 }
+\examples{
+
+## ------------------------------------------------
+## Method `FingerprintPrediction$toList`
+## ------------------------------------------------
+
+# convert array of FingerprintPrediction (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
@@ -31,6 +45,8 @@ Create a new FingerprintPrediction
 \itemize{
 \item \href{#method-FingerprintPrediction-new}{\code{FingerprintPrediction$new()}}
 \item \href{#method-FingerprintPrediction-toJSON}{\code{FingerprintPrediction$toJSON()}}
+\item \href{#method-FingerprintPrediction-toList}{\code{FingerprintPrediction$toList()}}
+\item \href{#method-FingerprintPrediction-toSimpleType}{\code{FingerprintPrediction$toSimpleType()}}
 \item \href{#method-FingerprintPrediction-fromJSON}{\code{FingerprintPrediction$fromJSON()}}
 \item \href{#method-FingerprintPrediction-toJSONString}{\code{FingerprintPrediction$toJSONString()}}
 \item \href{#method-FingerprintPrediction-fromJSONString}{\code{FingerprintPrediction$fromJSONString()}}
@@ -74,13 +90,52 @@ Initialize a new FingerprintPrediction class.
 \if{html}{\out{<a id="method-FingerprintPrediction-toJSON"></a>}}
 \if{latex}{\out{\hypertarget{method-FingerprintPrediction-toJSON}{}}}
 \subsection{Method \code{toJSON()}}{
-To JSON String
+Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{FingerprintPrediction$toJSON()}\if{html}{\out{</div>}}
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-FingerprintPrediction-toList"></a>}}
+\if{latex}{\out{\hypertarget{method-FingerprintPrediction-toList}{}}}
+\subsection{Method \code{toList()}}{
+Convert to a List
+
+Convert the R6 object to a list to work more easily with other tooling.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{FingerprintPrediction$toList()}\if{html}{\out{</div>}}
+}
+
 \subsection{Returns}{
-FingerprintPrediction in JSON format
+FingerprintPrediction as a base R list.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{# convert array of FingerprintPrediction (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-FingerprintPrediction-toSimpleType"></a>}}
+\if{latex}{\out{\hypertarget{method-FingerprintPrediction-toSimpleType}{}}}
+\subsection{Method \code{toSimpleType()}}{
+Convert FingerprintPrediction to a base R type
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{FingerprintPrediction$toSimpleType()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A base R type, e.g. a list or numeric/character array.
 }
 }
 \if{html}{\out{<hr>}}
@@ -109,9 +164,16 @@ the instance of FingerprintPrediction
 \subsection{Method \code{toJSONString()}}{
 To JSON String
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FingerprintPrediction$toJSONString()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{FingerprintPrediction$toJSONString(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Parameters passed to `jsonlite::toJSON`}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
 FingerprintPrediction in JSON format
 }

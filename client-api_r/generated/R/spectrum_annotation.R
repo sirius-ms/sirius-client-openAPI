@@ -8,12 +8,12 @@
 #' @description SpectrumAnnotation Class
 #' @format An \code{R6Class} generator object
 #' @field molecularFormula Molecular formula that has been annotated to this spectrum character [optional]
-#' @field ionization Ionization that has been annotated to this spectrum character [optional]
+#' @field adduct Adduct that has been annotated to this spectrum character [optional]
 #' @field exactMass Exact mass based on the annotated molecular formula and ionization numeric [optional]
 #' @field massDeviationMz Absolute mass deviation of the exact mass to the precursor mass (precursorMz) of this spectrum in mDa numeric [optional]
 #' @field massDeviationPpm Relative mass deviation of the exact mass to the precursor mass (precursorMz) of this spectrum in ppm numeric [optional]
-#' @field structureAnnotationSmiles Smiles of the structure candidate used to derive substructure peak annotations via epimetheus insilico fragmentation  Substructure highlighting (bond and atom indices) refer to this specific SMILES.  If you standardize or canonicalize this SMILES in any way the indices of substructure highlighting might  not match correctly anymore.   Null if substructure annotation not available or not requested. character [optional]
-#' @field structureAnnotationScore Overall score of all substructure annotations computed for this structure candidate (structureAnnotationSmiles)   Null if substructure annotation not available or not requested. numeric [optional]
+#' @field structureAnnotationSmiles EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.   Smiles of the structure candidate used to derive substructure peak annotations via epimetheus insilico fragmentation  Substructure highlighting (bond and atom indices) refer to this specific SMILES.  If you standardize or canonicalize this SMILES in any way the indices of substructure highlighting might  not match correctly anymore.   Null if substructure annotation not available or not requested. character [optional]
+#' @field structureAnnotationScore EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.   Overall score of all substructure annotations computed for this structure candidate (structureAnnotationSmiles)   Null if substructure annotation not available or not requested. numeric [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
 #' @export
@@ -21,38 +21,36 @@ SpectrumAnnotation <- R6::R6Class(
   "SpectrumAnnotation",
   public = list(
     `molecularFormula` = NULL,
-    `ionization` = NULL,
+    `adduct` = NULL,
     `exactMass` = NULL,
     `massDeviationMz` = NULL,
     `massDeviationPpm` = NULL,
     `structureAnnotationSmiles` = NULL,
     `structureAnnotationScore` = NULL,
-    #' Initialize a new SpectrumAnnotation class.
-    #'
+
     #' @description
     #' Initialize a new SpectrumAnnotation class.
     #'
     #' @param molecularFormula Molecular formula that has been annotated to this spectrum
-    #' @param ionization Ionization that has been annotated to this spectrum
+    #' @param adduct Adduct that has been annotated to this spectrum
     #' @param exactMass Exact mass based on the annotated molecular formula and ionization
     #' @param massDeviationMz Absolute mass deviation of the exact mass to the precursor mass (precursorMz) of this spectrum in mDa
     #' @param massDeviationPpm Relative mass deviation of the exact mass to the precursor mass (precursorMz) of this spectrum in ppm
-    #' @param structureAnnotationSmiles Smiles of the structure candidate used to derive substructure peak annotations via epimetheus insilico fragmentation  Substructure highlighting (bond and atom indices) refer to this specific SMILES.  If you standardize or canonicalize this SMILES in any way the indices of substructure highlighting might  not match correctly anymore.   Null if substructure annotation not available or not requested.
-    #' @param structureAnnotationScore Overall score of all substructure annotations computed for this structure candidate (structureAnnotationSmiles)   Null if substructure annotation not available or not requested.
+    #' @param structureAnnotationSmiles EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.   Smiles of the structure candidate used to derive substructure peak annotations via epimetheus insilico fragmentation  Substructure highlighting (bond and atom indices) refer to this specific SMILES.  If you standardize or canonicalize this SMILES in any way the indices of substructure highlighting might  not match correctly anymore.   Null if substructure annotation not available or not requested.
+    #' @param structureAnnotationScore EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.   Overall score of all substructure annotations computed for this structure candidate (structureAnnotationSmiles)   Null if substructure annotation not available or not requested.
     #' @param ... Other optional arguments.
-    #' @export
-    initialize = function(`molecularFormula` = NULL, `ionization` = NULL, `exactMass` = NULL, `massDeviationMz` = NULL, `massDeviationPpm` = NULL, `structureAnnotationSmiles` = NULL, `structureAnnotationScore` = NULL, ...) {
+    initialize = function(`molecularFormula` = NULL, `adduct` = NULL, `exactMass` = NULL, `massDeviationMz` = NULL, `massDeviationPpm` = NULL, `structureAnnotationSmiles` = NULL, `structureAnnotationScore` = NULL, ...) {
       if (!is.null(`molecularFormula`)) {
         if (!(is.character(`molecularFormula`) && length(`molecularFormula`) == 1)) {
           stop(paste("Error! Invalid data for `molecularFormula`. Must be a string:", `molecularFormula`))
         }
         self$`molecularFormula` <- `molecularFormula`
       }
-      if (!is.null(`ionization`)) {
-        if (!(is.character(`ionization`) && length(`ionization`) == 1)) {
-          stop(paste("Error! Invalid data for `ionization`. Must be a string:", `ionization`))
+      if (!is.null(`adduct`)) {
+        if (!(is.character(`adduct`) && length(`adduct`) == 1)) {
+          stop(paste("Error! Invalid data for `adduct`. Must be a string:", `adduct`))
         }
-        self$`ionization` <- `ionization`
+        self$`adduct` <- `adduct`
       }
       if (!is.null(`exactMass`)) {
         if (!(is.numeric(`exactMass`) && length(`exactMass`) == 1)) {
@@ -85,22 +83,45 @@ SpectrumAnnotation <- R6::R6Class(
         self$`structureAnnotationScore` <- `structureAnnotationScore`
       }
     },
-    #' To JSON string
-    #'
+
     #' @description
-    #' To JSON String
-    #'
-    #' @return SpectrumAnnotation in JSON format
-    #' @export
+    #' Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
     toJSON = function() {
+      .Deprecated(new = "toSimpleType", msg = "Use the '$toSimpleType()' method instead since that is more clearly named. Use '$toJSONString()' to get a JSON string")
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert to a List
+    #'
+    #' Convert the R6 object to a list to work more easily with other tooling.
+    #'
+    #' @return SpectrumAnnotation as a base R list.
+    #' @examples
+    #' # convert array of SpectrumAnnotation (x) to a data frame
+    #' \dontrun{
+    #' library(purrr)
+    #' library(tibble)
+    #' df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+    #' df
+    #' }
+    toList = function() {
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert SpectrumAnnotation to a base R type
+    #'
+    #' @return A base R type, e.g. a list or numeric/character array.
+    toSimpleType = function() {
       SpectrumAnnotationObject <- list()
       if (!is.null(self$`molecularFormula`)) {
         SpectrumAnnotationObject[["molecularFormula"]] <-
           self$`molecularFormula`
       }
-      if (!is.null(self$`ionization`)) {
-        SpectrumAnnotationObject[["ionization"]] <-
-          self$`ionization`
+      if (!is.null(self$`adduct`)) {
+        SpectrumAnnotationObject[["adduct"]] <-
+          self$`adduct`
       }
       if (!is.null(self$`exactMass`)) {
         SpectrumAnnotationObject[["exactMass"]] <-
@@ -122,23 +143,21 @@ SpectrumAnnotation <- R6::R6Class(
         SpectrumAnnotationObject[["structureAnnotationScore"]] <-
           self$`structureAnnotationScore`
       }
-      SpectrumAnnotationObject
+      return(SpectrumAnnotationObject)
     },
-    #' Deserialize JSON string into an instance of SpectrumAnnotation
-    #'
+
     #' @description
     #' Deserialize JSON string into an instance of SpectrumAnnotation
     #'
     #' @param input_json the JSON input
     #' @return the instance of SpectrumAnnotation
-    #' @export
     fromJSON = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       if (!is.null(this_object$`molecularFormula`)) {
         self$`molecularFormula` <- this_object$`molecularFormula`
       }
-      if (!is.null(this_object$`ionization`)) {
-        self$`ionization` <- this_object$`ionization`
+      if (!is.null(this_object$`adduct`)) {
+        self$`adduct` <- this_object$`adduct`
       }
       if (!is.null(this_object$`exactMass`)) {
         self$`exactMass` <- this_object$`exactMass`
@@ -157,91 +176,27 @@ SpectrumAnnotation <- R6::R6Class(
       }
       self
     },
-    #' To JSON string
-    #'
+
     #' @description
     #' To JSON String
-    #'
+    #' 
+    #' @param ... Parameters passed to `jsonlite::toJSON`
     #' @return SpectrumAnnotation in JSON format
-    #' @export
-    toJSONString = function() {
-      jsoncontent <- c(
-        if (!is.null(self$`molecularFormula`)) {
-          sprintf(
-          '"molecularFormula":
-            "%s"
-                    ',
-          self$`molecularFormula`
-          )
-        },
-        if (!is.null(self$`ionization`)) {
-          sprintf(
-          '"ionization":
-            "%s"
-                    ',
-          self$`ionization`
-          )
-        },
-        if (!is.null(self$`exactMass`)) {
-          sprintf(
-          '"exactMass":
-            %f
-                    ',
-          self$`exactMass`
-          )
-        },
-        if (!is.null(self$`massDeviationMz`)) {
-          sprintf(
-          '"massDeviationMz":
-            %f
-                    ',
-          self$`massDeviationMz`
-          )
-        },
-        if (!is.null(self$`massDeviationPpm`)) {
-          sprintf(
-          '"massDeviationPpm":
-            %f
-                    ',
-          self$`massDeviationPpm`
-          )
-        },
-        if (!is.null(self$`structureAnnotationSmiles`)) {
-          sprintf(
-          '"structureAnnotationSmiles":
-            "%s"
-                    ',
-          self$`structureAnnotationSmiles`
-          )
-        },
-        if (!is.null(self$`structureAnnotationScore`)) {
-          sprintf(
-          '"structureAnnotationScore":
-            %f
-                    ',
-          self$`structureAnnotationScore`
-          )
-        }
-      )
-      jsoncontent <- paste(jsoncontent, collapse = ",")
-      # remove c() occurences and reduce resulting double escaped quotes \"\" into \"
-      jsoncontent <- gsub('\\\"c\\((.*?)\\\"\\)', '\\1', jsoncontent)
-      # fix wrong serialization of "\"ENUM\"" to "ENUM"
-      jsoncontent <- gsub("\\\\\"([A-Z]+)\\\\\"", "\\1", jsoncontent)
-      json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
+    toJSONString = function(...) {
+      simple <- self$toSimpleType()
+      json <- jsonlite::toJSON(simple, auto_unbox = TRUE, digits = NA, null = 'null', ...)
+      return(as.character(jsonlite::minify(json)))
     },
-    #' Deserialize JSON string into an instance of SpectrumAnnotation
-    #'
+
     #' @description
     #' Deserialize JSON string into an instance of SpectrumAnnotation
     #'
     #' @param input_json the JSON input
     #' @return the instance of SpectrumAnnotation
-    #' @export
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       self$`molecularFormula` <- this_object$`molecularFormula`
-      self$`ionization` <- this_object$`ionization`
+      self$`adduct` <- this_object$`adduct`
       self$`exactMass` <- this_object$`exactMass`
       self$`massDeviationMz` <- this_object$`massDeviationMz`
       self$`massDeviationPpm` <- this_object$`massDeviationPpm`
@@ -249,53 +204,42 @@ SpectrumAnnotation <- R6::R6Class(
       self$`structureAnnotationScore` <- this_object$`structureAnnotationScore`
       self
     },
-    #' Validate JSON input with respect to SpectrumAnnotation
-    #'
+
     #' @description
     #' Validate JSON input with respect to SpectrumAnnotation and throw an exception if invalid
     #'
     #' @param input the JSON input
-    #' @export
     validateJSON = function(input) {
       input_json <- jsonlite::fromJSON(input)
     },
-    #' To string (JSON format)
-    #'
+
     #' @description
     #' To string (JSON format)
     #'
     #' @return String representation of SpectrumAnnotation
-    #' @export
     toString = function() {
       self$toJSONString()
     },
-    #' Return true if the values in all fields are valid.
-    #'
+
     #' @description
     #' Return true if the values in all fields are valid.
     #'
     #' @return true if the values in all fields are valid.
-    #' @export
     isValid = function() {
       TRUE
     },
-    #' Return a list of invalid fields (if any).
-    #'
+
     #' @description
     #' Return a list of invalid fields (if any).
     #'
     #' @return A list of invalid fields (if any).
-    #' @export
     getInvalidFields = function() {
       invalid_fields <- list()
       invalid_fields
     },
-    #' Print the object
-    #'
+
     #' @description
     #' Print the object
-    #'
-    #' @export
     print = function() {
       print(jsonlite::prettify(self$toJSONString()))
       invisible(self)

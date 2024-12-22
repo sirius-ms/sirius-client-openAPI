@@ -15,6 +15,20 @@ Deviation Class
 \details{
 Create a new Deviation
 }
+\examples{
+
+## ------------------------------------------------
+## Method `Deviation$toList`
+## ------------------------------------------------
+
+# convert array of Deviation (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
@@ -29,6 +43,8 @@ Create a new Deviation
 \itemize{
 \item \href{#method-Deviation-new}{\code{Deviation$new()}}
 \item \href{#method-Deviation-toJSON}{\code{Deviation$toJSON()}}
+\item \href{#method-Deviation-toList}{\code{Deviation$toList()}}
+\item \href{#method-Deviation-toSimpleType}{\code{Deviation$toSimpleType()}}
 \item \href{#method-Deviation-fromJSON}{\code{Deviation$fromJSON()}}
 \item \href{#method-Deviation-toJSONString}{\code{Deviation$toJSONString()}}
 \item \href{#method-Deviation-fromJSONString}{\code{Deviation$fromJSONString()}}
@@ -65,13 +81,52 @@ Initialize a new Deviation class.
 \if{html}{\out{<a id="method-Deviation-toJSON"></a>}}
 \if{latex}{\out{\hypertarget{method-Deviation-toJSON}{}}}
 \subsection{Method \code{toJSON()}}{
-To JSON String
+Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Deviation$toJSON()}\if{html}{\out{</div>}}
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Deviation-toList"></a>}}
+\if{latex}{\out{\hypertarget{method-Deviation-toList}{}}}
+\subsection{Method \code{toList()}}{
+Convert to a List
+
+Convert the R6 object to a list to work more easily with other tooling.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Deviation$toList()}\if{html}{\out{</div>}}
+}
+
 \subsection{Returns}{
-Deviation in JSON format
+Deviation as a base R list.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{# convert array of Deviation (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Deviation-toSimpleType"></a>}}
+\if{latex}{\out{\hypertarget{method-Deviation-toSimpleType}{}}}
+\subsection{Method \code{toSimpleType()}}{
+Convert Deviation to a base R type
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Deviation$toSimpleType()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A base R type, e.g. a list or numeric/character array.
 }
 }
 \if{html}{\out{<hr>}}
@@ -100,9 +155,16 @@ the instance of Deviation
 \subsection{Method \code{toJSONString()}}{
 To JSON String
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Deviation$toJSONString()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Deviation$toJSONString(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Parameters passed to `jsonlite::toJSON`}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
 Deviation in JSON format
 }

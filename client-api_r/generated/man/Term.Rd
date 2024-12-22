@@ -15,6 +15,20 @@ Term Class
 \details{
 Create a new Term
 }
+\examples{
+
+## ------------------------------------------------
+## Method `Term$toList`
+## ------------------------------------------------
+
+# convert array of Term (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
@@ -29,6 +43,8 @@ Create a new Term
 \itemize{
 \item \href{#method-Term-new}{\code{Term$new()}}
 \item \href{#method-Term-toJSON}{\code{Term$toJSON()}}
+\item \href{#method-Term-toList}{\code{Term$toList()}}
+\item \href{#method-Term-toSimpleType}{\code{Term$toSimpleType()}}
 \item \href{#method-Term-fromJSON}{\code{Term$fromJSON()}}
 \item \href{#method-Term-toJSONString}{\code{Term$toJSONString()}}
 \item \href{#method-Term-fromJSONString}{\code{Term$fromJSONString()}}
@@ -65,13 +81,52 @@ Initialize a new Term class.
 \if{html}{\out{<a id="method-Term-toJSON"></a>}}
 \if{latex}{\out{\hypertarget{method-Term-toJSON}{}}}
 \subsection{Method \code{toJSON()}}{
-To JSON String
+Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Term$toJSON()}\if{html}{\out{</div>}}
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Term-toList"></a>}}
+\if{latex}{\out{\hypertarget{method-Term-toList}{}}}
+\subsection{Method \code{toList()}}{
+Convert to a List
+
+Convert the R6 object to a list to work more easily with other tooling.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Term$toList()}\if{html}{\out{</div>}}
+}
+
 \subsection{Returns}{
-Term in JSON format
+Term as a base R list.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{# convert array of Term (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Term-toSimpleType"></a>}}
+\if{latex}{\out{\hypertarget{method-Term-toSimpleType}{}}}
+\subsection{Method \code{toSimpleType()}}{
+Convert Term to a base R type
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Term$toSimpleType()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A base R type, e.g. a list or numeric/character array.
 }
 }
 \if{html}{\out{<hr>}}
@@ -100,9 +155,16 @@ the instance of Term
 \subsection{Method \code{toJSONString()}}{
 To JSON String
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Term$toJSONString()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Term$toJSONString(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Parameters passed to `jsonlite::toJSON`}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
 Term in JSON format
 }

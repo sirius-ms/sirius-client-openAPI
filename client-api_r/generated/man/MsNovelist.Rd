@@ -15,6 +15,20 @@ MsNovelist Class
 \details{
 Create a new MsNovelist
 }
+\examples{
+
+## ------------------------------------------------
+## Method `MsNovelist$toList`
+## ------------------------------------------------
+
+# convert array of MsNovelist (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
@@ -29,6 +43,8 @@ Create a new MsNovelist
 \itemize{
 \item \href{#method-MsNovelist-new}{\code{MsNovelist$new()}}
 \item \href{#method-MsNovelist-toJSON}{\code{MsNovelist$toJSON()}}
+\item \href{#method-MsNovelist-toList}{\code{MsNovelist$toList()}}
+\item \href{#method-MsNovelist-toSimpleType}{\code{MsNovelist$toSimpleType()}}
 \item \href{#method-MsNovelist-fromJSON}{\code{MsNovelist$fromJSON()}}
 \item \href{#method-MsNovelist-toJSONString}{\code{MsNovelist$toJSONString()}}
 \item \href{#method-MsNovelist-fromJSONString}{\code{MsNovelist$fromJSONString()}}
@@ -65,13 +81,52 @@ Initialize a new MsNovelist class.
 \if{html}{\out{<a id="method-MsNovelist-toJSON"></a>}}
 \if{latex}{\out{\hypertarget{method-MsNovelist-toJSON}{}}}
 \subsection{Method \code{toJSON()}}{
-To JSON String
+Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{MsNovelist$toJSON()}\if{html}{\out{</div>}}
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-MsNovelist-toList"></a>}}
+\if{latex}{\out{\hypertarget{method-MsNovelist-toList}{}}}
+\subsection{Method \code{toList()}}{
+Convert to a List
+
+Convert the R6 object to a list to work more easily with other tooling.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{MsNovelist$toList()}\if{html}{\out{</div>}}
+}
+
 \subsection{Returns}{
-MsNovelist in JSON format
+MsNovelist as a base R list.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{# convert array of MsNovelist (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-MsNovelist-toSimpleType"></a>}}
+\if{latex}{\out{\hypertarget{method-MsNovelist-toSimpleType}{}}}
+\subsection{Method \code{toSimpleType()}}{
+Convert MsNovelist to a base R type
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{MsNovelist$toSimpleType()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A base R type, e.g. a list or numeric/character array.
 }
 }
 \if{html}{\out{<hr>}}
@@ -100,9 +155,16 @@ the instance of MsNovelist
 \subsection{Method \code{toJSONString()}}{
 To JSON String
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{MsNovelist$toJSONString()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{MsNovelist$toJSONString(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Parameters passed to `jsonlite::toJSON`}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
 MsNovelist in JSON format
 }

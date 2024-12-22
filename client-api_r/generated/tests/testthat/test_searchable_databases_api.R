@@ -4,6 +4,8 @@
 context("Test SearchableDatabasesApi")
 
 api_instance <- SearchableDatabasesApi$new()
+path_to_demo_data <- paste(Sys.getenv("HOME"), "sirius-client-openAPI/.updater/clientTests/Data", sep="/")
+test_file = paste(path_to_demo_data, "Kaempferol.ms", sep="/")
 
 test_that("AddDatabases", {
   # tests for AddDatabases
@@ -22,19 +24,28 @@ test_that("CreateDatabase", {
   # @param searchable_database_parameters SearchableDatabaseParameters  (optional)
   # @return [SearchableDatabase]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  db_name <- "CreateDatabase"
+
+  response <- api_instance$CreateDatabase(db_name)
+  expect_true(inherits(response, "SearchableDatabase"))
+
+  withr::defer(api_instance$RemoveDatabase(db_name))
 })
 
 test_that("GetCustomDatabases", {
   # tests for GetCustomDatabases
   # base path: http://localhost:8080
   # @param include_stats character  (optional)
-  # @param include_with_errors character  (optional)
   # @return [array[SearchableDatabase]]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  db_name <- "GetCustomDatabases"
+  api_instance$CreateDatabase(db_name)
+
+  response <- api_instance$GetCustomDatabases()
+  expect_true(inherits(response, "list"))
+  expect_true(inherits(response[[1]], "SearchableDatabase"))
+
+  withr::defer(api_instance$RemoveDatabase(db_name))
 })
 
 test_that("GetDatabase", {
@@ -44,19 +55,24 @@ test_that("GetDatabase", {
   # @param include_stats character  (optional)
   # @return [SearchableDatabase]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  db_name <- "GetDatabase"
+  api_instance$CreateDatabase(db_name)
+
+  response <- api_instance$GetDatabase(db_name)
+  expect_true(inherits(response, "SearchableDatabase"))
+
+  withr::defer(api_instance$RemoveDatabase(db_name))
 })
 
 test_that("GetDatabases", {
   # tests for GetDatabases
   # base path: http://localhost:8080
   # @param include_stats character  (optional)
-  # @param include_with_errors character  (optional)
   # @return [array[SearchableDatabase]]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  response <- api_instance$GetIncludedDatabases()
+  expect_true(inherits(response, "list"))
+  expect_true(inherits(response[[1]], "SearchableDatabase"))
 })
 
 test_that("GetIncludedDatabases", {
@@ -65,8 +81,9 @@ test_that("GetIncludedDatabases", {
   # @param include_stats character  (optional)
   # @return [array[SearchableDatabase]]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  response <- api_instance$GetIncludedDatabases()
+  expect_true(inherits(response, "list"))
+  expect_true(inherits(response[[1]], "SearchableDatabase"))
 })
 
 test_that("ImportIntoDatabase", {
@@ -79,8 +96,14 @@ test_that("ImportIntoDatabase", {
   # @param input_files array[data.frame]  (optional)
   # @return [SearchableDatabase]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+#   # TODO broken
+#   db_name <- "ImportIntoDatabase"
+#   api_instance$CreateDatabase(db_name)
+#
+#   response <- api_instance$ImportIntoDatabase(db_name, input_files=c(test_file))
+#   expect_true(inherits(response, "SearchableDatabase"))
+#
+#   withr::defer(api_instance$RemoveDatabase(db_name))
 })
 
 test_that("RemoveDatabase", {
@@ -90,8 +113,12 @@ test_that("RemoveDatabase", {
   # @param delete character  (optional)
   # @return [Void]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  db_name <- "RemoveDatabase"
+  api_instance$CreateDatabase(db_name)
+
+  response <- api_instance$RemoveDatabase(db_name)
+
+  expect_true(is.null(response))
 })
 
 test_that("UpdateDatabase", {
@@ -101,6 +128,11 @@ test_that("UpdateDatabase", {
   # @param searchable_database_parameters SearchableDatabaseParameters  (optional)
   # @return [SearchableDatabase]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+#   # TODO java.lang.UnsupportedOperationException: Updating Custom databases is not yest supported
+#   db_name <- "UpdateDatabase"
+#   api_instance$CreateDatabase(db_name)
+#
+#   response <- api_instance$UpdateDatabase(db_name)
+#
+#   expect_true(inherits(response, "SearchableDatabase"))
 })

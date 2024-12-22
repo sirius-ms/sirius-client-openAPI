@@ -11,7 +11,7 @@ Name | Type | Description | Notes
 **number_of_candidates** | **int** | Number of formula candidates to keep as result list (Formula Candidates). | [optional] 
 **number_of_candidates_per_ionization** | **int** | Use this parameter if you want to force SIRIUS to report at least  NumberOfCandidatesPerIonization results per ionization.  if &lt;&#x3D; 0, this parameter will have no effect and just the top  NumberOfCandidates results will be reported. | [optional] 
 **mass_accuracy_ms2ppm** | **float** | Maximum allowed mass deviation. Only molecular formulas within this mass window are considered. | [optional] 
-**isotope_ms2_settings** | **str** | Specify how isotope patterns in MS/MS should be handled.  &lt;p&gt;  FILTER: When filtering is enabled, molecular formulas are excluded if their  theoretical isotope pattern does not match the theoretical one, even if their MS/MS pattern has high score.  &lt;p&gt;  SCORE: Use them for SCORING. To use this the instrument should produce clear MS/MS isotope patterns  &lt;p&gt;  IGNORE: Ignore that there might be isotope patterns in MS/MS | [optional] 
+**isotope_ms2_settings** | [**IsotopeMs2Strategy**](IsotopeMs2Strategy.md) |  | [optional] 
 **filter_by_isotope_pattern** | **bool** | When filtering is enabled, molecular formulas are excluded if their theoretical isotope pattern does not match the theoretical one, even if their MS/MS pattern has high score. | [optional] 
 **enforce_el_gordo_formula** | **bool** | El Gordo may predict that an MS/MS spectrum is a lipid spectrum. If enabled, the corresponding molecular formula will be enforeced as molecular formula candidate. | [optional] 
 **perform_bottom_up_search** | **bool** | If true, molecular formula generation via bottom up search is enabled. | [optional] 

@@ -15,12 +15,28 @@ CompoundClass Class
 \details{
 Create a new CompoundClass
 }
+\examples{
+
+## ------------------------------------------------
+## Method `CompoundClass$toList`
+## ------------------------------------------------
+
+# convert array of CompoundClass (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{type}}{\link{CompoundClassType} [optional]}
+\item{\code{type}}{Specifies the classification ontology the CompoundClass belongs to. character [optional]}
 
 \item{\code{level}}{Name of the level this compound class belongs to character [optional]}
+
+\item{\code{levelIndex}}{Index of the level this compound class belongs to integer [optional]}
 
 \item{\code{name}}{Name of the compound class. character [optional]}
 
@@ -31,6 +47,10 @@ Create a new CompoundClass
 \item{\code{probability}}{prediction probability numeric [optional]}
 
 \item{\code{index}}{Absolute index of this property in the predicted vector/embedding integer [optional]}
+
+\item{\code{parentId}}{Unique id of the parent class. Might be undefined for certain classification ontologies. integer [optional]}
+
+\item{\code{parentName}}{Name of the parent compound class. character [optional]}
 }
 \if{html}{\out{</div>}}
 }
@@ -39,6 +59,8 @@ Create a new CompoundClass
 \itemize{
 \item \href{#method-CompoundClass-new}{\code{CompoundClass$new()}}
 \item \href{#method-CompoundClass-toJSON}{\code{CompoundClass$toJSON()}}
+\item \href{#method-CompoundClass-toList}{\code{CompoundClass$toList()}}
+\item \href{#method-CompoundClass-toSimpleType}{\code{CompoundClass$toSimpleType()}}
 \item \href{#method-CompoundClass-fromJSON}{\code{CompoundClass$fromJSON()}}
 \item \href{#method-CompoundClass-toJSONString}{\code{CompoundClass$toJSONString()}}
 \item \href{#method-CompoundClass-fromJSONString}{\code{CompoundClass$fromJSONString()}}
@@ -59,11 +81,14 @@ Initialize a new CompoundClass class.
 \if{html}{\out{<div class="r">}}\preformatted{CompoundClass$new(
   type = NULL,
   level = NULL,
+  levelIndex = NULL,
   name = NULL,
   description = NULL,
   id = NULL,
   probability = NULL,
   index = NULL,
+  parentId = NULL,
+  parentName = NULL,
   ...
 )}\if{html}{\out{</div>}}
 }
@@ -71,9 +96,11 @@ Initialize a new CompoundClass class.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{type}}{type}
+\item{\code{type}}{Specifies the classification ontology the CompoundClass belongs to.}
 
 \item{\code{level}}{Name of the level this compound class belongs to}
+
+\item{\code{levelIndex}}{Index of the level this compound class belongs to}
 
 \item{\code{name}}{Name of the compound class.}
 
@@ -85,6 +112,10 @@ Initialize a new CompoundClass class.
 
 \item{\code{index}}{Absolute index of this property in the predicted vector/embedding}
 
+\item{\code{parentId}}{Unique id of the parent class. Might be undefined for certain classification ontologies.}
+
+\item{\code{parentName}}{Name of the parent compound class.}
+
 \item{\code{...}}{Other optional arguments.}
 }
 \if{html}{\out{</div>}}
@@ -94,13 +125,52 @@ Initialize a new CompoundClass class.
 \if{html}{\out{<a id="method-CompoundClass-toJSON"></a>}}
 \if{latex}{\out{\hypertarget{method-CompoundClass-toJSON}{}}}
 \subsection{Method \code{toJSON()}}{
-To JSON String
+Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{CompoundClass$toJSON()}\if{html}{\out{</div>}}
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-CompoundClass-toList"></a>}}
+\if{latex}{\out{\hypertarget{method-CompoundClass-toList}{}}}
+\subsection{Method \code{toList()}}{
+Convert to a List
+
+Convert the R6 object to a list to work more easily with other tooling.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{CompoundClass$toList()}\if{html}{\out{</div>}}
+}
+
 \subsection{Returns}{
-CompoundClass in JSON format
+CompoundClass as a base R list.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{# convert array of CompoundClass (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-CompoundClass-toSimpleType"></a>}}
+\if{latex}{\out{\hypertarget{method-CompoundClass-toSimpleType}{}}}
+\subsection{Method \code{toSimpleType()}}{
+Convert CompoundClass to a base R type
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{CompoundClass$toSimpleType()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A base R type, e.g. a list or numeric/character array.
 }
 }
 \if{html}{\out{<hr>}}
@@ -129,9 +199,16 @@ the instance of CompoundClass
 \subsection{Method \code{toJSONString()}}{
 To JSON String
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{CompoundClass$toJSONString()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{CompoundClass$toJSONString(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Parameters passed to `jsonlite::toJSON`}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
 CompoundClass in JSON format
 }

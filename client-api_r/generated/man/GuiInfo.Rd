@@ -15,6 +15,20 @@ GuiInfo Class
 \details{
 Create a new GuiInfo
 }
+\examples{
+
+## ------------------------------------------------
+## Method `GuiInfo$toList`
+## ------------------------------------------------
+
+# convert array of GuiInfo (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
@@ -27,6 +41,8 @@ Create a new GuiInfo
 \itemize{
 \item \href{#method-GuiInfo-new}{\code{GuiInfo$new()}}
 \item \href{#method-GuiInfo-toJSON}{\code{GuiInfo$toJSON()}}
+\item \href{#method-GuiInfo-toList}{\code{GuiInfo$toList()}}
+\item \href{#method-GuiInfo-toSimpleType}{\code{GuiInfo$toSimpleType()}}
 \item \href{#method-GuiInfo-fromJSON}{\code{GuiInfo$fromJSON()}}
 \item \href{#method-GuiInfo-toJSONString}{\code{GuiInfo$toJSONString()}}
 \item \href{#method-GuiInfo-fromJSONString}{\code{GuiInfo$fromJSONString()}}
@@ -61,13 +77,52 @@ Initialize a new GuiInfo class.
 \if{html}{\out{<a id="method-GuiInfo-toJSON"></a>}}
 \if{latex}{\out{\hypertarget{method-GuiInfo-toJSON}{}}}
 \subsection{Method \code{toJSON()}}{
-To JSON String
+Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{GuiInfo$toJSON()}\if{html}{\out{</div>}}
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-GuiInfo-toList"></a>}}
+\if{latex}{\out{\hypertarget{method-GuiInfo-toList}{}}}
+\subsection{Method \code{toList()}}{
+Convert to a List
+
+Convert the R6 object to a list to work more easily with other tooling.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{GuiInfo$toList()}\if{html}{\out{</div>}}
+}
+
 \subsection{Returns}{
-GuiInfo in JSON format
+GuiInfo as a base R list.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{# convert array of GuiInfo (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-GuiInfo-toSimpleType"></a>}}
+\if{latex}{\out{\hypertarget{method-GuiInfo-toSimpleType}{}}}
+\subsection{Method \code{toSimpleType()}}{
+Convert GuiInfo to a base R type
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{GuiInfo$toSimpleType()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A base R type, e.g. a list or numeric/character array.
 }
 }
 \if{html}{\out{<hr>}}
@@ -96,9 +151,16 @@ the instance of GuiInfo
 \subsection{Method \code{toJSONString()}}{
 To JSON String
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{GuiInfo$toJSONString()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{GuiInfo$toJSONString(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Parameters passed to `jsonlite::toJSON`}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
 GuiInfo in JSON format
 }

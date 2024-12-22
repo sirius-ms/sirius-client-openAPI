@@ -8,12 +8,26 @@
 An \code{R6Class} generator object
 }
 \description{
-Simple and easy serializable fragmentation tree model with annotated fragments/nodes abd losses/edges  Root fragment has index 0;
+Simple and easy serializable fragmentation tree model with annotated fragments/nodes abd losses/edges  Root fragment has index 0;  Molecular formula and adduct are identical to the ones of the corresponding molecular formula candidate and SpectrumAnnotation
 
 FragmentationTree Class
 }
 \details{
 Create a new FragmentationTree
+}
+\examples{
+
+## ------------------------------------------------
+## Method `FragmentationTree$toList`
+## ------------------------------------------------
+
+# convert array of FragmentationTree (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
@@ -23,6 +37,10 @@ Create a new FragmentationTree
 \item{\code{losses}}{list(\link{LossEdge}) [optional]}
 
 \item{\code{treeScore}}{numeric [optional]}
+
+\item{\code{molecularFormula}}{character [optional]}
+
+\item{\code{adduct}}{character [optional]}
 }
 \if{html}{\out{</div>}}
 }
@@ -31,6 +49,8 @@ Create a new FragmentationTree
 \itemize{
 \item \href{#method-FragmentationTree-new}{\code{FragmentationTree$new()}}
 \item \href{#method-FragmentationTree-toJSON}{\code{FragmentationTree$toJSON()}}
+\item \href{#method-FragmentationTree-toList}{\code{FragmentationTree$toList()}}
+\item \href{#method-FragmentationTree-toSimpleType}{\code{FragmentationTree$toSimpleType()}}
 \item \href{#method-FragmentationTree-fromJSON}{\code{FragmentationTree$fromJSON()}}
 \item \href{#method-FragmentationTree-toJSONString}{\code{FragmentationTree$toJSONString()}}
 \item \href{#method-FragmentationTree-fromJSONString}{\code{FragmentationTree$fromJSONString()}}
@@ -48,7 +68,14 @@ Create a new FragmentationTree
 \subsection{Method \code{new()}}{
 Initialize a new FragmentationTree class.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FragmentationTree$new(fragments = NULL, losses = NULL, treeScore = NULL, ...)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{FragmentationTree$new(
+  fragments = NULL,
+  losses = NULL,
+  treeScore = NULL,
+  molecularFormula = NULL,
+  adduct = NULL,
+  ...
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -60,6 +87,10 @@ Initialize a new FragmentationTree class.
 
 \item{\code{treeScore}}{treeScore}
 
+\item{\code{molecularFormula}}{molecularFormula}
+
+\item{\code{adduct}}{adduct}
+
 \item{\code{...}}{Other optional arguments.}
 }
 \if{html}{\out{</div>}}
@@ -69,13 +100,52 @@ Initialize a new FragmentationTree class.
 \if{html}{\out{<a id="method-FragmentationTree-toJSON"></a>}}
 \if{latex}{\out{\hypertarget{method-FragmentationTree-toJSON}{}}}
 \subsection{Method \code{toJSON()}}{
-To JSON String
+Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{FragmentationTree$toJSON()}\if{html}{\out{</div>}}
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-FragmentationTree-toList"></a>}}
+\if{latex}{\out{\hypertarget{method-FragmentationTree-toList}{}}}
+\subsection{Method \code{toList()}}{
+Convert to a List
+
+Convert the R6 object to a list to work more easily with other tooling.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{FragmentationTree$toList()}\if{html}{\out{</div>}}
+}
+
 \subsection{Returns}{
-FragmentationTree in JSON format
+FragmentationTree as a base R list.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{# convert array of FragmentationTree (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-FragmentationTree-toSimpleType"></a>}}
+\if{latex}{\out{\hypertarget{method-FragmentationTree-toSimpleType}{}}}
+\subsection{Method \code{toSimpleType()}}{
+Convert FragmentationTree to a base R type
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{FragmentationTree$toSimpleType()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A base R type, e.g. a list or numeric/character array.
 }
 }
 \if{html}{\out{<hr>}}
@@ -104,9 +174,16 @@ the instance of FragmentationTree
 \subsection{Method \code{toJSONString()}}{
 To JSON String
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FragmentationTree$toJSONString()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{FragmentationTree$toJSONString(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Parameters passed to `jsonlite::toJSON`}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
 FragmentationTree in JSON format
 }

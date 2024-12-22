@@ -39,8 +39,7 @@ SearchableDatabase <- R6::R6Class(
     `numberOfFormulas` = NULL,
     `numberOfReferenceSpectra` = NULL,
     `errorMessage` = NULL,
-    #' Initialize a new SearchableDatabase class.
-    #'
+
     #' @description
     #' Initialize a new SearchableDatabase class.
     #'
@@ -58,7 +57,6 @@ SearchableDatabase <- R6::R6Class(
     #' @param numberOfReferenceSpectra Number of reference spectra available in this database
     #' @param errorMessage Error message if the database could not be loaded
     #' @param ... Other optional arguments.
-    #' @export
     initialize = function(`databaseId`, `customDb`, `searchable`, `updateNeeded`, `displayName` = NULL, `location` = NULL, `matchRtOfReferenceSpectra` = FALSE, `dbDate` = NULL, `dbVersion` = NULL, `numberOfStructures` = NULL, `numberOfFormulas` = NULL, `numberOfReferenceSpectra` = NULL, `errorMessage` = NULL, ...) {
       if (!missing(`databaseId`)) {
         if (!(is.character(`databaseId`) && length(`databaseId`) == 1)) {
@@ -139,14 +137,37 @@ SearchableDatabase <- R6::R6Class(
         self$`errorMessage` <- `errorMessage`
       }
     },
-    #' To JSON string
-    #'
+
     #' @description
-    #' To JSON String
-    #'
-    #' @return SearchableDatabase in JSON format
-    #' @export
+    #' Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
     toJSON = function() {
+      .Deprecated(new = "toSimpleType", msg = "Use the '$toSimpleType()' method instead since that is more clearly named. Use '$toJSONString()' to get a JSON string")
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert to a List
+    #'
+    #' Convert the R6 object to a list to work more easily with other tooling.
+    #'
+    #' @return SearchableDatabase as a base R list.
+    #' @examples
+    #' # convert array of SearchableDatabase (x) to a data frame
+    #' \dontrun{
+    #' library(purrr)
+    #' library(tibble)
+    #' df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+    #' df
+    #' }
+    toList = function() {
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert SearchableDatabase to a base R type
+    #'
+    #' @return A base R type, e.g. a list or numeric/character array.
+    toSimpleType = function() {
       SearchableDatabaseObject <- list()
       if (!is.null(self$`displayName`)) {
         SearchableDatabaseObject[["displayName"]] <-
@@ -200,16 +221,14 @@ SearchableDatabase <- R6::R6Class(
         SearchableDatabaseObject[["errorMessage"]] <-
           self$`errorMessage`
       }
-      SearchableDatabaseObject
+      return(SearchableDatabaseObject)
     },
-    #' Deserialize JSON string into an instance of SearchableDatabase
-    #'
+
     #' @description
     #' Deserialize JSON string into an instance of SearchableDatabase
     #'
     #' @param input_json the JSON input
     #' @return the instance of SearchableDatabase
-    #' @export
     fromJSON = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       if (!is.null(this_object$`displayName`)) {
@@ -253,135 +272,23 @@ SearchableDatabase <- R6::R6Class(
       }
       self
     },
-    #' To JSON string
-    #'
+
     #' @description
     #' To JSON String
-    #'
+    #' 
+    #' @param ... Parameters passed to `jsonlite::toJSON`
     #' @return SearchableDatabase in JSON format
-    #' @export
-    toJSONString = function() {
-      jsoncontent <- c(
-        if (!is.null(self$`displayName`)) {
-          sprintf(
-          '"displayName":
-            "%s"
-                    ',
-          self$`displayName`
-          )
-        },
-        if (!is.null(self$`location`)) {
-          sprintf(
-          '"location":
-            "%s"
-                    ',
-          self$`location`
-          )
-        },
-        if (!is.null(self$`matchRtOfReferenceSpectra`)) {
-          sprintf(
-          '"matchRtOfReferenceSpectra":
-            %s
-                    ',
-          tolower(self$`matchRtOfReferenceSpectra`)
-          )
-        },
-        if (!is.null(self$`databaseId`)) {
-          sprintf(
-          '"databaseId":
-            "%s"
-                    ',
-          self$`databaseId`
-          )
-        },
-        if (!is.null(self$`customDb`)) {
-          sprintf(
-          '"customDb":
-            %s
-                    ',
-          tolower(self$`customDb`)
-          )
-        },
-        if (!is.null(self$`searchable`)) {
-          sprintf(
-          '"searchable":
-            %s
-                    ',
-          tolower(self$`searchable`)
-          )
-        },
-        if (!is.null(self$`dbDate`)) {
-          sprintf(
-          '"dbDate":
-            "%s"
-                    ',
-          self$`dbDate`
-          )
-        },
-        if (!is.null(self$`dbVersion`)) {
-          sprintf(
-          '"dbVersion":
-            %f
-                    ',
-          self$`dbVersion`
-          )
-        },
-        if (!is.null(self$`updateNeeded`)) {
-          sprintf(
-          '"updateNeeded":
-            %s
-                    ',
-          tolower(self$`updateNeeded`)
-          )
-        },
-        if (!is.null(self$`numberOfStructures`)) {
-          sprintf(
-          '"numberOfStructures":
-            %f
-                    ',
-          self$`numberOfStructures`
-          )
-        },
-        if (!is.null(self$`numberOfFormulas`)) {
-          sprintf(
-          '"numberOfFormulas":
-            %f
-                    ',
-          self$`numberOfFormulas`
-          )
-        },
-        if (!is.null(self$`numberOfReferenceSpectra`)) {
-          sprintf(
-          '"numberOfReferenceSpectra":
-            %f
-                    ',
-          self$`numberOfReferenceSpectra`
-          )
-        },
-        if (!is.null(self$`errorMessage`)) {
-          sprintf(
-          '"errorMessage":
-            "%s"
-                    ',
-          self$`errorMessage`
-          )
-        }
-      )
-      jsoncontent <- paste(jsoncontent, collapse = ",")
-      # remove c() occurences and reduce resulting double escaped quotes \"\" into \"
-      jsoncontent <- gsub('\\\"c\\((.*?)\\\"\\)', '\\1', jsoncontent)
-      # fix wrong serialization of "\"ENUM\"" to "ENUM"
-      jsoncontent <- gsub("\\\\\"([A-Z]+)\\\\\"", "\\1", jsoncontent)
-      json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
+    toJSONString = function(...) {
+      simple <- self$toSimpleType()
+      json <- jsonlite::toJSON(simple, auto_unbox = TRUE, digits = NA, null = 'null', ...)
+      return(as.character(jsonlite::minify(json)))
     },
-    #' Deserialize JSON string into an instance of SearchableDatabase
-    #'
+
     #' @description
     #' Deserialize JSON string into an instance of SearchableDatabase
     #'
     #' @param input_json the JSON input
     #' @return the instance of SearchableDatabase
-    #' @export
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       self$`displayName` <- this_object$`displayName`
@@ -399,13 +306,11 @@ SearchableDatabase <- R6::R6Class(
       self$`errorMessage` <- this_object$`errorMessage`
       self
     },
-    #' Validate JSON input with respect to SearchableDatabase
-    #'
+
     #' @description
     #' Validate JSON input with respect to SearchableDatabase and throw an exception if invalid
     #'
     #' @param input the JSON input
-    #' @export
     validateJSON = function(input) {
       input_json <- jsonlite::fromJSON(input)
       # check the required field `databaseId`
@@ -441,23 +346,19 @@ SearchableDatabase <- R6::R6Class(
         stop(paste("The JSON input `", input, "` is invalid for SearchableDatabase: the required field `updateNeeded` is missing."))
       }
     },
-    #' To string (JSON format)
-    #'
+
     #' @description
     #' To string (JSON format)
     #'
     #' @return String representation of SearchableDatabase
-    #' @export
     toString = function() {
       self$toJSONString()
     },
-    #' Return true if the values in all fields are valid.
-    #'
+
     #' @description
     #' Return true if the values in all fields are valid.
     #'
     #' @return true if the values in all fields are valid.
-    #' @export
     isValid = function() {
       # check if the required `databaseId` is null
       if (is.null(self$`databaseId`)) {
@@ -481,13 +382,11 @@ SearchableDatabase <- R6::R6Class(
 
       TRUE
     },
-    #' Return a list of invalid fields (if any).
-    #'
+
     #' @description
     #' Return a list of invalid fields (if any).
     #'
     #' @return A list of invalid fields (if any).
-    #' @export
     getInvalidFields = function() {
       invalid_fields <- list()
       # check if the required `databaseId` is null
@@ -512,12 +411,9 @@ SearchableDatabase <- R6::R6Class(
 
       invalid_fields
     },
-    #' Print the object
-    #'
+
     #' @description
     #' Print the object
-    #'
-    #' @export
     print = function() {
       print(jsonlite::prettify(self$toJSONString()))
       invisible(self)

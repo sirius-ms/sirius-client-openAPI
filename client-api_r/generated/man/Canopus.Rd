@@ -15,6 +15,20 @@ Canopus Class
 \details{
 Create a new Canopus
 }
+\examples{
+
+## ------------------------------------------------
+## Method `Canopus$toList`
+## ------------------------------------------------
+
+# convert array of Canopus (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
@@ -27,6 +41,8 @@ Create a new Canopus
 \itemize{
 \item \href{#method-Canopus-new}{\code{Canopus$new()}}
 \item \href{#method-Canopus-toJSON}{\code{Canopus$toJSON()}}
+\item \href{#method-Canopus-toList}{\code{Canopus$toList()}}
+\item \href{#method-Canopus-toSimpleType}{\code{Canopus$toSimpleType()}}
 \item \href{#method-Canopus-fromJSON}{\code{Canopus$fromJSON()}}
 \item \href{#method-Canopus-toJSONString}{\code{Canopus$toJSONString()}}
 \item \href{#method-Canopus-fromJSONString}{\code{Canopus$fromJSONString()}}
@@ -61,13 +77,52 @@ Initialize a new Canopus class.
 \if{html}{\out{<a id="method-Canopus-toJSON"></a>}}
 \if{latex}{\out{\hypertarget{method-Canopus-toJSON}{}}}
 \subsection{Method \code{toJSON()}}{
-To JSON String
+Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Canopus$toJSON()}\if{html}{\out{</div>}}
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Canopus-toList"></a>}}
+\if{latex}{\out{\hypertarget{method-Canopus-toList}{}}}
+\subsection{Method \code{toList()}}{
+Convert to a List
+
+Convert the R6 object to a list to work more easily with other tooling.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Canopus$toList()}\if{html}{\out{</div>}}
+}
+
 \subsection{Returns}{
-Canopus in JSON format
+Canopus as a base R list.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{# convert array of Canopus (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Canopus-toSimpleType"></a>}}
+\if{latex}{\out{\hypertarget{method-Canopus-toSimpleType}{}}}
+\subsection{Method \code{toSimpleType()}}{
+Convert Canopus to a base R type
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Canopus$toSimpleType()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A base R type, e.g. a list or numeric/character array.
 }
 }
 \if{html}{\out{<hr>}}
@@ -96,9 +151,16 @@ the instance of Canopus
 \subsection{Method \code{toJSONString()}}{
 To JSON String
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Canopus$toJSONString()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Canopus$toJSONString(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Parameters passed to `jsonlite::toJSON`}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
 Canopus in JSON format
 }

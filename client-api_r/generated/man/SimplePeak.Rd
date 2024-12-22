@@ -15,6 +15,20 @@ SimplePeak Class
 \details{
 Create a new SimplePeak
 }
+\examples{
+
+## ------------------------------------------------
+## Method `SimplePeak$toList`
+## ------------------------------------------------
+
+# convert array of SimplePeak (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
@@ -29,6 +43,8 @@ Create a new SimplePeak
 \itemize{
 \item \href{#method-SimplePeak-new}{\code{SimplePeak$new()}}
 \item \href{#method-SimplePeak-toJSON}{\code{SimplePeak$toJSON()}}
+\item \href{#method-SimplePeak-toList}{\code{SimplePeak$toList()}}
+\item \href{#method-SimplePeak-toSimpleType}{\code{SimplePeak$toSimpleType()}}
 \item \href{#method-SimplePeak-fromJSON}{\code{SimplePeak$fromJSON()}}
 \item \href{#method-SimplePeak-toJSONString}{\code{SimplePeak$toJSONString()}}
 \item \href{#method-SimplePeak-fromJSONString}{\code{SimplePeak$fromJSONString()}}
@@ -65,13 +81,52 @@ Initialize a new SimplePeak class.
 \if{html}{\out{<a id="method-SimplePeak-toJSON"></a>}}
 \if{latex}{\out{\hypertarget{method-SimplePeak-toJSON}{}}}
 \subsection{Method \code{toJSON()}}{
-To JSON String
+Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{SimplePeak$toJSON()}\if{html}{\out{</div>}}
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-SimplePeak-toList"></a>}}
+\if{latex}{\out{\hypertarget{method-SimplePeak-toList}{}}}
+\subsection{Method \code{toList()}}{
+Convert to a List
+
+Convert the R6 object to a list to work more easily with other tooling.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{SimplePeak$toList()}\if{html}{\out{</div>}}
+}
+
 \subsection{Returns}{
-SimplePeak in JSON format
+SimplePeak as a base R list.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{# convert array of SimplePeak (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-SimplePeak-toSimpleType"></a>}}
+\if{latex}{\out{\hypertarget{method-SimplePeak-toSimpleType}{}}}
+\subsection{Method \code{toSimpleType()}}{
+Convert SimplePeak to a base R type
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{SimplePeak$toSimpleType()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A base R type, e.g. a list or numeric/character array.
 }
 }
 \if{html}{\out{<hr>}}
@@ -100,9 +155,16 @@ the instance of SimplePeak
 \subsection{Method \code{toJSONString()}}{
 To JSON String
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{SimplePeak$toJSONString()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{SimplePeak$toJSONString(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Parameters passed to `jsonlite::toJSON`}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
 SimplePeak in JSON format
 }

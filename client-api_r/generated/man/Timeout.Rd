@@ -15,6 +15,20 @@ Timeout Class
 \details{
 Create a new Timeout
 }
+\examples{
+
+## ------------------------------------------------
+## Method `Timeout$toList`
+## ------------------------------------------------
+
+# convert array of Timeout (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
@@ -29,6 +43,8 @@ Create a new Timeout
 \itemize{
 \item \href{#method-Timeout-new}{\code{Timeout$new()}}
 \item \href{#method-Timeout-toJSON}{\code{Timeout$toJSON()}}
+\item \href{#method-Timeout-toList}{\code{Timeout$toList()}}
+\item \href{#method-Timeout-toSimpleType}{\code{Timeout$toSimpleType()}}
 \item \href{#method-Timeout-fromJSON}{\code{Timeout$fromJSON()}}
 \item \href{#method-Timeout-toJSONString}{\code{Timeout$toJSONString()}}
 \item \href{#method-Timeout-fromJSONString}{\code{Timeout$fromJSONString()}}
@@ -69,13 +85,52 @@ Initialize a new Timeout class.
 \if{html}{\out{<a id="method-Timeout-toJSON"></a>}}
 \if{latex}{\out{\hypertarget{method-Timeout-toJSON}{}}}
 \subsection{Method \code{toJSON()}}{
-To JSON String
+Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Timeout$toJSON()}\if{html}{\out{</div>}}
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Timeout-toList"></a>}}
+\if{latex}{\out{\hypertarget{method-Timeout-toList}{}}}
+\subsection{Method \code{toList()}}{
+Convert to a List
+
+Convert the R6 object to a list to work more easily with other tooling.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Timeout$toList()}\if{html}{\out{</div>}}
+}
+
 \subsection{Returns}{
-Timeout in JSON format
+Timeout as a base R list.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{# convert array of Timeout (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Timeout-toSimpleType"></a>}}
+\if{latex}{\out{\hypertarget{method-Timeout-toSimpleType}{}}}
+\subsection{Method \code{toSimpleType()}}{
+Convert Timeout to a base R type
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Timeout$toSimpleType()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A base R type, e.g. a list or numeric/character array.
 }
 }
 \if{html}{\out{<hr>}}
@@ -104,9 +159,16 @@ the instance of Timeout
 \subsection{Method \code{toJSONString()}}{
 To JSON String
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Timeout$toJSONString()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Timeout$toJSONString(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Parameters passed to `jsonlite::toJSON`}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
 Timeout in JSON format
 }

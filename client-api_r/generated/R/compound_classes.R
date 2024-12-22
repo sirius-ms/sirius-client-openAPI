@@ -23,8 +23,7 @@ CompoundClasses <- R6::R6Class(
     `npcClass` = NULL,
     `classyFireLineage` = NULL,
     `classyFireAlternatives` = NULL,
-    #' Initialize a new CompoundClasses class.
-    #'
+
     #' @description
     #' Initialize a new CompoundClasses class.
     #'
@@ -34,7 +33,6 @@ CompoundClasses <- R6::R6Class(
     #' @param classyFireLineage Most likely ClassyFire lineage from ordered from least specific to most specific class  classyFireLineage.get(classyFireLineage.size() - 1) gives the most specific ClassyFire compound class annotation
     #' @param classyFireAlternatives Alternative ClassyFire classes with high probability that do not fit into the linage
     #' @param ... Other optional arguments.
-    #' @export
     initialize = function(`npcPathway` = NULL, `npcSuperclass` = NULL, `npcClass` = NULL, `classyFireLineage` = NULL, `classyFireAlternatives` = NULL, ...) {
       if (!is.null(`npcPathway`)) {
         stopifnot(R6::is.R6(`npcPathway`))
@@ -59,78 +57,81 @@ CompoundClasses <- R6::R6Class(
         self$`classyFireAlternatives` <- `classyFireAlternatives`
       }
     },
-    #' To JSON string
-    #'
+
     #' @description
-    #' To JSON String
-    #'
-    #' @return CompoundClasses in JSON format
-    #' @export
+    #' Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
     toJSON = function() {
+      .Deprecated(new = "toSimpleType", msg = "Use the '$toSimpleType()' method instead since that is more clearly named. Use '$toJSONString()' to get a JSON string")
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert to a List
+    #'
+    #' Convert the R6 object to a list to work more easily with other tooling.
+    #'
+    #' @return CompoundClasses as a base R list.
+    #' @examples
+    #' # convert array of CompoundClasses (x) to a data frame
+    #' \dontrun{
+    #' library(purrr)
+    #' library(tibble)
+    #' df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+    #' df
+    #' }
+    toList = function() {
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert CompoundClasses to a base R type
+    #'
+    #' @return A base R type, e.g. a list or numeric/character array.
+    toSimpleType = function() {
       CompoundClassesObject <- list()
       if (!is.null(self$`npcPathway`)) {
         CompoundClassesObject[["npcPathway"]] <-
-          if (is.list(self$`npcPathway`$toJSON()) && length(self$`npcPathway`$toJSON()) == 0L){
-            NULL
-          } else if (length(names(self$`npcPathway`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`npcPathway`$toJSON()))) {
-            jsonlite::fromJSON(self$`npcPathway`$toJSON())
-          } else {
-            self$`npcPathway`$toJSON()
-          }
+          self$`npcPathway`$toSimpleType()
       }
       if (!is.null(self$`npcSuperclass`)) {
         CompoundClassesObject[["npcSuperclass"]] <-
-          if (is.list(self$`npcSuperclass`$toJSON()) && length(self$`npcSuperclass`$toJSON()) == 0L){
-            NULL
-          } else if (length(names(self$`npcSuperclass`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`npcSuperclass`$toJSON()))) {
-            jsonlite::fromJSON(self$`npcSuperclass`$toJSON())
-          } else {
-            self$`npcSuperclass`$toJSON()
-          }
+          self$`npcSuperclass`$toSimpleType()
       }
       if (!is.null(self$`npcClass`)) {
         CompoundClassesObject[["npcClass"]] <-
-          if (is.list(self$`npcClass`$toJSON()) && length(self$`npcClass`$toJSON()) == 0L){
-            NULL
-          } else if (length(names(self$`npcClass`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`npcClass`$toJSON()))) {
-            jsonlite::fromJSON(self$`npcClass`$toJSON())
-          } else {
-            self$`npcClass`$toJSON()
-          }
+          self$`npcClass`$toSimpleType()
       }
       if (!is.null(self$`classyFireLineage`)) {
         CompoundClassesObject[["classyFireLineage"]] <-
-          lapply(self$`classyFireLineage`, function(x) x$toJSON())
+          lapply(self$`classyFireLineage`, function(x) x$toSimpleType())
       }
       if (!is.null(self$`classyFireAlternatives`)) {
         CompoundClassesObject[["classyFireAlternatives"]] <-
-          lapply(self$`classyFireAlternatives`, function(x) x$toJSON())
+          lapply(self$`classyFireAlternatives`, function(x) x$toSimpleType())
       }
-      CompoundClassesObject
+      return(CompoundClassesObject)
     },
-    #' Deserialize JSON string into an instance of CompoundClasses
-    #'
+
     #' @description
     #' Deserialize JSON string into an instance of CompoundClasses
     #'
     #' @param input_json the JSON input
     #' @return the instance of CompoundClasses
-    #' @export
     fromJSON = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       if (!is.null(this_object$`npcPathway`)) {
         `npcpathway_object` <- CompoundClass$new()
-        `npcpathway_object`$fromJSON(jsonlite::toJSON(this_object$`npcPathway`, auto_unbox = TRUE, digits = NA))
+        `npcpathway_object`$fromJSON(jsonlite::toJSON(this_object$`npcPathway`, auto_unbox = TRUE, digits = NA, null = 'null'))
         self$`npcPathway` <- `npcpathway_object`
       }
       if (!is.null(this_object$`npcSuperclass`)) {
         `npcsuperclass_object` <- CompoundClass$new()
-        `npcsuperclass_object`$fromJSON(jsonlite::toJSON(this_object$`npcSuperclass`, auto_unbox = TRUE, digits = NA))
+        `npcsuperclass_object`$fromJSON(jsonlite::toJSON(this_object$`npcSuperclass`, auto_unbox = TRUE, digits = NA, null = 'null'))
         self$`npcSuperclass` <- `npcsuperclass_object`
       }
       if (!is.null(this_object$`npcClass`)) {
         `npcclass_object` <- CompoundClass$new()
-        `npcclass_object`$fromJSON(jsonlite::toJSON(this_object$`npcClass`, auto_unbox = TRUE, digits = NA))
+        `npcclass_object`$fromJSON(jsonlite::toJSON(this_object$`npcClass`, auto_unbox = TRUE, digits = NA, null = 'null'))
         self$`npcClass` <- `npcclass_object`
       }
       if (!is.null(this_object$`classyFireLineage`)) {
@@ -141,127 +142,68 @@ CompoundClasses <- R6::R6Class(
       }
       self
     },
-    #' To JSON string
-    #'
+
     #' @description
     #' To JSON String
-    #'
+    #' 
+    #' @param ... Parameters passed to `jsonlite::toJSON`
     #' @return CompoundClasses in JSON format
-    #' @export
-    toJSONString = function() {
-      jsoncontent <- c(
-        if (!is.null(self$`npcPathway`)) {
-          sprintf(
-          '"npcPathway":
-          %s
-          ',
-          jsonlite::toJSON(self$`npcPathway`$toJSON(), auto_unbox = TRUE, digits = NA)
-          )
-        },
-        if (!is.null(self$`npcSuperclass`)) {
-          sprintf(
-          '"npcSuperclass":
-          %s
-          ',
-          jsonlite::toJSON(self$`npcSuperclass`$toJSON(), auto_unbox = TRUE, digits = NA)
-          )
-        },
-        if (!is.null(self$`npcClass`)) {
-          sprintf(
-          '"npcClass":
-          %s
-          ',
-          jsonlite::toJSON(self$`npcClass`$toJSON(), auto_unbox = TRUE, digits = NA)
-          )
-        },
-        if (!is.null(self$`classyFireLineage`)) {
-          sprintf(
-          '"classyFireLineage":
-          [%s]
-',
-          paste(sapply(self$`classyFireLineage`, function(x) jsonlite::toJSON(x$toJSON(), auto_unbox = TRUE, digits = NA)), collapse = ",")
-          )
-        },
-        if (!is.null(self$`classyFireAlternatives`)) {
-          sprintf(
-          '"classyFireAlternatives":
-          [%s]
-',
-          paste(sapply(self$`classyFireAlternatives`, function(x) jsonlite::toJSON(x$toJSON(), auto_unbox = TRUE, digits = NA)), collapse = ",")
-          )
-        }
-      )
-      jsoncontent <- paste(jsoncontent, collapse = ",")
-      # remove c() occurences and reduce resulting double escaped quotes \"\" into \"
-      jsoncontent <- gsub('\\\"c\\((.*?)\\\"\\)', '\\1', jsoncontent)
-      # fix wrong serialization of "\"ENUM\"" to "ENUM"
-      jsoncontent <- gsub("\\\\\"([A-Z]+)\\\\\"", "\\1", jsoncontent)
-      json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
+    toJSONString = function(...) {
+      simple <- self$toSimpleType()
+      json <- jsonlite::toJSON(simple, auto_unbox = TRUE, digits = NA, null = 'null', ...)
+      return(as.character(jsonlite::minify(json)))
     },
-    #' Deserialize JSON string into an instance of CompoundClasses
-    #'
+
     #' @description
     #' Deserialize JSON string into an instance of CompoundClasses
     #'
     #' @param input_json the JSON input
     #' @return the instance of CompoundClasses
-    #' @export
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
-      self$`npcPathway` <- CompoundClass$new()$fromJSON(jsonlite::toJSON(this_object$`npcPathway`, auto_unbox = TRUE, digits = NA))
-      self$`npcSuperclass` <- CompoundClass$new()$fromJSON(jsonlite::toJSON(this_object$`npcSuperclass`, auto_unbox = TRUE, digits = NA))
-      self$`npcClass` <- CompoundClass$new()$fromJSON(jsonlite::toJSON(this_object$`npcClass`, auto_unbox = TRUE, digits = NA))
+      self$`npcPathway` <- CompoundClass$new()$fromJSON(jsonlite::toJSON(this_object$`npcPathway`, auto_unbox = TRUE, digits = NA, null = 'null'))
+      self$`npcSuperclass` <- CompoundClass$new()$fromJSON(jsonlite::toJSON(this_object$`npcSuperclass`, auto_unbox = TRUE, digits = NA, null = 'null'))
+      self$`npcClass` <- CompoundClass$new()$fromJSON(jsonlite::toJSON(this_object$`npcClass`, auto_unbox = TRUE, digits = NA, null = 'null'))
       self$`classyFireLineage` <- ApiClient$new()$deserializeObj(this_object$`classyFireLineage`, "array[CompoundClass]", loadNamespace("Rsirius"))
       self$`classyFireAlternatives` <- ApiClient$new()$deserializeObj(this_object$`classyFireAlternatives`, "array[CompoundClass]", loadNamespace("Rsirius"))
       self
     },
-    #' Validate JSON input with respect to CompoundClasses
-    #'
+
     #' @description
     #' Validate JSON input with respect to CompoundClasses and throw an exception if invalid
     #'
     #' @param input the JSON input
-    #' @export
     validateJSON = function(input) {
       input_json <- jsonlite::fromJSON(input)
     },
-    #' To string (JSON format)
-    #'
+
     #' @description
     #' To string (JSON format)
     #'
     #' @return String representation of CompoundClasses
-    #' @export
     toString = function() {
       self$toJSONString()
     },
-    #' Return true if the values in all fields are valid.
-    #'
+
     #' @description
     #' Return true if the values in all fields are valid.
     #'
     #' @return true if the values in all fields are valid.
-    #' @export
     isValid = function() {
       TRUE
     },
-    #' Return a list of invalid fields (if any).
-    #'
+
     #' @description
     #' Return a list of invalid fields (if any).
     #'
     #' @return A list of invalid fields (if any).
-    #' @export
     getInvalidFields = function() {
       invalid_fields <- list()
       invalid_fields
     },
-    #' Print the object
-    #'
+
     #' @description
     #' Print the object
-    #'
-    #' @export
     print = function() {
       print(jsonlite::prettify(self$toJSONString()))
       invisible(self)

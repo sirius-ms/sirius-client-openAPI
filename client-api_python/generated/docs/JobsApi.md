@@ -10,6 +10,7 @@ Method | HTTP request | Description
 [**get_default_job_config**](JobsApi.md#get_default_job_config) | **GET** /api/default-job-config | Request default job configuration
 [**get_job**](JobsApi.md#get_job) | **GET** /api/projects/{projectId}/jobs/{jobId} | Get job information and its current state and progress (if available).
 [**get_job_config**](JobsApi.md#get_job_config) | **GET** /api/job-configs/{name} | Request job configuration with given name.
+[**get_job_config_names**](JobsApi.md#get_job_config_names) | **GET** /api/job-config-names | Get all (non-default) job configuration names
 [**get_job_configs**](JobsApi.md#get_job_configs) | **GET** /api/job-configs | Request all available job configurations
 [**get_jobs**](JobsApi.md#get_jobs) | **GET** /api/projects/{projectId}/jobs | Get List of all available jobs with information such as current state and progress (if available).
 [**get_jobs_paged**](JobsApi.md#get_jobs_paged) | **GET** /api/projects/{projectId}/jobs/page | Get Page of jobs with information such as current state and progress (if available).
@@ -47,8 +48,8 @@ with PySirius.ApiClient(configuration) as api_client:
     api_instance = PySirius.JobsApi(api_client)
     project_id = 'project_id_example' # str | project-space to delete job from
     job_id = 'job_id_example' # str | of the job to be deleted
-    cancel_if_running = True # bool | If true job will be canceled if it is not finished. Otherwise,                         deletion will fail for running jobs or request will block until job has finished. (optional) (default to True)
-    await_deletion = True # bool | If true request will block until deletion succeeded or failed.                         If the job is still running the request will wait until the job has finished. (optional) (default to True)
+    cancel_if_running = True # bool | If true, job will be canceled if it is not finished. Otherwise,                         deletion will fail for running jobs or request will block until job has finished. (optional) (default to True)
+    await_deletion = True # bool | If true, request will block until deletion succeeded or failed.                         If the job is still running the request will wait until the job has finished. (optional) (default to True)
 
     try:
         # Delete job.
@@ -66,8 +67,8 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **str**| project-space to delete job from | 
  **job_id** | **str**| of the job to be deleted | 
- **cancel_if_running** | **bool**| If true job will be canceled if it is not finished. Otherwise,                         deletion will fail for running jobs or request will block until job has finished. | [optional] [default to True]
- **await_deletion** | **bool**| If true request will block until deletion succeeded or failed.                         If the job is still running the request will wait until the job has finished. | [optional] [default to True]
+ **cancel_if_running** | **bool**| If true, job will be canceled if it is not finished. Otherwise,                         deletion will fail for running jobs or request will block until job has finished. | [optional] [default to True]
+ **await_deletion** | **bool**| If true, request will block until deletion succeeded or failed.                         If the job is still running the request will wait until the job has finished. | [optional] [default to True]
 
 ### Return type
 
@@ -182,8 +183,8 @@ with PySirius.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = PySirius.JobsApi(api_client)
     project_id = 'project_id_example' # str | project-space to delete jobs from
-    cancel_if_running = True # bool | If true job will be canceled if it is not finished. Otherwise,                         deletion will fail for running jobs or request will block until job has finished. (optional) (default to True)
-    await_deletion = True # bool | If true request will block until deletion succeeded or failed.                         If the job is still running the request will wait until the job has finished. (optional) (default to True)
+    cancel_if_running = True # bool | If true, job will be canceled if it is not finished. Otherwise,                         deletion will fail for running jobs or request will block until job has finished. (optional) (default to True)
+    await_deletion = True # bool | If true, request will block until deletion succeeded or failed.                         If the job is still running the request will wait until the job has finished. (optional) (default to True)
 
     try:
         # * Delete ALL jobs.
@@ -200,8 +201,8 @@ with PySirius.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **str**| project-space to delete jobs from | 
- **cancel_if_running** | **bool**| If true job will be canceled if it is not finished. Otherwise,                         deletion will fail for running jobs or request will block until job has finished. | [optional] [default to True]
- **await_deletion** | **bool**| If true request will block until deletion succeeded or failed.                         If the job is still running the request will wait until the job has finished. | [optional] [default to True]
+ **cancel_if_running** | **bool**| If true, job will be canceled if it is not finished. Otherwise,                         deletion will fail for running jobs or request will block until job has finished. | [optional] [default to True]
+ **await_deletion** | **bool**| If true, request will block until deletion succeeded or failed.                         If the job is still running the request will wait until the job has finished. | [optional] [default to True]
 
 ### Return type
 
@@ -225,7 +226,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_default_job_config**
-> JobSubmission get_default_job_config(include_config_map=include_config_map)
+> JobSubmission get_default_job_config(include_config_map=include_config_map, move_parameters_to_config_map=move_parameters_to_config_map, include_custom_dbs_for_structure_search=include_custom_dbs_for_structure_search)
 
 Request default job configuration
 
@@ -252,10 +253,12 @@ with PySirius.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = PySirius.JobsApi(api_client)
     include_config_map = False # bool | if true, generic configmap with-defaults will be included (optional) (default to False)
+    move_parameters_to_config_map = False # bool | if true, object-based parameters will be converted to and added to the generic configMap parameters (optional) (default to False)
+    include_custom_dbs_for_structure_search = False # bool | if true, default database selection of structure db search contains also all available custom DB. (optional) (default to False)
 
     try:
         # Request default job configuration
-        api_response = api_instance.get_default_job_config(include_config_map=include_config_map)
+        api_response = api_instance.get_default_job_config(include_config_map=include_config_map, move_parameters_to_config_map=move_parameters_to_config_map, include_custom_dbs_for_structure_search=include_custom_dbs_for_structure_search)
         print("The response of JobsApi->get_default_job_config:\n")
         pprint(api_response)
     except Exception as e:
@@ -270,6 +273,8 @@ with PySirius.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **include_config_map** | **bool**| if true, generic configmap with-defaults will be included | [optional] [default to False]
+ **move_parameters_to_config_map** | **bool**| if true, object-based parameters will be converted to and added to the generic configMap parameters | [optional] [default to False]
+ **include_custom_dbs_for_structure_search** | **bool**| if true, default database selection of structure db search contains also all available custom DB. | [optional] [default to False]
 
 ### Return type
 
@@ -366,7 +371,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_job_config**
-> JobSubmission get_job_config(name, include_config_map=include_config_map)
+> StoredJobSubmission get_job_config(name, move_parameters_to_config_map=move_parameters_to_config_map)
 
 Request job configuration with given name.
 
@@ -377,7 +382,7 @@ Request job configuration with given name.
 
 ```python
 import PySirius
-from PySirius.models.job_submission import JobSubmission
+from PySirius.models.stored_job_submission import StoredJobSubmission
 from PySirius.rest import ApiException
 from pprint import pprint
 
@@ -393,11 +398,11 @@ with PySirius.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = PySirius.JobsApi(api_client)
     name = 'name_example' # str | name of the job-config to return
-    include_config_map = False # bool | if true the generic configmap will be part of the output (optional) (default to False)
+    move_parameters_to_config_map = False # bool | if true, object-based parameters will be converted to and added to the generic configMap parameters (optional) (default to False)
 
     try:
         # Request job configuration with given name.
-        api_response = api_instance.get_job_config(name, include_config_map=include_config_map)
+        api_response = api_instance.get_job_config(name, move_parameters_to_config_map=move_parameters_to_config_map)
         print("The response of JobsApi->get_job_config:\n")
         pprint(api_response)
     except Exception as e:
@@ -412,11 +417,11 @@ with PySirius.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **name** | **str**| name of the job-config to return | 
- **include_config_map** | **bool**| if true the generic configmap will be part of the output | [optional] [default to False]
+ **move_parameters_to_config_map** | **bool**| if true, object-based parameters will be converted to and added to the generic configMap parameters | [optional] [default to False]
 
 ### Return type
 
-[**JobSubmission**](JobSubmission.md)
+[**StoredJobSubmission**](StoredJobSubmission.md)
 
 ### Authorization
 
@@ -435,19 +440,18 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_job_configs**
-> List[JobSubmission] get_job_configs(include_config_map=include_config_map)
+# **get_job_config_names**
+> List[str] get_job_config_names()
 
-Request all available job configurations
+Get all (non-default) job configuration names
 
-Request all available job configurations
+Get all (non-default) job configuration names
 
 ### Example
 
 
 ```python
 import PySirius
-from PySirius.models.job_submission import JobSubmission
 from PySirius.rest import ApiException
 from pprint import pprint
 
@@ -462,11 +466,74 @@ configuration = PySirius.Configuration(
 with PySirius.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = PySirius.JobsApi(api_client)
-    include_config_map = False # bool | if true the generic configmap will be part of the output (optional) (default to False)
+
+    try:
+        # Get all (non-default) job configuration names
+        api_response = api_instance.get_job_config_names()
+        print("The response of JobsApi->get_job_config_names:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling JobsApi->get_job_config_names: %s\n" % e)
+```
+
+
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+**List[str]**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **get_job_configs**
+> List[StoredJobSubmission] get_job_configs()
+
+Request all available job configurations
+
+Request all available job configurations
+
+### Example
+
+
+```python
+import PySirius
+from PySirius.models.stored_job_submission import StoredJobSubmission
+from PySirius.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to http://localhost:8080
+# See configuration.py for a list of all supported configuration parameters.
+configuration = PySirius.Configuration(
+    host = "http://localhost:8080"
+)
+
+
+# Enter a context with an instance of the API client
+with PySirius.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = PySirius.JobsApi(api_client)
 
     try:
         # Request all available job configurations
-        api_response = api_instance.get_job_configs(include_config_map=include_config_map)
+        api_response = api_instance.get_job_configs()
         print("The response of JobsApi->get_job_configs:\n")
         pprint(api_response)
     except Exception as e:
@@ -477,14 +544,11 @@ with PySirius.ApiClient(configuration) as api_client:
 
 ### Parameters
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **include_config_map** | **bool**| if true the generic configmap will be part of the output | [optional] [default to False]
+This endpoint does not need any parameter.
 
 ### Return type
 
-[**List[JobSubmission]**](JobSubmission.md)
+[**List[StoredJobSubmission]**](StoredJobSubmission.md)
 
 ### Authorization
 
@@ -532,7 +596,7 @@ with PySirius.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = PySirius.JobsApi(api_client)
     project_id = 'project_id_example' # str | project-space to run jobs on
-    opt_fields = [] # List[JobOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to [])
+    opt_fields = ["none"] # List[JobOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to ["none"])
 
     try:
         # Get List of all available jobs with information such as current state and progress (if available).
@@ -551,7 +615,7 @@ with PySirius.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **str**| project-space to run jobs on | 
- **opt_fields** | [**List[JobOptField]**](JobOptField.md)| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to []]
+ **opt_fields** | [**List[JobOptField]**](JobOptField.md)| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;none&quot;]]
 
 ### Return type
 
@@ -575,7 +639,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_jobs_paged**
-> PageJob get_jobs_paged(project_id, page=page, size=size, sort=sort, opt_fields=opt_fields)
+> PagedModelJob get_jobs_paged(project_id, page=page, size=size, sort=sort, opt_fields=opt_fields)
 
 Get Page of jobs with information such as current state and progress (if available).
 
@@ -587,7 +651,7 @@ Get Page of jobs with information such as current state and progress (if availab
 ```python
 import PySirius
 from PySirius.models.job_opt_field import JobOptField
-from PySirius.models.page_job import PageJob
+from PySirius.models.paged_model_job import PagedModelJob
 from PySirius.rest import ApiException
 from pprint import pprint
 
@@ -606,7 +670,7 @@ with PySirius.ApiClient(configuration) as api_client:
     page = 0 # int | Zero-based page index (0..N) (optional) (default to 0)
     size = 20 # int | The size of the page to be returned (optional) (default to 20)
     sort = ['sort_example'] # List[str] | Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (optional)
-    opt_fields = [] # List[JobOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to [])
+    opt_fields = ["none"] # List[JobOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to ["none"])
 
     try:
         # Get Page of jobs with information such as current state and progress (if available).
@@ -628,11 +692,11 @@ Name | Type | Description  | Notes
  **page** | **int**| Zero-based page index (0..N) | [optional] [default to 0]
  **size** | **int**| The size of the page to be returned | [optional] [default to 20]
  **sort** | [**List[str]**](str.md)| Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. | [optional] 
- **opt_fields** | [**List[JobOptField]**](JobOptField.md)| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to []]
+ **opt_fields** | [**List[JobOptField]**](JobOptField.md)| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;none&quot;]]
 
 ### Return type
 
-[**PageJob**](PageJob.md)
+[**PagedModelJob**](PagedModelJob.md)
 
 ### Authorization
 
@@ -718,7 +782,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **save_job_config**
-> str save_job_config(name, job_submission, override_existing=override_existing)
+> StoredJobSubmission save_job_config(name, job_submission, override_existing=override_existing, move_parameters_to_config_map=move_parameters_to_config_map)
 
 Add new job configuration with given name.
 
@@ -730,6 +794,7 @@ Add new job configuration with given name.
 ```python
 import PySirius
 from PySirius.models.job_submission import JobSubmission
+from PySirius.models.stored_job_submission import StoredJobSubmission
 from PySirius.rest import ApiException
 from pprint import pprint
 
@@ -747,10 +812,11 @@ with PySirius.ApiClient(configuration) as api_client:
     name = 'name_example' # str | name of the job-config to add
     job_submission = PySirius.JobSubmission() # JobSubmission | to add
     override_existing = False # bool |  (optional) (default to False)
+    move_parameters_to_config_map = False # bool | if true, object-based parameters will be converted to and added to the generic configMap parameters in the return object (optional) (default to False)
 
     try:
         # Add new job configuration with given name.
-        api_response = api_instance.save_job_config(name, job_submission, override_existing=override_existing)
+        api_response = api_instance.save_job_config(name, job_submission, override_existing=override_existing, move_parameters_to_config_map=move_parameters_to_config_map)
         print("The response of JobsApi->save_job_config:\n")
         pprint(api_response)
     except Exception as e:
@@ -767,10 +833,11 @@ Name | Type | Description  | Notes
  **name** | **str**| name of the job-config to add | 
  **job_submission** | [**JobSubmission**](JobSubmission.md)| to add | 
  **override_existing** | **bool**|  | [optional] [default to False]
+ **move_parameters_to_config_map** | **bool**| if true, object-based parameters will be converted to and added to the generic configMap parameters in the return object | [optional] [default to False]
 
 ### Return type
 
-**str**
+[**StoredJobSubmission**](StoredJobSubmission.md)
 
 ### Authorization
 
@@ -779,13 +846,13 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: text/plain
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Probably modified name of the config (to ensure filesystem path compatibility). |  -  |
+**200** | StoredJobSubmission that contains the JobSubmission and the probably modified name of the config (to ensure path compatibility). |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

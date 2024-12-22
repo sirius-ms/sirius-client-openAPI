@@ -15,6 +15,20 @@ BinaryFingerprint Class
 \details{
 Create a new BinaryFingerprint
 }
+\examples{
+
+## ------------------------------------------------
+## Method `BinaryFingerprint$toList`
+## ------------------------------------------------
+
+# convert array of BinaryFingerprint (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
@@ -29,6 +43,8 @@ Create a new BinaryFingerprint
 \itemize{
 \item \href{#method-BinaryFingerprint-new}{\code{BinaryFingerprint$new()}}
 \item \href{#method-BinaryFingerprint-toJSON}{\code{BinaryFingerprint$toJSON()}}
+\item \href{#method-BinaryFingerprint-toList}{\code{BinaryFingerprint$toList()}}
+\item \href{#method-BinaryFingerprint-toSimpleType}{\code{BinaryFingerprint$toSimpleType()}}
 \item \href{#method-BinaryFingerprint-fromJSON}{\code{BinaryFingerprint$fromJSON()}}
 \item \href{#method-BinaryFingerprint-toJSONString}{\code{BinaryFingerprint$toJSONString()}}
 \item \href{#method-BinaryFingerprint-fromJSONString}{\code{BinaryFingerprint$fromJSONString()}}
@@ -65,13 +81,52 @@ Initialize a new BinaryFingerprint class.
 \if{html}{\out{<a id="method-BinaryFingerprint-toJSON"></a>}}
 \if{latex}{\out{\hypertarget{method-BinaryFingerprint-toJSON}{}}}
 \subsection{Method \code{toJSON()}}{
-To JSON String
+Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{BinaryFingerprint$toJSON()}\if{html}{\out{</div>}}
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-BinaryFingerprint-toList"></a>}}
+\if{latex}{\out{\hypertarget{method-BinaryFingerprint-toList}{}}}
+\subsection{Method \code{toList()}}{
+Convert to a List
+
+Convert the R6 object to a list to work more easily with other tooling.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{BinaryFingerprint$toList()}\if{html}{\out{</div>}}
+}
+
 \subsection{Returns}{
-BinaryFingerprint in JSON format
+BinaryFingerprint as a base R list.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{# convert array of BinaryFingerprint (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-BinaryFingerprint-toSimpleType"></a>}}
+\if{latex}{\out{\hypertarget{method-BinaryFingerprint-toSimpleType}{}}}
+\subsection{Method \code{toSimpleType()}}{
+Convert BinaryFingerprint to a base R type
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{BinaryFingerprint$toSimpleType()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A base R type, e.g. a list or numeric/character array.
 }
 }
 \if{html}{\out{<hr>}}
@@ -100,9 +155,16 @@ the instance of BinaryFingerprint
 \subsection{Method \code{toJSONString()}}{
 To JSON String
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{BinaryFingerprint$toJSONString()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{BinaryFingerprint$toJSONString(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Parameters passed to `jsonlite::toJSON`}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
 BinaryFingerprint in JSON format
 }

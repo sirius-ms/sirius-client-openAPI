@@ -2,8 +2,14 @@
 # Please update as you see appropriate
 
 context("Test JobsApi")
+options(warn=-1)
 
 api_instance <- JobsApi$new()
+features_api <- FeaturesApi$new()
+projects_api <- ProjectsApi$new()
+path_to_demo_data <- paste(Sys.getenv("HOME"), "sirius-client-openAPI/.updater/clientTests/Data", sep="/")
+input_file = paste(path_to_demo_data, "Kaempferol.ms", sep="/")
+
 
 test_that("DeleteJob", {
   # tests for DeleteJob
@@ -16,8 +22,18 @@ test_that("DeleteJob", {
   # @param await_deletion character If true request will block until deletion succeeded or failed.                         If the job is still running the request will wait until the job has finished. (optional)
   # @return [Void]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  project_id <- "DeleteJob"
+  project_dir <- paste(Sys.getenv("HOME"), project_id, sep="/")
+  projects_api$CreateProject(project_id, project_dir)
+  projects_api$ImportPreprocessedDataAsJob(project_id, input_files=input_file)
+
+  response_before <- api_instance$GetJobs(project_id)
+  api_instance$DeleteJob(project_id, response_before[[1]]$id)
+  response_after <- api_instance$GetJobs(project_id)
+  expect_equal(length(response_before), length(response_after)+1)
+
+  withr::defer(projects_api$CloseProject(project_id))
+  withr::defer(unlink(project_dir, recursive=TRUE))
 })
 
 test_that("DeleteJobConfig", {
@@ -42,8 +58,18 @@ test_that("DeleteJobs", {
   # @param await_deletion character If true request will block until deletion succeeded or failed.                         If the job is still running the request will wait until the job has finished. (optional)
   # @return [Void]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  project_id <- "DeleteJob"
+  project_dir <- paste(Sys.getenv("HOME"), project_id, sep="/")
+  projects_api$CreateProject(project_id, project_dir)
+  projects_api$ImportPreprocessedDataAsJob(project_id, input_files=input_file)
+
+  response_before <- api_instance$GetJobs(project_id)
+  api_instance$DeleteJobs(project_id)
+  response_after <- api_instance$GetJobs(project_id)
+  expect_equal(length(response_before), length(response_after)+1)
+
+  withr::defer(projects_api$CloseProject(project_id))
+  withr::defer(unlink(project_dir, recursive=TRUE))
 })
 
 test_that("GetDefaultJobConfig", {
@@ -54,8 +80,8 @@ test_that("GetDefaultJobConfig", {
   # @param include_config_map character if true, generic configmap with-defaults will be included (optional)
   # @return [JobSubmission]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  response <- api_instance$GetDefaultJobConfig(TRUE)
+  expect_true(inherits(response, "JobSubmission"))
 })
 
 test_that("GetJob", {
@@ -68,8 +94,17 @@ test_that("GetJob", {
   # @param opt_fields array[JobOptField] set of optional fields to be included. Use 'none' only to override defaults. (optional)
   # @return [Job]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  project_id <- "GetJob"
+  project_dir <- paste(Sys.getenv("HOME"), project_id, sep="/")
+  projects_api$CreateProject(project_id, project_dir)
+  projects_api$ImportPreprocessedDataAsJob(project_id, input_files=input_file)
+  job_id <- api_instance$GetJobs(project_id)[[1]]$id
+
+  response <- api_instance$GetJob(project_id, job_id)
+  expect_true(inherits(response, "Job"))
+
+  withr::defer(projects_api$CloseProject(project_id))
+  withr::defer(unlink(project_dir, recursive=TRUE))
 })
 
 test_that("GetJobConfig", {
@@ -93,8 +128,13 @@ test_that("GetJobConfigs", {
   # @param include_config_map character if true the generic configmap will be part of the output (optional)
   # @return [array[JobSubmission]]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  config_name <- "GetJobConfigs"
+  job_submission <- api_instance$GetDefaultJobConfig(TRUE)
+  api_instance$SaveJobConfig(config_name, job_submission, TRUE)
+
+  response <- api_instance$GetJobConfigs()
+  expect_true(inherits(response, "list"))
+  expect_true(inherits(response[[1]], "StoredJobSubmission"))
 })
 
 test_that("GetJobs", {
@@ -106,8 +146,17 @@ test_that("GetJobs", {
   # @param opt_fields array[JobOptField] set of optional fields to be included. Use 'none' only to override defaults. (optional)
   # @return [array[Job]]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  project_id <- "GetJobs"
+  project_dir <- paste(Sys.getenv("HOME"), project_id, sep="/")
+  projects_api$CreateProject(project_id, project_dir)
+  projects_api$ImportPreprocessedDataAsJob(project_id, input_files=input_file)
+
+  response <- api_instance$GetJobs(project_id)
+  expect_true(inherits(response, "list"))
+  expect_true(inherits(response[[1]], "Job"))
+
+  withr::defer(projects_api$CloseProject(project_id))
+  withr::defer(unlink(project_dir, recursive=TRUE))
 })
 
 test_that("GetJobsPaged", {
@@ -122,19 +171,35 @@ test_that("GetJobsPaged", {
   # @param opt_fields array[JobOptField] set of optional fields to be included. Use 'none' only to override defaults. (optional)
   # @return [PageJob]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  project_id <- "GetJobsPaged"
+  project_dir <- paste(Sys.getenv("HOME"), project_id, sep="/")
+  projects_api$CreateProject(project_id, project_dir)
+  projects_api$ImportPreprocessedDataAsJob(project_id, input_files=input_file)
+
+  response <- api_instance$GetJobsPaged(project_id)
+  expect_true(inherits(response, "PagedModelJob"))
+
+  withr::defer(projects_api$CloseProject(project_id))
+  withr::defer(unlink(project_dir, recursive=TRUE))
 })
 
 test_that("HasJobs", {
   # tests for HasJobs
   # base path: http://localhost:8080
-  # @param project_id character 
+  # @param project_id character
   # @param include_finished character  (optional)
   # @return [character]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  project_id <- "HasJobs"
+  project_dir <- paste(Sys.getenv("HOME"), project_id, sep="/")
+  projects_api$CreateProject(project_id, project_dir)
+  projects_api$ImportPreprocessedDataAsJob(project_id, input_files=input_file)
+
+  response <- api_instance$HasJobs(project_id)
+  expect_true(inherits(response, "logical"))
+
+  withr::defer(projects_api$CloseProject(project_id))
+  withr::defer(unlink(project_dir, recursive=TRUE))
 })
 
 test_that("SaveJobConfig", {
@@ -145,10 +210,14 @@ test_that("SaveJobConfig", {
   # @param name character name of the job-config to add
   # @param job_submission JobSubmission to add
   # @param override_existing character  (optional)
-  # @return [character]
+  
+  config_name <- "SaveJobConfig"
+  job_submission <- api_instance$GetDefaultJobConfig(TRUE)
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  response <- api_instance$SaveJobConfig(config_name, job_submission, TRUE)
+  expect_true(inherits(response, "StoredJobSubmission"))
+  expect_equal(response$name, config_name)
+  # todo  add check whether  config can be requested
 })
 
 test_that("StartJob", {
@@ -161,8 +230,26 @@ test_that("StartJob", {
   # @param opt_fields array[JobOptField] set of optional fields to be included. Use 'none' only to override defaults. (optional)
   # @return [Job]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  project_id <- "StartJob"
+  project_dir <- paste(Sys.getenv("HOME"), project_id, sep="/")
+  projects_api$CreateProject(project_id, project_dir)
+  projects_api$ImportPreprocessedDataAsJob(project_id, input_files=input_file)
+  Sys.sleep(1)
+ 
+  job_submission <- api_instance$GetDefaultJobConfig()
+  
+  job_submission$zodiacParams$enabled <- FALSE
+  job_submission$fingerprintPredictionParams$enabled <- FALSE
+  job_submission$canopusParams$enabled <- FALSE
+  job_submission$structureDbSearchParams$enabled <- FALSE
+  job_submission$msNovelistParams$enabled <- FALSE
+  job_submission$alignedFeatureIds <- list(features_api$GetAlignedFeatures(project_id)[[1]]$alignedFeatureId)
+  
+  response <- api_instance$StartJob(project_id, job_submission)
+  expect_true(inherits(response, "Job"))
+
+  withr::defer(projects_api$CloseProject(project_id))
+  withr::defer(unlink(project_dir, recursive=TRUE))
 })
 
 test_that("StartJobFromConfig", {

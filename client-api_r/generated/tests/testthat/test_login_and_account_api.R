@@ -13,8 +13,8 @@ test_that("GetAccountInfo", {
   # @param include_subs character include available and active subscriptions in {@link AccountInfo AccountInfo}. (optional)
   # @return [AccountInfo]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  response <- api_instance$GetAccountInfo()
+  expect_true(inherits(response, "AccountInfo"))
 })
 
 test_that("GetSignUpURL", {
@@ -24,8 +24,9 @@ test_that("GetSignUpURL", {
   # Get SignUp URL (For signUp via web browser)
   # @return [character]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  # TODO deserialize error
+  response <- api_instance$GetSignUpURL()
+  expect_true(inherits(response, "character"))
 })
 
 test_that("GetSubscriptions", {
@@ -35,8 +36,9 @@ test_that("GetSubscriptions", {
   # Get available subscriptions of the account currently logged in. Fails if not logged in.
   # @return [array[Subscription]]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  response <- api_instance$GetSubscriptions()
+  expect_true(inherits(response, "list"))
+  expect_true(inherits(response[[1]], "Subscription"))
 })
 
 test_that("IsLoggedIn", {
@@ -46,8 +48,8 @@ test_that("IsLoggedIn", {
   # Check if a user is logged in.
   # @return [character]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  response <- api_instance$IsLoggedIn()
+  expect_true(inherits(response, "logical"))
 })
 
 test_that("Login", {
