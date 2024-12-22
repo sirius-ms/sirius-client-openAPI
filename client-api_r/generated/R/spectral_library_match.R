@@ -155,10 +155,35 @@ SpectralLibraryMatch <- R6::R6Class(
     },
 
     #' @description
-    #' To JSON String
-    #'
-    #' @return SpectralLibraryMatch in JSON format
+    #' Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
     toJSON = function() {
+      .Deprecated(new = "toSimpleType", msg = "Use the '$toSimpleType()' method instead since that is more clearly named. Use '$toJSONString()' to get a JSON string")
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert to a List
+    #'
+    #' Convert the R6 object to a list to work more easily with other tooling.
+    #'
+    #' @return SpectralLibraryMatch as a base R list.
+    #' @examples
+    #' # convert array of SpectralLibraryMatch (x) to a data frame
+    #' \dontrun{
+    #' library(purrr)
+    #' library(tibble)
+    #' df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+    #' df
+    #' }
+    toList = function() {
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert SpectralLibraryMatch to a base R type
+    #'
+    #' @return A base R type, e.g. a list or numeric/character array.
+    toSimpleType = function() {
       SpectralLibraryMatchObject <- list()
       if (!is.null(self$`specMatchId`)) {
         SpectralLibraryMatchObject[["specMatchId"]] <-
@@ -218,9 +243,9 @@ SpectralLibraryMatch <- R6::R6Class(
       }
       if (!is.null(self$`referenceSpectrum`)) {
         SpectralLibraryMatchObject[["referenceSpectrum"]] <-
-          self$`referenceSpectrum`$toJSON()
+          self$`referenceSpectrum`$toSimpleType()
       }
-      SpectralLibraryMatchObject
+      return(SpectralLibraryMatchObject)
     },
 
     #' @description
@@ -274,7 +299,7 @@ SpectralLibraryMatch <- R6::R6Class(
       }
       if (!is.null(this_object$`referenceSpectrum`)) {
         `referencespectrum_object` <- BasicSpectrum$new()
-        `referencespectrum_object`$fromJSON(jsonlite::toJSON(this_object$`referenceSpectrum`, auto_unbox = TRUE, digits = NA))
+        `referencespectrum_object`$fromJSON(jsonlite::toJSON(this_object$`referenceSpectrum`, auto_unbox = TRUE, digits = NA, null = 'null'))
         self$`referenceSpectrum` <- `referencespectrum_object`
       }
       self
@@ -282,133 +307,13 @@ SpectralLibraryMatch <- R6::R6Class(
 
     #' @description
     #' To JSON String
-    #'
+    #' 
+    #' @param ... Parameters passed to `jsonlite::toJSON`
     #' @return SpectralLibraryMatch in JSON format
-    toJSONString = function() {
-      jsoncontent <- c(
-        if (!is.null(self$`specMatchId`)) {
-          sprintf(
-          '"specMatchId":
-            "%s"
-                    ',
-          self$`specMatchId`
-          )
-        },
-        if (!is.null(self$`rank`)) {
-          sprintf(
-          '"rank":
-            %d
-                    ',
-          self$`rank`
-          )
-        },
-        if (!is.null(self$`similarity`)) {
-          sprintf(
-          '"similarity":
-            %d
-                    ',
-          self$`similarity`
-          )
-        },
-        if (!is.null(self$`sharedPeaks`)) {
-          sprintf(
-          '"sharedPeaks":
-            %d
-                    ',
-          self$`sharedPeaks`
-          )
-        },
-        if (!is.null(self$`querySpectrumIndex`)) {
-          sprintf(
-          '"querySpectrumIndex":
-            %d
-                    ',
-          self$`querySpectrumIndex`
-          )
-        },
-        if (!is.null(self$`dbName`)) {
-          sprintf(
-          '"dbName":
-            "%s"
-                    ',
-          self$`dbName`
-          )
-        },
-        if (!is.null(self$`dbId`)) {
-          sprintf(
-          '"dbId":
-            "%s"
-                    ',
-          self$`dbId`
-          )
-        },
-        if (!is.null(self$`uuid`)) {
-          sprintf(
-          '"uuid":
-            %d
-                    ',
-          self$`uuid`
-          )
-        },
-        if (!is.null(self$`splash`)) {
-          sprintf(
-          '"splash":
-            "%s"
-                    ',
-          self$`splash`
-          )
-        },
-        if (!is.null(self$`molecularFormula`)) {
-          sprintf(
-          '"molecularFormula":
-            "%s"
-                    ',
-          self$`molecularFormula`
-          )
-        },
-        if (!is.null(self$`adduct`)) {
-          sprintf(
-          '"adduct":
-            "%s"
-                    ',
-          self$`adduct`
-          )
-        },
-        if (!is.null(self$`exactMass`)) {
-          sprintf(
-          '"exactMass":
-            "%s"
-                    ',
-          self$`exactMass`
-          )
-        },
-        if (!is.null(self$`smiles`)) {
-          sprintf(
-          '"smiles":
-            "%s"
-                    ',
-          self$`smiles`
-          )
-        },
-        if (!is.null(self$`inchiKey`)) {
-          sprintf(
-          '"inchiKey":
-            "%s"
-                    ',
-          self$`inchiKey`
-          )
-        },
-        if (!is.null(self$`referenceSpectrum`)) {
-          sprintf(
-          '"referenceSpectrum":
-          %s
-          ',
-          jsonlite::toJSON(self$`referenceSpectrum`$toJSON(), auto_unbox = TRUE, digits = NA)
-          )
-        }
-      )
-      jsoncontent <- paste(jsoncontent, collapse = ",")
-      json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
+    toJSONString = function(...) {
+      simple <- self$toSimpleType()
+      json <- jsonlite::toJSON(simple, auto_unbox = TRUE, digits = NA, null = 'null', ...)
+      return(as.character(jsonlite::minify(json)))
     },
 
     #' @description
@@ -432,7 +337,7 @@ SpectralLibraryMatch <- R6::R6Class(
       self$`exactMass` <- this_object$`exactMass`
       self$`smiles` <- this_object$`smiles`
       self$`inchiKey` <- this_object$`inchiKey`
-      self$`referenceSpectrum` <- BasicSpectrum$new()$fromJSON(jsonlite::toJSON(this_object$`referenceSpectrum`, auto_unbox = TRUE, digits = NA))
+      self$`referenceSpectrum` <- BasicSpectrum$new()$fromJSON(jsonlite::toJSON(this_object$`referenceSpectrum`, auto_unbox = TRUE, digits = NA, null = 'null'))
       self
     },
 

@@ -139,10 +139,35 @@ SearchableDatabase <- R6::R6Class(
     },
 
     #' @description
-    #' To JSON String
-    #'
-    #' @return SearchableDatabase in JSON format
+    #' Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
     toJSON = function() {
+      .Deprecated(new = "toSimpleType", msg = "Use the '$toSimpleType()' method instead since that is more clearly named. Use '$toJSONString()' to get a JSON string")
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert to a List
+    #'
+    #' Convert the R6 object to a list to work more easily with other tooling.
+    #'
+    #' @return SearchableDatabase as a base R list.
+    #' @examples
+    #' # convert array of SearchableDatabase (x) to a data frame
+    #' \dontrun{
+    #' library(purrr)
+    #' library(tibble)
+    #' df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+    #' df
+    #' }
+    toList = function() {
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert SearchableDatabase to a base R type
+    #'
+    #' @return A base R type, e.g. a list or numeric/character array.
+    toSimpleType = function() {
       SearchableDatabaseObject <- list()
       if (!is.null(self$`displayName`)) {
         SearchableDatabaseObject[["displayName"]] <-
@@ -196,7 +221,7 @@ SearchableDatabase <- R6::R6Class(
         SearchableDatabaseObject[["errorMessage"]] <-
           self$`errorMessage`
       }
-      SearchableDatabaseObject
+      return(SearchableDatabaseObject)
     },
 
     #' @description
@@ -250,117 +275,13 @@ SearchableDatabase <- R6::R6Class(
 
     #' @description
     #' To JSON String
-    #'
+    #' 
+    #' @param ... Parameters passed to `jsonlite::toJSON`
     #' @return SearchableDatabase in JSON format
-    toJSONString = function() {
-      jsoncontent <- c(
-        if (!is.null(self$`displayName`)) {
-          sprintf(
-          '"displayName":
-            "%s"
-                    ',
-          self$`displayName`
-          )
-        },
-        if (!is.null(self$`location`)) {
-          sprintf(
-          '"location":
-            "%s"
-                    ',
-          self$`location`
-          )
-        },
-        if (!is.null(self$`matchRtOfReferenceSpectra`)) {
-          sprintf(
-          '"matchRtOfReferenceSpectra":
-            %s
-                    ',
-          tolower(self$`matchRtOfReferenceSpectra`)
-          )
-        },
-        if (!is.null(self$`databaseId`)) {
-          sprintf(
-          '"databaseId":
-            "%s"
-                    ',
-          self$`databaseId`
-          )
-        },
-        if (!is.null(self$`customDb`)) {
-          sprintf(
-          '"customDb":
-            %s
-                    ',
-          tolower(self$`customDb`)
-          )
-        },
-        if (!is.null(self$`searchable`)) {
-          sprintf(
-          '"searchable":
-            %s
-                    ',
-          tolower(self$`searchable`)
-          )
-        },
-        if (!is.null(self$`dbDate`)) {
-          sprintf(
-          '"dbDate":
-            "%s"
-                    ',
-          self$`dbDate`
-          )
-        },
-        if (!is.null(self$`dbVersion`)) {
-          sprintf(
-          '"dbVersion":
-            %d
-                    ',
-          self$`dbVersion`
-          )
-        },
-        if (!is.null(self$`updateNeeded`)) {
-          sprintf(
-          '"updateNeeded":
-            %s
-                    ',
-          tolower(self$`updateNeeded`)
-          )
-        },
-        if (!is.null(self$`numberOfStructures`)) {
-          sprintf(
-          '"numberOfStructures":
-            %d
-                    ',
-          self$`numberOfStructures`
-          )
-        },
-        if (!is.null(self$`numberOfFormulas`)) {
-          sprintf(
-          '"numberOfFormulas":
-            %d
-                    ',
-          self$`numberOfFormulas`
-          )
-        },
-        if (!is.null(self$`numberOfReferenceSpectra`)) {
-          sprintf(
-          '"numberOfReferenceSpectra":
-            %d
-                    ',
-          self$`numberOfReferenceSpectra`
-          )
-        },
-        if (!is.null(self$`errorMessage`)) {
-          sprintf(
-          '"errorMessage":
-            "%s"
-                    ',
-          self$`errorMessage`
-          )
-        }
-      )
-      jsoncontent <- paste(jsoncontent, collapse = ",")
-      json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
+    toJSONString = function(...) {
+      simple <- self$toSimpleType()
+      json <- jsonlite::toJSON(simple, auto_unbox = TRUE, digits = NA, null = 'null', ...)
+      return(as.character(jsonlite::minify(json)))
     },
 
     #' @description

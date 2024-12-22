@@ -39,10 +39,35 @@ BinaryFingerprint <- R6::R6Class(
     },
 
     #' @description
-    #' To JSON String
-    #'
-    #' @return BinaryFingerprint in JSON format
+    #' Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
     toJSON = function() {
+      .Deprecated(new = "toSimpleType", msg = "Use the '$toSimpleType()' method instead since that is more clearly named. Use '$toJSONString()' to get a JSON string")
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert to a List
+    #'
+    #' Convert the R6 object to a list to work more easily with other tooling.
+    #'
+    #' @return BinaryFingerprint as a base R list.
+    #' @examples
+    #' # convert array of BinaryFingerprint (x) to a data frame
+    #' \dontrun{
+    #' library(purrr)
+    #' library(tibble)
+    #' df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+    #' df
+    #' }
+    toList = function() {
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert BinaryFingerprint to a base R type
+    #'
+    #' @return A base R type, e.g. a list or numeric/character array.
+    toSimpleType = function() {
       BinaryFingerprintObject <- list()
       if (!is.null(self$`bitsSet`)) {
         BinaryFingerprintObject[["bitsSet"]] <-
@@ -52,7 +77,7 @@ BinaryFingerprint <- R6::R6Class(
         BinaryFingerprintObject[["length"]] <-
           self$`length`
       }
-      BinaryFingerprintObject
+      return(BinaryFingerprintObject)
     },
 
     #' @description
@@ -73,29 +98,13 @@ BinaryFingerprint <- R6::R6Class(
 
     #' @description
     #' To JSON String
-    #'
+    #' 
+    #' @param ... Parameters passed to `jsonlite::toJSON`
     #' @return BinaryFingerprint in JSON format
-    toJSONString = function() {
-      jsoncontent <- c(
-        if (!is.null(self$`bitsSet`)) {
-          sprintf(
-          '"bitsSet":
-             [%s]
-          ',
-          paste(unlist(lapply(self$`bitsSet`, function(x) paste0('"', x, '"'))), collapse = ",")
-          )
-        },
-        if (!is.null(self$`length`)) {
-          sprintf(
-          '"length":
-            %d
-                    ',
-          self$`length`
-          )
-        }
-      )
-      jsoncontent <- paste(jsoncontent, collapse = ",")
-      json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
+    toJSONString = function(...) {
+      simple <- self$toSimpleType()
+      json <- jsonlite::toJSON(simple, auto_unbox = TRUE, digits = NA, null = 'null', ...)
+      return(as.character(jsonlite::minify(json)))
     },
 
     #' @description

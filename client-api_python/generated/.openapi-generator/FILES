@@ -1,7 +1,5 @@
 .github/workflows/python.yml
 .gitignore
-.gitlab-ci.yml
-.travis.yml
 PySirius/__init__.py
 PySirius/api/__init__.py
 PySirius/api/actuator_api.py
@@ -254,19 +252,9 @@ docs/UseHeuristic.md
 docs/Zodiac.md
 docs/ZodiacEdgeFilterThresholds.md
 docs/ZodiacEpochs.md
-git_push.sh
 pyproject.toml
 requirements.txt
 setup.cfg
 setup.py
 test-requirements.txt
-test/test_actuator_api.py
-test/test_compounds_api.py
-test/test_features_api.py
-test/test_gui_api.py
-test/test_info_api.py
-test/test_jobs_api.py
-test/test_login_and_account_api.py
-test/test_projects_api.py
-test/test_searchable_databases_api.py
 tox.ini

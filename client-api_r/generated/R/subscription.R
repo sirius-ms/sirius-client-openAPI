@@ -157,10 +157,35 @@ Subscription <- R6::R6Class(
     },
 
     #' @description
-    #' To JSON String
-    #'
-    #' @return Subscription in JSON format
+    #' Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
     toJSON = function() {
+      .Deprecated(new = "toSimpleType", msg = "Use the '$toSimpleType()' method instead since that is more clearly named. Use '$toJSONString()' to get a JSON string")
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert to a List
+    #'
+    #' Convert the R6 object to a list to work more easily with other tooling.
+    #'
+    #' @return Subscription as a base R list.
+    #' @examples
+    #' # convert array of Subscription (x) to a data frame
+    #' \dontrun{
+    #' library(purrr)
+    #' library(tibble)
+    #' df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+    #' df
+    #' }
+    toList = function() {
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert Subscription to a base R type
+    #'
+    #' @return A base R type, e.g. a list or numeric/character array.
+    toSimpleType = function() {
       SubscriptionObject <- list()
       if (!is.null(self$`sid`)) {
         SubscriptionObject[["sid"]] <-
@@ -222,7 +247,7 @@ Subscription <- R6::R6Class(
         SubscriptionObject[["pp"]] <-
           self$`pp`
       }
-      SubscriptionObject
+      return(SubscriptionObject)
     },
 
     #' @description
@@ -282,133 +307,13 @@ Subscription <- R6::R6Class(
 
     #' @description
     #' To JSON String
-    #'
+    #' 
+    #' @param ... Parameters passed to `jsonlite::toJSON`
     #' @return Subscription in JSON format
-    toJSONString = function() {
-      jsoncontent <- c(
-        if (!is.null(self$`sid`)) {
-          sprintf(
-          '"sid":
-            "%s"
-                    ',
-          self$`sid`
-          )
-        },
-        if (!is.null(self$`subscriberId`)) {
-          sprintf(
-          '"subscriberId":
-            "%s"
-                    ',
-          self$`subscriberId`
-          )
-        },
-        if (!is.null(self$`subscriberName`)) {
-          sprintf(
-          '"subscriberName":
-            "%s"
-                    ',
-          self$`subscriberName`
-          )
-        },
-        if (!is.null(self$`expirationDate`)) {
-          sprintf(
-          '"expirationDate":
-            "%s"
-                    ',
-          self$`expirationDate`
-          )
-        },
-        if (!is.null(self$`startDate`)) {
-          sprintf(
-          '"startDate":
-            "%s"
-                    ',
-          self$`startDate`
-          )
-        },
-        if (!is.null(self$`countQueries`)) {
-          sprintf(
-          '"countQueries":
-            %s
-                    ',
-          tolower(self$`countQueries`)
-          )
-        },
-        if (!is.null(self$`instanceLimit`)) {
-          sprintf(
-          '"instanceLimit":
-            %d
-                    ',
-          self$`instanceLimit`
-          )
-        },
-        if (!is.null(self$`instanceHashRecordingTime`)) {
-          sprintf(
-          '"instanceHashRecordingTime":
-            %d
-                    ',
-          self$`instanceHashRecordingTime`
-          )
-        },
-        if (!is.null(self$`maxQueriesPerInstance`)) {
-          sprintf(
-          '"maxQueriesPerInstance":
-            %d
-                    ',
-          self$`maxQueriesPerInstance`
-          )
-        },
-        if (!is.null(self$`maxUserAccounts`)) {
-          sprintf(
-          '"maxUserAccounts":
-            %d
-                    ',
-          self$`maxUserAccounts`
-          )
-        },
-        if (!is.null(self$`serviceUrl`)) {
-          sprintf(
-          '"serviceUrl":
-            "%s"
-                    ',
-          self$`serviceUrl`
-          )
-        },
-        if (!is.null(self$`description`)) {
-          sprintf(
-          '"description":
-            "%s"
-                    ',
-          self$`description`
-          )
-        },
-        if (!is.null(self$`name`)) {
-          sprintf(
-          '"name":
-            "%s"
-                    ',
-          self$`name`
-          )
-        },
-        if (!is.null(self$`tos`)) {
-          sprintf(
-          '"tos":
-            "%s"
-                    ',
-          self$`tos`
-          )
-        },
-        if (!is.null(self$`pp`)) {
-          sprintf(
-          '"pp":
-            "%s"
-                    ',
-          self$`pp`
-          )
-        }
-      )
-      jsoncontent <- paste(jsoncontent, collapse = ",")
-      json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
+    toJSONString = function(...) {
+      simple <- self$toSimpleType()
+      json <- jsonlite::toJSON(simple, auto_unbox = TRUE, digits = NA, null = 'null', ...)
+      return(as.character(jsonlite::minify(json)))
     },
 
     #' @description
