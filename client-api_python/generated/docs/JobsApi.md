@@ -371,7 +371,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_job_config**
-> JobSubmission get_job_config(name, move_parameters_to_config_map=move_parameters_to_config_map)
+> StoredJobSubmission get_job_config(name, move_parameters_to_config_map=move_parameters_to_config_map)
 
 Request job configuration with given name.
 
@@ -382,7 +382,7 @@ Request job configuration with given name.
 
 ```python
 import PySirius
-from PySirius.models.job_submission import JobSubmission
+from PySirius.models.stored_job_submission import StoredJobSubmission
 from PySirius.rest import ApiException
 from pprint import pprint
 
@@ -421,7 +421,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**JobSubmission**](JobSubmission.md)
+[**StoredJobSubmission**](StoredJobSubmission.md)
 
 ### Authorization
 
@@ -504,7 +504,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_job_configs**
-> List[JobSubmission] get_job_configs()
+> List[StoredJobSubmission] get_job_configs()
 
 Request all available job configurations
 
@@ -515,7 +515,7 @@ Request all available job configurations
 
 ```python
 import PySirius
-from PySirius.models.job_submission import JobSubmission
+from PySirius.models.stored_job_submission import StoredJobSubmission
 from PySirius.rest import ApiException
 from pprint import pprint
 
@@ -548,7 +548,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**List[JobSubmission]**](JobSubmission.md)
+[**List[StoredJobSubmission]**](StoredJobSubmission.md)
 
 ### Authorization
 
@@ -782,7 +782,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **save_job_config**
-> str save_job_config(name, job_submission, override_existing=override_existing)
+> StoredJobSubmission save_job_config(name, job_submission, override_existing=override_existing, move_parameters_to_config_map=move_parameters_to_config_map)
 
 Add new job configuration with given name.
 
@@ -794,6 +794,7 @@ Add new job configuration with given name.
 ```python
 import PySirius
 from PySirius.models.job_submission import JobSubmission
+from PySirius.models.stored_job_submission import StoredJobSubmission
 from PySirius.rest import ApiException
 from pprint import pprint
 
@@ -811,10 +812,11 @@ with PySirius.ApiClient(configuration) as api_client:
     name = 'name_example' # str | name of the job-config to add
     job_submission = PySirius.JobSubmission() # JobSubmission | to add
     override_existing = False # bool |  (optional) (default to False)
+    move_parameters_to_config_map = False # bool | if true, object-based parameters will be converted to and added to the generic configMap parameters in the return object (optional) (default to False)
 
     try:
         # Add new job configuration with given name.
-        api_response = api_instance.save_job_config(name, job_submission, override_existing=override_existing)
+        api_response = api_instance.save_job_config(name, job_submission, override_existing=override_existing, move_parameters_to_config_map=move_parameters_to_config_map)
         print("The response of JobsApi->save_job_config:\n")
         pprint(api_response)
     except Exception as e:
@@ -831,10 +833,11 @@ Name | Type | Description  | Notes
  **name** | **str**| name of the job-config to add | 
  **job_submission** | [**JobSubmission**](JobSubmission.md)| to add | 
  **override_existing** | **bool**|  | [optional] [default to False]
+ **move_parameters_to_config_map** | **bool**| if true, object-based parameters will be converted to and added to the generic configMap parameters in the return object | [optional] [default to False]
 
 ### Return type
 
-**str**
+[**StoredJobSubmission**](StoredJobSubmission.md)
 
 ### Authorization
 
@@ -843,13 +846,13 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: application/problem+json, text/plain
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Probably modified name of the config (to ensure filesystem path compatibility). |  -  |
+**200** | StoredJobSubmission that contains the JobSubmission and the probably modified name of the config (to ensure path compatibility). |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

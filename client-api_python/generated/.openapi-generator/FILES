@@ -111,6 +111,7 @@ PySirius/models/spectral_library_match_summary.py
 PySirius/models/spectral_library_search.py
 PySirius/models/spectral_matching_type.py
 PySirius/models/spectrum_annotation.py
+PySirius/models/stored_job_submission.py
 PySirius/models/structure_candidate.py
 PySirius/models/structure_candidate_formula.py
 PySirius/models/structure_candidate_opt_field.py
@@ -235,6 +236,7 @@ docs/SpectralLibraryMatchSummary.md
 docs/SpectralLibrarySearch.md
 docs/SpectralMatchingType.md
 docs/SpectrumAnnotation.md
+docs/StoredJobSubmission.md
 docs/StructureCandidate.md
 docs/StructureCandidateFormula.md
 docs/StructureCandidateOptField.md

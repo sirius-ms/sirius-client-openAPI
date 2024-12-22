@@ -240,6 +240,7 @@ Class | Method | HTTP request | Description
  - [SpectralLibraryMatchSummary](docs/SpectralLibraryMatchSummary.md)
  - [SpectralLibrarySearch](docs/SpectralLibrarySearch.md)
  - [SpectrumAnnotation](docs/SpectrumAnnotation.md)
+ - [StoredJobSubmission](docs/StoredJobSubmission.md)
  - [StructureCandidate](docs/StructureCandidate.md)
  - [StructureCandidateFormula](docs/StructureCandidateFormula.md)
  - [StructureCandidateScored](docs/StructureCandidateScored.md)

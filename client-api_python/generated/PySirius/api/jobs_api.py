@@ -21,6 +21,7 @@ from PySirius.models.job import Job
 from PySirius.models.job_opt_field import JobOptField
 from PySirius.models.job_submission import JobSubmission
 from PySirius.models.paged_model_job import PagedModelJob
+from PySirius.models.stored_job_submission import StoredJobSubmission
 
 from PySirius.api_client import ApiClient, RequestSerialized
 from PySirius.api_response import ApiResponse
@@ -1476,7 +1477,7 @@ class JobsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> JobSubmission:
+    ) -> StoredJobSubmission:
         """Request job configuration with given name.
 
         Request job configuration with given name.
@@ -1517,7 +1518,7 @@ class JobsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "JobSubmission",
+            '200': "StoredJobSubmission",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1547,7 +1548,7 @@ class JobsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[JobSubmission]:
+    ) -> ApiResponse[StoredJobSubmission]:
         """Request job configuration with given name.
 
         Request job configuration with given name.
@@ -1588,7 +1589,7 @@ class JobsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "JobSubmission",
+            '200': "StoredJobSubmission",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1659,7 +1660,7 @@ class JobsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "JobSubmission",
+            '200': "StoredJobSubmission",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1990,7 +1991,7 @@ class JobsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> List[JobSubmission]:
+    ) -> List[StoredJobSubmission]:
         """Request all available job configurations
 
         Request all available job configurations
@@ -2025,7 +2026,7 @@ class JobsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "List[JobSubmission]",
+            '200': "List[StoredJobSubmission]",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2053,7 +2054,7 @@ class JobsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[List[JobSubmission]]:
+    ) -> ApiResponse[List[StoredJobSubmission]]:
         """Request all available job configurations
 
         Request all available job configurations
@@ -2088,7 +2089,7 @@ class JobsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "List[JobSubmission]",
+            '200': "List[StoredJobSubmission]",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2151,7 +2152,7 @@ class JobsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "List[JobSubmission]",
+            '200': "List[StoredJobSubmission]",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3096,6 +3097,7 @@ class JobsApi:
         name: Annotated[StrictStr, Field(description="name of the job-config to add")],
         job_submission: Annotated[JobSubmission, Field(description="to add")],
         override_existing: Optional[StrictBool] = None,
+        move_parameters_to_config_map: Annotated[Optional[StrictBool], Field(description="if true, object-based parameters will be converted to and added to the generic configMap parameters in the return object")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3108,7 +3110,7 @@ class JobsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> str:
+    ) -> StoredJobSubmission:
         """Add new job configuration with given name.
 
         Add new job configuration with given name.
@@ -3119,6 +3121,8 @@ class JobsApi:
         :type job_submission: JobSubmission
         :param override_existing:
         :type override_existing: bool
+        :param move_parameters_to_config_map: if true, object-based parameters will be converted to and added to the generic configMap parameters in the return object
+        :type move_parameters_to_config_map: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3145,6 +3149,7 @@ class JobsApi:
             name=name,
             job_submission=job_submission,
             override_existing=override_existing,
+            move_parameters_to_config_map=move_parameters_to_config_map,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3152,7 +3157,7 @@ class JobsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "str",
+            '200': "StoredJobSubmission",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3171,6 +3176,7 @@ class JobsApi:
         name: Annotated[StrictStr, Field(description="name of the job-config to add")],
         job_submission: Annotated[JobSubmission, Field(description="to add")],
         override_existing: Optional[StrictBool] = None,
+        move_parameters_to_config_map: Annotated[Optional[StrictBool], Field(description="if true, object-based parameters will be converted to and added to the generic configMap parameters in the return object")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3183,7 +3189,7 @@ class JobsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[str]:
+    ) -> ApiResponse[StoredJobSubmission]:
         """Add new job configuration with given name.
 
         Add new job configuration with given name.
@@ -3194,6 +3200,8 @@ class JobsApi:
         :type job_submission: JobSubmission
         :param override_existing:
         :type override_existing: bool
+        :param move_parameters_to_config_map: if true, object-based parameters will be converted to and added to the generic configMap parameters in the return object
+        :type move_parameters_to_config_map: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3220,6 +3228,7 @@ class JobsApi:
             name=name,
             job_submission=job_submission,
             override_existing=override_existing,
+            move_parameters_to_config_map=move_parameters_to_config_map,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3227,7 +3236,7 @@ class JobsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "str",
+            '200': "StoredJobSubmission",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3246,6 +3255,7 @@ class JobsApi:
         name: Annotated[StrictStr, Field(description="name of the job-config to add")],
         job_submission: Annotated[JobSubmission, Field(description="to add")],
         override_existing: Optional[StrictBool] = None,
+        move_parameters_to_config_map: Annotated[Optional[StrictBool], Field(description="if true, object-based parameters will be converted to and added to the generic configMap parameters in the return object")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3269,6 +3279,8 @@ class JobsApi:
         :type job_submission: JobSubmission
         :param override_existing:
         :type override_existing: bool
+        :param move_parameters_to_config_map: if true, object-based parameters will be converted to and added to the generic configMap parameters in the return object
+        :type move_parameters_to_config_map: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3295,6 +3307,7 @@ class JobsApi:
             name=name,
             job_submission=job_submission,
             override_existing=override_existing,
+            move_parameters_to_config_map=move_parameters_to_config_map,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3302,7 +3315,7 @@ class JobsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "str",
+            '200': "StoredJobSubmission",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3316,6 +3329,7 @@ class JobsApi:
         name,
         job_submission,
         override_existing,
+        move_parameters_to_config_map,
         _request_auth,
         _content_type,
         _headers,
@@ -3342,6 +3356,10 @@ class JobsApi:
             
             _query_params.append(('overrideExisting', override_existing))
             
+        if move_parameters_to_config_map is not None:
+            
+            _query_params.append(('moveParametersToConfigMap', move_parameters_to_config_map))
+            
         # process the header parameters
         # process the form parameters
         # process the body parameter
@@ -3352,8 +3370,7 @@ class JobsApi:
         # set the HTTP header `Accept`
         _header_params['Accept'] = self.api_client.select_header_accept(
             [
-                'application/problem+json', 
-                'text/plain'
+                'application/json'
             ]
         )
 

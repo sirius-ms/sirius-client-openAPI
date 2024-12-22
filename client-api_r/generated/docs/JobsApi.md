@@ -265,7 +265,7 @@ No authorization required
 | **200** | OK |  -  |
 
 # **GetJobConfig**
-> JobSubmission GetJobConfig(name, move_parameters_to_config_map = FALSE)
+> StoredJobSubmission GetJobConfig(name, move_parameters_to_config_map = FALSE)
 
 Request job configuration with given name.
 
@@ -297,7 +297,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**JobSubmission**](JobSubmission.md)
+[**StoredJobSubmission**](StoredJobSubmission.md)
 
 ### Authorization
 
@@ -356,7 +356,7 @@ No authorization required
 | **200** | OK |  -  |
 
 # **GetJobConfigs**
-> array[JobSubmission] GetJobConfigs()
+> array[StoredJobSubmission] GetJobConfigs()
 
 Request all available job configurations
 
@@ -381,7 +381,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**array[JobSubmission]**](JobSubmission.md)
+[**array[StoredJobSubmission]**](StoredJobSubmission.md)
 
 ### Authorization
 
@@ -547,7 +547,7 @@ No authorization required
 | **200** | OK |  -  |
 
 # **SaveJobConfig**
-> character SaveJobConfig(name, job_submission, override_existing = FALSE)
+> StoredJobSubmission SaveJobConfig(name, job_submission, override_existing = FALSE, move_parameters_to_config_map = FALSE)
 
 Add new job configuration with given name.
 
@@ -563,11 +563,12 @@ library(Rsirius)
 var_name <- "name_example" # character | name of the job-config to add
 var_job_submission <- JobSubmission$new(c("compoundIds_example"), c("alignedFeatureIds_example"), c("fallbackAdducts_example"), c("enforcedAdducts_example"), c("detectableAdducts_example"), "recompute_example", SpectralLibrarySearch$new("enabled_example", c("spectraSearchDBs_example"), 123, 123, "INTENSITY"), Sirius$new("enabled_example", "QTOF", 123, 123, 123, "IGNORE", "filterByIsotopePattern_example", "enforceElGordoFormula_example", "performBottomUpSearch_example", 123, c("formulaSearchDBs_example"), "applyFormulaConstraintsToDBAndBottomUpSearch_example", "enforcedFormulaConstraints_example", "fallbackFormulaConstraints_example", c("detectableElements_example"), Timeout$new(123, 123), UseHeuristic$new(123, 123), "injectSpecLibMatchFormulas_example", 123, 123), Zodiac$new("enabled_example", 123, 123, "runInTwoSteps_example", ZodiacEdgeFilterThresholds$new(123, 123, 123), ZodiacEpochs$new(123, 123, 123)), FingerprintPrediction$new("enabled_example", "useScoreThreshold_example", "alwaysPredictHighRefMatches_example"), Canopus$new("enabled_example"), StructureDbSearch$new("enabled_example", c("structureSearchDBs_example"), "tagStructuresWithLipidClass_example", "OFF"), MsNovelist$new("enabled_example", 123), c(key = "inner_example")) # JobSubmission | to add
 var_override_existing <- FALSE # character |  (Optional)
+var_move_parameters_to_config_map <- FALSE # character | if true, object-based parameters will be converted to and added to the generic configMap parameters in the return object (Optional)
 
 api_instance <- rsirius_api$new()
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$SaveJobConfig(var_name, var_job_submission, override_existing = var_override_existingdata_file = "result.txt")
-result <- api_instance$jobs_api$SaveJobConfig(var_name, var_job_submission, override_existing = var_override_existing)
+# result <- api_instance$SaveJobConfig(var_name, var_job_submission, override_existing = var_override_existing, move_parameters_to_config_map = var_move_parameters_to_config_mapdata_file = "result.txt")
+result <- api_instance$jobs_api$SaveJobConfig(var_name, var_job_submission, override_existing = var_override_existing, move_parameters_to_config_map = var_move_parameters_to_config_map)
 dput(result)
 ```
 
@@ -578,10 +579,11 @@ Name | Type | Description  | Notes
  **name** | **character**| name of the job-config to add | 
  **job_submission** | [**JobSubmission**](JobSubmission.md)| to add | 
  **override_existing** | **character**|  | [optional] [default to FALSE]
+ **move_parameters_to_config_map** | **character**| if true, object-based parameters will be converted to and added to the generic configMap parameters in the return object | [optional] [default to FALSE]
 
 ### Return type
 
-**character**
+[**StoredJobSubmission**](StoredJobSubmission.md)
 
 ### Authorization
 
@@ -590,12 +592,12 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: application/problem+json, text/plain
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** | Probably modified name of the config (to ensure filesystem path compatibility). |  -  |
+| **200** | StoredJobSubmission that contains the JobSubmission and the probably modified name of the config (to ensure path compatibility). |  -  |
 
 # **StartJob**
 > Job StartJob(project_id, job_submission, opt_fields = ["command","progress"])
