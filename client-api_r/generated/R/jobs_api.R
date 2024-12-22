@@ -177,13 +177,14 @@
 #' var_name <- "name_example" # character | name of the job-config to add
 #' var_job_submission <- JobSubmission$new(c("compoundIds_example"), c("alignedFeatureIds_example"), c("fallbackAdducts_example"), c("enforcedAdducts_example"), c("detectableAdducts_example"), "recompute_example", SpectralLibrarySearch$new("enabled_example", c("spectraSearchDBs_example"), 123, 123, "INTENSITY"), Sirius$new("enabled_example", "QTOF", 123, 123, 123, "IGNORE", "filterByIsotopePattern_example", "enforceElGordoFormula_example", "performBottomUpSearch_example", 123, c("formulaSearchDBs_example"), "applyFormulaConstraintsToDBAndBottomUpSearch_example", "enforcedFormulaConstraints_example", "fallbackFormulaConstraints_example", c("detectableElements_example"), Timeout$new(123, 123), UseHeuristic$new(123, 123), "injectSpecLibMatchFormulas_example", 123, 123), Zodiac$new("enabled_example", 123, 123, "runInTwoSteps_example", ZodiacEdgeFilterThresholds$new(123, 123, 123), ZodiacEpochs$new(123, 123, 123)), FingerprintPrediction$new("enabled_example", "useScoreThreshold_example", "alwaysPredictHighRefMatches_example"), Canopus$new("enabled_example"), StructureDbSearch$new("enabled_example", c("structureSearchDBs_example"), "tagStructuresWithLipidClass_example", "OFF"), MsNovelist$new("enabled_example", 123), c(key = "inner_example")) # JobSubmission | to add
 #' var_override_existing <- FALSE # character |  (Optional)
+#' var_move_parameters_to_config_map <- FALSE # character | if true, object-based parameters will be converted to and added to the generic configMap parameters in the return object (Optional)
 #'
 #' #Add new job configuration with given name.
 #' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-#' # result <- api_instance$SaveJobConfig(var_name, var_job_submission, override_existing = var_override_existingdata_file = "result.txt")
-#' result <- api_instance$jobs_api$SaveJobConfig(var_name, var_job_submission, override_existing = var_override_existing)
+#' # result <- api_instance$SaveJobConfig(var_name, var_job_submission, override_existing = var_override_existing, move_parameters_to_config_map = var_move_parameters_to_config_mapdata_file = "result.txt")
+#' result <- api_instance$jobs_api$SaveJobConfig(var_name, var_job_submission, override_existing = var_override_existing, move_parameters_to_config_map = var_move_parameters_to_config_map)
 #' dput(result)
 #'
 #'
@@ -744,7 +745,7 @@ JobsApi <- R6::R6Class(
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
-    #' @return JobSubmission
+    #' @return StoredJobSubmission
     GetJobConfig = function(name, move_parameters_to_config_map = FALSE, data_file = NULL, ...) {
       local_var_response <- self$GetJobConfigWithHttpInfo(name, move_parameters_to_config_map, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
@@ -766,7 +767,7 @@ JobsApi <- R6::R6Class(
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
-    #' @return API response (JobSubmission) with additional information such as HTTP status code, headers
+    #' @return API response (StoredJobSubmission) with additional information such as HTTP status code, headers
     GetJobConfigWithHttpInfo = function(name, move_parameters_to_config_map = FALSE, data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
@@ -817,7 +818,7 @@ JobsApi <- R6::R6Class(
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "JobSubmission", loadNamespace("Rsirius")),
+          self$api_client$deserialize(local_var_resp$response_as_text(), "StoredJobSubmission", loadNamespace("Rsirius")),
           error = function(e) {
             stop("Failed to deserialize response")
           }
@@ -926,7 +927,7 @@ JobsApi <- R6::R6Class(
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
-    #' @return array[JobSubmission]
+    #' @return array[StoredJobSubmission]
     GetJobConfigs = function(data_file = NULL, ...) {
       local_var_response <- self$GetJobConfigsWithHttpInfo(data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
@@ -946,7 +947,7 @@ JobsApi <- R6::R6Class(
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
-    #' @return API response (array[JobSubmission]) with additional information such as HTTP status code, headers
+    #' @return API response (array[StoredJobSubmission]) with additional information such as HTTP status code, headers
     GetJobConfigsWithHttpInfo = function(data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
@@ -985,7 +986,7 @@ JobsApi <- R6::R6Class(
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "array[JobSubmission]", loadNamespace("Rsirius")),
+          self$api_client$deserialize(local_var_resp$response_as_text(), "array[StoredJobSubmission]", loadNamespace("Rsirius")),
           error = function(e) {
             stop("Failed to deserialize response")
           }
@@ -1348,12 +1349,13 @@ JobsApi <- R6::R6Class(
     #' @param name name of the job-config to add
     #' @param job_submission to add
     #' @param override_existing (optional) No description (default value: FALSE)
+    #' @param move_parameters_to_config_map (optional) if true, object-based parameters will be converted to and added to the generic configMap parameters in the return object (default value: FALSE)
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
-    #' @return character
-    SaveJobConfig = function(name, job_submission, override_existing = FALSE, data_file = NULL, ...) {
-      local_var_response <- self$SaveJobConfigWithHttpInfo(name, job_submission, override_existing, data_file = data_file, ...)
+    #' @return StoredJobSubmission
+    SaveJobConfig = function(name, job_submission, override_existing = FALSE, move_parameters_to_config_map = FALSE, data_file = NULL, ...) {
+      local_var_response <- self$SaveJobConfigWithHttpInfo(name, job_submission, override_existing, move_parameters_to_config_map, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
@@ -1371,11 +1373,12 @@ JobsApi <- R6::R6Class(
     #' @param name name of the job-config to add
     #' @param job_submission to add
     #' @param override_existing (optional) No description (default value: FALSE)
+    #' @param move_parameters_to_config_map (optional) if true, object-based parameters will be converted to and added to the generic configMap parameters in the return object (default value: FALSE)
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
-    #' @return API response (character) with additional information such as HTTP status code, headers
-    SaveJobConfigWithHttpInfo = function(name, job_submission, override_existing = FALSE, data_file = NULL, ...) {
+    #' @return API response (StoredJobSubmission) with additional information such as HTTP status code, headers
+    SaveJobConfigWithHttpInfo = function(name, job_submission, override_existing = FALSE, move_parameters_to_config_map = FALSE, data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -1396,7 +1399,10 @@ JobsApi <- R6::R6Class(
 
 
 
+
       query_params[["overrideExisting"]] <- `override_existing`
+
+      query_params[["moveParametersToConfigMap"]] <- `move_parameters_to_config_map`
 
       if (!is.null(`job_submission`)) {
         local_var_body <- `job_submission`$toJSONString()
@@ -1411,7 +1417,7 @@ JobsApi <- R6::R6Class(
 
 
       # The Accept request HTTP header
-      local_var_accepts <- list("application/problem+json", "text/plain")
+      local_var_accepts <- list("application/json")
 
       # The Content-Type representation header
       local_var_content_types <- list("application/json")
@@ -1436,7 +1442,7 @@ JobsApi <- R6::R6Class(
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "character", loadNamespace("Rsirius")),
+          self$api_client$deserialize(local_var_resp$response_as_text(), "StoredJobSubmission", loadNamespace("Rsirius")),
           error = function(e) {
             stop("Failed to deserialize response")
           }

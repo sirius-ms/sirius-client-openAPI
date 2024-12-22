@@ -15,7 +15,7 @@ import time
 import unittest
 
 import PySirius
-from PySirius import PySiriusAPI, SiriusSDK
+from PySirius import PySiriusAPI, SiriusSDK, StoredJobSubmission
 from PySirius.models.job import Job
 from PySirius.models.paged_model_job import PagedModelJob
 from PySirius.models.job_submission import JobSubmission
@@ -125,7 +125,7 @@ class TestJobsApi(unittest.TestCase):
         response = self.api.jobs().get_job_config(config_name)
         self.api.jobs().delete_job_config(config_name)
 
-        self.assertIsInstance(response, JobSubmission)
+        self.assertIsInstance(response, StoredJobSubmission)
 
     def test_get_job_configs(self) -> None:
         """Test case for get_job_configs
@@ -140,7 +140,7 @@ class TestJobsApi(unittest.TestCase):
         self.api.jobs().delete_job_config(config_name)
 
         self.assertIsInstance(response, list)
-        self.assertIsInstance(response[0], JobSubmission)
+        self.assertIsInstance(response[0], StoredJobSubmission)
 
     def test_get_jobs(self) -> None:
         """Test case for get_jobs
@@ -178,7 +178,8 @@ class TestJobsApi(unittest.TestCase):
         response = self.api.jobs().save_job_config(config_name, default_config)
         self.api.jobs().delete_job_config(config_name)
 
-        self.assertEqual(response, "test_save_job_config")
+        self.assertIsInstance(response, StoredJobSubmission)
+        self.assertEqual(response.name, "test_save_job_config")
 
     def test_start_job(self) -> None:
         """Test case for start_job

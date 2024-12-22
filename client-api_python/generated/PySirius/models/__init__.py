@@ -107,6 +107,7 @@ from PySirius.models.spectral_library_match_summary import SpectralLibraryMatchS
 from PySirius.models.spectral_library_search import SpectralLibrarySearch
 from PySirius.models.spectral_matching_type import SpectralMatchingType
 from PySirius.models.spectrum_annotation import SpectrumAnnotation
+from PySirius.models.stored_job_submission import StoredJobSubmission
 from PySirius.models.structure_candidate import StructureCandidate
 from PySirius.models.structure_candidate_formula import StructureCandidateFormula
 from PySirius.models.structure_candidate_opt_field import StructureCandidateOptField

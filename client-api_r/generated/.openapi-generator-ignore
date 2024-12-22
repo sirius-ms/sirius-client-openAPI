@@ -25,4 +25,4 @@ tests/testthat/*
 tests/*
 .travis.yml
 git_push.sh
-
+.gitignore
