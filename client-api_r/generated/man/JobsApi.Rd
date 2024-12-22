@@ -184,13 +184,14 @@ library(Rsirius)
 var_name <- "name_example" # character | name of the job-config to add
 var_job_submission <- JobSubmission$new(c("compoundIds_example"), c("alignedFeatureIds_example"), c("fallbackAdducts_example"), c("enforcedAdducts_example"), c("detectableAdducts_example"), "recompute_example", SpectralLibrarySearch$new("enabled_example", c("spectraSearchDBs_example"), 123, 123, "INTENSITY"), Sirius$new("enabled_example", "QTOF", 123, 123, 123, "IGNORE", "filterByIsotopePattern_example", "enforceElGordoFormula_example", "performBottomUpSearch_example", 123, c("formulaSearchDBs_example"), "applyFormulaConstraintsToDBAndBottomUpSearch_example", "enforcedFormulaConstraints_example", "fallbackFormulaConstraints_example", c("detectableElements_example"), Timeout$new(123, 123), UseHeuristic$new(123, 123), "injectSpecLibMatchFormulas_example", 123, 123), Zodiac$new("enabled_example", 123, 123, "runInTwoSteps_example", ZodiacEdgeFilterThresholds$new(123, 123, 123), ZodiacEpochs$new(123, 123, 123)), FingerprintPrediction$new("enabled_example", "useScoreThreshold_example", "alwaysPredictHighRefMatches_example"), Canopus$new("enabled_example"), StructureDbSearch$new("enabled_example", c("structureSearchDBs_example"), "tagStructuresWithLipidClass_example", "OFF"), MsNovelist$new("enabled_example", 123), c(key = "inner_example")) # JobSubmission | to add
 var_override_existing <- FALSE # character |  (Optional)
+var_move_parameters_to_config_map <- FALSE # character | if true, object-based parameters will be converted to and added to the generic configMap parameters in the return object (Optional)
 
 #Add new job configuration with given name.
 api_instance <- rsirius_api$new()
 
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$SaveJobConfig(var_name, var_job_submission, override_existing = var_override_existingdata_file = "result.txt")
-result <- api_instance$jobs_api$SaveJobConfig(var_name, var_job_submission, override_existing = var_override_existing)
+# result <- api_instance$SaveJobConfig(var_name, var_job_submission, override_existing = var_override_existing, move_parameters_to_config_map = var_move_parameters_to_config_mapdata_file = "result.txt")
+result <- api_instance$jobs_api$SaveJobConfig(var_name, var_job_submission, override_existing = var_override_existing, move_parameters_to_config_map = var_move_parameters_to_config_map)
 dput(result)
 
 
@@ -627,7 +628,7 @@ Request job configuration with given name.
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-JobSubmission
+StoredJobSubmission
 }
 }
 \if{html}{\out{<hr>}}
@@ -658,7 +659,7 @@ Request job configuration with given name.
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-API response (JobSubmission) with additional information such as HTTP status code, headers
+API response (StoredJobSubmission) with additional information such as HTTP status code, headers
 }
 }
 \if{html}{\out{<hr>}}
@@ -724,7 +725,7 @@ Request all available job configurations
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-array[JobSubmission]
+array[StoredJobSubmission]
 }
 }
 \if{html}{\out{<hr>}}
@@ -746,7 +747,7 @@ Request all available job configurations
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-API response (array[JobSubmission]) with additional information such as HTTP status code, headers
+API response (array[StoredJobSubmission]) with additional information such as HTTP status code, headers
 }
 }
 \if{html}{\out{<hr>}}
@@ -951,6 +952,7 @@ Add new job configuration with given name.
   name,
   job_submission,
   override_existing = FALSE,
+  move_parameters_to_config_map = FALSE,
   data_file = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -965,6 +967,8 @@ Add new job configuration with given name.
 
 \item{\code{override_existing}}{(optional) No description (default value: FALSE)}
 
+\item{\code{move_parameters_to_config_map}}{(optional) if true, object-based parameters will be converted to and added to the generic configMap parameters in the return object (default value: FALSE)}
+
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 
 \item{\code{...}}{Other optional arguments}
@@ -972,7 +976,7 @@ Add new job configuration with given name.
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-character
+StoredJobSubmission
 }
 }
 \if{html}{\out{<hr>}}
@@ -985,6 +989,7 @@ Add new job configuration with given name.
   name,
   job_submission,
   override_existing = FALSE,
+  move_parameters_to_config_map = FALSE,
   data_file = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -999,6 +1004,8 @@ Add new job configuration with given name.
 
 \item{\code{override_existing}}{(optional) No description (default value: FALSE)}
 
+\item{\code{move_parameters_to_config_map}}{(optional) if true, object-based parameters will be converted to and added to the generic configMap parameters in the return object (default value: FALSE)}
+
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 
 \item{\code{...}}{Other optional arguments}
@@ -1006,7 +1013,7 @@ Add new job configuration with given name.
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-API response (character) with additional information such as HTTP status code, headers
+API response (StoredJobSubmission) with additional information such as HTTP status code, headers
 }
 }
 \if{html}{\out{<hr>}}
