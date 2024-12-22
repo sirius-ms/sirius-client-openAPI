@@ -2,7 +2,6 @@
 .github/workflows/r-client.yaml
 .gitignore
 .lintr
-.travis.yml
 DESCRIPTION
 NAMESPACE
 R/account_credentials.R
@@ -197,11 +196,8 @@ docs/UseHeuristic.md
 docs/Zodiac.md
 docs/ZodiacEdgeFilterThresholds.md
 docs/ZodiacEpochs.md
-git_push.sh
-tests/testthat.R
 tests/testthat/test_account_credentials.R
 tests/testthat/test_account_info.R
-tests/testthat/test_actuator_api.R
 tests/testthat/test_adduct_edge_experimental.R
 tests/testthat/test_adduct_network_experimental.R
 tests/testthat/test_adduct_node_experimental.R
@@ -221,7 +217,6 @@ tests/testthat/test_compound.R
 tests/testthat/test_compound_class.R
 tests/testthat/test_compound_classes.R
 tests/testthat/test_compound_import.R
-tests/testthat/test_compounds_api.R
 tests/testthat/test_computed_subtools.R
 tests/testthat/test_connection_check.R
 tests/testthat/test_connection_error.R
@@ -232,7 +227,6 @@ tests/testthat/test_db_link.R
 tests/testthat/test_deviation.R
 tests/testthat/test_feature_annotations.R
 tests/testthat/test_feature_import.R
-tests/testthat/test_features_api.R
 tests/testthat/test_fingerprint_prediction.R
 tests/testthat/test_formula_candidate.R
 tests/testthat/test_fragment_node.R
@@ -241,16 +235,13 @@ tests/testthat/test_gui_api.R
 tests/testthat/test_gui_info.R
 tests/testthat/test_import_result.R
 tests/testthat/test_info.R
-tests/testthat/test_info_api.R
 tests/testthat/test_isotope_pattern_annotation.R
 tests/testthat/test_job.R
 tests/testthat/test_job_progress.R
 tests/testthat/test_job_submission.R
-tests/testthat/test_jobs_api.R
 tests/testthat/test_lcms_submission_parameters.R
 tests/testthat/test_license_info.R
 tests/testthat/test_lipid_annotation.R
-tests/testthat/test_login_and_account_api.R
 tests/testthat/test_loss_edge.R
 tests/testthat/test_ms_data.R
 tests/testthat/test_ms_novelist.R
@@ -266,12 +257,10 @@ tests/testthat/test_parent_peak.R
 tests/testthat/test_peak_annotation.R
 tests/testthat/test_project_change_event.R
 tests/testthat/test_project_info.R
-tests/testthat/test_projects_api.R
 tests/testthat/test_quality_item.R
 tests/testthat/test_quantification_table_experimental.R
 tests/testthat/test_searchable_database.R
 tests/testthat/test_searchable_database_parameters.R
-tests/testthat/test_searchable_databases_api.R
 tests/testthat/test_simple_peak.R
 tests/testthat/test_sirius.R
 tests/testthat/test_spectral_library_match.R

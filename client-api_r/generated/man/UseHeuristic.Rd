@@ -15,6 +15,20 @@ UseHeuristic Class
 \details{
 Create a new UseHeuristic
 }
+\examples{
+
+## ------------------------------------------------
+## Method `UseHeuristic$toList`
+## ------------------------------------------------
+
+# convert array of UseHeuristic (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
@@ -29,6 +43,8 @@ Create a new UseHeuristic
 \itemize{
 \item \href{#method-UseHeuristic-new}{\code{UseHeuristic$new()}}
 \item \href{#method-UseHeuristic-toJSON}{\code{UseHeuristic$toJSON()}}
+\item \href{#method-UseHeuristic-toList}{\code{UseHeuristic$toList()}}
+\item \href{#method-UseHeuristic-toSimpleType}{\code{UseHeuristic$toSimpleType()}}
 \item \href{#method-UseHeuristic-fromJSON}{\code{UseHeuristic$fromJSON()}}
 \item \href{#method-UseHeuristic-toJSONString}{\code{UseHeuristic$toJSONString()}}
 \item \href{#method-UseHeuristic-fromJSONString}{\code{UseHeuristic$fromJSONString()}}
@@ -69,13 +85,52 @@ Initialize a new UseHeuristic class.
 \if{html}{\out{<a id="method-UseHeuristic-toJSON"></a>}}
 \if{latex}{\out{\hypertarget{method-UseHeuristic-toJSON}{}}}
 \subsection{Method \code{toJSON()}}{
-To JSON String
+Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{UseHeuristic$toJSON()}\if{html}{\out{</div>}}
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-UseHeuristic-toList"></a>}}
+\if{latex}{\out{\hypertarget{method-UseHeuristic-toList}{}}}
+\subsection{Method \code{toList()}}{
+Convert to a List
+
+Convert the R6 object to a list to work more easily with other tooling.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{UseHeuristic$toList()}\if{html}{\out{</div>}}
+}
+
 \subsection{Returns}{
-UseHeuristic in JSON format
+UseHeuristic as a base R list.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{# convert array of UseHeuristic (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-UseHeuristic-toSimpleType"></a>}}
+\if{latex}{\out{\hypertarget{method-UseHeuristic-toSimpleType}{}}}
+\subsection{Method \code{toSimpleType()}}{
+Convert UseHeuristic to a base R type
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{UseHeuristic$toSimpleType()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A base R type, e.g. a list or numeric/character array.
 }
 }
 \if{html}{\out{<hr>}}
@@ -104,9 +159,16 @@ the instance of UseHeuristic
 \subsection{Method \code{toJSONString()}}{
 To JSON String
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{UseHeuristic$toJSONString()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{UseHeuristic$toJSONString(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Parameters passed to `jsonlite::toJSON`}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
 UseHeuristic in JSON format
 }

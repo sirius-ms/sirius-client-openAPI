@@ -15,6 +15,20 @@ MsData Class
 \details{
 Create a new MsData
 }
+\examples{
+
+## ------------------------------------------------
+## Method `MsData$toList`
+## ------------------------------------------------
+
+# convert array of MsData (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
@@ -33,6 +47,8 @@ Create a new MsData
 \itemize{
 \item \href{#method-MsData-new}{\code{MsData$new()}}
 \item \href{#method-MsData-toJSON}{\code{MsData$toJSON()}}
+\item \href{#method-MsData-toList}{\code{MsData$toList()}}
+\item \href{#method-MsData-toSimpleType}{\code{MsData$toSimpleType()}}
 \item \href{#method-MsData-fromJSON}{\code{MsData$fromJSON()}}
 \item \href{#method-MsData-toJSONString}{\code{MsData$toJSONString()}}
 \item \href{#method-MsData-fromJSONString}{\code{MsData$fromJSONString()}}
@@ -79,13 +95,52 @@ Initialize a new MsData class.
 \if{html}{\out{<a id="method-MsData-toJSON"></a>}}
 \if{latex}{\out{\hypertarget{method-MsData-toJSON}{}}}
 \subsection{Method \code{toJSON()}}{
-To JSON String
+Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{MsData$toJSON()}\if{html}{\out{</div>}}
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-MsData-toList"></a>}}
+\if{latex}{\out{\hypertarget{method-MsData-toList}{}}}
+\subsection{Method \code{toList()}}{
+Convert to a List
+
+Convert the R6 object to a list to work more easily with other tooling.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{MsData$toList()}\if{html}{\out{</div>}}
+}
+
 \subsection{Returns}{
-MsData in JSON format
+MsData as a base R list.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{# convert array of MsData (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-MsData-toSimpleType"></a>}}
+\if{latex}{\out{\hypertarget{method-MsData-toSimpleType}{}}}
+\subsection{Method \code{toSimpleType()}}{
+Convert MsData to a base R type
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{MsData$toSimpleType()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A base R type, e.g. a list or numeric/character array.
 }
 }
 \if{html}{\out{<hr>}}
@@ -114,9 +169,16 @@ the instance of MsData
 \subsection{Method \code{toJSONString()}}{
 To JSON String
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{MsData$toJSONString()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{MsData$toJSONString(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Parameters passed to `jsonlite::toJSON`}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
 MsData in JSON format
 }

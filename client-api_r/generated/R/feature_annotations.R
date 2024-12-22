@@ -89,22 +89,47 @@ FeatureAnnotations <- R6::R6Class(
     },
 
     #' @description
-    #' To JSON String
-    #'
-    #' @return FeatureAnnotations in JSON format
+    #' Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
     toJSON = function() {
+      .Deprecated(new = "toSimpleType", msg = "Use the '$toSimpleType()' method instead since that is more clearly named. Use '$toJSONString()' to get a JSON string")
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert to a List
+    #'
+    #' Convert the R6 object to a list to work more easily with other tooling.
+    #'
+    #' @return FeatureAnnotations as a base R list.
+    #' @examples
+    #' # convert array of FeatureAnnotations (x) to a data frame
+    #' \dontrun{
+    #' library(purrr)
+    #' library(tibble)
+    #' df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+    #' df
+    #' }
+    toList = function() {
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert FeatureAnnotations to a base R type
+    #'
+    #' @return A base R type, e.g. a list or numeric/character array.
+    toSimpleType = function() {
       FeatureAnnotationsObject <- list()
       if (!is.null(self$`formulaAnnotation`)) {
         FeatureAnnotationsObject[["formulaAnnotation"]] <-
-          self$`formulaAnnotation`$toJSON()
+          self$`formulaAnnotation`$toSimpleType()
       }
       if (!is.null(self$`structureAnnotation`)) {
         FeatureAnnotationsObject[["structureAnnotation"]] <-
-          self$`structureAnnotation`$toJSON()
+          self$`structureAnnotation`$toSimpleType()
       }
       if (!is.null(self$`compoundClassAnnotation`)) {
         FeatureAnnotationsObject[["compoundClassAnnotation"]] <-
-          self$`compoundClassAnnotation`$toJSON()
+          self$`compoundClassAnnotation`$toSimpleType()
       }
       if (!is.null(self$`confidenceExactMatch`)) {
         FeatureAnnotationsObject[["confidenceExactMatch"]] <-
@@ -126,7 +151,7 @@ FeatureAnnotations <- R6::R6Class(
         FeatureAnnotationsObject[["expandedDatabases"]] <-
           self$`expandedDatabases`
       }
-      FeatureAnnotationsObject
+      return(FeatureAnnotationsObject)
     },
 
     #' @description
@@ -138,17 +163,17 @@ FeatureAnnotations <- R6::R6Class(
       this_object <- jsonlite::fromJSON(input_json)
       if (!is.null(this_object$`formulaAnnotation`)) {
         `formulaannotation_object` <- FormulaCandidate$new()
-        `formulaannotation_object`$fromJSON(jsonlite::toJSON(this_object$`formulaAnnotation`, auto_unbox = TRUE, digits = NA))
+        `formulaannotation_object`$fromJSON(jsonlite::toJSON(this_object$`formulaAnnotation`, auto_unbox = TRUE, digits = NA, null = 'null'))
         self$`formulaAnnotation` <- `formulaannotation_object`
       }
       if (!is.null(this_object$`structureAnnotation`)) {
         `structureannotation_object` <- StructureCandidateScored$new()
-        `structureannotation_object`$fromJSON(jsonlite::toJSON(this_object$`structureAnnotation`, auto_unbox = TRUE, digits = NA))
+        `structureannotation_object`$fromJSON(jsonlite::toJSON(this_object$`structureAnnotation`, auto_unbox = TRUE, digits = NA, null = 'null'))
         self$`structureAnnotation` <- `structureannotation_object`
       }
       if (!is.null(this_object$`compoundClassAnnotation`)) {
         `compoundclassannotation_object` <- CompoundClasses$new()
-        `compoundclassannotation_object`$fromJSON(jsonlite::toJSON(this_object$`compoundClassAnnotation`, auto_unbox = TRUE, digits = NA))
+        `compoundclassannotation_object`$fromJSON(jsonlite::toJSON(this_object$`compoundClassAnnotation`, auto_unbox = TRUE, digits = NA, null = 'null'))
         self$`compoundClassAnnotation` <- `compoundclassannotation_object`
       }
       if (!is.null(this_object$`confidenceExactMatch`)) {
@@ -174,77 +199,13 @@ FeatureAnnotations <- R6::R6Class(
 
     #' @description
     #' To JSON String
-    #'
+    #' 
+    #' @param ... Parameters passed to `jsonlite::toJSON`
     #' @return FeatureAnnotations in JSON format
-    toJSONString = function() {
-      jsoncontent <- c(
-        if (!is.null(self$`formulaAnnotation`)) {
-          sprintf(
-          '"formulaAnnotation":
-          %s
-          ',
-          jsonlite::toJSON(self$`formulaAnnotation`$toJSON(), auto_unbox = TRUE, digits = NA)
-          )
-        },
-        if (!is.null(self$`structureAnnotation`)) {
-          sprintf(
-          '"structureAnnotation":
-          %s
-          ',
-          jsonlite::toJSON(self$`structureAnnotation`$toJSON(), auto_unbox = TRUE, digits = NA)
-          )
-        },
-        if (!is.null(self$`compoundClassAnnotation`)) {
-          sprintf(
-          '"compoundClassAnnotation":
-          %s
-          ',
-          jsonlite::toJSON(self$`compoundClassAnnotation`$toJSON(), auto_unbox = TRUE, digits = NA)
-          )
-        },
-        if (!is.null(self$`confidenceExactMatch`)) {
-          sprintf(
-          '"confidenceExactMatch":
-            %d
-                    ',
-          self$`confidenceExactMatch`
-          )
-        },
-        if (!is.null(self$`confidenceApproxMatch`)) {
-          sprintf(
-          '"confidenceApproxMatch":
-            %d
-                    ',
-          self$`confidenceApproxMatch`
-          )
-        },
-        if (!is.null(self$`expansiveSearchState`)) {
-          sprintf(
-          '"expansiveSearchState":
-            "%s"
-                    ',
-          self$`expansiveSearchState`
-          )
-        },
-        if (!is.null(self$`specifiedDatabases`)) {
-          sprintf(
-          '"specifiedDatabases":
-             [%s]
-          ',
-          paste(unlist(lapply(self$`specifiedDatabases`, function(x) paste0('"', x, '"'))), collapse = ",")
-          )
-        },
-        if (!is.null(self$`expandedDatabases`)) {
-          sprintf(
-          '"expandedDatabases":
-             [%s]
-          ',
-          paste(unlist(lapply(self$`expandedDatabases`, function(x) paste0('"', x, '"'))), collapse = ",")
-          )
-        }
-      )
-      jsoncontent <- paste(jsoncontent, collapse = ",")
-      json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
+    toJSONString = function(...) {
+      simple <- self$toSimpleType()
+      json <- jsonlite::toJSON(simple, auto_unbox = TRUE, digits = NA, null = 'null', ...)
+      return(as.character(jsonlite::minify(json)))
     },
 
     #' @description
@@ -254,9 +215,9 @@ FeatureAnnotations <- R6::R6Class(
     #' @return the instance of FeatureAnnotations
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
-      self$`formulaAnnotation` <- FormulaCandidate$new()$fromJSON(jsonlite::toJSON(this_object$`formulaAnnotation`, auto_unbox = TRUE, digits = NA))
-      self$`structureAnnotation` <- StructureCandidateScored$new()$fromJSON(jsonlite::toJSON(this_object$`structureAnnotation`, auto_unbox = TRUE, digits = NA))
-      self$`compoundClassAnnotation` <- CompoundClasses$new()$fromJSON(jsonlite::toJSON(this_object$`compoundClassAnnotation`, auto_unbox = TRUE, digits = NA))
+      self$`formulaAnnotation` <- FormulaCandidate$new()$fromJSON(jsonlite::toJSON(this_object$`formulaAnnotation`, auto_unbox = TRUE, digits = NA, null = 'null'))
+      self$`structureAnnotation` <- StructureCandidateScored$new()$fromJSON(jsonlite::toJSON(this_object$`structureAnnotation`, auto_unbox = TRUE, digits = NA, null = 'null'))
+      self$`compoundClassAnnotation` <- CompoundClasses$new()$fromJSON(jsonlite::toJSON(this_object$`compoundClassAnnotation`, auto_unbox = TRUE, digits = NA, null = 'null'))
       self$`confidenceExactMatch` <- this_object$`confidenceExactMatch`
       self$`confidenceApproxMatch` <- this_object$`confidenceApproxMatch`
       if (!is.null(this_object$`expansiveSearchState`) && !(this_object$`expansiveSearchState` %in% c("OFF", "EXACT", "APPROXIMATE"))) {

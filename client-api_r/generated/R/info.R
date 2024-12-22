@@ -128,10 +128,35 @@ Info <- R6::R6Class(
     },
 
     #' @description
-    #' To JSON String
-    #'
-    #' @return Info in JSON format
+    #' Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
     toJSON = function() {
+      .Deprecated(new = "toSimpleType", msg = "Use the '$toSimpleType()' method instead since that is more clearly named. Use '$toJSONString()' to get a JSON string")
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert to a List
+    #'
+    #' Convert the R6 object to a list to work more easily with other tooling.
+    #'
+    #' @return Info as a base R list.
+    #' @examples
+    #' # convert array of Info (x) to a data frame
+    #' \dontrun{
+    #' library(purrr)
+    #' library(tibble)
+    #' df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+    #' df
+    #' }
+    toList = function() {
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert Info to a base R type
+    #'
+    #' @return A base R type, e.g. a list or numeric/character array.
+    toSimpleType = function() {
       InfoObject <- list()
       if (!is.null(self$`nightSkyApiVersion`)) {
         InfoObject[["nightSkyApiVersion"]] <-
@@ -181,7 +206,7 @@ Info <- R6::R6Class(
         InfoObject[["supportedILPSolvers"]] <-
           self$`supportedILPSolvers`
       }
-      InfoObject
+      return(InfoObject)
     },
 
     #' @description
@@ -232,109 +257,13 @@ Info <- R6::R6Class(
 
     #' @description
     #' To JSON String
-    #'
+    #' 
+    #' @param ... Parameters passed to `jsonlite::toJSON`
     #' @return Info in JSON format
-    toJSONString = function() {
-      jsoncontent <- c(
-        if (!is.null(self$`nightSkyApiVersion`)) {
-          sprintf(
-          '"nightSkyApiVersion":
-            "%s"
-                    ',
-          self$`nightSkyApiVersion`
-          )
-        },
-        if (!is.null(self$`siriusVersion`)) {
-          sprintf(
-          '"siriusVersion":
-            "%s"
-                    ',
-          self$`siriusVersion`
-          )
-        },
-        if (!is.null(self$`latestSiriusVersion`)) {
-          sprintf(
-          '"latestSiriusVersion":
-            "%s"
-                    ',
-          self$`latestSiriusVersion`
-          )
-        },
-        if (!is.null(self$`latestSiriusLink`)) {
-          sprintf(
-          '"latestSiriusLink":
-            "%s"
-                    ',
-          self$`latestSiriusLink`
-          )
-        },
-        if (!is.null(self$`updateAvailable`)) {
-          sprintf(
-          '"updateAvailable":
-            %s
-                    ',
-          tolower(self$`updateAvailable`)
-          )
-        },
-        if (!is.null(self$`siriusLibVersion`)) {
-          sprintf(
-          '"siriusLibVersion":
-            "%s"
-                    ',
-          self$`siriusLibVersion`
-          )
-        },
-        if (!is.null(self$`fingerIdLibVersion`)) {
-          sprintf(
-          '"fingerIdLibVersion":
-            "%s"
-                    ',
-          self$`fingerIdLibVersion`
-          )
-        },
-        if (!is.null(self$`chemDbVersion`)) {
-          sprintf(
-          '"chemDbVersion":
-            "%s"
-                    ',
-          self$`chemDbVersion`
-          )
-        },
-        if (!is.null(self$`fingerIdModelVersion`)) {
-          sprintf(
-          '"fingerIdModelVersion":
-            "%s"
-                    ',
-          self$`fingerIdModelVersion`
-          )
-        },
-        if (!is.null(self$`fingerprintId`)) {
-          sprintf(
-          '"fingerprintId":
-            "%s"
-                    ',
-          self$`fingerprintId`
-          )
-        },
-        if (!is.null(self$`availableILPSolvers`)) {
-          sprintf(
-          '"availableILPSolvers":
-             [%s]
-          ',
-          paste(unlist(lapply(self$`availableILPSolvers`, function(x) paste0('"', x, '"'))), collapse = ",")
-          )
-        },
-        if (!is.null(self$`supportedILPSolvers`)) {
-          sprintf(
-          '"supportedILPSolvers":
-            %s
-          ',
-          jsonlite::toJSON(lapply(self$`supportedILPSolvers`, function(x){ x }), auto_unbox = TRUE, digits = NA)
-          )
-        }
-      )
-      jsoncontent <- paste(jsoncontent, collapse = ",")
-      json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
+    toJSONString = function(...) {
+      simple <- self$toSimpleType()
+      json <- jsonlite::toJSON(simple, auto_unbox = TRUE, digits = NA, null = 'null', ...)
+      return(as.character(jsonlite::minify(json)))
     },
 
     #' @description

@@ -131,10 +131,35 @@ FeatureImport <- R6::R6Class(
     },
 
     #' @description
-    #' To JSON String
-    #'
-    #' @return FeatureImport in JSON format
+    #' Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
     toJSON = function() {
+      .Deprecated(new = "toSimpleType", msg = "Use the '$toSimpleType()' method instead since that is more clearly named. Use '$toJSONString()' to get a JSON string")
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert to a List
+    #'
+    #' Convert the R6 object to a list to work more easily with other tooling.
+    #'
+    #' @return FeatureImport as a base R list.
+    #' @examples
+    #' # convert array of FeatureImport (x) to a data frame
+    #' \dontrun{
+    #' library(purrr)
+    #' library(tibble)
+    #' df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+    #' df
+    #' }
+    toList = function() {
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert FeatureImport to a base R type
+    #'
+    #' @return A base R type, e.g. a list or numeric/character array.
+    toSimpleType = function() {
       FeatureImportObject <- list()
       if (!is.null(self$`name`)) {
         FeatureImportObject[["name"]] <-
@@ -174,17 +199,17 @@ FeatureImport <- R6::R6Class(
       }
       if (!is.null(self$`mergedMs1`)) {
         FeatureImportObject[["mergedMs1"]] <-
-          self$`mergedMs1`$toJSON()
+          self$`mergedMs1`$toSimpleType()
       }
       if (!is.null(self$`ms1Spectra`)) {
         FeatureImportObject[["ms1Spectra"]] <-
-          lapply(self$`ms1Spectra`, function(x) x$toJSON())
+          lapply(self$`ms1Spectra`, function(x) x$toSimpleType())
       }
       if (!is.null(self$`ms2Spectra`)) {
         FeatureImportObject[["ms2Spectra"]] <-
-          lapply(self$`ms2Spectra`, function(x) x$toJSON())
+          lapply(self$`ms2Spectra`, function(x) x$toSimpleType())
       }
-      FeatureImportObject
+      return(FeatureImportObject)
     },
 
     #' @description
@@ -229,7 +254,7 @@ FeatureImport <- R6::R6Class(
       }
       if (!is.null(this_object$`mergedMs1`)) {
         `mergedms1_object` <- BasicSpectrum$new()
-        `mergedms1_object`$fromJSON(jsonlite::toJSON(this_object$`mergedMs1`, auto_unbox = TRUE, digits = NA))
+        `mergedms1_object`$fromJSON(jsonlite::toJSON(this_object$`mergedMs1`, auto_unbox = TRUE, digits = NA, null = 'null'))
         self$`mergedMs1` <- `mergedms1_object`
       }
       if (!is.null(this_object$`ms1Spectra`)) {
@@ -243,109 +268,13 @@ FeatureImport <- R6::R6Class(
 
     #' @description
     #' To JSON String
-    #'
+    #' 
+    #' @param ... Parameters passed to `jsonlite::toJSON`
     #' @return FeatureImport in JSON format
-    toJSONString = function() {
-      jsoncontent <- c(
-        if (!is.null(self$`name`)) {
-          sprintf(
-          '"name":
-            "%s"
-                    ',
-          self$`name`
-          )
-        },
-        if (!is.null(self$`externalFeatureId`)) {
-          sprintf(
-          '"externalFeatureId":
-            "%s"
-                    ',
-          self$`externalFeatureId`
-          )
-        },
-        if (!is.null(self$`ionMass`)) {
-          sprintf(
-          '"ionMass":
-            %d
-                    ',
-          self$`ionMass`
-          )
-        },
-        if (!is.null(self$`charge`)) {
-          sprintf(
-          '"charge":
-            %d
-                    ',
-          self$`charge`
-          )
-        },
-        if (!is.null(self$`detectedAdducts`)) {
-          sprintf(
-          '"detectedAdducts":
-             [%s]
-          ',
-          paste(unlist(lapply(self$`detectedAdducts`, function(x) paste0('"', x, '"'))), collapse = ",")
-          )
-        },
-        if (!is.null(self$`rtStartSeconds`)) {
-          sprintf(
-          '"rtStartSeconds":
-            %d
-                    ',
-          self$`rtStartSeconds`
-          )
-        },
-        if (!is.null(self$`rtEndSeconds`)) {
-          sprintf(
-          '"rtEndSeconds":
-            %d
-                    ',
-          self$`rtEndSeconds`
-          )
-        },
-        if (!is.null(self$`rtApexSeconds`)) {
-          sprintf(
-          '"rtApexSeconds":
-            %d
-                    ',
-          self$`rtApexSeconds`
-          )
-        },
-        if (!is.null(self$`dataQuality`)) {
-          sprintf(
-          '"dataQuality":
-            "%s"
-                    ',
-          self$`dataQuality`
-          )
-        },
-        if (!is.null(self$`mergedMs1`)) {
-          sprintf(
-          '"mergedMs1":
-          %s
-          ',
-          jsonlite::toJSON(self$`mergedMs1`$toJSON(), auto_unbox = TRUE, digits = NA)
-          )
-        },
-        if (!is.null(self$`ms1Spectra`)) {
-          sprintf(
-          '"ms1Spectra":
-          [%s]
-',
-          paste(sapply(self$`ms1Spectra`, function(x) jsonlite::toJSON(x$toJSON(), auto_unbox = TRUE, digits = NA)), collapse = ",")
-          )
-        },
-        if (!is.null(self$`ms2Spectra`)) {
-          sprintf(
-          '"ms2Spectra":
-          [%s]
-',
-          paste(sapply(self$`ms2Spectra`, function(x) jsonlite::toJSON(x$toJSON(), auto_unbox = TRUE, digits = NA)), collapse = ",")
-          )
-        }
-      )
-      jsoncontent <- paste(jsoncontent, collapse = ",")
-      json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
+    toJSONString = function(...) {
+      simple <- self$toSimpleType()
+      json <- jsonlite::toJSON(simple, auto_unbox = TRUE, digits = NA, null = 'null', ...)
+      return(as.character(jsonlite::minify(json)))
     },
 
     #' @description
@@ -370,7 +299,7 @@ FeatureImport <- R6::R6Class(
         stop(paste("Error! \"", this_object$`dataQuality`, "\" cannot be assigned to `dataQuality`. Must be \"NOT_APPLICABLE\", \"LOWEST\", \"BAD\", \"DECENT\", \"GOOD\".", sep = ""))
       }
       self$`dataQuality` <- this_object$`dataQuality`
-      self$`mergedMs1` <- BasicSpectrum$new()$fromJSON(jsonlite::toJSON(this_object$`mergedMs1`, auto_unbox = TRUE, digits = NA))
+      self$`mergedMs1` <- BasicSpectrum$new()$fromJSON(jsonlite::toJSON(this_object$`mergedMs1`, auto_unbox = TRUE, digits = NA, null = 'null'))
       self$`ms1Spectra` <- ApiClient$new()$deserializeObj(this_object$`ms1Spectra`, "array[BasicSpectrum]", loadNamespace("Rsirius"))
       self$`ms2Spectra` <- ApiClient$new()$deserializeObj(this_object$`ms2Spectra`, "array[BasicSpectrum]", loadNamespace("Rsirius"))
       self

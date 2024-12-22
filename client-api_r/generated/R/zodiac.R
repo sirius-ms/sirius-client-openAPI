@@ -72,10 +72,35 @@ Zodiac <- R6::R6Class(
     },
 
     #' @description
-    #' To JSON String
-    #'
-    #' @return Zodiac in JSON format
+    #' Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
     toJSON = function() {
+      .Deprecated(new = "toSimpleType", msg = "Use the '$toSimpleType()' method instead since that is more clearly named. Use '$toJSONString()' to get a JSON string")
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert to a List
+    #'
+    #' Convert the R6 object to a list to work more easily with other tooling.
+    #'
+    #' @return Zodiac as a base R list.
+    #' @examples
+    #' # convert array of Zodiac (x) to a data frame
+    #' \dontrun{
+    #' library(purrr)
+    #' library(tibble)
+    #' df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+    #' df
+    #' }
+    toList = function() {
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert Zodiac to a base R type
+    #'
+    #' @return A base R type, e.g. a list or numeric/character array.
+    toSimpleType = function() {
       ZodiacObject <- list()
       if (!is.null(self$`enabled`)) {
         ZodiacObject[["enabled"]] <-
@@ -95,13 +120,13 @@ Zodiac <- R6::R6Class(
       }
       if (!is.null(self$`edgeFilterThresholds`)) {
         ZodiacObject[["edgeFilterThresholds"]] <-
-          self$`edgeFilterThresholds`$toJSON()
+          self$`edgeFilterThresholds`$toSimpleType()
       }
       if (!is.null(self$`gibbsSamplerParameters`)) {
         ZodiacObject[["gibbsSamplerParameters"]] <-
-          self$`gibbsSamplerParameters`$toJSON()
+          self$`gibbsSamplerParameters`$toSimpleType()
       }
-      ZodiacObject
+      return(ZodiacObject)
     },
 
     #' @description
@@ -125,12 +150,12 @@ Zodiac <- R6::R6Class(
       }
       if (!is.null(this_object$`edgeFilterThresholds`)) {
         `edgefilterthresholds_object` <- ZodiacEdgeFilterThresholds$new()
-        `edgefilterthresholds_object`$fromJSON(jsonlite::toJSON(this_object$`edgeFilterThresholds`, auto_unbox = TRUE, digits = NA))
+        `edgefilterthresholds_object`$fromJSON(jsonlite::toJSON(this_object$`edgeFilterThresholds`, auto_unbox = TRUE, digits = NA, null = 'null'))
         self$`edgeFilterThresholds` <- `edgefilterthresholds_object`
       }
       if (!is.null(this_object$`gibbsSamplerParameters`)) {
         `gibbssamplerparameters_object` <- ZodiacEpochs$new()
-        `gibbssamplerparameters_object`$fromJSON(jsonlite::toJSON(this_object$`gibbsSamplerParameters`, auto_unbox = TRUE, digits = NA))
+        `gibbssamplerparameters_object`$fromJSON(jsonlite::toJSON(this_object$`gibbsSamplerParameters`, auto_unbox = TRUE, digits = NA, null = 'null'))
         self$`gibbsSamplerParameters` <- `gibbssamplerparameters_object`
       }
       self
@@ -138,61 +163,13 @@ Zodiac <- R6::R6Class(
 
     #' @description
     #' To JSON String
-    #'
+    #' 
+    #' @param ... Parameters passed to `jsonlite::toJSON`
     #' @return Zodiac in JSON format
-    toJSONString = function() {
-      jsoncontent <- c(
-        if (!is.null(self$`enabled`)) {
-          sprintf(
-          '"enabled":
-            %s
-                    ',
-          tolower(self$`enabled`)
-          )
-        },
-        if (!is.null(self$`consideredCandidatesAt300Mz`)) {
-          sprintf(
-          '"consideredCandidatesAt300Mz":
-            %d
-                    ',
-          self$`consideredCandidatesAt300Mz`
-          )
-        },
-        if (!is.null(self$`consideredCandidatesAt800Mz`)) {
-          sprintf(
-          '"consideredCandidatesAt800Mz":
-            %d
-                    ',
-          self$`consideredCandidatesAt800Mz`
-          )
-        },
-        if (!is.null(self$`runInTwoSteps`)) {
-          sprintf(
-          '"runInTwoSteps":
-            %s
-                    ',
-          tolower(self$`runInTwoSteps`)
-          )
-        },
-        if (!is.null(self$`edgeFilterThresholds`)) {
-          sprintf(
-          '"edgeFilterThresholds":
-          %s
-          ',
-          jsonlite::toJSON(self$`edgeFilterThresholds`$toJSON(), auto_unbox = TRUE, digits = NA)
-          )
-        },
-        if (!is.null(self$`gibbsSamplerParameters`)) {
-          sprintf(
-          '"gibbsSamplerParameters":
-          %s
-          ',
-          jsonlite::toJSON(self$`gibbsSamplerParameters`$toJSON(), auto_unbox = TRUE, digits = NA)
-          )
-        }
-      )
-      jsoncontent <- paste(jsoncontent, collapse = ",")
-      json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
+    toJSONString = function(...) {
+      simple <- self$toSimpleType()
+      json <- jsonlite::toJSON(simple, auto_unbox = TRUE, digits = NA, null = 'null', ...)
+      return(as.character(jsonlite::minify(json)))
     },
 
     #' @description
@@ -206,8 +183,8 @@ Zodiac <- R6::R6Class(
       self$`consideredCandidatesAt300Mz` <- this_object$`consideredCandidatesAt300Mz`
       self$`consideredCandidatesAt800Mz` <- this_object$`consideredCandidatesAt800Mz`
       self$`runInTwoSteps` <- this_object$`runInTwoSteps`
-      self$`edgeFilterThresholds` <- ZodiacEdgeFilterThresholds$new()$fromJSON(jsonlite::toJSON(this_object$`edgeFilterThresholds`, auto_unbox = TRUE, digits = NA))
-      self$`gibbsSamplerParameters` <- ZodiacEpochs$new()$fromJSON(jsonlite::toJSON(this_object$`gibbsSamplerParameters`, auto_unbox = TRUE, digits = NA))
+      self$`edgeFilterThresholds` <- ZodiacEdgeFilterThresholds$new()$fromJSON(jsonlite::toJSON(this_object$`edgeFilterThresholds`, auto_unbox = TRUE, digits = NA, null = 'null'))
+      self$`gibbsSamplerParameters` <- ZodiacEpochs$new()$fromJSON(jsonlite::toJSON(this_object$`gibbsSamplerParameters`, auto_unbox = TRUE, digits = NA, null = 'null'))
       self
     },
 

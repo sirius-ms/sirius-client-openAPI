@@ -117,10 +117,35 @@ StructureCandidateScored <- R6::R6Class(
     },
 
     #' @description
-    #' To JSON String
-    #'
-    #' @return StructureCandidateScored in JSON format
+    #' Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
     toJSON = function() {
+      .Deprecated(new = "toSimpleType", msg = "Use the '$toSimpleType()' method instead since that is more clearly named. Use '$toJSONString()' to get a JSON string")
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert to a List
+    #'
+    #' Convert the R6 object to a list to work more easily with other tooling.
+    #'
+    #' @return StructureCandidateScored as a base R list.
+    #' @examples
+    #' # convert array of StructureCandidateScored (x) to a data frame
+    #' \dontrun{
+    #' library(purrr)
+    #' library(tibble)
+    #' df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+    #' df
+    #' }
+    toList = function() {
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert StructureCandidateScored to a base R type
+    #'
+    #' @return A base R type, e.g. a list or numeric/character array.
+    toSimpleType = function() {
       StructureCandidateScoredObject <- list()
       if (!is.null(self$`inchiKey`)) {
         StructureCandidateScoredObject[["inchiKey"]] <-
@@ -140,11 +165,11 @@ StructureCandidateScored <- R6::R6Class(
       }
       if (!is.null(self$`dbLinks`)) {
         StructureCandidateScoredObject[["dbLinks"]] <-
-          lapply(self$`dbLinks`, function(x) x$toJSON())
+          lapply(self$`dbLinks`, function(x) x$toSimpleType())
       }
       if (!is.null(self$`spectralLibraryMatches`)) {
         StructureCandidateScoredObject[["spectralLibraryMatches"]] <-
-          lapply(self$`spectralLibraryMatches`, function(x) x$toJSON())
+          lapply(self$`spectralLibraryMatches`, function(x) x$toSimpleType())
       }
       if (!is.null(self$`rank`)) {
         StructureCandidateScoredObject[["rank"]] <-
@@ -164,9 +189,9 @@ StructureCandidateScored <- R6::R6Class(
       }
       if (!is.null(self$`fingerprint`)) {
         StructureCandidateScoredObject[["fingerprint"]] <-
-          self$`fingerprint`$toJSON()
+          self$`fingerprint`$toSimpleType()
       }
-      StructureCandidateScoredObject
+      return(StructureCandidateScoredObject)
     },
 
     #' @description
@@ -208,7 +233,7 @@ StructureCandidateScored <- R6::R6Class(
       }
       if (!is.null(this_object$`fingerprint`)) {
         `fingerprint_object` <- BinaryFingerprint$new()
-        `fingerprint_object`$fromJSON(jsonlite::toJSON(this_object$`fingerprint`, auto_unbox = TRUE, digits = NA))
+        `fingerprint_object`$fromJSON(jsonlite::toJSON(this_object$`fingerprint`, auto_unbox = TRUE, digits = NA, null = 'null'))
         self$`fingerprint` <- `fingerprint_object`
       }
       self
@@ -216,101 +241,13 @@ StructureCandidateScored <- R6::R6Class(
 
     #' @description
     #' To JSON String
-    #'
+    #' 
+    #' @param ... Parameters passed to `jsonlite::toJSON`
     #' @return StructureCandidateScored in JSON format
-    toJSONString = function() {
-      jsoncontent <- c(
-        if (!is.null(self$`inchiKey`)) {
-          sprintf(
-          '"inchiKey":
-            "%s"
-                    ',
-          self$`inchiKey`
-          )
-        },
-        if (!is.null(self$`smiles`)) {
-          sprintf(
-          '"smiles":
-            "%s"
-                    ',
-          self$`smiles`
-          )
-        },
-        if (!is.null(self$`structureName`)) {
-          sprintf(
-          '"structureName":
-            "%s"
-                    ',
-          self$`structureName`
-          )
-        },
-        if (!is.null(self$`xlogP`)) {
-          sprintf(
-          '"xlogP":
-            %d
-                    ',
-          self$`xlogP`
-          )
-        },
-        if (!is.null(self$`dbLinks`)) {
-          sprintf(
-          '"dbLinks":
-          [%s]
-',
-          paste(sapply(self$`dbLinks`, function(x) jsonlite::toJSON(x$toJSON(), auto_unbox = TRUE, digits = NA)), collapse = ",")
-          )
-        },
-        if (!is.null(self$`spectralLibraryMatches`)) {
-          sprintf(
-          '"spectralLibraryMatches":
-          [%s]
-',
-          paste(sapply(self$`spectralLibraryMatches`, function(x) jsonlite::toJSON(x$toJSON(), auto_unbox = TRUE, digits = NA)), collapse = ",")
-          )
-        },
-        if (!is.null(self$`rank`)) {
-          sprintf(
-          '"rank":
-            %d
-                    ',
-          self$`rank`
-          )
-        },
-        if (!is.null(self$`csiScore`)) {
-          sprintf(
-          '"csiScore":
-            %d
-                    ',
-          self$`csiScore`
-          )
-        },
-        if (!is.null(self$`tanimotoSimilarity`)) {
-          sprintf(
-          '"tanimotoSimilarity":
-            %d
-                    ',
-          self$`tanimotoSimilarity`
-          )
-        },
-        if (!is.null(self$`mcesDistToTopHit`)) {
-          sprintf(
-          '"mcesDistToTopHit":
-            %d
-                    ',
-          self$`mcesDistToTopHit`
-          )
-        },
-        if (!is.null(self$`fingerprint`)) {
-          sprintf(
-          '"fingerprint":
-          %s
-          ',
-          jsonlite::toJSON(self$`fingerprint`$toJSON(), auto_unbox = TRUE, digits = NA)
-          )
-        }
-      )
-      jsoncontent <- paste(jsoncontent, collapse = ",")
-      json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
+    toJSONString = function(...) {
+      simple <- self$toSimpleType()
+      json <- jsonlite::toJSON(simple, auto_unbox = TRUE, digits = NA, null = 'null', ...)
+      return(as.character(jsonlite::minify(json)))
     },
 
     #' @description
@@ -330,7 +267,7 @@ StructureCandidateScored <- R6::R6Class(
       self$`csiScore` <- this_object$`csiScore`
       self$`tanimotoSimilarity` <- this_object$`tanimotoSimilarity`
       self$`mcesDistToTopHit` <- this_object$`mcesDistToTopHit`
-      self$`fingerprint` <- BinaryFingerprint$new()$fromJSON(jsonlite::toJSON(this_object$`fingerprint`, auto_unbox = TRUE, digits = NA))
+      self$`fingerprint` <- BinaryFingerprint$new()$fromJSON(jsonlite::toJSON(this_object$`fingerprint`, auto_unbox = TRUE, digits = NA, null = 'null'))
       self
     },
 

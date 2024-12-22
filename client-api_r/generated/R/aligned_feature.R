@@ -181,10 +181,35 @@ AlignedFeature <- R6::R6Class(
     },
 
     #' @description
-    #' To JSON String
-    #'
-    #' @return AlignedFeature in JSON format
+    #' Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
     toJSON = function() {
+      .Deprecated(new = "toSimpleType", msg = "Use the '$toSimpleType()' method instead since that is more clearly named. Use '$toJSONString()' to get a JSON string")
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert to a List
+    #'
+    #' Convert the R6 object to a list to work more easily with other tooling.
+    #'
+    #' @return AlignedFeature as a base R list.
+    #' @examples
+    #' # convert array of AlignedFeature (x) to a data frame
+    #' \dontrun{
+    #' library(purrr)
+    #' library(tibble)
+    #' df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+    #' df
+    #' }
+    toList = function() {
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert AlignedFeature to a base R type
+    #'
+    #' @return A base R type, e.g. a list or numeric/character array.
+    toSimpleType = function() {
       AlignedFeatureObject <- list()
       if (!is.null(self$`alignedFeatureId`)) {
         AlignedFeatureObject[["alignedFeatureId"]] <-
@@ -240,15 +265,15 @@ AlignedFeature <- R6::R6Class(
       }
       if (!is.null(self$`msData`)) {
         AlignedFeatureObject[["msData"]] <-
-          self$`msData`$toJSON()
+          self$`msData`$toSimpleType()
       }
       if (!is.null(self$`topAnnotations`)) {
         AlignedFeatureObject[["topAnnotations"]] <-
-          self$`topAnnotations`$toJSON()
+          self$`topAnnotations`$toSimpleType()
       }
       if (!is.null(self$`topAnnotationsDeNovo`)) {
         AlignedFeatureObject[["topAnnotationsDeNovo"]] <-
-          self$`topAnnotationsDeNovo`$toJSON()
+          self$`topAnnotationsDeNovo`$toSimpleType()
       }
       if (!is.null(self$`computing`)) {
         AlignedFeatureObject[["computing"]] <-
@@ -256,9 +281,9 @@ AlignedFeature <- R6::R6Class(
       }
       if (!is.null(self$`computedTools`)) {
         AlignedFeatureObject[["computedTools"]] <-
-          self$`computedTools`$toJSON()
+          self$`computedTools`$toSimpleType()
       }
-      AlignedFeatureObject
+      return(AlignedFeatureObject)
     },
 
     #' @description
@@ -315,17 +340,17 @@ AlignedFeature <- R6::R6Class(
       }
       if (!is.null(this_object$`msData`)) {
         `msdata_object` <- MsData$new()
-        `msdata_object`$fromJSON(jsonlite::toJSON(this_object$`msData`, auto_unbox = TRUE, digits = NA))
+        `msdata_object`$fromJSON(jsonlite::toJSON(this_object$`msData`, auto_unbox = TRUE, digits = NA, null = 'null'))
         self$`msData` <- `msdata_object`
       }
       if (!is.null(this_object$`topAnnotations`)) {
         `topannotations_object` <- FeatureAnnotations$new()
-        `topannotations_object`$fromJSON(jsonlite::toJSON(this_object$`topAnnotations`, auto_unbox = TRUE, digits = NA))
+        `topannotations_object`$fromJSON(jsonlite::toJSON(this_object$`topAnnotations`, auto_unbox = TRUE, digits = NA, null = 'null'))
         self$`topAnnotations` <- `topannotations_object`
       }
       if (!is.null(this_object$`topAnnotationsDeNovo`)) {
         `topannotationsdenovo_object` <- FeatureAnnotations$new()
-        `topannotationsdenovo_object`$fromJSON(jsonlite::toJSON(this_object$`topAnnotationsDeNovo`, auto_unbox = TRUE, digits = NA))
+        `topannotationsdenovo_object`$fromJSON(jsonlite::toJSON(this_object$`topAnnotationsDeNovo`, auto_unbox = TRUE, digits = NA, null = 'null'))
         self$`topAnnotationsDeNovo` <- `topannotationsdenovo_object`
       }
       if (!is.null(this_object$`computing`)) {
@@ -333,7 +358,7 @@ AlignedFeature <- R6::R6Class(
       }
       if (!is.null(this_object$`computedTools`)) {
         `computedtools_object` <- ComputedSubtools$new()
-        `computedtools_object`$fromJSON(jsonlite::toJSON(this_object$`computedTools`, auto_unbox = TRUE, digits = NA))
+        `computedtools_object`$fromJSON(jsonlite::toJSON(this_object$`computedTools`, auto_unbox = TRUE, digits = NA, null = 'null'))
         self$`computedTools` <- `computedtools_object`
       }
       self
@@ -341,157 +366,13 @@ AlignedFeature <- R6::R6Class(
 
     #' @description
     #' To JSON String
-    #'
+    #' 
+    #' @param ... Parameters passed to `jsonlite::toJSON`
     #' @return AlignedFeature in JSON format
-    toJSONString = function() {
-      jsoncontent <- c(
-        if (!is.null(self$`alignedFeatureId`)) {
-          sprintf(
-          '"alignedFeatureId":
-            "%s"
-                    ',
-          self$`alignedFeatureId`
-          )
-        },
-        if (!is.null(self$`compoundId`)) {
-          sprintf(
-          '"compoundId":
-            "%s"
-                    ',
-          self$`compoundId`
-          )
-        },
-        if (!is.null(self$`name`)) {
-          sprintf(
-          '"name":
-            "%s"
-                    ',
-          self$`name`
-          )
-        },
-        if (!is.null(self$`externalFeatureId`)) {
-          sprintf(
-          '"externalFeatureId":
-            "%s"
-                    ',
-          self$`externalFeatureId`
-          )
-        },
-        if (!is.null(self$`ionMass`)) {
-          sprintf(
-          '"ionMass":
-            %d
-                    ',
-          self$`ionMass`
-          )
-        },
-        if (!is.null(self$`charge`)) {
-          sprintf(
-          '"charge":
-            %d
-                    ',
-          self$`charge`
-          )
-        },
-        if (!is.null(self$`detectedAdducts`)) {
-          sprintf(
-          '"detectedAdducts":
-             [%s]
-          ',
-          paste(unlist(lapply(self$`detectedAdducts`, function(x) paste0('"', x, '"'))), collapse = ",")
-          )
-        },
-        if (!is.null(self$`rtStartSeconds`)) {
-          sprintf(
-          '"rtStartSeconds":
-            %d
-                    ',
-          self$`rtStartSeconds`
-          )
-        },
-        if (!is.null(self$`rtEndSeconds`)) {
-          sprintf(
-          '"rtEndSeconds":
-            %d
-                    ',
-          self$`rtEndSeconds`
-          )
-        },
-        if (!is.null(self$`rtApexSeconds`)) {
-          sprintf(
-          '"rtApexSeconds":
-            %d
-                    ',
-          self$`rtApexSeconds`
-          )
-        },
-        if (!is.null(self$`quality`)) {
-          sprintf(
-          '"quality":
-            "%s"
-                    ',
-          self$`quality`
-          )
-        },
-        if (!is.null(self$`hasMs1`)) {
-          sprintf(
-          '"hasMs1":
-            %s
-                    ',
-          tolower(self$`hasMs1`)
-          )
-        },
-        if (!is.null(self$`hasMsMs`)) {
-          sprintf(
-          '"hasMsMs":
-            %s
-                    ',
-          tolower(self$`hasMsMs`)
-          )
-        },
-        if (!is.null(self$`msData`)) {
-          sprintf(
-          '"msData":
-          %s
-          ',
-          jsonlite::toJSON(self$`msData`$toJSON(), auto_unbox = TRUE, digits = NA)
-          )
-        },
-        if (!is.null(self$`topAnnotations`)) {
-          sprintf(
-          '"topAnnotations":
-          %s
-          ',
-          jsonlite::toJSON(self$`topAnnotations`$toJSON(), auto_unbox = TRUE, digits = NA)
-          )
-        },
-        if (!is.null(self$`topAnnotationsDeNovo`)) {
-          sprintf(
-          '"topAnnotationsDeNovo":
-          %s
-          ',
-          jsonlite::toJSON(self$`topAnnotationsDeNovo`$toJSON(), auto_unbox = TRUE, digits = NA)
-          )
-        },
-        if (!is.null(self$`computing`)) {
-          sprintf(
-          '"computing":
-            %s
-                    ',
-          tolower(self$`computing`)
-          )
-        },
-        if (!is.null(self$`computedTools`)) {
-          sprintf(
-          '"computedTools":
-          %s
-          ',
-          jsonlite::toJSON(self$`computedTools`$toJSON(), auto_unbox = TRUE, digits = NA)
-          )
-        }
-      )
-      jsoncontent <- paste(jsoncontent, collapse = ",")
-      json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
+    toJSONString = function(...) {
+      simple <- self$toSimpleType()
+      json <- jsonlite::toJSON(simple, auto_unbox = TRUE, digits = NA, null = 'null', ...)
+      return(as.character(jsonlite::minify(json)))
     },
 
     #' @description
@@ -520,11 +401,11 @@ AlignedFeature <- R6::R6Class(
       self$`quality` <- this_object$`quality`
       self$`hasMs1` <- this_object$`hasMs1`
       self$`hasMsMs` <- this_object$`hasMsMs`
-      self$`msData` <- MsData$new()$fromJSON(jsonlite::toJSON(this_object$`msData`, auto_unbox = TRUE, digits = NA))
-      self$`topAnnotations` <- FeatureAnnotations$new()$fromJSON(jsonlite::toJSON(this_object$`topAnnotations`, auto_unbox = TRUE, digits = NA))
-      self$`topAnnotationsDeNovo` <- FeatureAnnotations$new()$fromJSON(jsonlite::toJSON(this_object$`topAnnotationsDeNovo`, auto_unbox = TRUE, digits = NA))
+      self$`msData` <- MsData$new()$fromJSON(jsonlite::toJSON(this_object$`msData`, auto_unbox = TRUE, digits = NA, null = 'null'))
+      self$`topAnnotations` <- FeatureAnnotations$new()$fromJSON(jsonlite::toJSON(this_object$`topAnnotations`, auto_unbox = TRUE, digits = NA, null = 'null'))
+      self$`topAnnotationsDeNovo` <- FeatureAnnotations$new()$fromJSON(jsonlite::toJSON(this_object$`topAnnotationsDeNovo`, auto_unbox = TRUE, digits = NA, null = 'null'))
       self$`computing` <- this_object$`computing`
-      self$`computedTools` <- ComputedSubtools$new()$fromJSON(jsonlite::toJSON(this_object$`computedTools`, auto_unbox = TRUE, digits = NA))
+      self$`computedTools` <- ComputedSubtools$new()$fromJSON(jsonlite::toJSON(this_object$`computedTools`, auto_unbox = TRUE, digits = NA, null = 'null'))
       self
     },
 
