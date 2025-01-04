@@ -30,11 +30,11 @@ jobs:
         command: |
             cd .updater/api
             curl -s https://api.github.com/repositories/94561614/releases > ./releases.json
-            packageVersion=$(cat ./releases.json  | grep 'name.*linux64.zip\"' | sort | tac | head -n 1 | cut -d - -f 2)
+            packageVersion=$(cat ./releases.json  | grep 'name.*linux-x64.zip\"' | sort | tac | head -n 1 | cut -d - -f 2)
             echo "Writing Version files: $packageVersion"
             echo $packageVersion > ./packageVersion.txt
             echo "Downloading Version: $packageVersion"
-            cat ./releases.json | grep 'browser_download_url.*linux64.zip\"' | sort | tac | head -n 1 | cut -d : -f 2,3 | tr -d \" | wget -i -
+            cat ./releases.json | grep 'browser_download_url.*linux-x64.zip\"' | sort | tac | head -n 1 | cut -d : -f 2,3 | tr -d \" | wget -i -
             echo "Download Complete"
             unzip *.zip
             echo "Api Ready"
