@@ -17,7 +17,7 @@
 #' @field rtStartSeconds  numeric [optional]
 #' @field rtEndSeconds  numeric [optional]
 #' @field rtApexSeconds  numeric [optional]
-#' @field quality  \link{DataQuality} [optional]
+#' @field quality Quality of this feature. character [optional]
 #' @field hasMs1 If true, the feature has at lease one MS1 spectrum character [optional]
 #' @field hasMsMs If true, the feature has at lease one MS/MS spectrum character [optional]
 #' @field msData  \link{MsData} [optional]
@@ -49,8 +49,7 @@ AlignedFeature <- R6::R6Class(
     `topAnnotationsDeNovo` = NULL,
     `computing` = NULL,
     `computedTools` = NULL,
-    #' Initialize a new AlignedFeature class.
-    #'
+
     #' @description
     #' Initialize a new AlignedFeature class.
     #'
@@ -64,7 +63,7 @@ AlignedFeature <- R6::R6Class(
     #' @param rtStartSeconds rtStartSeconds
     #' @param rtEndSeconds rtEndSeconds
     #' @param rtApexSeconds rtApexSeconds
-    #' @param quality quality
+    #' @param quality Quality of this feature.
     #' @param hasMs1 If true, the feature has at lease one MS1 spectrum
     #' @param hasMsMs If true, the feature has at lease one MS/MS spectrum
     #' @param msData msData
@@ -73,7 +72,6 @@ AlignedFeature <- R6::R6Class(
     #' @param computing Write lock for this feature. If the feature is locked no write operations are possible.  True if any computation is modifying this feature or its results
     #' @param computedTools computedTools
     #' @param ... Other optional arguments.
-    #' @export
     initialize = function(`charge`, `detectedAdducts`, `alignedFeatureId` = NULL, `compoundId` = NULL, `name` = NULL, `externalFeatureId` = NULL, `ionMass` = NULL, `rtStartSeconds` = NULL, `rtEndSeconds` = NULL, `rtApexSeconds` = NULL, `quality` = NULL, `hasMs1` = NULL, `hasMsMs` = NULL, `msData` = NULL, `topAnnotations` = NULL, `topAnnotationsDeNovo` = NULL, `computing` = NULL, `computedTools` = NULL, ...) {
       if (!missing(`charge`)) {
         if (!(is.numeric(`charge`) && length(`charge`) == 1)) {
@@ -138,11 +136,12 @@ AlignedFeature <- R6::R6Class(
         self$`rtApexSeconds` <- `rtApexSeconds`
       }
       if (!is.null(`quality`)) {
-        # disabled, as it is broken and checks for `quality` %in% c()
-        # if (!(`quality` %in% c())) {
-        #  stop(paste("Error! \"", `quality`, "\" cannot be assigned to `quality`. Must be .", sep = ""))
-        # }
-        stopifnot(R6::is.R6(`quality`))
+        if (!(`quality` %in% c("NOT_APPLICABLE", "LOWEST", "BAD", "DECENT", "GOOD"))) {
+          stop(paste("Error! \"", `quality`, "\" cannot be assigned to `quality`. Must be \"NOT_APPLICABLE\", \"LOWEST\", \"BAD\", \"DECENT\", \"GOOD\".", sep = ""))
+        }
+        if (!(is.character(`quality`) && length(`quality`) == 1)) {
+          stop(paste("Error! Invalid data for `quality`. Must be a string:", `quality`))
+        }
         self$`quality` <- `quality`
       }
       if (!is.null(`hasMs1`)) {
@@ -180,14 +179,37 @@ AlignedFeature <- R6::R6Class(
         self$`computedTools` <- `computedTools`
       }
     },
-    #' To JSON string
-    #'
+
     #' @description
-    #' To JSON String
-    #'
-    #' @return AlignedFeature in JSON format
-    #' @export
+    #' Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
     toJSON = function() {
+      .Deprecated(new = "toSimpleType", msg = "Use the '$toSimpleType()' method instead since that is more clearly named. Use '$toJSONString()' to get a JSON string")
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert to a List
+    #'
+    #' Convert the R6 object to a list to work more easily with other tooling.
+    #'
+    #' @return AlignedFeature as a base R list.
+    #' @examples
+    #' # convert array of AlignedFeature (x) to a data frame
+    #' \dontrun{
+    #' library(purrr)
+    #' library(tibble)
+    #' df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+    #' df
+    #' }
+    toList = function() {
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert AlignedFeature to a base R type
+    #'
+    #' @return A base R type, e.g. a list or numeric/character array.
+    toSimpleType = function() {
       AlignedFeatureObject <- list()
       if (!is.null(self$`alignedFeatureId`)) {
         AlignedFeatureObject[["alignedFeatureId"]] <-
@@ -231,13 +253,7 @@ AlignedFeature <- R6::R6Class(
       }
       if (!is.null(self$`quality`)) {
         AlignedFeatureObject[["quality"]] <-
-          if (is.list(self$`quality`$toJSON()) && length(self$`quality`$toJSON()) == 0L){
-            NULL
-          } else if (length(names(self$`quality`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`quality`$toJSON()))) {
-            jsonlite::fromJSON(self$`quality`$toJSON())
-          } else {
-            self$`quality`$toJSON()
-          }
+          self$`quality`
       }
       if (!is.null(self$`hasMs1`)) {
         AlignedFeatureObject[["hasMs1"]] <-
@@ -249,33 +265,15 @@ AlignedFeature <- R6::R6Class(
       }
       if (!is.null(self$`msData`)) {
         AlignedFeatureObject[["msData"]] <-
-          if (is.list(self$`msData`$toJSON()) && length(self$`msData`$toJSON()) == 0L){
-            NULL
-          } else if (length(names(self$`msData`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`msData`$toJSON()))) {
-            jsonlite::fromJSON(self$`msData`$toJSON())
-          } else {
-            self$`msData`$toJSON()
-          }
+          self$`msData`$toSimpleType()
       }
       if (!is.null(self$`topAnnotations`)) {
         AlignedFeatureObject[["topAnnotations"]] <-
-          if (is.list(self$`topAnnotations`$toJSON()) && length(self$`topAnnotations`$toJSON()) == 0L){
-            NULL
-          } else if (length(names(self$`topAnnotations`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`topAnnotations`$toJSON()))) {
-            jsonlite::fromJSON(self$`topAnnotations`$toJSON())
-          } else {
-            self$`topAnnotations`$toJSON()
-          }
+          self$`topAnnotations`$toSimpleType()
       }
       if (!is.null(self$`topAnnotationsDeNovo`)) {
         AlignedFeatureObject[["topAnnotationsDeNovo"]] <-
-          if (is.list(self$`topAnnotationsDeNovo`$toJSON()) && length(self$`topAnnotationsDeNovo`$toJSON()) == 0L){
-            NULL
-          } else if (length(names(self$`topAnnotationsDeNovo`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`topAnnotationsDeNovo`$toJSON()))) {
-            jsonlite::fromJSON(self$`topAnnotationsDeNovo`$toJSON())
-          } else {
-            self$`topAnnotationsDeNovo`$toJSON()
-          }
+          self$`topAnnotationsDeNovo`$toSimpleType()
       }
       if (!is.null(self$`computing`)) {
         AlignedFeatureObject[["computing"]] <-
@@ -283,24 +281,16 @@ AlignedFeature <- R6::R6Class(
       }
       if (!is.null(self$`computedTools`)) {
         AlignedFeatureObject[["computedTools"]] <-
-          if (is.list(self$`computedTools`$toJSON()) && length(self$`computedTools`$toJSON()) == 0L){
-            NULL
-          } else if (length(names(self$`computedTools`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`computedTools`$toJSON()))) {
-            jsonlite::fromJSON(self$`computedTools`$toJSON())
-          } else {
-            self$`computedTools`$toJSON()
-          }
+          self$`computedTools`$toSimpleType()
       }
-      AlignedFeatureObject
+      return(AlignedFeatureObject)
     },
-    #' Deserialize JSON string into an instance of AlignedFeature
-    #'
+
     #' @description
     #' Deserialize JSON string into an instance of AlignedFeature
     #'
     #' @param input_json the JSON input
     #' @return the instance of AlignedFeature
-    #' @export
     fromJSON = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       if (!is.null(this_object$`alignedFeatureId`)) {
@@ -337,9 +327,10 @@ AlignedFeature <- R6::R6Class(
         self$`rtApexSeconds` <- this_object$`rtApexSeconds`
       }
       if (!is.null(this_object$`quality`)) {
-        `quality_object` <- DataQuality$new()
-        `quality_object`$fromJSON(jsonlite::toJSON(this_object$`quality`, auto_unbox = TRUE, digits = NA))
-        self$`quality` <- `quality_object`
+        if (!is.null(this_object$`quality`) && !(this_object$`quality` %in% c("NOT_APPLICABLE", "LOWEST", "BAD", "DECENT", "GOOD"))) {
+          stop(paste("Error! \"", this_object$`quality`, "\" cannot be assigned to `quality`. Must be \"NOT_APPLICABLE\", \"LOWEST\", \"BAD\", \"DECENT\", \"GOOD\".", sep = ""))
+        }
+        self$`quality` <- this_object$`quality`
       }
       if (!is.null(this_object$`hasMs1`)) {
         self$`hasMs1` <- this_object$`hasMs1`
@@ -349,17 +340,17 @@ AlignedFeature <- R6::R6Class(
       }
       if (!is.null(this_object$`msData`)) {
         `msdata_object` <- MsData$new()
-        `msdata_object`$fromJSON(jsonlite::toJSON(this_object$`msData`, auto_unbox = TRUE, digits = NA))
+        `msdata_object`$fromJSON(jsonlite::toJSON(this_object$`msData`, auto_unbox = TRUE, digits = NA, null = 'null'))
         self$`msData` <- `msdata_object`
       }
       if (!is.null(this_object$`topAnnotations`)) {
         `topannotations_object` <- FeatureAnnotations$new()
-        `topannotations_object`$fromJSON(jsonlite::toJSON(this_object$`topAnnotations`, auto_unbox = TRUE, digits = NA))
+        `topannotations_object`$fromJSON(jsonlite::toJSON(this_object$`topAnnotations`, auto_unbox = TRUE, digits = NA, null = 'null'))
         self$`topAnnotations` <- `topannotations_object`
       }
       if (!is.null(this_object$`topAnnotationsDeNovo`)) {
         `topannotationsdenovo_object` <- FeatureAnnotations$new()
-        `topannotationsdenovo_object`$fromJSON(jsonlite::toJSON(this_object$`topAnnotationsDeNovo`, auto_unbox = TRUE, digits = NA))
+        `topannotationsdenovo_object`$fromJSON(jsonlite::toJSON(this_object$`topAnnotationsDeNovo`, auto_unbox = TRUE, digits = NA, null = 'null'))
         self$`topAnnotationsDeNovo` <- `topannotationsdenovo_object`
       }
       if (!is.null(this_object$`computing`)) {
@@ -367,180 +358,28 @@ AlignedFeature <- R6::R6Class(
       }
       if (!is.null(this_object$`computedTools`)) {
         `computedtools_object` <- ComputedSubtools$new()
-        `computedtools_object`$fromJSON(jsonlite::toJSON(this_object$`computedTools`, auto_unbox = TRUE, digits = NA))
+        `computedtools_object`$fromJSON(jsonlite::toJSON(this_object$`computedTools`, auto_unbox = TRUE, digits = NA, null = 'null'))
         self$`computedTools` <- `computedtools_object`
       }
       self
     },
-    #' To JSON string
-    #'
+
     #' @description
     #' To JSON String
-    #'
+    #' 
+    #' @param ... Parameters passed to `jsonlite::toJSON`
     #' @return AlignedFeature in JSON format
-    #' @export
-    toJSONString = function() {
-      jsoncontent <- c(
-        if (!is.null(self$`alignedFeatureId`)) {
-          sprintf(
-          '"alignedFeatureId":
-            "%s"
-                    ',
-          self$`alignedFeatureId`
-          )
-        },
-        if (!is.null(self$`compoundId`)) {
-          sprintf(
-          '"compoundId":
-            "%s"
-                    ',
-          self$`compoundId`
-          )
-        },
-        if (!is.null(self$`name`)) {
-          sprintf(
-          '"name":
-            "%s"
-                    ',
-          self$`name`
-          )
-        },
-        if (!is.null(self$`externalFeatureId`)) {
-          sprintf(
-          '"externalFeatureId":
-            "%s"
-                    ',
-          self$`externalFeatureId`
-          )
-        },
-        if (!is.null(self$`ionMass`)) {
-          sprintf(
-          '"ionMass":
-            %f
-                    ',
-          self$`ionMass`
-          )
-        },
-        if (!is.null(self$`charge`)) {
-          sprintf(
-          '"charge":
-            %f
-                    ',
-          self$`charge`
-          )
-        },
-        if (!is.null(self$`detectedAdducts`)) {
-          sprintf(
-          '"detectedAdducts":
-             [%s]
-          ',
-          paste(unlist(lapply(self$`detectedAdducts`, function(x) paste0('"', x, '"'))), collapse = ",")
-          )
-        },
-        if (!is.null(self$`rtStartSeconds`)) {
-          sprintf(
-          '"rtStartSeconds":
-            %f
-                    ',
-          self$`rtStartSeconds`
-          )
-        },
-        if (!is.null(self$`rtEndSeconds`)) {
-          sprintf(
-          '"rtEndSeconds":
-            %f
-                    ',
-          self$`rtEndSeconds`
-          )
-        },
-        if (!is.null(self$`rtApexSeconds`)) {
-          sprintf(
-          '"rtApexSeconds":
-            %f
-                    ',
-          self$`rtApexSeconds`
-          )
-        },
-        if (!is.null(self$`quality`)) {
-          sprintf(
-          '"quality":
-          %s
-          ',
-          jsonlite::toJSON(self$`quality`$toJSON(), auto_unbox = TRUE, digits = NA)
-          )
-        },
-        if (!is.null(self$`hasMs1`)) {
-          sprintf(
-          '"hasMs1":
-            %s
-                    ',
-          tolower(self$`hasMs1`)
-          )
-        },
-        if (!is.null(self$`hasMsMs`)) {
-          sprintf(
-          '"hasMsMs":
-            %s
-                    ',
-          tolower(self$`hasMsMs`)
-          )
-        },
-        if (!is.null(self$`msData`)) {
-          sprintf(
-          '"msData":
-          %s
-          ',
-          jsonlite::toJSON(self$`msData`$toJSON(), auto_unbox = TRUE, digits = NA)
-          )
-        },
-        if (!is.null(self$`topAnnotations`)) {
-          sprintf(
-          '"topAnnotations":
-          %s
-          ',
-          jsonlite::toJSON(self$`topAnnotations`$toJSON(), auto_unbox = TRUE, digits = NA)
-          )
-        },
-        if (!is.null(self$`topAnnotationsDeNovo`)) {
-          sprintf(
-          '"topAnnotationsDeNovo":
-          %s
-          ',
-          jsonlite::toJSON(self$`topAnnotationsDeNovo`$toJSON(), auto_unbox = TRUE, digits = NA)
-          )
-        },
-        if (!is.null(self$`computing`)) {
-          sprintf(
-          '"computing":
-            %s
-                    ',
-          tolower(self$`computing`)
-          )
-        },
-        if (!is.null(self$`computedTools`)) {
-          sprintf(
-          '"computedTools":
-          %s
-          ',
-          jsonlite::toJSON(self$`computedTools`$toJSON(), auto_unbox = TRUE, digits = NA)
-          )
-        }
-      )
-      jsoncontent <- paste(jsoncontent, collapse = ",")
-      # remove c() occurences and reduce resulting double escaped quotes \"\" into \"
-      jsoncontent <- gsub('\\\"c\\((.*?)\\\"\\)', '\\1', jsoncontent)
-      # fix wrong serialization of "\"ENUM\"" to "ENUM"
-      jsoncontent <- gsub("\\\\\"([A-Z]+)\\\\\"", "\\1", jsoncontent)
-      json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
+    toJSONString = function(...) {
+      simple <- self$toSimpleType()
+      json <- jsonlite::toJSON(simple, auto_unbox = TRUE, digits = NA, null = 'null', ...)
+      return(as.character(jsonlite::minify(json)))
     },
-    #' Deserialize JSON string into an instance of AlignedFeature
-    #'
+
     #' @description
     #' Deserialize JSON string into an instance of AlignedFeature
     #'
     #' @param input_json the JSON input
     #' @return the instance of AlignedFeature
-    #' @export
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       self$`alignedFeatureId` <- this_object$`alignedFeatureId`
@@ -556,23 +395,24 @@ AlignedFeature <- R6::R6Class(
       self$`rtStartSeconds` <- this_object$`rtStartSeconds`
       self$`rtEndSeconds` <- this_object$`rtEndSeconds`
       self$`rtApexSeconds` <- this_object$`rtApexSeconds`
-      self$`quality` <- DataQuality$new()$fromJSON(jsonlite::toJSON(this_object$`quality`, auto_unbox = TRUE, digits = NA))
+      if (!is.null(this_object$`quality`) && !(this_object$`quality` %in% c("NOT_APPLICABLE", "LOWEST", "BAD", "DECENT", "GOOD"))) {
+        stop(paste("Error! \"", this_object$`quality`, "\" cannot be assigned to `quality`. Must be \"NOT_APPLICABLE\", \"LOWEST\", \"BAD\", \"DECENT\", \"GOOD\".", sep = ""))
+      }
+      self$`quality` <- this_object$`quality`
       self$`hasMs1` <- this_object$`hasMs1`
       self$`hasMsMs` <- this_object$`hasMsMs`
-      self$`msData` <- MsData$new()$fromJSON(jsonlite::toJSON(this_object$`msData`, auto_unbox = TRUE, digits = NA))
-      self$`topAnnotations` <- FeatureAnnotations$new()$fromJSON(jsonlite::toJSON(this_object$`topAnnotations`, auto_unbox = TRUE, digits = NA))
-      self$`topAnnotationsDeNovo` <- FeatureAnnotations$new()$fromJSON(jsonlite::toJSON(this_object$`topAnnotationsDeNovo`, auto_unbox = TRUE, digits = NA))
+      self$`msData` <- MsData$new()$fromJSON(jsonlite::toJSON(this_object$`msData`, auto_unbox = TRUE, digits = NA, null = 'null'))
+      self$`topAnnotations` <- FeatureAnnotations$new()$fromJSON(jsonlite::toJSON(this_object$`topAnnotations`, auto_unbox = TRUE, digits = NA, null = 'null'))
+      self$`topAnnotationsDeNovo` <- FeatureAnnotations$new()$fromJSON(jsonlite::toJSON(this_object$`topAnnotationsDeNovo`, auto_unbox = TRUE, digits = NA, null = 'null'))
       self$`computing` <- this_object$`computing`
-      self$`computedTools` <- ComputedSubtools$new()$fromJSON(jsonlite::toJSON(this_object$`computedTools`, auto_unbox = TRUE, digits = NA))
+      self$`computedTools` <- ComputedSubtools$new()$fromJSON(jsonlite::toJSON(this_object$`computedTools`, auto_unbox = TRUE, digits = NA, null = 'null'))
       self
     },
-    #' Validate JSON input with respect to AlignedFeature
-    #'
+
     #' @description
     #' Validate JSON input with respect to AlignedFeature and throw an exception if invalid
     #'
     #' @param input the JSON input
-    #' @export
     validateJSON = function(input) {
       input_json <- jsonlite::fromJSON(input)
       # check the required field `charge`
@@ -594,23 +434,19 @@ AlignedFeature <- R6::R6Class(
         stop(paste("The JSON input `", input, "` is invalid for AlignedFeature: the required field `detectedAdducts` is missing."))
       }
     },
-    #' To string (JSON format)
-    #'
+
     #' @description
     #' To string (JSON format)
     #'
     #' @return String representation of AlignedFeature
-    #' @export
     toString = function() {
       self$toJSONString()
     },
-    #' Return true if the values in all fields are valid.
-    #'
+
     #' @description
     #' Return true if the values in all fields are valid.
     #'
     #' @return true if the values in all fields are valid.
-    #' @export
     isValid = function() {
       # check if the required `charge` is null
       if (is.null(self$`charge`)) {
@@ -625,13 +461,11 @@ AlignedFeature <- R6::R6Class(
 
       TRUE
     },
-    #' Return a list of invalid fields (if any).
-    #'
+
     #' @description
     #' Return a list of invalid fields (if any).
     #'
     #' @return A list of invalid fields (if any).
-    #' @export
     getInvalidFields = function() {
       invalid_fields <- list()
       # check if the required `charge` is null
@@ -647,12 +481,9 @@ AlignedFeature <- R6::R6Class(
 
       invalid_fields
     },
-    #' Print the object
-    #'
+
     #' @description
     #' Print the object
-    #'
-    #' @export
     print = function() {
       print(jsonlite::prettify(self$toJSONString()))
       invisible(self)

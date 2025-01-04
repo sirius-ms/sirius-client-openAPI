@@ -21,5 +21,8 @@
 #docs/*.md
 # Then explicitly reverse the ignore rule for a single file:
 #!docs/README.md
-test/*
-!test/*_api.R
+tests/testthat/*
+tests/*
+.travis.yml
+git_push.sh
+.gitignore

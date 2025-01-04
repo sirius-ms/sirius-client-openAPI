@@ -15,6 +15,20 @@ FeatureAnnotations Class
 \details{
 Create a new FeatureAnnotations
 }
+\examples{
+
+## ------------------------------------------------
+## Method `FeatureAnnotations$toList`
+## ------------------------------------------------
+
+# convert array of FeatureAnnotations (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
@@ -28,7 +42,11 @@ Create a new FeatureAnnotations
 
 \item{\code{confidenceApproxMatch}}{Confidence Score that represents the confidence whether the top hit or a very similar hit (estimated by MCES distance) is correct. numeric [optional]}
 
-\item{\code{expansiveSearchState}}{\link{ConfidenceMode} [optional]}
+\item{\code{expansiveSearchState}}{Result that shows if structure annotation was expanded by using PubChem as fallback and if so, which confidence mode was used (as per input paramter) character [optional]}
+
+\item{\code{specifiedDatabases}}{List of databases that have been specified by for structure db search. Null if no structure db search has been performed. list(character) [optional]}
+
+\item{\code{expandedDatabases}}{List of databases that have been used to expand search space during expansive search. Null if no structure db search has been performed. list(character) [optional]}
 }
 \if{html}{\out{</div>}}
 }
@@ -37,6 +55,8 @@ Create a new FeatureAnnotations
 \itemize{
 \item \href{#method-FeatureAnnotations-new}{\code{FeatureAnnotations$new()}}
 \item \href{#method-FeatureAnnotations-toJSON}{\code{FeatureAnnotations$toJSON()}}
+\item \href{#method-FeatureAnnotations-toList}{\code{FeatureAnnotations$toList()}}
+\item \href{#method-FeatureAnnotations-toSimpleType}{\code{FeatureAnnotations$toSimpleType()}}
 \item \href{#method-FeatureAnnotations-fromJSON}{\code{FeatureAnnotations$fromJSON()}}
 \item \href{#method-FeatureAnnotations-toJSONString}{\code{FeatureAnnotations$toJSONString()}}
 \item \href{#method-FeatureAnnotations-fromJSONString}{\code{FeatureAnnotations$fromJSONString()}}
@@ -61,6 +81,8 @@ Initialize a new FeatureAnnotations class.
   confidenceExactMatch = NULL,
   confidenceApproxMatch = NULL,
   expansiveSearchState = NULL,
+  specifiedDatabases = NULL,
+  expandedDatabases = NULL,
   ...
 )}\if{html}{\out{</div>}}
 }
@@ -78,7 +100,11 @@ Initialize a new FeatureAnnotations class.
 
 \item{\code{confidenceApproxMatch}}{Confidence Score that represents the confidence whether the top hit or a very similar hit (estimated by MCES distance) is correct.}
 
-\item{\code{expansiveSearchState}}{expansiveSearchState}
+\item{\code{expansiveSearchState}}{Result that shows if structure annotation was expanded by using PubChem as fallback and if so, which confidence mode was used (as per input paramter)}
+
+\item{\code{specifiedDatabases}}{List of databases that have been specified by for structure db search. Null if no structure db search has been performed.}
+
+\item{\code{expandedDatabases}}{List of databases that have been used to expand search space during expansive search. Null if no structure db search has been performed.}
 
 \item{\code{...}}{Other optional arguments.}
 }
@@ -89,13 +115,52 @@ Initialize a new FeatureAnnotations class.
 \if{html}{\out{<a id="method-FeatureAnnotations-toJSON"></a>}}
 \if{latex}{\out{\hypertarget{method-FeatureAnnotations-toJSON}{}}}
 \subsection{Method \code{toJSON()}}{
-To JSON String
+Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{FeatureAnnotations$toJSON()}\if{html}{\out{</div>}}
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-FeatureAnnotations-toList"></a>}}
+\if{latex}{\out{\hypertarget{method-FeatureAnnotations-toList}{}}}
+\subsection{Method \code{toList()}}{
+Convert to a List
+
+Convert the R6 object to a list to work more easily with other tooling.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{FeatureAnnotations$toList()}\if{html}{\out{</div>}}
+}
+
 \subsection{Returns}{
-FeatureAnnotations in JSON format
+FeatureAnnotations as a base R list.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{# convert array of FeatureAnnotations (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-FeatureAnnotations-toSimpleType"></a>}}
+\if{latex}{\out{\hypertarget{method-FeatureAnnotations-toSimpleType}{}}}
+\subsection{Method \code{toSimpleType()}}{
+Convert FeatureAnnotations to a base R type
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{FeatureAnnotations$toSimpleType()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A base R type, e.g. a list or numeric/character array.
 }
 }
 \if{html}{\out{<hr>}}
@@ -124,9 +189,16 @@ the instance of FeatureAnnotations
 \subsection{Method \code{toJSONString()}}{
 To JSON String
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FeatureAnnotations$toJSONString()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{FeatureAnnotations$toJSONString(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Parameters passed to `jsonlite::toJSON`}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
 FeatureAnnotations in JSON format
 }

@@ -10,7 +10,7 @@
 #' @field molecularFormula Molecular formula of the consensus annotation  Might be null if no consensus formula is available. character [optional]
 #' @field compoundClasses  \link{CompoundClasses} [optional]
 #' @field supportingFeatureIds FeatureIds where the topAnnotation supports this annotation. list(character) [optional]
-#' @field selectionCriterion  \link{ConsensusCriterionCSI} [optional]
+#' @field selectionCriterion Null if this is a custom selection character [optional]
 #' @field csiFingerIdStructure  \link{StructureCandidate} [optional]
 #' @field confidenceExactMatch Confidence value that represents the certainty that reported consensus structure is exactly the measured one  If multiple features support this consensus structure the maximum confidence is reported numeric [optional]
 #' @field confidenceApproxMatch Confidence value that represents the certainty that the exact consensus structure or a very similar  structure (e.g. measured by Maximum Common Edge Subgraph Distance) is the measured one.  If multiple features support this consensus structure the maximum confidence is reported numeric [optional]
@@ -27,20 +27,18 @@ ConsensusAnnotationsCSI <- R6::R6Class(
     `csiFingerIdStructure` = NULL,
     `confidenceExactMatch` = NULL,
     `confidenceApproxMatch` = NULL,
-    #' Initialize a new ConsensusAnnotationsCSI class.
-    #'
+
     #' @description
     #' Initialize a new ConsensusAnnotationsCSI class.
     #'
     #' @param molecularFormula Molecular formula of the consensus annotation  Might be null if no consensus formula is available.
     #' @param compoundClasses compoundClasses
     #' @param supportingFeatureIds FeatureIds where the topAnnotation supports this annotation.
-    #' @param selectionCriterion selectionCriterion
+    #' @param selectionCriterion Null if this is a custom selection
     #' @param csiFingerIdStructure csiFingerIdStructure
     #' @param confidenceExactMatch Confidence value that represents the certainty that reported consensus structure is exactly the measured one  If multiple features support this consensus structure the maximum confidence is reported
     #' @param confidenceApproxMatch Confidence value that represents the certainty that the exact consensus structure or a very similar  structure (e.g. measured by Maximum Common Edge Subgraph Distance) is the measured one.  If multiple features support this consensus structure the maximum confidence is reported
     #' @param ... Other optional arguments.
-    #' @export
     initialize = function(`molecularFormula` = NULL, `compoundClasses` = NULL, `supportingFeatureIds` = NULL, `selectionCriterion` = NULL, `csiFingerIdStructure` = NULL, `confidenceExactMatch` = NULL, `confidenceApproxMatch` = NULL, ...) {
       if (!is.null(`molecularFormula`)) {
         if (!(is.character(`molecularFormula`) && length(`molecularFormula`) == 1)) {
@@ -58,11 +56,12 @@ ConsensusAnnotationsCSI <- R6::R6Class(
         self$`supportingFeatureIds` <- `supportingFeatureIds`
       }
       if (!is.null(`selectionCriterion`)) {
-        # disabled, as it is broken and checks for `selectionCriterion` %in% c()
-        # if (!(`selectionCriterion` %in% c())) {
-        #  stop(paste("Error! \"", `selectionCriterion`, "\" cannot be assigned to `selectionCriterion`. Must be .", sep = ""))
-        # }
-        stopifnot(R6::is.R6(`selectionCriterion`))
+        if (!(`selectionCriterion` %in% c("MAJORITY_STRUCTURE", "CONFIDENCE_STRUCTURE", "SINGLETON_STRUCTURE", "MAJORITY_FORMULA", "TOP_FORMULA", "SINGLETON_FORMULA"))) {
+          stop(paste("Error! \"", `selectionCriterion`, "\" cannot be assigned to `selectionCriterion`. Must be \"MAJORITY_STRUCTURE\", \"CONFIDENCE_STRUCTURE\", \"SINGLETON_STRUCTURE\", \"MAJORITY_FORMULA\", \"TOP_FORMULA\", \"SINGLETON_FORMULA\".", sep = ""))
+        }
+        if (!(is.character(`selectionCriterion`) && length(`selectionCriterion`) == 1)) {
+          stop(paste("Error! Invalid data for `selectionCriterion`. Must be a string:", `selectionCriterion`))
+        }
         self$`selectionCriterion` <- `selectionCriterion`
       }
       if (!is.null(`csiFingerIdStructure`)) {
@@ -82,14 +81,37 @@ ConsensusAnnotationsCSI <- R6::R6Class(
         self$`confidenceApproxMatch` <- `confidenceApproxMatch`
       }
     },
-    #' To JSON string
-    #'
+
     #' @description
-    #' To JSON String
-    #'
-    #' @return ConsensusAnnotationsCSI in JSON format
-    #' @export
+    #' Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
     toJSON = function() {
+      .Deprecated(new = "toSimpleType", msg = "Use the '$toSimpleType()' method instead since that is more clearly named. Use '$toJSONString()' to get a JSON string")
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert to a List
+    #'
+    #' Convert the R6 object to a list to work more easily with other tooling.
+    #'
+    #' @return ConsensusAnnotationsCSI as a base R list.
+    #' @examples
+    #' # convert array of ConsensusAnnotationsCSI (x) to a data frame
+    #' \dontrun{
+    #' library(purrr)
+    #' library(tibble)
+    #' df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+    #' df
+    #' }
+    toList = function() {
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert ConsensusAnnotationsCSI to a base R type
+    #'
+    #' @return A base R type, e.g. a list or numeric/character array.
+    toSimpleType = function() {
       ConsensusAnnotationsCSIObject <- list()
       if (!is.null(self$`molecularFormula`)) {
         ConsensusAnnotationsCSIObject[["molecularFormula"]] <-
@@ -97,13 +119,7 @@ ConsensusAnnotationsCSI <- R6::R6Class(
       }
       if (!is.null(self$`compoundClasses`)) {
         ConsensusAnnotationsCSIObject[["compoundClasses"]] <-
-          if (is.list(self$`compoundClasses`$toJSON()) && length(self$`compoundClasses`$toJSON()) == 0L){
-            NULL
-          } else if (length(names(self$`compoundClasses`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`compoundClasses`$toJSON()))) {
-            jsonlite::fromJSON(self$`compoundClasses`$toJSON())
-          } else {
-            self$`compoundClasses`$toJSON()
-          }
+          self$`compoundClasses`$toSimpleType()
       }
       if (!is.null(self$`supportingFeatureIds`)) {
         ConsensusAnnotationsCSIObject[["supportingFeatureIds"]] <-
@@ -111,23 +127,11 @@ ConsensusAnnotationsCSI <- R6::R6Class(
       }
       if (!is.null(self$`selectionCriterion`)) {
         ConsensusAnnotationsCSIObject[["selectionCriterion"]] <-
-          if (is.list(self$`selectionCriterion`$toJSON()) && length(self$`selectionCriterion`$toJSON()) == 0L){
-            NULL
-          } else if (length(names(self$`selectionCriterion`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`selectionCriterion`$toJSON()))) {
-            jsonlite::fromJSON(self$`selectionCriterion`$toJSON())
-          } else {
-            self$`selectionCriterion`$toJSON()
-          }
+          self$`selectionCriterion`
       }
       if (!is.null(self$`csiFingerIdStructure`)) {
         ConsensusAnnotationsCSIObject[["csiFingerIdStructure"]] <-
-          if (is.list(self$`csiFingerIdStructure`$toJSON()) && length(self$`csiFingerIdStructure`$toJSON()) == 0L){
-            NULL
-          } else if (length(names(self$`csiFingerIdStructure`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`csiFingerIdStructure`$toJSON()))) {
-            jsonlite::fromJSON(self$`csiFingerIdStructure`$toJSON())
-          } else {
-            self$`csiFingerIdStructure`$toJSON()
-          }
+          self$`csiFingerIdStructure`$toSimpleType()
       }
       if (!is.null(self$`confidenceExactMatch`)) {
         ConsensusAnnotationsCSIObject[["confidenceExactMatch"]] <-
@@ -137,16 +141,14 @@ ConsensusAnnotationsCSI <- R6::R6Class(
         ConsensusAnnotationsCSIObject[["confidenceApproxMatch"]] <-
           self$`confidenceApproxMatch`
       }
-      ConsensusAnnotationsCSIObject
+      return(ConsensusAnnotationsCSIObject)
     },
-    #' Deserialize JSON string into an instance of ConsensusAnnotationsCSI
-    #'
+
     #' @description
     #' Deserialize JSON string into an instance of ConsensusAnnotationsCSI
     #'
     #' @param input_json the JSON input
     #' @return the instance of ConsensusAnnotationsCSI
-    #' @export
     fromJSON = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       if (!is.null(this_object$`molecularFormula`)) {
@@ -154,20 +156,21 @@ ConsensusAnnotationsCSI <- R6::R6Class(
       }
       if (!is.null(this_object$`compoundClasses`)) {
         `compoundclasses_object` <- CompoundClasses$new()
-        `compoundclasses_object`$fromJSON(jsonlite::toJSON(this_object$`compoundClasses`, auto_unbox = TRUE, digits = NA))
+        `compoundclasses_object`$fromJSON(jsonlite::toJSON(this_object$`compoundClasses`, auto_unbox = TRUE, digits = NA, null = 'null'))
         self$`compoundClasses` <- `compoundclasses_object`
       }
       if (!is.null(this_object$`supportingFeatureIds`)) {
         self$`supportingFeatureIds` <- ApiClient$new()$deserializeObj(this_object$`supportingFeatureIds`, "array[character]", loadNamespace("Rsirius"))
       }
       if (!is.null(this_object$`selectionCriterion`)) {
-        `selectioncriterion_object` <- ConsensusCriterionCSI$new()
-        `selectioncriterion_object`$fromJSON(jsonlite::toJSON(this_object$`selectionCriterion`, auto_unbox = TRUE, digits = NA))
-        self$`selectionCriterion` <- `selectioncriterion_object`
+        if (!is.null(this_object$`selectionCriterion`) && !(this_object$`selectionCriterion` %in% c("MAJORITY_STRUCTURE", "CONFIDENCE_STRUCTURE", "SINGLETON_STRUCTURE", "MAJORITY_FORMULA", "TOP_FORMULA", "SINGLETON_FORMULA"))) {
+          stop(paste("Error! \"", this_object$`selectionCriterion`, "\" cannot be assigned to `selectionCriterion`. Must be \"MAJORITY_STRUCTURE\", \"CONFIDENCE_STRUCTURE\", \"SINGLETON_STRUCTURE\", \"MAJORITY_FORMULA\", \"TOP_FORMULA\", \"SINGLETON_FORMULA\".", sep = ""))
+        }
+        self$`selectionCriterion` <- this_object$`selectionCriterion`
       }
       if (!is.null(this_object$`csiFingerIdStructure`)) {
         `csifingeridstructure_object` <- StructureCandidate$new()
-        `csifingeridstructure_object`$fromJSON(jsonlite::toJSON(this_object$`csiFingerIdStructure`, auto_unbox = TRUE, digits = NA))
+        `csifingeridstructure_object`$fromJSON(jsonlite::toJSON(this_object$`csiFingerIdStructure`, auto_unbox = TRUE, digits = NA, null = 'null'))
         self$`csiFingerIdStructure` <- `csifingeridstructure_object`
       }
       if (!is.null(this_object$`confidenceExactMatch`)) {
@@ -178,145 +181,73 @@ ConsensusAnnotationsCSI <- R6::R6Class(
       }
       self
     },
-    #' To JSON string
-    #'
+
     #' @description
     #' To JSON String
-    #'
+    #' 
+    #' @param ... Parameters passed to `jsonlite::toJSON`
     #' @return ConsensusAnnotationsCSI in JSON format
-    #' @export
-    toJSONString = function() {
-      jsoncontent <- c(
-        if (!is.null(self$`molecularFormula`)) {
-          sprintf(
-          '"molecularFormula":
-            "%s"
-                    ',
-          self$`molecularFormula`
-          )
-        },
-        if (!is.null(self$`compoundClasses`)) {
-          sprintf(
-          '"compoundClasses":
-          %s
-          ',
-          jsonlite::toJSON(self$`compoundClasses`$toJSON(), auto_unbox = TRUE, digits = NA)
-          )
-        },
-        if (!is.null(self$`supportingFeatureIds`)) {
-          sprintf(
-          '"supportingFeatureIds":
-             [%s]
-          ',
-          paste(unlist(lapply(self$`supportingFeatureIds`, function(x) paste0('"', x, '"'))), collapse = ",")
-          )
-        },
-        if (!is.null(self$`selectionCriterion`)) {
-          sprintf(
-          '"selectionCriterion":
-          %s
-          ',
-          jsonlite::toJSON(self$`selectionCriterion`$toJSON(), auto_unbox = TRUE, digits = NA)
-          )
-        },
-        if (!is.null(self$`csiFingerIdStructure`)) {
-          sprintf(
-          '"csiFingerIdStructure":
-          %s
-          ',
-          jsonlite::toJSON(self$`csiFingerIdStructure`$toJSON(), auto_unbox = TRUE, digits = NA)
-          )
-        },
-        if (!is.null(self$`confidenceExactMatch`)) {
-          sprintf(
-          '"confidenceExactMatch":
-            %f
-                    ',
-          self$`confidenceExactMatch`
-          )
-        },
-        if (!is.null(self$`confidenceApproxMatch`)) {
-          sprintf(
-          '"confidenceApproxMatch":
-            %f
-                    ',
-          self$`confidenceApproxMatch`
-          )
-        }
-      )
-      jsoncontent <- paste(jsoncontent, collapse = ",")
-      # remove c() occurences and reduce resulting double escaped quotes \"\" into \"
-      jsoncontent <- gsub('\\\"c\\((.*?)\\\"\\)', '\\1', jsoncontent)
-      # fix wrong serialization of "\"ENUM\"" to "ENUM"
-      jsoncontent <- gsub("\\\\\"([A-Z]+)\\\\\"", "\\1", jsoncontent)
-      json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
+    toJSONString = function(...) {
+      simple <- self$toSimpleType()
+      json <- jsonlite::toJSON(simple, auto_unbox = TRUE, digits = NA, null = 'null', ...)
+      return(as.character(jsonlite::minify(json)))
     },
-    #' Deserialize JSON string into an instance of ConsensusAnnotationsCSI
-    #'
+
     #' @description
     #' Deserialize JSON string into an instance of ConsensusAnnotationsCSI
     #'
     #' @param input_json the JSON input
     #' @return the instance of ConsensusAnnotationsCSI
-    #' @export
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       self$`molecularFormula` <- this_object$`molecularFormula`
-      self$`compoundClasses` <- CompoundClasses$new()$fromJSON(jsonlite::toJSON(this_object$`compoundClasses`, auto_unbox = TRUE, digits = NA))
+      self$`compoundClasses` <- CompoundClasses$new()$fromJSON(jsonlite::toJSON(this_object$`compoundClasses`, auto_unbox = TRUE, digits = NA, null = 'null'))
       self$`supportingFeatureIds` <- ApiClient$new()$deserializeObj(this_object$`supportingFeatureIds`, "array[character]", loadNamespace("Rsirius"))
-      self$`selectionCriterion` <- ConsensusCriterionCSI$new()$fromJSON(jsonlite::toJSON(this_object$`selectionCriterion`, auto_unbox = TRUE, digits = NA))
-      self$`csiFingerIdStructure` <- StructureCandidate$new()$fromJSON(jsonlite::toJSON(this_object$`csiFingerIdStructure`, auto_unbox = TRUE, digits = NA))
+      if (!is.null(this_object$`selectionCriterion`) && !(this_object$`selectionCriterion` %in% c("MAJORITY_STRUCTURE", "CONFIDENCE_STRUCTURE", "SINGLETON_STRUCTURE", "MAJORITY_FORMULA", "TOP_FORMULA", "SINGLETON_FORMULA"))) {
+        stop(paste("Error! \"", this_object$`selectionCriterion`, "\" cannot be assigned to `selectionCriterion`. Must be \"MAJORITY_STRUCTURE\", \"CONFIDENCE_STRUCTURE\", \"SINGLETON_STRUCTURE\", \"MAJORITY_FORMULA\", \"TOP_FORMULA\", \"SINGLETON_FORMULA\".", sep = ""))
+      }
+      self$`selectionCriterion` <- this_object$`selectionCriterion`
+      self$`csiFingerIdStructure` <- StructureCandidate$new()$fromJSON(jsonlite::toJSON(this_object$`csiFingerIdStructure`, auto_unbox = TRUE, digits = NA, null = 'null'))
       self$`confidenceExactMatch` <- this_object$`confidenceExactMatch`
       self$`confidenceApproxMatch` <- this_object$`confidenceApproxMatch`
       self
     },
-    #' Validate JSON input with respect to ConsensusAnnotationsCSI
-    #'
+
     #' @description
     #' Validate JSON input with respect to ConsensusAnnotationsCSI and throw an exception if invalid
     #'
     #' @param input the JSON input
-    #' @export
     validateJSON = function(input) {
       input_json <- jsonlite::fromJSON(input)
     },
-    #' To string (JSON format)
-    #'
+
     #' @description
     #' To string (JSON format)
     #'
     #' @return String representation of ConsensusAnnotationsCSI
-    #' @export
     toString = function() {
       self$toJSONString()
     },
-    #' Return true if the values in all fields are valid.
-    #'
+
     #' @description
     #' Return true if the values in all fields are valid.
     #'
     #' @return true if the values in all fields are valid.
-    #' @export
     isValid = function() {
       TRUE
     },
-    #' Return a list of invalid fields (if any).
-    #'
+
     #' @description
     #' Return a list of invalid fields (if any).
     #'
     #' @return A list of invalid fields (if any).
-    #' @export
     getInvalidFields = function() {
       invalid_fields <- list()
       invalid_fields
     },
-    #' Print the object
-    #'
+
     #' @description
     #' Print the object
-    #'
-    #' @export
     print = function() {
       print(jsonlite::prettify(self$toJSONString()))
       invisible(self)

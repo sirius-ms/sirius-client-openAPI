@@ -4,22 +4,22 @@ All URIs are relative to *http://localhost:8080*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**CloseProjectSpace**](ProjectsApi.md#CloseProjectSpace) | **DELETE** /api/projects/{projectId} | Close project-space and remove it from application
-[**CreateProjectSpace**](ProjectsApi.md#CreateProjectSpace) | **POST** /api/projects/{projectId} | Create and open a new project-space at given location and make it accessible via the given projectId.
+[**CloseProject**](ProjectsApi.md#CloseProject) | **DELETE** /api/projects/{projectId} | Close project-space and remove it from application
+[**CreateProject**](ProjectsApi.md#CreateProject) | **POST** /api/projects/{projectId} | Create and open a new project-space at given location and make it accessible via the given projectId.
 [**GetCanopusClassyFireData**](ProjectsApi.md#GetCanopusClassyFireData) | **GET** /api/projects/{projectId}/cf-data | Get CANOPUS prediction vector definition for ClassyFire classes
 [**GetCanopusNpcData**](ProjectsApi.md#GetCanopusNpcData) | **GET** /api/projects/{projectId}/npc-data | Get CANOPUS prediction vector definition for NPC classes
 [**GetFingerIdData**](ProjectsApi.md#GetFingerIdData) | **GET** /api/projects/{projectId}/fingerid-data | Get CSI:FingerID fingerprint (prediction vector) definition
-[**GetProjectSpace**](ProjectsApi.md#GetProjectSpace) | **GET** /api/projects/{projectId} | Get project space info by its projectId.
-[**GetProjectSpaces**](ProjectsApi.md#GetProjectSpaces) | **GET** /api/projects | List opened project spaces.
+[**GetProject**](ProjectsApi.md#GetProject) | **GET** /api/projects/{projectId} | Get project space info by its projectId.
+[**GetProjects**](ProjectsApi.md#GetProjects) | **GET** /api/projects | List opened project spaces.
 [**ImportMsRunData**](ProjectsApi.md#ImportMsRunData) | **POST** /api/projects/{projectId}/import/ms-data-files | Import and Align full MS-Runs from various formats into the specified project  Possible formats (mzML, mzXML)
 [**ImportMsRunDataAsJob**](ProjectsApi.md#ImportMsRunDataAsJob) | **POST** /api/projects/{projectId}/import/ms-data-files-job | Import and Align full MS-Runs from various formats into the specified project as background job.
 [**ImportPreprocessedData**](ProjectsApi.md#ImportPreprocessedData) | **POST** /api/projects/{projectId}/import/preprocessed-data-files | Import already preprocessed ms/ms data from various formats into the specified project  Possible formats (ms, mgf, cef, msp)
 [**ImportPreprocessedDataAsJob**](ProjectsApi.md#ImportPreprocessedDataAsJob) | **POST** /api/projects/{projectId}/import/preprocessed-data-files-job | Import ms/ms data from the given format into the specified project-space as background job.
-[**OpenProjectSpace**](ProjectsApi.md#OpenProjectSpace) | **PUT** /api/projects/{projectId} | Open an existing project-space and make it accessible via the given projectId.
+[**OpenProject**](ProjectsApi.md#OpenProject) | **PUT** /api/projects/{projectId} | Open an existing project-space and make it accessible via the given projectId.
 
 
-# **CloseProjectSpace**
-> CloseProjectSpace(project_id)
+# **CloseProject**
+> CloseProject(project_id)
 
 Close project-space and remove it from application
 
@@ -35,7 +35,7 @@ library(Rsirius)
 var_project_id <- "project_id_example" # character | unique name/identifier of the  project-space to be closed.
 
 api_instance <- rsirius_api$new()
-api_instance$projects_api$CloseProjectSpace(var_project_id)
+api_instance$projects_api$CloseProject(var_project_id)
 ```
 
 ### Parameters
@@ -62,8 +62,8 @@ No authorization required
 |-------------|-------------|------------------|
 | **200** | OK |  -  |
 
-# **CreateProjectSpace**
-> ProjectInfo CreateProjectSpace(project_id, path_to_project = var.path_to_project, opt_fields = [])
+# **CreateProject**
+> ProjectInfo CreateProject(project_id, path_to_project = var.path_to_project, opt_fields = ["none"])
 
 Create and open a new project-space at given location and make it accessible via the given projectId.
 
@@ -78,12 +78,12 @@ library(Rsirius)
 # prepare function argument(s)
 var_project_id <- "project_id_example" # character | unique name/identifier that shall be used to access the newly created project-space. Must consist only of [a-zA-Z0-9_-].
 var_path_to_project <- "path_to_project_example" # character | local file path where the project will be created. If NULL, project will be stored by its projectId in default project location. DEPRECATED: This parameter relies on the local filesystem and will likely be removed in later versions of this API to allow for more flexible use cases. (Optional)
-var_opt_fields <- c(ProjectInfoOptField$new()) # array[ProjectInfoOptField] |  (Optional)
+var_opt_fields <- c("none") # array[character] |  (Optional)
 
 api_instance <- rsirius_api$new()
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$CreateProjectSpace(var_project_id, path_to_project = var_path_to_project, opt_fields = var_opt_fieldsdata_file = "result.txt")
-result <- api_instance$projects_api$CreateProjectSpace(var_project_id, path_to_project = var_path_to_project, opt_fields = var_opt_fields)
+# result <- api_instance$CreateProject(var_project_id, path_to_project = var_path_to_project, opt_fields = var_opt_fieldsdata_file = "result.txt")
+result <- api_instance$projects_api$CreateProject(var_project_id, path_to_project = var_path_to_project, opt_fields = var_opt_fields)
 dput(result)
 ```
 
@@ -93,7 +93,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **character**| unique name/identifier that shall be used to access the newly created project-space. Must consist only of [a-zA-Z0-9_-]. | 
  **path_to_project** | **character**| local file path where the project will be created. If NULL, project will be stored by its projectId in default project location. DEPRECATED: This parameter relies on the local filesystem and will likely be removed in later versions of this API to allow for more flexible use cases. | [optional] 
- **opt_fields** | list( [**ProjectInfoOptField**](ProjectInfoOptField.md) )|  | [optional] [default to []]
+ **opt_fields** | Enum [none, compatibilityInfo, sizeInformation] |  | [optional] [default to [&quot;none&quot;]]
 
 ### Return type
 
@@ -153,7 +153,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/csv
+ - **Accept**: application/csv, application/CSV
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -200,7 +200,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/csv
+ - **Accept**: application/csv, application/CSV
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -247,15 +247,15 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/csv
+ - **Accept**: application/csv, application/CSV
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | OK |  -  |
 
-# **GetProjectSpace**
-> ProjectInfo GetProjectSpace(project_id, opt_fields = [])
+# **GetProject**
+> ProjectInfo GetProject(project_id, opt_fields = ["none"])
 
 Get project space info by its projectId.
 
@@ -269,12 +269,12 @@ library(Rsirius)
 #
 # prepare function argument(s)
 var_project_id <- "project_id_example" # character | unique name/identifier tof the project-space to be accessed.
-var_opt_fields <- c(ProjectInfoOptField$new()) # array[ProjectInfoOptField] |  (Optional)
+var_opt_fields <- c("none") # array[character] |  (Optional)
 
 api_instance <- rsirius_api$new()
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$GetProjectSpace(var_project_id, opt_fields = var_opt_fieldsdata_file = "result.txt")
-result <- api_instance$projects_api$GetProjectSpace(var_project_id, opt_fields = var_opt_fields)
+# result <- api_instance$GetProject(var_project_id, opt_fields = var_opt_fieldsdata_file = "result.txt")
+result <- api_instance$projects_api$GetProject(var_project_id, opt_fields = var_opt_fields)
 dput(result)
 ```
 
@@ -283,7 +283,7 @@ dput(result)
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **character**| unique name/identifier tof the project-space to be accessed. | 
- **opt_fields** | list( [**ProjectInfoOptField**](ProjectInfoOptField.md) )|  | [optional] [default to []]
+ **opt_fields** | Enum [none, compatibilityInfo, sizeInformation] |  | [optional] [default to [&quot;none&quot;]]
 
 ### Return type
 
@@ -303,8 +303,8 @@ No authorization required
 |-------------|-------------|------------------|
 | **200** | OK |  -  |
 
-# **GetProjectSpaces**
-> array[ProjectInfo] GetProjectSpaces()
+# **GetProjects**
+> array[ProjectInfo] GetProjects()
 
 List opened project spaces.
 
@@ -319,8 +319,8 @@ library(Rsirius)
 
 api_instance <- rsirius_api$new()
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$GetProjectSpaces(data_file = "result.txt")
-result <- api_instance$projects_api$GetProjectSpaces()
+# result <- api_instance$GetProjects(data_file = "result.txt")
+result <- api_instance$projects_api$GetProjects()
 dput(result)
 ```
 
@@ -346,7 +346,7 @@ No authorization required
 | **200** | OK |  -  |
 
 # **ImportMsRunData**
-> ImportResult ImportMsRunData(project_id, parameters, input_files = var.input_files)
+> ImportResult ImportMsRunData(project_id, input_files = var.input_files, parameters = var.parameters)
 
 Import and Align full MS-Runs from various formats into the specified project  Possible formats (mzML, mzXML)
 
@@ -360,13 +360,13 @@ library(Rsirius)
 #
 # prepare function argument(s)
 var_project_id <- "project_id_example" # character | Project-space to import into.
-var_parameters <- LcmsSubmissionParameters$new("alignLCMSRuns_example") # LcmsSubmissionParameters | Parameters for feature alignment and feature finding.
 var_input_files <- c(123) # array[data.frame] |  (Optional)
+var_parameters <- LcmsSubmissionParameters$new("alignLCMSRuns_example") # LcmsSubmissionParameters |  (Optional)
 
 api_instance <- rsirius_api$new()
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$ImportMsRunData(var_project_id, var_parameters, input_files = var_input_filesdata_file = "result.txt")
-result <- api_instance$projects_api$ImportMsRunData(var_project_id, var_parameters, input_files = var_input_files)
+# result <- api_instance$ImportMsRunData(var_project_id, input_files = var_input_files, parameters = var_parametersdata_file = "result.txt")
+result <- api_instance$projects_api$ImportMsRunData(var_project_id, input_files = var_input_files, parameters = var_parameters)
 dput(result)
 ```
 
@@ -375,8 +375,8 @@ dput(result)
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **character**| Project-space to import into. | 
- **parameters** | [**LcmsSubmissionParameters**](.md)| Parameters for feature alignment and feature finding. | 
  **input_files** | list( **data.frame** )|  | [optional] 
+ **parameters** | [**LcmsSubmissionParameters**](LcmsSubmissionParameters.md)|  | [optional] 
 
 ### Return type
 
@@ -397,7 +397,7 @@ No authorization required
 | **200** | OK |  -  |
 
 # **ImportMsRunDataAsJob**
-> Job ImportMsRunDataAsJob(project_id, parameters, opt_fields = ["progress"], input_files = var.input_files)
+> Job ImportMsRunDataAsJob(project_id, opt_fields = ["progress"], input_files = var.input_files, parameters = var.parameters)
 
 Import and Align full MS-Runs from various formats into the specified project as background job.
 
@@ -411,14 +411,14 @@ library(Rsirius)
 #
 # prepare function argument(s)
 var_project_id <- "project_id_example" # character | Project-space to import into.
-var_parameters <- LcmsSubmissionParameters$new("alignLCMSRuns_example") # LcmsSubmissionParameters | Parameters for feature alignment and feature finding.
-var_opt_fields <- c(JobOptField$new()) # array[JobOptField] | Set of optional fields to be included. Use 'none' only to override defaults. (Optional)
+var_opt_fields <- c("none") # array[character] | Set of optional fields to be included. Use 'none' only to override defaults. (Optional)
 var_input_files <- c(123) # array[data.frame] |  (Optional)
+var_parameters <- LcmsSubmissionParameters$new("alignLCMSRuns_example") # LcmsSubmissionParameters |  (Optional)
 
 api_instance <- rsirius_api$new()
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$ImportMsRunDataAsJob(var_project_id, var_parameters, opt_fields = var_opt_fields, input_files = var_input_filesdata_file = "result.txt")
-result <- api_instance$projects_api$ImportMsRunDataAsJob(var_project_id, var_parameters, opt_fields = var_opt_fields, input_files = var_input_files)
+# result <- api_instance$ImportMsRunDataAsJob(var_project_id, opt_fields = var_opt_fields, input_files = var_input_files, parameters = var_parametersdata_file = "result.txt")
+result <- api_instance$projects_api$ImportMsRunDataAsJob(var_project_id, opt_fields = var_opt_fields, input_files = var_input_files, parameters = var_parameters)
 dput(result)
 ```
 
@@ -427,9 +427,9 @@ dput(result)
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **character**| Project-space to import into. | 
- **parameters** | [**LcmsSubmissionParameters**](.md)| Parameters for feature alignment and feature finding. | 
- **opt_fields** | list( [**JobOptField**](JobOptField.md) )| Set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;progress&quot;]]
+ **opt_fields** | Enum [none, command, progress, affectedIds] | Set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;progress&quot;]]
  **input_files** | list( **data.frame** )|  | [optional] 
+ **parameters** | [**LcmsSubmissionParameters**](LcmsSubmissionParameters.md)|  | [optional] 
 
 ### Return type
 
@@ -519,7 +519,7 @@ library(Rsirius)
 var_project_id <- "project_id_example" # character | project-space to import into.
 var_ignore_formulas <- FALSE # character |  (Optional)
 var_allow_ms1_only <- TRUE # character |  (Optional)
-var_opt_fields <- c(JobOptField$new()) # array[JobOptField] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
+var_opt_fields <- c("none") # array[character] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
 var_input_files <- c(123) # array[data.frame] |  (Optional)
 
 api_instance <- rsirius_api$new()
@@ -536,7 +536,7 @@ Name | Type | Description  | Notes
  **project_id** | **character**| project-space to import into. | 
  **ignore_formulas** | **character**|  | [optional] [default to FALSE]
  **allow_ms1_only** | **character**|  | [optional] [default to TRUE]
- **opt_fields** | list( [**JobOptField**](JobOptField.md) )| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;progress&quot;]]
+ **opt_fields** | Enum [none, command, progress, affectedIds] | set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;progress&quot;]]
  **input_files** | list( **data.frame** )|  | [optional] 
 
 ### Return type
@@ -557,8 +557,8 @@ No authorization required
 |-------------|-------------|------------------|
 | **200** | the import job. |  -  |
 
-# **OpenProjectSpace**
-> ProjectInfo OpenProjectSpace(project_id, path_to_project = var.path_to_project, opt_fields = [])
+# **OpenProject**
+> ProjectInfo OpenProject(project_id, path_to_project = var.path_to_project, opt_fields = ["none"])
 
 Open an existing project-space and make it accessible via the given projectId.
 
@@ -573,12 +573,12 @@ library(Rsirius)
 # prepare function argument(s)
 var_project_id <- "project_id_example" # character | unique name/identifier that shall be used to access the opened project-space. Must consist only of [a-zA-Z0-9_-].
 var_path_to_project <- "path_to_project_example" # character | local file path to open the project from. If NULL, project will be loaded by it projectId from default project location.  DEPRECATED: This parameter relies on the local filesystem and will likely be removed in later versions of this API to allow for more flexible use cases. (Optional)
-var_opt_fields <- c(ProjectInfoOptField$new()) # array[ProjectInfoOptField] |  (Optional)
+var_opt_fields <- c("none") # array[character] |  (Optional)
 
 api_instance <- rsirius_api$new()
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$OpenProjectSpace(var_project_id, path_to_project = var_path_to_project, opt_fields = var_opt_fieldsdata_file = "result.txt")
-result <- api_instance$projects_api$OpenProjectSpace(var_project_id, path_to_project = var_path_to_project, opt_fields = var_opt_fields)
+# result <- api_instance$OpenProject(var_project_id, path_to_project = var_path_to_project, opt_fields = var_opt_fieldsdata_file = "result.txt")
+result <- api_instance$projects_api$OpenProject(var_project_id, path_to_project = var_path_to_project, opt_fields = var_opt_fields)
 dput(result)
 ```
 
@@ -588,7 +588,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **character**| unique name/identifier that shall be used to access the opened project-space. Must consist only of [a-zA-Z0-9_-]. | 
  **path_to_project** | **character**| local file path to open the project from. If NULL, project will be loaded by it projectId from default project location.  DEPRECATED: This parameter relies on the local filesystem and will likely be removed in later versions of this API to allow for more flexible use cases. | [optional] 
- **opt_fields** | list( [**ProjectInfoOptField**](ProjectInfoOptField.md) )|  | [optional] [default to []]
+ **opt_fields** | Enum [none, compatibilityInfo, sizeInformation] |  | [optional] [default to [&quot;none&quot;]]
 
 ### Return type
 

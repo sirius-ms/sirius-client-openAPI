@@ -15,6 +15,20 @@ ConnectionCheck Class
 \details{
 Create a new ConnectionCheck
 }
+\examples{
+
+## ------------------------------------------------
+## Method `ConnectionCheck$toList`
+## ------------------------------------------------
+
+# convert array of ConnectionCheck (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
@@ -29,6 +43,8 @@ Create a new ConnectionCheck
 \itemize{
 \item \href{#method-ConnectionCheck-new}{\code{ConnectionCheck$new()}}
 \item \href{#method-ConnectionCheck-toJSON}{\code{ConnectionCheck$toJSON()}}
+\item \href{#method-ConnectionCheck-toList}{\code{ConnectionCheck$toList()}}
+\item \href{#method-ConnectionCheck-toSimpleType}{\code{ConnectionCheck$toSimpleType()}}
 \item \href{#method-ConnectionCheck-fromJSON}{\code{ConnectionCheck$fromJSON()}}
 \item \href{#method-ConnectionCheck-toJSONString}{\code{ConnectionCheck$toJSONString()}}
 \item \href{#method-ConnectionCheck-fromJSONString}{\code{ConnectionCheck$fromJSONString()}}
@@ -65,13 +81,52 @@ Initialize a new ConnectionCheck class.
 \if{html}{\out{<a id="method-ConnectionCheck-toJSON"></a>}}
 \if{latex}{\out{\hypertarget{method-ConnectionCheck-toJSON}{}}}
 \subsection{Method \code{toJSON()}}{
-To JSON String
+Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ConnectionCheck$toJSON()}\if{html}{\out{</div>}}
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ConnectionCheck-toList"></a>}}
+\if{latex}{\out{\hypertarget{method-ConnectionCheck-toList}{}}}
+\subsection{Method \code{toList()}}{
+Convert to a List
+
+Convert the R6 object to a list to work more easily with other tooling.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ConnectionCheck$toList()}\if{html}{\out{</div>}}
+}
+
 \subsection{Returns}{
-ConnectionCheck in JSON format
+ConnectionCheck as a base R list.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{# convert array of ConnectionCheck (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-ConnectionCheck-toSimpleType"></a>}}
+\if{latex}{\out{\hypertarget{method-ConnectionCheck-toSimpleType}{}}}
+\subsection{Method \code{toSimpleType()}}{
+Convert ConnectionCheck to a base R type
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ConnectionCheck$toSimpleType()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A base R type, e.g. a list or numeric/character array.
 }
 }
 \if{html}{\out{<hr>}}
@@ -100,9 +155,16 @@ the instance of ConnectionCheck
 \subsection{Method \code{toJSONString()}}{
 To JSON String
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ConnectionCheck$toJSONString()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ConnectionCheck$toJSONString(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Parameters passed to `jsonlite::toJSON`}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
 ConnectionCheck in JSON format
 }

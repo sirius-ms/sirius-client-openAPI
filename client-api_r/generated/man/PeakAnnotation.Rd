@@ -15,6 +15,20 @@ PeakAnnotation Class
 \details{
 Create a new PeakAnnotation
 }
+\examples{
+
+## ------------------------------------------------
+## Method `PeakAnnotation$toList`
+## ------------------------------------------------
+
+# convert array of PeakAnnotation (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
@@ -22,9 +36,9 @@ Create a new PeakAnnotation
 
 \item{\code{molecularFormula}}{Molecular formula that has been annotated to this peak character [optional]}
 
-\item{\code{ionization}}{Ionization that has been annotated to this peak character [optional]}
+\item{\code{adduct}}{Adduct that has been annotated to this peak character [optional]}
 
-\item{\code{exactMass}}{Exact mass of the annotated molecular formula and ionization numeric [optional]}
+\item{\code{exactMass}}{Exact mass of the annotated molecular formula and adduct numeric [optional]}
 
 \item{\code{massDeviationMz}}{Absolute mass deviation of the exact mass to the measured peak mass in mDa numeric [optional]}
 
@@ -36,15 +50,15 @@ Create a new PeakAnnotation
 
 \item{\code{parentPeak}}{\link{ParentPeak} [optional]}
 
-\item{\code{substructureAtoms}}{Array/List of indices of the atoms of the structure candidate that are part of this fragments substructure  (highlighted atoms) list(integer) [optional]}
+\item{\code{substructureAtoms}}{EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.   Array/List of indices of the atoms of the structure candidate that are part of this fragments substructure  (highlighted atoms) list(integer) [optional]}
 
-\item{\code{substructureBonds}}{Array/List of indices of the bonds of the structure candidate that are part of this fragments substructure  (highlighted bonds)   Null if substructure annotation not available or not requested. list(integer) [optional]}
+\item{\code{substructureBonds}}{EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.   Array/List of indices of the bonds of the structure candidate that are part of this fragments substructure  (highlighted bonds)   Null if substructure annotation not available or not requested. list(integer) [optional]}
 
-\item{\code{substructureBondsCut}}{Array/List of indices of the bonds of the structure candidate that need to be cut to produce this fragments  substructure (highlighted cutted bonds).   Null if substructure annotation not available or not requested. list(integer) [optional]}
+\item{\code{substructureBondsCut}}{EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.   Array/List of indices of the bonds of the structure candidate that need to be cut to produce this fragments  substructure (highlighted cutted bonds).   Null if substructure annotation not available or not requested. list(integer) [optional]}
 
-\item{\code{substructureScore}}{This score roughly reflects the probability of this fragment forming.   This is the score of the path from root to this node which has the maximal score or \"profit\".  The score of a path is equal to the sum of scores of its contained fragments and edges.  Note: Refers to 'totalScore' in CombinatorialNode   Null if substructure annotation not available or not requested. numeric [optional]}
+\item{\code{substructureScore}}{EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.   This score roughly reflects the probability of this fragment forming.   This is the score of the path from root to this node which has the maximal score or \"profit\".  The score of a path is equal to the sum of scores of its contained fragments and edges.  Note: Refers to 'totalScore' in CombinatorialNode   Null if substructure annotation not available or not requested. numeric [optional]}
 
-\item{\code{hydrogenRearrangements}}{Number of hydrogens rearrangements needed to match the substructure to the fragment formula.   Null if substructure annotation not available or not requested. integer [optional]}
+\item{\code{hydrogenRearrangements}}{EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.   Number of hydrogens rearrangements needed to match the substructure to the fragment formula.   Null if substructure annotation not available or not requested. integer [optional]}
 }
 \if{html}{\out{</div>}}
 }
@@ -53,6 +67,8 @@ Create a new PeakAnnotation
 \itemize{
 \item \href{#method-PeakAnnotation-new}{\code{PeakAnnotation$new()}}
 \item \href{#method-PeakAnnotation-toJSON}{\code{PeakAnnotation$toJSON()}}
+\item \href{#method-PeakAnnotation-toList}{\code{PeakAnnotation$toList()}}
+\item \href{#method-PeakAnnotation-toSimpleType}{\code{PeakAnnotation$toSimpleType()}}
 \item \href{#method-PeakAnnotation-fromJSON}{\code{PeakAnnotation$fromJSON()}}
 \item \href{#method-PeakAnnotation-toJSONString}{\code{PeakAnnotation$toJSONString()}}
 \item \href{#method-PeakAnnotation-fromJSONString}{\code{PeakAnnotation$fromJSONString()}}
@@ -73,7 +89,7 @@ Initialize a new PeakAnnotation class.
 \if{html}{\out{<div class="r">}}\preformatted{PeakAnnotation$new(
   fragmentId,
   molecularFormula = NULL,
-  ionization = NULL,
+  adduct = NULL,
   exactMass = NULL,
   massDeviationMz = NULL,
   massDeviationPpm = NULL,
@@ -96,9 +112,9 @@ Initialize a new PeakAnnotation class.
 
 \item{\code{molecularFormula}}{Molecular formula that has been annotated to this peak}
 
-\item{\code{ionization}}{Ionization that has been annotated to this peak}
+\item{\code{adduct}}{Adduct that has been annotated to this peak}
 
-\item{\code{exactMass}}{Exact mass of the annotated molecular formula and ionization}
+\item{\code{exactMass}}{Exact mass of the annotated molecular formula and adduct}
 
 \item{\code{massDeviationMz}}{Absolute mass deviation of the exact mass to the measured peak mass in mDa}
 
@@ -110,15 +126,15 @@ Initialize a new PeakAnnotation class.
 
 \item{\code{parentPeak}}{parentPeak}
 
-\item{\code{substructureAtoms}}{Array/List of indices of the atoms of the structure candidate that are part of this fragments substructure  (highlighted atoms)}
+\item{\code{substructureAtoms}}{EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.   Array/List of indices of the atoms of the structure candidate that are part of this fragments substructure  (highlighted atoms)}
 
-\item{\code{substructureBonds}}{Array/List of indices of the bonds of the structure candidate that are part of this fragments substructure  (highlighted bonds)   Null if substructure annotation not available or not requested.}
+\item{\code{substructureBonds}}{EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.   Array/List of indices of the bonds of the structure candidate that are part of this fragments substructure  (highlighted bonds)   Null if substructure annotation not available or not requested.}
 
-\item{\code{substructureBondsCut}}{Array/List of indices of the bonds of the structure candidate that need to be cut to produce this fragments  substructure (highlighted cutted bonds).   Null if substructure annotation not available or not requested.}
+\item{\code{substructureBondsCut}}{EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.   Array/List of indices of the bonds of the structure candidate that need to be cut to produce this fragments  substructure (highlighted cutted bonds).   Null if substructure annotation not available or not requested.}
 
-\item{\code{substructureScore}}{This score roughly reflects the probability of this fragment forming.   This is the score of the path from root to this node which has the maximal score or \"profit\".  The score of a path is equal to the sum of scores of its contained fragments and edges.  Note: Refers to 'totalScore' in CombinatorialNode   Null if substructure annotation not available or not requested.}
+\item{\code{substructureScore}}{EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.   This score roughly reflects the probability of this fragment forming.   This is the score of the path from root to this node which has the maximal score or \"profit\".  The score of a path is equal to the sum of scores of its contained fragments and edges.  Note: Refers to 'totalScore' in CombinatorialNode   Null if substructure annotation not available or not requested.}
 
-\item{\code{hydrogenRearrangements}}{Number of hydrogens rearrangements needed to match the substructure to the fragment formula.   Null if substructure annotation not available or not requested.}
+\item{\code{hydrogenRearrangements}}{EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.   Number of hydrogens rearrangements needed to match the substructure to the fragment formula.   Null if substructure annotation not available or not requested.}
 
 \item{\code{...}}{Other optional arguments.}
 }
@@ -129,13 +145,52 @@ Initialize a new PeakAnnotation class.
 \if{html}{\out{<a id="method-PeakAnnotation-toJSON"></a>}}
 \if{latex}{\out{\hypertarget{method-PeakAnnotation-toJSON}{}}}
 \subsection{Method \code{toJSON()}}{
-To JSON String
+Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{PeakAnnotation$toJSON()}\if{html}{\out{</div>}}
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-PeakAnnotation-toList"></a>}}
+\if{latex}{\out{\hypertarget{method-PeakAnnotation-toList}{}}}
+\subsection{Method \code{toList()}}{
+Convert to a List
+
+Convert the R6 object to a list to work more easily with other tooling.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{PeakAnnotation$toList()}\if{html}{\out{</div>}}
+}
+
 \subsection{Returns}{
-PeakAnnotation in JSON format
+PeakAnnotation as a base R list.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{# convert array of PeakAnnotation (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-PeakAnnotation-toSimpleType"></a>}}
+\if{latex}{\out{\hypertarget{method-PeakAnnotation-toSimpleType}{}}}
+\subsection{Method \code{toSimpleType()}}{
+Convert PeakAnnotation to a base R type
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{PeakAnnotation$toSimpleType()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A base R type, e.g. a list or numeric/character array.
 }
 }
 \if{html}{\out{<hr>}}
@@ -164,9 +219,16 @@ the instance of PeakAnnotation
 \subsection{Method \code{toJSONString()}}{
 To JSON String
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{PeakAnnotation$toJSONString()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{PeakAnnotation$toJSONString(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Parameters passed to `jsonlite::toJSON`}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
 PeakAnnotation in JSON format
 }

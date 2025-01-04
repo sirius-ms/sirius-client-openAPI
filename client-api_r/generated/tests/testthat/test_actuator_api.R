@@ -10,9 +10,8 @@ test_that("Health", {
   # base path: http://localhost:8080
   # Actuator web endpoint &#39;health&#39;
   # @return [object]
-
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  result <- api_instance$Health()
+  expect_equal(result$status, "UP")
 })
 
 test_that("Shutdown", {

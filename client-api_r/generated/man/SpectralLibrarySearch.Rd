@@ -15,6 +15,20 @@ SpectralLibrarySearch Class
 \details{
 Create a new SpectralLibrarySearch
 }
+\examples{
+
+## ------------------------------------------------
+## Method `SpectralLibrarySearch$toList`
+## ------------------------------------------------
+
+# convert array of SpectralLibrarySearch (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
@@ -26,7 +40,7 @@ Create a new SpectralLibrarySearch
 
 \item{\code{precursorDeviationPpm}}{Maximum allowed mass deviation in ppm for matching the precursor. If not specified, the same value as for the peaks is used. numeric [optional]}
 
-\item{\code{scoring}}{\link{SpectralMatchingType} [optional]}
+\item{\code{scoring}}{Specify scoring method to match spectra  INTENSITY: Intensity weighted. Each peak matches at most one peak in the other spectrum.  GAUSSIAN: Treat peaks as (un-normalized) Gaussians and score overlapping areas of PDFs. Each peak might score against multiple peaks in the other spectrum.  MODIFIED_COSINE:  This algorithm requires that there is at most one pair of peaks (u,v) where the m/z of u and v are within the allowed mass tolerance. To be used for analog search with different precursor masses. character [optional]}
 }
 \if{html}{\out{</div>}}
 }
@@ -35,6 +49,8 @@ Create a new SpectralLibrarySearch
 \itemize{
 \item \href{#method-SpectralLibrarySearch-new}{\code{SpectralLibrarySearch$new()}}
 \item \href{#method-SpectralLibrarySearch-toJSON}{\code{SpectralLibrarySearch$toJSON()}}
+\item \href{#method-SpectralLibrarySearch-toList}{\code{SpectralLibrarySearch$toList()}}
+\item \href{#method-SpectralLibrarySearch-toSimpleType}{\code{SpectralLibrarySearch$toSimpleType()}}
 \item \href{#method-SpectralLibrarySearch-fromJSON}{\code{SpectralLibrarySearch$fromJSON()}}
 \item \href{#method-SpectralLibrarySearch-toJSONString}{\code{SpectralLibrarySearch$toJSONString()}}
 \item \href{#method-SpectralLibrarySearch-fromJSONString}{\code{SpectralLibrarySearch$fromJSONString()}}
@@ -73,7 +89,7 @@ Initialize a new SpectralLibrarySearch class.
 
 \item{\code{precursorDeviationPpm}}{Maximum allowed mass deviation in ppm for matching the precursor. If not specified, the same value as for the peaks is used.}
 
-\item{\code{scoring}}{scoring}
+\item{\code{scoring}}{Specify scoring method to match spectra  INTENSITY: Intensity weighted. Each peak matches at most one peak in the other spectrum.  GAUSSIAN: Treat peaks as (un-normalized) Gaussians and score overlapping areas of PDFs. Each peak might score against multiple peaks in the other spectrum.  MODIFIED_COSINE:  This algorithm requires that there is at most one pair of peaks (u,v) where the m/z of u and v are within the allowed mass tolerance. To be used for analog search with different precursor masses.}
 
 \item{\code{...}}{Other optional arguments.}
 }
@@ -84,13 +100,52 @@ Initialize a new SpectralLibrarySearch class.
 \if{html}{\out{<a id="method-SpectralLibrarySearch-toJSON"></a>}}
 \if{latex}{\out{\hypertarget{method-SpectralLibrarySearch-toJSON}{}}}
 \subsection{Method \code{toJSON()}}{
-To JSON String
+Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{SpectralLibrarySearch$toJSON()}\if{html}{\out{</div>}}
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-SpectralLibrarySearch-toList"></a>}}
+\if{latex}{\out{\hypertarget{method-SpectralLibrarySearch-toList}{}}}
+\subsection{Method \code{toList()}}{
+Convert to a List
+
+Convert the R6 object to a list to work more easily with other tooling.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{SpectralLibrarySearch$toList()}\if{html}{\out{</div>}}
+}
+
 \subsection{Returns}{
-SpectralLibrarySearch in JSON format
+SpectralLibrarySearch as a base R list.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{# convert array of SpectralLibrarySearch (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-SpectralLibrarySearch-toSimpleType"></a>}}
+\if{latex}{\out{\hypertarget{method-SpectralLibrarySearch-toSimpleType}{}}}
+\subsection{Method \code{toSimpleType()}}{
+Convert SpectralLibrarySearch to a base R type
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{SpectralLibrarySearch$toSimpleType()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A base R type, e.g. a list or numeric/character array.
 }
 }
 \if{html}{\out{<hr>}}
@@ -119,9 +174,16 @@ the instance of SpectralLibrarySearch
 \subsection{Method \code{toJSONString()}}{
 To JSON String
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{SpectralLibrarySearch$toJSONString()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{SpectralLibrarySearch$toJSONString(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Parameters passed to `jsonlite::toJSON`}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
 SpectralLibrarySearch in JSON format
 }

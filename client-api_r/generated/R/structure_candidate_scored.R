@@ -35,8 +35,7 @@ StructureCandidateScored <- R6::R6Class(
     `tanimotoSimilarity` = NULL,
     `mcesDistToTopHit` = NULL,
     `fingerprint` = NULL,
-    #' Initialize a new StructureCandidateScored class.
-    #'
+
     #' @description
     #' Initialize a new StructureCandidateScored class.
     #'
@@ -52,7 +51,6 @@ StructureCandidateScored <- R6::R6Class(
     #' @param mcesDistToTopHit Maximum Common Edge Subgraph (MCES) distance to the top scoring hit (CSI:FingerID) in a candidate list.
     #' @param fingerprint fingerprint
     #' @param ... Other optional arguments.
-    #' @export
     initialize = function(`inchiKey` = NULL, `smiles` = NULL, `structureName` = NULL, `xlogP` = NULL, `dbLinks` = NULL, `spectralLibraryMatches` = NULL, `rank` = NULL, `csiScore` = NULL, `tanimotoSimilarity` = NULL, `mcesDistToTopHit` = NULL, `fingerprint` = NULL, ...) {
       if (!is.null(`inchiKey`)) {
         if (!(is.character(`inchiKey`) && length(`inchiKey`) == 1)) {
@@ -117,14 +115,37 @@ StructureCandidateScored <- R6::R6Class(
         self$`fingerprint` <- `fingerprint`
       }
     },
-    #' To JSON string
-    #'
+
     #' @description
-    #' To JSON String
-    #'
-    #' @return StructureCandidateScored in JSON format
-    #' @export
+    #' Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
     toJSON = function() {
+      .Deprecated(new = "toSimpleType", msg = "Use the '$toSimpleType()' method instead since that is more clearly named. Use '$toJSONString()' to get a JSON string")
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert to a List
+    #'
+    #' Convert the R6 object to a list to work more easily with other tooling.
+    #'
+    #' @return StructureCandidateScored as a base R list.
+    #' @examples
+    #' # convert array of StructureCandidateScored (x) to a data frame
+    #' \dontrun{
+    #' library(purrr)
+    #' library(tibble)
+    #' df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+    #' df
+    #' }
+    toList = function() {
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert StructureCandidateScored to a base R type
+    #'
+    #' @return A base R type, e.g. a list or numeric/character array.
+    toSimpleType = function() {
       StructureCandidateScoredObject <- list()
       if (!is.null(self$`inchiKey`)) {
         StructureCandidateScoredObject[["inchiKey"]] <-
@@ -144,11 +165,11 @@ StructureCandidateScored <- R6::R6Class(
       }
       if (!is.null(self$`dbLinks`)) {
         StructureCandidateScoredObject[["dbLinks"]] <-
-          lapply(self$`dbLinks`, function(x) x$toJSON())
+          lapply(self$`dbLinks`, function(x) x$toSimpleType())
       }
       if (!is.null(self$`spectralLibraryMatches`)) {
         StructureCandidateScoredObject[["spectralLibraryMatches"]] <-
-          lapply(self$`spectralLibraryMatches`, function(x) x$toJSON())
+          lapply(self$`spectralLibraryMatches`, function(x) x$toSimpleType())
       }
       if (!is.null(self$`rank`)) {
         StructureCandidateScoredObject[["rank"]] <-
@@ -168,24 +189,16 @@ StructureCandidateScored <- R6::R6Class(
       }
       if (!is.null(self$`fingerprint`)) {
         StructureCandidateScoredObject[["fingerprint"]] <-
-          if (is.list(self$`fingerprint`$toJSON()) && length(self$`fingerprint`$toJSON()) == 0L){
-            NULL
-          } else if (length(names(self$`fingerprint`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`fingerprint`$toJSON()))) {
-            jsonlite::fromJSON(self$`fingerprint`$toJSON())
-          } else {
-            self$`fingerprint`$toJSON()
-          }
+          self$`fingerprint`$toSimpleType()
       }
-      StructureCandidateScoredObject
+      return(StructureCandidateScoredObject)
     },
-    #' Deserialize JSON string into an instance of StructureCandidateScored
-    #'
+
     #' @description
     #' Deserialize JSON string into an instance of StructureCandidateScored
     #'
     #' @param input_json the JSON input
     #' @return the instance of StructureCandidateScored
-    #' @export
     fromJSON = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       if (!is.null(this_object$`inchiKey`)) {
@@ -220,124 +233,28 @@ StructureCandidateScored <- R6::R6Class(
       }
       if (!is.null(this_object$`fingerprint`)) {
         `fingerprint_object` <- BinaryFingerprint$new()
-        `fingerprint_object`$fromJSON(jsonlite::toJSON(this_object$`fingerprint`, auto_unbox = TRUE, digits = NA))
+        `fingerprint_object`$fromJSON(jsonlite::toJSON(this_object$`fingerprint`, auto_unbox = TRUE, digits = NA, null = 'null'))
         self$`fingerprint` <- `fingerprint_object`
       }
       self
     },
-    #' To JSON string
-    #'
+
     #' @description
     #' To JSON String
-    #'
+    #' 
+    #' @param ... Parameters passed to `jsonlite::toJSON`
     #' @return StructureCandidateScored in JSON format
-    #' @export
-    toJSONString = function() {
-      jsoncontent <- c(
-        if (!is.null(self$`inchiKey`)) {
-          sprintf(
-          '"inchiKey":
-            "%s"
-                    ',
-          self$`inchiKey`
-          )
-        },
-        if (!is.null(self$`smiles`)) {
-          sprintf(
-          '"smiles":
-            "%s"
-                    ',
-          self$`smiles`
-          )
-        },
-        if (!is.null(self$`structureName`)) {
-          sprintf(
-          '"structureName":
-            "%s"
-                    ',
-          self$`structureName`
-          )
-        },
-        if (!is.null(self$`xlogP`)) {
-          sprintf(
-          '"xlogP":
-            %f
-                    ',
-          self$`xlogP`
-          )
-        },
-        if (!is.null(self$`dbLinks`)) {
-          sprintf(
-          '"dbLinks":
-          [%s]
-',
-          paste(sapply(self$`dbLinks`, function(x) jsonlite::toJSON(x$toJSON(), auto_unbox = TRUE, digits = NA)), collapse = ",")
-          )
-        },
-        if (!is.null(self$`spectralLibraryMatches`)) {
-          sprintf(
-          '"spectralLibraryMatches":
-          [%s]
-',
-          paste(sapply(self$`spectralLibraryMatches`, function(x) jsonlite::toJSON(x$toJSON(), auto_unbox = TRUE, digits = NA)), collapse = ",")
-          )
-        },
-        if (!is.null(self$`rank`)) {
-          sprintf(
-          '"rank":
-            %f
-                    ',
-          self$`rank`
-          )
-        },
-        if (!is.null(self$`csiScore`)) {
-          sprintf(
-          '"csiScore":
-            %f
-                    ',
-          self$`csiScore`
-          )
-        },
-        if (!is.null(self$`tanimotoSimilarity`)) {
-          sprintf(
-          '"tanimotoSimilarity":
-            %f
-                    ',
-          self$`tanimotoSimilarity`
-          )
-        },
-        if (!is.null(self$`mcesDistToTopHit`)) {
-          sprintf(
-          '"mcesDistToTopHit":
-            %f
-                    ',
-          self$`mcesDistToTopHit`
-          )
-        },
-        if (!is.null(self$`fingerprint`)) {
-          sprintf(
-          '"fingerprint":
-          %s
-          ',
-          jsonlite::toJSON(self$`fingerprint`$toJSON(), auto_unbox = TRUE, digits = NA)
-          )
-        }
-      )
-      jsoncontent <- paste(jsoncontent, collapse = ",")
-      # remove c() occurences and reduce resulting double escaped quotes \"\" into \"
-      jsoncontent <- gsub('\\\"c\\((.*?)\\\"\\)', '\\1', jsoncontent)
-      # fix wrong serialization of "\"ENUM\"" to "ENUM"
-      jsoncontent <- gsub("\\\\\"([A-Z]+)\\\\\"", "\\1", jsoncontent)
-      json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
+    toJSONString = function(...) {
+      simple <- self$toSimpleType()
+      json <- jsonlite::toJSON(simple, auto_unbox = TRUE, digits = NA, null = 'null', ...)
+      return(as.character(jsonlite::minify(json)))
     },
-    #' Deserialize JSON string into an instance of StructureCandidateScored
-    #'
+
     #' @description
     #' Deserialize JSON string into an instance of StructureCandidateScored
     #'
     #' @param input_json the JSON input
     #' @return the instance of StructureCandidateScored
-    #' @export
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       self$`inchiKey` <- this_object$`inchiKey`
@@ -350,56 +267,45 @@ StructureCandidateScored <- R6::R6Class(
       self$`csiScore` <- this_object$`csiScore`
       self$`tanimotoSimilarity` <- this_object$`tanimotoSimilarity`
       self$`mcesDistToTopHit` <- this_object$`mcesDistToTopHit`
-      self$`fingerprint` <- BinaryFingerprint$new()$fromJSON(jsonlite::toJSON(this_object$`fingerprint`, auto_unbox = TRUE, digits = NA))
+      self$`fingerprint` <- BinaryFingerprint$new()$fromJSON(jsonlite::toJSON(this_object$`fingerprint`, auto_unbox = TRUE, digits = NA, null = 'null'))
       self
     },
-    #' Validate JSON input with respect to StructureCandidateScored
-    #'
+
     #' @description
     #' Validate JSON input with respect to StructureCandidateScored and throw an exception if invalid
     #'
     #' @param input the JSON input
-    #' @export
     validateJSON = function(input) {
       input_json <- jsonlite::fromJSON(input)
     },
-    #' To string (JSON format)
-    #'
+
     #' @description
     #' To string (JSON format)
     #'
     #' @return String representation of StructureCandidateScored
-    #' @export
     toString = function() {
       self$toJSONString()
     },
-    #' Return true if the values in all fields are valid.
-    #'
+
     #' @description
     #' Return true if the values in all fields are valid.
     #'
     #' @return true if the values in all fields are valid.
-    #' @export
     isValid = function() {
       TRUE
     },
-    #' Return a list of invalid fields (if any).
-    #'
+
     #' @description
     #' Return a list of invalid fields (if any).
     #'
     #' @return A list of invalid fields (if any).
-    #' @export
     getInvalidFields = function() {
       invalid_fields <- list()
       invalid_fields
     },
-    #' Print the object
-    #'
+
     #' @description
     #' Print the object
-    #'
-    #' @export
     print = function() {
       print(jsonlite::prettify(self$toJSONString()))
       invisible(self)

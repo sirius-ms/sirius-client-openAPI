@@ -15,6 +15,20 @@ Job Class
 \details{
 Create a new Job
 }
+\examples{
+
+## ------------------------------------------------
+## Method `Job$toList`
+## ------------------------------------------------
+
+# convert array of Job (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
@@ -27,6 +41,8 @@ Create a new Job
 \item{\code{affectedCompoundIds}}{List of compoundIds that are affected by this job.  This lis will also contain compoundIds where not all features of the compound are affected by the job.  If this job is creating compounds (e.g. data import jobs) this value will be NULL until the jobs has finished list(character) [optional]}
 
 \item{\code{affectedAlignedFeatureIds}}{List of alignedFeatureIds that are affected by this job.  If this job is creating features (e.g. data import jobs) this value will be NULL until the jobs has finished list(character) [optional]}
+
+\item{\code{jobEffect}}{Effect this job has. The affected ids are added, removed or modified.  Null if job does not affect features/compounds  Not available/null if affected Ids are not requested character [optional]}
 }
 \if{html}{\out{</div>}}
 }
@@ -35,6 +51,8 @@ Create a new Job
 \itemize{
 \item \href{#method-Job-new}{\code{Job$new()}}
 \item \href{#method-Job-toJSON}{\code{Job$toJSON()}}
+\item \href{#method-Job-toList}{\code{Job$toList()}}
+\item \href{#method-Job-toSimpleType}{\code{Job$toSimpleType()}}
 \item \href{#method-Job-fromJSON}{\code{Job$fromJSON()}}
 \item \href{#method-Job-toJSONString}{\code{Job$toJSONString()}}
 \item \href{#method-Job-fromJSONString}{\code{Job$fromJSONString()}}
@@ -58,6 +76,7 @@ Initialize a new Job class.
   progress = NULL,
   affectedCompoundIds = NULL,
   affectedAlignedFeatureIds = NULL,
+  jobEffect = NULL,
   ...
 )}\if{html}{\out{</div>}}
 }
@@ -75,6 +94,8 @@ Initialize a new Job class.
 
 \item{\code{affectedAlignedFeatureIds}}{List of alignedFeatureIds that are affected by this job.  If this job is creating features (e.g. data import jobs) this value will be NULL until the jobs has finished}
 
+\item{\code{jobEffect}}{Effect this job has. The affected ids are added, removed or modified.  Null if job does not affect features/compounds  Not available/null if affected Ids are not requested}
+
 \item{\code{...}}{Other optional arguments.}
 }
 \if{html}{\out{</div>}}
@@ -84,13 +105,52 @@ Initialize a new Job class.
 \if{html}{\out{<a id="method-Job-toJSON"></a>}}
 \if{latex}{\out{\hypertarget{method-Job-toJSON}{}}}
 \subsection{Method \code{toJSON()}}{
-To JSON String
+Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Job$toJSON()}\if{html}{\out{</div>}}
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Job-toList"></a>}}
+\if{latex}{\out{\hypertarget{method-Job-toList}{}}}
+\subsection{Method \code{toList()}}{
+Convert to a List
+
+Convert the R6 object to a list to work more easily with other tooling.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Job$toList()}\if{html}{\out{</div>}}
+}
+
 \subsection{Returns}{
-Job in JSON format
+Job as a base R list.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{# convert array of Job (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Job-toSimpleType"></a>}}
+\if{latex}{\out{\hypertarget{method-Job-toSimpleType}{}}}
+\subsection{Method \code{toSimpleType()}}{
+Convert Job to a base R type
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Job$toSimpleType()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A base R type, e.g. a list or numeric/character array.
 }
 }
 \if{html}{\out{<hr>}}
@@ -119,9 +179,16 @@ the instance of Job
 \subsection{Method \code{toJSONString()}}{
 To JSON String
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Job$toJSONString()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Job$toJSONString(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Parameters passed to `jsonlite::toJSON`}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
 Job in JSON format
 }

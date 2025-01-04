@@ -8,12 +8,26 @@
 An \code{R6Class} generator object
 }
 \description{
-AnnotatedSpectrum Class
+Spectrum model with peak annotations based on the fragmentation tree and Epimetheus substructure annotations.  Molecular formula and adduct of the spectrum are identical to the ones of the corresponding molecular formula candidate and FragmentationTree.  Fragment molecular formulas and adducts correspond to the FragmentationTree's FragmentNodes
 
 AnnotatedSpectrum Class
 }
 \details{
 Create a new AnnotatedSpectrum
+}
+\examples{
+
+## ------------------------------------------------
+## Method `AnnotatedSpectrum$toList`
+## ------------------------------------------------
+
+# convert array of AnnotatedSpectrum (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
@@ -23,6 +37,8 @@ Create a new AnnotatedSpectrum
 \item{\code{msLevel}}{MS level of the measured spectrum.  Artificial spectra with no msLevel (e.g. Simulated Isotope patterns) use null or zero integer [optional]}
 
 \item{\code{collisionEnergy}}{Collision energy used for MS/MS spectra  Null for spectra where collision energy is not applicable character [optional]}
+
+\item{\code{instrument}}{Instrument information. character [optional]}
 
 \item{\code{precursorMz}}{Precursor m/z of the MS/MS spectrum  Null for spectra where precursor m/z is not applicable numeric [optional]}
 
@@ -41,6 +57,8 @@ Create a new AnnotatedSpectrum
 \itemize{
 \item \href{#method-AnnotatedSpectrum-new}{\code{AnnotatedSpectrum$new()}}
 \item \href{#method-AnnotatedSpectrum-toJSON}{\code{AnnotatedSpectrum$toJSON()}}
+\item \href{#method-AnnotatedSpectrum-toList}{\code{AnnotatedSpectrum$toList()}}
+\item \href{#method-AnnotatedSpectrum-toSimpleType}{\code{AnnotatedSpectrum$toSimpleType()}}
 \item \href{#method-AnnotatedSpectrum-fromJSON}{\code{AnnotatedSpectrum$fromJSON()}}
 \item \href{#method-AnnotatedSpectrum-toJSONString}{\code{AnnotatedSpectrum$toJSONString()}}
 \item \href{#method-AnnotatedSpectrum-fromJSONString}{\code{AnnotatedSpectrum$fromJSONString()}}
@@ -63,6 +81,7 @@ Initialize a new AnnotatedSpectrum class.
   name = NULL,
   msLevel = NULL,
   collisionEnergy = NULL,
+  instrument = NULL,
   precursorMz = NULL,
   scanNumber = NULL,
   absIntensityFactor = NULL,
@@ -82,6 +101,8 @@ Initialize a new AnnotatedSpectrum class.
 
 \item{\code{collisionEnergy}}{Collision energy used for MS/MS spectra  Null for spectra where collision energy is not applicable}
 
+\item{\code{instrument}}{Instrument information.}
+
 \item{\code{precursorMz}}{Precursor m/z of the MS/MS spectrum  Null for spectra where precursor m/z is not applicable}
 
 \item{\code{scanNumber}}{Scan number of the spectrum.  Might be null for artificial spectra with no scan number (e.g. Simulated Isotope patterns or merged spectra)}
@@ -99,13 +120,52 @@ Initialize a new AnnotatedSpectrum class.
 \if{html}{\out{<a id="method-AnnotatedSpectrum-toJSON"></a>}}
 \if{latex}{\out{\hypertarget{method-AnnotatedSpectrum-toJSON}{}}}
 \subsection{Method \code{toJSON()}}{
-To JSON String
+Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{AnnotatedSpectrum$toJSON()}\if{html}{\out{</div>}}
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-AnnotatedSpectrum-toList"></a>}}
+\if{latex}{\out{\hypertarget{method-AnnotatedSpectrum-toList}{}}}
+\subsection{Method \code{toList()}}{
+Convert to a List
+
+Convert the R6 object to a list to work more easily with other tooling.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{AnnotatedSpectrum$toList()}\if{html}{\out{</div>}}
+}
+
 \subsection{Returns}{
-AnnotatedSpectrum in JSON format
+AnnotatedSpectrum as a base R list.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{# convert array of AnnotatedSpectrum (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-AnnotatedSpectrum-toSimpleType"></a>}}
+\if{latex}{\out{\hypertarget{method-AnnotatedSpectrum-toSimpleType}{}}}
+\subsection{Method \code{toSimpleType()}}{
+Convert AnnotatedSpectrum to a base R type
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{AnnotatedSpectrum$toSimpleType()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A base R type, e.g. a list or numeric/character array.
 }
 }
 \if{html}{\out{<hr>}}
@@ -134,9 +194,16 @@ the instance of AnnotatedSpectrum
 \subsection{Method \code{toJSONString()}}{
 To JSON String
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{AnnotatedSpectrum$toJSONString()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{AnnotatedSpectrum$toJSONString(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Parameters passed to `jsonlite::toJSON`}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
 AnnotatedSpectrum in JSON format
 }

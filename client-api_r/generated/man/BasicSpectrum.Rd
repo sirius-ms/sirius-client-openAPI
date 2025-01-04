@@ -15,6 +15,20 @@ BasicSpectrum Class
 \details{
 Create a new BasicSpectrum
 }
+\examples{
+
+## ------------------------------------------------
+## Method `BasicSpectrum$toList`
+## ------------------------------------------------
+
+# convert array of BasicSpectrum (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
@@ -23,6 +37,8 @@ Create a new BasicSpectrum
 \item{\code{msLevel}}{MS level of the measured spectrum.  Artificial spectra with no msLevel (e.g. Simulated Isotope patterns) use null or zero integer [optional]}
 
 \item{\code{collisionEnergy}}{Collision energy used for MS/MS spectra  Null for spectra where collision energy is not applicable character [optional]}
+
+\item{\code{instrument}}{Instrument information. character [optional]}
 
 \item{\code{precursorMz}}{Precursor m/z of the MS/MS spectrum  Null for spectra where precursor m/z is not applicable numeric [optional]}
 
@@ -39,6 +55,8 @@ Create a new BasicSpectrum
 \itemize{
 \item \href{#method-BasicSpectrum-new}{\code{BasicSpectrum$new()}}
 \item \href{#method-BasicSpectrum-toJSON}{\code{BasicSpectrum$toJSON()}}
+\item \href{#method-BasicSpectrum-toList}{\code{BasicSpectrum$toList()}}
+\item \href{#method-BasicSpectrum-toSimpleType}{\code{BasicSpectrum$toSimpleType()}}
 \item \href{#method-BasicSpectrum-fromJSON}{\code{BasicSpectrum$fromJSON()}}
 \item \href{#method-BasicSpectrum-toJSONString}{\code{BasicSpectrum$toJSONString()}}
 \item \href{#method-BasicSpectrum-fromJSONString}{\code{BasicSpectrum$fromJSONString()}}
@@ -61,6 +79,7 @@ Initialize a new BasicSpectrum class.
   name = NULL,
   msLevel = NULL,
   collisionEnergy = NULL,
+  instrument = NULL,
   precursorMz = NULL,
   scanNumber = NULL,
   absIntensityFactor = NULL,
@@ -79,6 +98,8 @@ Initialize a new BasicSpectrum class.
 
 \item{\code{collisionEnergy}}{Collision energy used for MS/MS spectra  Null for spectra where collision energy is not applicable}
 
+\item{\code{instrument}}{Instrument information.}
+
 \item{\code{precursorMz}}{Precursor m/z of the MS/MS spectrum  Null for spectra where precursor m/z is not applicable}
 
 \item{\code{scanNumber}}{Scan number of the spectrum.  Might be null for artificial spectra with no scan number (e.g. Simulated Isotope patterns or merged spectra)}
@@ -94,13 +115,52 @@ Initialize a new BasicSpectrum class.
 \if{html}{\out{<a id="method-BasicSpectrum-toJSON"></a>}}
 \if{latex}{\out{\hypertarget{method-BasicSpectrum-toJSON}{}}}
 \subsection{Method \code{toJSON()}}{
-To JSON String
+Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{BasicSpectrum$toJSON()}\if{html}{\out{</div>}}
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-BasicSpectrum-toList"></a>}}
+\if{latex}{\out{\hypertarget{method-BasicSpectrum-toList}{}}}
+\subsection{Method \code{toList()}}{
+Convert to a List
+
+Convert the R6 object to a list to work more easily with other tooling.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{BasicSpectrum$toList()}\if{html}{\out{</div>}}
+}
+
 \subsection{Returns}{
-BasicSpectrum in JSON format
+BasicSpectrum as a base R list.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{# convert array of BasicSpectrum (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-BasicSpectrum-toSimpleType"></a>}}
+\if{latex}{\out{\hypertarget{method-BasicSpectrum-toSimpleType}{}}}
+\subsection{Method \code{toSimpleType()}}{
+Convert BasicSpectrum to a base R type
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{BasicSpectrum$toSimpleType()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A base R type, e.g. a list or numeric/character array.
 }
 }
 \if{html}{\out{<hr>}}
@@ -129,9 +189,16 @@ the instance of BasicSpectrum
 \subsection{Method \code{toJSONString()}}{
 To JSON String
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{BasicSpectrum$toJSONString()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{BasicSpectrum$toJSONString(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Parameters passed to `jsonlite::toJSON`}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
 BasicSpectrum in JSON format
 }

@@ -19,8 +19,7 @@ AccountCredentials <- R6::R6Class(
     `username` = NULL,
     `password` = NULL,
     `refreshToken` = NULL,
-    #' Initialize a new AccountCredentials class.
-    #'
+
     #' @description
     #' Initialize a new AccountCredentials class.
     #'
@@ -28,7 +27,6 @@ AccountCredentials <- R6::R6Class(
     #' @param password password
     #' @param refreshToken refreshToken
     #' @param ... Other optional arguments.
-    #' @export
     initialize = function(`username` = NULL, `password` = NULL, `refreshToken` = NULL, ...) {
       if (!is.null(`username`)) {
         if (!(is.character(`username`) && length(`username`) == 1)) {
@@ -49,14 +47,37 @@ AccountCredentials <- R6::R6Class(
         self$`refreshToken` <- `refreshToken`
       }
     },
-    #' To JSON string
-    #'
+
     #' @description
-    #' To JSON String
-    #'
-    #' @return AccountCredentials in JSON format
-    #' @export
+    #' Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
     toJSON = function() {
+      .Deprecated(new = "toSimpleType", msg = "Use the '$toSimpleType()' method instead since that is more clearly named. Use '$toJSONString()' to get a JSON string")
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert to a List
+    #'
+    #' Convert the R6 object to a list to work more easily with other tooling.
+    #'
+    #' @return AccountCredentials as a base R list.
+    #' @examples
+    #' # convert array of AccountCredentials (x) to a data frame
+    #' \dontrun{
+    #' library(purrr)
+    #' library(tibble)
+    #' df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+    #' df
+    #' }
+    toList = function() {
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert AccountCredentials to a base R type
+    #'
+    #' @return A base R type, e.g. a list or numeric/character array.
+    toSimpleType = function() {
       AccountCredentialsObject <- list()
       if (!is.null(self$`username`)) {
         AccountCredentialsObject[["username"]] <-
@@ -70,16 +91,14 @@ AccountCredentials <- R6::R6Class(
         AccountCredentialsObject[["refreshToken"]] <-
           self$`refreshToken`
       }
-      AccountCredentialsObject
+      return(AccountCredentialsObject)
     },
-    #' Deserialize JSON string into an instance of AccountCredentials
-    #'
+
     #' @description
     #' Deserialize JSON string into an instance of AccountCredentials
     #'
     #' @param input_json the JSON input
     #' @return the instance of AccountCredentials
-    #' @export
     fromJSON = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       if (!is.null(this_object$`username`)) {
@@ -93,55 +112,23 @@ AccountCredentials <- R6::R6Class(
       }
       self
     },
-    #' To JSON string
-    #'
+
     #' @description
     #' To JSON String
-    #'
+    #' 
+    #' @param ... Parameters passed to `jsonlite::toJSON`
     #' @return AccountCredentials in JSON format
-    #' @export
-    toJSONString = function() {
-      jsoncontent <- c(
-        if (!is.null(self$`username`)) {
-          sprintf(
-          '"username":
-            "%s"
-                    ',
-          self$`username`
-          )
-        },
-        if (!is.null(self$`password`)) {
-          sprintf(
-          '"password":
-            "%s"
-                    ',
-          self$`password`
-          )
-        },
-        if (!is.null(self$`refreshToken`)) {
-          sprintf(
-          '"refreshToken":
-            "%s"
-                    ',
-          self$`refreshToken`
-          )
-        }
-      )
-      jsoncontent <- paste(jsoncontent, collapse = ",")
-      # remove c() occurences and reduce resulting double escaped quotes \"\" into \"
-      jsoncontent <- gsub('\\\"c\\((.*?)\\\"\\)', '\\1', jsoncontent)
-      # fix wrong serialization of "\"ENUM\"" to "ENUM"
-      jsoncontent <- gsub("\\\\\"([A-Z]+)\\\\\"", "\\1", jsoncontent)
-      json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
+    toJSONString = function(...) {
+      simple <- self$toSimpleType()
+      json <- jsonlite::toJSON(simple, auto_unbox = TRUE, digits = NA, null = 'null', ...)
+      return(as.character(jsonlite::minify(json)))
     },
-    #' Deserialize JSON string into an instance of AccountCredentials
-    #'
+
     #' @description
     #' Deserialize JSON string into an instance of AccountCredentials
     #'
     #' @param input_json the JSON input
     #' @return the instance of AccountCredentials
-    #' @export
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       self$`username` <- this_object$`username`
@@ -149,53 +136,42 @@ AccountCredentials <- R6::R6Class(
       self$`refreshToken` <- this_object$`refreshToken`
       self
     },
-    #' Validate JSON input with respect to AccountCredentials
-    #'
+
     #' @description
     #' Validate JSON input with respect to AccountCredentials and throw an exception if invalid
     #'
     #' @param input the JSON input
-    #' @export
     validateJSON = function(input) {
       input_json <- jsonlite::fromJSON(input)
     },
-    #' To string (JSON format)
-    #'
+
     #' @description
     #' To string (JSON format)
     #'
     #' @return String representation of AccountCredentials
-    #' @export
     toString = function() {
       self$toJSONString()
     },
-    #' Return true if the values in all fields are valid.
-    #'
+
     #' @description
     #' Return true if the values in all fields are valid.
     #'
     #' @return true if the values in all fields are valid.
-    #' @export
     isValid = function() {
       TRUE
     },
-    #' Return a list of invalid fields (if any).
-    #'
+
     #' @description
     #' Return a list of invalid fields (if any).
     #'
     #' @return A list of invalid fields (if any).
-    #' @export
     getInvalidFields = function() {
       invalid_fields <- list()
       invalid_fields
     },
-    #' Print the object
-    #'
+
     #' @description
     #' Print the object
-    #'
-    #' @export
     print = function() {
       print(jsonlite::prettify(self$toJSONString()))
       invisible(self)

@@ -21,8 +21,7 @@ LossEdge <- R6::R6Class(
     `targetFragmentIdx` = NULL,
     `molecularFormula` = NULL,
     `score` = NULL,
-    #' Initialize a new LossEdge class.
-    #'
+
     #' @description
     #' Initialize a new LossEdge class.
     #'
@@ -31,7 +30,6 @@ LossEdge <- R6::R6Class(
     #' @param molecularFormula molecularFormula
     #' @param score score
     #' @param ... Other optional arguments.
-    #' @export
     initialize = function(`sourceFragmentIdx` = NULL, `targetFragmentIdx` = NULL, `molecularFormula` = NULL, `score` = NULL, ...) {
       if (!is.null(`sourceFragmentIdx`)) {
         if (!(is.numeric(`sourceFragmentIdx`) && length(`sourceFragmentIdx`) == 1)) {
@@ -58,14 +56,37 @@ LossEdge <- R6::R6Class(
         self$`score` <- `score`
       }
     },
-    #' To JSON string
-    #'
+
     #' @description
-    #' To JSON String
-    #'
-    #' @return LossEdge in JSON format
-    #' @export
+    #' Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
     toJSON = function() {
+      .Deprecated(new = "toSimpleType", msg = "Use the '$toSimpleType()' method instead since that is more clearly named. Use '$toJSONString()' to get a JSON string")
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert to a List
+    #'
+    #' Convert the R6 object to a list to work more easily with other tooling.
+    #'
+    #' @return LossEdge as a base R list.
+    #' @examples
+    #' # convert array of LossEdge (x) to a data frame
+    #' \dontrun{
+    #' library(purrr)
+    #' library(tibble)
+    #' df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+    #' df
+    #' }
+    toList = function() {
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert LossEdge to a base R type
+    #'
+    #' @return A base R type, e.g. a list or numeric/character array.
+    toSimpleType = function() {
       LossEdgeObject <- list()
       if (!is.null(self$`sourceFragmentIdx`)) {
         LossEdgeObject[["sourceFragmentIdx"]] <-
@@ -83,16 +104,14 @@ LossEdge <- R6::R6Class(
         LossEdgeObject[["score"]] <-
           self$`score`
       }
-      LossEdgeObject
+      return(LossEdgeObject)
     },
-    #' Deserialize JSON string into an instance of LossEdge
-    #'
+
     #' @description
     #' Deserialize JSON string into an instance of LossEdge
     #'
     #' @param input_json the JSON input
     #' @return the instance of LossEdge
-    #' @export
     fromJSON = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       if (!is.null(this_object$`sourceFragmentIdx`)) {
@@ -109,63 +128,23 @@ LossEdge <- R6::R6Class(
       }
       self
     },
-    #' To JSON string
-    #'
+
     #' @description
     #' To JSON String
-    #'
+    #' 
+    #' @param ... Parameters passed to `jsonlite::toJSON`
     #' @return LossEdge in JSON format
-    #' @export
-    toJSONString = function() {
-      jsoncontent <- c(
-        if (!is.null(self$`sourceFragmentIdx`)) {
-          sprintf(
-          '"sourceFragmentIdx":
-            %f
-                    ',
-          self$`sourceFragmentIdx`
-          )
-        },
-        if (!is.null(self$`targetFragmentIdx`)) {
-          sprintf(
-          '"targetFragmentIdx":
-            %f
-                    ',
-          self$`targetFragmentIdx`
-          )
-        },
-        if (!is.null(self$`molecularFormula`)) {
-          sprintf(
-          '"molecularFormula":
-            "%s"
-                    ',
-          self$`molecularFormula`
-          )
-        },
-        if (!is.null(self$`score`)) {
-          sprintf(
-          '"score":
-            %f
-                    ',
-          self$`score`
-          )
-        }
-      )
-      jsoncontent <- paste(jsoncontent, collapse = ",")
-      # remove c() occurences and reduce resulting double escaped quotes \"\" into \"
-      jsoncontent <- gsub('\\\"c\\((.*?)\\\"\\)', '\\1', jsoncontent)
-      # fix wrong serialization of "\"ENUM\"" to "ENUM"
-      jsoncontent <- gsub("\\\\\"([A-Z]+)\\\\\"", "\\1", jsoncontent)
-      json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
+    toJSONString = function(...) {
+      simple <- self$toSimpleType()
+      json <- jsonlite::toJSON(simple, auto_unbox = TRUE, digits = NA, null = 'null', ...)
+      return(as.character(jsonlite::minify(json)))
     },
-    #' Deserialize JSON string into an instance of LossEdge
-    #'
+
     #' @description
     #' Deserialize JSON string into an instance of LossEdge
     #'
     #' @param input_json the JSON input
     #' @return the instance of LossEdge
-    #' @export
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       self$`sourceFragmentIdx` <- this_object$`sourceFragmentIdx`
@@ -174,53 +153,42 @@ LossEdge <- R6::R6Class(
       self$`score` <- this_object$`score`
       self
     },
-    #' Validate JSON input with respect to LossEdge
-    #'
+
     #' @description
     #' Validate JSON input with respect to LossEdge and throw an exception if invalid
     #'
     #' @param input the JSON input
-    #' @export
     validateJSON = function(input) {
       input_json <- jsonlite::fromJSON(input)
     },
-    #' To string (JSON format)
-    #'
+
     #' @description
     #' To string (JSON format)
     #'
     #' @return String representation of LossEdge
-    #' @export
     toString = function() {
       self$toJSONString()
     },
-    #' Return true if the values in all fields are valid.
-    #'
+
     #' @description
     #' Return true if the values in all fields are valid.
     #'
     #' @return true if the values in all fields are valid.
-    #' @export
     isValid = function() {
       TRUE
     },
-    #' Return a list of invalid fields (if any).
-    #'
+
     #' @description
     #' Return a list of invalid fields (if any).
     #'
     #' @return A list of invalid fields (if any).
-    #' @export
     getInvalidFields = function() {
       invalid_fields <- list()
       invalid_fields
     },
-    #' Print the object
-    #'
+
     #' @description
     #' Print the object
-    #'
-    #' @export
     print = function() {
       print(jsonlite::prettify(self$toJSONString()))
       invisible(self)

@@ -15,14 +15,28 @@ Category Class
 \details{
 Create a new Category
 }
+\examples{
+
+## ------------------------------------------------
+## Method `Category$toList`
+## ------------------------------------------------
+
+# convert array of Category (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
 \item{\code{categoryName}}{character [optional]}
 
-\item{\code{overallQuality}}{\link{DataQuality} [optional]}
+\item{\code{overallQuality}}{character [optional]}
 
-\item{\code{items}}{list(\link{Item}) [optional]}
+\item{\code{items}}{list(\link{QualityItem}) [optional]}
 }
 \if{html}{\out{</div>}}
 }
@@ -31,6 +45,8 @@ Create a new Category
 \itemize{
 \item \href{#method-Category-new}{\code{Category$new()}}
 \item \href{#method-Category-toJSON}{\code{Category$toJSON()}}
+\item \href{#method-Category-toList}{\code{Category$toList()}}
+\item \href{#method-Category-toSimpleType}{\code{Category$toSimpleType()}}
 \item \href{#method-Category-fromJSON}{\code{Category$fromJSON()}}
 \item \href{#method-Category-toJSONString}{\code{Category$toJSONString()}}
 \item \href{#method-Category-fromJSONString}{\code{Category$fromJSONString()}}
@@ -69,13 +85,52 @@ Initialize a new Category class.
 \if{html}{\out{<a id="method-Category-toJSON"></a>}}
 \if{latex}{\out{\hypertarget{method-Category-toJSON}{}}}
 \subsection{Method \code{toJSON()}}{
-To JSON String
+Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Category$toJSON()}\if{html}{\out{</div>}}
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Category-toList"></a>}}
+\if{latex}{\out{\hypertarget{method-Category-toList}{}}}
+\subsection{Method \code{toList()}}{
+Convert to a List
+
+Convert the R6 object to a list to work more easily with other tooling.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Category$toList()}\if{html}{\out{</div>}}
+}
+
 \subsection{Returns}{
-Category in JSON format
+Category as a base R list.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{# convert array of Category (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Category-toSimpleType"></a>}}
+\if{latex}{\out{\hypertarget{method-Category-toSimpleType}{}}}
+\subsection{Method \code{toSimpleType()}}{
+Convert Category to a base R type
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Category$toSimpleType()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A base R type, e.g. a list or numeric/character array.
 }
 }
 \if{html}{\out{<hr>}}
@@ -104,9 +159,16 @@ the instance of Category
 \subsection{Method \code{toJSONString()}}{
 To JSON String
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Category$toJSONString()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Category$toJSONString(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Parameters passed to `jsonlite::toJSON`}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
 Category in JSON format
 }

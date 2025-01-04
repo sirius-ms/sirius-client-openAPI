@@ -15,6 +15,20 @@ SpectralLibraryMatch Class
 \details{
 Create a new SpectralLibraryMatch
 }
+\examples{
+
+## ------------------------------------------------
+## Method `SpectralLibraryMatch$toList`
+## ------------------------------------------------
+
+# convert array of SpectralLibraryMatch (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
@@ -44,7 +58,7 @@ Create a new SpectralLibraryMatch
 
 \item{\code{smiles}}{character [optional]}
 
-\item{\code{candidateInChiKey}}{character}
+\item{\code{inchiKey}}{character}
 
 \item{\code{referenceSpectrum}}{\link{BasicSpectrum} [optional]}
 }
@@ -55,6 +69,8 @@ Create a new SpectralLibraryMatch
 \itemize{
 \item \href{#method-SpectralLibraryMatch-new}{\code{SpectralLibraryMatch$new()}}
 \item \href{#method-SpectralLibraryMatch-toJSON}{\code{SpectralLibraryMatch$toJSON()}}
+\item \href{#method-SpectralLibraryMatch-toList}{\code{SpectralLibraryMatch$toList()}}
+\item \href{#method-SpectralLibraryMatch-toSimpleType}{\code{SpectralLibraryMatch$toSimpleType()}}
 \item \href{#method-SpectralLibraryMatch-fromJSON}{\code{SpectralLibraryMatch$fromJSON()}}
 \item \href{#method-SpectralLibraryMatch-toJSONString}{\code{SpectralLibraryMatch$toJSONString()}}
 \item \href{#method-SpectralLibraryMatch-fromJSONString}{\code{SpectralLibraryMatch$fromJSONString()}}
@@ -76,7 +92,7 @@ Initialize a new SpectralLibraryMatch class.
   similarity,
   querySpectrumIndex,
   uuid,
-  candidateInChiKey,
+  inchiKey,
   specMatchId = NULL,
   rank = NULL,
   sharedPeaks = NULL,
@@ -101,7 +117,7 @@ Initialize a new SpectralLibraryMatch class.
 
 \item{\code{uuid}}{uuid}
 
-\item{\code{candidateInChiKey}}{candidateInChiKey}
+\item{\code{inchiKey}}{inchiKey}
 
 \item{\code{specMatchId}}{specMatchId}
 
@@ -134,13 +150,52 @@ Initialize a new SpectralLibraryMatch class.
 \if{html}{\out{<a id="method-SpectralLibraryMatch-toJSON"></a>}}
 \if{latex}{\out{\hypertarget{method-SpectralLibraryMatch-toJSON}{}}}
 \subsection{Method \code{toJSON()}}{
-To JSON String
+Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{SpectralLibraryMatch$toJSON()}\if{html}{\out{</div>}}
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-SpectralLibraryMatch-toList"></a>}}
+\if{latex}{\out{\hypertarget{method-SpectralLibraryMatch-toList}{}}}
+\subsection{Method \code{toList()}}{
+Convert to a List
+
+Convert the R6 object to a list to work more easily with other tooling.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{SpectralLibraryMatch$toList()}\if{html}{\out{</div>}}
+}
+
 \subsection{Returns}{
-SpectralLibraryMatch in JSON format
+SpectralLibraryMatch as a base R list.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{# convert array of SpectralLibraryMatch (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-SpectralLibraryMatch-toSimpleType"></a>}}
+\if{latex}{\out{\hypertarget{method-SpectralLibraryMatch-toSimpleType}{}}}
+\subsection{Method \code{toSimpleType()}}{
+Convert SpectralLibraryMatch to a base R type
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{SpectralLibraryMatch$toSimpleType()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A base R type, e.g. a list or numeric/character array.
 }
 }
 \if{html}{\out{<hr>}}
@@ -169,9 +224,16 @@ the instance of SpectralLibraryMatch
 \subsection{Method \code{toJSONString()}}{
 To JSON String
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{SpectralLibraryMatch$toJSONString()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{SpectralLibraryMatch$toJSONString(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Parameters passed to `jsonlite::toJSON`}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
 SpectralLibraryMatch in JSON format
 }

@@ -15,6 +15,20 @@ CompoundImport Class
 \details{
 Create a new CompoundImport
 }
+\examples{
+
+## ------------------------------------------------
+## Method `CompoundImport$toList`
+## ------------------------------------------------
+
+# convert array of CompoundImport (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
@@ -29,6 +43,8 @@ Create a new CompoundImport
 \itemize{
 \item \href{#method-CompoundImport-new}{\code{CompoundImport$new()}}
 \item \href{#method-CompoundImport-toJSON}{\code{CompoundImport$toJSON()}}
+\item \href{#method-CompoundImport-toList}{\code{CompoundImport$toList()}}
+\item \href{#method-CompoundImport-toSimpleType}{\code{CompoundImport$toSimpleType()}}
 \item \href{#method-CompoundImport-fromJSON}{\code{CompoundImport$fromJSON()}}
 \item \href{#method-CompoundImport-toJSONString}{\code{CompoundImport$toJSONString()}}
 \item \href{#method-CompoundImport-fromJSONString}{\code{CompoundImport$fromJSONString()}}
@@ -65,13 +81,52 @@ Initialize a new CompoundImport class.
 \if{html}{\out{<a id="method-CompoundImport-toJSON"></a>}}
 \if{latex}{\out{\hypertarget{method-CompoundImport-toJSON}{}}}
 \subsection{Method \code{toJSON()}}{
-To JSON String
+Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{CompoundImport$toJSON()}\if{html}{\out{</div>}}
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-CompoundImport-toList"></a>}}
+\if{latex}{\out{\hypertarget{method-CompoundImport-toList}{}}}
+\subsection{Method \code{toList()}}{
+Convert to a List
+
+Convert the R6 object to a list to work more easily with other tooling.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{CompoundImport$toList()}\if{html}{\out{</div>}}
+}
+
 \subsection{Returns}{
-CompoundImport in JSON format
+CompoundImport as a base R list.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{# convert array of CompoundImport (x) to a data frame
+\dontrun{
+library(purrr)
+library(tibble)
+df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+df
+}
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-CompoundImport-toSimpleType"></a>}}
+\if{latex}{\out{\hypertarget{method-CompoundImport-toSimpleType}{}}}
+\subsection{Method \code{toSimpleType()}}{
+Convert CompoundImport to a base R type
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{CompoundImport$toSimpleType()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A base R type, e.g. a list or numeric/character array.
 }
 }
 \if{html}{\out{<hr>}}
@@ -100,9 +155,16 @@ the instance of CompoundImport
 \subsection{Method \code{toJSONString()}}{
 To JSON String
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{CompoundImport$toJSONString()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{CompoundImport$toJSONString(...)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Parameters passed to `jsonlite::toJSON`}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
 CompoundImport in JSON format
 }

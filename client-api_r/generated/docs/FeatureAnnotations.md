@@ -10,6 +10,8 @@ Name | Type | Description | Notes
 **compoundClassAnnotation** | [**CompoundClasses**](CompoundClasses.md) |  | [optional] 
 **confidenceExactMatch** | **numeric** | Confidence Score that represents the confidence whether the top hit is correct. | [optional] 
 **confidenceApproxMatch** | **numeric** | Confidence Score that represents the confidence whether the top hit or a very similar hit (estimated by MCES distance) is correct. | [optional] 
-**expansiveSearchState** | [**ConfidenceMode**](ConfidenceMode.md) |  | [optional] [Enum: ] 
+**expansiveSearchState** | **character** | Result that shows if structure annotation was expanded by using PubChem as fallback and if so, which confidence mode was used (as per input paramter) | [optional] [Enum: [OFF, EXACT, APPROXIMATE]] 
+**specifiedDatabases** | **array[character]** | List of databases that have been specified by for structure db search. Null if no structure db search has been performed. | [optional] 
+**expandedDatabases** | **array[character]** | List of databases that have been used to expand search space during expansive search. Null if no structure db search has been performed. | [optional] 
 
 

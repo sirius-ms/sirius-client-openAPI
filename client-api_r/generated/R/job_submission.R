@@ -41,8 +41,7 @@ JobSubmission <- R6::R6Class(
     `structureDbSearchParams` = NULL,
     `msNovelistParams` = NULL,
     `configMap` = NULL,
-    #' Initialize a new JobSubmission class.
-    #'
+
     #' @description
     #' Initialize a new JobSubmission class.
     #'
@@ -61,7 +60,6 @@ JobSubmission <- R6::R6Class(
     #' @param msNovelistParams msNovelistParams
     #' @param configMap As an alternative to the object based parameters, this map allows to store key value pairs  of ALL SIRIUS parameters. All possible parameters can be retrieved from SIRIUS via the respective endpoint.
     #' @param ... Other optional arguments.
-    #' @export
     initialize = function(`compoundIds` = NULL, `alignedFeatureIds` = NULL, `fallbackAdducts` = NULL, `enforcedAdducts` = NULL, `detectableAdducts` = NULL, `recompute` = NULL, `spectraSearchParams` = NULL, `formulaIdParams` = NULL, `zodiacParams` = NULL, `fingerprintPredictionParams` = NULL, `canopusParams` = NULL, `structureDbSearchParams` = NULL, `msNovelistParams` = NULL, `configMap` = NULL, ...) {
       if (!is.null(`compoundIds`)) {
         stopifnot(is.vector(`compoundIds`), length(`compoundIds`) != 0)
@@ -128,14 +126,37 @@ JobSubmission <- R6::R6Class(
         self$`configMap` <- `configMap`
       }
     },
-    #' To JSON string
-    #'
+
     #' @description
-    #' To JSON String
-    #'
-    #' @return JobSubmission in JSON format
-    #' @export
+    #' Convert to an R object. This method is deprecated. Use `toSimpleType()` instead.
     toJSON = function() {
+      .Deprecated(new = "toSimpleType", msg = "Use the '$toSimpleType()' method instead since that is more clearly named. Use '$toJSONString()' to get a JSON string")
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert to a List
+    #'
+    #' Convert the R6 object to a list to work more easily with other tooling.
+    #'
+    #' @return JobSubmission as a base R list.
+    #' @examples
+    #' # convert array of JobSubmission (x) to a data frame
+    #' \dontrun{
+    #' library(purrr)
+    #' library(tibble)
+    #' df <- x |> map(\(y)y$toList()) |> map(as_tibble) |> list_rbind()
+    #' df
+    #' }
+    toList = function() {
+      return(self$toSimpleType())
+    },
+
+    #' @description
+    #' Convert JobSubmission to a base R type
+    #'
+    #' @return A base R type, e.g. a list or numeric/character array.
+    toSimpleType = function() {
       JobSubmissionObject <- list()
       if (!is.null(self$`compoundIds`)) {
         JobSubmissionObject[["compoundIds"]] <-
@@ -163,88 +184,44 @@ JobSubmission <- R6::R6Class(
       }
       if (!is.null(self$`spectraSearchParams`)) {
         JobSubmissionObject[["spectraSearchParams"]] <-
-          if (is.list(self$`spectraSearchParams`$toJSON()) && length(self$`spectraSearchParams`$toJSON()) == 0L){
-            NULL
-          } else if (length(names(self$`spectraSearchParams`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`spectraSearchParams`$toJSON()))) {
-            jsonlite::fromJSON(self$`spectraSearchParams`$toJSON())
-          } else {
-            self$`spectraSearchParams`$toJSON()
-          }
+          self$`spectraSearchParams`$toSimpleType()
       }
       if (!is.null(self$`formulaIdParams`)) {
         JobSubmissionObject[["formulaIdParams"]] <-
-          if (is.list(self$`formulaIdParams`$toJSON()) && length(self$`formulaIdParams`$toJSON()) == 0L){
-            NULL
-          } else if (length(names(self$`formulaIdParams`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`formulaIdParams`$toJSON()))) {
-            jsonlite::fromJSON(self$`formulaIdParams`$toJSON())
-          } else {
-            self$`formulaIdParams`$toJSON()
-          }
+          self$`formulaIdParams`$toSimpleType()
       }
       if (!is.null(self$`zodiacParams`)) {
         JobSubmissionObject[["zodiacParams"]] <-
-          if (is.list(self$`zodiacParams`$toJSON()) && length(self$`zodiacParams`$toJSON()) == 0L){
-            NULL
-          } else if (length(names(self$`zodiacParams`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`zodiacParams`$toJSON()))) {
-            jsonlite::fromJSON(self$`zodiacParams`$toJSON())
-          } else {
-            self$`zodiacParams`$toJSON()
-          }
+          self$`zodiacParams`$toSimpleType()
       }
       if (!is.null(self$`fingerprintPredictionParams`)) {
         JobSubmissionObject[["fingerprintPredictionParams"]] <-
-          if (is.list(self$`fingerprintPredictionParams`$toJSON()) && length(self$`fingerprintPredictionParams`$toJSON()) == 0L){
-            NULL
-          } else if (length(names(self$`fingerprintPredictionParams`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`fingerprintPredictionParams`$toJSON()))) {
-            jsonlite::fromJSON(self$`fingerprintPredictionParams`$toJSON())
-          } else {
-            self$`fingerprintPredictionParams`$toJSON()
-          }
+          self$`fingerprintPredictionParams`$toSimpleType()
       }
       if (!is.null(self$`canopusParams`)) {
         JobSubmissionObject[["canopusParams"]] <-
-          if (is.list(self$`canopusParams`$toJSON()) && length(self$`canopusParams`$toJSON()) == 0L){
-            NULL
-          } else if (length(names(self$`canopusParams`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`canopusParams`$toJSON()))) {
-            jsonlite::fromJSON(self$`canopusParams`$toJSON())
-          } else {
-            self$`canopusParams`$toJSON()
-          }
+          self$`canopusParams`$toSimpleType()
       }
       if (!is.null(self$`structureDbSearchParams`)) {
         JobSubmissionObject[["structureDbSearchParams"]] <-
-          if (is.list(self$`structureDbSearchParams`$toJSON()) && length(self$`structureDbSearchParams`$toJSON()) == 0L){
-            NULL
-          } else if (length(names(self$`structureDbSearchParams`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`structureDbSearchParams`$toJSON()))) {
-            jsonlite::fromJSON(self$`structureDbSearchParams`$toJSON())
-          } else {
-            self$`structureDbSearchParams`$toJSON()
-          }
+          self$`structureDbSearchParams`$toSimpleType()
       }
       if (!is.null(self$`msNovelistParams`)) {
         JobSubmissionObject[["msNovelistParams"]] <-
-          if (is.list(self$`msNovelistParams`$toJSON()) && length(self$`msNovelistParams`$toJSON()) == 0L){
-            NULL
-          } else if (length(names(self$`msNovelistParams`$toJSON())) == 0L && is.character(jsonlite::fromJSON(self$`msNovelistParams`$toJSON()))) {
-            jsonlite::fromJSON(self$`msNovelistParams`$toJSON())
-          } else {
-            self$`msNovelistParams`$toJSON()
-          }
+          self$`msNovelistParams`$toSimpleType()
       }
       if (!is.null(self$`configMap`)) {
         JobSubmissionObject[["configMap"]] <-
           self$`configMap`
       }
-      JobSubmissionObject
+      return(JobSubmissionObject)
     },
-    #' Deserialize JSON string into an instance of JobSubmission
-    #'
+
     #' @description
     #' Deserialize JSON string into an instance of JobSubmission
     #'
     #' @param input_json the JSON input
     #' @return the instance of JobSubmission
-    #' @export
     fromJSON = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       if (!is.null(this_object$`compoundIds`)) {
@@ -267,37 +244,37 @@ JobSubmission <- R6::R6Class(
       }
       if (!is.null(this_object$`spectraSearchParams`)) {
         `spectrasearchparams_object` <- SpectralLibrarySearch$new()
-        `spectrasearchparams_object`$fromJSON(jsonlite::toJSON(this_object$`spectraSearchParams`, auto_unbox = TRUE, digits = NA))
+        `spectrasearchparams_object`$fromJSON(jsonlite::toJSON(this_object$`spectraSearchParams`, auto_unbox = TRUE, digits = NA, null = 'null'))
         self$`spectraSearchParams` <- `spectrasearchparams_object`
       }
       if (!is.null(this_object$`formulaIdParams`)) {
         `formulaidparams_object` <- Sirius$new()
-        `formulaidparams_object`$fromJSON(jsonlite::toJSON(this_object$`formulaIdParams`, auto_unbox = TRUE, digits = NA))
+        `formulaidparams_object`$fromJSON(jsonlite::toJSON(this_object$`formulaIdParams`, auto_unbox = TRUE, digits = NA, null = 'null'))
         self$`formulaIdParams` <- `formulaidparams_object`
       }
       if (!is.null(this_object$`zodiacParams`)) {
         `zodiacparams_object` <- Zodiac$new()
-        `zodiacparams_object`$fromJSON(jsonlite::toJSON(this_object$`zodiacParams`, auto_unbox = TRUE, digits = NA))
+        `zodiacparams_object`$fromJSON(jsonlite::toJSON(this_object$`zodiacParams`, auto_unbox = TRUE, digits = NA, null = 'null'))
         self$`zodiacParams` <- `zodiacparams_object`
       }
       if (!is.null(this_object$`fingerprintPredictionParams`)) {
         `fingerprintpredictionparams_object` <- FingerprintPrediction$new()
-        `fingerprintpredictionparams_object`$fromJSON(jsonlite::toJSON(this_object$`fingerprintPredictionParams`, auto_unbox = TRUE, digits = NA))
+        `fingerprintpredictionparams_object`$fromJSON(jsonlite::toJSON(this_object$`fingerprintPredictionParams`, auto_unbox = TRUE, digits = NA, null = 'null'))
         self$`fingerprintPredictionParams` <- `fingerprintpredictionparams_object`
       }
       if (!is.null(this_object$`canopusParams`)) {
         `canopusparams_object` <- Canopus$new()
-        `canopusparams_object`$fromJSON(jsonlite::toJSON(this_object$`canopusParams`, auto_unbox = TRUE, digits = NA))
+        `canopusparams_object`$fromJSON(jsonlite::toJSON(this_object$`canopusParams`, auto_unbox = TRUE, digits = NA, null = 'null'))
         self$`canopusParams` <- `canopusparams_object`
       }
       if (!is.null(this_object$`structureDbSearchParams`)) {
         `structuredbsearchparams_object` <- StructureDbSearch$new()
-        `structuredbsearchparams_object`$fromJSON(jsonlite::toJSON(this_object$`structureDbSearchParams`, auto_unbox = TRUE, digits = NA))
+        `structuredbsearchparams_object`$fromJSON(jsonlite::toJSON(this_object$`structureDbSearchParams`, auto_unbox = TRUE, digits = NA, null = 'null'))
         self$`structureDbSearchParams` <- `structuredbsearchparams_object`
       }
       if (!is.null(this_object$`msNovelistParams`)) {
         `msnovelistparams_object` <- MsNovelist$new()
-        `msnovelistparams_object`$fromJSON(jsonlite::toJSON(this_object$`msNovelistParams`, auto_unbox = TRUE, digits = NA))
+        `msnovelistparams_object`$fromJSON(jsonlite::toJSON(this_object$`msNovelistParams`, auto_unbox = TRUE, digits = NA, null = 'null'))
         self$`msNovelistParams` <- `msnovelistparams_object`
       }
       if (!is.null(this_object$`configMap`)) {
@@ -305,143 +282,23 @@ JobSubmission <- R6::R6Class(
       }
       self
     },
-    #' To JSON string
-    #'
+
     #' @description
     #' To JSON String
-    #'
+    #' 
+    #' @param ... Parameters passed to `jsonlite::toJSON`
     #' @return JobSubmission in JSON format
-    #' @export
-    toJSONString = function() {
-      jsoncontent <- c(
-        if (!is.null(self$`compoundIds`)) {
-          sprintf(
-          '"compoundIds":
-             [%s]
-          ',
-          paste(unlist(lapply(self$`compoundIds`, function(x) paste0('"', x, '"'))), collapse = ",")
-          )
-        },
-        if (!is.null(self$`alignedFeatureIds`)) {
-          sprintf(
-          '"alignedFeatureIds":
-             [%s]
-          ',
-          paste(unlist(lapply(self$`alignedFeatureIds`, function(x) paste0('"', x, '"'))), collapse = ",")
-          )
-        },
-        if (!is.null(self$`fallbackAdducts`)) {
-          sprintf(
-          '"fallbackAdducts":
-             [%s]
-          ',
-          paste(unlist(lapply(self$`fallbackAdducts`, function(x) paste0('"', x, '"'))), collapse = ",")
-          )
-        },
-        if (!is.null(self$`enforcedAdducts`)) {
-          sprintf(
-          '"enforcedAdducts":
-             [%s]
-          ',
-          paste(unlist(lapply(self$`enforcedAdducts`, function(x) paste0('"', x, '"'))), collapse = ",")
-          )
-        },
-        if (!is.null(self$`detectableAdducts`)) {
-          sprintf(
-          '"detectableAdducts":
-             [%s]
-          ',
-          paste(unlist(lapply(self$`detectableAdducts`, function(x) paste0('"', x, '"'))), collapse = ",")
-          )
-        },
-        if (!is.null(self$`recompute`)) {
-          sprintf(
-          '"recompute":
-            %s
-                    ',
-          tolower(self$`recompute`)
-          )
-        },
-        if (!is.null(self$`spectraSearchParams`)) {
-          sprintf(
-          '"spectraSearchParams":
-          %s
-          ',
-          jsonlite::toJSON(self$`spectraSearchParams`$toJSON(), auto_unbox = TRUE, digits = NA)
-          )
-        },
-        if (!is.null(self$`formulaIdParams`)) {
-          sprintf(
-          '"formulaIdParams":
-          %s
-          ',
-          jsonlite::toJSON(self$`formulaIdParams`$toJSON(), auto_unbox = TRUE, digits = NA)
-          )
-        },
-        if (!is.null(self$`zodiacParams`)) {
-          sprintf(
-          '"zodiacParams":
-          %s
-          ',
-          jsonlite::toJSON(self$`zodiacParams`$toJSON(), auto_unbox = TRUE, digits = NA)
-          )
-        },
-        if (!is.null(self$`fingerprintPredictionParams`)) {
-          sprintf(
-          '"fingerprintPredictionParams":
-          %s
-          ',
-          jsonlite::toJSON(self$`fingerprintPredictionParams`$toJSON(), auto_unbox = TRUE, digits = NA)
-          )
-        },
-        if (!is.null(self$`canopusParams`)) {
-          sprintf(
-          '"canopusParams":
-          %s
-          ',
-          jsonlite::toJSON(self$`canopusParams`$toJSON(), auto_unbox = TRUE, digits = NA)
-          )
-        },
-        if (!is.null(self$`structureDbSearchParams`)) {
-          sprintf(
-          '"structureDbSearchParams":
-          %s
-          ',
-          jsonlite::toJSON(self$`structureDbSearchParams`$toJSON(), auto_unbox = TRUE, digits = NA)
-          )
-        },
-        if (!is.null(self$`msNovelistParams`)) {
-          sprintf(
-          '"msNovelistParams":
-          %s
-          ',
-          jsonlite::toJSON(self$`msNovelistParams`$toJSON(), auto_unbox = TRUE, digits = NA)
-          )
-        },
-        if (!is.null(self$`configMap`)) {
-          sprintf(
-          '"configMap":
-            %s
-          ',
-          jsonlite::toJSON(lapply(self$`configMap`, function(x){ x }), auto_unbox = TRUE, digits = NA)
-          )
-        }
-      )
-      jsoncontent <- paste(jsoncontent, collapse = ",")
-      # remove c() occurences and reduce resulting double escaped quotes \"\" into \"
-      jsoncontent <- gsub('\\\"c\\((.*?)\\\"\\)', '\\1', jsoncontent)
-      # fix wrong serialization of "\"ENUM\"" to "ENUM"
-      jsoncontent <- gsub("\\\\\"([A-Z]+)\\\\\"", "\\1", jsoncontent)
-      json_string <- as.character(jsonlite::minify(paste("{", jsoncontent, "}", sep = "")))
+    toJSONString = function(...) {
+      simple <- self$toSimpleType()
+      json <- jsonlite::toJSON(simple, auto_unbox = TRUE, digits = NA, null = 'null', ...)
+      return(as.character(jsonlite::minify(json)))
     },
-    #' Deserialize JSON string into an instance of JobSubmission
-    #'
+
     #' @description
     #' Deserialize JSON string into an instance of JobSubmission
     #'
     #' @param input_json the JSON input
     #' @return the instance of JobSubmission
-    #' @export
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       self$`compoundIds` <- ApiClient$new()$deserializeObj(this_object$`compoundIds`, "array[character]", loadNamespace("Rsirius"))
@@ -450,63 +307,52 @@ JobSubmission <- R6::R6Class(
       self$`enforcedAdducts` <- ApiClient$new()$deserializeObj(this_object$`enforcedAdducts`, "array[character]", loadNamespace("Rsirius"))
       self$`detectableAdducts` <- ApiClient$new()$deserializeObj(this_object$`detectableAdducts`, "array[character]", loadNamespace("Rsirius"))
       self$`recompute` <- this_object$`recompute`
-      self$`spectraSearchParams` <- SpectralLibrarySearch$new()$fromJSON(jsonlite::toJSON(this_object$`spectraSearchParams`, auto_unbox = TRUE, digits = NA))
-      self$`formulaIdParams` <- Sirius$new()$fromJSON(jsonlite::toJSON(this_object$`formulaIdParams`, auto_unbox = TRUE, digits = NA))
-      self$`zodiacParams` <- Zodiac$new()$fromJSON(jsonlite::toJSON(this_object$`zodiacParams`, auto_unbox = TRUE, digits = NA))
-      self$`fingerprintPredictionParams` <- FingerprintPrediction$new()$fromJSON(jsonlite::toJSON(this_object$`fingerprintPredictionParams`, auto_unbox = TRUE, digits = NA))
-      self$`canopusParams` <- Canopus$new()$fromJSON(jsonlite::toJSON(this_object$`canopusParams`, auto_unbox = TRUE, digits = NA))
-      self$`structureDbSearchParams` <- StructureDbSearch$new()$fromJSON(jsonlite::toJSON(this_object$`structureDbSearchParams`, auto_unbox = TRUE, digits = NA))
-      self$`msNovelistParams` <- MsNovelist$new()$fromJSON(jsonlite::toJSON(this_object$`msNovelistParams`, auto_unbox = TRUE, digits = NA))
+      self$`spectraSearchParams` <- SpectralLibrarySearch$new()$fromJSON(jsonlite::toJSON(this_object$`spectraSearchParams`, auto_unbox = TRUE, digits = NA, null = 'null'))
+      self$`formulaIdParams` <- Sirius$new()$fromJSON(jsonlite::toJSON(this_object$`formulaIdParams`, auto_unbox = TRUE, digits = NA, null = 'null'))
+      self$`zodiacParams` <- Zodiac$new()$fromJSON(jsonlite::toJSON(this_object$`zodiacParams`, auto_unbox = TRUE, digits = NA, null = 'null'))
+      self$`fingerprintPredictionParams` <- FingerprintPrediction$new()$fromJSON(jsonlite::toJSON(this_object$`fingerprintPredictionParams`, auto_unbox = TRUE, digits = NA, null = 'null'))
+      self$`canopusParams` <- Canopus$new()$fromJSON(jsonlite::toJSON(this_object$`canopusParams`, auto_unbox = TRUE, digits = NA, null = 'null'))
+      self$`structureDbSearchParams` <- StructureDbSearch$new()$fromJSON(jsonlite::toJSON(this_object$`structureDbSearchParams`, auto_unbox = TRUE, digits = NA, null = 'null'))
+      self$`msNovelistParams` <- MsNovelist$new()$fromJSON(jsonlite::toJSON(this_object$`msNovelistParams`, auto_unbox = TRUE, digits = NA, null = 'null'))
       self$`configMap` <- ApiClient$new()$deserializeObj(this_object$`configMap`, "map(character)", loadNamespace("Rsirius"))
       self
     },
-    #' Validate JSON input with respect to JobSubmission
-    #'
+
     #' @description
     #' Validate JSON input with respect to JobSubmission and throw an exception if invalid
     #'
     #' @param input the JSON input
-    #' @export
     validateJSON = function(input) {
       input_json <- jsonlite::fromJSON(input)
     },
-    #' To string (JSON format)
-    #'
+
     #' @description
     #' To string (JSON format)
     #'
     #' @return String representation of JobSubmission
-    #' @export
     toString = function() {
       self$toJSONString()
     },
-    #' Return true if the values in all fields are valid.
-    #'
+
     #' @description
     #' Return true if the values in all fields are valid.
     #'
     #' @return true if the values in all fields are valid.
-    #' @export
     isValid = function() {
       TRUE
     },
-    #' Return a list of invalid fields (if any).
-    #'
+
     #' @description
     #' Return a list of invalid fields (if any).
     #'
     #' @return A list of invalid fields (if any).
-    #' @export
     getInvalidFields = function() {
       invalid_fields <- list()
       invalid_fields
     },
-    #' Print the object
-    #'
+
     #' @description
     #' Print the object
-    #'
-    #' @export
     print = function() {
       print(jsonlite::prettify(self$toJSONString()))
       invisible(self)

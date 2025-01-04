@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **progress** | [**JobProgress**](JobProgress.md) |  | [optional] 
 **affected_compound_ids** | **List[Optional[str]]** | List of compoundIds that are affected by this job.  This lis will also contain compoundIds where not all features of the compound are affected by the job.  If this job is creating compounds (e.g. data import jobs) this value will be NULL until the jobs has finished | [optional] 
 **affected_aligned_feature_ids** | **List[Optional[str]]** | List of alignedFeatureIds that are affected by this job.  If this job is creating features (e.g. data import jobs) this value will be NULL until the jobs has finished | [optional] 
+**job_effect** | [**JobEffect**](JobEffect.md) |  | [optional] 
 
 ## Example
 
