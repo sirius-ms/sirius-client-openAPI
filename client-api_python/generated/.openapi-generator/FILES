@@ -1,5 +1,4 @@
 .github/workflows/python.yml
-.gitignore
 PySirius/__init__.py
 PySirius/api/__init__.py
 PySirius/api/actuator_api.py
