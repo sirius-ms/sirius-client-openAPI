@@ -27,6 +27,7 @@ SiriusSDK <- R6::R6Class(
 
     reset_sdk_process = function() {
       self$process <- NULL
+      self$process_id <- NULL
     },
 
     connect = function(url) {
@@ -292,7 +293,7 @@ SiriusSDK <- R6::R6Class(
           Sys.sleep(3)
           if (!self$process$is_alive()) {
             cat("Sirius was shut down successfully\n")
-            self$reset_sdk_class()
+            self$reset_sdk_process()
             return(NULL)
           }
         }, error = function(e) {
@@ -304,7 +305,7 @@ SiriusSDK <- R6::R6Class(
         Sys.sleep(3)
         if (!self$process$is_alive()) {
           cat("Sirius process has been terminated.\n")
-          self$reset_sdk_class()
+          self$reset_sdk_process()
           return(NULL)
         }
 
@@ -312,7 +313,7 @@ SiriusSDK <- R6::R6Class(
         Sys.sleep(3)
         if (!self$process$is_alive()) {
           cat("Sirius process has been killed.\n")
-          self$reset_sdk_class()
+          self$reset_sdk_process()
           return(NULL)
         }
 
@@ -326,7 +327,7 @@ SiriusSDK <- R6::R6Class(
           system(paste("kill -0", self$process_id))
         }, error = function(e) {
           cat("Sirius process has been terminated.\n")
-          self$reset_sdk_class()
+          self$reset_sdk_process()
           return(NULL)
         })
 
@@ -336,7 +337,7 @@ SiriusSDK <- R6::R6Class(
           system(paste("kill -0", self$process_id))
         }, error = function(e) {
           cat("Sirius process has been killed.\n")
-          self$reset_sdk_class()
+          self$reset_sdk_process()
           return(NULL)
         })
 

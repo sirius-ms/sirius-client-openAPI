@@ -38,6 +38,7 @@ class SiriusSDK:
 
     def reset_sdk_process(self):
         SiriusSDK.process = None
+        SiriusSDK.process_id = None
 
     def restart_sirius(self):
         if None not in (SiriusSDK.run_command, SiriusSDK.process, SiriusSDK.api_client):
@@ -332,7 +333,7 @@ class SiriusSDK:
                 time.sleep(3)
                 if SiriusSDK.process.poll() is not None:
                     print("Sirius was shut down succesfully")
-                    SiriusSDK.reset_sdk_class(self)
+                    SiriusSDK.reset_sdk_process(self)
                     return
             except Exception as e:
                 print("An Exception occured while trying to gracefully shutdown SIRIUS!")
@@ -343,7 +344,7 @@ class SiriusSDK:
             time.sleep(3)
             if SiriusSDK.process.poll() is not None:
                 print("Sirius process has been terminated.")
-                SiriusSDK.reset_sdk_class(self)
+                SiriusSDK.reset_sdk_process(self)
                 return
 
             # Terminate via SIGKILL
@@ -351,7 +352,7 @@ class SiriusSDK:
             time.sleep(3)
             if SiriusSDK.process.poll() is not None:
                 print("Sirius process has been killed.")
-                SiriusSDK.reset_sdk_class(self)
+                SiriusSDK.reset_sdk_process(self)
                 return
 
             # Termination not successful!
@@ -366,7 +367,7 @@ class SiriusSDK:
                 os.kill(SiriusSDK.process_id, 0)
             except OSError:
                 print("Sirius process has been terminated.")
-                SiriusSDK.reset_sdk_class(self)
+                SiriusSDK.reset_sdk_process(self)
                 return
 
             os.kill(SiriusSDK.process_id, signal.SIGKILL)
@@ -375,7 +376,7 @@ class SiriusSDK:
                 os.kill(SiriusSDK.process_id, 0)
             except OSError:
                 print("Sirius process has been killed.")
-                SiriusSDK.reset_sdk_class(self)
+                SiriusSDK.reset_sdk_process(self)
                 return
 
             # Termination not successful!
