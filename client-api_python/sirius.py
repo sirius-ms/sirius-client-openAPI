@@ -58,12 +58,10 @@ class SiriusSDK:
                             print(
                                 "Alternatively, try attaching to a running SIRIUS instance with attach_to_running_sirius()")
                             return None
-                        SiriusSDK.host = f'http://localhost:{SiriusSDK.port}'
-                        SiriusSDK.api_client = self.connect(SiriusSDK.host).get_client()
-
-                        if PySirius.ActuatorApi(SiriusSDK.api_client).health().get('status') == 'UP':
-                            SiriusSDK.process_id = SiriusSDK.process.pid
-                            return None
+                        # connect() sets self$host and self$api_client
+                        host = f'http://localhost:{SiriusSDK.port}'
+                        sirius_api = self.connect(host)
+                        return sirius_api
                     else:
                         print("The SIRIUS process seems to have exited during startup. Please investigate this error.")
                         print(f"Exit code provided by the process: {SiriusSDK.process.poll()}")
@@ -397,6 +395,6 @@ class SiriusSDK:
     @classmethod
     def connect(cls, url):
         """Connect to a remote (or local) running sirius by providing the address, e.g. 'http://localhost:8080'."""
-        config = PySirius.Configuration(url)
-        api_client = PySirius.ApiClient(config)
-        return PySirius.PySiriusAPI(api_client=api_client)
+        SiriusSDK.config = PySirius.Configuration(url)
+        SiriusSDK.api_client = PySirius.ApiClient(SiriusSDK.config)
+        return PySirius.PySiriusAPI(api_client=SiriusSDK.api_client)
