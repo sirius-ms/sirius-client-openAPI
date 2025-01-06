@@ -31,9 +31,9 @@ SiriusSDK <- R6::R6Class(
     },
 
     connect = function(url) {
-      host <- url
-      api_client <- Rsirius::ApiClient$new(host)
-      return(Rsirius::rsirius_api$new(api_client))
+      self$host <- url
+      self$api_client <- Rsirius::ApiClient$new(self$host)
+      return(Rsirius::rsirius_api$new(self$api_client))
     },
 
     reconnect = function() {
@@ -62,12 +62,10 @@ SiriusSDK <- R6::R6Class(
                 cat("Alternatively, try attaching to a running SIRIUS instance with attach_to_running_sirius()\n")
                 return(NULL)
               }
-              self$host <- paste0('http://localhost:', self$port)
-              sirius_api <- self$connect(self$host)
-              if (sirius_api$actuator_api$Health()$status == "UP") {
-                self$process_id <- self$process$get_pid()
-                return(NULL)
-              }
+              # connect() sets self$host and self$api_client
+              host <- paste0('http://localhost:', self$port)
+              sirius_api <- self$connect(host)
+              return(sirius_api)
             } else {
               cat("The SIRIUS process seems to have exited during startup. Please investigate this error.\n")
               self$reset_sdk_class()
@@ -108,7 +106,7 @@ SiriusSDK <- R6::R6Class(
       if (!is.null(self$api_client)) {
         tryCatch({
           if (Rsirius::ActuatorApi$new(self$api_client)$Health()$status == "UP") {
-            return(Rsirius::ActuatorApi$new(self$api_client))
+            return(Rsirius::rsirius_api$new(self$api_client))
           }
         }, error = function(e) {
           message("Found existing API Client, but could not reach API.")
@@ -122,7 +120,7 @@ SiriusSDK <- R6::R6Class(
         self$api_client <- sirius_api$api_client
         tryCatch({
           if (Rsirius::ActuatorApi$new(self$api_client)$Health()$status == "UP") {
-            return(Rsirius::ActuatorApi$new(self$api_client))
+            return(Rsirius::rsirius_api$new(self$api_client))
           }
         }, error = function(e) {
           message("Found existing port, but could not reach API under this port.")
@@ -165,7 +163,7 @@ SiriusSDK <- R6::R6Class(
 
       tryCatch({
         if (Rsirius::ActuatorApi$new(self$api_client)$Health()$status == "UP") {
-            return(Rsirius::ActuatorApi$new(self$api_client))
+            return(Rsirius::rsirius_api$new(self$api_client))
         }
       }, error = function(e) {
         message("Created API client from process_id and port, but could not reach API.")
