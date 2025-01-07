@@ -54,6 +54,14 @@ jobs:
         flake8 ./client-api_python --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Unset DISPLAY
       run: echo "JAVA_TOOL_OPTIONS=-Djava.awt.headless=true" >> $GITHUB_ENV
+    - name: Check SIRIUS download
+      run: |
+        echo "Show content of cache download (.updater/api/)"
+        ls -lah .updater/api/
+        echo "Show content of cache download (.updater/api/sirius)"
+        ls -lah .updater/api/sirius
+        echo "Show content of cache download (.updater/api/sirius/bin)"
+        ls -lah .updater/api/sirius/bin
     - name: Run Rest Api
       run: bash .updater/api/sirius/bin/sirius REST -p 8080 -s &
     - name: Wait for Api to start

@@ -42,6 +42,14 @@ jobs:
       run: wget ${{ secrets.TOMATO_SMALL_DOWNLOAD_LINK }} -O tomato_small.sirius
     - name: Change HOME to working directory of runner
       run: echo "HOME=/home/runner/work/sirius-client-openAPI" >> $GITHUB_ENV
+    - name: Check SIRIUS download
+      run: |
+        echo "Show content of cache download (.updater/api/)"
+        ls -lah .updater/api/
+        echo "Show content of cache download (.updater/api/sirius)"
+        ls -lah .updater/api/sirius
+        echo "Show content of cache download (.updater/api/sirius/bin)"
+        ls -lah .updater/api/sirius/bin
     - name: Run Rest Api
       run: bash .updater/api/sirius/bin/sirius REST -p 8080 -s &
     - name: Wait for Api to start
