@@ -12,7 +12,7 @@
 """  # noqa: E501
 
 
-__version__ = "6.1.0"
+__version__ = "6.1.1"
 
 # import apis into sdk package
 from PySirius.api.actuator_api import ActuatorApi

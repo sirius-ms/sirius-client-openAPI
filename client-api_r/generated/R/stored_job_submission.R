@@ -8,6 +8,7 @@
 #' @description StoredJobSubmission Class
 #' @format An \code{R6Class} generator object
 #' @field name Unique name to identify this JobSubmission (job config). character
+#' @field editable False for predefined configs which are not editable and not removable. character
 #' @field jobSubmission  \link{JobSubmission}
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
@@ -16,20 +17,28 @@ StoredJobSubmission <- R6::R6Class(
   "StoredJobSubmission",
   public = list(
     `name` = NULL,
+    `editable` = NULL,
     `jobSubmission` = NULL,
 
     #' @description
     #' Initialize a new StoredJobSubmission class.
     #'
     #' @param name Unique name to identify this JobSubmission (job config).
+    #' @param editable False for predefined configs which are not editable and not removable.
     #' @param jobSubmission jobSubmission
     #' @param ... Other optional arguments.
-    initialize = function(`name`, `jobSubmission`, ...) {
+    initialize = function(`name`, `editable`, `jobSubmission`, ...) {
       if (!missing(`name`)) {
         if (!(is.character(`name`) && length(`name`) == 1)) {
           stop(paste("Error! Invalid data for `name`. Must be a string:", `name`))
         }
         self$`name` <- `name`
+      }
+      if (!missing(`editable`)) {
+        if (!(is.logical(`editable`) && length(`editable`) == 1)) {
+          stop(paste("Error! Invalid data for `editable`. Must be a boolean:", `editable`))
+        }
+        self$`editable` <- `editable`
       }
       if (!missing(`jobSubmission`)) {
         stopifnot(R6::is.R6(`jobSubmission`))
@@ -72,6 +81,10 @@ StoredJobSubmission <- R6::R6Class(
         StoredJobSubmissionObject[["name"]] <-
           self$`name`
       }
+      if (!is.null(self$`editable`)) {
+        StoredJobSubmissionObject[["editable"]] <-
+          self$`editable`
+      }
       if (!is.null(self$`jobSubmission`)) {
         StoredJobSubmissionObject[["jobSubmission"]] <-
           self$`jobSubmission`$toSimpleType()
@@ -88,6 +101,9 @@ StoredJobSubmission <- R6::R6Class(
       this_object <- jsonlite::fromJSON(input_json)
       if (!is.null(this_object$`name`)) {
         self$`name` <- this_object$`name`
+      }
+      if (!is.null(this_object$`editable`)) {
+        self$`editable` <- this_object$`editable`
       }
       if (!is.null(this_object$`jobSubmission`)) {
         `jobsubmission_object` <- JobSubmission$new()
@@ -116,6 +132,7 @@ StoredJobSubmission <- R6::R6Class(
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       self$`name` <- this_object$`name`
+      self$`editable` <- this_object$`editable`
       self$`jobSubmission` <- JobSubmission$new()$fromJSON(jsonlite::toJSON(this_object$`jobSubmission`, auto_unbox = TRUE, digits = NA, null = 'null'))
       self
     },
@@ -133,6 +150,14 @@ StoredJobSubmission <- R6::R6Class(
         }
       } else {
         stop(paste("The JSON input `", input, "` is invalid for StoredJobSubmission: the required field `name` is missing."))
+      }
+      # check the required field `editable`
+      if (!is.null(input_json$`editable`)) {
+        if (!(is.logical(input_json$`editable`) && length(input_json$`editable`) == 1)) {
+          stop(paste("Error! Invalid data for `editable`. Must be a boolean:", input_json$`editable`))
+        }
+      } else {
+        stop(paste("The JSON input `", input, "` is invalid for StoredJobSubmission: the required field `editable` is missing."))
       }
       # check the required field `jobSubmission`
       if (!is.null(input_json$`jobSubmission`)) {
@@ -160,6 +185,11 @@ StoredJobSubmission <- R6::R6Class(
         return(FALSE)
       }
 
+      # check if the required `editable` is null
+      if (is.null(self$`editable`)) {
+        return(FALSE)
+      }
+
       # check if the required `jobSubmission` is null
       if (is.null(self$`jobSubmission`)) {
         return(FALSE)
@@ -177,6 +207,11 @@ StoredJobSubmission <- R6::R6Class(
       # check if the required `name` is null
       if (is.null(self$`name`)) {
         invalid_fields["name"] <- "Non-nullable required field `name` cannot be null."
+      }
+
+      # check if the required `editable` is null
+      if (is.null(self$`editable`)) {
+        invalid_fields["editable"] <- "Non-nullable required field `editable` cannot be null."
       }
 
       # check if the required `jobSubmission` is null

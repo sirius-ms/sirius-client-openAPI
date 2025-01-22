@@ -34,6 +34,8 @@ df
 \describe{
 \item{\code{name}}{Unique name to identify this JobSubmission (job config). character}
 
+\item{\code{editable}}{False for predefined configs which are not editable and not removable. character}
+
 \item{\code{jobSubmission}}{\link{JobSubmission}}
 }
 \if{html}{\out{</div>}}
@@ -62,13 +64,15 @@ df
 \subsection{Method \code{new()}}{
 Initialize a new StoredJobSubmission class.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{StoredJobSubmission$new(name, jobSubmission, ...)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{StoredJobSubmission$new(name, editable, jobSubmission, ...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{name}}{Unique name to identify this JobSubmission (job config).}
+
+\item{\code{editable}}{False for predefined configs which are not editable and not removable.}
 
 \item{\code{jobSubmission}}{jobSubmission}
 

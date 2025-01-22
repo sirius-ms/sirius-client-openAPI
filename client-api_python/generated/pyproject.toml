@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "PySirius"
-version = "6.1.0"
+version = "6.1.1"
 description = "SIRIUS Nightsky API"
 authors = ["OpenAPI Generator Community <team@openapitools.org>"]
 license = "NoLicense"
