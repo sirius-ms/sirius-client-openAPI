@@ -10,7 +10,7 @@ Method | HTTP request | Description
 [**get_default_job_config**](JobsApi.md#get_default_job_config) | **GET** /api/default-job-config | Request default job configuration
 [**get_job**](JobsApi.md#get_job) | **GET** /api/projects/{projectId}/jobs/{jobId} | Get job information and its current state and progress (if available).
 [**get_job_config**](JobsApi.md#get_job_config) | **GET** /api/job-configs/{name} | Request job configuration with given name.
-[**get_job_config_names**](JobsApi.md#get_job_config_names) | **GET** /api/job-config-names | Get all (non-default) job configuration names
+[**get_job_config_names**](JobsApi.md#get_job_config_names) | **GET** /api/job-config-names | DEPRECATED: use /job-configs to get all configs with names.
 [**get_job_configs**](JobsApi.md#get_job_configs) | **GET** /api/job-configs | Request all available job configurations
 [**get_jobs**](JobsApi.md#get_jobs) | **GET** /api/projects/{projectId}/jobs | Get List of all available jobs with information such as current state and progress (if available).
 [**get_jobs_paged**](JobsApi.md#get_jobs_paged) | **GET** /api/projects/{projectId}/jobs/page | Get Page of jobs with information such as current state and progress (if available).
@@ -443,7 +443,7 @@ No authorization required
 # **get_job_config_names**
 > List[str] get_job_config_names()
 
-Get all (non-default) job configuration names
+DEPRECATED: use /job-configs to get all configs with names.
 
 Get all (non-default) job configuration names
 
@@ -468,7 +468,7 @@ with PySirius.ApiClient(configuration) as api_client:
     api_instance = PySirius.JobsApi(api_client)
 
     try:
-        # Get all (non-default) job configuration names
+        # DEPRECATED: use /job-configs to get all configs with names.
         api_response = api_instance.get_job_config_names()
         print("The response of JobsApi->get_job_config_names:\n")
         pprint(api_response)

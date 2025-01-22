@@ -6,6 +6,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **name** | **str** | Unique name to identify this JobSubmission (job config). | 
+**editable** | **bool** | False for predefined configs which are not editable and not removable. | 
 **job_submission** | [**JobSubmission**](JobSubmission.md) |  | 
 
 ## Example

@@ -10,7 +10,7 @@ Method | HTTP request | Description
 [**GetDefaultJobConfig**](JobsApi.md#GetDefaultJobConfig) | **GET** /api/default-job-config | Request default job configuration
 [**GetJob**](JobsApi.md#GetJob) | **GET** /api/projects/{projectId}/jobs/{jobId} | Get job information and its current state and progress (if available).
 [**GetJobConfig**](JobsApi.md#GetJobConfig) | **GET** /api/job-configs/{name} | Request job configuration with given name.
-[**GetJobConfigNames**](JobsApi.md#GetJobConfigNames) | **GET** /api/job-config-names | Get all (non-default) job configuration names
+[**GetJobConfigNames**](JobsApi.md#GetJobConfigNames) | **GET** /api/job-config-names | DEPRECATED: use /job-configs to get all configs with names.
 [**GetJobConfigs**](JobsApi.md#GetJobConfigs) | **GET** /api/job-configs | Request all available job configurations
 [**GetJobs**](JobsApi.md#GetJobs) | **GET** /api/projects/{projectId}/jobs | Get List of all available jobs with information such as current state and progress (if available).
 [**GetJobsPaged**](JobsApi.md#GetJobsPaged) | **GET** /api/projects/{projectId}/jobs/page | Get Page of jobs with information such as current state and progress (if available).
@@ -316,7 +316,7 @@ No authorization required
 # **GetJobConfigNames**
 > array[character] GetJobConfigNames()
 
-Get all (non-default) job configuration names
+DEPRECATED: use /job-configs to get all configs with names.
 
 Get all (non-default) job configuration names
 
@@ -324,7 +324,7 @@ Get all (non-default) job configuration names
 ```R
 library(Rsirius)
 
-# Get all (non-default) job configuration names
+# DEPRECATED: use /job-configs to get all configs with names.
 #
 
 api_instance <- rsirius_api$new()

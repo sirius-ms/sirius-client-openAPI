@@ -15,7 +15,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
 from typing import Any, ClassVar, Dict, List
 from PySirius.models.job_submission import JobSubmission
 from typing import Optional, Set
@@ -26,8 +26,9 @@ class StoredJobSubmission(BaseModel):
     StoredJobSubmission
     """ # noqa: E501
     name: StrictStr = Field(description="Unique name to identify this JobSubmission (job config).")
+    editable: StrictBool = Field(description="False for predefined configs which are not editable and not removable.")
     job_submission: JobSubmission = Field(alias="jobSubmission")
-    __properties: ClassVar[List[str]] = ["name", "jobSubmission"]
+    __properties: ClassVar[List[str]] = ["name", "editable", "jobSubmission"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -84,6 +85,7 @@ class StoredJobSubmission(BaseModel):
 
         _obj = cls.model_validate({
             "name": obj.get("name"),
+            "editable": obj.get("editable"),
             "jobSubmission": JobSubmission.from_dict(obj["jobSubmission"]) if obj.get("jobSubmission") is not None else None
         })
         return _obj

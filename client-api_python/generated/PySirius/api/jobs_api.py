@@ -1750,7 +1750,7 @@ class JobsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> List[str]:
-        """Get all (non-default) job configuration names
+        """(Deprecated) DEPRECATED: use /job-configs to get all configs with names.
 
         Get all (non-default) job configuration names
 
@@ -1775,6 +1775,7 @@ class JobsApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """ # noqa: E501
+        warnings.warn("GET /api/job-config-names is deprecated.", DeprecationWarning)
 
         _param = self._get_job_config_names_serialize(
             _request_auth=_request_auth,
@@ -1813,7 +1814,7 @@ class JobsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[List[str]]:
-        """Get all (non-default) job configuration names
+        """(Deprecated) DEPRECATED: use /job-configs to get all configs with names.
 
         Get all (non-default) job configuration names
 
@@ -1838,6 +1839,7 @@ class JobsApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """ # noqa: E501
+        warnings.warn("GET /api/job-config-names is deprecated.", DeprecationWarning)
 
         _param = self._get_job_config_names_serialize(
             _request_auth=_request_auth,
@@ -1876,7 +1878,7 @@ class JobsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get all (non-default) job configuration names
+        """(Deprecated) DEPRECATED: use /job-configs to get all configs with names.
 
         Get all (non-default) job configuration names
 
@@ -1901,6 +1903,7 @@ class JobsApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """ # noqa: E501
+        warnings.warn("GET /api/job-config-names is deprecated.", DeprecationWarning)
 
         _param = self._get_job_config_names_serialize(
             _request_auth=_request_auth,
