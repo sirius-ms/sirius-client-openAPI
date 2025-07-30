@@ -40,7 +40,7 @@ jobs:
             echo "Api Ready"
     - name: Run Rest Api with strings
       run: |
-        bash .updater/api/sirius/bin/sirius REST --no-headless --api-mode=STABLE -p 8080 -s &
+        bash .updater/api/sirius/bin/sirius REST --headless --api-mode=STABLE -p 8080 -s &
     - name: Update api-docs-strings.json
       run: |
         while ! nc -z localhost 8080; do sleep 0.1; done
