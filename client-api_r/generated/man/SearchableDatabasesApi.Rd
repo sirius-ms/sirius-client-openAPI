@@ -107,15 +107,16 @@ dput(result)
 
 library(Rsirius)
 var_database_id <- "database_id_example" # character | database to import into
+var_input_files <- c(123) # array[data.frame] | files to be imported
 var_buffer_size <- 1000 # integer |  (Optional)
-var_input_files <- c(123) # array[data.frame] |  (Optional)
+var_bio_transformer_parameters <- BioTransformerParameters$new("RULE_BASED", "BT_RULE_BASED", c(BioTransformerSequenceStep$new("PHASE_1_CYP450", 123)), "useDB_example") # BioTransformerParameters | configuration for biotransformer execution. If null BioTransformer will not be applied. (Optional)
 
 #Start import of structure and spectra files into the specified database.
 api_instance <- rsirius_api$new()
 
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$ImportIntoDatabase(var_database_id, buffer_size = var_buffer_size, input_files = var_input_filesdata_file = "result.txt")
-result <- api_instance$searchable_databases_api$ImportIntoDatabase(var_database_id, buffer_size = var_buffer_size, input_files = var_input_files)
+# result <- api_instance$ImportIntoDatabase(var_database_id, var_input_files, buffer_size = var_buffer_size, bio_transformer_parameters = var_bio_transformer_parametersdata_file = "result.txt")
+result <- api_instance$searchable_databases_api$ImportIntoDatabase(var_database_id, var_input_files, buffer_size = var_buffer_size, bio_transformer_parameters = var_bio_transformer_parameters)
 dput(result)
 
 
@@ -549,8 +550,9 @@ Start import of structure and spectra files into the specified database.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{SearchableDatabasesApi$ImportIntoDatabase(
   database_id,
+  input_files,
   buffer_size = 1000,
-  input_files = NULL,
+  bio_transformer_parameters = NULL,
   data_file = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -561,9 +563,11 @@ Start import of structure and spectra files into the specified database.
 \describe{
 \item{\code{database_id}}{database to import into}
 
+\item{\code{input_files}}{files to be imported}
+
 \item{\code{buffer_size}}{(optional) No description (default value: 1000)}
 
-\item{\code{input_files}}{(optional) No description}
+\item{\code{bio_transformer_parameters}}{(optional) configuration for biotransformer execution. If null BioTransformer will not be applied.}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 
@@ -583,8 +587,9 @@ Start import of structure and spectra files into the specified database.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{SearchableDatabasesApi$ImportIntoDatabaseWithHttpInfo(
   database_id,
+  input_files,
   buffer_size = 1000,
-  input_files = NULL,
+  bio_transformer_parameters = NULL,
   data_file = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -595,9 +600,11 @@ Start import of structure and spectra files into the specified database.
 \describe{
 \item{\code{database_id}}{database to import into}
 
+\item{\code{input_files}}{files to be imported}
+
 \item{\code{buffer_size}}{(optional) No description (default value: 1000)}
 
-\item{\code{input_files}}{(optional) No description}
+\item{\code{bio_transformer_parameters}}{(optional) configuration for biotransformer execution. If null BioTransformer will not be applied.}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 

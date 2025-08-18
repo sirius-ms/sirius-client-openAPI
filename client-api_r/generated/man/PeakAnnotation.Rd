@@ -48,7 +48,7 @@ df
 
 \item{\code{recalibratedMassDeviationPpm}}{Relative mass deviation of the exact mass to the recalibrated peak mass in ppm numeric [optional]}
 
-\item{\code{parentPeak}}{\link{ParentPeak} [optional]}
+\item{\code{parentPeak}}{Link to the parent peak connected via the neutral loss from the fragmentation tree. \link{ParentPeak} [optional]}
 
 \item{\code{substructureAtoms}}{EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.   Array/List of indices of the atoms of the structure candidate that are part of this fragments substructure  (highlighted atoms) list(integer) [optional]}
 
@@ -124,7 +124,7 @@ Initialize a new PeakAnnotation class.
 
 \item{\code{recalibratedMassDeviationPpm}}{Relative mass deviation of the exact mass to the recalibrated peak mass in ppm}
 
-\item{\code{parentPeak}}{parentPeak}
+\item{\code{parentPeak}}{Link to the parent peak connected via the neutral loss from the fragmentation tree.}
 
 \item{\code{substructureAtoms}}{EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.   Array/List of indices of the atoms of the structure candidate that are part of this fragments substructure  (highlighted atoms)}
 
