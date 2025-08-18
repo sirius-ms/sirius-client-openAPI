@@ -13,6 +13,12 @@ for file in *; do
         # Use sed to replace "= []" with "= list()"
         sed -i 's/= \[\]/= list()/g' "$file"
 
+        # Use sed to replace "= [none]" with "= list(NULL)"
+        sed -i 's/= \[none\]/= list(NULL)/g' "$file"
+
+        # Use sed to replace "= [something]" with "= list(something)"
+        sed -i 's/= \[\([^]]*\)\]/= list(\1)/g' "$file"
+
         # Use sed to replace "= ["something"]" with "= list("something")"
         sed -i 's/= \["\([^"]*\)"\]/= list("\1")/g' "$file"
 
