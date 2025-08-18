@@ -18,6 +18,9 @@ import json
 from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from PySirius.models.basic_spectrum import BasicSpectrum
+from PySirius.models.peak_pair import PeakPair
+from PySirius.models.spectral_match_type import SpectralMatchType
+from PySirius.models.spectrum_type import SpectrumType
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -27,8 +30,9 @@ class SpectralLibraryMatch(BaseModel):
     """ # noqa: E501
     spec_match_id: Optional[StrictStr] = Field(default=None, alias="specMatchId")
     rank: Optional[StrictInt] = None
-    similarity: float
-    shared_peaks: Optional[StrictInt] = Field(default=None, alias="sharedPeaks")
+    similarity: float = Field(description="Similarity between query and reference spectrum")
+    shared_peaks: Optional[StrictInt] = Field(default=None, description="Number of shared/matched peaks", alias="sharedPeaks")
+    shared_peak_mapping: Optional[List[PeakPair]] = Field(default=None, description="List of paired/matched peak indices.   Maps indices of peaks from the query spectrum (mass sorted)  to indices of matched peaks in the reference spectrum (mass sorted)", alias="sharedPeakMapping")
     query_spectrum_index: StrictInt = Field(alias="querySpectrumIndex")
     db_name: Optional[StrictStr] = Field(default=None, alias="dbName")
     db_id: Optional[StrictStr] = Field(default=None, alias="dbId")
@@ -36,11 +40,14 @@ class SpectralLibraryMatch(BaseModel):
     splash: Optional[StrictStr] = None
     molecular_formula: Optional[StrictStr] = Field(default=None, alias="molecularFormula")
     adduct: Optional[StrictStr] = None
-    exact_mass: Optional[StrictStr] = Field(default=None, alias="exactMass")
+    exact_mass: Optional[float] = Field(default=None, alias="exactMass")
     smiles: Optional[StrictStr] = None
+    type: Optional[SpectralMatchType] = None
     inchi_key: StrictStr = Field(alias="inchiKey")
+    reference_spectrum_type: Optional[SpectrumType] = Field(default=None, alias="referenceSpectrumType")
     reference_spectrum: Optional[BasicSpectrum] = Field(default=None, alias="referenceSpectrum")
-    __properties: ClassVar[List[str]] = ["specMatchId", "rank", "similarity", "sharedPeaks", "querySpectrumIndex", "dbName", "dbId", "uuid", "splash", "molecularFormula", "adduct", "exactMass", "smiles", "inchiKey", "referenceSpectrum"]
+    query_spectrum_type: Optional[SpectrumType] = Field(default=None, alias="querySpectrumType")
+    __properties: ClassVar[List[str]] = ["specMatchId", "rank", "similarity", "sharedPeaks", "sharedPeakMapping", "querySpectrumIndex", "dbName", "dbId", "uuid", "splash", "molecularFormula", "adduct", "exactMass", "smiles", "type", "inchiKey", "referenceSpectrumType", "referenceSpectrum", "querySpectrumType"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -81,14 +88,16 @@ class SpectralLibraryMatch(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of each item in shared_peak_mapping (list)
+        _items = []
+        if self.shared_peak_mapping:
+            for _item_shared_peak_mapping in self.shared_peak_mapping:
+                if _item_shared_peak_mapping:
+                    _items.append(_item_shared_peak_mapping.to_dict())
+            _dict['sharedPeakMapping'] = _items
         # override the default output from pydantic by calling `to_dict()` of reference_spectrum
         if self.reference_spectrum:
             _dict['referenceSpectrum'] = self.reference_spectrum.to_dict()
-        # set to None if reference_spectrum (nullable) is None
-        # and model_fields_set contains the field
-        if self.reference_spectrum is None and "reference_spectrum" in self.model_fields_set:
-            _dict['referenceSpectrum'] = None
-
         return _dict
 
     @classmethod
@@ -105,6 +114,7 @@ class SpectralLibraryMatch(BaseModel):
             "rank": obj.get("rank"),
             "similarity": obj.get("similarity"),
             "sharedPeaks": obj.get("sharedPeaks"),
+            "sharedPeakMapping": [PeakPair.from_dict(_item) for _item in obj["sharedPeakMapping"]] if obj.get("sharedPeakMapping") is not None else None,
             "querySpectrumIndex": obj.get("querySpectrumIndex"),
             "dbName": obj.get("dbName"),
             "dbId": obj.get("dbId"),
@@ -114,8 +124,11 @@ class SpectralLibraryMatch(BaseModel):
             "adduct": obj.get("adduct"),
             "exactMass": obj.get("exactMass"),
             "smiles": obj.get("smiles"),
+            "type": obj.get("type"),
             "inchiKey": obj.get("inchiKey"),
-            "referenceSpectrum": BasicSpectrum.from_dict(obj["referenceSpectrum"]) if obj.get("referenceSpectrum") is not None else None
+            "referenceSpectrumType": obj.get("referenceSpectrumType"),
+            "referenceSpectrum": BasicSpectrum.from_dict(obj["referenceSpectrum"]) if obj.get("referenceSpectrum") is not None else None,
+            "querySpectrumType": obj.get("querySpectrumType")
         })
         return _obj
 

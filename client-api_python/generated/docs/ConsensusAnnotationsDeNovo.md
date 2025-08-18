@@ -6,9 +6,9 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **molecular_formula** | **str** | Molecular formula of the consensus annotation  Might be null if no consensus formula is available. | [optional] 
-**compound_classes** | [**CompoundClasses**](CompoundClasses.md) |  | [optional] 
-**supporting_feature_ids** | **List[Optional[str]]** | FeatureIds where the topAnnotation supports this annotation. | [optional] 
-**selection_criterion** | [**ConsensusCriterionDeNovo**](ConsensusCriterionDeNovo.md) |  | [optional] 
+**compound_classes** | [**CompoundClasses**](CompoundClasses.md) | Compound classes (predicted with CANOPUS) corresponding to the molecularFormula  Might be null if no fingerprints or compound classes are available. | [optional] 
+**supporting_feature_ids** | **List[str]** | FeatureIds where the topAnnotation supports this annotation. | [optional] 
+**selection_criterion** | [**ConsensusCriterionDeNovo**](ConsensusCriterionDeNovo.md) | Criterion that was used to select the consensus annotation. | [optional] 
 
 ## Example
 

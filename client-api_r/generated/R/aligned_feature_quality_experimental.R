@@ -194,6 +194,11 @@ AlignedFeatureQualityExperimental <- R6::R6Class(
         return(FALSE)
       }
 
+      # check if the required `overallQuality` is null
+      if (is.null(self$`overallQuality`)) {
+        return(FALSE)
+      }
+
       # check if the required `categories` is null
       if (is.null(self$`categories`)) {
         return(FALSE)
@@ -211,6 +216,11 @@ AlignedFeatureQualityExperimental <- R6::R6Class(
       # check if the required `alignedFeatureId` is null
       if (is.null(self$`alignedFeatureId`)) {
         invalid_fields["alignedFeatureId"] <- "Non-nullable required field `alignedFeatureId` cannot be null."
+      }
+
+      # check if the required `overallQuality` is null
+      if (is.null(self$`overallQuality`)) {
+        invalid_fields["overallQuality"] <- "Non-nullable required field `overallQuality` cannot be null."
       }
 
       # check if the required `categories` is null
