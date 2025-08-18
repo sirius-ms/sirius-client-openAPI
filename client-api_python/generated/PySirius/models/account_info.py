@@ -79,21 +79,6 @@ class AccountInfo(BaseModel):
                 if _item_subscriptions:
                     _items.append(_item_subscriptions.to_dict())
             _dict['subscriptions'] = _items
-        # set to None if username (nullable) is None
-        # and model_fields_set contains the field
-        if self.username is None and "username" in self.model_fields_set:
-            _dict['username'] = None
-
-        # set to None if gravatar_url (nullable) is None
-        # and model_fields_set contains the field
-        if self.gravatar_url is None and "gravatar_url" in self.model_fields_set:
-            _dict['gravatarURL'] = None
-
-        # set to None if active_subscription_id (nullable) is None
-        # and model_fields_set contains the field
-        if self.active_subscription_id is None and "active_subscription_id" in self.model_fields_set:
-            _dict['activeSubscriptionId'] = None
-
         return _dict
 
     @classmethod

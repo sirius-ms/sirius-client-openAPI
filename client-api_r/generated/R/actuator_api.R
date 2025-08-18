@@ -33,10 +33,7 @@
 #' #Actuator web endpoint 'shutdown'
 #' api_instance <- rsirius_api$new()
 #'
-#' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-#' # result <- api_instance$Shutdown(data_file = "result.txt")
-#' result <- api_instance$actuator_api$Shutdown()
-#' dput(result)
+#' api_instance$actuator_api$Shutdown()
 #'
 #'
 #' }
@@ -100,7 +97,7 @@ ActuatorApi <- R6::R6Class(
       local_var_url_path <- "/actuator/health"
 
       # The Accept request HTTP header
-      local_var_accepts <- list("application/vnd.spring-boot.actuator.v3+json", "application/json", "application/vnd.spring-boot.actuator.v2+json")
+      local_var_accepts <- list("application/vnd.spring-boot.actuator.v3+json", "application/vnd.spring-boot.actuator.v2+json", "application/json")
 
       # The Content-Type representation header
       local_var_content_types <- list()
@@ -147,12 +144,11 @@ ActuatorApi <- R6::R6Class(
     #' @description
     #' Actuator web endpoint 'shutdown'
     #'
-    #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
-    #' @return object
-    Shutdown = function(data_file = NULL, ...) {
-      local_var_response <- self$ShutdownWithHttpInfo(data_file = data_file, ...)
+    #' @return void
+    Shutdown = function(...) {
+      local_var_response <- self$ShutdownWithHttpInfo(...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
@@ -167,11 +163,10 @@ ActuatorApi <- R6::R6Class(
     #' @description
     #' Actuator web endpoint 'shutdown'
     #'
-    #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
-    #' @return API response (object) with additional information such as HTTP status code, headers
-    ShutdownWithHttpInfo = function(data_file = NULL, ...) {
+    #' @return API response (void) with additional information such as HTTP status code, headers
+    ShutdownWithHttpInfo = function(...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -184,7 +179,7 @@ ActuatorApi <- R6::R6Class(
       local_var_url_path <- "/actuator/shutdown"
 
       # The Accept request HTTP header
-      local_var_accepts <- list("application/vnd.spring-boot.actuator.v3+json", "application/json", "application/vnd.spring-boot.actuator.v2+json")
+      local_var_accepts <- list()
 
       # The Content-Type representation header
       local_var_content_types <- list()
@@ -203,18 +198,7 @@ ActuatorApi <- R6::R6Class(
                                  ...)
 
       if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
-        # save response in a file
-        if (!is.null(data_file)) {
-          write(local_var_resp$response, data_file)
-        }
-
-        deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "object", loadNamespace("Rsirius")),
-          error = function(e) {
-            stop("Failed to deserialize response")
-          }
-        )
-        local_var_resp$content <- deserialized_resp_obj
+        local_var_resp$content <- NULL
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
