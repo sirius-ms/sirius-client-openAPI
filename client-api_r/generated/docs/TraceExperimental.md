@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **sampleId** | **character** |  | [optional] 
 **sampleName** | **character** |  | [optional] 
 **label** | **character** |  | [optional] 
+**color** | **character** |  | [optional] 
 **intensities** | **array[numeric]** |  | [optional] 
 **annotations** | [**array[TraceAnnotationExperimental]**](TraceAnnotationExperimental.md) |  | [optional] 
 **mz** | **numeric** |  | [optional] 

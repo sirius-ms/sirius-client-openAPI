@@ -58,19 +58,19 @@ df
 
 \item{\code{medianMassDeviation}}{\link{Deviation} [optional]}
 
-\item{\code{fragmentationTree}}{\link{FragmentationTree} [optional]}
+\item{\code{fragmentationTree}}{The fragmentation tree that belongs to this molecular formula candidate (produces the treeScore). \link{FragmentationTree} [optional]}
 
-\item{\code{annotatedSpectrum}}{\link{AnnotatedSpectrum} [optional]}
+\item{\code{annotatedSpectrum}}{Fragmentation spectrum (e.g. Merged MS/MS) which is annotated with fragments and losses \link{AnnotatedSpectrum} [optional]}
 
-\item{\code{isotopePatternAnnotation}}{\link{IsotopePatternAnnotation} [optional]}
+\item{\code{isotopePatternAnnotation}}{The measured and simulated isotope pattern that have been  compared against each other to produce the isotopeScore. \link{IsotopePatternAnnotation} [optional]}
 
-\item{\code{lipidAnnotation}}{\link{LipidAnnotation} [optional]}
+\item{\code{lipidAnnotation}}{ElGordo lipid annotation of this candidate.  NULL if annotation was not requested. lipidAnnotation.lipidSpecies == NULL if candidate has not been classified as a lipid \link{LipidAnnotation} [optional]}
 
 \item{\code{predictedFingerprint}}{Probabilistic molecular fingerprint predicted by CSI:FingerID list(numeric) [optional]}
 
-\item{\code{compoundClasses}}{\link{CompoundClasses} [optional]}
+\item{\code{compoundClasses}}{Most likely compound classes for different levels of each ontology for this FormulaCandidate (predictedFingerprint) \link{CompoundClasses} [optional]}
 
-\item{\code{canopusPrediction}}{\link{CanopusPrediction} [optional]}
+\item{\code{canopusPrediction}}{All classes predicted by canopus for this FormulaCandidate (predictedFingerprint) \link{CanopusPrediction} [optional]}
 }
 \if{html}{\out{</div>}}
 }
@@ -152,19 +152,19 @@ Initialize a new FormulaCandidate class.
 
 \item{\code{medianMassDeviation}}{medianMassDeviation}
 
-\item{\code{fragmentationTree}}{fragmentationTree}
+\item{\code{fragmentationTree}}{The fragmentation tree that belongs to this molecular formula candidate (produces the treeScore).}
 
-\item{\code{annotatedSpectrum}}{annotatedSpectrum}
+\item{\code{annotatedSpectrum}}{Fragmentation spectrum (e.g. Merged MS/MS) which is annotated with fragments and losses}
 
-\item{\code{isotopePatternAnnotation}}{isotopePatternAnnotation}
+\item{\code{isotopePatternAnnotation}}{The measured and simulated isotope pattern that have been  compared against each other to produce the isotopeScore.}
 
-\item{\code{lipidAnnotation}}{lipidAnnotation}
+\item{\code{lipidAnnotation}}{ElGordo lipid annotation of this candidate.  NULL if annotation was not requested. lipidAnnotation.lipidSpecies == NULL if candidate has not been classified as a lipid}
 
 \item{\code{predictedFingerprint}}{Probabilistic molecular fingerprint predicted by CSI:FingerID}
 
-\item{\code{compoundClasses}}{compoundClasses}
+\item{\code{compoundClasses}}{Most likely compound classes for different levels of each ontology for this FormulaCandidate (predictedFingerprint)}
 
-\item{\code{canopusPrediction}}{canopusPrediction}
+\item{\code{canopusPrediction}}{All classes predicted by canopus for this FormulaCandidate (predictedFingerprint)}
 
 \item{\code{...}}{Other optional arguments.}
 }

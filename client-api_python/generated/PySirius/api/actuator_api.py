@@ -247,8 +247,8 @@ class ActuatorApi:
         _header_params['Accept'] = self.api_client.select_header_accept(
             [
                 'application/vnd.spring-boot.actuator.v3+json', 
-                'application/json', 
-                'application/vnd.spring-boot.actuator.v2+json'
+                'application/vnd.spring-boot.actuator.v2+json', 
+                'application/json'
             ]
         )
 
@@ -290,7 +290,7 @@ class ActuatorApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> object:
+    ) -> None:
         """Actuator web endpoint 'shutdown'
 
 
@@ -324,7 +324,8 @@ class ActuatorApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "object",
+            '204': None,
+            '400': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -352,7 +353,7 @@ class ActuatorApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[object]:
+    ) -> ApiResponse[None]:
         """Actuator web endpoint 'shutdown'
 
 
@@ -386,7 +387,8 @@ class ActuatorApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "object",
+            '204': None,
+            '400': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -448,7 +450,8 @@ class ActuatorApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "object",
+            '204': None,
+            '400': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -484,14 +487,6 @@ class ActuatorApi:
         # process the body parameter
 
 
-        # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/vnd.spring-boot.actuator.v3+json', 
-                'application/json', 
-                'application/vnd.spring-boot.actuator.v2+json'
-            ]
-        )
 
 
         # authentication setting

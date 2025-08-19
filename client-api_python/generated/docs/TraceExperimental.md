@@ -10,6 +10,7 @@ Name | Type | Description | Notes
 **sample_id** | **str** |  | [optional] 
 **sample_name** | **str** |  | [optional] 
 **label** | **str** |  | [optional] 
+**color** | **str** |  | [optional] 
 **intensities** | **List[float]** |  | [optional] 
 **annotations** | [**List[TraceAnnotationExperimental]**](TraceAnnotationExperimental.md) |  | [optional] 
 **mz** | **float** |  | [optional] 

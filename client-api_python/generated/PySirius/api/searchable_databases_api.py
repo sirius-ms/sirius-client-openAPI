@@ -17,6 +17,7 @@ from typing_extensions import Annotated
 from pydantic import Field, StrictBool, StrictBytes, StrictInt, StrictStr, field_validator
 from typing import List, Optional, Tuple, Union
 from typing_extensions import Annotated
+from PySirius.models.bio_transformer_parameters import BioTransformerParameters
 from PySirius.models.searchable_database import SearchableDatabase
 from PySirius.models.searchable_database_parameters import SearchableDatabaseParameters
 
@@ -1668,8 +1669,9 @@ class SearchableDatabasesApi:
     def import_into_database(
         self,
         database_id: Annotated[StrictStr, Field(description="database to import into")],
+        input_files: Annotated[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]], Field(description="files to be imported")],
         buffer_size: Optional[StrictInt] = None,
-        input_files: Optional[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]]] = None,
+        bio_transformer_parameters: Annotated[Optional[BioTransformerParameters], Field(description="configuration for biotransformer execution. If null BioTransformer will not be applied.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1689,10 +1691,12 @@ class SearchableDatabasesApi:
 
         :param database_id: database to import into (required)
         :type database_id: str
+        :param input_files: files to be imported (required)
+        :type input_files: List[bytearray]
         :param buffer_size:
         :type buffer_size: int
-        :param input_files:
-        :type input_files: List[bytearray]
+        :param bio_transformer_parameters: configuration for biotransformer execution. If null BioTransformer will not be applied.
+        :type bio_transformer_parameters: BioTransformerParameters
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1717,8 +1721,9 @@ class SearchableDatabasesApi:
 
         _param = self._import_into_database_serialize(
             database_id=database_id,
-            buffer_size=buffer_size,
             input_files=input_files,
+            buffer_size=buffer_size,
+            bio_transformer_parameters=bio_transformer_parameters,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1743,8 +1748,9 @@ class SearchableDatabasesApi:
     def import_into_database_with_http_info(
         self,
         database_id: Annotated[StrictStr, Field(description="database to import into")],
+        input_files: Annotated[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]], Field(description="files to be imported")],
         buffer_size: Optional[StrictInt] = None,
-        input_files: Optional[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]]] = None,
+        bio_transformer_parameters: Annotated[Optional[BioTransformerParameters], Field(description="configuration for biotransformer execution. If null BioTransformer will not be applied.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1764,10 +1770,12 @@ class SearchableDatabasesApi:
 
         :param database_id: database to import into (required)
         :type database_id: str
+        :param input_files: files to be imported (required)
+        :type input_files: List[bytearray]
         :param buffer_size:
         :type buffer_size: int
-        :param input_files:
-        :type input_files: List[bytearray]
+        :param bio_transformer_parameters: configuration for biotransformer execution. If null BioTransformer will not be applied.
+        :type bio_transformer_parameters: BioTransformerParameters
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1792,8 +1800,9 @@ class SearchableDatabasesApi:
 
         _param = self._import_into_database_serialize(
             database_id=database_id,
-            buffer_size=buffer_size,
             input_files=input_files,
+            buffer_size=buffer_size,
+            bio_transformer_parameters=bio_transformer_parameters,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1818,8 +1827,9 @@ class SearchableDatabasesApi:
     def import_into_database_without_preload_content(
         self,
         database_id: Annotated[StrictStr, Field(description="database to import into")],
+        input_files: Annotated[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]], Field(description="files to be imported")],
         buffer_size: Optional[StrictInt] = None,
-        input_files: Optional[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]]] = None,
+        bio_transformer_parameters: Annotated[Optional[BioTransformerParameters], Field(description="configuration for biotransformer execution. If null BioTransformer will not be applied.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1839,10 +1849,12 @@ class SearchableDatabasesApi:
 
         :param database_id: database to import into (required)
         :type database_id: str
+        :param input_files: files to be imported (required)
+        :type input_files: List[bytearray]
         :param buffer_size:
         :type buffer_size: int
-        :param input_files:
-        :type input_files: List[bytearray]
+        :param bio_transformer_parameters: configuration for biotransformer execution. If null BioTransformer will not be applied.
+        :type bio_transformer_parameters: BioTransformerParameters
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1867,8 +1879,9 @@ class SearchableDatabasesApi:
 
         _param = self._import_into_database_serialize(
             database_id=database_id,
-            buffer_size=buffer_size,
             input_files=input_files,
+            buffer_size=buffer_size,
+            bio_transformer_parameters=bio_transformer_parameters,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1888,8 +1901,9 @@ class SearchableDatabasesApi:
     def _import_into_database_serialize(
         self,
         database_id,
-        buffer_size,
         input_files,
+        buffer_size,
+        bio_transformer_parameters,
         _request_auth,
         _content_type,
         _headers,
@@ -1921,6 +1935,8 @@ class SearchableDatabasesApi:
         # process the form parameters
         if input_files is not None:
             _files['inputFiles'] = input_files
+        if bio_transformer_parameters is not None:
+            _form_params.append(('bioTransformerParameters', bio_transformer_parameters))
         # process the body parameter
 
 

@@ -72,6 +72,7 @@ jobs:
       run: |
         import os
         import PySirius
+        from PySirius import SiriusSDK
         accept_terms = True
         account_credentials = PySirius.AccountCredentials(username=os.environ['SIRIUS_USER'], password=os.environ['SIRIUS_PW'])
         sdk = SiriusSDK().attach_or_start_sirius()

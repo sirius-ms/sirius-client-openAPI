@@ -6,10 +6,10 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **molecular_formula** | **str** | Molecular formula of the consensus annotation  Might be null if no consensus formula is available. | [optional] 
-**compound_classes** | [**CompoundClasses**](CompoundClasses.md) |  | [optional] 
-**supporting_feature_ids** | **List[Optional[str]]** | FeatureIds where the topAnnotation supports this annotation. | [optional] 
-**selection_criterion** | [**ConsensusCriterionCSI**](ConsensusCriterionCSI.md) |  | [optional] 
-**csi_finger_id_structure** | [**StructureCandidate**](StructureCandidate.md) |  | [optional] 
+**compound_classes** | [**CompoundClasses**](CompoundClasses.md) | Compound classes (predicted with CANOPUS) corresponding to the molecularFormula  Might be null if no fingerprints or compound classes are available. | [optional] 
+**supporting_feature_ids** | **List[str]** | FeatureIds where the topAnnotation supports this annotation. | [optional] 
+**selection_criterion** | [**ConsensusCriterionCSI**](ConsensusCriterionCSI.md) | Null if this is a custom selection | [optional] 
+**csi_finger_id_structure** | [**StructureCandidate**](StructureCandidate.md) | Database structure candidate (searched with CSI:FingerID), that also defines the molecularFormula  Might be null if no consensus structure is available. | [optional] 
 **confidence_exact_match** | **float** | Confidence value that represents the certainty that reported consensus structure is exactly the measured one  If multiple features support this consensus structure the maximum confidence is reported | [optional] 
 **confidence_approx_match** | **float** | Confidence value that represents the certainty that the exact consensus structure or a very similar  structure (e.g. measured by Maximum Common Edge Subgraph Distance) is the measured one.  If multiple features support this consensus structure the maximum confidence is reported | [optional] 
 

@@ -36,7 +36,7 @@ df
 
 \item{\code{editable}}{False for predefined configs which are not editable and not removable. character}
 
-\item{\code{jobSubmission}}{\link{JobSubmission}}
+\item{\code{jobSubmission}}{The JobSubmission identified by the name \link{JobSubmission}}
 }
 \if{html}{\out{</div>}}
 }
@@ -74,7 +74,7 @@ Initialize a new StoredJobSubmission class.
 
 \item{\code{editable}}{False for predefined configs which are not editable and not removable.}
 
-\item{\code{jobSubmission}}{jobSubmission}
+\item{\code{jobSubmission}}{The JobSubmission identified by the name}
 
 \item{\code{...}}{Other optional arguments.}
 }

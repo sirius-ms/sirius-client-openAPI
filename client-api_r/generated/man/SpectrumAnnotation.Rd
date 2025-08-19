@@ -42,9 +42,13 @@ df
 
 \item{\code{massDeviationPpm}}{Relative mass deviation of the exact mass to the precursor mass (precursorMz) of this spectrum in ppm numeric [optional]}
 
-\item{\code{structureAnnotationSmiles}}{EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.   Smiles of the structure candidate used to derive substructure peak annotations via epimetheus insilico fragmentation  Substructure highlighting (bond and atom indices) refer to this specific SMILES.  If you standardize or canonicalize this SMILES in any way the indices of substructure highlighting might  not match correctly anymore.   Null if substructure annotation not available or not requested. character [optional]}
+\item{\code{structureAnnotationSmiles}}{EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.  <p>  Smiles of the structure candidate used to derive substructure peak annotations via epimetheus insilico fragmentation  Substructure highlighting (bond and atom indices) refer to this specific SMILES.  If you standardize or canonicalize this SMILES in any way the indices of substructure highlighting might  not match correctly anymore.  <p>  Null if substructure annotation not available or not requested. character [optional]}
 
-\item{\code{structureAnnotationScore}}{EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.   Overall score of all substructure annotations computed for this structure candidate (structureAnnotationSmiles)   Null if substructure annotation not available or not requested. numeric [optional]}
+\item{\code{structureAnnotationName}}{EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.  <p>  Name of the structure candidate used to derive substructure peak annotations via epimetheus insilico fragmentation.  <p>  Null if substructure annotation not available or not requested. character [optional]}
+
+\item{\code{structureAnnotationSvg}}{EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.  <p>  SVG graphics of the structure candidate used to derive substructure peak annotations via epimetheus insilico fragmentation  Substructure highlighting (bond and atom indices) refers to this SVG.  <p>  Null if substructure annotation not available or not requested. character [optional]}
+
+\item{\code{structureAnnotationScore}}{EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.  <p>  Overall score of all substructure annotations computed for this structure candidate (structureAnnotationSmiles)  <p>  Null if substructure annotation not available or not requested. numeric [optional]}
 }
 \if{html}{\out{</div>}}
 }
@@ -79,6 +83,8 @@ Initialize a new SpectrumAnnotation class.
   massDeviationMz = NULL,
   massDeviationPpm = NULL,
   structureAnnotationSmiles = NULL,
+  structureAnnotationName = NULL,
+  structureAnnotationSvg = NULL,
   structureAnnotationScore = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -97,9 +103,13 @@ Initialize a new SpectrumAnnotation class.
 
 \item{\code{massDeviationPpm}}{Relative mass deviation of the exact mass to the precursor mass (precursorMz) of this spectrum in ppm}
 
-\item{\code{structureAnnotationSmiles}}{EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.   Smiles of the structure candidate used to derive substructure peak annotations via epimetheus insilico fragmentation  Substructure highlighting (bond and atom indices) refer to this specific SMILES.  If you standardize or canonicalize this SMILES in any way the indices of substructure highlighting might  not match correctly anymore.   Null if substructure annotation not available or not requested.}
+\item{\code{structureAnnotationSmiles}}{EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.  <p>  Smiles of the structure candidate used to derive substructure peak annotations via epimetheus insilico fragmentation  Substructure highlighting (bond and atom indices) refer to this specific SMILES.  If you standardize or canonicalize this SMILES in any way the indices of substructure highlighting might  not match correctly anymore.  <p>  Null if substructure annotation not available or not requested.}
 
-\item{\code{structureAnnotationScore}}{EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.   Overall score of all substructure annotations computed for this structure candidate (structureAnnotationSmiles)   Null if substructure annotation not available or not requested.}
+\item{\code{structureAnnotationName}}{EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.  <p>  Name of the structure candidate used to derive substructure peak annotations via epimetheus insilico fragmentation.  <p>  Null if substructure annotation not available or not requested.}
+
+\item{\code{structureAnnotationSvg}}{EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.  <p>  SVG graphics of the structure candidate used to derive substructure peak annotations via epimetheus insilico fragmentation  Substructure highlighting (bond and atom indices) refers to this SVG.  <p>  Null if substructure annotation not available or not requested.}
+
+\item{\code{structureAnnotationScore}}{EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.  <p>  Overall score of all substructure annotations computed for this structure candidate (structureAnnotationSmiles)  <p>  Null if substructure annotation not available or not requested.}
 
 \item{\code{...}}{Other optional arguments.}
 }

@@ -28,14 +28,14 @@ class FeatureAnnotations(BaseModel):
     """
     Summary of the results of a feature (aligned over runs). Can be added to a AlignedFeature.  The different annotation fields within this summary object are null if the corresponding  feature does not contain the represented results. If fields are non-null  the corresponding result has been computed but might still be empty.
     """ # noqa: E501
-    formula_annotation: Optional[FormulaCandidate] = Field(default=None, alias="formulaAnnotation")
-    structure_annotation: Optional[StructureCandidateScored] = Field(default=None, alias="structureAnnotation")
-    compound_class_annotation: Optional[CompoundClasses] = Field(default=None, alias="compoundClassAnnotation")
+    formula_annotation: Optional[FormulaCandidate] = Field(default=None, description="Best matching FormulaCandidate.", alias="formulaAnnotation")
+    structure_annotation: Optional[StructureCandidateScored] = Field(default=None, description="Best matching StructureCandidate ranked by CSI:FingerID Score over all FormulaCandidates.", alias="structureAnnotation")
+    compound_class_annotation: Optional[CompoundClasses] = Field(default=None, description="Best matching compound classes that correspond to the formulaAnnotation", alias="compoundClassAnnotation")
     confidence_exact_match: Optional[float] = Field(default=None, description="Confidence Score that represents the confidence whether the top hit is correct.", alias="confidenceExactMatch")
     confidence_approx_match: Optional[float] = Field(default=None, description="Confidence Score that represents the confidence whether the top hit or a very similar hit (estimated by MCES distance) is correct.", alias="confidenceApproxMatch")
-    expansive_search_state: Optional[ConfidenceMode] = Field(default=None, alias="expansiveSearchState")
-    specified_databases: Optional[List[Optional[StrictStr]]] = Field(default=None, description="List of databases that have been specified by for structure db search. Null if no structure db search has been performed.", alias="specifiedDatabases")
-    expanded_databases: Optional[List[Optional[StrictStr]]] = Field(default=None, description="List of databases that have been used to expand search space during expansive search. Null if no structure db search has been performed.", alias="expandedDatabases")
+    expansive_search_state: Optional[ConfidenceMode] = Field(default=None, description="Result that shows if structure annotation was expanded by using PubChem as fallback and if so, which confidence mode was used (as per input paramter)", alias="expansiveSearchState")
+    specified_databases: Optional[List[StrictStr]] = Field(default=None, description="List of databases that have been specified by for structure db search. Null if no structure db search has been performed.", alias="specifiedDatabases")
+    expanded_databases: Optional[List[StrictStr]] = Field(default=None, description="List of databases that have been used to expand search space during expansive search. Null if no structure db search has been performed.", alias="expandedDatabases")
     __properties: ClassVar[List[str]] = ["formulaAnnotation", "structureAnnotation", "compoundClassAnnotation", "confidenceExactMatch", "confidenceApproxMatch", "expansiveSearchState", "specifiedDatabases", "expandedDatabases"]
 
     model_config = ConfigDict(
@@ -86,46 +86,6 @@ class FeatureAnnotations(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of compound_class_annotation
         if self.compound_class_annotation:
             _dict['compoundClassAnnotation'] = self.compound_class_annotation.to_dict()
-        # set to None if formula_annotation (nullable) is None
-        # and model_fields_set contains the field
-        if self.formula_annotation is None and "formula_annotation" in self.model_fields_set:
-            _dict['formulaAnnotation'] = None
-
-        # set to None if structure_annotation (nullable) is None
-        # and model_fields_set contains the field
-        if self.structure_annotation is None and "structure_annotation" in self.model_fields_set:
-            _dict['structureAnnotation'] = None
-
-        # set to None if compound_class_annotation (nullable) is None
-        # and model_fields_set contains the field
-        if self.compound_class_annotation is None and "compound_class_annotation" in self.model_fields_set:
-            _dict['compoundClassAnnotation'] = None
-
-        # set to None if confidence_exact_match (nullable) is None
-        # and model_fields_set contains the field
-        if self.confidence_exact_match is None and "confidence_exact_match" in self.model_fields_set:
-            _dict['confidenceExactMatch'] = None
-
-        # set to None if confidence_approx_match (nullable) is None
-        # and model_fields_set contains the field
-        if self.confidence_approx_match is None and "confidence_approx_match" in self.model_fields_set:
-            _dict['confidenceApproxMatch'] = None
-
-        # set to None if expansive_search_state (nullable) is None
-        # and model_fields_set contains the field
-        if self.expansive_search_state is None and "expansive_search_state" in self.model_fields_set:
-            _dict['expansiveSearchState'] = None
-
-        # set to None if specified_databases (nullable) is None
-        # and model_fields_set contains the field
-        if self.specified_databases is None and "specified_databases" in self.model_fields_set:
-            _dict['specifiedDatabases'] = None
-
-        # set to None if expanded_databases (nullable) is None
-        # and model_fields_set contains the field
-        if self.expanded_databases is None and "expanded_databases" in self.model_fields_set:
-            _dict['expandedDatabases'] = None
-
         return _dict
 
     @classmethod
