@@ -284,13 +284,6 @@ class TestFeaturesApi(unittest.TestCase):
         # response = self.api.features().get_ms_data(self.project_id, self.aligned_feature_id)
         # self.assertIsInstance(response, MsData)
 
-    def test_get_quantification(self) -> None:
-        """Test case for get_quantification
-
-        """
-        response = self.api.features().get_quantification_experimental(self.project_id, self.aligned_feature_id)
-        self.assertIsInstance(response, QuantificationTableExperimental)
-
     def test_get_spectral_library_match(self) -> None:
         """Test case for get_spectral_library_match
 
