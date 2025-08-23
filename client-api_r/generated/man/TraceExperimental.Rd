@@ -40,6 +40,8 @@ df
 
 \item{\code{label}}{character [optional]}
 
+\item{\code{color}}{character [optional]}
+
 \item{\code{intensities}}{list(numeric) [optional]}
 
 \item{\code{annotations}}{list(\link{TraceAnnotationExperimental}) [optional]}
@@ -83,6 +85,7 @@ Initialize a new TraceExperimental class.
   sampleId = NULL,
   sampleName = NULL,
   label = NULL,
+  color = NULL,
   intensities = NULL,
   annotations = NULL,
   mz = NULL,
@@ -103,6 +106,8 @@ Initialize a new TraceExperimental class.
 \item{\code{sampleName}}{sampleName}
 
 \item{\code{label}}{label}
+
+\item{\code{color}}{color}
 
 \item{\code{intensities}}{intensities}
 

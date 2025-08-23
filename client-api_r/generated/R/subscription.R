@@ -22,6 +22,7 @@
 #' @field name  character [optional]
 #' @field tos  character [optional]
 #' @field pp  character [optional]
+#' @field allowedFeatures  \link{AllowedFeatures} [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
 #' @export
@@ -43,6 +44,7 @@ Subscription <- R6::R6Class(
     `name` = NULL,
     `tos` = NULL,
     `pp` = NULL,
+    `allowedFeatures` = NULL,
 
     #' @description
     #' Initialize a new Subscription class.
@@ -62,8 +64,9 @@ Subscription <- R6::R6Class(
     #' @param name name
     #' @param tos tos
     #' @param pp pp
+    #' @param allowedFeatures allowedFeatures
     #' @param ... Other optional arguments.
-    initialize = function(`sid` = NULL, `subscriberId` = NULL, `subscriberName` = NULL, `expirationDate` = NULL, `startDate` = NULL, `countQueries` = NULL, `instanceLimit` = NULL, `instanceHashRecordingTime` = NULL, `maxQueriesPerInstance` = NULL, `maxUserAccounts` = NULL, `serviceUrl` = NULL, `description` = NULL, `name` = NULL, `tos` = NULL, `pp` = NULL, ...) {
+    initialize = function(`sid` = NULL, `subscriberId` = NULL, `subscriberName` = NULL, `expirationDate` = NULL, `startDate` = NULL, `countQueries` = NULL, `instanceLimit` = NULL, `instanceHashRecordingTime` = NULL, `maxQueriesPerInstance` = NULL, `maxUserAccounts` = NULL, `serviceUrl` = NULL, `description` = NULL, `name` = NULL, `tos` = NULL, `pp` = NULL, `allowedFeatures` = NULL, ...) {
       if (!is.null(`sid`)) {
         if (!(is.character(`sid`) && length(`sid`) == 1)) {
           stop(paste("Error! Invalid data for `sid`. Must be a string:", `sid`))
@@ -153,6 +156,10 @@ Subscription <- R6::R6Class(
           stop(paste("Error! Invalid data for `pp`. Must be a string:", `pp`))
         }
         self$`pp` <- `pp`
+      }
+      if (!is.null(`allowedFeatures`)) {
+        stopifnot(R6::is.R6(`allowedFeatures`))
+        self$`allowedFeatures` <- `allowedFeatures`
       }
     },
 
@@ -247,6 +254,10 @@ Subscription <- R6::R6Class(
         SubscriptionObject[["pp"]] <-
           self$`pp`
       }
+      if (!is.null(self$`allowedFeatures`)) {
+        SubscriptionObject[["allowedFeatures"]] <-
+          self$`allowedFeatures`$toSimpleType()
+      }
       return(SubscriptionObject)
     },
 
@@ -302,6 +313,11 @@ Subscription <- R6::R6Class(
       if (!is.null(this_object$`pp`)) {
         self$`pp` <- this_object$`pp`
       }
+      if (!is.null(this_object$`allowedFeatures`)) {
+        `allowedfeatures_object` <- AllowedFeatures$new()
+        `allowedfeatures_object`$fromJSON(jsonlite::toJSON(this_object$`allowedFeatures`, auto_unbox = TRUE, digits = NA, null = 'null'))
+        self$`allowedFeatures` <- `allowedfeatures_object`
+      }
       self
     },
 
@@ -338,6 +354,7 @@ Subscription <- R6::R6Class(
       self$`name` <- this_object$`name`
       self$`tos` <- this_object$`tos`
       self$`pp` <- this_object$`pp`
+      self$`allowedFeatures` <- AllowedFeatures$new()$fromJSON(jsonlite::toJSON(this_object$`allowedFeatures`, auto_unbox = TRUE, digits = NA, null = 'null'))
       self
     },
 

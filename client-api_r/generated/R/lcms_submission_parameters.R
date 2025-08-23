@@ -8,6 +8,11 @@
 #' @description LcmsSubmissionParameters Class
 #' @format An \code{R6Class} generator object
 #' @field alignLCMSRuns Specifies whether LC/MS runs should be aligned character [optional]
+#' @field noiseIntensity Noise level under which all peaks are considered to be likely noise. A peak has to be at least 3x noise level  to be picked as feature. Peaks with MS/MS are still picked even though they might be below noise level.  If not specified, the noise intensity is detected automatically from data. We recommend to NOT specify  this parameter, as the automated detection is usually sufficient. numeric [optional]
+#' @field traceMaxMassDeviation Maximal allowed mass deviation for peaks in ms1 to be considered as belonging to the same trace. \link{Deviation} [optional]
+#' @field alignMaxMassDeviation Maximal allowed mass deviation for aligning features. If not specified, this parameter is estimated from data. \link{Deviation} [optional]
+#' @field alignMaxRetentionTimeDeviation Maximal allowed retention time error in seconds for aligning features. If not specified, this parameter is estimated from data. numeric [optional]
+#' @field minSNR Minimum ratio between peak height and noise intensity for detecting features. By default, this value is 3. Features with good MS/MS are always picked independent of their intensity. For picking very low intensive features we recommend a min-snr of 2, but this will increase runtime and storage memory numeric [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
 #' @export
@@ -15,18 +20,54 @@ LcmsSubmissionParameters <- R6::R6Class(
   "LcmsSubmissionParameters",
   public = list(
     `alignLCMSRuns` = NULL,
+    `noiseIntensity` = NULL,
+    `traceMaxMassDeviation` = NULL,
+    `alignMaxMassDeviation` = NULL,
+    `alignMaxRetentionTimeDeviation` = NULL,
+    `minSNR` = NULL,
 
     #' @description
     #' Initialize a new LcmsSubmissionParameters class.
     #'
     #' @param alignLCMSRuns Specifies whether LC/MS runs should be aligned. Default to TRUE.
+    #' @param noiseIntensity Noise level under which all peaks are considered to be likely noise. A peak has to be at least 3x noise level  to be picked as feature. Peaks with MS/MS are still picked even though they might be below noise level.  If not specified, the noise intensity is detected automatically from data. We recommend to NOT specify  this parameter, as the automated detection is usually sufficient.. Default to -1.
+    #' @param traceMaxMassDeviation Maximal allowed mass deviation for peaks in ms1 to be considered as belonging to the same trace.
+    #' @param alignMaxMassDeviation Maximal allowed mass deviation for aligning features. If not specified, this parameter is estimated from data.
+    #' @param alignMaxRetentionTimeDeviation Maximal allowed retention time error in seconds for aligning features. If not specified, this parameter is estimated from data.. Default to -1.
+    #' @param minSNR Minimum ratio between peak height and noise intensity for detecting features. By default, this value is 3. Features with good MS/MS are always picked independent of their intensity. For picking very low intensive features we recommend a min-snr of 2, but this will increase runtime and storage memory. Default to 3.
     #' @param ... Other optional arguments.
-    initialize = function(`alignLCMSRuns` = TRUE, ...) {
+    initialize = function(`alignLCMSRuns` = TRUE, `noiseIntensity` = -1, `traceMaxMassDeviation` = NULL, `alignMaxMassDeviation` = NULL, `alignMaxRetentionTimeDeviation` = -1, `minSNR` = 3, ...) {
       if (!is.null(`alignLCMSRuns`)) {
         if (!(is.logical(`alignLCMSRuns`) && length(`alignLCMSRuns`) == 1)) {
           stop(paste("Error! Invalid data for `alignLCMSRuns`. Must be a boolean:", `alignLCMSRuns`))
         }
         self$`alignLCMSRuns` <- `alignLCMSRuns`
+      }
+      if (!is.null(`noiseIntensity`)) {
+        if (!(is.numeric(`noiseIntensity`) && length(`noiseIntensity`) == 1)) {
+          stop(paste("Error! Invalid data for `noiseIntensity`. Must be a number:", `noiseIntensity`))
+        }
+        self$`noiseIntensity` <- `noiseIntensity`
+      }
+      if (!is.null(`traceMaxMassDeviation`)) {
+        stopifnot(R6::is.R6(`traceMaxMassDeviation`))
+        self$`traceMaxMassDeviation` <- `traceMaxMassDeviation`
+      }
+      if (!is.null(`alignMaxMassDeviation`)) {
+        stopifnot(R6::is.R6(`alignMaxMassDeviation`))
+        self$`alignMaxMassDeviation` <- `alignMaxMassDeviation`
+      }
+      if (!is.null(`alignMaxRetentionTimeDeviation`)) {
+        if (!(is.numeric(`alignMaxRetentionTimeDeviation`) && length(`alignMaxRetentionTimeDeviation`) == 1)) {
+          stop(paste("Error! Invalid data for `alignMaxRetentionTimeDeviation`. Must be a number:", `alignMaxRetentionTimeDeviation`))
+        }
+        self$`alignMaxRetentionTimeDeviation` <- `alignMaxRetentionTimeDeviation`
+      }
+      if (!is.null(`minSNR`)) {
+        if (!(is.numeric(`minSNR`) && length(`minSNR`) == 1)) {
+          stop(paste("Error! Invalid data for `minSNR`. Must be a number:", `minSNR`))
+        }
+        self$`minSNR` <- `minSNR`
       }
     },
 
@@ -65,6 +106,26 @@ LcmsSubmissionParameters <- R6::R6Class(
         LcmsSubmissionParametersObject[["alignLCMSRuns"]] <-
           self$`alignLCMSRuns`
       }
+      if (!is.null(self$`noiseIntensity`)) {
+        LcmsSubmissionParametersObject[["noiseIntensity"]] <-
+          self$`noiseIntensity`
+      }
+      if (!is.null(self$`traceMaxMassDeviation`)) {
+        LcmsSubmissionParametersObject[["traceMaxMassDeviation"]] <-
+          self$`traceMaxMassDeviation`$toSimpleType()
+      }
+      if (!is.null(self$`alignMaxMassDeviation`)) {
+        LcmsSubmissionParametersObject[["alignMaxMassDeviation"]] <-
+          self$`alignMaxMassDeviation`$toSimpleType()
+      }
+      if (!is.null(self$`alignMaxRetentionTimeDeviation`)) {
+        LcmsSubmissionParametersObject[["alignMaxRetentionTimeDeviation"]] <-
+          self$`alignMaxRetentionTimeDeviation`
+      }
+      if (!is.null(self$`minSNR`)) {
+        LcmsSubmissionParametersObject[["minSNR"]] <-
+          self$`minSNR`
+      }
       return(LcmsSubmissionParametersObject)
     },
 
@@ -77,6 +138,25 @@ LcmsSubmissionParameters <- R6::R6Class(
       this_object <- jsonlite::fromJSON(input_json)
       if (!is.null(this_object$`alignLCMSRuns`)) {
         self$`alignLCMSRuns` <- this_object$`alignLCMSRuns`
+      }
+      if (!is.null(this_object$`noiseIntensity`)) {
+        self$`noiseIntensity` <- this_object$`noiseIntensity`
+      }
+      if (!is.null(this_object$`traceMaxMassDeviation`)) {
+        `tracemaxmassdeviation_object` <- Deviation$new()
+        `tracemaxmassdeviation_object`$fromJSON(jsonlite::toJSON(this_object$`traceMaxMassDeviation`, auto_unbox = TRUE, digits = NA, null = 'null'))
+        self$`traceMaxMassDeviation` <- `tracemaxmassdeviation_object`
+      }
+      if (!is.null(this_object$`alignMaxMassDeviation`)) {
+        `alignmaxmassdeviation_object` <- Deviation$new()
+        `alignmaxmassdeviation_object`$fromJSON(jsonlite::toJSON(this_object$`alignMaxMassDeviation`, auto_unbox = TRUE, digits = NA, null = 'null'))
+        self$`alignMaxMassDeviation` <- `alignmaxmassdeviation_object`
+      }
+      if (!is.null(this_object$`alignMaxRetentionTimeDeviation`)) {
+        self$`alignMaxRetentionTimeDeviation` <- this_object$`alignMaxRetentionTimeDeviation`
+      }
+      if (!is.null(this_object$`minSNR`)) {
+        self$`minSNR` <- this_object$`minSNR`
       }
       self
     },
@@ -100,6 +180,11 @@ LcmsSubmissionParameters <- R6::R6Class(
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       self$`alignLCMSRuns` <- this_object$`alignLCMSRuns`
+      self$`noiseIntensity` <- this_object$`noiseIntensity`
+      self$`traceMaxMassDeviation` <- Deviation$new()$fromJSON(jsonlite::toJSON(this_object$`traceMaxMassDeviation`, auto_unbox = TRUE, digits = NA, null = 'null'))
+      self$`alignMaxMassDeviation` <- Deviation$new()$fromJSON(jsonlite::toJSON(this_object$`alignMaxMassDeviation`, auto_unbox = TRUE, digits = NA, null = 'null'))
+      self$`alignMaxRetentionTimeDeviation` <- this_object$`alignMaxRetentionTimeDeviation`
+      self$`minSNR` <- this_object$`minSNR`
       self
     },
 

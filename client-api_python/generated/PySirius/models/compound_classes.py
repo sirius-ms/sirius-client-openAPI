@@ -25,11 +25,11 @@ class CompoundClasses(BaseModel):
     """
     Container class that holds the most likely compound class for different levels of each ontology for a  certain Compound/Feature/FormulaCandidate/PredictedFingerprint.
     """ # noqa: E501
-    npc_pathway: Optional[CompoundClass] = Field(default=None, alias="npcPathway")
-    npc_superclass: Optional[CompoundClass] = Field(default=None, alias="npcSuperclass")
-    npc_class: Optional[CompoundClass] = Field(default=None, alias="npcClass")
-    classy_fire_lineage: Optional[List[Optional[CompoundClass]]] = Field(default=None, description="Most likely ClassyFire lineage from ordered from least specific to most specific class  classyFireLineage.get(classyFireLineage.size() - 1) gives the most specific ClassyFire compound class annotation", alias="classyFireLineage")
-    classy_fire_alternatives: Optional[List[Optional[CompoundClass]]] = Field(default=None, description="Alternative ClassyFire classes with high probability that do not fit into the linage", alias="classyFireAlternatives")
+    npc_pathway: Optional[CompoundClass] = Field(default=None, description="Pathway level NPC class with the highest probability", alias="npcPathway")
+    npc_superclass: Optional[CompoundClass] = Field(default=None, description="Superclass level NPC class with the highest probability", alias="npcSuperclass")
+    npc_class: Optional[CompoundClass] = Field(default=None, description="Class level NPC class with the highest probability", alias="npcClass")
+    classy_fire_lineage: Optional[List[CompoundClass]] = Field(default=None, description="Most likely ClassyFire lineage from ordered from least specific to most specific class  classyFireLineage.get(classyFireLineage.size() - 1) gives the most specific ClassyFire compound class annotation", alias="classyFireLineage")
+    classy_fire_alternatives: Optional[List[CompoundClass]] = Field(default=None, description="Alternative ClassyFire classes with high probability that do not fit into the linage", alias="classyFireAlternatives")
     __properties: ClassVar[List[str]] = ["npcPathway", "npcSuperclass", "npcClass", "classyFireLineage", "classyFireAlternatives"]
 
     model_config = ConfigDict(
@@ -94,31 +94,6 @@ class CompoundClasses(BaseModel):
                 if _item_classy_fire_alternatives:
                     _items.append(_item_classy_fire_alternatives.to_dict())
             _dict['classyFireAlternatives'] = _items
-        # set to None if npc_pathway (nullable) is None
-        # and model_fields_set contains the field
-        if self.npc_pathway is None and "npc_pathway" in self.model_fields_set:
-            _dict['npcPathway'] = None
-
-        # set to None if npc_superclass (nullable) is None
-        # and model_fields_set contains the field
-        if self.npc_superclass is None and "npc_superclass" in self.model_fields_set:
-            _dict['npcSuperclass'] = None
-
-        # set to None if npc_class (nullable) is None
-        # and model_fields_set contains the field
-        if self.npc_class is None and "npc_class" in self.model_fields_set:
-            _dict['npcClass'] = None
-
-        # set to None if classy_fire_lineage (nullable) is None
-        # and model_fields_set contains the field
-        if self.classy_fire_lineage is None and "classy_fire_lineage" in self.model_fields_set:
-            _dict['classyFireLineage'] = None
-
-        # set to None if classy_fire_alternatives (nullable) is None
-        # and model_fields_set contains the field
-        if self.classy_fire_alternatives is None and "classy_fire_alternatives" in self.model_fields_set:
-            _dict['classyFireAlternatives'] = None
-
         return _dict
 
     @classmethod

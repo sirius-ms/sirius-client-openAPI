@@ -32,11 +32,11 @@ df
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{formulaAnnotation}}{\link{FormulaCandidate} [optional]}
+\item{\code{formulaAnnotation}}{Best matching FormulaCandidate. \link{FormulaCandidate} [optional]}
 
-\item{\code{structureAnnotation}}{\link{StructureCandidateScored} [optional]}
+\item{\code{structureAnnotation}}{Best matching StructureCandidate ranked by CSI:FingerID Score over all FormulaCandidates. \link{StructureCandidateScored} [optional]}
 
-\item{\code{compoundClassAnnotation}}{\link{CompoundClasses} [optional]}
+\item{\code{compoundClassAnnotation}}{Best matching compound classes that correspond to the formulaAnnotation \link{CompoundClasses} [optional]}
 
 \item{\code{confidenceExactMatch}}{Confidence Score that represents the confidence whether the top hit is correct. numeric [optional]}
 
@@ -90,11 +90,11 @@ Initialize a new FeatureAnnotations class.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{formulaAnnotation}}{formulaAnnotation}
+\item{\code{formulaAnnotation}}{Best matching FormulaCandidate.}
 
-\item{\code{structureAnnotation}}{structureAnnotation}
+\item{\code{structureAnnotation}}{Best matching StructureCandidate ranked by CSI:FingerID Score over all FormulaCandidates.}
 
-\item{\code{compoundClassAnnotation}}{compoundClassAnnotation}
+\item{\code{compoundClassAnnotation}}{Best matching compound classes that correspond to the formulaAnnotation}
 
 \item{\code{confidenceExactMatch}}{Confidence Score that represents the confidence whether the top hit is correct.}
 

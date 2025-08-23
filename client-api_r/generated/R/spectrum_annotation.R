@@ -12,8 +12,10 @@
 #' @field exactMass Exact mass based on the annotated molecular formula and ionization numeric [optional]
 #' @field massDeviationMz Absolute mass deviation of the exact mass to the precursor mass (precursorMz) of this spectrum in mDa numeric [optional]
 #' @field massDeviationPpm Relative mass deviation of the exact mass to the precursor mass (precursorMz) of this spectrum in ppm numeric [optional]
-#' @field structureAnnotationSmiles EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.   Smiles of the structure candidate used to derive substructure peak annotations via epimetheus insilico fragmentation  Substructure highlighting (bond and atom indices) refer to this specific SMILES.  If you standardize or canonicalize this SMILES in any way the indices of substructure highlighting might  not match correctly anymore.   Null if substructure annotation not available or not requested. character [optional]
-#' @field structureAnnotationScore EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.   Overall score of all substructure annotations computed for this structure candidate (structureAnnotationSmiles)   Null if substructure annotation not available or not requested. numeric [optional]
+#' @field structureAnnotationSmiles EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.  <p>  Smiles of the structure candidate used to derive substructure peak annotations via epimetheus insilico fragmentation  Substructure highlighting (bond and atom indices) refer to this specific SMILES.  If you standardize or canonicalize this SMILES in any way the indices of substructure highlighting might  not match correctly anymore.  <p>  Null if substructure annotation not available or not requested. character [optional]
+#' @field structureAnnotationName EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.  <p>  Name of the structure candidate used to derive substructure peak annotations via epimetheus insilico fragmentation.  <p>  Null if substructure annotation not available or not requested. character [optional]
+#' @field structureAnnotationSvg EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.  <p>  SVG graphics of the structure candidate used to derive substructure peak annotations via epimetheus insilico fragmentation  Substructure highlighting (bond and atom indices) refers to this SVG.  <p>  Null if substructure annotation not available or not requested. character [optional]
+#' @field structureAnnotationScore EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.  <p>  Overall score of all substructure annotations computed for this structure candidate (structureAnnotationSmiles)  <p>  Null if substructure annotation not available or not requested. numeric [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
 #' @export
@@ -26,6 +28,8 @@ SpectrumAnnotation <- R6::R6Class(
     `massDeviationMz` = NULL,
     `massDeviationPpm` = NULL,
     `structureAnnotationSmiles` = NULL,
+    `structureAnnotationName` = NULL,
+    `structureAnnotationSvg` = NULL,
     `structureAnnotationScore` = NULL,
 
     #' @description
@@ -36,10 +40,12 @@ SpectrumAnnotation <- R6::R6Class(
     #' @param exactMass Exact mass based on the annotated molecular formula and ionization
     #' @param massDeviationMz Absolute mass deviation of the exact mass to the precursor mass (precursorMz) of this spectrum in mDa
     #' @param massDeviationPpm Relative mass deviation of the exact mass to the precursor mass (precursorMz) of this spectrum in ppm
-    #' @param structureAnnotationSmiles EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.   Smiles of the structure candidate used to derive substructure peak annotations via epimetheus insilico fragmentation  Substructure highlighting (bond and atom indices) refer to this specific SMILES.  If you standardize or canonicalize this SMILES in any way the indices of substructure highlighting might  not match correctly anymore.   Null if substructure annotation not available or not requested.
-    #' @param structureAnnotationScore EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.   Overall score of all substructure annotations computed for this structure candidate (structureAnnotationSmiles)   Null if substructure annotation not available or not requested.
+    #' @param structureAnnotationSmiles EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.  <p>  Smiles of the structure candidate used to derive substructure peak annotations via epimetheus insilico fragmentation  Substructure highlighting (bond and atom indices) refer to this specific SMILES.  If you standardize or canonicalize this SMILES in any way the indices of substructure highlighting might  not match correctly anymore.  <p>  Null if substructure annotation not available or not requested.
+    #' @param structureAnnotationName EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.  <p>  Name of the structure candidate used to derive substructure peak annotations via epimetheus insilico fragmentation.  <p>  Null if substructure annotation not available or not requested.
+    #' @param structureAnnotationSvg EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.  <p>  SVG graphics of the structure candidate used to derive substructure peak annotations via epimetheus insilico fragmentation  Substructure highlighting (bond and atom indices) refers to this SVG.  <p>  Null if substructure annotation not available or not requested.
+    #' @param structureAnnotationScore EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.  <p>  Overall score of all substructure annotations computed for this structure candidate (structureAnnotationSmiles)  <p>  Null if substructure annotation not available or not requested.
     #' @param ... Other optional arguments.
-    initialize = function(`molecularFormula` = NULL, `adduct` = NULL, `exactMass` = NULL, `massDeviationMz` = NULL, `massDeviationPpm` = NULL, `structureAnnotationSmiles` = NULL, `structureAnnotationScore` = NULL, ...) {
+    initialize = function(`molecularFormula` = NULL, `adduct` = NULL, `exactMass` = NULL, `massDeviationMz` = NULL, `massDeviationPpm` = NULL, `structureAnnotationSmiles` = NULL, `structureAnnotationName` = NULL, `structureAnnotationSvg` = NULL, `structureAnnotationScore` = NULL, ...) {
       if (!is.null(`molecularFormula`)) {
         if (!(is.character(`molecularFormula`) && length(`molecularFormula`) == 1)) {
           stop(paste("Error! Invalid data for `molecularFormula`. Must be a string:", `molecularFormula`))
@@ -75,6 +81,18 @@ SpectrumAnnotation <- R6::R6Class(
           stop(paste("Error! Invalid data for `structureAnnotationSmiles`. Must be a string:", `structureAnnotationSmiles`))
         }
         self$`structureAnnotationSmiles` <- `structureAnnotationSmiles`
+      }
+      if (!is.null(`structureAnnotationName`)) {
+        if (!(is.character(`structureAnnotationName`) && length(`structureAnnotationName`) == 1)) {
+          stop(paste("Error! Invalid data for `structureAnnotationName`. Must be a string:", `structureAnnotationName`))
+        }
+        self$`structureAnnotationName` <- `structureAnnotationName`
+      }
+      if (!is.null(`structureAnnotationSvg`)) {
+        if (!(is.character(`structureAnnotationSvg`) && length(`structureAnnotationSvg`) == 1)) {
+          stop(paste("Error! Invalid data for `structureAnnotationSvg`. Must be a string:", `structureAnnotationSvg`))
+        }
+        self$`structureAnnotationSvg` <- `structureAnnotationSvg`
       }
       if (!is.null(`structureAnnotationScore`)) {
         if (!(is.numeric(`structureAnnotationScore`) && length(`structureAnnotationScore`) == 1)) {
@@ -139,6 +157,14 @@ SpectrumAnnotation <- R6::R6Class(
         SpectrumAnnotationObject[["structureAnnotationSmiles"]] <-
           self$`structureAnnotationSmiles`
       }
+      if (!is.null(self$`structureAnnotationName`)) {
+        SpectrumAnnotationObject[["structureAnnotationName"]] <-
+          self$`structureAnnotationName`
+      }
+      if (!is.null(self$`structureAnnotationSvg`)) {
+        SpectrumAnnotationObject[["structureAnnotationSvg"]] <-
+          self$`structureAnnotationSvg`
+      }
       if (!is.null(self$`structureAnnotationScore`)) {
         SpectrumAnnotationObject[["structureAnnotationScore"]] <-
           self$`structureAnnotationScore`
@@ -171,6 +197,12 @@ SpectrumAnnotation <- R6::R6Class(
       if (!is.null(this_object$`structureAnnotationSmiles`)) {
         self$`structureAnnotationSmiles` <- this_object$`structureAnnotationSmiles`
       }
+      if (!is.null(this_object$`structureAnnotationName`)) {
+        self$`structureAnnotationName` <- this_object$`structureAnnotationName`
+      }
+      if (!is.null(this_object$`structureAnnotationSvg`)) {
+        self$`structureAnnotationSvg` <- this_object$`structureAnnotationSvg`
+      }
       if (!is.null(this_object$`structureAnnotationScore`)) {
         self$`structureAnnotationScore` <- this_object$`structureAnnotationScore`
       }
@@ -201,6 +233,8 @@ SpectrumAnnotation <- R6::R6Class(
       self$`massDeviationMz` <- this_object$`massDeviationMz`
       self$`massDeviationPpm` <- this_object$`massDeviationPpm`
       self$`structureAnnotationSmiles` <- this_object$`structureAnnotationSmiles`
+      self$`structureAnnotationName` <- this_object$`structureAnnotationName`
+      self$`structureAnnotationSvg` <- this_object$`structureAnnotationSvg`
       self$`structureAnnotationScore` <- this_object$`structureAnnotationScore`
       self
     },
