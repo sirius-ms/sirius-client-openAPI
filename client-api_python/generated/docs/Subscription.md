@@ -20,6 +20,7 @@ Name | Type | Description | Notes
 **name** | **str** |  | [optional] 
 **tos** | **str** |  | [optional] 
 **pp** | **str** |  | [optional] 
+**allowed_features** | [**AllowedFeatures**](AllowedFeatures.md) |  | [optional] 
 
 ## Example
 

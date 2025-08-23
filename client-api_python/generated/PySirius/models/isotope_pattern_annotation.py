@@ -74,16 +74,6 @@ class IsotopePatternAnnotation(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of simulated_pattern
         if self.simulated_pattern:
             _dict['simulatedPattern'] = self.simulated_pattern.to_dict()
-        # set to None if isotope_pattern (nullable) is None
-        # and model_fields_set contains the field
-        if self.isotope_pattern is None and "isotope_pattern" in self.model_fields_set:
-            _dict['isotopePattern'] = None
-
-        # set to None if simulated_pattern (nullable) is None
-        # and model_fields_set contains the field
-        if self.simulated_pattern is None and "simulated_pattern" in self.model_fields_set:
-            _dict['simulatedPattern'] = None
-
         return _dict
 
     @classmethod
