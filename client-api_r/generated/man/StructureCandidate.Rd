@@ -38,11 +38,13 @@ df
 
 \item{\code{structureName}}{character [optional]}
 
-\item{\code{xlogP}}{numeric [optional]}
+\item{\code{structureSvg}}{SVG graphics of the structure candidate  OPTIONAL: needs to be added by parameter character [optional]}
 
 \item{\code{dbLinks}}{List of structure database links belonging to this structure candidate  OPTIONAL: needs to be added by parameter list(\link{DBLink}) [optional]}
 
 \item{\code{spectralLibraryMatches}}{List of spectral library matches belonging to this structure candidate  OPTIONAL: needs to be added by parameter list(\link{SpectralLibraryMatch}) [optional]}
+
+\item{\code{xlogP}}{numeric [optional]}
 }
 \if{html}{\out{</div>}}
 }
@@ -74,9 +76,10 @@ Initialize a new StructureCandidate class.
   inchiKey = NULL,
   smiles = NULL,
   structureName = NULL,
-  xlogP = NULL,
+  structureSvg = NULL,
   dbLinks = NULL,
   spectralLibraryMatches = NULL,
+  xlogP = NULL,
   ...
 )}\if{html}{\out{</div>}}
 }
@@ -90,11 +93,13 @@ Initialize a new StructureCandidate class.
 
 \item{\code{structureName}}{structureName}
 
-\item{\code{xlogP}}{xlogP}
+\item{\code{structureSvg}}{SVG graphics of the structure candidate  OPTIONAL: needs to be added by parameter}
 
 \item{\code{dbLinks}}{List of structure database links belonging to this structure candidate  OPTIONAL: needs to be added by parameter}
 
 \item{\code{spectralLibraryMatches}}{List of spectral library matches belonging to this structure candidate  OPTIONAL: needs to be added by parameter}
+
+\item{\code{xlogP}}{xlogP}
 
 \item{\code{...}}{Other optional arguments.}
 }
