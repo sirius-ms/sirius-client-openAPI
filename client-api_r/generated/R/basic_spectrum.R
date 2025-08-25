@@ -13,8 +13,14 @@
 #' @field instrument Instrument information. character [optional]
 #' @field precursorMz Precursor m/z of the MS/MS spectrum  Null for spectra where precursor m/z is not applicable numeric [optional]
 #' @field scanNumber Scan number of the spectrum.  Might be null for artificial spectra with no scan number (e.g. Simulated Isotope patterns or merged spectra) integer [optional]
+#' @field cosineQuery True if spectrum is in cosine query normalized format.  Such spectrum is compatible with SpectralLibraryMatch peak assignments to reference spectra. character
+#' @field precursorPeak A separate precursor peak field to either mark the precursor in the peaklist or  provide the precursor peak separately from the spectrum in case the spectrum is in a preprocessed form where  the precursor peak has been removed for library matching.   NULL if the spectrum does not contain the precursor peak. \link{SimplePeak} [optional]
 #' @field peaks The peaks of this spectrum which might contain additional annotations such as molecular formulas. list(\link{SimplePeak})
-#' @field absIntensityFactor Factor to convert relative intensities to absolute intensities.  Might be null or 1 for spectra where absolute intensities are not available (E.g. artificial or merged spectra) numeric [optional]
+#' @field absIntensityFactor Factor to convert relative intensities to absolute intensities.  Might be null or 1 for spectra where absolute intensities are not available (E.g. artificial or merged spectra)  <p>  DEPRECATED: Spectra are always returned with raw intensities.  Use provided normalization factors to normalize on the fly. numeric [optional]
+#' @field maxNormFactor Factor to convert absolute intensities to MAX norm. numeric [optional]
+#' @field sumNormFactor Factor to convert absolute intensities to SUM norm. numeric [optional]
+#' @field l2NormFactor Factor to convert absolute intensities to L2 (Euclidean) norm. numeric [optional]
+#' @field firstPeakNormFactor Factor to convert absolute intensities to normalize intensities by first peak intensity. numeric [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
 #' @export
@@ -27,12 +33,19 @@ BasicSpectrum <- R6::R6Class(
     `instrument` = NULL,
     `precursorMz` = NULL,
     `scanNumber` = NULL,
+    `cosineQuery` = NULL,
+    `precursorPeak` = NULL,
     `peaks` = NULL,
     `absIntensityFactor` = NULL,
+    `maxNormFactor` = NULL,
+    `sumNormFactor` = NULL,
+    `l2NormFactor` = NULL,
+    `firstPeakNormFactor` = NULL,
 
     #' @description
     #' Initialize a new BasicSpectrum class.
     #'
+    #' @param cosineQuery True if spectrum is in cosine query normalized format.  Such spectrum is compatible with SpectralLibraryMatch peak assignments to reference spectra.
     #' @param peaks The peaks of this spectrum which might contain additional annotations such as molecular formulas.
     #' @param name Optional Displayable name of this spectrum.
     #' @param msLevel MS level of the measured spectrum.  Artificial spectra with no msLevel (e.g. Simulated Isotope patterns) use null or zero
@@ -40,9 +53,20 @@ BasicSpectrum <- R6::R6Class(
     #' @param instrument Instrument information.
     #' @param precursorMz Precursor m/z of the MS/MS spectrum  Null for spectra where precursor m/z is not applicable
     #' @param scanNumber Scan number of the spectrum.  Might be null for artificial spectra with no scan number (e.g. Simulated Isotope patterns or merged spectra)
-    #' @param absIntensityFactor Factor to convert relative intensities to absolute intensities.  Might be null or 1 for spectra where absolute intensities are not available (E.g. artificial or merged spectra)
+    #' @param precursorPeak A separate precursor peak field to either mark the precursor in the peaklist or  provide the precursor peak separately from the spectrum in case the spectrum is in a preprocessed form where  the precursor peak has been removed for library matching.   NULL if the spectrum does not contain the precursor peak.
+    #' @param absIntensityFactor Factor to convert relative intensities to absolute intensities.  Might be null or 1 for spectra where absolute intensities are not available (E.g. artificial or merged spectra)  <p>  DEPRECATED: Spectra are always returned with raw intensities.  Use provided normalization factors to normalize on the fly.
+    #' @param maxNormFactor Factor to convert absolute intensities to MAX norm.
+    #' @param sumNormFactor Factor to convert absolute intensities to SUM norm.
+    #' @param l2NormFactor Factor to convert absolute intensities to L2 (Euclidean) norm.
+    #' @param firstPeakNormFactor Factor to convert absolute intensities to normalize intensities by first peak intensity.
     #' @param ... Other optional arguments.
-    initialize = function(`peaks`, `name` = NULL, `msLevel` = NULL, `collisionEnergy` = NULL, `instrument` = NULL, `precursorMz` = NULL, `scanNumber` = NULL, `absIntensityFactor` = NULL, ...) {
+    initialize = function(`cosineQuery`, `peaks`, `name` = NULL, `msLevel` = NULL, `collisionEnergy` = NULL, `instrument` = NULL, `precursorMz` = NULL, `scanNumber` = NULL, `precursorPeak` = NULL, `absIntensityFactor` = NULL, `maxNormFactor` = NULL, `sumNormFactor` = NULL, `l2NormFactor` = NULL, `firstPeakNormFactor` = NULL, ...) {
+      if (!missing(`cosineQuery`)) {
+        if (!(is.logical(`cosineQuery`) && length(`cosineQuery`) == 1)) {
+          stop(paste("Error! Invalid data for `cosineQuery`. Must be a boolean:", `cosineQuery`))
+        }
+        self$`cosineQuery` <- `cosineQuery`
+      }
       if (!missing(`peaks`)) {
         stopifnot(is.vector(`peaks`), length(`peaks`) != 0)
         sapply(`peaks`, function(x) stopifnot(R6::is.R6(x)))
@@ -84,11 +108,39 @@ BasicSpectrum <- R6::R6Class(
         }
         self$`scanNumber` <- `scanNumber`
       }
+      if (!is.null(`precursorPeak`)) {
+        stopifnot(R6::is.R6(`precursorPeak`))
+        self$`precursorPeak` <- `precursorPeak`
+      }
       if (!is.null(`absIntensityFactor`)) {
         if (!(is.numeric(`absIntensityFactor`) && length(`absIntensityFactor`) == 1)) {
           stop(paste("Error! Invalid data for `absIntensityFactor`. Must be a number:", `absIntensityFactor`))
         }
         self$`absIntensityFactor` <- `absIntensityFactor`
+      }
+      if (!is.null(`maxNormFactor`)) {
+        if (!(is.numeric(`maxNormFactor`) && length(`maxNormFactor`) == 1)) {
+          stop(paste("Error! Invalid data for `maxNormFactor`. Must be a number:", `maxNormFactor`))
+        }
+        self$`maxNormFactor` <- `maxNormFactor`
+      }
+      if (!is.null(`sumNormFactor`)) {
+        if (!(is.numeric(`sumNormFactor`) && length(`sumNormFactor`) == 1)) {
+          stop(paste("Error! Invalid data for `sumNormFactor`. Must be a number:", `sumNormFactor`))
+        }
+        self$`sumNormFactor` <- `sumNormFactor`
+      }
+      if (!is.null(`l2NormFactor`)) {
+        if (!(is.numeric(`l2NormFactor`) && length(`l2NormFactor`) == 1)) {
+          stop(paste("Error! Invalid data for `l2NormFactor`. Must be a number:", `l2NormFactor`))
+        }
+        self$`l2NormFactor` <- `l2NormFactor`
+      }
+      if (!is.null(`firstPeakNormFactor`)) {
+        if (!(is.numeric(`firstPeakNormFactor`) && length(`firstPeakNormFactor`) == 1)) {
+          stop(paste("Error! Invalid data for `firstPeakNormFactor`. Must be a number:", `firstPeakNormFactor`))
+        }
+        self$`firstPeakNormFactor` <- `firstPeakNormFactor`
       }
     },
 
@@ -147,6 +199,14 @@ BasicSpectrum <- R6::R6Class(
         BasicSpectrumObject[["scanNumber"]] <-
           self$`scanNumber`
       }
+      if (!is.null(self$`cosineQuery`)) {
+        BasicSpectrumObject[["cosineQuery"]] <-
+          self$`cosineQuery`
+      }
+      if (!is.null(self$`precursorPeak`)) {
+        BasicSpectrumObject[["precursorPeak"]] <-
+          self$`precursorPeak`$toSimpleType()
+      }
       if (!is.null(self$`peaks`)) {
         BasicSpectrumObject[["peaks"]] <-
           lapply(self$`peaks`, function(x) x$toSimpleType())
@@ -154,6 +214,22 @@ BasicSpectrum <- R6::R6Class(
       if (!is.null(self$`absIntensityFactor`)) {
         BasicSpectrumObject[["absIntensityFactor"]] <-
           self$`absIntensityFactor`
+      }
+      if (!is.null(self$`maxNormFactor`)) {
+        BasicSpectrumObject[["maxNormFactor"]] <-
+          self$`maxNormFactor`
+      }
+      if (!is.null(self$`sumNormFactor`)) {
+        BasicSpectrumObject[["sumNormFactor"]] <-
+          self$`sumNormFactor`
+      }
+      if (!is.null(self$`l2NormFactor`)) {
+        BasicSpectrumObject[["l2NormFactor"]] <-
+          self$`l2NormFactor`
+      }
+      if (!is.null(self$`firstPeakNormFactor`)) {
+        BasicSpectrumObject[["firstPeakNormFactor"]] <-
+          self$`firstPeakNormFactor`
       }
       return(BasicSpectrumObject)
     },
@@ -183,11 +259,31 @@ BasicSpectrum <- R6::R6Class(
       if (!is.null(this_object$`scanNumber`)) {
         self$`scanNumber` <- this_object$`scanNumber`
       }
+      if (!is.null(this_object$`cosineQuery`)) {
+        self$`cosineQuery` <- this_object$`cosineQuery`
+      }
+      if (!is.null(this_object$`precursorPeak`)) {
+        `precursorpeak_object` <- SimplePeak$new()
+        `precursorpeak_object`$fromJSON(jsonlite::toJSON(this_object$`precursorPeak`, auto_unbox = TRUE, digits = NA, null = 'null'))
+        self$`precursorPeak` <- `precursorpeak_object`
+      }
       if (!is.null(this_object$`peaks`)) {
         self$`peaks` <- ApiClient$new()$deserializeObj(this_object$`peaks`, "array[SimplePeak]", loadNamespace("Rsirius"))
       }
       if (!is.null(this_object$`absIntensityFactor`)) {
         self$`absIntensityFactor` <- this_object$`absIntensityFactor`
+      }
+      if (!is.null(this_object$`maxNormFactor`)) {
+        self$`maxNormFactor` <- this_object$`maxNormFactor`
+      }
+      if (!is.null(this_object$`sumNormFactor`)) {
+        self$`sumNormFactor` <- this_object$`sumNormFactor`
+      }
+      if (!is.null(this_object$`l2NormFactor`)) {
+        self$`l2NormFactor` <- this_object$`l2NormFactor`
+      }
+      if (!is.null(this_object$`firstPeakNormFactor`)) {
+        self$`firstPeakNormFactor` <- this_object$`firstPeakNormFactor`
       }
       self
     },
@@ -216,8 +312,14 @@ BasicSpectrum <- R6::R6Class(
       self$`instrument` <- this_object$`instrument`
       self$`precursorMz` <- this_object$`precursorMz`
       self$`scanNumber` <- this_object$`scanNumber`
+      self$`cosineQuery` <- this_object$`cosineQuery`
+      self$`precursorPeak` <- SimplePeak$new()$fromJSON(jsonlite::toJSON(this_object$`precursorPeak`, auto_unbox = TRUE, digits = NA, null = 'null'))
       self$`peaks` <- ApiClient$new()$deserializeObj(this_object$`peaks`, "array[SimplePeak]", loadNamespace("Rsirius"))
       self$`absIntensityFactor` <- this_object$`absIntensityFactor`
+      self$`maxNormFactor` <- this_object$`maxNormFactor`
+      self$`sumNormFactor` <- this_object$`sumNormFactor`
+      self$`l2NormFactor` <- this_object$`l2NormFactor`
+      self$`firstPeakNormFactor` <- this_object$`firstPeakNormFactor`
       self
     },
 
@@ -227,6 +329,14 @@ BasicSpectrum <- R6::R6Class(
     #' @param input the JSON input
     validateJSON = function(input) {
       input_json <- jsonlite::fromJSON(input)
+      # check the required field `cosineQuery`
+      if (!is.null(input_json$`cosineQuery`)) {
+        if (!(is.logical(input_json$`cosineQuery`) && length(input_json$`cosineQuery`) == 1)) {
+          stop(paste("Error! Invalid data for `cosineQuery`. Must be a boolean:", input_json$`cosineQuery`))
+        }
+      } else {
+        stop(paste("The JSON input `", input, "` is invalid for BasicSpectrum: the required field `cosineQuery` is missing."))
+      }
       # check the required field `peaks`
       if (!is.null(input_json$`peaks`)) {
         stopifnot(is.vector(input_json$`peaks`), length(input_json$`peaks`) != 0)
@@ -249,6 +359,11 @@ BasicSpectrum <- R6::R6Class(
     #'
     #' @return true if the values in all fields are valid.
     isValid = function() {
+      # check if the required `cosineQuery` is null
+      if (is.null(self$`cosineQuery`)) {
+        return(FALSE)
+      }
+
       # check if the required `peaks` is null
       if (is.null(self$`peaks`)) {
         return(FALSE)
@@ -263,6 +378,11 @@ BasicSpectrum <- R6::R6Class(
     #' @return A list of invalid fields (if any).
     getInvalidFields = function() {
       invalid_fields <- list()
+      # check if the required `cosineQuery` is null
+      if (is.null(self$`cosineQuery`)) {
+        invalid_fields["cosineQuery"] <- "Non-nullable required field `cosineQuery` cannot be null."
+      }
+
       # check if the required `peaks` is null
       if (is.null(self$`peaks`)) {
         invalid_fields["peaks"] <- "Non-nullable required field `peaks` cannot be null."

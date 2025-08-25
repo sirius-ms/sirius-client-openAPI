@@ -59,7 +59,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/vnd.spring-boot.actuator.v3+json, application/json, application/vnd.spring-boot.actuator.v2+json
+ - **Accept**: application/vnd.spring-boot.actuator.v3+json, application/vnd.spring-boot.actuator.v2+json, application/json
 
 ### HTTP response details
 
@@ -70,7 +70,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **shutdown**
-> object shutdown()
+> shutdown()
 
 Actuator web endpoint 'shutdown'
 
@@ -96,9 +96,7 @@ with PySirius.ApiClient(configuration) as api_client:
 
     try:
         # Actuator web endpoint 'shutdown'
-        api_response = api_instance.shutdown()
-        print("The response of ActuatorApi->shutdown:\n")
-        pprint(api_response)
+        api_instance.shutdown()
     except Exception as e:
         print("Exception when calling ActuatorApi->shutdown: %s\n" % e)
 ```
@@ -111,7 +109,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-**object**
+void (empty response body)
 
 ### Authorization
 
@@ -120,13 +118,14 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/vnd.spring-boot.actuator.v3+json, application/json, application/vnd.spring-boot.actuator.v2+json
+ - **Accept**: Not defined
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | OK |  -  |
+**204** | No Content |  -  |
+**400** | Bad Request |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

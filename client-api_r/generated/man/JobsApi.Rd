@@ -58,12 +58,26 @@ api_instance <- rsirius_api$new()
 api_instance$jobs_api$DeleteJobs(var_project_id, cancel_if_running = var_cancel_if_running, await_deletion = var_await_deletion)
 
 
+####################  GetCommand  ####################
+
+library(Rsirius)
+var_job_submission <- JobSubmission$new(c("compoundIds_example"), c("alignedFeatureIds_example"), c("fallbackAdducts_example"), c("enforcedAdducts_example"), c("detectableAdducts_example"), "recompute_example", SpectralLibrarySearch$new("enabled_example", c("spectraSearchDBs_example"), 123, 123, 123, "enableAnalogueSearch_example", 123, 123, "INTENSITY", 123), Sirius$new("enabled_example", "QTOF", 123, 123, 123, "IGNORE", "filterByIsotopePattern_example", "enforceElGordoFormula_example", "performBottomUpSearch_example", 123, c("formulaSearchDBs_example"), "applyFormulaConstraintsToDBAndBottomUpSearch_example", "enforcedFormulaConstraints_example", "fallbackFormulaConstraints_example", c("detectableElements_example"), Timeout$new(123, 123), UseHeuristic$new(123, 123), "injectSpecLibMatchFormulas_example", 123, 123), Zodiac$new("enabled_example", 123, 123, "runInTwoSteps_example", ZodiacEdgeFilterThresholds$new(123, 123, 123), ZodiacEpochs$new(123, 123, 123), ZodiacLibraryScoring$new("enabled_example", 123), ZodiacAnalogueNodes$new("enabled_example", 123, 123)), FingerprintPrediction$new("enabled_example", "useScoreThreshold_example", "alwaysPredictHighRefMatches_example"), Canopus$new("enabled_example"), StructureDbSearch$new("enabled_example", c("structureSearchDBs_example"), "tagStructuresWithLipidClass_example", "OFF"), MsNovelist$new("enabled_example", 123), c(key = "inner_example")) # JobSubmission | 
+
+#Get a CLI command for the given job configuration.
+api_instance <- rsirius_api$new()
+
+# to save the result into a file, simply add the optional `data_file` parameter, e.g.
+# result <- api_instance$GetCommand(var_job_submissiondata_file = "result.txt")
+result <- api_instance$jobs_api$GetCommand(var_job_submission)
+dput(result)
+
+
 ####################  GetDefaultJobConfig  ####################
 
 library(Rsirius)
 var_include_config_map <- FALSE # character | if true, generic configmap with-defaults will be included (Optional)
 var_move_parameters_to_config_map <- FALSE # character | if true, object-based parameters will be converted to and added to the generic configMap parameters (Optional)
-var_include_custom_dbs_for_structure_search <- FALSE # character | if true, default database selection of structure db search contains also all available custom DB. (Optional)
+var_include_custom_dbs_for_structure_search <- FALSE # character | if true, default database selection of structure db search                                            spectral library search contains also all available custom DB.                                            If No custom dbs are selected, spectral library search is disabled by default. (Optional)
 
 #Request default job configuration
 api_instance <- rsirius_api$new()
@@ -109,7 +123,7 @@ dput(result)
 
 library(Rsirius)
 
-#DEPRECATED: use /job-configs to get all configs with names.
+#[DEPRECATED] Get all (non-default) job configuration names  
 api_instance <- rsirius_api$new()
 
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
@@ -182,7 +196,7 @@ dput(result)
 
 library(Rsirius)
 var_name <- "name_example" # character | name of the job-config to add
-var_job_submission <- JobSubmission$new(c("compoundIds_example"), c("alignedFeatureIds_example"), c("fallbackAdducts_example"), c("enforcedAdducts_example"), c("detectableAdducts_example"), "recompute_example", SpectralLibrarySearch$new("enabled_example", c("spectraSearchDBs_example"), 123, 123, "INTENSITY"), Sirius$new("enabled_example", "QTOF", 123, 123, 123, "IGNORE", "filterByIsotopePattern_example", "enforceElGordoFormula_example", "performBottomUpSearch_example", 123, c("formulaSearchDBs_example"), "applyFormulaConstraintsToDBAndBottomUpSearch_example", "enforcedFormulaConstraints_example", "fallbackFormulaConstraints_example", c("detectableElements_example"), Timeout$new(123, 123), UseHeuristic$new(123, 123), "injectSpecLibMatchFormulas_example", 123, 123), Zodiac$new("enabled_example", 123, 123, "runInTwoSteps_example", ZodiacEdgeFilterThresholds$new(123, 123, 123), ZodiacEpochs$new(123, 123, 123)), FingerprintPrediction$new("enabled_example", "useScoreThreshold_example", "alwaysPredictHighRefMatches_example"), Canopus$new("enabled_example"), StructureDbSearch$new("enabled_example", c("structureSearchDBs_example"), "tagStructuresWithLipidClass_example", "OFF"), MsNovelist$new("enabled_example", 123), c(key = "inner_example")) # JobSubmission | to add
+var_job_submission <- JobSubmission$new(c("compoundIds_example"), c("alignedFeatureIds_example"), c("fallbackAdducts_example"), c("enforcedAdducts_example"), c("detectableAdducts_example"), "recompute_example", SpectralLibrarySearch$new("enabled_example", c("spectraSearchDBs_example"), 123, 123, 123, "enableAnalogueSearch_example", 123, 123, "INTENSITY", 123), Sirius$new("enabled_example", "QTOF", 123, 123, 123, "IGNORE", "filterByIsotopePattern_example", "enforceElGordoFormula_example", "performBottomUpSearch_example", 123, c("formulaSearchDBs_example"), "applyFormulaConstraintsToDBAndBottomUpSearch_example", "enforcedFormulaConstraints_example", "fallbackFormulaConstraints_example", c("detectableElements_example"), Timeout$new(123, 123), UseHeuristic$new(123, 123), "injectSpecLibMatchFormulas_example", 123, 123), Zodiac$new("enabled_example", 123, 123, "runInTwoSteps_example", ZodiacEdgeFilterThresholds$new(123, 123, 123), ZodiacEpochs$new(123, 123, 123), ZodiacLibraryScoring$new("enabled_example", 123), ZodiacAnalogueNodes$new("enabled_example", 123, 123)), FingerprintPrediction$new("enabled_example", "useScoreThreshold_example", "alwaysPredictHighRefMatches_example"), Canopus$new("enabled_example"), StructureDbSearch$new("enabled_example", c("structureSearchDBs_example"), "tagStructuresWithLipidClass_example", "OFF"), MsNovelist$new("enabled_example", 123), c(key = "inner_example")) # JobSubmission | to add
 var_override_existing <- FALSE # character |  (Optional)
 var_move_parameters_to_config_map <- FALSE # character | if true, object-based parameters will be converted to and added to the generic configMap parameters in the return object (Optional)
 
@@ -199,7 +213,7 @@ dput(result)
 
 library(Rsirius)
 var_project_id <- "project_id_example" # character | project-space to run jobs on
-var_job_submission <- JobSubmission$new(c("compoundIds_example"), c("alignedFeatureIds_example"), c("fallbackAdducts_example"), c("enforcedAdducts_example"), c("detectableAdducts_example"), "recompute_example", SpectralLibrarySearch$new("enabled_example", c("spectraSearchDBs_example"), 123, 123, "INTENSITY"), Sirius$new("enabled_example", "QTOF", 123, 123, 123, "IGNORE", "filterByIsotopePattern_example", "enforceElGordoFormula_example", "performBottomUpSearch_example", 123, c("formulaSearchDBs_example"), "applyFormulaConstraintsToDBAndBottomUpSearch_example", "enforcedFormulaConstraints_example", "fallbackFormulaConstraints_example", c("detectableElements_example"), Timeout$new(123, 123), UseHeuristic$new(123, 123), "injectSpecLibMatchFormulas_example", 123, 123), Zodiac$new("enabled_example", 123, 123, "runInTwoSteps_example", ZodiacEdgeFilterThresholds$new(123, 123, 123), ZodiacEpochs$new(123, 123, 123)), FingerprintPrediction$new("enabled_example", "useScoreThreshold_example", "alwaysPredictHighRefMatches_example"), Canopus$new("enabled_example"), StructureDbSearch$new("enabled_example", c("structureSearchDBs_example"), "tagStructuresWithLipidClass_example", "OFF"), MsNovelist$new("enabled_example", 123), c(key = "inner_example")) # JobSubmission | configuration of the job that will be submitted of the job to be returned
+var_job_submission <- JobSubmission$new(c("compoundIds_example"), c("alignedFeatureIds_example"), c("fallbackAdducts_example"), c("enforcedAdducts_example"), c("detectableAdducts_example"), "recompute_example", SpectralLibrarySearch$new("enabled_example", c("spectraSearchDBs_example"), 123, 123, 123, "enableAnalogueSearch_example", 123, 123, "INTENSITY", 123), Sirius$new("enabled_example", "QTOF", 123, 123, 123, "IGNORE", "filterByIsotopePattern_example", "enforceElGordoFormula_example", "performBottomUpSearch_example", 123, c("formulaSearchDBs_example"), "applyFormulaConstraintsToDBAndBottomUpSearch_example", "enforcedFormulaConstraints_example", "fallbackFormulaConstraints_example", c("detectableElements_example"), Timeout$new(123, 123), UseHeuristic$new(123, 123), "injectSpecLibMatchFormulas_example", 123, 123), Zodiac$new("enabled_example", 123, 123, "runInTwoSteps_example", ZodiacEdgeFilterThresholds$new(123, 123, 123), ZodiacEpochs$new(123, 123, 123), ZodiacLibraryScoring$new("enabled_example", 123), ZodiacAnalogueNodes$new("enabled_example", 123, 123)), FingerprintPrediction$new("enabled_example", "useScoreThreshold_example", "alwaysPredictHighRefMatches_example"), Canopus$new("enabled_example"), StructureDbSearch$new("enabled_example", c("structureSearchDBs_example"), "tagStructuresWithLipidClass_example", "OFF"), MsNovelist$new("enabled_example", 123), c(key = "inner_example")) # JobSubmission | configuration of the job that will be submitted of the job to be returned
 var_opt_fields <- c("none") # array[character] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
 
 #Start computation for given compounds and with given parameters.
@@ -248,6 +262,8 @@ dput(result)
 \item \href{#method-JobsApi-DeleteJobConfigWithHttpInfo}{\code{JobsApi$DeleteJobConfigWithHttpInfo()}}
 \item \href{#method-JobsApi-DeleteJobs}{\code{JobsApi$DeleteJobs()}}
 \item \href{#method-JobsApi-DeleteJobsWithHttpInfo}{\code{JobsApi$DeleteJobsWithHttpInfo()}}
+\item \href{#method-JobsApi-GetCommand}{\code{JobsApi$GetCommand()}}
+\item \href{#method-JobsApi-GetCommandWithHttpInfo}{\code{JobsApi$GetCommandWithHttpInfo()}}
 \item \href{#method-JobsApi-GetDefaultJobConfig}{\code{JobsApi$GetDefaultJobConfig()}}
 \item \href{#method-JobsApi-GetDefaultJobConfigWithHttpInfo}{\code{JobsApi$GetDefaultJobConfigWithHttpInfo()}}
 \item \href{#method-JobsApi-GetJob}{\code{JobsApi$GetJob()}}
@@ -465,6 +481,54 @@ API response (void) with additional information such as HTTP status code, header
 }
 }
 \if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-JobsApi-GetCommand"></a>}}
+\if{latex}{\out{\hypertarget{method-JobsApi-GetCommand}{}}}
+\subsection{Method \code{GetCommand()}}{
+Get a CLI command for the given job configuration.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{JobsApi$GetCommand(job_submission, data_file = NULL, ...)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{job_submission}}{}
+
+\item{\code{data_file}}{(optional) name of the data file to save the result}
+
+\item{\code{...}}{Other optional arguments}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+array[character]
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-JobsApi-GetCommandWithHttpInfo"></a>}}
+\if{latex}{\out{\hypertarget{method-JobsApi-GetCommandWithHttpInfo}{}}}
+\subsection{Method \code{GetCommandWithHttpInfo()}}{
+Get a CLI command for the given job configuration.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{JobsApi$GetCommandWithHttpInfo(job_submission, data_file = NULL, ...)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{job_submission}}{}
+
+\item{\code{data_file}}{(optional) name of the data file to save the result}
+
+\item{\code{...}}{Other optional arguments}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+API response (array[character]) with additional information such as HTTP status code, headers
+}
+}
+\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-JobsApi-GetDefaultJobConfig"></a>}}
 \if{latex}{\out{\hypertarget{method-JobsApi-GetDefaultJobConfig}{}}}
 \subsection{Method \code{GetDefaultJobConfig()}}{
@@ -486,7 +550,7 @@ Request default job configuration
 
 \item{\code{move_parameters_to_config_map}}{(optional) if true, object-based parameters will be converted to and added to the generic configMap parameters (default value: FALSE)}
 
-\item{\code{include_custom_dbs_for_structure_search}}{(optional) if true, default database selection of structure db search contains also all available custom DB. (default value: FALSE)}
+\item{\code{include_custom_dbs_for_structure_search}}{(optional) if true, default database selection of structure db search                                            spectral library search contains also all available custom DB.                                            If No custom dbs are selected, spectral library search is disabled by default. (default value: FALSE)}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 
@@ -520,7 +584,7 @@ Request default job configuration
 
 \item{\code{move_parameters_to_config_map}}{(optional) if true, object-based parameters will be converted to and added to the generic configMap parameters (default value: FALSE)}
 
-\item{\code{include_custom_dbs_for_structure_search}}{(optional) if true, default database selection of structure db search contains also all available custom DB. (default value: FALSE)}
+\item{\code{include_custom_dbs_for_structure_search}}{(optional) if true, default database selection of structure db search                                            spectral library search contains also all available custom DB.                                            If No custom dbs are selected, spectral library search is disabled by default. (default value: FALSE)}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 
@@ -541,7 +605,7 @@ Get job information and its current state and progress (if available).
 \if{html}{\out{<div class="r">}}\preformatted{JobsApi$GetJob(
   project_id,
   job_id,
-  opt_fields = list("progress"),
+  opt_fields = list(progress),
   data_file = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -554,7 +618,7 @@ Get job information and its current state and progress (if available).
 
 \item{\code{job_id}}{of the job to be returned}
 
-\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["progress"])}
+\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [progress])}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 
@@ -575,7 +639,7 @@ Get job information and its current state and progress (if available).
 \if{html}{\out{<div class="r">}}\preformatted{JobsApi$GetJobWithHttpInfo(
   project_id,
   job_id,
-  opt_fields = list("progress"),
+  opt_fields = list(progress),
   data_file = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -588,7 +652,7 @@ Get job information and its current state and progress (if available).
 
 \item{\code{job_id}}{of the job to be returned}
 
-\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["progress"])}
+\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [progress])}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 
@@ -666,7 +730,7 @@ API response (StoredJobSubmission) with additional information such as HTTP stat
 \if{html}{\out{<a id="method-JobsApi-GetJobConfigNames"></a>}}
 \if{latex}{\out{\hypertarget{method-JobsApi-GetJobConfigNames}{}}}
 \subsection{Method \code{GetJobConfigNames()}}{
-DEPRECATED: use /job-configs to get all configs with names.
+[DEPRECATED] Get all (non-default) job configuration names
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{JobsApi$GetJobConfigNames(data_file = NULL, ...)}\if{html}{\out{</div>}}
 }
@@ -688,7 +752,7 @@ array[character]
 \if{html}{\out{<a id="method-JobsApi-GetJobConfigNamesWithHttpInfo"></a>}}
 \if{latex}{\out{\hypertarget{method-JobsApi-GetJobConfigNamesWithHttpInfo}{}}}
 \subsection{Method \code{GetJobConfigNamesWithHttpInfo()}}{
-DEPRECATED: use /job-configs to get all configs with names.
+[DEPRECATED] Get all (non-default) job configuration names
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{JobsApi$GetJobConfigNamesWithHttpInfo(data_file = NULL, ...)}\if{html}{\out{</div>}}
 }
@@ -818,7 +882,7 @@ Get Page of jobs with information such as current state and progress (if availab
   page = 0,
   size = 20,
   sort = NULL,
-  opt_fields = list("none"),
+  opt_fields = list(NULL),
   data_file = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -835,7 +899,7 @@ Get Page of jobs with information such as current state and progress (if availab
 
 \item{\code{sort}}{(optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.}
 
-\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])}
+\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [none])}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 
@@ -858,7 +922,7 @@ Get Page of jobs with information such as current state and progress (if availab
   page = 0,
   size = 20,
   sort = NULL,
-  opt_fields = list("none"),
+  opt_fields = list(NULL),
   data_file = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -875,7 +939,7 @@ Get Page of jobs with information such as current state and progress (if availab
 
 \item{\code{sort}}{(optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.}
 
-\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])}
+\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [none])}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 
@@ -1095,7 +1159,7 @@ Start computation for given compounds and with parameters from a stored job-conf
   job_config_name,
   request_body,
   recompute = NULL,
-  opt_fields = list("command", "progress"),
+  opt_fields = list(command, progress),
   data_file = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -1112,7 +1176,7 @@ Start computation for given compounds and with parameters from a stored job-conf
 
 \item{\code{recompute}}{(optional) enable or disable recompute. If null the stored value will be used.}
 
-\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["command","progress"])}
+\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [command, progress])}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 
@@ -1135,7 +1199,7 @@ Start computation for given compounds and with parameters from a stored job-conf
   job_config_name,
   request_body,
   recompute = NULL,
-  opt_fields = list("command", "progress"),
+  opt_fields = list(command, progress),
   data_file = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -1152,7 +1216,7 @@ Start computation for given compounds and with parameters from a stored job-conf
 
 \item{\code{recompute}}{(optional) enable or disable recompute. If null the stored value will be used.}
 
-\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["command","progress"])}
+\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [command, progress])}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 

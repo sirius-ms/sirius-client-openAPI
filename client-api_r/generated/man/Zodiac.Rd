@@ -40,9 +40,13 @@ df
 
 \item{\code{runInTwoSteps}}{As default ZODIAC runs a 2-step approach. First running 'good quality compounds' only, and afterwards including the remaining. character [optional]}
 
-\item{\code{edgeFilterThresholds}}{\link{ZodiacEdgeFilterThresholds} [optional]}
+\item{\code{edgeFilterThresholds}}{thresholdFilter = Defines the proportion of edges of the complete network which will be ignored.  minLocalConnections = Minimum number of compounds to which at least one candidate per compound must be connected to. \link{ZodiacEdgeFilterThresholds} [optional]}
 
-\item{\code{gibbsSamplerParameters}}{\link{ZodiacEpochs} [optional]}
+\item{\code{gibbsSamplerParameters}}{iterations: \"Number of epochs to run the Gibbs sampling. When multiple Markov chains are computed, all chains' iterations sum up to this value.\"  burnInPeriod: \"Number of epochs considered as 'burn-in period'.  numberOfMarkovChains: Number of separate Gibbs sampling runs. \link{ZodiacEpochs} [optional]}
+
+\item{\code{librarySearchAnchors}}{Configure the use of identity spectral library search results as anchors in ZODIAC network \link{ZodiacLibraryScoring} [optional]}
+
+\item{\code{analogueSearchAnchors}}{Configure the use of analogue spectral library search results as anchors in ZODIAC network \link{ZodiacAnalogueNodes} [optional]}
 }
 \if{html}{\out{</div>}}
 }
@@ -77,6 +81,8 @@ Initialize a new Zodiac class.
   runInTwoSteps = NULL,
   edgeFilterThresholds = NULL,
   gibbsSamplerParameters = NULL,
+  librarySearchAnchors = NULL,
+  analogueSearchAnchors = NULL,
   ...
 )}\if{html}{\out{</div>}}
 }
@@ -92,9 +98,13 @@ Initialize a new Zodiac class.
 
 \item{\code{runInTwoSteps}}{As default ZODIAC runs a 2-step approach. First running 'good quality compounds' only, and afterwards including the remaining.}
 
-\item{\code{edgeFilterThresholds}}{edgeFilterThresholds}
+\item{\code{edgeFilterThresholds}}{thresholdFilter = Defines the proportion of edges of the complete network which will be ignored.  minLocalConnections = Minimum number of compounds to which at least one candidate per compound must be connected to.}
 
-\item{\code{gibbsSamplerParameters}}{gibbsSamplerParameters}
+\item{\code{gibbsSamplerParameters}}{iterations: \"Number of epochs to run the Gibbs sampling. When multiple Markov chains are computed, all chains' iterations sum up to this value.\"  burnInPeriod: \"Number of epochs considered as 'burn-in period'.  numberOfMarkovChains: Number of separate Gibbs sampling runs.}
+
+\item{\code{librarySearchAnchors}}{Configure the use of identity spectral library search results as anchors in ZODIAC network}
+
+\item{\code{analogueSearchAnchors}}{Configure the use of analogue spectral library search results as anchors in ZODIAC network}
 
 \item{\code{...}}{Other optional arguments.}
 }

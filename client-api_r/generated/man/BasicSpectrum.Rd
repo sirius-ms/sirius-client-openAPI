@@ -44,9 +44,21 @@ df
 
 \item{\code{scanNumber}}{Scan number of the spectrum.  Might be null for artificial spectra with no scan number (e.g. Simulated Isotope patterns or merged spectra) integer [optional]}
 
+\item{\code{cosineQuery}}{True if spectrum is in cosine query normalized format.  Such spectrum is compatible with SpectralLibraryMatch peak assignments to reference spectra. character}
+
+\item{\code{precursorPeak}}{A separate precursor peak field to either mark the precursor in the peaklist or  provide the precursor peak separately from the spectrum in case the spectrum is in a preprocessed form where  the precursor peak has been removed for library matching.   NULL if the spectrum does not contain the precursor peak. \link{SimplePeak} [optional]}
+
 \item{\code{peaks}}{The peaks of this spectrum which might contain additional annotations such as molecular formulas. list(\link{SimplePeak})}
 
-\item{\code{absIntensityFactor}}{Factor to convert relative intensities to absolute intensities.  Might be null or 1 for spectra where absolute intensities are not available (E.g. artificial or merged spectra) numeric [optional]}
+\item{\code{absIntensityFactor}}{Factor to convert relative intensities to absolute intensities.  Might be null or 1 for spectra where absolute intensities are not available (E.g. artificial or merged spectra)  <p>  DEPRECATED: Spectra are always returned with raw intensities.  Use provided normalization factors to normalize on the fly. numeric [optional]}
+
+\item{\code{maxNormFactor}}{Factor to convert absolute intensities to MAX norm. numeric [optional]}
+
+\item{\code{sumNormFactor}}{Factor to convert absolute intensities to SUM norm. numeric [optional]}
+
+\item{\code{l2NormFactor}}{Factor to convert absolute intensities to L2 (Euclidean) norm. numeric [optional]}
+
+\item{\code{firstPeakNormFactor}}{Factor to convert absolute intensities to normalize intensities by first peak intensity. numeric [optional]}
 }
 \if{html}{\out{</div>}}
 }
@@ -75,6 +87,7 @@ df
 Initialize a new BasicSpectrum class.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{BasicSpectrum$new(
+  cosineQuery,
   peaks,
   name = NULL,
   msLevel = NULL,
@@ -82,7 +95,12 @@ Initialize a new BasicSpectrum class.
   instrument = NULL,
   precursorMz = NULL,
   scanNumber = NULL,
+  precursorPeak = NULL,
   absIntensityFactor = NULL,
+  maxNormFactor = NULL,
+  sumNormFactor = NULL,
+  l2NormFactor = NULL,
+  firstPeakNormFactor = NULL,
   ...
 )}\if{html}{\out{</div>}}
 }
@@ -90,6 +108,8 @@ Initialize a new BasicSpectrum class.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
+\item{\code{cosineQuery}}{True if spectrum is in cosine query normalized format.  Such spectrum is compatible with SpectralLibraryMatch peak assignments to reference spectra.}
+
 \item{\code{peaks}}{The peaks of this spectrum which might contain additional annotations such as molecular formulas.}
 
 \item{\code{name}}{Optional Displayable name of this spectrum.}
@@ -104,7 +124,17 @@ Initialize a new BasicSpectrum class.
 
 \item{\code{scanNumber}}{Scan number of the spectrum.  Might be null for artificial spectra with no scan number (e.g. Simulated Isotope patterns or merged spectra)}
 
-\item{\code{absIntensityFactor}}{Factor to convert relative intensities to absolute intensities.  Might be null or 1 for spectra where absolute intensities are not available (E.g. artificial or merged spectra)}
+\item{\code{precursorPeak}}{A separate precursor peak field to either mark the precursor in the peaklist or  provide the precursor peak separately from the spectrum in case the spectrum is in a preprocessed form where  the precursor peak has been removed for library matching.   NULL if the spectrum does not contain the precursor peak.}
+
+\item{\code{absIntensityFactor}}{Factor to convert relative intensities to absolute intensities.  Might be null or 1 for spectra where absolute intensities are not available (E.g. artificial or merged spectra)  <p>  DEPRECATED: Spectra are always returned with raw intensities.  Use provided normalization factors to normalize on the fly.}
+
+\item{\code{maxNormFactor}}{Factor to convert absolute intensities to MAX norm.}
+
+\item{\code{sumNormFactor}}{Factor to convert absolute intensities to SUM norm.}
+
+\item{\code{l2NormFactor}}{Factor to convert absolute intensities to L2 (Euclidean) norm.}
+
+\item{\code{firstPeakNormFactor}}{Factor to convert absolute intensities to normalize intensities by first peak intensity.}
 
 \item{\code{...}}{Other optional arguments.}
 }
