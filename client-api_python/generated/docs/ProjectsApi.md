@@ -4,7 +4,7 @@ All URIs are relative to *http://localhost:8080*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**close_project**](ProjectsApi.md#close_project) | **DELETE** /api/projects/{projectId} | Close project-space and remove it from application
+[**close_project**](ProjectsApi.md#close_project) | **DELETE** /api/projects/{projectId} | Close project-space and remove it from the application
 [**create_project**](ProjectsApi.md#create_project) | **POST** /api/projects/{projectId} | Create and open a new project-space at given location and make it accessible via the given projectId.
 [**get_canopus_classy_fire_data**](ProjectsApi.md#get_canopus_classy_fire_data) | **GET** /api/projects/{projectId}/cf-data | Get CANOPUS prediction vector definition for ClassyFire classes
 [**get_canopus_npc_data**](ProjectsApi.md#get_canopus_npc_data) | **GET** /api/projects/{projectId}/npc-data | Get CANOPUS prediction vector definition for NPC classes
@@ -19,11 +19,14 @@ Method | HTTP request | Description
 
 
 # **close_project**
-> close_project(project_id)
+> close_project(project_id, compact=compact)
 
-Close project-space and remove it from application
+Close project-space and remove it from the application
 
-Close project-space and remove it from application. Project will NOT be deleted from disk.  <p>  ATTENTION: This will cancel and remove all jobs running on this Project before closing it.  If there are many jobs, this might take some time.
+Close project-space and remove it from the application. The Project will NOT be deleted from disk.
+ <p>
+ ATTENTION: This will cancel and remove all jobs running on this Project before closing it.
+ If there are many jobs, this might take some time.
 
 ### Example
 
@@ -45,10 +48,11 @@ with PySirius.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = PySirius.ProjectsApi(api_client)
     project_id = 'project_id_example' # str | unique name/identifier of the  project-space to be closed.
+    compact = False # bool | if true, compact project storage after closing. DEPRECATED: Compacting acts on the local filesystem and will likely be removed in a later version. (optional) (default to False)
 
     try:
-        # Close project-space and remove it from application
-        api_instance.close_project(project_id)
+        # Close project-space and remove it from the application
+        api_instance.close_project(project_id, compact=compact)
     except Exception as e:
         print("Exception when calling ProjectsApi->close_project: %s\n" % e)
 ```
@@ -61,6 +65,7 @@ with PySirius.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **str**| unique name/identifier of the  project-space to be closed. | 
+ **compact** | **bool**| if true, compact project storage after closing. DEPRECATED: Compacting acts on the local filesystem and will likely be removed in a later version. | [optional] [default to False]
 
 ### Return type
 
@@ -113,7 +118,7 @@ with PySirius.ApiClient(configuration) as api_client:
     api_instance = PySirius.ProjectsApi(api_client)
     project_id = 'project_id_example' # str | unique name/identifier that shall be used to access the newly created project-space. Must consist only of [a-zA-Z0-9_-].
     path_to_project = 'path_to_project_example' # str | local file path where the project will be created. If NULL, project will be stored by its projectId in default project location. DEPRECATED: This parameter relies on the local filesystem and will likely be removed in later versions of this API to allow for more flexible use cases. (optional)
-    opt_fields = ["none"] # List[ProjectInfoOptField] |  (optional) (default to ["none"])
+    opt_fields = [none] # List[ProjectInfoOptField] |  (optional) (default to [none])
 
     try:
         # Create and open a new project-space at given location and make it accessible via the given projectId.
@@ -133,7 +138,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **str**| unique name/identifier that shall be used to access the newly created project-space. Must consist only of [a-zA-Z0-9_-]. | 
  **path_to_project** | **str**| local file path where the project will be created. If NULL, project will be stored by its projectId in default project location. DEPRECATED: This parameter relies on the local filesystem and will likely be removed in later versions of this API to allow for more flexible use cases. | [optional] 
- **opt_fields** | [**List[ProjectInfoOptField]**](ProjectInfoOptField.md)|  | [optional] [default to [&quot;none&quot;]]
+ **opt_fields** | [**List[ProjectInfoOptField]**](ProjectInfoOptField.md)|  | [optional] [default to [none]]
 
 ### Return type
 
@@ -493,11 +498,12 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **import_ms_run_data**
-> ImportResult import_ms_run_data(project_id, input_files=input_files, parameters=parameters)
+> ImportResult import_ms_run_data(project_id, input_files, parameters)
 
 Import and Align full MS-Runs from various formats into the specified project  Possible formats (mzML, mzXML)
 
-Import and Align full MS-Runs from various formats into the specified project  Possible formats (mzML, mzXML)
+Import and Align full MS-Runs from various formats into the specified project
+ Possible formats (mzML, mzXML)
 
 ### Example
 
@@ -521,12 +527,12 @@ with PySirius.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = PySirius.ProjectsApi(api_client)
     project_id = 'project_id_example' # str | Project-space to import into.
-    input_files = None # List[bytearray] |  (optional)
-    parameters = PySirius.LcmsSubmissionParameters() # LcmsSubmissionParameters |  (optional)
+    input_files = None # List[bytearray] | Files to import into project.
+    parameters = PySirius.LcmsSubmissionParameters() # LcmsSubmissionParameters | Parameters for feature alignment and feature finding.
 
     try:
         # Import and Align full MS-Runs from various formats into the specified project  Possible formats (mzML, mzXML)
-        api_response = api_instance.import_ms_run_data(project_id, input_files=input_files, parameters=parameters)
+        api_response = api_instance.import_ms_run_data(project_id, input_files, parameters)
         print("The response of ProjectsApi->import_ms_run_data:\n")
         pprint(api_response)
     except Exception as e:
@@ -541,8 +547,8 @@ with PySirius.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **str**| Project-space to import into. | 
- **input_files** | **List[bytearray]**|  | [optional] 
- **parameters** | [**LcmsSubmissionParameters**](LcmsSubmissionParameters.md)|  | [optional] 
+ **input_files** | **List[bytearray]**| Files to import into project. | 
+ **parameters** | [**LcmsSubmissionParameters**](LcmsSubmissionParameters.md)| Parameters for feature alignment and feature finding. | 
 
 ### Return type
 
@@ -566,11 +572,12 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **import_ms_run_data_as_job**
-> Job import_ms_run_data_as_job(project_id, opt_fields=opt_fields, input_files=input_files, parameters=parameters)
+> Job import_ms_run_data_as_job(project_id, input_files, parameters, opt_fields=opt_fields)
 
 Import and Align full MS-Runs from various formats into the specified project as background job.
 
-Import and Align full MS-Runs from various formats into the specified project as background job.  Possible formats (mzML, mzXML)
+Import and Align full MS-Runs from various formats into the specified project as background job.
+ Possible formats (mzML, mzXML)
 
 ### Example
 
@@ -595,13 +602,13 @@ with PySirius.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = PySirius.ProjectsApi(api_client)
     project_id = 'project_id_example' # str | Project-space to import into.
-    opt_fields = ["progress"] # List[JobOptField] | Set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to ["progress"])
-    input_files = None # List[bytearray] |  (optional)
-    parameters = PySirius.LcmsSubmissionParameters() # LcmsSubmissionParameters |  (optional)
+    input_files = None # List[bytearray] | Files to import into project.
+    parameters = PySirius.LcmsSubmissionParameters() # LcmsSubmissionParameters | Parameters for feature alignment and feature finding.
+    opt_fields = [progress] # List[JobOptField] | Set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to [progress])
 
     try:
         # Import and Align full MS-Runs from various formats into the specified project as background job.
-        api_response = api_instance.import_ms_run_data_as_job(project_id, opt_fields=opt_fields, input_files=input_files, parameters=parameters)
+        api_response = api_instance.import_ms_run_data_as_job(project_id, input_files, parameters, opt_fields=opt_fields)
         print("The response of ProjectsApi->import_ms_run_data_as_job:\n")
         pprint(api_response)
     except Exception as e:
@@ -616,9 +623,9 @@ with PySirius.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **str**| Project-space to import into. | 
- **opt_fields** | [**List[JobOptField]**](JobOptField.md)| Set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;progress&quot;]]
- **input_files** | **List[bytearray]**|  | [optional] 
- **parameters** | [**LcmsSubmissionParameters**](LcmsSubmissionParameters.md)|  | [optional] 
+ **input_files** | **List[bytearray]**| Files to import into project. | 
+ **parameters** | [**LcmsSubmissionParameters**](LcmsSubmissionParameters.md)| Parameters for feature alignment and feature finding. | 
+ **opt_fields** | [**List[JobOptField]**](JobOptField.md)| Set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [progress]]
 
 ### Return type
 
@@ -642,11 +649,12 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **import_preprocessed_data**
-> ImportResult import_preprocessed_data(project_id, ignore_formulas=ignore_formulas, allow_ms1_only=allow_ms1_only, input_files=input_files)
+> ImportResult import_preprocessed_data(project_id, input_files, ignore_formulas=ignore_formulas, allow_ms1_only=allow_ms1_only)
 
 Import already preprocessed ms/ms data from various formats into the specified project  Possible formats (ms, mgf, cef, msp)
 
-Import already preprocessed ms/ms data from various formats into the specified project  Possible formats (ms, mgf, cef, msp)
+Import already preprocessed ms/ms data from various formats into the specified project
+ Possible formats (ms, mgf, cef, msp)
 
 ### Example
 
@@ -669,13 +677,13 @@ with PySirius.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = PySirius.ProjectsApi(api_client)
     project_id = 'project_id_example' # str | project-space to import into.
+    input_files = None # List[bytearray] | files to import into project
     ignore_formulas = False # bool |  (optional) (default to False)
     allow_ms1_only = True # bool |  (optional) (default to True)
-    input_files = None # List[bytearray] |  (optional)
 
     try:
         # Import already preprocessed ms/ms data from various formats into the specified project  Possible formats (ms, mgf, cef, msp)
-        api_response = api_instance.import_preprocessed_data(project_id, ignore_formulas=ignore_formulas, allow_ms1_only=allow_ms1_only, input_files=input_files)
+        api_response = api_instance.import_preprocessed_data(project_id, input_files, ignore_formulas=ignore_formulas, allow_ms1_only=allow_ms1_only)
         print("The response of ProjectsApi->import_preprocessed_data:\n")
         pprint(api_response)
     except Exception as e:
@@ -690,9 +698,9 @@ with PySirius.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **str**| project-space to import into. | 
+ **input_files** | **List[bytearray]**| files to import into project | 
  **ignore_formulas** | **bool**|  | [optional] [default to False]
  **allow_ms1_only** | **bool**|  | [optional] [default to True]
- **input_files** | **List[bytearray]**|  | [optional] 
 
 ### Return type
 
@@ -716,11 +724,12 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **import_preprocessed_data_as_job**
-> Job import_preprocessed_data_as_job(project_id, ignore_formulas=ignore_formulas, allow_ms1_only=allow_ms1_only, opt_fields=opt_fields, input_files=input_files)
+> Job import_preprocessed_data_as_job(project_id, input_files, ignore_formulas=ignore_formulas, allow_ms1_only=allow_ms1_only, opt_fields=opt_fields)
 
 Import ms/ms data from the given format into the specified project-space as background job.
 
-Import ms/ms data from the given format into the specified project-space as background job.  Possible formats (ms, mgf, cef, msp)
+Import ms/ms data from the given format into the specified project-space as background job.
+ Possible formats (ms, mgf, cef, msp)
 
 ### Example
 
@@ -744,14 +753,14 @@ with PySirius.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = PySirius.ProjectsApi(api_client)
     project_id = 'project_id_example' # str | project-space to import into.
+    input_files = None # List[bytearray] | 
     ignore_formulas = False # bool |  (optional) (default to False)
     allow_ms1_only = True # bool |  (optional) (default to True)
-    opt_fields = ["progress"] # List[JobOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to ["progress"])
-    input_files = None # List[bytearray] |  (optional)
+    opt_fields = [progress] # List[JobOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to [progress])
 
     try:
         # Import ms/ms data from the given format into the specified project-space as background job.
-        api_response = api_instance.import_preprocessed_data_as_job(project_id, ignore_formulas=ignore_formulas, allow_ms1_only=allow_ms1_only, opt_fields=opt_fields, input_files=input_files)
+        api_response = api_instance.import_preprocessed_data_as_job(project_id, input_files, ignore_formulas=ignore_formulas, allow_ms1_only=allow_ms1_only, opt_fields=opt_fields)
         print("The response of ProjectsApi->import_preprocessed_data_as_job:\n")
         pprint(api_response)
     except Exception as e:
@@ -766,10 +775,10 @@ with PySirius.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **str**| project-space to import into. | 
+ **input_files** | **List[bytearray]**|  | 
  **ignore_formulas** | **bool**|  | [optional] [default to False]
  **allow_ms1_only** | **bool**|  | [optional] [default to True]
- **opt_fields** | [**List[JobOptField]**](JobOptField.md)| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;progress&quot;]]
- **input_files** | **List[bytearray]**|  | [optional] 
+ **opt_fields** | [**List[JobOptField]**](JobOptField.md)| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [progress]]
 
 ### Return type
 
@@ -822,7 +831,7 @@ with PySirius.ApiClient(configuration) as api_client:
     api_instance = PySirius.ProjectsApi(api_client)
     project_id = 'project_id_example' # str | unique name/identifier that shall be used to access the opened project-space. Must consist only of [a-zA-Z0-9_-].
     path_to_project = 'path_to_project_example' # str | local file path to open the project from. If NULL, project will be loaded by it projectId from default project location.  DEPRECATED: This parameter relies on the local filesystem and will likely be removed in later versions of this API to allow for more flexible use cases. (optional)
-    opt_fields = ["none"] # List[ProjectInfoOptField] |  (optional) (default to ["none"])
+    opt_fields = [none] # List[ProjectInfoOptField] |  (optional) (default to [none])
 
     try:
         # Open an existing project-space and make it accessible via the given projectId.
@@ -842,7 +851,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **str**| unique name/identifier that shall be used to access the opened project-space. Must consist only of [a-zA-Z0-9_-]. | 
  **path_to_project** | **str**| local file path to open the project from. If NULL, project will be loaded by it projectId from default project location.  DEPRECATED: This parameter relies on the local filesystem and will likely be removed in later versions of this API to allow for more flexible use cases. | [optional] 
- **opt_fields** | [**List[ProjectInfoOptField]**](ProjectInfoOptField.md)|  | [optional] [default to [&quot;none&quot;]]
+ **opt_fields** | [**List[ProjectInfoOptField]**](ProjectInfoOptField.md)|  | [optional] [default to [none]]
 
 ### Return type
 

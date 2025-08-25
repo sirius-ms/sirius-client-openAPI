@@ -26,9 +26,11 @@ class AlignedFeatureOptField(str, Enum):
     """
     NONE = 'none'
     MSDATA = 'msData'
+    TOPANNOTATIONSSUMMARY = 'topAnnotationsSummary'
     TOPANNOTATIONS = 'topAnnotations'
     TOPANNOTATIONSDENOVO = 'topAnnotationsDeNovo'
     COMPUTEDTOOLS = 'computedTools'
+    TAGS = 'tags'
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:

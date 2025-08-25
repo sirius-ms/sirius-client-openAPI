@@ -11,8 +11,6 @@ Method | HTTP request | Description
 # **get_connection_check**
 > ConnectionCheck get_connection_check()
 
-
-
 ### Example
 
 
@@ -71,8 +69,6 @@ No authorization required
 
 # **get_info**
 > Info get_info(server_info=server_info, update_info=update_info)
-
-
 
 ### Example
 

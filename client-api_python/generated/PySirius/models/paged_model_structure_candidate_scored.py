@@ -26,7 +26,7 @@ class PagedModelStructureCandidateScored(BaseModel):
     """
     PagedModelStructureCandidateScored
     """ # noqa: E501
-    content: Optional[List[Optional[StructureCandidateScored]]] = None
+    content: Optional[List[StructureCandidateScored]] = None
     page: Optional[PageMetadata] = None
     __properties: ClassVar[List[str]] = ["content", "page"]
 

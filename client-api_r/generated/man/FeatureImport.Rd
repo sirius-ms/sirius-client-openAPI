@@ -50,7 +50,7 @@ df
 
 \item{\code{dataQuality}}{A optional feature quality flag that can be used to filter features to be shown in the gui or to be considered for further analysis. character [optional]}
 
-\item{\code{mergedMs1}}{\link{BasicSpectrum} [optional]}
+\item{\code{mergedMs1}}{Merged/Representative MS1 spectrum of this feature that contains the isotope pattern of the precursor ion.  Note: 'ms1Spectra' will be ignored if given. \link{BasicSpectrum} [optional]}
 
 \item{\code{ms1Spectra}}{List of MS1Spectra belonging to this feature. These spectra will be merged an only a representative  mergedMs1 spectrum will be stored in SIRIUS. At least one of these spectra should contain the  isotope pattern of the precursor ion.  Note: Will be ignored if 'mergedMs1' is given. list(\link{BasicSpectrum}) [optional]}
 
@@ -120,7 +120,7 @@ Initialize a new FeatureImport class.
 
 \item{\code{dataQuality}}{A optional feature quality flag that can be used to filter features to be shown in the gui or to be considered for further analysis.}
 
-\item{\code{mergedMs1}}{mergedMs1}
+\item{\code{mergedMs1}}{Merged/Representative MS1 spectrum of this feature that contains the isotope pattern of the precursor ion.  Note: 'ms1Spectra' will be ignored if given.}
 
 \item{\code{ms1Spectra}}{List of MS1Spectra belonging to this feature. These spectra will be merged an only a representative  mergedMs1 spectrum will be stored in SIRIUS. At least one of these spectra should contain the  isotope pattern of the precursor ion.  Note: Will be ignored if 'mergedMs1' is given.}
 

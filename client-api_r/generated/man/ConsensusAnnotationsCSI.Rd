@@ -34,13 +34,13 @@ df
 \describe{
 \item{\code{molecularFormula}}{Molecular formula of the consensus annotation  Might be null if no consensus formula is available. character [optional]}
 
-\item{\code{compoundClasses}}{\link{CompoundClasses} [optional]}
+\item{\code{compoundClasses}}{Compound classes (predicted with CANOPUS) corresponding to the molecularFormula  Might be null if no fingerprints or compound classes are available. \link{CompoundClasses} [optional]}
 
 \item{\code{supportingFeatureIds}}{FeatureIds where the topAnnotation supports this annotation. list(character) [optional]}
 
 \item{\code{selectionCriterion}}{Null if this is a custom selection character [optional]}
 
-\item{\code{csiFingerIdStructure}}{\link{StructureCandidate} [optional]}
+\item{\code{csiFingerIdStructure}}{Database structure candidate (searched with CSI:FingerID), that also defines the molecularFormula  Might be null if no consensus structure is available. \link{StructureCandidate} [optional]}
 
 \item{\code{confidenceExactMatch}}{Confidence value that represents the certainty that reported consensus structure is exactly the measured one  If multiple features support this consensus structure the maximum confidence is reported numeric [optional]}
 
@@ -89,13 +89,13 @@ Initialize a new ConsensusAnnotationsCSI class.
 \describe{
 \item{\code{molecularFormula}}{Molecular formula of the consensus annotation  Might be null if no consensus formula is available.}
 
-\item{\code{compoundClasses}}{compoundClasses}
+\item{\code{compoundClasses}}{Compound classes (predicted with CANOPUS) corresponding to the molecularFormula  Might be null if no fingerprints or compound classes are available.}
 
 \item{\code{supportingFeatureIds}}{FeatureIds where the topAnnotation supports this annotation.}
 
 \item{\code{selectionCriterion}}{Null if this is a custom selection}
 
-\item{\code{csiFingerIdStructure}}{csiFingerIdStructure}
+\item{\code{csiFingerIdStructure}}{Database structure candidate (searched with CSI:FingerID), that also defines the molecularFormula  Might be null if no consensus structure is available.}
 
 \item{\code{confidenceExactMatch}}{Confidence value that represents the certainty that reported consensus structure is exactly the measured one  If multiple features support this consensus structure the maximum confidence is reported}
 
