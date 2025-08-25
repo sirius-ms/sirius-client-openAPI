@@ -51,12 +51,26 @@
 #' api_instance$jobs_api$DeleteJobs(var_project_id, cancel_if_running = var_cancel_if_running, await_deletion = var_await_deletion)
 #'
 #'
+#' ####################  GetCommand  ####################
+#'
+#' library(Rsirius)
+#' var_job_submission <- JobSubmission$new(c("compoundIds_example"), c("alignedFeatureIds_example"), c("fallbackAdducts_example"), c("enforcedAdducts_example"), c("detectableAdducts_example"), "recompute_example", SpectralLibrarySearch$new("enabled_example", c("spectraSearchDBs_example"), 123, 123, 123, "enableAnalogueSearch_example", 123, 123, "INTENSITY", 123), Sirius$new("enabled_example", "QTOF", 123, 123, 123, "IGNORE", "filterByIsotopePattern_example", "enforceElGordoFormula_example", "performBottomUpSearch_example", 123, c("formulaSearchDBs_example"), "applyFormulaConstraintsToDBAndBottomUpSearch_example", "enforcedFormulaConstraints_example", "fallbackFormulaConstraints_example", c("detectableElements_example"), Timeout$new(123, 123), UseHeuristic$new(123, 123), "injectSpecLibMatchFormulas_example", 123, 123), Zodiac$new("enabled_example", 123, 123, "runInTwoSteps_example", ZodiacEdgeFilterThresholds$new(123, 123, 123), ZodiacEpochs$new(123, 123, 123), ZodiacLibraryScoring$new("enabled_example", 123), ZodiacAnalogueNodes$new("enabled_example", 123, 123)), FingerprintPrediction$new("enabled_example", "useScoreThreshold_example", "alwaysPredictHighRefMatches_example"), Canopus$new("enabled_example"), StructureDbSearch$new("enabled_example", c("structureSearchDBs_example"), "tagStructuresWithLipidClass_example", "OFF"), MsNovelist$new("enabled_example", 123), c(key = "inner_example")) # JobSubmission | 
+#'
+#' #Get a CLI command for the given job configuration.
+#' api_instance <- rsirius_api$new()
+#'
+#' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
+#' # result <- api_instance$GetCommand(var_job_submissiondata_file = "result.txt")
+#' result <- api_instance$jobs_api$GetCommand(var_job_submission)
+#' dput(result)
+#'
+#'
 #' ####################  GetDefaultJobConfig  ####################
 #'
 #' library(Rsirius)
 #' var_include_config_map <- FALSE # character | if true, generic configmap with-defaults will be included (Optional)
 #' var_move_parameters_to_config_map <- FALSE # character | if true, object-based parameters will be converted to and added to the generic configMap parameters (Optional)
-#' var_include_custom_dbs_for_structure_search <- FALSE # character | if true, default database selection of structure db search contains also all available custom DB. (Optional)
+#' var_include_custom_dbs_for_structure_search <- FALSE # character | if true, default database selection of structure db search                                            spectral library search contains also all available custom DB.                                            If No custom dbs are selected, spectral library search is disabled by default. (Optional)
 #'
 #' #Request default job configuration
 #' api_instance <- rsirius_api$new()
@@ -102,7 +116,7 @@
 #'
 #' library(Rsirius)
 #'
-#' #DEPRECATED: use /job-configs to get all configs with names.
+#' #[DEPRECATED] Get all (non-default) job configuration names  
 #' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
@@ -175,7 +189,7 @@
 #'
 #' library(Rsirius)
 #' var_name <- "name_example" # character | name of the job-config to add
-#' var_job_submission <- JobSubmission$new(c("compoundIds_example"), c("alignedFeatureIds_example"), c("fallbackAdducts_example"), c("enforcedAdducts_example"), c("detectableAdducts_example"), "recompute_example", SpectralLibrarySearch$new("enabled_example", c("spectraSearchDBs_example"), 123, 123, "INTENSITY"), Sirius$new("enabled_example", "QTOF", 123, 123, 123, "IGNORE", "filterByIsotopePattern_example", "enforceElGordoFormula_example", "performBottomUpSearch_example", 123, c("formulaSearchDBs_example"), "applyFormulaConstraintsToDBAndBottomUpSearch_example", "enforcedFormulaConstraints_example", "fallbackFormulaConstraints_example", c("detectableElements_example"), Timeout$new(123, 123), UseHeuristic$new(123, 123), "injectSpecLibMatchFormulas_example", 123, 123), Zodiac$new("enabled_example", 123, 123, "runInTwoSteps_example", ZodiacEdgeFilterThresholds$new(123, 123, 123), ZodiacEpochs$new(123, 123, 123)), FingerprintPrediction$new("enabled_example", "useScoreThreshold_example", "alwaysPredictHighRefMatches_example"), Canopus$new("enabled_example"), StructureDbSearch$new("enabled_example", c("structureSearchDBs_example"), "tagStructuresWithLipidClass_example", "OFF"), MsNovelist$new("enabled_example", 123), c(key = "inner_example")) # JobSubmission | to add
+#' var_job_submission <- JobSubmission$new(c("compoundIds_example"), c("alignedFeatureIds_example"), c("fallbackAdducts_example"), c("enforcedAdducts_example"), c("detectableAdducts_example"), "recompute_example", SpectralLibrarySearch$new("enabled_example", c("spectraSearchDBs_example"), 123, 123, 123, "enableAnalogueSearch_example", 123, 123, "INTENSITY", 123), Sirius$new("enabled_example", "QTOF", 123, 123, 123, "IGNORE", "filterByIsotopePattern_example", "enforceElGordoFormula_example", "performBottomUpSearch_example", 123, c("formulaSearchDBs_example"), "applyFormulaConstraintsToDBAndBottomUpSearch_example", "enforcedFormulaConstraints_example", "fallbackFormulaConstraints_example", c("detectableElements_example"), Timeout$new(123, 123), UseHeuristic$new(123, 123), "injectSpecLibMatchFormulas_example", 123, 123), Zodiac$new("enabled_example", 123, 123, "runInTwoSteps_example", ZodiacEdgeFilterThresholds$new(123, 123, 123), ZodiacEpochs$new(123, 123, 123), ZodiacLibraryScoring$new("enabled_example", 123), ZodiacAnalogueNodes$new("enabled_example", 123, 123)), FingerprintPrediction$new("enabled_example", "useScoreThreshold_example", "alwaysPredictHighRefMatches_example"), Canopus$new("enabled_example"), StructureDbSearch$new("enabled_example", c("structureSearchDBs_example"), "tagStructuresWithLipidClass_example", "OFF"), MsNovelist$new("enabled_example", 123), c(key = "inner_example")) # JobSubmission | to add
 #' var_override_existing <- FALSE # character |  (Optional)
 #' var_move_parameters_to_config_map <- FALSE # character | if true, object-based parameters will be converted to and added to the generic configMap parameters in the return object (Optional)
 #'
@@ -192,7 +206,7 @@
 #'
 #' library(Rsirius)
 #' var_project_id <- "project_id_example" # character | project-space to run jobs on
-#' var_job_submission <- JobSubmission$new(c("compoundIds_example"), c("alignedFeatureIds_example"), c("fallbackAdducts_example"), c("enforcedAdducts_example"), c("detectableAdducts_example"), "recompute_example", SpectralLibrarySearch$new("enabled_example", c("spectraSearchDBs_example"), 123, 123, "INTENSITY"), Sirius$new("enabled_example", "QTOF", 123, 123, 123, "IGNORE", "filterByIsotopePattern_example", "enforceElGordoFormula_example", "performBottomUpSearch_example", 123, c("formulaSearchDBs_example"), "applyFormulaConstraintsToDBAndBottomUpSearch_example", "enforcedFormulaConstraints_example", "fallbackFormulaConstraints_example", c("detectableElements_example"), Timeout$new(123, 123), UseHeuristic$new(123, 123), "injectSpecLibMatchFormulas_example", 123, 123), Zodiac$new("enabled_example", 123, 123, "runInTwoSteps_example", ZodiacEdgeFilterThresholds$new(123, 123, 123), ZodiacEpochs$new(123, 123, 123)), FingerprintPrediction$new("enabled_example", "useScoreThreshold_example", "alwaysPredictHighRefMatches_example"), Canopus$new("enabled_example"), StructureDbSearch$new("enabled_example", c("structureSearchDBs_example"), "tagStructuresWithLipidClass_example", "OFF"), MsNovelist$new("enabled_example", 123), c(key = "inner_example")) # JobSubmission | configuration of the job that will be submitted of the job to be returned
+#' var_job_submission <- JobSubmission$new(c("compoundIds_example"), c("alignedFeatureIds_example"), c("fallbackAdducts_example"), c("enforcedAdducts_example"), c("detectableAdducts_example"), "recompute_example", SpectralLibrarySearch$new("enabled_example", c("spectraSearchDBs_example"), 123, 123, 123, "enableAnalogueSearch_example", 123, 123, "INTENSITY", 123), Sirius$new("enabled_example", "QTOF", 123, 123, 123, "IGNORE", "filterByIsotopePattern_example", "enforceElGordoFormula_example", "performBottomUpSearch_example", 123, c("formulaSearchDBs_example"), "applyFormulaConstraintsToDBAndBottomUpSearch_example", "enforcedFormulaConstraints_example", "fallbackFormulaConstraints_example", c("detectableElements_example"), Timeout$new(123, 123), UseHeuristic$new(123, 123), "injectSpecLibMatchFormulas_example", 123, 123), Zodiac$new("enabled_example", 123, 123, "runInTwoSteps_example", ZodiacEdgeFilterThresholds$new(123, 123, 123), ZodiacEpochs$new(123, 123, 123), ZodiacLibraryScoring$new("enabled_example", 123), ZodiacAnalogueNodes$new("enabled_example", 123, 123)), FingerprintPrediction$new("enabled_example", "useScoreThreshold_example", "alwaysPredictHighRefMatches_example"), Canopus$new("enabled_example"), StructureDbSearch$new("enabled_example", c("structureSearchDBs_example"), "tagStructuresWithLipidClass_example", "OFF"), MsNovelist$new("enabled_example", 123), c(key = "inner_example")) # JobSubmission | configuration of the job that will be submitted of the job to be returned
 #' var_opt_fields <- c("none") # array[character] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
 #'
 #' #Start computation for given compounds and with given parameters.
@@ -256,13 +270,13 @@ JobsApi <- R6::R6Class(
     DeleteJob = function(project_id, job_id, cancel_if_running = TRUE, await_deletion = TRUE, ...) {
       local_var_response <- self$DeleteJobWithHttpInfo(project_id, job_id, cancel_if_running, await_deletion, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
-        local_var_response$content
+        return(local_var_response$content)
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
-        local_var_response
+        return(local_var_response)
       }
     },
 
@@ -294,9 +308,21 @@ JobsApi <- R6::R6Class(
         stop("Missing required parameter `job_id`.")
       }
 
+      if (!missing(`project_id`) && is.null(`project_id`)) {
+        stop("Invalid value for `project_id` when calling JobsApi$DeleteJob, `project_id` is not nullable")
+      }
 
+      if (!missing(`job_id`) && is.null(`job_id`)) {
+        stop("Invalid value for `job_id` when calling JobsApi$DeleteJob, `job_id` is not nullable")
+      }
 
+      if (!missing(`cancel_if_running`) && is.null(`cancel_if_running`)) {
+        stop("Invalid value for `cancel_if_running` when calling JobsApi$DeleteJob, `cancel_if_running` is not nullable")
+      }
 
+      if (!missing(`await_deletion`) && is.null(`await_deletion`)) {
+        stop("Invalid value for `await_deletion` when calling JobsApi$DeleteJob, `await_deletion` is not nullable")
+      }
 
       query_params[["cancelIfRunning"]] <- `cancel_if_running`
 
@@ -333,8 +359,11 @@ JobsApi <- R6::R6Class(
 
       if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
         local_var_resp$content <- NULL
-        local_var_resp
-      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        return(local_var_resp)
+      } 
+      
+      local_var_error_msg <- local_var_resp$response_as_text()      
+      if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp)
@@ -342,7 +371,7 @@ JobsApi <- R6::R6Class(
         if (is.null(local_var_resp$response) || local_var_resp$response == "") {
           local_var_resp$response <- "API server error"
         }
-        local_var_resp
+        return(local_var_resp)
       }
     },
 
@@ -356,13 +385,13 @@ JobsApi <- R6::R6Class(
     DeleteJobConfig = function(name, ...) {
       local_var_response <- self$DeleteJobConfigWithHttpInfo(name, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
-        local_var_response$content
+        return(local_var_response$content)
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
-        local_var_response
+        return(local_var_response)
       }
     },
 
@@ -387,6 +416,9 @@ JobsApi <- R6::R6Class(
         stop("Missing required parameter `name`.")
       }
 
+      if (!missing(`name`) && is.null(`name`)) {
+        stop("Invalid value for `name` when calling JobsApi$DeleteJobConfig, `name` is not nullable")
+      }
 
       local_var_url_path <- "/api/job-configs/{name}"
       if (!missing(`name`)) {
@@ -415,8 +447,11 @@ JobsApi <- R6::R6Class(
 
       if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
         local_var_resp$content <- NULL
-        local_var_resp
-      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        return(local_var_resp)
+      } 
+      
+      local_var_error_msg <- local_var_resp$response_as_text()      
+      if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp)
@@ -424,7 +459,7 @@ JobsApi <- R6::R6Class(
         if (is.null(local_var_resp$response) || local_var_resp$response == "") {
           local_var_resp$response <- "API server error"
         }
-        local_var_resp
+        return(local_var_resp)
       }
     },
 
@@ -440,13 +475,13 @@ JobsApi <- R6::R6Class(
     DeleteJobs = function(project_id, cancel_if_running = TRUE, await_deletion = TRUE, ...) {
       local_var_response <- self$DeleteJobsWithHttpInfo(project_id, cancel_if_running, await_deletion, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
-        local_var_response$content
+        return(local_var_response$content)
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
-        local_var_response
+        return(local_var_response)
       }
     },
 
@@ -473,8 +508,17 @@ JobsApi <- R6::R6Class(
         stop("Missing required parameter `project_id`.")
       }
 
+      if (!missing(`project_id`) && is.null(`project_id`)) {
+        stop("Invalid value for `project_id` when calling JobsApi$DeleteJobs, `project_id` is not nullable")
+      }
 
+      if (!missing(`cancel_if_running`) && is.null(`cancel_if_running`)) {
+        stop("Invalid value for `cancel_if_running` when calling JobsApi$DeleteJobs, `cancel_if_running` is not nullable")
+      }
 
+      if (!missing(`await_deletion`) && is.null(`await_deletion`)) {
+        stop("Invalid value for `await_deletion` when calling JobsApi$DeleteJobs, `await_deletion` is not nullable")
+      }
 
       query_params[["cancelIfRunning"]] <- `cancel_if_running`
 
@@ -507,8 +551,11 @@ JobsApi <- R6::R6Class(
 
       if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
         local_var_resp$content <- NULL
-        local_var_resp
-      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        return(local_var_resp)
+      } 
+      
+      local_var_error_msg <- local_var_resp$response_as_text()      
+      if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp)
@@ -516,7 +563,110 @@ JobsApi <- R6::R6Class(
         if (is.null(local_var_resp$response) || local_var_resp$response == "") {
           local_var_resp$response <- "API server error"
         }
-        local_var_resp
+        return(local_var_resp)
+      }
+    },
+
+    #' @description
+    #' Get a CLI command for the given job configuration.
+    #'
+    #' @param job_submission 
+    #' @param data_file (optional) name of the data file to save the result
+    #' @param ... Other optional arguments
+    #'
+    #' @return array[character]
+    GetCommand = function(job_submission, data_file = NULL, ...) {
+      local_var_response <- self$GetCommandWithHttpInfo(job_submission, data_file = data_file, ...)
+      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
+        return(local_var_response$content)
+      } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
+        return(local_var_response)
+      } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
+        return(local_var_response)
+      } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
+        return(local_var_response)
+      }
+    },
+
+    #' @description
+    #' Get a CLI command for the given job configuration.
+    #'
+    #' @param job_submission 
+    #' @param data_file (optional) name of the data file to save the result
+    #' @param ... Other optional arguments
+    #'
+    #' @return API response (array[character]) with additional information such as HTTP status code, headers
+    GetCommandWithHttpInfo = function(job_submission, data_file = NULL, ...) {
+      args <- list(...)
+      query_params <- list()
+      header_params <- c()
+      form_params <- list()
+      file_params <- list()
+      local_var_body <- NULL
+      oauth_scopes <- NULL
+      is_oauth <- FALSE
+
+      if (missing(`job_submission`)) {
+        stop("Missing required parameter `job_submission`.")
+      }
+
+      if (!missing(`job_submission`) && is.null(`job_submission`)) {
+        stop("Invalid value for `job_submission` when calling JobsApi$GetCommand, `job_submission` is not nullable")
+      }
+
+      if (!is.null(`job_submission`)) {
+        local_var_body <- `job_submission`$toJSONString()
+      } else {
+        local_var_body <- NULL
+      }
+
+      local_var_url_path <- "/api/job-configs/get-command"
+
+      # The Accept request HTTP header
+      local_var_accepts <- list("application/json")
+
+      # The Content-Type representation header
+      local_var_content_types <- list("application/json")
+
+      local_var_resp <- self$api_client$CallApi(url = paste0(self$api_client$base_path, local_var_url_path),
+                                 method = "POST",
+                                 query_params = query_params,
+                                 header_params = header_params,
+                                 form_params = form_params,
+                                 file_params = file_params,
+                                 accepts = local_var_accepts,
+                                 content_types = local_var_content_types,
+                                 body = local_var_body,
+                                 is_oauth = is_oauth,
+                                 oauth_scopes = oauth_scopes,
+                                 ...)
+
+      if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
+        # save response in a file
+        if (!is.null(data_file)) {
+          self$api_client$WriteFile(local_var_resp, data_file)
+        }
+
+        deserialized_resp_obj <- tryCatch(
+          self$api_client$DeserializeResponse(local_var_resp, "array[character]"),
+          error = function(e) {
+            stop("Failed to deserialize response")
+          }
+        )
+        local_var_resp$content <- deserialized_resp_obj
+        return(local_var_resp)
+      } 
+      
+      local_var_error_msg <- local_var_resp$response_as_text()      
+      if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
+      } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
+        ApiResponse$new("API client error", local_var_resp)
+      } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
+        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
+          local_var_resp$response <- "API server error"
+        }
+        return(local_var_resp)
       }
     },
 
@@ -525,7 +675,7 @@ JobsApi <- R6::R6Class(
     #'
     #' @param include_config_map (optional) if true, generic configmap with-defaults will be included (default value: FALSE)
     #' @param move_parameters_to_config_map (optional) if true, object-based parameters will be converted to and added to the generic configMap parameters (default value: FALSE)
-    #' @param include_custom_dbs_for_structure_search (optional) if true, default database selection of structure db search contains also all available custom DB. (default value: FALSE)
+    #' @param include_custom_dbs_for_structure_search (optional) if true, default database selection of structure db search                                            spectral library search contains also all available custom DB.                                            If No custom dbs are selected, spectral library search is disabled by default. (default value: FALSE)
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
@@ -533,13 +683,13 @@ JobsApi <- R6::R6Class(
     GetDefaultJobConfig = function(include_config_map = FALSE, move_parameters_to_config_map = FALSE, include_custom_dbs_for_structure_search = FALSE, data_file = NULL, ...) {
       local_var_response <- self$GetDefaultJobConfigWithHttpInfo(include_config_map, move_parameters_to_config_map, include_custom_dbs_for_structure_search, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
-        local_var_response$content
+        return(local_var_response$content)
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
-        local_var_response
+        return(local_var_response)
       }
     },
 
@@ -548,7 +698,7 @@ JobsApi <- R6::R6Class(
     #'
     #' @param include_config_map (optional) if true, generic configmap with-defaults will be included (default value: FALSE)
     #' @param move_parameters_to_config_map (optional) if true, object-based parameters will be converted to and added to the generic configMap parameters (default value: FALSE)
-    #' @param include_custom_dbs_for_structure_search (optional) if true, default database selection of structure db search contains also all available custom DB. (default value: FALSE)
+    #' @param include_custom_dbs_for_structure_search (optional) if true, default database selection of structure db search                                            spectral library search contains also all available custom DB.                                            If No custom dbs are selected, spectral library search is disabled by default. (default value: FALSE)
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
@@ -563,8 +713,17 @@ JobsApi <- R6::R6Class(
       oauth_scopes <- NULL
       is_oauth <- FALSE
 
+      if (!missing(`include_config_map`) && is.null(`include_config_map`)) {
+        stop("Invalid value for `include_config_map` when calling JobsApi$GetDefaultJobConfig, `include_config_map` is not nullable")
+      }
 
+      if (!missing(`move_parameters_to_config_map`) && is.null(`move_parameters_to_config_map`)) {
+        stop("Invalid value for `move_parameters_to_config_map` when calling JobsApi$GetDefaultJobConfig, `move_parameters_to_config_map` is not nullable")
+      }
 
+      if (!missing(`include_custom_dbs_for_structure_search`) && is.null(`include_custom_dbs_for_structure_search`)) {
+        stop("Invalid value for `include_custom_dbs_for_structure_search` when calling JobsApi$GetDefaultJobConfig, `include_custom_dbs_for_structure_search` is not nullable")
+      }
 
       query_params[["includeConfigMap"]] <- `include_config_map`
 
@@ -596,18 +755,21 @@ JobsApi <- R6::R6Class(
       if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
         # save response in a file
         if (!is.null(data_file)) {
-          write(local_var_resp$response, data_file)
+          self$api_client$WriteFile(local_var_resp, data_file)
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "JobSubmission", loadNamespace("Rsirius")),
+          self$api_client$DeserializeResponse(local_var_resp, "JobSubmission"),
           error = function(e) {
             stop("Failed to deserialize response")
           }
         )
         local_var_resp$content <- deserialized_resp_obj
-        local_var_resp
-      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        return(local_var_resp)
+      } 
+      
+      local_var_error_msg <- local_var_resp$response_as_text()      
+      if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp)
@@ -615,7 +777,7 @@ JobsApi <- R6::R6Class(
         if (is.null(local_var_resp$response) || local_var_resp$response == "") {
           local_var_resp$response <- "API server error"
         }
-        local_var_resp
+        return(local_var_resp)
       }
     },
 
@@ -624,21 +786,21 @@ JobsApi <- R6::R6Class(
     #'
     #' @param project_id project-space to run jobs on
     #' @param job_id of the job to be returned
-    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["progress"])
+    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [progress])
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return Job
-    GetJob = function(project_id, job_id, opt_fields = list("progress"), data_file = NULL, ...) {
+    GetJob = function(project_id, job_id, opt_fields = list(progress), data_file = NULL, ...) {
       local_var_response <- self$GetJobWithHttpInfo(project_id, job_id, opt_fields, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
-        local_var_response$content
+        return(local_var_response$content)
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
-        local_var_response
+        return(local_var_response)
       }
     },
 
@@ -647,12 +809,12 @@ JobsApi <- R6::R6Class(
     #'
     #' @param project_id project-space to run jobs on
     #' @param job_id of the job to be returned
-    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["progress"])
+    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [progress])
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return API response (Job) with additional information such as HTTP status code, headers
-    GetJobWithHttpInfo = function(project_id, job_id, opt_fields = list("progress"), data_file = NULL, ...) {
+    GetJobWithHttpInfo = function(project_id, job_id, opt_fields = list(progress), data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -670,8 +832,17 @@ JobsApi <- R6::R6Class(
         stop("Missing required parameter `job_id`.")
       }
 
+      if (!missing(`project_id`) && is.null(`project_id`)) {
+        stop("Invalid value for `project_id` when calling JobsApi$GetJob, `project_id` is not nullable")
+      }
 
+      if (!missing(`job_id`) && is.null(`job_id`)) {
+        stop("Invalid value for `job_id` when calling JobsApi$GetJob, `job_id` is not nullable")
+      }
 
+      if (!missing(`opt_fields`) && is.null(`opt_fields`)) {
+        stop("Invalid value for `opt_fields` when calling JobsApi$GetJob, `opt_fields` is not nullable")
+      }
 
       # explore
       for (query_item in `opt_fields`) {
@@ -714,18 +885,21 @@ JobsApi <- R6::R6Class(
       if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
         # save response in a file
         if (!is.null(data_file)) {
-          write(local_var_resp$response, data_file)
+          self$api_client$WriteFile(local_var_resp, data_file)
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "Job", loadNamespace("Rsirius")),
+          self$api_client$DeserializeResponse(local_var_resp, "Job"),
           error = function(e) {
             stop("Failed to deserialize response")
           }
         )
         local_var_resp$content <- deserialized_resp_obj
-        local_var_resp
-      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        return(local_var_resp)
+      } 
+      
+      local_var_error_msg <- local_var_resp$response_as_text()      
+      if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp)
@@ -733,7 +907,7 @@ JobsApi <- R6::R6Class(
         if (is.null(local_var_resp$response) || local_var_resp$response == "") {
           local_var_resp$response <- "API server error"
         }
-        local_var_resp
+        return(local_var_resp)
       }
     },
 
@@ -749,13 +923,13 @@ JobsApi <- R6::R6Class(
     GetJobConfig = function(name, move_parameters_to_config_map = FALSE, data_file = NULL, ...) {
       local_var_response <- self$GetJobConfigWithHttpInfo(name, move_parameters_to_config_map, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
-        local_var_response$content
+        return(local_var_response$content)
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
-        local_var_response
+        return(local_var_response)
       }
     },
 
@@ -782,7 +956,13 @@ JobsApi <- R6::R6Class(
         stop("Missing required parameter `name`.")
       }
 
+      if (!missing(`name`) && is.null(`name`)) {
+        stop("Invalid value for `name` when calling JobsApi$GetJobConfig, `name` is not nullable")
+      }
 
+      if (!missing(`move_parameters_to_config_map`) && is.null(`move_parameters_to_config_map`)) {
+        stop("Invalid value for `move_parameters_to_config_map` when calling JobsApi$GetJobConfig, `move_parameters_to_config_map` is not nullable")
+      }
 
       query_params[["moveParametersToConfigMap"]] <- `move_parameters_to_config_map`
 
@@ -814,18 +994,21 @@ JobsApi <- R6::R6Class(
       if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
         # save response in a file
         if (!is.null(data_file)) {
-          write(local_var_resp$response, data_file)
+          self$api_client$WriteFile(local_var_resp, data_file)
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "StoredJobSubmission", loadNamespace("Rsirius")),
+          self$api_client$DeserializeResponse(local_var_resp, "StoredJobSubmission"),
           error = function(e) {
             stop("Failed to deserialize response")
           }
         )
         local_var_resp$content <- deserialized_resp_obj
-        local_var_resp
-      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        return(local_var_resp)
+      } 
+      
+      local_var_error_msg <- local_var_resp$response_as_text()      
+      if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp)
@@ -833,12 +1016,12 @@ JobsApi <- R6::R6Class(
         if (is.null(local_var_resp$response) || local_var_resp$response == "") {
           local_var_resp$response <- "API server error"
         }
-        local_var_resp
+        return(local_var_resp)
       }
     },
 
     #' @description
-    #' DEPRECATED: use /job-configs to get all configs with names.
+    #' [DEPRECATED] Get all (non-default) job configuration names  
     #'
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
@@ -847,18 +1030,18 @@ JobsApi <- R6::R6Class(
     GetJobConfigNames = function(data_file = NULL, ...) {
       local_var_response <- self$GetJobConfigNamesWithHttpInfo(data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
-        local_var_response$content
+        return(local_var_response$content)
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
-        local_var_response
+        return(local_var_response)
       }
     },
 
     #' @description
-    #' DEPRECATED: use /job-configs to get all configs with names.
+    #' [DEPRECATED] Get all (non-default) job configuration names  
     #'
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
@@ -898,18 +1081,21 @@ JobsApi <- R6::R6Class(
       if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
         # save response in a file
         if (!is.null(data_file)) {
-          write(local_var_resp$response, data_file)
+          self$api_client$WriteFile(local_var_resp, data_file)
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "array[character]", loadNamespace("Rsirius")),
+          self$api_client$DeserializeResponse(local_var_resp, "array[character]"),
           error = function(e) {
             stop("Failed to deserialize response")
           }
         )
         local_var_resp$content <- deserialized_resp_obj
-        local_var_resp
-      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        return(local_var_resp)
+      } 
+      
+      local_var_error_msg <- local_var_resp$response_as_text()      
+      if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp)
@@ -917,7 +1103,7 @@ JobsApi <- R6::R6Class(
         if (is.null(local_var_resp$response) || local_var_resp$response == "") {
           local_var_resp$response <- "API server error"
         }
-        local_var_resp
+        return(local_var_resp)
       }
     },
 
@@ -931,13 +1117,13 @@ JobsApi <- R6::R6Class(
     GetJobConfigs = function(data_file = NULL, ...) {
       local_var_response <- self$GetJobConfigsWithHttpInfo(data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
-        local_var_response$content
+        return(local_var_response$content)
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
-        local_var_response
+        return(local_var_response)
       }
     },
 
@@ -982,18 +1168,21 @@ JobsApi <- R6::R6Class(
       if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
         # save response in a file
         if (!is.null(data_file)) {
-          write(local_var_resp$response, data_file)
+          self$api_client$WriteFile(local_var_resp, data_file)
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "array[StoredJobSubmission]", loadNamespace("Rsirius")),
+          self$api_client$DeserializeResponse(local_var_resp, "array[StoredJobSubmission]"),
           error = function(e) {
             stop("Failed to deserialize response")
           }
         )
         local_var_resp$content <- deserialized_resp_obj
-        local_var_resp
-      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        return(local_var_resp)
+      } 
+      
+      local_var_error_msg <- local_var_resp$response_as_text()      
+      if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp)
@@ -1001,7 +1190,7 @@ JobsApi <- R6::R6Class(
         if (is.null(local_var_resp$response) || local_var_resp$response == "") {
           local_var_resp$response <- "API server error"
         }
-        local_var_resp
+        return(local_var_resp)
       }
     },
 
@@ -1017,13 +1206,13 @@ JobsApi <- R6::R6Class(
     GetJobs = function(project_id, opt_fields = list("none"), data_file = NULL, ...) {
       local_var_response <- self$GetJobsWithHttpInfo(project_id, opt_fields, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
-        local_var_response$content
+        return(local_var_response$content)
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
-        local_var_response
+        return(local_var_response)
       }
     },
 
@@ -1050,7 +1239,13 @@ JobsApi <- R6::R6Class(
         stop("Missing required parameter `project_id`.")
       }
 
+      if (!missing(`project_id`) && is.null(`project_id`)) {
+        stop("Invalid value for `project_id` when calling JobsApi$GetJobs, `project_id` is not nullable")
+      }
 
+      if (!missing(`opt_fields`) && is.null(`opt_fields`)) {
+        stop("Invalid value for `opt_fields` when calling JobsApi$GetJobs, `opt_fields` is not nullable")
+      }
 
       # explore
       for (query_item in `opt_fields`) {
@@ -1089,18 +1284,21 @@ JobsApi <- R6::R6Class(
       if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
         # save response in a file
         if (!is.null(data_file)) {
-          write(local_var_resp$response, data_file)
+          self$api_client$WriteFile(local_var_resp, data_file)
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "array[Job]", loadNamespace("Rsirius")),
+          self$api_client$DeserializeResponse(local_var_resp, "array[Job]"),
           error = function(e) {
             stop("Failed to deserialize response")
           }
         )
         local_var_resp$content <- deserialized_resp_obj
-        local_var_resp
-      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        return(local_var_resp)
+      } 
+      
+      local_var_error_msg <- local_var_resp$response_as_text()      
+      if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp)
@@ -1108,7 +1306,7 @@ JobsApi <- R6::R6Class(
         if (is.null(local_var_resp$response) || local_var_resp$response == "") {
           local_var_resp$response <- "API server error"
         }
-        local_var_resp
+        return(local_var_resp)
       }
     },
 
@@ -1119,21 +1317,21 @@ JobsApi <- R6::R6Class(
     #' @param page (optional) Zero-based page index (0..N) (default value: 0)
     #' @param size (optional) The size of the page to be returned (default value: 20)
     #' @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
-    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])
+    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [none])
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return PagedModelJob
-    GetJobsPaged = function(project_id, page = 0, size = 20, sort = NULL, opt_fields = list("none"), data_file = NULL, ...) {
+    GetJobsPaged = function(project_id, page = 0, size = 20, sort = NULL, opt_fields = list(NULL), data_file = NULL, ...) {
       local_var_response <- self$GetJobsPagedWithHttpInfo(project_id, page, size, sort, opt_fields, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
-        local_var_response$content
+        return(local_var_response$content)
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
-        local_var_response
+        return(local_var_response)
       }
     },
 
@@ -1144,12 +1342,12 @@ JobsApi <- R6::R6Class(
     #' @param page (optional) Zero-based page index (0..N) (default value: 0)
     #' @param size (optional) The size of the page to be returned (default value: 20)
     #' @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
-    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])
+    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [none])
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return API response (PagedModelJob) with additional information such as HTTP status code, headers
-    GetJobsPagedWithHttpInfo = function(project_id, page = 0, size = 20, sort = NULL, opt_fields = list("none"), data_file = NULL, ...) {
+    GetJobsPagedWithHttpInfo = function(project_id, page = 0, size = 20, sort = NULL, opt_fields = list(NULL), data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -1163,16 +1361,31 @@ JobsApi <- R6::R6Class(
         stop("Missing required parameter `project_id`.")
       }
 
+      if (!missing(`project_id`) && is.null(`project_id`)) {
+        stop("Invalid value for `project_id` when calling JobsApi$GetJobsPaged, `project_id` is not nullable")
+      }
 
-      if (`page` < 0) {
+      if (!missing(`page`) && is.null(`page`)) {
+        stop("Invalid value for `page` when calling JobsApi$GetJobsPaged, `page` is not nullable")
+      }
+      if (!is.null(`page`) && `page` <  0) {
         stop("Invalid value for `page` when calling JobsApi$GetJobsPaged, must be bigger than or equal to 0.")
       }
 
-      if (`size` < 1) {
+      if (!missing(`size`) && is.null(`size`)) {
+        stop("Invalid value for `size` when calling JobsApi$GetJobsPaged, `size` is not nullable")
+      }
+      if (!is.null(`size`) && `size` <  1) {
         stop("Invalid value for `size` when calling JobsApi$GetJobsPaged, must be bigger than or equal to 1.")
       }
 
+      if (!missing(`sort`) && is.null(`sort`)) {
+        stop("Invalid value for `sort` when calling JobsApi$GetJobsPaged, `sort` is not nullable")
+      }
 
+      if (!missing(`opt_fields`) && is.null(`opt_fields`)) {
+        stop("Invalid value for `opt_fields` when calling JobsApi$GetJobsPaged, `opt_fields` is not nullable")
+      }
 
       query_params[["page"]] <- `page`
 
@@ -1220,18 +1433,21 @@ JobsApi <- R6::R6Class(
       if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
         # save response in a file
         if (!is.null(data_file)) {
-          write(local_var_resp$response, data_file)
+          self$api_client$WriteFile(local_var_resp, data_file)
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "PagedModelJob", loadNamespace("Rsirius")),
+          self$api_client$DeserializeResponse(local_var_resp, "PagedModelJob"),
           error = function(e) {
             stop("Failed to deserialize response")
           }
         )
         local_var_resp$content <- deserialized_resp_obj
-        local_var_resp
-      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        return(local_var_resp)
+      } 
+      
+      local_var_error_msg <- local_var_resp$response_as_text()      
+      if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp)
@@ -1239,7 +1455,7 @@ JobsApi <- R6::R6Class(
         if (is.null(local_var_resp$response) || local_var_resp$response == "") {
           local_var_resp$response <- "API server error"
         }
-        local_var_resp
+        return(local_var_resp)
       }
     },
 
@@ -1255,13 +1471,13 @@ JobsApi <- R6::R6Class(
     HasJobs = function(project_id, include_finished = FALSE, data_file = NULL, ...) {
       local_var_response <- self$HasJobsWithHttpInfo(project_id, include_finished, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
-        local_var_response$content
+        return(local_var_response$content)
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
-        local_var_response
+        return(local_var_response)
       }
     },
 
@@ -1288,7 +1504,13 @@ JobsApi <- R6::R6Class(
         stop("Missing required parameter `project_id`.")
       }
 
+      if (!missing(`project_id`) && is.null(`project_id`)) {
+        stop("Invalid value for `project_id` when calling JobsApi$HasJobs, `project_id` is not nullable")
+      }
 
+      if (!missing(`include_finished`) && is.null(`include_finished`)) {
+        stop("Invalid value for `include_finished` when calling JobsApi$HasJobs, `include_finished` is not nullable")
+      }
 
       query_params[["includeFinished"]] <- `include_finished`
 
@@ -1320,18 +1542,21 @@ JobsApi <- R6::R6Class(
       if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
         # save response in a file
         if (!is.null(data_file)) {
-          write(local_var_resp$response, data_file)
+          self$api_client$WriteFile(local_var_resp, data_file)
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "character", loadNamespace("Rsirius")),
+          self$api_client$DeserializeResponse(local_var_resp, "character"),
           error = function(e) {
             stop("Failed to deserialize response")
           }
         )
         local_var_resp$content <- deserialized_resp_obj
-        local_var_resp
-      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        return(local_var_resp)
+      } 
+      
+      local_var_error_msg <- local_var_resp$response_as_text()      
+      if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp)
@@ -1339,7 +1564,7 @@ JobsApi <- R6::R6Class(
         if (is.null(local_var_resp$response) || local_var_resp$response == "") {
           local_var_resp$response <- "API server error"
         }
-        local_var_resp
+        return(local_var_resp)
       }
     },
 
@@ -1357,13 +1582,13 @@ JobsApi <- R6::R6Class(
     SaveJobConfig = function(name, job_submission, override_existing = FALSE, move_parameters_to_config_map = FALSE, data_file = NULL, ...) {
       local_var_response <- self$SaveJobConfigWithHttpInfo(name, job_submission, override_existing, move_parameters_to_config_map, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
-        local_var_response$content
+        return(local_var_response$content)
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
-        local_var_response
+        return(local_var_response)
       }
     },
 
@@ -1396,9 +1621,21 @@ JobsApi <- R6::R6Class(
         stop("Missing required parameter `job_submission`.")
       }
 
+      if (!missing(`name`) && is.null(`name`)) {
+        stop("Invalid value for `name` when calling JobsApi$SaveJobConfig, `name` is not nullable")
+      }
 
+      if (!missing(`job_submission`) && is.null(`job_submission`)) {
+        stop("Invalid value for `job_submission` when calling JobsApi$SaveJobConfig, `job_submission` is not nullable")
+      }
 
+      if (!missing(`override_existing`) && is.null(`override_existing`)) {
+        stop("Invalid value for `override_existing` when calling JobsApi$SaveJobConfig, `override_existing` is not nullable")
+      }
 
+      if (!missing(`move_parameters_to_config_map`) && is.null(`move_parameters_to_config_map`)) {
+        stop("Invalid value for `move_parameters_to_config_map` when calling JobsApi$SaveJobConfig, `move_parameters_to_config_map` is not nullable")
+      }
 
       query_params[["overrideExisting"]] <- `override_existing`
 
@@ -1407,7 +1644,7 @@ JobsApi <- R6::R6Class(
       if (!is.null(`job_submission`)) {
         local_var_body <- `job_submission`$toJSONString()
       } else {
-        body <- NULL
+        local_var_body <- NULL
       }
 
       local_var_url_path <- "/api/job-configs/{name}"
@@ -1438,18 +1675,21 @@ JobsApi <- R6::R6Class(
       if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
         # save response in a file
         if (!is.null(data_file)) {
-          write(local_var_resp$response, data_file)
+          self$api_client$WriteFile(local_var_resp, data_file)
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "StoredJobSubmission", loadNamespace("Rsirius")),
+          self$api_client$DeserializeResponse(local_var_resp, "StoredJobSubmission"),
           error = function(e) {
             stop("Failed to deserialize response")
           }
         )
         local_var_resp$content <- deserialized_resp_obj
-        local_var_resp
-      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        return(local_var_resp)
+      } 
+      
+      local_var_error_msg <- local_var_resp$response_as_text()      
+      if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp)
@@ -1457,7 +1697,7 @@ JobsApi <- R6::R6Class(
         if (is.null(local_var_resp$response) || local_var_resp$response == "") {
           local_var_resp$response <- "API server error"
         }
-        local_var_resp
+        return(local_var_resp)
       }
     },
 
@@ -1474,13 +1714,13 @@ JobsApi <- R6::R6Class(
     StartJob = function(project_id, job_submission, opt_fields = list("command","progress"), data_file = NULL, ...) {
       local_var_response <- self$StartJobWithHttpInfo(project_id, job_submission, opt_fields, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
-        local_var_response$content
+        return(local_var_response$content)
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
-        local_var_response
+        return(local_var_response)
       }
     },
 
@@ -1512,8 +1752,17 @@ JobsApi <- R6::R6Class(
         stop("Missing required parameter `job_submission`.")
       }
 
+      if (!missing(`project_id`) && is.null(`project_id`)) {
+        stop("Invalid value for `project_id` when calling JobsApi$StartJob, `project_id` is not nullable")
+      }
 
+      if (!missing(`job_submission`) && is.null(`job_submission`)) {
+        stop("Invalid value for `job_submission` when calling JobsApi$StartJob, `job_submission` is not nullable")
+      }
 
+      if (!missing(`opt_fields`) && is.null(`opt_fields`)) {
+        stop("Invalid value for `opt_fields` when calling JobsApi$StartJob, `opt_fields` is not nullable")
+      }
 
       # explore
       for (query_item in `opt_fields`) {
@@ -1527,7 +1776,7 @@ JobsApi <- R6::R6Class(
       if (!is.null(`job_submission`)) {
         local_var_body <- `job_submission`$toJSONString()
       } else {
-        body <- NULL
+        local_var_body <- NULL
       }
 
       local_var_url_path <- "/api/projects/{projectId}/jobs"
@@ -1558,18 +1807,21 @@ JobsApi <- R6::R6Class(
       if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
         # save response in a file
         if (!is.null(data_file)) {
-          write(local_var_resp$response, data_file)
+          self$api_client$WriteFile(local_var_resp, data_file)
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "Job", loadNamespace("Rsirius")),
+          self$api_client$DeserializeResponse(local_var_resp, "Job"),
           error = function(e) {
             stop("Failed to deserialize response")
           }
         )
         local_var_resp$content <- deserialized_resp_obj
-        local_var_resp
-      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        return(local_var_resp)
+      } 
+      
+      local_var_error_msg <- local_var_resp$response_as_text()      
+      if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp)
@@ -1577,7 +1829,7 @@ JobsApi <- R6::R6Class(
         if (is.null(local_var_resp$response) || local_var_resp$response == "") {
           local_var_resp$response <- "API server error"
         }
-        local_var_resp
+        return(local_var_resp)
       }
     },
 
@@ -1588,21 +1840,21 @@ JobsApi <- R6::R6Class(
     #' @param job_config_name name if the config to be used
     #' @param request_body List of alignedFeatureIds to be computed
     #' @param recompute (optional) enable or disable recompute. If null the stored value will be used.
-    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["command","progress"])
+    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [command, progress])
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return Job
-    StartJobFromConfig = function(project_id, job_config_name, request_body, recompute = NULL, opt_fields = list("command","progress"), data_file = NULL, ...) {
+    StartJobFromConfig = function(project_id, job_config_name, request_body, recompute = NULL, opt_fields = list(command, progress), data_file = NULL, ...) {
       local_var_response <- self$StartJobFromConfigWithHttpInfo(project_id, job_config_name, request_body, recompute, opt_fields, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
-        local_var_response$content
+        return(local_var_response$content)
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
-        local_var_response
+        return(local_var_response)
       }
     },
 
@@ -1613,12 +1865,12 @@ JobsApi <- R6::R6Class(
     #' @param job_config_name name if the config to be used
     #' @param request_body List of alignedFeatureIds to be computed
     #' @param recompute (optional) enable or disable recompute. If null the stored value will be used.
-    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["command","progress"])
+    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [command, progress])
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return API response (Job) with additional information such as HTTP status code, headers
-    StartJobFromConfigWithHttpInfo = function(project_id, job_config_name, request_body, recompute = NULL, opt_fields = list("command","progress"), data_file = NULL, ...) {
+    StartJobFromConfigWithHttpInfo = function(project_id, job_config_name, request_body, recompute = NULL, opt_fields = list(command, progress), data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -1640,10 +1892,25 @@ JobsApi <- R6::R6Class(
         stop("Missing required parameter `request_body`.")
       }
 
+      if (!missing(`project_id`) && is.null(`project_id`)) {
+        stop("Invalid value for `project_id` when calling JobsApi$StartJobFromConfig, `project_id` is not nullable")
+      }
 
+      if (!missing(`job_config_name`) && is.null(`job_config_name`)) {
+        stop("Invalid value for `job_config_name` when calling JobsApi$StartJobFromConfig, `job_config_name` is not nullable")
+      }
 
+      if (!missing(`request_body`) && is.null(`request_body`)) {
+        stop("Invalid value for `request_body` when calling JobsApi$StartJobFromConfig, `request_body` is not nullable")
+      }
 
+      if (!missing(`recompute`) && is.null(`recompute`)) {
+        stop("Invalid value for `recompute` when calling JobsApi$StartJobFromConfig, `recompute` is not nullable")
+      }
 
+      if (!missing(`opt_fields`) && is.null(`opt_fields`)) {
+        stop("Invalid value for `opt_fields` when calling JobsApi$StartJobFromConfig, `opt_fields` is not nullable")
+      }
 
       query_params[["jobConfigName"]] <- `job_config_name`
 
@@ -1664,7 +1931,7 @@ JobsApi <- R6::R6Class(
                                                          })), collapse = ",")
         local_var_body <- paste0("[", body.items, "]")
       } else {
-        body <- NULL
+        local_var_body <- NULL
       }
 
       local_var_url_path <- "/api/projects/{projectId}/jobs/from-config"
@@ -1695,18 +1962,21 @@ JobsApi <- R6::R6Class(
       if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
         # save response in a file
         if (!is.null(data_file)) {
-          write(local_var_resp$response, data_file)
+          self$api_client$WriteFile(local_var_resp, data_file)
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "Job", loadNamespace("Rsirius")),
+          self$api_client$DeserializeResponse(local_var_resp, "Job"),
           error = function(e) {
             stop("Failed to deserialize response")
           }
         )
         local_var_resp$content <- deserialized_resp_obj
-        local_var_resp
-      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        return(local_var_resp)
+      } 
+      
+      local_var_error_msg <- local_var_resp$response_as_text()      
+      if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp)
@@ -1714,7 +1984,7 @@ JobsApi <- R6::R6Class(
         if (is.null(local_var_resp$response) || local_var_resp$response == "") {
           local_var_resp$response <- "API server error"
         }
-        local_var_resp
+        return(local_var_resp)
       }
     }
   )

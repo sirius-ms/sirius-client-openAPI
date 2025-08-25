@@ -7,10 +7,11 @@ Method | HTTP request | Description
 [**delete_job**](JobsApi.md#delete_job) | **DELETE** /api/projects/{projectId}/jobs/{jobId} | Delete job.
 [**delete_job_config**](JobsApi.md#delete_job_config) | **DELETE** /api/job-configs/{name} | Delete job configuration with given name.
 [**delete_jobs**](JobsApi.md#delete_jobs) | **DELETE** /api/projects/{projectId}/jobs | * Delete ALL jobs.
+[**get_command**](JobsApi.md#get_command) | **POST** /api/job-configs/get-command | Get a CLI command for the given job configuration.
 [**get_default_job_config**](JobsApi.md#get_default_job_config) | **GET** /api/default-job-config | Request default job configuration
 [**get_job**](JobsApi.md#get_job) | **GET** /api/projects/{projectId}/jobs/{jobId} | Get job information and its current state and progress (if available).
 [**get_job_config**](JobsApi.md#get_job_config) | **GET** /api/job-configs/{name} | Request job configuration with given name.
-[**get_job_config_names**](JobsApi.md#get_job_config_names) | **GET** /api/job-config-names | DEPRECATED: use /job-configs to get all configs with names.
+[**get_job_config_names**](JobsApi.md#get_job_config_names) | **GET** /api/job-config-names | [DEPRECATED] Get all (non-default) job configuration names  
 [**get_job_configs**](JobsApi.md#get_job_configs) | **GET** /api/job-configs | Request all available job configurations
 [**get_jobs**](JobsApi.md#get_jobs) | **GET** /api/projects/{projectId}/jobs | Get List of all available jobs with information such as current state and progress (if available).
 [**get_jobs_paged**](JobsApi.md#get_jobs_paged) | **GET** /api/projects/{projectId}/jobs/page | Get Page of jobs with information such as current state and progress (if available).
@@ -225,6 +226,74 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **get_command**
+> List[str] get_command(job_submission)
+
+Get a CLI command for the given job configuration.
+
+Get a CLI command for the given job configuration.
+
+### Example
+
+
+```python
+import PySirius
+from PySirius.models.job_submission import JobSubmission
+from PySirius.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to http://localhost:8080
+# See configuration.py for a list of all supported configuration parameters.
+configuration = PySirius.Configuration(
+    host = "http://localhost:8080"
+)
+
+
+# Enter a context with an instance of the API client
+with PySirius.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = PySirius.JobsApi(api_client)
+    job_submission = PySirius.JobSubmission() # JobSubmission | 
+
+    try:
+        # Get a CLI command for the given job configuration.
+        api_response = api_instance.get_command(job_submission)
+        print("The response of JobsApi->get_command:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling JobsApi->get_command: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **job_submission** | [**JobSubmission**](JobSubmission.md)|  | 
+
+### Return type
+
+**List[str]**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **get_default_job_config**
 > JobSubmission get_default_job_config(include_config_map=include_config_map, move_parameters_to_config_map=move_parameters_to_config_map, include_custom_dbs_for_structure_search=include_custom_dbs_for_structure_search)
 
@@ -254,7 +323,7 @@ with PySirius.ApiClient(configuration) as api_client:
     api_instance = PySirius.JobsApi(api_client)
     include_config_map = False # bool | if true, generic configmap with-defaults will be included (optional) (default to False)
     move_parameters_to_config_map = False # bool | if true, object-based parameters will be converted to and added to the generic configMap parameters (optional) (default to False)
-    include_custom_dbs_for_structure_search = False # bool | if true, default database selection of structure db search contains also all available custom DB. (optional) (default to False)
+    include_custom_dbs_for_structure_search = False # bool | if true, default database selection of structure db search                                            spectral library search contains also all available custom DB.                                            If No custom dbs are selected, spectral library search is disabled by default. (optional) (default to False)
 
     try:
         # Request default job configuration
@@ -274,7 +343,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **include_config_map** | **bool**| if true, generic configmap with-defaults will be included | [optional] [default to False]
  **move_parameters_to_config_map** | **bool**| if true, object-based parameters will be converted to and added to the generic configMap parameters | [optional] [default to False]
- **include_custom_dbs_for_structure_search** | **bool**| if true, default database selection of structure db search contains also all available custom DB. | [optional] [default to False]
+ **include_custom_dbs_for_structure_search** | **bool**| if true, default database selection of structure db search                                            spectral library search contains also all available custom DB.                                            If No custom dbs are selected, spectral library search is disabled by default. | [optional] [default to False]
 
 ### Return type
 
@@ -327,7 +396,7 @@ with PySirius.ApiClient(configuration) as api_client:
     api_instance = PySirius.JobsApi(api_client)
     project_id = 'project_id_example' # str | project-space to run jobs on
     job_id = 'job_id_example' # str | of the job to be returned
-    opt_fields = ["progress"] # List[JobOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to ["progress"])
+    opt_fields = [progress] # List[JobOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to [progress])
 
     try:
         # Get job information and its current state and progress (if available).
@@ -347,7 +416,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **str**| project-space to run jobs on | 
  **job_id** | **str**| of the job to be returned | 
- **opt_fields** | [**List[JobOptField]**](JobOptField.md)| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;progress&quot;]]
+ **opt_fields** | [**List[JobOptField]**](JobOptField.md)| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [progress]]
 
 ### Return type
 
@@ -443,9 +512,11 @@ No authorization required
 # **get_job_config_names**
 > List[str] get_job_config_names()
 
-DEPRECATED: use /job-configs to get all configs with names.
+[DEPRECATED] Get all (non-default) job configuration names  
 
-Get all (non-default) job configuration names
+[DEPRECATED] Get all (non-default) job configuration names
+ <p>
+ [DEPRECATED] Use /job-configs to get all configs with names. This endpoint is based on local file paths and will likely be removed in future versions of this API.
 
 ### Example
 
@@ -468,7 +539,7 @@ with PySirius.ApiClient(configuration) as api_client:
     api_instance = PySirius.JobsApi(api_client)
 
     try:
-        # DEPRECATED: use /job-configs to get all configs with names.
+        # [DEPRECATED] Get all (non-default) job configuration names  
         api_response = api_instance.get_job_config_names()
         print("The response of JobsApi->get_job_config_names:\n")
         pprint(api_response)
@@ -670,7 +741,7 @@ with PySirius.ApiClient(configuration) as api_client:
     page = 0 # int | Zero-based page index (0..N) (optional) (default to 0)
     size = 20 # int | The size of the page to be returned (optional) (default to 20)
     sort = ['sort_example'] # List[str] | Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (optional)
-    opt_fields = ["none"] # List[JobOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to ["none"])
+    opt_fields = [none] # List[JobOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to [none])
 
     try:
         # Get Page of jobs with information such as current state and progress (if available).
@@ -692,7 +763,7 @@ Name | Type | Description  | Notes
  **page** | **int**| Zero-based page index (0..N) | [optional] [default to 0]
  **size** | **int**| The size of the page to be returned | [optional] [default to 20]
  **sort** | [**List[str]**](str.md)| Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. | [optional] 
- **opt_fields** | [**List[JobOptField]**](JobOptField.md)| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;none&quot;]]
+ **opt_fields** | [**List[JobOptField]**](JobOptField.md)| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [none]]
 
 ### Return type
 
@@ -717,8 +788,6 @@ No authorization required
 
 # **has_jobs**
 > bool has_jobs(project_id, include_finished=include_finished)
-
-
 
 ### Example
 
@@ -962,7 +1031,7 @@ with PySirius.ApiClient(configuration) as api_client:
     job_config_name = 'job_config_name_example' # str | name if the config to be used
     request_body = ['request_body_example'] # List[str] | List of alignedFeatureIds to be computed
     recompute = True # bool | enable or disable recompute. If null the stored value will be used. (optional)
-    opt_fields = ["command","progress"] # List[JobOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to ["command","progress"])
+    opt_fields = [command, progress] # List[JobOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to [command, progress])
 
     try:
         # Start computation for given compounds and with parameters from a stored job-config.
@@ -984,7 +1053,7 @@ Name | Type | Description  | Notes
  **job_config_name** | **str**| name if the config to be used | 
  **request_body** | [**List[str]**](str.md)| List of alignedFeatureIds to be computed | 
  **recompute** | **bool**| enable or disable recompute. If null the stored value will be used. | [optional] 
- **opt_fields** | [**List[JobOptField]**](JobOptField.md)| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;command&quot;,&quot;progress&quot;]]
+ **opt_fields** | [**List[JobOptField]**](JobOptField.md)| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [command, progress]]
 
 ### Return type
 

@@ -17,6 +17,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictBool
 from typing import Any, ClassVar, Dict, List, Optional
+from PySirius.models.deviation import Deviation
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -25,7 +26,12 @@ class LcmsSubmissionParameters(BaseModel):
     LcmsSubmissionParameters
     """ # noqa: E501
     align_lcms_runs: Optional[StrictBool] = Field(default=True, description="Specifies whether LC/MS runs should be aligned", alias="alignLCMSRuns")
-    __properties: ClassVar[List[str]] = ["alignLCMSRuns"]
+    noise_intensity: Optional[float] = Field(default=-1, description="Noise level under which all peaks are considered to be likely noise. A peak has to be at least 3x noise level  to be picked as feature. Peaks with MS/MS are still picked even though they might be below noise level.  If not specified, the noise intensity is detected automatically from data. We recommend to NOT specify  this parameter, as the automated detection is usually sufficient.", alias="noiseIntensity")
+    trace_max_mass_deviation: Optional[Deviation] = Field(default=None, description="Maximal allowed mass deviation for peaks in ms1 to be considered as belonging to the same trace.", alias="traceMaxMassDeviation")
+    align_max_mass_deviation: Optional[Deviation] = Field(default=None, description="Maximal allowed mass deviation for aligning features. If not specified, this parameter is estimated from data.", alias="alignMaxMassDeviation")
+    align_max_retention_time_deviation: Optional[float] = Field(default=-1, description="Maximal allowed retention time error in seconds for aligning features. If not specified, this parameter is estimated from data.", alias="alignMaxRetentionTimeDeviation")
+    min_snr: Optional[float] = Field(default=3, description="Minimum ratio between peak height and noise intensity for detecting features. By default, this value is 3. Features with good MS/MS are always picked independent of their intensity. For picking very low intensive features we recommend a min-snr of 2, but this will increase runtime and storage memory", alias="minSNR")
+    __properties: ClassVar[List[str]] = ["alignLCMSRuns", "noiseIntensity", "traceMaxMassDeviation", "alignMaxMassDeviation", "alignMaxRetentionTimeDeviation", "minSNR"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -66,6 +72,12 @@ class LcmsSubmissionParameters(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of trace_max_mass_deviation
+        if self.trace_max_mass_deviation:
+            _dict['traceMaxMassDeviation'] = self.trace_max_mass_deviation.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of align_max_mass_deviation
+        if self.align_max_mass_deviation:
+            _dict['alignMaxMassDeviation'] = self.align_max_mass_deviation.to_dict()
         return _dict
 
     @classmethod
@@ -78,7 +90,12 @@ class LcmsSubmissionParameters(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "alignLCMSRuns": obj.get("alignLCMSRuns") if obj.get("alignLCMSRuns") is not None else True
+            "alignLCMSRuns": obj.get("alignLCMSRuns") if obj.get("alignLCMSRuns") is not None else True,
+            "noiseIntensity": obj.get("noiseIntensity") if obj.get("noiseIntensity") is not None else -1,
+            "traceMaxMassDeviation": Deviation.from_dict(obj["traceMaxMassDeviation"]) if obj.get("traceMaxMassDeviation") is not None else None,
+            "alignMaxMassDeviation": Deviation.from_dict(obj["alignMaxMassDeviation"]) if obj.get("alignMaxMassDeviation") is not None else None,
+            "alignMaxRetentionTimeDeviation": obj.get("alignMaxRetentionTimeDeviation") if obj.get("alignMaxRetentionTimeDeviation") is not None else -1,
+            "minSNR": obj.get("minSNR") if obj.get("minSNR") is not None else 3
         })
         return _obj
 

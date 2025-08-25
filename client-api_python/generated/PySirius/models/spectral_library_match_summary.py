@@ -73,11 +73,6 @@ class SpectralLibraryMatchSummary(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of best_match
         if self.best_match:
             _dict['bestMatch'] = self.best_match.to_dict()
-        # set to None if best_match (nullable) is None
-        # and model_fields_set contains the field
-        if self.best_match is None and "best_match" in self.model_fields_set:
-            _dict['bestMatch'] = None
-
         return _dict
 
     @classmethod

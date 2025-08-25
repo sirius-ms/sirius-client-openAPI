@@ -19,28 +19,34 @@
 #' @format An \code{R6Class} generator object
 #' @field api_client API client
 #' @field actuator_api an instance of ActuatorApi
+#' @field compound_statistics_api an instance of CompoundStatisticsApi
 #' @field compounds_api an instance of CompoundsApi
+#' @field feature_statistics_api an instance of FeatureStatisticsApi
 #' @field features_api an instance of FeaturesApi
-#' @field gui_api an instance of GuiApi
 #' @field info_api an instance of InfoApi
 #' @field jobs_api an instance of JobsApi
 #' @field login_and_account_api an instance of LoginAndAccountApi
 #' @field projects_api an instance of ProjectsApi
+#' @field runs_api an instance of RunsApi
 #' @field searchable_databases_api an instance of SearchableDatabasesApi
+#' @field tags_api an instance of TagsApi
 #' @export
 rsirius_api <- R6::R6Class(
   "rsirius_api",
   public = list(
     api_client = NULL,
     actuator_api = NULL,
+    compound_statistics_api = NULL,
     compounds_api = NULL,
+    feature_statistics_api = NULL,
     features_api = NULL,
-    gui_api = NULL,
     info_api = NULL,
     jobs_api = NULL,
     login_and_account_api = NULL,
     projects_api = NULL,
+    runs_api = NULL,
     searchable_databases_api = NULL,
+    tags_api = NULL,
     #' Initialize a new Rsirius API Class.
     #'
     #' @description
@@ -57,11 +63,13 @@ rsirius_api <- R6::R6Class(
 
       self$actuator_api <- ActuatorApi$new(self$api_client)
 
+      self$compound_statistics_api <- CompoundStatisticsApi$new(self$api_client)
+
       self$compounds_api <- CompoundsApi$new(self$api_client)
 
-      self$features_api <- FeaturesApi$new(self$api_client)
+      self$feature_statistics_api <- FeatureStatisticsApi$new(self$api_client)
 
-      self$gui_api <- GuiApi$new(self$api_client)
+      self$features_api <- FeaturesApi$new(self$api_client)
 
       self$info_api <- InfoApi$new(self$api_client)
 
@@ -71,7 +79,11 @@ rsirius_api <- R6::R6Class(
 
       self$projects_api <- ProjectsApi$new(self$api_client)
 
+      self$runs_api <- RunsApi$new(self$api_client)
+
       self$searchable_databases_api <- SearchableDatabasesApi$new(self$api_client)
+
+      self$tags_api <- TagsApi$new(self$api_client)
 
     }
   )

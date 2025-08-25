@@ -36,11 +36,21 @@ df
 
 \item{\code{spectraSearchDBs}}{Structure Databases with Reference spectra to search in.  <p>  Defaults to BIO + Custom Databases. Possible values are available to Database API. list(character) [optional]}
 
-\item{\code{peakDeviationPpm}}{Maximum allowed mass deviation in ppm for matching peaks. numeric [optional]}
-
 \item{\code{precursorDeviationPpm}}{Maximum allowed mass deviation in ppm for matching the precursor. If not specified, the same value as for the peaks is used. numeric [optional]}
 
-\item{\code{scoring}}{Specify scoring method to match spectra  INTENSITY: Intensity weighted. Each peak matches at most one peak in the other spectrum.  GAUSSIAN: Treat peaks as (un-normalized) Gaussians and score overlapping areas of PDFs. Each peak might score against multiple peaks in the other spectrum.  MODIFIED_COSINE:  This algorithm requires that there is at most one pair of peaks (u,v) where the m/z of u and v are within the allowed mass tolerance. To be used for analog search with different precursor masses. character [optional]}
+\item{\code{minSimilarity}}{Minimal spectral similarity of a spectral match to be considered a hit. numeric [optional]}
+
+\item{\code{minNumOfPeaks}}{Minimal number of matching peaks of a spectral match to be considered a hit. integer [optional]}
+
+\item{\code{enableAnalogueSearch}}{Enable analogue search in addition to the identity spectral library search character [optional]}
+
+\item{\code{minSimilarityAnalogue}}{Minimal spectral similarity of a spectral match to be considered an analogue hit. numeric [optional]}
+
+\item{\code{minNumOfPeaksAnalogue}}{Minimal number of matching peaks of a spectral match to be considered an analogue hit. integer [optional]}
+
+\item{\code{scoring}}{NO LONGER SUPPORTED (IGNORED)  Specify scoring method to match spectra  INTENSITY: Intensity weighted. Each peak matches at most one peak in the other spectrum.  GAUSSIAN: Treat peaks as (un-normalized) Gaussians and score overlapping areas of PDFs. Each peak might score against multiple peaks in the other spectrum.  MODIFIED_COSINE:  This algorithm requires that there is at most one pair of peaks (u,v) where the m/z of u and v are within the allowed mass tolerance. To be used for analog search with different precursor masses. character [optional]}
+
+\item{\code{peakDeviationPpm}}{NO LONGER SUPPORTED (IGNORED)  Maximum allowed mass deviation in ppm for matching peaks. numeric [optional]}
 }
 \if{html}{\out{</div>}}
 }
@@ -71,9 +81,14 @@ Initialize a new SpectralLibrarySearch class.
 \if{html}{\out{<div class="r">}}\preformatted{SpectralLibrarySearch$new(
   enabled = NULL,
   spectraSearchDBs = NULL,
-  peakDeviationPpm = NULL,
   precursorDeviationPpm = NULL,
+  minSimilarity = NULL,
+  minNumOfPeaks = NULL,
+  enableAnalogueSearch = NULL,
+  minSimilarityAnalogue = NULL,
+  minNumOfPeaksAnalogue = NULL,
   scoring = NULL,
+  peakDeviationPpm = NULL,
   ...
 )}\if{html}{\out{</div>}}
 }
@@ -85,11 +100,21 @@ Initialize a new SpectralLibrarySearch class.
 
 \item{\code{spectraSearchDBs}}{Structure Databases with Reference spectra to search in.  <p>  Defaults to BIO + Custom Databases. Possible values are available to Database API.}
 
-\item{\code{peakDeviationPpm}}{Maximum allowed mass deviation in ppm for matching peaks.}
-
 \item{\code{precursorDeviationPpm}}{Maximum allowed mass deviation in ppm for matching the precursor. If not specified, the same value as for the peaks is used.}
 
-\item{\code{scoring}}{Specify scoring method to match spectra  INTENSITY: Intensity weighted. Each peak matches at most one peak in the other spectrum.  GAUSSIAN: Treat peaks as (un-normalized) Gaussians and score overlapping areas of PDFs. Each peak might score against multiple peaks in the other spectrum.  MODIFIED_COSINE:  This algorithm requires that there is at most one pair of peaks (u,v) where the m/z of u and v are within the allowed mass tolerance. To be used for analog search with different precursor masses.}
+\item{\code{minSimilarity}}{Minimal spectral similarity of a spectral match to be considered a hit.}
+
+\item{\code{minNumOfPeaks}}{Minimal number of matching peaks of a spectral match to be considered a hit.}
+
+\item{\code{enableAnalogueSearch}}{Enable analogue search in addition to the identity spectral library search}
+
+\item{\code{minSimilarityAnalogue}}{Minimal spectral similarity of a spectral match to be considered an analogue hit.}
+
+\item{\code{minNumOfPeaksAnalogue}}{Minimal number of matching peaks of a spectral match to be considered an analogue hit.}
+
+\item{\code{scoring}}{NO LONGER SUPPORTED (IGNORED)  Specify scoring method to match spectra  INTENSITY: Intensity weighted. Each peak matches at most one peak in the other spectrum.  GAUSSIAN: Treat peaks as (un-normalized) Gaussians and score overlapping areas of PDFs. Each peak might score against multiple peaks in the other spectrum.  MODIFIED_COSINE:  This algorithm requires that there is at most one pair of peaks (u,v) where the m/z of u and v are within the allowed mass tolerance. To be used for analog search with different precursor masses.}
+
+\item{\code{peakDeviationPpm}}{NO LONGER SUPPORTED (IGNORED)  Maximum allowed mass deviation in ppm for matching peaks.}
 
 \item{\code{...}}{Other optional arguments.}
 }

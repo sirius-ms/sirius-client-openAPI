@@ -7,9 +7,9 @@
 #' @title FeatureAnnotations
 #' @description FeatureAnnotations Class
 #' @format An \code{R6Class} generator object
-#' @field formulaAnnotation  \link{FormulaCandidate} [optional]
-#' @field structureAnnotation  \link{StructureCandidateScored} [optional]
-#' @field compoundClassAnnotation  \link{CompoundClasses} [optional]
+#' @field formulaAnnotation Best matching FormulaCandidate. \link{FormulaCandidate} [optional]
+#' @field structureAnnotation Best matching StructureCandidate ranked by CSI:FingerID Score over all FormulaCandidates. \link{StructureCandidateScored} [optional]
+#' @field compoundClassAnnotation Best matching compound classes that correspond to the formulaAnnotation \link{CompoundClasses} [optional]
 #' @field confidenceExactMatch Confidence Score that represents the confidence whether the top hit is correct. numeric [optional]
 #' @field confidenceApproxMatch Confidence Score that represents the confidence whether the top hit or a very similar hit (estimated by MCES distance) is correct. numeric [optional]
 #' @field expansiveSearchState Result that shows if structure annotation was expanded by using PubChem as fallback and if so, which confidence mode was used (as per input paramter) character [optional]
@@ -33,9 +33,9 @@ FeatureAnnotations <- R6::R6Class(
     #' @description
     #' Initialize a new FeatureAnnotations class.
     #'
-    #' @param formulaAnnotation formulaAnnotation
-    #' @param structureAnnotation structureAnnotation
-    #' @param compoundClassAnnotation compoundClassAnnotation
+    #' @param formulaAnnotation Best matching FormulaCandidate.
+    #' @param structureAnnotation Best matching StructureCandidate ranked by CSI:FingerID Score over all FormulaCandidates.
+    #' @param compoundClassAnnotation Best matching compound classes that correspond to the formulaAnnotation
     #' @param confidenceExactMatch Confidence Score that represents the confidence whether the top hit is correct.
     #' @param confidenceApproxMatch Confidence Score that represents the confidence whether the top hit or a very similar hit (estimated by MCES distance) is correct.
     #' @param expansiveSearchState Result that shows if structure annotation was expanded by using PubChem as fallback and if so, which confidence mode was used (as per input paramter)

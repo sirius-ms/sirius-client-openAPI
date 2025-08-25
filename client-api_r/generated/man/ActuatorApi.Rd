@@ -40,10 +40,7 @@ library(Rsirius)
 #Actuator web endpoint 'shutdown'
 api_instance <- rsirius_api$new()
 
-# to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$Shutdown(data_file = "result.txt")
-result <- api_instance$actuator_api$Shutdown()
-dput(result)
+api_instance$actuator_api$Shutdown()
 
 
 }
@@ -133,20 +130,18 @@ API response (object) with additional information such as HTTP status code, head
 \subsection{Method \code{Shutdown()}}{
 Actuator web endpoint 'shutdown'
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ActuatorApi$Shutdown(data_file = NULL, ...)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ActuatorApi$Shutdown(...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{data_file}}{(optional) name of the data file to save the result}
-
 \item{\code{...}}{Other optional arguments}
 }
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-object
+void
 }
 }
 \if{html}{\out{<hr>}}
@@ -155,20 +150,18 @@ object
 \subsection{Method \code{ShutdownWithHttpInfo()}}{
 Actuator web endpoint 'shutdown'
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ActuatorApi$ShutdownWithHttpInfo(data_file = NULL, ...)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ActuatorApi$ShutdownWithHttpInfo(...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{data_file}}{(optional) name of the data file to save the result}
-
 \item{\code{...}}{Other optional arguments}
 }
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-API response (object) with additional information such as HTTP status code, headers
+API response (void) with additional information such as HTTP status code, headers
 }
 }
 \if{html}{\out{<hr>}}

@@ -1,12 +1,13 @@
 #' Create a new MsData
 #'
 #' @description
-#' The MsData wraps all spectral input data belonging to a (aligned) feature. All spectra fields are optional.  However, at least one Spectrum field needs to be set to create a valid MsData Object.  The different types of spectra fields can be extended to adapt to other MassSpec measurement techniques not covered yet.  <p>  Each Feature can have:  - One merged MS/MS spectrum (optional)  - One merged MS spectrum (optional)  - many MS/MS spectra (optional)  - many MS spectra (optional)  <p>  Each non-merged spectrum has an index which can be used to access the spectrum.  <p>  In the future we might add some additional information like chromatographic peak or something similar
+#' The MsData wraps all spectral input data belonging to a (aligned) feature. All spectra fields are optional.  However, at least one Spectrum field needs to be set to create a valid MsData Object.  The different types of spectra fields can be extended to adapt to other MassSpec measurement techniques not covered yet.  <p>  Each Feature can have:  - One extracted isotope pattern (optional)  - One merged MS/MS spectrum (optional)  - One merged MS spectrum (optional)  - many MS/MS spectra (optional)  - many MS spectra (optional)  <p>  Each non-merged spectrum has an index which can be used to access the spectrum.  <p>  In the future we might add some additional information like chromatographic peak or something similar
 #'
 #' @docType class
 #' @title MsData
 #' @description MsData Class
 #' @format An \code{R6Class} generator object
+#' @field isotopePattern  \link{BasicSpectrum} [optional]
 #' @field mergedMs1  \link{BasicSpectrum} [optional]
 #' @field mergedMs2  \link{BasicSpectrum} [optional]
 #' @field ms1Spectra  list(\link{BasicSpectrum}) [optional]
@@ -17,6 +18,7 @@
 MsData <- R6::R6Class(
   "MsData",
   public = list(
+    `isotopePattern` = NULL,
     `mergedMs1` = NULL,
     `mergedMs2` = NULL,
     `ms1Spectra` = NULL,
@@ -25,12 +27,17 @@ MsData <- R6::R6Class(
     #' @description
     #' Initialize a new MsData class.
     #'
+    #' @param isotopePattern isotopePattern
     #' @param mergedMs1 mergedMs1
     #' @param mergedMs2 mergedMs2
     #' @param ms1Spectra ms1Spectra
     #' @param ms2Spectra ms2Spectra
     #' @param ... Other optional arguments.
-    initialize = function(`mergedMs1` = NULL, `mergedMs2` = NULL, `ms1Spectra` = NULL, `ms2Spectra` = NULL, ...) {
+    initialize = function(`isotopePattern` = NULL, `mergedMs1` = NULL, `mergedMs2` = NULL, `ms1Spectra` = NULL, `ms2Spectra` = NULL, ...) {
+      if (!is.null(`isotopePattern`)) {
+        stopifnot(R6::is.R6(`isotopePattern`))
+        self$`isotopePattern` <- `isotopePattern`
+      }
       if (!is.null(`mergedMs1`)) {
         stopifnot(R6::is.R6(`mergedMs1`))
         self$`mergedMs1` <- `mergedMs1`
@@ -82,6 +89,10 @@ MsData <- R6::R6Class(
     #' @return A base R type, e.g. a list or numeric/character array.
     toSimpleType = function() {
       MsDataObject <- list()
+      if (!is.null(self$`isotopePattern`)) {
+        MsDataObject[["isotopePattern"]] <-
+          self$`isotopePattern`$toSimpleType()
+      }
       if (!is.null(self$`mergedMs1`)) {
         MsDataObject[["mergedMs1"]] <-
           self$`mergedMs1`$toSimpleType()
@@ -108,6 +119,11 @@ MsData <- R6::R6Class(
     #' @return the instance of MsData
     fromJSON = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
+      if (!is.null(this_object$`isotopePattern`)) {
+        `isotopepattern_object` <- BasicSpectrum$new()
+        `isotopepattern_object`$fromJSON(jsonlite::toJSON(this_object$`isotopePattern`, auto_unbox = TRUE, digits = NA, null = 'null'))
+        self$`isotopePattern` <- `isotopepattern_object`
+      }
       if (!is.null(this_object$`mergedMs1`)) {
         `mergedms1_object` <- BasicSpectrum$new()
         `mergedms1_object`$fromJSON(jsonlite::toJSON(this_object$`mergedMs1`, auto_unbox = TRUE, digits = NA, null = 'null'))
@@ -145,6 +161,7 @@ MsData <- R6::R6Class(
     #' @return the instance of MsData
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
+      self$`isotopePattern` <- BasicSpectrum$new()$fromJSON(jsonlite::toJSON(this_object$`isotopePattern`, auto_unbox = TRUE, digits = NA, null = 'null'))
       self$`mergedMs1` <- BasicSpectrum$new()$fromJSON(jsonlite::toJSON(this_object$`mergedMs1`, auto_unbox = TRUE, digits = NA, null = 'null'))
       self$`mergedMs2` <- BasicSpectrum$new()$fromJSON(jsonlite::toJSON(this_object$`mergedMs2`, auto_unbox = TRUE, digits = NA, null = 'null'))
       self$`ms1Spectra` <- ApiClient$new()$deserializeObj(this_object$`ms1Spectra`, "array[BasicSpectrum]", loadNamespace("Rsirius"))

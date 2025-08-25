@@ -28,6 +28,7 @@ class StructureCandidateOptField(str, Enum):
     FINGERPRINT = 'fingerprint'
     DBLINKS = 'dbLinks'
     LIBRARYMATCHES = 'libraryMatches'
+    STRUCTURESVG = 'structureSvg'
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:

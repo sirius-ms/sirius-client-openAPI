@@ -72,26 +72,6 @@ class ProjectChangeEvent(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # set to None if compound_id (nullable) is None
-        # and model_fields_set contains the field
-        if self.compound_id is None and "compound_id" in self.model_fields_set:
-            _dict['compoundId'] = None
-
-        # set to None if featured_id (nullable) is None
-        # and model_fields_set contains the field
-        if self.featured_id is None and "featured_id" in self.model_fields_set:
-            _dict['featuredId'] = None
-
-        # set to None if formula_id (nullable) is None
-        # and model_fields_set contains the field
-        if self.formula_id is None and "formula_id" in self.model_fields_set:
-            _dict['formulaId'] = None
-
-        # set to None if structure_in_ch_i_key (nullable) is None
-        # and model_fields_set contains the field
-        if self.structure_in_ch_i_key is None and "structure_in_ch_i_key" in self.model_fields_set:
-            _dict['structureInChIKey'] = None
-
         return _dict
 
     @classmethod
