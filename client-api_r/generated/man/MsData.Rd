@@ -8,7 +8,7 @@
 An \code{R6Class} generator object
 }
 \description{
-The MsData wraps all spectral input data belonging to a (aligned) feature. All spectra fields are optional.  However, at least one Spectrum field needs to be set to create a valid MsData Object.  The different types of spectra fields can be extended to adapt to other MassSpec measurement techniques not covered yet.  <p>  Each Feature can have:  - One merged MS/MS spectrum (optional)  - One merged MS spectrum (optional)  - many MS/MS spectra (optional)  - many MS spectra (optional)  <p>  Each non-merged spectrum has an index which can be used to access the spectrum.  <p>  In the future we might add some additional information like chromatographic peak or something similar
+The MsData wraps all spectral input data belonging to a (aligned) feature. All spectra fields are optional.  However, at least one Spectrum field needs to be set to create a valid MsData Object.  The different types of spectra fields can be extended to adapt to other MassSpec measurement techniques not covered yet.  <p>  Each Feature can have:  - One extracted isotope pattern (optional)  - One merged MS/MS spectrum (optional)  - One merged MS spectrum (optional)  - many MS/MS spectra (optional)  - many MS spectra (optional)  <p>  Each non-merged spectrum has an index which can be used to access the spectrum.  <p>  In the future we might add some additional information like chromatographic peak or something similar
 
 MsData Class
 }
@@ -32,6 +32,8 @@ df
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
+\item{\code{isotopePattern}}{\link{BasicSpectrum} [optional]}
+
 \item{\code{mergedMs1}}{\link{BasicSpectrum} [optional]}
 
 \item{\code{mergedMs2}}{\link{BasicSpectrum} [optional]}
@@ -67,6 +69,7 @@ df
 Initialize a new MsData class.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{MsData$new(
+  isotopePattern = NULL,
   mergedMs1 = NULL,
   mergedMs2 = NULL,
   ms1Spectra = NULL,
@@ -78,6 +81,8 @@ Initialize a new MsData class.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
+\item{\code{isotopePattern}}{isotopePattern}
+
 \item{\code{mergedMs1}}{mergedMs1}
 
 \item{\code{mergedMs2}}{mergedMs2}
