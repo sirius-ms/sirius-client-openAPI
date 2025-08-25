@@ -17,11 +17,12 @@
 #'
 #' library(Rsirius)
 #' var_project_id <- "project_id_example" # character | unique name/identifier of the  project-space to be closed.
+#' var_compact <- FALSE # character | if true, compact project storage after closing. DEPRECATED: Compacting acts on the local filesystem and will likely be removed in a later version. (Optional)
 #'
-#' #Close project-space and remove it from application
+#' #Close project-space and remove it from the application
 #' api_instance <- rsirius_api$new()
 #'
-#' api_instance$projects_api$CloseProject(var_project_id)
+#' api_instance$projects_api$CloseProject(var_project_id, compact = var_compact)
 #'
 #'
 #' ####################  CreateProject  ####################
@@ -117,15 +118,15 @@
 #'
 #' library(Rsirius)
 #' var_project_id <- "project_id_example" # character | Project-space to import into.
-#' var_input_files <- c(123) # array[data.frame] |  (Optional)
-#' var_parameters <- LcmsSubmissionParameters$new("alignLCMSRuns_example") # LcmsSubmissionParameters |  (Optional)
+#' var_input_files <- c(123) # array[data.frame] | Files to import into project.
+#' var_parameters <- LcmsSubmissionParameters$new("alignLCMSRuns_example", 123, Deviation$new(123, 123), Deviation$new(123, 123), 123, 123) # LcmsSubmissionParameters | Parameters for feature alignment and feature finding.
 #'
 #' #Import and Align full MS-Runs from various formats into the specified project  Possible formats (mzML, mzXML)
 #' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-#' # result <- api_instance$ImportMsRunData(var_project_id, input_files = var_input_files, parameters = var_parametersdata_file = "result.txt")
-#' result <- api_instance$projects_api$ImportMsRunData(var_project_id, input_files = var_input_files, parameters = var_parameters)
+#' # result <- api_instance$ImportMsRunData(var_project_id, var_input_files, var_parametersdata_file = "result.txt")
+#' result <- api_instance$projects_api$ImportMsRunData(var_project_id, var_input_files, var_parameters)
 #' dput(result)
 #'
 #'
@@ -133,16 +134,16 @@
 #'
 #' library(Rsirius)
 #' var_project_id <- "project_id_example" # character | Project-space to import into.
+#' var_input_files <- c(123) # array[data.frame] | Files to import into project.
+#' var_parameters <- LcmsSubmissionParameters$new("alignLCMSRuns_example", 123, Deviation$new(123, 123), Deviation$new(123, 123), 123, 123) # LcmsSubmissionParameters | Parameters for feature alignment and feature finding.
 #' var_opt_fields <- c("none") # array[character] | Set of optional fields to be included. Use 'none' only to override defaults. (Optional)
-#' var_input_files <- c(123) # array[data.frame] |  (Optional)
-#' var_parameters <- LcmsSubmissionParameters$new("alignLCMSRuns_example") # LcmsSubmissionParameters |  (Optional)
 #'
 #' #Import and Align full MS-Runs from various formats into the specified project as background job.
 #' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-#' # result <- api_instance$ImportMsRunDataAsJob(var_project_id, opt_fields = var_opt_fields, input_files = var_input_files, parameters = var_parametersdata_file = "result.txt")
-#' result <- api_instance$projects_api$ImportMsRunDataAsJob(var_project_id, opt_fields = var_opt_fields, input_files = var_input_files, parameters = var_parameters)
+#' # result <- api_instance$ImportMsRunDataAsJob(var_project_id, var_input_files, var_parameters, opt_fields = var_opt_fieldsdata_file = "result.txt")
+#' result <- api_instance$projects_api$ImportMsRunDataAsJob(var_project_id, var_input_files, var_parameters, opt_fields = var_opt_fields)
 #' dput(result)
 #'
 #'
@@ -150,16 +151,16 @@
 #'
 #' library(Rsirius)
 #' var_project_id <- "project_id_example" # character | project-space to import into.
+#' var_input_files <- c(123) # array[data.frame] | files to import into project
 #' var_ignore_formulas <- FALSE # character |  (Optional)
 #' var_allow_ms1_only <- TRUE # character |  (Optional)
-#' var_input_files <- c(123) # array[data.frame] |  (Optional)
 #'
 #' #Import already preprocessed ms/ms data from various formats into the specified project  Possible formats (ms, mgf, cef, msp)
 #' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-#' # result <- api_instance$ImportPreprocessedData(var_project_id, ignore_formulas = var_ignore_formulas, allow_ms1_only = var_allow_ms1_only, input_files = var_input_filesdata_file = "result.txt")
-#' result <- api_instance$projects_api$ImportPreprocessedData(var_project_id, ignore_formulas = var_ignore_formulas, allow_ms1_only = var_allow_ms1_only, input_files = var_input_files)
+#' # result <- api_instance$ImportPreprocessedData(var_project_id, var_input_files, ignore_formulas = var_ignore_formulas, allow_ms1_only = var_allow_ms1_onlydata_file = "result.txt")
+#' result <- api_instance$projects_api$ImportPreprocessedData(var_project_id, var_input_files, ignore_formulas = var_ignore_formulas, allow_ms1_only = var_allow_ms1_only)
 #' dput(result)
 #'
 #'
@@ -167,17 +168,17 @@
 #'
 #' library(Rsirius)
 #' var_project_id <- "project_id_example" # character | project-space to import into.
+#' var_input_files <- c(123) # array[data.frame] | 
 #' var_ignore_formulas <- FALSE # character |  (Optional)
 #' var_allow_ms1_only <- TRUE # character |  (Optional)
 #' var_opt_fields <- c("none") # array[character] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
-#' var_input_files <- c(123) # array[data.frame] |  (Optional)
 #'
 #' #Import ms/ms data from the given format into the specified project-space as background job.
 #' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-#' # result <- api_instance$ImportPreprocessedDataAsJob(var_project_id, ignore_formulas = var_ignore_formulas, allow_ms1_only = var_allow_ms1_only, opt_fields = var_opt_fields, input_files = var_input_filesdata_file = "result.txt")
-#' result <- api_instance$projects_api$ImportPreprocessedDataAsJob(var_project_id, ignore_formulas = var_ignore_formulas, allow_ms1_only = var_allow_ms1_only, opt_fields = var_opt_fields, input_files = var_input_files)
+#' # result <- api_instance$ImportPreprocessedDataAsJob(var_project_id, var_input_files, ignore_formulas = var_ignore_formulas, allow_ms1_only = var_allow_ms1_only, opt_fields = var_opt_fieldsdata_file = "result.txt")
+#' result <- api_instance$projects_api$ImportPreprocessedDataAsJob(var_project_id, var_input_files, ignore_formulas = var_ignore_formulas, allow_ms1_only = var_allow_ms1_only, opt_fields = var_opt_fields)
 #' dput(result)
 #'
 #'
@@ -219,33 +220,35 @@ ProjectsApi <- R6::R6Class(
     },
 
     #' @description
-    #' Close project-space and remove it from application
+    #' Close project-space and remove it from the application
     #'
     #' @param project_id unique name/identifier of the  project-space to be closed.
+    #' @param compact (optional) if true, compact project storage after closing. DEPRECATED: Compacting acts on the local filesystem and will likely be removed in a later version. (default value: FALSE)
     #' @param ... Other optional arguments
     #'
     #' @return void
-    CloseProject = function(project_id, ...) {
-      local_var_response <- self$CloseProjectWithHttpInfo(project_id, ...)
+    CloseProject = function(project_id, compact = FALSE, ...) {
+      local_var_response <- self$CloseProjectWithHttpInfo(project_id, compact, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
-        local_var_response$content
+        return(local_var_response$content)
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
-        local_var_response
+        return(local_var_response)
       }
     },
 
     #' @description
-    #' Close project-space and remove it from application
+    #' Close project-space and remove it from the application
     #'
     #' @param project_id unique name/identifier of the  project-space to be closed.
+    #' @param compact (optional) if true, compact project storage after closing. DEPRECATED: Compacting acts on the local filesystem and will likely be removed in a later version. (default value: FALSE)
     #' @param ... Other optional arguments
     #'
     #' @return API response (void) with additional information such as HTTP status code, headers
-    CloseProjectWithHttpInfo = function(project_id, ...) {
+    CloseProjectWithHttpInfo = function(project_id, compact = FALSE, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -259,6 +262,9 @@ ProjectsApi <- R6::R6Class(
         stop("Missing required parameter `project_id`.")
       }
 
+
+
+      query_params[["compact"]] <- `compact`
 
       local_var_url_path <- "/api/projects/{projectId}"
       if (!missing(`project_id`)) {
@@ -287,8 +293,11 @@ ProjectsApi <- R6::R6Class(
 
       if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
         local_var_resp$content <- NULL
-        local_var_resp
-      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        return(local_var_resp)
+      } 
+      
+      local_var_error_msg <- local_var_resp$response_as_text()      
+      if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp)
@@ -296,7 +305,7 @@ ProjectsApi <- R6::R6Class(
         if (is.null(local_var_resp$response) || local_var_resp$response == "") {
           local_var_resp$response <- "API server error"
         }
-        local_var_resp
+        return(local_var_resp)
       }
     },
 
@@ -305,21 +314,21 @@ ProjectsApi <- R6::R6Class(
     #'
     #' @param project_id unique name/identifier that shall be used to access the newly created project-space. Must consist only of [a-zA-Z0-9_-].
     #' @param path_to_project (optional) local file path where the project will be created. If NULL, project will be stored by its projectId in default project location. DEPRECATED: This parameter relies on the local filesystem and will likely be removed in later versions of this API to allow for more flexible use cases.
-    #' @param opt_fields (optional) No description (default value: ["none"])
+    #' @param opt_fields (optional) No description (default value: [none])
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return ProjectInfo
-    CreateProject = function(project_id, path_to_project = NULL, opt_fields = list("none"), data_file = NULL, ...) {
+    CreateProject = function(project_id, path_to_project = NULL, opt_fields = list(NULL), data_file = NULL, ...) {
       local_var_response <- self$CreateProjectWithHttpInfo(project_id, path_to_project, opt_fields, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
-        local_var_response$content
+        return(local_var_response$content)
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
-        local_var_response
+        return(local_var_response)
       }
     },
 
@@ -328,12 +337,12 @@ ProjectsApi <- R6::R6Class(
     #'
     #' @param project_id unique name/identifier that shall be used to access the newly created project-space. Must consist only of [a-zA-Z0-9_-].
     #' @param path_to_project (optional) local file path where the project will be created. If NULL, project will be stored by its projectId in default project location. DEPRECATED: This parameter relies on the local filesystem and will likely be removed in later versions of this API to allow for more flexible use cases.
-    #' @param opt_fields (optional) No description (default value: ["none"])
+    #' @param opt_fields (optional) No description (default value: [none])
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return API response (ProjectInfo) with additional information such as HTTP status code, headers
-    CreateProjectWithHttpInfo = function(project_id, path_to_project = NULL, opt_fields = list("none"), data_file = NULL, ...) {
+    CreateProjectWithHttpInfo = function(project_id, path_to_project = NULL, opt_fields = list(NULL), data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -389,18 +398,21 @@ ProjectsApi <- R6::R6Class(
       if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
         # save response in a file
         if (!is.null(data_file)) {
-          write(local_var_resp$response, data_file)
+          self$api_client$WriteFile(local_var_resp, data_file)
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "ProjectInfo", loadNamespace("Rsirius")),
+          self$api_client$DeserializeResponse(local_var_resp, "ProjectInfo"),
           error = function(e) {
             stop("Failed to deserialize response")
           }
         )
         local_var_resp$content <- deserialized_resp_obj
-        local_var_resp
-      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        return(local_var_resp)
+      } 
+      
+      local_var_error_msg <- local_var_resp$response_as_text()      
+      if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp)
@@ -408,7 +420,7 @@ ProjectsApi <- R6::R6Class(
         if (is.null(local_var_resp$response) || local_var_resp$response == "") {
           local_var_resp$response <- "API server error"
         }
-        local_var_resp
+        return(local_var_resp)
       }
     },
 
@@ -424,13 +436,13 @@ ProjectsApi <- R6::R6Class(
     GetCanopusClassyFireData = function(project_id, charge, data_file = NULL, ...) {
       local_var_response <- self$GetCanopusClassyFireDataWithHttpInfo(project_id, charge, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
-        local_var_response$content
+        return(local_var_response$content)
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
-        local_var_response
+        return(local_var_response)
       }
     },
 
@@ -493,18 +505,21 @@ ProjectsApi <- R6::R6Class(
       if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
         # save response in a file
         if (!is.null(data_file)) {
-          write(local_var_resp$response, data_file)
+          self$api_client$WriteFile(local_var_resp, data_file)
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "character", loadNamespace("Rsirius")),
+          self$api_client$DeserializeResponse(local_var_resp, "character"),
           error = function(e) {
             stop("Failed to deserialize response")
           }
         )
         local_var_resp$content <- deserialized_resp_obj
-        local_var_resp
-      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        return(local_var_resp)
+      } 
+      
+      local_var_error_msg <- local_var_resp$response_as_text()      
+      if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp)
@@ -512,7 +527,7 @@ ProjectsApi <- R6::R6Class(
         if (is.null(local_var_resp$response) || local_var_resp$response == "") {
           local_var_resp$response <- "API server error"
         }
-        local_var_resp
+        return(local_var_resp)
       }
     },
 
@@ -528,13 +543,13 @@ ProjectsApi <- R6::R6Class(
     GetCanopusNpcData = function(project_id, charge, data_file = NULL, ...) {
       local_var_response <- self$GetCanopusNpcDataWithHttpInfo(project_id, charge, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
-        local_var_response$content
+        return(local_var_response$content)
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
-        local_var_response
+        return(local_var_response)
       }
     },
 
@@ -597,18 +612,21 @@ ProjectsApi <- R6::R6Class(
       if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
         # save response in a file
         if (!is.null(data_file)) {
-          write(local_var_resp$response, data_file)
+          self$api_client$WriteFile(local_var_resp, data_file)
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "character", loadNamespace("Rsirius")),
+          self$api_client$DeserializeResponse(local_var_resp, "character"),
           error = function(e) {
             stop("Failed to deserialize response")
           }
         )
         local_var_resp$content <- deserialized_resp_obj
-        local_var_resp
-      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        return(local_var_resp)
+      } 
+      
+      local_var_error_msg <- local_var_resp$response_as_text()      
+      if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp)
@@ -616,7 +634,7 @@ ProjectsApi <- R6::R6Class(
         if (is.null(local_var_resp$response) || local_var_resp$response == "") {
           local_var_resp$response <- "API server error"
         }
-        local_var_resp
+        return(local_var_resp)
       }
     },
 
@@ -632,13 +650,13 @@ ProjectsApi <- R6::R6Class(
     GetFingerIdData = function(project_id, charge, data_file = NULL, ...) {
       local_var_response <- self$GetFingerIdDataWithHttpInfo(project_id, charge, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
-        local_var_response$content
+        return(local_var_response$content)
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
-        local_var_response
+        return(local_var_response)
       }
     },
 
@@ -701,18 +719,21 @@ ProjectsApi <- R6::R6Class(
       if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
         # save response in a file
         if (!is.null(data_file)) {
-          write(local_var_resp$response, data_file)
+          self$api_client$WriteFile(local_var_resp, data_file)
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "character", loadNamespace("Rsirius")),
+          self$api_client$DeserializeResponse(local_var_resp, "character"),
           error = function(e) {
             stop("Failed to deserialize response")
           }
         )
         local_var_resp$content <- deserialized_resp_obj
-        local_var_resp
-      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        return(local_var_resp)
+      } 
+      
+      local_var_error_msg <- local_var_resp$response_as_text()      
+      if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp)
@@ -720,7 +741,7 @@ ProjectsApi <- R6::R6Class(
         if (is.null(local_var_resp$response) || local_var_resp$response == "") {
           local_var_resp$response <- "API server error"
         }
-        local_var_resp
+        return(local_var_resp)
       }
     },
 
@@ -736,13 +757,13 @@ ProjectsApi <- R6::R6Class(
     GetProject = function(project_id, opt_fields = list("none"), data_file = NULL, ...) {
       local_var_response <- self$GetProjectWithHttpInfo(project_id, opt_fields, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
-        local_var_response$content
+        return(local_var_response$content)
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
-        local_var_response
+        return(local_var_response)
       }
     },
 
@@ -808,18 +829,21 @@ ProjectsApi <- R6::R6Class(
       if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
         # save response in a file
         if (!is.null(data_file)) {
-          write(local_var_resp$response, data_file)
+          self$api_client$WriteFile(local_var_resp, data_file)
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "ProjectInfo", loadNamespace("Rsirius")),
+          self$api_client$DeserializeResponse(local_var_resp, "ProjectInfo"),
           error = function(e) {
             stop("Failed to deserialize response")
           }
         )
         local_var_resp$content <- deserialized_resp_obj
-        local_var_resp
-      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        return(local_var_resp)
+      } 
+      
+      local_var_error_msg <- local_var_resp$response_as_text()      
+      if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp)
@@ -827,7 +851,7 @@ ProjectsApi <- R6::R6Class(
         if (is.null(local_var_resp$response) || local_var_resp$response == "") {
           local_var_resp$response <- "API server error"
         }
-        local_var_resp
+        return(local_var_resp)
       }
     },
 
@@ -841,13 +865,13 @@ ProjectsApi <- R6::R6Class(
     GetProjects = function(data_file = NULL, ...) {
       local_var_response <- self$GetProjectsWithHttpInfo(data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
-        local_var_response$content
+        return(local_var_response$content)
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
-        local_var_response
+        return(local_var_response)
       }
     },
 
@@ -892,18 +916,21 @@ ProjectsApi <- R6::R6Class(
       if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
         # save response in a file
         if (!is.null(data_file)) {
-          write(local_var_resp$response, data_file)
+          self$api_client$WriteFile(local_var_resp, data_file)
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "array[ProjectInfo]", loadNamespace("Rsirius")),
+          self$api_client$DeserializeResponse(local_var_resp, "array[ProjectInfo]"),
           error = function(e) {
             stop("Failed to deserialize response")
           }
         )
         local_var_resp$content <- deserialized_resp_obj
-        local_var_resp
-      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        return(local_var_resp)
+      } 
+      
+      local_var_error_msg <- local_var_resp$response_as_text()      
+      if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp)
@@ -911,7 +938,7 @@ ProjectsApi <- R6::R6Class(
         if (is.null(local_var_resp$response) || local_var_resp$response == "") {
           local_var_resp$response <- "API server error"
         }
-        local_var_resp
+        return(local_var_resp)
       }
     },
 
@@ -919,22 +946,22 @@ ProjectsApi <- R6::R6Class(
     #' Import and Align full MS-Runs from various formats into the specified project  Possible formats (mzML, mzXML)
     #'
     #' @param project_id Project-space to import into.
-    #' @param input_files (optional) No description
-    #' @param parameters (optional) No description
+    #' @param input_files Files to import into project.
+    #' @param parameters Parameters for feature alignment and feature finding.
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return ImportResult
-    ImportMsRunData = function(project_id, input_files = NULL, parameters = NULL, data_file = NULL, ...) {
+    ImportMsRunData = function(project_id, input_files, parameters, data_file = NULL, ...) {
       local_var_response <- self$ImportMsRunDataWithHttpInfo(project_id, input_files, parameters, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
-        local_var_response$content
+        return(local_var_response$content)
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
-        local_var_response
+        return(local_var_response)
       }
     },
 
@@ -942,13 +969,13 @@ ProjectsApi <- R6::R6Class(
     #' Import and Align full MS-Runs from various formats into the specified project  Possible formats (mzML, mzXML)
     #'
     #' @param project_id Project-space to import into.
-    #' @param input_files (optional) No description
-    #' @param parameters (optional) No description
+    #' @param input_files Files to import into project.
+    #' @param parameters Parameters for feature alignment and feature finding.
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return API response (ImportResult) with additional information such as HTTP status code, headers
-    ImportMsRunDataWithHttpInfo = function(project_id, input_files = NULL, parameters = NULL, data_file = NULL, ...) {
+    ImportMsRunDataWithHttpInfo = function(project_id, input_files, parameters, data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -960,6 +987,14 @@ ProjectsApi <- R6::R6Class(
 
       if (missing(`project_id`)) {
         stop("Missing required parameter `project_id`.")
+      }
+
+      if (missing(`input_files`)) {
+        stop("Missing required parameter `input_files`.")
+      }
+
+      if (missing(`parameters`)) {
+        stop("Missing required parameter `parameters`.")
       }
 
 
@@ -995,18 +1030,21 @@ ProjectsApi <- R6::R6Class(
       if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
         # save response in a file
         if (!is.null(data_file)) {
-          write(local_var_resp$response, data_file)
+          self$api_client$WriteFile(local_var_resp, data_file)
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "ImportResult", loadNamespace("Rsirius")),
+          self$api_client$DeserializeResponse(local_var_resp, "ImportResult"),
           error = function(e) {
             stop("Failed to deserialize response")
           }
         )
         local_var_resp$content <- deserialized_resp_obj
-        local_var_resp
-      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        return(local_var_resp)
+      } 
+      
+      local_var_error_msg <- local_var_resp$response_as_text()      
+      if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp)
@@ -1014,7 +1052,7 @@ ProjectsApi <- R6::R6Class(
         if (is.null(local_var_resp$response) || local_var_resp$response == "") {
           local_var_resp$response <- "API server error"
         }
-        local_var_resp
+        return(local_var_resp)
       }
     },
 
@@ -1022,23 +1060,23 @@ ProjectsApi <- R6::R6Class(
     #' Import and Align full MS-Runs from various formats into the specified project as background job.
     #'
     #' @param project_id Project-space to import into.
-    #' @param opt_fields (optional) Set of optional fields to be included. Use 'none' only to override defaults. (default value: ["progress"])
-    #' @param input_files (optional) No description
-    #' @param parameters (optional) No description
+    #' @param input_files Files to import into project.
+    #' @param parameters Parameters for feature alignment and feature finding.
+    #' @param opt_fields (optional) Set of optional fields to be included. Use 'none' only to override defaults. (default value: [progress])
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return Job
-    ImportMsRunDataAsJob = function(project_id, opt_fields = list("progress"), input_files = NULL, parameters = NULL, data_file = NULL, ...) {
-      local_var_response <- self$ImportMsRunDataAsJobWithHttpInfo(project_id, opt_fields, input_files, parameters, data_file = data_file, ...)
+    ImportMsRunDataAsJob = function(project_id, input_files, parameters, opt_fields = list(progress), data_file = NULL, ...) {
+      local_var_response <- self$ImportMsRunDataAsJobWithHttpInfo(project_id, input_files, parameters, opt_fields, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
-        local_var_response$content
+        return(local_var_response$content)
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
-        local_var_response
+        return(local_var_response)
       }
     },
 
@@ -1046,14 +1084,14 @@ ProjectsApi <- R6::R6Class(
     #' Import and Align full MS-Runs from various formats into the specified project as background job.
     #'
     #' @param project_id Project-space to import into.
-    #' @param opt_fields (optional) Set of optional fields to be included. Use 'none' only to override defaults. (default value: ["progress"])
-    #' @param input_files (optional) No description
-    #' @param parameters (optional) No description
+    #' @param input_files Files to import into project.
+    #' @param parameters Parameters for feature alignment and feature finding.
+    #' @param opt_fields (optional) Set of optional fields to be included. Use 'none' only to override defaults. (default value: [progress])
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return API response (Job) with additional information such as HTTP status code, headers
-    ImportMsRunDataAsJobWithHttpInfo = function(project_id, opt_fields = list("progress"), input_files = NULL, parameters = NULL, data_file = NULL, ...) {
+    ImportMsRunDataAsJobWithHttpInfo = function(project_id, input_files, parameters, opt_fields = list(progress), data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -1065,6 +1103,14 @@ ProjectsApi <- R6::R6Class(
 
       if (missing(`project_id`)) {
         stop("Missing required parameter `project_id`.")
+      }
+
+      if (missing(`input_files`)) {
+        stop("Missing required parameter `input_files`.")
+      }
+
+      if (missing(`parameters`)) {
+        stop("Missing required parameter `parameters`.")
       }
 
 
@@ -1110,18 +1156,21 @@ ProjectsApi <- R6::R6Class(
       if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
         # save response in a file
         if (!is.null(data_file)) {
-          write(local_var_resp$response, data_file)
+          self$api_client$WriteFile(local_var_resp, data_file)
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "Job", loadNamespace("Rsirius")),
+          self$api_client$DeserializeResponse(local_var_resp, "Job"),
           error = function(e) {
             stop("Failed to deserialize response")
           }
         )
         local_var_resp$content <- deserialized_resp_obj
-        local_var_resp
-      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        return(local_var_resp)
+      } 
+      
+      local_var_error_msg <- local_var_resp$response_as_text()      
+      if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp)
@@ -1129,7 +1178,7 @@ ProjectsApi <- R6::R6Class(
         if (is.null(local_var_resp$response) || local_var_resp$response == "") {
           local_var_resp$response <- "API server error"
         }
-        local_var_resp
+        return(local_var_resp)
       }
     },
 
@@ -1137,23 +1186,23 @@ ProjectsApi <- R6::R6Class(
     #' Import already preprocessed ms/ms data from various formats into the specified project  Possible formats (ms, mgf, cef, msp)
     #'
     #' @param project_id project-space to import into.
+    #' @param input_files files to import into project
     #' @param ignore_formulas (optional) No description (default value: FALSE)
     #' @param allow_ms1_only (optional) No description (default value: TRUE)
-    #' @param input_files (optional) No description
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return ImportResult
-    ImportPreprocessedData = function(project_id, ignore_formulas = FALSE, allow_ms1_only = TRUE, input_files = NULL, data_file = NULL, ...) {
-      local_var_response <- self$ImportPreprocessedDataWithHttpInfo(project_id, ignore_formulas, allow_ms1_only, input_files, data_file = data_file, ...)
+    ImportPreprocessedData = function(project_id, input_files, ignore_formulas = FALSE, allow_ms1_only = TRUE, data_file = NULL, ...) {
+      local_var_response <- self$ImportPreprocessedDataWithHttpInfo(project_id, input_files, ignore_formulas, allow_ms1_only, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
-        local_var_response$content
+        return(local_var_response$content)
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
-        local_var_response
+        return(local_var_response)
       }
     },
 
@@ -1161,14 +1210,14 @@ ProjectsApi <- R6::R6Class(
     #' Import already preprocessed ms/ms data from various formats into the specified project  Possible formats (ms, mgf, cef, msp)
     #'
     #' @param project_id project-space to import into.
+    #' @param input_files files to import into project
     #' @param ignore_formulas (optional) No description (default value: FALSE)
     #' @param allow_ms1_only (optional) No description (default value: TRUE)
-    #' @param input_files (optional) No description
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return API response (ImportResult) with additional information such as HTTP status code, headers
-    ImportPreprocessedDataWithHttpInfo = function(project_id, ignore_formulas = FALSE, allow_ms1_only = TRUE, input_files = NULL, data_file = NULL, ...) {
+    ImportPreprocessedDataWithHttpInfo = function(project_id, input_files, ignore_formulas = FALSE, allow_ms1_only = TRUE, data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -1180,6 +1229,10 @@ ProjectsApi <- R6::R6Class(
 
       if (missing(`project_id`)) {
         stop("Missing required parameter `project_id`.")
+      }
+
+      if (missing(`input_files`)) {
+        stop("Missing required parameter `input_files`.")
       }
 
 
@@ -1219,18 +1272,21 @@ ProjectsApi <- R6::R6Class(
       if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
         # save response in a file
         if (!is.null(data_file)) {
-          write(local_var_resp$response, data_file)
+          self$api_client$WriteFile(local_var_resp, data_file)
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "ImportResult", loadNamespace("Rsirius")),
+          self$api_client$DeserializeResponse(local_var_resp, "ImportResult"),
           error = function(e) {
             stop("Failed to deserialize response")
           }
         )
         local_var_resp$content <- deserialized_resp_obj
-        local_var_resp
-      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        return(local_var_resp)
+      } 
+      
+      local_var_error_msg <- local_var_resp$response_as_text()      
+      if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp)
@@ -1238,7 +1294,7 @@ ProjectsApi <- R6::R6Class(
         if (is.null(local_var_resp$response) || local_var_resp$response == "") {
           local_var_resp$response <- "API server error"
         }
-        local_var_resp
+        return(local_var_resp)
       }
     },
 
@@ -1246,24 +1302,24 @@ ProjectsApi <- R6::R6Class(
     #' Import ms/ms data from the given format into the specified project-space as background job.
     #'
     #' @param project_id project-space to import into.
+    #' @param input_files 
     #' @param ignore_formulas (optional) No description (default value: FALSE)
     #' @param allow_ms1_only (optional) No description (default value: TRUE)
-    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["progress"])
-    #' @param input_files (optional) No description
+    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [progress])
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return Job
-    ImportPreprocessedDataAsJob = function(project_id, ignore_formulas = FALSE, allow_ms1_only = TRUE, opt_fields = list("progress"), input_files = NULL, data_file = NULL, ...) {
-      local_var_response <- self$ImportPreprocessedDataAsJobWithHttpInfo(project_id, ignore_formulas, allow_ms1_only, opt_fields, input_files, data_file = data_file, ...)
+    ImportPreprocessedDataAsJob = function(project_id, input_files, ignore_formulas = FALSE, allow_ms1_only = TRUE, opt_fields = list(progress), data_file = NULL, ...) {
+      local_var_response <- self$ImportPreprocessedDataAsJobWithHttpInfo(project_id, input_files, ignore_formulas, allow_ms1_only, opt_fields, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
-        local_var_response$content
+        return(local_var_response$content)
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
-        local_var_response
+        return(local_var_response)
       }
     },
 
@@ -1271,15 +1327,15 @@ ProjectsApi <- R6::R6Class(
     #' Import ms/ms data from the given format into the specified project-space as background job.
     #'
     #' @param project_id project-space to import into.
+    #' @param input_files 
     #' @param ignore_formulas (optional) No description (default value: FALSE)
     #' @param allow_ms1_only (optional) No description (default value: TRUE)
-    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["progress"])
-    #' @param input_files (optional) No description
+    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [progress])
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return API response (Job) with additional information such as HTTP status code, headers
-    ImportPreprocessedDataAsJobWithHttpInfo = function(project_id, ignore_formulas = FALSE, allow_ms1_only = TRUE, opt_fields = list("progress"), input_files = NULL, data_file = NULL, ...) {
+    ImportPreprocessedDataAsJobWithHttpInfo = function(project_id, input_files, ignore_formulas = FALSE, allow_ms1_only = TRUE, opt_fields = list(progress), data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -1291,6 +1347,10 @@ ProjectsApi <- R6::R6Class(
 
       if (missing(`project_id`)) {
         stop("Missing required parameter `project_id`.")
+      }
+
+      if (missing(`input_files`)) {
+        stop("Missing required parameter `input_files`.")
       }
 
 
@@ -1340,18 +1400,21 @@ ProjectsApi <- R6::R6Class(
       if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
         # save response in a file
         if (!is.null(data_file)) {
-          write(local_var_resp$response, data_file)
+          self$api_client$WriteFile(local_var_resp, data_file)
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "Job", loadNamespace("Rsirius")),
+          self$api_client$DeserializeResponse(local_var_resp, "Job"),
           error = function(e) {
             stop("Failed to deserialize response")
           }
         )
         local_var_resp$content <- deserialized_resp_obj
-        local_var_resp
-      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        return(local_var_resp)
+      } 
+      
+      local_var_error_msg <- local_var_resp$response_as_text()      
+      if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp)
@@ -1359,7 +1422,7 @@ ProjectsApi <- R6::R6Class(
         if (is.null(local_var_resp$response) || local_var_resp$response == "") {
           local_var_resp$response <- "API server error"
         }
-        local_var_resp
+        return(local_var_resp)
       }
     },
 
@@ -1368,21 +1431,21 @@ ProjectsApi <- R6::R6Class(
     #'
     #' @param project_id unique name/identifier that shall be used to access the opened project-space. Must consist only of [a-zA-Z0-9_-].
     #' @param path_to_project (optional) local file path to open the project from. If NULL, project will be loaded by it projectId from default project location.  DEPRECATED: This parameter relies on the local filesystem and will likely be removed in later versions of this API to allow for more flexible use cases.
-    #' @param opt_fields (optional) No description (default value: ["none"])
+    #' @param opt_fields (optional) No description (default value: [none])
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return ProjectInfo
-    OpenProject = function(project_id, path_to_project = NULL, opt_fields = list("none"), data_file = NULL, ...) {
+    OpenProject = function(project_id, path_to_project = NULL, opt_fields = list(NULL), data_file = NULL, ...) {
       local_var_response <- self$OpenProjectWithHttpInfo(project_id, path_to_project, opt_fields, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
-        local_var_response$content
+        return(local_var_response$content)
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
-        local_var_response
+        return(local_var_response)
       }
     },
 
@@ -1391,12 +1454,12 @@ ProjectsApi <- R6::R6Class(
     #'
     #' @param project_id unique name/identifier that shall be used to access the opened project-space. Must consist only of [a-zA-Z0-9_-].
     #' @param path_to_project (optional) local file path to open the project from. If NULL, project will be loaded by it projectId from default project location.  DEPRECATED: This parameter relies on the local filesystem and will likely be removed in later versions of this API to allow for more flexible use cases.
-    #' @param opt_fields (optional) No description (default value: ["none"])
+    #' @param opt_fields (optional) No description (default value: [none])
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return API response (ProjectInfo) with additional information such as HTTP status code, headers
-    OpenProjectWithHttpInfo = function(project_id, path_to_project = NULL, opt_fields = list("none"), data_file = NULL, ...) {
+    OpenProjectWithHttpInfo = function(project_id, path_to_project = NULL, opt_fields = list(NULL), data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -1452,18 +1515,21 @@ ProjectsApi <- R6::R6Class(
       if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
         # save response in a file
         if (!is.null(data_file)) {
-          write(local_var_resp$response, data_file)
+          self$api_client$WriteFile(local_var_resp, data_file)
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "ProjectInfo", loadNamespace("Rsirius")),
+          self$api_client$DeserializeResponse(local_var_resp, "ProjectInfo"),
           error = function(e) {
             stop("Failed to deserialize response")
           }
         )
         local_var_resp$content <- deserialized_resp_obj
-        local_var_resp
-      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        return(local_var_resp)
+      } 
+      
+      local_var_error_msg <- local_var_resp$response_as_text()      
+      if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp)
@@ -1471,7 +1537,7 @@ ProjectsApi <- R6::R6Class(
         if (is.null(local_var_resp$response) || local_var_resp$response == "") {
           local_var_resp$response <- "API server error"
         }
-        local_var_resp
+        return(local_var_resp)
       }
     }
   )

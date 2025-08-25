@@ -7,8 +7,8 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **user_email** | **str** | Email address of the user account this license information belongs to. | [optional] 
 **user_id** | **str** | User ID (uid) of the user account this license information belongs to. | [optional] 
-**subscription** | [**Subscription**](Subscription.md) |  | [optional] 
-**consumables** | [**SubscriptionConsumables**](SubscriptionConsumables.md) |  | [optional] 
+**subscription** | [**Subscription**](Subscription.md) | The active subscription that was used the requested the information | [optional] 
+**consumables** | [**SubscriptionConsumables**](SubscriptionConsumables.md) | Status of the consumable resources of the {@link Subscription Subscription}. | [optional] 
 **terms** | [**List[Term]**](Term.md) |  | [optional] 
 
 ## Example

@@ -20,11 +20,12 @@
 #' @field quality Quality of this feature. character [optional]
 #' @field hasMs1 If true, the feature has at lease one MS1 spectrum character [optional]
 #' @field hasMsMs If true, the feature has at lease one MS/MS spectrum character [optional]
-#' @field msData  \link{MsData} [optional]
-#' @field topAnnotations  \link{FeatureAnnotations} [optional]
-#' @field topAnnotationsDeNovo  \link{FeatureAnnotations} [optional]
+#' @field msData Mass Spec data of this feature (input data) \link{MsData} [optional]
+#' @field topAnnotations Top annotations of this feature.  If a CSI:FingerID structureAnnotation is available, the FormulaCandidate that corresponds to the  structureAnnotation is returned. Otherwise, it's the FormulaCandidate with the highest SiriusScore is returned.  CANOPUS Compound classes correspond to the FormulaCandidate no matter how it was selected   Null if it was not requested und non-null otherwise. \link{FeatureAnnotations} [optional]
+#' @field topAnnotationsDeNovo Top de novo annotations of this feature.  The FormulaCandidate with the highest SiriusScore is returned. MSNovelist structureAnnotation and  CANOPUS compoundClasses correspond to the FormulaCandidate.   Null if it was not requested und non-null otherwise. \link{FeatureAnnotations} [optional]
 #' @field computing Write lock for this feature. If the feature is locked no write operations are possible.  True if any computation is modifying this feature or its results character [optional]
-#' @field computedTools  \link{ComputedSubtools} [optional]
+#' @field computedTools Specifies which tools have been executed for this feature. Can be used to estimate which results can be expected. Null if it was not requested und non-null otherwise. \link{ComputedSubtools} [optional]
+#' @field tags Key: tagName, value: tag named list(\link{Tag}) [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
 #' @export
@@ -49,6 +50,7 @@ AlignedFeature <- R6::R6Class(
     `topAnnotationsDeNovo` = NULL,
     `computing` = NULL,
     `computedTools` = NULL,
+    `tags` = NULL,
 
     #' @description
     #' Initialize a new AlignedFeature class.
@@ -66,13 +68,14 @@ AlignedFeature <- R6::R6Class(
     #' @param quality Quality of this feature.
     #' @param hasMs1 If true, the feature has at lease one MS1 spectrum
     #' @param hasMsMs If true, the feature has at lease one MS/MS spectrum
-    #' @param msData msData
-    #' @param topAnnotations topAnnotations
-    #' @param topAnnotationsDeNovo topAnnotationsDeNovo
+    #' @param msData Mass Spec data of this feature (input data)
+    #' @param topAnnotations Top annotations of this feature.  If a CSI:FingerID structureAnnotation is available, the FormulaCandidate that corresponds to the  structureAnnotation is returned. Otherwise, it's the FormulaCandidate with the highest SiriusScore is returned.  CANOPUS Compound classes correspond to the FormulaCandidate no matter how it was selected   Null if it was not requested und non-null otherwise.
+    #' @param topAnnotationsDeNovo Top de novo annotations of this feature.  The FormulaCandidate with the highest SiriusScore is returned. MSNovelist structureAnnotation and  CANOPUS compoundClasses correspond to the FormulaCandidate.   Null if it was not requested und non-null otherwise.
     #' @param computing Write lock for this feature. If the feature is locked no write operations are possible.  True if any computation is modifying this feature or its results
-    #' @param computedTools computedTools
+    #' @param computedTools Specifies which tools have been executed for this feature. Can be used to estimate which results can be expected. Null if it was not requested und non-null otherwise.
+    #' @param tags Key: tagName, value: tag
     #' @param ... Other optional arguments.
-    initialize = function(`charge`, `detectedAdducts`, `alignedFeatureId` = NULL, `compoundId` = NULL, `name` = NULL, `externalFeatureId` = NULL, `ionMass` = NULL, `rtStartSeconds` = NULL, `rtEndSeconds` = NULL, `rtApexSeconds` = NULL, `quality` = NULL, `hasMs1` = NULL, `hasMsMs` = NULL, `msData` = NULL, `topAnnotations` = NULL, `topAnnotationsDeNovo` = NULL, `computing` = NULL, `computedTools` = NULL, ...) {
+    initialize = function(`charge`, `detectedAdducts`, `alignedFeatureId` = NULL, `compoundId` = NULL, `name` = NULL, `externalFeatureId` = NULL, `ionMass` = NULL, `rtStartSeconds` = NULL, `rtEndSeconds` = NULL, `rtApexSeconds` = NULL, `quality` = NULL, `hasMs1` = NULL, `hasMsMs` = NULL, `msData` = NULL, `topAnnotations` = NULL, `topAnnotationsDeNovo` = NULL, `computing` = NULL, `computedTools` = NULL, `tags` = NULL, ...) {
       if (!missing(`charge`)) {
         if (!(is.numeric(`charge`) && length(`charge`) == 1)) {
           stop(paste("Error! Invalid data for `charge`. Must be an integer:", `charge`))
@@ -177,6 +180,11 @@ AlignedFeature <- R6::R6Class(
       if (!is.null(`computedTools`)) {
         stopifnot(R6::is.R6(`computedTools`))
         self$`computedTools` <- `computedTools`
+      }
+      if (!is.null(`tags`)) {
+        stopifnot(is.vector(`tags`), length(`tags`) != 0)
+        sapply(`tags`, function(x) stopifnot(R6::is.R6(x)))
+        self$`tags` <- `tags`
       }
     },
 
@@ -283,6 +291,10 @@ AlignedFeature <- R6::R6Class(
         AlignedFeatureObject[["computedTools"]] <-
           self$`computedTools`$toSimpleType()
       }
+      if (!is.null(self$`tags`)) {
+        AlignedFeatureObject[["tags"]] <-
+          lapply(self$`tags`, function(x) x$toSimpleType())
+      }
       return(AlignedFeatureObject)
     },
 
@@ -361,6 +373,9 @@ AlignedFeature <- R6::R6Class(
         `computedtools_object`$fromJSON(jsonlite::toJSON(this_object$`computedTools`, auto_unbox = TRUE, digits = NA, null = 'null'))
         self$`computedTools` <- `computedtools_object`
       }
+      if (!is.null(this_object$`tags`)) {
+        self$`tags` <- ApiClient$new()$deserializeObj(this_object$`tags`, "map(Tag)", loadNamespace("Rsirius"))
+      }
       self
     },
 
@@ -406,6 +421,7 @@ AlignedFeature <- R6::R6Class(
       self$`topAnnotationsDeNovo` <- FeatureAnnotations$new()$fromJSON(jsonlite::toJSON(this_object$`topAnnotationsDeNovo`, auto_unbox = TRUE, digits = NA, null = 'null'))
       self$`computing` <- this_object$`computing`
       self$`computedTools` <- ComputedSubtools$new()$fromJSON(jsonlite::toJSON(this_object$`computedTools`, auto_unbox = TRUE, digits = NA, null = 'null'))
+      self$`tags` <- ApiClient$new()$deserializeObj(this_object$`tags`, "map(Tag)", loadNamespace("Rsirius"))
       self
     },
 
