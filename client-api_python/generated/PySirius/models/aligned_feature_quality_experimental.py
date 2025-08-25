@@ -16,7 +16,7 @@ import re  # noqa: F401
 import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
+from typing import Any, ClassVar, Dict, List
 from PySirius.models.category import Category
 from PySirius.models.data_quality import DataQuality
 from typing import Optional, Set
@@ -27,7 +27,7 @@ class AlignedFeatureQualityExperimental(BaseModel):
     EXPERIMENTAL: This schema is experimental and may be changed (or even removed) without notice until it is declared stable.
     """ # noqa: E501
     aligned_feature_id: StrictStr = Field(description="Id of the feature (aligned over runs) this quality information belongs to.", alias="alignedFeatureId")
-    overall_quality: Optional[DataQuality] = Field(alias="overallQuality")
+    overall_quality: DataQuality = Field(description="Overall Quality", alias="overallQuality")
     categories: Dict[str, Category] = Field(description="Contains all pre-computation quality information that belong to  this feature (aligned over runs), such as information about the quality of the peak shape, MS2 spectrum etc.,")
     __properties: ClassVar[List[str]] = ["alignedFeatureId", "overallQuality", "categories"]
 
@@ -77,11 +77,6 @@ class AlignedFeatureQualityExperimental(BaseModel):
                 if self.categories[_key_categories]:
                     _field_dict[_key_categories] = self.categories[_key_categories].to_dict()
             _dict['categories'] = _field_dict
-        # set to None if overall_quality (nullable) is None
-        # and model_fields_set contains the field
-        if self.overall_quality is None and "overall_quality" in self.model_fields_set:
-            _dict['overallQuality'] = None
-
         return _dict
 
     @classmethod

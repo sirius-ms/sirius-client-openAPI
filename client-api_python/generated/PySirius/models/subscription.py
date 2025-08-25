@@ -18,6 +18,7 @@ import json
 from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
+from PySirius.models.allowed_features import AllowedFeatures
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -40,7 +41,8 @@ class Subscription(BaseModel):
     name: Optional[StrictStr] = None
     tos: Optional[StrictStr] = None
     pp: Optional[StrictStr] = None
-    __properties: ClassVar[List[str]] = ["sid", "subscriberId", "subscriberName", "expirationDate", "startDate", "countQueries", "instanceLimit", "instanceHashRecordingTime", "maxQueriesPerInstance", "maxUserAccounts", "serviceUrl", "description", "name", "tos", "pp"]
+    allowed_features: Optional[AllowedFeatures] = Field(default=None, alias="allowedFeatures")
+    __properties: ClassVar[List[str]] = ["sid", "subscriberId", "subscriberName", "expirationDate", "startDate", "countQueries", "instanceLimit", "instanceHashRecordingTime", "maxQueriesPerInstance", "maxUserAccounts", "serviceUrl", "description", "name", "tos", "pp", "allowedFeatures"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -81,66 +83,9 @@ class Subscription(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # set to None if subscriber_name (nullable) is None
-        # and model_fields_set contains the field
-        if self.subscriber_name is None and "subscriber_name" in self.model_fields_set:
-            _dict['subscriberName'] = None
-
-        # set to None if expiration_date (nullable) is None
-        # and model_fields_set contains the field
-        if self.expiration_date is None and "expiration_date" in self.model_fields_set:
-            _dict['expirationDate'] = None
-
-        # set to None if start_date (nullable) is None
-        # and model_fields_set contains the field
-        if self.start_date is None and "start_date" in self.model_fields_set:
-            _dict['startDate'] = None
-
-        # set to None if count_queries (nullable) is None
-        # and model_fields_set contains the field
-        if self.count_queries is None and "count_queries" in self.model_fields_set:
-            _dict['countQueries'] = None
-
-        # set to None if instance_limit (nullable) is None
-        # and model_fields_set contains the field
-        if self.instance_limit is None and "instance_limit" in self.model_fields_set:
-            _dict['instanceLimit'] = None
-
-        # set to None if instance_hash_recording_time (nullable) is None
-        # and model_fields_set contains the field
-        if self.instance_hash_recording_time is None and "instance_hash_recording_time" in self.model_fields_set:
-            _dict['instanceHashRecordingTime'] = None
-
-        # set to None if max_queries_per_instance (nullable) is None
-        # and model_fields_set contains the field
-        if self.max_queries_per_instance is None and "max_queries_per_instance" in self.model_fields_set:
-            _dict['maxQueriesPerInstance'] = None
-
-        # set to None if max_user_accounts (nullable) is None
-        # and model_fields_set contains the field
-        if self.max_user_accounts is None and "max_user_accounts" in self.model_fields_set:
-            _dict['maxUserAccounts'] = None
-
-        # set to None if description (nullable) is None
-        # and model_fields_set contains the field
-        if self.description is None and "description" in self.model_fields_set:
-            _dict['description'] = None
-
-        # set to None if name (nullable) is None
-        # and model_fields_set contains the field
-        if self.name is None and "name" in self.model_fields_set:
-            _dict['name'] = None
-
-        # set to None if tos (nullable) is None
-        # and model_fields_set contains the field
-        if self.tos is None and "tos" in self.model_fields_set:
-            _dict['tos'] = None
-
-        # set to None if pp (nullable) is None
-        # and model_fields_set contains the field
-        if self.pp is None and "pp" in self.model_fields_set:
-            _dict['pp'] = None
-
+        # override the default output from pydantic by calling `to_dict()` of allowed_features
+        if self.allowed_features:
+            _dict['allowedFeatures'] = self.allowed_features.to_dict()
         return _dict
 
     @classmethod
@@ -167,7 +112,8 @@ class Subscription(BaseModel):
             "description": obj.get("description"),
             "name": obj.get("name"),
             "tos": obj.get("tos"),
-            "pp": obj.get("pp")
+            "pp": obj.get("pp"),
+            "allowedFeatures": AllowedFeatures.from_dict(obj["allowedFeatures"]) if obj.get("allowedFeatures") is not None else None
         })
         return _obj
 

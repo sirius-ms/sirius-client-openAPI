@@ -75,16 +75,6 @@ class ConnectionError(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # set to None if server_response_error_code (nullable) is None
-        # and model_fields_set contains the field
-        if self.server_response_error_code is None and "server_response_error_code" in self.model_fields_set:
-            _dict['serverResponseErrorCode'] = None
-
-        # set to None if server_response_error_message (nullable) is None
-        # and model_fields_set contains the field
-        if self.server_response_error_message is None and "server_response_error_message" in self.model_fields_set:
-            _dict['serverResponseErrorMessage'] = None
-
         return _dict
 
     @classmethod
