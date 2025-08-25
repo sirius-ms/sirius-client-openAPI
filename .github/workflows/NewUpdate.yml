@@ -67,7 +67,7 @@ jobs:
         rm -rf client-api_python/generated/docs
         rm -rf client-api_python/generated/PySirius
        
-        java -jar .updater/openapi_generator/openapi-generator-cli.jar generate -i .updater/api/api-docs-enums.json -c .updater/config/Python/config.json -g python -o client-api_python/generated -t client-api_python/templates/python --additional-properties=packageVersion=$packageVersion
+        java -jar .updater/openapi_generator/openapi-generator-cli.jar generate -i .updater/api/api-docs-enums.json -c .updater/config/Python/config.json -g python -o client-api_python/generated --additional-properties=packageVersion=$packageVersion
         
         echo "temporarily move R manual folder"
         mv client-api_r/generated/man/ client-api_r/
