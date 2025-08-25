@@ -61,6 +61,8 @@ df
 \item{\code{tos}}{character [optional]}
 
 \item{\code{pp}}{character [optional]}
+
+\item{\code{allowedFeatures}}{\link{AllowedFeatures} [optional]}
 }
 \if{html}{\out{</div>}}
 }
@@ -104,6 +106,7 @@ Initialize a new Subscription class.
   name = NULL,
   tos = NULL,
   pp = NULL,
+  allowedFeatures = NULL,
   ...
 )}\if{html}{\out{</div>}}
 }
@@ -140,6 +143,8 @@ Initialize a new Subscription class.
 \item{\code{tos}}{tos}
 
 \item{\code{pp}}{pp}
+
+\item{\code{allowedFeatures}}{allowedFeatures}
 
 \item{\code{...}}{Other optional arguments.}
 }
