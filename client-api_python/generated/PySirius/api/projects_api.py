@@ -8,7 +8,6 @@
 
     Do not edit the class manually.
 """  # noqa: E501
-
 import warnings
 from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
@@ -46,6 +45,7 @@ class ProjectsApi:
     def close_project(
         self,
         project_id: Annotated[StrictStr, Field(description="unique name/identifier of the  project-space to be closed.")],
+        compact: Annotated[Optional[StrictBool], Field(description="if true, compact project storage after closing. DEPRECATED: Compacting acts on the local filesystem and will likely be removed in a later version.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -59,12 +59,14 @@ class ProjectsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> None:
-        """Close project-space and remove it from application
+        """Close project-space and remove it from the application
 
-        Close project-space and remove it from application. Project will NOT be deleted from disk.  <p>  ATTENTION: This will cancel and remove all jobs running on this Project before closing it.  If there are many jobs, this might take some time.
+        Close project-space and remove it from the application. The Project will NOT be deleted from disk.  <p>  ATTENTION: This will cancel and remove all jobs running on this Project before closing it.  If there are many jobs, this might take some time.
 
         :param project_id: unique name/identifier of the  project-space to be closed. (required)
         :type project_id: str
+        :param compact: if true, compact project storage after closing. DEPRECATED: Compacting acts on the local filesystem and will likely be removed in a later version.
+        :type compact: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -89,6 +91,7 @@ class ProjectsApi:
 
         _param = self._close_project_serialize(
             project_id=project_id,
+            compact=compact,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -97,8 +100,7 @@ class ProjectsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': None,
-        }
-        response_data = self.api_client.call_api(
+        }        response_data = self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
@@ -113,6 +115,7 @@ class ProjectsApi:
     def close_project_with_http_info(
         self,
         project_id: Annotated[StrictStr, Field(description="unique name/identifier of the  project-space to be closed.")],
+        compact: Annotated[Optional[StrictBool], Field(description="if true, compact project storage after closing. DEPRECATED: Compacting acts on the local filesystem and will likely be removed in a later version.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -126,12 +129,14 @@ class ProjectsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[None]:
-        """Close project-space and remove it from application
+        """Close project-space and remove it from the application
 
-        Close project-space and remove it from application. Project will NOT be deleted from disk.  <p>  ATTENTION: This will cancel and remove all jobs running on this Project before closing it.  If there are many jobs, this might take some time.
+        Close project-space and remove it from the application. The Project will NOT be deleted from disk.  <p>  ATTENTION: This will cancel and remove all jobs running on this Project before closing it.  If there are many jobs, this might take some time.
 
         :param project_id: unique name/identifier of the  project-space to be closed. (required)
         :type project_id: str
+        :param compact: if true, compact project storage after closing. DEPRECATED: Compacting acts on the local filesystem and will likely be removed in a later version.
+        :type compact: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -156,6 +161,7 @@ class ProjectsApi:
 
         _param = self._close_project_serialize(
             project_id=project_id,
+            compact=compact,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -164,8 +170,7 @@ class ProjectsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': None,
-        }
-        response_data = self.api_client.call_api(
+        }        response_data = self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
@@ -180,6 +185,7 @@ class ProjectsApi:
     def close_project_without_preload_content(
         self,
         project_id: Annotated[StrictStr, Field(description="unique name/identifier of the  project-space to be closed.")],
+        compact: Annotated[Optional[StrictBool], Field(description="if true, compact project storage after closing. DEPRECATED: Compacting acts on the local filesystem and will likely be removed in a later version.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -193,12 +199,14 @@ class ProjectsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Close project-space and remove it from application
+        """Close project-space and remove it from the application
 
-        Close project-space and remove it from application. Project will NOT be deleted from disk.  <p>  ATTENTION: This will cancel and remove all jobs running on this Project before closing it.  If there are many jobs, this might take some time.
+        Close project-space and remove it from the application. The Project will NOT be deleted from disk.  <p>  ATTENTION: This will cancel and remove all jobs running on this Project before closing it.  If there are many jobs, this might take some time.
 
         :param project_id: unique name/identifier of the  project-space to be closed. (required)
         :type project_id: str
+        :param compact: if true, compact project storage after closing. DEPRECATED: Compacting acts on the local filesystem and will likely be removed in a later version.
+        :type compact: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -223,6 +231,7 @@ class ProjectsApi:
 
         _param = self._close_project_serialize(
             project_id=project_id,
+            compact=compact,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -231,8 +240,7 @@ class ProjectsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': None,
-        }
-        response_data = self.api_client.call_api(
+        }        response_data = self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
@@ -242,6 +250,7 @@ class ProjectsApi:
     def _close_project_serialize(
         self,
         project_id,
+        compact,
         _request_auth,
         _content_type,
         _headers,
@@ -264,6 +273,10 @@ class ProjectsApi:
         if project_id is not None:
             _path_params['projectId'] = project_id
         # process the query parameters
+        if compact is not None:
+            
+            _query_params.append(('compact', compact))
+            
         # process the header parameters
         # process the form parameters
         # process the body parameter
@@ -298,7 +311,7 @@ class ProjectsApi:
         self,
         project_id: Annotated[StrictStr, Field(description="unique name/identifier that shall be used to access the newly created project-space. Must consist only of [a-zA-Z0-9_-].")],
         path_to_project: Annotated[Optional[StrictStr], Field(description="local file path where the project will be created. If NULL, project will be stored by its projectId in default project location. DEPRECATED: This parameter relies on the local filesystem and will likely be removed in later versions of this API to allow for more flexible use cases.")] = None,
-        opt_fields: Optional[List[Optional[ProjectInfoOptField]]] = None,
+        opt_fields: Optional[List[ProjectInfoOptField]] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -356,8 +369,7 @@ class ProjectsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ProjectInfo",
-        }
-        response_data = self.api_client.call_api(
+        }        response_data = self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
@@ -373,7 +385,7 @@ class ProjectsApi:
         self,
         project_id: Annotated[StrictStr, Field(description="unique name/identifier that shall be used to access the newly created project-space. Must consist only of [a-zA-Z0-9_-].")],
         path_to_project: Annotated[Optional[StrictStr], Field(description="local file path where the project will be created. If NULL, project will be stored by its projectId in default project location. DEPRECATED: This parameter relies on the local filesystem and will likely be removed in later versions of this API to allow for more flexible use cases.")] = None,
-        opt_fields: Optional[List[Optional[ProjectInfoOptField]]] = None,
+        opt_fields: Optional[List[ProjectInfoOptField]] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -431,8 +443,7 @@ class ProjectsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ProjectInfo",
-        }
-        response_data = self.api_client.call_api(
+        }        response_data = self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
@@ -448,7 +459,7 @@ class ProjectsApi:
         self,
         project_id: Annotated[StrictStr, Field(description="unique name/identifier that shall be used to access the newly created project-space. Must consist only of [a-zA-Z0-9_-].")],
         path_to_project: Annotated[Optional[StrictStr], Field(description="local file path where the project will be created. If NULL, project will be stored by its projectId in default project location. DEPRECATED: This parameter relies on the local filesystem and will likely be removed in later versions of this API to allow for more flexible use cases.")] = None,
-        opt_fields: Optional[List[Optional[ProjectInfoOptField]]] = None,
+        opt_fields: Optional[List[ProjectInfoOptField]] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -506,8 +517,7 @@ class ProjectsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ProjectInfo",
-        }
-        response_data = self.api_client.call_api(
+        }        response_data = self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
@@ -643,8 +653,7 @@ class ProjectsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "str",
-        }
-        response_data = self.api_client.call_api(
+        }        response_data = self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
@@ -713,8 +722,7 @@ class ProjectsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "str",
-        }
-        response_data = self.api_client.call_api(
+        }        response_data = self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
@@ -783,8 +791,7 @@ class ProjectsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "str",
-        }
-        response_data = self.api_client.call_api(
+        }        response_data = self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
@@ -915,8 +922,7 @@ class ProjectsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "str",
-        }
-        response_data = self.api_client.call_api(
+        }        response_data = self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
@@ -985,8 +991,7 @@ class ProjectsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "str",
-        }
-        response_data = self.api_client.call_api(
+        }        response_data = self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
@@ -1055,8 +1060,7 @@ class ProjectsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "str",
-        }
-        response_data = self.api_client.call_api(
+        }        response_data = self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
@@ -1187,8 +1191,7 @@ class ProjectsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "str",
-        }
-        response_data = self.api_client.call_api(
+        }        response_data = self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
@@ -1257,8 +1260,7 @@ class ProjectsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "str",
-        }
-        response_data = self.api_client.call_api(
+        }        response_data = self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
@@ -1327,8 +1329,7 @@ class ProjectsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "str",
-        }
-        response_data = self.api_client.call_api(
+        }        response_data = self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
@@ -1405,7 +1406,7 @@ class ProjectsApi:
     def get_project(
         self,
         project_id: Annotated[StrictStr, Field(description="unique name/identifier tof the project-space to be accessed.")],
-        opt_fields: Optional[List[Optional[ProjectInfoOptField]]] = None,
+        opt_fields: Optional[List[ProjectInfoOptField]] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1460,8 +1461,7 @@ class ProjectsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ProjectInfo",
-        }
-        response_data = self.api_client.call_api(
+        }        response_data = self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
@@ -1476,7 +1476,7 @@ class ProjectsApi:
     def get_project_with_http_info(
         self,
         project_id: Annotated[StrictStr, Field(description="unique name/identifier tof the project-space to be accessed.")],
-        opt_fields: Optional[List[Optional[ProjectInfoOptField]]] = None,
+        opt_fields: Optional[List[ProjectInfoOptField]] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1531,8 +1531,7 @@ class ProjectsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ProjectInfo",
-        }
-        response_data = self.api_client.call_api(
+        }        response_data = self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
@@ -1547,7 +1546,7 @@ class ProjectsApi:
     def get_project_without_preload_content(
         self,
         project_id: Annotated[StrictStr, Field(description="unique name/identifier tof the project-space to be accessed.")],
-        opt_fields: Optional[List[Optional[ProjectInfoOptField]]] = None,
+        opt_fields: Optional[List[ProjectInfoOptField]] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1602,8 +1601,7 @@ class ProjectsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ProjectInfo",
-        }
-        response_data = self.api_client.call_api(
+        }        response_data = self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
@@ -1727,8 +1725,7 @@ class ProjectsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "List[ProjectInfo]",
-        }
-        response_data = self.api_client.call_api(
+        }        response_data = self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
@@ -1790,8 +1787,7 @@ class ProjectsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "List[ProjectInfo]",
-        }
-        response_data = self.api_client.call_api(
+        }        response_data = self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
@@ -1853,8 +1849,7 @@ class ProjectsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "List[ProjectInfo]",
-        }
-        response_data = self.api_client.call_api(
+        }        response_data = self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
@@ -1922,8 +1917,8 @@ class ProjectsApi:
     def import_ms_run_data(
         self,
         project_id: Annotated[StrictStr, Field(description="Project-space to import into.")],
-        input_files: Optional[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]]] = None,
-        parameters: Optional[LcmsSubmissionParameters] = None,
+        input_files: Annotated[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]], Field(description="Files to import into project.")],
+        parameters: Annotated[LcmsSubmissionParameters, Field(description="Parameters for feature alignment and feature finding.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1943,9 +1938,9 @@ class ProjectsApi:
 
         :param project_id: Project-space to import into. (required)
         :type project_id: str
-        :param input_files:
+        :param input_files: Files to import into project. (required)
         :type input_files: List[bytearray]
-        :param parameters:
+        :param parameters: Parameters for feature alignment and feature finding. (required)
         :type parameters: LcmsSubmissionParameters
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -1981,8 +1976,7 @@ class ProjectsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ImportResult",
-        }
-        response_data = self.api_client.call_api(
+        }        response_data = self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
@@ -1997,8 +1991,8 @@ class ProjectsApi:
     def import_ms_run_data_with_http_info(
         self,
         project_id: Annotated[StrictStr, Field(description="Project-space to import into.")],
-        input_files: Optional[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]]] = None,
-        parameters: Optional[LcmsSubmissionParameters] = None,
+        input_files: Annotated[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]], Field(description="Files to import into project.")],
+        parameters: Annotated[LcmsSubmissionParameters, Field(description="Parameters for feature alignment and feature finding.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2018,9 +2012,9 @@ class ProjectsApi:
 
         :param project_id: Project-space to import into. (required)
         :type project_id: str
-        :param input_files:
+        :param input_files: Files to import into project. (required)
         :type input_files: List[bytearray]
-        :param parameters:
+        :param parameters: Parameters for feature alignment and feature finding. (required)
         :type parameters: LcmsSubmissionParameters
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -2056,8 +2050,7 @@ class ProjectsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ImportResult",
-        }
-        response_data = self.api_client.call_api(
+        }        response_data = self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
@@ -2072,8 +2065,8 @@ class ProjectsApi:
     def import_ms_run_data_without_preload_content(
         self,
         project_id: Annotated[StrictStr, Field(description="Project-space to import into.")],
-        input_files: Optional[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]]] = None,
-        parameters: Optional[LcmsSubmissionParameters] = None,
+        input_files: Annotated[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]], Field(description="Files to import into project.")],
+        parameters: Annotated[LcmsSubmissionParameters, Field(description="Parameters for feature alignment and feature finding.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2093,9 +2086,9 @@ class ProjectsApi:
 
         :param project_id: Project-space to import into. (required)
         :type project_id: str
-        :param input_files:
+        :param input_files: Files to import into project. (required)
         :type input_files: List[bytearray]
-        :param parameters:
+        :param parameters: Parameters for feature alignment and feature finding. (required)
         :type parameters: LcmsSubmissionParameters
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -2131,8 +2124,7 @@ class ProjectsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ImportResult",
-        }
-        response_data = self.api_client.call_api(
+        }        response_data = self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
@@ -2223,9 +2215,9 @@ class ProjectsApi:
     def import_ms_run_data_as_job(
         self,
         project_id: Annotated[StrictStr, Field(description="Project-space to import into.")],
-        opt_fields: Annotated[Optional[List[Optional[JobOptField]]], Field(description="Set of optional fields to be included. Use 'none' only to override defaults.")] = None,
-        input_files: Optional[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]]] = None,
-        parameters: Optional[LcmsSubmissionParameters] = None,
+        input_files: Annotated[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]], Field(description="Files to import into project.")],
+        parameters: Annotated[LcmsSubmissionParameters, Field(description="Parameters for feature alignment and feature finding.")],
+        opt_fields: Annotated[Optional[List[JobOptField]], Field(description="Set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2245,12 +2237,12 @@ class ProjectsApi:
 
         :param project_id: Project-space to import into. (required)
         :type project_id: str
+        :param input_files: Files to import into project. (required)
+        :type input_files: List[bytearray]
+        :param parameters: Parameters for feature alignment and feature finding. (required)
+        :type parameters: LcmsSubmissionParameters
         :param opt_fields: Set of optional fields to be included. Use 'none' only to override defaults.
         :type opt_fields: List[JobOptField]
-        :param input_files:
-        :type input_files: List[bytearray]
-        :param parameters:
-        :type parameters: LcmsSubmissionParameters
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2275,9 +2267,9 @@ class ProjectsApi:
 
         _param = self._import_ms_run_data_as_job_serialize(
             project_id=project_id,
-            opt_fields=opt_fields,
             input_files=input_files,
             parameters=parameters,
+            opt_fields=opt_fields,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2286,8 +2278,7 @@ class ProjectsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "Job",
-        }
-        response_data = self.api_client.call_api(
+        }        response_data = self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
@@ -2302,9 +2293,9 @@ class ProjectsApi:
     def import_ms_run_data_as_job_with_http_info(
         self,
         project_id: Annotated[StrictStr, Field(description="Project-space to import into.")],
-        opt_fields: Annotated[Optional[List[Optional[JobOptField]]], Field(description="Set of optional fields to be included. Use 'none' only to override defaults.")] = None,
-        input_files: Optional[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]]] = None,
-        parameters: Optional[LcmsSubmissionParameters] = None,
+        input_files: Annotated[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]], Field(description="Files to import into project.")],
+        parameters: Annotated[LcmsSubmissionParameters, Field(description="Parameters for feature alignment and feature finding.")],
+        opt_fields: Annotated[Optional[List[JobOptField]], Field(description="Set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2324,12 +2315,12 @@ class ProjectsApi:
 
         :param project_id: Project-space to import into. (required)
         :type project_id: str
+        :param input_files: Files to import into project. (required)
+        :type input_files: List[bytearray]
+        :param parameters: Parameters for feature alignment and feature finding. (required)
+        :type parameters: LcmsSubmissionParameters
         :param opt_fields: Set of optional fields to be included. Use 'none' only to override defaults.
         :type opt_fields: List[JobOptField]
-        :param input_files:
-        :type input_files: List[bytearray]
-        :param parameters:
-        :type parameters: LcmsSubmissionParameters
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2354,9 +2345,9 @@ class ProjectsApi:
 
         _param = self._import_ms_run_data_as_job_serialize(
             project_id=project_id,
-            opt_fields=opt_fields,
             input_files=input_files,
             parameters=parameters,
+            opt_fields=opt_fields,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2365,8 +2356,7 @@ class ProjectsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "Job",
-        }
-        response_data = self.api_client.call_api(
+        }        response_data = self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
@@ -2381,9 +2371,9 @@ class ProjectsApi:
     def import_ms_run_data_as_job_without_preload_content(
         self,
         project_id: Annotated[StrictStr, Field(description="Project-space to import into.")],
-        opt_fields: Annotated[Optional[List[Optional[JobOptField]]], Field(description="Set of optional fields to be included. Use 'none' only to override defaults.")] = None,
-        input_files: Optional[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]]] = None,
-        parameters: Optional[LcmsSubmissionParameters] = None,
+        input_files: Annotated[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]], Field(description="Files to import into project.")],
+        parameters: Annotated[LcmsSubmissionParameters, Field(description="Parameters for feature alignment and feature finding.")],
+        opt_fields: Annotated[Optional[List[JobOptField]], Field(description="Set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2403,12 +2393,12 @@ class ProjectsApi:
 
         :param project_id: Project-space to import into. (required)
         :type project_id: str
+        :param input_files: Files to import into project. (required)
+        :type input_files: List[bytearray]
+        :param parameters: Parameters for feature alignment and feature finding. (required)
+        :type parameters: LcmsSubmissionParameters
         :param opt_fields: Set of optional fields to be included. Use 'none' only to override defaults.
         :type opt_fields: List[JobOptField]
-        :param input_files:
-        :type input_files: List[bytearray]
-        :param parameters:
-        :type parameters: LcmsSubmissionParameters
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2433,9 +2423,9 @@ class ProjectsApi:
 
         _param = self._import_ms_run_data_as_job_serialize(
             project_id=project_id,
-            opt_fields=opt_fields,
             input_files=input_files,
             parameters=parameters,
+            opt_fields=opt_fields,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2444,8 +2434,7 @@ class ProjectsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "Job",
-        }
-        response_data = self.api_client.call_api(
+        }        response_data = self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
@@ -2455,9 +2444,9 @@ class ProjectsApi:
     def _import_ms_run_data_as_job_serialize(
         self,
         project_id,
-        opt_fields,
         input_files,
         parameters,
+        opt_fields,
         _request_auth,
         _content_type,
         _headers,
@@ -2467,8 +2456,8 @@ class ProjectsApi:
         _host = None
 
         _collection_formats: Dict[str, str] = {
-            'optFields': 'multi',
             'inputFiles': 'csv',
+            'optFields': 'multi',
         }
 
         _path_params: Dict[str, str] = {}
@@ -2542,9 +2531,9 @@ class ProjectsApi:
     def import_preprocessed_data(
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to import into.")],
+        input_files: Annotated[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]], Field(description="files to import into project")],
         ignore_formulas: Optional[StrictBool] = None,
         allow_ms1_only: Optional[StrictBool] = None,
-        input_files: Optional[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]]] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2564,12 +2553,12 @@ class ProjectsApi:
 
         :param project_id: project-space to import into. (required)
         :type project_id: str
+        :param input_files: files to import into project (required)
+        :type input_files: List[bytearray]
         :param ignore_formulas:
         :type ignore_formulas: bool
         :param allow_ms1_only:
         :type allow_ms1_only: bool
-        :param input_files:
-        :type input_files: List[bytearray]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2594,9 +2583,9 @@ class ProjectsApi:
 
         _param = self._import_preprocessed_data_serialize(
             project_id=project_id,
+            input_files=input_files,
             ignore_formulas=ignore_formulas,
             allow_ms1_only=allow_ms1_only,
-            input_files=input_files,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2605,8 +2594,7 @@ class ProjectsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ImportResult",
-        }
-        response_data = self.api_client.call_api(
+        }        response_data = self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
@@ -2621,9 +2609,9 @@ class ProjectsApi:
     def import_preprocessed_data_with_http_info(
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to import into.")],
+        input_files: Annotated[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]], Field(description="files to import into project")],
         ignore_formulas: Optional[StrictBool] = None,
         allow_ms1_only: Optional[StrictBool] = None,
-        input_files: Optional[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]]] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2643,12 +2631,12 @@ class ProjectsApi:
 
         :param project_id: project-space to import into. (required)
         :type project_id: str
+        :param input_files: files to import into project (required)
+        :type input_files: List[bytearray]
         :param ignore_formulas:
         :type ignore_formulas: bool
         :param allow_ms1_only:
         :type allow_ms1_only: bool
-        :param input_files:
-        :type input_files: List[bytearray]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2673,9 +2661,9 @@ class ProjectsApi:
 
         _param = self._import_preprocessed_data_serialize(
             project_id=project_id,
+            input_files=input_files,
             ignore_formulas=ignore_formulas,
             allow_ms1_only=allow_ms1_only,
-            input_files=input_files,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2684,8 +2672,7 @@ class ProjectsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ImportResult",
-        }
-        response_data = self.api_client.call_api(
+        }        response_data = self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
@@ -2700,9 +2687,9 @@ class ProjectsApi:
     def import_preprocessed_data_without_preload_content(
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to import into.")],
+        input_files: Annotated[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]], Field(description="files to import into project")],
         ignore_formulas: Optional[StrictBool] = None,
         allow_ms1_only: Optional[StrictBool] = None,
-        input_files: Optional[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]]] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2722,12 +2709,12 @@ class ProjectsApi:
 
         :param project_id: project-space to import into. (required)
         :type project_id: str
+        :param input_files: files to import into project (required)
+        :type input_files: List[bytearray]
         :param ignore_formulas:
         :type ignore_formulas: bool
         :param allow_ms1_only:
         :type allow_ms1_only: bool
-        :param input_files:
-        :type input_files: List[bytearray]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2752,9 +2739,9 @@ class ProjectsApi:
 
         _param = self._import_preprocessed_data_serialize(
             project_id=project_id,
+            input_files=input_files,
             ignore_formulas=ignore_formulas,
             allow_ms1_only=allow_ms1_only,
-            input_files=input_files,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2763,8 +2750,7 @@ class ProjectsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ImportResult",
-        }
-        response_data = self.api_client.call_api(
+        }        response_data = self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
@@ -2774,9 +2760,9 @@ class ProjectsApi:
     def _import_preprocessed_data_serialize(
         self,
         project_id,
+        input_files,
         ignore_formulas,
         allow_ms1_only,
-        input_files,
         _request_auth,
         _content_type,
         _headers,
@@ -2862,10 +2848,10 @@ class ProjectsApi:
     def import_preprocessed_data_as_job(
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to import into.")],
+        input_files: List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]],
         ignore_formulas: Optional[StrictBool] = None,
         allow_ms1_only: Optional[StrictBool] = None,
-        opt_fields: Annotated[Optional[List[Optional[JobOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
-        input_files: Optional[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]]] = None,
+        opt_fields: Annotated[Optional[List[JobOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2885,14 +2871,14 @@ class ProjectsApi:
 
         :param project_id: project-space to import into. (required)
         :type project_id: str
+        :param input_files: (required)
+        :type input_files: List[bytearray]
         :param ignore_formulas:
         :type ignore_formulas: bool
         :param allow_ms1_only:
         :type allow_ms1_only: bool
         :param opt_fields: set of optional fields to be included. Use 'none' only to override defaults.
         :type opt_fields: List[JobOptField]
-        :param input_files:
-        :type input_files: List[bytearray]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2917,10 +2903,10 @@ class ProjectsApi:
 
         _param = self._import_preprocessed_data_as_job_serialize(
             project_id=project_id,
+            input_files=input_files,
             ignore_formulas=ignore_formulas,
             allow_ms1_only=allow_ms1_only,
             opt_fields=opt_fields,
-            input_files=input_files,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2929,8 +2915,7 @@ class ProjectsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "Job",
-        }
-        response_data = self.api_client.call_api(
+        }        response_data = self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
@@ -2945,10 +2930,10 @@ class ProjectsApi:
     def import_preprocessed_data_as_job_with_http_info(
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to import into.")],
+        input_files: List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]],
         ignore_formulas: Optional[StrictBool] = None,
         allow_ms1_only: Optional[StrictBool] = None,
-        opt_fields: Annotated[Optional[List[Optional[JobOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
-        input_files: Optional[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]]] = None,
+        opt_fields: Annotated[Optional[List[JobOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2968,14 +2953,14 @@ class ProjectsApi:
 
         :param project_id: project-space to import into. (required)
         :type project_id: str
+        :param input_files: (required)
+        :type input_files: List[bytearray]
         :param ignore_formulas:
         :type ignore_formulas: bool
         :param allow_ms1_only:
         :type allow_ms1_only: bool
         :param opt_fields: set of optional fields to be included. Use 'none' only to override defaults.
         :type opt_fields: List[JobOptField]
-        :param input_files:
-        :type input_files: List[bytearray]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3000,10 +2985,10 @@ class ProjectsApi:
 
         _param = self._import_preprocessed_data_as_job_serialize(
             project_id=project_id,
+            input_files=input_files,
             ignore_formulas=ignore_formulas,
             allow_ms1_only=allow_ms1_only,
             opt_fields=opt_fields,
-            input_files=input_files,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3012,8 +2997,7 @@ class ProjectsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "Job",
-        }
-        response_data = self.api_client.call_api(
+        }        response_data = self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
@@ -3028,10 +3012,10 @@ class ProjectsApi:
     def import_preprocessed_data_as_job_without_preload_content(
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to import into.")],
+        input_files: List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]],
         ignore_formulas: Optional[StrictBool] = None,
         allow_ms1_only: Optional[StrictBool] = None,
-        opt_fields: Annotated[Optional[List[Optional[JobOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
-        input_files: Optional[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]]] = None,
+        opt_fields: Annotated[Optional[List[JobOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3051,14 +3035,14 @@ class ProjectsApi:
 
         :param project_id: project-space to import into. (required)
         :type project_id: str
+        :param input_files: (required)
+        :type input_files: List[bytearray]
         :param ignore_formulas:
         :type ignore_formulas: bool
         :param allow_ms1_only:
         :type allow_ms1_only: bool
         :param opt_fields: set of optional fields to be included. Use 'none' only to override defaults.
         :type opt_fields: List[JobOptField]
-        :param input_files:
-        :type input_files: List[bytearray]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3083,10 +3067,10 @@ class ProjectsApi:
 
         _param = self._import_preprocessed_data_as_job_serialize(
             project_id=project_id,
+            input_files=input_files,
             ignore_formulas=ignore_formulas,
             allow_ms1_only=allow_ms1_only,
             opt_fields=opt_fields,
-            input_files=input_files,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3095,8 +3079,7 @@ class ProjectsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "Job",
-        }
-        response_data = self.api_client.call_api(
+        }        response_data = self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
@@ -3106,10 +3089,10 @@ class ProjectsApi:
     def _import_preprocessed_data_as_job_serialize(
         self,
         project_id,
+        input_files,
         ignore_formulas,
         allow_ms1_only,
         opt_fields,
-        input_files,
         _request_auth,
         _content_type,
         _headers,
@@ -3119,8 +3102,8 @@ class ProjectsApi:
         _host = None
 
         _collection_formats: Dict[str, str] = {
-            'optFields': 'multi',
             'inputFiles': 'csv',
+            'optFields': 'multi',
         }
 
         _path_params: Dict[str, str] = {}
@@ -3201,7 +3184,7 @@ class ProjectsApi:
         self,
         project_id: Annotated[StrictStr, Field(description="unique name/identifier that shall be used to access the opened project-space. Must consist only of [a-zA-Z0-9_-].")],
         path_to_project: Annotated[Optional[StrictStr], Field(description="local file path to open the project from. If NULL, project will be loaded by it projectId from default project location.  DEPRECATED: This parameter relies on the local filesystem and will likely be removed in later versions of this API to allow for more flexible use cases.")] = None,
-        opt_fields: Optional[List[Optional[ProjectInfoOptField]]] = None,
+        opt_fields: Optional[List[ProjectInfoOptField]] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3259,8 +3242,7 @@ class ProjectsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ProjectInfo",
-        }
-        response_data = self.api_client.call_api(
+        }        response_data = self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
@@ -3276,7 +3258,7 @@ class ProjectsApi:
         self,
         project_id: Annotated[StrictStr, Field(description="unique name/identifier that shall be used to access the opened project-space. Must consist only of [a-zA-Z0-9_-].")],
         path_to_project: Annotated[Optional[StrictStr], Field(description="local file path to open the project from. If NULL, project will be loaded by it projectId from default project location.  DEPRECATED: This parameter relies on the local filesystem and will likely be removed in later versions of this API to allow for more flexible use cases.")] = None,
-        opt_fields: Optional[List[Optional[ProjectInfoOptField]]] = None,
+        opt_fields: Optional[List[ProjectInfoOptField]] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3334,8 +3316,7 @@ class ProjectsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ProjectInfo",
-        }
-        response_data = self.api_client.call_api(
+        }        response_data = self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
@@ -3351,7 +3332,7 @@ class ProjectsApi:
         self,
         project_id: Annotated[StrictStr, Field(description="unique name/identifier that shall be used to access the opened project-space. Must consist only of [a-zA-Z0-9_-].")],
         path_to_project: Annotated[Optional[StrictStr], Field(description="local file path to open the project from. If NULL, project will be loaded by it projectId from default project location.  DEPRECATED: This parameter relies on the local filesystem and will likely be removed in later versions of this API to allow for more flexible use cases.")] = None,
-        opt_fields: Optional[List[Optional[ProjectInfoOptField]]] = None,
+        opt_fields: Optional[List[ProjectInfoOptField]] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3409,8 +3390,7 @@ class ProjectsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ProjectInfo",
-        }
-        response_data = self.api_client.call_api(
+        }        response_data = self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )

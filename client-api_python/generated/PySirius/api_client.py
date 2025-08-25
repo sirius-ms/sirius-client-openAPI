@@ -9,7 +9,6 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 import datetime
 from dateutil.parser import parse
 from enum import Enum
@@ -86,7 +85,7 @@ class ApiClient:
             self.default_headers[header_name] = header_value
         self.cookie = cookie
         # Set default User-Agent.
-        self.user_agent = 'OpenAPI-Generator/6.1.1/python'
+        self.user_agent = 'OpenAPI-Generator/6.4.0/python'
         self.client_side_validation = configuration.client_side_validation
 
     def __enter__(self):

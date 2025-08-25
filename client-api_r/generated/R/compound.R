@@ -13,9 +13,10 @@
 #' @field rtEndSeconds The merged/consensus retention time end (latest rt) of this compound numeric [optional]
 #' @field neutralMass Neutral mass of this compound. Ion masse minus the mass of the assigned adduct of each feature of  this compound should result in the same neutral mass numeric [optional]
 #' @field features List of aligned features (adducts) that belong to the same (this) compound list(\link{AlignedFeature}) [optional]
-#' @field consensusAnnotations  \link{ConsensusAnnotationsCSI} [optional]
-#' @field consensusAnnotationsDeNovo  \link{ConsensusAnnotationsDeNovo} [optional]
-#' @field customAnnotations  \link{ConsensusAnnotationsCSI} [optional]
+#' @field consensusAnnotations The consensus of the top annotations from all the features of this compound.  Null if it was not requested und non-null otherwise. Might contain empty fields if results are not available \link{ConsensusAnnotationsCSI} [optional]
+#' @field consensusAnnotationsDeNovo The consensus of the top de novo annotations from all the features of this compound.  Null if it was not requested und non-null otherwise. Might contain empty fields if results are not available \link{ConsensusAnnotationsDeNovo} [optional]
+#' @field customAnnotations Alternative annotations selected by the User. \link{ConsensusAnnotationsCSI} [optional]
+#' @field tags Key: tagName, value: tag named list(\link{Tag}) [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
 #' @export
@@ -31,6 +32,7 @@ Compound <- R6::R6Class(
     `consensusAnnotations` = NULL,
     `consensusAnnotationsDeNovo` = NULL,
     `customAnnotations` = NULL,
+    `tags` = NULL,
 
     #' @description
     #' Initialize a new Compound class.
@@ -41,11 +43,12 @@ Compound <- R6::R6Class(
     #' @param rtEndSeconds The merged/consensus retention time end (latest rt) of this compound
     #' @param neutralMass Neutral mass of this compound. Ion masse minus the mass of the assigned adduct of each feature of  this compound should result in the same neutral mass
     #' @param features List of aligned features (adducts) that belong to the same (this) compound
-    #' @param consensusAnnotations consensusAnnotations
-    #' @param consensusAnnotationsDeNovo consensusAnnotationsDeNovo
-    #' @param customAnnotations customAnnotations
+    #' @param consensusAnnotations The consensus of the top annotations from all the features of this compound.  Null if it was not requested und non-null otherwise. Might contain empty fields if results are not available
+    #' @param consensusAnnotationsDeNovo The consensus of the top de novo annotations from all the features of this compound.  Null if it was not requested und non-null otherwise. Might contain empty fields if results are not available
+    #' @param customAnnotations Alternative annotations selected by the User.
+    #' @param tags Key: tagName, value: tag
     #' @param ... Other optional arguments.
-    initialize = function(`compoundId` = NULL, `name` = NULL, `rtStartSeconds` = NULL, `rtEndSeconds` = NULL, `neutralMass` = NULL, `features` = NULL, `consensusAnnotations` = NULL, `consensusAnnotationsDeNovo` = NULL, `customAnnotations` = NULL, ...) {
+    initialize = function(`compoundId` = NULL, `name` = NULL, `rtStartSeconds` = NULL, `rtEndSeconds` = NULL, `neutralMass` = NULL, `features` = NULL, `consensusAnnotations` = NULL, `consensusAnnotationsDeNovo` = NULL, `customAnnotations` = NULL, `tags` = NULL, ...) {
       if (!is.null(`compoundId`)) {
         if (!(is.character(`compoundId`) && length(`compoundId`) == 1)) {
           stop(paste("Error! Invalid data for `compoundId`. Must be a string:", `compoundId`))
@@ -92,6 +95,11 @@ Compound <- R6::R6Class(
       if (!is.null(`customAnnotations`)) {
         stopifnot(R6::is.R6(`customAnnotations`))
         self$`customAnnotations` <- `customAnnotations`
+      }
+      if (!is.null(`tags`)) {
+        stopifnot(is.vector(`tags`), length(`tags`) != 0)
+        sapply(`tags`, function(x) stopifnot(R6::is.R6(x)))
+        self$`tags` <- `tags`
       }
     },
 
@@ -162,6 +170,10 @@ Compound <- R6::R6Class(
         CompoundObject[["customAnnotations"]] <-
           self$`customAnnotations`$toSimpleType()
       }
+      if (!is.null(self$`tags`)) {
+        CompoundObject[["tags"]] <-
+          lapply(self$`tags`, function(x) x$toSimpleType())
+      }
       return(CompoundObject)
     },
 
@@ -205,6 +217,9 @@ Compound <- R6::R6Class(
         `customannotations_object`$fromJSON(jsonlite::toJSON(this_object$`customAnnotations`, auto_unbox = TRUE, digits = NA, null = 'null'))
         self$`customAnnotations` <- `customannotations_object`
       }
+      if (!is.null(this_object$`tags`)) {
+        self$`tags` <- ApiClient$new()$deserializeObj(this_object$`tags`, "map(Tag)", loadNamespace("Rsirius"))
+      }
       self
     },
 
@@ -235,6 +250,7 @@ Compound <- R6::R6Class(
       self$`consensusAnnotations` <- ConsensusAnnotationsCSI$new()$fromJSON(jsonlite::toJSON(this_object$`consensusAnnotations`, auto_unbox = TRUE, digits = NA, null = 'null'))
       self$`consensusAnnotationsDeNovo` <- ConsensusAnnotationsDeNovo$new()$fromJSON(jsonlite::toJSON(this_object$`consensusAnnotationsDeNovo`, auto_unbox = TRUE, digits = NA, null = 'null'))
       self$`customAnnotations` <- ConsensusAnnotationsCSI$new()$fromJSON(jsonlite::toJSON(this_object$`customAnnotations`, auto_unbox = TRUE, digits = NA, null = 'null'))
+      self$`tags` <- ApiClient$new()$deserializeObj(this_object$`tags`, "map(Tag)", loadNamespace("Rsirius"))
       self
     },
 

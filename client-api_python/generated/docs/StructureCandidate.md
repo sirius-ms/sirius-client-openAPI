@@ -8,9 +8,10 @@ Name | Type | Description | Notes
 **inchi_key** | **str** |  | [optional] 
 **smiles** | **str** |  | [optional] 
 **structure_name** | **str** |  | [optional] 
-**xlog_p** | **float** |  | [optional] 
+**structure_svg** | **str** | SVG graphics of the structure candidate  OPTIONAL: needs to be added by parameter | [optional] 
 **db_links** | [**List[DBLink]**](DBLink.md) | List of structure database links belonging to this structure candidate  OPTIONAL: needs to be added by parameter | [optional] 
 **spectral_library_matches** | [**List[SpectralLibraryMatch]**](SpectralLibraryMatch.md) | List of spectral library matches belonging to this structure candidate  OPTIONAL: needs to be added by parameter | [optional] 
+**xlog_p** | **float** |  | [optional] 
 
 ## Example
 

@@ -100,15 +100,16 @@
 #'
 #' library(Rsirius)
 #' var_database_id <- "database_id_example" # character | database to import into
+#' var_input_files <- c(123) # array[data.frame] | files to be imported
 #' var_buffer_size <- 1000 # integer |  (Optional)
-#' var_input_files <- c(123) # array[data.frame] |  (Optional)
+#' var_bio_transformer_parameters <- BioTransformerParameters$new("RULE_BASED", "BT_RULE_BASED", c(BioTransformerSequenceStep$new("PHASE_1_CYP450", 123)), "useDB_example") # BioTransformerParameters | configuration for biotransformer execution. If null BioTransformer will not be applied. (Optional)
 #'
 #' #Start import of structure and spectra files into the specified database.
 #' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-#' # result <- api_instance$ImportIntoDatabase(var_database_id, buffer_size = var_buffer_size, input_files = var_input_filesdata_file = "result.txt")
-#' result <- api_instance$searchable_databases_api$ImportIntoDatabase(var_database_id, buffer_size = var_buffer_size, input_files = var_input_files)
+#' # result <- api_instance$ImportIntoDatabase(var_database_id, var_input_files, buffer_size = var_buffer_size, bio_transformer_parameters = var_bio_transformer_parametersdata_file = "result.txt")
+#' result <- api_instance$searchable_databases_api$ImportIntoDatabase(var_database_id, var_input_files, buffer_size = var_buffer_size, bio_transformer_parameters = var_bio_transformer_parameters)
 #' dput(result)
 #'
 #'
@@ -169,13 +170,13 @@ SearchableDatabasesApi <- R6::R6Class(
     AddDatabases = function(request_body, data_file = NULL, ...) {
       local_var_response <- self$AddDatabasesWithHttpInfo(request_body, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
-        local_var_response$content
+        return(local_var_response$content)
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
-        local_var_response
+        return(local_var_response)
       }
     },
 
@@ -201,6 +202,9 @@ SearchableDatabasesApi <- R6::R6Class(
         stop("Missing required parameter `request_body`.")
       }
 
+      if (!missing(`request_body`) && is.null(`request_body`)) {
+        stop("Invalid value for `request_body` when calling SearchableDatabasesApi$AddDatabases, `request_body` is not nullable")
+      }
 
       if (!is.null(`request_body`)) {
         body.items <- paste(unlist(lapply(`request_body`, function(param) {
@@ -208,7 +212,7 @@ SearchableDatabasesApi <- R6::R6Class(
                                                          })), collapse = ",")
         local_var_body <- paste0("[", body.items, "]")
       } else {
-        body <- NULL
+        local_var_body <- NULL
       }
 
       local_var_url_path <- "/api/databases"
@@ -235,18 +239,21 @@ SearchableDatabasesApi <- R6::R6Class(
       if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
         # save response in a file
         if (!is.null(data_file)) {
-          write(local_var_resp$response, data_file)
+          self$api_client$WriteFile(local_var_resp, data_file)
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "array[SearchableDatabase]", loadNamespace("Rsirius")),
+          self$api_client$DeserializeResponse(local_var_resp, "array[SearchableDatabase]"),
           error = function(e) {
             stop("Failed to deserialize response")
           }
         )
         local_var_resp$content <- deserialized_resp_obj
-        local_var_resp
-      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        return(local_var_resp)
+      } 
+      
+      local_var_error_msg <- local_var_resp$response_as_text()      
+      if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp)
@@ -254,7 +261,7 @@ SearchableDatabasesApi <- R6::R6Class(
         if (is.null(local_var_resp$response) || local_var_resp$response == "") {
           local_var_resp$response <- "API server error"
         }
-        local_var_resp
+        return(local_var_resp)
       }
     },
 
@@ -270,13 +277,13 @@ SearchableDatabasesApi <- R6::R6Class(
     CreateDatabase = function(database_id, searchable_database_parameters = NULL, data_file = NULL, ...) {
       local_var_response <- self$CreateDatabaseWithHttpInfo(database_id, searchable_database_parameters, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
-        local_var_response$content
+        return(local_var_response$content)
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
-        local_var_response
+        return(local_var_response)
       }
     },
 
@@ -303,15 +310,21 @@ SearchableDatabasesApi <- R6::R6Class(
         stop("Missing required parameter `database_id`.")
       }
 
-      if (!str_detect(`database_id`, "^[a-zA-Z0-9-_]+$")) {
+      if (!missing(`database_id`) && is.null(`database_id`)) {
+        stop("Invalid value for `database_id` when calling SearchableDatabasesApi$CreateDatabase, `database_id` is not nullable")
+      }
+      if (!is.null(`database_id`) && !stringr::str_detect(`database_id`, "^[a-zA-Z0-9-_]+$")) {
         stop("Invalid value for `database_id` when calling SearchableDatabasesApi$CreateDatabase, must conform to the pattern ^[a-zA-Z0-9-_]+$.")
       }
 
+      if (!missing(`searchable_database_parameters`) && is.null(`searchable_database_parameters`)) {
+        stop("Invalid value for `searchable_database_parameters` when calling SearchableDatabasesApi$CreateDatabase, `searchable_database_parameters` is not nullable")
+      }
 
       if (!is.null(`searchable_database_parameters`)) {
         local_var_body <- `searchable_database_parameters`$toJSONString()
       } else {
-        body <- NULL
+        local_var_body <- NULL
       }
 
       local_var_url_path <- "/api/databases/{databaseId}"
@@ -342,18 +355,21 @@ SearchableDatabasesApi <- R6::R6Class(
       if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
         # save response in a file
         if (!is.null(data_file)) {
-          write(local_var_resp$response, data_file)
+          self$api_client$WriteFile(local_var_resp, data_file)
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "SearchableDatabase", loadNamespace("Rsirius")),
+          self$api_client$DeserializeResponse(local_var_resp, "SearchableDatabase"),
           error = function(e) {
             stop("Failed to deserialize response")
           }
         )
         local_var_resp$content <- deserialized_resp_obj
-        local_var_resp
-      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        return(local_var_resp)
+      } 
+      
+      local_var_error_msg <- local_var_resp$response_as_text()      
+      if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp)
@@ -361,7 +377,7 @@ SearchableDatabasesApi <- R6::R6Class(
         if (is.null(local_var_resp$response) || local_var_resp$response == "") {
           local_var_resp$response <- "API server error"
         }
-        local_var_resp
+        return(local_var_resp)
       }
     },
 
@@ -377,13 +393,13 @@ SearchableDatabasesApi <- R6::R6Class(
     GetCustomDatabases = function(include_stats = FALSE, include_with_errors = FALSE, data_file = NULL, ...) {
       local_var_response <- self$GetCustomDatabasesWithHttpInfo(include_stats, include_with_errors, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
-        local_var_response$content
+        return(local_var_response$content)
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
-        local_var_response
+        return(local_var_response)
       }
     },
 
@@ -406,7 +422,13 @@ SearchableDatabasesApi <- R6::R6Class(
       oauth_scopes <- NULL
       is_oauth <- FALSE
 
+      if (!missing(`include_stats`) && is.null(`include_stats`)) {
+        stop("Invalid value for `include_stats` when calling SearchableDatabasesApi$GetCustomDatabases, `include_stats` is not nullable")
+      }
 
+      if (!missing(`include_with_errors`) && is.null(`include_with_errors`)) {
+        stop("Invalid value for `include_with_errors` when calling SearchableDatabasesApi$GetCustomDatabases, `include_with_errors` is not nullable")
+      }
 
       query_params[["includeStats"]] <- `include_stats`
 
@@ -436,18 +458,21 @@ SearchableDatabasesApi <- R6::R6Class(
       if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
         # save response in a file
         if (!is.null(data_file)) {
-          write(local_var_resp$response, data_file)
+          self$api_client$WriteFile(local_var_resp, data_file)
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "array[SearchableDatabase]", loadNamespace("Rsirius")),
+          self$api_client$DeserializeResponse(local_var_resp, "array[SearchableDatabase]"),
           error = function(e) {
             stop("Failed to deserialize response")
           }
         )
         local_var_resp$content <- deserialized_resp_obj
-        local_var_resp
-      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        return(local_var_resp)
+      } 
+      
+      local_var_error_msg <- local_var_resp$response_as_text()      
+      if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp)
@@ -455,7 +480,7 @@ SearchableDatabasesApi <- R6::R6Class(
         if (is.null(local_var_resp$response) || local_var_resp$response == "") {
           local_var_resp$response <- "API server error"
         }
-        local_var_resp
+        return(local_var_resp)
       }
     },
 
@@ -471,13 +496,13 @@ SearchableDatabasesApi <- R6::R6Class(
     GetDatabase = function(database_id, include_stats = TRUE, data_file = NULL, ...) {
       local_var_response <- self$GetDatabaseWithHttpInfo(database_id, include_stats, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
-        local_var_response$content
+        return(local_var_response$content)
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
-        local_var_response
+        return(local_var_response)
       }
     },
 
@@ -504,7 +529,13 @@ SearchableDatabasesApi <- R6::R6Class(
         stop("Missing required parameter `database_id`.")
       }
 
+      if (!missing(`database_id`) && is.null(`database_id`)) {
+        stop("Invalid value for `database_id` when calling SearchableDatabasesApi$GetDatabase, `database_id` is not nullable")
+      }
 
+      if (!missing(`include_stats`) && is.null(`include_stats`)) {
+        stop("Invalid value for `include_stats` when calling SearchableDatabasesApi$GetDatabase, `include_stats` is not nullable")
+      }
 
       query_params[["includeStats"]] <- `include_stats`
 
@@ -536,18 +567,21 @@ SearchableDatabasesApi <- R6::R6Class(
       if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
         # save response in a file
         if (!is.null(data_file)) {
-          write(local_var_resp$response, data_file)
+          self$api_client$WriteFile(local_var_resp, data_file)
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "SearchableDatabase", loadNamespace("Rsirius")),
+          self$api_client$DeserializeResponse(local_var_resp, "SearchableDatabase"),
           error = function(e) {
             stop("Failed to deserialize response")
           }
         )
         local_var_resp$content <- deserialized_resp_obj
-        local_var_resp
-      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        return(local_var_resp)
+      } 
+      
+      local_var_error_msg <- local_var_resp$response_as_text()      
+      if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp)
@@ -555,7 +589,7 @@ SearchableDatabasesApi <- R6::R6Class(
         if (is.null(local_var_resp$response) || local_var_resp$response == "") {
           local_var_resp$response <- "API server error"
         }
-        local_var_resp
+        return(local_var_resp)
       }
     },
 
@@ -571,13 +605,13 @@ SearchableDatabasesApi <- R6::R6Class(
     GetDatabases = function(include_stats = FALSE, include_with_errors = FALSE, data_file = NULL, ...) {
       local_var_response <- self$GetDatabasesWithHttpInfo(include_stats, include_with_errors, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
-        local_var_response$content
+        return(local_var_response$content)
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
-        local_var_response
+        return(local_var_response)
       }
     },
 
@@ -600,7 +634,13 @@ SearchableDatabasesApi <- R6::R6Class(
       oauth_scopes <- NULL
       is_oauth <- FALSE
 
+      if (!missing(`include_stats`) && is.null(`include_stats`)) {
+        stop("Invalid value for `include_stats` when calling SearchableDatabasesApi$GetDatabases, `include_stats` is not nullable")
+      }
 
+      if (!missing(`include_with_errors`) && is.null(`include_with_errors`)) {
+        stop("Invalid value for `include_with_errors` when calling SearchableDatabasesApi$GetDatabases, `include_with_errors` is not nullable")
+      }
 
       query_params[["includeStats"]] <- `include_stats`
 
@@ -630,18 +670,21 @@ SearchableDatabasesApi <- R6::R6Class(
       if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
         # save response in a file
         if (!is.null(data_file)) {
-          write(local_var_resp$response, data_file)
+          self$api_client$WriteFile(local_var_resp, data_file)
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "array[SearchableDatabase]", loadNamespace("Rsirius")),
+          self$api_client$DeserializeResponse(local_var_resp, "array[SearchableDatabase]"),
           error = function(e) {
             stop("Failed to deserialize response")
           }
         )
         local_var_resp$content <- deserialized_resp_obj
-        local_var_resp
-      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        return(local_var_resp)
+      } 
+      
+      local_var_error_msg <- local_var_resp$response_as_text()      
+      if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp)
@@ -649,7 +692,7 @@ SearchableDatabasesApi <- R6::R6Class(
         if (is.null(local_var_resp$response) || local_var_resp$response == "") {
           local_var_resp$response <- "API server error"
         }
-        local_var_resp
+        return(local_var_resp)
       }
     },
 
@@ -664,13 +707,13 @@ SearchableDatabasesApi <- R6::R6Class(
     GetIncludedDatabases = function(include_stats = FALSE, data_file = NULL, ...) {
       local_var_response <- self$GetIncludedDatabasesWithHttpInfo(include_stats, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
-        local_var_response$content
+        return(local_var_response$content)
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
-        local_var_response
+        return(local_var_response)
       }
     },
 
@@ -692,6 +735,9 @@ SearchableDatabasesApi <- R6::R6Class(
       oauth_scopes <- NULL
       is_oauth <- FALSE
 
+      if (!missing(`include_stats`) && is.null(`include_stats`)) {
+        stop("Invalid value for `include_stats` when calling SearchableDatabasesApi$GetIncludedDatabases, `include_stats` is not nullable")
+      }
 
       query_params[["includeStats"]] <- `include_stats`
 
@@ -719,18 +765,21 @@ SearchableDatabasesApi <- R6::R6Class(
       if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
         # save response in a file
         if (!is.null(data_file)) {
-          write(local_var_resp$response, data_file)
+          self$api_client$WriteFile(local_var_resp, data_file)
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "array[SearchableDatabase]", loadNamespace("Rsirius")),
+          self$api_client$DeserializeResponse(local_var_resp, "array[SearchableDatabase]"),
           error = function(e) {
             stop("Failed to deserialize response")
           }
         )
         local_var_resp$content <- deserialized_resp_obj
-        local_var_resp
-      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        return(local_var_resp)
+      } 
+      
+      local_var_error_msg <- local_var_resp$response_as_text()      
+      if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp)
@@ -738,7 +787,7 @@ SearchableDatabasesApi <- R6::R6Class(
         if (is.null(local_var_resp$response) || local_var_resp$response == "") {
           local_var_resp$response <- "API server error"
         }
-        local_var_resp
+        return(local_var_resp)
       }
     },
 
@@ -746,22 +795,23 @@ SearchableDatabasesApi <- R6::R6Class(
     #' Start import of structure and spectra files into the specified database.
     #'
     #' @param database_id database to import into
+    #' @param input_files files to be imported
     #' @param buffer_size (optional) No description (default value: 1000)
-    #' @param input_files (optional) No description
+    #' @param bio_transformer_parameters (optional) configuration for biotransformer execution. If null BioTransformer will not be applied.
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return SearchableDatabase
-    ImportIntoDatabase = function(database_id, buffer_size = 1000, input_files = NULL, data_file = NULL, ...) {
-      local_var_response <- self$ImportIntoDatabaseWithHttpInfo(database_id, buffer_size, input_files, data_file = data_file, ...)
+    ImportIntoDatabase = function(database_id, input_files, buffer_size = 1000, bio_transformer_parameters = NULL, data_file = NULL, ...) {
+      local_var_response <- self$ImportIntoDatabaseWithHttpInfo(database_id, input_files, buffer_size, bio_transformer_parameters, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
-        local_var_response$content
+        return(local_var_response$content)
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
-        local_var_response
+        return(local_var_response)
       }
     },
 
@@ -769,13 +819,14 @@ SearchableDatabasesApi <- R6::R6Class(
     #' Start import of structure and spectra files into the specified database.
     #'
     #' @param database_id database to import into
+    #' @param input_files files to be imported
     #' @param buffer_size (optional) No description (default value: 1000)
-    #' @param input_files (optional) No description
+    #' @param bio_transformer_parameters (optional) configuration for biotransformer execution. If null BioTransformer will not be applied.
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return API response (SearchableDatabase) with additional information such as HTTP status code, headers
-    ImportIntoDatabaseWithHttpInfo = function(database_id, buffer_size = 1000, input_files = NULL, data_file = NULL, ...) {
+    ImportIntoDatabaseWithHttpInfo = function(database_id, input_files, buffer_size = 1000, bio_transformer_parameters = NULL, data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -789,12 +840,30 @@ SearchableDatabasesApi <- R6::R6Class(
         stop("Missing required parameter `database_id`.")
       }
 
+      if (missing(`input_files`)) {
+        stop("Missing required parameter `input_files`.")
+      }
 
+      if (!missing(`database_id`) && is.null(`database_id`)) {
+        stop("Invalid value for `database_id` when calling SearchableDatabasesApi$ImportIntoDatabase, `database_id` is not nullable")
+      }
 
+      if (!missing(`input_files`) && is.null(`input_files`)) {
+        stop("Invalid value for `input_files` when calling SearchableDatabasesApi$ImportIntoDatabase, `input_files` is not nullable")
+      }
+
+      if (!missing(`buffer_size`) && is.null(`buffer_size`)) {
+        stop("Invalid value for `buffer_size` when calling SearchableDatabasesApi$ImportIntoDatabase, `buffer_size` is not nullable")
+      }
+
+      if (!missing(`bio_transformer_parameters`) && is.null(`bio_transformer_parameters`)) {
+        stop("Invalid value for `bio_transformer_parameters` when calling SearchableDatabasesApi$ImportIntoDatabase, `bio_transformer_parameters` is not nullable")
+      }
 
       query_params[["bufferSize"]] <- `buffer_size`
 
       file_params[["inputFiles"]] <- curl::form_file(`input_files`)
+      form_params["bioTransformerParameters"] <- `bio_transformer_parameters`
       local_var_url_path <- "/api/databases/{databaseId}/import/from-files"
       if (!missing(`database_id`)) {
         local_var_url_path <- gsub("\\{databaseId\\}", URLencode(as.character(`database_id`), reserved = TRUE), local_var_url_path)
@@ -823,18 +892,21 @@ SearchableDatabasesApi <- R6::R6Class(
       if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
         # save response in a file
         if (!is.null(data_file)) {
-          write(local_var_resp$response, data_file)
+          self$api_client$WriteFile(local_var_resp, data_file)
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "SearchableDatabase", loadNamespace("Rsirius")),
+          self$api_client$DeserializeResponse(local_var_resp, "SearchableDatabase"),
           error = function(e) {
             stop("Failed to deserialize response")
           }
         )
         local_var_resp$content <- deserialized_resp_obj
-        local_var_resp
-      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        return(local_var_resp)
+      } 
+      
+      local_var_error_msg <- local_var_resp$response_as_text()      
+      if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp)
@@ -842,7 +914,7 @@ SearchableDatabasesApi <- R6::R6Class(
         if (is.null(local_var_resp$response) || local_var_resp$response == "") {
           local_var_resp$response <- "API server error"
         }
-        local_var_resp
+        return(local_var_resp)
       }
     },
 
@@ -857,13 +929,13 @@ SearchableDatabasesApi <- R6::R6Class(
     RemoveDatabase = function(database_id, delete = FALSE, ...) {
       local_var_response <- self$RemoveDatabaseWithHttpInfo(database_id, delete, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
-        local_var_response$content
+        return(local_var_response$content)
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
-        local_var_response
+        return(local_var_response)
       }
     },
 
@@ -889,7 +961,13 @@ SearchableDatabasesApi <- R6::R6Class(
         stop("Missing required parameter `database_id`.")
       }
 
+      if (!missing(`database_id`) && is.null(`database_id`)) {
+        stop("Invalid value for `database_id` when calling SearchableDatabasesApi$RemoveDatabase, `database_id` is not nullable")
+      }
 
+      if (!missing(`delete`) && is.null(`delete`)) {
+        stop("Invalid value for `delete` when calling SearchableDatabasesApi$RemoveDatabase, `delete` is not nullable")
+      }
 
       query_params[["delete"]] <- `delete`
 
@@ -920,8 +998,11 @@ SearchableDatabasesApi <- R6::R6Class(
 
       if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
         local_var_resp$content <- NULL
-        local_var_resp
-      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        return(local_var_resp)
+      } 
+      
+      local_var_error_msg <- local_var_resp$response_as_text()      
+      if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp)
@@ -929,7 +1010,7 @@ SearchableDatabasesApi <- R6::R6Class(
         if (is.null(local_var_resp$response) || local_var_resp$response == "") {
           local_var_resp$response <- "API server error"
         }
-        local_var_resp
+        return(local_var_resp)
       }
     },
 
@@ -945,13 +1026,13 @@ SearchableDatabasesApi <- R6::R6Class(
     UpdateDatabase = function(database_id, searchable_database_parameters = NULL, data_file = NULL, ...) {
       local_var_response <- self$UpdateDatabaseWithHttpInfo(database_id, searchable_database_parameters, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
-        local_var_response$content
+        return(local_var_response$content)
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
-        local_var_response
+        return(local_var_response)
       }
     },
 
@@ -978,12 +1059,18 @@ SearchableDatabasesApi <- R6::R6Class(
         stop("Missing required parameter `database_id`.")
       }
 
+      if (!missing(`database_id`) && is.null(`database_id`)) {
+        stop("Invalid value for `database_id` when calling SearchableDatabasesApi$UpdateDatabase, `database_id` is not nullable")
+      }
 
+      if (!missing(`searchable_database_parameters`) && is.null(`searchable_database_parameters`)) {
+        stop("Invalid value for `searchable_database_parameters` when calling SearchableDatabasesApi$UpdateDatabase, `searchable_database_parameters` is not nullable")
+      }
 
       if (!is.null(`searchable_database_parameters`)) {
         local_var_body <- `searchable_database_parameters`$toJSONString()
       } else {
-        body <- NULL
+        local_var_body <- NULL
       }
 
       local_var_url_path <- "/api/databases/{databaseId}"
@@ -1014,18 +1101,21 @@ SearchableDatabasesApi <- R6::R6Class(
       if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
         # save response in a file
         if (!is.null(data_file)) {
-          write(local_var_resp$response, data_file)
+          self$api_client$WriteFile(local_var_resp, data_file)
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "SearchableDatabase", loadNamespace("Rsirius")),
+          self$api_client$DeserializeResponse(local_var_resp, "SearchableDatabase"),
           error = function(e) {
             stop("Failed to deserialize response")
           }
         )
         local_var_resp$content <- deserialized_resp_obj
-        local_var_resp
-      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        return(local_var_resp)
+      } 
+      
+      local_var_error_msg <- local_var_resp$response_as_text()      
+      if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp)
@@ -1033,7 +1123,7 @@ SearchableDatabasesApi <- R6::R6Class(
         if (is.null(local_var_resp$response) || local_var_resp$response == "") {
           local_var_resp$response <- "API server error"
         }
-        local_var_resp
+        return(local_var_resp)
       }
     }
   )

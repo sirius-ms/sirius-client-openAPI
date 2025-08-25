@@ -6,7 +6,7 @@ Predicted compound class with name, probability and id if available.  (ClassyFir
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**type** | [**CompoundClassType**](CompoundClassType.md) |  | [optional] 
+**type** | [**CompoundClassType**](CompoundClassType.md) | Specifies the classification ontology the CompoundClass belongs to. | [optional] 
 **level** | **str** | Name of the level this compound class belongs to | [optional] 
 **level_index** | **int** | Index of the level this compound class belongs to | [optional] 
 **name** | **str** | Name of the compound class. | [optional] 

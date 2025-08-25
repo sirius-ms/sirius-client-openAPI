@@ -27,7 +27,7 @@ class StoredJobSubmission(BaseModel):
     """ # noqa: E501
     name: StrictStr = Field(description="Unique name to identify this JobSubmission (job config).")
     editable: StrictBool = Field(description="False for predefined configs which are not editable and not removable.")
-    job_submission: JobSubmission = Field(alias="jobSubmission")
+    job_submission: JobSubmission = Field(description="The JobSubmission identified by the name", alias="jobSubmission")
     __properties: ClassVar[List[str]] = ["name", "editable", "jobSubmission"]
 
     model_config = ConfigDict(

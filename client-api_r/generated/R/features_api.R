@@ -17,7 +17,7 @@
 #'
 #' library(Rsirius)
 #' var_project_id <- "project_id_example" # character | project-space to import into.
-#' var_feature_import <- c(FeatureImport$new(123, 123, "name_example", "externalFeatureId_example", c("detectedAdducts_example"), 123, 123, 123, "NOT_APPLICABLE", BasicSpectrum$new(c(SimplePeak$new(123, 123)), "name_example", 123, "collisionEnergy_example", "instrument_example", 123, 123, 123), c(BasicSpectrum$new(c(SimplePeak$new(123, 123)), "name_example", 123, "collisionEnergy_example", "instrument_example", 123, 123, 123)), c(BasicSpectrum$new(c(SimplePeak$new(123, 123)), "name_example", 123, "collisionEnergy_example", "instrument_example", 123, 123, 123)))) # array[FeatureImport] | the feature data to be imported
+#' var_feature_import <- c(FeatureImport$new(123, 123, "name_example", "externalFeatureId_example", c("detectedAdducts_example"), 123, 123, 123, "NOT_APPLICABLE", BasicSpectrum$new("cosineQuery_example", c(SimplePeak$new(123, 123)), "name_example", 123, "collisionEnergy_example", "instrument_example", 123, 123, SimplePeak$new(123, 123), 123, 123, 123, 123, 123), c(BasicSpectrum$new("cosineQuery_example", c(SimplePeak$new(123, 123)), "name_example", 123, "collisionEnergy_example", "instrument_example", 123, 123, SimplePeak$new(123, 123), 123, 123, 123, 123, 123)), c(BasicSpectrum$new("cosineQuery_example", c(SimplePeak$new(123, 123)), "name_example", 123, "collisionEnergy_example", "instrument_example", 123, 123, SimplePeak$new(123, 123), 123, 123, 123, 123, 123)))) # array[FeatureImport] | the feature data to be imported
 #' var_profile <- "profile_example" # character | profile describing the instrument used to measure the data. Used to merge spectra. (Optional)
 #' var_opt_fields <- c("none") # array[character] | set of optional fields to be included. Use 'none' to override defaults. (Optional)
 #'
@@ -27,6 +27,38 @@
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
 #' # result <- api_instance$AddAlignedFeatures(var_project_id, var_feature_import, profile = var_profile, opt_fields = var_opt_fieldsdata_file = "result.txt")
 #' result <- api_instance$features_api$AddAlignedFeatures(var_project_id, var_feature_import, profile = var_profile, opt_fields = var_opt_fields)
+#' dput(result)
+#'
+#'
+#' ####################  AddDeNovoStructureCandidate  ####################
+#'
+#' library(Rsirius)
+#' var_project_id <- "project_id_example" # character | project-space to read from.
+#' var_aligned_feature_id <- "aligned_feature_id_example" # character | feature (aligned over runs) the structure candidates belong to.
+#' var_smiles <- "none" # character | smiles (Optional)
+#'
+#' #[EXPERIMENTAL] Add molecular structures (as SMILES) to the list of de novo structures.
+#' api_instance <- rsirius_api$new()
+#'
+#' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
+#' # result <- api_instance$AddDeNovoStructureCandidate(var_project_id, var_aligned_feature_id, smiles = var_smilesdata_file = "result.txt")
+#' result <- api_instance$features_api$AddDeNovoStructureCandidate(var_project_id, var_aligned_feature_id, smiles = var_smiles)
+#' dput(result)
+#'
+#'
+#' ####################  AddTagsToAlignedFeatureExperimental  ####################
+#'
+#' library(Rsirius)
+#' var_project_id <- "project_id_example" # character | project-space to add to.
+#' var_aligned_feature_id <- "aligned_feature_id_example" # character | run to add tags to.
+#' var_tag <- c(Tag$new("tagName_example", TODO)) # array[Tag] | tags to add.
+#'
+#' #[EXPERIMENTAL] Add tags to a feature (aligned over runs) in the project
+#' api_instance <- rsirius_api$new()
+#'
+#' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
+#' # result <- api_instance$AddTagsToAlignedFeatureExperimental(var_project_id, var_aligned_feature_id, var_tagdata_file = "result.txt")
+#' result <- api_instance$features_api$AddTagsToAlignedFeatureExperimental(var_project_id, var_aligned_feature_id, var_tag)
 #' dput(result)
 #'
 #'
@@ -60,7 +92,7 @@
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_aligned_feature_id <- "aligned_feature_id_example" # character | one feature that is considered the main feature of the adduct network
 #'
-#' #EXPERIMENTAL: This endpoint is experimental and may be changed (or even removed) without notice until it is declared stable.
+#' #[EXPERIMENTAL] Returns the adduct network for a given alignedFeatureId together with all merged traces contained in the network
 #' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
@@ -74,14 +106,30 @@
 #' library(Rsirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_aligned_feature_id <- "aligned_feature_id_example" # character | identifier of feature (aligned over runs) to access.
+#' var_ms_data_search_prepared <- FALSE # character | Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. (Optional)
 #' var_opt_fields <- c("none") # array[character] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
 #'
 #' #Get feature (aligned over runs) with the given identifier from the specified project-space.
 #' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-#' # result <- api_instance$GetAlignedFeature(var_project_id, var_aligned_feature_id, opt_fields = var_opt_fieldsdata_file = "result.txt")
-#' result <- api_instance$features_api$GetAlignedFeature(var_project_id, var_aligned_feature_id, opt_fields = var_opt_fields)
+#' # result <- api_instance$GetAlignedFeature(var_project_id, var_aligned_feature_id, ms_data_search_prepared = var_ms_data_search_prepared, opt_fields = var_opt_fieldsdata_file = "result.txt")
+#' result <- api_instance$features_api$GetAlignedFeature(var_project_id, var_aligned_feature_id, ms_data_search_prepared = var_ms_data_search_prepared, opt_fields = var_opt_fields)
+#' dput(result)
+#'
+#'
+#' ####################  GetAlignedFeatureQualityExperimental  ####################
+#'
+#' library(Rsirius)
+#' var_project_id <- "project_id_example" # character | project-space to read from.
+#' var_aligned_feature_id <- "aligned_feature_id_example" # character | identifier of feature (aligned over runs) to access.
+#'
+#' #[EXPERIMENTAL] Returns data quality information for given feature (alignedFeatureId)  
+#' api_instance <- rsirius_api$new()
+#'
+#' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
+#' # result <- api_instance$GetAlignedFeatureQualityExperimental(var_project_id, var_aligned_feature_iddata_file = "result.txt")
+#' result <- api_instance$features_api$GetAlignedFeatureQualityExperimental(var_project_id, var_aligned_feature_id)
 #' dput(result)
 #'
 #'
@@ -89,14 +137,53 @@
 #'
 #' library(Rsirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
+#' var_ms_data_search_prepared <- FALSE # character | Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. (Optional)
 #' var_opt_fields <- c("none") # array[character] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
 #'
 #' #Get all available features (aligned over runs) in the given project-space.
 #' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-#' # result <- api_instance$GetAlignedFeatures(var_project_id, opt_fields = var_opt_fieldsdata_file = "result.txt")
-#' result <- api_instance$features_api$GetAlignedFeatures(var_project_id, opt_fields = var_opt_fields)
+#' # result <- api_instance$GetAlignedFeatures(var_project_id, ms_data_search_prepared = var_ms_data_search_prepared, opt_fields = var_opt_fieldsdata_file = "result.txt")
+#' result <- api_instance$features_api$GetAlignedFeatures(var_project_id, ms_data_search_prepared = var_ms_data_search_prepared, opt_fields = var_opt_fields)
+#' dput(result)
+#'
+#'
+#' ####################  GetAlignedFeaturesByGroupExperimental  ####################
+#'
+#' library(Rsirius)
+#' var_project_id <- "project_id_example" # character | project-space to delete from.
+#' var_group_name <- "group_name_example" # character | tag group name.
+#' var_page <- 0 # integer | Zero-based page index (0..N) (Optional)
+#' var_size <- 20 # integer | The size of the page to be returned (Optional)
+#' var_sort <- c("inner_example") # array[character] | Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (Optional)
+#' var_opt_fields <- c("none") # array[character] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
+#'
+#' #[EXPERIMENTAL] Get features (aligned over runs) by tag group
+#' api_instance <- rsirius_api$new()
+#'
+#' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
+#' # result <- api_instance$GetAlignedFeaturesByGroupExperimental(var_project_id, var_group_name, page = var_page, size = var_size, sort = var_sort, opt_fields = var_opt_fieldsdata_file = "result.txt")
+#' result <- api_instance$features_api$GetAlignedFeaturesByGroupExperimental(var_project_id, var_group_name, page = var_page, size = var_size, sort = var_sort, opt_fields = var_opt_fields)
+#' dput(result)
+#'
+#'
+#' ####################  GetAlignedFeaturesByTagExperimental  ####################
+#'
+#' library(Rsirius)
+#' var_project_id <- "project_id_example" # character | project space to get features (aligned over runs) from.
+#' var_filter <- "" # character | tag filter. (Optional)
+#' var_page <- 0 # integer | Zero-based page index (0..N) (Optional)
+#' var_size <- 20 # integer | The size of the page to be returned (Optional)
+#' var_sort <- c("inner_example") # array[character] | Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (Optional)
+#' var_opt_fields <- c("none") # array[character] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
+#'
+#' #[EXPERIMENTAL] Get features (aligned over runs) by tag
+#' api_instance <- rsirius_api$new()
+#'
+#' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
+#' # result <- api_instance$GetAlignedFeaturesByTagExperimental(var_project_id, filter = var_filter, page = var_page, size = var_size, sort = var_sort, opt_fields = var_opt_fieldsdata_file = "result.txt")
+#' result <- api_instance$features_api$GetAlignedFeaturesByTagExperimental(var_project_id, filter = var_filter, page = var_page, size = var_size, sort = var_sort, opt_fields = var_opt_fields)
 #' dput(result)
 #'
 #'
@@ -107,29 +194,15 @@
 #' var_page <- 0 # integer | Zero-based page index (0..N) (Optional)
 #' var_size <- 20 # integer | The size of the page to be returned (Optional)
 #' var_sort <- c("inner_example") # array[character] | Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (Optional)
+#' var_ms_data_search_prepared <- FALSE # character | Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. (Optional)
 #' var_opt_fields <- c("none") # array[character] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
 #'
 #' #Get all available features (aligned over runs) in the given project-space.
 #' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-#' # result <- api_instance$GetAlignedFeaturesPaged(var_project_id, page = var_page, size = var_size, sort = var_sort, opt_fields = var_opt_fieldsdata_file = "result.txt")
-#' result <- api_instance$features_api$GetAlignedFeaturesPaged(var_project_id, page = var_page, size = var_size, sort = var_sort, opt_fields = var_opt_fields)
-#' dput(result)
-#'
-#'
-#' ####################  GetAlignedFeaturesQualityExperimental  ####################
-#'
-#' library(Rsirius)
-#' var_project_id <- "project_id_example" # character | project-space to read from.
-#' var_aligned_feature_id <- "aligned_feature_id_example" # character | identifier of feature (aligned over runs) to access.
-#'
-#' #EXPERIMENTAL: This endpoint is experimental and may be changed (or even removed) without notice until it is declared stable.
-#' api_instance <- rsirius_api$new()
-#'
-#' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-#' # result <- api_instance$GetAlignedFeaturesQualityExperimental(var_project_id, var_aligned_feature_iddata_file = "result.txt")
-#' result <- api_instance$features_api$GetAlignedFeaturesQualityExperimental(var_project_id, var_aligned_feature_id)
+#' # result <- api_instance$GetAlignedFeaturesPaged(var_project_id, page = var_page, size = var_size, sort = var_sort, ms_data_search_prepared = var_ms_data_search_prepared, opt_fields = var_opt_fieldsdata_file = "result.txt")
+#' result <- api_instance$features_api$GetAlignedFeaturesPaged(var_project_id, page = var_page, size = var_size, sort = var_sort, ms_data_search_prepared = var_ms_data_search_prepared, opt_fields = var_opt_fields)
 #' dput(result)
 #'
 #'
@@ -140,7 +213,7 @@
 #' var_aligned_feature_id <- "aligned_feature_id_example" # character | feature (aligned over runs) the formula result belongs to.
 #' var_formula_id <- "formula_id_example" # character | identifier of the requested formula result
 #'
-#' #Best matching compound classes,  Set of the highest scoring compound classes (CANOPUS) on each hierarchy level of  the ClassyFire and NPC ontology,
+#' #Return Best matching compound classes for given formulaId
 #' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
@@ -237,6 +310,21 @@
 #' dput(result)
 #'
 #'
+#' ####################  GetFeatureQuantTableExperimental  ####################
+#'
+#' library(Rsirius)
+#' var_project_id <- "project_id_example" # character | project-space to read from.
+#' var_type <- "APEX_HEIGHT" # character | quantification type. (Optional)
+#'
+#' #[EXPERIMENTAL]  Returns the full quantification table for the given feature (alignedFeatureId)
+#' api_instance <- rsirius_api$new()
+#'
+#' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
+#' # result <- api_instance$GetFeatureQuantTableExperimental(var_project_id, type = var_typedata_file = "result.txt")
+#' result <- api_instance$features_api$GetFeatureQuantTableExperimental(var_project_id, type = var_type)
+#' dput(result)
+#'
+#'
 #' ####################  GetFingerprintPrediction  ####################
 #'
 #' library(Rsirius)
@@ -244,7 +332,7 @@
 #' var_aligned_feature_id <- "aligned_feature_id_example" # character | feature (aligned over runs) the formula result belongs to.
 #' var_formula_id <- "formula_id_example" # character | identifier of the requested formula result
 #'
-#' #Returns predicted fingerprint (CSI:FingerID) for the given formula result identifier  This fingerprint is used to perform structure database search and predict compound classes.
+#' #Returns predicted fingerprint (CSI:FingerID) for the given formula result identifier (formulaId)  
 #' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
@@ -259,13 +347,14 @@
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_aligned_feature_id <- "aligned_feature_id_example" # character | feature (aligned over runs) the formula result belongs to.
 #' var_formula_id <- "formula_id_example" # character | identifier of the requested formula result
+#' var_ms_data_search_prepared <- FALSE # character | Returns all fragment spectra in a preprocessed form as used for fast                          Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                          peak assignments and reference spectra. (Optional)
 #'
-#' #Returns MS/MS Spectrum (Merged MS/MS and measured MS/MS) which is annotated with fragments and losses  for the given formula result identifier  These annotations are only available if a fragmentation tree and the structure candidate are available.
+#' #Returns MS/MS Spectrum annotated with fragments and losses for provided formulaId
 #' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-#' # result <- api_instance$GetFormulaAnnotatedMsMsData(var_project_id, var_aligned_feature_id, var_formula_iddata_file = "result.txt")
-#' result <- api_instance$features_api$GetFormulaAnnotatedMsMsData(var_project_id, var_aligned_feature_id, var_formula_id)
+#' # result <- api_instance$GetFormulaAnnotatedMsMsData(var_project_id, var_aligned_feature_id, var_formula_id, ms_data_search_prepared = var_ms_data_search_prepareddata_file = "result.txt")
+#' result <- api_instance$features_api$GetFormulaAnnotatedMsMsData(var_project_id, var_aligned_feature_id, var_formula_id, ms_data_search_prepared = var_ms_data_search_prepared)
 #' dput(result)
 #'
 #'
@@ -276,13 +365,14 @@
 #' var_aligned_feature_id <- "aligned_feature_id_example" # character | feature (aligned over runs) the formula result belongs to.
 #' var_formula_id <- "formula_id_example" # character | identifier of the requested formula result
 #' var_spectrum_index <- -1 # integer | index of the spectrum to be annotated. Merged MS/MS will be used if spectrumIndex < 0 (default) (Optional)
+#' var_search_prepared <- FALSE # character | Returns all fragment spectra in a preprocessed form as used for fast                          Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                          peak assignments and reference spectra. (Optional)
 #'
-#' #Returns a fragmentation spectrum (e.g. Merged MS/MS) which is annotated with fragments and losses for the given formula result identifier  These annotations are only available if a fragmentation tree is available.
+#' #Returns a fragmentation spectrum (e
 #' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-#' # result <- api_instance$GetFormulaAnnotatedSpectrum(var_project_id, var_aligned_feature_id, var_formula_id, spectrum_index = var_spectrum_indexdata_file = "result.txt")
-#' result <- api_instance$features_api$GetFormulaAnnotatedSpectrum(var_project_id, var_aligned_feature_id, var_formula_id, spectrum_index = var_spectrum_index)
+#' # result <- api_instance$GetFormulaAnnotatedSpectrum(var_project_id, var_aligned_feature_id, var_formula_id, spectrum_index = var_spectrum_index, search_prepared = var_search_prepareddata_file = "result.txt")
+#' result <- api_instance$features_api$GetFormulaAnnotatedSpectrum(var_project_id, var_aligned_feature_id, var_formula_id, spectrum_index = var_spectrum_index, search_prepared = var_search_prepared)
 #' dput(result)
 #'
 #'
@@ -292,14 +382,15 @@
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_aligned_feature_id <- "aligned_feature_id_example" # character | feature (aligned over runs) the formula result belongs to.
 #' var_formula_id <- "formula_id_example" # character | identifier of the requested formula result
+#' var_ms_data_search_prepared <- FALSE # character | Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. (Optional)
 #' var_opt_fields <- c("none") # array[character] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
 #'
 #' #FormulaResultContainers for the given 'formulaId' with minimal information.
 #' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-#' # result <- api_instance$GetFormulaCandidate(var_project_id, var_aligned_feature_id, var_formula_id, opt_fields = var_opt_fieldsdata_file = "result.txt")
-#' result <- api_instance$features_api$GetFormulaCandidate(var_project_id, var_aligned_feature_id, var_formula_id, opt_fields = var_opt_fields)
+#' # result <- api_instance$GetFormulaCandidate(var_project_id, var_aligned_feature_id, var_formula_id, ms_data_search_prepared = var_ms_data_search_prepared, opt_fields = var_opt_fieldsdata_file = "result.txt")
+#' result <- api_instance$features_api$GetFormulaCandidate(var_project_id, var_aligned_feature_id, var_formula_id, ms_data_search_prepared = var_ms_data_search_prepared, opt_fields = var_opt_fields)
 #' dput(result)
 #'
 #'
@@ -308,14 +399,15 @@
 #' library(Rsirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_aligned_feature_id <- "aligned_feature_id_example" # character | feature (aligned over runs) the formula result belongs to.
+#' var_ms_data_search_prepared <- FALSE # character | Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. (Optional)
 #' var_opt_fields <- c("none") # array[character] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
 #'
 #' #List of FormulaResultContainers available for this feature with minimal information.
 #' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-#' # result <- api_instance$GetFormulaCandidates(var_project_id, var_aligned_feature_id, opt_fields = var_opt_fieldsdata_file = "result.txt")
-#' result <- api_instance$features_api$GetFormulaCandidates(var_project_id, var_aligned_feature_id, opt_fields = var_opt_fields)
+#' # result <- api_instance$GetFormulaCandidates(var_project_id, var_aligned_feature_id, ms_data_search_prepared = var_ms_data_search_prepared, opt_fields = var_opt_fieldsdata_file = "result.txt")
+#' result <- api_instance$features_api$GetFormulaCandidates(var_project_id, var_aligned_feature_id, ms_data_search_prepared = var_ms_data_search_prepared, opt_fields = var_opt_fields)
 #' dput(result)
 #'
 #'
@@ -327,14 +419,15 @@
 #' var_page <- 0 # integer | Zero-based page index (0..N) (Optional)
 #' var_size <- 20 # integer | The size of the page to be returned (Optional)
 #' var_sort <- c("inner_example") # array[character] | Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (Optional)
+#' var_ms_data_search_prepared <- FALSE # character | Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. (Optional)
 #' var_opt_fields <- c("none") # array[character] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
 #'
 #' #Page of FormulaResultContainers available for this feature with minimal information.
 #' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-#' # result <- api_instance$GetFormulaCandidatesPaged(var_project_id, var_aligned_feature_id, page = var_page, size = var_size, sort = var_sort, opt_fields = var_opt_fieldsdata_file = "result.txt")
-#' result <- api_instance$features_api$GetFormulaCandidatesPaged(var_project_id, var_aligned_feature_id, page = var_page, size = var_size, sort = var_sort, opt_fields = var_opt_fields)
+#' # result <- api_instance$GetFormulaCandidatesPaged(var_project_id, var_aligned_feature_id, page = var_page, size = var_size, sort = var_sort, ms_data_search_prepared = var_ms_data_search_prepared, opt_fields = var_opt_fieldsdata_file = "result.txt")
+#' result <- api_instance$features_api$GetFormulaCandidatesPaged(var_project_id, var_aligned_feature_id, page = var_page, size = var_size, sort = var_sort, ms_data_search_prepared = var_ms_data_search_prepared, opt_fields = var_opt_fields)
 #' dput(result)
 #'
 #'
@@ -345,7 +438,7 @@
 #' var_aligned_feature_id <- "aligned_feature_id_example" # character | feature (aligned over runs) the formula result belongs to.
 #' var_formula_id <- "formula_id_example" # character | identifier of the requested formula result
 #'
-#' #Returns fragmentation tree (SIRIUS) for the given formula result identifier  This tree is used to rank formula candidates (treeScore).
+#' #Returns fragmentation tree (SIRIUS) for the given formula result identifier  
 #' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
@@ -361,7 +454,7 @@
 #' var_aligned_feature_id <- "aligned_feature_id_example" # character | feature (aligned over runs) the formula result belongs to.
 #' var_formula_id <- "formula_id_example" # character | identifier of the requested formula result
 #'
-#' #Returns Isotope pattern information (simulated isotope pattern, measured isotope pattern, isotope pattern highlighting)  for the given formula result identifier.
+#' #Returns Isotope pattern information for given formulaId  
 #' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
@@ -377,7 +470,7 @@
 #' var_aligned_feature_id <- "aligned_feature_id_example" # character | feature (aligned over runs) the formula result belongs to.
 #' var_formula_id <- "formula_id_example" # character | identifier of the requested formula result
 #'
-#' #Returns Lipid annotation (ElGordo) for the given formula result identifier.
+#' #Returns Lipid annotation (ElGordo) for the given formulaId
 #' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
@@ -390,30 +483,31 @@
 #'
 #' library(Rsirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
-#' var_aligned_feature_id <- "aligned_feature_id_example" # character | feature (aligned over runs) the Mass Spec data belong sto.
+#' var_aligned_feature_id <- "aligned_feature_id_example" # character | feature (aligned over runs) the Mass Spec data belongs to.
+#' var_ms_data_search_prepared <- FALSE # character | Returns all fragment spectra in a preprocessed form as used for fast                          Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                          peak assignments and reference spectra. (Optional)
 #'
 #' #Mass Spec data (input data) for the given 'alignedFeatureId' .
 #' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-#' # result <- api_instance$GetMsData(var_project_id, var_aligned_feature_iddata_file = "result.txt")
-#' result <- api_instance$features_api$GetMsData(var_project_id, var_aligned_feature_id)
+#' # result <- api_instance$GetMsData(var_project_id, var_aligned_feature_id, ms_data_search_prepared = var_ms_data_search_prepareddata_file = "result.txt")
+#' result <- api_instance$features_api$GetMsData(var_project_id, var_aligned_feature_id, ms_data_search_prepared = var_ms_data_search_prepared)
 #' dput(result)
 #'
 #'
-#' ####################  GetQuantificationExperimental  ####################
+#' ####################  GetQuantTableRowExperimental  ####################
 #'
 #' library(Rsirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
-#' var_aligned_feature_id <- "aligned_feature_id_example" # character | feature which intensities should be read out
+#' var_aligned_feature_id <- "aligned_feature_id_example" # character | feature which quantity should be read out
 #' var_type <- "APEX_HEIGHT" # character | quantification type. Currently, only APEX_HEIGHT is supported, which is the intensity of the feature at its apex. (Optional)
 #'
-#' #EXPERIMENTAL: This endpoint is experimental and may be changed (or even removed) without notice until it is declared stable.
+#' #[EXPERIMENTAL] Returns a single quantification table row for the given feature (alignedFeatureId)
 #' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-#' # result <- api_instance$GetQuantificationExperimental(var_project_id, var_aligned_feature_id, type = var_typedata_file = "result.txt")
-#' result <- api_instance$features_api$GetQuantificationExperimental(var_project_id, var_aligned_feature_id, type = var_type)
+#' # result <- api_instance$GetQuantTableRowExperimental(var_project_id, var_aligned_feature_id, type = var_typedata_file = "result.txt")
+#' result <- api_instance$features_api$GetQuantTableRowExperimental(var_project_id, var_aligned_feature_id, type = var_type)
 #' dput(result)
 #'
 #'
@@ -422,10 +516,10 @@
 #' library(Rsirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_aligned_feature_id <- "aligned_feature_id_example" # character | feature (aligned over runs) the structure candidates belong to.
-#' var_match_id <- "match_id_example" # character | 
+#' var_match_id <- "match_id_example" # character | id of the library match to be returned.
 #' var_opt_fields <- c("none") # array[character] |  (Optional)
 #'
-#' #List of spectral library matches for the given 'alignedFeatureId'.
+#' #Spectral library match for the given 'alignedFeatureId'.
 #' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
@@ -500,13 +594,30 @@
 #' var_aligned_feature_id <- "aligned_feature_id_example" # character | feature (aligned over runs) the formula result belongs to.
 #' var_formula_id <- "formula_id_example" # character | identifier of the requested formula result
 #' var_inchi_key <- "inchi_key_example" # character | 2d InChIKey of the structure candidate to be used to annotate the spectrum annotation
+#' var_ms_data_search_prepared <- FALSE # character | Returns all fragment spectra in a preprocessed form as used for fast                          Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                          peak assignments and reference spectra. (Optional)
 #'
-#' #EXPERIMENTAL: This endpoint is experimental because it produces return values that are not yet stable.
+#' #[EXPERIMENTAL] Returns MS/MS Data annotated with fragments and losses for given formulaId and inChIKey
 #' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-#' # result <- api_instance$GetStructureAnnotatedMsDataExperimental(var_project_id, var_aligned_feature_id, var_formula_id, var_inchi_keydata_file = "result.txt")
-#' result <- api_instance$features_api$GetStructureAnnotatedMsDataExperimental(var_project_id, var_aligned_feature_id, var_formula_id, var_inchi_key)
+#' # result <- api_instance$GetStructureAnnotatedMsDataExperimental(var_project_id, var_aligned_feature_id, var_formula_id, var_inchi_key, ms_data_search_prepared = var_ms_data_search_prepareddata_file = "result.txt")
+#' result <- api_instance$features_api$GetStructureAnnotatedMsDataExperimental(var_project_id, var_aligned_feature_id, var_formula_id, var_inchi_key, ms_data_search_prepared = var_ms_data_search_prepared)
+#' dput(result)
+#'
+#'
+#' ####################  GetStructureAnnotatedSpectralLibraryMatchExperimental  ####################
+#'
+#' library(Rsirius)
+#' var_project_id <- "project_id_example" # character | project-space to read from.
+#' var_aligned_feature_id <- "aligned_feature_id_example" # character | feature (aligned over runs) the structure candidates belong to.
+#' var_match_id <- "match_id_example" # character | id of the library match to be returned.
+#'
+#' #[EXPERIMENTAL] Spectral library match for the given 'alignedFeatureId' with additional molecular formula and substructure annotations
+#' api_instance <- rsirius_api$new()
+#'
+#' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
+#' # result <- api_instance$GetStructureAnnotatedSpectralLibraryMatchExperimental(var_project_id, var_aligned_feature_id, var_match_iddata_file = "result.txt")
+#' result <- api_instance$features_api$GetStructureAnnotatedSpectralLibraryMatchExperimental(var_project_id, var_aligned_feature_id, var_match_id)
 #' dput(result)
 #'
 #'
@@ -518,13 +629,14 @@
 #' var_formula_id <- "formula_id_example" # character | identifier of the requested formula result
 #' var_inchi_key <- "inchi_key_example" # character | 2d InChIKey of the structure candidate to be used to annotate the spectrum annotation
 #' var_spectrum_index <- -1 # integer | index of the spectrum to be annotated. Merged MS/MS will be used if spectrumIndex < 0 (default) (Optional)
+#' var_search_prepared <- FALSE # character |  (Optional)
 #'
-#' #EXPERIMENTAL: This endpoint is experimental because it produces return values that are not yet stable.
+#' #[EXPERIMENTAL] Returns a fragmentation spectrum annotated with fragments and losses for the given formulaId and inChIKey  
 #' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-#' # result <- api_instance$GetStructureAnnotatedSpectrumExperimental(var_project_id, var_aligned_feature_id, var_formula_id, var_inchi_key, spectrum_index = var_spectrum_indexdata_file = "result.txt")
-#' result <- api_instance$features_api$GetStructureAnnotatedSpectrumExperimental(var_project_id, var_aligned_feature_id, var_formula_id, var_inchi_key, spectrum_index = var_spectrum_index)
+#' # result <- api_instance$GetStructureAnnotatedSpectrumExperimental(var_project_id, var_aligned_feature_id, var_formula_id, var_inchi_key, spectrum_index = var_spectrum_index, search_prepared = var_search_prepareddata_file = "result.txt")
+#' result <- api_instance$features_api$GetStructureAnnotatedSpectrumExperimental(var_project_id, var_aligned_feature_id, var_formula_id, var_inchi_key, spectrum_index = var_spectrum_index, search_prepared = var_search_prepared)
 #' dput(result)
 #'
 #'
@@ -600,6 +712,21 @@
 #' dput(result)
 #'
 #'
+#' ####################  GetTagsForAlignedFeaturesExperimental  ####################
+#'
+#' library(Rsirius)
+#' var_project_id <- "project_id_example" # character | project-space to get from.
+#' var_object_id <- "object_id_example" # character | object to get tags for.
+#'
+#' #[EXPERIMENTAL] Get all tags associated with this Object
+#' api_instance <- rsirius_api$new()
+#'
+#' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
+#' # result <- api_instance$GetTagsForAlignedFeaturesExperimental(var_project_id, var_object_iddata_file = "result.txt")
+#' result <- api_instance$features_api$GetTagsForAlignedFeaturesExperimental(var_project_id, var_object_id)
+#' dput(result)
+#'
+#'
 #' ####################  GetTracesExperimental  ####################
 #'
 #' library(Rsirius)
@@ -607,13 +734,26 @@
 #' var_aligned_feature_id <- "aligned_feature_id_example" # character | feature which intensities should be read out
 #' var_include_all <- FALSE # character | when true, return all samples that belong to the same merged trace. when false, only return samples which contain the aligned feature. (Optional)
 #'
-#' #EXPERIMENTAL: This endpoint is experimental and may be changed (or even removed) without notice until it is declared stable.
+#' #[EXPERIMENTAL] Returns the traces of the given feature (alignedFeatureId)
 #' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
 #' # result <- api_instance$GetTracesExperimental(var_project_id, var_aligned_feature_id, include_all = var_include_alldata_file = "result.txt")
 #' result <- api_instance$features_api$GetTracesExperimental(var_project_id, var_aligned_feature_id, include_all = var_include_all)
 #' dput(result)
+#'
+#'
+#' ####################  RemoveTagFromAlignedFeatureExperimental  ####################
+#'
+#' library(Rsirius)
+#' var_project_id <- "project_id_example" # character | project-space to delete from.
+#' var_aligned_feature_id <- "aligned_feature_id_example" # character | feature (aligned over runs) to delete tag from.
+#' var_tag_name <- "tag_name_example" # character | name of the tag to delete.
+#'
+#' #[EXPERIMENTAL] Delete tag with the given name from the feature (aligned over runs) with the specified ID in the specified project-space
+#' api_instance <- rsirius_api$new()
+#'
+#' api_instance$features_api$RemoveTagFromAlignedFeatureExperimental(var_project_id, var_aligned_feature_id, var_tag_name)
 #'
 #'
 #' }
@@ -643,21 +783,21 @@ FeaturesApi <- R6::R6Class(
     #' @param project_id project-space to import into.
     #' @param feature_import the feature data to be imported
     #' @param profile (optional) profile describing the instrument used to measure the data. Used to merge spectra.
-    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' to override defaults. (default value: ["none"])
+    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' to override defaults. (default value: [none])
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return array[AlignedFeature]
-    AddAlignedFeatures = function(project_id, feature_import, profile = NULL, opt_fields = list("none"), data_file = NULL, ...) {
+    AddAlignedFeatures = function(project_id, feature_import, profile = NULL, opt_fields = list(NULL), data_file = NULL, ...) {
       local_var_response <- self$AddAlignedFeaturesWithHttpInfo(project_id, feature_import, profile, opt_fields, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
-        local_var_response$content
+        return(local_var_response$content)
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
-        local_var_response
+        return(local_var_response)
       }
     },
 
@@ -667,12 +807,12 @@ FeaturesApi <- R6::R6Class(
     #' @param project_id project-space to import into.
     #' @param feature_import the feature data to be imported
     #' @param profile (optional) profile describing the instrument used to measure the data. Used to merge spectra.
-    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' to override defaults. (default value: ["none"])
+    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' to override defaults. (default value: [none])
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return API response (array[AlignedFeature]) with additional information such as HTTP status code, headers
-    AddAlignedFeaturesWithHttpInfo = function(project_id, feature_import, profile = NULL, opt_fields = list("none"), data_file = NULL, ...) {
+    AddAlignedFeaturesWithHttpInfo = function(project_id, feature_import, profile = NULL, opt_fields = list(NULL), data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -690,9 +830,21 @@ FeaturesApi <- R6::R6Class(
         stop("Missing required parameter `feature_import`.")
       }
 
+      if (!missing(`project_id`) && is.null(`project_id`)) {
+        stop("Invalid value for `project_id` when calling FeaturesApi$AddAlignedFeatures, `project_id` is not nullable")
+      }
 
+      if (!missing(`feature_import`) && is.null(`feature_import`)) {
+        stop("Invalid value for `feature_import` when calling FeaturesApi$AddAlignedFeatures, `feature_import` is not nullable")
+      }
 
+      if (!missing(`profile`) && is.null(`profile`)) {
+        stop("Invalid value for `profile` when calling FeaturesApi$AddAlignedFeatures, `profile` is not nullable")
+      }
 
+      if (!missing(`opt_fields`) && is.null(`opt_fields`)) {
+        stop("Invalid value for `opt_fields` when calling FeaturesApi$AddAlignedFeatures, `opt_fields` is not nullable")
+      }
 
       if (!is.null(`profile`) && !(`profile` %in% c("QTOF", "ORBITRAP"))) {
         stop("Invalid value for profile when calling FeaturesApi$AddAlignedFeatures. Must be [QTOF, ORBITRAP].")
@@ -702,8 +854,8 @@ FeaturesApi <- R6::R6Class(
       # explore
       for (query_item in `opt_fields`) {
         # validate enum values
-        if (!is.null(query_item) && !(query_item %in% c("none", "msData", "topAnnotations", "topAnnotationsDeNovo", "computedTools"))) {
-          stop("Invalid value for opt_fields when calling FeaturesApi$AddAlignedFeatures. Must be [none, msData, topAnnotations, topAnnotationsDeNovo, computedTools].")
+        if (!is.null(query_item) && !(query_item %in% c("none", "msData", "topAnnotationsSummary", "topAnnotations", "topAnnotationsDeNovo", "computedTools", "tags"))) {
+          stop("Invalid value for opt_fields when calling FeaturesApi$AddAlignedFeatures. Must be [none, msData, topAnnotationsSummary, topAnnotations, topAnnotationsDeNovo, computedTools, tags].")
         }
         query_params[["optFields"]] <- c(query_params[["optFields"]], list(`optFields` = query_item))
       }
@@ -714,7 +866,7 @@ FeaturesApi <- R6::R6Class(
                                                          })), collapse = ",")
         local_var_body <- paste0("[", body.items, "]")
       } else {
-        body <- NULL
+        local_var_body <- NULL
       }
 
       local_var_url_path <- "/api/projects/{projectId}/aligned-features"
@@ -745,18 +897,21 @@ FeaturesApi <- R6::R6Class(
       if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
         # save response in a file
         if (!is.null(data_file)) {
-          write(local_var_resp$response, data_file)
+          self$api_client$WriteFile(local_var_resp, data_file)
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "array[AlignedFeature]", loadNamespace("Rsirius")),
+          self$api_client$DeserializeResponse(local_var_resp, "array[AlignedFeature]"),
           error = function(e) {
             stop("Failed to deserialize response")
           }
         )
         local_var_resp$content <- deserialized_resp_obj
-        local_var_resp
-      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        return(local_var_resp)
+      } 
+      
+      local_var_error_msg <- local_var_resp$response_as_text()      
+      if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp)
@@ -764,7 +919,264 @@ FeaturesApi <- R6::R6Class(
         if (is.null(local_var_resp$response) || local_var_resp$response == "") {
           local_var_resp$response <- "API server error"
         }
-        local_var_resp
+        return(local_var_resp)
+      }
+    },
+
+    #' @description
+    #' [EXPERIMENTAL] Add molecular structures (as SMILES) to the list of de novo structures.
+    #'
+    #' @param project_id project-space to read from.
+    #' @param aligned_feature_id feature (aligned over runs) the structure candidates belong to.
+    #' @param smiles (optional) smiles (default value: "none")
+    #' @param data_file (optional) name of the data file to save the result
+    #' @param ... Other optional arguments
+    #'
+    #' @return array[StructureCandidateFormula]
+    AddDeNovoStructureCandidate = function(project_id, aligned_feature_id, smiles = "none", data_file = NULL, ...) {
+      local_var_response <- self$AddDeNovoStructureCandidateWithHttpInfo(project_id, aligned_feature_id, smiles, data_file = data_file, ...)
+      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
+        return(local_var_response$content)
+      } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
+        return(local_var_response)
+      } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
+        return(local_var_response)
+      } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
+        return(local_var_response)
+      }
+    },
+
+    #' @description
+    #' [EXPERIMENTAL] Add molecular structures (as SMILES) to the list of de novo structures.
+    #'
+    #' @param project_id project-space to read from.
+    #' @param aligned_feature_id feature (aligned over runs) the structure candidates belong to.
+    #' @param smiles (optional) smiles (default value: "none")
+    #' @param data_file (optional) name of the data file to save the result
+    #' @param ... Other optional arguments
+    #'
+    #' @return API response (array[StructureCandidateFormula]) with additional information such as HTTP status code, headers
+    AddDeNovoStructureCandidateWithHttpInfo = function(project_id, aligned_feature_id, smiles = "none", data_file = NULL, ...) {
+      args <- list(...)
+      query_params <- list()
+      header_params <- c()
+      form_params <- list()
+      file_params <- list()
+      local_var_body <- NULL
+      oauth_scopes <- NULL
+      is_oauth <- FALSE
+
+      if (missing(`project_id`)) {
+        stop("Missing required parameter `project_id`.")
+      }
+
+      if (missing(`aligned_feature_id`)) {
+        stop("Missing required parameter `aligned_feature_id`.")
+      }
+
+      if (!missing(`project_id`) && is.null(`project_id`)) {
+        stop("Invalid value for `project_id` when calling FeaturesApi$AddDeNovoStructureCandidate, `project_id` is not nullable")
+      }
+
+      if (!missing(`aligned_feature_id`) && is.null(`aligned_feature_id`)) {
+        stop("Invalid value for `aligned_feature_id` when calling FeaturesApi$AddDeNovoStructureCandidate, `aligned_feature_id` is not nullable")
+      }
+
+      if (!missing(`smiles`) && is.null(`smiles`)) {
+        stop("Invalid value for `smiles` when calling FeaturesApi$AddDeNovoStructureCandidate, `smiles` is not nullable")
+      }
+
+      query_params[["smiles"]] <- `smiles`
+
+      local_var_url_path <- "/api/projects/{projectId}/aligned-features/{alignedFeatureId}/denovo-structures"
+      if (!missing(`project_id`)) {
+        local_var_url_path <- gsub("\\{projectId\\}", URLencode(as.character(`project_id`), reserved = TRUE), local_var_url_path)
+      }
+
+      if (!missing(`aligned_feature_id`)) {
+        local_var_url_path <- gsub("\\{alignedFeatureId\\}", URLencode(as.character(`aligned_feature_id`), reserved = TRUE), local_var_url_path)
+      }
+
+
+      # The Accept request HTTP header
+      local_var_accepts <- list("application/json")
+
+      # The Content-Type representation header
+      local_var_content_types <- list()
+
+      local_var_resp <- self$api_client$CallApi(url = paste0(self$api_client$base_path, local_var_url_path),
+                                 method = "PUT",
+                                 query_params = query_params,
+                                 header_params = header_params,
+                                 form_params = form_params,
+                                 file_params = file_params,
+                                 accepts = local_var_accepts,
+                                 content_types = local_var_content_types,
+                                 body = local_var_body,
+                                 is_oauth = is_oauth,
+                                 oauth_scopes = oauth_scopes,
+                                 ...)
+
+      if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
+        # save response in a file
+        if (!is.null(data_file)) {
+          self$api_client$WriteFile(local_var_resp, data_file)
+        }
+
+        deserialized_resp_obj <- tryCatch(
+          self$api_client$DeserializeResponse(local_var_resp, "array[StructureCandidateFormula]"),
+          error = function(e) {
+            stop("Failed to deserialize response")
+          }
+        )
+        local_var_resp$content <- deserialized_resp_obj
+        return(local_var_resp)
+      } 
+      
+      local_var_error_msg <- local_var_resp$response_as_text()      
+      if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
+      } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
+        ApiResponse$new("API client error", local_var_resp)
+      } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
+        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
+          local_var_resp$response <- "API server error"
+        }
+        return(local_var_resp)
+      }
+    },
+
+    #' @description
+    #' [EXPERIMENTAL] Add tags to a feature (aligned over runs) in the project
+    #'
+    #' @param project_id project-space to add to.
+    #' @param aligned_feature_id run to add tags to.
+    #' @param tag tags to add.
+    #' @param data_file (optional) name of the data file to save the result
+    #' @param ... Other optional arguments
+    #'
+    #' @return array[Tag]
+    AddTagsToAlignedFeatureExperimental = function(project_id, aligned_feature_id, tag, data_file = NULL, ...) {
+      local_var_response <- self$AddTagsToAlignedFeatureExperimentalWithHttpInfo(project_id, aligned_feature_id, tag, data_file = data_file, ...)
+      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
+        return(local_var_response$content)
+      } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
+        return(local_var_response)
+      } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
+        return(local_var_response)
+      } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
+        return(local_var_response)
+      }
+    },
+
+    #' @description
+    #' [EXPERIMENTAL] Add tags to a feature (aligned over runs) in the project
+    #'
+    #' @param project_id project-space to add to.
+    #' @param aligned_feature_id run to add tags to.
+    #' @param tag tags to add.
+    #' @param data_file (optional) name of the data file to save the result
+    #' @param ... Other optional arguments
+    #'
+    #' @return API response (array[Tag]) with additional information such as HTTP status code, headers
+    AddTagsToAlignedFeatureExperimentalWithHttpInfo = function(project_id, aligned_feature_id, tag, data_file = NULL, ...) {
+      args <- list(...)
+      query_params <- list()
+      header_params <- c()
+      form_params <- list()
+      file_params <- list()
+      local_var_body <- NULL
+      oauth_scopes <- NULL
+      is_oauth <- FALSE
+
+      if (missing(`project_id`)) {
+        stop("Missing required parameter `project_id`.")
+      }
+
+      if (missing(`aligned_feature_id`)) {
+        stop("Missing required parameter `aligned_feature_id`.")
+      }
+
+      if (missing(`tag`)) {
+        stop("Missing required parameter `tag`.")
+      }
+
+      if (!missing(`project_id`) && is.null(`project_id`)) {
+        stop("Invalid value for `project_id` when calling FeaturesApi$AddTagsToAlignedFeatureExperimental, `project_id` is not nullable")
+      }
+
+      if (!missing(`aligned_feature_id`) && is.null(`aligned_feature_id`)) {
+        stop("Invalid value for `aligned_feature_id` when calling FeaturesApi$AddTagsToAlignedFeatureExperimental, `aligned_feature_id` is not nullable")
+      }
+
+      if (!missing(`tag`) && is.null(`tag`)) {
+        stop("Invalid value for `tag` when calling FeaturesApi$AddTagsToAlignedFeatureExperimental, `tag` is not nullable")
+      }
+
+      if (!is.null(`tag`)) {
+        body.items <- paste(unlist(lapply(`tag`, function(param) {
+                                                             param$toJSONString()
+                                                         })), collapse = ",")
+        local_var_body <- paste0("[", body.items, "]")
+      } else {
+        local_var_body <- NULL
+      }
+
+      local_var_url_path <- "/api/projects/{projectId}/aligned-features/tags/{alignedFeatureId}"
+      if (!missing(`project_id`)) {
+        local_var_url_path <- gsub("\\{projectId\\}", URLencode(as.character(`project_id`), reserved = TRUE), local_var_url_path)
+      }
+
+      if (!missing(`aligned_feature_id`)) {
+        local_var_url_path <- gsub("\\{alignedFeatureId\\}", URLencode(as.character(`aligned_feature_id`), reserved = TRUE), local_var_url_path)
+      }
+
+
+      # The Accept request HTTP header
+      local_var_accepts <- list("application/json")
+
+      # The Content-Type representation header
+      local_var_content_types <- list("application/json")
+
+      local_var_resp <- self$api_client$CallApi(url = paste0(self$api_client$base_path, local_var_url_path),
+                                 method = "PUT",
+                                 query_params = query_params,
+                                 header_params = header_params,
+                                 form_params = form_params,
+                                 file_params = file_params,
+                                 accepts = local_var_accepts,
+                                 content_types = local_var_content_types,
+                                 body = local_var_body,
+                                 is_oauth = is_oauth,
+                                 oauth_scopes = oauth_scopes,
+                                 ...)
+
+      if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
+        # save response in a file
+        if (!is.null(data_file)) {
+          self$api_client$WriteFile(local_var_resp, data_file)
+        }
+
+        deserialized_resp_obj <- tryCatch(
+          self$api_client$DeserializeResponse(local_var_resp, "array[Tag]"),
+          error = function(e) {
+            stop("Failed to deserialize response")
+          }
+        )
+        local_var_resp$content <- deserialized_resp_obj
+        return(local_var_resp)
+      } 
+      
+      local_var_error_msg <- local_var_resp$response_as_text()      
+      if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
+      } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
+        ApiResponse$new("API client error", local_var_resp)
+      } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
+        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
+          local_var_resp$response <- "API server error"
+        }
+        return(local_var_resp)
       }
     },
 
@@ -779,13 +1191,13 @@ FeaturesApi <- R6::R6Class(
     DeleteAlignedFeature = function(project_id, aligned_feature_id, ...) {
       local_var_response <- self$DeleteAlignedFeatureWithHttpInfo(project_id, aligned_feature_id, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
-        local_var_response$content
+        return(local_var_response$content)
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
-        local_var_response
+        return(local_var_response)
       }
     },
 
@@ -815,7 +1227,13 @@ FeaturesApi <- R6::R6Class(
         stop("Missing required parameter `aligned_feature_id`.")
       }
 
+      if (!missing(`project_id`) && is.null(`project_id`)) {
+        stop("Invalid value for `project_id` when calling FeaturesApi$DeleteAlignedFeature, `project_id` is not nullable")
+      }
 
+      if (!missing(`aligned_feature_id`) && is.null(`aligned_feature_id`)) {
+        stop("Invalid value for `aligned_feature_id` when calling FeaturesApi$DeleteAlignedFeature, `aligned_feature_id` is not nullable")
+      }
 
       local_var_url_path <- "/api/projects/{projectId}/aligned-features/{alignedFeatureId}"
       if (!missing(`project_id`)) {
@@ -848,8 +1266,11 @@ FeaturesApi <- R6::R6Class(
 
       if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
         local_var_resp$content <- NULL
-        local_var_resp
-      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        return(local_var_resp)
+      } 
+      
+      local_var_error_msg <- local_var_resp$response_as_text()      
+      if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp)
@@ -857,7 +1278,7 @@ FeaturesApi <- R6::R6Class(
         if (is.null(local_var_resp$response) || local_var_resp$response == "") {
           local_var_resp$response <- "API server error"
         }
-        local_var_resp
+        return(local_var_resp)
       }
     },
 
@@ -872,13 +1293,13 @@ FeaturesApi <- R6::R6Class(
     DeleteAlignedFeatures = function(project_id, request_body, ...) {
       local_var_response <- self$DeleteAlignedFeaturesWithHttpInfo(project_id, request_body, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
-        local_var_response$content
+        return(local_var_response$content)
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
-        local_var_response
+        return(local_var_response)
       }
     },
 
@@ -908,7 +1329,13 @@ FeaturesApi <- R6::R6Class(
         stop("Missing required parameter `request_body`.")
       }
 
+      if (!missing(`project_id`) && is.null(`project_id`)) {
+        stop("Invalid value for `project_id` when calling FeaturesApi$DeleteAlignedFeatures, `project_id` is not nullable")
+      }
 
+      if (!missing(`request_body`) && is.null(`request_body`)) {
+        stop("Invalid value for `request_body` when calling FeaturesApi$DeleteAlignedFeatures, `request_body` is not nullable")
+      }
 
       if (!is.null(`request_body`)) {
         body.items <- paste(unlist(lapply(`request_body`, function(param) {
@@ -916,7 +1343,7 @@ FeaturesApi <- R6::R6Class(
                                                          })), collapse = ",")
         local_var_body <- paste0("[", body.items, "]")
       } else {
-        body <- NULL
+        local_var_body <- NULL
       }
 
       local_var_url_path <- "/api/projects/{projectId}/aligned-features/delete"
@@ -946,8 +1373,11 @@ FeaturesApi <- R6::R6Class(
 
       if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
         local_var_resp$content <- NULL
-        local_var_resp
-      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        return(local_var_resp)
+      } 
+      
+      local_var_error_msg <- local_var_resp$response_as_text()      
+      if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp)
@@ -955,12 +1385,12 @@ FeaturesApi <- R6::R6Class(
         if (is.null(local_var_resp$response) || local_var_resp$response == "") {
           local_var_resp$response <- "API server error"
         }
-        local_var_resp
+        return(local_var_resp)
       }
     },
 
     #' @description
-    #' EXPERIMENTAL: This endpoint is experimental and may be changed (or even removed) without notice until it is declared stable.
+    #' [EXPERIMENTAL] Returns the adduct network for a given alignedFeatureId together with all merged traces contained in the network
     #'
     #' @param project_id project-space to read from.
     #' @param aligned_feature_id one feature that is considered the main feature of the adduct network
@@ -971,18 +1401,18 @@ FeaturesApi <- R6::R6Class(
     GetAdductNetworkWithMergedTracesExperimental = function(project_id, aligned_feature_id, data_file = NULL, ...) {
       local_var_response <- self$GetAdductNetworkWithMergedTracesExperimentalWithHttpInfo(project_id, aligned_feature_id, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
-        local_var_response$content
+        return(local_var_response$content)
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
-        local_var_response
+        return(local_var_response)
       }
     },
 
     #' @description
-    #' EXPERIMENTAL: This endpoint is experimental and may be changed (or even removed) without notice until it is declared stable.
+    #' [EXPERIMENTAL] Returns the adduct network for a given alignedFeatureId together with all merged traces contained in the network
     #'
     #' @param project_id project-space to read from.
     #' @param aligned_feature_id one feature that is considered the main feature of the adduct network
@@ -1008,7 +1438,13 @@ FeaturesApi <- R6::R6Class(
         stop("Missing required parameter `aligned_feature_id`.")
       }
 
+      if (!missing(`project_id`) && is.null(`project_id`)) {
+        stop("Invalid value for `project_id` when calling FeaturesApi$GetAdductNetworkWithMergedTracesExperimental, `project_id` is not nullable")
+      }
 
+      if (!missing(`aligned_feature_id`) && is.null(`aligned_feature_id`)) {
+        stop("Invalid value for `aligned_feature_id` when calling FeaturesApi$GetAdductNetworkWithMergedTracesExperimental, `aligned_feature_id` is not nullable")
+      }
 
       local_var_url_path <- "/api/projects/{projectId}/aligned-features/{alignedFeatureId}/adducts"
       if (!missing(`project_id`)) {
@@ -1042,18 +1478,21 @@ FeaturesApi <- R6::R6Class(
       if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
         # save response in a file
         if (!is.null(data_file)) {
-          write(local_var_resp$response, data_file)
+          self$api_client$WriteFile(local_var_resp, data_file)
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "TraceSetExperimental", loadNamespace("Rsirius")),
+          self$api_client$DeserializeResponse(local_var_resp, "TraceSetExperimental"),
           error = function(e) {
             stop("Failed to deserialize response")
           }
         )
         local_var_resp$content <- deserialized_resp_obj
-        local_var_resp
-      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        return(local_var_resp)
+      } 
+      
+      local_var_error_msg <- local_var_resp$response_as_text()      
+      if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp)
@@ -1061,7 +1500,7 @@ FeaturesApi <- R6::R6Class(
         if (is.null(local_var_resp$response) || local_var_resp$response == "") {
           local_var_resp$response <- "API server error"
         }
-        local_var_resp
+        return(local_var_resp)
       }
     },
 
@@ -1070,21 +1509,22 @@ FeaturesApi <- R6::R6Class(
     #'
     #' @param project_id project-space to read from.
     #' @param aligned_feature_id identifier of feature (aligned over runs) to access.
-    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])
+    #' @param ms_data_search_prepared (optional) Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. (default value: FALSE)
+    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [none])
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return AlignedFeature
-    GetAlignedFeature = function(project_id, aligned_feature_id, opt_fields = list("none"), data_file = NULL, ...) {
-      local_var_response <- self$GetAlignedFeatureWithHttpInfo(project_id, aligned_feature_id, opt_fields, data_file = data_file, ...)
+    GetAlignedFeature = function(project_id, aligned_feature_id, ms_data_search_prepared = FALSE, opt_fields = list(NULL), data_file = NULL, ...) {
+      local_var_response <- self$GetAlignedFeatureWithHttpInfo(project_id, aligned_feature_id, ms_data_search_prepared, opt_fields, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
-        local_var_response$content
+        return(local_var_response$content)
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
-        local_var_response
+        return(local_var_response)
       }
     },
 
@@ -1093,12 +1533,13 @@ FeaturesApi <- R6::R6Class(
     #'
     #' @param project_id project-space to read from.
     #' @param aligned_feature_id identifier of feature (aligned over runs) to access.
-    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])
+    #' @param ms_data_search_prepared (optional) Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. (default value: FALSE)
+    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [none])
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return API response (AlignedFeature) with additional information such as HTTP status code, headers
-    GetAlignedFeatureWithHttpInfo = function(project_id, aligned_feature_id, opt_fields = list("none"), data_file = NULL, ...) {
+    GetAlignedFeatureWithHttpInfo = function(project_id, aligned_feature_id, ms_data_search_prepared = FALSE, opt_fields = list(NULL), data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -1116,14 +1557,29 @@ FeaturesApi <- R6::R6Class(
         stop("Missing required parameter `aligned_feature_id`.")
       }
 
+      if (!missing(`project_id`) && is.null(`project_id`)) {
+        stop("Invalid value for `project_id` when calling FeaturesApi$GetAlignedFeature, `project_id` is not nullable")
+      }
 
+      if (!missing(`aligned_feature_id`) && is.null(`aligned_feature_id`)) {
+        stop("Invalid value for `aligned_feature_id` when calling FeaturesApi$GetAlignedFeature, `aligned_feature_id` is not nullable")
+      }
 
+      if (!missing(`ms_data_search_prepared`) && is.null(`ms_data_search_prepared`)) {
+        stop("Invalid value for `ms_data_search_prepared` when calling FeaturesApi$GetAlignedFeature, `ms_data_search_prepared` is not nullable")
+      }
+
+      if (!missing(`opt_fields`) && is.null(`opt_fields`)) {
+        stop("Invalid value for `opt_fields` when calling FeaturesApi$GetAlignedFeature, `opt_fields` is not nullable")
+      }
+
+      query_params[["msDataSearchPrepared"]] <- `ms_data_search_prepared`
 
       # explore
       for (query_item in `opt_fields`) {
         # validate enum values
-        if (!is.null(query_item) && !(query_item %in% c("none", "msData", "topAnnotations", "topAnnotationsDeNovo", "computedTools"))) {
-          stop("Invalid value for opt_fields when calling FeaturesApi$GetAlignedFeature. Must be [none, msData, topAnnotations, topAnnotationsDeNovo, computedTools].")
+        if (!is.null(query_item) && !(query_item %in% c("none", "msData", "topAnnotationsSummary", "topAnnotations", "topAnnotationsDeNovo", "computedTools", "tags"))) {
+          stop("Invalid value for opt_fields when calling FeaturesApi$GetAlignedFeature. Must be [none, msData, topAnnotationsSummary, topAnnotations, topAnnotationsDeNovo, computedTools, tags].")
         }
         query_params[["optFields"]] <- c(query_params[["optFields"]], list(`optFields` = query_item))
       }
@@ -1160,18 +1616,21 @@ FeaturesApi <- R6::R6Class(
       if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
         # save response in a file
         if (!is.null(data_file)) {
-          write(local_var_resp$response, data_file)
+          self$api_client$WriteFile(local_var_resp, data_file)
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "AlignedFeature", loadNamespace("Rsirius")),
+          self$api_client$DeserializeResponse(local_var_resp, "AlignedFeature"),
           error = function(e) {
             stop("Failed to deserialize response")
           }
         )
         local_var_resp$content <- deserialized_resp_obj
-        local_var_resp
-      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        return(local_var_resp)
+      } 
+      
+      local_var_error_msg <- local_var_resp$response_as_text()      
+      if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp)
@@ -1179,250 +1638,12 @@ FeaturesApi <- R6::R6Class(
         if (is.null(local_var_resp$response) || local_var_resp$response == "") {
           local_var_resp$response <- "API server error"
         }
-        local_var_resp
+        return(local_var_resp)
       }
     },
 
     #' @description
-    #' Get all available features (aligned over runs) in the given project-space.
-    #'
-    #' @param project_id project-space to read from.
-    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])
-    #' @param data_file (optional) name of the data file to save the result
-    #' @param ... Other optional arguments
-    #'
-    #' @return array[AlignedFeature]
-    GetAlignedFeatures = function(project_id, opt_fields = list("none"), data_file = NULL, ...) {
-      local_var_response <- self$GetAlignedFeaturesWithHttpInfo(project_id, opt_fields, data_file = data_file, ...)
-      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
-        local_var_response$content
-      } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
-        local_var_response
-      } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
-        local_var_response
-      } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
-        local_var_response
-      }
-    },
-
-    #' @description
-    #' Get all available features (aligned over runs) in the given project-space.
-    #'
-    #' @param project_id project-space to read from.
-    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])
-    #' @param data_file (optional) name of the data file to save the result
-    #' @param ... Other optional arguments
-    #'
-    #' @return API response (array[AlignedFeature]) with additional information such as HTTP status code, headers
-    GetAlignedFeaturesWithHttpInfo = function(project_id, opt_fields = list("none"), data_file = NULL, ...) {
-      args <- list(...)
-      query_params <- list()
-      header_params <- c()
-      form_params <- list()
-      file_params <- list()
-      local_var_body <- NULL
-      oauth_scopes <- NULL
-      is_oauth <- FALSE
-
-      if (missing(`project_id`)) {
-        stop("Missing required parameter `project_id`.")
-      }
-
-
-
-      # explore
-      for (query_item in `opt_fields`) {
-        # validate enum values
-        if (!is.null(query_item) && !(query_item %in% c("none", "msData", "topAnnotations", "topAnnotationsDeNovo", "computedTools"))) {
-          stop("Invalid value for opt_fields when calling FeaturesApi$GetAlignedFeatures. Must be [none, msData, topAnnotations, topAnnotationsDeNovo, computedTools].")
-        }
-        query_params[["optFields"]] <- c(query_params[["optFields"]], list(`optFields` = query_item))
-      }
-
-      local_var_url_path <- "/api/projects/{projectId}/aligned-features"
-      if (!missing(`project_id`)) {
-        local_var_url_path <- gsub("\\{projectId\\}", URLencode(as.character(`project_id`), reserved = TRUE), local_var_url_path)
-      }
-
-
-      # The Accept request HTTP header
-      local_var_accepts <- list("application/json")
-
-      # The Content-Type representation header
-      local_var_content_types <- list()
-
-      local_var_resp <- self$api_client$CallApi(url = paste0(self$api_client$base_path, local_var_url_path),
-                                 method = "GET",
-                                 query_params = query_params,
-                                 header_params = header_params,
-                                 form_params = form_params,
-                                 file_params = file_params,
-                                 accepts = local_var_accepts,
-                                 content_types = local_var_content_types,
-                                 body = local_var_body,
-                                 is_oauth = is_oauth,
-                                 oauth_scopes = oauth_scopes,
-                                 ...)
-
-      if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
-        # save response in a file
-        if (!is.null(data_file)) {
-          write(local_var_resp$response, data_file)
-        }
-
-        deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "array[AlignedFeature]", loadNamespace("Rsirius")),
-          error = function(e) {
-            stop("Failed to deserialize response")
-          }
-        )
-        local_var_resp$content <- deserialized_resp_obj
-        local_var_resp
-      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
-        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
-      } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
-        ApiResponse$new("API client error", local_var_resp)
-      } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
-        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
-          local_var_resp$response <- "API server error"
-        }
-        local_var_resp
-      }
-    },
-
-    #' @description
-    #' Get all available features (aligned over runs) in the given project-space.
-    #'
-    #' @param project_id project-space to read from.
-    #' @param page (optional) Zero-based page index (0..N) (default value: 0)
-    #' @param size (optional) The size of the page to be returned (default value: 20)
-    #' @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
-    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])
-    #' @param data_file (optional) name of the data file to save the result
-    #' @param ... Other optional arguments
-    #'
-    #' @return PagedModelAlignedFeature
-    GetAlignedFeaturesPaged = function(project_id, page = 0, size = 20, sort = NULL, opt_fields = list("none"), data_file = NULL, ...) {
-      local_var_response <- self$GetAlignedFeaturesPagedWithHttpInfo(project_id, page, size, sort, opt_fields, data_file = data_file, ...)
-      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
-        local_var_response$content
-      } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
-        local_var_response
-      } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
-        local_var_response
-      } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
-        local_var_response
-      }
-    },
-
-    #' @description
-    #' Get all available features (aligned over runs) in the given project-space.
-    #'
-    #' @param project_id project-space to read from.
-    #' @param page (optional) Zero-based page index (0..N) (default value: 0)
-    #' @param size (optional) The size of the page to be returned (default value: 20)
-    #' @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
-    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])
-    #' @param data_file (optional) name of the data file to save the result
-    #' @param ... Other optional arguments
-    #'
-    #' @return API response (PagedModelAlignedFeature) with additional information such as HTTP status code, headers
-    GetAlignedFeaturesPagedWithHttpInfo = function(project_id, page = 0, size = 20, sort = NULL, opt_fields = list("none"), data_file = NULL, ...) {
-      args <- list(...)
-      query_params <- list()
-      header_params <- c()
-      form_params <- list()
-      file_params <- list()
-      local_var_body <- NULL
-      oauth_scopes <- NULL
-      is_oauth <- FALSE
-
-      if (missing(`project_id`)) {
-        stop("Missing required parameter `project_id`.")
-      }
-
-
-      if (`page` < 0) {
-        stop("Invalid value for `page` when calling FeaturesApi$GetAlignedFeaturesPaged, must be bigger than or equal to 0.")
-      }
-
-      if (`size` < 1) {
-        stop("Invalid value for `size` when calling FeaturesApi$GetAlignedFeaturesPaged, must be bigger than or equal to 1.")
-      }
-
-
-
-      query_params[["page"]] <- `page`
-
-      query_params[["size"]] <- `size`
-
-      # explore
-      for (query_item in `sort`) {
-        query_params[["sort"]] <- c(query_params[["sort"]], list(`sort` = query_item))
-      }
-
-      # explore
-      for (query_item in `opt_fields`) {
-        # validate enum values
-        if (!is.null(query_item) && !(query_item %in% c("none", "msData", "topAnnotations", "topAnnotationsDeNovo", "computedTools"))) {
-          stop("Invalid value for opt_fields when calling FeaturesApi$GetAlignedFeaturesPaged. Must be [none, msData, topAnnotations, topAnnotationsDeNovo, computedTools].")
-        }
-        query_params[["optFields"]] <- c(query_params[["optFields"]], list(`optFields` = query_item))
-      }
-
-      local_var_url_path <- "/api/projects/{projectId}/aligned-features/page"
-      if (!missing(`project_id`)) {
-        local_var_url_path <- gsub("\\{projectId\\}", URLencode(as.character(`project_id`), reserved = TRUE), local_var_url_path)
-      }
-
-
-      # The Accept request HTTP header
-      local_var_accepts <- list("application/json")
-
-      # The Content-Type representation header
-      local_var_content_types <- list()
-
-      local_var_resp <- self$api_client$CallApi(url = paste0(self$api_client$base_path, local_var_url_path),
-                                 method = "GET",
-                                 query_params = query_params,
-                                 header_params = header_params,
-                                 form_params = form_params,
-                                 file_params = file_params,
-                                 accepts = local_var_accepts,
-                                 content_types = local_var_content_types,
-                                 body = local_var_body,
-                                 is_oauth = is_oauth,
-                                 oauth_scopes = oauth_scopes,
-                                 ...)
-
-      if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
-        # save response in a file
-        if (!is.null(data_file)) {
-          write(local_var_resp$response, data_file)
-        }
-
-        deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "PagedModelAlignedFeature", loadNamespace("Rsirius")),
-          error = function(e) {
-            stop("Failed to deserialize response")
-          }
-        )
-        local_var_resp$content <- deserialized_resp_obj
-        local_var_resp
-      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
-        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
-      } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
-        ApiResponse$new("API client error", local_var_resp)
-      } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
-        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
-          local_var_resp$response <- "API server error"
-        }
-        local_var_resp
-      }
-    },
-
-    #' @description
-    #' EXPERIMENTAL: This endpoint is experimental and may be changed (or even removed) without notice until it is declared stable.
+    #' [EXPERIMENTAL] Returns data quality information for given feature (alignedFeatureId)  
     #'
     #' @param project_id project-space to read from.
     #' @param aligned_feature_id identifier of feature (aligned over runs) to access.
@@ -1430,21 +1651,21 @@ FeaturesApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #'
     #' @return AlignedFeatureQualityExperimental
-    GetAlignedFeaturesQualityExperimental = function(project_id, aligned_feature_id, data_file = NULL, ...) {
-      local_var_response <- self$GetAlignedFeaturesQualityExperimentalWithHttpInfo(project_id, aligned_feature_id, data_file = data_file, ...)
+    GetAlignedFeatureQualityExperimental = function(project_id, aligned_feature_id, data_file = NULL, ...) {
+      local_var_response <- self$GetAlignedFeatureQualityExperimentalWithHttpInfo(project_id, aligned_feature_id, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
-        local_var_response$content
+        return(local_var_response$content)
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
-        local_var_response
+        return(local_var_response)
       }
     },
 
     #' @description
-    #' EXPERIMENTAL: This endpoint is experimental and may be changed (or even removed) without notice until it is declared stable.
+    #' [EXPERIMENTAL] Returns data quality information for given feature (alignedFeatureId)  
     #'
     #' @param project_id project-space to read from.
     #' @param aligned_feature_id identifier of feature (aligned over runs) to access.
@@ -1452,7 +1673,7 @@ FeaturesApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #'
     #' @return API response (AlignedFeatureQualityExperimental) with additional information such as HTTP status code, headers
-    GetAlignedFeaturesQualityExperimentalWithHttpInfo = function(project_id, aligned_feature_id, data_file = NULL, ...) {
+    GetAlignedFeatureQualityExperimentalWithHttpInfo = function(project_id, aligned_feature_id, data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -1470,7 +1691,13 @@ FeaturesApi <- R6::R6Class(
         stop("Missing required parameter `aligned_feature_id`.")
       }
 
+      if (!missing(`project_id`) && is.null(`project_id`)) {
+        stop("Invalid value for `project_id` when calling FeaturesApi$GetAlignedFeatureQualityExperimental, `project_id` is not nullable")
+      }
 
+      if (!missing(`aligned_feature_id`) && is.null(`aligned_feature_id`)) {
+        stop("Invalid value for `aligned_feature_id` when calling FeaturesApi$GetAlignedFeatureQualityExperimental, `aligned_feature_id` is not nullable")
+      }
 
       local_var_url_path <- "/api/projects/{projectId}/aligned-features/{alignedFeatureId}/quality-report"
       if (!missing(`project_id`)) {
@@ -1504,18 +1731,21 @@ FeaturesApi <- R6::R6Class(
       if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
         # save response in a file
         if (!is.null(data_file)) {
-          write(local_var_resp$response, data_file)
+          self$api_client$WriteFile(local_var_resp, data_file)
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "AlignedFeatureQualityExperimental", loadNamespace("Rsirius")),
+          self$api_client$DeserializeResponse(local_var_resp, "AlignedFeatureQualityExperimental"),
           error = function(e) {
             stop("Failed to deserialize response")
           }
         )
         local_var_resp$content <- deserialized_resp_obj
-        local_var_resp
-      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        return(local_var_resp)
+      } 
+      
+      local_var_error_msg <- local_var_resp$response_as_text()      
+      if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp)
@@ -1523,12 +1753,611 @@ FeaturesApi <- R6::R6Class(
         if (is.null(local_var_resp$response) || local_var_resp$response == "") {
           local_var_resp$response <- "API server error"
         }
-        local_var_resp
+        return(local_var_resp)
       }
     },
 
     #' @description
-    #' Best matching compound classes,  Set of the highest scoring compound classes (CANOPUS) on each hierarchy level of  the ClassyFire and NPC ontology,
+    #' Get all available features (aligned over runs) in the given project-space.
+    #'
+    #' @param project_id project-space to read from.
+    #' @param ms_data_search_prepared (optional) Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. (default value: FALSE)
+    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [none])
+    #' @param data_file (optional) name of the data file to save the result
+    #' @param ... Other optional arguments
+    #'
+    #' @return array[AlignedFeature]
+    GetAlignedFeatures = function(project_id, ms_data_search_prepared = FALSE, opt_fields = list(NULL), data_file = NULL, ...) {
+      local_var_response <- self$GetAlignedFeaturesWithHttpInfo(project_id, ms_data_search_prepared, opt_fields, data_file = data_file, ...)
+      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
+        return(local_var_response$content)
+      } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
+        return(local_var_response)
+      } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
+        return(local_var_response)
+      } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
+        return(local_var_response)
+      }
+    },
+
+    #' @description
+    #' Get all available features (aligned over runs) in the given project-space.
+    #'
+    #' @param project_id project-space to read from.
+    #' @param ms_data_search_prepared (optional) Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. (default value: FALSE)
+    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [none])
+    #' @param data_file (optional) name of the data file to save the result
+    #' @param ... Other optional arguments
+    #'
+    #' @return API response (array[AlignedFeature]) with additional information such as HTTP status code, headers
+    GetAlignedFeaturesWithHttpInfo = function(project_id, ms_data_search_prepared = FALSE, opt_fields = list(NULL), data_file = NULL, ...) {
+      args <- list(...)
+      query_params <- list()
+      header_params <- c()
+      form_params <- list()
+      file_params <- list()
+      local_var_body <- NULL
+      oauth_scopes <- NULL
+      is_oauth <- FALSE
+
+      if (missing(`project_id`)) {
+        stop("Missing required parameter `project_id`.")
+      }
+
+      if (!missing(`project_id`) && is.null(`project_id`)) {
+        stop("Invalid value for `project_id` when calling FeaturesApi$GetAlignedFeatures, `project_id` is not nullable")
+      }
+
+      if (!missing(`ms_data_search_prepared`) && is.null(`ms_data_search_prepared`)) {
+        stop("Invalid value for `ms_data_search_prepared` when calling FeaturesApi$GetAlignedFeatures, `ms_data_search_prepared` is not nullable")
+      }
+
+      if (!missing(`opt_fields`) && is.null(`opt_fields`)) {
+        stop("Invalid value for `opt_fields` when calling FeaturesApi$GetAlignedFeatures, `opt_fields` is not nullable")
+      }
+
+      query_params[["msDataSearchPrepared"]] <- `ms_data_search_prepared`
+
+      # explore
+      for (query_item in `opt_fields`) {
+        # validate enum values
+        if (!is.null(query_item) && !(query_item %in% c("none", "msData", "topAnnotationsSummary", "topAnnotations", "topAnnotationsDeNovo", "computedTools", "tags"))) {
+          stop("Invalid value for opt_fields when calling FeaturesApi$GetAlignedFeatures. Must be [none, msData, topAnnotationsSummary, topAnnotations, topAnnotationsDeNovo, computedTools, tags].")
+        }
+        query_params[["optFields"]] <- c(query_params[["optFields"]], list(`optFields` = query_item))
+      }
+
+      local_var_url_path <- "/api/projects/{projectId}/aligned-features"
+      if (!missing(`project_id`)) {
+        local_var_url_path <- gsub("\\{projectId\\}", URLencode(as.character(`project_id`), reserved = TRUE), local_var_url_path)
+      }
+
+
+      # The Accept request HTTP header
+      local_var_accepts <- list("application/json")
+
+      # The Content-Type representation header
+      local_var_content_types <- list()
+
+      local_var_resp <- self$api_client$CallApi(url = paste0(self$api_client$base_path, local_var_url_path),
+                                 method = "GET",
+                                 query_params = query_params,
+                                 header_params = header_params,
+                                 form_params = form_params,
+                                 file_params = file_params,
+                                 accepts = local_var_accepts,
+                                 content_types = local_var_content_types,
+                                 body = local_var_body,
+                                 is_oauth = is_oauth,
+                                 oauth_scopes = oauth_scopes,
+                                 ...)
+
+      if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
+        # save response in a file
+        if (!is.null(data_file)) {
+          self$api_client$WriteFile(local_var_resp, data_file)
+        }
+
+        deserialized_resp_obj <- tryCatch(
+          self$api_client$DeserializeResponse(local_var_resp, "array[AlignedFeature]"),
+          error = function(e) {
+            stop("Failed to deserialize response")
+          }
+        )
+        local_var_resp$content <- deserialized_resp_obj
+        return(local_var_resp)
+      } 
+      
+      local_var_error_msg <- local_var_resp$response_as_text()      
+      if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
+      } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
+        ApiResponse$new("API client error", local_var_resp)
+      } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
+        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
+          local_var_resp$response <- "API server error"
+        }
+        return(local_var_resp)
+      }
+    },
+
+    #' @description
+    #' [EXPERIMENTAL] Get features (aligned over runs) by tag group
+    #'
+    #' @param project_id project-space to delete from.
+    #' @param group_name tag group name.
+    #' @param page (optional) Zero-based page index (0..N) (default value: 0)
+    #' @param size (optional) The size of the page to be returned (default value: 20)
+    #' @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [none])
+    #' @param data_file (optional) name of the data file to save the result
+    #' @param ... Other optional arguments
+    #'
+    #' @return PagedModelAlignedFeature
+    GetAlignedFeaturesByGroupExperimental = function(project_id, group_name, page = 0, size = 20, sort = NULL, opt_fields = list(NULL), data_file = NULL, ...) {
+      local_var_response <- self$GetAlignedFeaturesByGroupExperimentalWithHttpInfo(project_id, group_name, page, size, sort, opt_fields, data_file = data_file, ...)
+      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
+        return(local_var_response$content)
+      } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
+        return(local_var_response)
+      } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
+        return(local_var_response)
+      } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
+        return(local_var_response)
+      }
+    },
+
+    #' @description
+    #' [EXPERIMENTAL] Get features (aligned over runs) by tag group
+    #'
+    #' @param project_id project-space to delete from.
+    #' @param group_name tag group name.
+    #' @param page (optional) Zero-based page index (0..N) (default value: 0)
+    #' @param size (optional) The size of the page to be returned (default value: 20)
+    #' @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [none])
+    #' @param data_file (optional) name of the data file to save the result
+    #' @param ... Other optional arguments
+    #'
+    #' @return API response (PagedModelAlignedFeature) with additional information such as HTTP status code, headers
+    GetAlignedFeaturesByGroupExperimentalWithHttpInfo = function(project_id, group_name, page = 0, size = 20, sort = NULL, opt_fields = list(NULL), data_file = NULL, ...) {
+      args <- list(...)
+      query_params <- list()
+      header_params <- c()
+      form_params <- list()
+      file_params <- list()
+      local_var_body <- NULL
+      oauth_scopes <- NULL
+      is_oauth <- FALSE
+
+      if (missing(`project_id`)) {
+        stop("Missing required parameter `project_id`.")
+      }
+
+      if (missing(`group_name`)) {
+        stop("Missing required parameter `group_name`.")
+      }
+
+      if (!missing(`project_id`) && is.null(`project_id`)) {
+        stop("Invalid value for `project_id` when calling FeaturesApi$GetAlignedFeaturesByGroupExperimental, `project_id` is not nullable")
+      }
+
+      if (!missing(`group_name`) && is.null(`group_name`)) {
+        stop("Invalid value for `group_name` when calling FeaturesApi$GetAlignedFeaturesByGroupExperimental, `group_name` is not nullable")
+      }
+
+      if (!missing(`page`) && is.null(`page`)) {
+        stop("Invalid value for `page` when calling FeaturesApi$GetAlignedFeaturesByGroupExperimental, `page` is not nullable")
+      }
+      if (!is.null(`page`) && `page` <  0) {
+        stop("Invalid value for `page` when calling FeaturesApi$GetAlignedFeaturesByGroupExperimental, must be bigger than or equal to 0.")
+      }
+
+      if (!missing(`size`) && is.null(`size`)) {
+        stop("Invalid value for `size` when calling FeaturesApi$GetAlignedFeaturesByGroupExperimental, `size` is not nullable")
+      }
+      if (!is.null(`size`) && `size` <  1) {
+        stop("Invalid value for `size` when calling FeaturesApi$GetAlignedFeaturesByGroupExperimental, must be bigger than or equal to 1.")
+      }
+
+      if (!missing(`sort`) && is.null(`sort`)) {
+        stop("Invalid value for `sort` when calling FeaturesApi$GetAlignedFeaturesByGroupExperimental, `sort` is not nullable")
+      }
+
+      if (!missing(`opt_fields`) && is.null(`opt_fields`)) {
+        stop("Invalid value for `opt_fields` when calling FeaturesApi$GetAlignedFeaturesByGroupExperimental, `opt_fields` is not nullable")
+      }
+
+      query_params[["groupName"]] <- `group_name`
+
+      query_params[["page"]] <- `page`
+
+      query_params[["size"]] <- `size`
+
+      # explore
+      for (query_item in `sort`) {
+        query_params[["sort"]] <- c(query_params[["sort"]], list(`sort` = query_item))
+      }
+
+      # explore
+      for (query_item in `opt_fields`) {
+        # validate enum values
+        if (!is.null(query_item) && !(query_item %in% c("none", "msData", "topAnnotationsSummary", "topAnnotations", "topAnnotationsDeNovo", "computedTools", "tags"))) {
+          stop("Invalid value for opt_fields when calling FeaturesApi$GetAlignedFeaturesByGroupExperimental. Must be [none, msData, topAnnotationsSummary, topAnnotations, topAnnotationsDeNovo, computedTools, tags].")
+        }
+        query_params[["optFields"]] <- c(query_params[["optFields"]], list(`optFields` = query_item))
+      }
+
+      local_var_url_path <- "/api/projects/{projectId}/aligned-features/grouped"
+      if (!missing(`project_id`)) {
+        local_var_url_path <- gsub("\\{projectId\\}", URLencode(as.character(`project_id`), reserved = TRUE), local_var_url_path)
+      }
+
+
+      # The Accept request HTTP header
+      local_var_accepts <- list("application/json")
+
+      # The Content-Type representation header
+      local_var_content_types <- list()
+
+      local_var_resp <- self$api_client$CallApi(url = paste0(self$api_client$base_path, local_var_url_path),
+                                 method = "GET",
+                                 query_params = query_params,
+                                 header_params = header_params,
+                                 form_params = form_params,
+                                 file_params = file_params,
+                                 accepts = local_var_accepts,
+                                 content_types = local_var_content_types,
+                                 body = local_var_body,
+                                 is_oauth = is_oauth,
+                                 oauth_scopes = oauth_scopes,
+                                 ...)
+
+      if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
+        # save response in a file
+        if (!is.null(data_file)) {
+          self$api_client$WriteFile(local_var_resp, data_file)
+        }
+
+        deserialized_resp_obj <- tryCatch(
+          self$api_client$DeserializeResponse(local_var_resp, "PagedModelAlignedFeature"),
+          error = function(e) {
+            stop("Failed to deserialize response")
+          }
+        )
+        local_var_resp$content <- deserialized_resp_obj
+        return(local_var_resp)
+      } 
+      
+      local_var_error_msg <- local_var_resp$response_as_text()      
+      if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
+      } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
+        ApiResponse$new("API client error", local_var_resp)
+      } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
+        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
+          local_var_resp$response <- "API server error"
+        }
+        return(local_var_resp)
+      }
+    },
+
+    #' @description
+    #' [EXPERIMENTAL] Get features (aligned over runs) by tag
+    #'
+    #' @param project_id project space to get features (aligned over runs) from.
+    #' @param filter (optional) tag filter. (default value: "")
+    #' @param page (optional) Zero-based page index (0..N) (default value: 0)
+    #' @param size (optional) The size of the page to be returned (default value: 20)
+    #' @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [])
+    #' @param data_file (optional) name of the data file to save the result
+    #' @param ... Other optional arguments
+    #'
+    #' @return PagedModelAlignedFeature
+    GetAlignedFeaturesByTagExperimental = function(project_id, filter = "", page = 0, size = 20, sort = NULL, opt_fields = list(), data_file = NULL, ...) {
+      local_var_response <- self$GetAlignedFeaturesByTagExperimentalWithHttpInfo(project_id, filter, page, size, sort, opt_fields, data_file = data_file, ...)
+      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
+        return(local_var_response$content)
+      } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
+        return(local_var_response)
+      } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
+        return(local_var_response)
+      } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
+        return(local_var_response)
+      }
+    },
+
+    #' @description
+    #' [EXPERIMENTAL] Get features (aligned over runs) by tag
+    #'
+    #' @param project_id project space to get features (aligned over runs) from.
+    #' @param filter (optional) tag filter. (default value: "")
+    #' @param page (optional) Zero-based page index (0..N) (default value: 0)
+    #' @param size (optional) The size of the page to be returned (default value: 20)
+    #' @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [])
+    #' @param data_file (optional) name of the data file to save the result
+    #' @param ... Other optional arguments
+    #'
+    #' @return API response (PagedModelAlignedFeature) with additional information such as HTTP status code, headers
+    GetAlignedFeaturesByTagExperimentalWithHttpInfo = function(project_id, filter = "", page = 0, size = 20, sort = NULL, opt_fields = list(), data_file = NULL, ...) {
+      args <- list(...)
+      query_params <- list()
+      header_params <- c()
+      form_params <- list()
+      file_params <- list()
+      local_var_body <- NULL
+      oauth_scopes <- NULL
+      is_oauth <- FALSE
+
+      if (missing(`project_id`)) {
+        stop("Missing required parameter `project_id`.")
+      }
+
+      if (!missing(`project_id`) && is.null(`project_id`)) {
+        stop("Invalid value for `project_id` when calling FeaturesApi$GetAlignedFeaturesByTagExperimental, `project_id` is not nullable")
+      }
+
+      if (!missing(`filter`) && is.null(`filter`)) {
+        stop("Invalid value for `filter` when calling FeaturesApi$GetAlignedFeaturesByTagExperimental, `filter` is not nullable")
+      }
+
+      if (!missing(`page`) && is.null(`page`)) {
+        stop("Invalid value for `page` when calling FeaturesApi$GetAlignedFeaturesByTagExperimental, `page` is not nullable")
+      }
+      if (!is.null(`page`) && `page` <  0) {
+        stop("Invalid value for `page` when calling FeaturesApi$GetAlignedFeaturesByTagExperimental, must be bigger than or equal to 0.")
+      }
+
+      if (!missing(`size`) && is.null(`size`)) {
+        stop("Invalid value for `size` when calling FeaturesApi$GetAlignedFeaturesByTagExperimental, `size` is not nullable")
+      }
+      if (!is.null(`size`) && `size` <  1) {
+        stop("Invalid value for `size` when calling FeaturesApi$GetAlignedFeaturesByTagExperimental, must be bigger than or equal to 1.")
+      }
+
+      if (!missing(`sort`) && is.null(`sort`)) {
+        stop("Invalid value for `sort` when calling FeaturesApi$GetAlignedFeaturesByTagExperimental, `sort` is not nullable")
+      }
+
+      if (!missing(`opt_fields`) && is.null(`opt_fields`)) {
+        stop("Invalid value for `opt_fields` when calling FeaturesApi$GetAlignedFeaturesByTagExperimental, `opt_fields` is not nullable")
+      }
+
+      query_params[["filter"]] <- `filter`
+
+      query_params[["page"]] <- `page`
+
+      query_params[["size"]] <- `size`
+
+      # explore
+      for (query_item in `sort`) {
+        query_params[["sort"]] <- c(query_params[["sort"]], list(`sort` = query_item))
+      }
+
+      # explore
+      for (query_item in `opt_fields`) {
+        # validate enum values
+        if (!is.null(query_item) && !(query_item %in% c("none", "msData", "topAnnotationsSummary", "topAnnotations", "topAnnotationsDeNovo", "computedTools", "tags"))) {
+          stop("Invalid value for opt_fields when calling FeaturesApi$GetAlignedFeaturesByTagExperimental. Must be [none, msData, topAnnotationsSummary, topAnnotations, topAnnotationsDeNovo, computedTools, tags].")
+        }
+        query_params[["optFields"]] <- c(query_params[["optFields"]], list(`optFields` = query_item))
+      }
+
+      local_var_url_path <- "/api/projects/{projectId}/aligned-features/tagged"
+      if (!missing(`project_id`)) {
+        local_var_url_path <- gsub("\\{projectId\\}", URLencode(as.character(`project_id`), reserved = TRUE), local_var_url_path)
+      }
+
+
+      # The Accept request HTTP header
+      local_var_accepts <- list("application/json")
+
+      # The Content-Type representation header
+      local_var_content_types <- list()
+
+      local_var_resp <- self$api_client$CallApi(url = paste0(self$api_client$base_path, local_var_url_path),
+                                 method = "GET",
+                                 query_params = query_params,
+                                 header_params = header_params,
+                                 form_params = form_params,
+                                 file_params = file_params,
+                                 accepts = local_var_accepts,
+                                 content_types = local_var_content_types,
+                                 body = local_var_body,
+                                 is_oauth = is_oauth,
+                                 oauth_scopes = oauth_scopes,
+                                 ...)
+
+      if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
+        # save response in a file
+        if (!is.null(data_file)) {
+          self$api_client$WriteFile(local_var_resp, data_file)
+        }
+
+        deserialized_resp_obj <- tryCatch(
+          self$api_client$DeserializeResponse(local_var_resp, "PagedModelAlignedFeature"),
+          error = function(e) {
+            stop("Failed to deserialize response")
+          }
+        )
+        local_var_resp$content <- deserialized_resp_obj
+        return(local_var_resp)
+      } 
+      
+      local_var_error_msg <- local_var_resp$response_as_text()      
+      if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
+      } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
+        ApiResponse$new("API client error", local_var_resp)
+      } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
+        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
+          local_var_resp$response <- "API server error"
+        }
+        return(local_var_resp)
+      }
+    },
+
+    #' @description
+    #' Get all available features (aligned over runs) in the given project-space.
+    #'
+    #' @param project_id project-space to read from.
+    #' @param page (optional) Zero-based page index (0..N) (default value: 0)
+    #' @param size (optional) The size of the page to be returned (default value: 20)
+    #' @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+    #' @param ms_data_search_prepared (optional) Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. (default value: FALSE)
+    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [none])
+    #' @param data_file (optional) name of the data file to save the result
+    #' @param ... Other optional arguments
+    #'
+    #' @return PagedModelAlignedFeature
+    GetAlignedFeaturesPaged = function(project_id, page = 0, size = 20, sort = NULL, ms_data_search_prepared = FALSE, opt_fields = list(NULL), data_file = NULL, ...) {
+      local_var_response <- self$GetAlignedFeaturesPagedWithHttpInfo(project_id, page, size, sort, ms_data_search_prepared, opt_fields, data_file = data_file, ...)
+      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
+        return(local_var_response$content)
+      } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
+        return(local_var_response)
+      } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
+        return(local_var_response)
+      } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
+        return(local_var_response)
+      }
+    },
+
+    #' @description
+    #' Get all available features (aligned over runs) in the given project-space.
+    #'
+    #' @param project_id project-space to read from.
+    #' @param page (optional) Zero-based page index (0..N) (default value: 0)
+    #' @param size (optional) The size of the page to be returned (default value: 20)
+    #' @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+    #' @param ms_data_search_prepared (optional) Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. (default value: FALSE)
+    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [none])
+    #' @param data_file (optional) name of the data file to save the result
+    #' @param ... Other optional arguments
+    #'
+    #' @return API response (PagedModelAlignedFeature) with additional information such as HTTP status code, headers
+    GetAlignedFeaturesPagedWithHttpInfo = function(project_id, page = 0, size = 20, sort = NULL, ms_data_search_prepared = FALSE, opt_fields = list(NULL), data_file = NULL, ...) {
+      args <- list(...)
+      query_params <- list()
+      header_params <- c()
+      form_params <- list()
+      file_params <- list()
+      local_var_body <- NULL
+      oauth_scopes <- NULL
+      is_oauth <- FALSE
+
+      if (missing(`project_id`)) {
+        stop("Missing required parameter `project_id`.")
+      }
+
+      if (!missing(`project_id`) && is.null(`project_id`)) {
+        stop("Invalid value for `project_id` when calling FeaturesApi$GetAlignedFeaturesPaged, `project_id` is not nullable")
+      }
+
+      if (!missing(`page`) && is.null(`page`)) {
+        stop("Invalid value for `page` when calling FeaturesApi$GetAlignedFeaturesPaged, `page` is not nullable")
+      }
+      if (!is.null(`page`) && `page` <  0) {
+        stop("Invalid value for `page` when calling FeaturesApi$GetAlignedFeaturesPaged, must be bigger than or equal to 0.")
+      }
+
+      if (!missing(`size`) && is.null(`size`)) {
+        stop("Invalid value for `size` when calling FeaturesApi$GetAlignedFeaturesPaged, `size` is not nullable")
+      }
+      if (!is.null(`size`) && `size` <  1) {
+        stop("Invalid value for `size` when calling FeaturesApi$GetAlignedFeaturesPaged, must be bigger than or equal to 1.")
+      }
+
+      if (!missing(`sort`) && is.null(`sort`)) {
+        stop("Invalid value for `sort` when calling FeaturesApi$GetAlignedFeaturesPaged, `sort` is not nullable")
+      }
+
+      if (!missing(`ms_data_search_prepared`) && is.null(`ms_data_search_prepared`)) {
+        stop("Invalid value for `ms_data_search_prepared` when calling FeaturesApi$GetAlignedFeaturesPaged, `ms_data_search_prepared` is not nullable")
+      }
+
+      if (!missing(`opt_fields`) && is.null(`opt_fields`)) {
+        stop("Invalid value for `opt_fields` when calling FeaturesApi$GetAlignedFeaturesPaged, `opt_fields` is not nullable")
+      }
+
+      query_params[["page"]] <- `page`
+
+      query_params[["size"]] <- `size`
+
+      # explore
+      for (query_item in `sort`) {
+        query_params[["sort"]] <- c(query_params[["sort"]], list(`sort` = query_item))
+      }
+
+      query_params[["msDataSearchPrepared"]] <- `ms_data_search_prepared`
+
+      # explore
+      for (query_item in `opt_fields`) {
+        # validate enum values
+        if (!is.null(query_item) && !(query_item %in% c("none", "msData", "topAnnotationsSummary", "topAnnotations", "topAnnotationsDeNovo", "computedTools", "tags"))) {
+          stop("Invalid value for opt_fields when calling FeaturesApi$GetAlignedFeaturesPaged. Must be [none, msData, topAnnotationsSummary, topAnnotations, topAnnotationsDeNovo, computedTools, tags].")
+        }
+        query_params[["optFields"]] <- c(query_params[["optFields"]], list(`optFields` = query_item))
+      }
+
+      local_var_url_path <- "/api/projects/{projectId}/aligned-features/page"
+      if (!missing(`project_id`)) {
+        local_var_url_path <- gsub("\\{projectId\\}", URLencode(as.character(`project_id`), reserved = TRUE), local_var_url_path)
+      }
+
+
+      # The Accept request HTTP header
+      local_var_accepts <- list("application/json")
+
+      # The Content-Type representation header
+      local_var_content_types <- list()
+
+      local_var_resp <- self$api_client$CallApi(url = paste0(self$api_client$base_path, local_var_url_path),
+                                 method = "GET",
+                                 query_params = query_params,
+                                 header_params = header_params,
+                                 form_params = form_params,
+                                 file_params = file_params,
+                                 accepts = local_var_accepts,
+                                 content_types = local_var_content_types,
+                                 body = local_var_body,
+                                 is_oauth = is_oauth,
+                                 oauth_scopes = oauth_scopes,
+                                 ...)
+
+      if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
+        # save response in a file
+        if (!is.null(data_file)) {
+          self$api_client$WriteFile(local_var_resp, data_file)
+        }
+
+        deserialized_resp_obj <- tryCatch(
+          self$api_client$DeserializeResponse(local_var_resp, "PagedModelAlignedFeature"),
+          error = function(e) {
+            stop("Failed to deserialize response")
+          }
+        )
+        local_var_resp$content <- deserialized_resp_obj
+        return(local_var_resp)
+      } 
+      
+      local_var_error_msg <- local_var_resp$response_as_text()      
+      if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
+      } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
+        ApiResponse$new("API client error", local_var_resp)
+      } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
+        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
+          local_var_resp$response <- "API server error"
+        }
+        return(local_var_resp)
+      }
+    },
+
+    #' @description
+    #' Return Best matching compound classes for given formulaId
     #'
     #' @param project_id project-space to read from.
     #' @param aligned_feature_id feature (aligned over runs) the formula result belongs to.
@@ -1540,18 +2369,18 @@ FeaturesApi <- R6::R6Class(
     GetBestMatchingCompoundClasses = function(project_id, aligned_feature_id, formula_id, data_file = NULL, ...) {
       local_var_response <- self$GetBestMatchingCompoundClassesWithHttpInfo(project_id, aligned_feature_id, formula_id, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
-        local_var_response$content
+        return(local_var_response$content)
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
-        local_var_response
+        return(local_var_response)
       }
     },
 
     #' @description
-    #' Best matching compound classes,  Set of the highest scoring compound classes (CANOPUS) on each hierarchy level of  the ClassyFire and NPC ontology,
+    #' Return Best matching compound classes for given formulaId
     #'
     #' @param project_id project-space to read from.
     #' @param aligned_feature_id feature (aligned over runs) the formula result belongs to.
@@ -1582,8 +2411,17 @@ FeaturesApi <- R6::R6Class(
         stop("Missing required parameter `formula_id`.")
       }
 
+      if (!missing(`project_id`) && is.null(`project_id`)) {
+        stop("Invalid value for `project_id` when calling FeaturesApi$GetBestMatchingCompoundClasses, `project_id` is not nullable")
+      }
 
+      if (!missing(`aligned_feature_id`) && is.null(`aligned_feature_id`)) {
+        stop("Invalid value for `aligned_feature_id` when calling FeaturesApi$GetBestMatchingCompoundClasses, `aligned_feature_id` is not nullable")
+      }
 
+      if (!missing(`formula_id`) && is.null(`formula_id`)) {
+        stop("Invalid value for `formula_id` when calling FeaturesApi$GetBestMatchingCompoundClasses, `formula_id` is not nullable")
+      }
 
       local_var_url_path <- "/api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/best-compound-classes"
       if (!missing(`project_id`)) {
@@ -1621,18 +2459,21 @@ FeaturesApi <- R6::R6Class(
       if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
         # save response in a file
         if (!is.null(data_file)) {
-          write(local_var_resp$response, data_file)
+          self$api_client$WriteFile(local_var_resp, data_file)
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "CompoundClasses", loadNamespace("Rsirius")),
+          self$api_client$DeserializeResponse(local_var_resp, "CompoundClasses"),
           error = function(e) {
             stop("Failed to deserialize response")
           }
         )
         local_var_resp$content <- deserialized_resp_obj
-        local_var_resp
-      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        return(local_var_resp)
+      } 
+      
+      local_var_error_msg <- local_var_resp$response_as_text()      
+      if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp)
@@ -1640,7 +2481,7 @@ FeaturesApi <- R6::R6Class(
         if (is.null(local_var_resp$response) || local_var_resp$response == "") {
           local_var_resp$response <- "API server error"
         }
-        local_var_resp
+        return(local_var_resp)
       }
     },
 
@@ -1657,13 +2498,13 @@ FeaturesApi <- R6::R6Class(
     GetCanopusPrediction = function(project_id, aligned_feature_id, formula_id, data_file = NULL, ...) {
       local_var_response <- self$GetCanopusPredictionWithHttpInfo(project_id, aligned_feature_id, formula_id, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
-        local_var_response$content
+        return(local_var_response$content)
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
-        local_var_response
+        return(local_var_response)
       }
     },
 
@@ -1699,8 +2540,17 @@ FeaturesApi <- R6::R6Class(
         stop("Missing required parameter `formula_id`.")
       }
 
+      if (!missing(`project_id`) && is.null(`project_id`)) {
+        stop("Invalid value for `project_id` when calling FeaturesApi$GetCanopusPrediction, `project_id` is not nullable")
+      }
 
+      if (!missing(`aligned_feature_id`) && is.null(`aligned_feature_id`)) {
+        stop("Invalid value for `aligned_feature_id` when calling FeaturesApi$GetCanopusPrediction, `aligned_feature_id` is not nullable")
+      }
 
+      if (!missing(`formula_id`) && is.null(`formula_id`)) {
+        stop("Invalid value for `formula_id` when calling FeaturesApi$GetCanopusPrediction, `formula_id` is not nullable")
+      }
 
       local_var_url_path <- "/api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/canopus-prediction"
       if (!missing(`project_id`)) {
@@ -1738,18 +2588,21 @@ FeaturesApi <- R6::R6Class(
       if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
         # save response in a file
         if (!is.null(data_file)) {
-          write(local_var_resp$response, data_file)
+          self$api_client$WriteFile(local_var_resp, data_file)
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "CanopusPrediction", loadNamespace("Rsirius")),
+          self$api_client$DeserializeResponse(local_var_resp, "CanopusPrediction"),
           error = function(e) {
             stop("Failed to deserialize response")
           }
         )
         local_var_resp$content <- deserialized_resp_obj
-        local_var_resp
-      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        return(local_var_resp)
+      } 
+      
+      local_var_error_msg <- local_var_resp$response_as_text()      
+      if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp)
@@ -1757,7 +2610,7 @@ FeaturesApi <- R6::R6Class(
         if (is.null(local_var_resp$response) || local_var_resp$response == "") {
           local_var_resp$response <- "API server error"
         }
-        local_var_resp
+        return(local_var_resp)
       }
     },
 
@@ -1774,13 +2627,13 @@ FeaturesApi <- R6::R6Class(
     GetDeNovoStructureCandidates = function(project_id, aligned_feature_id, opt_fields = list("none"), data_file = NULL, ...) {
       local_var_response <- self$GetDeNovoStructureCandidatesWithHttpInfo(project_id, aligned_feature_id, opt_fields, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
-        local_var_response$content
+        return(local_var_response$content)
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
-        local_var_response
+        return(local_var_response)
       }
     },
 
@@ -1812,14 +2665,23 @@ FeaturesApi <- R6::R6Class(
         stop("Missing required parameter `aligned_feature_id`.")
       }
 
+      if (!missing(`project_id`) && is.null(`project_id`)) {
+        stop("Invalid value for `project_id` when calling FeaturesApi$GetDeNovoStructureCandidates, `project_id` is not nullable")
+      }
 
+      if (!missing(`aligned_feature_id`) && is.null(`aligned_feature_id`)) {
+        stop("Invalid value for `aligned_feature_id` when calling FeaturesApi$GetDeNovoStructureCandidates, `aligned_feature_id` is not nullable")
+      }
 
+      if (!missing(`opt_fields`) && is.null(`opt_fields`)) {
+        stop("Invalid value for `opt_fields` when calling FeaturesApi$GetDeNovoStructureCandidates, `opt_fields` is not nullable")
+      }
 
       # explore
       for (query_item in `opt_fields`) {
         # validate enum values
-        if (!is.null(query_item) && !(query_item %in% c("none", "fingerprint", "dbLinks", "libraryMatches"))) {
-          stop("Invalid value for opt_fields when calling FeaturesApi$GetDeNovoStructureCandidates. Must be [none, fingerprint, dbLinks, libraryMatches].")
+        if (!is.null(query_item) && !(query_item %in% c("none", "fingerprint", "dbLinks", "libraryMatches", "structureSvg"))) {
+          stop("Invalid value for opt_fields when calling FeaturesApi$GetDeNovoStructureCandidates. Must be [none, fingerprint, dbLinks, libraryMatches, structureSvg].")
         }
         query_params[["optFields"]] <- c(query_params[["optFields"]], list(`optFields` = query_item))
       }
@@ -1856,18 +2718,21 @@ FeaturesApi <- R6::R6Class(
       if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
         # save response in a file
         if (!is.null(data_file)) {
-          write(local_var_resp$response, data_file)
+          self$api_client$WriteFile(local_var_resp, data_file)
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "array[StructureCandidateFormula]", loadNamespace("Rsirius")),
+          self$api_client$DeserializeResponse(local_var_resp, "array[StructureCandidateFormula]"),
           error = function(e) {
             stop("Failed to deserialize response")
           }
         )
         local_var_resp$content <- deserialized_resp_obj
-        local_var_resp
-      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        return(local_var_resp)
+      } 
+      
+      local_var_error_msg <- local_var_resp$response_as_text()      
+      if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp)
@@ -1875,7 +2740,7 @@ FeaturesApi <- R6::R6Class(
         if (is.null(local_var_resp$response) || local_var_resp$response == "") {
           local_var_resp$response <- "API server error"
         }
-        local_var_resp
+        return(local_var_resp)
       }
     },
 
@@ -1885,21 +2750,21 @@ FeaturesApi <- R6::R6Class(
     #' @param project_id project-space to read from.
     #' @param aligned_feature_id feature (aligned over runs) the formula result belongs to.
     #' @param formula_id identifier of the requested formula result
-    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])
+    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [none])
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return array[StructureCandidateScored]
-    GetDeNovoStructureCandidatesByFormula = function(project_id, aligned_feature_id, formula_id, opt_fields = list("none"), data_file = NULL, ...) {
+    GetDeNovoStructureCandidatesByFormula = function(project_id, aligned_feature_id, formula_id, opt_fields = list(NULL), data_file = NULL, ...) {
       local_var_response <- self$GetDeNovoStructureCandidatesByFormulaWithHttpInfo(project_id, aligned_feature_id, formula_id, opt_fields, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
-        local_var_response$content
+        return(local_var_response$content)
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
-        local_var_response
+        return(local_var_response)
       }
     },
 
@@ -1909,12 +2774,12 @@ FeaturesApi <- R6::R6Class(
     #' @param project_id project-space to read from.
     #' @param aligned_feature_id feature (aligned over runs) the formula result belongs to.
     #' @param formula_id identifier of the requested formula result
-    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])
+    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [none])
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return API response (array[StructureCandidateScored]) with additional information such as HTTP status code, headers
-    GetDeNovoStructureCandidatesByFormulaWithHttpInfo = function(project_id, aligned_feature_id, formula_id, opt_fields = list("none"), data_file = NULL, ...) {
+    GetDeNovoStructureCandidatesByFormulaWithHttpInfo = function(project_id, aligned_feature_id, formula_id, opt_fields = list(NULL), data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -1936,15 +2801,27 @@ FeaturesApi <- R6::R6Class(
         stop("Missing required parameter `formula_id`.")
       }
 
+      if (!missing(`project_id`) && is.null(`project_id`)) {
+        stop("Invalid value for `project_id` when calling FeaturesApi$GetDeNovoStructureCandidatesByFormula, `project_id` is not nullable")
+      }
 
+      if (!missing(`aligned_feature_id`) && is.null(`aligned_feature_id`)) {
+        stop("Invalid value for `aligned_feature_id` when calling FeaturesApi$GetDeNovoStructureCandidatesByFormula, `aligned_feature_id` is not nullable")
+      }
 
+      if (!missing(`formula_id`) && is.null(`formula_id`)) {
+        stop("Invalid value for `formula_id` when calling FeaturesApi$GetDeNovoStructureCandidatesByFormula, `formula_id` is not nullable")
+      }
 
+      if (!missing(`opt_fields`) && is.null(`opt_fields`)) {
+        stop("Invalid value for `opt_fields` when calling FeaturesApi$GetDeNovoStructureCandidatesByFormula, `opt_fields` is not nullable")
+      }
 
       # explore
       for (query_item in `opt_fields`) {
         # validate enum values
-        if (!is.null(query_item) && !(query_item %in% c("none", "fingerprint", "dbLinks", "libraryMatches"))) {
-          stop("Invalid value for opt_fields when calling FeaturesApi$GetDeNovoStructureCandidatesByFormula. Must be [none, fingerprint, dbLinks, libraryMatches].")
+        if (!is.null(query_item) && !(query_item %in% c("none", "fingerprint", "dbLinks", "libraryMatches", "structureSvg"))) {
+          stop("Invalid value for opt_fields when calling FeaturesApi$GetDeNovoStructureCandidatesByFormula. Must be [none, fingerprint, dbLinks, libraryMatches, structureSvg].")
         }
         query_params[["optFields"]] <- c(query_params[["optFields"]], list(`optFields` = query_item))
       }
@@ -1985,18 +2862,21 @@ FeaturesApi <- R6::R6Class(
       if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
         # save response in a file
         if (!is.null(data_file)) {
-          write(local_var_resp$response, data_file)
+          self$api_client$WriteFile(local_var_resp, data_file)
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "array[StructureCandidateScored]", loadNamespace("Rsirius")),
+          self$api_client$DeserializeResponse(local_var_resp, "array[StructureCandidateScored]"),
           error = function(e) {
             stop("Failed to deserialize response")
           }
         )
         local_var_resp$content <- deserialized_resp_obj
-        local_var_resp
-      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        return(local_var_resp)
+      } 
+      
+      local_var_error_msg <- local_var_resp$response_as_text()      
+      if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp)
@@ -2004,7 +2884,7 @@ FeaturesApi <- R6::R6Class(
         if (is.null(local_var_resp$response) || local_var_resp$response == "") {
           local_var_resp$response <- "API server error"
         }
-        local_var_resp
+        return(local_var_resp)
       }
     },
 
@@ -2017,21 +2897,21 @@ FeaturesApi <- R6::R6Class(
     #' @param page (optional) Zero-based page index (0..N) (default value: 0)
     #' @param size (optional) The size of the page to be returned (default value: 20)
     #' @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
-    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])
+    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [none])
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return PagedModelStructureCandidateScored
-    GetDeNovoStructureCandidatesByFormulaPaged = function(project_id, aligned_feature_id, formula_id, page = 0, size = 20, sort = NULL, opt_fields = list("none"), data_file = NULL, ...) {
+    GetDeNovoStructureCandidatesByFormulaPaged = function(project_id, aligned_feature_id, formula_id, page = 0, size = 20, sort = NULL, opt_fields = list(NULL), data_file = NULL, ...) {
       local_var_response <- self$GetDeNovoStructureCandidatesByFormulaPagedWithHttpInfo(project_id, aligned_feature_id, formula_id, page, size, sort, opt_fields, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
-        local_var_response$content
+        return(local_var_response$content)
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
-        local_var_response
+        return(local_var_response)
       }
     },
 
@@ -2044,12 +2924,12 @@ FeaturesApi <- R6::R6Class(
     #' @param page (optional) Zero-based page index (0..N) (default value: 0)
     #' @param size (optional) The size of the page to be returned (default value: 20)
     #' @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
-    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])
+    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [none])
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return API response (PagedModelStructureCandidateScored) with additional information such as HTTP status code, headers
-    GetDeNovoStructureCandidatesByFormulaPagedWithHttpInfo = function(project_id, aligned_feature_id, formula_id, page = 0, size = 20, sort = NULL, opt_fields = list("none"), data_file = NULL, ...) {
+    GetDeNovoStructureCandidatesByFormulaPagedWithHttpInfo = function(project_id, aligned_feature_id, formula_id, page = 0, size = 20, sort = NULL, opt_fields = list(NULL), data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -2071,18 +2951,39 @@ FeaturesApi <- R6::R6Class(
         stop("Missing required parameter `formula_id`.")
       }
 
+      if (!missing(`project_id`) && is.null(`project_id`)) {
+        stop("Invalid value for `project_id` when calling FeaturesApi$GetDeNovoStructureCandidatesByFormulaPaged, `project_id` is not nullable")
+      }
 
+      if (!missing(`aligned_feature_id`) && is.null(`aligned_feature_id`)) {
+        stop("Invalid value for `aligned_feature_id` when calling FeaturesApi$GetDeNovoStructureCandidatesByFormulaPaged, `aligned_feature_id` is not nullable")
+      }
 
+      if (!missing(`formula_id`) && is.null(`formula_id`)) {
+        stop("Invalid value for `formula_id` when calling FeaturesApi$GetDeNovoStructureCandidatesByFormulaPaged, `formula_id` is not nullable")
+      }
 
-      if (`page` < 0) {
+      if (!missing(`page`) && is.null(`page`)) {
+        stop("Invalid value for `page` when calling FeaturesApi$GetDeNovoStructureCandidatesByFormulaPaged, `page` is not nullable")
+      }
+      if (!is.null(`page`) && `page` <  0) {
         stop("Invalid value for `page` when calling FeaturesApi$GetDeNovoStructureCandidatesByFormulaPaged, must be bigger than or equal to 0.")
       }
 
-      if (`size` < 1) {
+      if (!missing(`size`) && is.null(`size`)) {
+        stop("Invalid value for `size` when calling FeaturesApi$GetDeNovoStructureCandidatesByFormulaPaged, `size` is not nullable")
+      }
+      if (!is.null(`size`) && `size` <  1) {
         stop("Invalid value for `size` when calling FeaturesApi$GetDeNovoStructureCandidatesByFormulaPaged, must be bigger than or equal to 1.")
       }
 
+      if (!missing(`sort`) && is.null(`sort`)) {
+        stop("Invalid value for `sort` when calling FeaturesApi$GetDeNovoStructureCandidatesByFormulaPaged, `sort` is not nullable")
+      }
 
+      if (!missing(`opt_fields`) && is.null(`opt_fields`)) {
+        stop("Invalid value for `opt_fields` when calling FeaturesApi$GetDeNovoStructureCandidatesByFormulaPaged, `opt_fields` is not nullable")
+      }
 
       query_params[["page"]] <- `page`
 
@@ -2096,8 +2997,8 @@ FeaturesApi <- R6::R6Class(
       # explore
       for (query_item in `opt_fields`) {
         # validate enum values
-        if (!is.null(query_item) && !(query_item %in% c("none", "fingerprint", "dbLinks", "libraryMatches"))) {
-          stop("Invalid value for opt_fields when calling FeaturesApi$GetDeNovoStructureCandidatesByFormulaPaged. Must be [none, fingerprint, dbLinks, libraryMatches].")
+        if (!is.null(query_item) && !(query_item %in% c("none", "fingerprint", "dbLinks", "libraryMatches", "structureSvg"))) {
+          stop("Invalid value for opt_fields when calling FeaturesApi$GetDeNovoStructureCandidatesByFormulaPaged. Must be [none, fingerprint, dbLinks, libraryMatches, structureSvg].")
         }
         query_params[["optFields"]] <- c(query_params[["optFields"]], list(`optFields` = query_item))
       }
@@ -2138,18 +3039,21 @@ FeaturesApi <- R6::R6Class(
       if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
         # save response in a file
         if (!is.null(data_file)) {
-          write(local_var_resp$response, data_file)
+          self$api_client$WriteFile(local_var_resp, data_file)
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "PagedModelStructureCandidateScored", loadNamespace("Rsirius")),
+          self$api_client$DeserializeResponse(local_var_resp, "PagedModelStructureCandidateScored"),
           error = function(e) {
             stop("Failed to deserialize response")
           }
         )
         local_var_resp$content <- deserialized_resp_obj
-        local_var_resp
-      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        return(local_var_resp)
+      } 
+      
+      local_var_error_msg <- local_var_resp$response_as_text()      
+      if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp)
@@ -2157,7 +3061,7 @@ FeaturesApi <- R6::R6Class(
         if (is.null(local_var_resp$response) || local_var_resp$response == "") {
           local_var_resp$response <- "API server error"
         }
-        local_var_resp
+        return(local_var_resp)
       }
     },
 
@@ -2169,21 +3073,21 @@ FeaturesApi <- R6::R6Class(
     #' @param page (optional) Zero-based page index (0..N) (default value: 0)
     #' @param size (optional) The size of the page to be returned (default value: 20)
     #' @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
-    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])
+    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [none])
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return PagedModelStructureCandidateFormula
-    GetDeNovoStructureCandidatesPaged = function(project_id, aligned_feature_id, page = 0, size = 20, sort = NULL, opt_fields = list("none"), data_file = NULL, ...) {
+    GetDeNovoStructureCandidatesPaged = function(project_id, aligned_feature_id, page = 0, size = 20, sort = NULL, opt_fields = list(NULL), data_file = NULL, ...) {
       local_var_response <- self$GetDeNovoStructureCandidatesPagedWithHttpInfo(project_id, aligned_feature_id, page, size, sort, opt_fields, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
-        local_var_response$content
+        return(local_var_response$content)
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
-        local_var_response
+        return(local_var_response)
       }
     },
 
@@ -2195,12 +3099,12 @@ FeaturesApi <- R6::R6Class(
     #' @param page (optional) Zero-based page index (0..N) (default value: 0)
     #' @param size (optional) The size of the page to be returned (default value: 20)
     #' @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
-    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])
+    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [none])
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return API response (PagedModelStructureCandidateFormula) with additional information such as HTTP status code, headers
-    GetDeNovoStructureCandidatesPagedWithHttpInfo = function(project_id, aligned_feature_id, page = 0, size = 20, sort = NULL, opt_fields = list("none"), data_file = NULL, ...) {
+    GetDeNovoStructureCandidatesPagedWithHttpInfo = function(project_id, aligned_feature_id, page = 0, size = 20, sort = NULL, opt_fields = list(NULL), data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -2218,17 +3122,35 @@ FeaturesApi <- R6::R6Class(
         stop("Missing required parameter `aligned_feature_id`.")
       }
 
+      if (!missing(`project_id`) && is.null(`project_id`)) {
+        stop("Invalid value for `project_id` when calling FeaturesApi$GetDeNovoStructureCandidatesPaged, `project_id` is not nullable")
+      }
 
+      if (!missing(`aligned_feature_id`) && is.null(`aligned_feature_id`)) {
+        stop("Invalid value for `aligned_feature_id` when calling FeaturesApi$GetDeNovoStructureCandidatesPaged, `aligned_feature_id` is not nullable")
+      }
 
-      if (`page` < 0) {
+      if (!missing(`page`) && is.null(`page`)) {
+        stop("Invalid value for `page` when calling FeaturesApi$GetDeNovoStructureCandidatesPaged, `page` is not nullable")
+      }
+      if (!is.null(`page`) && `page` <  0) {
         stop("Invalid value for `page` when calling FeaturesApi$GetDeNovoStructureCandidatesPaged, must be bigger than or equal to 0.")
       }
 
-      if (`size` < 1) {
+      if (!missing(`size`) && is.null(`size`)) {
+        stop("Invalid value for `size` when calling FeaturesApi$GetDeNovoStructureCandidatesPaged, `size` is not nullable")
+      }
+      if (!is.null(`size`) && `size` <  1) {
         stop("Invalid value for `size` when calling FeaturesApi$GetDeNovoStructureCandidatesPaged, must be bigger than or equal to 1.")
       }
 
+      if (!missing(`sort`) && is.null(`sort`)) {
+        stop("Invalid value for `sort` when calling FeaturesApi$GetDeNovoStructureCandidatesPaged, `sort` is not nullable")
+      }
 
+      if (!missing(`opt_fields`) && is.null(`opt_fields`)) {
+        stop("Invalid value for `opt_fields` when calling FeaturesApi$GetDeNovoStructureCandidatesPaged, `opt_fields` is not nullable")
+      }
 
       query_params[["page"]] <- `page`
 
@@ -2242,8 +3164,8 @@ FeaturesApi <- R6::R6Class(
       # explore
       for (query_item in `opt_fields`) {
         # validate enum values
-        if (!is.null(query_item) && !(query_item %in% c("none", "fingerprint", "dbLinks", "libraryMatches"))) {
-          stop("Invalid value for opt_fields when calling FeaturesApi$GetDeNovoStructureCandidatesPaged. Must be [none, fingerprint, dbLinks, libraryMatches].")
+        if (!is.null(query_item) && !(query_item %in% c("none", "fingerprint", "dbLinks", "libraryMatches", "structureSvg"))) {
+          stop("Invalid value for opt_fields when calling FeaturesApi$GetDeNovoStructureCandidatesPaged. Must be [none, fingerprint, dbLinks, libraryMatches, structureSvg].")
         }
         query_params[["optFields"]] <- c(query_params[["optFields"]], list(`optFields` = query_item))
       }
@@ -2280,18 +3202,21 @@ FeaturesApi <- R6::R6Class(
       if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
         # save response in a file
         if (!is.null(data_file)) {
-          write(local_var_resp$response, data_file)
+          self$api_client$WriteFile(local_var_resp, data_file)
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "PagedModelStructureCandidateFormula", loadNamespace("Rsirius")),
+          self$api_client$DeserializeResponse(local_var_resp, "PagedModelStructureCandidateFormula"),
           error = function(e) {
             stop("Failed to deserialize response")
           }
         )
         local_var_resp$content <- deserialized_resp_obj
-        local_var_resp
-      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        return(local_var_resp)
+      } 
+      
+      local_var_error_msg <- local_var_resp$response_as_text()      
+      if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp)
@@ -2299,12 +3224,124 @@ FeaturesApi <- R6::R6Class(
         if (is.null(local_var_resp$response) || local_var_resp$response == "") {
           local_var_resp$response <- "API server error"
         }
-        local_var_resp
+        return(local_var_resp)
       }
     },
 
     #' @description
-    #' Returns predicted fingerprint (CSI:FingerID) for the given formula result identifier  This fingerprint is used to perform structure database search and predict compound classes.
+    #' [EXPERIMENTAL]  Returns the full quantification table for the given feature (alignedFeatureId)
+    #'
+    #' @param project_id project-space to read from.
+    #' @param type (optional) quantification type. (default value: "APEX_HEIGHT")
+    #' @param data_file (optional) name of the data file to save the result
+    #' @param ... Other optional arguments
+    #'
+    #' @return QuantTableExperimental
+    GetFeatureQuantTableExperimental = function(project_id, type = "APEX_HEIGHT", data_file = NULL, ...) {
+      local_var_response <- self$GetFeatureQuantTableExperimentalWithHttpInfo(project_id, type, data_file = data_file, ...)
+      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
+        return(local_var_response$content)
+      } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
+        return(local_var_response)
+      } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
+        return(local_var_response)
+      } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
+        return(local_var_response)
+      }
+    },
+
+    #' @description
+    #' [EXPERIMENTAL]  Returns the full quantification table for the given feature (alignedFeatureId)
+    #'
+    #' @param project_id project-space to read from.
+    #' @param type (optional) quantification type. (default value: "APEX_HEIGHT")
+    #' @param data_file (optional) name of the data file to save the result
+    #' @param ... Other optional arguments
+    #'
+    #' @return API response (QuantTableExperimental) with additional information such as HTTP status code, headers
+    GetFeatureQuantTableExperimentalWithHttpInfo = function(project_id, type = "APEX_HEIGHT", data_file = NULL, ...) {
+      args <- list(...)
+      query_params <- list()
+      header_params <- c()
+      form_params <- list()
+      file_params <- list()
+      local_var_body <- NULL
+      oauth_scopes <- NULL
+      is_oauth <- FALSE
+
+      if (missing(`project_id`)) {
+        stop("Missing required parameter `project_id`.")
+      }
+
+      if (!missing(`project_id`) && is.null(`project_id`)) {
+        stop("Invalid value for `project_id` when calling FeaturesApi$GetFeatureQuantTableExperimental, `project_id` is not nullable")
+      }
+
+      if (!missing(`type`) && is.null(`type`)) {
+        stop("Invalid value for `type` when calling FeaturesApi$GetFeatureQuantTableExperimental, `type` is not nullable")
+      }
+
+      if (!is.null(`type`) && !(`type` %in% c("APEX_INTENSITY", "AREA_UNDER_CURVE"))) {
+        stop("Invalid value for type when calling FeaturesApi$GetFeatureQuantTableExperimental. Must be [APEX_INTENSITY, AREA_UNDER_CURVE].")
+      }
+      query_params[["type"]] <- `type`
+
+      local_var_url_path <- "/api/projects/{projectId}/aligned-features/quant-table"
+      if (!missing(`project_id`)) {
+        local_var_url_path <- gsub("\\{projectId\\}", URLencode(as.character(`project_id`), reserved = TRUE), local_var_url_path)
+      }
+
+
+      # The Accept request HTTP header
+      local_var_accepts <- list("application/json")
+
+      # The Content-Type representation header
+      local_var_content_types <- list()
+
+      local_var_resp <- self$api_client$CallApi(url = paste0(self$api_client$base_path, local_var_url_path),
+                                 method = "GET",
+                                 query_params = query_params,
+                                 header_params = header_params,
+                                 form_params = form_params,
+                                 file_params = file_params,
+                                 accepts = local_var_accepts,
+                                 content_types = local_var_content_types,
+                                 body = local_var_body,
+                                 is_oauth = is_oauth,
+                                 oauth_scopes = oauth_scopes,
+                                 ...)
+
+      if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
+        # save response in a file
+        if (!is.null(data_file)) {
+          self$api_client$WriteFile(local_var_resp, data_file)
+        }
+
+        deserialized_resp_obj <- tryCatch(
+          self$api_client$DeserializeResponse(local_var_resp, "QuantTableExperimental"),
+          error = function(e) {
+            stop("Failed to deserialize response")
+          }
+        )
+        local_var_resp$content <- deserialized_resp_obj
+        return(local_var_resp)
+      } 
+      
+      local_var_error_msg <- local_var_resp$response_as_text()      
+      if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
+      } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
+        ApiResponse$new("API client error", local_var_resp)
+      } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
+        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
+          local_var_resp$response <- "API server error"
+        }
+        return(local_var_resp)
+      }
+    },
+
+    #' @description
+    #' Returns predicted fingerprint (CSI:FingerID) for the given formula result identifier (formulaId)  
     #'
     #' @param project_id project-space to read from.
     #' @param aligned_feature_id feature (aligned over runs) the formula result belongs to.
@@ -2316,18 +3353,18 @@ FeaturesApi <- R6::R6Class(
     GetFingerprintPrediction = function(project_id, aligned_feature_id, formula_id, data_file = NULL, ...) {
       local_var_response <- self$GetFingerprintPredictionWithHttpInfo(project_id, aligned_feature_id, formula_id, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
-        local_var_response$content
+        return(local_var_response$content)
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
-        local_var_response
+        return(local_var_response)
       }
     },
 
     #' @description
-    #' Returns predicted fingerprint (CSI:FingerID) for the given formula result identifier  This fingerprint is used to perform structure database search and predict compound classes.
+    #' Returns predicted fingerprint (CSI:FingerID) for the given formula result identifier (formulaId)  
     #'
     #' @param project_id project-space to read from.
     #' @param aligned_feature_id feature (aligned over runs) the formula result belongs to.
@@ -2358,8 +3395,17 @@ FeaturesApi <- R6::R6Class(
         stop("Missing required parameter `formula_id`.")
       }
 
+      if (!missing(`project_id`) && is.null(`project_id`)) {
+        stop("Invalid value for `project_id` when calling FeaturesApi$GetFingerprintPrediction, `project_id` is not nullable")
+      }
 
+      if (!missing(`aligned_feature_id`) && is.null(`aligned_feature_id`)) {
+        stop("Invalid value for `aligned_feature_id` when calling FeaturesApi$GetFingerprintPrediction, `aligned_feature_id` is not nullable")
+      }
 
+      if (!missing(`formula_id`) && is.null(`formula_id`)) {
+        stop("Invalid value for `formula_id` when calling FeaturesApi$GetFingerprintPrediction, `formula_id` is not nullable")
+      }
 
       local_var_url_path <- "/api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/fingerprint"
       if (!missing(`project_id`)) {
@@ -2397,18 +3443,21 @@ FeaturesApi <- R6::R6Class(
       if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
         # save response in a file
         if (!is.null(data_file)) {
-          write(local_var_resp$response, data_file)
+          self$api_client$WriteFile(local_var_resp, data_file)
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "array[numeric]", loadNamespace("Rsirius")),
+          self$api_client$DeserializeResponse(local_var_resp, "array[numeric]"),
           error = function(e) {
             stop("Failed to deserialize response")
           }
         )
         local_var_resp$content <- deserialized_resp_obj
-        local_var_resp
-      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        return(local_var_resp)
+      } 
+      
+      local_var_error_msg <- local_var_resp$response_as_text()      
+      if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp)
@@ -2416,44 +3465,46 @@ FeaturesApi <- R6::R6Class(
         if (is.null(local_var_resp$response) || local_var_resp$response == "") {
           local_var_resp$response <- "API server error"
         }
-        local_var_resp
+        return(local_var_resp)
       }
     },
 
     #' @description
-    #' Returns MS/MS Spectrum (Merged MS/MS and measured MS/MS) which is annotated with fragments and losses  for the given formula result identifier  These annotations are only available if a fragmentation tree and the structure candidate are available.
+    #' Returns MS/MS Spectrum annotated with fragments and losses for provided formulaId
     #'
     #' @param project_id project-space to read from.
     #' @param aligned_feature_id feature (aligned over runs) the formula result belongs to.
     #' @param formula_id identifier of the requested formula result
+    #' @param ms_data_search_prepared (optional) Returns all fragment spectra in a preprocessed form as used for fast                          Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                          peak assignments and reference spectra. (default value: FALSE)
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return AnnotatedMsMsData
-    GetFormulaAnnotatedMsMsData = function(project_id, aligned_feature_id, formula_id, data_file = NULL, ...) {
-      local_var_response <- self$GetFormulaAnnotatedMsMsDataWithHttpInfo(project_id, aligned_feature_id, formula_id, data_file = data_file, ...)
+    GetFormulaAnnotatedMsMsData = function(project_id, aligned_feature_id, formula_id, ms_data_search_prepared = FALSE, data_file = NULL, ...) {
+      local_var_response <- self$GetFormulaAnnotatedMsMsDataWithHttpInfo(project_id, aligned_feature_id, formula_id, ms_data_search_prepared, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
-        local_var_response$content
+        return(local_var_response$content)
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
-        local_var_response
+        return(local_var_response)
       }
     },
 
     #' @description
-    #' Returns MS/MS Spectrum (Merged MS/MS and measured MS/MS) which is annotated with fragments and losses  for the given formula result identifier  These annotations are only available if a fragmentation tree and the structure candidate are available.
+    #' Returns MS/MS Spectrum annotated with fragments and losses for provided formulaId
     #'
     #' @param project_id project-space to read from.
     #' @param aligned_feature_id feature (aligned over runs) the formula result belongs to.
     #' @param formula_id identifier of the requested formula result
+    #' @param ms_data_search_prepared (optional) Returns all fragment spectra in a preprocessed form as used for fast                          Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                          peak assignments and reference spectra. (default value: FALSE)
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return API response (AnnotatedMsMsData) with additional information such as HTTP status code, headers
-    GetFormulaAnnotatedMsMsDataWithHttpInfo = function(project_id, aligned_feature_id, formula_id, data_file = NULL, ...) {
+    GetFormulaAnnotatedMsMsDataWithHttpInfo = function(project_id, aligned_feature_id, formula_id, ms_data_search_prepared = FALSE, data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -2475,8 +3526,23 @@ FeaturesApi <- R6::R6Class(
         stop("Missing required parameter `formula_id`.")
       }
 
+      if (!missing(`project_id`) && is.null(`project_id`)) {
+        stop("Invalid value for `project_id` when calling FeaturesApi$GetFormulaAnnotatedMsMsData, `project_id` is not nullable")
+      }
 
+      if (!missing(`aligned_feature_id`) && is.null(`aligned_feature_id`)) {
+        stop("Invalid value for `aligned_feature_id` when calling FeaturesApi$GetFormulaAnnotatedMsMsData, `aligned_feature_id` is not nullable")
+      }
 
+      if (!missing(`formula_id`) && is.null(`formula_id`)) {
+        stop("Invalid value for `formula_id` when calling FeaturesApi$GetFormulaAnnotatedMsMsData, `formula_id` is not nullable")
+      }
+
+      if (!missing(`ms_data_search_prepared`) && is.null(`ms_data_search_prepared`)) {
+        stop("Invalid value for `ms_data_search_prepared` when calling FeaturesApi$GetFormulaAnnotatedMsMsData, `ms_data_search_prepared` is not nullable")
+      }
+
+      query_params[["msDataSearchPrepared"]] <- `ms_data_search_prepared`
 
       local_var_url_path <- "/api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/annotated-msmsdata"
       if (!missing(`project_id`)) {
@@ -2514,18 +3580,21 @@ FeaturesApi <- R6::R6Class(
       if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
         # save response in a file
         if (!is.null(data_file)) {
-          write(local_var_resp$response, data_file)
+          self$api_client$WriteFile(local_var_resp, data_file)
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "AnnotatedMsMsData", loadNamespace("Rsirius")),
+          self$api_client$DeserializeResponse(local_var_resp, "AnnotatedMsMsData"),
           error = function(e) {
             stop("Failed to deserialize response")
           }
         )
         local_var_resp$content <- deserialized_resp_obj
-        local_var_resp
-      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        return(local_var_resp)
+      } 
+      
+      local_var_error_msg <- local_var_resp$response_as_text()      
+      if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp)
@@ -2533,46 +3602,48 @@ FeaturesApi <- R6::R6Class(
         if (is.null(local_var_resp$response) || local_var_resp$response == "") {
           local_var_resp$response <- "API server error"
         }
-        local_var_resp
+        return(local_var_resp)
       }
     },
 
     #' @description
-    #' Returns a fragmentation spectrum (e.g. Merged MS/MS) which is annotated with fragments and losses for the given formula result identifier  These annotations are only available if a fragmentation tree is available.
+    #' Returns a fragmentation spectrum (e
     #'
     #' @param project_id project-space to read from.
     #' @param aligned_feature_id feature (aligned over runs) the formula result belongs to.
     #' @param formula_id identifier of the requested formula result
     #' @param spectrum_index (optional) index of the spectrum to be annotated. Merged MS/MS will be used if spectrumIndex < 0 (default) (default value: -1)
+    #' @param search_prepared (optional) Returns all fragment spectra in a preprocessed form as used for fast                          Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                          peak assignments and reference spectra. (default value: FALSE)
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return AnnotatedSpectrum
-    GetFormulaAnnotatedSpectrum = function(project_id, aligned_feature_id, formula_id, spectrum_index = -1, data_file = NULL, ...) {
-      local_var_response <- self$GetFormulaAnnotatedSpectrumWithHttpInfo(project_id, aligned_feature_id, formula_id, spectrum_index, data_file = data_file, ...)
+    GetFormulaAnnotatedSpectrum = function(project_id, aligned_feature_id, formula_id, spectrum_index = -1, search_prepared = FALSE, data_file = NULL, ...) {
+      local_var_response <- self$GetFormulaAnnotatedSpectrumWithHttpInfo(project_id, aligned_feature_id, formula_id, spectrum_index, search_prepared, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
-        local_var_response$content
+        return(local_var_response$content)
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
-        local_var_response
+        return(local_var_response)
       }
     },
 
     #' @description
-    #' Returns a fragmentation spectrum (e.g. Merged MS/MS) which is annotated with fragments and losses for the given formula result identifier  These annotations are only available if a fragmentation tree is available.
+    #' Returns a fragmentation spectrum (e
     #'
     #' @param project_id project-space to read from.
     #' @param aligned_feature_id feature (aligned over runs) the formula result belongs to.
     #' @param formula_id identifier of the requested formula result
     #' @param spectrum_index (optional) index of the spectrum to be annotated. Merged MS/MS will be used if spectrumIndex < 0 (default) (default value: -1)
+    #' @param search_prepared (optional) Returns all fragment spectra in a preprocessed form as used for fast                          Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                          peak assignments and reference spectra. (default value: FALSE)
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return API response (AnnotatedSpectrum) with additional information such as HTTP status code, headers
-    GetFormulaAnnotatedSpectrumWithHttpInfo = function(project_id, aligned_feature_id, formula_id, spectrum_index = -1, data_file = NULL, ...) {
+    GetFormulaAnnotatedSpectrumWithHttpInfo = function(project_id, aligned_feature_id, formula_id, spectrum_index = -1, search_prepared = FALSE, data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -2594,11 +3665,29 @@ FeaturesApi <- R6::R6Class(
         stop("Missing required parameter `formula_id`.")
       }
 
+      if (!missing(`project_id`) && is.null(`project_id`)) {
+        stop("Invalid value for `project_id` when calling FeaturesApi$GetFormulaAnnotatedSpectrum, `project_id` is not nullable")
+      }
 
+      if (!missing(`aligned_feature_id`) && is.null(`aligned_feature_id`)) {
+        stop("Invalid value for `aligned_feature_id` when calling FeaturesApi$GetFormulaAnnotatedSpectrum, `aligned_feature_id` is not nullable")
+      }
 
+      if (!missing(`formula_id`) && is.null(`formula_id`)) {
+        stop("Invalid value for `formula_id` when calling FeaturesApi$GetFormulaAnnotatedSpectrum, `formula_id` is not nullable")
+      }
 
+      if (!missing(`spectrum_index`) && is.null(`spectrum_index`)) {
+        stop("Invalid value for `spectrum_index` when calling FeaturesApi$GetFormulaAnnotatedSpectrum, `spectrum_index` is not nullable")
+      }
+
+      if (!missing(`search_prepared`) && is.null(`search_prepared`)) {
+        stop("Invalid value for `search_prepared` when calling FeaturesApi$GetFormulaAnnotatedSpectrum, `search_prepared` is not nullable")
+      }
 
       query_params[["spectrumIndex"]] <- `spectrum_index`
+
+      query_params[["searchPrepared"]] <- `search_prepared`
 
       local_var_url_path <- "/api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/annotated-spectrum"
       if (!missing(`project_id`)) {
@@ -2636,18 +3725,21 @@ FeaturesApi <- R6::R6Class(
       if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
         # save response in a file
         if (!is.null(data_file)) {
-          write(local_var_resp$response, data_file)
+          self$api_client$WriteFile(local_var_resp, data_file)
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "AnnotatedSpectrum", loadNamespace("Rsirius")),
+          self$api_client$DeserializeResponse(local_var_resp, "AnnotatedSpectrum"),
           error = function(e) {
             stop("Failed to deserialize response")
           }
         )
         local_var_resp$content <- deserialized_resp_obj
-        local_var_resp
-      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        return(local_var_resp)
+      } 
+      
+      local_var_error_msg <- local_var_resp$response_as_text()      
+      if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp)
@@ -2655,7 +3747,7 @@ FeaturesApi <- R6::R6Class(
         if (is.null(local_var_resp$response) || local_var_resp$response == "") {
           local_var_resp$response <- "API server error"
         }
-        local_var_resp
+        return(local_var_resp)
       }
     },
 
@@ -2665,21 +3757,22 @@ FeaturesApi <- R6::R6Class(
     #' @param project_id project-space to read from.
     #' @param aligned_feature_id feature (aligned over runs) the formula result belongs to.
     #' @param formula_id identifier of the requested formula result
-    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])
+    #' @param ms_data_search_prepared (optional) Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. (default value: FALSE)
+    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [none])
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return FormulaCandidate
-    GetFormulaCandidate = function(project_id, aligned_feature_id, formula_id, opt_fields = list("none"), data_file = NULL, ...) {
-      local_var_response <- self$GetFormulaCandidateWithHttpInfo(project_id, aligned_feature_id, formula_id, opt_fields, data_file = data_file, ...)
+    GetFormulaCandidate = function(project_id, aligned_feature_id, formula_id, ms_data_search_prepared = FALSE, opt_fields = list(NULL), data_file = NULL, ...) {
+      local_var_response <- self$GetFormulaCandidateWithHttpInfo(project_id, aligned_feature_id, formula_id, ms_data_search_prepared, opt_fields, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
-        local_var_response$content
+        return(local_var_response$content)
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
-        local_var_response
+        return(local_var_response)
       }
     },
 
@@ -2689,12 +3782,13 @@ FeaturesApi <- R6::R6Class(
     #' @param project_id project-space to read from.
     #' @param aligned_feature_id feature (aligned over runs) the formula result belongs to.
     #' @param formula_id identifier of the requested formula result
-    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])
+    #' @param ms_data_search_prepared (optional) Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. (default value: FALSE)
+    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [none])
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return API response (FormulaCandidate) with additional information such as HTTP status code, headers
-    GetFormulaCandidateWithHttpInfo = function(project_id, aligned_feature_id, formula_id, opt_fields = list("none"), data_file = NULL, ...) {
+    GetFormulaCandidateWithHttpInfo = function(project_id, aligned_feature_id, formula_id, ms_data_search_prepared = FALSE, opt_fields = list(NULL), data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -2716,9 +3810,27 @@ FeaturesApi <- R6::R6Class(
         stop("Missing required parameter `formula_id`.")
       }
 
+      if (!missing(`project_id`) && is.null(`project_id`)) {
+        stop("Invalid value for `project_id` when calling FeaturesApi$GetFormulaCandidate, `project_id` is not nullable")
+      }
 
+      if (!missing(`aligned_feature_id`) && is.null(`aligned_feature_id`)) {
+        stop("Invalid value for `aligned_feature_id` when calling FeaturesApi$GetFormulaCandidate, `aligned_feature_id` is not nullable")
+      }
 
+      if (!missing(`formula_id`) && is.null(`formula_id`)) {
+        stop("Invalid value for `formula_id` when calling FeaturesApi$GetFormulaCandidate, `formula_id` is not nullable")
+      }
 
+      if (!missing(`ms_data_search_prepared`) && is.null(`ms_data_search_prepared`)) {
+        stop("Invalid value for `ms_data_search_prepared` when calling FeaturesApi$GetFormulaCandidate, `ms_data_search_prepared` is not nullable")
+      }
+
+      if (!missing(`opt_fields`) && is.null(`opt_fields`)) {
+        stop("Invalid value for `opt_fields` when calling FeaturesApi$GetFormulaCandidate, `opt_fields` is not nullable")
+      }
+
+      query_params[["msDataSearchPrepared"]] <- `ms_data_search_prepared`
 
       # explore
       for (query_item in `opt_fields`) {
@@ -2765,18 +3877,21 @@ FeaturesApi <- R6::R6Class(
       if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
         # save response in a file
         if (!is.null(data_file)) {
-          write(local_var_resp$response, data_file)
+          self$api_client$WriteFile(local_var_resp, data_file)
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "FormulaCandidate", loadNamespace("Rsirius")),
+          self$api_client$DeserializeResponse(local_var_resp, "FormulaCandidate"),
           error = function(e) {
             stop("Failed to deserialize response")
           }
         )
         local_var_resp$content <- deserialized_resp_obj
-        local_var_resp
-      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        return(local_var_resp)
+      } 
+      
+      local_var_error_msg <- local_var_resp$response_as_text()      
+      if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp)
@@ -2784,7 +3899,7 @@ FeaturesApi <- R6::R6Class(
         if (is.null(local_var_resp$response) || local_var_resp$response == "") {
           local_var_resp$response <- "API server error"
         }
-        local_var_resp
+        return(local_var_resp)
       }
     },
 
@@ -2793,21 +3908,22 @@ FeaturesApi <- R6::R6Class(
     #'
     #' @param project_id project-space to read from.
     #' @param aligned_feature_id feature (aligned over runs) the formula result belongs to.
+    #' @param ms_data_search_prepared (optional) Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. (default value: FALSE)
     #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return array[FormulaCandidate]
-    GetFormulaCandidates = function(project_id, aligned_feature_id, opt_fields = list("none"), data_file = NULL, ...) {
-      local_var_response <- self$GetFormulaCandidatesWithHttpInfo(project_id, aligned_feature_id, opt_fields, data_file = data_file, ...)
+    GetFormulaCandidates = function(project_id, aligned_feature_id, ms_data_search_prepared = FALSE, opt_fields = list("none"), data_file = NULL, ...) {
+      local_var_response <- self$GetFormulaCandidatesWithHttpInfo(project_id, aligned_feature_id, ms_data_search_prepared, opt_fields, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
-        local_var_response$content
+        return(local_var_response$content)
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
-        local_var_response
+        return(local_var_response)
       }
     },
 
@@ -2816,12 +3932,13 @@ FeaturesApi <- R6::R6Class(
     #'
     #' @param project_id project-space to read from.
     #' @param aligned_feature_id feature (aligned over runs) the formula result belongs to.
+    #' @param ms_data_search_prepared (optional) Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. (default value: FALSE)
     #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return API response (array[FormulaCandidate]) with additional information such as HTTP status code, headers
-    GetFormulaCandidatesWithHttpInfo = function(project_id, aligned_feature_id, opt_fields = list("none"), data_file = NULL, ...) {
+    GetFormulaCandidatesWithHttpInfo = function(project_id, aligned_feature_id, ms_data_search_prepared = FALSE, opt_fields = list("none"), data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -2839,8 +3956,23 @@ FeaturesApi <- R6::R6Class(
         stop("Missing required parameter `aligned_feature_id`.")
       }
 
+      if (!missing(`project_id`) && is.null(`project_id`)) {
+        stop("Invalid value for `project_id` when calling FeaturesApi$GetFormulaCandidates, `project_id` is not nullable")
+      }
 
+      if (!missing(`aligned_feature_id`) && is.null(`aligned_feature_id`)) {
+        stop("Invalid value for `aligned_feature_id` when calling FeaturesApi$GetFormulaCandidates, `aligned_feature_id` is not nullable")
+      }
 
+      if (!missing(`ms_data_search_prepared`) && is.null(`ms_data_search_prepared`)) {
+        stop("Invalid value for `ms_data_search_prepared` when calling FeaturesApi$GetFormulaCandidates, `ms_data_search_prepared` is not nullable")
+      }
+
+      if (!missing(`opt_fields`) && is.null(`opt_fields`)) {
+        stop("Invalid value for `opt_fields` when calling FeaturesApi$GetFormulaCandidates, `opt_fields` is not nullable")
+      }
+
+      query_params[["msDataSearchPrepared"]] <- `ms_data_search_prepared`
 
       # explore
       for (query_item in `opt_fields`) {
@@ -2883,18 +4015,21 @@ FeaturesApi <- R6::R6Class(
       if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
         # save response in a file
         if (!is.null(data_file)) {
-          write(local_var_resp$response, data_file)
+          self$api_client$WriteFile(local_var_resp, data_file)
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "array[FormulaCandidate]", loadNamespace("Rsirius")),
+          self$api_client$DeserializeResponse(local_var_resp, "array[FormulaCandidate]"),
           error = function(e) {
             stop("Failed to deserialize response")
           }
         )
         local_var_resp$content <- deserialized_resp_obj
-        local_var_resp
-      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        return(local_var_resp)
+      } 
+      
+      local_var_error_msg <- local_var_resp$response_as_text()      
+      if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp)
@@ -2902,7 +4037,7 @@ FeaturesApi <- R6::R6Class(
         if (is.null(local_var_resp$response) || local_var_resp$response == "") {
           local_var_resp$response <- "API server error"
         }
-        local_var_resp
+        return(local_var_resp)
       }
     },
 
@@ -2914,21 +4049,22 @@ FeaturesApi <- R6::R6Class(
     #' @param page (optional) Zero-based page index (0..N) (default value: 0)
     #' @param size (optional) The size of the page to be returned (default value: 20)
     #' @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
-    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])
+    #' @param ms_data_search_prepared (optional) Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. (default value: FALSE)
+    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [none])
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return PagedModelFormulaCandidate
-    GetFormulaCandidatesPaged = function(project_id, aligned_feature_id, page = 0, size = 20, sort = NULL, opt_fields = list("none"), data_file = NULL, ...) {
-      local_var_response <- self$GetFormulaCandidatesPagedWithHttpInfo(project_id, aligned_feature_id, page, size, sort, opt_fields, data_file = data_file, ...)
+    GetFormulaCandidatesPaged = function(project_id, aligned_feature_id, page = 0, size = 20, sort = NULL, ms_data_search_prepared = FALSE, opt_fields = list(NULL), data_file = NULL, ...) {
+      local_var_response <- self$GetFormulaCandidatesPagedWithHttpInfo(project_id, aligned_feature_id, page, size, sort, ms_data_search_prepared, opt_fields, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
-        local_var_response$content
+        return(local_var_response$content)
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
-        local_var_response
+        return(local_var_response)
       }
     },
 
@@ -2940,12 +4076,13 @@ FeaturesApi <- R6::R6Class(
     #' @param page (optional) Zero-based page index (0..N) (default value: 0)
     #' @param size (optional) The size of the page to be returned (default value: 20)
     #' @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
-    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])
+    #' @param ms_data_search_prepared (optional) Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. (default value: FALSE)
+    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [none])
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return API response (PagedModelFormulaCandidate) with additional information such as HTTP status code, headers
-    GetFormulaCandidatesPagedWithHttpInfo = function(project_id, aligned_feature_id, page = 0, size = 20, sort = NULL, opt_fields = list("none"), data_file = NULL, ...) {
+    GetFormulaCandidatesPagedWithHttpInfo = function(project_id, aligned_feature_id, page = 0, size = 20, sort = NULL, ms_data_search_prepared = FALSE, opt_fields = list(NULL), data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -2963,17 +4100,39 @@ FeaturesApi <- R6::R6Class(
         stop("Missing required parameter `aligned_feature_id`.")
       }
 
+      if (!missing(`project_id`) && is.null(`project_id`)) {
+        stop("Invalid value for `project_id` when calling FeaturesApi$GetFormulaCandidatesPaged, `project_id` is not nullable")
+      }
 
+      if (!missing(`aligned_feature_id`) && is.null(`aligned_feature_id`)) {
+        stop("Invalid value for `aligned_feature_id` when calling FeaturesApi$GetFormulaCandidatesPaged, `aligned_feature_id` is not nullable")
+      }
 
-      if (`page` < 0) {
+      if (!missing(`page`) && is.null(`page`)) {
+        stop("Invalid value for `page` when calling FeaturesApi$GetFormulaCandidatesPaged, `page` is not nullable")
+      }
+      if (!is.null(`page`) && `page` <  0) {
         stop("Invalid value for `page` when calling FeaturesApi$GetFormulaCandidatesPaged, must be bigger than or equal to 0.")
       }
 
-      if (`size` < 1) {
+      if (!missing(`size`) && is.null(`size`)) {
+        stop("Invalid value for `size` when calling FeaturesApi$GetFormulaCandidatesPaged, `size` is not nullable")
+      }
+      if (!is.null(`size`) && `size` <  1) {
         stop("Invalid value for `size` when calling FeaturesApi$GetFormulaCandidatesPaged, must be bigger than or equal to 1.")
       }
 
+      if (!missing(`sort`) && is.null(`sort`)) {
+        stop("Invalid value for `sort` when calling FeaturesApi$GetFormulaCandidatesPaged, `sort` is not nullable")
+      }
 
+      if (!missing(`ms_data_search_prepared`) && is.null(`ms_data_search_prepared`)) {
+        stop("Invalid value for `ms_data_search_prepared` when calling FeaturesApi$GetFormulaCandidatesPaged, `ms_data_search_prepared` is not nullable")
+      }
+
+      if (!missing(`opt_fields`) && is.null(`opt_fields`)) {
+        stop("Invalid value for `opt_fields` when calling FeaturesApi$GetFormulaCandidatesPaged, `opt_fields` is not nullable")
+      }
 
       query_params[["page"]] <- `page`
 
@@ -2983,6 +4142,8 @@ FeaturesApi <- R6::R6Class(
       for (query_item in `sort`) {
         query_params[["sort"]] <- c(query_params[["sort"]], list(`sort` = query_item))
       }
+
+      query_params[["msDataSearchPrepared"]] <- `ms_data_search_prepared`
 
       # explore
       for (query_item in `opt_fields`) {
@@ -3025,18 +4186,21 @@ FeaturesApi <- R6::R6Class(
       if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
         # save response in a file
         if (!is.null(data_file)) {
-          write(local_var_resp$response, data_file)
+          self$api_client$WriteFile(local_var_resp, data_file)
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "PagedModelFormulaCandidate", loadNamespace("Rsirius")),
+          self$api_client$DeserializeResponse(local_var_resp, "PagedModelFormulaCandidate"),
           error = function(e) {
             stop("Failed to deserialize response")
           }
         )
         local_var_resp$content <- deserialized_resp_obj
-        local_var_resp
-      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        return(local_var_resp)
+      } 
+      
+      local_var_error_msg <- local_var_resp$response_as_text()      
+      if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp)
@@ -3044,12 +4208,12 @@ FeaturesApi <- R6::R6Class(
         if (is.null(local_var_resp$response) || local_var_resp$response == "") {
           local_var_resp$response <- "API server error"
         }
-        local_var_resp
+        return(local_var_resp)
       }
     },
 
     #' @description
-    #' Returns fragmentation tree (SIRIUS) for the given formula result identifier  This tree is used to rank formula candidates (treeScore).
+    #' Returns fragmentation tree (SIRIUS) for the given formula result identifier  
     #'
     #' @param project_id project-space to read from.
     #' @param aligned_feature_id feature (aligned over runs) the formula result belongs to.
@@ -3061,18 +4225,18 @@ FeaturesApi <- R6::R6Class(
     GetFragTree = function(project_id, aligned_feature_id, formula_id, data_file = NULL, ...) {
       local_var_response <- self$GetFragTreeWithHttpInfo(project_id, aligned_feature_id, formula_id, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
-        local_var_response$content
+        return(local_var_response$content)
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
-        local_var_response
+        return(local_var_response)
       }
     },
 
     #' @description
-    #' Returns fragmentation tree (SIRIUS) for the given formula result identifier  This tree is used to rank formula candidates (treeScore).
+    #' Returns fragmentation tree (SIRIUS) for the given formula result identifier  
     #'
     #' @param project_id project-space to read from.
     #' @param aligned_feature_id feature (aligned over runs) the formula result belongs to.
@@ -3103,8 +4267,17 @@ FeaturesApi <- R6::R6Class(
         stop("Missing required parameter `formula_id`.")
       }
 
+      if (!missing(`project_id`) && is.null(`project_id`)) {
+        stop("Invalid value for `project_id` when calling FeaturesApi$GetFragTree, `project_id` is not nullable")
+      }
 
+      if (!missing(`aligned_feature_id`) && is.null(`aligned_feature_id`)) {
+        stop("Invalid value for `aligned_feature_id` when calling FeaturesApi$GetFragTree, `aligned_feature_id` is not nullable")
+      }
 
+      if (!missing(`formula_id`) && is.null(`formula_id`)) {
+        stop("Invalid value for `formula_id` when calling FeaturesApi$GetFragTree, `formula_id` is not nullable")
+      }
 
       local_var_url_path <- "/api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/fragtree"
       if (!missing(`project_id`)) {
@@ -3142,18 +4315,21 @@ FeaturesApi <- R6::R6Class(
       if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
         # save response in a file
         if (!is.null(data_file)) {
-          write(local_var_resp$response, data_file)
+          self$api_client$WriteFile(local_var_resp, data_file)
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "FragmentationTree", loadNamespace("Rsirius")),
+          self$api_client$DeserializeResponse(local_var_resp, "FragmentationTree"),
           error = function(e) {
             stop("Failed to deserialize response")
           }
         )
         local_var_resp$content <- deserialized_resp_obj
-        local_var_resp
-      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        return(local_var_resp)
+      } 
+      
+      local_var_error_msg <- local_var_resp$response_as_text()      
+      if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp)
@@ -3161,12 +4337,12 @@ FeaturesApi <- R6::R6Class(
         if (is.null(local_var_resp$response) || local_var_resp$response == "") {
           local_var_resp$response <- "API server error"
         }
-        local_var_resp
+        return(local_var_resp)
       }
     },
 
     #' @description
-    #' Returns Isotope pattern information (simulated isotope pattern, measured isotope pattern, isotope pattern highlighting)  for the given formula result identifier.
+    #' Returns Isotope pattern information for given formulaId  
     #'
     #' @param project_id project-space to read from.
     #' @param aligned_feature_id feature (aligned over runs) the formula result belongs to.
@@ -3178,18 +4354,18 @@ FeaturesApi <- R6::R6Class(
     GetIsotopePatternAnnotation = function(project_id, aligned_feature_id, formula_id, data_file = NULL, ...) {
       local_var_response <- self$GetIsotopePatternAnnotationWithHttpInfo(project_id, aligned_feature_id, formula_id, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
-        local_var_response$content
+        return(local_var_response$content)
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
-        local_var_response
+        return(local_var_response)
       }
     },
 
     #' @description
-    #' Returns Isotope pattern information (simulated isotope pattern, measured isotope pattern, isotope pattern highlighting)  for the given formula result identifier.
+    #' Returns Isotope pattern information for given formulaId  
     #'
     #' @param project_id project-space to read from.
     #' @param aligned_feature_id feature (aligned over runs) the formula result belongs to.
@@ -3220,8 +4396,17 @@ FeaturesApi <- R6::R6Class(
         stop("Missing required parameter `formula_id`.")
       }
 
+      if (!missing(`project_id`) && is.null(`project_id`)) {
+        stop("Invalid value for `project_id` when calling FeaturesApi$GetIsotopePatternAnnotation, `project_id` is not nullable")
+      }
 
+      if (!missing(`aligned_feature_id`) && is.null(`aligned_feature_id`)) {
+        stop("Invalid value for `aligned_feature_id` when calling FeaturesApi$GetIsotopePatternAnnotation, `aligned_feature_id` is not nullable")
+      }
 
+      if (!missing(`formula_id`) && is.null(`formula_id`)) {
+        stop("Invalid value for `formula_id` when calling FeaturesApi$GetIsotopePatternAnnotation, `formula_id` is not nullable")
+      }
 
       local_var_url_path <- "/api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/isotope-pattern"
       if (!missing(`project_id`)) {
@@ -3259,18 +4444,21 @@ FeaturesApi <- R6::R6Class(
       if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
         # save response in a file
         if (!is.null(data_file)) {
-          write(local_var_resp$response, data_file)
+          self$api_client$WriteFile(local_var_resp, data_file)
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "IsotopePatternAnnotation", loadNamespace("Rsirius")),
+          self$api_client$DeserializeResponse(local_var_resp, "IsotopePatternAnnotation"),
           error = function(e) {
             stop("Failed to deserialize response")
           }
         )
         local_var_resp$content <- deserialized_resp_obj
-        local_var_resp
-      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        return(local_var_resp)
+      } 
+      
+      local_var_error_msg <- local_var_resp$response_as_text()      
+      if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp)
@@ -3278,12 +4466,12 @@ FeaturesApi <- R6::R6Class(
         if (is.null(local_var_resp$response) || local_var_resp$response == "") {
           local_var_resp$response <- "API server error"
         }
-        local_var_resp
+        return(local_var_resp)
       }
     },
 
     #' @description
-    #' Returns Lipid annotation (ElGordo) for the given formula result identifier.
+    #' Returns Lipid annotation (ElGordo) for the given formulaId
     #'
     #' @param project_id project-space to read from.
     #' @param aligned_feature_id feature (aligned over runs) the formula result belongs to.
@@ -3295,18 +4483,18 @@ FeaturesApi <- R6::R6Class(
     GetLipidAnnotation = function(project_id, aligned_feature_id, formula_id, data_file = NULL, ...) {
       local_var_response <- self$GetLipidAnnotationWithHttpInfo(project_id, aligned_feature_id, formula_id, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
-        local_var_response$content
+        return(local_var_response$content)
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
-        local_var_response
+        return(local_var_response)
       }
     },
 
     #' @description
-    #' Returns Lipid annotation (ElGordo) for the given formula result identifier.
+    #' Returns Lipid annotation (ElGordo) for the given formulaId
     #'
     #' @param project_id project-space to read from.
     #' @param aligned_feature_id feature (aligned over runs) the formula result belongs to.
@@ -3337,8 +4525,17 @@ FeaturesApi <- R6::R6Class(
         stop("Missing required parameter `formula_id`.")
       }
 
+      if (!missing(`project_id`) && is.null(`project_id`)) {
+        stop("Invalid value for `project_id` when calling FeaturesApi$GetLipidAnnotation, `project_id` is not nullable")
+      }
 
+      if (!missing(`aligned_feature_id`) && is.null(`aligned_feature_id`)) {
+        stop("Invalid value for `aligned_feature_id` when calling FeaturesApi$GetLipidAnnotation, `aligned_feature_id` is not nullable")
+      }
 
+      if (!missing(`formula_id`) && is.null(`formula_id`)) {
+        stop("Invalid value for `formula_id` when calling FeaturesApi$GetLipidAnnotation, `formula_id` is not nullable")
+      }
 
       local_var_url_path <- "/api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/lipid-annotation"
       if (!missing(`project_id`)) {
@@ -3376,18 +4573,21 @@ FeaturesApi <- R6::R6Class(
       if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
         # save response in a file
         if (!is.null(data_file)) {
-          write(local_var_resp$response, data_file)
+          self$api_client$WriteFile(local_var_resp, data_file)
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "LipidAnnotation", loadNamespace("Rsirius")),
+          self$api_client$DeserializeResponse(local_var_resp, "LipidAnnotation"),
           error = function(e) {
             stop("Failed to deserialize response")
           }
         )
         local_var_resp$content <- deserialized_resp_obj
-        local_var_resp
-      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        return(local_var_resp)
+      } 
+      
+      local_var_error_msg <- local_var_resp$response_as_text()      
+      if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp)
@@ -3395,7 +4595,7 @@ FeaturesApi <- R6::R6Class(
         if (is.null(local_var_resp$response) || local_var_resp$response == "") {
           local_var_resp$response <- "API server error"
         }
-        local_var_resp
+        return(local_var_resp)
       }
     },
 
@@ -3403,21 +4603,22 @@ FeaturesApi <- R6::R6Class(
     #' Mass Spec data (input data) for the given 'alignedFeatureId' .
     #'
     #' @param project_id project-space to read from.
-    #' @param aligned_feature_id feature (aligned over runs) the Mass Spec data belong sto.
+    #' @param aligned_feature_id feature (aligned over runs) the Mass Spec data belongs to.
+    #' @param ms_data_search_prepared (optional) Returns all fragment spectra in a preprocessed form as used for fast                          Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                          peak assignments and reference spectra. (default value: FALSE)
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return MsData
-    GetMsData = function(project_id, aligned_feature_id, data_file = NULL, ...) {
-      local_var_response <- self$GetMsDataWithHttpInfo(project_id, aligned_feature_id, data_file = data_file, ...)
+    GetMsData = function(project_id, aligned_feature_id, ms_data_search_prepared = FALSE, data_file = NULL, ...) {
+      local_var_response <- self$GetMsDataWithHttpInfo(project_id, aligned_feature_id, ms_data_search_prepared, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
-        local_var_response$content
+        return(local_var_response$content)
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
-        local_var_response
+        return(local_var_response)
       }
     },
 
@@ -3425,12 +4626,13 @@ FeaturesApi <- R6::R6Class(
     #' Mass Spec data (input data) for the given 'alignedFeatureId' .
     #'
     #' @param project_id project-space to read from.
-    #' @param aligned_feature_id feature (aligned over runs) the Mass Spec data belong sto.
+    #' @param aligned_feature_id feature (aligned over runs) the Mass Spec data belongs to.
+    #' @param ms_data_search_prepared (optional) Returns all fragment spectra in a preprocessed form as used for fast                          Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                          peak assignments and reference spectra. (default value: FALSE)
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return API response (MsData) with additional information such as HTTP status code, headers
-    GetMsDataWithHttpInfo = function(project_id, aligned_feature_id, data_file = NULL, ...) {
+    GetMsDataWithHttpInfo = function(project_id, aligned_feature_id, ms_data_search_prepared = FALSE, data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -3448,7 +4650,19 @@ FeaturesApi <- R6::R6Class(
         stop("Missing required parameter `aligned_feature_id`.")
       }
 
+      if (!missing(`project_id`) && is.null(`project_id`)) {
+        stop("Invalid value for `project_id` when calling FeaturesApi$GetMsData, `project_id` is not nullable")
+      }
 
+      if (!missing(`aligned_feature_id`) && is.null(`aligned_feature_id`)) {
+        stop("Invalid value for `aligned_feature_id` when calling FeaturesApi$GetMsData, `aligned_feature_id` is not nullable")
+      }
+
+      if (!missing(`ms_data_search_prepared`) && is.null(`ms_data_search_prepared`)) {
+        stop("Invalid value for `ms_data_search_prepared` when calling FeaturesApi$GetMsData, `ms_data_search_prepared` is not nullable")
+      }
+
+      query_params[["msDataSearchPrepared"]] <- `ms_data_search_prepared`
 
       local_var_url_path <- "/api/projects/{projectId}/aligned-features/{alignedFeatureId}/ms-data"
       if (!missing(`project_id`)) {
@@ -3482,18 +4696,21 @@ FeaturesApi <- R6::R6Class(
       if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
         # save response in a file
         if (!is.null(data_file)) {
-          write(local_var_resp$response, data_file)
+          self$api_client$WriteFile(local_var_resp, data_file)
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "MsData", loadNamespace("Rsirius")),
+          self$api_client$DeserializeResponse(local_var_resp, "MsData"),
           error = function(e) {
             stop("Failed to deserialize response")
           }
         )
         local_var_resp$content <- deserialized_resp_obj
-        local_var_resp
-      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        return(local_var_resp)
+      } 
+      
+      local_var_error_msg <- local_var_resp$response_as_text()      
+      if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp)
@@ -3501,44 +4718,44 @@ FeaturesApi <- R6::R6Class(
         if (is.null(local_var_resp$response) || local_var_resp$response == "") {
           local_var_resp$response <- "API server error"
         }
-        local_var_resp
+        return(local_var_resp)
       }
     },
 
     #' @description
-    #' EXPERIMENTAL: This endpoint is experimental and may be changed (or even removed) without notice until it is declared stable.
+    #' [EXPERIMENTAL] Returns a single quantification table row for the given feature (alignedFeatureId)
     #'
     #' @param project_id project-space to read from.
-    #' @param aligned_feature_id feature which intensities should be read out
+    #' @param aligned_feature_id feature which quantity should be read out
     #' @param type (optional) quantification type. Currently, only APEX_HEIGHT is supported, which is the intensity of the feature at its apex. (default value: "APEX_HEIGHT")
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
-    #' @return QuantificationTableExperimental
-    GetQuantificationExperimental = function(project_id, aligned_feature_id, type = "APEX_HEIGHT", data_file = NULL, ...) {
-      local_var_response <- self$GetQuantificationExperimentalWithHttpInfo(project_id, aligned_feature_id, type, data_file = data_file, ...)
+    #' @return QuantTableExperimental
+    GetQuantTableRowExperimental = function(project_id, aligned_feature_id, type = "APEX_HEIGHT", data_file = NULL, ...) {
+      local_var_response <- self$GetQuantTableRowExperimentalWithHttpInfo(project_id, aligned_feature_id, type, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
-        local_var_response$content
+        return(local_var_response$content)
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
-        local_var_response
+        return(local_var_response)
       }
     },
 
     #' @description
-    #' EXPERIMENTAL: This endpoint is experimental and may be changed (or even removed) without notice until it is declared stable.
+    #' [EXPERIMENTAL] Returns a single quantification table row for the given feature (alignedFeatureId)
     #'
     #' @param project_id project-space to read from.
-    #' @param aligned_feature_id feature which intensities should be read out
+    #' @param aligned_feature_id feature which quantity should be read out
     #' @param type (optional) quantification type. Currently, only APEX_HEIGHT is supported, which is the intensity of the feature at its apex. (default value: "APEX_HEIGHT")
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
-    #' @return API response (QuantificationTableExperimental) with additional information such as HTTP status code, headers
-    GetQuantificationExperimentalWithHttpInfo = function(project_id, aligned_feature_id, type = "APEX_HEIGHT", data_file = NULL, ...) {
+    #' @return API response (QuantTableExperimental) with additional information such as HTTP status code, headers
+    GetQuantTableRowExperimentalWithHttpInfo = function(project_id, aligned_feature_id, type = "APEX_HEIGHT", data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -3556,15 +4773,24 @@ FeaturesApi <- R6::R6Class(
         stop("Missing required parameter `aligned_feature_id`.")
       }
 
+      if (!missing(`project_id`) && is.null(`project_id`)) {
+        stop("Invalid value for `project_id` when calling FeaturesApi$GetQuantTableRowExperimental, `project_id` is not nullable")
+      }
 
+      if (!missing(`aligned_feature_id`) && is.null(`aligned_feature_id`)) {
+        stop("Invalid value for `aligned_feature_id` when calling FeaturesApi$GetQuantTableRowExperimental, `aligned_feature_id` is not nullable")
+      }
 
+      if (!missing(`type`) && is.null(`type`)) {
+        stop("Invalid value for `type` when calling FeaturesApi$GetQuantTableRowExperimental, `type` is not nullable")
+      }
 
-      if (!is.null(`type`) && !(`type` %in% c("APEX_HEIGHT"))) {
-        stop("Invalid value for type when calling FeaturesApi$GetQuantificationExperimental. Must be [APEX_HEIGHT].")
+      if (!is.null(`type`) && !(`type` %in% c("APEX_INTENSITY", "AREA_UNDER_CURVE"))) {
+        stop("Invalid value for type when calling FeaturesApi$GetQuantTableRowExperimental. Must be [APEX_INTENSITY, AREA_UNDER_CURVE].")
       }
       query_params[["type"]] <- `type`
 
-      local_var_url_path <- "/api/projects/{projectId}/aligned-features/{alignedFeatureId}/quantification"
+      local_var_url_path <- "/api/projects/{projectId}/aligned-features/{alignedFeatureId}/quant-table-row"
       if (!missing(`project_id`)) {
         local_var_url_path <- gsub("\\{projectId\\}", URLencode(as.character(`project_id`), reserved = TRUE), local_var_url_path)
       }
@@ -3596,18 +4822,21 @@ FeaturesApi <- R6::R6Class(
       if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
         # save response in a file
         if (!is.null(data_file)) {
-          write(local_var_resp$response, data_file)
+          self$api_client$WriteFile(local_var_resp, data_file)
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "QuantificationTableExperimental", loadNamespace("Rsirius")),
+          self$api_client$DeserializeResponse(local_var_resp, "QuantTableExperimental"),
           error = function(e) {
             stop("Failed to deserialize response")
           }
         )
         local_var_resp$content <- deserialized_resp_obj
-        local_var_resp
-      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        return(local_var_resp)
+      } 
+      
+      local_var_error_msg <- local_var_resp$response_as_text()      
+      if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp)
@@ -3615,46 +4844,46 @@ FeaturesApi <- R6::R6Class(
         if (is.null(local_var_resp$response) || local_var_resp$response == "") {
           local_var_resp$response <- "API server error"
         }
-        local_var_resp
+        return(local_var_resp)
       }
     },
 
     #' @description
-    #' List of spectral library matches for the given 'alignedFeatureId'.
+    #' Spectral library match for the given 'alignedFeatureId'.
     #'
     #' @param project_id project-space to read from.
     #' @param aligned_feature_id feature (aligned over runs) the structure candidates belong to.
-    #' @param match_id 
-    #' @param opt_fields (optional) No description (default value: ["none"])
+    #' @param match_id id of the library match to be returned.
+    #' @param opt_fields (optional) No description (default value: [none])
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return SpectralLibraryMatch
-    GetSpectralLibraryMatch = function(project_id, aligned_feature_id, match_id, opt_fields = list("none"), data_file = NULL, ...) {
+    GetSpectralLibraryMatch = function(project_id, aligned_feature_id, match_id, opt_fields = list(NULL), data_file = NULL, ...) {
       local_var_response <- self$GetSpectralLibraryMatchWithHttpInfo(project_id, aligned_feature_id, match_id, opt_fields, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
-        local_var_response$content
+        return(local_var_response$content)
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
-        local_var_response
+        return(local_var_response)
       }
     },
 
     #' @description
-    #' List of spectral library matches for the given 'alignedFeatureId'.
+    #' Spectral library match for the given 'alignedFeatureId'.
     #'
     #' @param project_id project-space to read from.
     #' @param aligned_feature_id feature (aligned over runs) the structure candidates belong to.
-    #' @param match_id 
-    #' @param opt_fields (optional) No description (default value: ["none"])
+    #' @param match_id id of the library match to be returned.
+    #' @param opt_fields (optional) No description (default value: [none])
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return API response (SpectralLibraryMatch) with additional information such as HTTP status code, headers
-    GetSpectralLibraryMatchWithHttpInfo = function(project_id, aligned_feature_id, match_id, opt_fields = list("none"), data_file = NULL, ...) {
+    GetSpectralLibraryMatchWithHttpInfo = function(project_id, aligned_feature_id, match_id, opt_fields = list(NULL), data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -3676,9 +4905,21 @@ FeaturesApi <- R6::R6Class(
         stop("Missing required parameter `match_id`.")
       }
 
+      if (!missing(`project_id`) && is.null(`project_id`)) {
+        stop("Invalid value for `project_id` when calling FeaturesApi$GetSpectralLibraryMatch, `project_id` is not nullable")
+      }
 
+      if (!missing(`aligned_feature_id`) && is.null(`aligned_feature_id`)) {
+        stop("Invalid value for `aligned_feature_id` when calling FeaturesApi$GetSpectralLibraryMatch, `aligned_feature_id` is not nullable")
+      }
 
+      if (!missing(`match_id`) && is.null(`match_id`)) {
+        stop("Invalid value for `match_id` when calling FeaturesApi$GetSpectralLibraryMatch, `match_id` is not nullable")
+      }
 
+      if (!missing(`opt_fields`) && is.null(`opt_fields`)) {
+        stop("Invalid value for `opt_fields` when calling FeaturesApi$GetSpectralLibraryMatch, `opt_fields` is not nullable")
+      }
 
       # explore
       for (query_item in `opt_fields`) {
@@ -3725,18 +4966,21 @@ FeaturesApi <- R6::R6Class(
       if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
         # save response in a file
         if (!is.null(data_file)) {
-          write(local_var_resp$response, data_file)
+          self$api_client$WriteFile(local_var_resp, data_file)
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "SpectralLibraryMatch", loadNamespace("Rsirius")),
+          self$api_client$DeserializeResponse(local_var_resp, "SpectralLibraryMatch"),
           error = function(e) {
             stop("Failed to deserialize response")
           }
         )
         local_var_resp$content <- deserialized_resp_obj
-        local_var_resp
-      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        return(local_var_resp)
+      } 
+      
+      local_var_error_msg <- local_var_resp$response_as_text()      
+      if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp)
@@ -3744,7 +4988,7 @@ FeaturesApi <- R6::R6Class(
         if (is.null(local_var_resp$response) || local_var_resp$response == "") {
           local_var_resp$response <- "API server error"
         }
-        local_var_resp
+        return(local_var_resp)
       }
     },
 
@@ -3764,13 +5008,13 @@ FeaturesApi <- R6::R6Class(
     GetSpectralLibraryMatches = function(project_id, aligned_feature_id, min_shared_peaks = 1, min_similarity = 0.2, inchi_key = "", opt_fields = list("none"), data_file = NULL, ...) {
       local_var_response <- self$GetSpectralLibraryMatchesWithHttpInfo(project_id, aligned_feature_id, min_shared_peaks, min_similarity, inchi_key, opt_fields, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
-        local_var_response$content
+        return(local_var_response$content)
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
-        local_var_response
+        return(local_var_response)
       }
     },
 
@@ -3805,11 +5049,29 @@ FeaturesApi <- R6::R6Class(
         stop("Missing required parameter `aligned_feature_id`.")
       }
 
+      if (!missing(`project_id`) && is.null(`project_id`)) {
+        stop("Invalid value for `project_id` when calling FeaturesApi$GetSpectralLibraryMatches, `project_id` is not nullable")
+      }
 
+      if (!missing(`aligned_feature_id`) && is.null(`aligned_feature_id`)) {
+        stop("Invalid value for `aligned_feature_id` when calling FeaturesApi$GetSpectralLibraryMatches, `aligned_feature_id` is not nullable")
+      }
 
+      if (!missing(`min_shared_peaks`) && is.null(`min_shared_peaks`)) {
+        stop("Invalid value for `min_shared_peaks` when calling FeaturesApi$GetSpectralLibraryMatches, `min_shared_peaks` is not nullable")
+      }
 
+      if (!missing(`min_similarity`) && is.null(`min_similarity`)) {
+        stop("Invalid value for `min_similarity` when calling FeaturesApi$GetSpectralLibraryMatches, `min_similarity` is not nullable")
+      }
 
+      if (!missing(`inchi_key`) && is.null(`inchi_key`)) {
+        stop("Invalid value for `inchi_key` when calling FeaturesApi$GetSpectralLibraryMatches, `inchi_key` is not nullable")
+      }
 
+      if (!missing(`opt_fields`) && is.null(`opt_fields`)) {
+        stop("Invalid value for `opt_fields` when calling FeaturesApi$GetSpectralLibraryMatches, `opt_fields` is not nullable")
+      }
 
       query_params[["minSharedPeaks"]] <- `min_shared_peaks`
 
@@ -3858,18 +5120,21 @@ FeaturesApi <- R6::R6Class(
       if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
         # save response in a file
         if (!is.null(data_file)) {
-          write(local_var_resp$response, data_file)
+          self$api_client$WriteFile(local_var_resp, data_file)
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "array[SpectralLibraryMatch]", loadNamespace("Rsirius")),
+          self$api_client$DeserializeResponse(local_var_resp, "array[SpectralLibraryMatch]"),
           error = function(e) {
             stop("Failed to deserialize response")
           }
         )
         local_var_resp$content <- deserialized_resp_obj
-        local_var_resp
-      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        return(local_var_resp)
+      } 
+      
+      local_var_error_msg <- local_var_resp$response_as_text()      
+      if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp)
@@ -3877,7 +5142,7 @@ FeaturesApi <- R6::R6Class(
         if (is.null(local_var_resp$response) || local_var_resp$response == "") {
           local_var_resp$response <- "API server error"
         }
-        local_var_resp
+        return(local_var_resp)
       }
     },
 
@@ -3892,21 +5157,21 @@ FeaturesApi <- R6::R6Class(
     #' @param min_shared_peaks (optional) No description (default value: 1)
     #' @param min_similarity (optional) No description (default value: 0.2)
     #' @param inchi_key (optional) No description (default value: "")
-    #' @param opt_fields (optional) No description (default value: ["none"])
+    #' @param opt_fields (optional) No description (default value: [none])
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return PagedModelSpectralLibraryMatch
-    GetSpectralLibraryMatchesPaged = function(project_id, aligned_feature_id, page = 0, size = 20, sort = NULL, min_shared_peaks = 1, min_similarity = 0.2, inchi_key = "", opt_fields = list("none"), data_file = NULL, ...) {
+    GetSpectralLibraryMatchesPaged = function(project_id, aligned_feature_id, page = 0, size = 20, sort = NULL, min_shared_peaks = 1, min_similarity = 0.2, inchi_key = "", opt_fields = list(NULL), data_file = NULL, ...) {
       local_var_response <- self$GetSpectralLibraryMatchesPagedWithHttpInfo(project_id, aligned_feature_id, page, size, sort, min_shared_peaks, min_similarity, inchi_key, opt_fields, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
-        local_var_response$content
+        return(local_var_response$content)
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
-        local_var_response
+        return(local_var_response)
       }
     },
 
@@ -3921,12 +5186,12 @@ FeaturesApi <- R6::R6Class(
     #' @param min_shared_peaks (optional) No description (default value: 1)
     #' @param min_similarity (optional) No description (default value: 0.2)
     #' @param inchi_key (optional) No description (default value: "")
-    #' @param opt_fields (optional) No description (default value: ["none"])
+    #' @param opt_fields (optional) No description (default value: [none])
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return API response (PagedModelSpectralLibraryMatch) with additional information such as HTTP status code, headers
-    GetSpectralLibraryMatchesPagedWithHttpInfo = function(project_id, aligned_feature_id, page = 0, size = 20, sort = NULL, min_shared_peaks = 1, min_similarity = 0.2, inchi_key = "", opt_fields = list("none"), data_file = NULL, ...) {
+    GetSpectralLibraryMatchesPagedWithHttpInfo = function(project_id, aligned_feature_id, page = 0, size = 20, sort = NULL, min_shared_peaks = 1, min_similarity = 0.2, inchi_key = "", opt_fields = list(NULL), data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -3944,20 +5209,47 @@ FeaturesApi <- R6::R6Class(
         stop("Missing required parameter `aligned_feature_id`.")
       }
 
+      if (!missing(`project_id`) && is.null(`project_id`)) {
+        stop("Invalid value for `project_id` when calling FeaturesApi$GetSpectralLibraryMatchesPaged, `project_id` is not nullable")
+      }
 
+      if (!missing(`aligned_feature_id`) && is.null(`aligned_feature_id`)) {
+        stop("Invalid value for `aligned_feature_id` when calling FeaturesApi$GetSpectralLibraryMatchesPaged, `aligned_feature_id` is not nullable")
+      }
 
-      if (`page` < 0) {
+      if (!missing(`page`) && is.null(`page`)) {
+        stop("Invalid value for `page` when calling FeaturesApi$GetSpectralLibraryMatchesPaged, `page` is not nullable")
+      }
+      if (!is.null(`page`) && `page` <  0) {
         stop("Invalid value for `page` when calling FeaturesApi$GetSpectralLibraryMatchesPaged, must be bigger than or equal to 0.")
       }
 
-      if (`size` < 1) {
+      if (!missing(`size`) && is.null(`size`)) {
+        stop("Invalid value for `size` when calling FeaturesApi$GetSpectralLibraryMatchesPaged, `size` is not nullable")
+      }
+      if (!is.null(`size`) && `size` <  1) {
         stop("Invalid value for `size` when calling FeaturesApi$GetSpectralLibraryMatchesPaged, must be bigger than or equal to 1.")
       }
 
+      if (!missing(`sort`) && is.null(`sort`)) {
+        stop("Invalid value for `sort` when calling FeaturesApi$GetSpectralLibraryMatchesPaged, `sort` is not nullable")
+      }
 
+      if (!missing(`min_shared_peaks`) && is.null(`min_shared_peaks`)) {
+        stop("Invalid value for `min_shared_peaks` when calling FeaturesApi$GetSpectralLibraryMatchesPaged, `min_shared_peaks` is not nullable")
+      }
 
+      if (!missing(`min_similarity`) && is.null(`min_similarity`)) {
+        stop("Invalid value for `min_similarity` when calling FeaturesApi$GetSpectralLibraryMatchesPaged, `min_similarity` is not nullable")
+      }
 
+      if (!missing(`inchi_key`) && is.null(`inchi_key`)) {
+        stop("Invalid value for `inchi_key` when calling FeaturesApi$GetSpectralLibraryMatchesPaged, `inchi_key` is not nullable")
+      }
 
+      if (!missing(`opt_fields`) && is.null(`opt_fields`)) {
+        stop("Invalid value for `opt_fields` when calling FeaturesApi$GetSpectralLibraryMatchesPaged, `opt_fields` is not nullable")
+      }
 
       query_params[["page"]] <- `page`
 
@@ -4015,18 +5307,21 @@ FeaturesApi <- R6::R6Class(
       if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
         # save response in a file
         if (!is.null(data_file)) {
-          write(local_var_resp$response, data_file)
+          self$api_client$WriteFile(local_var_resp, data_file)
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "PagedModelSpectralLibraryMatch", loadNamespace("Rsirius")),
+          self$api_client$DeserializeResponse(local_var_resp, "PagedModelSpectralLibraryMatch"),
           error = function(e) {
             stop("Failed to deserialize response")
           }
         )
         local_var_resp$content <- deserialized_resp_obj
-        local_var_resp
-      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        return(local_var_resp)
+      } 
+      
+      local_var_error_msg <- local_var_resp$response_as_text()      
+      if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp)
@@ -4034,7 +5329,7 @@ FeaturesApi <- R6::R6Class(
         if (is.null(local_var_resp$response) || local_var_resp$response == "") {
           local_var_resp$response <- "API server error"
         }
-        local_var_resp
+        return(local_var_resp)
       }
     },
 
@@ -4053,13 +5348,13 @@ FeaturesApi <- R6::R6Class(
     GetSpectralLibraryMatchesSummary = function(project_id, aligned_feature_id, min_shared_peaks = 1, min_similarity = 0.2, inchi_key = "", data_file = NULL, ...) {
       local_var_response <- self$GetSpectralLibraryMatchesSummaryWithHttpInfo(project_id, aligned_feature_id, min_shared_peaks, min_similarity, inchi_key, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
-        local_var_response$content
+        return(local_var_response$content)
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
-        local_var_response
+        return(local_var_response)
       }
     },
 
@@ -4093,10 +5388,25 @@ FeaturesApi <- R6::R6Class(
         stop("Missing required parameter `aligned_feature_id`.")
       }
 
+      if (!missing(`project_id`) && is.null(`project_id`)) {
+        stop("Invalid value for `project_id` when calling FeaturesApi$GetSpectralLibraryMatchesSummary, `project_id` is not nullable")
+      }
 
+      if (!missing(`aligned_feature_id`) && is.null(`aligned_feature_id`)) {
+        stop("Invalid value for `aligned_feature_id` when calling FeaturesApi$GetSpectralLibraryMatchesSummary, `aligned_feature_id` is not nullable")
+      }
 
+      if (!missing(`min_shared_peaks`) && is.null(`min_shared_peaks`)) {
+        stop("Invalid value for `min_shared_peaks` when calling FeaturesApi$GetSpectralLibraryMatchesSummary, `min_shared_peaks` is not nullable")
+      }
 
+      if (!missing(`min_similarity`) && is.null(`min_similarity`)) {
+        stop("Invalid value for `min_similarity` when calling FeaturesApi$GetSpectralLibraryMatchesSummary, `min_similarity` is not nullable")
+      }
 
+      if (!missing(`inchi_key`) && is.null(`inchi_key`)) {
+        stop("Invalid value for `inchi_key` when calling FeaturesApi$GetSpectralLibraryMatchesSummary, `inchi_key` is not nullable")
+      }
 
       query_params[["minSharedPeaks"]] <- `min_shared_peaks`
 
@@ -4136,18 +5446,21 @@ FeaturesApi <- R6::R6Class(
       if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
         # save response in a file
         if (!is.null(data_file)) {
-          write(local_var_resp$response, data_file)
+          self$api_client$WriteFile(local_var_resp, data_file)
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "SpectralLibraryMatchSummary", loadNamespace("Rsirius")),
+          self$api_client$DeserializeResponse(local_var_resp, "SpectralLibraryMatchSummary"),
           error = function(e) {
             stop("Failed to deserialize response")
           }
         )
         local_var_resp$content <- deserialized_resp_obj
-        local_var_resp
-      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        return(local_var_resp)
+      } 
+      
+      local_var_error_msg <- local_var_resp$response_as_text()      
+      if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp)
@@ -4155,46 +5468,48 @@ FeaturesApi <- R6::R6Class(
         if (is.null(local_var_resp$response) || local_var_resp$response == "") {
           local_var_resp$response <- "API server error"
         }
-        local_var_resp
+        return(local_var_resp)
       }
     },
 
     #' @description
-    #' EXPERIMENTAL: This endpoint is experimental because it produces return values that are not yet stable.
+    #' [EXPERIMENTAL] Returns MS/MS Data annotated with fragments and losses for given formulaId and inChIKey
     #'
     #' @param project_id project-space to read from.
     #' @param aligned_feature_id feature (aligned over runs) the formula result belongs to.
     #' @param formula_id identifier of the requested formula result
     #' @param inchi_key 2d InChIKey of the structure candidate to be used to annotate the spectrum annotation
+    #' @param ms_data_search_prepared (optional) Returns all fragment spectra in a preprocessed form as used for fast                          Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                          peak assignments and reference spectra. (default value: FALSE)
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return AnnotatedMsMsData
-    GetStructureAnnotatedMsDataExperimental = function(project_id, aligned_feature_id, formula_id, inchi_key, data_file = NULL, ...) {
-      local_var_response <- self$GetStructureAnnotatedMsDataExperimentalWithHttpInfo(project_id, aligned_feature_id, formula_id, inchi_key, data_file = data_file, ...)
+    GetStructureAnnotatedMsDataExperimental = function(project_id, aligned_feature_id, formula_id, inchi_key, ms_data_search_prepared = FALSE, data_file = NULL, ...) {
+      local_var_response <- self$GetStructureAnnotatedMsDataExperimentalWithHttpInfo(project_id, aligned_feature_id, formula_id, inchi_key, ms_data_search_prepared, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
-        local_var_response$content
+        return(local_var_response$content)
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
-        local_var_response
+        return(local_var_response)
       }
     },
 
     #' @description
-    #' EXPERIMENTAL: This endpoint is experimental because it produces return values that are not yet stable.
+    #' [EXPERIMENTAL] Returns MS/MS Data annotated with fragments and losses for given formulaId and inChIKey
     #'
     #' @param project_id project-space to read from.
     #' @param aligned_feature_id feature (aligned over runs) the formula result belongs to.
     #' @param formula_id identifier of the requested formula result
     #' @param inchi_key 2d InChIKey of the structure candidate to be used to annotate the spectrum annotation
+    #' @param ms_data_search_prepared (optional) Returns all fragment spectra in a preprocessed form as used for fast                          Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                          peak assignments and reference spectra. (default value: FALSE)
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return API response (AnnotatedMsMsData) with additional information such as HTTP status code, headers
-    GetStructureAnnotatedMsDataExperimentalWithHttpInfo = function(project_id, aligned_feature_id, formula_id, inchi_key, data_file = NULL, ...) {
+    GetStructureAnnotatedMsDataExperimentalWithHttpInfo = function(project_id, aligned_feature_id, formula_id, inchi_key, ms_data_search_prepared = FALSE, data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -4220,9 +5535,27 @@ FeaturesApi <- R6::R6Class(
         stop("Missing required parameter `inchi_key`.")
       }
 
+      if (!missing(`project_id`) && is.null(`project_id`)) {
+        stop("Invalid value for `project_id` when calling FeaturesApi$GetStructureAnnotatedMsDataExperimental, `project_id` is not nullable")
+      }
 
+      if (!missing(`aligned_feature_id`) && is.null(`aligned_feature_id`)) {
+        stop("Invalid value for `aligned_feature_id` when calling FeaturesApi$GetStructureAnnotatedMsDataExperimental, `aligned_feature_id` is not nullable")
+      }
 
+      if (!missing(`formula_id`) && is.null(`formula_id`)) {
+        stop("Invalid value for `formula_id` when calling FeaturesApi$GetStructureAnnotatedMsDataExperimental, `formula_id` is not nullable")
+      }
 
+      if (!missing(`inchi_key`) && is.null(`inchi_key`)) {
+        stop("Invalid value for `inchi_key` when calling FeaturesApi$GetStructureAnnotatedMsDataExperimental, `inchi_key` is not nullable")
+      }
+
+      if (!missing(`ms_data_search_prepared`) && is.null(`ms_data_search_prepared`)) {
+        stop("Invalid value for `ms_data_search_prepared` when calling FeaturesApi$GetStructureAnnotatedMsDataExperimental, `ms_data_search_prepared` is not nullable")
+      }
+
+      query_params[["msDataSearchPrepared"]] <- `ms_data_search_prepared`
 
       local_var_url_path <- "/api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/structures/{inchiKey}/annotated-msmsdata"
       if (!missing(`project_id`)) {
@@ -4264,18 +5597,21 @@ FeaturesApi <- R6::R6Class(
       if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
         # save response in a file
         if (!is.null(data_file)) {
-          write(local_var_resp$response, data_file)
+          self$api_client$WriteFile(local_var_resp, data_file)
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "AnnotatedMsMsData", loadNamespace("Rsirius")),
+          self$api_client$DeserializeResponse(local_var_resp, "AnnotatedMsMsData"),
           error = function(e) {
             stop("Failed to deserialize response")
           }
         )
         local_var_resp$content <- deserialized_resp_obj
-        local_var_resp
-      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        return(local_var_resp)
+      } 
+      
+      local_var_error_msg <- local_var_resp$response_as_text()      
+      if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp)
@@ -4283,48 +5619,179 @@ FeaturesApi <- R6::R6Class(
         if (is.null(local_var_resp$response) || local_var_resp$response == "") {
           local_var_resp$response <- "API server error"
         }
-        local_var_resp
+        return(local_var_resp)
       }
     },
 
     #' @description
-    #' EXPERIMENTAL: This endpoint is experimental because it produces return values that are not yet stable.
+    #' [EXPERIMENTAL] Spectral library match for the given 'alignedFeatureId' with additional molecular formula and substructure annotations
     #'
     #' @param project_id project-space to read from.
-    #' @param aligned_feature_id feature (aligned over runs) the formula result belongs to.
-    #' @param formula_id identifier of the requested formula result
-    #' @param inchi_key 2d InChIKey of the structure candidate to be used to annotate the spectrum annotation
-    #' @param spectrum_index (optional) index of the spectrum to be annotated. Merged MS/MS will be used if spectrumIndex < 0 (default) (default value: -1)
+    #' @param aligned_feature_id feature (aligned over runs) the structure candidates belong to.
+    #' @param match_id id of the library match to be returned.
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return AnnotatedSpectrum
-    GetStructureAnnotatedSpectrumExperimental = function(project_id, aligned_feature_id, formula_id, inchi_key, spectrum_index = -1, data_file = NULL, ...) {
-      local_var_response <- self$GetStructureAnnotatedSpectrumExperimentalWithHttpInfo(project_id, aligned_feature_id, formula_id, inchi_key, spectrum_index, data_file = data_file, ...)
+    GetStructureAnnotatedSpectralLibraryMatchExperimental = function(project_id, aligned_feature_id, match_id, data_file = NULL, ...) {
+      local_var_response <- self$GetStructureAnnotatedSpectralLibraryMatchExperimentalWithHttpInfo(project_id, aligned_feature_id, match_id, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
-        local_var_response$content
+        return(local_var_response$content)
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
-        local_var_response
+        return(local_var_response)
       }
     },
 
     #' @description
-    #' EXPERIMENTAL: This endpoint is experimental because it produces return values that are not yet stable.
+    #' [EXPERIMENTAL] Spectral library match for the given 'alignedFeatureId' with additional molecular formula and substructure annotations
+    #'
+    #' @param project_id project-space to read from.
+    #' @param aligned_feature_id feature (aligned over runs) the structure candidates belong to.
+    #' @param match_id id of the library match to be returned.
+    #' @param data_file (optional) name of the data file to save the result
+    #' @param ... Other optional arguments
+    #'
+    #' @return API response (AnnotatedSpectrum) with additional information such as HTTP status code, headers
+    GetStructureAnnotatedSpectralLibraryMatchExperimentalWithHttpInfo = function(project_id, aligned_feature_id, match_id, data_file = NULL, ...) {
+      args <- list(...)
+      query_params <- list()
+      header_params <- c()
+      form_params <- list()
+      file_params <- list()
+      local_var_body <- NULL
+      oauth_scopes <- NULL
+      is_oauth <- FALSE
+
+      if (missing(`project_id`)) {
+        stop("Missing required parameter `project_id`.")
+      }
+
+      if (missing(`aligned_feature_id`)) {
+        stop("Missing required parameter `aligned_feature_id`.")
+      }
+
+      if (missing(`match_id`)) {
+        stop("Missing required parameter `match_id`.")
+      }
+
+      if (!missing(`project_id`) && is.null(`project_id`)) {
+        stop("Invalid value for `project_id` when calling FeaturesApi$GetStructureAnnotatedSpectralLibraryMatchExperimental, `project_id` is not nullable")
+      }
+
+      if (!missing(`aligned_feature_id`) && is.null(`aligned_feature_id`)) {
+        stop("Invalid value for `aligned_feature_id` when calling FeaturesApi$GetStructureAnnotatedSpectralLibraryMatchExperimental, `aligned_feature_id` is not nullable")
+      }
+
+      if (!missing(`match_id`) && is.null(`match_id`)) {
+        stop("Invalid value for `match_id` when calling FeaturesApi$GetStructureAnnotatedSpectralLibraryMatchExperimental, `match_id` is not nullable")
+      }
+
+      local_var_url_path <- "/api/projects/{projectId}/aligned-features/{alignedFeatureId}/spectral-library-matches/{matchId}/annotated"
+      if (!missing(`project_id`)) {
+        local_var_url_path <- gsub("\\{projectId\\}", URLencode(as.character(`project_id`), reserved = TRUE), local_var_url_path)
+      }
+
+      if (!missing(`aligned_feature_id`)) {
+        local_var_url_path <- gsub("\\{alignedFeatureId\\}", URLencode(as.character(`aligned_feature_id`), reserved = TRUE), local_var_url_path)
+      }
+
+      if (!missing(`match_id`)) {
+        local_var_url_path <- gsub("\\{matchId\\}", URLencode(as.character(`match_id`), reserved = TRUE), local_var_url_path)
+      }
+
+
+      # The Accept request HTTP header
+      local_var_accepts <- list("application/json")
+
+      # The Content-Type representation header
+      local_var_content_types <- list()
+
+      local_var_resp <- self$api_client$CallApi(url = paste0(self$api_client$base_path, local_var_url_path),
+                                 method = "GET",
+                                 query_params = query_params,
+                                 header_params = header_params,
+                                 form_params = form_params,
+                                 file_params = file_params,
+                                 accepts = local_var_accepts,
+                                 content_types = local_var_content_types,
+                                 body = local_var_body,
+                                 is_oauth = is_oauth,
+                                 oauth_scopes = oauth_scopes,
+                                 ...)
+
+      if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
+        # save response in a file
+        if (!is.null(data_file)) {
+          self$api_client$WriteFile(local_var_resp, data_file)
+        }
+
+        deserialized_resp_obj <- tryCatch(
+          self$api_client$DeserializeResponse(local_var_resp, "AnnotatedSpectrum"),
+          error = function(e) {
+            stop("Failed to deserialize response")
+          }
+        )
+        local_var_resp$content <- deserialized_resp_obj
+        return(local_var_resp)
+      } 
+      
+      local_var_error_msg <- local_var_resp$response_as_text()      
+      if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
+      } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
+        ApiResponse$new("API client error", local_var_resp)
+      } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
+        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
+          local_var_resp$response <- "API server error"
+        }
+        return(local_var_resp)
+      }
+    },
+
+    #' @description
+    #' [EXPERIMENTAL] Returns a fragmentation spectrum annotated with fragments and losses for the given formulaId and inChIKey  
     #'
     #' @param project_id project-space to read from.
     #' @param aligned_feature_id feature (aligned over runs) the formula result belongs to.
     #' @param formula_id identifier of the requested formula result
     #' @param inchi_key 2d InChIKey of the structure candidate to be used to annotate the spectrum annotation
     #' @param spectrum_index (optional) index of the spectrum to be annotated. Merged MS/MS will be used if spectrumIndex < 0 (default) (default value: -1)
+    #' @param search_prepared (optional) No description (default value: FALSE)
+    #' @param data_file (optional) name of the data file to save the result
+    #' @param ... Other optional arguments
+    #'
+    #' @return AnnotatedSpectrum
+    GetStructureAnnotatedSpectrumExperimental = function(project_id, aligned_feature_id, formula_id, inchi_key, spectrum_index = -1, search_prepared = FALSE, data_file = NULL, ...) {
+      local_var_response <- self$GetStructureAnnotatedSpectrumExperimentalWithHttpInfo(project_id, aligned_feature_id, formula_id, inchi_key, spectrum_index, search_prepared, data_file = data_file, ...)
+      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
+        return(local_var_response$content)
+      } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
+        return(local_var_response)
+      } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
+        return(local_var_response)
+      } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
+        return(local_var_response)
+      }
+    },
+
+    #' @description
+    #' [EXPERIMENTAL] Returns a fragmentation spectrum annotated with fragments and losses for the given formulaId and inChIKey  
+    #'
+    #' @param project_id project-space to read from.
+    #' @param aligned_feature_id feature (aligned over runs) the formula result belongs to.
+    #' @param formula_id identifier of the requested formula result
+    #' @param inchi_key 2d InChIKey of the structure candidate to be used to annotate the spectrum annotation
+    #' @param spectrum_index (optional) index of the spectrum to be annotated. Merged MS/MS will be used if spectrumIndex < 0 (default) (default value: -1)
+    #' @param search_prepared (optional) No description (default value: FALSE)
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return API response (AnnotatedSpectrum) with additional information such as HTTP status code, headers
-    GetStructureAnnotatedSpectrumExperimentalWithHttpInfo = function(project_id, aligned_feature_id, formula_id, inchi_key, spectrum_index = -1, data_file = NULL, ...) {
+    GetStructureAnnotatedSpectrumExperimentalWithHttpInfo = function(project_id, aligned_feature_id, formula_id, inchi_key, spectrum_index = -1, search_prepared = FALSE, data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -4350,12 +5817,33 @@ FeaturesApi <- R6::R6Class(
         stop("Missing required parameter `inchi_key`.")
       }
 
+      if (!missing(`project_id`) && is.null(`project_id`)) {
+        stop("Invalid value for `project_id` when calling FeaturesApi$GetStructureAnnotatedSpectrumExperimental, `project_id` is not nullable")
+      }
 
+      if (!missing(`aligned_feature_id`) && is.null(`aligned_feature_id`)) {
+        stop("Invalid value for `aligned_feature_id` when calling FeaturesApi$GetStructureAnnotatedSpectrumExperimental, `aligned_feature_id` is not nullable")
+      }
 
+      if (!missing(`formula_id`) && is.null(`formula_id`)) {
+        stop("Invalid value for `formula_id` when calling FeaturesApi$GetStructureAnnotatedSpectrumExperimental, `formula_id` is not nullable")
+      }
 
+      if (!missing(`inchi_key`) && is.null(`inchi_key`)) {
+        stop("Invalid value for `inchi_key` when calling FeaturesApi$GetStructureAnnotatedSpectrumExperimental, `inchi_key` is not nullable")
+      }
 
+      if (!missing(`spectrum_index`) && is.null(`spectrum_index`)) {
+        stop("Invalid value for `spectrum_index` when calling FeaturesApi$GetStructureAnnotatedSpectrumExperimental, `spectrum_index` is not nullable")
+      }
+
+      if (!missing(`search_prepared`) && is.null(`search_prepared`)) {
+        stop("Invalid value for `search_prepared` when calling FeaturesApi$GetStructureAnnotatedSpectrumExperimental, `search_prepared` is not nullable")
+      }
 
       query_params[["spectrumIndex"]] <- `spectrum_index`
+
+      query_params[["searchPrepared"]] <- `search_prepared`
 
       local_var_url_path <- "/api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/structures/{inchiKey}/annotated-spectrum"
       if (!missing(`project_id`)) {
@@ -4397,18 +5885,21 @@ FeaturesApi <- R6::R6Class(
       if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
         # save response in a file
         if (!is.null(data_file)) {
-          write(local_var_resp$response, data_file)
+          self$api_client$WriteFile(local_var_resp, data_file)
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "AnnotatedSpectrum", loadNamespace("Rsirius")),
+          self$api_client$DeserializeResponse(local_var_resp, "AnnotatedSpectrum"),
           error = function(e) {
             stop("Failed to deserialize response")
           }
         )
         local_var_resp$content <- deserialized_resp_obj
-        local_var_resp
-      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        return(local_var_resp)
+      } 
+      
+      local_var_error_msg <- local_var_resp$response_as_text()      
+      if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp)
@@ -4416,7 +5907,7 @@ FeaturesApi <- R6::R6Class(
         if (is.null(local_var_resp$response) || local_var_resp$response == "") {
           local_var_resp$response <- "API server error"
         }
-        local_var_resp
+        return(local_var_resp)
       }
     },
 
@@ -4425,21 +5916,21 @@ FeaturesApi <- R6::R6Class(
     #'
     #' @param project_id project-space to read from.
     #' @param aligned_feature_id feature (aligned over runs) the structure candidates belong to.
-    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])
+    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [none])
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return array[StructureCandidateFormula]
-    GetStructureCandidates = function(project_id, aligned_feature_id, opt_fields = list("none"), data_file = NULL, ...) {
+    GetStructureCandidates = function(project_id, aligned_feature_id, opt_fields = list(NULL), data_file = NULL, ...) {
       local_var_response <- self$GetStructureCandidatesWithHttpInfo(project_id, aligned_feature_id, opt_fields, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
-        local_var_response$content
+        return(local_var_response$content)
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
-        local_var_response
+        return(local_var_response)
       }
     },
 
@@ -4448,12 +5939,12 @@ FeaturesApi <- R6::R6Class(
     #'
     #' @param project_id project-space to read from.
     #' @param aligned_feature_id feature (aligned over runs) the structure candidates belong to.
-    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])
+    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [none])
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return API response (array[StructureCandidateFormula]) with additional information such as HTTP status code, headers
-    GetStructureCandidatesWithHttpInfo = function(project_id, aligned_feature_id, opt_fields = list("none"), data_file = NULL, ...) {
+    GetStructureCandidatesWithHttpInfo = function(project_id, aligned_feature_id, opt_fields = list(NULL), data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -4471,14 +5962,23 @@ FeaturesApi <- R6::R6Class(
         stop("Missing required parameter `aligned_feature_id`.")
       }
 
+      if (!missing(`project_id`) && is.null(`project_id`)) {
+        stop("Invalid value for `project_id` when calling FeaturesApi$GetStructureCandidates, `project_id` is not nullable")
+      }
 
+      if (!missing(`aligned_feature_id`) && is.null(`aligned_feature_id`)) {
+        stop("Invalid value for `aligned_feature_id` when calling FeaturesApi$GetStructureCandidates, `aligned_feature_id` is not nullable")
+      }
 
+      if (!missing(`opt_fields`) && is.null(`opt_fields`)) {
+        stop("Invalid value for `opt_fields` when calling FeaturesApi$GetStructureCandidates, `opt_fields` is not nullable")
+      }
 
       # explore
       for (query_item in `opt_fields`) {
         # validate enum values
-        if (!is.null(query_item) && !(query_item %in% c("none", "fingerprint", "dbLinks", "libraryMatches"))) {
-          stop("Invalid value for opt_fields when calling FeaturesApi$GetStructureCandidates. Must be [none, fingerprint, dbLinks, libraryMatches].")
+        if (!is.null(query_item) && !(query_item %in% c("none", "fingerprint", "dbLinks", "libraryMatches", "structureSvg"))) {
+          stop("Invalid value for opt_fields when calling FeaturesApi$GetStructureCandidates. Must be [none, fingerprint, dbLinks, libraryMatches, structureSvg].")
         }
         query_params[["optFields"]] <- c(query_params[["optFields"]], list(`optFields` = query_item))
       }
@@ -4515,18 +6015,21 @@ FeaturesApi <- R6::R6Class(
       if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
         # save response in a file
         if (!is.null(data_file)) {
-          write(local_var_resp$response, data_file)
+          self$api_client$WriteFile(local_var_resp, data_file)
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "array[StructureCandidateFormula]", loadNamespace("Rsirius")),
+          self$api_client$DeserializeResponse(local_var_resp, "array[StructureCandidateFormula]"),
           error = function(e) {
             stop("Failed to deserialize response")
           }
         )
         local_var_resp$content <- deserialized_resp_obj
-        local_var_resp
-      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        return(local_var_resp)
+      } 
+      
+      local_var_error_msg <- local_var_resp$response_as_text()      
+      if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp)
@@ -4534,7 +6037,7 @@ FeaturesApi <- R6::R6Class(
         if (is.null(local_var_resp$response) || local_var_resp$response == "") {
           local_var_resp$response <- "API server error"
         }
-        local_var_resp
+        return(local_var_resp)
       }
     },
 
@@ -4544,21 +6047,21 @@ FeaturesApi <- R6::R6Class(
     #' @param project_id project-space to read from.
     #' @param aligned_feature_id feature (aligned over runs) the formula result belongs to.
     #' @param formula_id identifier of the requested formula result
-    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])
+    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [none])
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return array[StructureCandidateScored]
-    GetStructureCandidatesByFormula = function(project_id, aligned_feature_id, formula_id, opt_fields = list("none"), data_file = NULL, ...) {
+    GetStructureCandidatesByFormula = function(project_id, aligned_feature_id, formula_id, opt_fields = list(NULL), data_file = NULL, ...) {
       local_var_response <- self$GetStructureCandidatesByFormulaWithHttpInfo(project_id, aligned_feature_id, formula_id, opt_fields, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
-        local_var_response$content
+        return(local_var_response$content)
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
-        local_var_response
+        return(local_var_response)
       }
     },
 
@@ -4568,12 +6071,12 @@ FeaturesApi <- R6::R6Class(
     #' @param project_id project-space to read from.
     #' @param aligned_feature_id feature (aligned over runs) the formula result belongs to.
     #' @param formula_id identifier of the requested formula result
-    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])
+    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [none])
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return API response (array[StructureCandidateScored]) with additional information such as HTTP status code, headers
-    GetStructureCandidatesByFormulaWithHttpInfo = function(project_id, aligned_feature_id, formula_id, opt_fields = list("none"), data_file = NULL, ...) {
+    GetStructureCandidatesByFormulaWithHttpInfo = function(project_id, aligned_feature_id, formula_id, opt_fields = list(NULL), data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -4595,15 +6098,27 @@ FeaturesApi <- R6::R6Class(
         stop("Missing required parameter `formula_id`.")
       }
 
+      if (!missing(`project_id`) && is.null(`project_id`)) {
+        stop("Invalid value for `project_id` when calling FeaturesApi$GetStructureCandidatesByFormula, `project_id` is not nullable")
+      }
 
+      if (!missing(`aligned_feature_id`) && is.null(`aligned_feature_id`)) {
+        stop("Invalid value for `aligned_feature_id` when calling FeaturesApi$GetStructureCandidatesByFormula, `aligned_feature_id` is not nullable")
+      }
 
+      if (!missing(`formula_id`) && is.null(`formula_id`)) {
+        stop("Invalid value for `formula_id` when calling FeaturesApi$GetStructureCandidatesByFormula, `formula_id` is not nullable")
+      }
 
+      if (!missing(`opt_fields`) && is.null(`opt_fields`)) {
+        stop("Invalid value for `opt_fields` when calling FeaturesApi$GetStructureCandidatesByFormula, `opt_fields` is not nullable")
+      }
 
       # explore
       for (query_item in `opt_fields`) {
         # validate enum values
-        if (!is.null(query_item) && !(query_item %in% c("none", "fingerprint", "dbLinks", "libraryMatches"))) {
-          stop("Invalid value for opt_fields when calling FeaturesApi$GetStructureCandidatesByFormula. Must be [none, fingerprint, dbLinks, libraryMatches].")
+        if (!is.null(query_item) && !(query_item %in% c("none", "fingerprint", "dbLinks", "libraryMatches", "structureSvg"))) {
+          stop("Invalid value for opt_fields when calling FeaturesApi$GetStructureCandidatesByFormula. Must be [none, fingerprint, dbLinks, libraryMatches, structureSvg].")
         }
         query_params[["optFields"]] <- c(query_params[["optFields"]], list(`optFields` = query_item))
       }
@@ -4644,18 +6159,21 @@ FeaturesApi <- R6::R6Class(
       if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
         # save response in a file
         if (!is.null(data_file)) {
-          write(local_var_resp$response, data_file)
+          self$api_client$WriteFile(local_var_resp, data_file)
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "array[StructureCandidateScored]", loadNamespace("Rsirius")),
+          self$api_client$DeserializeResponse(local_var_resp, "array[StructureCandidateScored]"),
           error = function(e) {
             stop("Failed to deserialize response")
           }
         )
         local_var_resp$content <- deserialized_resp_obj
-        local_var_resp
-      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        return(local_var_resp)
+      } 
+      
+      local_var_error_msg <- local_var_resp$response_as_text()      
+      if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp)
@@ -4663,7 +6181,7 @@ FeaturesApi <- R6::R6Class(
         if (is.null(local_var_resp$response) || local_var_resp$response == "") {
           local_var_resp$response <- "API server error"
         }
-        local_var_resp
+        return(local_var_resp)
       }
     },
 
@@ -4676,21 +6194,21 @@ FeaturesApi <- R6::R6Class(
     #' @param page (optional) Zero-based page index (0..N) (default value: 0)
     #' @param size (optional) The size of the page to be returned (default value: 20)
     #' @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
-    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])
+    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [none])
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return PagedModelStructureCandidateScored
-    GetStructureCandidatesByFormulaPaged = function(project_id, aligned_feature_id, formula_id, page = 0, size = 20, sort = NULL, opt_fields = list("none"), data_file = NULL, ...) {
+    GetStructureCandidatesByFormulaPaged = function(project_id, aligned_feature_id, formula_id, page = 0, size = 20, sort = NULL, opt_fields = list(NULL), data_file = NULL, ...) {
       local_var_response <- self$GetStructureCandidatesByFormulaPagedWithHttpInfo(project_id, aligned_feature_id, formula_id, page, size, sort, opt_fields, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
-        local_var_response$content
+        return(local_var_response$content)
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
-        local_var_response
+        return(local_var_response)
       }
     },
 
@@ -4703,12 +6221,12 @@ FeaturesApi <- R6::R6Class(
     #' @param page (optional) Zero-based page index (0..N) (default value: 0)
     #' @param size (optional) The size of the page to be returned (default value: 20)
     #' @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
-    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])
+    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [none])
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return API response (PagedModelStructureCandidateScored) with additional information such as HTTP status code, headers
-    GetStructureCandidatesByFormulaPagedWithHttpInfo = function(project_id, aligned_feature_id, formula_id, page = 0, size = 20, sort = NULL, opt_fields = list("none"), data_file = NULL, ...) {
+    GetStructureCandidatesByFormulaPagedWithHttpInfo = function(project_id, aligned_feature_id, formula_id, page = 0, size = 20, sort = NULL, opt_fields = list(NULL), data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -4730,18 +6248,39 @@ FeaturesApi <- R6::R6Class(
         stop("Missing required parameter `formula_id`.")
       }
 
+      if (!missing(`project_id`) && is.null(`project_id`)) {
+        stop("Invalid value for `project_id` when calling FeaturesApi$GetStructureCandidatesByFormulaPaged, `project_id` is not nullable")
+      }
 
+      if (!missing(`aligned_feature_id`) && is.null(`aligned_feature_id`)) {
+        stop("Invalid value for `aligned_feature_id` when calling FeaturesApi$GetStructureCandidatesByFormulaPaged, `aligned_feature_id` is not nullable")
+      }
 
+      if (!missing(`formula_id`) && is.null(`formula_id`)) {
+        stop("Invalid value for `formula_id` when calling FeaturesApi$GetStructureCandidatesByFormulaPaged, `formula_id` is not nullable")
+      }
 
-      if (`page` < 0) {
+      if (!missing(`page`) && is.null(`page`)) {
+        stop("Invalid value for `page` when calling FeaturesApi$GetStructureCandidatesByFormulaPaged, `page` is not nullable")
+      }
+      if (!is.null(`page`) && `page` <  0) {
         stop("Invalid value for `page` when calling FeaturesApi$GetStructureCandidatesByFormulaPaged, must be bigger than or equal to 0.")
       }
 
-      if (`size` < 1) {
+      if (!missing(`size`) && is.null(`size`)) {
+        stop("Invalid value for `size` when calling FeaturesApi$GetStructureCandidatesByFormulaPaged, `size` is not nullable")
+      }
+      if (!is.null(`size`) && `size` <  1) {
         stop("Invalid value for `size` when calling FeaturesApi$GetStructureCandidatesByFormulaPaged, must be bigger than or equal to 1.")
       }
 
+      if (!missing(`sort`) && is.null(`sort`)) {
+        stop("Invalid value for `sort` when calling FeaturesApi$GetStructureCandidatesByFormulaPaged, `sort` is not nullable")
+      }
 
+      if (!missing(`opt_fields`) && is.null(`opt_fields`)) {
+        stop("Invalid value for `opt_fields` when calling FeaturesApi$GetStructureCandidatesByFormulaPaged, `opt_fields` is not nullable")
+      }
 
       query_params[["page"]] <- `page`
 
@@ -4755,8 +6294,8 @@ FeaturesApi <- R6::R6Class(
       # explore
       for (query_item in `opt_fields`) {
         # validate enum values
-        if (!is.null(query_item) && !(query_item %in% c("none", "fingerprint", "dbLinks", "libraryMatches"))) {
-          stop("Invalid value for opt_fields when calling FeaturesApi$GetStructureCandidatesByFormulaPaged. Must be [none, fingerprint, dbLinks, libraryMatches].")
+        if (!is.null(query_item) && !(query_item %in% c("none", "fingerprint", "dbLinks", "libraryMatches", "structureSvg"))) {
+          stop("Invalid value for opt_fields when calling FeaturesApi$GetStructureCandidatesByFormulaPaged. Must be [none, fingerprint, dbLinks, libraryMatches, structureSvg].")
         }
         query_params[["optFields"]] <- c(query_params[["optFields"]], list(`optFields` = query_item))
       }
@@ -4797,18 +6336,21 @@ FeaturesApi <- R6::R6Class(
       if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
         # save response in a file
         if (!is.null(data_file)) {
-          write(local_var_resp$response, data_file)
+          self$api_client$WriteFile(local_var_resp, data_file)
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "PagedModelStructureCandidateScored", loadNamespace("Rsirius")),
+          self$api_client$DeserializeResponse(local_var_resp, "PagedModelStructureCandidateScored"),
           error = function(e) {
             stop("Failed to deserialize response")
           }
         )
         local_var_resp$content <- deserialized_resp_obj
-        local_var_resp
-      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        return(local_var_resp)
+      } 
+      
+      local_var_error_msg <- local_var_resp$response_as_text()      
+      if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp)
@@ -4816,7 +6358,7 @@ FeaturesApi <- R6::R6Class(
         if (is.null(local_var_resp$response) || local_var_resp$response == "") {
           local_var_resp$response <- "API server error"
         }
-        local_var_resp
+        return(local_var_resp)
       }
     },
 
@@ -4828,21 +6370,21 @@ FeaturesApi <- R6::R6Class(
     #' @param page (optional) Zero-based page index (0..N) (default value: 0)
     #' @param size (optional) The size of the page to be returned (default value: 20)
     #' @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
-    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])
+    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [none])
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return PagedModelStructureCandidateFormula
-    GetStructureCandidatesPaged = function(project_id, aligned_feature_id, page = 0, size = 20, sort = NULL, opt_fields = list("none"), data_file = NULL, ...) {
+    GetStructureCandidatesPaged = function(project_id, aligned_feature_id, page = 0, size = 20, sort = NULL, opt_fields = list(NULL), data_file = NULL, ...) {
       local_var_response <- self$GetStructureCandidatesPagedWithHttpInfo(project_id, aligned_feature_id, page, size, sort, opt_fields, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
-        local_var_response$content
+        return(local_var_response$content)
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
-        local_var_response
+        return(local_var_response)
       }
     },
 
@@ -4854,12 +6396,12 @@ FeaturesApi <- R6::R6Class(
     #' @param page (optional) Zero-based page index (0..N) (default value: 0)
     #' @param size (optional) The size of the page to be returned (default value: 20)
     #' @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
-    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])
+    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [none])
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return API response (PagedModelStructureCandidateFormula) with additional information such as HTTP status code, headers
-    GetStructureCandidatesPagedWithHttpInfo = function(project_id, aligned_feature_id, page = 0, size = 20, sort = NULL, opt_fields = list("none"), data_file = NULL, ...) {
+    GetStructureCandidatesPagedWithHttpInfo = function(project_id, aligned_feature_id, page = 0, size = 20, sort = NULL, opt_fields = list(NULL), data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -4877,17 +6419,35 @@ FeaturesApi <- R6::R6Class(
         stop("Missing required parameter `aligned_feature_id`.")
       }
 
+      if (!missing(`project_id`) && is.null(`project_id`)) {
+        stop("Invalid value for `project_id` when calling FeaturesApi$GetStructureCandidatesPaged, `project_id` is not nullable")
+      }
 
+      if (!missing(`aligned_feature_id`) && is.null(`aligned_feature_id`)) {
+        stop("Invalid value for `aligned_feature_id` when calling FeaturesApi$GetStructureCandidatesPaged, `aligned_feature_id` is not nullable")
+      }
 
-      if (`page` < 0) {
+      if (!missing(`page`) && is.null(`page`)) {
+        stop("Invalid value for `page` when calling FeaturesApi$GetStructureCandidatesPaged, `page` is not nullable")
+      }
+      if (!is.null(`page`) && `page` <  0) {
         stop("Invalid value for `page` when calling FeaturesApi$GetStructureCandidatesPaged, must be bigger than or equal to 0.")
       }
 
-      if (`size` < 1) {
+      if (!missing(`size`) && is.null(`size`)) {
+        stop("Invalid value for `size` when calling FeaturesApi$GetStructureCandidatesPaged, `size` is not nullable")
+      }
+      if (!is.null(`size`) && `size` <  1) {
         stop("Invalid value for `size` when calling FeaturesApi$GetStructureCandidatesPaged, must be bigger than or equal to 1.")
       }
 
+      if (!missing(`sort`) && is.null(`sort`)) {
+        stop("Invalid value for `sort` when calling FeaturesApi$GetStructureCandidatesPaged, `sort` is not nullable")
+      }
 
+      if (!missing(`opt_fields`) && is.null(`opt_fields`)) {
+        stop("Invalid value for `opt_fields` when calling FeaturesApi$GetStructureCandidatesPaged, `opt_fields` is not nullable")
+      }
 
       query_params[["page"]] <- `page`
 
@@ -4901,8 +6461,8 @@ FeaturesApi <- R6::R6Class(
       # explore
       for (query_item in `opt_fields`) {
         # validate enum values
-        if (!is.null(query_item) && !(query_item %in% c("none", "fingerprint", "dbLinks", "libraryMatches"))) {
-          stop("Invalid value for opt_fields when calling FeaturesApi$GetStructureCandidatesPaged. Must be [none, fingerprint, dbLinks, libraryMatches].")
+        if (!is.null(query_item) && !(query_item %in% c("none", "fingerprint", "dbLinks", "libraryMatches", "structureSvg"))) {
+          stop("Invalid value for opt_fields when calling FeaturesApi$GetStructureCandidatesPaged. Must be [none, fingerprint, dbLinks, libraryMatches, structureSvg].")
         }
         query_params[["optFields"]] <- c(query_params[["optFields"]], list(`optFields` = query_item))
       }
@@ -4939,18 +6499,21 @@ FeaturesApi <- R6::R6Class(
       if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
         # save response in a file
         if (!is.null(data_file)) {
-          write(local_var_resp$response, data_file)
+          self$api_client$WriteFile(local_var_resp, data_file)
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "PagedModelStructureCandidateFormula", loadNamespace("Rsirius")),
+          self$api_client$DeserializeResponse(local_var_resp, "PagedModelStructureCandidateFormula"),
           error = function(e) {
             stop("Failed to deserialize response")
           }
         )
         local_var_resp$content <- deserialized_resp_obj
-        local_var_resp
-      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        return(local_var_resp)
+      } 
+      
+      local_var_error_msg <- local_var_resp$response_as_text()      
+      if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp)
@@ -4958,12 +6521,127 @@ FeaturesApi <- R6::R6Class(
         if (is.null(local_var_resp$response) || local_var_resp$response == "") {
           local_var_resp$response <- "API server error"
         }
-        local_var_resp
+        return(local_var_resp)
       }
     },
 
     #' @description
-    #' EXPERIMENTAL: This endpoint is experimental and may be changed (or even removed) without notice until it is declared stable.
+    #' [EXPERIMENTAL] Get all tags associated with this Object
+    #'
+    #' @param project_id project-space to get from.
+    #' @param object_id object to get tags for.
+    #' @param data_file (optional) name of the data file to save the result
+    #' @param ... Other optional arguments
+    #'
+    #' @return array[Tag]
+    GetTagsForAlignedFeaturesExperimental = function(project_id, object_id, data_file = NULL, ...) {
+      local_var_response <- self$GetTagsForAlignedFeaturesExperimentalWithHttpInfo(project_id, object_id, data_file = data_file, ...)
+      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
+        return(local_var_response$content)
+      } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
+        return(local_var_response)
+      } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
+        return(local_var_response)
+      } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
+        return(local_var_response)
+      }
+    },
+
+    #' @description
+    #' [EXPERIMENTAL] Get all tags associated with this Object
+    #'
+    #' @param project_id project-space to get from.
+    #' @param object_id object to get tags for.
+    #' @param data_file (optional) name of the data file to save the result
+    #' @param ... Other optional arguments
+    #'
+    #' @return API response (array[Tag]) with additional information such as HTTP status code, headers
+    GetTagsForAlignedFeaturesExperimentalWithHttpInfo = function(project_id, object_id, data_file = NULL, ...) {
+      args <- list(...)
+      query_params <- list()
+      header_params <- c()
+      form_params <- list()
+      file_params <- list()
+      local_var_body <- NULL
+      oauth_scopes <- NULL
+      is_oauth <- FALSE
+
+      if (missing(`project_id`)) {
+        stop("Missing required parameter `project_id`.")
+      }
+
+      if (missing(`object_id`)) {
+        stop("Missing required parameter `object_id`.")
+      }
+
+      if (!missing(`project_id`) && is.null(`project_id`)) {
+        stop("Invalid value for `project_id` when calling FeaturesApi$GetTagsForAlignedFeaturesExperimental, `project_id` is not nullable")
+      }
+
+      if (!missing(`object_id`) && is.null(`object_id`)) {
+        stop("Invalid value for `object_id` when calling FeaturesApi$GetTagsForAlignedFeaturesExperimental, `object_id` is not nullable")
+      }
+
+      local_var_url_path <- "/api/projects/{projectId}/aligned-features/tags/{objectId}"
+      if (!missing(`project_id`)) {
+        local_var_url_path <- gsub("\\{projectId\\}", URLencode(as.character(`project_id`), reserved = TRUE), local_var_url_path)
+      }
+
+      if (!missing(`object_id`)) {
+        local_var_url_path <- gsub("\\{objectId\\}", URLencode(as.character(`object_id`), reserved = TRUE), local_var_url_path)
+      }
+
+
+      # The Accept request HTTP header
+      local_var_accepts <- list("application/json")
+
+      # The Content-Type representation header
+      local_var_content_types <- list()
+
+      local_var_resp <- self$api_client$CallApi(url = paste0(self$api_client$base_path, local_var_url_path),
+                                 method = "GET",
+                                 query_params = query_params,
+                                 header_params = header_params,
+                                 form_params = form_params,
+                                 file_params = file_params,
+                                 accepts = local_var_accepts,
+                                 content_types = local_var_content_types,
+                                 body = local_var_body,
+                                 is_oauth = is_oauth,
+                                 oauth_scopes = oauth_scopes,
+                                 ...)
+
+      if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
+        # save response in a file
+        if (!is.null(data_file)) {
+          self$api_client$WriteFile(local_var_resp, data_file)
+        }
+
+        deserialized_resp_obj <- tryCatch(
+          self$api_client$DeserializeResponse(local_var_resp, "array[Tag]"),
+          error = function(e) {
+            stop("Failed to deserialize response")
+          }
+        )
+        local_var_resp$content <- deserialized_resp_obj
+        return(local_var_resp)
+      } 
+      
+      local_var_error_msg <- local_var_resp$response_as_text()      
+      if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
+      } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
+        ApiResponse$new("API client error", local_var_resp)
+      } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
+        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
+          local_var_resp$response <- "API server error"
+        }
+        return(local_var_resp)
+      }
+    },
+
+    #' @description
+    #' [EXPERIMENTAL] Returns the traces of the given feature (alignedFeatureId)
     #'
     #' @param project_id project-space to read from.
     #' @param aligned_feature_id feature which intensities should be read out
@@ -4975,18 +6653,18 @@ FeaturesApi <- R6::R6Class(
     GetTracesExperimental = function(project_id, aligned_feature_id, include_all = FALSE, data_file = NULL, ...) {
       local_var_response <- self$GetTracesExperimentalWithHttpInfo(project_id, aligned_feature_id, include_all, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
-        local_var_response$content
+        return(local_var_response$content)
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
-        local_var_response
+        return(local_var_response)
       } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
-        local_var_response
+        return(local_var_response)
       }
     },
 
     #' @description
-    #' EXPERIMENTAL: This endpoint is experimental and may be changed (or even removed) without notice until it is declared stable.
+    #' [EXPERIMENTAL] Returns the traces of the given feature (alignedFeatureId)
     #'
     #' @param project_id project-space to read from.
     #' @param aligned_feature_id feature which intensities should be read out
@@ -5013,8 +6691,17 @@ FeaturesApi <- R6::R6Class(
         stop("Missing required parameter `aligned_feature_id`.")
       }
 
+      if (!missing(`project_id`) && is.null(`project_id`)) {
+        stop("Invalid value for `project_id` when calling FeaturesApi$GetTracesExperimental, `project_id` is not nullable")
+      }
 
+      if (!missing(`aligned_feature_id`) && is.null(`aligned_feature_id`)) {
+        stop("Invalid value for `aligned_feature_id` when calling FeaturesApi$GetTracesExperimental, `aligned_feature_id` is not nullable")
+      }
 
+      if (!missing(`include_all`) && is.null(`include_all`)) {
+        stop("Invalid value for `include_all` when calling FeaturesApi$GetTracesExperimental, `include_all` is not nullable")
+      }
 
       query_params[["includeAll"]] <- `include_all`
 
@@ -5050,18 +6737,21 @@ FeaturesApi <- R6::R6Class(
       if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
         # save response in a file
         if (!is.null(data_file)) {
-          write(local_var_resp$response, data_file)
+          self$api_client$WriteFile(local_var_resp, data_file)
         }
 
         deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "TraceSetExperimental", loadNamespace("Rsirius")),
+          self$api_client$DeserializeResponse(local_var_resp, "TraceSetExperimental"),
           error = function(e) {
             stop("Failed to deserialize response")
           }
         )
         local_var_resp$content <- deserialized_resp_obj
-        local_var_resp
-      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        return(local_var_resp)
+      } 
+      
+      local_var_error_msg <- local_var_resp$response_as_text()      
+      if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp)
@@ -5069,7 +6759,123 @@ FeaturesApi <- R6::R6Class(
         if (is.null(local_var_resp$response) || local_var_resp$response == "") {
           local_var_resp$response <- "API server error"
         }
-        local_var_resp
+        return(local_var_resp)
+      }
+    },
+
+    #' @description
+    #' [EXPERIMENTAL] Delete tag with the given name from the feature (aligned over runs) with the specified ID in the specified project-space
+    #'
+    #' @param project_id project-space to delete from.
+    #' @param aligned_feature_id feature (aligned over runs) to delete tag from.
+    #' @param tag_name name of the tag to delete.
+    #' @param ... Other optional arguments
+    #'
+    #' @return void
+    RemoveTagFromAlignedFeatureExperimental = function(project_id, aligned_feature_id, tag_name, ...) {
+      local_var_response <- self$RemoveTagFromAlignedFeatureExperimentalWithHttpInfo(project_id, aligned_feature_id, tag_name, ...)
+      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
+        return(local_var_response$content)
+      } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
+        return(local_var_response)
+      } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
+        return(local_var_response)
+      } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
+        return(local_var_response)
+      }
+    },
+
+    #' @description
+    #' [EXPERIMENTAL] Delete tag with the given name from the feature (aligned over runs) with the specified ID in the specified project-space
+    #'
+    #' @param project_id project-space to delete from.
+    #' @param aligned_feature_id feature (aligned over runs) to delete tag from.
+    #' @param tag_name name of the tag to delete.
+    #' @param ... Other optional arguments
+    #'
+    #' @return API response (void) with additional information such as HTTP status code, headers
+    RemoveTagFromAlignedFeatureExperimentalWithHttpInfo = function(project_id, aligned_feature_id, tag_name, ...) {
+      args <- list(...)
+      query_params <- list()
+      header_params <- c()
+      form_params <- list()
+      file_params <- list()
+      local_var_body <- NULL
+      oauth_scopes <- NULL
+      is_oauth <- FALSE
+
+      if (missing(`project_id`)) {
+        stop("Missing required parameter `project_id`.")
+      }
+
+      if (missing(`aligned_feature_id`)) {
+        stop("Missing required parameter `aligned_feature_id`.")
+      }
+
+      if (missing(`tag_name`)) {
+        stop("Missing required parameter `tag_name`.")
+      }
+
+      if (!missing(`project_id`) && is.null(`project_id`)) {
+        stop("Invalid value for `project_id` when calling FeaturesApi$RemoveTagFromAlignedFeatureExperimental, `project_id` is not nullable")
+      }
+
+      if (!missing(`aligned_feature_id`) && is.null(`aligned_feature_id`)) {
+        stop("Invalid value for `aligned_feature_id` when calling FeaturesApi$RemoveTagFromAlignedFeatureExperimental, `aligned_feature_id` is not nullable")
+      }
+
+      if (!missing(`tag_name`) && is.null(`tag_name`)) {
+        stop("Invalid value for `tag_name` when calling FeaturesApi$RemoveTagFromAlignedFeatureExperimental, `tag_name` is not nullable")
+      }
+
+      local_var_url_path <- "/api/projects/{projectId}/aligned-features/tags/{alignedFeatureId}/{tagName}"
+      if (!missing(`project_id`)) {
+        local_var_url_path <- gsub("\\{projectId\\}", URLencode(as.character(`project_id`), reserved = TRUE), local_var_url_path)
+      }
+
+      if (!missing(`aligned_feature_id`)) {
+        local_var_url_path <- gsub("\\{alignedFeatureId\\}", URLencode(as.character(`aligned_feature_id`), reserved = TRUE), local_var_url_path)
+      }
+
+      if (!missing(`tag_name`)) {
+        local_var_url_path <- gsub("\\{tagName\\}", URLencode(as.character(`tag_name`), reserved = TRUE), local_var_url_path)
+      }
+
+
+      # The Accept request HTTP header
+      local_var_accepts <- list()
+
+      # The Content-Type representation header
+      local_var_content_types <- list()
+
+      local_var_resp <- self$api_client$CallApi(url = paste0(self$api_client$base_path, local_var_url_path),
+                                 method = "DELETE",
+                                 query_params = query_params,
+                                 header_params = header_params,
+                                 form_params = form_params,
+                                 file_params = file_params,
+                                 accepts = local_var_accepts,
+                                 content_types = local_var_content_types,
+                                 body = local_var_body,
+                                 is_oauth = is_oauth,
+                                 oauth_scopes = oauth_scopes,
+                                 ...)
+
+      if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
+        local_var_resp$content <- NULL
+        return(local_var_resp)
+      } 
+      
+      local_var_error_msg <- local_var_resp$response_as_text()      
+      if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
+      } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
+        ApiResponse$new("API client error", local_var_resp)
+      } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
+        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
+          local_var_resp$response <- "API server error"
+        }
+        return(local_var_resp)
       }
     }
   )
