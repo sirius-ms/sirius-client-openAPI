@@ -29,13 +29,7 @@ jobs:
         timeout_minutes: 5
         command: |
             cd .updater/api
-            curl -s https://api.github.com/repositories/94561614/releases > ./releases.json
-            packageVersion=$(cat ./releases.json  | grep 'name.*linux-x64.zip\"' | sort | tac | head -n 1 | cut -d - -f 2)
-            echo "Writing Version files: $packageVersion"
-            echo $packageVersion > ./packageVersion.txt
-            echo "Downloading Version: $packageVersion"
-            cat ./releases.json | grep 'browser_download_url.*linux-x64.zip\"' | sort | tac | head -n 1 | cut -d : -f 2,3 | tr -d \" | wget -i -
-            echo "Download Complete"
+            wget https://github.com/sirius-ms/sirius/releases/download/v6.3.1/sirius-6.3.1-linux-x64.zip
             unzip *.zip
             echo "Api Ready"
     - name: Run Rest Api with strings
