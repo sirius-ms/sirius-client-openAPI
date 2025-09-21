@@ -50,6 +50,13 @@ class TestProjectsApi(unittest.TestCase):
         """
         pass
 
+    def test_copy_project(self) -> None:
+        """Test case for copy_project
+
+        DEPRECATED: this endpoint is based on local file paths and will likely be removed in future versions of this API.
+        """
+        pass
+
     def test_create_project(self) -> None:
         """Test case for create_project
 

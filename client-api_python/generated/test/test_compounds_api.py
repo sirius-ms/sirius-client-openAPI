@@ -11,7 +11,6 @@
 
 import os
 import json
-import shutil
 import unittest
 
 import PySirius
@@ -74,6 +73,7 @@ class TestCompoundsApi(unittest.TestCase):
         """
         pass
 
+
     def test_delete_compound(self) -> None:
         """Test case for delete_compound
 
@@ -117,15 +117,6 @@ class TestCompoundsApi(unittest.TestCase):
         """
         response = self.api.compounds().get_compounds_paged(self.project_id)
         self.assertIsInstance(response, PagedModelCompound)
-
-    def test_get_traces(self) -> None:
-        """Test case for get_traces
-
-        """
-        # TODO "No trace information available for project id = test_compounds_api and compound id = 599595888450877371"
-        # compound_id = self.api.compounds().get_compounds(self.project_id)[0].compound_id
-        # response = self.api.compounds().get_traces(self.project_id, compound_id)
-        # self.assertIsInstance(response, TraceSet)
 
 if __name__ == '__main__':
     unittest.main()
