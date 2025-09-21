@@ -128,24 +128,3 @@ test_that("GetCompoundsPaged", {
   withr::defer(projects_api$CloseProject(project_id))
   withr::defer(unlink(project_dir, recursive=TRUE))
 })
-
-test_that("GetTraces", {
-  # tests for GetTraces
-  # base path: http://localhost:8080
-  # @param project_id character
-  # @param compound_id character
-  # @return [TraceSet]
-
-#   TODO feature has no trace
-#   project_id <- "GetTraces"
-#   project_dir <- paste(Sys.getenv("HOME"), "GetTraces", sep="/")
-#   projects_api$CreateProject(project_id, project_dir)
-#   api_instance$AddCompounds(project_id, compound_import)
-#   compound_id <- api_instance$GetCompounds(project_id)[[1]]$compoundId
-#
-#   response <- api_instance$GetTraces(project_id, compound_id)
-#   expect_true(inherits(response, "TraceSet"))
-#
-#   withr::defer(projects_api$CloseProject(project_id))
-#   withr::defer(unlink(project_dir, recursive=TRUE))
-})
