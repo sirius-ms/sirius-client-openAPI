@@ -30,6 +30,9 @@ jobs:
         command: |
             cd .updater/api
             wget https://github.com/sirius-ms/sirius/releases/download/v6.3.1/sirius-6.3.1-linux-x64.zip
+            packageVersion=6.3.1
+            echo "Writing Version files: $packageVersion"
+            echo $packageVersion > ./packageVersion.txt
             unzip *.zip
             echo "Api Ready"
     - name: Run Rest Api with strings
