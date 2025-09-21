@@ -44,13 +44,13 @@ class FormulaCandidate(BaseModel):
     num_of_explainable_peaks: Optional[StrictInt] = Field(default=None, alias="numOfExplainablePeaks")
     total_explained_intensity: Optional[float] = Field(default=None, alias="totalExplainedIntensity")
     median_mass_deviation: Optional[Deviation] = Field(default=None, alias="medianMassDeviation")
-    fragmentation_tree: Optional[FragmentationTree] = Field(default=None, alias="fragmentationTree")
-    annotated_spectrum: Optional[AnnotatedSpectrum] = Field(default=None, alias="annotatedSpectrum")
-    isotope_pattern_annotation: Optional[IsotopePatternAnnotation] = Field(default=None, alias="isotopePatternAnnotation")
-    lipid_annotation: Optional[LipidAnnotation] = Field(default=None, alias="lipidAnnotation")
-    predicted_fingerprint: Optional[List[Optional[float]]] = Field(default=None, description="Probabilistic molecular fingerprint predicted by CSI:FingerID", alias="predictedFingerprint")
-    compound_classes: Optional[CompoundClasses] = Field(default=None, alias="compoundClasses")
-    canopus_prediction: Optional[CanopusPrediction] = Field(default=None, alias="canopusPrediction")
+    fragmentation_tree: Optional[FragmentationTree] = Field(default=None, description="The fragmentation tree that belongs to this molecular formula candidate (produces the treeScore).", alias="fragmentationTree")
+    annotated_spectrum: Optional[AnnotatedSpectrum] = Field(default=None, description="Fragmentation spectrum (e.g. Merged MS/MS) which is annotated with fragments and losses", alias="annotatedSpectrum")
+    isotope_pattern_annotation: Optional[IsotopePatternAnnotation] = Field(default=None, description="The measured and simulated isotope pattern that have been  compared against each other to produce the isotopeScore.", alias="isotopePatternAnnotation")
+    lipid_annotation: Optional[LipidAnnotation] = Field(default=None, description="ElGordo lipid annotation of this candidate.  NULL if annotation was not requested. lipidAnnotation.lipidSpecies == NULL if candidate has not been classified as a lipid", alias="lipidAnnotation")
+    predicted_fingerprint: Optional[List[float]] = Field(default=None, description="Probabilistic molecular fingerprint predicted by CSI:FingerID", alias="predictedFingerprint")
+    compound_classes: Optional[CompoundClasses] = Field(default=None, description="Most likely compound classes for different levels of each ontology for this FormulaCandidate (predictedFingerprint)", alias="compoundClasses")
+    canopus_prediction: Optional[CanopusPrediction] = Field(default=None, description="All classes predicted by canopus for this FormulaCandidate (predictedFingerprint)", alias="canopusPrediction")
     __properties: ClassVar[List[str]] = ["formulaId", "molecularFormula", "adduct", "rank", "siriusScoreNormalized", "siriusScore", "isotopeScore", "treeScore", "zodiacScore", "numOfExplainedPeaks", "numOfExplainablePeaks", "totalExplainedIntensity", "medianMassDeviation", "fragmentationTree", "annotatedSpectrum", "isotopePatternAnnotation", "lipidAnnotation", "predictedFingerprint", "compoundClasses", "canopusPrediction"]
 
     model_config = ConfigDict(
@@ -113,86 +113,6 @@ class FormulaCandidate(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of canopus_prediction
         if self.canopus_prediction:
             _dict['canopusPrediction'] = self.canopus_prediction.to_dict()
-        # set to None if sirius_score_normalized (nullable) is None
-        # and model_fields_set contains the field
-        if self.sirius_score_normalized is None and "sirius_score_normalized" in self.model_fields_set:
-            _dict['siriusScoreNormalized'] = None
-
-        # set to None if sirius_score (nullable) is None
-        # and model_fields_set contains the field
-        if self.sirius_score is None and "sirius_score" in self.model_fields_set:
-            _dict['siriusScore'] = None
-
-        # set to None if isotope_score (nullable) is None
-        # and model_fields_set contains the field
-        if self.isotope_score is None and "isotope_score" in self.model_fields_set:
-            _dict['isotopeScore'] = None
-
-        # set to None if tree_score (nullable) is None
-        # and model_fields_set contains the field
-        if self.tree_score is None and "tree_score" in self.model_fields_set:
-            _dict['treeScore'] = None
-
-        # set to None if zodiac_score (nullable) is None
-        # and model_fields_set contains the field
-        if self.zodiac_score is None and "zodiac_score" in self.model_fields_set:
-            _dict['zodiacScore'] = None
-
-        # set to None if num_of_explained_peaks (nullable) is None
-        # and model_fields_set contains the field
-        if self.num_of_explained_peaks is None and "num_of_explained_peaks" in self.model_fields_set:
-            _dict['numOfExplainedPeaks'] = None
-
-        # set to None if num_of_explainable_peaks (nullable) is None
-        # and model_fields_set contains the field
-        if self.num_of_explainable_peaks is None and "num_of_explainable_peaks" in self.model_fields_set:
-            _dict['numOfExplainablePeaks'] = None
-
-        # set to None if total_explained_intensity (nullable) is None
-        # and model_fields_set contains the field
-        if self.total_explained_intensity is None and "total_explained_intensity" in self.model_fields_set:
-            _dict['totalExplainedIntensity'] = None
-
-        # set to None if median_mass_deviation (nullable) is None
-        # and model_fields_set contains the field
-        if self.median_mass_deviation is None and "median_mass_deviation" in self.model_fields_set:
-            _dict['medianMassDeviation'] = None
-
-        # set to None if fragmentation_tree (nullable) is None
-        # and model_fields_set contains the field
-        if self.fragmentation_tree is None and "fragmentation_tree" in self.model_fields_set:
-            _dict['fragmentationTree'] = None
-
-        # set to None if annotated_spectrum (nullable) is None
-        # and model_fields_set contains the field
-        if self.annotated_spectrum is None and "annotated_spectrum" in self.model_fields_set:
-            _dict['annotatedSpectrum'] = None
-
-        # set to None if isotope_pattern_annotation (nullable) is None
-        # and model_fields_set contains the field
-        if self.isotope_pattern_annotation is None and "isotope_pattern_annotation" in self.model_fields_set:
-            _dict['isotopePatternAnnotation'] = None
-
-        # set to None if lipid_annotation (nullable) is None
-        # and model_fields_set contains the field
-        if self.lipid_annotation is None and "lipid_annotation" in self.model_fields_set:
-            _dict['lipidAnnotation'] = None
-
-        # set to None if predicted_fingerprint (nullable) is None
-        # and model_fields_set contains the field
-        if self.predicted_fingerprint is None and "predicted_fingerprint" in self.model_fields_set:
-            _dict['predictedFingerprint'] = None
-
-        # set to None if compound_classes (nullable) is None
-        # and model_fields_set contains the field
-        if self.compound_classes is None and "compound_classes" in self.model_fields_set:
-            _dict['compoundClasses'] = None
-
-        # set to None if canopus_prediction (nullable) is None
-        # and model_fields_set contains the field
-        if self.canopus_prediction is None and "canopus_prediction" in self.model_fields_set:
-            _dict['canopusPrediction'] = None
-
         return _dict
 
     @classmethod

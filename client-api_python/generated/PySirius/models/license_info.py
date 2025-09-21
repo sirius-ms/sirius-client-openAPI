@@ -29,9 +29,9 @@ class LicenseInfo(BaseModel):
     """ # noqa: E501
     user_email: Optional[StrictStr] = Field(default=None, description="Email address of the user account this license information belongs to.", alias="userEmail")
     user_id: Optional[StrictStr] = Field(default=None, description="User ID (uid) of the user account this license information belongs to.", alias="userId")
-    subscription: Optional[Subscription] = None
-    consumables: Optional[SubscriptionConsumables] = None
-    terms: Optional[List[Optional[Term]]] = None
+    subscription: Optional[Subscription] = Field(default=None, description="The active subscription that was used the requested the information")
+    consumables: Optional[SubscriptionConsumables] = Field(default=None, description="Status of the consumable resources of the {@link Subscription Subscription}.")
+    terms: Optional[List[Term]] = None
     __properties: ClassVar[List[str]] = ["userEmail", "userId", "subscription", "consumables", "terms"]
 
     model_config = ConfigDict(
@@ -86,26 +86,6 @@ class LicenseInfo(BaseModel):
                 if _item_terms:
                     _items.append(_item_terms.to_dict())
             _dict['terms'] = _items
-        # set to None if user_email (nullable) is None
-        # and model_fields_set contains the field
-        if self.user_email is None and "user_email" in self.model_fields_set:
-            _dict['userEmail'] = None
-
-        # set to None if user_id (nullable) is None
-        # and model_fields_set contains the field
-        if self.user_id is None and "user_id" in self.model_fields_set:
-            _dict['userId'] = None
-
-        # set to None if consumables (nullable) is None
-        # and model_fields_set contains the field
-        if self.consumables is None and "consumables" in self.model_fields_set:
-            _dict['consumables'] = None
-
-        # set to None if terms (nullable) is None
-        # and model_fields_set contains the field
-        if self.terms is None and "terms" in self.model_fields_set:
-            _dict['terms'] = None
-
         return _dict
 
     @classmethod

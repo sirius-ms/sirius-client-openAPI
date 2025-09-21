@@ -27,6 +27,7 @@ class SpectralMatchingType(str, Enum):
     INTENSITY = 'INTENSITY'
     GAUSSIAN = 'GAUSSIAN'
     MODIFIED_COSINE = 'MODIFIED_COSINE'
+    FAST_COSINE = 'FAST_COSINE'
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:

@@ -416,7 +416,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **import_into_database**
-> SearchableDatabase import_into_database(database_id, buffer_size=buffer_size, input_files=input_files)
+> SearchableDatabase import_into_database(database_id, input_files, buffer_size=buffer_size, bio_transformer_parameters=bio_transformer_parameters)
 
 Start import of structure and spectra files into the specified database.
 
@@ -427,6 +427,7 @@ Start import of structure and spectra files into the specified database.
 
 ```python
 import PySirius
+from PySirius.models.bio_transformer_parameters import BioTransformerParameters
 from PySirius.models.searchable_database import SearchableDatabase
 from PySirius.rest import ApiException
 from pprint import pprint
@@ -443,12 +444,13 @@ with PySirius.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = PySirius.SearchableDatabasesApi(api_client)
     database_id = 'database_id_example' # str | database to import into
+    input_files = None # List[bytearray] | files to be imported
     buffer_size = 1000 # int |  (optional) (default to 1000)
-    input_files = None # List[bytearray] |  (optional)
+    bio_transformer_parameters = PySirius.BioTransformerParameters() # BioTransformerParameters | configuration for biotransformer execution. If null, BioTransformer is not applied. (optional)
 
     try:
         # Start import of structure and spectra files into the specified database.
-        api_response = api_instance.import_into_database(database_id, buffer_size=buffer_size, input_files=input_files)
+        api_response = api_instance.import_into_database(database_id, input_files, buffer_size=buffer_size, bio_transformer_parameters=bio_transformer_parameters)
         print("The response of SearchableDatabasesApi->import_into_database:\n")
         pprint(api_response)
     except Exception as e:
@@ -463,8 +465,9 @@ with PySirius.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **database_id** | **str**| database to import into | 
+ **input_files** | **List[bytearray]**| files to be imported | 
  **buffer_size** | **int**|  | [optional] [default to 1000]
- **input_files** | **List[bytearray]**|  | [optional] 
+ **bio_transformer_parameters** | [**BioTransformerParameters**](BioTransformerParameters.md)| configuration for biotransformer execution. If null, BioTransformer is not applied. | [optional] 
 
 ### Return type
 
@@ -483,7 +486,7 @@ No authorization required
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Job of the import command to be executed. |  -  |
+**200** | Meta-Information of the affected database after the import has been performed. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

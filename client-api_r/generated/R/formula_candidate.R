@@ -20,13 +20,13 @@
 #' @field numOfExplainablePeaks  integer [optional]
 #' @field totalExplainedIntensity  numeric [optional]
 #' @field medianMassDeviation  \link{Deviation} [optional]
-#' @field fragmentationTree  \link{FragmentationTree} [optional]
-#' @field annotatedSpectrum  \link{AnnotatedSpectrum} [optional]
-#' @field isotopePatternAnnotation  \link{IsotopePatternAnnotation} [optional]
-#' @field lipidAnnotation  \link{LipidAnnotation} [optional]
+#' @field fragmentationTree The fragmentation tree that belongs to this molecular formula candidate (produces the treeScore). \link{FragmentationTree} [optional]
+#' @field annotatedSpectrum Fragmentation spectrum (e.g. Merged MS/MS) which is annotated with fragments and losses \link{AnnotatedSpectrum} [optional]
+#' @field isotopePatternAnnotation The measured and simulated isotope pattern that have been  compared against each other to produce the isotopeScore. \link{IsotopePatternAnnotation} [optional]
+#' @field lipidAnnotation ElGordo lipid annotation of this candidate.  NULL if annotation was not requested. lipidAnnotation.lipidSpecies == NULL if candidate has not been classified as a lipid \link{LipidAnnotation} [optional]
 #' @field predictedFingerprint Probabilistic molecular fingerprint predicted by CSI:FingerID list(numeric) [optional]
-#' @field compoundClasses  \link{CompoundClasses} [optional]
-#' @field canopusPrediction  \link{CanopusPrediction} [optional]
+#' @field compoundClasses Most likely compound classes for different levels of each ontology for this FormulaCandidate (predictedFingerprint) \link{CompoundClasses} [optional]
+#' @field canopusPrediction All classes predicted by canopus for this FormulaCandidate (predictedFingerprint) \link{CanopusPrediction} [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
 #' @export
@@ -70,13 +70,13 @@ FormulaCandidate <- R6::R6Class(
     #' @param numOfExplainablePeaks numOfExplainablePeaks
     #' @param totalExplainedIntensity totalExplainedIntensity
     #' @param medianMassDeviation medianMassDeviation
-    #' @param fragmentationTree fragmentationTree
-    #' @param annotatedSpectrum annotatedSpectrum
-    #' @param isotopePatternAnnotation isotopePatternAnnotation
-    #' @param lipidAnnotation lipidAnnotation
+    #' @param fragmentationTree The fragmentation tree that belongs to this molecular formula candidate (produces the treeScore).
+    #' @param annotatedSpectrum Fragmentation spectrum (e.g. Merged MS/MS) which is annotated with fragments and losses
+    #' @param isotopePatternAnnotation The measured and simulated isotope pattern that have been  compared against each other to produce the isotopeScore.
+    #' @param lipidAnnotation ElGordo lipid annotation of this candidate.  NULL if annotation was not requested. lipidAnnotation.lipidSpecies == NULL if candidate has not been classified as a lipid
     #' @param predictedFingerprint Probabilistic molecular fingerprint predicted by CSI:FingerID
-    #' @param compoundClasses compoundClasses
-    #' @param canopusPrediction canopusPrediction
+    #' @param compoundClasses Most likely compound classes for different levels of each ontology for this FormulaCandidate (predictedFingerprint)
+    #' @param canopusPrediction All classes predicted by canopus for this FormulaCandidate (predictedFingerprint)
     #' @param ... Other optional arguments.
     initialize = function(`formulaId` = NULL, `molecularFormula` = NULL, `adduct` = NULL, `rank` = NULL, `siriusScoreNormalized` = NULL, `siriusScore` = NULL, `isotopeScore` = NULL, `treeScore` = NULL, `zodiacScore` = NULL, `numOfExplainedPeaks` = NULL, `numOfExplainablePeaks` = NULL, `totalExplainedIntensity` = NULL, `medianMassDeviation` = NULL, `fragmentationTree` = NULL, `annotatedSpectrum` = NULL, `isotopePatternAnnotation` = NULL, `lipidAnnotation` = NULL, `predictedFingerprint` = NULL, `compoundClasses` = NULL, `canopusPrediction` = NULL, ...) {
       if (!is.null(`formulaId`)) {

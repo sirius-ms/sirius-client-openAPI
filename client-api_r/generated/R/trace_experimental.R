@@ -11,6 +11,7 @@
 #' @field sampleId  character [optional]
 #' @field sampleName  character [optional]
 #' @field label  character [optional]
+#' @field color  character [optional]
 #' @field intensities  list(numeric) [optional]
 #' @field annotations  list(\link{TraceAnnotationExperimental}) [optional]
 #' @field mz  numeric [optional]
@@ -27,6 +28,7 @@ TraceExperimental <- R6::R6Class(
     `sampleId` = NULL,
     `sampleName` = NULL,
     `label` = NULL,
+    `color` = NULL,
     `intensities` = NULL,
     `annotations` = NULL,
     `mz` = NULL,
@@ -41,6 +43,7 @@ TraceExperimental <- R6::R6Class(
     #' @param sampleId sampleId
     #' @param sampleName sampleName
     #' @param label label
+    #' @param color color
     #' @param intensities intensities
     #' @param annotations annotations
     #' @param mz mz
@@ -48,7 +51,7 @@ TraceExperimental <- R6::R6Class(
     #' @param normalizationFactor Traces are stored with raw intensity values. The normalization factor maps them to relative intensities,  such that traces from different samples can be compared.
     #' @param noiseLevel The noise level is estimated from the median noise in the surrounding scans. It can be used to  calculate signal-to-noise ratios.
     #' @param ... Other optional arguments.
-    initialize = function(`id` = NULL, `sampleId` = NULL, `sampleName` = NULL, `label` = NULL, `intensities` = NULL, `annotations` = NULL, `mz` = NULL, `merged` = NULL, `normalizationFactor` = NULL, `noiseLevel` = NULL, ...) {
+    initialize = function(`id` = NULL, `sampleId` = NULL, `sampleName` = NULL, `label` = NULL, `color` = NULL, `intensities` = NULL, `annotations` = NULL, `mz` = NULL, `merged` = NULL, `normalizationFactor` = NULL, `noiseLevel` = NULL, ...) {
       if (!is.null(`id`)) {
         if (!(is.character(`id`) && length(`id`) == 1)) {
           stop(paste("Error! Invalid data for `id`. Must be a string:", `id`))
@@ -72,6 +75,12 @@ TraceExperimental <- R6::R6Class(
           stop(paste("Error! Invalid data for `label`. Must be a string:", `label`))
         }
         self$`label` <- `label`
+      }
+      if (!is.null(`color`)) {
+        if (!(is.character(`color`) && length(`color`) == 1)) {
+          stop(paste("Error! Invalid data for `color`. Must be a string:", `color`))
+        }
+        self$`color` <- `color`
       }
       if (!is.null(`intensities`)) {
         stopifnot(is.vector(`intensities`), length(`intensities`) != 0)
@@ -156,6 +165,10 @@ TraceExperimental <- R6::R6Class(
         TraceExperimentalObject[["label"]] <-
           self$`label`
       }
+      if (!is.null(self$`color`)) {
+        TraceExperimentalObject[["color"]] <-
+          self$`color`
+      }
       if (!is.null(self$`intensities`)) {
         TraceExperimentalObject[["intensities"]] <-
           self$`intensities`
@@ -202,6 +215,9 @@ TraceExperimental <- R6::R6Class(
       if (!is.null(this_object$`label`)) {
         self$`label` <- this_object$`label`
       }
+      if (!is.null(this_object$`color`)) {
+        self$`color` <- this_object$`color`
+      }
       if (!is.null(this_object$`intensities`)) {
         self$`intensities` <- ApiClient$new()$deserializeObj(this_object$`intensities`, "array[numeric]", loadNamespace("Rsirius"))
       }
@@ -245,6 +261,7 @@ TraceExperimental <- R6::R6Class(
       self$`sampleId` <- this_object$`sampleId`
       self$`sampleName` <- this_object$`sampleName`
       self$`label` <- this_object$`label`
+      self$`color` <- this_object$`color`
       self$`intensities` <- ApiClient$new()$deserializeObj(this_object$`intensities`, "array[numeric]", loadNamespace("Rsirius"))
       self$`annotations` <- ApiClient$new()$deserializeObj(this_object$`annotations`, "array[TraceAnnotationExperimental]", loadNamespace("Rsirius"))
       self$`mz` <- this_object$`mz`

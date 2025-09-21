@@ -3,6 +3,8 @@
 
 ## Enum
 
+* `UNIMPORTED` (value: `'UNIMPORTED'`)
+
 * `DIRECT_IMPORT` (value: `'DIRECT_IMPORT'`)
 
 * `PEAKLISTS` (value: `'PEAKLISTS'`)
