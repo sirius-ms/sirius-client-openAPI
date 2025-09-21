@@ -100,15 +100,16 @@
 #'
 #' library(Rsirius)
 #' var_database_id <- "database_id_example" # character | database to import into
+#' var_input_files <- c(123) # array[data.frame] | files to be imported
 #' var_buffer_size <- 1000 # integer |  (Optional)
-#' var_input_files <- c(123) # array[data.frame] |  (Optional)
+#' var_bio_transformer_parameters <- BioTransformerParameters$new("RULE_BASED", "BT_RULE_BASED", c(BioTransformerSequenceStep$new("PHASE_1_CYP450", 123)), "useDB_example") # BioTransformerParameters | configuration for biotransformer execution. If null, BioTransformer is not applied. (Optional)
 #'
 #' #Start import of structure and spectra files into the specified database.
 #' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-#' # result <- api_instance$ImportIntoDatabase(var_database_id, buffer_size = var_buffer_size, input_files = var_input_filesdata_file = "result.txt")
-#' result <- api_instance$searchable_databases_api$ImportIntoDatabase(var_database_id, buffer_size = var_buffer_size, input_files = var_input_files)
+#' # result <- api_instance$ImportIntoDatabase(var_database_id, var_input_files, buffer_size = var_buffer_size, bio_transformer_parameters = var_bio_transformer_parametersdata_file = "result.txt")
+#' result <- api_instance$searchable_databases_api$ImportIntoDatabase(var_database_id, var_input_files, buffer_size = var_buffer_size, bio_transformer_parameters = var_bio_transformer_parameters)
 #' dput(result)
 #'
 #'
@@ -746,14 +747,15 @@ SearchableDatabasesApi <- R6::R6Class(
     #' Start import of structure and spectra files into the specified database.
     #'
     #' @param database_id database to import into
+    #' @param input_files files to be imported
     #' @param buffer_size (optional) No description (default value: 1000)
-    #' @param input_files (optional) No description
+    #' @param bio_transformer_parameters (optional) configuration for biotransformer execution. If null, BioTransformer is not applied.
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return SearchableDatabase
-    ImportIntoDatabase = function(database_id, buffer_size = 1000, input_files = NULL, data_file = NULL, ...) {
-      local_var_response <- self$ImportIntoDatabaseWithHttpInfo(database_id, buffer_size, input_files, data_file = data_file, ...)
+    ImportIntoDatabase = function(database_id, input_files, buffer_size = 1000, bio_transformer_parameters = NULL, data_file = NULL, ...) {
+      local_var_response <- self$ImportIntoDatabaseWithHttpInfo(database_id, input_files, buffer_size, bio_transformer_parameters, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
@@ -769,13 +771,14 @@ SearchableDatabasesApi <- R6::R6Class(
     #' Start import of structure and spectra files into the specified database.
     #'
     #' @param database_id database to import into
+    #' @param input_files files to be imported
     #' @param buffer_size (optional) No description (default value: 1000)
-    #' @param input_files (optional) No description
+    #' @param bio_transformer_parameters (optional) configuration for biotransformer execution. If null, BioTransformer is not applied.
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return API response (SearchableDatabase) with additional information such as HTTP status code, headers
-    ImportIntoDatabaseWithHttpInfo = function(database_id, buffer_size = 1000, input_files = NULL, data_file = NULL, ...) {
+    ImportIntoDatabaseWithHttpInfo = function(database_id, input_files, buffer_size = 1000, bio_transformer_parameters = NULL, data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -789,12 +792,18 @@ SearchableDatabasesApi <- R6::R6Class(
         stop("Missing required parameter `database_id`.")
       }
 
+      if (missing(`input_files`)) {
+        stop("Missing required parameter `input_files`.")
+      }
+
+
 
 
 
       query_params[["bufferSize"]] <- `buffer_size`
 
       file_params[["inputFiles"]] <- curl::form_file(`input_files`)
+      form_params["bioTransformerParameters"] <- `bio_transformer_parameters`
       local_var_url_path <- "/api/databases/{databaseId}/import/from-files"
       if (!missing(`database_id`)) {
         local_var_url_path <- gsub("\\{databaseId\\}", URLencode(as.character(`database_id`), reserved = TRUE), local_var_url_path)

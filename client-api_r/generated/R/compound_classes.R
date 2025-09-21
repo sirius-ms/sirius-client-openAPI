@@ -7,9 +7,9 @@
 #' @title CompoundClasses
 #' @description CompoundClasses Class
 #' @format An \code{R6Class} generator object
-#' @field npcPathway  \link{CompoundClass} [optional]
-#' @field npcSuperclass  \link{CompoundClass} [optional]
-#' @field npcClass  \link{CompoundClass} [optional]
+#' @field npcPathway Pathway level NPC class with the highest probability \link{CompoundClass} [optional]
+#' @field npcSuperclass Superclass level NPC class with the highest probability \link{CompoundClass} [optional]
+#' @field npcClass Class level NPC class with the highest probability \link{CompoundClass} [optional]
 #' @field classyFireLineage Most likely ClassyFire lineage from ordered from least specific to most specific class  classyFireLineage.get(classyFireLineage.size() - 1) gives the most specific ClassyFire compound class annotation list(\link{CompoundClass}) [optional]
 #' @field classyFireAlternatives Alternative ClassyFire classes with high probability that do not fit into the linage list(\link{CompoundClass}) [optional]
 #' @importFrom R6 R6Class
@@ -27,9 +27,9 @@ CompoundClasses <- R6::R6Class(
     #' @description
     #' Initialize a new CompoundClasses class.
     #'
-    #' @param npcPathway npcPathway
-    #' @param npcSuperclass npcSuperclass
-    #' @param npcClass npcClass
+    #' @param npcPathway Pathway level NPC class with the highest probability
+    #' @param npcSuperclass Superclass level NPC class with the highest probability
+    #' @param npcClass Class level NPC class with the highest probability
     #' @param classyFireLineage Most likely ClassyFire lineage from ordered from least specific to most specific class  classyFireLineage.get(classyFireLineage.size() - 1) gives the most specific ClassyFire compound class annotation
     #' @param classyFireAlternatives Alternative ClassyFire classes with high probability that do not fit into the linage
     #' @param ... Other optional arguments.

@@ -27,9 +27,9 @@ class ConsensusAnnotationsDeNovo(BaseModel):
     ConsensusAnnotationsDeNovo
     """ # noqa: E501
     molecular_formula: Optional[StrictStr] = Field(default=None, description="Molecular formula of the consensus annotation  Might be null if no consensus formula is available.", alias="molecularFormula")
-    compound_classes: Optional[CompoundClasses] = Field(default=None, alias="compoundClasses")
-    supporting_feature_ids: Optional[List[Optional[StrictStr]]] = Field(default=None, description="FeatureIds where the topAnnotation supports this annotation.", alias="supportingFeatureIds")
-    selection_criterion: Optional[ConsensusCriterionDeNovo] = Field(default=None, alias="selectionCriterion")
+    compound_classes: Optional[CompoundClasses] = Field(default=None, description="Compound classes (predicted with CANOPUS) corresponding to the molecularFormula  Might be null if no fingerprints or compound classes are available.", alias="compoundClasses")
+    supporting_feature_ids: Optional[List[StrictStr]] = Field(default=None, description="FeatureIds where the topAnnotation supports this annotation.", alias="supportingFeatureIds")
+    selection_criterion: Optional[ConsensusCriterionDeNovo] = Field(default=None, description="Criterion that was used to select the consensus annotation.", alias="selectionCriterion")
     __properties: ClassVar[List[str]] = ["molecularFormula", "compoundClasses", "supportingFeatureIds", "selectionCriterion"]
 
     model_config = ConfigDict(
@@ -74,26 +74,6 @@ class ConsensusAnnotationsDeNovo(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of compound_classes
         if self.compound_classes:
             _dict['compoundClasses'] = self.compound_classes.to_dict()
-        # set to None if molecular_formula (nullable) is None
-        # and model_fields_set contains the field
-        if self.molecular_formula is None and "molecular_formula" in self.model_fields_set:
-            _dict['molecularFormula'] = None
-
-        # set to None if compound_classes (nullable) is None
-        # and model_fields_set contains the field
-        if self.compound_classes is None and "compound_classes" in self.model_fields_set:
-            _dict['compoundClasses'] = None
-
-        # set to None if supporting_feature_ids (nullable) is None
-        # and model_fields_set contains the field
-        if self.supporting_feature_ids is None and "supporting_feature_ids" in self.model_fields_set:
-            _dict['supportingFeatureIds'] = None
-
-        # set to None if selection_criterion (nullable) is None
-        # and model_fields_set contains the field
-        if self.selection_criterion is None and "selection_criterion" in self.model_fields_set:
-            _dict['selectionCriterion'] = None
-
         return _dict
 
     @classmethod

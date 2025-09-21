@@ -7,10 +7,15 @@ User/developer friendly parameter subset for the Spectral library search tool.
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **enabled** | **bool** | tags whether the tool is enabled | [optional] 
-**spectra_search_dbs** | **List[Optional[str]]** | Structure Databases with Reference spectra to search in.  &lt;p&gt;  Defaults to BIO + Custom Databases. Possible values are available to Database API. | [optional] 
-**peak_deviation_ppm** | **float** | Maximum allowed mass deviation in ppm for matching peaks. | [optional] 
+**spectra_search_dbs** | **List[str]** | Structure Databases with Reference spectra to search in.  &lt;p&gt;  Defaults to BIO + Custom Databases. Possible values are available to Database API. | [optional] 
 **precursor_deviation_ppm** | **float** | Maximum allowed mass deviation in ppm for matching the precursor. If not specified, the same value as for the peaks is used. | [optional] 
-**scoring** | [**SpectralMatchingType**](SpectralMatchingType.md) |  | [optional] 
+**min_similarity** | **float** | Minimal spectral similarity of a spectral match to be considered a hit. | [optional] 
+**min_num_of_peaks** | **int** | Minimal number of matching peaks of a spectral match to be considered a hit. | [optional] 
+**enable_analogue_search** | **bool** | Enable analogue search in addition to the identity spectral library search | [optional] 
+**min_similarity_analogue** | **float** | Minimal spectral similarity of a spectral match to be considered an analogue hit. | [optional] 
+**min_num_of_peaks_analogue** | **int** | Minimal number of matching peaks of a spectral match to be considered an analogue hit. | [optional] 
+**scoring** | [**SpectralMatchingType**](SpectralMatchingType.md) | NO LONGER SUPPORTED (IGNORED)  Specify scoring method to match spectra  INTENSITY: Intensity weighted. Each peak matches at most one peak in the other spectrum.  GAUSSIAN: Treat peaks as (un-normalized) Gaussians and score overlapping areas of PDFs. Each peak might score against multiple peaks in the other spectrum.  MODIFIED_COSINE:  This algorithm requires that there is at most one pair of peaks (u,v) where the m/z of u and v are within the allowed mass tolerance. To be used for analog search with different precursor masses. | [optional] 
+**peak_deviation_ppm** | **float** | NO LONGER SUPPORTED (IGNORED)  Maximum allowed mass deviation in ppm for matching peaks. | [optional] 
 
 ## Example
 

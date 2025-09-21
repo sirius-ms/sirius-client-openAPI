@@ -26,7 +26,7 @@ class PagedModelFormulaCandidate(BaseModel):
     """
     PagedModelFormulaCandidate
     """ # noqa: E501
-    content: Optional[List[Optional[FormulaCandidate]]] = None
+    content: Optional[List[FormulaCandidate]] = None
     page: Optional[PageMetadata] = None
     __properties: ClassVar[List[str]] = ["content", "page"]
 

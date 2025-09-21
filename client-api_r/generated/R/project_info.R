@@ -62,8 +62,8 @@ ProjectInfo <- R6::R6Class(
         self$`description` <- `description`
       }
       if (!is.null(`type`)) {
-        if (!(`type` %in% c("DIRECT_IMPORT", "PEAKLISTS", "ALIGNED_RUNS", "UNALIGNED_RUNS"))) {
-          stop(paste("Error! \"", `type`, "\" cannot be assigned to `type`. Must be \"DIRECT_IMPORT\", \"PEAKLISTS\", \"ALIGNED_RUNS\", \"UNALIGNED_RUNS\".", sep = ""))
+        if (!(`type` %in% c("UNIMPORTED", "DIRECT_IMPORT", "PEAKLISTS", "ALIGNED_RUNS", "UNALIGNED_RUNS"))) {
+          stop(paste("Error! \"", `type`, "\" cannot be assigned to `type`. Must be \"UNIMPORTED\", \"DIRECT_IMPORT\", \"PEAKLISTS\", \"ALIGNED_RUNS\", \"UNALIGNED_RUNS\".", sep = ""))
         }
         if (!(is.character(`type`) && length(`type`) == 1)) {
           stop(paste("Error! Invalid data for `type`. Must be a string:", `type`))
@@ -179,8 +179,8 @@ ProjectInfo <- R6::R6Class(
         self$`description` <- this_object$`description`
       }
       if (!is.null(this_object$`type`)) {
-        if (!is.null(this_object$`type`) && !(this_object$`type` %in% c("DIRECT_IMPORT", "PEAKLISTS", "ALIGNED_RUNS", "UNALIGNED_RUNS"))) {
-          stop(paste("Error! \"", this_object$`type`, "\" cannot be assigned to `type`. Must be \"DIRECT_IMPORT\", \"PEAKLISTS\", \"ALIGNED_RUNS\", \"UNALIGNED_RUNS\".", sep = ""))
+        if (!is.null(this_object$`type`) && !(this_object$`type` %in% c("UNIMPORTED", "DIRECT_IMPORT", "PEAKLISTS", "ALIGNED_RUNS", "UNALIGNED_RUNS"))) {
+          stop(paste("Error! \"", this_object$`type`, "\" cannot be assigned to `type`. Must be \"UNIMPORTED\", \"DIRECT_IMPORT\", \"PEAKLISTS\", \"ALIGNED_RUNS\", \"UNALIGNED_RUNS\".", sep = ""))
         }
         self$`type` <- this_object$`type`
       }
@@ -220,8 +220,8 @@ ProjectInfo <- R6::R6Class(
       self$`projectId` <- this_object$`projectId`
       self$`location` <- this_object$`location`
       self$`description` <- this_object$`description`
-      if (!is.null(this_object$`type`) && !(this_object$`type` %in% c("DIRECT_IMPORT", "PEAKLISTS", "ALIGNED_RUNS", "UNALIGNED_RUNS"))) {
-        stop(paste("Error! \"", this_object$`type`, "\" cannot be assigned to `type`. Must be \"DIRECT_IMPORT\", \"PEAKLISTS\", \"ALIGNED_RUNS\", \"UNALIGNED_RUNS\".", sep = ""))
+      if (!is.null(this_object$`type`) && !(this_object$`type` %in% c("UNIMPORTED", "DIRECT_IMPORT", "PEAKLISTS", "ALIGNED_RUNS", "UNALIGNED_RUNS"))) {
+        stop(paste("Error! \"", this_object$`type`, "\" cannot be assigned to `type`. Must be \"UNIMPORTED\", \"DIRECT_IMPORT\", \"PEAKLISTS\", \"ALIGNED_RUNS\", \"UNALIGNED_RUNS\".", sep = ""))
       }
       self$`type` <- this_object$`type`
       self$`compatible` <- this_object$`compatible`

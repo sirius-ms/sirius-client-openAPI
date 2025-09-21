@@ -483,24 +483,6 @@ test_that("GetMsData", {
   withr::defer(projects_api$CloseProject(project_id))
 })
 
-test_that("GetQuantification", {
-  # tests for GetQuantification
-  # base path: http://localhost:8080
-  # @param project_id character
-  # @param aligned_feature_id character
-  # @param type character  (optional)
-  # @return [QuantificationTable]
-
-  project_id <- "GetQuantification"
-  projects_api$OpenProject(project_id, tomato_project)
-  aligned_feature_id <- api_instance$GetAlignedFeatures(project_id)[[1]]$alignedFeatureId
-
-  response <- api_instance$GetQuantificationExperimental(project_id, aligned_feature_id)
-  expect_true(inherits(response, "QuantificationTableExperimental"))
-
-  withr::defer(projects_api$CloseProject(project_id))
-})
-
 test_that("GetSpectralLibraryMatch", {
   # tests for GetSpectralLibraryMatch
   # base path: http://localhost:8080
@@ -598,37 +580,6 @@ test_that("GetSpectralLibraryMatchesSummary", {
   withr::defer(projects_api$CloseProject(project_id))
 })
 
-test_that("GetStructureAnnotatedMsData", {
-  # tests for GetStructureAnnotatedMsData
-  # base path: http://localhost:8080
-  # Returns MS/MS Data (Merged MS/MS and list of measured MS/MS ) which are annotated with fragments and losses  for the given formula result identifier and structure candidate inChIKey.
-  # Returns MS/MS Data (Merged MS/MS and list of measured MS/MS ) which are annotated with fragments and losses  for the given formula result identifier and structure candidate inChIKey.  These annotations are only available if a fragmentation tree and the structure candidate are available.
-  # @param project_id character project-space to read from.
-  # @param aligned_feature_id character feature (aligned over runs) the formula result belongs to.
-  # @param formula_id character identifier of the requested formula result
-  # @param inchi_key character 2d InChIKey of the structure candidate to be used to annotate the spectrum annotation
-  # @return [AnnotatedMsMsData]
-
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
-})
-
-test_that("GetStructureAnnotatedSpectrum", {
-  # tests for GetStructureAnnotatedSpectrum
-  # base path: http://localhost:8080
-  # Returns a fragmentation spectrum (e.g. Merged MS/MS) which is annotated with fragments and losses for the given formula result identifier  These annotations are only available if a fragmentation tree is available.
-  # Returns a fragmentation spectrum (e.g. Merged MS/MS) which is annotated with fragments and losses for the given formula result identifier  These annotations are only available if a fragmentation tree is available.
-  # @param project_id character project-space to read from.
-  # @param aligned_feature_id character feature (aligned over runs) the formula result belongs to.
-  # @param formula_id character identifier of the requested formula result
-  # @param inchi_key character 2d InChIKey of the structure candidate to be used to annotate the spectrum annotation
-  # @param spectrum_index integer index of the spectrum to be annotated. Merged MS/MS will be used if spectrumIndex < 0 (default) (optional)
-  # @return [AnnotatedSpectrum]
-
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
-})
-
 test_that("GetStructureCandidates", {
   # tests for GetStructureCandidates
   # base path: http://localhost:8080
@@ -717,23 +668,6 @@ test_that("GetStructureCandidatesPaged", {
 
   response <- api_instance$GetStructureCandidatesPaged(project_id, aligned_feature_id)
   expect_true(inherits(response, "PagedModelStructureCandidateFormula"))
-
-  withr::defer(projects_api$CloseProject(project_id))
-})
-
-test_that("GetTraces1", {
-  # tests for GetTraces1
-  # base path: http://localhost:8080
-  # @param project_id character
-  # @param aligned_feature_id character
-  # @return [TraceSet]
-
-  project_id <- "GetTraces"
-  projects_api$OpenProject(project_id, tomato_project)
-  aligned_feature_id <- api_instance$GetAlignedFeatures(project_id)[[1]]$alignedFeatureId
-
-  response <- api_instance$GetTracesExperimental(project_id, aligned_feature_id)
-  expect_true(inherits(response, "TraceSetExperimental"))
 
   withr::defer(projects_api$CloseProject(project_id))
 })

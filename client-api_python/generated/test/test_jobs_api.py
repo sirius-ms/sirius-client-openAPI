@@ -96,6 +96,13 @@ class TestJobsApi(unittest.TestCase):
         self.assertIsInstance(response_after, list)
         self.assertEqual(len(response_after), 0)
 
+    def test_get_command(self) -> None:
+        """Test case for get_command
+
+        Get a CLI command for the given job configuration.
+        """
+        pass
+
     def test_get_default_job_config(self) -> None:
         """Test case for get_default_job_config
 
@@ -126,6 +133,13 @@ class TestJobsApi(unittest.TestCase):
         self.api.jobs().delete_job_config(config_name)
 
         self.assertIsInstance(response, StoredJobSubmission)
+
+    def test_get_job_config_names(self) -> None:
+        """Test case for get_job_config_names
+
+        [DEPRECATED] Get all (non-default) job configuration names
+        """
+        pass
 
     def test_get_job_configs(self) -> None:
         """Test case for get_job_configs

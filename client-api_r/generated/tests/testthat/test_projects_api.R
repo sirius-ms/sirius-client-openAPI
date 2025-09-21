@@ -22,6 +22,21 @@ test_that("CloseProject", {
   #expect_equal(result, "EXPECTED_RESULT")
 })
 
+test_that("CopyProject", {
+  # tests for CopyProject
+  # base path: http://localhost:39109
+  # DEPRECATED: this endpoint is based on local file paths and will likely be removed in future versions of this API.
+  # [DEPRECATED] Move an existing (opened) project-space to another location.  &lt;p&gt;  [DEPRECATED] this endpoint is based on local file paths and will likely be removed in future versions of this API.
+  # @param project_id character unique name/identifier of the project-space that shall be copied.
+  # @param path_to_copied_project character target location where the source project will be copied to.
+  # @param copy_project_id character optional id/mame of the newly created project (copy). If given the project will be opened. (optional)
+  # @param opt_fields array[character]  (optional)
+  # @return [ProjectInfo]
+
+  # uncomment below to test the operation
+  #expect_equal(result, "EXPECTED_RESULT")
+})
+
 test_that("CreateProject", {
   # tests for CreateProject
   # base path: http://localhost:8080

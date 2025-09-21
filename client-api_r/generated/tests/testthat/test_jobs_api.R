@@ -72,6 +72,18 @@ test_that("DeleteJobs", {
   withr::defer(unlink(project_dir, recursive=TRUE))
 })
 
+test_that("GetCommand", {
+  # tests for GetCommand
+  # base path: http://localhost:39109
+  # Get a CLI command for the given job configuration.
+  # Get a CLI command for the given job configuration.
+  # @param job_submission JobSubmission
+  # @return [array[character]]
+
+  # uncomment below to test the operation
+  #expect_equal(result, "EXPECTED_RESULT")
+})
+
 test_that("GetDefaultJobConfig", {
   # tests for GetDefaultJobConfig
   # base path: http://localhost:8080
@@ -115,6 +127,17 @@ test_that("GetJobConfig", {
   # @param name character name of the job-config to return
   # @param include_config_map character if true the generic configmap will be part of the output (optional)
   # @return [JobSubmission]
+
+  # uncomment below to test the operation
+  #expect_equal(result, "EXPECTED_RESULT")
+})
+
+test_that("GetJobConfigNames", {
+  # tests for GetJobConfigNames
+  # base path: http://localhost:39109
+  # [DEPRECATED] Get all (non-default) job configuration names
+  # [DEPRECATED] Get all (non-default) job configuration names  &lt;p&gt;  [DEPRECATED] Use /job-configs to get all configs with names. This endpoint is based on local file paths and will likely be removed in future versions of this API.
+  # @return [array[character]]
 
   # uncomment below to test the operation
   #expect_equal(result, "EXPECTED_RESULT")

@@ -36,9 +36,11 @@ df
 
 \item{\code{rank}}{integer [optional]}
 
-\item{\code{similarity}}{numeric}
+\item{\code{similarity}}{Similarity between query and reference spectrum numeric}
 
-\item{\code{sharedPeaks}}{integer [optional]}
+\item{\code{sharedPeaks}}{Number of shared/matched peaks integer [optional]}
+
+\item{\code{sharedPeakMapping}}{List of paired/matched peak indices.   Maps indices of peaks from the query spectrum (mass sorted)  to indices of matched peaks in the reference spectrum (mass sorted) list(\link{PeakPair}) [optional]}
 
 \item{\code{querySpectrumIndex}}{integer}
 
@@ -54,13 +56,19 @@ df
 
 \item{\code{adduct}}{character [optional]}
 
-\item{\code{exactMass}}{character [optional]}
+\item{\code{exactMass}}{numeric [optional]}
 
 \item{\code{smiles}}{character [optional]}
 
+\item{\code{type}}{character [optional]}
+
 \item{\code{inchiKey}}{character}
 
+\item{\code{referenceSpectrumType}}{character [optional]}
+
 \item{\code{referenceSpectrum}}{\link{BasicSpectrum} [optional]}
+
+\item{\code{querySpectrumType}}{character [optional]}
 }
 \if{html}{\out{</div>}}
 }
@@ -96,6 +104,7 @@ Initialize a new SpectralLibraryMatch class.
   specMatchId = NULL,
   rank = NULL,
   sharedPeaks = NULL,
+  sharedPeakMapping = NULL,
   dbName = NULL,
   dbId = NULL,
   splash = NULL,
@@ -103,7 +112,10 @@ Initialize a new SpectralLibraryMatch class.
   adduct = NULL,
   exactMass = NULL,
   smiles = NULL,
+  type = "IDENTITY",
+  referenceSpectrumType = "SPECTRUM",
   referenceSpectrum = NULL,
+  querySpectrumType = NULL,
   ...
 )}\if{html}{\out{</div>}}
 }
@@ -111,7 +123,7 @@ Initialize a new SpectralLibraryMatch class.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{similarity}}{similarity}
+\item{\code{similarity}}{Similarity between query and reference spectrum}
 
 \item{\code{querySpectrumIndex}}{querySpectrumIndex}
 
@@ -123,7 +135,9 @@ Initialize a new SpectralLibraryMatch class.
 
 \item{\code{rank}}{rank}
 
-\item{\code{sharedPeaks}}{sharedPeaks}
+\item{\code{sharedPeaks}}{Number of shared/matched peaks}
+
+\item{\code{sharedPeakMapping}}{List of paired/matched peak indices.   Maps indices of peaks from the query spectrum (mass sorted)  to indices of matched peaks in the reference spectrum (mass sorted)}
 
 \item{\code{dbName}}{dbName}
 
@@ -139,7 +153,13 @@ Initialize a new SpectralLibraryMatch class.
 
 \item{\code{smiles}}{smiles}
 
+\item{\code{type}}{type. Default to "IDENTITY".}
+
+\item{\code{referenceSpectrumType}}{referenceSpectrumType. Default to "SPECTRUM".}
+
 \item{\code{referenceSpectrum}}{referenceSpectrum}
+
+\item{\code{querySpectrumType}}{querySpectrumType}
 
 \item{\code{...}}{Other optional arguments.}
 }

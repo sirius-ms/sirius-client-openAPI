@@ -12,7 +12,7 @@ import os
 import unittest
 
 from PySirius import SiriusSDK, PagedModelAlignedFeature, PagedModelStructureCandidateScored, \
-    PagedModelStructureCandidateFormula, PagedModelFormulaCandidate, QuantificationTableExperimental, \
+    PagedModelStructureCandidateFormula, PagedModelFormulaCandidate, QuantTableExperimental, \
     PagedModelSpectralLibraryMatch, TraceSetExperimental
 from PySirius.models.aligned_feature import AlignedFeature
 from PySirius.models.annotated_ms_ms_data import AnnotatedMsMsData
@@ -116,6 +116,13 @@ class TestFeaturesApi(unittest.TestCase):
         finally:
             self.api.projects().close_project(project_id)
             os.remove(project_info.location)
+
+    def test_delete_aligned_features(self) -> None:
+        """Test case for delete_aligned_features
+
+        Delete feature (aligned over runs) with the given identifier from the specified project-space.
+        """
+        pass
 
     def test_get_aligned_feature(self) -> None:
         """Test case for get_aligned_feature
@@ -284,13 +291,6 @@ class TestFeaturesApi(unittest.TestCase):
         # response = self.api.features().get_ms_data(self.project_id, self.aligned_feature_id)
         # self.assertIsInstance(response, MsData)
 
-    def test_get_quantification(self) -> None:
-        """Test case for get_quantification
-
-        """
-        response = self.api.features().get_quantification_experimental(self.project_id, self.aligned_feature_id)
-        self.assertIsInstance(response, QuantificationTableExperimental)
-
     def test_get_spectral_library_match(self) -> None:
         """Test case for get_spectral_library_match
 
@@ -322,20 +322,6 @@ class TestFeaturesApi(unittest.TestCase):
         """
         response = self.api.features().get_spectral_library_matches_summary(self.project_id, self.aligned_feature_id)
         self.assertIsInstance(response, SpectralLibraryMatchSummary)
-
-    def test_get_structure_annotated_ms_data(self) -> None:
-        """Test case for get_structure_annotated_ms_data
-
-        Returns MS/MS Data (Merged MS/MS and list of measured MS/MS ) which are annotated with fragments and losses  for the given formula result identifier and structure candidate inChIKey.
-        """
-        pass
-
-    def test_get_structure_annotated_spectrum(self) -> None:
-        """Test case for get_structure_annotated_spectrum
-
-        Returns a fragmentation spectrum (e.g. Merged MS/MS) which is annotated with fragments and losses for the given formula result identifier  These annotations are only available if a fragmentation tree is available.
-        """
-        pass
 
     def test_get_structure_candidates(self) -> None:
         """Test case for get_structure_candidates
@@ -373,14 +359,6 @@ class TestFeaturesApi(unittest.TestCase):
         """
         response = self.api.features().get_structure_candidates_paged(self.project_id, self.aligned_feature_id)
         self.assertIsInstance(response, PagedModelStructureCandidateFormula)
-
-    def test_get_traces1(self) -> None:
-        """Test case for get_traces1
-
-        """
-        response = self.api.features().get_traces_experimental(self.project_id, self.aligned_feature_id)
-        self.assertIsInstance(response, TraceSetExperimental)
-
 
 if __name__ == '__main__':
     unittest.main()
