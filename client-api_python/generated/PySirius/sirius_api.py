@@ -8,7 +8,7 @@ class PySiriusAPI:
 
     def __init__(self, api_client):
         self.api_client = api_client
-    
+
     def get_client(self):
         return self.api_client
 
