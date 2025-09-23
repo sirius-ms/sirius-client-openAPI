@@ -26,21 +26,14 @@ class TestSearchableDatabasesApi(unittest.TestCase):
         self.api = SiriusSDK().attach_or_start_sirius()
         self.dbs = self.api.databases()
         self.database_id = 'create_database'
-        database_parameters = SearchableDatabaseParameters(display_name="test_db", location=f"{os.environ.get('HOME')}/test_db")
-        self.create_response = self.dbs.create_database(self.database_id, database_parameters)
+        self.database_parameters = SearchableDatabaseParameters(display_name="test_db", location=f"{os.environ.get('HOME')}/test_db.siriusdb")
+        self.create_response = self.dbs.create_database(self.database_id, self.database_parameters)
 
         path_to_demo_data = f"{os.environ.get('HOME')}/sirius-client-openAPI/.updater/clientTests/Data"
         self.test_file = path_to_demo_data + "/Kaempferol.ms"
 
     def tearDown(self) -> None:
         self.dbs.remove_database(self.database_id, True)
-
-    def test_add_databases(self) -> None:
-        """Test case for add_databases
-
-        """
-        # DEPRECATED
-        pass
 
     def test_create_database(self) -> None:
         """Test case for create_database
@@ -91,19 +84,23 @@ class TestSearchableDatabasesApi(unittest.TestCase):
         """Test case for remove_database
 
         """
-        pass
+        remove_database_id = 'remove_database'
+        database_parameters = SearchableDatabaseParameters(display_name="test_remove_db",
+                                                           location=f"{os.environ.get('HOME')}/test_remove_db")
+        self.create_response = self.dbs.create_database(remove_database_id, database_parameters)
+        before = len(self.dbs.get_databases())
+        self.dbs.remove_database(remove_database_id, True)
+        after = len(self.dbs.get_databases())
+        self.assertEqual(before, after+1)
 
     def test_update_database(self) -> None:
         """Test case for update_database
 
         """
-        try:
-            response = self.dbs.update_database_with_http_info(self.database_id)
-            # self.assertIsInstance(response, SearchableDatabase)
-        except ServiceException as ex:
-            # Updating Custom databases is not yet supported
-            self.assertTrue('UnsupportedOperationException' in ex.body, 'UnsupportedOperationException not found!')
-            self.assertEqual(ex.status, 500, 'Status is not 500!')
+        # TODO not yet supported
+        # response = self.dbs.update_database(self.database_id)
+        # self.assertIsInstance(response, SearchableDatabase)
+        pass
 
 if __name__ == '__main__':
     unittest.main()

@@ -60,7 +60,7 @@ class TestCompoundsApi(unittest.TestCase):
 
         compound_import_instance = CompoundImport.from_json(json.dumps(compound_import_json))
         compound_import = [compound_import_instance]
-        self.api.compounds().add_compounds(self.project_id, compound_import)
+        self.add_response = self.api.compounds().add_compounds(self.project_id, compound_import)
 
     def tearDown(self) -> None:
         self.api.projects().close_project(self.project_id)
@@ -71,7 +71,8 @@ class TestCompoundsApi(unittest.TestCase):
 
         Import Compounds and its contained features.
         """
-        pass
+        self.assertIsInstance(self.add_response, list)
+        self.assertIsInstance(self.add_response[0], Compound)
 
 
     def test_delete_compound(self) -> None:

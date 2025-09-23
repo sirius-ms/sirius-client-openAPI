@@ -17,6 +17,7 @@ import unittest
 import PySirius
 from PySirius import PySiriusAPI, SiriusSDK, StoredJobSubmission
 from PySirius.models.job import Job
+from PySirius.models.job_state import JobState
 from PySirius.models.paged_model_job import PagedModelJob
 from PySirius.models.job_submission import JobSubmission
 
@@ -49,11 +50,9 @@ class TestJobsApi(unittest.TestCase):
         Delete job.
         """
         response_before = self.api.jobs().get_jobs(self.project_id)
-        print(response_before)
         self.api.jobs().delete_job(self.project_id, response_before[0].id, cancel_if_running=True, await_deletion=True)
         for i in range(0,1000):
             if len(self.api.jobs().get_jobs(self.project_id)) > 0:
-                print(self.api.jobs().get_jobs(self.project_id))
                 time.sleep(0.1)
             else: break
         response_after = self.api.jobs().get_jobs(self.project_id)
@@ -101,7 +100,10 @@ class TestJobsApi(unittest.TestCase):
 
         Get a CLI command for the given job configuration.
         """
-        pass
+        config = self.api.jobs().get_default_job_config()
+        response = self.api.jobs().get_command(config)
+        self.assertIsInstance(response, list)
+        self.assertIsInstance(response[0], str)
 
     def test_get_default_job_config(self) -> None:
         """Test case for get_default_job_config
@@ -133,13 +135,6 @@ class TestJobsApi(unittest.TestCase):
         self.api.jobs().delete_job_config(config_name)
 
         self.assertIsInstance(response, StoredJobSubmission)
-
-    def test_get_job_config_names(self) -> None:
-        """Test case for get_job_config_names
-
-        [DEPRECATED] Get all (non-default) job configuration names
-        """
-        pass
 
     def test_get_job_configs(self) -> None:
         """Test case for get_job_configs
@@ -215,11 +210,14 @@ class TestJobsApi(unittest.TestCase):
         }
         job_submission = JobSubmission.from_json(json.dumps(job_submission_json))
         response = self.api.jobs().start_job(self.project_id, job_submission)
-        # time.sleep(3)
+
+        while True:
+            if self.api.jobs().get_job(self.project_id, response.id).progress.state is not JobState.DONE:
+                time.sleep(1)
+            else:
+                break
 
         self.assertIsInstance(response, Job)
-        # # TODO find substitute for this line for SIRIUS6
-        # self.assertTrue(os.path.exists(self.path_to_project + "/" + aligned_feature_id + "/scores"))
 
     def test_start_job_from_config(self) -> None:
         """Test case for start_job_from_config
@@ -241,15 +239,17 @@ class TestJobsApi(unittest.TestCase):
                 sirius_json
         }
         job_submission = JobSubmission.from_json(json.dumps(job_submission_json))
-        self.api.jobs().save_job_config(config_name, job_submission)
+        self.api.jobs().save_job_config(config_name, job_submission, True)
         response = self.api.jobs().start_job_from_config(self.project_id, config_name, [aligned_feature_id])
-        # time.sleep(3)
+
+        while True:
+            if self.api.jobs().get_job(self.project_id, response.id).progress.state is not JobState.DONE:
+                time.sleep(1)
+            else:
+                break
+
         self.api.jobs().delete_job_config(config_name)
-
         self.assertIsInstance(response, Job)
-        # # TODO find substitute for this line for SIRIUS6
-        # self.assertTrue(os.path.exists(self.path_to_project + "/" + aligned_feature_id + "/scores"))
-
 
 if __name__ == '__main__':
     unittest.main()

@@ -10,12 +10,15 @@
 
 import os
 import unittest
+import json
 
 from PySirius import SiriusSDK, PagedModelAlignedFeature, PagedModelStructureCandidateScored, \
     PagedModelStructureCandidateFormula, PagedModelFormulaCandidate, QuantTableExperimental, \
     PagedModelSpectralLibraryMatch, TraceSetExperimental
 from PySirius.models.aligned_feature import AlignedFeature
 from PySirius.models.annotated_ms_ms_data import AnnotatedMsMsData
+from PySirius.models.ms_data import MsData
+from PySirius.models.feature_import import FeatureImport
 from PySirius.models.annotated_spectrum import AnnotatedSpectrum
 from PySirius.models.canopus_prediction import CanopusPrediction
 from PySirius.models.compound_classes import CompoundClasses
@@ -37,7 +40,7 @@ class TestFeaturesApi(unittest.TestCase):
         self.path_to_project = f"{os.environ.get('HOME')}/tomato_small.sirius"
         # check if test project already open -> allows to run tests in independent calls.
         if self.api.projects().get_project_without_preload_content(self.project_id).status == 404:
-            self.api.projects().open_project(self.project_id, self.path_to_project)
+            self.project_info = self.api.projects().open_project(self.project_id, self.path_to_project)
         # the single one ID with MSNovelist results computed
         self.aligned_feature_id = "586487307819356741"
 
@@ -52,46 +55,52 @@ class TestFeaturesApi(unittest.TestCase):
 
         Import (aligned) features into the project.
         """
-        # # equals test_add_compounds
-        # simple_peak_json = {
-        #     "mz": 1.23,
-        #     "intensity": 1.23
-        # }
-        #
-        # basic_spectrum_json = {
-        #     "precursorMz": 1.23,
-        #     "peaks": [
-        #         simple_peak_json
-        #     ]
-        # }
-        #
-        # feature_import_json = {
-        #     "name": "testfeature",
-        #     "featureId": "testfeature",
-        #     "ionMass": 1.23,
-        #     "adduct": "[M+?]+",
-        #     "ms1Spectra": [
-        #         basic_spectrum_json
-        #     ],
-        #     "ms2Spectra": [
-        #         basic_spectrum_json
-        #     ]
-        # }
-        #
-        # feature_import_instance = FeatureImport.from_json(json.dumps(feature_import_json))
-        # feature_import = [feature_import_instance]
-        # response = self.api.features().add_aligned_features(self.project_id, feature_import)
-        # self.api.features().delete_aligned_feature(self.project_id, response[0].aligned_feature_id)
-        #
-        # self.assertIsInstance(response, list)
-        # self.assertIsInstance(response[0], AlignedFeature)
+        project_info = self.api.projects().create_project(project_id="delete-project")
+        project_id = project_info.project_id
+        try:
+            simple_peak_json = {
+                "mz": 1.23,
+                "intensity": 1.23
+            }
+
+            basic_spectrum_json = {
+                "precursorMz": 1.23,
+                "peaks": [
+                    simple_peak_json
+                ]
+            }
+
+            feature_import_json = {
+                "name": "testfeature",
+                "featureId": "testfeature",
+                "ionMass": 1.23,
+                "charge": 1,
+                "adduct": "[M+?]+",
+                "ms1Spectra": [
+                    basic_spectrum_json
+                ],
+                "ms2Spectra": [
+                    basic_spectrum_json
+                ]
+            }
+
+            feature_import_instance = FeatureImport.from_json(json.dumps(feature_import_json))
+            feature_import = [feature_import_instance]
+            response = self.api.features().add_aligned_features(project_id, feature_import)
+            self.api.features().delete_aligned_feature(project_id, response[0].aligned_feature_id)
+
+            self.assertIsInstance(response, list)
+            self.assertIsInstance(response[0], AlignedFeature)
+        finally:
+            self.api.projects().close_project(project_id)
+            os.remove(project_info.location)
 
     def test_delete_aligned_feature(self) -> None:
         """Test case for delete_aligned_feature
 
         Delete feature (aligned over runs) with the given identifier from the specified project-space.
         """
-        project_info = self.api.projects().create_project(project_id="delete-project")
+        project_info = self.api.projects().create_project(project_id="delete-feature-project")
         project_id = project_info.project_id
         try:
             path_to_demo_data = f"{os.environ.get('HOME')}/sirius-client-openAPI/.updater/clientTests/Data"
@@ -122,7 +131,30 @@ class TestFeaturesApi(unittest.TestCase):
 
         Delete feature (aligned over runs) with the given identifier from the specified project-space.
         """
-        pass
+        project_info = self.api.projects().create_project(project_id="delete-features-project")
+        project_id = project_info.project_id
+        try:
+            path_to_demo_data = f"{os.environ.get('HOME')}/sirius-client-openAPI/.updater/clientTests/Data"
+            preproc_ms2_file_1 = path_to_demo_data + "/Kaempferol.ms"
+            preproc_ms2_file_2 = path_to_demo_data + "/laudanosine.mgf"
+            input_files = [preproc_ms2_file_1, preproc_ms2_file_2]
+            import_result = self.api.projects().import_preprocessed_data(project_id, input_files=input_files)
+            feature_ids = import_result.affected_aligned_feature_ids
+
+            response_before = self.api.features().get_aligned_features(project_id)
+            self.api.features().delete_aligned_features(project_id, feature_ids)
+            response_after = self.api.features().get_aligned_features(project_id)
+
+            self.assertIsInstance(response_before, list)
+            self.assertIsInstance(response_before[0], AlignedFeature)
+
+            self.assertIsInstance(response_after, list)
+            self.assertEqual(len(response_after), 0)
+
+            self.assertEqual(len(response_before) - len(response_after), 2)
+        finally:
+            self.api.projects().close_project(project_id)
+            os.remove(project_info.location)
 
     def test_get_aligned_feature(self) -> None:
         """Test case for get_aligned_feature
@@ -285,17 +317,15 @@ class TestFeaturesApi(unittest.TestCase):
 
         Mass Spec data (input data) for the given 'alignedFeatureId' .
         """
-        # # pydantic_core._pydantic_core.ValidationError: 1 validation error for MsData
-        # #   ms1Spectra
-        # #       Input should be a valid list [type=list_type, input_value=None, input_type=NoneType]
-        # response = self.api.features().get_ms_data(self.project_id, self.aligned_feature_id)
-        # self.assertIsInstance(response, MsData)
+        response = self.api.features().get_ms_data(self.project_id, self.aligned_feature_id)
+        self.assertIsInstance(response, MsData)
 
     def test_get_spectral_library_match(self) -> None:
         """Test case for get_spectral_library_match
 
         List of spectral library matches for the given 'alignedFeatureId'.
         """
+        # TODO have to library match in projectspace
         pass
 
     def test_get_spectral_library_matches(self) -> None:
@@ -305,6 +335,7 @@ class TestFeaturesApi(unittest.TestCase):
         """
         response = self.api.features().get_spectral_library_matches(self.project_id, self.aligned_feature_id)
         self.assertIsInstance(response, list)
+        # TODO have to library match in projectspace
         # self.assertIsInstance(response[0], SpectralLibraryMatch)
 
     def test_get_spectral_library_matches_paged(self) -> None:
@@ -359,6 +390,7 @@ class TestFeaturesApi(unittest.TestCase):
         """
         response = self.api.features().get_structure_candidates_paged(self.project_id, self.aligned_feature_id)
         self.assertIsInstance(response, PagedModelStructureCandidateFormula)
+
 
 if __name__ == '__main__':
     unittest.main()
