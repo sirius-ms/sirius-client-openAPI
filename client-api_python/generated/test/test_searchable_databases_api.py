@@ -15,21 +15,25 @@ from PySirius import SiriusSDK
 from PySirius.api.searchable_databases_api import SearchableDatabasesApi
 from PySirius.exceptions import ServiceException
 from PySirius.models.searchable_database import SearchableDatabase
+from PySirius.models.searchable_database_parameters import SearchableDatabaseParameters
+
 
 
 class TestSearchableDatabasesApi(unittest.TestCase):
     """SearchableDatabasesApi unit test stubs"""
 
     def setUp(self) -> None:
-        self.dbs = SiriusSDK().attach_or_start_sirius().databases()
+        self.api = SiriusSDK().attach_or_start_sirius()
+        self.dbs = self.api.databases()
         self.database_id = 'create_database'
-        self.create_response = self.dbs.create_database(self.database_id)
+        database_parameters = SearchableDatabaseParameters(display_name="test_db", location=f"{os.environ.get('HOME')}/test_db")
+        self.create_response = self.dbs.create_database(self.database_id, database_parameters)
 
         path_to_demo_data = f"{os.environ.get('HOME')}/sirius-client-openAPI/.updater/clientTests/Data"
         self.test_file = path_to_demo_data + "/Kaempferol.ms"
 
     def tearDown(self) -> None:
-        self.dbs.remove_database(self.database_id)
+        self.dbs.remove_database(self.database_id, True)
 
     def test_add_databases(self) -> None:
         """Test case for add_databases
