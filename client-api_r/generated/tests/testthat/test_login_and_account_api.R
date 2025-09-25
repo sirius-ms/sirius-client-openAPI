@@ -3,7 +3,9 @@
 
 context("Test LoginAndAccountApi")
 
-api_instance <- LoginAndAccountApi$new()
+sdk = SiriusSDK$new()
+api = sdk$attach_to_sirius()
+api_instance <- api$login_and_account_api
 
 test_that("GetAccountInfo", {
   # tests for GetAccountInfo

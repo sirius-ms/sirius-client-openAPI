@@ -3,7 +3,9 @@
 
 context("Test ActuatorApi")
 
-api_instance <- ActuatorApi$new()
+sdk = SiriusSDK$new()
+api = sdk$attach_to_sirius()
+api_instance <- api$actuator_api
 
 test_that("Health", {
   # tests for Health

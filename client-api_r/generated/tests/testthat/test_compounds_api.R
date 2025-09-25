@@ -3,8 +3,10 @@
 
 context("Test CompoundsApi")
 
-api_instance <- CompoundsApi$new()
-projects_api <- ProjectsApi$new()
+sdk = SiriusSDK$new()
+api = sdk$attach_to_sirius()
+api_instance <- api$compounds_api
+projects_api <- api$projects_api
 
 basic_spectrum <- c(BasicSpectrum$new(peaks = c(SimplePeak$new(1.23, 4.56)), precursorMz = 1.23))
 feature_import <- c(FeatureImport$new(ionMass = 1.23, charge = 1, ms1Spectra = basic_spectrum, ms2Spectra = basic_spectrum))
@@ -22,7 +24,7 @@ test_that("AddCompounds", {
   # @return [array[Compound]]
 
   project_id <- "AddCompounds"
-  project_dir <- paste(Sys.getenv("HOME"), "AddCompounds", sep="/")
+  project_dir <- paste(Sys.getenv("HOME"), paste0(project_id, ".sirius"), sep="/")
   projects_api$CreateProject(project_id, project_dir)
 
   response <- api_instance$AddCompounds(project_id, compound_import)
@@ -43,7 +45,7 @@ test_that("DeleteCompound", {
   # @return [Void]
 
   project_id <- "DeleteCompound"
-  project_dir <- paste(Sys.getenv("HOME"), "DeleteCompound", sep="/")
+  project_dir <- paste(Sys.getenv("HOME"), paste0(project_id, ".sirius"), sep="/")
   projects_api$CreateProject(project_id, project_dir)
   api_instance$AddCompounds(project_id, compound_import)
   compound_id <- api_instance$GetCompounds(project_id)[[1]]$compoundId
@@ -70,7 +72,7 @@ test_that("GetCompound", {
   # @return [Compound]
 
   project_id <- "GetCompound"
-  project_dir <- paste(Sys.getenv("HOME"), "GetCompound", sep="/")
+  project_dir <- paste(Sys.getenv("HOME"), paste0(project_id, ".sirius"), sep="/")
   projects_api$CreateProject(project_id, project_dir)
   api_instance$AddCompounds(project_id, compound_import)
   compound_id <- api_instance$GetCompounds(project_id)[[1]]$compoundId
@@ -93,7 +95,7 @@ test_that("GetCompounds", {
   # @return [array[Compound]]
 
   project_id <- "GetCompounds"
-  project_dir <- paste(Sys.getenv("HOME"), "GetCompounds", sep="/")
+  project_dir <- paste(Sys.getenv("HOME"), paste0(project_id, ".sirius"), sep="/")
   projects_api$CreateProject(project_id, project_dir)
   api_instance$AddCompounds(project_id, compound_import)
 
@@ -119,7 +121,7 @@ test_that("GetCompoundsPaged", {
   # @return [PageCompound]
 
   project_id <- "GetCompoundsPaged"
-  project_dir <- paste(Sys.getenv("HOME"), "GetCompoundsPaged", sep="/")
+  project_dir <- paste(Sys.getenv("HOME"), paste0(project_id, ".sirius"), sep="/")
   projects_api$CreateProject(project_id, project_dir)
 
   response <- api_instance$GetCompoundsPaged(project_id)

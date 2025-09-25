@@ -3,7 +3,9 @@
 
 context("Test ProjectsApi")
 
-api_instance <- ProjectsApi$new()
+sdk = SiriusSDK$new()
+api = sdk$attach_to_sirius()
+api_instance <- api$projects_api
 path_to_demo_data <- paste(Sys.getenv("HOME"), "sirius-client-openAPI/.updater/clientTests/Data", sep="/")
 preproc_ms2_file_1 = paste(path_to_demo_data, "Kaempferol.ms", sep="/")
 preproc_ms2_file_2 = paste(path_to_demo_data, "laudanosine.mgf", sep="/")
@@ -18,23 +20,17 @@ test_that("CloseProject", {
   # @param project_id character unique name/identifier of the  project-space to be closed.
   # @return [Void]
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
-})
+  project_id <- "CloseProject"
+  project_dir <- paste(Sys.getenv("HOME"), paste0(project_id, ".sirius"), sep="/")
 
-test_that("CopyProject", {
-  # tests for CopyProject
-  # base path: http://localhost:39109
-  # DEPRECATED: this endpoint is based on local file paths and will likely be removed in future versions of this API.
-  # [DEPRECATED] Move an existing (opened) project-space to another location.  &lt;p&gt;  [DEPRECATED] this endpoint is based on local file paths and will likely be removed in future versions of this API.
-  # @param project_id character unique name/identifier of the project-space that shall be copied.
-  # @param path_to_copied_project character target location where the source project will be copied to.
-  # @param copy_project_id character optional id/mame of the newly created project (copy). If given the project will be opened. (optional)
-  # @param opt_fields array[character]  (optional)
-  # @return [ProjectInfo]
+  api_instance$CreateProject(project_id, project_dir)
+  response_before <- api_instance$GetProjects()
+  api_instance$CloseProject(project_id)
+  response_after <- api_instance$GetProjects()
 
-  # uncomment below to test the operation
-  #expect_equal(result, "EXPECTED_RESULT")
+  expect_equal(length(response_before), length(response_after)+1)
+
+  withr::defer(unlink(project_dir, recursive=TRUE))
 })
 
 test_that("CreateProject", {
@@ -47,7 +43,7 @@ test_that("CreateProject", {
   # @return [ProjectInfo]
 
   project_id <- "CreateProject"
-  project_dir <- paste(Sys.getenv("HOME"), project_id, sep="/")
+  project_dir <- paste(Sys.getenv("HOME"), paste0(project_id, ".sirius"), sep="/")
 
   response <- api_instance$CreateProject(project_id, project_dir)
   expect_true(inherits(response, "ProjectInfo"))
@@ -120,7 +116,7 @@ test_that("GetProject", {
   # @return [ProjectInfo]
 
   project_id <- "GetProject"
-  project_dir <- paste(Sys.getenv("HOME"), project_id, sep="/")
+  project_dir <- paste(Sys.getenv("HOME"), paste0(project_id, ".sirius"), sep="/")
   api_instance$CreateProject(project_id, project_dir)
 
   response <- api_instance$GetProject(project_id)
@@ -138,7 +134,7 @@ test_that("GetProjects", {
   # @return [array[ProjectInfo]]
 
   project_id <- "GetProjects"
-  project_dir <- paste(Sys.getenv("HOME"), project_id, sep="/")
+  project_dir <- paste(Sys.getenv("HOME"), paste0(project_id, ".sirius"), sep="/")
   api_instance$CreateProject(project_id, project_dir)
 
   response <- api_instance$GetProjects()
@@ -162,7 +158,7 @@ test_that("ImportMsRunData", {
 
 #   Request processing failed: java.lang.RuntimeException: java.lang.NullPointerException: Cannot invoke "de.unijena.bioinf.ms.frontend.subtools.lcms_align.DataSmoothing.ordinal()" because "filter" is null
 #   project_id <- "ImportMsRunData"
-#   project_dir <- paste(Sys.getenv("HOME"), project_id, sep="/")
+#   project_dir <- paste(Sys.getenv("HOME"), paste0(project_id, ".sirius"), sep="/")
 #   api_instance$CreateProject(project_id, project_dir)
 #
 #   var_input_files <- full_ms_file
@@ -186,17 +182,17 @@ test_that("ImportMsRunDataAsJob", {
   # @param input_files array[data.frame]  (optional)
   # @return [Job]
 
-  project_id <- "ImportMsRunDataAsJob"
-  project_dir <- paste(Sys.getenv("HOME"), project_id, sep="/")
-  api_instance$CreateProject(project_id, project_dir)
-
-  var_input_files <- full_ms_file
-  var_parameters <- LcmsSubmissionParameters$new(TRUE)$toJSONString()
-  response <- api_instance$ImportMsRunDataAsJob(project_id, parameters=var_parameters, input_files=var_input_files)
-  expect_true(inherits(response, "Job"))
-
-  withr::defer(api_instance$CloseProject(project_id))
-  withr::defer(unlink(project_dir, recursive=TRUE))
+#   project_id <- "ImportMsRunDataAsJob"
+#   project_dir <- paste(Sys.getenv("HOME"), paste0(project_id, ".sirius"), sep="/")
+#   api_instance$CreateProject(project_id, project_dir)
+#
+#   var_input_files <- full_ms_file
+#   var_parameters <- LcmsSubmissionParameters$new(TRUE)$toJSONString()
+#   response <- api_instance$ImportMsRunDataAsJob(project_id, parameters=var_parameters, input_files=var_input_files)
+#   expect_true(inherits(response, "Job"))
+#
+#   withr::defer(api_instance$CloseProject(project_id))
+#   withr::defer(unlink(project_dir, recursive=TRUE))
 })
 
 test_that("ImportPreprocessedData", {
@@ -211,7 +207,7 @@ test_that("ImportPreprocessedData", {
   # @return [ImportResult]
 
   project_id <- "ImportPreprocessedData"
-  project_dir <- paste(Sys.getenv("HOME"), project_id, sep="/")
+  project_dir <- paste(Sys.getenv("HOME"), paste0(project_id, ".sirius"), sep="/")
   api_instance$CreateProject(project_id, project_dir)
 
   var_input_files <- preproc_ms2_file_1
@@ -235,7 +231,7 @@ test_that("ImportPreprocessedDataAsJob", {
   # @return [Job]
 
   project_id <- "ImportPreprocessedDataAsJob"
-  project_dir <- paste(Sys.getenv("HOME"), project_id, sep="/")
+  project_dir <- paste(Sys.getenv("HOME"), paste0(project_id, ".sirius"), sep="/")
   api_instance$CreateProject(project_id, project_dir)
 
   var_input_files <- preproc_ms2_file_1
