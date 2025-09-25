@@ -1285,8 +1285,12 @@ FeaturesApi <- R6::R6Class(
 
       if (!is.null(`request_body`)) {
         body.items <- paste(unlist(lapply(`request_body`, function(param) {
-                                                             param$toJSONString()
-                                                         })), collapse = ",")
+          if (inherits(param, "character")) {
+            param
+          } else {
+            param$toJSONString()
+          }
+        })), collapse = ",")
         local_var_body <- paste0("[", body.items, "]")
       } else {
         body <- NULL

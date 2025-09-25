@@ -740,7 +740,7 @@ JobsApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #'
     #' @return Job
-    GetJob = function(project_id, job_id, opt_fields = list(progress), data_file = NULL, ...) {
+    GetJob = function(project_id, job_id, opt_fields = list("progress"), data_file = NULL, ...) {
       local_var_response <- self$GetJobWithHttpInfo(project_id, job_id, opt_fields, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
@@ -763,7 +763,7 @@ JobsApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #'
     #' @return API response (Job) with additional information such as HTTP status code, headers
-    GetJobWithHttpInfo = function(project_id, job_id, opt_fields = list(progress), data_file = NULL, ...) {
+    GetJobWithHttpInfo = function(project_id, job_id, opt_fields = list("progress"), data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -1704,7 +1704,7 @@ JobsApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #'
     #' @return Job
-    StartJobFromConfig = function(project_id, job_config_name, request_body, recompute = NULL, opt_fields = list(command, progress), data_file = NULL, ...) {
+    StartJobFromConfig = function(project_id, job_config_name, request_body, recompute = NULL, opt_fields = list("command", "progress"), data_file = NULL, ...) {
       local_var_response <- self$StartJobFromConfigWithHttpInfo(project_id, job_config_name, request_body, recompute, opt_fields, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
@@ -1729,7 +1729,7 @@ JobsApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #'
     #' @return API response (Job) with additional information such as HTTP status code, headers
-    StartJobFromConfigWithHttpInfo = function(project_id, job_config_name, request_body, recompute = NULL, opt_fields = list(command, progress), data_file = NULL, ...) {
+    StartJobFromConfigWithHttpInfo = function(project_id, job_config_name, request_body, recompute = NULL, opt_fields = list("command", "progress"), data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -1771,8 +1771,12 @@ JobsApi <- R6::R6Class(
 
       if (!is.null(`request_body`)) {
         body.items <- paste(unlist(lapply(`request_body`, function(param) {
-                                                             param$toJSONString()
-                                                         })), collapse = ",")
+          if (inherits(param, "character")) {
+            param
+          } else {
+            param$toJSONString()
+          }
+        })), collapse = ",")
         local_var_body <- paste0("[", body.items, "]")
       } else {
         body <- NULL

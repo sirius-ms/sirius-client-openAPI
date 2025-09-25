@@ -1043,7 +1043,7 @@ ProjectsApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #'
     #' @return Job
-    ImportMsRunDataAsJob = function(project_id, input_files, parameters, opt_fields = list(progress), data_file = NULL, ...) {
+    ImportMsRunDataAsJob = function(project_id, input_files, parameters, opt_fields = list("progress"), data_file = NULL, ...) {
       local_var_response <- self$ImportMsRunDataAsJobWithHttpInfo(project_id, input_files, parameters, opt_fields, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
@@ -1067,7 +1067,7 @@ ProjectsApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #'
     #' @return API response (Job) with additional information such as HTTP status code, headers
-    ImportMsRunDataAsJobWithHttpInfo = function(project_id, input_files, parameters, opt_fields = list(progress), data_file = NULL, ...) {
+    ImportMsRunDataAsJobWithHttpInfo = function(project_id, input_files, parameters, opt_fields = list("progress"), data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -1280,7 +1280,7 @@ ProjectsApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #'
     #' @return Job
-    ImportPreprocessedDataAsJob = function(project_id, input_files, ignore_formulas = FALSE, allow_ms1_only = TRUE, opt_fields = list(progress), data_file = NULL, ...) {
+    ImportPreprocessedDataAsJob = function(project_id, input_files, ignore_formulas = FALSE, allow_ms1_only = TRUE, opt_fields = list("progress"), data_file = NULL, ...) {
       local_var_response <- self$ImportPreprocessedDataAsJobWithHttpInfo(project_id, input_files, ignore_formulas, allow_ms1_only, opt_fields, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
@@ -1305,7 +1305,7 @@ ProjectsApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #'
     #' @return API response (Job) with additional information such as HTTP status code, headers
-    ImportPreprocessedDataAsJobWithHttpInfo = function(project_id, input_files, ignore_formulas = FALSE, allow_ms1_only = TRUE, opt_fields = list(progress), data_file = NULL, ...) {
+    ImportPreprocessedDataAsJobWithHttpInfo = function(project_id, input_files, ignore_formulas = FALSE, allow_ms1_only = TRUE, opt_fields = list("progress"), data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
