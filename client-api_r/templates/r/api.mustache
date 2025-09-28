@@ -448,8 +448,12 @@
       if (!is.null(`{{paramName}}`)) {
         {{#isArray}}
         body.items <- paste(unlist(lapply(`{{paramName}}`, function(param) {
-                                                             param$toJSONString()
-                                                         })), collapse = ",")
+          if (inherits(param, "character")) {
+            param
+          } else {
+            param$toJSONString()
+          }
+        })), collapse = ",")
         local_var_body <- paste0("[", body.items, "]")
         {{/isArray}}
         {{^isArray}}
