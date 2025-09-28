@@ -3,13 +3,13 @@
 
 context("Test ProjectsApi")
 
-sdk = SiriusSDK$new()
-api = sdk$attach_to_sirius()
+sdk <- SiriusSDK$new()
+api <- sdk$attach_to_sirius()
 api_instance <- api$projects_api
-path_to_demo_data <- paste(Sys.getenv("HOME"), "sirius-client-openAPI/.updater/clientTests/Data", sep="/")
-preproc_ms2_file_1 = paste(path_to_demo_data, "Kaempferol.ms", sep="/")
-preproc_ms2_file_2 = paste(path_to_demo_data, "laudanosine.mgf", sep="/")
-full_ms_file = paste(path_to_demo_data, "SPF4_Eso3_GH6_01_22643.mzXML", sep="/")
+path_to_demo_data <- paste(Sys.getenv("HOME"), "sirius-client-openAPI/.updater/clientTests/Data", sep = "/")
+preproc_ms2_file_1 <- paste(path_to_demo_data, "Kaempferol.ms", sep = "/")
+preproc_ms2_file_2 <- paste(path_to_demo_data, "laudanosine.mgf", sep = "/")
+full_ms_file <- paste(path_to_demo_data, "SPF4_Eso3_GH6_01_22643.mzXML", sep = "/")
 
 
 test_that("CloseProject", {
@@ -20,17 +20,23 @@ test_that("CloseProject", {
   # @param project_id character unique name/identifier of the  project-space to be closed.
   # @return [Void]
 
-  project_id <- "CloseProject"
-  project_dir <- paste(Sys.getenv("HOME"), paste0(project_id, ".sirius"), sep="/")
+  tryCatch({
 
-  api_instance$CreateProject(project_id, project_dir)
-  response_before <- api_instance$GetProjects()
-  api_instance$CloseProject(project_id)
-  response_after <- api_instance$GetProjects()
+    project_id <- "CloseProject"
+    project_dir <- paste(Sys.getenv("HOME"), paste0(project_id, ".sirius"), sep = "/")
 
-  expect_equal(length(response_before), length(response_after)+1)
+    api_instance$CreateProject(project_id, project_dir)
+    response_before <- api_instance$GetProjects()
+    api_instance$CloseProject(project_id)
+    response_after <- api_instance$GetProjects()
 
-  withr::defer(unlink(project_dir, recursive=TRUE))
+    expect_equal(length(response_before), length(response_after) + 1)
+
+  }, finally = {
+
+    unlink(project_dir, recursive = TRUE)
+
+  })
 })
 
 test_that("CreateProject", {
@@ -42,14 +48,20 @@ test_that("CreateProject", {
   # @param path_to_project character local file path where the project will be created. If NULL, project will be stored by its projectId in default project location. DEPRECATED: This parameter relies on the local filesystem and will likely be removed in later versions of this API to allow for more flexible use cases. (optional)
   # @return [ProjectInfo]
 
-  project_id <- "CreateProject"
-  project_dir <- paste(Sys.getenv("HOME"), paste0(project_id, ".sirius"), sep="/")
+  tryCatch({
 
-  response <- api_instance$CreateProject(project_id, project_dir)
-  expect_true(inherits(response, "ProjectInfo"))
+    project_id <- "CreateProject"
+    project_dir <- paste(Sys.getenv("HOME"), paste0(project_id, ".sirius"), sep = "/")
 
-  withr::defer(api_instance$CloseProject(project_id))
-  withr::defer(unlink(project_dir, recursive=TRUE))
+    response <- api_instance$CreateProject(project_id, project_dir)
+    expect_true(inherits(response, "ProjectInfo"))
+
+  }, finally = {
+
+    api_instance$CloseProject(project_id)
+    unlink(project_dir, recursive = TRUE)
+
+  })
 })
 
 test_that("GetCanopusClassyFireData", {
@@ -60,14 +72,20 @@ test_that("GetCanopusClassyFireData", {
   # @param charge integer
   # @return [character]
 
-  project_id <- "GetCanopusClassyFireData"
-  project_dir <- paste(Sys.getenv("HOME"), "tomato_small.sirius", sep="/")
-  api_instance$OpenProject(project_id, project_dir)
+  tryCatch({
 
-  response <- api_instance$GetCanopusClassyFireData(project_id, 56)
-  expect_true(inherits(response, "character"))
+    project_id <- "GetCanopusClassyFireData"
+    project_dir <- paste(Sys.getenv("HOME"), "tomato_small.sirius", sep = "/")
+    api_instance$OpenProject(project_id, project_dir)
 
-  withr::defer(api_instance$CloseProject(project_id))
+    response <- api_instance$GetCanopusClassyFireData(project_id, 1)
+    expect_true(inherits(response, "data.frame"))
+
+  }, finally = {
+
+    api_instance$CloseProject(project_id)
+
+  })
 })
 
 test_that("GetCanopusNpcData", {
@@ -78,14 +96,20 @@ test_that("GetCanopusNpcData", {
   # @param charge integer
   # @return [character]
 
-  project_id <- "GetCanopusNpcData"
-  project_dir <- paste(Sys.getenv("HOME"), "tomato_small.sirius", sep="/")
-  api_instance$OpenProject(project_id, project_dir)
+  tryCatch({
 
-  response <- api_instance$GetCanopusNpcData(project_id, 56)
-  expect_true(inherits(response, "character"))
+    project_id <- "GetCanopusNpcData"
+    project_dir <- paste(Sys.getenv("HOME"), "tomato_small.sirius", sep = "/")
+    api_instance$OpenProject(project_id, project_dir)
 
-  withr::defer(api_instance$CloseProject(project_id))
+    response <- api_instance$GetCanopusNpcData(project_id, 1)
+    expect_true(inherits(response, "data.frame"))
+
+  }, finally = {
+
+    api_instance$CloseProject(project_id)
+
+  })
 })
 
 test_that("GetFingerIdData", {
@@ -96,14 +120,22 @@ test_that("GetFingerIdData", {
   # @param charge integer
   # @return [character]
 
-  project_id <- "GetFingerIdData"
-  project_dir <- paste(Sys.getenv("HOME"), "tomato_small.sirius", sep="/")
-  api_instance$OpenProject(project_id, project_dir)
+  tryCatch({
 
-  response <- api_instance$GetFingerIdData(project_id, 56)
-  expect_true(inherits(response, "character"))
+    project_id <- "GetFingerIdData"
+    project_dir <- paste(Sys.getenv("HOME"), "tomato_small.sirius", sep = "/")
+    api_instance$OpenProject(project_id, project_dir)
 
-  withr::defer(api_instance$CloseProject(project_id))
+    response <- api_instance$GetFingerIdData(project_id, 1)
+    expect_true(inherits(response, "data.frame"))
+    expect_true(inherits(response$relativeIndex, "integer"))
+    expect_true(inherits(response$description, "character"))
+
+  }, finally = {
+
+    api_instance$CloseProject(project_id)
+
+  })
 })
 
 test_that("GetProject", {
@@ -115,15 +147,21 @@ test_that("GetProject", {
   # @param opt_fields array[ProjectInfoOptField]  (optional)
   # @return [ProjectInfo]
 
-  project_id <- "GetProject"
-  project_dir <- paste(Sys.getenv("HOME"), paste0(project_id, ".sirius"), sep="/")
-  api_instance$CreateProject(project_id, project_dir)
+  tryCatch({
 
-  response <- api_instance$GetProject(project_id)
-  expect_true(inherits(response, "ProjectInfo"))
+    project_id <- "GetProject"
+    project_dir <- paste(Sys.getenv("HOME"), paste0(project_id, ".sirius"), sep = "/")
+    api_instance$CreateProject(project_id, project_dir)
 
-  withr::defer(api_instance$CloseProject(project_id))
-  withr::defer(unlink(project_dir, recursive=TRUE))
+    response <- api_instance$GetProject(project_id)
+    expect_true(inherits(response, "ProjectInfo"))
+
+  }, finally = {
+
+    api_instance$CloseProject(project_id)
+    unlink(project_dir, recursive = TRUE)
+
+  })
 })
 
 test_that("GetProjects", {
@@ -133,16 +171,22 @@ test_that("GetProjects", {
   # List opened project spaces.
   # @return [array[ProjectInfo]]
 
-  project_id <- "GetProjects"
-  project_dir <- paste(Sys.getenv("HOME"), paste0(project_id, ".sirius"), sep="/")
-  api_instance$CreateProject(project_id, project_dir)
+  tryCatch({
 
-  response <- api_instance$GetProjects()
-  expect_true(inherits(response, "list"))
-  expect_true(inherits(response[[1]], "ProjectInfo"))
+    project_id <- "GetProjects"
+    project_dir <- paste(Sys.getenv("HOME"), paste0(project_id, ".sirius"), sep = "/")
+    api_instance$CreateProject(project_id, project_dir)
 
-  withr::defer(api_instance$CloseProject(project_id))
-  withr::defer(unlink(project_dir, recursive=TRUE))
+    response <- api_instance$GetProjects()
+    expect_true(inherits(response, "list"))
+    expect_true(inherits(response[[1]], "ProjectInfo"))
+
+  }, finally = {
+
+    api_instance$CloseProject(project_id)
+    unlink(project_dir, recursive = TRUE)
+
+  })
 })
 
 test_that("ImportMsRunData", {
@@ -156,18 +200,18 @@ test_that("ImportMsRunData", {
   # @param input_files array[data.frame]  (optional)
   # @return [ImportResult]
 
-#   Request processing failed: java.lang.RuntimeException: java.lang.NullPointerException: Cannot invoke "de.unijena.bioinf.ms.frontend.subtools.lcms_align.DataSmoothing.ordinal()" because "filter" is null
-#   project_id <- "ImportMsRunData"
-#   project_dir <- paste(Sys.getenv("HOME"), paste0(project_id, ".sirius"), sep="/")
-#   api_instance$CreateProject(project_id, project_dir)
-#
-#   var_input_files <- full_ms_file
-#   var_parameters <- LcmsSubmissionParameters$new()$toJSON()
-#   response <- api_instance$ImportMsRunData(project_id, var_parameters, input_files=var_input_files)
-#   expect_true(inherits(response, "ImportResult"))
-#
-#   withr::defer(api_instance$CloseProject(project_id))
-#   withr::defer(unlink(project_dir, recursive=TRUE))
+  #   Request processing failed: java.lang.RuntimeException: java.lang.NullPointerException: Cannot invoke "de.unijena.bioinf.ms.frontend.subtools.lcms_align.DataSmoothing.ordinal()" because "filter" is null
+  #   project_id <- "ImportMsRunData"
+  #   project_dir <- paste(Sys.getenv("HOME"), paste0(project_id, ".sirius"), sep="/")
+  #   api_instance$CreateProject(project_id, project_dir)
+  #
+  #   var_input_files <- full_ms_file
+  #   var_parameters <- LcmsSubmissionParameters$new()$toJSON()
+  #   response <- api_instance$ImportMsRunData(project_id, var_parameters, input_files=var_input_files)
+  #   expect_true(inherits(response, "ImportResult"))
+  #
+  #   withr::defer(api_instance$CloseProject(project_id))
+  #   withr::defer(unlink(project_dir, recursive=TRUE))
 })
 
 test_that("ImportMsRunDataAsJob", {
@@ -182,17 +226,17 @@ test_that("ImportMsRunDataAsJob", {
   # @param input_files array[data.frame]  (optional)
   # @return [Job]
 
-#   project_id <- "ImportMsRunDataAsJob"
-#   project_dir <- paste(Sys.getenv("HOME"), paste0(project_id, ".sirius"), sep="/")
-#   api_instance$CreateProject(project_id, project_dir)
-#
-#   var_input_files <- full_ms_file
-#   var_parameters <- LcmsSubmissionParameters$new(TRUE)$toJSONString()
-#   response <- api_instance$ImportMsRunDataAsJob(project_id, parameters=var_parameters, input_files=var_input_files)
-#   expect_true(inherits(response, "Job"))
-#
-#   withr::defer(api_instance$CloseProject(project_id))
-#   withr::defer(unlink(project_dir, recursive=TRUE))
+  #   project_id <- "ImportMsRunDataAsJob"
+  #   project_dir <- paste(Sys.getenv("HOME"), paste0(project_id, ".sirius"), sep="/")
+  #   api_instance$CreateProject(project_id, project_dir)
+  #
+  #   var_input_files <- full_ms_file
+  #   var_parameters <- LcmsSubmissionParameters$new(TRUE)$toJSONString()
+  #   response <- api_instance$ImportMsRunDataAsJob(project_id, parameters=var_parameters, input_files=var_input_files)
+  #   expect_true(inherits(response, "Job"))
+  #
+  #   withr::defer(api_instance$CloseProject(project_id))
+  #   withr::defer(unlink(project_dir, recursive=TRUE))
 })
 
 test_that("ImportPreprocessedData", {
@@ -206,16 +250,24 @@ test_that("ImportPreprocessedData", {
   # @param input_files array[data.frame]  (optional)
   # @return [ImportResult]
 
-  project_id <- "ImportPreprocessedData"
-  project_dir <- paste(Sys.getenv("HOME"), paste0(project_id, ".sirius"), sep="/")
-  api_instance$CreateProject(project_id, project_dir)
+  tryCatch({
 
-  var_input_files <- preproc_ms2_file_1
-  response <- api_instance$ImportPreprocessedData(project_id, input_files=var_input_files)
-  expect_true(inherits(response, "ImportResult"))
+    project_id <- "ImportPreprocessedData"
+    project_dir <- paste(Sys.getenv("HOME"), paste0(project_id, ".sirius"), sep = "/")
+    api_instance$CreateProject(project_id, project_dir)
 
-  withr::defer(api_instance$CloseProject(project_id))
-  withr::defer(unlink(project_dir, recursive=TRUE))
+    var_input_files <- c(preproc_ms2_file_1, preproc_ms2_file_2)
+    response <- api_instance$ImportPreprocessedData(project_id, input_files = var_input_files)
+    expect_true(inherits(response, "ImportResult"))
+    expect_equal(length(response$affectedCompoundIds), 2)
+    expect_equal(length(response$affectedAlignedFeatureIds), 2)
+
+  }, finally = {
+
+    api_instance$CloseProject(project_id)
+    unlink(project_dir, recursive = TRUE)
+
+  })
 })
 
 test_that("ImportPreprocessedDataAsJob", {
@@ -230,16 +282,22 @@ test_that("ImportPreprocessedDataAsJob", {
   # @param input_files array[data.frame]  (optional)
   # @return [Job]
 
-  project_id <- "ImportPreprocessedDataAsJob"
-  project_dir <- paste(Sys.getenv("HOME"), paste0(project_id, ".sirius"), sep="/")
-  api_instance$CreateProject(project_id, project_dir)
+  tryCatch({
 
-  var_input_files <- preproc_ms2_file_1
-  response <- api_instance$ImportPreprocessedDataAsJob(project_id, input_files=var_input_files)
-  expect_true(inherits(response, "Job"))
+    project_id <- "ImportPreprocessedDataAsJob"
+    project_dir <- paste(Sys.getenv("HOME"), paste0(project_id, ".sirius"), sep = "/")
+    api_instance$CreateProject(project_id, project_dir)
 
-  withr::defer(api_instance$CloseProject(project_id))
-  withr::defer(unlink(project_dir, recursive=TRUE))
+    var_input_files <- c(preproc_ms2_file_1, preproc_ms2_file_2)
+    response <- api_instance$ImportPreprocessedDataAsJob(project_id, input_files = var_input_files)
+    expect_true(inherits(response, "Job"))
+
+  }, finally = {
+
+    api_instance$CloseProject(project_id)
+    unlink(project_dir, recursive = TRUE)
+
+  })
 })
 
 test_that("OpenProject", {
@@ -252,11 +310,17 @@ test_that("OpenProject", {
   # @param opt_fields array[ProjectInfoOptField]  (optional)
   # @return [ProjectInfo]
 
-  project_id <- "OpenProject"
-  project_dir <- paste(Sys.getenv("HOME"), "tomato_small.sirius", sep="/")
+  tryCatch({
 
-  response <- api_instance$OpenProject(project_id, project_dir)
-  expect_true(inherits(response, "ProjectInfo"))
+    project_id <- "OpenProject"
+    project_dir <- paste(Sys.getenv("HOME"), "tomato_small.sirius", sep = "/")
 
-  withr::defer(api_instance$CloseProject(project_id))
+    response <- api_instance$OpenProject(project_id, project_dir)
+    expect_true(inherits(response, "ProjectInfo"))
+
+  }, finally = {
+
+    api_instance$CloseProject(project_id)
+
+  })
 })
