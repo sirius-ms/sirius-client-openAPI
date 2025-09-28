@@ -563,20 +563,54 @@
           write(local_var_resp$response, data_file)
         }
 
-        deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "{{returnType}}", loadNamespace("{{packageName}}")),
-          error = function(e) {
-            {{#useDefaultExceptionHandling}}
-            stop("Failed to deserialize response")
-            {{/useDefaultExceptionHandling}}
-            {{#useRlangExceptionHandling}}
-            rlang::abort(message = "Failed to deserialize response",
-                         .subclass = "ApiException",
-                         ApiException = ApiException$new(http_response = local_var_resp))
-            {{/useRlangExceptionHandling}}
-          }
-        )
-        local_var_resp$content <- deserialized_resp_obj
+        # Check if we are expecting a CSV response
+        is_csv_response <- any(grepl("csv", local_var_accepts, ignore.case = TRUE))
+
+        if (is_csv_response) {
+          # For CSV responses, parse into data.frame
+          csv_resp_obj <- tryCatch(
+            {
+              csv_text <- rawToChar(local_var_resp$response)
+
+              # Detect separator by examining first line
+              first_line <- strsplit(csv_text, "\n")[[1]][1]
+              if (grepl("\t", first_line)) {
+                # Tab-separated (TSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = "\t")
+              } else {
+                # Comma-separated (CSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = ",")
+              }
+            },
+            error = function(e) {
+              {{#useDefaultExceptionHandling}}
+              stop("Failed to parse CSV response")
+              {{/useDefaultExceptionHandling}}
+              {{#useRlangExceptionHandling}}
+              rlang::abort(message = "Failed to parse CSV response",
+                           .subclass = "ApiException",
+                           ApiException = ApiException$new(http_response = local_var_resp))
+              {{/useRlangExceptionHandling}}
+            }
+          )
+          local_var_resp$content <- csv_resp_obj
+        } else {
+          # For JSON responses, deserialize normally
+          deserialized_resp_obj <- tryCatch(
+            self$api_client$deserialize(local_var_resp$response_as_text(), "{{returnType}}", loadNamespace("{{packageName}}")),
+            error = function(e) {
+              {{#useDefaultExceptionHandling}}
+              stop("Failed to deserialize response")
+              {{/useDefaultExceptionHandling}}
+              {{#useRlangExceptionHandling}}
+              rlang::abort(message = "Failed to deserialize response",
+                           .subclass = "ApiException",
+                           ApiException = ApiException$new(http_response = local_var_resp))
+              {{/useRlangExceptionHandling}}
+            }
+          )
+          local_var_resp$content <- deserialized_resp_obj
+        }
         {{/isPrimitiveType}}
         {{/returnType}}
         {{^returnType}}
