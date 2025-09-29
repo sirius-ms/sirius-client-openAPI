@@ -3,8 +3,8 @@
 
 context("Test InfoApi")
 
-sdk = SiriusSDK$new()
-api = sdk$attach_to_sirius()
+sdk <- SiriusSDK$new()
+api <- sdk$attach_to_sirius()
 api_instance <- api$info_api
 
 test_that("GetConnectionCheck", {
