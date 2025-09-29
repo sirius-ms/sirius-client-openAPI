@@ -252,7 +252,20 @@ ApiClient  <- R6::R6Class(
 
         # Add form parameters first
         if (!is.null(form_params) && length(form_params) != 0) {
-          multipart_data <- c(multipart_data, form_params)
+          for (param_name in names(form_params)) {
+            param_value <- form_params[[param_name]]
+            is_json <- tryCatch({
+              jsonlite::validate(param_value)
+            }, error = function(e) {
+              FALSE
+            })
+
+            if (is_json) {
+              multipart_data[[param_name]] <- curl::form_data(param_value, type = "application/json")
+            } else {
+              multipart_data[[param_name]] <- param_value
+            }
+          }
         }
 
         # Add file parameters - handle multiple files with same name
