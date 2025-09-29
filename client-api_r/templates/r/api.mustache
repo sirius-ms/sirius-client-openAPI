@@ -438,8 +438,8 @@
       file_params["{{baseName}}"] <- httr::upload_file(`{{paramName}}`)
       {{/isHttr2}}
       {{#isHttr2}}
-      file_params[["{{{baseName}}}"]] <- lapply(input_files, function(file_path) {
-        curl::form_file(`{{paramName}}`)
+      file_params[["{{{baseName}}}"]] <- lapply(`{{paramName}}`, function(param) {
+        curl::form_file(param)
       })
       {{/isHttr2}}
       {{/isFile}}
