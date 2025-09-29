@@ -250,13 +250,94 @@ test_that("ImportPreprocessedData", {
   # @param input_files array[data.frame]  (optional)
   # @return [ImportResult]
 
+  # TEST 1: single file as characters
   tryCatch({
 
-    project_id <- "ImportPreprocessedData"
+    project_id <- "ImportPreprocessedData1"
+    project_dir <- paste(Sys.getenv("HOME"), paste0(project_id, ".sirius"), sep = "/")
+    api_instance$CreateProject(project_id, project_dir)
+
+    var_input_files <- preproc_ms2_file_1
+    response <- api_instance$ImportPreprocessedData(project_id, input_files = var_input_files)
+    expect_true(inherits(response, "ImportResult"))
+    expect_equal(length(response$affectedCompoundIds), 1)
+    expect_equal(length(response$affectedAlignedFeatureIds), 1)
+
+  }, finally = {
+
+    api_instance$CloseProject(project_id)
+    unlink(project_dir, recursive = TRUE)
+
+  })
+
+  # TEST 2: single file in vector
+  tryCatch({
+
+    project_id <- "ImportPreprocessedData2"
+    project_dir <- paste(Sys.getenv("HOME"), paste0(project_id, ".sirius"), sep = "/")
+    api_instance$CreateProject(project_id, project_dir)
+
+    var_input_files <- c(preproc_ms2_file_1)
+    response <- api_instance$ImportPreprocessedData(project_id, input_files = var_input_files)
+    expect_true(inherits(response, "ImportResult"))
+    expect_equal(length(response$affectedCompoundIds), 1)
+    expect_equal(length(response$affectedAlignedFeatureIds), 1)
+
+  }, finally = {
+
+    api_instance$CloseProject(project_id)
+    unlink(project_dir, recursive = TRUE)
+
+  })
+
+  # TEST 3: multiple files in vector
+  tryCatch({
+
+    project_id <- "ImportPreprocessedData3"
     project_dir <- paste(Sys.getenv("HOME"), paste0(project_id, ".sirius"), sep = "/")
     api_instance$CreateProject(project_id, project_dir)
 
     var_input_files <- c(preproc_ms2_file_1, preproc_ms2_file_2)
+    response <- api_instance$ImportPreprocessedData(project_id, input_files = var_input_files)
+    expect_true(inherits(response, "ImportResult"))
+    expect_equal(length(response$affectedCompoundIds), 2)
+    expect_equal(length(response$affectedAlignedFeatureIds), 2)
+
+  }, finally = {
+
+    api_instance$CloseProject(project_id)
+    unlink(project_dir, recursive = TRUE)
+
+  })
+
+  # TEST 4: single file in list
+  tryCatch({
+
+    project_id <- "ImportPreprocessedData4"
+    project_dir <- paste(Sys.getenv("HOME"), paste0(project_id, ".sirius"), sep = "/")
+    api_instance$CreateProject(project_id, project_dir)
+
+    var_input_files <- list(preproc_ms2_file_1)
+    response <- api_instance$ImportPreprocessedData(project_id, input_files = var_input_files)
+    expect_true(inherits(response, "ImportResult"))
+    expect_equal(length(response$affectedCompoundIds), 1)
+    expect_equal(length(response$affectedAlignedFeatureIds), 1)
+
+  }, finally = {
+
+    api_instance$CloseProject(project_id)
+    unlink(project_dir, recursive = TRUE)
+
+  })
+
+  # TEST 5: multiple files in list
+  tryCatch({
+
+    project_id <- "ImportPreprocessedData5"
+    project_dir <- paste(Sys.getenv("HOME"), paste0(project_id, ".sirius"), sep = "/")
+    api_instance$CreateProject(project_id, project_dir)
+
+    var_input_files <- list(preproc_ms2_file_1, preproc_ms2_file_2)
     response <- api_instance$ImportPreprocessedData(project_id, input_files = var_input_files)
     expect_true(inherits(response, "ImportResult"))
     expect_equal(length(response$affectedCompoundIds), 2)
@@ -282,13 +363,86 @@ test_that("ImportPreprocessedDataAsJob", {
   # @param input_files array[data.frame]  (optional)
   # @return [Job]
 
+  # TEST 1: single file as characters
   tryCatch({
 
-    project_id <- "ImportPreprocessedDataAsJob"
+    project_id <- "ImportPreprocessedDataAsJob1"
+    project_dir <- paste(Sys.getenv("HOME"), paste0(project_id, ".sirius"), sep = "/")
+    api_instance$CreateProject(project_id, project_dir)
+
+    var_input_files <- preproc_ms2_file_1
+    response <- api_instance$ImportPreprocessedDataAsJob(project_id, input_files = var_input_files)
+    expect_true(inherits(response, "Job"))
+
+  }, finally = {
+
+    api_instance$CloseProject(project_id)
+    unlink(project_dir, recursive = TRUE)
+
+  })
+
+  # TEST 2: single file in vector
+  tryCatch({
+
+    project_id <- "ImportPreprocessedDataAsJob2"
+    project_dir <- paste(Sys.getenv("HOME"), paste0(project_id, ".sirius"), sep = "/")
+    api_instance$CreateProject(project_id, project_dir)
+
+    var_input_files <- c(preproc_ms2_file_1)
+    response <- api_instance$ImportPreprocessedDataAsJob(project_id, input_files = var_input_files)
+    expect_true(inherits(response, "Job"))
+
+  }, finally = {
+
+    api_instance$CloseProject(project_id)
+    unlink(project_dir, recursive = TRUE)
+
+  })
+
+  # TEST 3: multiple files in vector
+  tryCatch({
+
+    project_id <- "ImportPreprocessedDataAsJob3"
     project_dir <- paste(Sys.getenv("HOME"), paste0(project_id, ".sirius"), sep = "/")
     api_instance$CreateProject(project_id, project_dir)
 
     var_input_files <- c(preproc_ms2_file_1, preproc_ms2_file_2)
+    response <- api_instance$ImportPreprocessedDataAsJob(project_id, input_files = var_input_files)
+    expect_true(inherits(response, "Job"))
+
+  }, finally = {
+
+    api_instance$CloseProject(project_id)
+    unlink(project_dir, recursive = TRUE)
+
+  })
+
+  # TEST 4: single file in list
+  tryCatch({
+
+    project_id <- "ImportPreprocessedDataAsJob4"
+    project_dir <- paste(Sys.getenv("HOME"), paste0(project_id, ".sirius"), sep = "/")
+    api_instance$CreateProject(project_id, project_dir)
+
+    var_input_files <- list(preproc_ms2_file_1)
+    response <- api_instance$ImportPreprocessedDataAsJob(project_id, input_files = var_input_files)
+    expect_true(inherits(response, "Job"))
+
+  }, finally = {
+
+    api_instance$CloseProject(project_id)
+    unlink(project_dir, recursive = TRUE)
+
+  })
+
+  # TEST 5: multiple files in list
+  tryCatch({
+
+    project_id <- "ImportPreprocessedDataAsJob5"
+    project_dir <- paste(Sys.getenv("HOME"), paste0(project_id, ".sirius"), sep = "/")
+    api_instance$CreateProject(project_id, project_dir)
+
+    var_input_files <- list(preproc_ms2_file_1, preproc_ms2_file_2)
     response <- api_instance$ImportPreprocessedDataAsJob(project_id, input_files = var_input_files)
     expect_true(inherits(response, "Job"))
 
