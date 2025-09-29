@@ -431,7 +431,13 @@
       {{#hasFormParams}}
       {{#formParams}}
       {{^isFile}}
-      form_params["{{baseName}}"] <- `{{paramName}}`
+      if (!is.null(`{{paramName}}`)) {
+        if (inherits(`{{paramName}}`, "R6")) {
+          form_params[["{{baseName}}"]] <- `{{paramName}}`$toJSONString()
+        } else {
+          form_params[["{{baseName}}"]] <- `{{paramName}}`
+        }
+      }
       {{/isFile}}
       {{#isFile}}
       {{^isHttr2}}

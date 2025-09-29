@@ -200,18 +200,23 @@ test_that("ImportMsRunData", {
   # @param input_files array[data.frame]  (optional)
   # @return [ImportResult]
 
-  #   Request processing failed: java.lang.RuntimeException: java.lang.NullPointerException: Cannot invoke "de.unijena.bioinf.ms.frontend.subtools.lcms_align.DataSmoothing.ordinal()" because "filter" is null
-  #   project_id <- "ImportMsRunData"
-  #   project_dir <- paste(Sys.getenv("HOME"), paste0(project_id, ".sirius"), sep="/")
-  #   api_instance$CreateProject(project_id, project_dir)
-  #
-  #   var_input_files <- full_ms_file
-  #   var_parameters <- LcmsSubmissionParameters$new()$toJSON()
-  #   response <- api_instance$ImportMsRunData(project_id, var_parameters, input_files=var_input_files)
-  #   expect_true(inherits(response, "ImportResult"))
-  #
-  #   withr::defer(api_instance$CloseProject(project_id))
-  #   withr::defer(unlink(project_dir, recursive=TRUE))
+  tryCatch({
+
+    project_id <- "ImportMsRunData"
+    project_dir <- paste(Sys.getenv("HOME"), paste0(project_id, ".sirius"), sep="/")
+    api_instance$CreateProject(project_id, project_dir)
+
+    var_input_files <- c(full_ms_file)
+    var_parameters <- LcmsSubmissionParameters$new()
+    response <- api_instance$ImportMsRunData(project_id, input_files=var_input_files, parameters=var_parameters)
+    expect_true(inherits(response, "ImportResult"))
+
+  }, finally = {
+
+    api_instance$CloseProject(project_id)
+    unlink(project_dir, recursive = TRUE)
+
+  })
 })
 
 test_that("ImportMsRunDataAsJob", {
@@ -226,17 +231,23 @@ test_that("ImportMsRunDataAsJob", {
   # @param input_files array[data.frame]  (optional)
   # @return [Job]
 
-  #   project_id <- "ImportMsRunDataAsJob"
-  #   project_dir <- paste(Sys.getenv("HOME"), paste0(project_id, ".sirius"), sep="/")
-  #   api_instance$CreateProject(project_id, project_dir)
-  #
-  #   var_input_files <- full_ms_file
-  #   var_parameters <- LcmsSubmissionParameters$new(TRUE)$toJSONString()
-  #   response <- api_instance$ImportMsRunDataAsJob(project_id, parameters=var_parameters, input_files=var_input_files)
-  #   expect_true(inherits(response, "Job"))
-  #
-  #   withr::defer(api_instance$CloseProject(project_id))
-  #   withr::defer(unlink(project_dir, recursive=TRUE))
+  tryCatch({
+
+    project_id <- "ImportMsRunDataAsJob"
+    project_dir <- paste(Sys.getenv("HOME"), paste0(project_id, ".sirius"), sep="/")
+    api_instance$CreateProject(project_id, project_dir)
+
+    var_input_files <- c(full_ms_file)
+    var_parameters <- LcmsSubmissionParameters$new()
+    response <- api_instance$ImportMsRunDataAsJob(project_id, input_files=var_input_files, parameters=var_parameters)
+    expect_true(inherits(response, "Job"))
+
+  }, finally = {
+
+    api_instance$CloseProject(project_id)
+    unlink(project_dir, recursive = TRUE)
+
+  })
 })
 
 test_that("ImportPreprocessedData", {
