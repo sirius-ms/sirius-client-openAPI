@@ -29,8 +29,8 @@ jobs:
         timeout_minutes: 5
         command: |
             cd .updater/api
-            wget https://github.com/sirius-ms/sirius/releases/download/v6.3.1/sirius-6.3.1-linux-x64.zip
-            packageVersion=6.3.1
+            wget https://github.com/sirius-ms/sirius/releases/download/v6.3.3-SNAPSHOT/sirius-6.3.3-SNAPSHOT-linux-x64.zip
+            packageVersion=6.3.3-SNAPSHOT
             echo "Writing Version files: $packageVersion"
             echo $packageVersion > ./packageVersion.txt
             unzip *.zip
