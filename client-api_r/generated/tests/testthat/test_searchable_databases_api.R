@@ -3,12 +3,12 @@
 
 context("Test SearchableDatabasesApi")
 
-sdk = SiriusSDK$new()
-api = sdk$attach_to_sirius()
+sdk <- SiriusSDK$new()
+api <- sdk$attach_to_sirius()
 api_instance <- api$searchable_databases_api
 home_dir <- Sys.getenv("HOME")
-path_to_demo_data <- paste(home_dir, "sirius-client-openAPI/.updater/clientTests/Data", sep="/")
-test_file = paste(path_to_demo_data, "Kaempferol.ms", sep="/")
+path_to_demo_data <- paste(home_dir, "sirius-client-openAPI/.updater/clientTests/Data", sep = "/")
+test_file <- paste(path_to_demo_data, "Kaempferol.ms", sep = "/")
 
 
 test_that("CreateDatabase", {
@@ -18,13 +18,19 @@ test_that("CreateDatabase", {
   # @param searchable_database_parameters SearchableDatabaseParameters  (optional)
   # @return [SearchableDatabase]
 
-  db_name <- "CreateDatabase"
-  db_params <- SearchableDatabaseParameters$new(display_name=db_name, location=paste0(home_dir, "/", db_name, ".siriusdb"))
+  tryCatch({
 
-  response <- api_instance$CreateDatabase(db_name, db_params)
-  expect_true(inherits(response, "SearchableDatabase"))
+    db_name <- "CreateDatabase"
+    db_params <- SearchableDatabaseParameters$new(display_name = db_name, location = paste0(home_dir, "/", db_name, ".siriusdb"))
 
-  withr::defer(api_instance$RemoveDatabase(db_name, TRUE))
+    response <- api_instance$CreateDatabase(db_name, db_params)
+    expect_true(inherits(response, "SearchableDatabase"))
+
+  }, finally = {
+
+    api_instance$RemoveDatabase(db_name, TRUE)
+
+  })
 })
 
 test_that("GetCustomDatabases", {
@@ -33,15 +39,21 @@ test_that("GetCustomDatabases", {
   # @param include_stats character  (optional)
   # @return [array[SearchableDatabase]]
 
-  db_name <- "GetCustomDatabases"
-  db_params <- SearchableDatabaseParameters$new(display_name=db_name, location=paste0(home_dir, "/", db_name, ".siriusdb"))
-  api_instance$CreateDatabase(db_name, db_params)
+  tryCatch({
 
-  response <- api_instance$GetCustomDatabases()
-  expect_true(inherits(response, "list"))
-  expect_true(inherits(response[[1]], "SearchableDatabase"))
+    db_name <- "GetCustomDatabases"
+    db_params <- SearchableDatabaseParameters$new(display_name = db_name, location = paste0(home_dir, "/", db_name, ".siriusdb"))
+    api_instance$CreateDatabase(db_name, db_params)
 
-  withr::defer(api_instance$RemoveDatabase(db_name, TRUE))
+    response <- api_instance$GetCustomDatabases()
+    expect_true(inherits(response, "list"))
+    expect_true(inherits(response[[1]], "SearchableDatabase"))
+
+  }, finally = {
+
+    api_instance$RemoveDatabase(db_name, TRUE)
+
+  })
 })
 
 test_that("GetDatabase", {
@@ -51,14 +63,20 @@ test_that("GetDatabase", {
   # @param include_stats character  (optional)
   # @return [SearchableDatabase]
 
-  db_name <- "GetDatabase"
-  db_params <- SearchableDatabaseParameters$new(display_name=db_name, location=paste0(home_dir, "/", db_name, ".siriusdb"))
-  api_instance$CreateDatabase(db_name, db_params)
+  tryCatch({
 
-  response <- api_instance$GetDatabase(db_name)
-  expect_true(inherits(response, "SearchableDatabase"))
+    db_name <- "GetDatabase"
+    db_params <- SearchableDatabaseParameters$new(display_name = db_name, location = paste0(home_dir, "/", db_name, ".siriusdb"))
+    api_instance$CreateDatabase(db_name, db_params)
 
-  withr::defer(api_instance$RemoveDatabase(db_name, TRUE))
+    response <- api_instance$GetDatabase(db_name)
+    expect_true(inherits(response, "SearchableDatabase"))
+
+  }, finally = {
+
+    api_instance$RemoveDatabase(db_name, TRUE)
+
+  })
 })
 
 test_that("GetDatabases", {
@@ -93,15 +111,20 @@ test_that("ImportIntoDatabase", {
   # @param input_files array[data.frame]  (optional)
   # @return [SearchableDatabase]
 
-  # TODO broken
-  db_name <- "ImportIntoDatabase"
-  db_params <- SearchableDatabaseParameters$new(display_name=db_name, location=paste0(home_dir, "/", db_name, ".siriusdb"))
-  api_instance$CreateDatabase(db_name, db_params)
+  tryCatch({
 
-  response <- api_instance$ImportIntoDatabase(db_name, input_files=c(test_file))
-  expect_true(inherits(response, "SearchableDatabase"))
+    db_name <- "ImportIntoDatabase"
+    db_params <- SearchableDatabaseParameters$new(display_name = db_name, location = paste0(home_dir, "/", db_name, ".siriusdb"))
+    api_instance$CreateDatabase(db_name, db_params)
 
-  withr::defer(api_instance$RemoveDatabase(db_name, TRUE))
+    response <- api_instance$ImportIntoDatabase(db_name, input_files = c(test_file))
+    expect_true(inherits(response, "SearchableDatabase"))
+
+  }, finally = {
+
+    api_instance$RemoveDatabase(db_name, TRUE)
+
+  })
 })
 
 test_that("RemoveDatabase", {
@@ -112,7 +135,7 @@ test_that("RemoveDatabase", {
   # @return [Void]
 
   db_name <- "RemoveDatabase"
-  db_params <- SearchableDatabaseParameters$new(display_name=db_name, location=paste0(home_dir, "/", db_name, ".siriusdb"))
+  db_params <- SearchableDatabaseParameters$new(display_name = db_name, location = paste0(home_dir, "/", db_name, ".siriusdb"))
   api_instance$CreateDatabase(db_name, db_params)
 
   response <- api_instance$RemoveDatabase(db_name, TRUE)
