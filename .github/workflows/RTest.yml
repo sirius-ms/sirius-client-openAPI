@@ -30,6 +30,7 @@ jobs:
         cache: false
         working-directory: ./client-api_r/generated
     - name: Install Rsirius
+      id: rsirius_install
       run: install.packages("/home/runner/work/sirius-client-openAPI/sirius-client-openAPI/client-api_r/generated", repos = NULL, type = "source")
       shell: Rscript {0}
     - name: Cache Sirius Release
@@ -53,8 +54,10 @@ jobs:
     - name: Run Rest Api
       run: bash .updater/api/sirius/bin/sirius REST -p 8080 -s &
     - name: Wait for Api to start
+      id: api_start
       run: while ! nc -z localhost 8080; do sleep 0.1; done
     - name: Login to SIRIUS
+      id: login
       run: |
         library(Rsirius)
         var_accept_terms <- TRUE
@@ -62,16 +65,17 @@ jobs:
         api_instance <- rsirius_api$new()
         api_response <- api_instance$login_and_account_api$Login(var_accept_terms, var_account_credentials)
         if (inherits(api_response, "AccountInfo")) {
+          print('Login successful!')
           quit(status=0)
         } else {
           print('Login failed, aborting...')
           quit(status=1)
         }
       shell: Rscript {0}
-    - name: Build Rsirius
+    - name: Test Info API
+      if: always() && steps.api_start.outcome == 'success' && steps.rsirius_install.outcome == 'success' && steps.login.outcome == 'success'
       run: |
-        R CMD build ./client-api_r/generated
-    - name: Test Rsirius using testthat
-      run: |
-        packageVersion=$(cat .updater/api/packageVersion.txt)
-        R CMD check "Rsirius_$packageVersion.tar.gz" --no-manual
+        library(Rsirius)
+        library(devtools)
+        test_file("client-api_r/generated/tests/testthat/test_info_api.R")
+      shell: Rscript {0}
