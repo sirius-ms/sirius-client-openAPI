@@ -87,11 +87,13 @@ jobs:
         echo "generating Finished!"
     - name: Format Python Package
       run: |
-         cp client-api_python/sirius_api.py client-api_python/generated/PySirius
-         cp client-api_python/sirius.py client-api_python/generated/PySirius
-
-         echo "from PySirius.sirius_api import PySiriusAPI" >> client-api_python/generated/PySirius/__init__.py
-         echo "from PySirius.sirius import SiriusSDK" >> client-api_python/generated/PySirius/__init__.py
+        cp client-api_python/sirius_api.py client-api_python/generated/PySirius
+        cp client-api_python/sirius.py client-api_python/generated/PySirius
+        
+        echo >> client-api_python/generated/PySirius/__init__.py
+        echo "# import manually generated API and SDK files" >> client-api_python/generated/PySirius/__init__.py
+        echo "from PySirius.sirius_api import PySiriusAPI" >> client-api_python/generated/PySirius/__init__.py
+        echo "from PySirius.sirius import SiriusSDK" >> client-api_python/generated/PySirius/__init__.py
     - name: Format R package
       run: |
         cp client-api_r/SiriusSDK.R  client-api_r/generated/R/SiriusSDK.R
