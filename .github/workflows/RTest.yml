@@ -33,7 +33,6 @@ jobs:
       id: rsirius_install
       run: |
         install.packages("/home/runner/work/sirius-client-openAPI/sirius-client-openAPI/client-api_r/generated", repos = NULL, type = "source")
-        install.packages("devtools")
       shell: Rscript {0}
     - name: Cache Sirius Release
       uses: actions/cache@v3
@@ -77,7 +76,5 @@ jobs:
     - name: Test Info API
       if: always() && steps.api_start.outcome == 'success' && steps.rsirius_install.outcome == 'success' && steps.login.outcome == 'success'
       run: |
-        library(Rsirius)
-        library(devtools)
-        test_active_file("client-api_r/generated/tests/testthat/test_info_api.R")
+        test_file("client-api_r/generated/tests/testthat/test_info_api.R")
       shell: Rscript {0}
