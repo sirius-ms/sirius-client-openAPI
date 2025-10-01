@@ -22,7 +22,7 @@ class TestProjectsApi(unittest.TestCase):
     """ProjectsApi unit test stubs"""
 
     def setUp(self) -> None:
-        self.api = SiriusSDK().attach_or_start_sirius()
+        self.api = SiriusSDK().attach_to_sirius(sirius_port=8080)
         self.projects = self.api.projects()
         path_to_demo_data = f"{os.environ.get('HOME')}/sirius-client-openAPI/.updater/clientTests/Data"
         self.preproc_ms2_file_1 = path_to_demo_data + "/Kaempferol.ms"

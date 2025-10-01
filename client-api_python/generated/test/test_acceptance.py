@@ -17,7 +17,7 @@ class TestAcceptance(unittest.TestCase):
     def test_simple_computation(self):
         path_to_project = self.path_to_project
         # start acceptance test for packages
-        api = SiriusSDK().attach_or_start_sirius(headless=True)
+        api = SiriusSDK().attach_to_sirius(sirius_port=8080)
         ps_info = api.projects().create_project("testProject", os.path.abspath(path_to_project))
         try:
             path = os.getenv('RECIPE_DIR') + "/Kaempferol.ms"

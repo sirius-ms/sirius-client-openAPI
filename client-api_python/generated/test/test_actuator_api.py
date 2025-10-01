@@ -19,7 +19,7 @@ class TestActuatorApi(unittest.TestCase):
     """ActuatorApi unit test stubs"""
 
     def setUp(self) -> None:
-        self.api = PySirius.ActuatorApi(SiriusSDK().attach_or_start_sirius().get_client())
+        self.api = PySirius.ActuatorApi(SiriusSDK().attach_to_sirius(sirius_port=8080).get_client())
 
     def tearDown(self) -> None:
         pass

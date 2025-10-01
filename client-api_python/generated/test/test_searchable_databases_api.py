@@ -23,7 +23,7 @@ class TestSearchableDatabasesApi(unittest.TestCase):
     """SearchableDatabasesApi unit test stubs"""
 
     def setUp(self) -> None:
-        self.api = SiriusSDK().attach_or_start_sirius()
+        self.api = SiriusSDK().attach_to_sirius(sirius_port=8080)
         self.dbs = self.api.databases()
         self.database_id = 'create_database'
         self.database_parameters = SearchableDatabaseParameters(display_name="test_db", location=f"{os.environ.get('HOME')}/test_db.siriusdb")

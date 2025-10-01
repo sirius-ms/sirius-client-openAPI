@@ -21,7 +21,7 @@ class TestInfoApi(unittest.TestCase):
     """InfoApi unit test stubs"""
 
     def setUp(self) -> None:
-        self.infoApi = SiriusSDK().attach_or_start_sirius().infos()
+        self.infoApi = SiriusSDK().attach_to_sirius(sirius_port=8080).infos()
 
     def tearDown(self) -> None:
         pass

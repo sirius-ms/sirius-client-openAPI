@@ -35,7 +35,7 @@ class TestFeaturesApi(unittest.TestCase):
     """FeaturesApi unit test stubs"""
 
     def setUp(self) -> None:
-        self.api = SiriusSDK().attach_or_start_sirius()
+        self.api = SiriusSDK().attach_to_sirius(sirius_port=8080)
         self.project_id = "test_features_api"
         self.path_to_project = f"{os.environ.get('HOME')}/tomato_small.sirius"
         # check if test project already open -> allows to run tests in independent calls.

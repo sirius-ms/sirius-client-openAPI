@@ -23,7 +23,7 @@ class TestCompoundsApi(unittest.TestCase):
     """CompoundsApi unit test stubs"""
 
     def setUp(self) -> None:
-        self.api = SiriusSDK().attach_or_start_sirius()
+        self.api = SiriusSDK().attach_to_sirius(sirius_port=8080)
         self.project_id = "test_compounds_api"
         self.path_to_project = f"{os.environ.get('HOME')}/test_compounds_api.sirius"
         self.api.projects().create_project(self.project_id, self.path_to_project)
