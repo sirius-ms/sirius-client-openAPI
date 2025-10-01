@@ -103,7 +103,7 @@ jobs:
     - name: Test Databases API
       if: always() && steps.api_start.outcome == 'success' && steps.rsirius_install.outcome == 'success' && steps.login.outcome == 'success'
       run: |
-        testthat::test_file("client-api_r/generated/tests/testthat/test_databases_api.R")
+        testthat::test_file("client-api_r/generated/tests/testthat/test_searchable_databases_api.R")
       shell: Rscript {0}
     - name: Test Features API
       if: always() && steps.api_start.outcome == 'success' && steps.rsirius_install.outcome == 'success' && steps.login.outcome == 'success'
