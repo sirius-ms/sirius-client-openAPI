@@ -75,9 +75,10 @@ jobs:
         accept_terms = True
         account_credentials = PySirius.AccountCredentials(username=os.environ['SIRIUS_USER'], password=os.environ['SIRIUS_PW'])
         api = PySirius.SiriusSDK().attach_or_start_sirius()
-        api_instance = PySirius.LoginAndAccountApi(api.get_client())
+        api_instance = api.account()
         api_response = api_instance.login(accept_terms, account_credentials)
         if isinstance(api_response, PySirius.AccountInfo):
+          print('Login successful!')
           exit(0)
         else:
           print('Login failed, aborting...')
