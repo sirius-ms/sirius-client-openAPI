@@ -78,45 +78,54 @@ jobs:
     - name: Test Actuator API
       if: always() && steps.api_start.outcome == 'success' && steps.rsirius_install.outcome == 'success' && steps.login.outcome == 'success'
       run: |
+        library(Rsirius)
         testthat::test_file("client-api_r/generated/tests/testthat/test_actuator_api.R")
       shell: Rscript {0}
     - name: Test Info API
       if: always() && steps.api_start.outcome == 'success' && steps.rsirius_install.outcome == 'success' && steps.login.outcome == 'success'
       run: |
+        library(Rsirius)
         testthat::test_file("client-api_r/generated/tests/testthat/test_info_api.R")
       shell: Rscript {0}
     - name: Test Login and Account API
       if: always() && steps.api_start.outcome == 'success' && steps.rsirius_install.outcome == 'success' && steps.login.outcome == 'success'
       run: |
+        library(Rsirius)
         testthat::test_file("client-api_r/generated/tests/testthat/test_login_and_account_api.R")
       shell: Rscript {0}
     - name: Test Projects API
       if: always() && steps.api_start.outcome == 'success' && steps.rsirius_install.outcome == 'success' && steps.login.outcome == 'success'
       run: |
+        library(Rsirius)
         testthat::test_file("client-api_r/generated/tests/testthat/test_projects_api.R")
       shell: Rscript {0}
     - name: Test Compounds API
       if: always() && steps.api_start.outcome == 'success' && steps.rsirius_install.outcome == 'success' && steps.login.outcome == 'success'
       run: |
+        library(Rsirius)
         testthat::test_file("client-api_r/generated/tests/testthat/test_compounds_api.R")
       shell: Rscript {0}
     - name: Test Databases API
       if: always() && steps.api_start.outcome == 'success' && steps.rsirius_install.outcome == 'success' && steps.login.outcome == 'success'
       run: |
+        library(Rsirius)
         testthat::test_file("client-api_r/generated/tests/testthat/test_searchable_databases_api.R")
       shell: Rscript {0}
     - name: Test Features API
       if: always() && steps.api_start.outcome == 'success' && steps.rsirius_install.outcome == 'success' && steps.login.outcome == 'success'
       run: |
+        library(Rsirius)
         testthat::test_file("client-api_r/generated/tests/testthat/test_features_api.R")
       shell: Rscript {0}
     - name: Test Jobs API
       if: always() && steps.api_start.outcome == 'success' && steps.rsirius_install.outcome == 'success' && steps.login.outcome == 'success'
       run: |
+        library(Rsirius)
         testthat::test_file("client-api_r/generated/tests/testthat/test_jobs_api.R")
       shell: Rscript {0}
     - name: Test acceptance
       if: always() && steps.api_start.outcome == 'success' && steps.rsirius_install.outcome == 'success' && steps.login.outcome == 'success'
       run: |
+        library(Rsirius)
         testthat::test_file("client-api_r/generated/tests/testthat/test_acceptance.R")
       shell: Rscript {0}
