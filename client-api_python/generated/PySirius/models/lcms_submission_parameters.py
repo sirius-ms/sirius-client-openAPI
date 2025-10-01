@@ -27,8 +27,8 @@ class LcmsSubmissionParameters(BaseModel):
     """ # noqa: E501
     align_lcms_runs: Optional[StrictBool] = Field(default=True, description="Specifies whether LC/MS runs should be aligned", alias="alignLCMSRuns")
     noise_intensity: Optional[float] = Field(default=-1, description="Noise level under which all peaks are considered to be likely noise. A peak has to be at least 3x noise level  to be picked as feature. Peaks with MS/MS are still picked even though they might be below noise level.  If not specified, the noise intensity is detected automatically from data. We recommend to NOT specify  this parameter, as the automated detection is usually sufficient.", alias="noiseIntensity")
-    trace_max_mass_deviation: Optional[Deviation] = Field(default=None, description="Maximal allowed mass deviation for peaks in ms1 to be considered as belonging to the same trace.", alias="traceMaxMassDeviation")
-    align_max_mass_deviation: Optional[Deviation] = Field(default=None, description="Maximal allowed mass deviation for aligning features. If not specified, this parameter is estimated from data.", alias="alignMaxMassDeviation")
+    trace_max_mass_deviation: Optional[Deviation] = Field(default=None, alias="traceMaxMassDeviation")
+    align_max_mass_deviation: Optional[Deviation] = Field(default=None, alias="alignMaxMassDeviation")
     align_max_retention_time_deviation: Optional[float] = Field(default=-1, description="Maximal allowed retention time error in seconds for aligning features. If not specified, this parameter is estimated from data.", alias="alignMaxRetentionTimeDeviation")
     min_snr: Optional[float] = Field(default=3, description="Minimum ratio between peak height and noise intensity for detecting features. By default, this value is 3. Features with good MS/MS are always picked independent of their intensity. For picking very low intensive features we recommend a min-snr of 2, but this will increase runtime and storage memory", alias="minSNR")
     __properties: ClassVar[List[str]] = ["alignLCMSRuns", "noiseIntensity", "traceMaxMassDeviation", "alignMaxMassDeviation", "alignMaxRetentionTimeDeviation", "minSNR"]

@@ -29,9 +29,9 @@ class TagDefinition(BaseModel):
     description: Optional[StrictStr] = Field(default=None, description="A human-readable description about the purpose of this tag.")
     tag_type: Optional[StrictStr] = Field(default=None, description="A simple string based identifier to specify the type/scope/purpose of this tag.", alias="tagType")
     value_type: ValueType = Field(alias="valueType")
-    possible_values: Optional[List[Any]] = Field(default=None, alias="possibleValues")
-    min_value: Optional[Any] = Field(default=None, alias="minValue")
-    max_value: Optional[Any] = Field(default=None, alias="maxValue")
+    possible_values: Optional[List[Optional[Dict[str, Any]]]] = Field(default=None, alias="possibleValues")
+    min_value: Optional[Dict[str, Any]] = Field(default=None, alias="minValue")
+    max_value: Optional[Dict[str, Any]] = Field(default=None, alias="maxValue")
     editable: Optional[StrictBool] = None
     __properties: ClassVar[List[str]] = ["tagName", "description", "tagType", "valueType", "possibleValues", "minValue", "maxValue", "editable"]
 
@@ -74,6 +74,21 @@ class TagDefinition(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if description (nullable) is None
+        # and model_fields_set contains the field
+        if self.description is None and "description" in self.model_fields_set:
+            _dict['description'] = None
+
+        # set to None if tag_type (nullable) is None
+        # and model_fields_set contains the field
+        if self.tag_type is None and "tag_type" in self.model_fields_set:
+            _dict['tagType'] = None
+
+        # set to None if possible_values (nullable) is None
+        # and model_fields_set contains the field
+        if self.possible_values is None and "possible_values" in self.model_fields_set:
+            _dict['possibleValues'] = None
+
         # set to None if min_value (nullable) is None
         # and model_fields_set contains the field
         if self.min_value is None and "min_value" in self.model_fields_set:

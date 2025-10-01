@@ -42,7 +42,7 @@ class SpectralLibraryMatch(BaseModel):
     adduct: Optional[StrictStr] = None
     exact_mass: Optional[float] = Field(default=None, alias="exactMass")
     smiles: Optional[StrictStr] = None
-    type: Optional[SpectralMatchType] = None
+    type: Optional[SpectralMatchType] = SpectralMatchType.IDENTITY
     inchi_key: StrictStr = Field(alias="inchiKey")
     reference_spectrum_type: Optional[SpectrumType] = Field(default=None, alias="referenceSpectrumType")
     reference_spectrum: Optional[BasicSpectrum] = Field(default=None, alias="referenceSpectrum")
@@ -98,6 +98,11 @@ class SpectralLibraryMatch(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of reference_spectrum
         if self.reference_spectrum:
             _dict['referenceSpectrum'] = self.reference_spectrum.to_dict()
+        # set to None if reference_spectrum (nullable) is None
+        # and model_fields_set contains the field
+        if self.reference_spectrum is None and "reference_spectrum" in self.model_fields_set:
+            _dict['referenceSpectrum'] = None
+
         return _dict
 
     @classmethod
@@ -124,7 +129,7 @@ class SpectralLibraryMatch(BaseModel):
             "adduct": obj.get("adduct"),
             "exactMass": obj.get("exactMass"),
             "smiles": obj.get("smiles"),
-            "type": obj.get("type"),
+            "type": obj.get("type") if obj.get("type") is not None else SpectralMatchType.IDENTITY,
             "inchiKey": obj.get("inchiKey"),
             "referenceSpectrumType": obj.get("referenceSpectrumType"),
             "referenceSpectrum": BasicSpectrum.from_dict(obj["referenceSpectrum"]) if obj.get("referenceSpectrum") is not None else None,

@@ -68,6 +68,21 @@ class AccountCredentials(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if username (nullable) is None
+        # and model_fields_set contains the field
+        if self.username is None and "username" in self.model_fields_set:
+            _dict['username'] = None
+
+        # set to None if password (nullable) is None
+        # and model_fields_set contains the field
+        if self.password is None and "password" in self.model_fields_set:
+            _dict['password'] = None
+
+        # set to None if refresh_token (nullable) is None
+        # and model_fields_set contains the field
+        if self.refresh_token is None and "refresh_token" in self.model_fields_set:
+            _dict['refreshToken'] = None
+
         return _dict
 
     @classmethod

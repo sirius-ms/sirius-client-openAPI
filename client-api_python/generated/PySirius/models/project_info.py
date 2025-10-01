@@ -28,7 +28,7 @@ class ProjectInfo(BaseModel):
     project_id: Optional[StrictStr] = Field(default=None, description="a user selected unique name of the project for easy access.", alias="projectId")
     location: Optional[StrictStr] = Field(default=None, description="storage location of the project.")
     description: Optional[StrictStr] = Field(default=None, description="Description of this project.")
-    type: Optional[ProjectType] = Field(default=None, description="Type of this project.  NULL if project type has not yet been specified by importing data.")
+    type: Optional[ProjectType] = None
     compatible: Optional[StrictBool] = Field(default=None, description="Indicates whether computed results (e.g. fingerprints, compounds classes) are compatible with the backend.  If true project is up-to-date and there are no restrictions regarding usage.  If false project is incompatible and therefore \"read only\" until the incompatible results have been removed. See updateProject endpoint for further information  If NULL the information has not been requested.")
     num_of_features: Optional[StrictInt] = Field(default=None, description="Number of features (aligned over runs) in this project. If NULL, information has not been requested (See OptField 'sizeInformation').", alias="numOfFeatures")
     num_of_compounds: Optional[StrictInt] = Field(default=None, description="Number of compounds (group of ion identities) in this project. If NULL, Information has not been requested (See OptField 'sizeInformation') or might be unavailable for this project type.", alias="numOfCompounds")
@@ -74,6 +74,36 @@ class ProjectInfo(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if description (nullable) is None
+        # and model_fields_set contains the field
+        if self.description is None and "description" in self.model_fields_set:
+            _dict['description'] = None
+
+        # set to None if type (nullable) is None
+        # and model_fields_set contains the field
+        if self.type is None and "type" in self.model_fields_set:
+            _dict['type'] = None
+
+        # set to None if compatible (nullable) is None
+        # and model_fields_set contains the field
+        if self.compatible is None and "compatible" in self.model_fields_set:
+            _dict['compatible'] = None
+
+        # set to None if num_of_features (nullable) is None
+        # and model_fields_set contains the field
+        if self.num_of_features is None and "num_of_features" in self.model_fields_set:
+            _dict['numOfFeatures'] = None
+
+        # set to None if num_of_compounds (nullable) is None
+        # and model_fields_set contains the field
+        if self.num_of_compounds is None and "num_of_compounds" in self.model_fields_set:
+            _dict['numOfCompounds'] = None
+
+        # set to None if num_of_bytes (nullable) is None
+        # and model_fields_set contains the field
+        if self.num_of_bytes is None and "num_of_bytes" in self.model_fields_set:
+            _dict['numOfBytes'] = None
+
         return _dict
 
     @classmethod

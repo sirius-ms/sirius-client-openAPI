@@ -68,6 +68,16 @@ class FingerprintPrediction(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if use_score_threshold (nullable) is None
+        # and model_fields_set contains the field
+        if self.use_score_threshold is None and "use_score_threshold" in self.model_fields_set:
+            _dict['useScoreThreshold'] = None
+
+        # set to None if always_predict_high_ref_matches (nullable) is None
+        # and model_fields_set contains the field
+        if self.always_predict_high_ref_matches is None and "always_predict_high_ref_matches" in self.model_fields_set:
+            _dict['alwaysPredictHighRefMatches'] = None
+
         return _dict
 
     @classmethod

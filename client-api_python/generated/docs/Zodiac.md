@@ -10,10 +10,10 @@ Name | Type | Description | Notes
 **considered_candidates_at300_mz** | **int** | Maximum number of candidate molecular formulas (fragmentation trees computed by SIRIUS) per compound which are considered by ZODIAC for compounds below 300 m/z. | [optional] 
 **considered_candidates_at800_mz** | **int** | Maximum number of candidate molecular formulas (fragmentation trees computed by SIRIUS) per compound which are considered by ZODIAC for compounds above 800 m/z. | [optional] 
 **run_in_two_steps** | **bool** | As default ZODIAC runs a 2-step approach. First running &#39;good quality compounds&#39; only, and afterwards including the remaining. | [optional] 
-**edge_filter_thresholds** | [**ZodiacEdgeFilterThresholds**](ZodiacEdgeFilterThresholds.md) | thresholdFilter &#x3D; Defines the proportion of edges of the complete network which will be ignored.  minLocalConnections &#x3D; Minimum number of compounds to which at least one candidate per compound must be connected to. | [optional] 
-**gibbs_sampler_parameters** | [**ZodiacEpochs**](ZodiacEpochs.md) | iterations: \&quot;Number of epochs to run the Gibbs sampling. When multiple Markov chains are computed, all chains&#39; iterations sum up to this value.\&quot;  burnInPeriod: \&quot;Number of epochs considered as &#39;burn-in period&#39;.  numberOfMarkovChains: Number of separate Gibbs sampling runs. | [optional] 
-**library_search_anchors** | [**ZodiacLibraryScoring**](ZodiacLibraryScoring.md) | Configure the use of identity spectral library search results as anchors in ZODIAC network | [optional] 
-**analogue_search_anchors** | [**ZodiacAnalogueNodes**](ZodiacAnalogueNodes.md) | Configure the use of analogue spectral library search results as anchors in ZODIAC network | [optional] 
+**edge_filter_thresholds** | [**ZodiacEdgeFilterThresholds**](ZodiacEdgeFilterThresholds.md) |  | [optional] 
+**gibbs_sampler_parameters** | [**ZodiacEpochs**](ZodiacEpochs.md) |  | [optional] 
+**library_search_anchors** | [**ZodiacLibraryScoring**](ZodiacLibraryScoring.md) |  | [optional] 
+**analogue_search_anchors** | [**ZodiacAnalogueNodes**](ZodiacAnalogueNodes.md) |  | [optional] 
 
 ## Example
 

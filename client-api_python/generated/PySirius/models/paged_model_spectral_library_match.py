@@ -26,7 +26,7 @@ class PagedModelSpectralLibraryMatch(BaseModel):
     """
     PagedModelSpectralLibraryMatch
     """ # noqa: E501
-    content: Optional[List[SpectralLibraryMatch]] = None
+    content: Optional[List[Optional[SpectralLibraryMatch]]] = None
     page: Optional[PageMetadata] = None
     __properties: ClassVar[List[str]] = ["content", "page"]
 

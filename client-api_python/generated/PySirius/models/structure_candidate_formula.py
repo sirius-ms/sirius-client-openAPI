@@ -31,14 +31,14 @@ class StructureCandidateFormula(BaseModel):
     smiles: Optional[StrictStr] = None
     structure_name: Optional[StrictStr] = Field(default=None, alias="structureName")
     structure_svg: Optional[StrictStr] = Field(default=None, description="SVG graphics of the structure candidate  OPTIONAL: needs to be added by parameter", alias="structureSvg")
-    db_links: Optional[List[DBLink]] = Field(default=None, description="List of structure database links belonging to this structure candidate  OPTIONAL: needs to be added by parameter", alias="dbLinks")
-    spectral_library_matches: Optional[List[SpectralLibraryMatch]] = Field(default=None, description="List of spectral library matches belonging to this structure candidate  OPTIONAL: needs to be added by parameter", alias="spectralLibraryMatches")
+    db_links: Optional[List[Optional[DBLink]]] = Field(default=None, description="List of structure database links belonging to this structure candidate  OPTIONAL: needs to be added by parameter", alias="dbLinks")
+    spectral_library_matches: Optional[List[Optional[SpectralLibraryMatch]]] = Field(default=None, description="List of spectral library matches belonging to this structure candidate  OPTIONAL: needs to be added by parameter", alias="spectralLibraryMatches")
     xlog_p: Optional[float] = Field(default=None, alias="xlogP")
     rank: Optional[StrictInt] = Field(default=None, description="the overall rank of this candidate among all candidates of this feature")
     csi_score: Optional[float] = Field(default=None, description="CSI:FingerID score of the fingerprint of this compound to the predicted fingerprint of CSI:FingerID  This is the score used for ranking structure candidates", alias="csiScore")
     tanimoto_similarity: Optional[float] = Field(default=None, description="Tanimoto similarly of the fingerprint of this compound to the predicted fingerprint of CSI:FingerID", alias="tanimotoSimilarity")
     mces_dist_to_top_hit: Optional[float] = Field(default=None, description="Maximum Common Edge Subgraph (MCES) distance to the top scoring hit (CSI:FingerID) in a candidate list.", alias="mcesDistToTopHit")
-    fingerprint: Optional[BinaryFingerprint] = Field(default=None, description="Array containing the indices of the molecular fingerprint that are available in the structure (1 if present)  OPTIONAL: needs to be added by parameter")
+    fingerprint: Optional[BinaryFingerprint] = None
     molecular_formula: Optional[StrictStr] = Field(default=None, description="Molecular formula of this candidate", alias="molecularFormula")
     adduct: Optional[StrictStr] = Field(default=None, description="Adduct of this candidate")
     formula_id: Optional[StrictStr] = Field(default=None, description="Id of the corresponding Formula candidate", alias="formulaId")
@@ -100,6 +100,46 @@ class StructureCandidateFormula(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of fingerprint
         if self.fingerprint:
             _dict['fingerprint'] = self.fingerprint.to_dict()
+        # set to None if structure_name (nullable) is None
+        # and model_fields_set contains the field
+        if self.structure_name is None and "structure_name" in self.model_fields_set:
+            _dict['structureName'] = None
+
+        # set to None if structure_svg (nullable) is None
+        # and model_fields_set contains the field
+        if self.structure_svg is None and "structure_svg" in self.model_fields_set:
+            _dict['structureSvg'] = None
+
+        # set to None if db_links (nullable) is None
+        # and model_fields_set contains the field
+        if self.db_links is None and "db_links" in self.model_fields_set:
+            _dict['dbLinks'] = None
+
+        # set to None if spectral_library_matches (nullable) is None
+        # and model_fields_set contains the field
+        if self.spectral_library_matches is None and "spectral_library_matches" in self.model_fields_set:
+            _dict['spectralLibraryMatches'] = None
+
+        # set to None if xlog_p (nullable) is None
+        # and model_fields_set contains the field
+        if self.xlog_p is None and "xlog_p" in self.model_fields_set:
+            _dict['xlogP'] = None
+
+        # set to None if tanimoto_similarity (nullable) is None
+        # and model_fields_set contains the field
+        if self.tanimoto_similarity is None and "tanimoto_similarity" in self.model_fields_set:
+            _dict['tanimotoSimilarity'] = None
+
+        # set to None if mces_dist_to_top_hit (nullable) is None
+        # and model_fields_set contains the field
+        if self.mces_dist_to_top_hit is None and "mces_dist_to_top_hit" in self.model_fields_set:
+            _dict['mcesDistToTopHit'] = None
+
+        # set to None if fingerprint (nullable) is None
+        # and model_fields_set contains the field
+        if self.fingerprint is None and "fingerprint" in self.model_fields_set:
+            _dict['fingerprint'] = None
+
         return _dict
 
     @classmethod

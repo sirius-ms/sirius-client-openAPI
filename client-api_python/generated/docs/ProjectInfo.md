@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **project_id** | **str** | a user selected unique name of the project for easy access. | [optional] 
 **location** | **str** | storage location of the project. | [optional] 
 **description** | **str** | Description of this project. | [optional] 
-**type** | [**ProjectType**](ProjectType.md) | Type of this project.  NULL if project type has not yet been specified by importing data. | [optional] 
+**type** | [**ProjectType**](ProjectType.md) |  | [optional] 
 **compatible** | **bool** | Indicates whether computed results (e.g. fingerprints, compounds classes) are compatible with the backend.  If true project is up-to-date and there are no restrictions regarding usage.  If false project is incompatible and therefore \&quot;read only\&quot; until the incompatible results have been removed. See updateProject endpoint for further information  If NULL the information has not been requested. | [optional] 
 **num_of_features** | **int** | Number of features (aligned over runs) in this project. If NULL, information has not been requested (See OptField &#39;sizeInformation&#39;). | [optional] 
 **num_of_compounds** | **int** | Number of compounds (group of ion identities) in this project. If NULL, Information has not been requested (See OptField &#39;sizeInformation&#39;) or might be unavailable for this project type. | [optional] 

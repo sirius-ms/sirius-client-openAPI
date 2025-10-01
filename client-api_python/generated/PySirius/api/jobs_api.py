@@ -1445,7 +1445,7 @@ class JobsApi:
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to run jobs on")],
         job_id: Annotated[StrictStr, Field(description="of the job to be returned")],
-        opt_fields: Annotated[Optional[List[JobOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[JobOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1520,7 +1520,7 @@ class JobsApi:
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to run jobs on")],
         job_id: Annotated[StrictStr, Field(description="of the job to be returned")],
-        opt_fields: Annotated[Optional[List[JobOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[JobOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1595,7 +1595,7 @@ class JobsApi:
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to run jobs on")],
         job_id: Annotated[StrictStr, Field(description="of the job to be returned")],
-        opt_fields: Annotated[Optional[List[JobOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[JobOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2495,7 +2495,7 @@ class JobsApi:
     def get_jobs(
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to run jobs on")],
-        opt_fields: Annotated[Optional[List[JobOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[JobOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2566,7 +2566,7 @@ class JobsApi:
     def get_jobs_with_http_info(
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to run jobs on")],
-        opt_fields: Annotated[Optional[List[JobOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[JobOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2637,7 +2637,7 @@ class JobsApi:
     def get_jobs_without_preload_content(
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to run jobs on")],
-        opt_fields: Annotated[Optional[List[JobOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[JobOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2773,7 +2773,7 @@ class JobsApi:
         page: Annotated[Optional[Annotated[int, Field(strict=True, ge=0)]], Field(description="Zero-based page index (0..N)")] = None,
         size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
         sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
-        opt_fields: Annotated[Optional[List[JobOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[JobOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2856,7 +2856,7 @@ class JobsApi:
         page: Annotated[Optional[Annotated[int, Field(strict=True, ge=0)]], Field(description="Zero-based page index (0..N)")] = None,
         size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
         sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
-        opt_fields: Annotated[Optional[List[JobOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[JobOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2939,7 +2939,7 @@ class JobsApi:
         page: Annotated[Optional[Annotated[int, Field(strict=True, ge=0)]], Field(description="Zero-based page index (0..N)")] = None,
         size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
         sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
-        opt_fields: Annotated[Optional[List[JobOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[JobOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3688,7 +3688,7 @@ class JobsApi:
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to run jobs on")],
         job_submission: Annotated[JobSubmission, Field(description="configuration of the job that will be submitted of the job to be returned")],
-        opt_fields: Annotated[Optional[List[JobOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[JobOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3763,7 +3763,7 @@ class JobsApi:
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to run jobs on")],
         job_submission: Annotated[JobSubmission, Field(description="configuration of the job that will be submitted of the job to be returned")],
-        opt_fields: Annotated[Optional[List[JobOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[JobOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3838,7 +3838,7 @@ class JobsApi:
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to run jobs on")],
         job_submission: Annotated[JobSubmission, Field(description="configuration of the job that will be submitted of the job to be returned")],
-        opt_fields: Annotated[Optional[List[JobOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[JobOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3993,7 +3993,7 @@ class JobsApi:
         job_config_name: Annotated[StrictStr, Field(description="name if the config to be used")],
         request_body: Annotated[List[StrictStr], Field(description="List of alignedFeatureIds to be computed")],
         recompute: Annotated[Optional[StrictBool], Field(description="enable or disable recompute. If null the stored value will be used.")] = None,
-        opt_fields: Annotated[Optional[List[JobOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[JobOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4076,7 +4076,7 @@ class JobsApi:
         job_config_name: Annotated[StrictStr, Field(description="name if the config to be used")],
         request_body: Annotated[List[StrictStr], Field(description="List of alignedFeatureIds to be computed")],
         recompute: Annotated[Optional[StrictBool], Field(description="enable or disable recompute. If null the stored value will be used.")] = None,
-        opt_fields: Annotated[Optional[List[JobOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[JobOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4159,7 +4159,7 @@ class JobsApi:
         job_config_name: Annotated[StrictStr, Field(description="name if the config to be used")],
         request_body: Annotated[List[StrictStr], Field(description="List of alignedFeatureIds to be computed")],
         recompute: Annotated[Optional[StrictBool], Field(description="enable or disable recompute. If null the stored value will be used.")] = None,
-        opt_fields: Annotated[Optional[List[JobOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[JobOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],

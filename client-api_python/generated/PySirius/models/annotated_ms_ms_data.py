@@ -16,7 +16,7 @@ import re  # noqa: F401
 import json
 
 from pydantic import BaseModel, ConfigDict, Field
-from typing import Any, ClassVar, Dict, List
+from typing import Any, ClassVar, Dict, List, Optional
 from PySirius.models.annotated_spectrum import AnnotatedSpectrum
 from typing import Optional, Set
 from typing_extensions import Self
@@ -25,8 +25,8 @@ class AnnotatedMsMsData(BaseModel):
     """
     AnnotatedMsMsData
     """ # noqa: E501
-    merged_ms2: AnnotatedSpectrum = Field(alias="mergedMs2")
-    ms2_spectra: List[AnnotatedSpectrum] = Field(alias="ms2Spectra")
+    merged_ms2: Optional[AnnotatedSpectrum] = Field(alias="mergedMs2")
+    ms2_spectra: List[Optional[AnnotatedSpectrum]] = Field(alias="ms2Spectra")
     __properties: ClassVar[List[str]] = ["mergedMs2", "ms2Spectra"]
 
     model_config = ConfigDict(
@@ -78,6 +78,11 @@ class AnnotatedMsMsData(BaseModel):
                 if _item_ms2_spectra:
                     _items.append(_item_ms2_spectra.to_dict())
             _dict['ms2Spectra'] = _items
+        # set to None if merged_ms2 (nullable) is None
+        # and model_fields_set contains the field
+        if self.merged_ms2 is None and "merged_ms2" in self.model_fields_set:
+            _dict['mergedMs2'] = None
+
         return _dict
 
     @classmethod

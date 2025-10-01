@@ -72,7 +72,7 @@ class FeaturesApi:
         project_id: Annotated[StrictStr, Field(description="project-space to import into.")],
         feature_import: Annotated[List[FeatureImport], Field(description="the feature data to be imported")],
         profile: Annotated[Optional[InstrumentProfile], Field(description="profile describing the instrument used to measure the data. Used to merge spectra.")] = None,
-        opt_fields: Annotated[Optional[List[AlignedFeatureOptField]], Field(description="set of optional fields to be included. Use 'none' to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[AlignedFeatureOptField]]], Field(description="set of optional fields to be included. Use 'none' to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -151,7 +151,7 @@ class FeaturesApi:
         project_id: Annotated[StrictStr, Field(description="project-space to import into.")],
         feature_import: Annotated[List[FeatureImport], Field(description="the feature data to be imported")],
         profile: Annotated[Optional[InstrumentProfile], Field(description="profile describing the instrument used to measure the data. Used to merge spectra.")] = None,
-        opt_fields: Annotated[Optional[List[AlignedFeatureOptField]], Field(description="set of optional fields to be included. Use 'none' to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[AlignedFeatureOptField]]], Field(description="set of optional fields to be included. Use 'none' to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -230,7 +230,7 @@ class FeaturesApi:
         project_id: Annotated[StrictStr, Field(description="project-space to import into.")],
         feature_import: Annotated[List[FeatureImport], Field(description="the feature data to be imported")],
         profile: Annotated[Optional[InstrumentProfile], Field(description="profile describing the instrument used to measure the data. Used to merge spectra.")] = None,
-        opt_fields: Annotated[Optional[List[AlignedFeatureOptField]], Field(description="set of optional fields to be included. Use 'none' to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[AlignedFeatureOptField]]], Field(description="set of optional fields to be included. Use 'none' to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1801,7 +1801,7 @@ class FeaturesApi:
         project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
         aligned_feature_id: Annotated[StrictStr, Field(description="identifier of feature (aligned over runs) to access.")],
         ms_data_search_prepared: Annotated[Optional[StrictBool], Field(description="Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra.")] = None,
-        opt_fields: Annotated[Optional[List[AlignedFeatureOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[AlignedFeatureOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1880,7 +1880,7 @@ class FeaturesApi:
         project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
         aligned_feature_id: Annotated[StrictStr, Field(description="identifier of feature (aligned over runs) to access.")],
         ms_data_search_prepared: Annotated[Optional[StrictBool], Field(description="Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra.")] = None,
-        opt_fields: Annotated[Optional[List[AlignedFeatureOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[AlignedFeatureOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1959,7 +1959,7 @@ class FeaturesApi:
         project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
         aligned_feature_id: Annotated[StrictStr, Field(description="identifier of feature (aligned over runs) to access.")],
         ms_data_search_prepared: Annotated[Optional[StrictBool], Field(description="Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra.")] = None,
-        opt_fields: Annotated[Optional[List[AlignedFeatureOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[AlignedFeatureOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2379,7 +2379,7 @@ class FeaturesApi:
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
         ms_data_search_prepared: Annotated[Optional[StrictBool], Field(description="Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra.")] = None,
-        opt_fields: Annotated[Optional[List[AlignedFeatureOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[AlignedFeatureOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2454,7 +2454,7 @@ class FeaturesApi:
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
         ms_data_search_prepared: Annotated[Optional[StrictBool], Field(description="Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra.")] = None,
-        opt_fields: Annotated[Optional[List[AlignedFeatureOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[AlignedFeatureOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2529,7 +2529,7 @@ class FeaturesApi:
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
         ms_data_search_prepared: Annotated[Optional[StrictBool], Field(description="Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra.")] = None,
-        opt_fields: Annotated[Optional[List[AlignedFeatureOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[AlignedFeatureOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2674,7 +2674,7 @@ class FeaturesApi:
         page: Annotated[Optional[Annotated[int, Field(strict=True, ge=0)]], Field(description="Zero-based page index (0..N)")] = None,
         size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
         sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
-        opt_fields: Annotated[Optional[List[AlignedFeatureOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[AlignedFeatureOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2761,7 +2761,7 @@ class FeaturesApi:
         page: Annotated[Optional[Annotated[int, Field(strict=True, ge=0)]], Field(description="Zero-based page index (0..N)")] = None,
         size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
         sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
-        opt_fields: Annotated[Optional[List[AlignedFeatureOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[AlignedFeatureOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2848,7 +2848,7 @@ class FeaturesApi:
         page: Annotated[Optional[Annotated[int, Field(strict=True, ge=0)]], Field(description="Zero-based page index (0..N)")] = None,
         size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
         sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
-        opt_fields: Annotated[Optional[List[AlignedFeatureOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[AlignedFeatureOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3018,7 +3018,7 @@ class FeaturesApi:
         page: Annotated[Optional[Annotated[int, Field(strict=True, ge=0)]], Field(description="Zero-based page index (0..N)")] = None,
         size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
         sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
-        opt_fields: Annotated[Optional[List[AlignedFeatureOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[AlignedFeatureOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3105,7 +3105,7 @@ class FeaturesApi:
         page: Annotated[Optional[Annotated[int, Field(strict=True, ge=0)]], Field(description="Zero-based page index (0..N)")] = None,
         size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
         sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
-        opt_fields: Annotated[Optional[List[AlignedFeatureOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[AlignedFeatureOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3192,7 +3192,7 @@ class FeaturesApi:
         page: Annotated[Optional[Annotated[int, Field(strict=True, ge=0)]], Field(description="Zero-based page index (0..N)")] = None,
         size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
         sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
-        opt_fields: Annotated[Optional[List[AlignedFeatureOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[AlignedFeatureOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3362,7 +3362,7 @@ class FeaturesApi:
         size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
         sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
         ms_data_search_prepared: Annotated[Optional[StrictBool], Field(description="Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra.")] = None,
-        opt_fields: Annotated[Optional[List[AlignedFeatureOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[AlignedFeatureOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3449,7 +3449,7 @@ class FeaturesApi:
         size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
         sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
         ms_data_search_prepared: Annotated[Optional[StrictBool], Field(description="Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra.")] = None,
-        opt_fields: Annotated[Optional[List[AlignedFeatureOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[AlignedFeatureOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3536,7 +3536,7 @@ class FeaturesApi:
         size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
         sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
         ms_data_search_prepared: Annotated[Optional[StrictBool], Field(description="Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra.")] = None,
-        opt_fields: Annotated[Optional[List[AlignedFeatureOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[AlignedFeatureOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4277,7 +4277,7 @@ class FeaturesApi:
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
         aligned_feature_id: Annotated[StrictStr, Field(description="feature (aligned over runs) the structure candidates belong to.")],
-        opt_fields: Annotated[Optional[List[StructureCandidateOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[StructureCandidateOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4352,7 +4352,7 @@ class FeaturesApi:
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
         aligned_feature_id: Annotated[StrictStr, Field(description="feature (aligned over runs) the structure candidates belong to.")],
-        opt_fields: Annotated[Optional[List[StructureCandidateOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[StructureCandidateOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4427,7 +4427,7 @@ class FeaturesApi:
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
         aligned_feature_id: Annotated[StrictStr, Field(description="feature (aligned over runs) the structure candidates belong to.")],
-        opt_fields: Annotated[Optional[List[StructureCandidateOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[StructureCandidateOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4568,7 +4568,7 @@ class FeaturesApi:
         project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
         aligned_feature_id: Annotated[StrictStr, Field(description="feature (aligned over runs) the formula result belongs to.")],
         formula_id: Annotated[StrictStr, Field(description="identifier of the requested formula result")],
-        opt_fields: Annotated[Optional[List[StructureCandidateOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[StructureCandidateOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4647,7 +4647,7 @@ class FeaturesApi:
         project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
         aligned_feature_id: Annotated[StrictStr, Field(description="feature (aligned over runs) the formula result belongs to.")],
         formula_id: Annotated[StrictStr, Field(description="identifier of the requested formula result")],
-        opt_fields: Annotated[Optional[List[StructureCandidateOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[StructureCandidateOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4726,7 +4726,7 @@ class FeaturesApi:
         project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
         aligned_feature_id: Annotated[StrictStr, Field(description="feature (aligned over runs) the formula result belongs to.")],
         formula_id: Annotated[StrictStr, Field(description="identifier of the requested formula result")],
-        opt_fields: Annotated[Optional[List[StructureCandidateOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[StructureCandidateOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4876,7 +4876,7 @@ class FeaturesApi:
         page: Annotated[Optional[Annotated[int, Field(strict=True, ge=0)]], Field(description="Zero-based page index (0..N)")] = None,
         size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
         sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
-        opt_fields: Annotated[Optional[List[StructureCandidateOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[StructureCandidateOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4967,7 +4967,7 @@ class FeaturesApi:
         page: Annotated[Optional[Annotated[int, Field(strict=True, ge=0)]], Field(description="Zero-based page index (0..N)")] = None,
         size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
         sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
-        opt_fields: Annotated[Optional[List[StructureCandidateOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[StructureCandidateOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -5058,7 +5058,7 @@ class FeaturesApi:
         page: Annotated[Optional[Annotated[int, Field(strict=True, ge=0)]], Field(description="Zero-based page index (0..N)")] = None,
         size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
         sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
-        opt_fields: Annotated[Optional[List[StructureCandidateOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[StructureCandidateOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -5232,7 +5232,7 @@ class FeaturesApi:
         page: Annotated[Optional[Annotated[int, Field(strict=True, ge=0)]], Field(description="Zero-based page index (0..N)")] = None,
         size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
         sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
-        opt_fields: Annotated[Optional[List[StructureCandidateOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[StructureCandidateOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -5319,7 +5319,7 @@ class FeaturesApi:
         page: Annotated[Optional[Annotated[int, Field(strict=True, ge=0)]], Field(description="Zero-based page index (0..N)")] = None,
         size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
         sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
-        opt_fields: Annotated[Optional[List[StructureCandidateOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[StructureCandidateOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -5406,7 +5406,7 @@ class FeaturesApi:
         page: Annotated[Optional[Annotated[int, Field(strict=True, ge=0)]], Field(description="Zero-based page index (0..N)")] = None,
         size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
         sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
-        opt_fields: Annotated[Optional[List[StructureCandidateOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[StructureCandidateOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -6759,7 +6759,7 @@ class FeaturesApi:
         aligned_feature_id: Annotated[StrictStr, Field(description="feature (aligned over runs) the formula result belongs to.")],
         formula_id: Annotated[StrictStr, Field(description="identifier of the requested formula result")],
         ms_data_search_prepared: Annotated[Optional[StrictBool], Field(description="Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra.")] = None,
-        opt_fields: Annotated[Optional[List[FormulaCandidateOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[FormulaCandidateOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -6842,7 +6842,7 @@ class FeaturesApi:
         aligned_feature_id: Annotated[StrictStr, Field(description="feature (aligned over runs) the formula result belongs to.")],
         formula_id: Annotated[StrictStr, Field(description="identifier of the requested formula result")],
         ms_data_search_prepared: Annotated[Optional[StrictBool], Field(description="Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra.")] = None,
-        opt_fields: Annotated[Optional[List[FormulaCandidateOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[FormulaCandidateOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -6925,7 +6925,7 @@ class FeaturesApi:
         aligned_feature_id: Annotated[StrictStr, Field(description="feature (aligned over runs) the formula result belongs to.")],
         formula_id: Annotated[StrictStr, Field(description="identifier of the requested formula result")],
         ms_data_search_prepared: Annotated[Optional[StrictBool], Field(description="Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra.")] = None,
-        opt_fields: Annotated[Optional[List[FormulaCandidateOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[FormulaCandidateOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -7080,7 +7080,7 @@ class FeaturesApi:
         project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
         aligned_feature_id: Annotated[StrictStr, Field(description="feature (aligned over runs) the formula result belongs to.")],
         ms_data_search_prepared: Annotated[Optional[StrictBool], Field(description="Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra.")] = None,
-        opt_fields: Annotated[Optional[List[FormulaCandidateOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[FormulaCandidateOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -7159,7 +7159,7 @@ class FeaturesApi:
         project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
         aligned_feature_id: Annotated[StrictStr, Field(description="feature (aligned over runs) the formula result belongs to.")],
         ms_data_search_prepared: Annotated[Optional[StrictBool], Field(description="Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra.")] = None,
-        opt_fields: Annotated[Optional[List[FormulaCandidateOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[FormulaCandidateOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -7238,7 +7238,7 @@ class FeaturesApi:
         project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
         aligned_feature_id: Annotated[StrictStr, Field(description="feature (aligned over runs) the formula result belongs to.")],
         ms_data_search_prepared: Annotated[Optional[StrictBool], Field(description="Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra.")] = None,
-        opt_fields: Annotated[Optional[List[FormulaCandidateOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[FormulaCandidateOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -7390,7 +7390,7 @@ class FeaturesApi:
         size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
         sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
         ms_data_search_prepared: Annotated[Optional[StrictBool], Field(description="Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra.")] = None,
-        opt_fields: Annotated[Optional[List[FormulaCandidateOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[FormulaCandidateOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -7481,7 +7481,7 @@ class FeaturesApi:
         size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
         sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
         ms_data_search_prepared: Annotated[Optional[StrictBool], Field(description="Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra.")] = None,
-        opt_fields: Annotated[Optional[List[FormulaCandidateOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[FormulaCandidateOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -7572,7 +7572,7 @@ class FeaturesApi:
         size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
         sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
         ms_data_search_prepared: Annotated[Optional[StrictBool], Field(description="Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra.")] = None,
-        opt_fields: Annotated[Optional[List[FormulaCandidateOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[FormulaCandidateOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -9185,7 +9185,7 @@ class FeaturesApi:
         project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
         aligned_feature_id: Annotated[StrictStr, Field(description="feature (aligned over runs) the structure candidates belong to.")],
         match_id: Annotated[StrictStr, Field(description="id of the library match to be returned.")],
-        opt_fields: Optional[List[SpectralLibraryMatchOptField]] = None,
+        opt_fields: Optional[List[Optional[SpectralLibraryMatchOptField]]] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -9264,7 +9264,7 @@ class FeaturesApi:
         project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
         aligned_feature_id: Annotated[StrictStr, Field(description="feature (aligned over runs) the structure candidates belong to.")],
         match_id: Annotated[StrictStr, Field(description="id of the library match to be returned.")],
-        opt_fields: Optional[List[SpectralLibraryMatchOptField]] = None,
+        opt_fields: Optional[List[Optional[SpectralLibraryMatchOptField]]] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -9343,7 +9343,7 @@ class FeaturesApi:
         project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
         aligned_feature_id: Annotated[StrictStr, Field(description="feature (aligned over runs) the structure candidates belong to.")],
         match_id: Annotated[StrictStr, Field(description="id of the library match to be returned.")],
-        opt_fields: Optional[List[SpectralLibraryMatchOptField]] = None,
+        opt_fields: Optional[List[Optional[SpectralLibraryMatchOptField]]] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -9492,7 +9492,7 @@ class FeaturesApi:
         min_shared_peaks: Optional[StrictInt] = None,
         min_similarity: Optional[float] = None,
         inchi_key: Optional[StrictStr] = None,
-        opt_fields: Optional[List[SpectralLibraryMatchOptField]] = None,
+        opt_fields: Optional[List[Optional[SpectralLibraryMatchOptField]]] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -9579,7 +9579,7 @@ class FeaturesApi:
         min_shared_peaks: Optional[StrictInt] = None,
         min_similarity: Optional[float] = None,
         inchi_key: Optional[StrictStr] = None,
-        opt_fields: Optional[List[SpectralLibraryMatchOptField]] = None,
+        opt_fields: Optional[List[Optional[SpectralLibraryMatchOptField]]] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -9666,7 +9666,7 @@ class FeaturesApi:
         min_shared_peaks: Optional[StrictInt] = None,
         min_similarity: Optional[float] = None,
         inchi_key: Optional[StrictStr] = None,
-        opt_fields: Optional[List[SpectralLibraryMatchOptField]] = None,
+        opt_fields: Optional[List[Optional[SpectralLibraryMatchOptField]]] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -9836,7 +9836,7 @@ class FeaturesApi:
         min_shared_peaks: Optional[StrictInt] = None,
         min_similarity: Optional[float] = None,
         inchi_key: Optional[StrictStr] = None,
-        opt_fields: Optional[List[SpectralLibraryMatchOptField]] = None,
+        opt_fields: Optional[List[Optional[SpectralLibraryMatchOptField]]] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -9935,7 +9935,7 @@ class FeaturesApi:
         min_shared_peaks: Optional[StrictInt] = None,
         min_similarity: Optional[float] = None,
         inchi_key: Optional[StrictStr] = None,
-        opt_fields: Optional[List[SpectralLibraryMatchOptField]] = None,
+        opt_fields: Optional[List[Optional[SpectralLibraryMatchOptField]]] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -10034,7 +10034,7 @@ class FeaturesApi:
         min_shared_peaks: Optional[StrictInt] = None,
         min_similarity: Optional[float] = None,
         inchi_key: Optional[StrictStr] = None,
-        opt_fields: Optional[List[SpectralLibraryMatchOptField]] = None,
+        opt_fields: Optional[List[Optional[SpectralLibraryMatchOptField]]] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -11488,7 +11488,7 @@ class FeaturesApi:
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
         aligned_feature_id: Annotated[StrictStr, Field(description="feature (aligned over runs) the structure candidates belong to.")],
-        opt_fields: Annotated[Optional[List[StructureCandidateOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[StructureCandidateOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -11563,7 +11563,7 @@ class FeaturesApi:
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
         aligned_feature_id: Annotated[StrictStr, Field(description="feature (aligned over runs) the structure candidates belong to.")],
-        opt_fields: Annotated[Optional[List[StructureCandidateOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[StructureCandidateOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -11638,7 +11638,7 @@ class FeaturesApi:
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
         aligned_feature_id: Annotated[StrictStr, Field(description="feature (aligned over runs) the structure candidates belong to.")],
-        opt_fields: Annotated[Optional[List[StructureCandidateOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[StructureCandidateOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -11779,7 +11779,7 @@ class FeaturesApi:
         project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
         aligned_feature_id: Annotated[StrictStr, Field(description="feature (aligned over runs) the formula result belongs to.")],
         formula_id: Annotated[StrictStr, Field(description="identifier of the requested formula result")],
-        opt_fields: Annotated[Optional[List[StructureCandidateOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[StructureCandidateOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -11858,7 +11858,7 @@ class FeaturesApi:
         project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
         aligned_feature_id: Annotated[StrictStr, Field(description="feature (aligned over runs) the formula result belongs to.")],
         formula_id: Annotated[StrictStr, Field(description="identifier of the requested formula result")],
-        opt_fields: Annotated[Optional[List[StructureCandidateOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[StructureCandidateOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -11937,7 +11937,7 @@ class FeaturesApi:
         project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
         aligned_feature_id: Annotated[StrictStr, Field(description="feature (aligned over runs) the formula result belongs to.")],
         formula_id: Annotated[StrictStr, Field(description="identifier of the requested formula result")],
-        opt_fields: Annotated[Optional[List[StructureCandidateOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[StructureCandidateOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -12087,7 +12087,7 @@ class FeaturesApi:
         page: Annotated[Optional[Annotated[int, Field(strict=True, ge=0)]], Field(description="Zero-based page index (0..N)")] = None,
         size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
         sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
-        opt_fields: Annotated[Optional[List[StructureCandidateOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[StructureCandidateOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -12178,7 +12178,7 @@ class FeaturesApi:
         page: Annotated[Optional[Annotated[int, Field(strict=True, ge=0)]], Field(description="Zero-based page index (0..N)")] = None,
         size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
         sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
-        opt_fields: Annotated[Optional[List[StructureCandidateOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[StructureCandidateOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -12269,7 +12269,7 @@ class FeaturesApi:
         page: Annotated[Optional[Annotated[int, Field(strict=True, ge=0)]], Field(description="Zero-based page index (0..N)")] = None,
         size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
         sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
-        opt_fields: Annotated[Optional[List[StructureCandidateOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[StructureCandidateOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -12443,7 +12443,7 @@ class FeaturesApi:
         page: Annotated[Optional[Annotated[int, Field(strict=True, ge=0)]], Field(description="Zero-based page index (0..N)")] = None,
         size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
         sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
-        opt_fields: Annotated[Optional[List[StructureCandidateOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[StructureCandidateOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -12530,7 +12530,7 @@ class FeaturesApi:
         page: Annotated[Optional[Annotated[int, Field(strict=True, ge=0)]], Field(description="Zero-based page index (0..N)")] = None,
         size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
         sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
-        opt_fields: Annotated[Optional[List[StructureCandidateOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[StructureCandidateOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -12617,7 +12617,7 @@ class FeaturesApi:
         page: Annotated[Optional[Annotated[int, Field(strict=True, ge=0)]], Field(description="Zero-based page index (0..N)")] = None,
         size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
         sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
-        opt_fields: Annotated[Optional[List[StructureCandidateOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[StructureCandidateOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],

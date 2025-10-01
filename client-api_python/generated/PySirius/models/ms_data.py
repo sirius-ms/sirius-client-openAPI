@@ -28,8 +28,8 @@ class MsData(BaseModel):
     isotope_pattern: Optional[BasicSpectrum] = Field(default=None, alias="isotopePattern")
     merged_ms1: Optional[BasicSpectrum] = Field(default=None, alias="mergedMs1")
     merged_ms2: Optional[BasicSpectrum] = Field(default=None, alias="mergedMs2")
-    ms1_spectra: Optional[List[BasicSpectrum]] = Field(default=None, alias="ms1Spectra")
-    ms2_spectra: Optional[List[BasicSpectrum]] = Field(default=None, alias="ms2Spectra")
+    ms1_spectra: Optional[List[Optional[BasicSpectrum]]] = Field(default=None, alias="ms1Spectra")
+    ms2_spectra: Optional[List[Optional[BasicSpectrum]]] = Field(default=None, alias="ms2Spectra")
     __properties: ClassVar[List[str]] = ["isotopePattern", "mergedMs1", "mergedMs2", "ms1Spectra", "ms2Spectra"]
 
     model_config = ConfigDict(
@@ -94,6 +94,21 @@ class MsData(BaseModel):
                 if _item_ms2_spectra:
                     _items.append(_item_ms2_spectra.to_dict())
             _dict['ms2Spectra'] = _items
+        # set to None if isotope_pattern (nullable) is None
+        # and model_fields_set contains the field
+        if self.isotope_pattern is None and "isotope_pattern" in self.model_fields_set:
+            _dict['isotopePattern'] = None
+
+        # set to None if merged_ms1 (nullable) is None
+        # and model_fields_set contains the field
+        if self.merged_ms1 is None and "merged_ms1" in self.model_fields_set:
+            _dict['mergedMs1'] = None
+
+        # set to None if merged_ms2 (nullable) is None
+        # and model_fields_set contains the field
+        if self.merged_ms2 is None and "merged_ms2" in self.model_fields_set:
+            _dict['mergedMs2'] = None
+
         return _dict
 
     @classmethod

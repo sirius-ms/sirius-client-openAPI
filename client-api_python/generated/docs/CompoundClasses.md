@@ -6,9 +6,9 @@ Container class that holds the most likely compound class for different levels o
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**npc_pathway** | [**CompoundClass**](CompoundClass.md) | Pathway level NPC class with the highest probability | [optional] 
-**npc_superclass** | [**CompoundClass**](CompoundClass.md) | Superclass level NPC class with the highest probability | [optional] 
-**npc_class** | [**CompoundClass**](CompoundClass.md) | Class level NPC class with the highest probability | [optional] 
+**npc_pathway** | [**CompoundClass**](CompoundClass.md) |  | [optional] 
+**npc_superclass** | [**CompoundClass**](CompoundClass.md) |  | [optional] 
+**npc_class** | [**CompoundClass**](CompoundClass.md) |  | [optional] 
 **classy_fire_lineage** | [**List[CompoundClass]**](CompoundClass.md) | Most likely ClassyFire lineage from ordered from least specific to most specific class  classyFireLineage.get(classyFireLineage.size() - 1) gives the most specific ClassyFire compound class annotation | [optional] 
 **classy_fire_alternatives** | [**List[CompoundClass]**](CompoundClass.md) | Alternative ClassyFire classes with high probability that do not fit into the linage | [optional] 
 

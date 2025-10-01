@@ -71,6 +71,21 @@ class TraceAnnotationExperimental(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if description (nullable) is None
+        # and model_fields_set contains the field
+        if self.description is None and "description" in self.model_fields_set:
+            _dict['description'] = None
+
+        # set to None if var_from (nullable) is None
+        # and model_fields_set contains the field
+        if self.var_from is None and "var_from" in self.model_fields_set:
+            _dict['from'] = None
+
+        # set to None if to (nullable) is None
+        # and model_fields_set contains the field
+        if self.to is None and "to" in self.model_fields_set:
+            _dict['to'] = None
+
         return _dict
 
     @classmethod

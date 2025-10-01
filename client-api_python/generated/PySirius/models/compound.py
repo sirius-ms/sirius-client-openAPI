@@ -34,9 +34,9 @@ class Compound(BaseModel):
     rt_end_seconds: Optional[float] = Field(default=None, description="The merged/consensus retention time end (latest rt) of this compound", alias="rtEndSeconds")
     neutral_mass: Optional[float] = Field(default=None, description="Neutral mass of this compound. Ion masse minus the mass of the assigned adduct of each feature of  this compound should result in the same neutral mass", alias="neutralMass")
     features: Optional[List[AlignedFeature]] = Field(default=None, description="List of aligned features (adducts) that belong to the same (this) compound")
-    consensus_annotations: Optional[ConsensusAnnotationsCSI] = Field(default=None, description="The consensus of the top annotations from all the features of this compound.  Null if it was not requested und non-null otherwise. Might contain empty fields if results are not available", alias="consensusAnnotations")
-    consensus_annotations_de_novo: Optional[ConsensusAnnotationsDeNovo] = Field(default=None, description="The consensus of the top de novo annotations from all the features of this compound.  Null if it was not requested und non-null otherwise. Might contain empty fields if results are not available", alias="consensusAnnotationsDeNovo")
-    custom_annotations: Optional[ConsensusAnnotationsCSI] = Field(default=None, description="Alternative annotations selected by the User.", alias="customAnnotations")
+    consensus_annotations: Optional[ConsensusAnnotationsCSI] = Field(default=None, alias="consensusAnnotations")
+    consensus_annotations_de_novo: Optional[ConsensusAnnotationsDeNovo] = Field(default=None, alias="consensusAnnotationsDeNovo")
+    custom_annotations: Optional[ConsensusAnnotationsCSI] = Field(default=None, alias="customAnnotations")
     tags: Optional[Dict[str, Tag]] = Field(default=None, description="Key: tagName, value: tag")
     __properties: ClassVar[List[str]] = ["compoundId", "name", "rtStartSeconds", "rtEndSeconds", "neutralMass", "features", "consensusAnnotations", "consensusAnnotationsDeNovo", "customAnnotations", "tags"]
 
@@ -102,6 +102,46 @@ class Compound(BaseModel):
                 if self.tags[_key_tags]:
                     _field_dict[_key_tags] = self.tags[_key_tags].to_dict()
             _dict['tags'] = _field_dict
+        # set to None if name (nullable) is None
+        # and model_fields_set contains the field
+        if self.name is None and "name" in self.model_fields_set:
+            _dict['name'] = None
+
+        # set to None if rt_start_seconds (nullable) is None
+        # and model_fields_set contains the field
+        if self.rt_start_seconds is None and "rt_start_seconds" in self.model_fields_set:
+            _dict['rtStartSeconds'] = None
+
+        # set to None if rt_end_seconds (nullable) is None
+        # and model_fields_set contains the field
+        if self.rt_end_seconds is None and "rt_end_seconds" in self.model_fields_set:
+            _dict['rtEndSeconds'] = None
+
+        # set to None if neutral_mass (nullable) is None
+        # and model_fields_set contains the field
+        if self.neutral_mass is None and "neutral_mass" in self.model_fields_set:
+            _dict['neutralMass'] = None
+
+        # set to None if consensus_annotations (nullable) is None
+        # and model_fields_set contains the field
+        if self.consensus_annotations is None and "consensus_annotations" in self.model_fields_set:
+            _dict['consensusAnnotations'] = None
+
+        # set to None if consensus_annotations_de_novo (nullable) is None
+        # and model_fields_set contains the field
+        if self.consensus_annotations_de_novo is None and "consensus_annotations_de_novo" in self.model_fields_set:
+            _dict['consensusAnnotationsDeNovo'] = None
+
+        # set to None if custom_annotations (nullable) is None
+        # and model_fields_set contains the field
+        if self.custom_annotations is None and "custom_annotations" in self.model_fields_set:
+            _dict['customAnnotations'] = None
+
+        # set to None if tags (nullable) is None
+        # and model_fields_set contains the field
+        if self.tags is None and "tags" in self.model_fields_set:
+            _dict['tags'] = None
+
         return _dict
 
     @classmethod

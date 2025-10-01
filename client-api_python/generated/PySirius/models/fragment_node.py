@@ -73,6 +73,41 @@ class FragmentNode(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if molecular_formula (nullable) is None
+        # and model_fields_set contains the field
+        if self.molecular_formula is None and "molecular_formula" in self.model_fields_set:
+            _dict['molecularFormula'] = None
+
+        # set to None if adduct (nullable) is None
+        # and model_fields_set contains the field
+        if self.adduct is None and "adduct" in self.model_fields_set:
+            _dict['adduct'] = None
+
+        # set to None if mass_deviation_da (nullable) is None
+        # and model_fields_set contains the field
+        if self.mass_deviation_da is None and "mass_deviation_da" in self.model_fields_set:
+            _dict['massDeviationDa'] = None
+
+        # set to None if mass_deviation_ppm (nullable) is None
+        # and model_fields_set contains the field
+        if self.mass_deviation_ppm is None and "mass_deviation_ppm" in self.model_fields_set:
+            _dict['massDeviationPpm'] = None
+
+        # set to None if score (nullable) is None
+        # and model_fields_set contains the field
+        if self.score is None and "score" in self.model_fields_set:
+            _dict['score'] = None
+
+        # set to None if intensity (nullable) is None
+        # and model_fields_set contains the field
+        if self.intensity is None and "intensity" in self.model_fields_set:
+            _dict['intensity'] = None
+
+        # set to None if mz (nullable) is None
+        # and model_fields_set contains the field
+        if self.mz is None and "mz" in self.model_fields_set:
+            _dict['mz'] = None
+
         return _dict
 
     @classmethod

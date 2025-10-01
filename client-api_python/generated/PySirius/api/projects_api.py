@@ -315,7 +315,7 @@ class ProjectsApi:
         self,
         project_id: Annotated[StrictStr, Field(description="unique name/identifier that shall be used to access the newly created project-space. Must consist only of [a-zA-Z0-9_-].")],
         path_to_project: Annotated[Optional[StrictStr], Field(description="local file path where the project will be created. If NULL, project will be stored by its projectId in default project location. DEPRECATED: This parameter relies on the local filesystem and will likely be removed in later versions of this API to allow for more flexible use cases.")] = None,
-        opt_fields: Optional[List[ProjectInfoOptField]] = None,
+        opt_fields: Optional[List[Optional[ProjectInfoOptField]]] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -390,7 +390,7 @@ class ProjectsApi:
         self,
         project_id: Annotated[StrictStr, Field(description="unique name/identifier that shall be used to access the newly created project-space. Must consist only of [a-zA-Z0-9_-].")],
         path_to_project: Annotated[Optional[StrictStr], Field(description="local file path where the project will be created. If NULL, project will be stored by its projectId in default project location. DEPRECATED: This parameter relies on the local filesystem and will likely be removed in later versions of this API to allow for more flexible use cases.")] = None,
-        opt_fields: Optional[List[ProjectInfoOptField]] = None,
+        opt_fields: Optional[List[Optional[ProjectInfoOptField]]] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -465,7 +465,7 @@ class ProjectsApi:
         self,
         project_id: Annotated[StrictStr, Field(description="unique name/identifier that shall be used to access the newly created project-space. Must consist only of [a-zA-Z0-9_-].")],
         path_to_project: Annotated[Optional[StrictStr], Field(description="local file path where the project will be created. If NULL, project will be stored by its projectId in default project location. DEPRECATED: This parameter relies on the local filesystem and will likely be removed in later versions of this API to allow for more flexible use cases.")] = None,
-        opt_fields: Optional[List[ProjectInfoOptField]] = None,
+        opt_fields: Optional[List[Optional[ProjectInfoOptField]]] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1422,7 +1422,7 @@ class ProjectsApi:
     def get_project(
         self,
         project_id: Annotated[StrictStr, Field(description="unique name/identifier tof the project-space to be accessed.")],
-        opt_fields: Optional[List[ProjectInfoOptField]] = None,
+        opt_fields: Optional[List[Optional[ProjectInfoOptField]]] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1493,7 +1493,7 @@ class ProjectsApi:
     def get_project_with_http_info(
         self,
         project_id: Annotated[StrictStr, Field(description="unique name/identifier tof the project-space to be accessed.")],
-        opt_fields: Optional[List[ProjectInfoOptField]] = None,
+        opt_fields: Optional[List[Optional[ProjectInfoOptField]]] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1564,7 +1564,7 @@ class ProjectsApi:
     def get_project_without_preload_content(
         self,
         project_id: Annotated[StrictStr, Field(description="unique name/identifier tof the project-space to be accessed.")],
-        opt_fields: Optional[List[ProjectInfoOptField]] = None,
+        opt_fields: Optional[List[Optional[ProjectInfoOptField]]] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1940,7 +1940,7 @@ class ProjectsApi:
         self,
         project_id: Annotated[StrictStr, Field(description="Project-space to import into.")],
         input_files: Annotated[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]], Field(description="Files to import into project.")],
-        parameters: Annotated[LcmsSubmissionParameters, Field(description="Parameters for feature alignment and feature finding.")],
+        parameters: LcmsSubmissionParameters,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1962,7 +1962,7 @@ class ProjectsApi:
         :type project_id: str
         :param input_files: Files to import into project. (required)
         :type input_files: List[bytearray]
-        :param parameters: Parameters for feature alignment and feature finding. (required)
+        :param parameters: (required)
         :type parameters: LcmsSubmissionParameters
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -2015,7 +2015,7 @@ class ProjectsApi:
         self,
         project_id: Annotated[StrictStr, Field(description="Project-space to import into.")],
         input_files: Annotated[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]], Field(description="Files to import into project.")],
-        parameters: Annotated[LcmsSubmissionParameters, Field(description="Parameters for feature alignment and feature finding.")],
+        parameters: LcmsSubmissionParameters,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2037,7 +2037,7 @@ class ProjectsApi:
         :type project_id: str
         :param input_files: Files to import into project. (required)
         :type input_files: List[bytearray]
-        :param parameters: Parameters for feature alignment and feature finding. (required)
+        :param parameters: (required)
         :type parameters: LcmsSubmissionParameters
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -2090,7 +2090,7 @@ class ProjectsApi:
         self,
         project_id: Annotated[StrictStr, Field(description="Project-space to import into.")],
         input_files: Annotated[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]], Field(description="Files to import into project.")],
-        parameters: Annotated[LcmsSubmissionParameters, Field(description="Parameters for feature alignment and feature finding.")],
+        parameters: LcmsSubmissionParameters,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2112,7 +2112,7 @@ class ProjectsApi:
         :type project_id: str
         :param input_files: Files to import into project. (required)
         :type input_files: List[bytearray]
-        :param parameters: Parameters for feature alignment and feature finding. (required)
+        :param parameters: (required)
         :type parameters: LcmsSubmissionParameters
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -2170,7 +2170,7 @@ class ProjectsApi:
         _host = None
 
         _collection_formats: Dict[str, str] = {
-            'inputFiles': 'csv',
+            'inputFiles': 'multi',
         }
 
         _path_params: Dict[str, str] = {}
@@ -2241,8 +2241,8 @@ class ProjectsApi:
         self,
         project_id: Annotated[StrictStr, Field(description="Project-space to import into.")],
         input_files: Annotated[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]], Field(description="Files to import into project.")],
-        parameters: Annotated[LcmsSubmissionParameters, Field(description="Parameters for feature alignment and feature finding.")],
-        opt_fields: Annotated[Optional[List[JobOptField]], Field(description="Set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        parameters: LcmsSubmissionParameters,
+        opt_fields: Annotated[Optional[List[Optional[JobOptField]]], Field(description="Set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2264,7 +2264,7 @@ class ProjectsApi:
         :type project_id: str
         :param input_files: Files to import into project. (required)
         :type input_files: List[bytearray]
-        :param parameters: Parameters for feature alignment and feature finding. (required)
+        :param parameters: (required)
         :type parameters: LcmsSubmissionParameters
         :param opt_fields: Set of optional fields to be included. Use 'none' only to override defaults.
         :type opt_fields: List[JobOptField]
@@ -2320,8 +2320,8 @@ class ProjectsApi:
         self,
         project_id: Annotated[StrictStr, Field(description="Project-space to import into.")],
         input_files: Annotated[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]], Field(description="Files to import into project.")],
-        parameters: Annotated[LcmsSubmissionParameters, Field(description="Parameters for feature alignment and feature finding.")],
-        opt_fields: Annotated[Optional[List[JobOptField]], Field(description="Set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        parameters: LcmsSubmissionParameters,
+        opt_fields: Annotated[Optional[List[Optional[JobOptField]]], Field(description="Set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2343,7 +2343,7 @@ class ProjectsApi:
         :type project_id: str
         :param input_files: Files to import into project. (required)
         :type input_files: List[bytearray]
-        :param parameters: Parameters for feature alignment and feature finding. (required)
+        :param parameters: (required)
         :type parameters: LcmsSubmissionParameters
         :param opt_fields: Set of optional fields to be included. Use 'none' only to override defaults.
         :type opt_fields: List[JobOptField]
@@ -2399,8 +2399,8 @@ class ProjectsApi:
         self,
         project_id: Annotated[StrictStr, Field(description="Project-space to import into.")],
         input_files: Annotated[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]], Field(description="Files to import into project.")],
-        parameters: Annotated[LcmsSubmissionParameters, Field(description="Parameters for feature alignment and feature finding.")],
-        opt_fields: Annotated[Optional[List[JobOptField]], Field(description="Set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        parameters: LcmsSubmissionParameters,
+        opt_fields: Annotated[Optional[List[Optional[JobOptField]]], Field(description="Set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2422,7 +2422,7 @@ class ProjectsApi:
         :type project_id: str
         :param input_files: Files to import into project. (required)
         :type input_files: List[bytearray]
-        :param parameters: Parameters for feature alignment and feature finding. (required)
+        :param parameters: (required)
         :type parameters: LcmsSubmissionParameters
         :param opt_fields: Set of optional fields to be included. Use 'none' only to override defaults.
         :type opt_fields: List[JobOptField]
@@ -2484,7 +2484,7 @@ class ProjectsApi:
         _host = None
 
         _collection_formats: Dict[str, str] = {
-            'inputFiles': 'csv',
+            'inputFiles': 'multi',
             'optFields': 'multi',
         }
 
@@ -2882,7 +2882,7 @@ class ProjectsApi:
         input_files: List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]],
         ignore_formulas: Optional[StrictBool] = None,
         allow_ms1_only: Optional[StrictBool] = None,
-        opt_fields: Annotated[Optional[List[JobOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[JobOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2965,7 +2965,7 @@ class ProjectsApi:
         input_files: List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]],
         ignore_formulas: Optional[StrictBool] = None,
         allow_ms1_only: Optional[StrictBool] = None,
-        opt_fields: Annotated[Optional[List[JobOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[JobOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3048,7 +3048,7 @@ class ProjectsApi:
         input_files: List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]],
         ignore_formulas: Optional[StrictBool] = None,
         allow_ms1_only: Optional[StrictBool] = None,
-        opt_fields: Annotated[Optional[List[JobOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[JobOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3218,7 +3218,7 @@ class ProjectsApi:
         self,
         project_id: Annotated[StrictStr, Field(description="unique name/identifier that shall be used to access the opened project-space. Must consist only of [a-zA-Z0-9_-].")],
         path_to_project: Annotated[Optional[StrictStr], Field(description="local file path to open the project from. If NULL, project will be loaded by it projectId from default project location.  DEPRECATED: This parameter relies on the local filesystem and will likely be removed in later versions of this API to allow for more flexible use cases.")] = None,
-        opt_fields: Optional[List[ProjectInfoOptField]] = None,
+        opt_fields: Optional[List[Optional[ProjectInfoOptField]]] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3293,7 +3293,7 @@ class ProjectsApi:
         self,
         project_id: Annotated[StrictStr, Field(description="unique name/identifier that shall be used to access the opened project-space. Must consist only of [a-zA-Z0-9_-].")],
         path_to_project: Annotated[Optional[StrictStr], Field(description="local file path to open the project from. If NULL, project will be loaded by it projectId from default project location.  DEPRECATED: This parameter relies on the local filesystem and will likely be removed in later versions of this API to allow for more flexible use cases.")] = None,
-        opt_fields: Optional[List[ProjectInfoOptField]] = None,
+        opt_fields: Optional[List[Optional[ProjectInfoOptField]]] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3368,7 +3368,7 @@ class ProjectsApi:
         self,
         project_id: Annotated[StrictStr, Field(description="unique name/identifier that shall be used to access the opened project-space. Must consist only of [a-zA-Z0-9_-].")],
         path_to_project: Annotated[Optional[StrictStr], Field(description="local file path to open the project from. If NULL, project will be loaded by it projectId from default project location.  DEPRECATED: This parameter relies on the local filesystem and will likely be removed in later versions of this API to allow for more flexible use cases.")] = None,
-        opt_fields: Optional[List[ProjectInfoOptField]] = None,
+        opt_fields: Optional[List[Optional[ProjectInfoOptField]]] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],

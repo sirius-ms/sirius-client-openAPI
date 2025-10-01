@@ -115,7 +115,7 @@ with PySirius.ApiClient(configuration) as api_client:
     api_instance = PySirius.ProjectsApi(api_client)
     project_id = 'project_id_example' # str | unique name/identifier that shall be used to access the newly created project-space. Must consist only of [a-zA-Z0-9_-].
     path_to_project = 'path_to_project_example' # str | local file path where the project will be created. If NULL, project will be stored by its projectId in default project location. DEPRECATED: This parameter relies on the local filesystem and will likely be removed in later versions of this API to allow for more flexible use cases. (optional)
-    opt_fields = [none] # List[ProjectInfoOptField] |  (optional) (default to [none])
+    opt_fields = ["none"] # List[ProjectInfoOptField] |  (optional) (default to ["none"])
 
     try:
         # Create and open a new project-space at given location and make it accessible via the given projectId.
@@ -135,7 +135,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **str**| unique name/identifier that shall be used to access the newly created project-space. Must consist only of [a-zA-Z0-9_-]. | 
  **path_to_project** | **str**| local file path where the project will be created. If NULL, project will be stored by its projectId in default project location. DEPRECATED: This parameter relies on the local filesystem and will likely be removed in later versions of this API to allow for more flexible use cases. | [optional] 
- **opt_fields** | [**List[ProjectInfoOptField]**](ProjectInfoOptField.md)|  | [optional] [default to [none]]
+ **opt_fields** | [**List[ProjectInfoOptField]**](ProjectInfoOptField.md)|  | [optional] [default to [&quot;none&quot;]]
 
 ### Return type
 
@@ -524,7 +524,7 @@ with PySirius.ApiClient(configuration) as api_client:
     api_instance = PySirius.ProjectsApi(api_client)
     project_id = 'project_id_example' # str | Project-space to import into.
     input_files = None # List[bytearray] | Files to import into project.
-    parameters = PySirius.LcmsSubmissionParameters() # LcmsSubmissionParameters | Parameters for feature alignment and feature finding.
+    parameters = PySirius.LcmsSubmissionParameters() # LcmsSubmissionParameters | 
 
     try:
         # Import and Align full MS-Runs from various formats into the specified project  Possible formats (mzML, mzXML)
@@ -544,7 +544,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **str**| Project-space to import into. | 
  **input_files** | **List[bytearray]**| Files to import into project. | 
- **parameters** | [**LcmsSubmissionParameters**](LcmsSubmissionParameters.md)| Parameters for feature alignment and feature finding. | 
+ **parameters** | [**LcmsSubmissionParameters**](LcmsSubmissionParameters.md)|  | 
 
 ### Return type
 
@@ -598,8 +598,8 @@ with PySirius.ApiClient(configuration) as api_client:
     api_instance = PySirius.ProjectsApi(api_client)
     project_id = 'project_id_example' # str | Project-space to import into.
     input_files = None # List[bytearray] | Files to import into project.
-    parameters = PySirius.LcmsSubmissionParameters() # LcmsSubmissionParameters | Parameters for feature alignment and feature finding.
-    opt_fields = [progress] # List[JobOptField] | Set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to [progress])
+    parameters = PySirius.LcmsSubmissionParameters() # LcmsSubmissionParameters | 
+    opt_fields = ["progress"] # List[JobOptField] | Set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to ["progress"])
 
     try:
         # Import and Align full MS-Runs from various formats into the specified project as background job.
@@ -619,8 +619,8 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **str**| Project-space to import into. | 
  **input_files** | **List[bytearray]**| Files to import into project. | 
- **parameters** | [**LcmsSubmissionParameters**](LcmsSubmissionParameters.md)| Parameters for feature alignment and feature finding. | 
- **opt_fields** | [**List[JobOptField]**](JobOptField.md)| Set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [progress]]
+ **parameters** | [**LcmsSubmissionParameters**](LcmsSubmissionParameters.md)|  | 
+ **opt_fields** | [**List[JobOptField]**](JobOptField.md)| Set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;progress&quot;]]
 
 ### Return type
 
@@ -749,7 +749,7 @@ with PySirius.ApiClient(configuration) as api_client:
     input_files = None # List[bytearray] | 
     ignore_formulas = False # bool |  (optional) (default to False)
     allow_ms1_only = True # bool |  (optional) (default to True)
-    opt_fields = [progress] # List[JobOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to [progress])
+    opt_fields = ["progress"] # List[JobOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to ["progress"])
 
     try:
         # Import ms/ms data from the given format into the specified project-space as background job.
@@ -771,7 +771,7 @@ Name | Type | Description  | Notes
  **input_files** | **List[bytearray]**|  | 
  **ignore_formulas** | **bool**|  | [optional] [default to False]
  **allow_ms1_only** | **bool**|  | [optional] [default to True]
- **opt_fields** | [**List[JobOptField]**](JobOptField.md)| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [progress]]
+ **opt_fields** | [**List[JobOptField]**](JobOptField.md)| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;progress&quot;]]
 
 ### Return type
 
@@ -824,7 +824,7 @@ with PySirius.ApiClient(configuration) as api_client:
     api_instance = PySirius.ProjectsApi(api_client)
     project_id = 'project_id_example' # str | unique name/identifier that shall be used to access the opened project-space. Must consist only of [a-zA-Z0-9_-].
     path_to_project = 'path_to_project_example' # str | local file path to open the project from. If NULL, project will be loaded by it projectId from default project location.  DEPRECATED: This parameter relies on the local filesystem and will likely be removed in later versions of this API to allow for more flexible use cases. (optional)
-    opt_fields = [none] # List[ProjectInfoOptField] |  (optional) (default to [none])
+    opt_fields = ["none"] # List[ProjectInfoOptField] |  (optional) (default to ["none"])
 
     try:
         # Open an existing project-space and make it accessible via the given projectId.
@@ -844,7 +844,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **str**| unique name/identifier that shall be used to access the opened project-space. Must consist only of [a-zA-Z0-9_-]. | 
  **path_to_project** | **str**| local file path to open the project from. If NULL, project will be loaded by it projectId from default project location.  DEPRECATED: This parameter relies on the local filesystem and will likely be removed in later versions of this API to allow for more flexible use cases. | [optional] 
- **opt_fields** | [**List[ProjectInfoOptField]**](ProjectInfoOptField.md)|  | [optional] [default to [none]]
+ **opt_fields** | [**List[ProjectInfoOptField]**](ProjectInfoOptField.md)|  | [optional] [default to [&quot;none&quot;]]
 
 ### Return type
 

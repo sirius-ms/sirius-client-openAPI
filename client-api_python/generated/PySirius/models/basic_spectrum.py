@@ -32,7 +32,7 @@ class BasicSpectrum(BaseModel):
     precursor_mz: Optional[float] = Field(default=None, description="Precursor m/z of the MS/MS spectrum  Null for spectra where precursor m/z is not applicable", alias="precursorMz")
     scan_number: Optional[StrictInt] = Field(default=None, description="Scan number of the spectrum.  Might be null for artificial spectra with no scan number (e.g. Simulated Isotope patterns or merged spectra)", alias="scanNumber")
     cosine_query: StrictBool = Field(description="True if spectrum is in cosine query normalized format.  Such spectrum is compatible with SpectralLibraryMatch peak assignments to reference spectra.", alias="cosineQuery")
-    precursor_peak: Optional[SimplePeak] = Field(default=None, description="A separate precursor peak field to either mark the precursor in the peaklist or  provide the precursor peak separately from the spectrum in case the spectrum is in a preprocessed form where  the precursor peak has been removed for library matching.   NULL if the spectrum does not contain the precursor peak.", alias="precursorPeak")
+    precursor_peak: Optional[SimplePeak] = Field(default=None, alias="precursorPeak")
     peaks: List[SimplePeak] = Field(description="The peaks of this spectrum which might contain additional annotations such as molecular formulas.")
     abs_intensity_factor: Optional[float] = Field(default=None, description="Factor to convert relative intensities to absolute intensities.  Might be null or 1 for spectra where absolute intensities are not available (E.g. artificial or merged spectra)  <p>  DEPRECATED: Spectra are always returned with raw intensities.  Use provided normalization factors to normalize on the fly.", alias="absIntensityFactor")
     max_norm_factor: Optional[float] = Field(default=None, description="Factor to convert absolute intensities to MAX norm.", alias="maxNormFactor")
@@ -90,6 +90,61 @@ class BasicSpectrum(BaseModel):
                 if _item_peaks:
                     _items.append(_item_peaks.to_dict())
             _dict['peaks'] = _items
+        # set to None if name (nullable) is None
+        # and model_fields_set contains the field
+        if self.name is None and "name" in self.model_fields_set:
+            _dict['name'] = None
+
+        # set to None if ms_level (nullable) is None
+        # and model_fields_set contains the field
+        if self.ms_level is None and "ms_level" in self.model_fields_set:
+            _dict['msLevel'] = None
+
+        # set to None if collision_energy (nullable) is None
+        # and model_fields_set contains the field
+        if self.collision_energy is None and "collision_energy" in self.model_fields_set:
+            _dict['collisionEnergy'] = None
+
+        # set to None if instrument (nullable) is None
+        # and model_fields_set contains the field
+        if self.instrument is None and "instrument" in self.model_fields_set:
+            _dict['instrument'] = None
+
+        # set to None if precursor_mz (nullable) is None
+        # and model_fields_set contains the field
+        if self.precursor_mz is None and "precursor_mz" in self.model_fields_set:
+            _dict['precursorMz'] = None
+
+        # set to None if scan_number (nullable) is None
+        # and model_fields_set contains the field
+        if self.scan_number is None and "scan_number" in self.model_fields_set:
+            _dict['scanNumber'] = None
+
+        # set to None if abs_intensity_factor (nullable) is None
+        # and model_fields_set contains the field
+        if self.abs_intensity_factor is None and "abs_intensity_factor" in self.model_fields_set:
+            _dict['absIntensityFactor'] = None
+
+        # set to None if max_norm_factor (nullable) is None
+        # and model_fields_set contains the field
+        if self.max_norm_factor is None and "max_norm_factor" in self.model_fields_set:
+            _dict['maxNormFactor'] = None
+
+        # set to None if sum_norm_factor (nullable) is None
+        # and model_fields_set contains the field
+        if self.sum_norm_factor is None and "sum_norm_factor" in self.model_fields_set:
+            _dict['sumNormFactor'] = None
+
+        # set to None if l2_norm_factor (nullable) is None
+        # and model_fields_set contains the field
+        if self.l2_norm_factor is None and "l2_norm_factor" in self.model_fields_set:
+            _dict['l2NormFactor'] = None
+
+        # set to None if first_peak_norm_factor (nullable) is None
+        # and model_fields_set contains the field
+        if self.first_peak_norm_factor is None and "first_peak_norm_factor" in self.model_fields_set:
+            _dict['firstPeakNormFactor'] = None
+
         return _dict
 
     @classmethod

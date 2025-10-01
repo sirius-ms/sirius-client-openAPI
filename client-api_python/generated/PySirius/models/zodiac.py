@@ -32,10 +32,10 @@ class Zodiac(BaseModel):
     considered_candidates_at300_mz: Optional[StrictInt] = Field(default=None, description="Maximum number of candidate molecular formulas (fragmentation trees computed by SIRIUS) per compound which are considered by ZODIAC for compounds below 300 m/z.", alias="consideredCandidatesAt300Mz")
     considered_candidates_at800_mz: Optional[StrictInt] = Field(default=None, description="Maximum number of candidate molecular formulas (fragmentation trees computed by SIRIUS) per compound which are considered by ZODIAC for compounds above 800 m/z.", alias="consideredCandidatesAt800Mz")
     run_in_two_steps: Optional[StrictBool] = Field(default=None, description="As default ZODIAC runs a 2-step approach. First running 'good quality compounds' only, and afterwards including the remaining.", alias="runInTwoSteps")
-    edge_filter_thresholds: Optional[ZodiacEdgeFilterThresholds] = Field(default=None, description="thresholdFilter = Defines the proportion of edges of the complete network which will be ignored.  minLocalConnections = Minimum number of compounds to which at least one candidate per compound must be connected to.", alias="edgeFilterThresholds")
-    gibbs_sampler_parameters: Optional[ZodiacEpochs] = Field(default=None, description="iterations: \"Number of epochs to run the Gibbs sampling. When multiple Markov chains are computed, all chains' iterations sum up to this value.\"  burnInPeriod: \"Number of epochs considered as 'burn-in period'.  numberOfMarkovChains: Number of separate Gibbs sampling runs.", alias="gibbsSamplerParameters")
-    library_search_anchors: Optional[ZodiacLibraryScoring] = Field(default=None, description="Configure the use of identity spectral library search results as anchors in ZODIAC network", alias="librarySearchAnchors")
-    analogue_search_anchors: Optional[ZodiacAnalogueNodes] = Field(default=None, description="Configure the use of analogue spectral library search results as anchors in ZODIAC network", alias="analogueSearchAnchors")
+    edge_filter_thresholds: Optional[ZodiacEdgeFilterThresholds] = Field(default=None, alias="edgeFilterThresholds")
+    gibbs_sampler_parameters: Optional[ZodiacEpochs] = Field(default=None, alias="gibbsSamplerParameters")
+    library_search_anchors: Optional[ZodiacLibraryScoring] = Field(default=None, alias="librarySearchAnchors")
+    analogue_search_anchors: Optional[ZodiacAnalogueNodes] = Field(default=None, alias="analogueSearchAnchors")
     __properties: ClassVar[List[str]] = ["enabled", "consideredCandidatesAt300Mz", "consideredCandidatesAt800Mz", "runInTwoSteps", "edgeFilterThresholds", "gibbsSamplerParameters", "librarySearchAnchors", "analogueSearchAnchors"]
 
     model_config = ConfigDict(
@@ -89,6 +89,41 @@ class Zodiac(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of analogue_search_anchors
         if self.analogue_search_anchors:
             _dict['analogueSearchAnchors'] = self.analogue_search_anchors.to_dict()
+        # set to None if considered_candidates_at300_mz (nullable) is None
+        # and model_fields_set contains the field
+        if self.considered_candidates_at300_mz is None and "considered_candidates_at300_mz" in self.model_fields_set:
+            _dict['consideredCandidatesAt300Mz'] = None
+
+        # set to None if considered_candidates_at800_mz (nullable) is None
+        # and model_fields_set contains the field
+        if self.considered_candidates_at800_mz is None and "considered_candidates_at800_mz" in self.model_fields_set:
+            _dict['consideredCandidatesAt800Mz'] = None
+
+        # set to None if run_in_two_steps (nullable) is None
+        # and model_fields_set contains the field
+        if self.run_in_two_steps is None and "run_in_two_steps" in self.model_fields_set:
+            _dict['runInTwoSteps'] = None
+
+        # set to None if edge_filter_thresholds (nullable) is None
+        # and model_fields_set contains the field
+        if self.edge_filter_thresholds is None and "edge_filter_thresholds" in self.model_fields_set:
+            _dict['edgeFilterThresholds'] = None
+
+        # set to None if gibbs_sampler_parameters (nullable) is None
+        # and model_fields_set contains the field
+        if self.gibbs_sampler_parameters is None and "gibbs_sampler_parameters" in self.model_fields_set:
+            _dict['gibbsSamplerParameters'] = None
+
+        # set to None if library_search_anchors (nullable) is None
+        # and model_fields_set contains the field
+        if self.library_search_anchors is None and "library_search_anchors" in self.model_fields_set:
+            _dict['librarySearchAnchors'] = None
+
+        # set to None if analogue_search_anchors (nullable) is None
+        # and model_fields_set contains the field
+        if self.analogue_search_anchors is None and "analogue_search_anchors" in self.model_fields_set:
+            _dict['analogueSearchAnchors'] = None
+
         return _dict
 
     @classmethod

@@ -26,7 +26,7 @@ class JobProgress(BaseModel):
     Progress information of a computation job that has already been submitted to SIRIUS.  if  currentProgress == maxProgress job is finished and should change to state done soon.  if a job is DONE all results can be accessed via the Project-Spaces api.
     """ # noqa: E501
     indeterminate: Optional[StrictBool] = Field(default=None, description="Is the progress indeterminate or not")
-    state: Optional[JobState] = Field(default=None, description="Current state of the Jobs in the SIRIUS internal Job scheduler           WAITING: Waiting for submission to ExecutorService (e.g. due to dependent jobs)          READY: Ready for submission but not yet enqueued for submission to ExecutorService.          QUEUED: Enqueued for submission to ExecutorService.          SUBMITTED: Submitted and waiting to be executed.          RUNNING: Job is running.          CANCELED: Jobs is finished due to cancellation by user or dependent jobs.          FAILED: Job is finished but failed.          DONE: Job finished successfully.")
+    state: Optional[JobState] = None
     current_progress: Optional[StrictInt] = Field(default=None, description="Current progress value of the job.", alias="currentProgress")
     max_progress: Optional[StrictInt] = Field(default=None, description="Progress value to reach (might also change during execution)", alias="maxProgress")
     message: Optional[StrictStr] = Field(default=None, description="Progress information and warnings.")
@@ -72,6 +72,31 @@ class JobProgress(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if indeterminate (nullable) is None
+        # and model_fields_set contains the field
+        if self.indeterminate is None and "indeterminate" in self.model_fields_set:
+            _dict['indeterminate'] = None
+
+        # set to None if current_progress (nullable) is None
+        # and model_fields_set contains the field
+        if self.current_progress is None and "current_progress" in self.model_fields_set:
+            _dict['currentProgress'] = None
+
+        # set to None if max_progress (nullable) is None
+        # and model_fields_set contains the field
+        if self.max_progress is None and "max_progress" in self.model_fields_set:
+            _dict['maxProgress'] = None
+
+        # set to None if message (nullable) is None
+        # and model_fields_set contains the field
+        if self.message is None and "message" in self.model_fields_set:
+            _dict['message'] = None
+
+        # set to None if error_message (nullable) is None
+        # and model_fields_set contains the field
+        if self.error_message is None and "error_message" in self.model_fields_set:
+            _dict['errorMessage'] = None
+
         return _dict
 
     @classmethod

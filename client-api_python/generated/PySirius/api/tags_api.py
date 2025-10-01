@@ -15,7 +15,7 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
 from pydantic import Field, StrictStr
-from typing import Any, List, Optional
+from typing import Any, Dict, List, Optional
 from typing_extensions import Annotated
 from PySirius.models.tag_definition import TagDefinition
 from PySirius.models.tag_definition_import import TagDefinitionImport
@@ -350,7 +350,7 @@ class TagsApi:
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to add to.")],
         tag_name: Annotated[StrictStr, Field(description="the tag definition to add the values to")],
-        request_body: List[Any],
+        request_body: List[Dict[str, Any]],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -425,7 +425,7 @@ class TagsApi:
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to add to.")],
         tag_name: Annotated[StrictStr, Field(description="the tag definition to add the values to")],
-        request_body: List[Any],
+        request_body: List[Dict[str, Any]],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -500,7 +500,7 @@ class TagsApi:
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to add to.")],
         tag_name: Annotated[StrictStr, Field(description="the tag definition to add the values to")],
-        request_body: List[Any],
+        request_body: List[Dict[str, Any]],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],

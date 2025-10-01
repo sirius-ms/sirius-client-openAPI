@@ -72,6 +72,11 @@ class AnnotatedPeak(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of peak_annotation
         if self.peak_annotation:
             _dict['peakAnnotation'] = self.peak_annotation.to_dict()
+        # set to None if peak_annotation (nullable) is None
+        # and model_fields_set contains the field
+        if self.peak_annotation is None and "peak_annotation" in self.model_fields_set:
+            _dict['peakAnnotation'] = None
+
         return _dict
 
     @classmethod

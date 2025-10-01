@@ -84,6 +84,16 @@ class TraceExperimental(BaseModel):
                 if _item_annotations:
                     _items.append(_item_annotations.to_dict())
             _dict['annotations'] = _items
+        # set to None if sample_id (nullable) is None
+        # and model_fields_set contains the field
+        if self.sample_id is None and "sample_id" in self.model_fields_set:
+            _dict['sampleId'] = None
+
+        # set to None if sample_name (nullable) is None
+        # and model_fields_set contains the field
+        if self.sample_name is None and "sample_name" in self.model_fields_set:
+            _dict['sampleName'] = None
+
         return _dict
 
     @classmethod

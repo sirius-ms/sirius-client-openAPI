@@ -77,6 +77,11 @@ class Category(BaseModel):
                 if _item_items:
                     _items.append(_item_items.to_dict())
             _dict['items'] = _items
+        # set to None if overall_quality (nullable) is None
+        # and model_fields_set contains the field
+        if self.overall_quality is None and "overall_quality" in self.model_fields_set:
+            _dict['overallQuality'] = None
+
         return _dict
 
     @classmethod

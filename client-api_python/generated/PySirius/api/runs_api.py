@@ -349,7 +349,7 @@ class RunsApi:
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to compute the fold change in.")],
         sample_type_fold_change_request: Annotated[SampleTypeFoldChangeRequest, Field(description="request with lists of run IDs that are sample, blank, and control runs")],
-        opt_fields: Annotated[Optional[List[JobOptField]], Field(description="job opt fields.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[JobOptField]]], Field(description="job opt fields.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -424,7 +424,7 @@ class RunsApi:
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to compute the fold change in.")],
         sample_type_fold_change_request: Annotated[SampleTypeFoldChangeRequest, Field(description="request with lists of run IDs that are sample, blank, and control runs")],
-        opt_fields: Annotated[Optional[List[JobOptField]], Field(description="job opt fields.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[JobOptField]]], Field(description="job opt fields.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -499,7 +499,7 @@ class RunsApi:
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to compute the fold change in.")],
         sample_type_fold_change_request: Annotated[SampleTypeFoldChangeRequest, Field(description="request with lists of run IDs that are sample, blank, and control runs")],
-        opt_fields: Annotated[Optional[List[JobOptField]], Field(description="job opt fields.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[JobOptField]]], Field(description="job opt fields.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -652,7 +652,7 @@ class RunsApi:
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
         run_id: Annotated[StrictStr, Field(description="identifier of run to access.")],
-        opt_fields: Annotated[Optional[List[RunOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[RunOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -727,7 +727,7 @@ class RunsApi:
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
         run_id: Annotated[StrictStr, Field(description="identifier of run to access.")],
-        opt_fields: Annotated[Optional[List[RunOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[RunOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -802,7 +802,7 @@ class RunsApi:
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
         run_id: Annotated[StrictStr, Field(description="identifier of run to access.")],
-        opt_fields: Annotated[Optional[List[RunOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[RunOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -944,7 +944,7 @@ class RunsApi:
         page: Annotated[Optional[Annotated[int, Field(strict=True, ge=0)]], Field(description="Zero-based page index (0..N)")] = None,
         size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
         sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
-        opt_fields: Annotated[Optional[List[RunOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[RunOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1027,7 +1027,7 @@ class RunsApi:
         page: Annotated[Optional[Annotated[int, Field(strict=True, ge=0)]], Field(description="Zero-based page index (0..N)")] = None,
         size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
         sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
-        opt_fields: Annotated[Optional[List[RunOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[RunOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1110,7 +1110,7 @@ class RunsApi:
         page: Annotated[Optional[Annotated[int, Field(strict=True, ge=0)]], Field(description="Zero-based page index (0..N)")] = None,
         size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
         sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
-        opt_fields: Annotated[Optional[List[RunOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[RunOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1272,7 +1272,7 @@ class RunsApi:
         page: Annotated[Optional[Annotated[int, Field(strict=True, ge=0)]], Field(description="Zero-based page index (0..N)")] = None,
         size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
         sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
-        opt_fields: Annotated[Optional[List[RunOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[RunOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1359,7 +1359,7 @@ class RunsApi:
         page: Annotated[Optional[Annotated[int, Field(strict=True, ge=0)]], Field(description="Zero-based page index (0..N)")] = None,
         size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
         sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
-        opt_fields: Annotated[Optional[List[RunOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[RunOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1446,7 +1446,7 @@ class RunsApi:
         page: Annotated[Optional[Annotated[int, Field(strict=True, ge=0)]], Field(description="Zero-based page index (0..N)")] = None,
         size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
         sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
-        opt_fields: Annotated[Optional[List[RunOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[RunOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1616,7 +1616,7 @@ class RunsApi:
         page: Annotated[Optional[Annotated[int, Field(strict=True, ge=0)]], Field(description="Zero-based page index (0..N)")] = None,
         size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
         sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
-        opt_fields: Annotated[Optional[List[RunOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[RunOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1703,7 +1703,7 @@ class RunsApi:
         page: Annotated[Optional[Annotated[int, Field(strict=True, ge=0)]], Field(description="Zero-based page index (0..N)")] = None,
         size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
         sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
-        opt_fields: Annotated[Optional[List[RunOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[RunOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1790,7 +1790,7 @@ class RunsApi:
         page: Annotated[Optional[Annotated[int, Field(strict=True, ge=0)]], Field(description="Zero-based page index (0..N)")] = None,
         size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
         sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
-        opt_fields: Annotated[Optional[List[RunOptField]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[RunOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],

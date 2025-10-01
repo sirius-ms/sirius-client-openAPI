@@ -1671,7 +1671,7 @@ class SearchableDatabasesApi:
         database_id: Annotated[StrictStr, Field(description="database to import into")],
         input_files: Annotated[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]], Field(description="files to be imported")],
         buffer_size: Optional[StrictInt] = None,
-        bio_transformer_parameters: Annotated[Optional[BioTransformerParameters], Field(description="configuration for biotransformer execution. If null, BioTransformer is not applied.")] = None,
+        bio_transformer_parameters: Optional[BioTransformerParameters] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1695,7 +1695,7 @@ class SearchableDatabasesApi:
         :type input_files: List[bytearray]
         :param buffer_size:
         :type buffer_size: int
-        :param bio_transformer_parameters: configuration for biotransformer execution. If null, BioTransformer is not applied.
+        :param bio_transformer_parameters:
         :type bio_transformer_parameters: BioTransformerParameters
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -1750,7 +1750,7 @@ class SearchableDatabasesApi:
         database_id: Annotated[StrictStr, Field(description="database to import into")],
         input_files: Annotated[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]], Field(description="files to be imported")],
         buffer_size: Optional[StrictInt] = None,
-        bio_transformer_parameters: Annotated[Optional[BioTransformerParameters], Field(description="configuration for biotransformer execution. If null, BioTransformer is not applied.")] = None,
+        bio_transformer_parameters: Optional[BioTransformerParameters] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1774,7 +1774,7 @@ class SearchableDatabasesApi:
         :type input_files: List[bytearray]
         :param buffer_size:
         :type buffer_size: int
-        :param bio_transformer_parameters: configuration for biotransformer execution. If null, BioTransformer is not applied.
+        :param bio_transformer_parameters:
         :type bio_transformer_parameters: BioTransformerParameters
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -1829,7 +1829,7 @@ class SearchableDatabasesApi:
         database_id: Annotated[StrictStr, Field(description="database to import into")],
         input_files: Annotated[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]], Field(description="files to be imported")],
         buffer_size: Optional[StrictInt] = None,
-        bio_transformer_parameters: Annotated[Optional[BioTransformerParameters], Field(description="configuration for biotransformer execution. If null, BioTransformer is not applied.")] = None,
+        bio_transformer_parameters: Optional[BioTransformerParameters] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1853,7 +1853,7 @@ class SearchableDatabasesApi:
         :type input_files: List[bytearray]
         :param buffer_size:
         :type buffer_size: int
-        :param bio_transformer_parameters: configuration for biotransformer execution. If null, BioTransformer is not applied.
+        :param bio_transformer_parameters:
         :type bio_transformer_parameters: BioTransformerParameters
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -1913,7 +1913,7 @@ class SearchableDatabasesApi:
         _host = None
 
         _collection_formats: Dict[str, str] = {
-            'inputFiles': 'csv',
+            'inputFiles': 'multi',
         }
 
         _path_params: Dict[str, str] = {}

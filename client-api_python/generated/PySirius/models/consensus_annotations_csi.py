@@ -28,10 +28,10 @@ class ConsensusAnnotationsCSI(BaseModel):
     ConsensusAnnotationsCSI
     """ # noqa: E501
     molecular_formula: Optional[StrictStr] = Field(default=None, description="Molecular formula of the consensus annotation  Might be null if no consensus formula is available.", alias="molecularFormula")
-    compound_classes: Optional[CompoundClasses] = Field(default=None, description="Compound classes (predicted with CANOPUS) corresponding to the molecularFormula  Might be null if no fingerprints or compound classes are available.", alias="compoundClasses")
-    supporting_feature_ids: Optional[List[StrictStr]] = Field(default=None, description="FeatureIds where the topAnnotation supports this annotation.", alias="supportingFeatureIds")
-    selection_criterion: Optional[ConsensusCriterionCSI] = Field(default=None, description="Null if this is a custom selection", alias="selectionCriterion")
-    csi_finger_id_structure: Optional[StructureCandidate] = Field(default=None, description="Database structure candidate (searched with CSI:FingerID), that also defines the molecularFormula  Might be null if no consensus structure is available.", alias="csiFingerIdStructure")
+    compound_classes: Optional[CompoundClasses] = Field(default=None, alias="compoundClasses")
+    supporting_feature_ids: Optional[List[Optional[StrictStr]]] = Field(default=None, description="FeatureIds where the topAnnotation supports this annotation.", alias="supportingFeatureIds")
+    selection_criterion: Optional[ConsensusCriterionCSI] = Field(default=None, alias="selectionCriterion")
+    csi_finger_id_structure: Optional[StructureCandidate] = Field(default=None, alias="csiFingerIdStructure")
     confidence_exact_match: Optional[float] = Field(default=None, description="Confidence value that represents the certainty that reported consensus structure is exactly the measured one  If multiple features support this consensus structure the maximum confidence is reported", alias="confidenceExactMatch")
     confidence_approx_match: Optional[float] = Field(default=None, description="Confidence value that represents the certainty that the exact consensus structure or a very similar  structure (e.g. measured by Maximum Common Edge Subgraph Distance) is the measured one.  If multiple features support this consensus structure the maximum confidence is reported", alias="confidenceApproxMatch")
     __properties: ClassVar[List[str]] = ["molecularFormula", "compoundClasses", "supportingFeatureIds", "selectionCriterion", "csiFingerIdStructure", "confidenceExactMatch", "confidenceApproxMatch"]
@@ -81,6 +81,41 @@ class ConsensusAnnotationsCSI(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of csi_finger_id_structure
         if self.csi_finger_id_structure:
             _dict['csiFingerIdStructure'] = self.csi_finger_id_structure.to_dict()
+        # set to None if molecular_formula (nullable) is None
+        # and model_fields_set contains the field
+        if self.molecular_formula is None and "molecular_formula" in self.model_fields_set:
+            _dict['molecularFormula'] = None
+
+        # set to None if compound_classes (nullable) is None
+        # and model_fields_set contains the field
+        if self.compound_classes is None and "compound_classes" in self.model_fields_set:
+            _dict['compoundClasses'] = None
+
+        # set to None if supporting_feature_ids (nullable) is None
+        # and model_fields_set contains the field
+        if self.supporting_feature_ids is None and "supporting_feature_ids" in self.model_fields_set:
+            _dict['supportingFeatureIds'] = None
+
+        # set to None if selection_criterion (nullable) is None
+        # and model_fields_set contains the field
+        if self.selection_criterion is None and "selection_criterion" in self.model_fields_set:
+            _dict['selectionCriterion'] = None
+
+        # set to None if csi_finger_id_structure (nullable) is None
+        # and model_fields_set contains the field
+        if self.csi_finger_id_structure is None and "csi_finger_id_structure" in self.model_fields_set:
+            _dict['csiFingerIdStructure'] = None
+
+        # set to None if confidence_exact_match (nullable) is None
+        # and model_fields_set contains the field
+        if self.confidence_exact_match is None and "confidence_exact_match" in self.model_fields_set:
+            _dict['confidenceExactMatch'] = None
+
+        # set to None if confidence_approx_match (nullable) is None
+        # and model_fields_set contains the field
+        if self.confidence_approx_match is None and "confidence_approx_match" in self.model_fields_set:
+            _dict['confidenceApproxMatch'] = None
+
         return _dict
 
     @classmethod

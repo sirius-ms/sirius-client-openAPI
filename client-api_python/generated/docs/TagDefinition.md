@@ -9,7 +9,7 @@ Name | Type | Description | Notes
 **description** | **str** | A human-readable description about the purpose of this tag. | [optional] 
 **tag_type** | **str** | A simple string based identifier to specify the type/scope/purpose of this tag. | [optional] 
 **value_type** | [**ValueType**](ValueType.md) |  | 
-**possible_values** | **List[object]** |  | [optional] 
+**possible_values** | **List[Optional[object]]** |  | [optional] 
 **min_value** | **object** |  | [optional] 
 **max_value** | **object** |  | [optional] 
 **editable** | **bool** |  | [optional] 

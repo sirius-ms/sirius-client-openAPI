@@ -6,14 +6,14 @@ Summary of the results of a feature (aligned over runs). Can be added to a Align
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**formula_annotation** | [**FormulaCandidate**](FormulaCandidate.md) | Best matching FormulaCandidate. | [optional] 
-**structure_annotation** | [**StructureCandidateScored**](StructureCandidateScored.md) | Best matching StructureCandidate ranked by CSI:FingerID Score over all FormulaCandidates. | [optional] 
-**compound_class_annotation** | [**CompoundClasses**](CompoundClasses.md) | Best matching compound classes that correspond to the formulaAnnotation | [optional] 
+**formula_annotation** | [**FormulaCandidate**](FormulaCandidate.md) |  | [optional] 
+**structure_annotation** | [**StructureCandidateScored**](StructureCandidateScored.md) |  | [optional] 
+**compound_class_annotation** | [**CompoundClasses**](CompoundClasses.md) |  | [optional] 
 **confidence_exact_match** | **float** | Confidence Score that represents the confidence whether the top hit is correct. | [optional] 
 **confidence_approx_match** | **float** | Confidence Score that represents the confidence whether the top hit or a very similar hit (estimated by MCES distance) is correct. | [optional] 
-**expansive_search_state** | [**ConfidenceMode**](ConfidenceMode.md) | Result that shows if structure annotation was expanded by using PubChem as fallback and if so, which confidence mode was used (as per input paramter) | [optional] 
-**specified_databases** | **List[str]** | List of databases that have been specified by for structure db search. Null if no structure db search has been performed. | [optional] 
-**expanded_databases** | **List[str]** | List of databases that have been used to expand search space during expansive search. Null if no structure db search has been performed. | [optional] 
+**expansive_search_state** | [**ConfidenceMode**](ConfidenceMode.md) |  | [optional] 
+**specified_databases** | **List[Optional[str]]** | List of databases that have been specified by for structure db search. Null if no structure db search has been performed. | [optional] 
+**expanded_databases** | **List[Optional[str]]** | List of databases that have been used to expand search space during expansive search. Null if no structure db search has been performed. | [optional] 
 
 ## Example
 

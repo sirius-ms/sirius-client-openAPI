@@ -50,7 +50,7 @@ class FeatureStatisticsApi:
         right_group_name: Annotated[StrictStr, Field(description="name of the right tag group.")],
         aggregation: Annotated[Optional[AggregationType], Field(description="aggregation type.")] = None,
         quantification: Annotated[Optional[QuantMeasure], Field(description="quantification type.")] = None,
-        opt_fields: Annotated[Optional[List[JobOptField]], Field(description="job opt fields.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[JobOptField]]], Field(description="job opt fields.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -137,7 +137,7 @@ class FeatureStatisticsApi:
         right_group_name: Annotated[StrictStr, Field(description="name of the right tag group.")],
         aggregation: Annotated[Optional[AggregationType], Field(description="aggregation type.")] = None,
         quantification: Annotated[Optional[QuantMeasure], Field(description="quantification type.")] = None,
-        opt_fields: Annotated[Optional[List[JobOptField]], Field(description="job opt fields.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[JobOptField]]], Field(description="job opt fields.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -224,7 +224,7 @@ class FeatureStatisticsApi:
         right_group_name: Annotated[StrictStr, Field(description="name of the right tag group.")],
         aggregation: Annotated[Optional[AggregationType], Field(description="aggregation type.")] = None,
         quantification: Annotated[Optional[QuantMeasure], Field(description="quantification type.")] = None,
-        opt_fields: Annotated[Optional[List[JobOptField]], Field(description="job opt fields.")] = None,
+        opt_fields: Annotated[Optional[List[Optional[JobOptField]]], Field(description="job opt fields.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],

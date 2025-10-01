@@ -25,7 +25,7 @@ class Tag(BaseModel):
     Tag
     """ # noqa: E501
     tag_name: StrictStr = Field(description="Name of the tag as defined by the corresponding TagDefinition  Links tag object to their definition.", alias="tagName")
-    value: Optional[Any] = None
+    value: Optional[Dict[str, Any]] = Field(default=None, description="Optional value of the tag.  <p>  Generic value of the tag as defined by the corresponding TagDefinition.  Can be Integer, Double, Boolean and String, whereas String values can represent Text, Date (yyyy-MM-dd) or Time (HH:mm:ss).")
     __properties: ClassVar[List[str]] = ["tagName", "value"]
 
     model_config = ConfigDict(

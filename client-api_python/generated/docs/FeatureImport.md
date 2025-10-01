@@ -10,12 +10,12 @@ Name | Type | Description | Notes
 **external_feature_id** | **str** | Externally provided FeatureId (by some preprocessing tool). This FeatureId is NOT used by SIRIUS but is stored to ease mapping information back to the source. | [optional] 
 **ion_mass** | **float** |  | 
 **charge** | **int** |  | 
-**detected_adducts** | **List[str]** | Detected adducts of this feature. Can be NULL or empty if no adducts are known. | [optional] 
+**detected_adducts** | **List[Optional[str]]** | Detected adducts of this feature. Can be NULL or empty if no adducts are known. | [optional] 
 **rt_start_seconds** | **float** |  | [optional] 
 **rt_end_seconds** | **float** |  | [optional] 
 **rt_apex_seconds** | **float** |  | [optional] 
-**data_quality** | [**DataQuality**](DataQuality.md) | A optional feature quality flag that can be used to filter features to be shown in the gui or to be considered for further analysis. | [optional] 
-**merged_ms1** | [**BasicSpectrum**](BasicSpectrum.md) | Merged/Representative MS1 spectrum of this feature that contains the isotope pattern of the precursor ion.  Note: &#39;ms1Spectra&#39; will be ignored if given. | [optional] 
+**data_quality** | [**DataQuality**](DataQuality.md) |  | [optional] 
+**merged_ms1** | [**BasicSpectrum**](BasicSpectrum.md) |  | [optional] 
 **ms1_spectra** | [**List[BasicSpectrum]**](BasicSpectrum.md) | List of MS1Spectra belonging to this feature. These spectra will be merged an only a representative  mergedMs1 spectrum will be stored in SIRIUS. At least one of these spectra should contain the  isotope pattern of the precursor ion.  Note: Will be ignored if &#39;mergedMs1&#39; is given. | [optional] 
 **ms2_spectra** | [**List[BasicSpectrum]**](BasicSpectrum.md) | List of MS/MS spectra that belong to this feature. | [optional] 
 

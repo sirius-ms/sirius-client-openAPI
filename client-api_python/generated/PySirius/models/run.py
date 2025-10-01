@@ -31,7 +31,7 @@ class Run(BaseModel):
     chromatography: Optional[StrictStr] = None
     ionization: Optional[StrictStr] = None
     fragmentation: Optional[StrictStr] = None
-    mass_analyzers: Optional[List[StrictStr]] = Field(default=None, alias="massAnalyzers")
+    mass_analyzers: Optional[List[Optional[StrictStr]]] = Field(default=None, alias="massAnalyzers")
     tags: Optional[Dict[str, Tag]] = Field(default=None, description="Key: tagName, value: tag")
     __properties: ClassVar[List[str]] = ["runId", "name", "source", "chromatography", "ionization", "fragmentation", "massAnalyzers", "tags"]
 
@@ -81,6 +81,31 @@ class Run(BaseModel):
                 if self.tags[_key_tags]:
                     _field_dict[_key_tags] = self.tags[_key_tags].to_dict()
             _dict['tags'] = _field_dict
+        # set to None if chromatography (nullable) is None
+        # and model_fields_set contains the field
+        if self.chromatography is None and "chromatography" in self.model_fields_set:
+            _dict['chromatography'] = None
+
+        # set to None if ionization (nullable) is None
+        # and model_fields_set contains the field
+        if self.ionization is None and "ionization" in self.model_fields_set:
+            _dict['ionization'] = None
+
+        # set to None if fragmentation (nullable) is None
+        # and model_fields_set contains the field
+        if self.fragmentation is None and "fragmentation" in self.model_fields_set:
+            _dict['fragmentation'] = None
+
+        # set to None if mass_analyzers (nullable) is None
+        # and model_fields_set contains the field
+        if self.mass_analyzers is None and "mass_analyzers" in self.model_fields_set:
+            _dict['massAnalyzers'] = None
+
+        # set to None if tags (nullable) is None
+        # and model_fields_set contains the field
+        if self.tags is None and "tags" in self.model_fields_set:
+            _dict['tags'] = None
+
         return _dict
 
     @classmethod

@@ -67,6 +67,11 @@ class MsNovelist(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if number_of_candidate_to_predict (nullable) is None
+        # and model_fields_set contains the field
+        if self.number_of_candidate_to_predict is None and "number_of_candidate_to_predict" in self.model_fields_set:
+            _dict['numberOfCandidateToPredict'] = None
+
         return _dict
 
     @classmethod

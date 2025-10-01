@@ -8,10 +8,10 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **quantification_measure** | [**QuantMeasure**](QuantMeasure.md) |  | [optional] 
 **row_type** | [**QuantRowType**](QuantRowType.md) |  | [optional] 
-**row_ids** | **List[int]** |  | [optional] 
-**column_ids** | **List[int]** |  | [optional] 
-**row_names** | **List[str]** |  | [optional] 
-**column_names** | **List[str]** |  | [optional] 
+**row_ids** | **List[Optional[int]]** |  | [optional] 
+**column_ids** | **List[Optional[int]]** |  | [optional] 
+**row_names** | **List[Optional[str]]** |  | [optional] 
+**column_names** | **List[Optional[str]]** |  | [optional] 
 **values** | **List[List[float]]** |  | [optional] 
 
 ## Example

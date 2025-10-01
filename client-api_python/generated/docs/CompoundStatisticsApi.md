@@ -45,7 +45,7 @@ with PySirius.ApiClient(configuration) as api_client:
     right_group_name = 'right_group_name_example' # str | name of the right tag group.
     aggregation = PySirius.AggregationType() # AggregationType | aggregation type. (optional)
     quantification = PySirius.QuantMeasure() # QuantMeasure | quantification type. (optional)
-    opt_fields = [progress] # List[JobOptField] | job opt fields. (optional) (default to [progress])
+    opt_fields = ["progress"] # List[JobOptField] | job opt fields. (optional) (default to ["progress"])
 
     try:
         # [EXPERIMENTAL] Compute the fold change between two groups of runs
@@ -68,7 +68,7 @@ Name | Type | Description  | Notes
  **right_group_name** | **str**| name of the right tag group. | 
  **aggregation** | [**AggregationType**](.md)| aggregation type. | [optional] 
  **quantification** | [**QuantMeasure**](.md)| quantification type. | [optional] 
- **opt_fields** | [**List[JobOptField]**](JobOptField.md)| job opt fields. | [optional] [default to [progress]]
+ **opt_fields** | [**List[JobOptField]**](JobOptField.md)| job opt fields. | [optional] [default to [&quot;progress&quot;]]
 
 ### Return type
 

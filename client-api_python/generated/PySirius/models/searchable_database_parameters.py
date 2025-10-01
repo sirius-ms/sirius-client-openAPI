@@ -68,6 +68,21 @@ class SearchableDatabaseParameters(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if display_name (nullable) is None
+        # and model_fields_set contains the field
+        if self.display_name is None and "display_name" in self.model_fields_set:
+            _dict['displayName'] = None
+
+        # set to None if location (nullable) is None
+        # and model_fields_set contains the field
+        if self.location is None and "location" in self.model_fields_set:
+            _dict['location'] = None
+
+        # set to None if match_rt_of_reference_spectra (nullable) is None
+        # and model_fields_set contains the field
+        if self.match_rt_of_reference_spectra is None and "match_rt_of_reference_spectra" in self.model_fields_set:
+            _dict['matchRtOfReferenceSpectra'] = None
+
         return _dict
 
     @classmethod

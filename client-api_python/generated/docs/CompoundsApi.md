@@ -53,8 +53,8 @@ with PySirius.ApiClient(configuration) as api_client:
     project_id = 'project_id_example' # str | project-space to import into.
     compound_import = [PySirius.CompoundImport()] # List[CompoundImport] | the compound data to be imported
     profile = PySirius.InstrumentProfile() # InstrumentProfile | profile describing the instrument used to measure the data. Used to merge spectra. (optional)
-    opt_fields = [none] # List[CompoundOptField] | set of optional fields to be included. Use 'none' to override defaults. (optional) (default to [none])
-    opt_fields_features = [none] # List[AlignedFeatureOptField] | set of optional fields of the nested features to be included. Use 'none' to override defaults. (optional) (default to [none])
+    opt_fields = ["none"] # List[CompoundOptField] | set of optional fields to be included. Use 'none' to override defaults. (optional) (default to ["none"])
+    opt_fields_features = ["none"] # List[AlignedFeatureOptField] | set of optional fields of the nested features to be included. Use 'none' to override defaults. (optional) (default to ["none"])
 
     try:
         # Import Compounds and its contained features.
@@ -75,8 +75,8 @@ Name | Type | Description  | Notes
  **project_id** | **str**| project-space to import into. | 
  **compound_import** | [**List[CompoundImport]**](CompoundImport.md)| the compound data to be imported | 
  **profile** | [**InstrumentProfile**](.md)| profile describing the instrument used to measure the data. Used to merge spectra. | [optional] 
- **opt_fields** | [**List[CompoundOptField]**](CompoundOptField.md)| set of optional fields to be included. Use &#39;none&#39; to override defaults. | [optional] [default to [none]]
- **opt_fields_features** | [**List[AlignedFeatureOptField]**](AlignedFeatureOptField.md)| set of optional fields of the nested features to be included. Use &#39;none&#39; to override defaults. | [optional] [default to [none]]
+ **opt_fields** | [**List[CompoundOptField]**](CompoundOptField.md)| set of optional fields to be included. Use &#39;none&#39; to override defaults. | [optional] [default to [&quot;none&quot;]]
+ **opt_fields_features** | [**List[AlignedFeatureOptField]**](AlignedFeatureOptField.md)| set of optional fields of the nested features to be included. Use &#39;none&#39; to override defaults. | [optional] [default to [&quot;none&quot;]]
 
 ### Return type
 
@@ -270,8 +270,8 @@ with PySirius.ApiClient(configuration) as api_client:
     project_id = 'project_id_example' # str | project-space to read from.
     compound_id = 'compound_id_example' # str | identifier of the compound (group of ion identities) to access.
     ms_data_search_prepared = False # bool | Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. (optional) (default to False)
-    opt_fields = [none] # List[CompoundOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to [none])
-    opt_fields_features = [none] # List[AlignedFeatureOptField] |  (optional) (default to [none])
+    opt_fields = ["none"] # List[CompoundOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to ["none"])
+    opt_fields_features = ["none"] # List[AlignedFeatureOptField] |  (optional) (default to ["none"])
 
     try:
         # Get compound (group of ion identities) with the given identifier from the specified project-space.
@@ -292,8 +292,8 @@ Name | Type | Description  | Notes
  **project_id** | **str**| project-space to read from. | 
  **compound_id** | **str**| identifier of the compound (group of ion identities) to access. | 
  **ms_data_search_prepared** | **bool**| Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. | [optional] [default to False]
- **opt_fields** | [**List[CompoundOptField]**](CompoundOptField.md)| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [none]]
- **opt_fields_features** | [**List[AlignedFeatureOptField]**](AlignedFeatureOptField.md)|  | [optional] [default to [none]]
+ **opt_fields** | [**List[CompoundOptField]**](CompoundOptField.md)| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;none&quot;]]
+ **opt_fields_features** | [**List[AlignedFeatureOptField]**](AlignedFeatureOptField.md)|  | [optional] [default to [&quot;none&quot;]]
 
 ### Return type
 
@@ -641,7 +641,7 @@ with PySirius.ApiClient(configuration) as api_client:
     page = 0 # int | Zero-based page index (0..N) (optional) (default to 0)
     size = 20 # int | The size of the page to be returned (optional) (default to 20)
     sort = ['sort_example'] # List[str] | Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (optional)
-    opt_fields = [none] # List[CompoundOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to [none])
+    opt_fields = ["none"] # List[CompoundOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to ["none"])
 
     try:
         # [EXPERIMENTAL] Get compounds (group of ion identities) by tag group
@@ -664,7 +664,7 @@ Name | Type | Description  | Notes
  **page** | **int**| Zero-based page index (0..N) | [optional] [default to 0]
  **size** | **int**| The size of the page to be returned | [optional] [default to 20]
  **sort** | [**List[str]**](str.md)| Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. | [optional] 
- **opt_fields** | [**List[CompoundOptField]**](CompoundOptField.md)| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [none]]
+ **opt_fields** | [**List[CompoundOptField]**](CompoundOptField.md)| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;none&quot;]]
 
 ### Return type
 
@@ -800,8 +800,8 @@ with PySirius.ApiClient(configuration) as api_client:
     size = 20 # int | The size of the page to be returned (optional) (default to 20)
     sort = ['sort_example'] # List[str] | Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (optional)
     ms_data_search_prepared = False # bool | Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. (optional) (default to False)
-    opt_fields = [none] # List[CompoundOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to [none])
-    opt_fields_features = [none] # List[AlignedFeatureOptField] |  (optional) (default to [none])
+    opt_fields = ["none"] # List[CompoundOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to ["none"])
+    opt_fields_features = ["none"] # List[AlignedFeatureOptField] |  (optional) (default to ["none"])
 
     try:
         # Page of available compounds (group of ion identities) in the given project-space.
@@ -824,8 +824,8 @@ Name | Type | Description  | Notes
  **size** | **int**| The size of the page to be returned | [optional] [default to 20]
  **sort** | [**List[str]**](str.md)| Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. | [optional] 
  **ms_data_search_prepared** | **bool**| Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. | [optional] [default to False]
- **opt_fields** | [**List[CompoundOptField]**](CompoundOptField.md)| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [none]]
- **opt_fields_features** | [**List[AlignedFeatureOptField]**](AlignedFeatureOptField.md)|  | [optional] [default to [none]]
+ **opt_fields** | [**List[CompoundOptField]**](CompoundOptField.md)| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;none&quot;]]
+ **opt_fields_features** | [**List[AlignedFeatureOptField]**](AlignedFeatureOptField.md)|  | [optional] [default to [&quot;none&quot;]]
 
 ### Return type
 

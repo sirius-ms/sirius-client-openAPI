@@ -30,14 +30,14 @@ class FeatureImport(BaseModel):
     external_feature_id: Optional[StrictStr] = Field(default=None, description="Externally provided FeatureId (by some preprocessing tool). This FeatureId is NOT used by SIRIUS but is stored to ease mapping information back to the source.", alias="externalFeatureId")
     ion_mass: float = Field(alias="ionMass")
     charge: StrictInt
-    detected_adducts: Optional[List[StrictStr]] = Field(default=None, description="Detected adducts of this feature. Can be NULL or empty if no adducts are known.", alias="detectedAdducts")
+    detected_adducts: Optional[List[Optional[StrictStr]]] = Field(default=None, description="Detected adducts of this feature. Can be NULL or empty if no adducts are known.", alias="detectedAdducts")
     rt_start_seconds: Optional[float] = Field(default=None, alias="rtStartSeconds")
     rt_end_seconds: Optional[float] = Field(default=None, alias="rtEndSeconds")
     rt_apex_seconds: Optional[float] = Field(default=None, alias="rtApexSeconds")
-    data_quality: Optional[DataQuality] = Field(default=None, description="A optional feature quality flag that can be used to filter features to be shown in the gui or to be considered for further analysis.", alias="dataQuality")
-    merged_ms1: Optional[BasicSpectrum] = Field(default=None, description="Merged/Representative MS1 spectrum of this feature that contains the isotope pattern of the precursor ion.  Note: 'ms1Spectra' will be ignored if given.", alias="mergedMs1")
-    ms1_spectra: Optional[List[BasicSpectrum]] = Field(default=None, description="List of MS1Spectra belonging to this feature. These spectra will be merged an only a representative  mergedMs1 spectrum will be stored in SIRIUS. At least one of these spectra should contain the  isotope pattern of the precursor ion.  Note: Will be ignored if 'mergedMs1' is given.", alias="ms1Spectra")
-    ms2_spectra: Optional[List[BasicSpectrum]] = Field(default=None, description="List of MS/MS spectra that belong to this feature.", alias="ms2Spectra")
+    data_quality: Optional[DataQuality] = Field(default=None, alias="dataQuality")
+    merged_ms1: Optional[BasicSpectrum] = Field(default=None, alias="mergedMs1")
+    ms1_spectra: Optional[List[Optional[BasicSpectrum]]] = Field(default=None, description="List of MS1Spectra belonging to this feature. These spectra will be merged an only a representative  mergedMs1 spectrum will be stored in SIRIUS. At least one of these spectra should contain the  isotope pattern of the precursor ion.  Note: Will be ignored if 'mergedMs1' is given.", alias="ms1Spectra")
+    ms2_spectra: Optional[List[Optional[BasicSpectrum]]] = Field(default=None, description="List of MS/MS spectra that belong to this feature.", alias="ms2Spectra")
     __properties: ClassVar[List[str]] = ["name", "externalFeatureId", "ionMass", "charge", "detectedAdducts", "rtStartSeconds", "rtEndSeconds", "rtApexSeconds", "dataQuality", "mergedMs1", "ms1Spectra", "ms2Spectra"]
 
     model_config = ConfigDict(
@@ -96,6 +96,56 @@ class FeatureImport(BaseModel):
                 if _item_ms2_spectra:
                     _items.append(_item_ms2_spectra.to_dict())
             _dict['ms2Spectra'] = _items
+        # set to None if name (nullable) is None
+        # and model_fields_set contains the field
+        if self.name is None and "name" in self.model_fields_set:
+            _dict['name'] = None
+
+        # set to None if external_feature_id (nullable) is None
+        # and model_fields_set contains the field
+        if self.external_feature_id is None and "external_feature_id" in self.model_fields_set:
+            _dict['externalFeatureId'] = None
+
+        # set to None if detected_adducts (nullable) is None
+        # and model_fields_set contains the field
+        if self.detected_adducts is None and "detected_adducts" in self.model_fields_set:
+            _dict['detectedAdducts'] = None
+
+        # set to None if rt_start_seconds (nullable) is None
+        # and model_fields_set contains the field
+        if self.rt_start_seconds is None and "rt_start_seconds" in self.model_fields_set:
+            _dict['rtStartSeconds'] = None
+
+        # set to None if rt_end_seconds (nullable) is None
+        # and model_fields_set contains the field
+        if self.rt_end_seconds is None and "rt_end_seconds" in self.model_fields_set:
+            _dict['rtEndSeconds'] = None
+
+        # set to None if rt_apex_seconds (nullable) is None
+        # and model_fields_set contains the field
+        if self.rt_apex_seconds is None and "rt_apex_seconds" in self.model_fields_set:
+            _dict['rtApexSeconds'] = None
+
+        # set to None if data_quality (nullable) is None
+        # and model_fields_set contains the field
+        if self.data_quality is None and "data_quality" in self.model_fields_set:
+            _dict['dataQuality'] = None
+
+        # set to None if merged_ms1 (nullable) is None
+        # and model_fields_set contains the field
+        if self.merged_ms1 is None and "merged_ms1" in self.model_fields_set:
+            _dict['mergedMs1'] = None
+
+        # set to None if ms1_spectra (nullable) is None
+        # and model_fields_set contains the field
+        if self.ms1_spectra is None and "ms1_spectra" in self.model_fields_set:
+            _dict['ms1Spectra'] = None
+
+        # set to None if ms2_spectra (nullable) is None
+        # and model_fields_set contains the field
+        if self.ms2_spectra is None and "ms2_spectra" in self.model_fields_set:
+            _dict['ms2Spectra'] = None
+
         return _dict
 
     @classmethod

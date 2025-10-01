@@ -22,7 +22,7 @@ from typing_extensions import Self
 
 class ComputedSubtools(BaseModel):
     """
-    ComputedSubtools
+    Specifies which tools have been executed for this feature. Can be used to estimate which results can be expected. Null if it was not requested und non-null otherwise.
     """ # noqa: E501
     library_search: Optional[StrictBool] = Field(default=None, alias="librarySearch")
     formula_search: Optional[StrictBool] = Field(default=None, alias="formulaSearch")

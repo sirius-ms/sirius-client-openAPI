@@ -28,10 +28,10 @@ class QuantTableExperimental(BaseModel):
     """ # noqa: E501
     quantification_measure: Optional[QuantMeasure] = Field(default=None, alias="quantificationMeasure")
     row_type: Optional[QuantRowType] = Field(default=None, alias="rowType")
-    row_ids: Optional[List[StrictInt]] = Field(default=None, alias="rowIds")
-    column_ids: Optional[List[StrictInt]] = Field(default=None, alias="columnIds")
-    row_names: Optional[List[StrictStr]] = Field(default=None, alias="rowNames")
-    column_names: Optional[List[StrictStr]] = Field(default=None, alias="columnNames")
+    row_ids: Optional[List[Optional[StrictInt]]] = Field(default=None, alias="rowIds")
+    column_ids: Optional[List[Optional[StrictInt]]] = Field(default=None, alias="columnIds")
+    row_names: Optional[List[Optional[StrictStr]]] = Field(default=None, alias="rowNames")
+    column_names: Optional[List[Optional[StrictStr]]] = Field(default=None, alias="columnNames")
     values: Optional[List[List[float]]] = None
     __properties: ClassVar[List[str]] = ["quantificationMeasure", "rowType", "rowIds", "columnIds", "rowNames", "columnNames", "values"]
 
@@ -74,6 +74,26 @@ class QuantTableExperimental(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if row_ids (nullable) is None
+        # and model_fields_set contains the field
+        if self.row_ids is None and "row_ids" in self.model_fields_set:
+            _dict['rowIds'] = None
+
+        # set to None if column_ids (nullable) is None
+        # and model_fields_set contains the field
+        if self.column_ids is None and "column_ids" in self.model_fields_set:
+            _dict['columnIds'] = None
+
+        # set to None if row_names (nullable) is None
+        # and model_fields_set contains the field
+        if self.row_names is None and "row_names" in self.model_fields_set:
+            _dict['rowNames'] = None
+
+        # set to None if column_names (nullable) is None
+        # and model_fields_set contains the field
+        if self.column_names is None and "column_names" in self.model_fields_set:
+            _dict['columnNames'] = None
+
         return _dict
 
     @classmethod

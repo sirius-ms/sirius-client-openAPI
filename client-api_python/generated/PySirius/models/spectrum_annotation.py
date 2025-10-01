@@ -74,6 +74,51 @@ class SpectrumAnnotation(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if molecular_formula (nullable) is None
+        # and model_fields_set contains the field
+        if self.molecular_formula is None and "molecular_formula" in self.model_fields_set:
+            _dict['molecularFormula'] = None
+
+        # set to None if adduct (nullable) is None
+        # and model_fields_set contains the field
+        if self.adduct is None and "adduct" in self.model_fields_set:
+            _dict['adduct'] = None
+
+        # set to None if exact_mass (nullable) is None
+        # and model_fields_set contains the field
+        if self.exact_mass is None and "exact_mass" in self.model_fields_set:
+            _dict['exactMass'] = None
+
+        # set to None if mass_deviation_mz (nullable) is None
+        # and model_fields_set contains the field
+        if self.mass_deviation_mz is None and "mass_deviation_mz" in self.model_fields_set:
+            _dict['massDeviationMz'] = None
+
+        # set to None if mass_deviation_ppm (nullable) is None
+        # and model_fields_set contains the field
+        if self.mass_deviation_ppm is None and "mass_deviation_ppm" in self.model_fields_set:
+            _dict['massDeviationPpm'] = None
+
+        # set to None if structure_annotation_smiles (nullable) is None
+        # and model_fields_set contains the field
+        if self.structure_annotation_smiles is None and "structure_annotation_smiles" in self.model_fields_set:
+            _dict['structureAnnotationSmiles'] = None
+
+        # set to None if structure_annotation_name (nullable) is None
+        # and model_fields_set contains the field
+        if self.structure_annotation_name is None and "structure_annotation_name" in self.model_fields_set:
+            _dict['structureAnnotationName'] = None
+
+        # set to None if structure_annotation_svg (nullable) is None
+        # and model_fields_set contains the field
+        if self.structure_annotation_svg is None and "structure_annotation_svg" in self.model_fields_set:
+            _dict['structureAnnotationSvg'] = None
+
+        # set to None if structure_annotation_score (nullable) is None
+        # and model_fields_set contains the field
+        if self.structure_annotation_score is None and "structure_annotation_score" in self.model_fields_set:
+            _dict['structureAnnotationScore'] = None
+
         return _dict
 
     @classmethod

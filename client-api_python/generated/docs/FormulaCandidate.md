@@ -19,13 +19,13 @@ Name | Type | Description | Notes
 **num_of_explainable_peaks** | **int** |  | [optional] 
 **total_explained_intensity** | **float** |  | [optional] 
 **median_mass_deviation** | [**Deviation**](Deviation.md) |  | [optional] 
-**fragmentation_tree** | [**FragmentationTree**](FragmentationTree.md) | The fragmentation tree that belongs to this molecular formula candidate (produces the treeScore). | [optional] 
-**annotated_spectrum** | [**AnnotatedSpectrum**](AnnotatedSpectrum.md) | Fragmentation spectrum (e.g. Merged MS/MS) which is annotated with fragments and losses | [optional] 
-**isotope_pattern_annotation** | [**IsotopePatternAnnotation**](IsotopePatternAnnotation.md) | The measured and simulated isotope pattern that have been  compared against each other to produce the isotopeScore. | [optional] 
-**lipid_annotation** | [**LipidAnnotation**](LipidAnnotation.md) | ElGordo lipid annotation of this candidate.  NULL if annotation was not requested. lipidAnnotation.lipidSpecies &#x3D;&#x3D; NULL if candidate has not been classified as a lipid | [optional] 
-**predicted_fingerprint** | **List[float]** | Probabilistic molecular fingerprint predicted by CSI:FingerID | [optional] 
-**compound_classes** | [**CompoundClasses**](CompoundClasses.md) | Most likely compound classes for different levels of each ontology for this FormulaCandidate (predictedFingerprint) | [optional] 
-**canopus_prediction** | [**CanopusPrediction**](CanopusPrediction.md) | All classes predicted by canopus for this FormulaCandidate (predictedFingerprint) | [optional] 
+**fragmentation_tree** | [**FragmentationTree**](FragmentationTree.md) |  | [optional] 
+**annotated_spectrum** | [**AnnotatedSpectrum**](AnnotatedSpectrum.md) |  | [optional] 
+**isotope_pattern_annotation** | [**IsotopePatternAnnotation**](IsotopePatternAnnotation.md) |  | [optional] 
+**lipid_annotation** | [**LipidAnnotation**](LipidAnnotation.md) |  | [optional] 
+**predicted_fingerprint** | **List[Optional[float]]** | Probabilistic molecular fingerprint predicted by CSI:FingerID | [optional] 
+**compound_classes** | [**CompoundClasses**](CompoundClasses.md) |  | [optional] 
+**canopus_prediction** | [**CanopusPrediction**](CanopusPrediction.md) |  | [optional] 
 
 ## Example
 

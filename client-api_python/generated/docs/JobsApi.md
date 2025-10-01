@@ -396,7 +396,7 @@ with PySirius.ApiClient(configuration) as api_client:
     api_instance = PySirius.JobsApi(api_client)
     project_id = 'project_id_example' # str | project-space to run jobs on
     job_id = 'job_id_example' # str | of the job to be returned
-    opt_fields = [progress] # List[JobOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to [progress])
+    opt_fields = ["progress"] # List[JobOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to ["progress"])
 
     try:
         # Get job information and its current state and progress (if available).
@@ -416,7 +416,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **str**| project-space to run jobs on | 
  **job_id** | **str**| of the job to be returned | 
- **opt_fields** | [**List[JobOptField]**](JobOptField.md)| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [progress]]
+ **opt_fields** | [**List[JobOptField]**](JobOptField.md)| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;progress&quot;]]
 
 ### Return type
 
@@ -739,7 +739,7 @@ with PySirius.ApiClient(configuration) as api_client:
     page = 0 # int | Zero-based page index (0..N) (optional) (default to 0)
     size = 20 # int | The size of the page to be returned (optional) (default to 20)
     sort = ['sort_example'] # List[str] | Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (optional)
-    opt_fields = [none] # List[JobOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to [none])
+    opt_fields = ["none"] # List[JobOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to ["none"])
 
     try:
         # Get Page of jobs with information such as current state and progress (if available).
@@ -761,7 +761,7 @@ Name | Type | Description  | Notes
  **page** | **int**| Zero-based page index (0..N) | [optional] [default to 0]
  **size** | **int**| The size of the page to be returned | [optional] [default to 20]
  **sort** | [**List[str]**](str.md)| Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. | [optional] 
- **opt_fields** | [**List[JobOptField]**](JobOptField.md)| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [none]]
+ **opt_fields** | [**List[JobOptField]**](JobOptField.md)| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;none&quot;]]
 
 ### Return type
 
@@ -1031,7 +1031,7 @@ with PySirius.ApiClient(configuration) as api_client:
     job_config_name = 'job_config_name_example' # str | name if the config to be used
     request_body = ['request_body_example'] # List[str] | List of alignedFeatureIds to be computed
     recompute = True # bool | enable or disable recompute. If null the stored value will be used. (optional)
-    opt_fields = [command, progress] # List[JobOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to [command, progress])
+    opt_fields = ["command","progress"] # List[JobOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to ["command","progress"])
 
     try:
         # Start computation for given compounds and with parameters from a stored job-config.
@@ -1053,7 +1053,7 @@ Name | Type | Description  | Notes
  **job_config_name** | **str**| name if the config to be used | 
  **request_body** | [**List[str]**](str.md)| List of alignedFeatureIds to be computed | 
  **recompute** | **bool**| enable or disable recompute. If null the stored value will be used. | [optional] 
- **opt_fields** | [**List[JobOptField]**](JobOptField.md)| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [command, progress]]
+ **opt_fields** | [**List[JobOptField]**](JobOptField.md)| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;command&quot;,&quot;progress&quot;]]
 
 ### Return type
 

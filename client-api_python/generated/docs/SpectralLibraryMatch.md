@@ -19,7 +19,7 @@ Name | Type | Description | Notes
 **adduct** | **str** |  | [optional] 
 **exact_mass** | **float** |  | [optional] 
 **smiles** | **str** |  | [optional] 
-**type** | [**SpectralMatchType**](SpectralMatchType.md) |  | [optional] 
+**type** | [**SpectralMatchType**](SpectralMatchType.md) |  | [optional] [default to SpectralMatchType.IDENTITY]
 **inchi_key** | **str** |  | 
 **reference_spectrum_type** | [**SpectrumType**](SpectrumType.md) |  | [optional] 
 **reference_spectrum** | [**BasicSpectrum**](BasicSpectrum.md) |  | [optional] 

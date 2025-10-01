@@ -12,7 +12,7 @@
 """  # noqa: E501
 
 
-__version__ = "6.3.1"
+__version__ = "6.3.3"
 
 # import apis into sdk package
 from PySirius.api.actuator_api import ActuatorApi
@@ -179,5 +179,7 @@ from PySirius.models.zodiac_analogue_nodes import ZodiacAnalogueNodes
 from PySirius.models.zodiac_edge_filter_thresholds import ZodiacEdgeFilterThresholds
 from PySirius.models.zodiac_epochs import ZodiacEpochs
 from PySirius.models.zodiac_library_scoring import ZodiacLibraryScoring
+
+# import manually generated API and SDK files
 from PySirius.sirius_api import PySiriusAPI
 from PySirius.sirius import SiriusSDK

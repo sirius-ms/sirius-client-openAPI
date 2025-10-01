@@ -83,7 +83,7 @@ with PySirius.ApiClient(configuration) as api_client:
     project_id = 'project_id_example' # str | project-space to import into.
     feature_import = [PySirius.FeatureImport()] # List[FeatureImport] | the feature data to be imported
     profile = PySirius.InstrumentProfile() # InstrumentProfile | profile describing the instrument used to measure the data. Used to merge spectra. (optional)
-    opt_fields = [none] # List[AlignedFeatureOptField] | set of optional fields to be included. Use 'none' to override defaults. (optional) (default to [none])
+    opt_fields = ["none"] # List[AlignedFeatureOptField] | set of optional fields to be included. Use 'none' to override defaults. (optional) (default to ["none"])
 
     try:
         # Import (aligned) features into the project.
@@ -104,7 +104,7 @@ Name | Type | Description  | Notes
  **project_id** | **str**| project-space to import into. | 
  **feature_import** | [**List[FeatureImport]**](FeatureImport.md)| the feature data to be imported | 
  **profile** | [**InstrumentProfile**](.md)| profile describing the instrument used to measure the data. Used to merge spectra. | [optional] 
- **opt_fields** | [**List[AlignedFeatureOptField]**](AlignedFeatureOptField.md)| set of optional fields to be included. Use &#39;none&#39; to override defaults. | [optional] [default to [none]]
+ **opt_fields** | [**List[AlignedFeatureOptField]**](AlignedFeatureOptField.md)| set of optional fields to be included. Use &#39;none&#39; to override defaults. | [optional] [default to [&quot;none&quot;]]
 
 ### Return type
 
@@ -506,7 +506,7 @@ with PySirius.ApiClient(configuration) as api_client:
     project_id = 'project_id_example' # str | project-space to read from.
     aligned_feature_id = 'aligned_feature_id_example' # str | identifier of feature (aligned over runs) to access.
     ms_data_search_prepared = False # bool | Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. (optional) (default to False)
-    opt_fields = [none] # List[AlignedFeatureOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to [none])
+    opt_fields = ["none"] # List[AlignedFeatureOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to ["none"])
 
     try:
         # Get feature (aligned over runs) with the given identifier from the specified project-space.
@@ -527,7 +527,7 @@ Name | Type | Description  | Notes
  **project_id** | **str**| project-space to read from. | 
  **aligned_feature_id** | **str**| identifier of feature (aligned over runs) to access. | 
  **ms_data_search_prepared** | **bool**| Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. | [optional] [default to False]
- **opt_fields** | [**List[AlignedFeatureOptField]**](AlignedFeatureOptField.md)| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [none]]
+ **opt_fields** | [**List[AlignedFeatureOptField]**](AlignedFeatureOptField.md)| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;none&quot;]]
 
 ### Return type
 
@@ -650,7 +650,7 @@ with PySirius.ApiClient(configuration) as api_client:
     api_instance = PySirius.FeaturesApi(api_client)
     project_id = 'project_id_example' # str | project-space to read from.
     ms_data_search_prepared = False # bool | Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. (optional) (default to False)
-    opt_fields = [none] # List[AlignedFeatureOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to [none])
+    opt_fields = ["none"] # List[AlignedFeatureOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to ["none"])
 
     try:
         # Get all available features (aligned over runs) in the given project-space.
@@ -670,7 +670,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **str**| project-space to read from. | 
  **ms_data_search_prepared** | **bool**| Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. | [optional] [default to False]
- **opt_fields** | [**List[AlignedFeatureOptField]**](AlignedFeatureOptField.md)| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [none]]
+ **opt_fields** | [**List[AlignedFeatureOptField]**](AlignedFeatureOptField.md)| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;none&quot;]]
 
 ### Return type
 
@@ -726,7 +726,7 @@ with PySirius.ApiClient(configuration) as api_client:
     page = 0 # int | Zero-based page index (0..N) (optional) (default to 0)
     size = 20 # int | The size of the page to be returned (optional) (default to 20)
     sort = ['sort_example'] # List[str] | Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (optional)
-    opt_fields = [none] # List[AlignedFeatureOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to [none])
+    opt_fields = ["none"] # List[AlignedFeatureOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to ["none"])
 
     try:
         # [EXPERIMENTAL] Get features (aligned over runs) by tag group
@@ -749,7 +749,7 @@ Name | Type | Description  | Notes
  **page** | **int**| Zero-based page index (0..N) | [optional] [default to 0]
  **size** | **int**| The size of the page to be returned | [optional] [default to 20]
  **sort** | [**List[str]**](str.md)| Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. | [optional] 
- **opt_fields** | [**List[AlignedFeatureOptField]**](AlignedFeatureOptField.md)| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [none]]
+ **opt_fields** | [**List[AlignedFeatureOptField]**](AlignedFeatureOptField.md)| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;none&quot;]]
 
 ### Return type
 
@@ -884,7 +884,7 @@ with PySirius.ApiClient(configuration) as api_client:
     size = 20 # int | The size of the page to be returned (optional) (default to 20)
     sort = ['sort_example'] # List[str] | Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (optional)
     ms_data_search_prepared = False # bool | Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. (optional) (default to False)
-    opt_fields = [none] # List[AlignedFeatureOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to [none])
+    opt_fields = ["none"] # List[AlignedFeatureOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to ["none"])
 
     try:
         # Get all available features (aligned over runs) in the given project-space.
@@ -907,7 +907,7 @@ Name | Type | Description  | Notes
  **size** | **int**| The size of the page to be returned | [optional] [default to 20]
  **sort** | [**List[str]**](str.md)| Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. | [optional] 
  **ms_data_search_prepared** | **bool**| Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. | [optional] [default to False]
- **opt_fields** | [**List[AlignedFeatureOptField]**](AlignedFeatureOptField.md)| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [none]]
+ **opt_fields** | [**List[AlignedFeatureOptField]**](AlignedFeatureOptField.md)| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;none&quot;]]
 
 ### Return type
 
@@ -1178,7 +1178,7 @@ with PySirius.ApiClient(configuration) as api_client:
     project_id = 'project_id_example' # str | project-space to read from.
     aligned_feature_id = 'aligned_feature_id_example' # str | feature (aligned over runs) the formula result belongs to.
     formula_id = 'formula_id_example' # str | identifier of the requested formula result
-    opt_fields = [none] # List[StructureCandidateOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to [none])
+    opt_fields = ["none"] # List[StructureCandidateOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to ["none"])
 
     try:
         # List of de novo structure candidates (e.g. generated by MsNovelist) ranked by CSI:FingerID score for the given 'formulaId' with minimal information.  StructureCandidates can be enriched with molecular fingerprint.
@@ -1199,7 +1199,7 @@ Name | Type | Description  | Notes
  **project_id** | **str**| project-space to read from. | 
  **aligned_feature_id** | **str**| feature (aligned over runs) the formula result belongs to. | 
  **formula_id** | **str**| identifier of the requested formula result | 
- **opt_fields** | [**List[StructureCandidateOptField]**](StructureCandidateOptField.md)| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [none]]
+ **opt_fields** | [**List[StructureCandidateOptField]**](StructureCandidateOptField.md)| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;none&quot;]]
 
 ### Return type
 
@@ -1256,7 +1256,7 @@ with PySirius.ApiClient(configuration) as api_client:
     page = 0 # int | Zero-based page index (0..N) (optional) (default to 0)
     size = 20 # int | The size of the page to be returned (optional) (default to 20)
     sort = ['sort_example'] # List[str] | Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (optional)
-    opt_fields = [none] # List[StructureCandidateOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to [none])
+    opt_fields = ["none"] # List[StructureCandidateOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to ["none"])
 
     try:
         # Page of de novo structure candidates (e.g. generated by MsNovelist) ranked by CSI:FingerID score for the given 'formulaId' with minimal information.  StructureCandidates can be enriched with molecular fingerprint.
@@ -1280,7 +1280,7 @@ Name | Type | Description  | Notes
  **page** | **int**| Zero-based page index (0..N) | [optional] [default to 0]
  **size** | **int**| The size of the page to be returned | [optional] [default to 20]
  **sort** | [**List[str]**](str.md)| Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. | [optional] 
- **opt_fields** | [**List[StructureCandidateOptField]**](StructureCandidateOptField.md)| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [none]]
+ **opt_fields** | [**List[StructureCandidateOptField]**](StructureCandidateOptField.md)| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;none&quot;]]
 
 ### Return type
 
@@ -1336,7 +1336,7 @@ with PySirius.ApiClient(configuration) as api_client:
     page = 0 # int | Zero-based page index (0..N) (optional) (default to 0)
     size = 20 # int | The size of the page to be returned (optional) (default to 20)
     sort = ['sort_example'] # List[str] | Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (optional)
-    opt_fields = [none] # List[StructureCandidateOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to [none])
+    opt_fields = ["none"] # List[StructureCandidateOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to ["none"])
 
     try:
         # Page of de novo structure candidates (e.g. generated by MsNovelist) ranked by CSI:FingerID score for the given 'alignedFeatureId' with minimal information.  StructureCandidates can be enriched with molecular fingerprint.
@@ -1359,7 +1359,7 @@ Name | Type | Description  | Notes
  **page** | **int**| Zero-based page index (0..N) | [optional] [default to 0]
  **size** | **int**| The size of the page to be returned | [optional] [default to 20]
  **sort** | [**List[str]**](str.md)| Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. | [optional] 
- **opt_fields** | [**List[StructureCandidateOptField]**](StructureCandidateOptField.md)| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [none]]
+ **opt_fields** | [**List[StructureCandidateOptField]**](StructureCandidateOptField.md)| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;none&quot;]]
 
 ### Return type
 
@@ -1706,7 +1706,7 @@ with PySirius.ApiClient(configuration) as api_client:
     aligned_feature_id = 'aligned_feature_id_example' # str | feature (aligned over runs) the formula result belongs to.
     formula_id = 'formula_id_example' # str | identifier of the requested formula result
     ms_data_search_prepared = False # bool | Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. (optional) (default to False)
-    opt_fields = [none] # List[FormulaCandidateOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to [none])
+    opt_fields = ["none"] # List[FormulaCandidateOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to ["none"])
 
     try:
         # FormulaResultContainers for the given 'formulaId' with minimal information.
@@ -1728,7 +1728,7 @@ Name | Type | Description  | Notes
  **aligned_feature_id** | **str**| feature (aligned over runs) the formula result belongs to. | 
  **formula_id** | **str**| identifier of the requested formula result | 
  **ms_data_search_prepared** | **bool**| Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. | [optional] [default to False]
- **opt_fields** | [**List[FormulaCandidateOptField]**](FormulaCandidateOptField.md)| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [none]]
+ **opt_fields** | [**List[FormulaCandidateOptField]**](FormulaCandidateOptField.md)| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;none&quot;]]
 
 ### Return type
 
@@ -1860,7 +1860,7 @@ with PySirius.ApiClient(configuration) as api_client:
     size = 20 # int | The size of the page to be returned (optional) (default to 20)
     sort = ['sort_example'] # List[str] | Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (optional)
     ms_data_search_prepared = False # bool | Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. (optional) (default to False)
-    opt_fields = [none] # List[FormulaCandidateOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to [none])
+    opt_fields = ["none"] # List[FormulaCandidateOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to ["none"])
 
     try:
         # Page of FormulaResultContainers available for this feature with minimal information.
@@ -1884,7 +1884,7 @@ Name | Type | Description  | Notes
  **size** | **int**| The size of the page to be returned | [optional] [default to 20]
  **sort** | [**List[str]**](str.md)| Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. | [optional] 
  **ms_data_search_prepared** | **bool**| Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. | [optional] [default to False]
- **opt_fields** | [**List[FormulaCandidateOptField]**](FormulaCandidateOptField.md)| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [none]]
+ **opt_fields** | [**List[FormulaCandidateOptField]**](FormulaCandidateOptField.md)| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;none&quot;]]
 
 ### Return type
 
@@ -2299,7 +2299,7 @@ with PySirius.ApiClient(configuration) as api_client:
     project_id = 'project_id_example' # str | project-space to read from.
     aligned_feature_id = 'aligned_feature_id_example' # str | feature (aligned over runs) the structure candidates belong to.
     match_id = 'match_id_example' # str | id of the library match to be returned.
-    opt_fields = [none] # List[SpectralLibraryMatchOptField] |  (optional) (default to [none])
+    opt_fields = ["none"] # List[SpectralLibraryMatchOptField] |  (optional) (default to ["none"])
 
     try:
         # Spectral library match for the given 'alignedFeatureId'.
@@ -2320,7 +2320,7 @@ Name | Type | Description  | Notes
  **project_id** | **str**| project-space to read from. | 
  **aligned_feature_id** | **str**| feature (aligned over runs) the structure candidates belong to. | 
  **match_id** | **str**| id of the library match to be returned. | 
- **opt_fields** | [**List[SpectralLibraryMatchOptField]**](SpectralLibraryMatchOptField.md)|  | [optional] [default to [none]]
+ **opt_fields** | [**List[SpectralLibraryMatchOptField]**](SpectralLibraryMatchOptField.md)|  | [optional] [default to [&quot;none&quot;]]
 
 ### Return type
 
@@ -2458,7 +2458,7 @@ with PySirius.ApiClient(configuration) as api_client:
     min_shared_peaks = 1 # int |  (optional) (default to 1)
     min_similarity = 0.2 # float |  (optional) (default to 0.2)
     inchi_key = '' # str |  (optional) (default to '')
-    opt_fields = [none] # List[SpectralLibraryMatchOptField] |  (optional) (default to [none])
+    opt_fields = ["none"] # List[SpectralLibraryMatchOptField] |  (optional) (default to ["none"])
 
     try:
         # Page of spectral library matches for the given 'alignedFeatureId'.
@@ -2484,7 +2484,7 @@ Name | Type | Description  | Notes
  **min_shared_peaks** | **int**|  | [optional] [default to 1]
  **min_similarity** | **float**|  | [optional] [default to 0.2]
  **inchi_key** | **str**|  | [optional] [default to &#39;&#39;]
- **opt_fields** | [**List[SpectralLibraryMatchOptField]**](SpectralLibraryMatchOptField.md)|  | [optional] [default to [none]]
+ **opt_fields** | [**List[SpectralLibraryMatchOptField]**](SpectralLibraryMatchOptField.md)|  | [optional] [default to [&quot;none&quot;]]
 
 ### Return type
 
@@ -2839,7 +2839,7 @@ with PySirius.ApiClient(configuration) as api_client:
     api_instance = PySirius.FeaturesApi(api_client)
     project_id = 'project_id_example' # str | project-space to read from.
     aligned_feature_id = 'aligned_feature_id_example' # str | feature (aligned over runs) the structure candidates belong to.
-    opt_fields = [none] # List[StructureCandidateOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to [none])
+    opt_fields = ["none"] # List[StructureCandidateOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to ["none"])
 
     try:
         # List of structure database search candidates ranked by CSI:FingerID score for the given 'alignedFeatureId' with minimal information.
@@ -2859,7 +2859,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **str**| project-space to read from. | 
  **aligned_feature_id** | **str**| feature (aligned over runs) the structure candidates belong to. | 
- **opt_fields** | [**List[StructureCandidateOptField]**](StructureCandidateOptField.md)| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [none]]
+ **opt_fields** | [**List[StructureCandidateOptField]**](StructureCandidateOptField.md)| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;none&quot;]]
 
 ### Return type
 
@@ -2913,7 +2913,7 @@ with PySirius.ApiClient(configuration) as api_client:
     project_id = 'project_id_example' # str | project-space to read from.
     aligned_feature_id = 'aligned_feature_id_example' # str | feature (aligned over runs) the formula result belongs to.
     formula_id = 'formula_id_example' # str | identifier of the requested formula result
-    opt_fields = [none] # List[StructureCandidateOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to [none])
+    opt_fields = ["none"] # List[StructureCandidateOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to ["none"])
 
     try:
         # List of CSI:FingerID structure database search candidates for the given 'formulaId' with minimal information.
@@ -2934,7 +2934,7 @@ Name | Type | Description  | Notes
  **project_id** | **str**| project-space to read from. | 
  **aligned_feature_id** | **str**| feature (aligned over runs) the formula result belongs to. | 
  **formula_id** | **str**| identifier of the requested formula result | 
- **opt_fields** | [**List[StructureCandidateOptField]**](StructureCandidateOptField.md)| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [none]]
+ **opt_fields** | [**List[StructureCandidateOptField]**](StructureCandidateOptField.md)| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;none&quot;]]
 
 ### Return type
 
@@ -2991,7 +2991,7 @@ with PySirius.ApiClient(configuration) as api_client:
     page = 0 # int | Zero-based page index (0..N) (optional) (default to 0)
     size = 20 # int | The size of the page to be returned (optional) (default to 20)
     sort = ['sort_example'] # List[str] | Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (optional)
-    opt_fields = [none] # List[StructureCandidateOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to [none])
+    opt_fields = ["none"] # List[StructureCandidateOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to ["none"])
 
     try:
         # Page of CSI:FingerID structure database search candidates for the given 'formulaId' with minimal information.
@@ -3015,7 +3015,7 @@ Name | Type | Description  | Notes
  **page** | **int**| Zero-based page index (0..N) | [optional] [default to 0]
  **size** | **int**| The size of the page to be returned | [optional] [default to 20]
  **sort** | [**List[str]**](str.md)| Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. | [optional] 
- **opt_fields** | [**List[StructureCandidateOptField]**](StructureCandidateOptField.md)| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [none]]
+ **opt_fields** | [**List[StructureCandidateOptField]**](StructureCandidateOptField.md)| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;none&quot;]]
 
 ### Return type
 
@@ -3071,7 +3071,7 @@ with PySirius.ApiClient(configuration) as api_client:
     page = 0 # int | Zero-based page index (0..N) (optional) (default to 0)
     size = 20 # int | The size of the page to be returned (optional) (default to 20)
     sort = ['sort_example'] # List[str] | Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (optional)
-    opt_fields = [none] # List[StructureCandidateOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to [none])
+    opt_fields = ["none"] # List[StructureCandidateOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to ["none"])
 
     try:
         # Page of structure database search candidates ranked by CSI:FingerID score for the given 'alignedFeatureId' with minimal information.
@@ -3094,7 +3094,7 @@ Name | Type | Description  | Notes
  **page** | **int**| Zero-based page index (0..N) | [optional] [default to 0]
  **size** | **int**| The size of the page to be returned | [optional] [default to 20]
  **sort** | [**List[str]**](str.md)| Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. | [optional] 
- **opt_fields** | [**List[StructureCandidateOptField]**](StructureCandidateOptField.md)| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [none]]
+ **opt_fields** | [**List[StructureCandidateOptField]**](StructureCandidateOptField.md)| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;none&quot;]]
 
 ### Return type
 

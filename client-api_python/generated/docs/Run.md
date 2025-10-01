@@ -11,7 +11,7 @@ Name | Type | Description | Notes
 **chromatography** | **str** |  | [optional] 
 **ionization** | **str** |  | [optional] 
 **fragmentation** | **str** |  | [optional] 
-**mass_analyzers** | **List[str]** |  | [optional] 
+**mass_analyzers** | **List[Optional[str]]** |  | [optional] 
 **tags** | [**Dict[str, Tag]**](Tag.md) | Key: tagName, value: tag | [optional] 
 
 ## Example

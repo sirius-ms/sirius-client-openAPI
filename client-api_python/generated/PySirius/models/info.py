@@ -78,6 +78,51 @@ class Info(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if night_sky_api_version (nullable) is None
+        # and model_fields_set contains the field
+        if self.night_sky_api_version is None and "night_sky_api_version" in self.model_fields_set:
+            _dict['nightSkyApiVersion'] = None
+
+        # set to None if sirius_version (nullable) is None
+        # and model_fields_set contains the field
+        if self.sirius_version is None and "sirius_version" in self.model_fields_set:
+            _dict['siriusVersion'] = None
+
+        # set to None if latest_sirius_version (nullable) is None
+        # and model_fields_set contains the field
+        if self.latest_sirius_version is None and "latest_sirius_version" in self.model_fields_set:
+            _dict['latestSiriusVersion'] = None
+
+        # set to None if latest_sirius_link (nullable) is None
+        # and model_fields_set contains the field
+        if self.latest_sirius_link is None and "latest_sirius_link" in self.model_fields_set:
+            _dict['latestSiriusLink'] = None
+
+        # set to None if sirius_lib_version (nullable) is None
+        # and model_fields_set contains the field
+        if self.sirius_lib_version is None and "sirius_lib_version" in self.model_fields_set:
+            _dict['siriusLibVersion'] = None
+
+        # set to None if finger_id_lib_version (nullable) is None
+        # and model_fields_set contains the field
+        if self.finger_id_lib_version is None and "finger_id_lib_version" in self.model_fields_set:
+            _dict['fingerIdLibVersion'] = None
+
+        # set to None if chem_db_version (nullable) is None
+        # and model_fields_set contains the field
+        if self.chem_db_version is None and "chem_db_version" in self.model_fields_set:
+            _dict['chemDbVersion'] = None
+
+        # set to None if finger_id_model_version (nullable) is None
+        # and model_fields_set contains the field
+        if self.finger_id_model_version is None and "finger_id_model_version" in self.model_fields_set:
+            _dict['fingerIdModelVersion'] = None
+
+        # set to None if fingerprint_id (nullable) is None
+        # and model_fields_set contains the field
+        if self.fingerprint_id is None and "fingerprint_id" in self.model_fields_set:
+            _dict['fingerprintId'] = None
+
         return _dict
 
     @classmethod

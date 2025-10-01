@@ -446,7 +446,7 @@ with PySirius.ApiClient(configuration) as api_client:
     database_id = 'database_id_example' # str | database to import into
     input_files = None # List[bytearray] | files to be imported
     buffer_size = 1000 # int |  (optional) (default to 1000)
-    bio_transformer_parameters = PySirius.BioTransformerParameters() # BioTransformerParameters | configuration for biotransformer execution. If null, BioTransformer is not applied. (optional)
+    bio_transformer_parameters = PySirius.BioTransformerParameters() # BioTransformerParameters |  (optional)
 
     try:
         # Start import of structure and spectra files into the specified database.
@@ -467,7 +467,7 @@ Name | Type | Description  | Notes
  **database_id** | **str**| database to import into | 
  **input_files** | **List[bytearray]**| files to be imported | 
  **buffer_size** | **int**|  | [optional] [default to 1000]
- **bio_transformer_parameters** | [**BioTransformerParameters**](BioTransformerParameters.md)| configuration for biotransformer execution. If null, BioTransformer is not applied. | [optional] 
+ **bio_transformer_parameters** | [**BioTransformerParameters**](BioTransformerParameters.md)|  | [optional] 
 
 ### Return type
 

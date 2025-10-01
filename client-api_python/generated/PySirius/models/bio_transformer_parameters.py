@@ -27,8 +27,8 @@ class BioTransformerParameters(BaseModel):
     """
     BioTransformerParameters
     """ # noqa: E501
-    cyp450_mode: Cyp450Mode = Field(description="Specify the Phase I/Cyp450 mode for all provided BioTransformerSequenceSteps. Will only be applied to Steps that  require the Cyp450 mode as parameter. Can be null in cases where only BioTransformerSequenceSteps are specified  that do not need the Cyp450 mode.", alias="cyp450Mode")
-    p2_mode: P2Mode = Field(description="Specify the Phase II mode for all provided BioTransformerSequenceSteps. Will only be applied to Steps that  require the Phase II mode  as parameter. Can be null in cases where only BioTransformerSequenceSteps are specified  that do not need the Phase II mode.", alias="p2Mode")
+    cyp450_mode: Optional[Cyp450Mode] = Field(alias="cyp450Mode")
+    p2_mode: Optional[P2Mode] = Field(alias="p2Mode")
     use_db: Optional[StrictBool] = Field(default=True, description="\"Specify if you want to enable the retrieving from database (HMDB) feature.\"", alias="useDB")
     bio_transformer_sequence_steps: List[BioTransformerSequenceStep] = Field(description="Specify BioTransformerSequenceSteps to be applied to input structures. MultiStep MetabolicTransformations can  only be used as singletons (list size of one).", alias="bioTransformerSequenceSteps")
     __properties: ClassVar[List[str]] = ["cyp450Mode", "p2Mode", "useDB", "bioTransformerSequenceSteps"]
@@ -79,6 +79,16 @@ class BioTransformerParameters(BaseModel):
                 if _item_bio_transformer_sequence_steps:
                     _items.append(_item_bio_transformer_sequence_steps.to_dict())
             _dict['bioTransformerSequenceSteps'] = _items
+        # set to None if cyp450_mode (nullable) is None
+        # and model_fields_set contains the field
+        if self.cyp450_mode is None and "cyp450_mode" in self.model_fields_set:
+            _dict['cyp450Mode'] = None
+
+        # set to None if p2_mode (nullable) is None
+        # and model_fields_set contains the field
+        if self.p2_mode is None and "p2_mode" in self.model_fields_set:
+            _dict['p2Mode'] = None
+
         return _dict
 
     @classmethod
@@ -91,8 +101,8 @@ class BioTransformerParameters(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "cyp450Mode": obj.get("cyp450Mode"),
-            "p2Mode": obj.get("p2Mode"),
+            "cyp450Mode": obj.get("cyp450Mode") if obj.get("cyp450Mode") is not None else Cyp450Mode.COMBINED,
+            "p2Mode": obj.get("p2Mode") if obj.get("p2Mode") is not None else P2Mode.BT_RULE_BASED,
             "useDB": obj.get("useDB") if obj.get("useDB") is not None else True,
             "bioTransformerSequenceSteps": [BioTransformerSequenceStep.from_dict(_item) for _item in obj["bioTransformerSequenceSteps"]] if obj.get("bioTransformerSequenceSteps") is not None else None
         })

@@ -78,6 +78,51 @@ class SearchableDatabase(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if display_name (nullable) is None
+        # and model_fields_set contains the field
+        if self.display_name is None and "display_name" in self.model_fields_set:
+            _dict['displayName'] = None
+
+        # set to None if location (nullable) is None
+        # and model_fields_set contains the field
+        if self.location is None and "location" in self.model_fields_set:
+            _dict['location'] = None
+
+        # set to None if match_rt_of_reference_spectra (nullable) is None
+        # and model_fields_set contains the field
+        if self.match_rt_of_reference_spectra is None and "match_rt_of_reference_spectra" in self.model_fields_set:
+            _dict['matchRtOfReferenceSpectra'] = None
+
+        # set to None if db_date (nullable) is None
+        # and model_fields_set contains the field
+        if self.db_date is None and "db_date" in self.model_fields_set:
+            _dict['dbDate'] = None
+
+        # set to None if db_version (nullable) is None
+        # and model_fields_set contains the field
+        if self.db_version is None and "db_version" in self.model_fields_set:
+            _dict['dbVersion'] = None
+
+        # set to None if number_of_structures (nullable) is None
+        # and model_fields_set contains the field
+        if self.number_of_structures is None and "number_of_structures" in self.model_fields_set:
+            _dict['numberOfStructures'] = None
+
+        # set to None if number_of_formulas (nullable) is None
+        # and model_fields_set contains the field
+        if self.number_of_formulas is None and "number_of_formulas" in self.model_fields_set:
+            _dict['numberOfFormulas'] = None
+
+        # set to None if number_of_reference_spectra (nullable) is None
+        # and model_fields_set contains the field
+        if self.number_of_reference_spectra is None and "number_of_reference_spectra" in self.model_fields_set:
+            _dict['numberOfReferenceSpectra'] = None
+
+        # set to None if error_message (nullable) is None
+        # and model_fields_set contains the field
+        if self.error_message is None and "error_message" in self.model_fields_set:
+            _dict['errorMessage'] = None
+
         return _dict
 
     @classmethod

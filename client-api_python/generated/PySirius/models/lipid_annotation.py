@@ -70,6 +70,31 @@ class LipidAnnotation(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if lipid_species (nullable) is None
+        # and model_fields_set contains the field
+        if self.lipid_species is None and "lipid_species" in self.model_fields_set:
+            _dict['lipidSpecies'] = None
+
+        # set to None if lipid_maps_id (nullable) is None
+        # and model_fields_set contains the field
+        if self.lipid_maps_id is None and "lipid_maps_id" in self.model_fields_set:
+            _dict['lipidMapsId'] = None
+
+        # set to None if lipid_class_name (nullable) is None
+        # and model_fields_set contains the field
+        if self.lipid_class_name is None and "lipid_class_name" in self.model_fields_set:
+            _dict['lipidClassName'] = None
+
+        # set to None if hypothetical_structure (nullable) is None
+        # and model_fields_set contains the field
+        if self.hypothetical_structure is None and "hypothetical_structure" in self.model_fields_set:
+            _dict['hypotheticalStructure'] = None
+
+        # set to None if chains_unknown (nullable) is None
+        # and model_fields_set contains the field
+        if self.chains_unknown is None and "chains_unknown" in self.model_fields_set:
+            _dict['chainsUnknown'] = None
+
         return _dict
 
     @classmethod
