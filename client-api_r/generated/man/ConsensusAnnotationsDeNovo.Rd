@@ -34,7 +34,7 @@ df
 \describe{
 \item{\code{molecularFormula}}{Molecular formula of the consensus annotation  Might be null if no consensus formula is available. character [optional]}
 
-\item{\code{compoundClasses}}{Compound classes (predicted with CANOPUS) corresponding to the molecularFormula  Might be null if no fingerprints or compound classes are available. \link{CompoundClasses} [optional]}
+\item{\code{compoundClasses}}{\link{CompoundClasses} [optional]}
 
 \item{\code{supportingFeatureIds}}{FeatureIds where the topAnnotation supports this annotation. list(character) [optional]}
 
@@ -80,7 +80,7 @@ Initialize a new ConsensusAnnotationsDeNovo class.
 \describe{
 \item{\code{molecularFormula}}{Molecular formula of the consensus annotation  Might be null if no consensus formula is available.}
 
-\item{\code{compoundClasses}}{Compound classes (predicted with CANOPUS) corresponding to the molecularFormula  Might be null if no fingerprints or compound classes are available.}
+\item{\code{compoundClasses}}{compoundClasses}
 
 \item{\code{supportingFeatureIds}}{FeatureIds where the topAnnotation supports this annotation.}
 

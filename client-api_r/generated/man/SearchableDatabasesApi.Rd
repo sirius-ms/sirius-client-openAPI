@@ -109,7 +109,7 @@ library(Rsirius)
 var_database_id <- "database_id_example" # character | database to import into
 var_input_files <- c(123) # array[data.frame] | files to be imported
 var_buffer_size <- 1000 # integer |  (Optional)
-var_bio_transformer_parameters <- BioTransformerParameters$new("RULE_BASED", "BT_RULE_BASED", c(BioTransformerSequenceStep$new("PHASE_1_CYP450", 123)), "useDB_example") # BioTransformerParameters | configuration for biotransformer execution. If null, BioTransformer is not applied. (Optional)
+var_bio_transformer_parameters <- BioTransformerParameters$new("RULE_BASED", "BT_RULE_BASED", c(BioTransformerSequenceStep$new("PHASE_1_CYP450", 123)), "useDB_example") # BioTransformerParameters |  (Optional)
 
 #Start import of structure and spectra files into the specified database.
 api_instance <- rsirius_api$new()
@@ -567,7 +567,7 @@ Start import of structure and spectra files into the specified database.
 
 \item{\code{buffer_size}}{(optional) No description (default value: 1000)}
 
-\item{\code{bio_transformer_parameters}}{(optional) configuration for biotransformer execution. If null, BioTransformer is not applied.}
+\item{\code{bio_transformer_parameters}}{(optional) No description}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 
@@ -604,7 +604,7 @@ Start import of structure and spectra files into the specified database.
 
 \item{\code{buffer_size}}{(optional) No description (default value: 1000)}
 
-\item{\code{bio_transformer_parameters}}{(optional) configuration for biotransformer execution. If null, BioTransformer is not applied.}
+\item{\code{bio_transformer_parameters}}{(optional) No description}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 

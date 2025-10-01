@@ -42,7 +42,7 @@ dput(result)
 library(Rsirius)
 var_project_id <- "project_id_example" # character | project-space to add to.
 var_tag_name <- "tag_name_example" # character | the tag definition to add the values to
-var_request_body <- c(TODO) # array[AnyType] | 
+var_request_body <- c(123) # array[object] | 
 
 #[EXPERIMENTAL] Add a possible value to the tag definition in the project
 api_instance <- rsirius_api$new()
@@ -57,7 +57,7 @@ dput(result)
 
 library(Rsirius)
 var_project_id <- "project_id_example" # character | project-space to add to.
-var_tag_definition_import <- c(TagDefinitionImport$new("tagName_example", "NONE", "description_example", "tagType_example", c(TODO), TODO, TODO)) # array[TagDefinitionImport] | the tag definitions to be created
+var_tag_definition_import <- c(TagDefinitionImport$new("tagName_example", "NONE", "description_example", "tagType_example", c(123), 123, 123)) # array[TagDefinitionImport] | the tag definitions to be created
 
 #[EXPERIMENTAL] Add tags to the project
 api_instance <- rsirius_api$new()

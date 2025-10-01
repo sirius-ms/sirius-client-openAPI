@@ -54,7 +54,7 @@ df
 
 \item{\code{mcesDistToTopHit}}{Maximum Common Edge Subgraph (MCES) distance to the top scoring hit (CSI:FingerID) in a candidate list. numeric [optional]}
 
-\item{\code{fingerprint}}{Array containing the indices of the molecular fingerprint that are available in the structure (1 if present)  OPTIONAL: needs to be added by parameter \link{BinaryFingerprint} [optional]}
+\item{\code{fingerprint}}{\link{BinaryFingerprint} [optional]}
 }
 \if{html}{\out{</div>}}
 }
@@ -124,7 +124,7 @@ Initialize a new StructureCandidateScored class.
 
 \item{\code{mcesDistToTopHit}}{Maximum Common Edge Subgraph (MCES) distance to the top scoring hit (CSI:FingerID) in a candidate list.}
 
-\item{\code{fingerprint}}{Array containing the indices of the molecular fingerprint that are available in the structure (1 if present)  OPTIONAL: needs to be added by parameter}
+\item{\code{fingerprint}}{fingerprint}
 
 \item{\code{...}}{Other optional arguments.}
 }

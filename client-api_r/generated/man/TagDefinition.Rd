@@ -40,11 +40,11 @@ df
 
 \item{\code{valueType}}{character}
 
-\item{\code{possibleValues}}{list(\link{AnyType}) [optional]}
+\item{\code{possibleValues}}{list(object) [optional]}
 
-\item{\code{minValue}}{\link{AnyType} [optional]}
+\item{\code{minValue}}{object [optional]}
 
-\item{\code{maxValue}}{\link{AnyType} [optional]}
+\item{\code{maxValue}}{object [optional]}
 
 \item{\code{editable}}{character [optional]}
 }

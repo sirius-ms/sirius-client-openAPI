@@ -36,7 +36,7 @@ df
 
 \item{\code{command}}{Command string of the executed Task character [optional]}
 
-\item{\code{progress}}{Optional progress information of this job \link{JobProgress} [optional]}
+\item{\code{progress}}{\link{JobProgress} [optional]}
 
 \item{\code{affectedCompoundIds}}{List of compoundIds that are affected by this job.  This lis will also contain compoundIds where not all features of the compound are affected by the job.  If this job is creating compounds (e.g. data import jobs) this value will be NULL until the jobs has finished list(character) [optional]}
 
@@ -88,7 +88,7 @@ Initialize a new Job class.
 
 \item{\code{command}}{Command string of the executed Task}
 
-\item{\code{progress}}{Optional progress information of this job}
+\item{\code{progress}}{progress}
 
 \item{\code{affectedCompoundIds}}{List of compoundIds that are affected by this job.  This lis will also contain compoundIds where not all features of the compound are affected by the job.  If this job is creating compounds (e.g. data import jobs) this value will be NULL until the jobs has finished}
 

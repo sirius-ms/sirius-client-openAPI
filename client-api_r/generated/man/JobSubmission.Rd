@@ -44,19 +44,19 @@ df
 
 \item{\code{recompute}}{Indicate if already existing result for a tool to be executed should be overwritten or not. character [optional]}
 
-\item{\code{spectraSearchParams}}{Parameter Object for spectral library search tool (CLI-Tool: spectra-search).  Library search results can be used to enhance formula search results  If NULL the tool will not be executed. \link{SpectralLibrarySearch} [optional]}
+\item{\code{spectraSearchParams}}{\link{SpectralLibrarySearch} [optional]}
 
-\item{\code{formulaIdParams}}{Parameter Object for molecular formula identification tool (CLI-Tool: formula, sirius).  If NULL the tool will not be executed. \link{Sirius} [optional]}
+\item{\code{formulaIdParams}}{\link{Sirius} [optional]}
 
-\item{\code{zodiacParams}}{Parameter Object for network  based molecular formula re-ranking (CLI-Tool: zodiac).  If NULL the tool will not be executed. \link{Zodiac} [optional]}
+\item{\code{zodiacParams}}{\link{Zodiac} [optional]}
 
-\item{\code{fingerprintPredictionParams}}{Parameter Object for Fingerprint prediction with CSI:FingerID (CLI-Tool: fingerint).  If NULL the tool will not be executed. \link{FingerprintPrediction} [optional]}
+\item{\code{fingerprintPredictionParams}}{\link{FingerprintPrediction} [optional]}
 
-\item{\code{canopusParams}}{Parameter Object for CANOPUS compound class prediction tool (CLI-Tool: canopus).  If NULL the tool will not be executed. \link{Canopus} [optional]}
+\item{\code{canopusParams}}{\link{Canopus} [optional]}
 
-\item{\code{structureDbSearchParams}}{Parameter Object for structure database search with CSI:FingerID (CLI-Tool: structure).  If NULL the tool will not be executed. \link{StructureDbSearch} [optional]}
+\item{\code{structureDbSearchParams}}{\link{StructureDbSearch} [optional]}
 
-\item{\code{msNovelistParams}}{Parameter Object for MsNovelist DeNovo structure generation (CLI-Tool: msnovelist)  If NULL the tool will not be executed. \link{MsNovelist} [optional]}
+\item{\code{msNovelistParams}}{\link{MsNovelist} [optional]}
 
 \item{\code{configMap}}{As an alternative to the object based parameters, this map allows to store key value pairs  of ALL SIRIUS parameters. All possible parameters can be retrieved from SIRIUS via the respective endpoint. named list(character) [optional]}
 }
@@ -120,19 +120,19 @@ Initialize a new JobSubmission class.
 
 \item{\code{recompute}}{Indicate if already existing result for a tool to be executed should be overwritten or not.}
 
-\item{\code{spectraSearchParams}}{Parameter Object for spectral library search tool (CLI-Tool: spectra-search).  Library search results can be used to enhance formula search results  If NULL the tool will not be executed.}
+\item{\code{spectraSearchParams}}{spectraSearchParams}
 
-\item{\code{formulaIdParams}}{Parameter Object for molecular formula identification tool (CLI-Tool: formula, sirius).  If NULL the tool will not be executed.}
+\item{\code{formulaIdParams}}{formulaIdParams}
 
-\item{\code{zodiacParams}}{Parameter Object for network  based molecular formula re-ranking (CLI-Tool: zodiac).  If NULL the tool will not be executed.}
+\item{\code{zodiacParams}}{zodiacParams}
 
-\item{\code{fingerprintPredictionParams}}{Parameter Object for Fingerprint prediction with CSI:FingerID (CLI-Tool: fingerint).  If NULL the tool will not be executed.}
+\item{\code{fingerprintPredictionParams}}{fingerprintPredictionParams}
 
-\item{\code{canopusParams}}{Parameter Object for CANOPUS compound class prediction tool (CLI-Tool: canopus).  If NULL the tool will not be executed.}
+\item{\code{canopusParams}}{canopusParams}
 
-\item{\code{structureDbSearchParams}}{Parameter Object for structure database search with CSI:FingerID (CLI-Tool: structure).  If NULL the tool will not be executed.}
+\item{\code{structureDbSearchParams}}{structureDbSearchParams}
 
-\item{\code{msNovelistParams}}{Parameter Object for MsNovelist DeNovo structure generation (CLI-Tool: msnovelist)  If NULL the tool will not be executed.}
+\item{\code{msNovelistParams}}{msNovelistParams}
 
 \item{\code{configMap}}{As an alternative to the object based parameters, this map allows to store key value pairs  of ALL SIRIUS parameters. All possible parameters can be retrieved from SIRIUS via the respective endpoint.}
 

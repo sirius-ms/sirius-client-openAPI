@@ -43,7 +43,7 @@ dput(result)
 library(Rsirius)
 var_project_id <- "project_id_example" # character | project-space to add to.
 var_compound_id <- "compound_id_example" # character | compound (group of ion identities) to add tags to.
-var_tag <- c(Tag$new("tagName_example", TODO)) # array[Tag] | tags to add.
+var_tag <- c(Tag$new("tagName_example", 123)) # array[Tag] | tags to add.
 
 #[EXPERIMENTAL] Tags with the same name will be overwritten
 api_instance <- rsirius_api$new()
@@ -303,8 +303,8 @@ Import Compounds and its contained features.
   project_id,
   compound_import,
   profile = NULL,
-  opt_fields = list(NULL),
-  opt_fields_features = list(NULL),
+  opt_fields = list("none"),
+  opt_fields_features = list("none"),
   data_file = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -319,9 +319,9 @@ Import Compounds and its contained features.
 
 \item{\code{profile}}{(optional) profile describing the instrument used to measure the data. Used to merge spectra.}
 
-\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' to override defaults. (default value: [none])}
+\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' to override defaults. (default value: ["none"])}
 
-\item{\code{opt_fields_features}}{(optional) set of optional fields of the nested features to be included. Use 'none' to override defaults. (default value: [none])}
+\item{\code{opt_fields_features}}{(optional) set of optional fields of the nested features to be included. Use 'none' to override defaults. (default value: ["none"])}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 
@@ -343,8 +343,8 @@ Import Compounds and its contained features.
   project_id,
   compound_import,
   profile = NULL,
-  opt_fields = list(NULL),
-  opt_fields_features = list(NULL),
+  opt_fields = list("none"),
+  opt_fields_features = list("none"),
   data_file = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -359,9 +359,9 @@ Import Compounds and its contained features.
 
 \item{\code{profile}}{(optional) profile describing the instrument used to measure the data. Used to merge spectra.}
 
-\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' to override defaults. (default value: [none])}
+\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' to override defaults. (default value: ["none"])}
 
-\item{\code{opt_fields_features}}{(optional) set of optional fields of the nested features to be included. Use 'none' to override defaults. (default value: [none])}
+\item{\code{opt_fields_features}}{(optional) set of optional fields of the nested features to be included. Use 'none' to override defaults. (default value: ["none"])}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 
@@ -499,8 +499,8 @@ Get compound (group of ion identities) with the given identifier from the specif
   project_id,
   compound_id,
   ms_data_search_prepared = FALSE,
-  opt_fields = list(NULL),
-  opt_fields_features = list(NULL),
+  opt_fields = list("none"),
+  opt_fields_features = list("none"),
   data_file = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -515,9 +515,9 @@ Get compound (group of ion identities) with the given identifier from the specif
 
 \item{\code{ms_data_search_prepared}}{(optional) Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. (default value: FALSE)}
 
-\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [none])}
+\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])}
 
-\item{\code{opt_fields_features}}{(optional) No description (default value: [none])}
+\item{\code{opt_fields_features}}{(optional) No description (default value: ["none"])}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 
@@ -539,8 +539,8 @@ Get compound (group of ion identities) with the given identifier from the specif
   project_id,
   compound_id,
   ms_data_search_prepared = FALSE,
-  opt_fields = list(NULL),
-  opt_fields_features = list(NULL),
+  opt_fields = list("none"),
+  opt_fields_features = list("none"),
   data_file = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -555,9 +555,9 @@ Get compound (group of ion identities) with the given identifier from the specif
 
 \item{\code{ms_data_search_prepared}}{(optional) Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. (default value: FALSE)}
 
-\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [none])}
+\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])}
 
-\item{\code{opt_fields_features}}{(optional) No description (default value: [none])}
+\item{\code{opt_fields_features}}{(optional) No description (default value: ["none"])}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 
@@ -853,7 +853,7 @@ API response (array[Compound]) with additional information such as HTTP status c
   page = 0,
   size = 20,
   sort = NULL,
-  opt_fields = list(NULL),
+  opt_fields = list("none"),
   data_file = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -872,7 +872,7 @@ API response (array[Compound]) with additional information such as HTTP status c
 
 \item{\code{sort}}{(optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.}
 
-\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [none])}
+\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 
@@ -896,7 +896,7 @@ PagedModelCompound
   page = 0,
   size = 20,
   sort = NULL,
-  opt_fields = list(NULL),
+  opt_fields = list("none"),
   data_file = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -915,7 +915,7 @@ PagedModelCompound
 
 \item{\code{sort}}{(optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.}
 
-\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [none])}
+\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 
@@ -1025,8 +1025,8 @@ Page of available compounds (group of ion identities) in the given project-space
   size = 20,
   sort = NULL,
   ms_data_search_prepared = FALSE,
-  opt_fields = list(NULL),
-  opt_fields_features = list(NULL),
+  opt_fields = list("none"),
+  opt_fields_features = list("none"),
   data_file = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -1045,9 +1045,9 @@ Page of available compounds (group of ion identities) in the given project-space
 
 \item{\code{ms_data_search_prepared}}{(optional) Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. (default value: FALSE)}
 
-\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [none])}
+\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])}
 
-\item{\code{opt_fields_features}}{(optional) No description (default value: [none])}
+\item{\code{opt_fields_features}}{(optional) No description (default value: ["none"])}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 
@@ -1071,8 +1071,8 @@ Page of available compounds (group of ion identities) in the given project-space
   size = 20,
   sort = NULL,
   ms_data_search_prepared = FALSE,
-  opt_fields = list(NULL),
-  opt_fields_features = list(NULL),
+  opt_fields = list("none"),
+  opt_fields_features = list("none"),
   data_file = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -1091,9 +1091,9 @@ Page of available compounds (group of ion identities) in the given project-space
 
 \item{\code{ms_data_search_prepared}}{(optional) Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. (default value: FALSE)}
 
-\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [none])}
+\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])}
 
-\item{\code{opt_fields_features}}{(optional) No description (default value: [none])}
+\item{\code{opt_fields_features}}{(optional) No description (default value: ["none"])}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 

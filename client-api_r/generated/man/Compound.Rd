@@ -44,11 +44,11 @@ df
 
 \item{\code{features}}{List of aligned features (adducts) that belong to the same (this) compound list(\link{AlignedFeature}) [optional]}
 
-\item{\code{consensusAnnotations}}{The consensus of the top annotations from all the features of this compound.  Null if it was not requested und non-null otherwise. Might contain empty fields if results are not available \link{ConsensusAnnotationsCSI} [optional]}
+\item{\code{consensusAnnotations}}{\link{ConsensusAnnotationsCSI} [optional]}
 
-\item{\code{consensusAnnotationsDeNovo}}{The consensus of the top de novo annotations from all the features of this compound.  Null if it was not requested und non-null otherwise. Might contain empty fields if results are not available \link{ConsensusAnnotationsDeNovo} [optional]}
+\item{\code{consensusAnnotationsDeNovo}}{\link{ConsensusAnnotationsDeNovo} [optional]}
 
-\item{\code{customAnnotations}}{Alternative annotations selected by the User. \link{ConsensusAnnotationsCSI} [optional]}
+\item{\code{customAnnotations}}{\link{ConsensusAnnotationsCSI} [optional]}
 
 \item{\code{tags}}{Key: tagName, value: tag named list(\link{Tag}) [optional]}
 }
@@ -108,11 +108,11 @@ Initialize a new Compound class.
 
 \item{\code{features}}{List of aligned features (adducts) that belong to the same (this) compound}
 
-\item{\code{consensusAnnotations}}{The consensus of the top annotations from all the features of this compound.  Null if it was not requested und non-null otherwise. Might contain empty fields if results are not available}
+\item{\code{consensusAnnotations}}{consensusAnnotations}
 
-\item{\code{consensusAnnotationsDeNovo}}{The consensus of the top de novo annotations from all the features of this compound.  Null if it was not requested und non-null otherwise. Might contain empty fields if results are not available}
+\item{\code{consensusAnnotationsDeNovo}}{consensusAnnotationsDeNovo}
 
-\item{\code{customAnnotations}}{Alternative annotations selected by the User.}
+\item{\code{customAnnotations}}{customAnnotations}
 
 \item{\code{tags}}{Key: tagName, value: tag}
 

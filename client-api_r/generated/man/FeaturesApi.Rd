@@ -58,7 +58,7 @@ dput(result)
 library(Rsirius)
 var_project_id <- "project_id_example" # character | project-space to add to.
 var_aligned_feature_id <- "aligned_feature_id_example" # character | run to add tags to.
-var_tag <- c(Tag$new("tagName_example", TODO)) # array[Tag] | tags to add.
+var_tag <- c(Tag$new("tagName_example", 123)) # array[Tag] | tags to add.
 
 #[EXPERIMENTAL] Add tags to a feature (aligned over runs) in the project
 api_instance <- rsirius_api$new()
@@ -894,7 +894,7 @@ Import (aligned) features into the project.
   project_id,
   feature_import,
   profile = NULL,
-  opt_fields = list(NULL),
+  opt_fields = list("none"),
   data_file = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -909,7 +909,7 @@ Import (aligned) features into the project.
 
 \item{\code{profile}}{(optional) profile describing the instrument used to measure the data. Used to merge spectra.}
 
-\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' to override defaults. (default value: [none])}
+\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' to override defaults. (default value: ["none"])}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 
@@ -931,7 +931,7 @@ Import (aligned) features into the project.
   project_id,
   feature_import,
   profile = NULL,
-  opt_fields = list(NULL),
+  opt_fields = list("none"),
   data_file = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -946,7 +946,7 @@ Import (aligned) features into the project.
 
 \item{\code{profile}}{(optional) profile describing the instrument used to measure the data. Used to merge spectra.}
 
-\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' to override defaults. (default value: [none])}
+\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' to override defaults. (default value: ["none"])}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 
@@ -1266,7 +1266,7 @@ Get feature (aligned over runs) with the given identifier from the specified pro
   project_id,
   aligned_feature_id,
   ms_data_search_prepared = FALSE,
-  opt_fields = list(NULL),
+  opt_fields = list("none"),
   data_file = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -1281,7 +1281,7 @@ Get feature (aligned over runs) with the given identifier from the specified pro
 
 \item{\code{ms_data_search_prepared}}{(optional) Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. (default value: FALSE)}
 
-\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [none])}
+\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 
@@ -1303,7 +1303,7 @@ Get feature (aligned over runs) with the given identifier from the specified pro
   project_id,
   aligned_feature_id,
   ms_data_search_prepared = FALSE,
-  opt_fields = list(NULL),
+  opt_fields = list("none"),
   data_file = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -1318,7 +1318,7 @@ Get feature (aligned over runs) with the given identifier from the specified pro
 
 \item{\code{ms_data_search_prepared}}{(optional) Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. (default value: FALSE)}
 
-\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [none])}
+\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 
@@ -1401,7 +1401,7 @@ Get all available features (aligned over runs) in the given project-space.
 \if{html}{\out{<div class="r">}}\preformatted{FeaturesApi$GetAlignedFeatures(
   project_id,
   ms_data_search_prepared = FALSE,
-  opt_fields = list(NULL),
+  opt_fields = list("none"),
   data_file = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -1414,7 +1414,7 @@ Get all available features (aligned over runs) in the given project-space.
 
 \item{\code{ms_data_search_prepared}}{(optional) Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. (default value: FALSE)}
 
-\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [none])}
+\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 
@@ -1435,7 +1435,7 @@ Get all available features (aligned over runs) in the given project-space.
 \if{html}{\out{<div class="r">}}\preformatted{FeaturesApi$GetAlignedFeaturesWithHttpInfo(
   project_id,
   ms_data_search_prepared = FALSE,
-  opt_fields = list(NULL),
+  opt_fields = list("none"),
   data_file = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -1448,7 +1448,7 @@ Get all available features (aligned over runs) in the given project-space.
 
 \item{\code{ms_data_search_prepared}}{(optional) Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. (default value: FALSE)}
 
-\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [none])}
+\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 
@@ -1472,7 +1472,7 @@ API response (array[AlignedFeature]) with additional information such as HTTP st
   page = 0,
   size = 20,
   sort = NULL,
-  opt_fields = list(NULL),
+  opt_fields = list("none"),
   data_file = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -1491,7 +1491,7 @@ API response (array[AlignedFeature]) with additional information such as HTTP st
 
 \item{\code{sort}}{(optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.}
 
-\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [none])}
+\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 
@@ -1515,7 +1515,7 @@ PagedModelAlignedFeature
   page = 0,
   size = 20,
   sort = NULL,
-  opt_fields = list(NULL),
+  opt_fields = list("none"),
   data_file = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -1534,7 +1534,7 @@ PagedModelAlignedFeature
 
 \item{\code{sort}}{(optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.}
 
-\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [none])}
+\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 
@@ -1644,7 +1644,7 @@ Get all available features (aligned over runs) in the given project-space.
   size = 20,
   sort = NULL,
   ms_data_search_prepared = FALSE,
-  opt_fields = list(NULL),
+  opt_fields = list("none"),
   data_file = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -1663,7 +1663,7 @@ Get all available features (aligned over runs) in the given project-space.
 
 \item{\code{ms_data_search_prepared}}{(optional) Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. (default value: FALSE)}
 
-\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [none])}
+\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 
@@ -1687,7 +1687,7 @@ Get all available features (aligned over runs) in the given project-space.
   size = 20,
   sort = NULL,
   ms_data_search_prepared = FALSE,
-  opt_fields = list(NULL),
+  opt_fields = list("none"),
   data_file = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -1706,7 +1706,7 @@ Get all available features (aligned over runs) in the given project-space.
 
 \item{\code{ms_data_search_prepared}}{(optional) Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. (default value: FALSE)}
 
-\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [none])}
+\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 
@@ -1932,7 +1932,7 @@ List of de novo structure candidates (e.g. generated by MsNovelist) ranked by CS
   project_id,
   aligned_feature_id,
   formula_id,
-  opt_fields = list(NULL),
+  opt_fields = list("none"),
   data_file = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -1947,7 +1947,7 @@ List of de novo structure candidates (e.g. generated by MsNovelist) ranked by CS
 
 \item{\code{formula_id}}{identifier of the requested formula result}
 
-\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [none])}
+\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 
@@ -1969,7 +1969,7 @@ List of de novo structure candidates (e.g. generated by MsNovelist) ranked by CS
   project_id,
   aligned_feature_id,
   formula_id,
-  opt_fields = list(NULL),
+  opt_fields = list("none"),
   data_file = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -1984,7 +1984,7 @@ List of de novo structure candidates (e.g. generated by MsNovelist) ranked by CS
 
 \item{\code{formula_id}}{identifier of the requested formula result}
 
-\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [none])}
+\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 
@@ -2009,7 +2009,7 @@ Page of de novo structure candidates (e.g. generated by MsNovelist) ranked by CS
   page = 0,
   size = 20,
   sort = NULL,
-  opt_fields = list(NULL),
+  opt_fields = list("none"),
   data_file = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -2030,7 +2030,7 @@ Page of de novo structure candidates (e.g. generated by MsNovelist) ranked by CS
 
 \item{\code{sort}}{(optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.}
 
-\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [none])}
+\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 
@@ -2055,7 +2055,7 @@ Page of de novo structure candidates (e.g. generated by MsNovelist) ranked by CS
   page = 0,
   size = 20,
   sort = NULL,
-  opt_fields = list(NULL),
+  opt_fields = list("none"),
   data_file = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -2076,7 +2076,7 @@ Page of de novo structure candidates (e.g. generated by MsNovelist) ranked by CS
 
 \item{\code{sort}}{(optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.}
 
-\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [none])}
+\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 
@@ -2100,7 +2100,7 @@ Page of de novo structure candidates (e.g. generated by MsNovelist) ranked by CS
   page = 0,
   size = 20,
   sort = NULL,
-  opt_fields = list(NULL),
+  opt_fields = list("none"),
   data_file = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -2119,7 +2119,7 @@ Page of de novo structure candidates (e.g. generated by MsNovelist) ranked by CS
 
 \item{\code{sort}}{(optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.}
 
-\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [none])}
+\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 
@@ -2143,7 +2143,7 @@ Page of de novo structure candidates (e.g. generated by MsNovelist) ranked by CS
   page = 0,
   size = 20,
   sort = NULL,
-  opt_fields = list(NULL),
+  opt_fields = list("none"),
   data_file = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -2162,7 +2162,7 @@ Page of de novo structure candidates (e.g. generated by MsNovelist) ranked by CS
 
 \item{\code{sort}}{(optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.}
 
-\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [none])}
+\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 
@@ -2469,7 +2469,7 @@ FormulaResultContainers for the given 'formulaId' with minimal information.
   aligned_feature_id,
   formula_id,
   ms_data_search_prepared = FALSE,
-  opt_fields = list(NULL),
+  opt_fields = list("none"),
   data_file = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -2486,7 +2486,7 @@ FormulaResultContainers for the given 'formulaId' with minimal information.
 
 \item{\code{ms_data_search_prepared}}{(optional) Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. (default value: FALSE)}
 
-\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [none])}
+\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 
@@ -2509,7 +2509,7 @@ FormulaResultContainers for the given 'formulaId' with minimal information.
   aligned_feature_id,
   formula_id,
   ms_data_search_prepared = FALSE,
-  opt_fields = list(NULL),
+  opt_fields = list("none"),
   data_file = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -2526,7 +2526,7 @@ FormulaResultContainers for the given 'formulaId' with minimal information.
 
 \item{\code{ms_data_search_prepared}}{(optional) Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. (default value: FALSE)}
 
-\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [none])}
+\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 
@@ -2625,7 +2625,7 @@ Page of FormulaResultContainers available for this feature with minimal informat
   size = 20,
   sort = NULL,
   ms_data_search_prepared = FALSE,
-  opt_fields = list(NULL),
+  opt_fields = list("none"),
   data_file = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -2646,7 +2646,7 @@ Page of FormulaResultContainers available for this feature with minimal informat
 
 \item{\code{ms_data_search_prepared}}{(optional) Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. (default value: FALSE)}
 
-\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [none])}
+\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 
@@ -2671,7 +2671,7 @@ Page of FormulaResultContainers available for this feature with minimal informat
   size = 20,
   sort = NULL,
   ms_data_search_prepared = FALSE,
-  opt_fields = list(NULL),
+  opt_fields = list("none"),
   data_file = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -2692,7 +2692,7 @@ Page of FormulaResultContainers available for this feature with minimal informat
 
 \item{\code{ms_data_search_prepared}}{(optional) Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. (default value: FALSE)}
 
-\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [none])}
+\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 
@@ -3054,7 +3054,7 @@ Spectral library match for the given 'alignedFeatureId'.
   project_id,
   aligned_feature_id,
   match_id,
-  opt_fields = list(NULL),
+  opt_fields = list("none"),
   data_file = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -3069,7 +3069,7 @@ Spectral library match for the given 'alignedFeatureId'.
 
 \item{\code{match_id}}{id of the library match to be returned.}
 
-\item{\code{opt_fields}}{(optional) No description (default value: [none])}
+\item{\code{opt_fields}}{(optional) No description (default value: ["none"])}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 
@@ -3091,7 +3091,7 @@ Spectral library match for the given 'alignedFeatureId'.
   project_id,
   aligned_feature_id,
   match_id,
-  opt_fields = list(NULL),
+  opt_fields = list("none"),
   data_file = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -3106,7 +3106,7 @@ Spectral library match for the given 'alignedFeatureId'.
 
 \item{\code{match_id}}{id of the library match to be returned.}
 
-\item{\code{opt_fields}}{(optional) No description (default value: [none])}
+\item{\code{opt_fields}}{(optional) No description (default value: ["none"])}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 
@@ -3219,7 +3219,7 @@ Page of spectral library matches for the given 'alignedFeatureId'.
   min_shared_peaks = 1,
   min_similarity = 0.2,
   inchi_key = "",
-  opt_fields = list(NULL),
+  opt_fields = list("none"),
   data_file = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -3244,7 +3244,7 @@ Page of spectral library matches for the given 'alignedFeatureId'.
 
 \item{\code{inchi_key}}{(optional) No description (default value: "")}
 
-\item{\code{opt_fields}}{(optional) No description (default value: [none])}
+\item{\code{opt_fields}}{(optional) No description (default value: ["none"])}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 
@@ -3271,7 +3271,7 @@ Page of spectral library matches for the given 'alignedFeatureId'.
   min_shared_peaks = 1,
   min_similarity = 0.2,
   inchi_key = "",
-  opt_fields = list(NULL),
+  opt_fields = list("none"),
   data_file = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -3296,7 +3296,7 @@ Page of spectral library matches for the given 'alignedFeatureId'.
 
 \item{\code{inchi_key}}{(optional) No description (default value: "")}
 
-\item{\code{opt_fields}}{(optional) No description (default value: [none])}
+\item{\code{opt_fields}}{(optional) No description (default value: ["none"])}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 
@@ -3631,7 +3631,7 @@ List of structure database search candidates ranked by CSI:FingerID score for th
 \if{html}{\out{<div class="r">}}\preformatted{FeaturesApi$GetStructureCandidates(
   project_id,
   aligned_feature_id,
-  opt_fields = list(NULL),
+  opt_fields = list("none"),
   data_file = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -3644,7 +3644,7 @@ List of structure database search candidates ranked by CSI:FingerID score for th
 
 \item{\code{aligned_feature_id}}{feature (aligned over runs) the structure candidates belong to.}
 
-\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [none])}
+\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 
@@ -3665,7 +3665,7 @@ List of structure database search candidates ranked by CSI:FingerID score for th
 \if{html}{\out{<div class="r">}}\preformatted{FeaturesApi$GetStructureCandidatesWithHttpInfo(
   project_id,
   aligned_feature_id,
-  opt_fields = list(NULL),
+  opt_fields = list("none"),
   data_file = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -3678,7 +3678,7 @@ List of structure database search candidates ranked by CSI:FingerID score for th
 
 \item{\code{aligned_feature_id}}{feature (aligned over runs) the structure candidates belong to.}
 
-\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [none])}
+\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 
@@ -3700,7 +3700,7 @@ List of CSI:FingerID structure database search candidates for the given 'formula
   project_id,
   aligned_feature_id,
   formula_id,
-  opt_fields = list(NULL),
+  opt_fields = list("none"),
   data_file = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -3715,7 +3715,7 @@ List of CSI:FingerID structure database search candidates for the given 'formula
 
 \item{\code{formula_id}}{identifier of the requested formula result}
 
-\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [none])}
+\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 
@@ -3737,7 +3737,7 @@ List of CSI:FingerID structure database search candidates for the given 'formula
   project_id,
   aligned_feature_id,
   formula_id,
-  opt_fields = list(NULL),
+  opt_fields = list("none"),
   data_file = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -3752,7 +3752,7 @@ List of CSI:FingerID structure database search candidates for the given 'formula
 
 \item{\code{formula_id}}{identifier of the requested formula result}
 
-\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [none])}
+\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 
@@ -3777,7 +3777,7 @@ Page of CSI:FingerID structure database search candidates for the given 'formula
   page = 0,
   size = 20,
   sort = NULL,
-  opt_fields = list(NULL),
+  opt_fields = list("none"),
   data_file = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -3798,7 +3798,7 @@ Page of CSI:FingerID structure database search candidates for the given 'formula
 
 \item{\code{sort}}{(optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.}
 
-\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [none])}
+\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 
@@ -3823,7 +3823,7 @@ Page of CSI:FingerID structure database search candidates for the given 'formula
   page = 0,
   size = 20,
   sort = NULL,
-  opt_fields = list(NULL),
+  opt_fields = list("none"),
   data_file = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -3844,7 +3844,7 @@ Page of CSI:FingerID structure database search candidates for the given 'formula
 
 \item{\code{sort}}{(optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.}
 
-\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [none])}
+\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 
@@ -3868,7 +3868,7 @@ Page of structure database search candidates ranked by CSI:FingerID score for th
   page = 0,
   size = 20,
   sort = NULL,
-  opt_fields = list(NULL),
+  opt_fields = list("none"),
   data_file = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -3887,7 +3887,7 @@ Page of structure database search candidates ranked by CSI:FingerID score for th
 
 \item{\code{sort}}{(optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.}
 
-\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [none])}
+\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 
@@ -3911,7 +3911,7 @@ Page of structure database search candidates ranked by CSI:FingerID score for th
   page = 0,
   size = 20,
   sort = NULL,
-  opt_fields = list(NULL),
+  opt_fields = list("none"),
   data_file = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -3930,7 +3930,7 @@ Page of structure database search candidates ranked by CSI:FingerID score for th
 
 \item{\code{sort}}{(optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.}
 
-\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [none])}
+\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 

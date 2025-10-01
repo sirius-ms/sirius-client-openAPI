@@ -138,7 +138,7 @@ Initialize a new CompoundStatisticsApi.
   right_group_name,
   aggregation = "AVG",
   quantification = "APEX_INTENSITY",
-  opt_fields = list(progress),
+  opt_fields = list("progress"),
   data_file = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -157,7 +157,7 @@ Initialize a new CompoundStatisticsApi.
 
 \item{\code{quantification}}{(optional) quantification type. (default value: "APEX_INTENSITY")}
 
-\item{\code{opt_fields}}{(optional) job opt fields. (default value: [progress])}
+\item{\code{opt_fields}}{(optional) job opt fields. (default value: ["progress"])}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 
@@ -181,7 +181,7 @@ Job
   right_group_name,
   aggregation = "AVG",
   quantification = "APEX_INTENSITY",
-  opt_fields = list(progress),
+  opt_fields = list("progress"),
   data_file = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -200,7 +200,7 @@ Job
 
 \item{\code{quantification}}{(optional) quantification type. (default value: "APEX_INTENSITY")}
 
-\item{\code{opt_fields}}{(optional) job opt fields. (default value: [progress])}
+\item{\code{opt_fields}}{(optional) job opt fields. (default value: ["progress"])}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 

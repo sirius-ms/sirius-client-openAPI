@@ -126,7 +126,7 @@ dput(result)
 library(Rsirius)
 var_project_id <- "project_id_example" # character | Project-space to import into.
 var_input_files <- c(123) # array[data.frame] | Files to import into project.
-var_parameters <- LcmsSubmissionParameters$new("alignLCMSRuns_example", 123, Deviation$new(123, 123), Deviation$new(123, 123), 123, 123) # LcmsSubmissionParameters | Parameters for feature alignment and feature finding.
+var_parameters <- LcmsSubmissionParameters$new("alignLCMSRuns_example", 123, Deviation$new(123, 123), Deviation$new(123, 123), 123, 123) # LcmsSubmissionParameters | 
 
 #Import and Align full MS-Runs from various formats into the specified project  Possible formats (mzML, mzXML)
 api_instance <- rsirius_api$new()
@@ -142,7 +142,7 @@ dput(result)
 library(Rsirius)
 var_project_id <- "project_id_example" # character | Project-space to import into.
 var_input_files <- c(123) # array[data.frame] | Files to import into project.
-var_parameters <- LcmsSubmissionParameters$new("alignLCMSRuns_example", 123, Deviation$new(123, 123), Deviation$new(123, 123), 123, 123) # LcmsSubmissionParameters | Parameters for feature alignment and feature finding.
+var_parameters <- LcmsSubmissionParameters$new("alignLCMSRuns_example", 123, Deviation$new(123, 123), Deviation$new(123, 123), 123, 123) # LcmsSubmissionParameters | 
 var_opt_fields <- c("none") # array[character] | Set of optional fields to be included. Use 'none' only to override defaults. (Optional)
 
 #Import and Align full MS-Runs from various formats into the specified project as background job.
@@ -319,7 +319,7 @@ Create and open a new project-space at given location and make it accessible via
 \if{html}{\out{<div class="r">}}\preformatted{ProjectsApi$CreateProject(
   project_id,
   path_to_project = NULL,
-  opt_fields = list(NULL),
+  opt_fields = list("none"),
   data_file = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -332,7 +332,7 @@ Create and open a new project-space at given location and make it accessible via
 
 \item{\code{path_to_project}}{(optional) local file path where the project will be created. If NULL, project will be stored by its projectId in default project location. DEPRECATED: This parameter relies on the local filesystem and will likely be removed in later versions of this API to allow for more flexible use cases.}
 
-\item{\code{opt_fields}}{(optional) No description (default value: [none])}
+\item{\code{opt_fields}}{(optional) No description (default value: ["none"])}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 
@@ -353,7 +353,7 @@ Create and open a new project-space at given location and make it accessible via
 \if{html}{\out{<div class="r">}}\preformatted{ProjectsApi$CreateProjectWithHttpInfo(
   project_id,
   path_to_project = NULL,
-  opt_fields = list(NULL),
+  opt_fields = list("none"),
   data_file = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -366,7 +366,7 @@ Create and open a new project-space at given location and make it accessible via
 
 \item{\code{path_to_project}}{(optional) local file path where the project will be created. If NULL, project will be stored by its projectId in default project location. DEPRECATED: This parameter relies on the local filesystem and will likely be removed in later versions of this API to allow for more flexible use cases.}
 
-\item{\code{opt_fields}}{(optional) No description (default value: [none])}
+\item{\code{opt_fields}}{(optional) No description (default value: ["none"])}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 
@@ -677,7 +677,7 @@ Import and Align full MS-Runs from various formats into the specified project  P
 
 \item{\code{input_files}}{Files to import into project.}
 
-\item{\code{parameters}}{Parameters for feature alignment and feature finding.}
+\item{\code{parameters}}{}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 
@@ -711,7 +711,7 @@ Import and Align full MS-Runs from various formats into the specified project  P
 
 \item{\code{input_files}}{Files to import into project.}
 
-\item{\code{parameters}}{Parameters for feature alignment and feature finding.}
+\item{\code{parameters}}{}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 
@@ -746,9 +746,9 @@ Import and Align full MS-Runs from various formats into the specified project as
 
 \item{\code{input_files}}{Files to import into project.}
 
-\item{\code{parameters}}{Parameters for feature alignment and feature finding.}
+\item{\code{parameters}}{}
 
-\item{\code{opt_fields}}{(optional) Set of optional fields to be included. Use 'none' only to override defaults. (default value: [progress])}
+\item{\code{opt_fields}}{(optional) Set of optional fields to be included. Use 'none' only to override defaults. (default value: ["progress"])}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 
@@ -783,9 +783,9 @@ Import and Align full MS-Runs from various formats into the specified project as
 
 \item{\code{input_files}}{Files to import into project.}
 
-\item{\code{parameters}}{Parameters for feature alignment and feature finding.}
+\item{\code{parameters}}{}
 
-\item{\code{opt_fields}}{(optional) Set of optional fields to be included. Use 'none' only to override defaults. (default value: [progress])}
+\item{\code{opt_fields}}{(optional) Set of optional fields to be included. Use 'none' only to override defaults. (default value: ["progress"])}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 
@@ -899,7 +899,7 @@ Import ms/ms data from the given format into the specified project-space as back
 
 \item{\code{allow_ms1_only}}{(optional) No description (default value: TRUE)}
 
-\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [progress])}
+\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["progress"])}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 
@@ -939,7 +939,7 @@ Import ms/ms data from the given format into the specified project-space as back
 
 \item{\code{allow_ms1_only}}{(optional) No description (default value: TRUE)}
 
-\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [progress])}
+\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["progress"])}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 
@@ -960,7 +960,7 @@ Open an existing project-space and make it accessible via the given projectId.
 \if{html}{\out{<div class="r">}}\preformatted{ProjectsApi$OpenProject(
   project_id,
   path_to_project = NULL,
-  opt_fields = list(NULL),
+  opt_fields = list("none"),
   data_file = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -973,7 +973,7 @@ Open an existing project-space and make it accessible via the given projectId.
 
 \item{\code{path_to_project}}{(optional) local file path to open the project from. If NULL, project will be loaded by it projectId from default project location.  DEPRECATED: This parameter relies on the local filesystem and will likely be removed in later versions of this API to allow for more flexible use cases.}
 
-\item{\code{opt_fields}}{(optional) No description (default value: [none])}
+\item{\code{opt_fields}}{(optional) No description (default value: ["none"])}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 
@@ -994,7 +994,7 @@ Open an existing project-space and make it accessible via the given projectId.
 \if{html}{\out{<div class="r">}}\preformatted{ProjectsApi$OpenProjectWithHttpInfo(
   project_id,
   path_to_project = NULL,
-  opt_fields = list(NULL),
+  opt_fields = list("none"),
   data_file = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -1007,7 +1007,7 @@ Open an existing project-space and make it accessible via the given projectId.
 
 \item{\code{path_to_project}}{(optional) local file path to open the project from. If NULL, project will be loaded by it projectId from default project location.  DEPRECATED: This parameter relies on the local filesystem and will likely be removed in later versions of this API to allow for more flexible use cases.}
 
-\item{\code{opt_fields}}{(optional) No description (default value: [none])}
+\item{\code{opt_fields}}{(optional) No description (default value: ["none"])}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 

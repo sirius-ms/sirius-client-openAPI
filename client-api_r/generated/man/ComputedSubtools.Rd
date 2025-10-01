@@ -8,7 +8,7 @@
 An \code{R6Class} generator object
 }
 \description{
-ComputedSubtools Class
+Specifies which tools have been executed for this feature. Can be used to estimate which results can be expected. Null if it was not requested und non-null otherwise.
 
 ComputedSubtools Class
 }

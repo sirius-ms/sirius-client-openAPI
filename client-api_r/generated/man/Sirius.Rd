@@ -62,9 +62,9 @@ df
 
 \item{\code{detectableElements}}{These configurations hold the information how to autodetect elements based on the given formula constraints.  Note: If the compound is already assigned to a specific molecular formula, this annotation is ignored.  <p>  Detectable: Detectable elements are added to the chemical alphabet, if there are indications for them (e.g. in isotope pattern) list(character) [optional]}
 
-\item{\code{ilpTimeout}}{Timout settings for the ILP solver used for fragmentation tree computation  secondsPerInstance: Set the maximum number of seconds for computing a single compound. Set to 0 to disable the time constraint.  secondsPerTree: Set the maximum number of seconds for a single molecular formula check. Set to 0 to disable the time constraint \link{Timeout} [optional]}
+\item{\code{ilpTimeout}}{\link{Timeout} [optional]}
 
-\item{\code{useHeuristic}}{Mass thresholds for heuristic fragmentation tree computation which dramatically speeds up computations.  useHeuristicAboveMz: For compounds above this threshold fragmentation trees will be computed heuristically for ranking. Tree that will be kept (numberOfCandidates) will be recomputed exactly  useOnlyHeuristicAboveMz:For compounds above this threshold fragmentation trees will be computed heuristically. \link{UseHeuristic} [optional]}
+\item{\code{useHeuristic}}{\link{UseHeuristic} [optional]}
 
 \item{\code{injectSpecLibMatchFormulas}}{If true formula candidates that belong to spectral library matches above a certain threshold will  we inject/preserved for further analyses no matter which score they have or which filter is applied character [optional]}
 
@@ -156,9 +156,9 @@ Initialize a new Sirius class.
 
 \item{\code{detectableElements}}{These configurations hold the information how to autodetect elements based on the given formula constraints.  Note: If the compound is already assigned to a specific molecular formula, this annotation is ignored.  <p>  Detectable: Detectable elements are added to the chemical alphabet, if there are indications for them (e.g. in isotope pattern)}
 
-\item{\code{ilpTimeout}}{Timout settings for the ILP solver used for fragmentation tree computation  secondsPerInstance: Set the maximum number of seconds for computing a single compound. Set to 0 to disable the time constraint.  secondsPerTree: Set the maximum number of seconds for a single molecular formula check. Set to 0 to disable the time constraint}
+\item{\code{ilpTimeout}}{ilpTimeout}
 
-\item{\code{useHeuristic}}{Mass thresholds for heuristic fragmentation tree computation which dramatically speeds up computations.  useHeuristicAboveMz: For compounds above this threshold fragmentation trees will be computed heuristically for ranking. Tree that will be kept (numberOfCandidates) will be recomputed exactly  useOnlyHeuristicAboveMz:For compounds above this threshold fragmentation trees will be computed heuristically.}
+\item{\code{useHeuristic}}{useHeuristic}
 
 \item{\code{injectSpecLibMatchFormulas}}{If true formula candidates that belong to spectral library matches above a certain threshold will  we inject/preserved for further analyses no matter which score they have or which filter is applied}
 

@@ -36,9 +36,9 @@ df
 
 \item{\code{userId}}{User ID (uid) of the user account this license information belongs to. character [optional]}
 
-\item{\code{subscription}}{The active subscription that was used the requested the information \link{Subscription} [optional]}
+\item{\code{subscription}}{\link{Subscription} [optional]}
 
-\item{\code{consumables}}{Status of the consumable resources of the {@link Subscription Subscription}. \link{SubscriptionConsumables} [optional]}
+\item{\code{consumables}}{\link{SubscriptionConsumables} [optional]}
 
 \item{\code{terms}}{list(\link{Term}) [optional]}
 }
@@ -85,9 +85,9 @@ Initialize a new LicenseInfo class.
 
 \item{\code{userId}}{User ID (uid) of the user account this license information belongs to.}
 
-\item{\code{subscription}}{The active subscription that was used the requested the information}
+\item{\code{subscription}}{subscription}
 
-\item{\code{consumables}}{Status of the consumable resources of the {@link Subscription Subscription}.}
+\item{\code{consumables}}{consumables}
 
 \item{\code{terms}}{terms}
 

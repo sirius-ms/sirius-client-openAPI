@@ -618,7 +618,7 @@ Get job information and its current state and progress (if available).
 
 \item{\code{job_id}}{of the job to be returned}
 
-\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [progress])}
+\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["progress"])}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 
@@ -652,7 +652,7 @@ Get job information and its current state and progress (if available).
 
 \item{\code{job_id}}{of the job to be returned}
 
-\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [progress])}
+\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["progress"])}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 
@@ -882,7 +882,7 @@ Get Page of jobs with information such as current state and progress (if availab
   page = 0,
   size = 20,
   sort = NULL,
-  opt_fields = list(NULL),
+  opt_fields = list("none"),
   data_file = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -899,7 +899,7 @@ Get Page of jobs with information such as current state and progress (if availab
 
 \item{\code{sort}}{(optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.}
 
-\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [none])}
+\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 
@@ -922,7 +922,7 @@ Get Page of jobs with information such as current state and progress (if availab
   page = 0,
   size = 20,
   sort = NULL,
-  opt_fields = list(NULL),
+  opt_fields = list("none"),
   data_file = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -939,7 +939,7 @@ Get Page of jobs with information such as current state and progress (if availab
 
 \item{\code{sort}}{(optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.}
 
-\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [none])}
+\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 
@@ -1176,7 +1176,7 @@ Start computation for given compounds and with parameters from a stored job-conf
 
 \item{\code{recompute}}{(optional) enable or disable recompute. If null the stored value will be used.}
 
-\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [command, progress])}
+\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["command","progress"])}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 
@@ -1216,7 +1216,7 @@ Start computation for given compounds and with parameters from a stored job-conf
 
 \item{\code{recompute}}{(optional) enable or disable recompute. If null the stored value will be used.}
 
-\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [command, progress])}
+\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["command","progress"])}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 

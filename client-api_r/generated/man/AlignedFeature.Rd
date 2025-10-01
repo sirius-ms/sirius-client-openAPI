@@ -58,15 +58,15 @@ df
 
 \item{\code{hasMsMs}}{If true, the feature has at lease one MS/MS spectrum character [optional]}
 
-\item{\code{msData}}{Mass Spec data of this feature (input data) \link{MsData} [optional]}
+\item{\code{msData}}{\link{MsData} [optional]}
 
-\item{\code{topAnnotations}}{Top annotations of this feature.  If a CSI:FingerID structureAnnotation is available, the FormulaCandidate that corresponds to the  structureAnnotation is returned. Otherwise, it's the FormulaCandidate with the highest SiriusScore is returned.  CANOPUS Compound classes correspond to the FormulaCandidate no matter how it was selected   Null if it was not requested und non-null otherwise. \link{FeatureAnnotations} [optional]}
+\item{\code{topAnnotations}}{\link{FeatureAnnotations} [optional]}
 
-\item{\code{topAnnotationsDeNovo}}{Top de novo annotations of this feature.  The FormulaCandidate with the highest SiriusScore is returned. MSNovelist structureAnnotation and  CANOPUS compoundClasses correspond to the FormulaCandidate.   Null if it was not requested und non-null otherwise. \link{FeatureAnnotations} [optional]}
+\item{\code{topAnnotationsDeNovo}}{\link{FeatureAnnotations} [optional]}
 
 \item{\code{computing}}{Write lock for this feature. If the feature is locked no write operations are possible.  True if any computation is modifying this feature or its results character [optional]}
 
-\item{\code{computedTools}}{Specifies which tools have been executed for this feature. Can be used to estimate which results can be expected. Null if it was not requested und non-null otherwise. \link{ComputedSubtools} [optional]}
+\item{\code{computedTools}}{\link{ComputedSubtools} [optional]}
 
 \item{\code{tags}}{Key: tagName, value: tag named list(\link{Tag}) [optional]}
 }
@@ -149,15 +149,15 @@ Initialize a new AlignedFeature class.
 
 \item{\code{hasMsMs}}{If true, the feature has at lease one MS/MS spectrum}
 
-\item{\code{msData}}{Mass Spec data of this feature (input data)}
+\item{\code{msData}}{msData}
 
-\item{\code{topAnnotations}}{Top annotations of this feature.  If a CSI:FingerID structureAnnotation is available, the FormulaCandidate that corresponds to the  structureAnnotation is returned. Otherwise, it's the FormulaCandidate with the highest SiriusScore is returned.  CANOPUS Compound classes correspond to the FormulaCandidate no matter how it was selected   Null if it was not requested und non-null otherwise.}
+\item{\code{topAnnotations}}{topAnnotations}
 
-\item{\code{topAnnotationsDeNovo}}{Top de novo annotations of this feature.  The FormulaCandidate with the highest SiriusScore is returned. MSNovelist structureAnnotation and  CANOPUS compoundClasses correspond to the FormulaCandidate.   Null if it was not requested und non-null otherwise.}
+\item{\code{topAnnotationsDeNovo}}{topAnnotationsDeNovo}
 
 \item{\code{computing}}{Write lock for this feature. If the feature is locked no write operations are possible.  True if any computation is modifying this feature or its results}
 
-\item{\code{computedTools}}{Specifies which tools have been executed for this feature. Can be used to estimate which results can be expected. Null if it was not requested und non-null otherwise.}
+\item{\code{computedTools}}{computedTools}
 
 \item{\code{tags}}{Key: tagName, value: tag}
 

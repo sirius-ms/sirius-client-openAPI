@@ -36,9 +36,9 @@ df
 
 \item{\code{noiseIntensity}}{Noise level under which all peaks are considered to be likely noise. A peak has to be at least 3x noise level  to be picked as feature. Peaks with MS/MS are still picked even though they might be below noise level.  If not specified, the noise intensity is detected automatically from data. We recommend to NOT specify  this parameter, as the automated detection is usually sufficient. numeric [optional]}
 
-\item{\code{traceMaxMassDeviation}}{Maximal allowed mass deviation for peaks in ms1 to be considered as belonging to the same trace. \link{Deviation} [optional]}
+\item{\code{traceMaxMassDeviation}}{\link{Deviation} [optional]}
 
-\item{\code{alignMaxMassDeviation}}{Maximal allowed mass deviation for aligning features. If not specified, this parameter is estimated from data. \link{Deviation} [optional]}
+\item{\code{alignMaxMassDeviation}}{\link{Deviation} [optional]}
 
 \item{\code{alignMaxRetentionTimeDeviation}}{Maximal allowed retention time error in seconds for aligning features. If not specified, this parameter is estimated from data. numeric [optional]}
 
@@ -88,9 +88,9 @@ Initialize a new LcmsSubmissionParameters class.
 
 \item{\code{noiseIntensity}}{Noise level under which all peaks are considered to be likely noise. A peak has to be at least 3x noise level  to be picked as feature. Peaks with MS/MS are still picked even though they might be below noise level.  If not specified, the noise intensity is detected automatically from data. We recommend to NOT specify  this parameter, as the automated detection is usually sufficient.. Default to -1.}
 
-\item{\code{traceMaxMassDeviation}}{Maximal allowed mass deviation for peaks in ms1 to be considered as belonging to the same trace.}
+\item{\code{traceMaxMassDeviation}}{traceMaxMassDeviation}
 
-\item{\code{alignMaxMassDeviation}}{Maximal allowed mass deviation for aligning features. If not specified, this parameter is estimated from data.}
+\item{\code{alignMaxMassDeviation}}{alignMaxMassDeviation}
 
 \item{\code{alignMaxRetentionTimeDeviation}}{Maximal allowed retention time error in seconds for aligning features. If not specified, this parameter is estimated from data.. Default to -1.}
 

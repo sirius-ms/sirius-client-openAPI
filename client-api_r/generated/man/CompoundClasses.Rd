@@ -32,11 +32,11 @@ df
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{npcPathway}}{Pathway level NPC class with the highest probability \link{CompoundClass} [optional]}
+\item{\code{npcPathway}}{\link{CompoundClass} [optional]}
 
-\item{\code{npcSuperclass}}{Superclass level NPC class with the highest probability \link{CompoundClass} [optional]}
+\item{\code{npcSuperclass}}{\link{CompoundClass} [optional]}
 
-\item{\code{npcClass}}{Class level NPC class with the highest probability \link{CompoundClass} [optional]}
+\item{\code{npcClass}}{\link{CompoundClass} [optional]}
 
 \item{\code{classyFireLineage}}{Most likely ClassyFire lineage from ordered from least specific to most specific class  classyFireLineage.get(classyFireLineage.size() - 1) gives the most specific ClassyFire compound class annotation list(\link{CompoundClass}) [optional]}
 
@@ -81,11 +81,11 @@ Initialize a new CompoundClasses class.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{npcPathway}}{Pathway level NPC class with the highest probability}
+\item{\code{npcPathway}}{npcPathway}
 
-\item{\code{npcSuperclass}}{Superclass level NPC class with the highest probability}
+\item{\code{npcSuperclass}}{npcSuperclass}
 
-\item{\code{npcClass}}{Class level NPC class with the highest probability}
+\item{\code{npcClass}}{npcClass}
 
 \item{\code{classyFireLineage}}{Most likely ClassyFire lineage from ordered from least specific to most specific class  classyFireLineage.get(classyFireLineage.size() - 1) gives the most specific ClassyFire compound class annotation}
 
