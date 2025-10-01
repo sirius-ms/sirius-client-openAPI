@@ -31,7 +31,9 @@ jobs:
         working-directory: ./client-api_r/generated
     - name: Install Rsirius
       id: rsirius_install
-      run: install.packages("/home/runner/work/sirius-client-openAPI/sirius-client-openAPI/client-api_r/generated", repos = NULL, type = "source")
+      run: |
+        install.packages("/home/runner/work/sirius-client-openAPI/sirius-client-openAPI/client-api_r/generated", repos = NULL, type = "source")
+        install.packages("devtools")
       shell: Rscript {0}
     - name: Cache Sirius Release
       uses: actions/cache@v3
@@ -77,5 +79,5 @@ jobs:
       run: |
         library(Rsirius)
         library(devtools)
-        test_file("client-api_r/generated/tests/testthat/test_info_api.R")
+        test_active_file("client-api_r/generated/tests/testthat/test_info_api.R")
       shell: Rscript {0}
