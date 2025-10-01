@@ -74,8 +74,8 @@ jobs:
         import PySirius
         accept_terms = True
         account_credentials = PySirius.AccountCredentials(username=os.environ['SIRIUS_USER'], password=os.environ['SIRIUS_PW'])
-        sdk = SiriusSDK().attach_or_start_sirius()
-        api_instance = PySirius.LoginAndAccountApi(sdk.get_client())
+        api = PySirius.SiriusSDK().attach_or_start_sirius()
+        api_instance = PySirius.LoginAndAccountApi(api.get_client())
         api_response = api_instance.login(accept_terms, account_credentials)
         if isinstance(api_response, PySirius.AccountInfo):
           exit(0)
