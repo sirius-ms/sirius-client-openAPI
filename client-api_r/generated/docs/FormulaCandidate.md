@@ -18,12 +18,12 @@ Name | Type | Description | Notes
 **numOfExplainablePeaks** | **integer** |  | [optional] 
 **totalExplainedIntensity** | **numeric** |  | [optional] 
 **medianMassDeviation** | [**Deviation**](Deviation.md) |  | [optional] 
-**fragmentationTree** | [**FragmentationTree**](FragmentationTree.md) | The fragmentation tree that belongs to this molecular formula candidate (produces the treeScore). | [optional] 
-**annotatedSpectrum** | [**AnnotatedSpectrum**](AnnotatedSpectrum.md) | Fragmentation spectrum (e.g. Merged MS/MS) which is annotated with fragments and losses | [optional] 
-**isotopePatternAnnotation** | [**IsotopePatternAnnotation**](IsotopePatternAnnotation.md) | The measured and simulated isotope pattern that have been  compared against each other to produce the isotopeScore. | [optional] 
-**lipidAnnotation** | [**LipidAnnotation**](LipidAnnotation.md) | ElGordo lipid annotation of this candidate.  NULL if annotation was not requested. lipidAnnotation.lipidSpecies &#x3D;&#x3D; NULL if candidate has not been classified as a lipid | [optional] 
+**fragmentationTree** | [**FragmentationTree**](FragmentationTree.md) |  | [optional] 
+**annotatedSpectrum** | [**AnnotatedSpectrum**](AnnotatedSpectrum.md) |  | [optional] 
+**isotopePatternAnnotation** | [**IsotopePatternAnnotation**](IsotopePatternAnnotation.md) |  | [optional] 
+**lipidAnnotation** | [**LipidAnnotation**](LipidAnnotation.md) |  | [optional] 
 **predictedFingerprint** | **array[numeric]** | Probabilistic molecular fingerprint predicted by CSI:FingerID | [optional] 
-**compoundClasses** | [**CompoundClasses**](CompoundClasses.md) | Most likely compound classes for different levels of each ontology for this FormulaCandidate (predictedFingerprint) | [optional] 
-**canopusPrediction** | [**CanopusPrediction**](CanopusPrediction.md) | All classes predicted by canopus for this FormulaCandidate (predictedFingerprint) | [optional] 
+**compoundClasses** | [**CompoundClasses**](CompoundClasses.md) |  | [optional] 
+**canopusPrediction** | [**CanopusPrediction**](CanopusPrediction.md) |  | [optional] 
 
 

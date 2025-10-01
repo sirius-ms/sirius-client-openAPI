@@ -11,10 +11,10 @@
 #' @field consideredCandidatesAt300Mz Maximum number of candidate molecular formulas (fragmentation trees computed by SIRIUS) per compound which are considered by ZODIAC for compounds below 300 m/z. integer [optional]
 #' @field consideredCandidatesAt800Mz Maximum number of candidate molecular formulas (fragmentation trees computed by SIRIUS) per compound which are considered by ZODIAC for compounds above 800 m/z. integer [optional]
 #' @field runInTwoSteps As default ZODIAC runs a 2-step approach. First running 'good quality compounds' only, and afterwards including the remaining. character [optional]
-#' @field edgeFilterThresholds thresholdFilter = Defines the proportion of edges of the complete network which will be ignored.  minLocalConnections = Minimum number of compounds to which at least one candidate per compound must be connected to. \link{ZodiacEdgeFilterThresholds} [optional]
-#' @field gibbsSamplerParameters iterations: \"Number of epochs to run the Gibbs sampling. When multiple Markov chains are computed, all chains' iterations sum up to this value.\"  burnInPeriod: \"Number of epochs considered as 'burn-in period'.  numberOfMarkovChains: Number of separate Gibbs sampling runs. \link{ZodiacEpochs} [optional]
-#' @field librarySearchAnchors Configure the use of identity spectral library search results as anchors in ZODIAC network \link{ZodiacLibraryScoring} [optional]
-#' @field analogueSearchAnchors Configure the use of analogue spectral library search results as anchors in ZODIAC network \link{ZodiacAnalogueNodes} [optional]
+#' @field edgeFilterThresholds  \link{ZodiacEdgeFilterThresholds} [optional]
+#' @field gibbsSamplerParameters  \link{ZodiacEpochs} [optional]
+#' @field librarySearchAnchors  \link{ZodiacLibraryScoring} [optional]
+#' @field analogueSearchAnchors  \link{ZodiacAnalogueNodes} [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
 #' @export
@@ -37,10 +37,10 @@ Zodiac <- R6::R6Class(
     #' @param consideredCandidatesAt300Mz Maximum number of candidate molecular formulas (fragmentation trees computed by SIRIUS) per compound which are considered by ZODIAC for compounds below 300 m/z.
     #' @param consideredCandidatesAt800Mz Maximum number of candidate molecular formulas (fragmentation trees computed by SIRIUS) per compound which are considered by ZODIAC for compounds above 800 m/z.
     #' @param runInTwoSteps As default ZODIAC runs a 2-step approach. First running 'good quality compounds' only, and afterwards including the remaining.
-    #' @param edgeFilterThresholds thresholdFilter = Defines the proportion of edges of the complete network which will be ignored.  minLocalConnections = Minimum number of compounds to which at least one candidate per compound must be connected to.
-    #' @param gibbsSamplerParameters iterations: \"Number of epochs to run the Gibbs sampling. When multiple Markov chains are computed, all chains' iterations sum up to this value.\"  burnInPeriod: \"Number of epochs considered as 'burn-in period'.  numberOfMarkovChains: Number of separate Gibbs sampling runs.
-    #' @param librarySearchAnchors Configure the use of identity spectral library search results as anchors in ZODIAC network
-    #' @param analogueSearchAnchors Configure the use of analogue spectral library search results as anchors in ZODIAC network
+    #' @param edgeFilterThresholds edgeFilterThresholds
+    #' @param gibbsSamplerParameters gibbsSamplerParameters
+    #' @param librarySearchAnchors librarySearchAnchors
+    #' @param analogueSearchAnchors analogueSearchAnchors
     #' @param ... Other optional arguments.
     initialize = function(`enabled` = NULL, `consideredCandidatesAt300Mz` = NULL, `consideredCandidatesAt800Mz` = NULL, `runInTwoSteps` = NULL, `edgeFilterThresholds` = NULL, `gibbsSamplerParameters` = NULL, `librarySearchAnchors` = NULL, `analogueSearchAnchors` = NULL, ...) {
       if (!is.null(`enabled`)) {

@@ -65,7 +65,7 @@ No authorization required
 | **200** | OK |  -  |
 
 # **CreateProject**
-> ProjectInfo CreateProject(project_id, path_to_project = var.path_to_project, opt_fields = [none])
+> ProjectInfo CreateProject(project_id, path_to_project = var.path_to_project, opt_fields = ["none"])
 
 Create and open a new project-space at given location and make it accessible via the given projectId.
 
@@ -95,7 +95,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **character**| unique name/identifier that shall be used to access the newly created project-space. Must consist only of [a-zA-Z0-9_-]. | 
  **path_to_project** | **character**| local file path where the project will be created. If NULL, project will be stored by its projectId in default project location. DEPRECATED: This parameter relies on the local filesystem and will likely be removed in later versions of this API to allow for more flexible use cases. | [optional] 
- **opt_fields** | Enum [none, compatibilityInfo, sizeInformation] |  | [optional] [default to [none]]
+ **opt_fields** | Enum [none, compatibilityInfo, sizeInformation] |  | [optional] [default to [&quot;none&quot;]]
 
 ### Return type
 
@@ -363,7 +363,7 @@ library(Rsirius)
 # prepare function argument(s)
 var_project_id <- "project_id_example" # character | Project-space to import into.
 var_input_files <- c(123) # array[data.frame] | Files to import into project.
-var_parameters <- LcmsSubmissionParameters$new("alignLCMSRuns_example", 123, Deviation$new(123, 123), Deviation$new(123, 123), 123, 123) # LcmsSubmissionParameters | Parameters for feature alignment and feature finding.
+var_parameters <- LcmsSubmissionParameters$new("alignLCMSRuns_example", 123, Deviation$new(123, 123), Deviation$new(123, 123), 123, 123) # LcmsSubmissionParameters | 
 
 api_instance <- rsirius_api$new()
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
@@ -378,7 +378,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **character**| Project-space to import into. | 
  **input_files** | list( **data.frame** )| Files to import into project. | 
- **parameters** | [**LcmsSubmissionParameters**](LcmsSubmissionParameters.md)| Parameters for feature alignment and feature finding. | 
+ **parameters** | [**LcmsSubmissionParameters**](LcmsSubmissionParameters.md)|  | 
 
 ### Return type
 
@@ -399,7 +399,7 @@ No authorization required
 | **200** | OK |  -  |
 
 # **ImportMsRunDataAsJob**
-> Job ImportMsRunDataAsJob(project_id, input_files, parameters, opt_fields = [progress])
+> Job ImportMsRunDataAsJob(project_id, input_files, parameters, opt_fields = ["progress"])
 
 Import and Align full MS-Runs from various formats into the specified project as background job.
 
@@ -414,7 +414,7 @@ library(Rsirius)
 # prepare function argument(s)
 var_project_id <- "project_id_example" # character | Project-space to import into.
 var_input_files <- c(123) # array[data.frame] | Files to import into project.
-var_parameters <- LcmsSubmissionParameters$new("alignLCMSRuns_example", 123, Deviation$new(123, 123), Deviation$new(123, 123), 123, 123) # LcmsSubmissionParameters | Parameters for feature alignment and feature finding.
+var_parameters <- LcmsSubmissionParameters$new("alignLCMSRuns_example", 123, Deviation$new(123, 123), Deviation$new(123, 123), 123, 123) # LcmsSubmissionParameters | 
 var_opt_fields <- c("none") # array[character] | Set of optional fields to be included. Use 'none' only to override defaults. (Optional)
 
 api_instance <- rsirius_api$new()
@@ -430,8 +430,8 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **character**| Project-space to import into. | 
  **input_files** | list( **data.frame** )| Files to import into project. | 
- **parameters** | [**LcmsSubmissionParameters**](LcmsSubmissionParameters.md)| Parameters for feature alignment and feature finding. | 
- **opt_fields** | Enum [none, command, progress, affectedIds] | Set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [progress]]
+ **parameters** | [**LcmsSubmissionParameters**](LcmsSubmissionParameters.md)|  | 
+ **opt_fields** | Enum [none, command, progress, affectedIds] | Set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;progress&quot;]]
 
 ### Return type
 
@@ -505,7 +505,7 @@ No authorization required
 | **200** | OK |  -  |
 
 # **ImportPreprocessedDataAsJob**
-> Job ImportPreprocessedDataAsJob(project_id, input_files, ignore_formulas = FALSE, allow_ms1_only = TRUE, opt_fields = [progress])
+> Job ImportPreprocessedDataAsJob(project_id, input_files, ignore_formulas = FALSE, allow_ms1_only = TRUE, opt_fields = ["progress"])
 
 Import ms/ms data from the given format into the specified project-space as background job.
 
@@ -539,7 +539,7 @@ Name | Type | Description  | Notes
  **input_files** | list( **data.frame** )|  | 
  **ignore_formulas** | **character**|  | [optional] [default to FALSE]
  **allow_ms1_only** | **character**|  | [optional] [default to TRUE]
- **opt_fields** | Enum [none, command, progress, affectedIds] | set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [progress]]
+ **opt_fields** | Enum [none, command, progress, affectedIds] | set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;progress&quot;]]
 
 ### Return type
 
@@ -560,7 +560,7 @@ No authorization required
 | **200** | the import job. |  -  |
 
 # **OpenProject**
-> ProjectInfo OpenProject(project_id, path_to_project = var.path_to_project, opt_fields = [none])
+> ProjectInfo OpenProject(project_id, path_to_project = var.path_to_project, opt_fields = ["none"])
 
 Open an existing project-space and make it accessible via the given projectId.
 
@@ -590,7 +590,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **character**| unique name/identifier that shall be used to access the opened project-space. Must consist only of [a-zA-Z0-9_-]. | 
  **path_to_project** | **character**| local file path to open the project from. If NULL, project will be loaded by it projectId from default project location.  DEPRECATED: This parameter relies on the local filesystem and will likely be removed in later versions of this API to allow for more flexible use cases. | [optional] 
- **opt_fields** | Enum [none, compatibilityInfo, sizeInformation] |  | [optional] [default to [none]]
+ **opt_fields** | Enum [none, compatibilityInfo, sizeInformation] |  | [optional] [default to [&quot;none&quot;]]
 
 ### Return type
 

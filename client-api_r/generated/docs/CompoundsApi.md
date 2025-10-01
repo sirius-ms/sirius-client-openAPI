@@ -20,7 +20,7 @@ Method | HTTP request | Description
 
 
 # **AddCompounds**
-> array[Compound] AddCompounds(project_id, compound_import, profile = var.profile, opt_fields = [none], opt_fields_features = [none])
+> array[Compound] AddCompounds(project_id, compound_import, profile = var.profile, opt_fields = ["none"], opt_fields_features = ["none"])
 
 Import Compounds and its contained features.
 
@@ -53,8 +53,8 @@ Name | Type | Description  | Notes
  **project_id** | **character**| project-space to import into. | 
  **compound_import** | list( [**CompoundImport**](CompoundImport.md) )| the compound data to be imported | 
  **profile** | Enum [QTOF, ORBITRAP] | profile describing the instrument used to measure the data. Used to merge spectra. | [optional] 
- **opt_fields** | Enum [none, consensusAnnotations, consensusAnnotationsDeNovo, customAnnotations, tags] | set of optional fields to be included. Use &#39;none&#39; to override defaults. | [optional] [default to [none]]
- **opt_fields_features** | Enum [none, msData, topAnnotationsSummary, topAnnotations, topAnnotationsDeNovo, computedTools, tags] | set of optional fields of the nested features to be included. Use &#39;none&#39; to override defaults. | [optional] [default to [none]]
+ **opt_fields** | Enum [none, consensusAnnotations, consensusAnnotationsDeNovo, customAnnotations, tags] | set of optional fields to be included. Use &#39;none&#39; to override defaults. | [optional] [default to [&quot;none&quot;]]
+ **opt_fields_features** | Enum [none, msData, topAnnotationsSummary, topAnnotations, topAnnotationsDeNovo, computedTools, tags] | set of optional fields of the nested features to be included. Use &#39;none&#39; to override defaults. | [optional] [default to [&quot;none&quot;]]
 
 ### Return type
 
@@ -90,7 +90,7 @@ library(Rsirius)
 # prepare function argument(s)
 var_project_id <- "project_id_example" # character | project-space to add to.
 var_compound_id <- "compound_id_example" # character | compound (group of ion identities) to add tags to.
-var_tag <- c(Tag$new("tagName_example", TODO)) # array[Tag] | tags to add.
+var_tag <- c(Tag$new("tagName_example", 123)) # array[Tag] | tags to add.
 
 api_instance <- rsirius_api$new()
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
@@ -172,7 +172,7 @@ No authorization required
 | **200** | OK |  -  |
 
 # **GetCompound**
-> Compound GetCompound(project_id, compound_id, ms_data_search_prepared = FALSE, opt_fields = [none], opt_fields_features = [none])
+> Compound GetCompound(project_id, compound_id, ms_data_search_prepared = FALSE, opt_fields = ["none"], opt_fields_features = ["none"])
 
 Get compound (group of ion identities) with the given identifier from the specified project-space.
 
@@ -205,8 +205,8 @@ Name | Type | Description  | Notes
  **project_id** | **character**| project-space to read from. | 
  **compound_id** | **character**| identifier of the compound (group of ion identities) to access. | 
  **ms_data_search_prepared** | **character**| Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. | [optional] [default to FALSE]
- **opt_fields** | Enum [none, consensusAnnotations, consensusAnnotationsDeNovo, customAnnotations, tags] | set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [none]]
- **opt_fields_features** | Enum [none, msData, topAnnotationsSummary, topAnnotations, topAnnotationsDeNovo, computedTools, tags] |  | [optional] [default to [none]]
+ **opt_fields** | Enum [none, consensusAnnotations, consensusAnnotationsDeNovo, customAnnotations, tags] | set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;none&quot;]]
+ **opt_fields_features** | Enum [none, msData, topAnnotationsSummary, topAnnotations, topAnnotationsDeNovo, computedTools, tags] |  | [optional] [default to [&quot;none&quot;]]
 
 ### Return type
 
@@ -431,7 +431,7 @@ No authorization required
 | **200** | Compounds with additional optional fields (if specified). |  -  |
 
 # **GetCompoundsByGroupExperimental**
-> PagedModelCompound GetCompoundsByGroupExperimental(project_id, group_name, page = 0, size = 20, sort = var.sort, opt_fields = [none])
+> PagedModelCompound GetCompoundsByGroupExperimental(project_id, group_name, page = 0, size = 20, sort = var.sort, opt_fields = ["none"])
 
 [EXPERIMENTAL] Get compounds (group of ion identities) by tag group
 
@@ -467,7 +467,7 @@ Name | Type | Description  | Notes
  **page** | **integer**| Zero-based page index (0..N) | [optional] [default to 0]
  **size** | **integer**| The size of the page to be returned | [optional] [default to 20]
  **sort** | list( **character** )| Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. | [optional] 
- **opt_fields** | Enum [none, consensusAnnotations, consensusAnnotationsDeNovo, customAnnotations, tags] | set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [none]]
+ **opt_fields** | Enum [none, consensusAnnotations, consensusAnnotationsDeNovo, customAnnotations, tags] | set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;none&quot;]]
 
 ### Return type
 
@@ -545,7 +545,7 @@ No authorization required
 | **200** | tagged compounds (group of ion identities) |  -  |
 
 # **GetCompoundsPaged**
-> PagedModelCompound GetCompoundsPaged(project_id, page = 0, size = 20, sort = var.sort, ms_data_search_prepared = FALSE, opt_fields = [none], opt_fields_features = [none])
+> PagedModelCompound GetCompoundsPaged(project_id, page = 0, size = 20, sort = var.sort, ms_data_search_prepared = FALSE, opt_fields = ["none"], opt_fields_features = ["none"])
 
 Page of available compounds (group of ion identities) in the given project-space.
 
@@ -582,8 +582,8 @@ Name | Type | Description  | Notes
  **size** | **integer**| The size of the page to be returned | [optional] [default to 20]
  **sort** | list( **character** )| Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. | [optional] 
  **ms_data_search_prepared** | **character**| Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. | [optional] [default to FALSE]
- **opt_fields** | Enum [none, consensusAnnotations, consensusAnnotationsDeNovo, customAnnotations, tags] | set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [none]]
- **opt_fields_features** | Enum [none, msData, topAnnotationsSummary, topAnnotations, topAnnotationsDeNovo, computedTools, tags] |  | [optional] [default to [none]]
+ **opt_fields** | Enum [none, consensusAnnotations, consensusAnnotationsDeNovo, customAnnotations, tags] | set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;none&quot;]]
+ **opt_fields_features** | Enum [none, msData, topAnnotationsSummary, topAnnotations, topAnnotationsDeNovo, computedTools, tags] |  | [optional] [default to [&quot;none&quot;]]
 
 ### Return type
 

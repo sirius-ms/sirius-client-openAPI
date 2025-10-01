@@ -262,7 +262,7 @@ No authorization required
 | **200** | {@link JobSubmission JobSubmission} with all parameters set to default values. |  -  |
 
 # **GetJob**
-> Job GetJob(project_id, job_id, opt_fields = [progress])
+> Job GetJob(project_id, job_id, opt_fields = ["progress"])
 
 Get job information and its current state and progress (if available).
 
@@ -292,7 +292,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **character**| project-space to run jobs on | 
  **job_id** | **character**| of the job to be returned | 
- **opt_fields** | Enum [none, command, progress, affectedIds] | set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [progress]]
+ **opt_fields** | Enum [none, command, progress, affectedIds] | set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;progress&quot;]]
 
 ### Return type
 
@@ -495,7 +495,7 @@ No authorization required
 | **200** | OK |  -  |
 
 # **GetJobsPaged**
-> PagedModelJob GetJobsPaged(project_id, page = 0, size = 20, sort = var.sort, opt_fields = [none])
+> PagedModelJob GetJobsPaged(project_id, page = 0, size = 20, sort = var.sort, opt_fields = ["none"])
 
 Get Page of jobs with information such as current state and progress (if available).
 
@@ -529,7 +529,7 @@ Name | Type | Description  | Notes
  **page** | **integer**| Zero-based page index (0..N) | [optional] [default to 0]
  **size** | **integer**| The size of the page to be returned | [optional] [default to 20]
  **sort** | list( **character** )| Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. | [optional] 
- **opt_fields** | Enum [none, command, progress, affectedIds] | set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [none]]
+ **opt_fields** | Enum [none, command, progress, affectedIds] | set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;none&quot;]]
 
 ### Return type
 
@@ -699,7 +699,7 @@ No authorization required
 | **202** | Accepted |  -  |
 
 # **StartJobFromConfig**
-> Job StartJobFromConfig(project_id, job_config_name, request_body, recompute = var.recompute, opt_fields = [command, progress])
+> Job StartJobFromConfig(project_id, job_config_name, request_body, recompute = var.recompute, opt_fields = ["command","progress"])
 
 Start computation for given compounds and with parameters from a stored job-config.
 
@@ -733,7 +733,7 @@ Name | Type | Description  | Notes
  **job_config_name** | **character**| name if the config to be used | 
  **request_body** | list( **character** )| List of alignedFeatureIds to be computed | 
  **recompute** | **character**| enable or disable recompute. If null the stored value will be used. | [optional] 
- **opt_fields** | Enum [none, command, progress, affectedIds] | set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [command, progress]]
+ **opt_fields** | Enum [none, command, progress, affectedIds] | set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;command&quot;,&quot;progress&quot;]]
 
 ### Return type
 

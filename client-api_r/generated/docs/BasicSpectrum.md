@@ -11,7 +11,7 @@ Name | Type | Description | Notes
 **precursorMz** | **numeric** | Precursor m/z of the MS/MS spectrum  Null for spectra where precursor m/z is not applicable | [optional] 
 **scanNumber** | **integer** | Scan number of the spectrum.  Might be null for artificial spectra with no scan number (e.g. Simulated Isotope patterns or merged spectra) | [optional] 
 **cosineQuery** | **character** | True if spectrum is in cosine query normalized format.  Such spectrum is compatible with SpectralLibraryMatch peak assignments to reference spectra. | [default to FALSE] 
-**precursorPeak** | [**SimplePeak**](SimplePeak.md) | A separate precursor peak field to either mark the precursor in the peaklist or  provide the precursor peak separately from the spectrum in case the spectrum is in a preprocessed form where  the precursor peak has been removed for library matching.   NULL if the spectrum does not contain the precursor peak. | [optional] 
+**precursorPeak** | [**SimplePeak**](SimplePeak.md) |  | [optional] 
 **peaks** | [**array[SimplePeak]**](SimplePeak.md) | The peaks of this spectrum which might contain additional annotations such as molecular formulas. | 
 **absIntensityFactor** | **numeric** | Factor to convert relative intensities to absolute intensities.  Might be null or 1 for spectra where absolute intensities are not available (E.g. artificial or merged spectra)  &lt;p&gt;  DEPRECATED: Spectra are always returned with raw intensities.  Use provided normalization factors to normalize on the fly. | [optional] 
 **maxNormFactor** | **numeric** | Factor to convert absolute intensities to MAX norm. | [optional] 

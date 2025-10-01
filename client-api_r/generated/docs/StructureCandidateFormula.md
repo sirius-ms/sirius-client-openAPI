@@ -15,7 +15,7 @@ Name | Type | Description | Notes
 **csiScore** | **numeric** | CSI:FingerID score of the fingerprint of this compound to the predicted fingerprint of CSI:FingerID  This is the score used for ranking structure candidates | [optional] 
 **tanimotoSimilarity** | **numeric** | Tanimoto similarly of the fingerprint of this compound to the predicted fingerprint of CSI:FingerID | [optional] 
 **mcesDistToTopHit** | **numeric** | Maximum Common Edge Subgraph (MCES) distance to the top scoring hit (CSI:FingerID) in a candidate list. | [optional] 
-**fingerprint** | [**BinaryFingerprint**](BinaryFingerprint.md) | Array containing the indices of the molecular fingerprint that are available in the structure (1 if present)  OPTIONAL: needs to be added by parameter | [optional] 
+**fingerprint** | [**BinaryFingerprint**](BinaryFingerprint.md) |  | [optional] 
 **molecularFormula** | **character** | Molecular formula of this candidate | [optional] 
 **adduct** | **character** | Adduct of this candidate | [optional] 
 **formulaId** | **character** | Id of the corresponding Formula candidate | [optional] 

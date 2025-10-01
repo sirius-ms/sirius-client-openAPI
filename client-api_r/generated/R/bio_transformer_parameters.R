@@ -215,16 +215,6 @@ BioTransformerParameters <- R6::R6Class(
     #'
     #' @return true if the values in all fields are valid.
     isValid = function() {
-      # check if the required `cyp450Mode` is null
-      if (is.null(self$`cyp450Mode`)) {
-        return(FALSE)
-      }
-
-      # check if the required `p2Mode` is null
-      if (is.null(self$`p2Mode`)) {
-        return(FALSE)
-      }
-
       # check if the required `bioTransformerSequenceSteps` is null
       if (is.null(self$`bioTransformerSequenceSteps`)) {
         return(FALSE)
@@ -239,16 +229,6 @@ BioTransformerParameters <- R6::R6Class(
     #' @return A list of invalid fields (if any).
     getInvalidFields = function() {
       invalid_fields <- list()
-      # check if the required `cyp450Mode` is null
-      if (is.null(self$`cyp450Mode`)) {
-        invalid_fields["cyp450Mode"] <- "Non-nullable required field `cyp450Mode` cannot be null."
-      }
-
-      # check if the required `p2Mode` is null
-      if (is.null(self$`p2Mode`)) {
-        invalid_fields["p2Mode"] <- "Non-nullable required field `p2Mode` cannot be null."
-      }
-
       # check if the required `bioTransformerSequenceSteps` is null
       if (is.null(self$`bioTransformerSequenceSteps`)) {
         invalid_fields["bioTransformerSequenceSteps"] <- "Non-nullable required field `bioTransformerSequenceSteps` cannot be null."

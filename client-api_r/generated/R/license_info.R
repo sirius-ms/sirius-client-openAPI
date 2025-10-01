@@ -9,8 +9,8 @@
 #' @format An \code{R6Class} generator object
 #' @field userEmail Email address of the user account this license information belongs to. character [optional]
 #' @field userId User ID (uid) of the user account this license information belongs to. character [optional]
-#' @field subscription The active subscription that was used the requested the information \link{Subscription} [optional]
-#' @field consumables Status of the consumable resources of the {@link Subscription Subscription}. \link{SubscriptionConsumables} [optional]
+#' @field subscription  \link{Subscription} [optional]
+#' @field consumables  \link{SubscriptionConsumables} [optional]
 #' @field terms  list(\link{Term}) [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
@@ -29,8 +29,8 @@ LicenseInfo <- R6::R6Class(
     #'
     #' @param userEmail Email address of the user account this license information belongs to.
     #' @param userId User ID (uid) of the user account this license information belongs to.
-    #' @param subscription The active subscription that was used the requested the information
-    #' @param consumables Status of the consumable resources of the {@link Subscription Subscription}.
+    #' @param subscription subscription
+    #' @param consumables consumables
     #' @param terms terms
     #' @param ... Other optional arguments.
     initialize = function(`userEmail` = NULL, `userId` = NULL, `subscription` = NULL, `consumables` = NULL, `terms` = NULL, ...) {

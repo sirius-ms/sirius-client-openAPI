@@ -13,9 +13,9 @@
 #' @field rtEndSeconds The merged/consensus retention time end (latest rt) of this compound numeric [optional]
 #' @field neutralMass Neutral mass of this compound. Ion masse minus the mass of the assigned adduct of each feature of  this compound should result in the same neutral mass numeric [optional]
 #' @field features List of aligned features (adducts) that belong to the same (this) compound list(\link{AlignedFeature}) [optional]
-#' @field consensusAnnotations The consensus of the top annotations from all the features of this compound.  Null if it was not requested und non-null otherwise. Might contain empty fields if results are not available \link{ConsensusAnnotationsCSI} [optional]
-#' @field consensusAnnotationsDeNovo The consensus of the top de novo annotations from all the features of this compound.  Null if it was not requested und non-null otherwise. Might contain empty fields if results are not available \link{ConsensusAnnotationsDeNovo} [optional]
-#' @field customAnnotations Alternative annotations selected by the User. \link{ConsensusAnnotationsCSI} [optional]
+#' @field consensusAnnotations  \link{ConsensusAnnotationsCSI} [optional]
+#' @field consensusAnnotationsDeNovo  \link{ConsensusAnnotationsDeNovo} [optional]
+#' @field customAnnotations  \link{ConsensusAnnotationsCSI} [optional]
 #' @field tags Key: tagName, value: tag named list(\link{Tag}) [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
@@ -43,9 +43,9 @@ Compound <- R6::R6Class(
     #' @param rtEndSeconds The merged/consensus retention time end (latest rt) of this compound
     #' @param neutralMass Neutral mass of this compound. Ion masse minus the mass of the assigned adduct of each feature of  this compound should result in the same neutral mass
     #' @param features List of aligned features (adducts) that belong to the same (this) compound
-    #' @param consensusAnnotations The consensus of the top annotations from all the features of this compound.  Null if it was not requested und non-null otherwise. Might contain empty fields if results are not available
-    #' @param consensusAnnotationsDeNovo The consensus of the top de novo annotations from all the features of this compound.  Null if it was not requested und non-null otherwise. Might contain empty fields if results are not available
-    #' @param customAnnotations Alternative annotations selected by the User.
+    #' @param consensusAnnotations consensusAnnotations
+    #' @param consensusAnnotationsDeNovo consensusAnnotationsDeNovo
+    #' @param customAnnotations customAnnotations
     #' @param tags Key: tagName, value: tag
     #' @param ... Other optional arguments.
     initialize = function(`compoundId` = NULL, `name` = NULL, `rtStartSeconds` = NULL, `rtEndSeconds` = NULL, `neutralMass` = NULL, `features` = NULL, `consensusAnnotations` = NULL, `consensusAnnotationsDeNovo` = NULL, `customAnnotations` = NULL, `tags` = NULL, ...) {

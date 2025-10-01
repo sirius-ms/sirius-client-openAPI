@@ -153,11 +153,6 @@ AnnotatedMsMsData <- R6::R6Class(
     #'
     #' @return true if the values in all fields are valid.
     isValid = function() {
-      # check if the required `mergedMs2` is null
-      if (is.null(self$`mergedMs2`)) {
-        return(FALSE)
-      }
-
       # check if the required `ms2Spectra` is null
       if (is.null(self$`ms2Spectra`)) {
         return(FALSE)
@@ -172,11 +167,6 @@ AnnotatedMsMsData <- R6::R6Class(
     #' @return A list of invalid fields (if any).
     getInvalidFields = function() {
       invalid_fields <- list()
-      # check if the required `mergedMs2` is null
-      if (is.null(self$`mergedMs2`)) {
-        invalid_fields["mergedMs2"] <- "Non-nullable required field `mergedMs2` cannot be null."
-      }
-
       # check if the required `ms2Spectra` is null
       if (is.null(self$`ms2Spectra`)) {
         invalid_fields["ms2Spectra"] <- "Non-nullable required field `ms2Spectra` cannot be null."

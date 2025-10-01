@@ -11,9 +11,9 @@
 #' @field description A human-readable description about the purpose of this tag. character [optional]
 #' @field tagType A simple string based identifier to specify the type/scope/purpose of this tag. character [optional]
 #' @field valueType  character
-#' @field possibleValues  list(\link{AnyType}) [optional]
-#' @field minValue  \link{AnyType} [optional]
-#' @field maxValue  \link{AnyType} [optional]
+#' @field possibleValues  list(object) [optional]
+#' @field minValue  object [optional]
+#' @field maxValue  object [optional]
 #' @field editable  character [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
@@ -72,15 +72,13 @@ TagDefinition <- R6::R6Class(
       }
       if (!is.null(`possibleValues`)) {
         stopifnot(is.vector(`possibleValues`), length(`possibleValues`) != 0)
-        sapply(`possibleValues`, function(x) stopifnot(R6::is.R6(x)))
+        sapply(`possibleValues`, function(x) stopifnot(is.character(x)))
         self$`possibleValues` <- `possibleValues`
       }
       if (!is.null(`minValue`)) {
-        stopifnot(R6::is.R6(`minValue`))
         self$`minValue` <- `minValue`
       }
       if (!is.null(`maxValue`)) {
-        stopifnot(R6::is.R6(`maxValue`))
         self$`maxValue` <- `maxValue`
       }
       if (!is.null(`editable`)) {
@@ -140,15 +138,15 @@ TagDefinition <- R6::R6Class(
       }
       if (!is.null(self$`possibleValues`)) {
         TagDefinitionObject[["possibleValues"]] <-
-          lapply(self$`possibleValues`, function(x) x$toSimpleType())
+          self$`possibleValues`
       }
       if (!is.null(self$`minValue`)) {
         TagDefinitionObject[["minValue"]] <-
-          self$`minValue`$toSimpleType()
+          self$`minValue`
       }
       if (!is.null(self$`maxValue`)) {
         TagDefinitionObject[["maxValue"]] <-
-          self$`maxValue`$toSimpleType()
+          self$`maxValue`
       }
       if (!is.null(self$`editable`)) {
         TagDefinitionObject[["editable"]] <-
@@ -180,17 +178,13 @@ TagDefinition <- R6::R6Class(
         self$`valueType` <- this_object$`valueType`
       }
       if (!is.null(this_object$`possibleValues`)) {
-        self$`possibleValues` <- ApiClient$new()$deserializeObj(this_object$`possibleValues`, "array[AnyType]", loadNamespace("Rsirius"))
+        self$`possibleValues` <- ApiClient$new()$deserializeObj(this_object$`possibleValues`, "array[object]", loadNamespace("Rsirius"))
       }
       if (!is.null(this_object$`minValue`)) {
-        `minvalue_object` <- AnyType$new()
-        `minvalue_object`$fromJSON(jsonlite::toJSON(this_object$`minValue`, auto_unbox = TRUE, digits = NA, null = 'null'))
-        self$`minValue` <- `minvalue_object`
+        self$`minValue` <- this_object$`minValue`
       }
       if (!is.null(this_object$`maxValue`)) {
-        `maxvalue_object` <- AnyType$new()
-        `maxvalue_object`$fromJSON(jsonlite::toJSON(this_object$`maxValue`, auto_unbox = TRUE, digits = NA, null = 'null'))
-        self$`maxValue` <- `maxvalue_object`
+        self$`maxValue` <- this_object$`maxValue`
       }
       if (!is.null(this_object$`editable`)) {
         self$`editable` <- this_object$`editable`
@@ -223,9 +217,9 @@ TagDefinition <- R6::R6Class(
         stop(paste("Error! \"", this_object$`valueType`, "\" cannot be assigned to `valueType`. Must be \"NONE\", \"BOOLEAN\", \"INTEGER\", \"REAL\", \"TEXT\", \"DATE\", \"TIME\".", sep = ""))
       }
       self$`valueType` <- this_object$`valueType`
-      self$`possibleValues` <- ApiClient$new()$deserializeObj(this_object$`possibleValues`, "array[AnyType]", loadNamespace("Rsirius"))
-      self$`minValue` <- AnyType$new()$fromJSON(jsonlite::toJSON(this_object$`minValue`, auto_unbox = TRUE, digits = NA, null = 'null'))
-      self$`maxValue` <- AnyType$new()$fromJSON(jsonlite::toJSON(this_object$`maxValue`, auto_unbox = TRUE, digits = NA, null = 'null'))
+      self$`possibleValues` <- ApiClient$new()$deserializeObj(this_object$`possibleValues`, "array[object]", loadNamespace("Rsirius"))
+      self$`minValue` <- this_object$`minValue`
+      self$`maxValue` <- this_object$`maxValue`
       self$`editable` <- this_object$`editable`
       self
     },

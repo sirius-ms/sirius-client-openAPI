@@ -14,14 +14,14 @@
 #' @field precursorMz Precursor m/z of the MS/MS spectrum  Null for spectra where precursor m/z is not applicable numeric [optional]
 #' @field scanNumber Scan number of the spectrum.  Might be null for artificial spectra with no scan number (e.g. Simulated Isotope patterns or merged spectra) integer [optional]
 #' @field cosineQuery True if spectrum is in cosine query normalized format.  Such spectrum is compatible with SpectralLibraryMatch peak assignments to reference spectra. character
-#' @field precursorPeak A separate precursor peak field to either mark the precursor in the peaklist or  provide the precursor peak separately from the spectrum in case the spectrum is in a preprocessed form where  the precursor peak has been removed for library matching.   NULL if the spectrum does not contain the precursor peak. \link{SimplePeak} [optional]
+#' @field precursorPeak  \link{SimplePeak} [optional]
 #' @field peaks The peaks of this spectrum which might contain additional annotations such as molecular formulas. list(\link{AnnotatedPeak})
 #' @field absIntensityFactor Factor to convert relative intensities to absolute intensities.  Might be null or 1 for spectra where absolute intensities are not available (E.g. artificial or merged spectra)  <p>  DEPRECATED: Spectra are always returned with raw intensities.  Use provided normalization factors to normalize on the fly. numeric [optional]
 #' @field maxNormFactor Factor to convert absolute intensities to MAX norm. numeric [optional]
 #' @field sumNormFactor Factor to convert absolute intensities to SUM norm. numeric [optional]
 #' @field l2NormFactor Factor to convert absolute intensities to L2 (Euclidean) norm. numeric [optional]
 #' @field firstPeakNormFactor Factor to convert absolute intensities to normalize intensities by first peak intensity. numeric [optional]
-#' @field spectrumAnnotation Optional Annotations of this spectrum. \link{SpectrumAnnotation} [optional]
+#' @field spectrumAnnotation  \link{SpectrumAnnotation} [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
 #' @export
@@ -55,13 +55,13 @@ AnnotatedSpectrum <- R6::R6Class(
     #' @param instrument Instrument information.
     #' @param precursorMz Precursor m/z of the MS/MS spectrum  Null for spectra where precursor m/z is not applicable
     #' @param scanNumber Scan number of the spectrum.  Might be null for artificial spectra with no scan number (e.g. Simulated Isotope patterns or merged spectra)
-    #' @param precursorPeak A separate precursor peak field to either mark the precursor in the peaklist or  provide the precursor peak separately from the spectrum in case the spectrum is in a preprocessed form where  the precursor peak has been removed for library matching.   NULL if the spectrum does not contain the precursor peak.
+    #' @param precursorPeak precursorPeak
     #' @param absIntensityFactor Factor to convert relative intensities to absolute intensities.  Might be null or 1 for spectra where absolute intensities are not available (E.g. artificial or merged spectra)  <p>  DEPRECATED: Spectra are always returned with raw intensities.  Use provided normalization factors to normalize on the fly.
     #' @param maxNormFactor Factor to convert absolute intensities to MAX norm.
     #' @param sumNormFactor Factor to convert absolute intensities to SUM norm.
     #' @param l2NormFactor Factor to convert absolute intensities to L2 (Euclidean) norm.
     #' @param firstPeakNormFactor Factor to convert absolute intensities to normalize intensities by first peak intensity.
-    #' @param spectrumAnnotation Optional Annotations of this spectrum.
+    #' @param spectrumAnnotation spectrumAnnotation
     #' @param ... Other optional arguments.
     initialize = function(`cosineQuery`, `peaks`, `name` = NULL, `msLevel` = NULL, `collisionEnergy` = NULL, `instrument` = NULL, `precursorMz` = NULL, `scanNumber` = NULL, `precursorPeak` = NULL, `absIntensityFactor` = NULL, `maxNormFactor` = NULL, `sumNormFactor` = NULL, `l2NormFactor` = NULL, `firstPeakNormFactor` = NULL, `spectrumAnnotation` = NULL, ...) {
       if (!missing(`cosineQuery`)) {

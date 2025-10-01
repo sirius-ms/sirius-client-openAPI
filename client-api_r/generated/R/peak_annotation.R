@@ -15,7 +15,7 @@
 #' @field massDeviationPpm Relative mass deviation of the exact mass to the measured peak mass in ppm numeric [optional]
 #' @field recalibratedMassDeviationMz Absolute mass deviation of the exact mass to the recalibrated peak mass in mDa numeric [optional]
 #' @field recalibratedMassDeviationPpm Relative mass deviation of the exact mass to the recalibrated peak mass in ppm numeric [optional]
-#' @field parentPeak Link to the parent peak connected via the neutral loss from the fragmentation tree. \link{ParentPeak} [optional]
+#' @field parentPeak  \link{ParentPeak} [optional]
 #' @field substructureAtoms EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.   Array/List of indices of the atoms of the structure candidate that are part of this fragments substructure  (highlighted atoms) list(integer) [optional]
 #' @field substructureBonds EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.   Array/List of indices of the bonds of the structure candidate that are part of this fragments substructure  (highlighted bonds)   Null if substructure annotation not available or not requested. list(integer) [optional]
 #' @field substructureBondsCut EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.   Array/List of indices of the bonds of the structure candidate that need to be cut to produce this fragments  substructure (highlighted cutted bonds).   Null if substructure annotation not available or not requested. list(integer) [optional]
@@ -53,7 +53,7 @@ PeakAnnotation <- R6::R6Class(
     #' @param massDeviationPpm Relative mass deviation of the exact mass to the measured peak mass in ppm
     #' @param recalibratedMassDeviationMz Absolute mass deviation of the exact mass to the recalibrated peak mass in mDa
     #' @param recalibratedMassDeviationPpm Relative mass deviation of the exact mass to the recalibrated peak mass in ppm
-    #' @param parentPeak Link to the parent peak connected via the neutral loss from the fragmentation tree.
+    #' @param parentPeak parentPeak
     #' @param substructureAtoms EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.   Array/List of indices of the atoms of the structure candidate that are part of this fragments substructure  (highlighted atoms)
     #' @param substructureBonds EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.   Array/List of indices of the bonds of the structure candidate that are part of this fragments substructure  (highlighted bonds)   Null if substructure annotation not available or not requested.
     #' @param substructureBondsCut EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.   Array/List of indices of the bonds of the structure candidate that need to be cut to produce this fragments  substructure (highlighted cutted bonds).   Null if substructure annotation not available or not requested.

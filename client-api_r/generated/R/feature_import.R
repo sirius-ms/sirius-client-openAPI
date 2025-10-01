@@ -16,7 +16,7 @@
 #' @field rtEndSeconds  numeric [optional]
 #' @field rtApexSeconds  numeric [optional]
 #' @field dataQuality A optional feature quality flag that can be used to filter features to be shown in the gui or to be considered for further analysis. character [optional]
-#' @field mergedMs1 Merged/Representative MS1 spectrum of this feature that contains the isotope pattern of the precursor ion.  Note: 'ms1Spectra' will be ignored if given. \link{BasicSpectrum} [optional]
+#' @field mergedMs1  \link{BasicSpectrum} [optional]
 #' @field ms1Spectra List of MS1Spectra belonging to this feature. These spectra will be merged an only a representative  mergedMs1 spectrum will be stored in SIRIUS. At least one of these spectra should contain the  isotope pattern of the precursor ion.  Note: Will be ignored if 'mergedMs1' is given. list(\link{BasicSpectrum}) [optional]
 #' @field ms2Spectra List of MS/MS spectra that belong to this feature. list(\link{BasicSpectrum}) [optional]
 #' @importFrom R6 R6Class
@@ -50,7 +50,7 @@ FeatureImport <- R6::R6Class(
     #' @param rtEndSeconds rtEndSeconds
     #' @param rtApexSeconds rtApexSeconds
     #' @param dataQuality A optional feature quality flag that can be used to filter features to be shown in the gui or to be considered for further analysis.
-    #' @param mergedMs1 Merged/Representative MS1 spectrum of this feature that contains the isotope pattern of the precursor ion.  Note: 'ms1Spectra' will be ignored if given.
+    #' @param mergedMs1 mergedMs1
     #' @param ms1Spectra List of MS1Spectra belonging to this feature. These spectra will be merged an only a representative  mergedMs1 spectrum will be stored in SIRIUS. At least one of these spectra should contain the  isotope pattern of the precursor ion.  Note: Will be ignored if 'mergedMs1' is given.
     #' @param ms2Spectra List of MS/MS spectra that belong to this feature.
     #' @param ... Other optional arguments.

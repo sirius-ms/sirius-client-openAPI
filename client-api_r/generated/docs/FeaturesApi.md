@@ -51,7 +51,7 @@ Method | HTTP request | Description
 
 
 # **AddAlignedFeatures**
-> array[AlignedFeature] AddAlignedFeatures(project_id, feature_import, profile = var.profile, opt_fields = [none])
+> array[AlignedFeature] AddAlignedFeatures(project_id, feature_import, profile = var.profile, opt_fields = ["none"])
 
 Import (aligned) features into the project.
 
@@ -83,7 +83,7 @@ Name | Type | Description  | Notes
  **project_id** | **character**| project-space to import into. | 
  **feature_import** | list( [**FeatureImport**](FeatureImport.md) )| the feature data to be imported | 
  **profile** | Enum [QTOF, ORBITRAP] | profile describing the instrument used to measure the data. Used to merge spectra. | [optional] 
- **opt_fields** | Enum [none, msData, topAnnotationsSummary, topAnnotations, topAnnotationsDeNovo, computedTools, tags] | set of optional fields to be included. Use &#39;none&#39; to override defaults. | [optional] [default to [none]]
+ **opt_fields** | Enum [none, msData, topAnnotationsSummary, topAnnotations, topAnnotationsDeNovo, computedTools, tags] | set of optional fields to be included. Use &#39;none&#39; to override defaults. | [optional] [default to [&quot;none&quot;]]
 
 ### Return type
 
@@ -170,7 +170,7 @@ library(Rsirius)
 # prepare function argument(s)
 var_project_id <- "project_id_example" # character | project-space to add to.
 var_aligned_feature_id <- "aligned_feature_id_example" # character | run to add tags to.
-var_tag <- c(Tag$new("tagName_example", TODO)) # array[Tag] | tags to add.
+var_tag <- c(Tag$new("tagName_example", 123)) # array[Tag] | tags to add.
 
 api_instance <- rsirius_api$new()
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
@@ -347,7 +347,7 @@ No authorization required
 | **200** | OK |  -  |
 
 # **GetAlignedFeature**
-> AlignedFeature GetAlignedFeature(project_id, aligned_feature_id, ms_data_search_prepared = FALSE, opt_fields = [none])
+> AlignedFeature GetAlignedFeature(project_id, aligned_feature_id, ms_data_search_prepared = FALSE, opt_fields = ["none"])
 
 Get feature (aligned over runs) with the given identifier from the specified project-space.
 
@@ -379,7 +379,7 @@ Name | Type | Description  | Notes
  **project_id** | **character**| project-space to read from. | 
  **aligned_feature_id** | **character**| identifier of feature (aligned over runs) to access. | 
  **ms_data_search_prepared** | **character**| Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. | [optional] [default to FALSE]
- **opt_fields** | Enum [none, msData, topAnnotationsSummary, topAnnotations, topAnnotationsDeNovo, computedTools, tags] | set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [none]]
+ **opt_fields** | Enum [none, msData, topAnnotationsSummary, topAnnotations, topAnnotationsDeNovo, computedTools, tags] | set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;none&quot;]]
 
 ### Return type
 
@@ -449,7 +449,7 @@ No authorization required
 | **200** | AlignedFeatureQuality quality information of the respective feature. |  -  |
 
 # **GetAlignedFeatures**
-> array[AlignedFeature] GetAlignedFeatures(project_id, ms_data_search_prepared = FALSE, opt_fields = [none])
+> array[AlignedFeature] GetAlignedFeatures(project_id, ms_data_search_prepared = FALSE, opt_fields = ["none"])
 
 Get all available features (aligned over runs) in the given project-space.
 
@@ -479,7 +479,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **character**| project-space to read from. | 
  **ms_data_search_prepared** | **character**| Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. | [optional] [default to FALSE]
- **opt_fields** | Enum [none, msData, topAnnotationsSummary, topAnnotations, topAnnotationsDeNovo, computedTools, tags] | set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [none]]
+ **opt_fields** | Enum [none, msData, topAnnotationsSummary, topAnnotations, topAnnotationsDeNovo, computedTools, tags] | set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;none&quot;]]
 
 ### Return type
 
@@ -500,7 +500,7 @@ No authorization required
 | **200** | AlignedFeatures with additional annotations and MS/MS data (if specified). |  -  |
 
 # **GetAlignedFeaturesByGroupExperimental**
-> PagedModelAlignedFeature GetAlignedFeaturesByGroupExperimental(project_id, group_name, page = 0, size = 20, sort = var.sort, opt_fields = [none])
+> PagedModelAlignedFeature GetAlignedFeaturesByGroupExperimental(project_id, group_name, page = 0, size = 20, sort = var.sort, opt_fields = ["none"])
 
 [EXPERIMENTAL] Get features (aligned over runs) by tag group
 
@@ -536,7 +536,7 @@ Name | Type | Description  | Notes
  **page** | **integer**| Zero-based page index (0..N) | [optional] [default to 0]
  **size** | **integer**| The size of the page to be returned | [optional] [default to 20]
  **sort** | list( **character** )| Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. | [optional] 
- **opt_fields** | Enum [none, msData, topAnnotationsSummary, topAnnotations, topAnnotationsDeNovo, computedTools, tags] | set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [none]]
+ **opt_fields** | Enum [none, msData, topAnnotationsSummary, topAnnotations, topAnnotationsDeNovo, computedTools, tags] | set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;none&quot;]]
 
 ### Return type
 
@@ -614,7 +614,7 @@ No authorization required
 | **200** | tagged features (aligned over runs) |  -  |
 
 # **GetAlignedFeaturesPaged**
-> PagedModelAlignedFeature GetAlignedFeaturesPaged(project_id, page = 0, size = 20, sort = var.sort, ms_data_search_prepared = FALSE, opt_fields = [none])
+> PagedModelAlignedFeature GetAlignedFeaturesPaged(project_id, page = 0, size = 20, sort = var.sort, ms_data_search_prepared = FALSE, opt_fields = ["none"])
 
 Get all available features (aligned over runs) in the given project-space.
 
@@ -650,7 +650,7 @@ Name | Type | Description  | Notes
  **size** | **integer**| The size of the page to be returned | [optional] [default to 20]
  **sort** | list( **character** )| Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. | [optional] 
  **ms_data_search_prepared** | **character**| Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. | [optional] [default to FALSE]
- **opt_fields** | Enum [none, msData, topAnnotationsSummary, topAnnotations, topAnnotationsDeNovo, computedTools, tags] | set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [none]]
+ **opt_fields** | Enum [none, msData, topAnnotationsSummary, topAnnotations, topAnnotationsDeNovo, computedTools, tags] | set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;none&quot;]]
 
 ### Return type
 
@@ -824,7 +824,7 @@ No authorization required
 | **200** | StructureCandidate of this feature (aligned over runs) candidate with specified optional fields. |  -  |
 
 # **GetDeNovoStructureCandidatesByFormula**
-> array[StructureCandidateScored] GetDeNovoStructureCandidatesByFormula(project_id, aligned_feature_id, formula_id, opt_fields = [none])
+> array[StructureCandidateScored] GetDeNovoStructureCandidatesByFormula(project_id, aligned_feature_id, formula_id, opt_fields = ["none"])
 
 List of de novo structure candidates (e.g. generated by MsNovelist) ranked by CSI:FingerID score for the given 'formulaId' with minimal information.  StructureCandidates can be enriched with molecular fingerprint.
 
@@ -856,7 +856,7 @@ Name | Type | Description  | Notes
  **project_id** | **character**| project-space to read from. | 
  **aligned_feature_id** | **character**| feature (aligned over runs) the formula result belongs to. | 
  **formula_id** | **character**| identifier of the requested formula result | 
- **opt_fields** | Enum [none, fingerprint, dbLinks, libraryMatches, structureSvg] | set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [none]]
+ **opt_fields** | Enum [none, fingerprint, dbLinks, libraryMatches, structureSvg] | set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;none&quot;]]
 
 ### Return type
 
@@ -877,7 +877,7 @@ No authorization required
 | **200** | StructureCandidate of this formula candidate with specified optional fields. |  -  |
 
 # **GetDeNovoStructureCandidatesByFormulaPaged**
-> PagedModelStructureCandidateScored GetDeNovoStructureCandidatesByFormulaPaged(project_id, aligned_feature_id, formula_id, page = 0, size = 20, sort = var.sort, opt_fields = [none])
+> PagedModelStructureCandidateScored GetDeNovoStructureCandidatesByFormulaPaged(project_id, aligned_feature_id, formula_id, page = 0, size = 20, sort = var.sort, opt_fields = ["none"])
 
 Page of de novo structure candidates (e.g. generated by MsNovelist) ranked by CSI:FingerID score for the given 'formulaId' with minimal information.  StructureCandidates can be enriched with molecular fingerprint.
 
@@ -915,7 +915,7 @@ Name | Type | Description  | Notes
  **page** | **integer**| Zero-based page index (0..N) | [optional] [default to 0]
  **size** | **integer**| The size of the page to be returned | [optional] [default to 20]
  **sort** | list( **character** )| Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. | [optional] 
- **opt_fields** | Enum [none, fingerprint, dbLinks, libraryMatches, structureSvg] | set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [none]]
+ **opt_fields** | Enum [none, fingerprint, dbLinks, libraryMatches, structureSvg] | set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;none&quot;]]
 
 ### Return type
 
@@ -936,7 +936,7 @@ No authorization required
 | **200** | StructureCandidate of this formula candidate with specified optional fields. |  -  |
 
 # **GetDeNovoStructureCandidatesPaged**
-> PagedModelStructureCandidateFormula GetDeNovoStructureCandidatesPaged(project_id, aligned_feature_id, page = 0, size = 20, sort = var.sort, opt_fields = [none])
+> PagedModelStructureCandidateFormula GetDeNovoStructureCandidatesPaged(project_id, aligned_feature_id, page = 0, size = 20, sort = var.sort, opt_fields = ["none"])
 
 Page of de novo structure candidates (e.g. generated by MsNovelist) ranked by CSI:FingerID score for the given 'alignedFeatureId' with minimal information.  StructureCandidates can be enriched with molecular fingerprint.
 
@@ -972,7 +972,7 @@ Name | Type | Description  | Notes
  **page** | **integer**| Zero-based page index (0..N) | [optional] [default to 0]
  **size** | **integer**| The size of the page to be returned | [optional] [default to 20]
  **sort** | list( **character** )| Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. | [optional] 
- **opt_fields** | Enum [none, fingerprint, dbLinks, libraryMatches, structureSvg] | set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [none]]
+ **opt_fields** | Enum [none, fingerprint, dbLinks, libraryMatches, structureSvg] | set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;none&quot;]]
 
 ### Return type
 
@@ -1201,7 +1201,7 @@ No authorization required
 | **200** | Fragmentation spectrum annotated with fragment formulas and losses. |  -  |
 
 # **GetFormulaCandidate**
-> FormulaCandidate GetFormulaCandidate(project_id, aligned_feature_id, formula_id, ms_data_search_prepared = FALSE, opt_fields = [none])
+> FormulaCandidate GetFormulaCandidate(project_id, aligned_feature_id, formula_id, ms_data_search_prepared = FALSE, opt_fields = ["none"])
 
 FormulaResultContainers for the given 'formulaId' with minimal information.
 
@@ -1235,7 +1235,7 @@ Name | Type | Description  | Notes
  **aligned_feature_id** | **character**| feature (aligned over runs) the formula result belongs to. | 
  **formula_id** | **character**| identifier of the requested formula result | 
  **ms_data_search_prepared** | **character**| Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. | [optional] [default to FALSE]
- **opt_fields** | Enum [none, statistics, fragmentationTree, annotatedSpectrum, isotopePattern, lipidAnnotation, predictedFingerprint, compoundClasses, canopusPredictions] | set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [none]]
+ **opt_fields** | Enum [none, statistics, fragmentationTree, annotatedSpectrum, isotopePattern, lipidAnnotation, predictedFingerprint, compoundClasses, canopusPredictions] | set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;none&quot;]]
 
 ### Return type
 
@@ -1309,7 +1309,7 @@ No authorization required
 | **200** | All FormulaCandidate of this feature with. |  -  |
 
 # **GetFormulaCandidatesPaged**
-> PagedModelFormulaCandidate GetFormulaCandidatesPaged(project_id, aligned_feature_id, page = 0, size = 20, sort = var.sort, ms_data_search_prepared = FALSE, opt_fields = [none])
+> PagedModelFormulaCandidate GetFormulaCandidatesPaged(project_id, aligned_feature_id, page = 0, size = 20, sort = var.sort, ms_data_search_prepared = FALSE, opt_fields = ["none"])
 
 Page of FormulaResultContainers available for this feature with minimal information.
 
@@ -1347,7 +1347,7 @@ Name | Type | Description  | Notes
  **size** | **integer**| The size of the page to be returned | [optional] [default to 20]
  **sort** | list( **character** )| Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. | [optional] 
  **ms_data_search_prepared** | **character**| Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. | [optional] [default to FALSE]
- **opt_fields** | Enum [none, statistics, fragmentationTree, annotatedSpectrum, isotopePattern, lipidAnnotation, predictedFingerprint, compoundClasses, canopusPredictions] | set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [none]]
+ **opt_fields** | Enum [none, statistics, fragmentationTree, annotatedSpectrum, isotopePattern, lipidAnnotation, predictedFingerprint, compoundClasses, canopusPredictions] | set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;none&quot;]]
 
 ### Return type
 
@@ -1623,7 +1623,7 @@ No authorization required
 | **200** | Quant table row for this feature |  -  |
 
 # **GetSpectralLibraryMatch**
-> SpectralLibraryMatch GetSpectralLibraryMatch(project_id, aligned_feature_id, match_id, opt_fields = [none])
+> SpectralLibraryMatch GetSpectralLibraryMatch(project_id, aligned_feature_id, match_id, opt_fields = ["none"])
 
 Spectral library match for the given 'alignedFeatureId'.
 
@@ -1655,7 +1655,7 @@ Name | Type | Description  | Notes
  **project_id** | **character**| project-space to read from. | 
  **aligned_feature_id** | **character**| feature (aligned over runs) the structure candidates belong to. | 
  **match_id** | **character**| id of the library match to be returned. | 
- **opt_fields** | Enum [none, referenceSpectrum] |  | [optional] [default to [none]]
+ **opt_fields** | Enum [none, referenceSpectrum] |  | [optional] [default to [&quot;none&quot;]]
 
 ### Return type
 
@@ -1733,7 +1733,7 @@ No authorization required
 | **200** | Spectral library matches of this feature (aligned over runs). |  -  |
 
 # **GetSpectralLibraryMatchesPaged**
-> PagedModelSpectralLibraryMatch GetSpectralLibraryMatchesPaged(project_id, aligned_feature_id, page = 0, size = 20, sort = var.sort, min_shared_peaks = 1, min_similarity = 0.2, inchi_key = "", opt_fields = [none])
+> PagedModelSpectralLibraryMatch GetSpectralLibraryMatchesPaged(project_id, aligned_feature_id, page = 0, size = 20, sort = var.sort, min_shared_peaks = 1, min_similarity = 0.2, inchi_key = "", opt_fields = ["none"])
 
 Page of spectral library matches for the given 'alignedFeatureId'.
 
@@ -1775,7 +1775,7 @@ Name | Type | Description  | Notes
  **min_shared_peaks** | **integer**|  | [optional] [default to 1]
  **min_similarity** | **numeric**|  | [optional] [default to 0.2]
  **inchi_key** | **character**|  | [optional] [default to &quot;&quot;]
- **opt_fields** | Enum [none, referenceSpectrum] |  | [optional] [default to [none]]
+ **opt_fields** | Enum [none, referenceSpectrum] |  | [optional] [default to [&quot;none&quot;]]
 
 ### Return type
 
@@ -2014,7 +2014,7 @@ No authorization required
 | **200** | Fragmentation spectrum annotated with fragments and sub-structures. |  -  |
 
 # **GetStructureCandidates**
-> array[StructureCandidateFormula] GetStructureCandidates(project_id, aligned_feature_id, opt_fields = [none])
+> array[StructureCandidateFormula] GetStructureCandidates(project_id, aligned_feature_id, opt_fields = ["none"])
 
 List of structure database search candidates ranked by CSI:FingerID score for the given 'alignedFeatureId' with minimal information.
 
@@ -2044,7 +2044,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **character**| project-space to read from. | 
  **aligned_feature_id** | **character**| feature (aligned over runs) the structure candidates belong to. | 
- **opt_fields** | Enum [none, fingerprint, dbLinks, libraryMatches, structureSvg] | set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [none]]
+ **opt_fields** | Enum [none, fingerprint, dbLinks, libraryMatches, structureSvg] | set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;none&quot;]]
 
 ### Return type
 
@@ -2065,7 +2065,7 @@ No authorization required
 | **200** | StructureCandidate of this feature (aligned over runs) candidate with specified optional fields. |  -  |
 
 # **GetStructureCandidatesByFormula**
-> array[StructureCandidateScored] GetStructureCandidatesByFormula(project_id, aligned_feature_id, formula_id, opt_fields = [none])
+> array[StructureCandidateScored] GetStructureCandidatesByFormula(project_id, aligned_feature_id, formula_id, opt_fields = ["none"])
 
 List of CSI:FingerID structure database search candidates for the given 'formulaId' with minimal information.
 
@@ -2097,7 +2097,7 @@ Name | Type | Description  | Notes
  **project_id** | **character**| project-space to read from. | 
  **aligned_feature_id** | **character**| feature (aligned over runs) the formula result belongs to. | 
  **formula_id** | **character**| identifier of the requested formula result | 
- **opt_fields** | Enum [none, fingerprint, dbLinks, libraryMatches, structureSvg] | set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [none]]
+ **opt_fields** | Enum [none, fingerprint, dbLinks, libraryMatches, structureSvg] | set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;none&quot;]]
 
 ### Return type
 
@@ -2118,7 +2118,7 @@ No authorization required
 | **200** | StructureCandidate of this formula candidate with specified optional fields. |  -  |
 
 # **GetStructureCandidatesByFormulaPaged**
-> PagedModelStructureCandidateScored GetStructureCandidatesByFormulaPaged(project_id, aligned_feature_id, formula_id, page = 0, size = 20, sort = var.sort, opt_fields = [none])
+> PagedModelStructureCandidateScored GetStructureCandidatesByFormulaPaged(project_id, aligned_feature_id, formula_id, page = 0, size = 20, sort = var.sort, opt_fields = ["none"])
 
 Page of CSI:FingerID structure database search candidates for the given 'formulaId' with minimal information.
 
@@ -2156,7 +2156,7 @@ Name | Type | Description  | Notes
  **page** | **integer**| Zero-based page index (0..N) | [optional] [default to 0]
  **size** | **integer**| The size of the page to be returned | [optional] [default to 20]
  **sort** | list( **character** )| Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. | [optional] 
- **opt_fields** | Enum [none, fingerprint, dbLinks, libraryMatches, structureSvg] | set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [none]]
+ **opt_fields** | Enum [none, fingerprint, dbLinks, libraryMatches, structureSvg] | set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;none&quot;]]
 
 ### Return type
 
@@ -2177,7 +2177,7 @@ No authorization required
 | **200** | StructureCandidate of this formula candidate with specified optional fields. |  -  |
 
 # **GetStructureCandidatesPaged**
-> PagedModelStructureCandidateFormula GetStructureCandidatesPaged(project_id, aligned_feature_id, page = 0, size = 20, sort = var.sort, opt_fields = [none])
+> PagedModelStructureCandidateFormula GetStructureCandidatesPaged(project_id, aligned_feature_id, page = 0, size = 20, sort = var.sort, opt_fields = ["none"])
 
 Page of structure database search candidates ranked by CSI:FingerID score for the given 'alignedFeatureId' with minimal information.
 
@@ -2213,7 +2213,7 @@ Name | Type | Description  | Notes
  **page** | **integer**| Zero-based page index (0..N) | [optional] [default to 0]
  **size** | **integer**| The size of the page to be returned | [optional] [default to 20]
  **sort** | list( **character** )| Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. | [optional] 
- **opt_fields** | Enum [none, fingerprint, dbLinks, libraryMatches, structureSvg] | set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [none]]
+ **opt_fields** | Enum [none, fingerprint, dbLinks, libraryMatches, structureSvg] | set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;none&quot;]]
 
 ### Return type
 

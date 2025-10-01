@@ -9,7 +9,7 @@
 #' @format An \code{R6Class} generator object
 #' @field id Unique identifier to access the job via the API character [optional]
 #' @field command Command string of the executed Task character [optional]
-#' @field progress Optional progress information of this job \link{JobProgress} [optional]
+#' @field progress  \link{JobProgress} [optional]
 #' @field affectedCompoundIds List of compoundIds that are affected by this job.  This lis will also contain compoundIds where not all features of the compound are affected by the job.  If this job is creating compounds (e.g. data import jobs) this value will be NULL until the jobs has finished list(character) [optional]
 #' @field affectedAlignedFeatureIds List of alignedFeatureIds that are affected by this job.  If this job is creating features (e.g. data import jobs) this value will be NULL until the jobs has finished list(character) [optional]
 #' @field jobEffect Effect this job has. The affected ids are added, removed or modified.  Null if job does not affect features/compounds  Not available/null if affected Ids are not requested character [optional]
@@ -31,7 +31,7 @@ Job <- R6::R6Class(
     #'
     #' @param id Unique identifier to access the job via the API
     #' @param command Command string of the executed Task
-    #' @param progress Optional progress information of this job
+    #' @param progress progress
     #' @param affectedCompoundIds List of compoundIds that are affected by this job.  This lis will also contain compoundIds where not all features of the compound are affected by the job.  If this job is creating compounds (e.g. data import jobs) this value will be NULL until the jobs has finished
     #' @param affectedAlignedFeatureIds List of alignedFeatureIds that are affected by this job.  If this job is creating features (e.g. data import jobs) this value will be NULL until the jobs has finished
     #' @param jobEffect Effect this job has. The affected ids are added, removed or modified.  Null if job does not affect features/compounds  Not available/null if affected Ids are not requested

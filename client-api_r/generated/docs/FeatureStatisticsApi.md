@@ -11,7 +11,7 @@ Method | HTTP request | Description
 
 
 # **ComputeAlignedFeatureFoldChangesExperimental**
-> Job ComputeAlignedFeatureFoldChangesExperimental(project_id, left_group_name, right_group_name, aggregation = "AVG", quantification = "APEX_INTENSITY", opt_fields = [progress])
+> Job ComputeAlignedFeatureFoldChangesExperimental(project_id, left_group_name, right_group_name, aggregation = "AVG", quantification = "APEX_INTENSITY", opt_fields = ["progress"])
 
 [EXPERIMENTAL] Compute the fold change between two groups of runs
 
@@ -47,7 +47,7 @@ Name | Type | Description  | Notes
  **right_group_name** | **character**| name of the right tag group. | 
  **aggregation** | Enum [AVG, MIN, MAX] | aggregation type. | [optional] [default to &quot;AVG&quot;]
  **quantification** | Enum [APEX_INTENSITY, AREA_UNDER_CURVE] | quantification type. | [optional] [default to &quot;APEX_INTENSITY&quot;]
- **opt_fields** | Enum [none, command, progress, affectedIds] | job opt fields. | [optional] [default to [progress]]
+ **opt_fields** | Enum [none, command, progress, affectedIds] | job opt fields. | [optional] [default to [&quot;progress&quot;]]
 
 ### Return type
 

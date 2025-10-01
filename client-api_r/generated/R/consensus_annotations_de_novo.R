@@ -8,7 +8,7 @@
 #' @description ConsensusAnnotationsDeNovo Class
 #' @format An \code{R6Class} generator object
 #' @field molecularFormula Molecular formula of the consensus annotation  Might be null if no consensus formula is available. character [optional]
-#' @field compoundClasses Compound classes (predicted with CANOPUS) corresponding to the molecularFormula  Might be null if no fingerprints or compound classes are available. \link{CompoundClasses} [optional]
+#' @field compoundClasses  \link{CompoundClasses} [optional]
 #' @field supportingFeatureIds FeatureIds where the topAnnotation supports this annotation. list(character) [optional]
 #' @field selectionCriterion Criterion that was used to select the consensus annotation. character [optional]
 #' @importFrom R6 R6Class
@@ -26,7 +26,7 @@ ConsensusAnnotationsDeNovo <- R6::R6Class(
     #' Initialize a new ConsensusAnnotationsDeNovo class.
     #'
     #' @param molecularFormula Molecular formula of the consensus annotation  Might be null if no consensus formula is available.
-    #' @param compoundClasses Compound classes (predicted with CANOPUS) corresponding to the molecularFormula  Might be null if no fingerprints or compound classes are available.
+    #' @param compoundClasses compoundClasses
     #' @param supportingFeatureIds FeatureIds where the topAnnotation supports this annotation.
     #' @param selectionCriterion Criterion that was used to select the consensus annotation.
     #' @param ... Other optional arguments.

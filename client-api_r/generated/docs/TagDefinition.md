@@ -8,9 +8,9 @@ Name | Type | Description | Notes
 **description** | **character** | A human-readable description about the purpose of this tag. | [optional] 
 **tagType** | **character** | A simple string based identifier to specify the type/scope/purpose of this tag. | [optional] 
 **valueType** | **character** |  | [Enum: [NONE, BOOLEAN, INTEGER, REAL, TEXT, DATE, TIME]] 
-**possibleValues** | [**array[AnyType]**](AnyType.md) |  | [optional] 
-**minValue** | [**AnyType**](.md) |  | [optional] 
-**maxValue** | [**AnyType**](.md) |  | [optional] 
+**possibleValues** | **array[object]** |  | [optional] 
+**minValue** | **object** |  | [optional] 
+**maxValue** | **object** |  | [optional] 
 **editable** | **character** |  | [optional] 
 
 

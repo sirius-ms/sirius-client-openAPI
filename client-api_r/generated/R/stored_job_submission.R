@@ -9,7 +9,7 @@
 #' @format An \code{R6Class} generator object
 #' @field name Unique name to identify this JobSubmission (job config). character
 #' @field editable False for predefined configs which are not editable and not removable. character
-#' @field jobSubmission The JobSubmission identified by the name \link{JobSubmission}
+#' @field jobSubmission  \link{JobSubmission}
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
 #' @export
@@ -25,7 +25,7 @@ StoredJobSubmission <- R6::R6Class(
     #'
     #' @param name Unique name to identify this JobSubmission (job config).
     #' @param editable False for predefined configs which are not editable and not removable.
-    #' @param jobSubmission The JobSubmission identified by the name
+    #' @param jobSubmission jobSubmission
     #' @param ... Other optional arguments.
     initialize = function(`name`, `editable`, `jobSubmission`, ...) {
       if (!missing(`name`)) {

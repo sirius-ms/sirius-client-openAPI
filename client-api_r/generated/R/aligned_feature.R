@@ -20,11 +20,11 @@
 #' @field quality Quality of this feature. character [optional]
 #' @field hasMs1 If true, the feature has at lease one MS1 spectrum character [optional]
 #' @field hasMsMs If true, the feature has at lease one MS/MS spectrum character [optional]
-#' @field msData Mass Spec data of this feature (input data) \link{MsData} [optional]
-#' @field topAnnotations Top annotations of this feature.  If a CSI:FingerID structureAnnotation is available, the FormulaCandidate that corresponds to the  structureAnnotation is returned. Otherwise, it's the FormulaCandidate with the highest SiriusScore is returned.  CANOPUS Compound classes correspond to the FormulaCandidate no matter how it was selected   Null if it was not requested und non-null otherwise. \link{FeatureAnnotations} [optional]
-#' @field topAnnotationsDeNovo Top de novo annotations of this feature.  The FormulaCandidate with the highest SiriusScore is returned. MSNovelist structureAnnotation and  CANOPUS compoundClasses correspond to the FormulaCandidate.   Null if it was not requested und non-null otherwise. \link{FeatureAnnotations} [optional]
+#' @field msData  \link{MsData} [optional]
+#' @field topAnnotations  \link{FeatureAnnotations} [optional]
+#' @field topAnnotationsDeNovo  \link{FeatureAnnotations} [optional]
 #' @field computing Write lock for this feature. If the feature is locked no write operations are possible.  True if any computation is modifying this feature or its results character [optional]
-#' @field computedTools Specifies which tools have been executed for this feature. Can be used to estimate which results can be expected. Null if it was not requested und non-null otherwise. \link{ComputedSubtools} [optional]
+#' @field computedTools  \link{ComputedSubtools} [optional]
 #' @field tags Key: tagName, value: tag named list(\link{Tag}) [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
@@ -68,11 +68,11 @@ AlignedFeature <- R6::R6Class(
     #' @param quality Quality of this feature.
     #' @param hasMs1 If true, the feature has at lease one MS1 spectrum
     #' @param hasMsMs If true, the feature has at lease one MS/MS spectrum
-    #' @param msData Mass Spec data of this feature (input data)
-    #' @param topAnnotations Top annotations of this feature.  If a CSI:FingerID structureAnnotation is available, the FormulaCandidate that corresponds to the  structureAnnotation is returned. Otherwise, it's the FormulaCandidate with the highest SiriusScore is returned.  CANOPUS Compound classes correspond to the FormulaCandidate no matter how it was selected   Null if it was not requested und non-null otherwise.
-    #' @param topAnnotationsDeNovo Top de novo annotations of this feature.  The FormulaCandidate with the highest SiriusScore is returned. MSNovelist structureAnnotation and  CANOPUS compoundClasses correspond to the FormulaCandidate.   Null if it was not requested und non-null otherwise.
+    #' @param msData msData
+    #' @param topAnnotations topAnnotations
+    #' @param topAnnotationsDeNovo topAnnotationsDeNovo
     #' @param computing Write lock for this feature. If the feature is locked no write operations are possible.  True if any computation is modifying this feature or its results
-    #' @param computedTools Specifies which tools have been executed for this feature. Can be used to estimate which results can be expected. Null if it was not requested und non-null otherwise.
+    #' @param computedTools computedTools
     #' @param tags Key: tagName, value: tag
     #' @param ... Other optional arguments.
     initialize = function(`charge`, `detectedAdducts`, `alignedFeatureId` = NULL, `compoundId` = NULL, `name` = NULL, `externalFeatureId` = NULL, `ionMass` = NULL, `rtStartSeconds` = NULL, `rtEndSeconds` = NULL, `rtApexSeconds` = NULL, `quality` = NULL, `hasMs1` = NULL, `hasMsMs` = NULL, `msData` = NULL, `topAnnotations` = NULL, `topAnnotationsDeNovo` = NULL, `computing` = NULL, `computedTools` = NULL, `tags` = NULL, ...) {

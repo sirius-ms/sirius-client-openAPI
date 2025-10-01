@@ -12,7 +12,7 @@ Name | Type | Description | Notes
 **massDeviationPpm** | **numeric** | Relative mass deviation of the exact mass to the measured peak mass in ppm | [optional] 
 **recalibratedMassDeviationMz** | **numeric** | Absolute mass deviation of the exact mass to the recalibrated peak mass in mDa | [optional] 
 **recalibratedMassDeviationPpm** | **numeric** | Relative mass deviation of the exact mass to the recalibrated peak mass in ppm | [optional] 
-**parentPeak** | [**ParentPeak**](ParentPeak.md) | Link to the parent peak connected via the neutral loss from the fragmentation tree. | [optional] 
+**parentPeak** | [**ParentPeak**](ParentPeak.md) |  | [optional] 
 **substructureAtoms** | **array[integer]** | EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.   Array/List of indices of the atoms of the structure candidate that are part of this fragments substructure  (highlighted atoms) | [optional] 
 **substructureBonds** | **array[integer]** | EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.   Array/List of indices of the bonds of the structure candidate that are part of this fragments substructure  (highlighted bonds)   Null if substructure annotation not available or not requested. | [optional] 
 **substructureBondsCut** | **array[integer]** | EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.   Array/List of indices of the bonds of the structure candidate that need to be cut to produce this fragments  substructure (highlighted cutted bonds).   Null if substructure annotation not available or not requested. | [optional] 

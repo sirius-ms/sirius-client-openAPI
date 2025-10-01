@@ -8,10 +8,10 @@
 #' @description ConsensusAnnotationsCSI Class
 #' @format An \code{R6Class} generator object
 #' @field molecularFormula Molecular formula of the consensus annotation  Might be null if no consensus formula is available. character [optional]
-#' @field compoundClasses Compound classes (predicted with CANOPUS) corresponding to the molecularFormula  Might be null if no fingerprints or compound classes are available. \link{CompoundClasses} [optional]
+#' @field compoundClasses  \link{CompoundClasses} [optional]
 #' @field supportingFeatureIds FeatureIds where the topAnnotation supports this annotation. list(character) [optional]
 #' @field selectionCriterion Null if this is a custom selection character [optional]
-#' @field csiFingerIdStructure Database structure candidate (searched with CSI:FingerID), that also defines the molecularFormula  Might be null if no consensus structure is available. \link{StructureCandidate} [optional]
+#' @field csiFingerIdStructure  \link{StructureCandidate} [optional]
 #' @field confidenceExactMatch Confidence value that represents the certainty that reported consensus structure is exactly the measured one  If multiple features support this consensus structure the maximum confidence is reported numeric [optional]
 #' @field confidenceApproxMatch Confidence value that represents the certainty that the exact consensus structure or a very similar  structure (e.g. measured by Maximum Common Edge Subgraph Distance) is the measured one.  If multiple features support this consensus structure the maximum confidence is reported numeric [optional]
 #' @importFrom R6 R6Class
@@ -32,10 +32,10 @@ ConsensusAnnotationsCSI <- R6::R6Class(
     #' Initialize a new ConsensusAnnotationsCSI class.
     #'
     #' @param molecularFormula Molecular formula of the consensus annotation  Might be null if no consensus formula is available.
-    #' @param compoundClasses Compound classes (predicted with CANOPUS) corresponding to the molecularFormula  Might be null if no fingerprints or compound classes are available.
+    #' @param compoundClasses compoundClasses
     #' @param supportingFeatureIds FeatureIds where the topAnnotation supports this annotation.
     #' @param selectionCriterion Null if this is a custom selection
-    #' @param csiFingerIdStructure Database structure candidate (searched with CSI:FingerID), that also defines the molecularFormula  Might be null if no consensus structure is available.
+    #' @param csiFingerIdStructure csiFingerIdStructure
     #' @param confidenceExactMatch Confidence value that represents the certainty that reported consensus structure is exactly the measured one  If multiple features support this consensus structure the maximum confidence is reported
     #' @param confidenceApproxMatch Confidence value that represents the certainty that the exact consensus structure or a very similar  structure (e.g. measured by Maximum Common Edge Subgraph Distance) is the measured one.  If multiple features support this consensus structure the maximum confidence is reported
     #' @param ... Other optional arguments.

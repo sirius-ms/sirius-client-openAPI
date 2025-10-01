@@ -18,7 +18,7 @@
 #' @field csiScore CSI:FingerID score of the fingerprint of this compound to the predicted fingerprint of CSI:FingerID  This is the score used for ranking structure candidates numeric [optional]
 #' @field tanimotoSimilarity Tanimoto similarly of the fingerprint of this compound to the predicted fingerprint of CSI:FingerID numeric [optional]
 #' @field mcesDistToTopHit Maximum Common Edge Subgraph (MCES) distance to the top scoring hit (CSI:FingerID) in a candidate list. numeric [optional]
-#' @field fingerprint Array containing the indices of the molecular fingerprint that are available in the structure (1 if present)  OPTIONAL: needs to be added by parameter \link{BinaryFingerprint} [optional]
+#' @field fingerprint  \link{BinaryFingerprint} [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
 #' @export
@@ -52,7 +52,7 @@ StructureCandidateScored <- R6::R6Class(
     #' @param csiScore CSI:FingerID score of the fingerprint of this compound to the predicted fingerprint of CSI:FingerID  This is the score used for ranking structure candidates
     #' @param tanimotoSimilarity Tanimoto similarly of the fingerprint of this compound to the predicted fingerprint of CSI:FingerID
     #' @param mcesDistToTopHit Maximum Common Edge Subgraph (MCES) distance to the top scoring hit (CSI:FingerID) in a candidate list.
-    #' @param fingerprint Array containing the indices of the molecular fingerprint that are available in the structure (1 if present)  OPTIONAL: needs to be added by parameter
+    #' @param fingerprint fingerprint
     #' @param ... Other optional arguments.
     initialize = function(`inchiKey` = NULL, `smiles` = NULL, `structureName` = NULL, `structureSvg` = NULL, `dbLinks` = NULL, `spectralLibraryMatches` = NULL, `xlogP` = NULL, `rank` = NULL, `csiScore` = NULL, `tanimotoSimilarity` = NULL, `mcesDistToTopHit` = NULL, `fingerprint` = NULL, ...) {
       if (!is.null(`inchiKey`)) {

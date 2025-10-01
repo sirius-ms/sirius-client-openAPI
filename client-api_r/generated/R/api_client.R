@@ -38,7 +38,7 @@ ApiClient  <- R6::R6Class(
     # base path of all requests
     base_path = "http://localhost:8080",
     # user agent in the HTTP request
-    user_agent = "OpenAPI-Generator/6.3.1/r",
+    user_agent = "OpenAPI-Generator/6.3.3-SNAPSHOT/r",
     # default headers in the HTTP request
     default_headers = NULL,
     # username (HTTP basic authentication)
@@ -210,12 +210,43 @@ ApiClient  <- R6::R6Class(
 
       # has file upload?
       if (!is.null(file_params) && length(file_params) != 0) {
-        req <- req %>% req_body_multipart(!!!file_params)
+        # Create multipart body data
+        multipart_data <- list()
 
-        # add form parameters via req_body_multipart
+        # Add form parameters first
         if (!is.null(form_params) && length(form_params) != 0) {
-          req <- req %>% req_body_multipart(!!!form_params)
+          for (param_name in names(form_params)) {
+            param_value <- form_params[[param_name]]
+            is_json <- tryCatch({
+              jsonlite::validate(param_value)
+            }, error = function(e) {
+              FALSE
+            })
+
+            if (is_json) {
+              multipart_data[[param_name]] <- curl::form_data(param_value, type = "application/json")
+            } else {
+              multipart_data[[param_name]] <- param_value
+            }
+          }
         }
+
+        # Add file parameters - handle multiple files with same name
+        for (param_name in names(file_params)) {
+          param_value <- file_params[[param_name]]
+
+          if (is.list(param_value) && length(param_value) > 1) {
+            # Multiple files with same parameter name
+            for (i in seq_along(param_value)) {
+              multipart_data[[length(multipart_data) + 1]] <- param_value[[i]]
+              names(multipart_data)[length(multipart_data)] <- param_name
+            }
+          } else {
+            # Single file
+            multipart_data[[param_name]] <- param_value[[1]]
+          }
+        }
+        req <- req %>% req_body_multipart(!!!multipart_data)
       } else { # no file upload
         # add form parameters via req_body_form
         if (!is.null(form_params) && length(form_params) != 0) {

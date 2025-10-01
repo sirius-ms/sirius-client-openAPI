@@ -300,7 +300,7 @@ library(Rsirius)
 var_database_id <- "database_id_example" # character | database to import into
 var_input_files <- c(123) # array[data.frame] | files to be imported
 var_buffer_size <- 1000 # integer |  (Optional)
-var_bio_transformer_parameters <- BioTransformerParameters$new("RULE_BASED", "BT_RULE_BASED", c(BioTransformerSequenceStep$new("PHASE_1_CYP450", 123)), "useDB_example") # BioTransformerParameters | configuration for biotransformer execution. If null, BioTransformer is not applied. (Optional)
+var_bio_transformer_parameters <- BioTransformerParameters$new("RULE_BASED", "BT_RULE_BASED", c(BioTransformerSequenceStep$new("PHASE_1_CYP450", 123)), "useDB_example") # BioTransformerParameters |  (Optional)
 
 api_instance <- rsirius_api$new()
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
@@ -316,7 +316,7 @@ Name | Type | Description  | Notes
  **database_id** | **character**| database to import into | 
  **input_files** | list( **data.frame** )| files to be imported | 
  **buffer_size** | **integer**|  | [optional] [default to 1000]
- **bio_transformer_parameters** | [**BioTransformerParameters**](BioTransformerParameters.md)| configuration for biotransformer execution. If null, BioTransformer is not applied. | [optional] 
+ **bio_transformer_parameters** | [**BioTransformerParameters**](BioTransformerParameters.md)|  | [optional] 
 
 ### Return type
 

@@ -5,9 +5,9 @@ Summary of the results of a feature (aligned over runs). Can be added to a Align
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**formulaAnnotation** | [**FormulaCandidate**](FormulaCandidate.md) | Best matching FormulaCandidate. | [optional] 
-**structureAnnotation** | [**StructureCandidateScored**](StructureCandidateScored.md) | Best matching StructureCandidate ranked by CSI:FingerID Score over all FormulaCandidates. | [optional] 
-**compoundClassAnnotation** | [**CompoundClasses**](CompoundClasses.md) | Best matching compound classes that correspond to the formulaAnnotation | [optional] 
+**formulaAnnotation** | [**FormulaCandidate**](FormulaCandidate.md) |  | [optional] 
+**structureAnnotation** | [**StructureCandidateScored**](StructureCandidateScored.md) |  | [optional] 
+**compoundClassAnnotation** | [**CompoundClasses**](CompoundClasses.md) |  | [optional] 
 **confidenceExactMatch** | **numeric** | Confidence Score that represents the confidence whether the top hit is correct. | [optional] 
 **confidenceApproxMatch** | **numeric** | Confidence Score that represents the confidence whether the top hit or a very similar hit (estimated by MCES distance) is correct. | [optional] 
 **expansiveSearchState** | **character** | Result that shows if structure annotation was expanded by using PubChem as fallback and if so, which confidence mode was used (as per input paramter) | [optional] [Enum: [OFF, EXACT, APPROXIMATE]] 

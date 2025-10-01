@@ -9,8 +9,8 @@
 #' @format An \code{R6Class} generator object
 #' @field alignLCMSRuns Specifies whether LC/MS runs should be aligned character [optional]
 #' @field noiseIntensity Noise level under which all peaks are considered to be likely noise. A peak has to be at least 3x noise level  to be picked as feature. Peaks with MS/MS are still picked even though they might be below noise level.  If not specified, the noise intensity is detected automatically from data. We recommend to NOT specify  this parameter, as the automated detection is usually sufficient. numeric [optional]
-#' @field traceMaxMassDeviation Maximal allowed mass deviation for peaks in ms1 to be considered as belonging to the same trace. \link{Deviation} [optional]
-#' @field alignMaxMassDeviation Maximal allowed mass deviation for aligning features. If not specified, this parameter is estimated from data. \link{Deviation} [optional]
+#' @field traceMaxMassDeviation  \link{Deviation} [optional]
+#' @field alignMaxMassDeviation  \link{Deviation} [optional]
 #' @field alignMaxRetentionTimeDeviation Maximal allowed retention time error in seconds for aligning features. If not specified, this parameter is estimated from data. numeric [optional]
 #' @field minSNR Minimum ratio between peak height and noise intensity for detecting features. By default, this value is 3. Features with good MS/MS are always picked independent of their intensity. For picking very low intensive features we recommend a min-snr of 2, but this will increase runtime and storage memory numeric [optional]
 #' @importFrom R6 R6Class
@@ -31,8 +31,8 @@ LcmsSubmissionParameters <- R6::R6Class(
     #'
     #' @param alignLCMSRuns Specifies whether LC/MS runs should be aligned. Default to TRUE.
     #' @param noiseIntensity Noise level under which all peaks are considered to be likely noise. A peak has to be at least 3x noise level  to be picked as feature. Peaks with MS/MS are still picked even though they might be below noise level.  If not specified, the noise intensity is detected automatically from data. We recommend to NOT specify  this parameter, as the automated detection is usually sufficient.. Default to -1.
-    #' @param traceMaxMassDeviation Maximal allowed mass deviation for peaks in ms1 to be considered as belonging to the same trace.
-    #' @param alignMaxMassDeviation Maximal allowed mass deviation for aligning features. If not specified, this parameter is estimated from data.
+    #' @param traceMaxMassDeviation traceMaxMassDeviation
+    #' @param alignMaxMassDeviation alignMaxMassDeviation
     #' @param alignMaxRetentionTimeDeviation Maximal allowed retention time error in seconds for aligning features. If not specified, this parameter is estimated from data.. Default to -1.
     #' @param minSNR Minimum ratio between peak height and noise intensity for detecting features. By default, this value is 3. Features with good MS/MS are always picked independent of their intensity. For picking very low intensive features we recommend a min-snr of 2, but this will increase runtime and storage memory. Default to 3.
     #' @param ... Other optional arguments.
