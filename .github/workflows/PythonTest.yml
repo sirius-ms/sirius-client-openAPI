@@ -116,3 +116,7 @@ jobs:
       if: always() && steps.api_start.outcome == 'success' && steps.pysirius_install.outcome == 'success' && steps.login.outcome == 'success'
       run: python test_searchable_databases_api.py
       working-directory: client-api_python/generated/test
+    - name: Test acceptance
+      if: always() && steps.api_start.outcome == 'success' && steps.pysirius_install.outcome == 'success' && steps.login.outcome == 'success'
+      run: python test_acceptance.py
+      working-directory: client-api_python/generated/test
