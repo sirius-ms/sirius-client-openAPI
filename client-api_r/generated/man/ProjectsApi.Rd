@@ -733,7 +733,7 @@ Import and Align full MS-Runs from various formats into the specified project as
   project_id,
   input_files,
   parameters,
-  opt_fields = list(progress),
+  opt_fields = list("progress"),
   data_file = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -770,7 +770,7 @@ Import and Align full MS-Runs from various formats into the specified project as
   project_id,
   input_files,
   parameters,
-  opt_fields = list(progress),
+  opt_fields = list("progress"),
   data_file = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -882,7 +882,7 @@ Import ms/ms data from the given format into the specified project-space as back
   input_files,
   ignore_formulas = FALSE,
   allow_ms1_only = TRUE,
-  opt_fields = list(progress),
+  opt_fields = list("progress"),
   data_file = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -922,7 +922,7 @@ Import ms/ms data from the given format into the specified project-space as back
   input_files,
   ignore_formulas = FALSE,
   allow_ms1_only = TRUE,
-  opt_fields = list(progress),
+  opt_fields = list("progress"),
   data_file = NULL,
   ...
 )}\if{html}{\out{</div>}}

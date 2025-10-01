@@ -605,7 +605,7 @@ Get job information and its current state and progress (if available).
 \if{html}{\out{<div class="r">}}\preformatted{JobsApi$GetJob(
   project_id,
   job_id,
-  opt_fields = list(progress),
+  opt_fields = list("progress"),
   data_file = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -639,7 +639,7 @@ Get job information and its current state and progress (if available).
 \if{html}{\out{<div class="r">}}\preformatted{JobsApi$GetJobWithHttpInfo(
   project_id,
   job_id,
-  opt_fields = list(progress),
+  opt_fields = list("progress"),
   data_file = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -1159,7 +1159,7 @@ Start computation for given compounds and with parameters from a stored job-conf
   job_config_name,
   request_body,
   recompute = NULL,
-  opt_fields = list(command, progress),
+  opt_fields = list("command", "progress"),
   data_file = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -1199,7 +1199,7 @@ Start computation for given compounds and with parameters from a stored job-conf
   job_config_name,
   request_body,
   recompute = NULL,
-  opt_fields = list(command, progress),
+  opt_fields = list("command", "progress"),
   data_file = NULL,
   ...
 )}\if{html}{\out{</div>}}
