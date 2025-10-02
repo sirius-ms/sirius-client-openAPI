@@ -20,7 +20,7 @@ jobs:
         timeout_minutes: 2
         command: |
             cd .updater/api
-            curl -s https://github.com/sirius-ms/sirius/releases/download/v6.3.3-SNAPSHOT/sirius-6.3.3-SNAPSHOT-linux-x64.zip
+            wget https://github.com/sirius-ms/sirius/releases/download/v6.3.3-SNAPSHOT/sirius-6.3.3-SNAPSHOT-linux-x64.zip
             echo "Download Complete"
             unzip -o *.zip
             echo "Api Ready"
