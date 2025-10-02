@@ -4,7 +4,7 @@
 context("Test InfoApi")
 
 sdk <- SiriusSDK$new()
-api <- sdk$attach_to_sirius()
+api <- sdk$attach_to_sirius(sirius_port=8080)
 api_instance <- api$info_api
 
 test_that("GetConnectionCheck", {

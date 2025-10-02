@@ -5,7 +5,7 @@ context("Test Acceptance")
 options(warn = -1)
 
 sdk <- SiriusSDK$new()
-api <- sdk$attach_to_sirius()
+api <- sdk$attach_to_sirius(sirius_port=8080)
 api_instance <- api$jobs_api
 features_api <- api$features_api
 projects_api <- api$projects_api

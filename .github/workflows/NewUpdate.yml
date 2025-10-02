@@ -20,7 +20,7 @@ jobs:
     - name: Download latest generators
       run: |
         cd .updater/openapi_generator
-        wget https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/7.10.0/openapi-generator-cli-7.10.0.jar -O openapi-generator-cli.jar
+        wget -nv https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/7.10.0/openapi-generator-cli-7.10.0.jar -O openapi-generator-cli.jar
         java -jar openapi-generator-cli.jar version > version
     - name: Download latest Sirius Release
       uses: nick-fields/retry@v2
@@ -34,7 +34,7 @@ jobs:
             echo "Writing Version files: $packageVersion"
             echo $packageVersion > ./packageVersion.txt
             echo "Downloading Version: $packageVersion"
-            cat ./releases.json | grep 'browser_download_url.*linux-x64.zip\"' | sort | tac | head -n 1 | cut -d : -f 2,3 | tr -d \" | wget -i -
+            cat ./releases.json | grep 'browser_download_url.*linux-x64.zip\"' | sort | tac | head -n 1 | cut -d : -f 2,3 | tr -d \" | wget -nv -i -
             echo "Download Complete"
             unzip *.zip
             echo "Api Ready"
@@ -45,7 +45,7 @@ jobs:
       run: |
         while ! nc -z localhost 8080; do sleep 0.1; done
         cd .updater/api
-        wget http://localhost:8080/v3/api-docs -O api-docs-strings.json
+        wget -nv http://localhost:8080/v3/api-docs -O api-docs-strings.json
     - name: Shutdown SIRIUS
       run: curl -X POST http://localhost:8080/actuator/shutdown
     - name: Run Rest Api with enums
@@ -55,7 +55,7 @@ jobs:
       run: |
         while ! nc -z localhost 8080; do sleep 0.1; done
         cd .updater/api
-        wget http://localhost:8080/v3/api-docs -O api-docs-enums.json
+        wget -nv http://localhost:8080/v3/api-docs -O api-docs-enums.json
     - name: Shutdown SIRIUS
       run: curl -X POST http://localhost:8080/actuator/shutdown
     - name: Update Clients

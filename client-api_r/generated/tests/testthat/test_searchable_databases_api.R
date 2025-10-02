@@ -4,7 +4,7 @@
 context("Test SearchableDatabasesApi")
 
 sdk <- SiriusSDK$new()
-api <- sdk$attach_to_sirius()
+api <- sdk$attach_to_sirius(sirius_port=8080)
 api_instance <- api$searchable_databases_api
 home_dir <- Sys.getenv("HOME")
 path_to_demo_data <- paste(home_dir, "sirius-client-openAPI/.updater/clientTests/Data", sep = "/")

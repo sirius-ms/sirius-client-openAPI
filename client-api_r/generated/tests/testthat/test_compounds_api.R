@@ -4,7 +4,7 @@
 context("Test CompoundsApi")
 
 sdk <- SiriusSDK$new()
-api <- sdk$attach_to_sirius()
+api <- sdk$attach_to_sirius(sirius_port=8080)
 api_instance <- api$compounds_api
 projects_api <- api$projects_api
 
