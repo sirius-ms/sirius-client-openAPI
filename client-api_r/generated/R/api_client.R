@@ -414,7 +414,7 @@ ApiClient  <- R6::R6Class(
         }
 
         # not json mime type, simply return the first one
-        return(headers[1])
+        return(headers[[1]])
       }
     }
   )
