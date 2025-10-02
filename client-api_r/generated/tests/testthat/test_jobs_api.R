@@ -32,7 +32,7 @@ test_that("DeleteJob", {
     projects_api$ImportPreprocessedDataAsJob(project_id, input_files=input_file)
 
     response_before <- api_instance$GetJobs(project_id)
-    api_instance$DeleteJob(project_id, response_before[[1]]$id)
+    api_instance$DeleteJob(project_id, response_before[[1]]$id, await_deletion=TRUE)
     response_after <- api_instance$GetJobs(project_id)
     expect_equal(length(response_before), length(response_after)+1)
 
@@ -92,7 +92,7 @@ test_that("DeleteJobs", {
     projects_api$ImportPreprocessedDataAsJob(project_id, input_files=input_file)
 
     response_before <- api_instance$GetJobs(project_id)
-    api_instance$DeleteJobs(project_id)
+    api_instance$DeleteJobs(project_id, await_deletion=TRUE)
     response_after <- api_instance$GetJobs(project_id)
     expect_equal(length(response_before), length(response_after)+1)
 
