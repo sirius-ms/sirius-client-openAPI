@@ -45,13 +45,6 @@ class TestFeaturesApi(unittest.TestCase):
         self.aligned_feature_id = "586487307819356741"
 
         self.formula_candidates = self.api.features().get_formula_candidates(self.project_id, self.aligned_feature_id)
-        print("########### DEBUG ###########")
-        print("Project info:")
-        print(self.project_info)
-        print("Candidates for MSNovelist feature:")
-        print(self.formula_candidates)
-        print("All Features:")
-        print(self.api.features().get_aligned_features(self.project_id))
         self.formula_id = self.formula_candidates[0].formula_id
 
     def tearDown(self) -> None:
