@@ -62,7 +62,7 @@ test_that("DeleteCompound", {
     api_instance$DeleteCompound(project_id, compound_id)
     response_after <- api_instance$GetCompounds(project_id)
 
-    expect_equal(length(response_before) - length(response_after), 2)
+    expect_equal(length(response_before) - length(response_after), 1)
 
   }, finally = {
 
