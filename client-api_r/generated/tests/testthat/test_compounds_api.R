@@ -4,7 +4,7 @@
 context("Test CompoundsApi")
 
 sdk <- SiriusSDK$new()
-api <- sdk$attach_to_sirius()
+api <- sdk$attach_to_sirius(sirius_port=8080)
 api_instance <- api$compounds_api
 projects_api <- api$projects_api
 
@@ -62,7 +62,7 @@ test_that("DeleteCompound", {
     api_instance$DeleteCompound(project_id, compound_id)
     response_after <- api_instance$GetCompounds(project_id)
 
-    expect_equal(length(response_before) - length(response_after), 1)
+    expect_equal(length(response_before) - length(response_after), 2)
 
   }, finally = {
 

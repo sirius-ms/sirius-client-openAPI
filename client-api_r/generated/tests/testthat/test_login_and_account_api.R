@@ -4,7 +4,7 @@
 context("Test LoginAndAccountApi")
 
 sdk <- SiriusSDK$new()
-api <- sdk$attach_to_sirius()
+api <- sdk$attach_to_sirius(sirius_port=8080)
 api_instance <- api$login_and_account_api
 
 test_that("GetAccountInfo", {

@@ -4,7 +4,7 @@
 context("Test ProjectsApi")
 
 sdk <- SiriusSDK$new()
-api <- sdk$attach_to_sirius()
+api <- sdk$attach_to_sirius(sirius_port=8080)
 api_instance <- api$projects_api
 path_to_demo_data <- paste(Sys.getenv("HOME"), "sirius-client-openAPI/.updater/clientTests/Data", sep = "/")
 preproc_ms2_file_1 <- paste(path_to_demo_data, "Kaempferol.ms", sep = "/")
