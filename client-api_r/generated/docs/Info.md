@@ -1,4 +1,4 @@
-# Rsirius::Info
+# RSirius::Info
 
 
 ## Properties

@@ -1,4 +1,4 @@
-# Rsirius::Compound
+# RSirius::Compound
 
 
 ## Properties

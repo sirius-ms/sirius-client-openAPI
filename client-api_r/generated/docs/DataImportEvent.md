@@ -1,4 +1,4 @@
-# Rsirius::DataImportEvent
+# RSirius::DataImportEvent
 
 
 ## Properties

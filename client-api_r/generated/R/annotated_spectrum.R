@@ -279,7 +279,7 @@ AnnotatedSpectrum <- R6::R6Class(
         self$`precursorPeak` <- `precursorpeak_object`
       }
       if (!is.null(this_object$`peaks`)) {
-        self$`peaks` <- ApiClient$new()$deserializeObj(this_object$`peaks`, "array[AnnotatedPeak]", loadNamespace("Rsirius"))
+        self$`peaks` <- ApiClient$new()$deserializeObj(this_object$`peaks`, "array[AnnotatedPeak]", loadNamespace("RSirius"))
       }
       if (!is.null(this_object$`absIntensityFactor`)) {
         self$`absIntensityFactor` <- this_object$`absIntensityFactor`
@@ -330,7 +330,7 @@ AnnotatedSpectrum <- R6::R6Class(
       self$`scanNumber` <- this_object$`scanNumber`
       self$`cosineQuery` <- this_object$`cosineQuery`
       self$`precursorPeak` <- SimplePeak$new()$fromJSON(jsonlite::toJSON(this_object$`precursorPeak`, auto_unbox = TRUE, digits = NA, null = 'null'))
-      self$`peaks` <- ApiClient$new()$deserializeObj(this_object$`peaks`, "array[AnnotatedPeak]", loadNamespace("Rsirius"))
+      self$`peaks` <- ApiClient$new()$deserializeObj(this_object$`peaks`, "array[AnnotatedPeak]", loadNamespace("RSirius"))
       self$`absIntensityFactor` <- this_object$`absIntensityFactor`
       self$`maxNormFactor` <- this_object$`maxNormFactor`
       self$`sumNormFactor` <- this_object$`sumNormFactor`

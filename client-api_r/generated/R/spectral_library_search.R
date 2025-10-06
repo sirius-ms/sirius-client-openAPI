@@ -198,7 +198,7 @@ SpectralLibrarySearch <- R6::R6Class(
         self$`enabled` <- this_object$`enabled`
       }
       if (!is.null(this_object$`spectraSearchDBs`)) {
-        self$`spectraSearchDBs` <- ApiClient$new()$deserializeObj(this_object$`spectraSearchDBs`, "array[character]", loadNamespace("Rsirius"))
+        self$`spectraSearchDBs` <- ApiClient$new()$deserializeObj(this_object$`spectraSearchDBs`, "array[character]", loadNamespace("RSirius"))
       }
       if (!is.null(this_object$`precursorDeviationPpm`)) {
         self$`precursorDeviationPpm` <- this_object$`precursorDeviationPpm`
@@ -249,7 +249,7 @@ SpectralLibrarySearch <- R6::R6Class(
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       self$`enabled` <- this_object$`enabled`
-      self$`spectraSearchDBs` <- ApiClient$new()$deserializeObj(this_object$`spectraSearchDBs`, "array[character]", loadNamespace("Rsirius"))
+      self$`spectraSearchDBs` <- ApiClient$new()$deserializeObj(this_object$`spectraSearchDBs`, "array[character]", loadNamespace("RSirius"))
       self$`precursorDeviationPpm` <- this_object$`precursorDeviationPpm`
       self$`minSimilarity` <- this_object$`minSimilarity`
       self$`minNumOfPeaks` <- this_object$`minNumOfPeaks`

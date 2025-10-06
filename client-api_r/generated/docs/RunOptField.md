@@ -1,4 +1,4 @@
-# Rsirius::RunOptField
+# RSirius::RunOptField
 
 
 ## Properties

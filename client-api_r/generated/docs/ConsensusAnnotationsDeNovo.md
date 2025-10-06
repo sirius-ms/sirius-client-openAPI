@@ -1,4 +1,4 @@
-# Rsirius::ConsensusAnnotationsDeNovo
+# RSirius::ConsensusAnnotationsDeNovo
 
 
 ## Properties

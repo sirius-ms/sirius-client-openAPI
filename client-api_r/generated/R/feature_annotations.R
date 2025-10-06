@@ -189,10 +189,10 @@ FeatureAnnotations <- R6::R6Class(
         self$`expansiveSearchState` <- this_object$`expansiveSearchState`
       }
       if (!is.null(this_object$`specifiedDatabases`)) {
-        self$`specifiedDatabases` <- ApiClient$new()$deserializeObj(this_object$`specifiedDatabases`, "array[character]", loadNamespace("Rsirius"))
+        self$`specifiedDatabases` <- ApiClient$new()$deserializeObj(this_object$`specifiedDatabases`, "array[character]", loadNamespace("RSirius"))
       }
       if (!is.null(this_object$`expandedDatabases`)) {
-        self$`expandedDatabases` <- ApiClient$new()$deserializeObj(this_object$`expandedDatabases`, "array[character]", loadNamespace("Rsirius"))
+        self$`expandedDatabases` <- ApiClient$new()$deserializeObj(this_object$`expandedDatabases`, "array[character]", loadNamespace("RSirius"))
       }
       self
     },
@@ -224,8 +224,8 @@ FeatureAnnotations <- R6::R6Class(
         stop(paste("Error! \"", this_object$`expansiveSearchState`, "\" cannot be assigned to `expansiveSearchState`. Must be \"OFF\", \"EXACT\", \"APPROXIMATE\".", sep = ""))
       }
       self$`expansiveSearchState` <- this_object$`expansiveSearchState`
-      self$`specifiedDatabases` <- ApiClient$new()$deserializeObj(this_object$`specifiedDatabases`, "array[character]", loadNamespace("Rsirius"))
-      self$`expandedDatabases` <- ApiClient$new()$deserializeObj(this_object$`expandedDatabases`, "array[character]", loadNamespace("Rsirius"))
+      self$`specifiedDatabases` <- ApiClient$new()$deserializeObj(this_object$`specifiedDatabases`, "array[character]", loadNamespace("RSirius"))
+      self$`expandedDatabases` <- ApiClient$new()$deserializeObj(this_object$`expandedDatabases`, "array[character]", loadNamespace("RSirius"))
       self
     },
 

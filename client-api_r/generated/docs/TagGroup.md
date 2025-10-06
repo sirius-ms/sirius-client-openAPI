@@ -1,4 +1,4 @@
-# Rsirius::TagGroup
+# RSirius::TagGroup
 
 
 ## Properties

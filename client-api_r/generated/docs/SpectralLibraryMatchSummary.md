@@ -1,4 +1,4 @@
-# Rsirius::SpectralLibraryMatchSummary
+# RSirius::SpectralLibraryMatchSummary
 
 
 ## Properties

@@ -1,4 +1,4 @@
-# Rsirius::PeakAnnotation
+# RSirius::PeakAnnotation
 
 
 ## Properties

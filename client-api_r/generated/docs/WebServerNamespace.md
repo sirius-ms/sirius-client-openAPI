@@ -1,4 +1,4 @@
-# Rsirius::WebServerNamespace
+# RSirius::WebServerNamespace
 
 
 ## Properties

@@ -1,4 +1,4 @@
-# Rsirius::PagedModelAlignedFeature
+# RSirius::PagedModelAlignedFeature
 
 
 ## Properties

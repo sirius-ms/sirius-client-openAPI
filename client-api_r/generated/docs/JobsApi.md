@@ -30,7 +30,7 @@ Delete job. Specify how to behave for running jobs.
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # Delete job.
 #
@@ -80,7 +80,7 @@ Delete job configuration with given name.
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # Delete job configuration with given name.
 #
@@ -124,7 +124,7 @@ No authorization required
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # * Delete ALL jobs.
 #
@@ -172,7 +172,7 @@ Get a CLI command for the given job configuration.
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # Get a CLI command for the given job configuration.
 #
@@ -219,7 +219,7 @@ Request default job configuration
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # Request default job configuration
 #
@@ -270,7 +270,7 @@ Get job information and its current state and progress (if available).
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # Get job information and its current state and progress (if available).
 #
@@ -321,7 +321,7 @@ Request job configuration with given name.
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # Request job configuration with given name.
 #
@@ -370,7 +370,7 @@ No authorization required
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # [DEPRECATED] Get all (non-default) job configuration names  
 #
@@ -412,7 +412,7 @@ Request all available job configurations
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # Request all available job configurations
 #
@@ -454,7 +454,7 @@ Get List of all available jobs with information such as current state and progre
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # Get List of all available jobs with information such as current state and progress (if available).
 #
@@ -503,7 +503,7 @@ Get Page of jobs with information such as current state and progress (if availab
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # Get Page of jobs with information such as current state and progress (if available).
 #
@@ -556,7 +556,7 @@ No authorization required
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # prepare function argument(s)
 var_project_id <- "project_id_example" # character | 
@@ -603,7 +603,7 @@ Add new job configuration with given name.
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # Add new job configuration with given name.
 #
@@ -656,7 +656,7 @@ Start computation for given compounds and with given parameters.
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # Start computation for given compounds and with given parameters.
 #
@@ -707,7 +707,7 @@ Start computation for given compounds and with parameters from a stored job-conf
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # Start computation for given compounds and with parameters from a stored job-config.
 #

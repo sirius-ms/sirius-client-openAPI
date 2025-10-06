@@ -200,7 +200,7 @@ Compound <- R6::R6Class(
         self$`neutralMass` <- this_object$`neutralMass`
       }
       if (!is.null(this_object$`features`)) {
-        self$`features` <- ApiClient$new()$deserializeObj(this_object$`features`, "array[AlignedFeature]", loadNamespace("Rsirius"))
+        self$`features` <- ApiClient$new()$deserializeObj(this_object$`features`, "array[AlignedFeature]", loadNamespace("RSirius"))
       }
       if (!is.null(this_object$`consensusAnnotations`)) {
         `consensusannotations_object` <- ConsensusAnnotationsCSI$new()
@@ -218,7 +218,7 @@ Compound <- R6::R6Class(
         self$`customAnnotations` <- `customannotations_object`
       }
       if (!is.null(this_object$`tags`)) {
-        self$`tags` <- ApiClient$new()$deserializeObj(this_object$`tags`, "map(Tag)", loadNamespace("Rsirius"))
+        self$`tags` <- ApiClient$new()$deserializeObj(this_object$`tags`, "map(Tag)", loadNamespace("RSirius"))
       }
       self
     },
@@ -246,11 +246,11 @@ Compound <- R6::R6Class(
       self$`rtStartSeconds` <- this_object$`rtStartSeconds`
       self$`rtEndSeconds` <- this_object$`rtEndSeconds`
       self$`neutralMass` <- this_object$`neutralMass`
-      self$`features` <- ApiClient$new()$deserializeObj(this_object$`features`, "array[AlignedFeature]", loadNamespace("Rsirius"))
+      self$`features` <- ApiClient$new()$deserializeObj(this_object$`features`, "array[AlignedFeature]", loadNamespace("RSirius"))
       self$`consensusAnnotations` <- ConsensusAnnotationsCSI$new()$fromJSON(jsonlite::toJSON(this_object$`consensusAnnotations`, auto_unbox = TRUE, digits = NA, null = 'null'))
       self$`consensusAnnotationsDeNovo` <- ConsensusAnnotationsDeNovo$new()$fromJSON(jsonlite::toJSON(this_object$`consensusAnnotationsDeNovo`, auto_unbox = TRUE, digits = NA, null = 'null'))
       self$`customAnnotations` <- ConsensusAnnotationsCSI$new()$fromJSON(jsonlite::toJSON(this_object$`customAnnotations`, auto_unbox = TRUE, digits = NA, null = 'null'))
-      self$`tags` <- ApiClient$new()$deserializeObj(this_object$`tags`, "map(Tag)", loadNamespace("Rsirius"))
+      self$`tags` <- ApiClient$new()$deserializeObj(this_object$`tags`, "map(Tag)", loadNamespace("RSirius"))
       self
     },
 

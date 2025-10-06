@@ -1,4 +1,4 @@
-# Rsirius::ProjectChangeEvent
+# RSirius::ProjectChangeEvent
 
 
 ## Properties

@@ -1,4 +1,4 @@
-# Rsirius::ZodiacEpochs
+# RSirius::ZodiacEpochs
 
 
 ## Properties

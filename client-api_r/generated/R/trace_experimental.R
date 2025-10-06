@@ -219,10 +219,10 @@ TraceExperimental <- R6::R6Class(
         self$`color` <- this_object$`color`
       }
       if (!is.null(this_object$`intensities`)) {
-        self$`intensities` <- ApiClient$new()$deserializeObj(this_object$`intensities`, "array[numeric]", loadNamespace("Rsirius"))
+        self$`intensities` <- ApiClient$new()$deserializeObj(this_object$`intensities`, "array[numeric]", loadNamespace("RSirius"))
       }
       if (!is.null(this_object$`annotations`)) {
-        self$`annotations` <- ApiClient$new()$deserializeObj(this_object$`annotations`, "array[TraceAnnotationExperimental]", loadNamespace("Rsirius"))
+        self$`annotations` <- ApiClient$new()$deserializeObj(this_object$`annotations`, "array[TraceAnnotationExperimental]", loadNamespace("RSirius"))
       }
       if (!is.null(this_object$`mz`)) {
         self$`mz` <- this_object$`mz`
@@ -262,8 +262,8 @@ TraceExperimental <- R6::R6Class(
       self$`sampleName` <- this_object$`sampleName`
       self$`label` <- this_object$`label`
       self$`color` <- this_object$`color`
-      self$`intensities` <- ApiClient$new()$deserializeObj(this_object$`intensities`, "array[numeric]", loadNamespace("Rsirius"))
-      self$`annotations` <- ApiClient$new()$deserializeObj(this_object$`annotations`, "array[TraceAnnotationExperimental]", loadNamespace("Rsirius"))
+      self$`intensities` <- ApiClient$new()$deserializeObj(this_object$`intensities`, "array[numeric]", loadNamespace("RSirius"))
+      self$`annotations` <- ApiClient$new()$deserializeObj(this_object$`annotations`, "array[TraceAnnotationExperimental]", loadNamespace("RSirius"))
       self$`mz` <- this_object$`mz`
       self$`merged` <- this_object$`merged`
       self$`normalizationFactor` <- this_object$`normalizationFactor`

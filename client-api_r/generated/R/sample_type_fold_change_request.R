@@ -99,13 +99,13 @@ SampleTypeFoldChangeRequest <- R6::R6Class(
     fromJSON = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       if (!is.null(this_object$`sampleRunIds`)) {
-        self$`sampleRunIds` <- ApiClient$new()$deserializeObj(this_object$`sampleRunIds`, "array[character]", loadNamespace("Rsirius"))
+        self$`sampleRunIds` <- ApiClient$new()$deserializeObj(this_object$`sampleRunIds`, "array[character]", loadNamespace("RSirius"))
       }
       if (!is.null(this_object$`blankRunIds`)) {
-        self$`blankRunIds` <- ApiClient$new()$deserializeObj(this_object$`blankRunIds`, "array[character]", loadNamespace("Rsirius"))
+        self$`blankRunIds` <- ApiClient$new()$deserializeObj(this_object$`blankRunIds`, "array[character]", loadNamespace("RSirius"))
       }
       if (!is.null(this_object$`controlRunIds`)) {
-        self$`controlRunIds` <- ApiClient$new()$deserializeObj(this_object$`controlRunIds`, "array[character]", loadNamespace("Rsirius"))
+        self$`controlRunIds` <- ApiClient$new()$deserializeObj(this_object$`controlRunIds`, "array[character]", loadNamespace("RSirius"))
       }
       self
     },
@@ -128,9 +128,9 @@ SampleTypeFoldChangeRequest <- R6::R6Class(
     #' @return the instance of SampleTypeFoldChangeRequest
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
-      self$`sampleRunIds` <- ApiClient$new()$deserializeObj(this_object$`sampleRunIds`, "array[character]", loadNamespace("Rsirius"))
-      self$`blankRunIds` <- ApiClient$new()$deserializeObj(this_object$`blankRunIds`, "array[character]", loadNamespace("Rsirius"))
-      self$`controlRunIds` <- ApiClient$new()$deserializeObj(this_object$`controlRunIds`, "array[character]", loadNamespace("Rsirius"))
+      self$`sampleRunIds` <- ApiClient$new()$deserializeObj(this_object$`sampleRunIds`, "array[character]", loadNamespace("RSirius"))
+      self$`blankRunIds` <- ApiClient$new()$deserializeObj(this_object$`blankRunIds`, "array[character]", loadNamespace("RSirius"))
+      self$`controlRunIds` <- ApiClient$new()$deserializeObj(this_object$`controlRunIds`, "array[character]", loadNamespace("RSirius"))
       self
     },
 

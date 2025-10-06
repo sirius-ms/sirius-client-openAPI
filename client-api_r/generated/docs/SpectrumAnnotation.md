@@ -1,4 +1,4 @@
-# Rsirius::SpectrumAnnotation
+# RSirius::SpectrumAnnotation
 
 
 ## Properties

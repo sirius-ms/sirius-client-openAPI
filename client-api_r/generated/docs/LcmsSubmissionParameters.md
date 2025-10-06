@@ -1,4 +1,4 @@
-# Rsirius::LcmsSubmissionParameters
+# RSirius::LcmsSubmissionParameters
 
 
 ## Properties

@@ -1,4 +1,4 @@
-# Rsirius::SubscriptionConsumables
+# RSirius::SubscriptionConsumables
 
 
 ## Properties

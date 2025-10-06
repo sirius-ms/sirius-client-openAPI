@@ -1,4 +1,4 @@
-# Rsirius::ZodiacLibraryScoring
+# RSirius::ZodiacLibraryScoring
 
 
 ## Properties

@@ -1,4 +1,4 @@
-# Rsirius::StatisticsTable
+# RSirius::StatisticsTable
 
 
 ## Properties

@@ -1,4 +1,4 @@
-# Rsirius::StructureDbSearch
+# RSirius::StructureDbSearch
 
 User/developer friendly parameter subset for the CSI:FingerID structure db search tool.  Needs results from FingerprintPrediction and Canopus Tool.  Non-Null parameters in this Object well override their equivalent value in the config map.
 

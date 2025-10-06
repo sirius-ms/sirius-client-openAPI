@@ -1,4 +1,4 @@
-# Rsirius::PageMetadata
+# RSirius::PageMetadata
 
 
 ## Properties

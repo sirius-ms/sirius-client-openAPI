@@ -86,7 +86,7 @@ PagedModelStructureCandidateScored <- R6::R6Class(
     fromJSON = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       if (!is.null(this_object$`content`)) {
-        self$`content` <- ApiClient$new()$deserializeObj(this_object$`content`, "array[StructureCandidateScored]", loadNamespace("Rsirius"))
+        self$`content` <- ApiClient$new()$deserializeObj(this_object$`content`, "array[StructureCandidateScored]", loadNamespace("RSirius"))
       }
       if (!is.null(this_object$`page`)) {
         `page_object` <- PageMetadata$new()
@@ -114,7 +114,7 @@ PagedModelStructureCandidateScored <- R6::R6Class(
     #' @return the instance of PagedModelStructureCandidateScored
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
-      self$`content` <- ApiClient$new()$deserializeObj(this_object$`content`, "array[StructureCandidateScored]", loadNamespace("Rsirius"))
+      self$`content` <- ApiClient$new()$deserializeObj(this_object$`content`, "array[StructureCandidateScored]", loadNamespace("RSirius"))
       self$`page` <- PageMetadata$new()$fromJSON(jsonlite::toJSON(this_object$`page`, auto_unbox = TRUE, digits = NA, null = 'null'))
       self
     },

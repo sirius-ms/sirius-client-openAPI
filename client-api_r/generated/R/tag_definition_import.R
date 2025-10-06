@@ -165,7 +165,7 @@ TagDefinitionImport <- R6::R6Class(
         self$`valueType` <- this_object$`valueType`
       }
       if (!is.null(this_object$`possibleValues`)) {
-        self$`possibleValues` <- ApiClient$new()$deserializeObj(this_object$`possibleValues`, "array[object]", loadNamespace("Rsirius"))
+        self$`possibleValues` <- ApiClient$new()$deserializeObj(this_object$`possibleValues`, "array[object]", loadNamespace("RSirius"))
       }
       if (!is.null(this_object$`minValue`)) {
         self$`minValue` <- this_object$`minValue`
@@ -201,7 +201,7 @@ TagDefinitionImport <- R6::R6Class(
         stop(paste("Error! \"", this_object$`valueType`, "\" cannot be assigned to `valueType`. Must be \"NONE\", \"BOOLEAN\", \"INTEGER\", \"REAL\", \"TEXT\", \"DATE\", \"TIME\".", sep = ""))
       }
       self$`valueType` <- this_object$`valueType`
-      self$`possibleValues` <- ApiClient$new()$deserializeObj(this_object$`possibleValues`, "array[object]", loadNamespace("Rsirius"))
+      self$`possibleValues` <- ApiClient$new()$deserializeObj(this_object$`possibleValues`, "array[object]", loadNamespace("RSirius"))
       self$`minValue` <- this_object$`minValue`
       self$`maxValue` <- this_object$`maxValue`
       self

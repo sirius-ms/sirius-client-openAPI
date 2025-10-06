@@ -183,10 +183,10 @@ Run <- R6::R6Class(
         self$`fragmentation` <- this_object$`fragmentation`
       }
       if (!is.null(this_object$`massAnalyzers`)) {
-        self$`massAnalyzers` <- ApiClient$new()$deserializeObj(this_object$`massAnalyzers`, "array[character]", loadNamespace("Rsirius"))
+        self$`massAnalyzers` <- ApiClient$new()$deserializeObj(this_object$`massAnalyzers`, "array[character]", loadNamespace("RSirius"))
       }
       if (!is.null(this_object$`tags`)) {
-        self$`tags` <- ApiClient$new()$deserializeObj(this_object$`tags`, "map(Tag)", loadNamespace("Rsirius"))
+        self$`tags` <- ApiClient$new()$deserializeObj(this_object$`tags`, "map(Tag)", loadNamespace("RSirius"))
       }
       self
     },
@@ -215,8 +215,8 @@ Run <- R6::R6Class(
       self$`chromatography` <- this_object$`chromatography`
       self$`ionization` <- this_object$`ionization`
       self$`fragmentation` <- this_object$`fragmentation`
-      self$`massAnalyzers` <- ApiClient$new()$deserializeObj(this_object$`massAnalyzers`, "array[character]", loadNamespace("Rsirius"))
-      self$`tags` <- ApiClient$new()$deserializeObj(this_object$`tags`, "map(Tag)", loadNamespace("Rsirius"))
+      self$`massAnalyzers` <- ApiClient$new()$deserializeObj(this_object$`massAnalyzers`, "array[character]", loadNamespace("RSirius"))
+      self$`tags` <- ApiClient$new()$deserializeObj(this_object$`tags`, "map(Tag)", loadNamespace("RSirius"))
       self
     },
 
