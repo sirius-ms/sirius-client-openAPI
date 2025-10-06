@@ -114,7 +114,7 @@ BackgroundComputationsStateEvent <- R6::R6Class(
     fromJSON = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       if (!is.null(this_object$`affectedJobs`)) {
-        self$`affectedJobs` <- ApiClient$new()$deserializeObj(this_object$`affectedJobs`, "array[Job]", loadNamespace("Rsirius"))
+        self$`affectedJobs` <- ApiClient$new()$deserializeObj(this_object$`affectedJobs`, "array[Job]", loadNamespace("RSirius"))
       }
       if (!is.null(this_object$`numberOfJobs`)) {
         self$`numberOfJobs` <- this_object$`numberOfJobs`
@@ -146,7 +146,7 @@ BackgroundComputationsStateEvent <- R6::R6Class(
     #' @return the instance of BackgroundComputationsStateEvent
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
-      self$`affectedJobs` <- ApiClient$new()$deserializeObj(this_object$`affectedJobs`, "array[Job]", loadNamespace("Rsirius"))
+      self$`affectedJobs` <- ApiClient$new()$deserializeObj(this_object$`affectedJobs`, "array[Job]", loadNamespace("RSirius"))
       self$`numberOfJobs` <- this_object$`numberOfJobs`
       self$`numberOfRunningJobs` <- this_object$`numberOfRunningJobs`
       self$`numberOfFinishedJobs` <- this_object$`numberOfFinishedJobs`

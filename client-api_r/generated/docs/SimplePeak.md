@@ -1,4 +1,4 @@
-# Rsirius::SimplePeak
+# RSirius::SimplePeak
 
 
 ## Properties

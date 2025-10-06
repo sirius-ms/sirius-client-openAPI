@@ -1,4 +1,4 @@
-# Rsirius::PagedModelSpectralLibraryMatch
+# RSirius::PagedModelSpectralLibraryMatch
 
 
 ## Properties

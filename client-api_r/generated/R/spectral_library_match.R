@@ -328,7 +328,7 @@ SpectralLibraryMatch <- R6::R6Class(
         self$`sharedPeaks` <- this_object$`sharedPeaks`
       }
       if (!is.null(this_object$`sharedPeakMapping`)) {
-        self$`sharedPeakMapping` <- ApiClient$new()$deserializeObj(this_object$`sharedPeakMapping`, "array[PeakPair]", loadNamespace("Rsirius"))
+        self$`sharedPeakMapping` <- ApiClient$new()$deserializeObj(this_object$`sharedPeakMapping`, "array[PeakPair]", loadNamespace("RSirius"))
       }
       if (!is.null(this_object$`querySpectrumIndex`)) {
         self$`querySpectrumIndex` <- this_object$`querySpectrumIndex`
@@ -408,7 +408,7 @@ SpectralLibraryMatch <- R6::R6Class(
       self$`rank` <- this_object$`rank`
       self$`similarity` <- this_object$`similarity`
       self$`sharedPeaks` <- this_object$`sharedPeaks`
-      self$`sharedPeakMapping` <- ApiClient$new()$deserializeObj(this_object$`sharedPeakMapping`, "array[PeakPair]", loadNamespace("Rsirius"))
+      self$`sharedPeakMapping` <- ApiClient$new()$deserializeObj(this_object$`sharedPeakMapping`, "array[PeakPair]", loadNamespace("RSirius"))
       self$`querySpectrumIndex` <- this_object$`querySpectrumIndex`
       self$`dbName` <- this_object$`dbName`
       self$`dbId` <- this_object$`dbId`

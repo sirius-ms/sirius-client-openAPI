@@ -1,4 +1,4 @@
-# Rsirius::LipidAnnotation
+# RSirius::LipidAnnotation
 
 
 ## Properties

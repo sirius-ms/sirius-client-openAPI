@@ -1,4 +1,4 @@
-# Rsirius::StoredJobSubmission
+# RSirius::StoredJobSubmission
 
 
 ## Properties

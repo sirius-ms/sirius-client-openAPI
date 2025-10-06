@@ -167,19 +167,19 @@ QuantTableExperimental <- R6::R6Class(
         self$`rowType` <- this_object$`rowType`
       }
       if (!is.null(this_object$`rowIds`)) {
-        self$`rowIds` <- ApiClient$new()$deserializeObj(this_object$`rowIds`, "array[integer]", loadNamespace("Rsirius"))
+        self$`rowIds` <- ApiClient$new()$deserializeObj(this_object$`rowIds`, "array[integer]", loadNamespace("RSirius"))
       }
       if (!is.null(this_object$`columnIds`)) {
-        self$`columnIds` <- ApiClient$new()$deserializeObj(this_object$`columnIds`, "array[integer]", loadNamespace("Rsirius"))
+        self$`columnIds` <- ApiClient$new()$deserializeObj(this_object$`columnIds`, "array[integer]", loadNamespace("RSirius"))
       }
       if (!is.null(this_object$`rowNames`)) {
-        self$`rowNames` <- ApiClient$new()$deserializeObj(this_object$`rowNames`, "array[character]", loadNamespace("Rsirius"))
+        self$`rowNames` <- ApiClient$new()$deserializeObj(this_object$`rowNames`, "array[character]", loadNamespace("RSirius"))
       }
       if (!is.null(this_object$`columnNames`)) {
-        self$`columnNames` <- ApiClient$new()$deserializeObj(this_object$`columnNames`, "array[character]", loadNamespace("Rsirius"))
+        self$`columnNames` <- ApiClient$new()$deserializeObj(this_object$`columnNames`, "array[character]", loadNamespace("RSirius"))
       }
       if (!is.null(this_object$`values`)) {
-        self$`values` <- ApiClient$new()$deserializeObj(this_object$`values`, "array[array[numeric]]", loadNamespace("Rsirius"))
+        self$`values` <- ApiClient$new()$deserializeObj(this_object$`values`, "array[array[numeric]]", loadNamespace("RSirius"))
       }
       self
     },
@@ -210,11 +210,11 @@ QuantTableExperimental <- R6::R6Class(
         stop(paste("Error! \"", this_object$`rowType`, "\" cannot be assigned to `rowType`. Must be \"FEATURES\", \"COMPOUNDS\".", sep = ""))
       }
       self$`rowType` <- this_object$`rowType`
-      self$`rowIds` <- ApiClient$new()$deserializeObj(this_object$`rowIds`, "array[integer]", loadNamespace("Rsirius"))
-      self$`columnIds` <- ApiClient$new()$deserializeObj(this_object$`columnIds`, "array[integer]", loadNamespace("Rsirius"))
-      self$`rowNames` <- ApiClient$new()$deserializeObj(this_object$`rowNames`, "array[character]", loadNamespace("Rsirius"))
-      self$`columnNames` <- ApiClient$new()$deserializeObj(this_object$`columnNames`, "array[character]", loadNamespace("Rsirius"))
-      self$`values` <- ApiClient$new()$deserializeObj(this_object$`values`, "array[array[numeric]]", loadNamespace("Rsirius"))
+      self$`rowIds` <- ApiClient$new()$deserializeObj(this_object$`rowIds`, "array[integer]", loadNamespace("RSirius"))
+      self$`columnIds` <- ApiClient$new()$deserializeObj(this_object$`columnIds`, "array[integer]", loadNamespace("RSirius"))
+      self$`rowNames` <- ApiClient$new()$deserializeObj(this_object$`rowNames`, "array[character]", loadNamespace("RSirius"))
+      self$`columnNames` <- ApiClient$new()$deserializeObj(this_object$`columnNames`, "array[character]", loadNamespace("RSirius"))
+      self$`values` <- ApiClient$new()$deserializeObj(this_object$`values`, "array[array[numeric]]", loadNamespace("RSirius"))
       self
     },
 

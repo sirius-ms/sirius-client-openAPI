@@ -123,7 +123,7 @@ ConsensusAnnotationsDeNovo <- R6::R6Class(
         self$`compoundClasses` <- `compoundclasses_object`
       }
       if (!is.null(this_object$`supportingFeatureIds`)) {
-        self$`supportingFeatureIds` <- ApiClient$new()$deserializeObj(this_object$`supportingFeatureIds`, "array[character]", loadNamespace("Rsirius"))
+        self$`supportingFeatureIds` <- ApiClient$new()$deserializeObj(this_object$`supportingFeatureIds`, "array[character]", loadNamespace("RSirius"))
       }
       if (!is.null(this_object$`selectionCriterion`)) {
         if (!is.null(this_object$`selectionCriterion`) && !(this_object$`selectionCriterion` %in% c("MAJORITY_FORMULA", "TOP_FORMULA", "SINGLETON_FORMULA"))) {
@@ -154,7 +154,7 @@ ConsensusAnnotationsDeNovo <- R6::R6Class(
       this_object <- jsonlite::fromJSON(input_json)
       self$`molecularFormula` <- this_object$`molecularFormula`
       self$`compoundClasses` <- CompoundClasses$new()$fromJSON(jsonlite::toJSON(this_object$`compoundClasses`, auto_unbox = TRUE, digits = NA, null = 'null'))
-      self$`supportingFeatureIds` <- ApiClient$new()$deserializeObj(this_object$`supportingFeatureIds`, "array[character]", loadNamespace("Rsirius"))
+      self$`supportingFeatureIds` <- ApiClient$new()$deserializeObj(this_object$`supportingFeatureIds`, "array[character]", loadNamespace("RSirius"))
       if (!is.null(this_object$`selectionCriterion`) && !(this_object$`selectionCriterion` %in% c("MAJORITY_FORMULA", "TOP_FORMULA", "SINGLETON_FORMULA"))) {
         stop(paste("Error! \"", this_object$`selectionCriterion`, "\" cannot be assigned to `selectionCriterion`. Must be \"MAJORITY_FORMULA\", \"TOP_FORMULA\", \"SINGLETON_FORMULA\".", sep = ""))
       }

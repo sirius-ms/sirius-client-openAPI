@@ -1,4 +1,4 @@
-# Rsirius::FeatureImport
+# RSirius::FeatureImport
 
 Represents an (aligned) feature to be imported into a SIRIUS project.  At least one of the Mass Spec data sources (e.g. mergedMs1, ms1Spectra, ms2Spectra) needs to be given.  Otherwise, the import will fail.
 

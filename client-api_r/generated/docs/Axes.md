@@ -1,4 +1,4 @@
-# Rsirius::Axes
+# RSirius::Axes
 
 
 ## Properties

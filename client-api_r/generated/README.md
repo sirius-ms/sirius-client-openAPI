@@ -1,4 +1,4 @@
-# R API client for Rsirius
+# R API client for RSirius
 
 REST API that provides the full functionality of SIRIUS and its web services as background service. It is intended as entry-point for scripting languages and software integration SDKs.This API is exposed by SIRIUS 6
 
@@ -28,14 +28,14 @@ install.packages("base64enc")
 git clone https://github.com/GIT_USER_ID/GIT_REPO_ID
 cd GIT_REPO_ID
 R CMD build .
-R CMD check Rsirius_6.3.3.tar.gz --no-manual
-R CMD INSTALL --preclean Rsirius_6.3.3.tar.gz
+R CMD check RSirius_6.3.3.tar.gz --no-manual
+R CMD INSTALL --preclean RSirius_6.3.3.tar.gz
 ```
 
 ### Install the package
 
 ```R
-install.packages("Rsirius")
+install.packages("RSirius")
 ```
 
 To install directly from Github, use `devtools`:
@@ -47,13 +47,13 @@ install_github("GIT_USER_ID/GIT_REPO_ID")
 
 To install the package from a local file:
 ```R
-install.packages("Rsirius_6.3.3.tar.gz", repos = NULL, type = "source")
+install.packages("RSirius_6.3.3.tar.gz", repos = NULL, type = "source")
 ```
 
 ### Usage
 
 ```R
-library(Rsirius)
+library(RSirius)
 ```
 
 ### Reformat code

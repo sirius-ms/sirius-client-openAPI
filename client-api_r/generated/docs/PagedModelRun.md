@@ -1,4 +1,4 @@
-# Rsirius::PagedModelRun
+# RSirius::PagedModelRun
 
 
 ## Properties

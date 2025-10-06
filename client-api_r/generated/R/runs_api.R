@@ -15,7 +15,7 @@
 #' \dontrun{
 #' ####################  AddTagsToRunExperimental  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to add to.
 #' var_run_id <- "run_id_example" # character | run to add tags to.
 #' var_tag <- c(Tag$new("tagName_example", 123)) # array[Tag] | tags to add.
@@ -31,7 +31,7 @@
 #'
 #' ####################  ComputeFoldChangeForBlankSubtraction  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to compute the fold change in.
 #' var_sample_type_fold_change_request <- SampleTypeFoldChangeRequest$new(c("sampleRunIds_example"), c("blankRunIds_example"), c("controlRunIds_example")) # SampleTypeFoldChangeRequest | request with lists of run IDs that are sample, blank, and control runs
 #' var_opt_fields <- c("none") # array[character] | job opt fields. (Optional)
@@ -47,7 +47,7 @@
 #'
 #' ####################  GetRunExperimental  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_run_id <- "run_id_example" # character | identifier of run to access.
 #' var_opt_fields <- c(RunOptField$new()) # array[RunOptField] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
@@ -63,7 +63,7 @@
 #'
 #' ####################  GetRunPageExperimental  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_page <- 0 # integer | Zero-based page index (0..N) (Optional)
 #' var_size <- 20 # integer | The size of the page to be returned (Optional)
@@ -81,7 +81,7 @@
 #'
 #' ####################  GetRunsByGroupExperimental  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to delete from.
 #' var_group_name <- "group_name_example" # character | tag group name.
 #' var_page <- 0 # integer | Zero-based page index (0..N) (Optional)
@@ -100,7 +100,7 @@
 #'
 #' ####################  GetRunsByTagExperimental  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project space to get runs from.
 #' var_filter <- "" # character | tag filter. (Optional)
 #' var_page <- 0 # integer | Zero-based page index (0..N) (Optional)
@@ -119,7 +119,7 @@
 #'
 #' ####################  GetTagsForRunExperimental  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to get from.
 #' var_object_id <- "object_id_example" # character | RunId to get tags for.
 #'
@@ -134,7 +134,7 @@
 #'
 #' ####################  RemoveTagFromRunExperimental  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to delete from.
 #' var_run_id <- "run_id_example" # character | run to delete tag from.
 #' var_tag_name <- "tag_name_example" # character | name of the tag to delete.
@@ -299,7 +299,7 @@ RunsApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "array[Tag]", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "array[Tag]", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -446,7 +446,7 @@ RunsApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "Job", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "Job", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -587,7 +587,7 @@ RunsApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "Run", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "Run", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -741,7 +741,7 @@ RunsApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "PagedModelRun", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "PagedModelRun", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -904,7 +904,7 @@ RunsApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "PagedModelRun", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "PagedModelRun", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -1063,7 +1063,7 @@ RunsApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "PagedModelRun", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "PagedModelRun", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -1196,7 +1196,7 @@ RunsApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "array[Tag]", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "array[Tag]", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }

@@ -1,4 +1,4 @@
-# Rsirius::QualityItem
+# RSirius::QualityItem
 
 
 ## Properties

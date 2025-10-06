@@ -103,10 +103,10 @@ DataImportEvent <- R6::R6Class(
         self$`importJobId` <- this_object$`importJobId`
       }
       if (!is.null(this_object$`importedCompoundIds`)) {
-        self$`importedCompoundIds` <- ApiClient$new()$deserializeObj(this_object$`importedCompoundIds`, "array[character]", loadNamespace("Rsirius"))
+        self$`importedCompoundIds` <- ApiClient$new()$deserializeObj(this_object$`importedCompoundIds`, "array[character]", loadNamespace("RSirius"))
       }
       if (!is.null(this_object$`importedFeatureIds`)) {
-        self$`importedFeatureIds` <- ApiClient$new()$deserializeObj(this_object$`importedFeatureIds`, "array[character]", loadNamespace("Rsirius"))
+        self$`importedFeatureIds` <- ApiClient$new()$deserializeObj(this_object$`importedFeatureIds`, "array[character]", loadNamespace("RSirius"))
       }
       self
     },
@@ -130,8 +130,8 @@ DataImportEvent <- R6::R6Class(
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       self$`importJobId` <- this_object$`importJobId`
-      self$`importedCompoundIds` <- ApiClient$new()$deserializeObj(this_object$`importedCompoundIds`, "array[character]", loadNamespace("Rsirius"))
-      self$`importedFeatureIds` <- ApiClient$new()$deserializeObj(this_object$`importedFeatureIds`, "array[character]", loadNamespace("Rsirius"))
+      self$`importedCompoundIds` <- ApiClient$new()$deserializeObj(this_object$`importedCompoundIds`, "array[character]", loadNamespace("RSirius"))
+      self$`importedFeatureIds` <- ApiClient$new()$deserializeObj(this_object$`importedFeatureIds`, "array[character]", loadNamespace("RSirius"))
       self
     },
 

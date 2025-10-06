@@ -1,4 +1,4 @@
-# Rsirius::PeakPair
+# RSirius::PeakPair
 
 
 ## Properties

@@ -1,4 +1,4 @@
-# Rsirius::PagedModelFormulaCandidate
+# RSirius::PagedModelFormulaCandidate
 
 
 ## Properties

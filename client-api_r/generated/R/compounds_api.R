@@ -15,7 +15,7 @@
 #' \dontrun{
 #' ####################  AddCompounds  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to import into.
 #' var_compound_import <- c(CompoundImport$new(c(FeatureImport$new(123, 123, "name_example", "externalFeatureId_example", c("detectedAdducts_example"), 123, 123, 123, "NOT_APPLICABLE", BasicSpectrum$new("cosineQuery_example", c(SimplePeak$new(123, 123)), "name_example", 123, "collisionEnergy_example", "instrument_example", 123, 123, SimplePeak$new(123, 123), 123, 123, 123, 123, 123), c(BasicSpectrum$new("cosineQuery_example", c(SimplePeak$new(..., ...)), "name_example", 123, "collisionEnergy_example", "instrument_example", 123, 123, SimplePeak$new(123, 123), 123, 123, 123, 123, 123)), c(BasicSpectrum$new("cosineQuery_example", c(SimplePeak$new(..., ...)), "name_example", 123, "collisionEnergy_example", "instrument_example", 123, 123, SimplePeak$new(123, 123), 123, 123, 123, 123, 123)))), "name_example")) # array[CompoundImport] | the compound data to be imported
 #' var_profile <- "profile_example" # character | profile describing the instrument used to measure the data. Used to merge spectra. (Optional)
@@ -33,7 +33,7 @@
 #'
 #' ####################  AddTagsToCompoundExperimental  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to add to.
 #' var_compound_id <- "compound_id_example" # character | compound (group of ion identities) to add tags to.
 #' var_tag <- c(Tag$new("tagName_example", 123)) # array[Tag] | tags to add.
@@ -49,7 +49,7 @@
 #'
 #' ####################  DeleteCompound  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to delete from.
 #' var_compound_id <- "compound_id_example" # character | identifier of the compound to delete.
 #'
@@ -61,7 +61,7 @@
 #'
 #' ####################  GetCompound  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_compound_id <- "compound_id_example" # character | identifier of the compound (group of ion identities) to access.
 #' var_ms_data_search_prepared <- FALSE # character | Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. (Optional)
@@ -79,7 +79,7 @@
 #'
 #' ####################  GetCompoundQuantTableExperimental  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_type <- "APEX_HEIGHT" # character | quantification type. (Optional)
 #'
@@ -94,7 +94,7 @@
 #'
 #' ####################  GetCompoundQuantTableRowExperimental  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_compound_id <- "compound_id_example" # character | compound which should be read out
 #' var_type <- "APEX_HEIGHT" # character | quantification type. (Optional)
@@ -110,7 +110,7 @@
 #'
 #' ####################  GetCompoundTracesExperimental  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_compound_id <- "compound_id_example" # character | compound which intensities should be read out
 #' var_feature_id <- "" # character |  (Optional)
@@ -126,7 +126,7 @@
 #'
 #' ####################  GetCompounds  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_ms_data_search_prepared <- FALSE # character | Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. (Optional)
 #' var_opt_fields <- c("none") # array[character] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
@@ -143,7 +143,7 @@
 #'
 #' ####################  GetCompoundsByGroupExperimental  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to delete from.
 #' var_group_name <- "group_name_example" # character | tag group name.
 #' var_page <- 0 # integer | Zero-based page index (0..N) (Optional)
@@ -162,7 +162,7 @@
 #'
 #' ####################  GetCompoundsByTagExperimental  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project space to get compounds (group of ion identities) from.
 #' var_filter <- "" # character | tag filter. (Optional)
 #' var_page <- 0 # integer | Zero-based page index (0..N) (Optional)
@@ -181,7 +181,7 @@
 #'
 #' ####################  GetCompoundsPaged  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_page <- 0 # integer | Zero-based page index (0..N) (Optional)
 #' var_size <- 20 # integer | The size of the page to be returned (Optional)
@@ -201,7 +201,7 @@
 #'
 #' ####################  GetTagsForCompoundExperimental  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to get from.
 #' var_object_id <- "object_id_example" # character | CompoundId to get tags for.
 #'
@@ -216,7 +216,7 @@
 #'
 #' ####################  RemoveTagFromCompoundExperimental  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to delete from.
 #' var_compound_id <- "compound_id_example" # character | compound (group of ion identities) to delete tag from.
 #' var_tag_name <- "tag_name_example" # character | name of the tag to delete.
@@ -402,7 +402,7 @@ CompoundsApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "array[Compound]", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "array[Compound]", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -555,7 +555,7 @@ CompoundsApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "array[Tag]", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "array[Tag]", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -810,7 +810,7 @@ CompoundsApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "Compound", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "Compound", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -940,7 +940,7 @@ CompoundsApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "QuantTableExperimental", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "QuantTableExperimental", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -1081,7 +1081,7 @@ CompoundsApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "QuantTableExperimental", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "QuantTableExperimental", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -1219,7 +1219,7 @@ CompoundsApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "TraceSetExperimental", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "TraceSetExperimental", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -1370,7 +1370,7 @@ CompoundsApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "array[Compound]", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "array[Compound]", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -1537,7 +1537,7 @@ CompoundsApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "PagedModelCompound", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "PagedModelCompound", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -1700,7 +1700,7 @@ CompoundsApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "PagedModelCompound", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "PagedModelCompound", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -1875,7 +1875,7 @@ CompoundsApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "PagedModelCompound", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "PagedModelCompound", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -2008,7 +2008,7 @@ CompoundsApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "array[Tag]", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "array[Tag]", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }

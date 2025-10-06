@@ -1,4 +1,4 @@
-# Rsirius::JobSubmission
+# RSirius::JobSubmission
 
 Object to submit a job to be executed by SIRIUS
 

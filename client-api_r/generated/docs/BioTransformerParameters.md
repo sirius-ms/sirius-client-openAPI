@@ -1,4 +1,4 @@
-# Rsirius::BioTransformerParameters
+# RSirius::BioTransformerParameters
 
 
 ## Properties

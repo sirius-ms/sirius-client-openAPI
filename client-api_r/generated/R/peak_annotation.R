@@ -269,13 +269,13 @@ PeakAnnotation <- R6::R6Class(
         self$`parentPeak` <- `parentpeak_object`
       }
       if (!is.null(this_object$`substructureAtoms`)) {
-        self$`substructureAtoms` <- ApiClient$new()$deserializeObj(this_object$`substructureAtoms`, "array[integer]", loadNamespace("Rsirius"))
+        self$`substructureAtoms` <- ApiClient$new()$deserializeObj(this_object$`substructureAtoms`, "array[integer]", loadNamespace("RSirius"))
       }
       if (!is.null(this_object$`substructureBonds`)) {
-        self$`substructureBonds` <- ApiClient$new()$deserializeObj(this_object$`substructureBonds`, "array[integer]", loadNamespace("Rsirius"))
+        self$`substructureBonds` <- ApiClient$new()$deserializeObj(this_object$`substructureBonds`, "array[integer]", loadNamespace("RSirius"))
       }
       if (!is.null(this_object$`substructureBondsCut`)) {
-        self$`substructureBondsCut` <- ApiClient$new()$deserializeObj(this_object$`substructureBondsCut`, "array[integer]", loadNamespace("Rsirius"))
+        self$`substructureBondsCut` <- ApiClient$new()$deserializeObj(this_object$`substructureBondsCut`, "array[integer]", loadNamespace("RSirius"))
       }
       if (!is.null(this_object$`substructureScore`)) {
         self$`substructureScore` <- this_object$`substructureScore`
@@ -313,9 +313,9 @@ PeakAnnotation <- R6::R6Class(
       self$`recalibratedMassDeviationMz` <- this_object$`recalibratedMassDeviationMz`
       self$`recalibratedMassDeviationPpm` <- this_object$`recalibratedMassDeviationPpm`
       self$`parentPeak` <- ParentPeak$new()$fromJSON(jsonlite::toJSON(this_object$`parentPeak`, auto_unbox = TRUE, digits = NA, null = 'null'))
-      self$`substructureAtoms` <- ApiClient$new()$deserializeObj(this_object$`substructureAtoms`, "array[integer]", loadNamespace("Rsirius"))
-      self$`substructureBonds` <- ApiClient$new()$deserializeObj(this_object$`substructureBonds`, "array[integer]", loadNamespace("Rsirius"))
-      self$`substructureBondsCut` <- ApiClient$new()$deserializeObj(this_object$`substructureBondsCut`, "array[integer]", loadNamespace("Rsirius"))
+      self$`substructureAtoms` <- ApiClient$new()$deserializeObj(this_object$`substructureAtoms`, "array[integer]", loadNamespace("RSirius"))
+      self$`substructureBonds` <- ApiClient$new()$deserializeObj(this_object$`substructureBonds`, "array[integer]", loadNamespace("RSirius"))
+      self$`substructureBondsCut` <- ApiClient$new()$deserializeObj(this_object$`substructureBondsCut`, "array[integer]", loadNamespace("RSirius"))
       self$`substructureScore` <- this_object$`substructureScore`
       self$`hydrogenRearrangements` <- this_object$`hydrogenRearrangements`
       self

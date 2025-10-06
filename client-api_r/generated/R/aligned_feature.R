@@ -324,7 +324,7 @@ AlignedFeature <- R6::R6Class(
         self$`charge` <- this_object$`charge`
       }
       if (!is.null(this_object$`detectedAdducts`)) {
-        self$`detectedAdducts` <- ApiClient$new()$deserializeObj(this_object$`detectedAdducts`, "set[character]", loadNamespace("Rsirius"))
+        self$`detectedAdducts` <- ApiClient$new()$deserializeObj(this_object$`detectedAdducts`, "set[character]", loadNamespace("RSirius"))
         if (!identical(self$`detectedAdducts`, unique(self$`detectedAdducts`))) {
           stop("Error! Items in `detectedAdducts` are not unique.")
         }
@@ -374,7 +374,7 @@ AlignedFeature <- R6::R6Class(
         self$`computedTools` <- `computedtools_object`
       }
       if (!is.null(this_object$`tags`)) {
-        self$`tags` <- ApiClient$new()$deserializeObj(this_object$`tags`, "map(Tag)", loadNamespace("Rsirius"))
+        self$`tags` <- ApiClient$new()$deserializeObj(this_object$`tags`, "map(Tag)", loadNamespace("RSirius"))
       }
       self
     },
@@ -403,7 +403,7 @@ AlignedFeature <- R6::R6Class(
       self$`externalFeatureId` <- this_object$`externalFeatureId`
       self$`ionMass` <- this_object$`ionMass`
       self$`charge` <- this_object$`charge`
-      self$`detectedAdducts` <- ApiClient$new()$deserializeObj(this_object$`detectedAdducts`, "set[character]", loadNamespace("Rsirius"))
+      self$`detectedAdducts` <- ApiClient$new()$deserializeObj(this_object$`detectedAdducts`, "set[character]", loadNamespace("RSirius"))
       if (!identical(self$`detectedAdducts`, unique(self$`detectedAdducts`))) {
         stop("Error! Items in `detectedAdducts` are not unique.")
       }
@@ -421,7 +421,7 @@ AlignedFeature <- R6::R6Class(
       self$`topAnnotationsDeNovo` <- FeatureAnnotations$new()$fromJSON(jsonlite::toJSON(this_object$`topAnnotationsDeNovo`, auto_unbox = TRUE, digits = NA, null = 'null'))
       self$`computing` <- this_object$`computing`
       self$`computedTools` <- ComputedSubtools$new()$fromJSON(jsonlite::toJSON(this_object$`computedTools`, auto_unbox = TRUE, digits = NA, null = 'null'))
-      self$`tags` <- ApiClient$new()$deserializeObj(this_object$`tags`, "map(Tag)", loadNamespace("Rsirius"))
+      self$`tags` <- ApiClient$new()$deserializeObj(this_object$`tags`, "map(Tag)", loadNamespace("RSirius"))
       self
     },
 

@@ -1,4 +1,4 @@
-# Rsirius::AllowedFeatures
+# RSirius::AllowedFeatures
 
 
 ## Properties

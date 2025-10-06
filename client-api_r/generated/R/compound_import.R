@@ -91,7 +91,7 @@ CompoundImport <- R6::R6Class(
         self$`name` <- this_object$`name`
       }
       if (!is.null(this_object$`features`)) {
-        self$`features` <- ApiClient$new()$deserializeObj(this_object$`features`, "array[FeatureImport]", loadNamespace("Rsirius"))
+        self$`features` <- ApiClient$new()$deserializeObj(this_object$`features`, "array[FeatureImport]", loadNamespace("RSirius"))
       }
       self
     },
@@ -115,7 +115,7 @@ CompoundImport <- R6::R6Class(
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       self$`name` <- this_object$`name`
-      self$`features` <- ApiClient$new()$deserializeObj(this_object$`features`, "array[FeatureImport]", loadNamespace("Rsirius"))
+      self$`features` <- ApiClient$new()$deserializeObj(this_object$`features`, "array[FeatureImport]", loadNamespace("RSirius"))
       self
     },
 

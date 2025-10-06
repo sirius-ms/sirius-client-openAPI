@@ -1,4 +1,4 @@
-# Rsirius::IsotopePatternAnnotation
+# RSirius::IsotopePatternAnnotation
 
 
 ## Properties

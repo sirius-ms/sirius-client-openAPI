@@ -15,7 +15,7 @@
 #' \dontrun{
 #' ####################  GetConnectionCheck  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #'
 #' api_instance <- rsirius_api$new()
 #'
@@ -27,7 +27,7 @@
 #'
 #' ####################  GetInfo  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_server_info <- TRUE # character |  (Optional)
 #' var_update_info <- TRUE # character |  (Optional)
 #'
@@ -151,7 +151,7 @@ InfoApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "ConnectionCheck", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "ConnectionCheck", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -272,7 +272,7 @@ InfoApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "Info", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "Info", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }

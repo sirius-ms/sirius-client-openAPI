@@ -232,7 +232,7 @@ FeatureImport <- R6::R6Class(
         self$`charge` <- this_object$`charge`
       }
       if (!is.null(this_object$`detectedAdducts`)) {
-        self$`detectedAdducts` <- ApiClient$new()$deserializeObj(this_object$`detectedAdducts`, "set[character]", loadNamespace("Rsirius"))
+        self$`detectedAdducts` <- ApiClient$new()$deserializeObj(this_object$`detectedAdducts`, "set[character]", loadNamespace("RSirius"))
         if (!identical(self$`detectedAdducts`, unique(self$`detectedAdducts`))) {
           stop("Error! Items in `detectedAdducts` are not unique.")
         }
@@ -258,10 +258,10 @@ FeatureImport <- R6::R6Class(
         self$`mergedMs1` <- `mergedms1_object`
       }
       if (!is.null(this_object$`ms1Spectra`)) {
-        self$`ms1Spectra` <- ApiClient$new()$deserializeObj(this_object$`ms1Spectra`, "array[BasicSpectrum]", loadNamespace("Rsirius"))
+        self$`ms1Spectra` <- ApiClient$new()$deserializeObj(this_object$`ms1Spectra`, "array[BasicSpectrum]", loadNamespace("RSirius"))
       }
       if (!is.null(this_object$`ms2Spectra`)) {
-        self$`ms2Spectra` <- ApiClient$new()$deserializeObj(this_object$`ms2Spectra`, "array[BasicSpectrum]", loadNamespace("Rsirius"))
+        self$`ms2Spectra` <- ApiClient$new()$deserializeObj(this_object$`ms2Spectra`, "array[BasicSpectrum]", loadNamespace("RSirius"))
       }
       self
     },
@@ -288,7 +288,7 @@ FeatureImport <- R6::R6Class(
       self$`externalFeatureId` <- this_object$`externalFeatureId`
       self$`ionMass` <- this_object$`ionMass`
       self$`charge` <- this_object$`charge`
-      self$`detectedAdducts` <- ApiClient$new()$deserializeObj(this_object$`detectedAdducts`, "set[character]", loadNamespace("Rsirius"))
+      self$`detectedAdducts` <- ApiClient$new()$deserializeObj(this_object$`detectedAdducts`, "set[character]", loadNamespace("RSirius"))
       if (!identical(self$`detectedAdducts`, unique(self$`detectedAdducts`))) {
         stop("Error! Items in `detectedAdducts` are not unique.")
       }
@@ -300,8 +300,8 @@ FeatureImport <- R6::R6Class(
       }
       self$`dataQuality` <- this_object$`dataQuality`
       self$`mergedMs1` <- BasicSpectrum$new()$fromJSON(jsonlite::toJSON(this_object$`mergedMs1`, auto_unbox = TRUE, digits = NA, null = 'null'))
-      self$`ms1Spectra` <- ApiClient$new()$deserializeObj(this_object$`ms1Spectra`, "array[BasicSpectrum]", loadNamespace("Rsirius"))
-      self$`ms2Spectra` <- ApiClient$new()$deserializeObj(this_object$`ms2Spectra`, "array[BasicSpectrum]", loadNamespace("Rsirius"))
+      self$`ms1Spectra` <- ApiClient$new()$deserializeObj(this_object$`ms1Spectra`, "array[BasicSpectrum]", loadNamespace("RSirius"))
+      self$`ms2Spectra` <- ApiClient$new()$deserializeObj(this_object$`ms2Spectra`, "array[BasicSpectrum]", loadNamespace("RSirius"))
       self
     },
 

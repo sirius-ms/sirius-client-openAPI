@@ -1,4 +1,4 @@
-# Rsirius::MsNovelist
+# RSirius::MsNovelist
 
 
 ## Properties

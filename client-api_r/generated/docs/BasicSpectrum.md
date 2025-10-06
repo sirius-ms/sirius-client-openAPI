@@ -1,4 +1,4 @@
-# Rsirius::BasicSpectrum
+# RSirius::BasicSpectrum
 
 
 ## Properties

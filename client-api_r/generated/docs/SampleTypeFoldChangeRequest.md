@@ -1,4 +1,4 @@
-# Rsirius::SampleTypeFoldChangeRequest
+# RSirius::SampleTypeFoldChangeRequest
 
 
 ## Properties

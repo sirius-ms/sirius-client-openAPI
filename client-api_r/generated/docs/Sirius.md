@@ -1,4 +1,4 @@
-# Rsirius::Sirius
+# RSirius::Sirius
 
 User/developer friendly parameter subset for the Formula/SIRIUS tool  Can use results from Spectral library search tool.
 

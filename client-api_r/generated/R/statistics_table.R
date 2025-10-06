@@ -211,19 +211,19 @@ StatisticsTable <- R6::R6Class(
         self$`rowType` <- this_object$`rowType`
       }
       if (!is.null(this_object$`rowIds`)) {
-        self$`rowIds` <- ApiClient$new()$deserializeObj(this_object$`rowIds`, "array[character]", loadNamespace("Rsirius"))
+        self$`rowIds` <- ApiClient$new()$deserializeObj(this_object$`rowIds`, "array[character]", loadNamespace("RSirius"))
       }
       if (!is.null(this_object$`columnNames`)) {
-        self$`columnNames` <- ApiClient$new()$deserializeObj(this_object$`columnNames`, "array[character]", loadNamespace("Rsirius"))
+        self$`columnNames` <- ApiClient$new()$deserializeObj(this_object$`columnNames`, "array[character]", loadNamespace("RSirius"))
       }
       if (!is.null(this_object$`columnLeftGroups`)) {
-        self$`columnLeftGroups` <- ApiClient$new()$deserializeObj(this_object$`columnLeftGroups`, "array[character]", loadNamespace("Rsirius"))
+        self$`columnLeftGroups` <- ApiClient$new()$deserializeObj(this_object$`columnLeftGroups`, "array[character]", loadNamespace("RSirius"))
       }
       if (!is.null(this_object$`columnRightGroups`)) {
-        self$`columnRightGroups` <- ApiClient$new()$deserializeObj(this_object$`columnRightGroups`, "array[character]", loadNamespace("Rsirius"))
+        self$`columnRightGroups` <- ApiClient$new()$deserializeObj(this_object$`columnRightGroups`, "array[character]", loadNamespace("RSirius"))
       }
       if (!is.null(this_object$`values`)) {
-        self$`values` <- ApiClient$new()$deserializeObj(this_object$`values`, "array[array[numeric]]", loadNamespace("Rsirius"))
+        self$`values` <- ApiClient$new()$deserializeObj(this_object$`values`, "array[array[numeric]]", loadNamespace("RSirius"))
       }
       self
     },
@@ -262,11 +262,11 @@ StatisticsTable <- R6::R6Class(
         stop(paste("Error! \"", this_object$`rowType`, "\" cannot be assigned to `rowType`. Must be \"FEATURES\", \"COMPOUNDS\".", sep = ""))
       }
       self$`rowType` <- this_object$`rowType`
-      self$`rowIds` <- ApiClient$new()$deserializeObj(this_object$`rowIds`, "array[character]", loadNamespace("Rsirius"))
-      self$`columnNames` <- ApiClient$new()$deserializeObj(this_object$`columnNames`, "array[character]", loadNamespace("Rsirius"))
-      self$`columnLeftGroups` <- ApiClient$new()$deserializeObj(this_object$`columnLeftGroups`, "array[character]", loadNamespace("Rsirius"))
-      self$`columnRightGroups` <- ApiClient$new()$deserializeObj(this_object$`columnRightGroups`, "array[character]", loadNamespace("Rsirius"))
-      self$`values` <- ApiClient$new()$deserializeObj(this_object$`values`, "array[array[numeric]]", loadNamespace("Rsirius"))
+      self$`rowIds` <- ApiClient$new()$deserializeObj(this_object$`rowIds`, "array[character]", loadNamespace("RSirius"))
+      self$`columnNames` <- ApiClient$new()$deserializeObj(this_object$`columnNames`, "array[character]", loadNamespace("RSirius"))
+      self$`columnLeftGroups` <- ApiClient$new()$deserializeObj(this_object$`columnLeftGroups`, "array[character]", loadNamespace("RSirius"))
+      self$`columnRightGroups` <- ApiClient$new()$deserializeObj(this_object$`columnRightGroups`, "array[character]", loadNamespace("RSirius"))
+      self$`values` <- ApiClient$new()$deserializeObj(this_object$`values`, "array[array[numeric]]", loadNamespace("RSirius"))
       self
     },
 

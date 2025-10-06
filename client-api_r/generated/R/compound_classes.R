@@ -135,10 +135,10 @@ CompoundClasses <- R6::R6Class(
         self$`npcClass` <- `npcclass_object`
       }
       if (!is.null(this_object$`classyFireLineage`)) {
-        self$`classyFireLineage` <- ApiClient$new()$deserializeObj(this_object$`classyFireLineage`, "array[CompoundClass]", loadNamespace("Rsirius"))
+        self$`classyFireLineage` <- ApiClient$new()$deserializeObj(this_object$`classyFireLineage`, "array[CompoundClass]", loadNamespace("RSirius"))
       }
       if (!is.null(this_object$`classyFireAlternatives`)) {
-        self$`classyFireAlternatives` <- ApiClient$new()$deserializeObj(this_object$`classyFireAlternatives`, "array[CompoundClass]", loadNamespace("Rsirius"))
+        self$`classyFireAlternatives` <- ApiClient$new()$deserializeObj(this_object$`classyFireAlternatives`, "array[CompoundClass]", loadNamespace("RSirius"))
       }
       self
     },
@@ -164,8 +164,8 @@ CompoundClasses <- R6::R6Class(
       self$`npcPathway` <- CompoundClass$new()$fromJSON(jsonlite::toJSON(this_object$`npcPathway`, auto_unbox = TRUE, digits = NA, null = 'null'))
       self$`npcSuperclass` <- CompoundClass$new()$fromJSON(jsonlite::toJSON(this_object$`npcSuperclass`, auto_unbox = TRUE, digits = NA, null = 'null'))
       self$`npcClass` <- CompoundClass$new()$fromJSON(jsonlite::toJSON(this_object$`npcClass`, auto_unbox = TRUE, digits = NA, null = 'null'))
-      self$`classyFireLineage` <- ApiClient$new()$deserializeObj(this_object$`classyFireLineage`, "array[CompoundClass]", loadNamespace("Rsirius"))
-      self$`classyFireAlternatives` <- ApiClient$new()$deserializeObj(this_object$`classyFireAlternatives`, "array[CompoundClass]", loadNamespace("Rsirius"))
+      self$`classyFireLineage` <- ApiClient$new()$deserializeObj(this_object$`classyFireLineage`, "array[CompoundClass]", loadNamespace("RSirius"))
+      self$`classyFireAlternatives` <- ApiClient$new()$deserializeObj(this_object$`classyFireAlternatives`, "array[CompoundClass]", loadNamespace("RSirius"))
       self
     },
 

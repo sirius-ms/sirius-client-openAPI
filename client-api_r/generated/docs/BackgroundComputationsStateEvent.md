@@ -1,4 +1,4 @@
-# Rsirius::BackgroundComputationsStateEvent
+# RSirius::BackgroundComputationsStateEvent
 
 
 ## Properties

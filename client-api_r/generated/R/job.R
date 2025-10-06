@@ -151,10 +151,10 @@ Job <- R6::R6Class(
         self$`progress` <- `progress_object`
       }
       if (!is.null(this_object$`affectedCompoundIds`)) {
-        self$`affectedCompoundIds` <- ApiClient$new()$deserializeObj(this_object$`affectedCompoundIds`, "array[character]", loadNamespace("Rsirius"))
+        self$`affectedCompoundIds` <- ApiClient$new()$deserializeObj(this_object$`affectedCompoundIds`, "array[character]", loadNamespace("RSirius"))
       }
       if (!is.null(this_object$`affectedAlignedFeatureIds`)) {
-        self$`affectedAlignedFeatureIds` <- ApiClient$new()$deserializeObj(this_object$`affectedAlignedFeatureIds`, "array[character]", loadNamespace("Rsirius"))
+        self$`affectedAlignedFeatureIds` <- ApiClient$new()$deserializeObj(this_object$`affectedAlignedFeatureIds`, "array[character]", loadNamespace("RSirius"))
       }
       if (!is.null(this_object$`jobEffect`)) {
         if (!is.null(this_object$`jobEffect`) && !(this_object$`jobEffect` %in% c("IMPORT", "COMPUTATION", "DELETION"))) {
@@ -186,8 +186,8 @@ Job <- R6::R6Class(
       self$`id` <- this_object$`id`
       self$`command` <- this_object$`command`
       self$`progress` <- JobProgress$new()$fromJSON(jsonlite::toJSON(this_object$`progress`, auto_unbox = TRUE, digits = NA, null = 'null'))
-      self$`affectedCompoundIds` <- ApiClient$new()$deserializeObj(this_object$`affectedCompoundIds`, "array[character]", loadNamespace("Rsirius"))
-      self$`affectedAlignedFeatureIds` <- ApiClient$new()$deserializeObj(this_object$`affectedAlignedFeatureIds`, "array[character]", loadNamespace("Rsirius"))
+      self$`affectedCompoundIds` <- ApiClient$new()$deserializeObj(this_object$`affectedCompoundIds`, "array[character]", loadNamespace("RSirius"))
+      self$`affectedAlignedFeatureIds` <- ApiClient$new()$deserializeObj(this_object$`affectedAlignedFeatureIds`, "array[character]", loadNamespace("RSirius"))
       if (!is.null(this_object$`jobEffect`) && !(this_object$`jobEffect` %in% c("IMPORT", "COMPUTATION", "DELETION"))) {
         stop(paste("Error! \"", this_object$`jobEffect`, "\" cannot be assigned to `jobEffect`. Must be \"IMPORT\", \"COMPUTATION\", \"DELETION\".", sep = ""))
       }

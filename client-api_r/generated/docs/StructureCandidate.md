@@ -1,4 +1,4 @@
-# Rsirius::StructureCandidate
+# RSirius::StructureCandidate
 
 
 ## Properties

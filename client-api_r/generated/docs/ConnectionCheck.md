@@ -1,4 +1,4 @@
-# Rsirius::ConnectionCheck
+# RSirius::ConnectionCheck
 
 
 ## Properties

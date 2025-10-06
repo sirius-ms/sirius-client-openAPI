@@ -28,7 +28,7 @@ Import Compounds and its contained features. Compounds and Features must not exi
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # Import Compounds and its contained features.
 #
@@ -83,7 +83,7 @@ No authorization required
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # [EXPERIMENTAL] Tags with the same name will be overwritten
 #
@@ -134,7 +134,7 @@ Delete compound (group of ion identities) with the given identifier (and the inc
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # Delete compound (group of ion identities) with the given identifier (and the included features) from the  specified project-space.
 #
@@ -180,7 +180,7 @@ Get compound (group of ion identities) with the given identifier from the specif
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # Get compound (group of ion identities) with the given identifier from the specified project-space.
 #
@@ -235,7 +235,7 @@ No authorization required
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # [EXPERIMENTAL] Returns the full quantification table of compounds
 #
@@ -284,7 +284,7 @@ No authorization required
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # [EXPERIMENTAL] Returns a single quantification table row for the given compound
 #
@@ -335,7 +335,7 @@ No authorization required
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # [EXPERIMENTAL] Returns the traces of the given compound
 #
@@ -386,7 +386,7 @@ List of all available compounds (group of ion identities) in the given project-s
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # List of all available compounds (group of ion identities) in the given project-space.
 #
@@ -439,7 +439,7 @@ No authorization required
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # [EXPERIMENTAL] Get compounds (group of ion identities) by tag group
 #
@@ -496,7 +496,7 @@ No authorization required
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # [EXPERIMENTAL] Get compounds (group of ion identities) by tag
 #
@@ -553,7 +553,7 @@ Page of available compounds (group of ion identities) in the given project-space
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # Page of available compounds (group of ion identities) in the given project-space.
 #
@@ -612,7 +612,7 @@ No authorization required
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # [EXPERIMENTAL] Get all tags associated with this Compound
 #
@@ -661,7 +661,7 @@ No authorization required
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # [EXPERIMENTAL] Delete tag with the given name from the compound (group of ion identities) with the specified ID in the specified project-space
 #

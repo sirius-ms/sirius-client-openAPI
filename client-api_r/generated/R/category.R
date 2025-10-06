@@ -113,7 +113,7 @@ Category <- R6::R6Class(
         self$`overallQuality` <- this_object$`overallQuality`
       }
       if (!is.null(this_object$`items`)) {
-        self$`items` <- ApiClient$new()$deserializeObj(this_object$`items`, "array[QualityItem]", loadNamespace("Rsirius"))
+        self$`items` <- ApiClient$new()$deserializeObj(this_object$`items`, "array[QualityItem]", loadNamespace("RSirius"))
       }
       self
     },
@@ -141,7 +141,7 @@ Category <- R6::R6Class(
         stop(paste("Error! \"", this_object$`overallQuality`, "\" cannot be assigned to `overallQuality`. Must be \"NOT_APPLICABLE\", \"LOWEST\", \"BAD\", \"DECENT\", \"GOOD\".", sep = ""))
       }
       self$`overallQuality` <- this_object$`overallQuality`
-      self$`items` <- ApiClient$new()$deserializeObj(this_object$`items`, "array[QualityItem]", loadNamespace("Rsirius"))
+      self$`items` <- ApiClient$new()$deserializeObj(this_object$`items`, "array[QualityItem]", loadNamespace("RSirius"))
       self
     },
 

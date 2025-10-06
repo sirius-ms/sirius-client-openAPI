@@ -1,4 +1,4 @@
-# Rsirius::ZodiacAnalogueNodes
+# RSirius::ZodiacAnalogueNodes
 
 
 ## Properties

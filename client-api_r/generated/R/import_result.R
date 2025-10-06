@@ -87,10 +87,10 @@ ImportResult <- R6::R6Class(
     fromJSON = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       if (!is.null(this_object$`affectedCompoundIds`)) {
-        self$`affectedCompoundIds` <- ApiClient$new()$deserializeObj(this_object$`affectedCompoundIds`, "array[character]", loadNamespace("Rsirius"))
+        self$`affectedCompoundIds` <- ApiClient$new()$deserializeObj(this_object$`affectedCompoundIds`, "array[character]", loadNamespace("RSirius"))
       }
       if (!is.null(this_object$`affectedAlignedFeatureIds`)) {
-        self$`affectedAlignedFeatureIds` <- ApiClient$new()$deserializeObj(this_object$`affectedAlignedFeatureIds`, "array[character]", loadNamespace("Rsirius"))
+        self$`affectedAlignedFeatureIds` <- ApiClient$new()$deserializeObj(this_object$`affectedAlignedFeatureIds`, "array[character]", loadNamespace("RSirius"))
       }
       self
     },
@@ -113,8 +113,8 @@ ImportResult <- R6::R6Class(
     #' @return the instance of ImportResult
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
-      self$`affectedCompoundIds` <- ApiClient$new()$deserializeObj(this_object$`affectedCompoundIds`, "array[character]", loadNamespace("Rsirius"))
-      self$`affectedAlignedFeatureIds` <- ApiClient$new()$deserializeObj(this_object$`affectedAlignedFeatureIds`, "array[character]", loadNamespace("Rsirius"))
+      self$`affectedCompoundIds` <- ApiClient$new()$deserializeObj(this_object$`affectedCompoundIds`, "array[character]", loadNamespace("RSirius"))
+      self$`affectedAlignedFeatureIds` <- ApiClient$new()$deserializeObj(this_object$`affectedAlignedFeatureIds`, "array[character]", loadNamespace("RSirius"))
       self
     },
 

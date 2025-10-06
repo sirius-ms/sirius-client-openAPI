@@ -1,4 +1,4 @@
-# Rsirius::ProjectInfo
+# RSirius::ProjectInfo
 
 
 ## Properties

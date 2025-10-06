@@ -15,7 +15,7 @@
 #' \dontrun{
 #' ####################  AddDatabases  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_request_body <- c("property_example") # array[character] | 
 #'
 #' #DEPRECATED: this endpoint is based on local file paths and will likely be replaced in future versions of this API.
@@ -29,7 +29,7 @@
 #'
 #' ####################  CreateDatabase  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_database_id <- "database_id_example" # character | 
 #' var_searchable_database_parameters <- SearchableDatabaseParameters$new("displayName_example", "location_example", "matchRtOfReferenceSpectra_example") # SearchableDatabaseParameters |  (Optional)
 #'
@@ -43,7 +43,7 @@
 #'
 #' ####################  GetCustomDatabases  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_include_stats <- FALSE # character |  (Optional)
 #' var_include_with_errors <- FALSE # character |  (Optional)
 #'
@@ -57,7 +57,7 @@
 #'
 #' ####################  GetDatabase  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_database_id <- "database_id_example" # character | 
 #' var_include_stats <- TRUE # character |  (Optional)
 #'
@@ -71,7 +71,7 @@
 #'
 #' ####################  GetDatabases  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_include_stats <- FALSE # character |  (Optional)
 #' var_include_with_errors <- FALSE # character |  (Optional)
 #'
@@ -85,7 +85,7 @@
 #'
 #' ####################  GetIncludedDatabases  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_include_stats <- FALSE # character |  (Optional)
 #'
 #' api_instance <- rsirius_api$new()
@@ -98,7 +98,7 @@
 #'
 #' ####################  ImportIntoDatabase  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_database_id <- "database_id_example" # character | database to import into
 #' var_input_files <- c(123) # array[data.frame] | files to be imported
 #' var_buffer_size <- 1000 # integer |  (Optional)
@@ -115,7 +115,7 @@
 #'
 #' ####################  RemoveDatabase  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_database_id <- "database_id_example" # character | 
 #' var_delete <- FALSE # character |  (Optional)
 #'
@@ -126,7 +126,7 @@
 #'
 #' ####################  UpdateDatabase  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_database_id <- "database_id_example" # character | 
 #' var_searchable_database_parameters <- SearchableDatabaseParameters$new("displayName_example", "location_example", "matchRtOfReferenceSpectra_example") # SearchableDatabaseParameters |  (Optional)
 #'
@@ -270,7 +270,7 @@ SearchableDatabasesApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "array[SearchableDatabase]", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "array[SearchableDatabase]", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -404,7 +404,7 @@ SearchableDatabasesApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "SearchableDatabase", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "SearchableDatabase", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -525,7 +525,7 @@ SearchableDatabasesApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "array[SearchableDatabase]", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "array[SearchableDatabase]", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -652,7 +652,7 @@ SearchableDatabasesApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "SearchableDatabase", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "SearchableDatabase", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -773,7 +773,7 @@ SearchableDatabasesApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "array[SearchableDatabase]", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "array[SearchableDatabase]", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -889,7 +889,7 @@ SearchableDatabasesApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "array[SearchableDatabase]", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "array[SearchableDatabase]", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -1036,7 +1036,7 @@ SearchableDatabasesApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "SearchableDatabase", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "SearchableDatabase", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -1254,7 +1254,7 @@ SearchableDatabasesApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "SearchableDatabase", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "SearchableDatabase", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }

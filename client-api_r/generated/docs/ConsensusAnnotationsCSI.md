@@ -1,4 +1,4 @@
-# Rsirius::ConsensusAnnotationsCSI
+# RSirius::ConsensusAnnotationsCSI
 
 
 ## Properties

@@ -15,7 +15,7 @@
 #' \dontrun{
 #' ####################  Health  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #'
 #' #Actuator web endpoint 'health'
 #' api_instance <- rsirius_api$new()
@@ -28,7 +28,7 @@
 #'
 #' ####################  Shutdown  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #'
 #' #Actuator web endpoint 'shutdown'
 #' api_instance <- rsirius_api$new()
@@ -148,7 +148,7 @@ ActuatorApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "object", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "object", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }

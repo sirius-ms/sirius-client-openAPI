@@ -91,7 +91,7 @@ ConnectionCheck <- R6::R6Class(
         self$`licenseInfo` <- `licenseinfo_object`
       }
       if (!is.null(this_object$`errors`)) {
-        self$`errors` <- ApiClient$new()$deserializeObj(this_object$`errors`, "array[ConnectionError]", loadNamespace("Rsirius"))
+        self$`errors` <- ApiClient$new()$deserializeObj(this_object$`errors`, "array[ConnectionError]", loadNamespace("RSirius"))
       }
       self
     },
@@ -115,7 +115,7 @@ ConnectionCheck <- R6::R6Class(
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       self$`licenseInfo` <- LicenseInfo$new()$fromJSON(jsonlite::toJSON(this_object$`licenseInfo`, auto_unbox = TRUE, digits = NA, null = 'null'))
-      self$`errors` <- ApiClient$new()$deserializeObj(this_object$`errors`, "array[ConnectionError]", loadNamespace("Rsirius"))
+      self$`errors` <- ApiClient$new()$deserializeObj(this_object$`errors`, "array[ConnectionError]", loadNamespace("RSirius"))
       self
     },
 

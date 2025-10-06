@@ -1,4 +1,4 @@
-# Rsirius::Category
+# RSirius::Category
 
 
 ## Properties

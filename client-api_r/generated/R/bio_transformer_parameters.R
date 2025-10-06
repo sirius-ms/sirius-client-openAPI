@@ -135,7 +135,7 @@ BioTransformerParameters <- R6::R6Class(
         self$`useDB` <- this_object$`useDB`
       }
       if (!is.null(this_object$`bioTransformerSequenceSteps`)) {
-        self$`bioTransformerSequenceSteps` <- ApiClient$new()$deserializeObj(this_object$`bioTransformerSequenceSteps`, "array[BioTransformerSequenceStep]", loadNamespace("Rsirius"))
+        self$`bioTransformerSequenceSteps` <- ApiClient$new()$deserializeObj(this_object$`bioTransformerSequenceSteps`, "array[BioTransformerSequenceStep]", loadNamespace("RSirius"))
       }
       self
     },
@@ -167,7 +167,7 @@ BioTransformerParameters <- R6::R6Class(
       }
       self$`p2Mode` <- this_object$`p2Mode`
       self$`useDB` <- this_object$`useDB`
-      self$`bioTransformerSequenceSteps` <- ApiClient$new()$deserializeObj(this_object$`bioTransformerSequenceSteps`, "array[BioTransformerSequenceStep]", loadNamespace("Rsirius"))
+      self$`bioTransformerSequenceSteps` <- ApiClient$new()$deserializeObj(this_object$`bioTransformerSequenceSteps`, "array[BioTransformerSequenceStep]", loadNamespace("RSirius"))
       self
     },
 

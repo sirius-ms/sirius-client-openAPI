@@ -126,10 +126,10 @@ FragmentationTree <- R6::R6Class(
     fromJSON = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       if (!is.null(this_object$`fragments`)) {
-        self$`fragments` <- ApiClient$new()$deserializeObj(this_object$`fragments`, "array[FragmentNode]", loadNamespace("Rsirius"))
+        self$`fragments` <- ApiClient$new()$deserializeObj(this_object$`fragments`, "array[FragmentNode]", loadNamespace("RSirius"))
       }
       if (!is.null(this_object$`losses`)) {
-        self$`losses` <- ApiClient$new()$deserializeObj(this_object$`losses`, "array[LossEdge]", loadNamespace("Rsirius"))
+        self$`losses` <- ApiClient$new()$deserializeObj(this_object$`losses`, "array[LossEdge]", loadNamespace("RSirius"))
       }
       if (!is.null(this_object$`treeScore`)) {
         self$`treeScore` <- this_object$`treeScore`
@@ -161,8 +161,8 @@ FragmentationTree <- R6::R6Class(
     #' @return the instance of FragmentationTree
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
-      self$`fragments` <- ApiClient$new()$deserializeObj(this_object$`fragments`, "array[FragmentNode]", loadNamespace("Rsirius"))
-      self$`losses` <- ApiClient$new()$deserializeObj(this_object$`losses`, "array[LossEdge]", loadNamespace("Rsirius"))
+      self$`fragments` <- ApiClient$new()$deserializeObj(this_object$`fragments`, "array[FragmentNode]", loadNamespace("RSirius"))
+      self$`losses` <- ApiClient$new()$deserializeObj(this_object$`losses`, "array[LossEdge]", loadNamespace("RSirius"))
       self$`treeScore` <- this_object$`treeScore`
       self$`molecularFormula` <- this_object$`molecularFormula`
       self$`adduct` <- this_object$`adduct`

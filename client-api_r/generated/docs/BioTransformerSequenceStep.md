@@ -1,4 +1,4 @@
-# Rsirius::BioTransformerSequenceStep
+# RSirius::BioTransformerSequenceStep
 
 
 ## Properties

@@ -88,7 +88,7 @@ BinaryFingerprint <- R6::R6Class(
     fromJSON = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       if (!is.null(this_object$`bitsSet`)) {
-        self$`bitsSet` <- ApiClient$new()$deserializeObj(this_object$`bitsSet`, "array[integer]", loadNamespace("Rsirius"))
+        self$`bitsSet` <- ApiClient$new()$deserializeObj(this_object$`bitsSet`, "array[integer]", loadNamespace("RSirius"))
       }
       if (!is.null(this_object$`length`)) {
         self$`length` <- this_object$`length`
@@ -114,7 +114,7 @@ BinaryFingerprint <- R6::R6Class(
     #' @return the instance of BinaryFingerprint
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
-      self$`bitsSet` <- ApiClient$new()$deserializeObj(this_object$`bitsSet`, "array[integer]", loadNamespace("Rsirius"))
+      self$`bitsSet` <- ApiClient$new()$deserializeObj(this_object$`bitsSet`, "array[integer]", loadNamespace("RSirius"))
       self$`length` <- this_object$`length`
       self
     },
