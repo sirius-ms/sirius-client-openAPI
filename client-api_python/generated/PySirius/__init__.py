@@ -181,5 +181,6 @@ from PySirius.models.zodiac_epochs import ZodiacEpochs
 from PySirius.models.zodiac_library_scoring import ZodiacLibraryScoring
 
 # import manually generated API and SDK files
-from PySirius.sirius_api import PySiriusAPI
-from PySirius.sirius import SiriusSDK
+from PySirius.pysirius_api import PySiriusAPI
+from PySirius.pysirius_sdk import SiriusSDK
+from PySirius.pysirius_helper import Helper

@@ -106,7 +106,7 @@ api = sdk.connect("http://localhost:8080")
 
 ### SiriusSDK class
 
-For more niche functionality and insights, find the SiriusSDK class [here](sirius.py).
+For more niche functionality and insights, find the SiriusSDK class [here](pysirius_sdk.py).
 
 ### Example code
 Our feedstocks for the conda-forge packages are running an automated minimal test.

@@ -1,7 +1,6 @@
 # THIS FILE IS NOT AUTO GENERATED AND MIGHT NEED TO BE CHANGED WHEN API ENDPOINTS CHANGE
 
 import os
-import sys
 import time
 import glob
 import signal
