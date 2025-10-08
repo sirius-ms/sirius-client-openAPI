@@ -12,11 +12,7 @@
 import os
 import json
 import unittest
-
-import PySirius
-from PySirius import PySiriusAPI, SiriusSDK, PagedModelCompound
-from PySirius.models.compound import Compound
-from PySirius.models.compound_import import CompoundImport
+from PySirius import PySiriusAPI, SiriusSDK, PagedModelCompound, Compound, CompoundImport
 
 
 class TestCompoundsApi(unittest.TestCase):

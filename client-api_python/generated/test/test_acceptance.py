@@ -1,8 +1,6 @@
 import unittest
 import os
-import time
-
-from PySirius import SiriusSDK, AlignedFeatureOptField, FragmentationTree, FormulaCandidate, JobState
+from PySirius import SiriusSDK, AlignedFeatureOptField, FragmentationTree, FormulaCandidate, JobState, Helper
 
 # a general purpose acceptance test that tests basic packe behaviour and can be used as blueprint for testing packages in CI/CD pipelines
 class TestAcceptance(unittest.TestCase):
@@ -35,12 +33,7 @@ class TestAcceptance(unittest.TestCase):
             job_sub.ms_novelist_params.enabled = False
 
             job = api.jobs().start_job(project_id=ps_info.project_id, job_submission=job_sub)
-
-            while True:
-                if api.jobs().get_job(ps_info.project_id, job.id).progress.state is not JobState.DONE:
-                    time.sleep(1)
-                else:
-                    break
+            Helper.wait_for_job_completion(ps_info, job, api)
 
             formula_candidate = api.features().get_aligned_feature(ps_info.project_id, feature_id, opt_fields=["topAnnotations"]).top_annotations.formula_annotation
             tree = api.features().get_frag_tree(ps_info.project_id, feature_id, formula_candidate.formula_id)

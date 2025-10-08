@@ -10,12 +10,7 @@
 
 import os
 import unittest
-
-from PySirius import SiriusSDK, JobOptField
-from PySirius.models.job import Job
-from PySirius.models.project_info import ProjectInfo
-from PySirius.models.import_result import ImportResult
-from PySirius.models.lcms_submission_parameters import LcmsSubmissionParameters
+from PySirius import SiriusSDK, JobOptField, Job, ProjectInfo, ImportResult, LcmsSubmissionParameters
 
 
 class TestProjectsApi(unittest.TestCase):

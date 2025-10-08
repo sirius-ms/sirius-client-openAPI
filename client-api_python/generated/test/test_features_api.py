@@ -11,24 +11,7 @@
 import os
 import unittest
 import json
-
-from PySirius import SiriusSDK, PagedModelAlignedFeature, PagedModelStructureCandidateScored, \
-    PagedModelStructureCandidateFormula, PagedModelFormulaCandidate, QuantTableExperimental, \
-    PagedModelSpectralLibraryMatch, TraceSetExperimental
-from PySirius.models.aligned_feature import AlignedFeature
-from PySirius.models.annotated_ms_ms_data import AnnotatedMsMsData
-from PySirius.models.ms_data import MsData
-from PySirius.models.feature_import import FeatureImport
-from PySirius.models.annotated_spectrum import AnnotatedSpectrum
-from PySirius.models.canopus_prediction import CanopusPrediction
-from PySirius.models.compound_classes import CompoundClasses
-from PySirius.models.formula_candidate import FormulaCandidate
-from PySirius.models.fragmentation_tree import FragmentationTree
-from PySirius.models.isotope_pattern_annotation import IsotopePatternAnnotation
-from PySirius.models.lipid_annotation import LipidAnnotation
-from PySirius.models.spectral_library_match_summary import SpectralLibraryMatchSummary
-from PySirius.models.structure_candidate_formula import StructureCandidateFormula
-from PySirius.models.structure_candidate_scored import StructureCandidateScored
+from PySirius import *
 
 
 class TestFeaturesApi(unittest.TestCase):

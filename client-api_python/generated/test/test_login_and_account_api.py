@@ -10,10 +10,7 @@
 
 
 import unittest
-
-import PySirius
-from PySirius import PySiriusAPI, SiriusSDK
-from PySirius.models.account_info import AccountInfo
+from PySirius import PySiriusAPI, SiriusSDK, AccountInfo
 
 
 class TestLoginAndAccountApi(unittest.TestCase):

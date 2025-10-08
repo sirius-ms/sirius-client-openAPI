@@ -14,13 +14,7 @@ import json
 import time
 import unittest
 
-import PySirius
-from PySirius import PySiriusAPI, SiriusSDK, StoredJobSubmission
-from PySirius.models.job import Job
-from PySirius.models.job_state import JobState
-from PySirius.models.paged_model_job import PagedModelJob
-from PySirius.models.job_submission import JobSubmission
-
+from PySirius import PySiriusAPI, SiriusSDK, StoredJobSubmission, Helper, Job, JobState, PagedModelJob, JobSubmission
 
 class TestJobsApi(unittest.TestCase):
     """JobsApi unit test stubs"""
@@ -211,11 +205,7 @@ class TestJobsApi(unittest.TestCase):
         job_submission = JobSubmission.from_json(json.dumps(job_submission_json))
         response = self.api.jobs().start_job(self.project_id, job_submission)
 
-        while True:
-            if self.api.jobs().get_job(self.project_id, response.id).progress.state is not JobState.DONE:
-                time.sleep(1)
-            else:
-                break
+        Helper.wait_for_job_completion(self.project_id, response.id, self.api.jobs())
 
         self.assertIsInstance(response, Job)
 
@@ -242,11 +232,7 @@ class TestJobsApi(unittest.TestCase):
         self.api.jobs().save_job_config(config_name, job_submission, True)
         response = self.api.jobs().start_job_from_config(self.project_id, config_name, [aligned_feature_id])
 
-        while True:
-            if self.api.jobs().get_job(self.project_id, response.id).progress.state is not JobState.DONE:
-                time.sleep(1)
-            else:
-                break
+        Helper.wait_for_job_completion(self.project_id, response.id, self.api.jobs())
 
         self.api.jobs().delete_job_config(config_name)
         self.assertIsInstance(response, Job)

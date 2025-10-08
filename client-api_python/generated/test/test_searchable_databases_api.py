@@ -10,13 +10,7 @@
 
 import os
 import unittest
-
-from PySirius import SiriusSDK
-from PySirius.api.searchable_databases_api import SearchableDatabasesApi
-from PySirius.exceptions import ServiceException
-from PySirius.models.searchable_database import SearchableDatabase
-from PySirius.models.searchable_database_parameters import SearchableDatabaseParameters
-
+from PySirius import SiriusSDK, SearchableDatabasesApi, SearchableDatabase, SearchableDatabaseParameters
 
 
 class TestSearchableDatabasesApi(unittest.TestCase):

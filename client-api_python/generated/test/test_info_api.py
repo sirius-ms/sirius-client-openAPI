@@ -10,12 +10,7 @@
 
 
 import unittest
-
-from PySirius import SiriusSDK
-from PySirius.api.info_api import InfoApi
-from PySirius.models.info import Info
-from PySirius.models.connection_check import ConnectionCheck
-
+from PySirius import SiriusSDK, InfoApi, Info, ConnectionCheck
 
 class TestInfoApi(unittest.TestCase):
     """InfoApi unit test stubs"""
