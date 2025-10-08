@@ -66,7 +66,7 @@ If you installed from GitHub or a local folder manually and do **not** have SIRI
 ```R
 library('Rsirius') 
 sdk <- SiriusSDK$new()
-api = sdk$start_sirius(sirius_path="your/path/to/sirius", port=8080)
+api <- sdk$start_sirius(sirius_path="your/path/to/sirius", port=8080)
 ```
 
 You can also attach to a running SIRIUS instance:
@@ -74,7 +74,7 @@ You can also attach to a running SIRIUS instance:
 ```R
 library('Rsirius') 
 sdk <- SiriusSDK$new()
-api = sdk$attach_to_sirius(sirius_major_version=6, port=8080)
+api <- sdk$attach_to_sirius(sirius_major_version=6, port=8080)
 ```
 
 ### Remote Endpoint
@@ -84,12 +84,12 @@ Please follow the [installation procedure](#installation--usage) and then run th
 ```R
 library('Rsirius') 
 sdk <- SiriusSDK$new()
-api = sdk$connect("http://localhost:8080")
+api <- sdk$connect("http://localhost:8080")
 ```
 
 ### SiriusSDK class
 
-For more niche functionality and insights, find the SiriusSDK class [here](SiriusSDK.R).
+For more niche functionality and insights, find the SiriusSDK class [here](rsirius_sdk.R).
 
 ### Example code
 Our feedstocks for the conda-forge packages are running an automated minimal test.
