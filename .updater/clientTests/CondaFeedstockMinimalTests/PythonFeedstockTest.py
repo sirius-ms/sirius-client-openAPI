@@ -1,12 +1,7 @@
-from PySirius import SiriusSDK, AlignedFeatureOptField, ActuatorApi
+from PySirius import SiriusSDK, AlignedFeatureOptField, ActuatorApi, Helper
 import os
-import time
 
 api = SiriusSDK().attach_or_start_sirius(headless=True)
-
-def wait_for_job(project_id, job_id):
-    while api.jobs().get_job(project_id, job_id).progress.state not in ["CANCELED", "FAILED", "DONE"]:
-        time.sleep(1)
 
 ps_info = api.projects().create_project_space("testProject", os.path.abspath("./testProject.sirius"))
 path = os.getenv('RECIPE_DIR') + "/Kaempferol.ms"
@@ -24,7 +19,7 @@ jobSub.canopus_params.enabled = False
 jobSub.ms_novelist_params.enabled = False
 
 job = api.jobs().start_job(project_id=ps_info.project_id, job_submission=jobSub)
-wait_for_job(ps_info.project_id, job.id)
+Helper.wait_for_job_completion(ps_info.project_id, job.id, api.jobs())
 
 formula_id = api.features().get_aligned_feature(ps_info.project_id, featureId, [AlignedFeatureOptField.TOPANNOTATIONS]
                                                 ).top_annotations.formula_annotation.formula_id
