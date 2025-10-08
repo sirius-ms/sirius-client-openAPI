@@ -38,8 +38,7 @@ library('Rsirius')
 ```
 
 ## Getting Started
-Being updated! Coming soon...
-<!--
+
 ### Local Endpoint
 Please follow the [installation procedure](#installation--usage) and then run the following (while replacing the Strings for project_space and sirius_executable).
 
@@ -87,7 +86,7 @@ library('Rsirius')
 sdk <- SiriusSDK$new()
 api = sdk$connect("http://localhost:8080")
 ```
--->
+
 ### SiriusSDK class
 
 For more niche functionality and insights, find the SiriusSDK class [here](SiriusSDK.R).
