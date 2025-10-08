@@ -96,10 +96,12 @@ jobs:
         echo "from PySirius.sirius import SiriusSDK" >> client-api_python/generated/PySirius/__init__.py
     - name: Format R package
       run: |
-        cp client-api_r/SiriusSDK.R  client-api_r/generated/R/SiriusSDK.R
+        cp client-api_r/rsirius_sdk.R  client-api_r/generated/R/rsirius_sdk.R
+        cp client-api_r/rsirius_helper.R  client-api_r/generated/R/rsirius_helper.R
         echo >> client-api_r/generated/NAMESPACE
         echo "# SDK" >> client-api_r/generated/NAMESPACE
         echo "export(SiriusSDK)" >> client-api_r/generated/NAMESPACE
+        echo "export(Helper)" >> client-api_r/generated/NAMESPACE
         
         chmod +x ./client-api_r/patches/list_syntax_fix.sh
         ./client-api_r/patches/list_syntax_fix.sh

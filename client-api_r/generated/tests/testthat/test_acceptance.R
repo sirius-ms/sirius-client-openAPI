@@ -33,11 +33,7 @@ test_that("Test Acceptance", {
     job_submission$alignedFeatureIds <- list(features_api$GetAlignedFeatures(project_id)[[1]]$alignedFeatureId)
 
     response <- api_instance$StartJob(project_id, job_submission)
-    while (api_instance$GetJob(project_id, response$id)$
-      progress$
-      state == "RUNNING") {
-      Sys.sleep(1)
-    }
+    Helper$new()$wait_for_job_completion(project_id, response$id, api_instance)
 
     formula_candidate <- features_api$GetAlignedFeature(project_id, job_submission$alignedFeatureIds[[1]], opt_fields = list("topAnnotations"))$
       topAnnotations$
