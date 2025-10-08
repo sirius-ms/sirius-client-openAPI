@@ -6,7 +6,7 @@ sdk <- SiriusSDK$new()
 sirius_api <- sdk$attach_or_start_sirius()
 
 wait_for_job <- function(project_id, job) {
-  while (sirius_api$jobs_api$GetJob(project_id, job$id)$progress$state != "DONE") {
+  while (!(sirius_api$jobs_api$GetJob(project_id, job$id)$progress$state %in% c("CANCELED", "FAILED", "DONE"))) {
     Sys.sleep(1)
   }
 }

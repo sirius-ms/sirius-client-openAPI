@@ -4,7 +4,10 @@ import time
 
 api = SiriusSDK().attach_or_start_sirius(headless=True)
 
-time.sleep(10)
+def wait_for_job(project_id, job_id):
+    while api.jobs().get_job(project_id, job_id).progress.state not in ["CANCELED", "FAILED", "DONE"]:
+        time.sleep(1)
+
 ps_info = api.projects().create_project_space("testProject", os.path.abspath("./testProject.sirius"))
 path = os.getenv('RECIPE_DIR') + "/Kaempferol.ms"
 path = os.path.abspath(path)
@@ -21,11 +24,7 @@ jobSub.canopus_params.enabled = False
 jobSub.ms_novelist_params.enabled = False
 
 job = api.jobs().start_job(project_id=ps_info.project_id, job_submission=jobSub)
-while True:
-    if api.jobs().get_job(ps_info.project_id, job.id).progress.state != 'DONE':
-        time.sleep(10)
-    else:
-        break
+wait_for_job(ps_info.project_id, job.id)
 
 formula_id = api.features().get_aligned_feature(ps_info.project_id, featureId, [AlignedFeatureOptField.TOPANNOTATIONS]
                                                 ).top_annotations.formula_annotation.formula_id
