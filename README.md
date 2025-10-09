@@ -1,5 +1,8 @@
-# sirius-client-openAPI
+[![conda-forge | r-sirius-ms](https://img.shields.io/badge/conda--forge-r--sirius--ms-blue?logo=anaconda)](https://anaconda.org/conda-forge/r-sirius-ms)
+[![conda-forge | py-sirius-ms](https://img.shields.io/badge/conda--forge-py--sirius--ms-blue?logo=anaconda)](https://anaconda.org/conda-forge/py-sirius-ms)
+[![conda-forge | sirius-ms](https://img.shields.io/badge/conda--forge-sirius--ms-blue?logo=anaconda)](https://anaconda.org/conda-forge/sirius-ms)
 
+# sirius-client-openAPI
 
 Maintained and prebuild OpenAPI based SIRIUS SDKs for different programming languages such as R, Python and Java.
 SDKs for other languages can be created using [OpenAPI Generator](https://openapi-generator.tech/).
