@@ -1,6 +1,6 @@
-[![conda-forge | r-sirius-ms](https://img.shields.io/badge/conda--forge-r--sirius--ms-blue?logo=anaconda)](https://anaconda.org/conda-forge/r-sirius-ms)
-[![conda-forge | py-sirius-ms](https://img.shields.io/badge/conda--forge-py--sirius--ms-blue?logo=anaconda)](https://anaconda.org/conda-forge/py-sirius-ms)
-[![conda-forge | sirius-ms](https://img.shields.io/badge/conda--forge-sirius--ms-blue?logo=anaconda)](https://anaconda.org/conda-forge/sirius-ms)
+[![conda-forge | r-sirius-ms](https://img.shields.io/conda/vn/conda-forge/r-sirius-ms?logo=anaconda&label=r-sirius-ms)](https://anaconda.org/conda-forge/r-sirius-ms)
+[![conda-forge | py-sirius-ms](https://img.shields.io/conda/vn/conda-forge/py-sirius-ms?logo=anaconda&label=py-sirius-ms)](https://anaconda.org/conda-forge/py-sirius-ms)
+[![conda-forge | sirius-ms](https://img.shields.io/conda/vn/conda-forge/sirius-ms?logo=anaconda&label=sirius-ms)](https://anaconda.org/conda-forge/sirius-ms)
 
 # sirius-client-openAPI
 
