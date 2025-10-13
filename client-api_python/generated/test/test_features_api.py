@@ -24,8 +24,8 @@ class TestFeaturesApi(unittest.TestCase):
         # check if test project already open -> allows to run tests in independent calls.
         if self.api.projects().get_project_without_preload_content(self.project_id).status == 404:
             self.project_info = self.api.projects().open_project(self.project_id, self.path_to_project)
-        # the single one ID with MSNovelist results computed
-        self.aligned_feature_id = "586487307819356741"
+        # the single ID with MSNovelist AND spectral library search results computed
+        self.aligned_feature_id = "586487310566638367"
 
         self.formula_candidates = self.api.features().get_formula_candidates(self.project_id, self.aligned_feature_id)
         self.formula_id = self.formula_candidates[0].formula_id
@@ -308,8 +308,9 @@ class TestFeaturesApi(unittest.TestCase):
 
         List of spectral library matches for the given 'alignedFeatureId'.
         """
-        # TODO have to library match in projectspace
-        pass
+        match_id = self.api.features().get_spectral_library_matches(self.project_id, self.aligned_feature_id)[0].spec_match_id
+        response = self.api.features().get_spectral_library_match(self.project_id, self.aligned_feature_id, match_id)
+        self.assertIsInstance(response, SpectralLibraryMatch)
 
     def test_get_spectral_library_matches(self) -> None:
         """Test case for get_spectral_library_matches
@@ -318,8 +319,7 @@ class TestFeaturesApi(unittest.TestCase):
         """
         response = self.api.features().get_spectral_library_matches(self.project_id, self.aligned_feature_id)
         self.assertIsInstance(response, list)
-        # TODO have to library match in projectspace
-        # self.assertIsInstance(response[0], SpectralLibraryMatch)
+        self.assertIsInstance(response[0], SpectralLibraryMatch)
 
     def test_get_spectral_library_matches_paged(self) -> None:
         """Test case for get_spectral_library_matches_paged

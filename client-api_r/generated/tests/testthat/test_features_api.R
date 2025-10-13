@@ -13,7 +13,8 @@ path_to_demo_data <- paste(Sys.getenv("HOME"), "sirius-client-openAPI/.updater/c
 preproc_ms2_file_1 <- paste(path_to_demo_data, "Kaempferol.ms", sep = "/")
 preproc_ms2_file_2 <- paste(path_to_demo_data, "laudanosine.mgf", sep = "/")
 
-aligned_feature_id <- "586487307819356741"
+# the single ID with MSNovelist AND spectral library search results computed
+aligned_feature_id <- "586487310566638367"
 tomato_project <- paste(Sys.getenv("HOME"), "tomato_small.sirius", sep = "/")
 basic_spectrum <- c(BasicSpectrum$new(peaks = c(SimplePeak$new(1.23, 4.56)), precursorMz = 1.23))
 feature_import <- c(FeatureImport$new(name = "testfeature", feature_id = "testfeature", ionMass = 1.23, adduct = "[M+?]+", ms1Spectra = basic_spectrum, ms2Spectra = basic_spectrum))
@@ -643,20 +644,20 @@ test_that("GetSpectralLibraryMatch", {
   # @param opt_fields array[SpectralLibraryMatchOptField]  (optional)
   # @return [SpectralLibraryMatch]
 
-  # TODO seems like there are none
-  # project_id <- "GetSpectralLibraryMatch"
-  # projects_api$OpenProject(project_id, tomato_project)
-  # #   match_id <- api_instance$GetSpectralLibraryMatches(project_id, aligned_feature_id)[[1]]$matchId
-  #
-  # response <- api_instance$GetSpectralLibraryMatch(project_id, aligned_feature_id, match_id)
-  # expect_true(inherits(response, "list"))
-  # expect_true(inherits(response[[1]], "SpectralLibraryMatch"))
-  #
-  # }, finally = {
-  #
-  #   projects_api$CloseProject(project_id)
-  #
-  # })
+  tryCatch({
+
+    project_id <- "GetSpectralLibraryMatch"
+    projects_api$OpenProject(project_id, tomato_project)
+    match_id <- api_instance$GetSpectralLibraryMatches(project_id, aligned_feature_id)[[1]]$specMatchId
+
+    response <- api_instance$GetSpectralLibraryMatch(project_id, aligned_feature_id, match_id)
+    expect_true(inherits(response, "SpectralLibraryMatch"))
+
+  }, finally = {
+
+    projects_api$CloseProject(project_id)
+
+  })
 })
 
 test_that("GetSpectralLibraryMatches", {
@@ -672,19 +673,20 @@ test_that("GetSpectralLibraryMatches", {
   # @param opt_fields array[SpectralLibraryMatchOptField]  (optional)
   # @return [array[SpectralLibraryMatch]]
 
-  # TODO seems like there are none
-  # project_id <- "GetSpectralLibraryMatches"
-  # projects_api$OpenProject(project_id, tomato_project)
-  # #
-  # response <- api_instance$GetSpectralLibraryMatches(project_id, aligned_feature_id)
-  # expect_true(inherits(response, "list"))
-  # expect_true(inherits(response[[1]], "SpectralLibraryMatch"))
-  #
-  # }, finally = {
-  #
-  #   projects_api$CloseProject(project_id)
-  #
-  # })
+  tryCatch({
+
+    project_id <- "GetSpectralLibraryMatches"
+    projects_api$OpenProject(project_id, tomato_project)
+
+    response <- api_instance$GetSpectralLibraryMatches(project_id, aligned_feature_id)
+    expect_true(inherits(response, "list"))
+    expect_true(inherits(response[[1]], "SpectralLibraryMatch"))
+
+  }, finally = {
+
+    projects_api$CloseProject(project_id)
+
+  })
 })
 
 test_that("GetSpectralLibraryMatchesPaged", {
