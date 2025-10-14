@@ -19,12 +19,6 @@ tomato_project <- paste(Sys.getenv("HOME"), "tomato_small.sirius", sep = "/")
 basic_spectrum <- c(BasicSpectrum$new(peaks = c(SimplePeak$new(1.23, 4.56)), precursorMz = 1.23))
 feature_import <- c(FeatureImport$new(name = "testfeature", feature_id = "testfeature", ionMass = 1.23, adduct = "[M+?]+", ms1Spectra = basic_spectrum, ms2Spectra = basic_spectrum))
 
-delete_if_exists <- function(path) {
-  if (file.exists(path)) {
-    file.remove(path)
-  }
-}
-
 test_that("AddAlignedFeatures", {
   # tests for AddAlignedFeatures
   # base path: http://localhost:8080
