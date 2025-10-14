@@ -423,7 +423,7 @@ ApiClient  <- R6::R6Class(
             return_obj <- vector("list", length = nrow(obj))
             if (nrow(obj) > 0) {
               for (row in 1:nrow(obj)) {
-                return_obj[[row]] <- self$deserializeObj(obj[row, , drop = FALSE],
+                return_obj[[row]] <- self$deserializeObj(as.list(obj[row, , drop = FALSE]),
                                                          inner_return_type, pkg_env)
               }
             }
@@ -448,7 +448,7 @@ ApiClient  <- R6::R6Class(
           return_obj <- return_type$new()
         }
         return_obj$fromJSON(
-          jsonlite::toJSON(obj, digits = NA, auto_unbox = TRUE, null = 'null')
+          jsonlite::toJSON(obj, digits = NA, auto_unbox = TRUE, null = 'null', na = 'null')
         )
       } else {
         # To handle primitive type
