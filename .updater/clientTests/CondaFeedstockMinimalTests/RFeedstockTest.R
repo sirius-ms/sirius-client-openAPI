@@ -1,6 +1,6 @@
 options(error = traceback)
 
-library('Rsirius')
+library('RSirius')
 
 sdk <- SiriusSDK$new()
 sirius_api <- sdk$attach_or_start_sirius()
