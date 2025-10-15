@@ -24,7 +24,8 @@ Method | HTTP request | Description
 
 Import Compounds and its contained features.
 
-Import Compounds and its contained features. Compounds and Features must not exist in the project.  Otherwise, they will exist twice.
+Import Compounds and its contained features. Compounds and Features must not exist in the project.
+ Otherwise, they will exist twice.
 
 ### Example
 
@@ -104,7 +105,9 @@ No authorization required
 
 [EXPERIMENTAL] Tags with the same name will be overwritten
 
-[EXPERIMENTAL] Tags with the same name will be overwritten.  <p>  [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.
+[EXPERIMENTAL] Tags with the same name will be overwritten.
+ <p>
+ [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.
 
 ### Example
 
@@ -176,7 +179,8 @@ No authorization required
 
 Delete compound (group of ion identities) with the given identifier (and the included features) from the  specified project-space.
 
-Delete compound (group of ion identities) with the given identifier (and the included features) from the  specified project-space.
+Delete compound (group of ion identities) with the given identifier (and the included features) from the
+ specified project-space.
 
 ### Example
 
@@ -321,7 +325,12 @@ No authorization required
 
 [EXPERIMENTAL] Returns the full quantification table of compounds
 
-[EXPERIMENTAL] Returns the full quantification table of compounds.  <p>  The quantification table contains a quantification of the features within all  runs they are contained in.  <p>  [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.*
+[EXPERIMENTAL] Returns the full quantification table of compounds.
+ <p>
+ The quantification table contains a quantification of the features within all
+ runs they are contained in.
+ <p>
+ [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.*
 
 ### Example
 
@@ -392,7 +401,12 @@ No authorization required
 
 [EXPERIMENTAL] Returns a single quantification table row for the given compound
 
-[EXPERIMENTAL] Returns a single quantification table row for the given compound.  <p>  The quantification table contains a quantification of the feature within all  samples it is contained in.  <p>  [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.*
+[EXPERIMENTAL] Returns a single quantification table row for the given compound.
+ <p>
+ The quantification table contains a quantification of the feature within all
+ samples it is contained in.
+ <p>
+ [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.*
 
 ### Example
 
@@ -465,7 +479,15 @@ No authorization required
 
 [EXPERIMENTAL] Returns the traces of the given compound
 
-[EXPERIMENTAL] Returns the traces of the given compound.  <p>  A trace consists of m/z and intensity values over the retention  time axis. All the returned traces are 'projected', which means they refer not to the original retention time axis,  but to a recalibrated axis. This means the data points in the trace are not exactly the same as in the raw data.  However, this also means that all traces can be directly compared against each other, as they all lie in the same  retention time axis.  <p>  [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.*
+[EXPERIMENTAL] Returns the traces of the given compound.
+ <p>
+ A trace consists of m/z and intensity values over the retention
+ time axis. All the returned traces are 'projected', which means they refer not to the original retention time axis,
+ but to a recalibrated axis. This means the data points in the trace are not exactly the same as in the raw data.
+ However, this also means that all traces can be directly compared against each other, as they all lie in the same
+ retention time axis.
+ <p>
+ [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.*
 
 ### Example
 
@@ -613,7 +635,9 @@ No authorization required
 
 [EXPERIMENTAL] Get compounds (group of ion identities) by tag group
 
-[EXPERIMENTAL] Get compounds (group of ion identities) by tag group.  <p>  [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.
+[EXPERIMENTAL] Get compounds (group of ion identities) by tag group.
+ <p>
+ [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.
 
 ### Example
 
@@ -692,7 +716,38 @@ No authorization required
 
 [EXPERIMENTAL] Get compounds (group of ion identities) by tag
 
-[EXPERIMENTAL] Get compounds (group of ion identities) by tag.   <h2>Supported filter syntax</h2>   <p>The filter string must contain one or more clauses. A clause is prefíxed  by a field name.  </p>   Currently the only searchable fields are names of tags (<code>tagName</code>) followed by a clause that is valued for the value type of the tag (See TagDefinition).  Tag name based field need to be prefixed with the namespace <code>tags.</code>.  Possible value types of tags are <strong>bool</strong>, <strong>integer</strong>, <strong>real</strong>, <strong>text</strong>, <strong>date</strong>, or <strong>time</strong> - tag value   <p>The format of the <strong>date</strong> type is <code>yyyy-MM-dd</code> and of the <strong>time</strong> type is <code>HH\\:mm\\:ss</code>.</p>   <p>A clause may be:</p>  <ul>      <li>a <strong>term</strong>: field name followed by a colon and the search term, e.g. <code>tags.MyTagA:sample</code></li>      <li>a <strong>phrase</strong>: field name followed by a colon and the search phrase in doublequotes, e.g. <code>tags.MyTagA:&quot;Some Text&quot;</code></li>      <li>a <strong>regular expression</strong>: field name followed by a colon and the regex in slashes, e.g. <code>tags.MyTagA:/[mb]oat/</code></li>      <li>a <strong>comparison</strong>: field name followed by a comparison operator and a value, e.g. <code>tags.MyTagB&lt;3</code></li>      <li>a <strong>range</strong>: field name followed by a colon and an open (indiced by <code>[ </code> and <code>] </code>) or (semi-)closed range (indiced by <code>{</code> and <code>}</code>), e.g. <code>tags.MyTagB:[* TO 3] </code></li>  </ul>   <p>Clauses may be <strong>grouped</strong> with brackets <code>( </code> and <code>) </code> and / or <strong>joined</strong> with <code>AND</code> or <code>OR </code> (or <code>&amp;&amp; </code> and <code>|| </code>)</p>   <h3>Example</h3>   <p>The syntax allows to build complex filter queries such as:</p>   <p><code>tags.city:&quot;new york&quot; AND tags.ATextTag:/[mb]oat/ AND tags.count:[1 TO *] OR tags.realNumberTag&lt;=3.2 OR tags.MyDateTag:2024-01-01 OR tags.MyDateTag:[2023-10-01 TO 2023-12-24] OR tags.MyDateTag&lt;2022-01-01 OR tags.time:12\\:00\\:00 OR tags.time:[12\\:00\\:00 TO 14\\:00\\:00] OR tags.time&lt;10\\:00\\:00 </code></p>   [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.
+[EXPERIMENTAL] Get compounds (group of ion identities) by tag.
+
+ <h2>Supported filter syntax</h2>
+
+ <p>The filter string must contain one or more clauses. A clause is prefíxed
+ by a field name.
+ </p>
+
+ Currently the only searchable fields are names of tags (<code>tagName</code>) followed by a clause that is valued for the value type of the tag (See TagDefinition).
+ Tag name based field need to be prefixed with the namespace <code>tags.</code>.
+ Possible value types of tags are <strong>bool</strong>, <strong>integer</strong>, <strong>real</strong>, <strong>text</strong>, <strong>date</strong>, or <strong>time</strong> - tag value
+
+ <p>The format of the <strong>date</strong> type is <code>yyyy-MM-dd</code> and of the <strong>time</strong> type is <code>HH\:mm\:ss</code>.</p>
+
+ <p>A clause may be:</p>
+ <ul>
+     <li>a <strong>term</strong>: field name followed by a colon and the search term, e.g. <code>tags.MyTagA:sample</code></li>
+     <li>a <strong>phrase</strong>: field name followed by a colon and the search phrase in doublequotes, e.g. <code>tags.MyTagA:&quot;Some Text&quot;</code></li>
+     <li>a <strong>regular expression</strong>: field name followed by a colon and the regex in slashes, e.g. <code>tags.MyTagA:/[mb]oat/</code></li>
+     <li>a <strong>comparison</strong>: field name followed by a comparison operator and a value, e.g. <code>tags.MyTagB&lt;3</code></li>
+     <li>a <strong>range</strong>: field name followed by a colon and an open (indiced by <code>[ </code> and <code>] </code>) or (semi-)closed range (indiced by <code>{</code> and <code>}</code>), e.g. <code>tags.MyTagB:[* TO 3] </code></li>
+ </ul>
+
+ <p>Clauses may be <strong>grouped</strong> with brackets <code>( </code> and <code>) </code> and / or <strong>joined</strong> with <code>AND</code> or <code>OR </code> (or <code>&amp;&amp; </code> and <code>|| </code>)</p>
+
+ <h3>Example</h3>
+
+ <p>The syntax allows to build complex filter queries such as:</p>
+
+ <p><code>tags.city:&quot;new york&quot; AND tags.ATextTag:/[mb]oat/ AND tags.count:[1 TO *] OR tags.realNumberTag&lt;=3.2 OR tags.MyDateTag:2024-01-01 OR tags.MyDateTag:[2023-10-01 TO 2023-12-24] OR tags.MyDateTag&lt;2022-01-01 OR tags.time:12\:00\:00 OR tags.time:[12\:00\:00 TO 14\:00\:00] OR tags.time&lt;10\:00\:00 </code></p>
+
+ [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.
 
 ### Example
 
@@ -923,7 +978,9 @@ No authorization required
 
 [EXPERIMENTAL] Delete tag with the given name from the compound (group of ion identities) with the specified ID in the specified project-space
 
-[EXPERIMENTAL] Delete tag with the given name from the compound (group of ion identities) with the specified ID in the specified project-space.  <p>  [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.
+[EXPERIMENTAL] Delete tag with the given name from the compound (group of ion identities) with the specified ID in the specified project-space.
+ <p>
+ [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.
 
 ### Example
 

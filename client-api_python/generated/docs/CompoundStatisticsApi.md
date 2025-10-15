@@ -15,7 +15,11 @@ Method | HTTP request | Description
 
 [EXPERIMENTAL] Compute the fold change between two groups of runs
 
-[EXPERIMENTAL] Compute the fold change between two groups of runs.  <p>  The runs need to be tagged and grouped.  <p>  [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.
+[EXPERIMENTAL] Compute the fold change between two groups of runs.
+ <p>
+ The runs need to be tagged and grouped.
+ <p>
+ [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.
 
 ### Example
 
@@ -96,7 +100,9 @@ No authorization required
 
 [EXPERIMENTAL] Delete fold changes
 
-[EXPERIMENTAL] Delete fold changes.  <p>  [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.
+[EXPERIMENTAL] Delete fold changes.
+ <p>
+ [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.
 
 ### Example
 
@@ -171,7 +177,9 @@ No authorization required
 
 [EXPERIMENTAL] Get table of all fold changes in the project space
 
-[EXPERIMENTAL] Get table of all fold changes in the project space.  <p>  [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.
+[EXPERIMENTAL] Get table of all fold changes in the project space.
+ <p>
+ [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.
 
 ### Example
 
@@ -245,7 +253,9 @@ No authorization required
 
 [EXPERIMENTAL] List all fold changes that are associated with an object
 
-[EXPERIMENTAL] List all fold changes that are associated with an object.  <p>  [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.
+[EXPERIMENTAL] List all fold changes that are associated with an object.
+ <p>
+ [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.
 
 ### Example
 

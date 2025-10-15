@@ -84,8 +84,6 @@ No authorization required
 # **create_database**
 > SearchableDatabase create_database(database_id, searchable_database_parameters=searchable_database_parameters)
 
-
-
 ### Example
 
 
@@ -152,8 +150,6 @@ No authorization required
 # **get_custom_databases**
 > List[SearchableDatabase] get_custom_databases(include_stats=include_stats, include_with_errors=include_with_errors)
 
-
-
 ### Example
 
 
@@ -218,8 +214,6 @@ No authorization required
 
 # **get_database**
 > SearchableDatabase get_database(database_id, include_stats=include_stats)
-
-
 
 ### Example
 
@@ -286,8 +280,6 @@ No authorization required
 # **get_databases**
 > List[SearchableDatabase] get_databases(include_stats=include_stats, include_with_errors=include_with_errors)
 
-
-
 ### Example
 
 
@@ -352,8 +344,6 @@ No authorization required
 
 # **get_included_databases**
 > List[SearchableDatabase] get_included_databases(include_stats=include_stats)
-
-
 
 ### Example
 
@@ -493,8 +483,6 @@ No authorization required
 # **remove_database**
 > remove_database(database_id, delete=delete)
 
-
-
 ### Example
 
 
@@ -556,8 +544,6 @@ No authorization required
 
 # **update_database**
 > SearchableDatabase update_database(database_id, searchable_database_parameters=searchable_database_parameters)
-
-
 
 ### Example
 

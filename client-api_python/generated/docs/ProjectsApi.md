@@ -23,7 +23,10 @@ Method | HTTP request | Description
 
 Close project-space and remove it from the application
 
-Close project-space and remove it from the application. The Project will NOT be deleted from disk.  <p>  ATTENTION: This will cancel and remove all jobs running on this Project before closing it.  If there are many jobs, this might take some time.
+Close project-space and remove it from the application. The Project will NOT be deleted from disk.
+ <p>
+ ATTENTION: This will cancel and remove all jobs running on this Project before closing it.
+ If there are many jobs, this might take some time.
 
 ### Example
 
@@ -499,7 +502,8 @@ No authorization required
 
 Import and Align full MS-Runs from various formats into the specified project  Possible formats (mzML, mzXML)
 
-Import and Align full MS-Runs from various formats into the specified project  Possible formats (mzML, mzXML)
+Import and Align full MS-Runs from various formats into the specified project
+ Possible formats (mzML, mzXML)
 
 ### Example
 
@@ -572,7 +576,8 @@ No authorization required
 
 Import and Align full MS-Runs from various formats into the specified project as background job.
 
-Import and Align full MS-Runs from various formats into the specified project as background job.  Possible formats (mzML, mzXML)
+Import and Align full MS-Runs from various formats into the specified project as background job.
+ Possible formats (mzML, mzXML)
 
 ### Example
 
@@ -648,7 +653,8 @@ No authorization required
 
 Import already preprocessed ms/ms data from various formats into the specified project  Possible formats (ms, mgf, cef, msp)
 
-Import already preprocessed ms/ms data from various formats into the specified project  Possible formats (ms, mgf, cef, msp)
+Import already preprocessed ms/ms data from various formats into the specified project
+ Possible formats (ms, mgf, cef, msp)
 
 ### Example
 
@@ -722,7 +728,8 @@ No authorization required
 
 Import ms/ms data from the given format into the specified project-space as background job.
 
-Import ms/ms data from the given format into the specified project-space as background job.  Possible formats (ms, mgf, cef, msp)
+Import ms/ms data from the given format into the specified project-space as background job.
+ Possible formats (ms, mgf, cef, msp)
 
 ### Example
 

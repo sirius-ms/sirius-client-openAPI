@@ -10,7 +10,6 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 # import models into model package
 from PySirius.models.account_credentials import AccountCredentials
 from PySirius.models.account_info import AccountInfo
@@ -151,3 +150,4 @@ from PySirius.models.zodiac_analogue_nodes import ZodiacAnalogueNodes
 from PySirius.models.zodiac_edge_filter_thresholds import ZodiacEdgeFilterThresholds
 from PySirius.models.zodiac_epochs import ZodiacEpochs
 from PySirius.models.zodiac_library_scoring import ZodiacLibraryScoring
+

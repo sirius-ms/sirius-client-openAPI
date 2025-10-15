@@ -514,7 +514,9 @@ No authorization required
 
 [DEPRECATED] Get all (non-default) job configuration names  
 
-[DEPRECATED] Get all (non-default) job configuration names  <p>  [DEPRECATED] Use /job-configs to get all configs with names. This endpoint is based on local file paths and will likely be removed in future versions of this API.
+[DEPRECATED] Get all (non-default) job configuration names
+ <p>
+ [DEPRECATED] Use /job-configs to get all configs with names. This endpoint is based on local file paths and will likely be removed in future versions of this API.
 
 ### Example
 
@@ -786,8 +788,6 @@ No authorization required
 
 # **has_jobs**
 > bool has_jobs(project_id, include_finished=include_finished)
-
-
 
 ### Example
 

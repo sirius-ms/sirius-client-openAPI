@@ -20,7 +20,13 @@ Method | HTTP request | Description
 
 [EXPERIMENTAL] Group tags in the project
 
-[EXPERIMENTAL] Group tags in the project. The group name must not exist in the project.   <p>  See <code>/tagged</code> for filter syntax.  </p>   [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.
+[EXPERIMENTAL] Group tags in the project. The group name must not exist in the project.
+
+ <p>
+ See <code>/tagged</code> for filter syntax.
+ </p>
+
+ [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.
 
 ### Example
 
@@ -94,7 +100,9 @@ No authorization required
 
 [EXPERIMENTAL] Add a possible value to the tag definition in the project
 
-[EXPERIMENTAL] Add a possible value to the tag definition in the project.  <p>  [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.
+[EXPERIMENTAL] Add a possible value to the tag definition in the project.
+ <p>
+ [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.
 
 ### Example
 
@@ -166,7 +174,9 @@ No authorization required
 
 [EXPERIMENTAL] Add tags to the project
 
-[EXPERIMENTAL] Add tags to the project. Tag names must not exist in the project.  <p>  [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.
+[EXPERIMENTAL] Add tags to the project. Tag names must not exist in the project.
+ <p>
+ [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.
 
 ### Example
 
@@ -237,7 +247,9 @@ No authorization required
 
 [EXPERIMENTAL] Delete tag groups with the given name from the specified project-space
 
-[EXPERIMENTAL] Delete tag groups with the given name from the specified project-space.  <p>  [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.
+[EXPERIMENTAL] Delete tag groups with the given name from the specified project-space.
+ <p>
+ [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.
 
 ### Example
 
@@ -304,7 +316,11 @@ No authorization required
 
 [EXPERIMENTAL] Delete tag definition with the given name from the specified project-space
 
-[EXPERIMENTAL] Delete tag definition with the given name from the specified project-space.  <p>  This will also remove all tags belonging to this definition from every tagged entity.  </p>  [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.
+[EXPERIMENTAL] Delete tag definition with the given name from the specified project-space.
+ <p>
+ This will also remove all tags belonging to this definition from every tagged entity.
+ </p>
+ [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.
 
 ### Example
 
@@ -371,7 +387,9 @@ No authorization required
 
 [EXPERIMENTAL] Get tag group by name in the given project-space
 
-[EXPERIMENTAL] Get tag group by name in the given project-space.  <p>  [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.
+[EXPERIMENTAL] Get tag group by name in the given project-space.
+ <p>
+ [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.
 
 ### Example
 
@@ -441,7 +459,9 @@ No authorization required
 
 [EXPERIMENTAL] Get all tag based groups in the given project-space
 
-[EXPERIMENTAL] Get all tag based groups in the given project-space.  <p>  [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.
+[EXPERIMENTAL] Get all tag based groups in the given project-space.
+ <p>
+ [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.
 
 ### Example
 
@@ -511,7 +531,9 @@ No authorization required
 
 [EXPERIMENTAL] Get tag definition by its name in the given project-space
 
-[EXPERIMENTAL] Get tag definition by its name in the given project-space.  <p>  [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.
+[EXPERIMENTAL] Get tag definition by its name in the given project-space.
+ <p>
+ [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.
 
 ### Example
 
@@ -581,7 +603,9 @@ No authorization required
 
 [EXPERIMENTAL] Get all tag definitions in the given project-space
 
-[EXPERIMENTAL] Get all tag definitions in the given project-space.  <p>  [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.
+[EXPERIMENTAL] Get all tag definitions in the given project-space.
+ <p>
+ [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.
 
 ### Example
 
