@@ -2,7 +2,7 @@
 [![conda-forge | py-sirius-ms](https://img.shields.io/conda/vn/conda-forge/py-sirius-ms?logo=anaconda&label=py-sirius-ms)](https://anaconda.org/conda-forge/py-sirius-ms)
 [![conda-forge | sirius-ms](https://img.shields.io/conda/vn/conda-forge/sirius-ms?logo=anaconda&label=sirius-ms)](https://anaconda.org/conda-forge/sirius-ms)
 
-<span style="color: red;">Rsirius is now RSirius!</span> Starting with `v3.1+sirius6.3.3`, `Rsirius` is now renamed to `RSirius` to fit the naming convention of `PySirius`. Please make sure you update your library imports accordingly!
+![#f03c15](https://placehold.co/10x10/f03c15/f03c15.png) Important notice: Rsirius is now RSirius! Starting with `v3.1+sirius6.3.3`, `Rsirius` is renamed to `RSirius` to fit the naming convention of `PySirius`. Please make sure you update your library imports accordingly!
 
 # sirius-client-openAPI
 

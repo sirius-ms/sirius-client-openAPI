@@ -1,4 +1,4 @@
-<span style="color: red;">Rsirius is now RSirius!</span> Starting with `v3.1+sirius6.3.3`, `Rsirius` is now renamed to `RSirius` to fit the naming convention of `PySirius`. Please make sure you update your library imports accordingly!
+![#f03c15](https://placehold.co/10x10/f03c15/f03c15.png) Important notice: Rsirius is now RSirius! Starting with `v3.1+sirius6.3.3`, `Rsirius` is renamed to `RSirius` to fit the naming convention of `PySirius`. Please make sure you update your library imports accordingly!
 
 # RSirius
 REST API that provides the full functionality of SIRIUS and its web services as background service. It is intended as entry-point for scripting languages and software integration SDKs.
