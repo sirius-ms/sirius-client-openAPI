@@ -36,7 +36,7 @@ install_github(repo = "sirius-ms/sirius-client-openAPI", subdir = "client-api_r/
 
 Then import the package:
 ```R
-library('Rsirius') 
+library(RSirius) 
 ```
 
 ## Getting Started
@@ -50,7 +50,7 @@ NOTE: the SIRIUS REST service automatically allocates a random available port on
 If you installed via conda-forge **or** have SIRIUS in your path, you should be able to activate your environment and simply use:
 
 ```R
-library('Rsirius') 
+library(RSirius) 
 sdk <- SiriusSDK$new()
 # SIRIUS must be in the path or the SIRIUS_EXE environment variable must be specified.
 # Is automatically configured when installing via conda or windows ms installer
@@ -66,7 +66,7 @@ sdk$shutdown_sirius()
 If you installed from GitHub or a local folder manually and do **not** have SIRIUS in path, you can go the manual way:
 
 ```R
-library('Rsirius') 
+library(RSirius) 
 sdk <- SiriusSDK$new()
 api <- sdk$start_sirius(sirius_path="your/path/to/sirius", port=8080)
 ```
@@ -74,7 +74,7 @@ api <- sdk$start_sirius(sirius_path="your/path/to/sirius", port=8080)
 You can also attach to a running SIRIUS instance:
 
 ```R
-library('Rsirius') 
+library(RSirius) 
 sdk <- SiriusSDK$new()
 api <- sdk$attach_to_sirius(sirius_major_version=6, port=8080)
 ```
@@ -84,7 +84,7 @@ api <- sdk$attach_to_sirius(sirius_major_version=6, port=8080)
 Please follow the [installation procedure](#installation--usage) and then run the following (while replacing address and port with the Remote address specifications):
 
 ```R
-library('Rsirius') 
+library(RSirius) 
 sdk <- SiriusSDK$new()
 api <- sdk$connect("http://localhost:8080")
 ```
