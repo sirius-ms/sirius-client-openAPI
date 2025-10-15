@@ -49,6 +49,8 @@ df
 \item{\code{consensusAnnotationsDeNovo}}{\link{ConsensusAnnotationsDeNovo} [optional]}
 
 \item{\code{customAnnotations}}{\link{ConsensusAnnotationsCSI} [optional]}
+
+\item{\code{tags}}{Key: tagName, value: tag named list(\link{Tag}) [optional]}
 }
 \if{html}{\out{</div>}}
 }
@@ -86,6 +88,7 @@ Initialize a new Compound class.
   consensusAnnotations = NULL,
   consensusAnnotationsDeNovo = NULL,
   customAnnotations = NULL,
+  tags = NULL,
   ...
 )}\if{html}{\out{</div>}}
 }
@@ -110,6 +113,8 @@ Initialize a new Compound class.
 \item{\code{consensusAnnotationsDeNovo}}{consensusAnnotationsDeNovo}
 
 \item{\code{customAnnotations}}{customAnnotations}
+
+\item{\code{tags}}{Key: tagName, value: tag}
 
 \item{\code{...}}{Other optional arguments.}
 }

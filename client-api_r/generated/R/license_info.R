@@ -139,7 +139,7 @@ LicenseInfo <- R6::R6Class(
         self$`consumables` <- `consumables_object`
       }
       if (!is.null(this_object$`terms`)) {
-        self$`terms` <- ApiClient$new()$deserializeObj(this_object$`terms`, "array[Term]", loadNamespace("Rsirius"))
+        self$`terms` <- ApiClient$new()$deserializeObj(this_object$`terms`, "array[Term]", loadNamespace("RSirius"))
       }
       self
     },
@@ -166,7 +166,7 @@ LicenseInfo <- R6::R6Class(
       self$`userId` <- this_object$`userId`
       self$`subscription` <- Subscription$new()$fromJSON(jsonlite::toJSON(this_object$`subscription`, auto_unbox = TRUE, digits = NA, null = 'null'))
       self$`consumables` <- SubscriptionConsumables$new()$fromJSON(jsonlite::toJSON(this_object$`consumables`, auto_unbox = TRUE, digits = NA, null = 'null'))
-      self$`terms` <- ApiClient$new()$deserializeObj(this_object$`terms`, "array[Term]", loadNamespace("Rsirius"))
+      self$`terms` <- ApiClient$new()$deserializeObj(this_object$`terms`, "array[Term]", loadNamespace("RSirius"))
       self
     },
 

@@ -1,4 +1,4 @@
-# Rsirius::Subscription
+# RSirius::Subscription
 
 
 ## Properties
@@ -19,5 +19,6 @@ Name | Type | Description | Notes
 **name** | **character** |  | [optional] 
 **tos** | **character** |  | [optional] 
 **pp** | **character** |  | [optional] 
+**allowedFeatures** | [**AllowedFeatures**](AllowedFeatures.md) |  | [optional] 
 
 

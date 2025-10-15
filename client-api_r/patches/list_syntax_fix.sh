@@ -16,6 +16,12 @@ for file in *; do
         # Use sed to replace "= [none]" with "= list(NULL)"
         sed -i 's/= \[none\]/= list(NULL)/g' "$file"
 
+        # Use sed to replace "[progress]" with "list(\"progress\")"
+        sed -i 's/\[progress\]/list("progress")/g' "$file"
+
+        # Use sed to replace "[command, progress]" with "list(\"command\", \"progress\")"
+        sed -i 's/\[command, progress\]/list("command", "progress")/g' "$file"
+
         # Use sed to replace "= [something]" with "= list(something)"
         sed -i 's/= \[\([^]]*\)\]/= list(\1)/g' "$file"
 

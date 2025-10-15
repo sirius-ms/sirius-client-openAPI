@@ -30,9 +30,10 @@ class StructureCandidateFormula(BaseModel):
     inchi_key: Optional[StrictStr] = Field(default=None, alias="inchiKey")
     smiles: Optional[StrictStr] = None
     structure_name: Optional[StrictStr] = Field(default=None, alias="structureName")
-    xlog_p: Optional[float] = Field(default=None, alias="xlogP")
+    structure_svg: Optional[StrictStr] = Field(default=None, description="SVG graphics of the structure candidate  OPTIONAL: needs to be added by parameter", alias="structureSvg")
     db_links: Optional[List[Optional[DBLink]]] = Field(default=None, description="List of structure database links belonging to this structure candidate  OPTIONAL: needs to be added by parameter", alias="dbLinks")
     spectral_library_matches: Optional[List[Optional[SpectralLibraryMatch]]] = Field(default=None, description="List of spectral library matches belonging to this structure candidate  OPTIONAL: needs to be added by parameter", alias="spectralLibraryMatches")
+    xlog_p: Optional[float] = Field(default=None, alias="xlogP")
     rank: Optional[StrictInt] = Field(default=None, description="the overall rank of this candidate among all candidates of this feature")
     csi_score: Optional[float] = Field(default=None, description="CSI:FingerID score of the fingerprint of this compound to the predicted fingerprint of CSI:FingerID  This is the score used for ranking structure candidates", alias="csiScore")
     tanimoto_similarity: Optional[float] = Field(default=None, description="Tanimoto similarly of the fingerprint of this compound to the predicted fingerprint of CSI:FingerID", alias="tanimotoSimilarity")
@@ -41,7 +42,7 @@ class StructureCandidateFormula(BaseModel):
     molecular_formula: Optional[StrictStr] = Field(default=None, description="Molecular formula of this candidate", alias="molecularFormula")
     adduct: Optional[StrictStr] = Field(default=None, description="Adduct of this candidate")
     formula_id: Optional[StrictStr] = Field(default=None, description="Id of the corresponding Formula candidate", alias="formulaId")
-    __properties: ClassVar[List[str]] = ["inchiKey", "smiles", "structureName", "xlogP", "dbLinks", "spectralLibraryMatches", "rank", "csiScore", "tanimotoSimilarity", "mcesDistToTopHit", "fingerprint", "molecularFormula", "adduct", "formulaId"]
+    __properties: ClassVar[List[str]] = ["inchiKey", "smiles", "structureName", "structureSvg", "dbLinks", "spectralLibraryMatches", "xlogP", "rank", "csiScore", "tanimotoSimilarity", "mcesDistToTopHit", "fingerprint", "molecularFormula", "adduct", "formulaId"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -104,10 +105,10 @@ class StructureCandidateFormula(BaseModel):
         if self.structure_name is None and "structure_name" in self.model_fields_set:
             _dict['structureName'] = None
 
-        # set to None if xlog_p (nullable) is None
+        # set to None if structure_svg (nullable) is None
         # and model_fields_set contains the field
-        if self.xlog_p is None and "xlog_p" in self.model_fields_set:
-            _dict['xlogP'] = None
+        if self.structure_svg is None and "structure_svg" in self.model_fields_set:
+            _dict['structureSvg'] = None
 
         # set to None if db_links (nullable) is None
         # and model_fields_set contains the field
@@ -118,6 +119,11 @@ class StructureCandidateFormula(BaseModel):
         # and model_fields_set contains the field
         if self.spectral_library_matches is None and "spectral_library_matches" in self.model_fields_set:
             _dict['spectralLibraryMatches'] = None
+
+        # set to None if xlog_p (nullable) is None
+        # and model_fields_set contains the field
+        if self.xlog_p is None and "xlog_p" in self.model_fields_set:
+            _dict['xlogP'] = None
 
         # set to None if tanimoto_similarity (nullable) is None
         # and model_fields_set contains the field
@@ -149,9 +155,10 @@ class StructureCandidateFormula(BaseModel):
             "inchiKey": obj.get("inchiKey"),
             "smiles": obj.get("smiles"),
             "structureName": obj.get("structureName"),
-            "xlogP": obj.get("xlogP"),
+            "structureSvg": obj.get("structureSvg"),
             "dbLinks": [DBLink.from_dict(_item) for _item in obj["dbLinks"]] if obj.get("dbLinks") is not None else None,
             "spectralLibraryMatches": [SpectralLibraryMatch.from_dict(_item) for _item in obj["spectralLibraryMatches"]] if obj.get("spectralLibraryMatches") is not None else None,
+            "xlogP": obj.get("xlogP"),
             "rank": obj.get("rank"),
             "csiScore": obj.get("csiScore"),
             "tanimotoSimilarity": obj.get("tanimotoSimilarity"),

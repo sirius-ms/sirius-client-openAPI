@@ -22,7 +22,7 @@ DEPRECATED: this endpoint is based on local file paths and will likely be replac
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # DEPRECATED: this endpoint is based on local file paths and will likely be replaced in future versions of this API.
 #
@@ -67,7 +67,7 @@ No authorization required
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # prepare function argument(s)
 var_database_id <- "database_id_example" # character | 
@@ -112,7 +112,7 @@ No authorization required
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # prepare function argument(s)
 var_include_stats <- FALSE # character |  (Optional)
@@ -157,7 +157,7 @@ No authorization required
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # prepare function argument(s)
 var_database_id <- "database_id_example" # character | 
@@ -202,7 +202,7 @@ No authorization required
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # prepare function argument(s)
 var_include_stats <- FALSE # character |  (Optional)
@@ -247,7 +247,7 @@ No authorization required
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # prepare function argument(s)
 var_include_stats <- FALSE # character |  (Optional)
@@ -284,7 +284,7 @@ No authorization required
 | **200** | OK |  -  |
 
 # **ImportIntoDatabase**
-> SearchableDatabase ImportIntoDatabase(database_id, buffer_size = 1000, input_files = var.input_files)
+> SearchableDatabase ImportIntoDatabase(database_id, input_files, buffer_size = 1000, bio_transformer_parameters = var.bio_transformer_parameters)
 
 Start import of structure and spectra files into the specified database.
 
@@ -292,19 +292,20 @@ Start import of structure and spectra files into the specified database.
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # Start import of structure and spectra files into the specified database.
 #
 # prepare function argument(s)
 var_database_id <- "database_id_example" # character | database to import into
+var_input_files <- c(123) # array[data.frame] | files to be imported
 var_buffer_size <- 1000 # integer |  (Optional)
-var_input_files <- c(123) # array[data.frame] |  (Optional)
+var_bio_transformer_parameters <- BioTransformerParameters$new("RULE_BASED", "BT_RULE_BASED", c(BioTransformerSequenceStep$new("PHASE_1_CYP450", 123)), "useDB_example") # BioTransformerParameters |  (Optional)
 
 api_instance <- rsirius_api$new()
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$ImportIntoDatabase(var_database_id, buffer_size = var_buffer_size, input_files = var_input_filesdata_file = "result.txt")
-result <- api_instance$searchable_databases_api$ImportIntoDatabase(var_database_id, buffer_size = var_buffer_size, input_files = var_input_files)
+# result <- api_instance$ImportIntoDatabase(var_database_id, var_input_files, buffer_size = var_buffer_size, bio_transformer_parameters = var_bio_transformer_parametersdata_file = "result.txt")
+result <- api_instance$searchable_databases_api$ImportIntoDatabase(var_database_id, var_input_files, buffer_size = var_buffer_size, bio_transformer_parameters = var_bio_transformer_parameters)
 dput(result)
 ```
 
@@ -313,8 +314,9 @@ dput(result)
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **database_id** | **character**| database to import into | 
+ **input_files** | list( **data.frame** )| files to be imported | 
  **buffer_size** | **integer**|  | [optional] [default to 1000]
- **input_files** | list( **data.frame** )|  | [optional] 
+ **bio_transformer_parameters** | [**BioTransformerParameters**](BioTransformerParameters.md)|  | [optional] 
 
 ### Return type
 
@@ -332,7 +334,7 @@ No authorization required
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** | Job of the import command to be executed. |  -  |
+| **200** | Meta-Information of the affected database after the import has been performed. |  -  |
 
 # **RemoveDatabase**
 > RemoveDatabase(database_id, delete = FALSE)
@@ -341,7 +343,7 @@ No authorization required
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # prepare function argument(s)
 var_database_id <- "database_id_example" # character | 
@@ -383,7 +385,7 @@ No authorization required
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # prepare function argument(s)
 var_database_id <- "database_id_example" # character | 

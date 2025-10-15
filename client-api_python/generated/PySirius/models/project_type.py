@@ -24,6 +24,7 @@ class ProjectType(str, Enum):
     """
     allowed enum values
     """
+    UNIMPORTED = 'UNIMPORTED'
     DIRECT_IMPORT = 'DIRECT_IMPORT'
     PEAKLISTS = 'PEAKLISTS'
     ALIGNED_RUNS = 'ALIGNED_RUNS'

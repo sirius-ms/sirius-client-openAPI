@@ -7,10 +7,11 @@ Method | HTTP request | Description
 [**DeleteJob**](JobsApi.md#DeleteJob) | **DELETE** /api/projects/{projectId}/jobs/{jobId} | Delete job.
 [**DeleteJobConfig**](JobsApi.md#DeleteJobConfig) | **DELETE** /api/job-configs/{name} | Delete job configuration with given name.
 [**DeleteJobs**](JobsApi.md#DeleteJobs) | **DELETE** /api/projects/{projectId}/jobs | * Delete ALL jobs.
+[**GetCommand**](JobsApi.md#GetCommand) | **POST** /api/job-configs/get-command | Get a CLI command for the given job configuration.
 [**GetDefaultJobConfig**](JobsApi.md#GetDefaultJobConfig) | **GET** /api/default-job-config | Request default job configuration
 [**GetJob**](JobsApi.md#GetJob) | **GET** /api/projects/{projectId}/jobs/{jobId} | Get job information and its current state and progress (if available).
 [**GetJobConfig**](JobsApi.md#GetJobConfig) | **GET** /api/job-configs/{name} | Request job configuration with given name.
-[**GetJobConfigNames**](JobsApi.md#GetJobConfigNames) | **GET** /api/job-config-names | DEPRECATED: use /job-configs to get all configs with names.
+[**GetJobConfigNames**](JobsApi.md#GetJobConfigNames) | **GET** /api/job-config-names | [DEPRECATED] Get all (non-default) job configuration names  
 [**GetJobConfigs**](JobsApi.md#GetJobConfigs) | **GET** /api/job-configs | Request all available job configurations
 [**GetJobs**](JobsApi.md#GetJobs) | **GET** /api/projects/{projectId}/jobs | Get List of all available jobs with information such as current state and progress (if available).
 [**GetJobsPaged**](JobsApi.md#GetJobsPaged) | **GET** /api/projects/{projectId}/jobs/page | Get Page of jobs with information such as current state and progress (if available).
@@ -29,7 +30,7 @@ Delete job. Specify how to behave for running jobs.
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # Delete job.
 #
@@ -79,7 +80,7 @@ Delete job configuration with given name.
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # Delete job configuration with given name.
 #
@@ -123,7 +124,7 @@ No authorization required
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # * Delete ALL jobs.
 #
@@ -162,6 +163,53 @@ No authorization required
 |-------------|-------------|------------------|
 | **202** | Accepted |  -  |
 
+# **GetCommand**
+> array[character] GetCommand(job_submission)
+
+Get a CLI command for the given job configuration.
+
+Get a CLI command for the given job configuration.
+
+### Example
+```R
+library(RSirius)
+
+# Get a CLI command for the given job configuration.
+#
+# prepare function argument(s)
+var_job_submission <- JobSubmission$new(c("compoundIds_example"), c("alignedFeatureIds_example"), c("fallbackAdducts_example"), c("enforcedAdducts_example"), c("detectableAdducts_example"), "recompute_example", SpectralLibrarySearch$new("enabled_example", c("spectraSearchDBs_example"), 123, 123, 123, "enableAnalogueSearch_example", 123, 123, "INTENSITY", 123), Sirius$new("enabled_example", "QTOF", 123, 123, 123, "IGNORE", "filterByIsotopePattern_example", "enforceElGordoFormula_example", "performBottomUpSearch_example", 123, c("formulaSearchDBs_example"), "applyFormulaConstraintsToDBAndBottomUpSearch_example", "enforcedFormulaConstraints_example", "fallbackFormulaConstraints_example", c("detectableElements_example"), Timeout$new(123, 123), UseHeuristic$new(123, 123), "injectSpecLibMatchFormulas_example", 123, 123), Zodiac$new("enabled_example", 123, 123, "runInTwoSteps_example", ZodiacEdgeFilterThresholds$new(123, 123, 123), ZodiacEpochs$new(123, 123, 123), ZodiacLibraryScoring$new("enabled_example", 123), ZodiacAnalogueNodes$new("enabled_example", 123, 123)), FingerprintPrediction$new("enabled_example", "useScoreThreshold_example", "alwaysPredictHighRefMatches_example"), Canopus$new("enabled_example"), StructureDbSearch$new("enabled_example", c("structureSearchDBs_example"), "tagStructuresWithLipidClass_example", "OFF"), MsNovelist$new("enabled_example", 123), c(key = "inner_example")) # JobSubmission | 
+
+api_instance <- rsirius_api$new()
+# to save the result into a file, simply add the optional `data_file` parameter, e.g.
+# result <- api_instance$GetCommand(var_job_submissiondata_file = "result.txt")
+result <- api_instance$jobs_api$GetCommand(var_job_submission)
+dput(result)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **job_submission** | [**JobSubmission**](JobSubmission.md)|  | 
+
+### Return type
+
+**array[character]**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | OK |  -  |
+
 # **GetDefaultJobConfig**
 > JobSubmission GetDefaultJobConfig(include_config_map = FALSE, move_parameters_to_config_map = FALSE, include_custom_dbs_for_structure_search = FALSE)
 
@@ -171,14 +219,14 @@ Request default job configuration
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # Request default job configuration
 #
 # prepare function argument(s)
 var_include_config_map <- FALSE # character | if true, generic configmap with-defaults will be included (Optional)
 var_move_parameters_to_config_map <- FALSE # character | if true, object-based parameters will be converted to and added to the generic configMap parameters (Optional)
-var_include_custom_dbs_for_structure_search <- FALSE # character | if true, default database selection of structure db search contains also all available custom DB. (Optional)
+var_include_custom_dbs_for_structure_search <- FALSE # character | if true, default database selection of structure db search                                            spectral library search contains also all available custom DB.                                            If No custom dbs are selected, spectral library search is disabled by default. (Optional)
 
 api_instance <- rsirius_api$new()
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
@@ -193,7 +241,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **include_config_map** | **character**| if true, generic configmap with-defaults will be included | [optional] [default to FALSE]
  **move_parameters_to_config_map** | **character**| if true, object-based parameters will be converted to and added to the generic configMap parameters | [optional] [default to FALSE]
- **include_custom_dbs_for_structure_search** | **character**| if true, default database selection of structure db search contains also all available custom DB. | [optional] [default to FALSE]
+ **include_custom_dbs_for_structure_search** | **character**| if true, default database selection of structure db search                                            spectral library search contains also all available custom DB.                                            If No custom dbs are selected, spectral library search is disabled by default. | [optional] [default to FALSE]
 
 ### Return type
 
@@ -222,7 +270,7 @@ Get job information and its current state and progress (if available).
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # Get job information and its current state and progress (if available).
 #
@@ -273,7 +321,7 @@ Request job configuration with given name.
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # Request job configuration with given name.
 #
@@ -316,15 +364,15 @@ No authorization required
 # **GetJobConfigNames**
 > array[character] GetJobConfigNames()
 
-DEPRECATED: use /job-configs to get all configs with names.
+[DEPRECATED] Get all (non-default) job configuration names  
 
-Get all (non-default) job configuration names
+[DEPRECATED] Get all (non-default) job configuration names  <p>  [DEPRECATED] Use /job-configs to get all configs with names. This endpoint is based on local file paths and will likely be removed in future versions of this API.
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
-# DEPRECATED: use /job-configs to get all configs with names.
+# [DEPRECATED] Get all (non-default) job configuration names  
 #
 
 api_instance <- rsirius_api$new()
@@ -364,7 +412,7 @@ Request all available job configurations
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # Request all available job configurations
 #
@@ -406,7 +454,7 @@ Get List of all available jobs with information such as current state and progre
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # Get List of all available jobs with information such as current state and progress (if available).
 #
@@ -455,7 +503,7 @@ Get Page of jobs with information such as current state and progress (if availab
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # Get Page of jobs with information such as current state and progress (if available).
 #
@@ -508,7 +556,7 @@ No authorization required
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # prepare function argument(s)
 var_project_id <- "project_id_example" # character | 
@@ -555,13 +603,13 @@ Add new job configuration with given name.
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # Add new job configuration with given name.
 #
 # prepare function argument(s)
 var_name <- "name_example" # character | name of the job-config to add
-var_job_submission <- JobSubmission$new(c("compoundIds_example"), c("alignedFeatureIds_example"), c("fallbackAdducts_example"), c("enforcedAdducts_example"), c("detectableAdducts_example"), "recompute_example", SpectralLibrarySearch$new("enabled_example", c("spectraSearchDBs_example"), 123, 123, "INTENSITY"), Sirius$new("enabled_example", "QTOF", 123, 123, 123, "IGNORE", "filterByIsotopePattern_example", "enforceElGordoFormula_example", "performBottomUpSearch_example", 123, c("formulaSearchDBs_example"), "applyFormulaConstraintsToDBAndBottomUpSearch_example", "enforcedFormulaConstraints_example", "fallbackFormulaConstraints_example", c("detectableElements_example"), Timeout$new(123, 123), UseHeuristic$new(123, 123), "injectSpecLibMatchFormulas_example", 123, 123), Zodiac$new("enabled_example", 123, 123, "runInTwoSteps_example", ZodiacEdgeFilterThresholds$new(123, 123, 123), ZodiacEpochs$new(123, 123, 123)), FingerprintPrediction$new("enabled_example", "useScoreThreshold_example", "alwaysPredictHighRefMatches_example"), Canopus$new("enabled_example"), StructureDbSearch$new("enabled_example", c("structureSearchDBs_example"), "tagStructuresWithLipidClass_example", "OFF"), MsNovelist$new("enabled_example", 123), c(key = "inner_example")) # JobSubmission | to add
+var_job_submission <- JobSubmission$new(c("compoundIds_example"), c("alignedFeatureIds_example"), c("fallbackAdducts_example"), c("enforcedAdducts_example"), c("detectableAdducts_example"), "recompute_example", SpectralLibrarySearch$new("enabled_example", c("spectraSearchDBs_example"), 123, 123, 123, "enableAnalogueSearch_example", 123, 123, "INTENSITY", 123), Sirius$new("enabled_example", "QTOF", 123, 123, 123, "IGNORE", "filterByIsotopePattern_example", "enforceElGordoFormula_example", "performBottomUpSearch_example", 123, c("formulaSearchDBs_example"), "applyFormulaConstraintsToDBAndBottomUpSearch_example", "enforcedFormulaConstraints_example", "fallbackFormulaConstraints_example", c("detectableElements_example"), Timeout$new(123, 123), UseHeuristic$new(123, 123), "injectSpecLibMatchFormulas_example", 123, 123), Zodiac$new("enabled_example", 123, 123, "runInTwoSteps_example", ZodiacEdgeFilterThresholds$new(123, 123, 123), ZodiacEpochs$new(123, 123, 123), ZodiacLibraryScoring$new("enabled_example", 123), ZodiacAnalogueNodes$new("enabled_example", 123, 123)), FingerprintPrediction$new("enabled_example", "useScoreThreshold_example", "alwaysPredictHighRefMatches_example"), Canopus$new("enabled_example"), StructureDbSearch$new("enabled_example", c("structureSearchDBs_example"), "tagStructuresWithLipidClass_example", "OFF"), MsNovelist$new("enabled_example", 123), c(key = "inner_example")) # JobSubmission | to add
 var_override_existing <- FALSE # character |  (Optional)
 var_move_parameters_to_config_map <- FALSE # character | if true, object-based parameters will be converted to and added to the generic configMap parameters in the return object (Optional)
 
@@ -608,13 +656,13 @@ Start computation for given compounds and with given parameters.
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # Start computation for given compounds and with given parameters.
 #
 # prepare function argument(s)
 var_project_id <- "project_id_example" # character | project-space to run jobs on
-var_job_submission <- JobSubmission$new(c("compoundIds_example"), c("alignedFeatureIds_example"), c("fallbackAdducts_example"), c("enforcedAdducts_example"), c("detectableAdducts_example"), "recompute_example", SpectralLibrarySearch$new("enabled_example", c("spectraSearchDBs_example"), 123, 123, "INTENSITY"), Sirius$new("enabled_example", "QTOF", 123, 123, 123, "IGNORE", "filterByIsotopePattern_example", "enforceElGordoFormula_example", "performBottomUpSearch_example", 123, c("formulaSearchDBs_example"), "applyFormulaConstraintsToDBAndBottomUpSearch_example", "enforcedFormulaConstraints_example", "fallbackFormulaConstraints_example", c("detectableElements_example"), Timeout$new(123, 123), UseHeuristic$new(123, 123), "injectSpecLibMatchFormulas_example", 123, 123), Zodiac$new("enabled_example", 123, 123, "runInTwoSteps_example", ZodiacEdgeFilterThresholds$new(123, 123, 123), ZodiacEpochs$new(123, 123, 123)), FingerprintPrediction$new("enabled_example", "useScoreThreshold_example", "alwaysPredictHighRefMatches_example"), Canopus$new("enabled_example"), StructureDbSearch$new("enabled_example", c("structureSearchDBs_example"), "tagStructuresWithLipidClass_example", "OFF"), MsNovelist$new("enabled_example", 123), c(key = "inner_example")) # JobSubmission | configuration of the job that will be submitted of the job to be returned
+var_job_submission <- JobSubmission$new(c("compoundIds_example"), c("alignedFeatureIds_example"), c("fallbackAdducts_example"), c("enforcedAdducts_example"), c("detectableAdducts_example"), "recompute_example", SpectralLibrarySearch$new("enabled_example", c("spectraSearchDBs_example"), 123, 123, 123, "enableAnalogueSearch_example", 123, 123, "INTENSITY", 123), Sirius$new("enabled_example", "QTOF", 123, 123, 123, "IGNORE", "filterByIsotopePattern_example", "enforceElGordoFormula_example", "performBottomUpSearch_example", 123, c("formulaSearchDBs_example"), "applyFormulaConstraintsToDBAndBottomUpSearch_example", "enforcedFormulaConstraints_example", "fallbackFormulaConstraints_example", c("detectableElements_example"), Timeout$new(123, 123), UseHeuristic$new(123, 123), "injectSpecLibMatchFormulas_example", 123, 123), Zodiac$new("enabled_example", 123, 123, "runInTwoSteps_example", ZodiacEdgeFilterThresholds$new(123, 123, 123), ZodiacEpochs$new(123, 123, 123), ZodiacLibraryScoring$new("enabled_example", 123), ZodiacAnalogueNodes$new("enabled_example", 123, 123)), FingerprintPrediction$new("enabled_example", "useScoreThreshold_example", "alwaysPredictHighRefMatches_example"), Canopus$new("enabled_example"), StructureDbSearch$new("enabled_example", c("structureSearchDBs_example"), "tagStructuresWithLipidClass_example", "OFF"), MsNovelist$new("enabled_example", 123), c(key = "inner_example")) # JobSubmission | configuration of the job that will be submitted of the job to be returned
 var_opt_fields <- c("none") # array[character] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
 
 api_instance <- rsirius_api$new()
@@ -659,7 +707,7 @@ Start computation for given compounds and with parameters from a stored job-conf
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # Start computation for given compounds and with parameters from a stored job-config.
 #

@@ -1,4 +1,4 @@
-# Rsirius::Zodiac
+# RSirius::Zodiac
 
 User/developer friendly parameter subset for the ZODIAC tool (Network base molecular formula re-ranking).  Needs results from Formula/SIRIUS Tool
 
@@ -11,5 +11,7 @@ Name | Type | Description | Notes
 **runInTwoSteps** | **character** | As default ZODIAC runs a 2-step approach. First running &#39;good quality compounds&#39; only, and afterwards including the remaining. | [optional] 
 **edgeFilterThresholds** | [**ZodiacEdgeFilterThresholds**](ZodiacEdgeFilterThresholds.md) |  | [optional] 
 **gibbsSamplerParameters** | [**ZodiacEpochs**](ZodiacEpochs.md) |  | [optional] 
+**librarySearchAnchors** | [**ZodiacLibraryScoring**](ZodiacLibraryScoring.md) |  | [optional] 
+**analogueSearchAnchors** | [**ZodiacAnalogueNodes**](ZodiacAnalogueNodes.md) |  | [optional] 
 
 

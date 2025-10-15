@@ -29,9 +29,11 @@ class SpectrumAnnotation(BaseModel):
     exact_mass: Optional[float] = Field(default=None, description="Exact mass based on the annotated molecular formula and ionization", alias="exactMass")
     mass_deviation_mz: Optional[float] = Field(default=None, description="Absolute mass deviation of the exact mass to the precursor mass (precursorMz) of this spectrum in mDa", alias="massDeviationMz")
     mass_deviation_ppm: Optional[float] = Field(default=None, description="Relative mass deviation of the exact mass to the precursor mass (precursorMz) of this spectrum in ppm", alias="massDeviationPpm")
-    structure_annotation_smiles: Optional[StrictStr] = Field(default=None, description="EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.   Smiles of the structure candidate used to derive substructure peak annotations via epimetheus insilico fragmentation  Substructure highlighting (bond and atom indices) refer to this specific SMILES.  If you standardize or canonicalize this SMILES in any way the indices of substructure highlighting might  not match correctly anymore.   Null if substructure annotation not available or not requested.", alias="structureAnnotationSmiles")
-    structure_annotation_score: Optional[float] = Field(default=None, description="EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.   Overall score of all substructure annotations computed for this structure candidate (structureAnnotationSmiles)   Null if substructure annotation not available or not requested.", alias="structureAnnotationScore")
-    __properties: ClassVar[List[str]] = ["molecularFormula", "adduct", "exactMass", "massDeviationMz", "massDeviationPpm", "structureAnnotationSmiles", "structureAnnotationScore"]
+    structure_annotation_smiles: Optional[StrictStr] = Field(default=None, description="EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.  <p>  Smiles of the structure candidate used to derive substructure peak annotations via epimetheus insilico fragmentation  Substructure highlighting (bond and atom indices) refer to this specific SMILES.  If you standardize or canonicalize this SMILES in any way the indices of substructure highlighting might  not match correctly anymore.  <p>  Null if substructure annotation not available or not requested.", alias="structureAnnotationSmiles")
+    structure_annotation_name: Optional[StrictStr] = Field(default=None, description="EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.  <p>  Name of the structure candidate used to derive substructure peak annotations via epimetheus insilico fragmentation.  <p>  Null if substructure annotation not available or not requested.", alias="structureAnnotationName")
+    structure_annotation_svg: Optional[StrictStr] = Field(default=None, description="EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.  <p>  SVG graphics of the structure candidate used to derive substructure peak annotations via epimetheus insilico fragmentation  Substructure highlighting (bond and atom indices) refers to this SVG.  <p>  Null if substructure annotation not available or not requested.", alias="structureAnnotationSvg")
+    structure_annotation_score: Optional[float] = Field(default=None, description="EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.  <p>  Overall score of all substructure annotations computed for this structure candidate (structureAnnotationSmiles)  <p>  Null if substructure annotation not available or not requested.", alias="structureAnnotationScore")
+    __properties: ClassVar[List[str]] = ["molecularFormula", "adduct", "exactMass", "massDeviationMz", "massDeviationPpm", "structureAnnotationSmiles", "structureAnnotationName", "structureAnnotationSvg", "structureAnnotationScore"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -102,6 +104,16 @@ class SpectrumAnnotation(BaseModel):
         if self.structure_annotation_smiles is None and "structure_annotation_smiles" in self.model_fields_set:
             _dict['structureAnnotationSmiles'] = None
 
+        # set to None if structure_annotation_name (nullable) is None
+        # and model_fields_set contains the field
+        if self.structure_annotation_name is None and "structure_annotation_name" in self.model_fields_set:
+            _dict['structureAnnotationName'] = None
+
+        # set to None if structure_annotation_svg (nullable) is None
+        # and model_fields_set contains the field
+        if self.structure_annotation_svg is None and "structure_annotation_svg" in self.model_fields_set:
+            _dict['structureAnnotationSvg'] = None
+
         # set to None if structure_annotation_score (nullable) is None
         # and model_fields_set contains the field
         if self.structure_annotation_score is None and "structure_annotation_score" in self.model_fields_set:
@@ -125,6 +137,8 @@ class SpectrumAnnotation(BaseModel):
             "massDeviationMz": obj.get("massDeviationMz"),
             "massDeviationPpm": obj.get("massDeviationPpm"),
             "structureAnnotationSmiles": obj.get("structureAnnotationSmiles"),
+            "structureAnnotationName": obj.get("structureAnnotationName"),
+            "structureAnnotationSvg": obj.get("structureAnnotationSvg"),
             "structureAnnotationScore": obj.get("structureAnnotationScore")
         })
         return _obj

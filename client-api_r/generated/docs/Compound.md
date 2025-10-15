@@ -1,4 +1,4 @@
-# Rsirius::Compound
+# RSirius::Compound
 
 
 ## Properties
@@ -13,5 +13,6 @@ Name | Type | Description | Notes
 **consensusAnnotations** | [**ConsensusAnnotationsCSI**](ConsensusAnnotationsCSI.md) |  | [optional] 
 **consensusAnnotationsDeNovo** | [**ConsensusAnnotationsDeNovo**](ConsensusAnnotationsDeNovo.md) |  | [optional] 
 **customAnnotations** | [**ConsensusAnnotationsCSI**](ConsensusAnnotationsCSI.md) |  | [optional] 
+**tags** | [**map(Tag)**](Tag.md) | Key: tagName, value: tag | [optional] 
 
 

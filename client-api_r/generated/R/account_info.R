@@ -152,7 +152,7 @@ AccountInfo <- R6::R6Class(
         self$`gravatarURL` <- this_object$`gravatarURL`
       }
       if (!is.null(this_object$`subscriptions`)) {
-        self$`subscriptions` <- ApiClient$new()$deserializeObj(this_object$`subscriptions`, "array[Subscription]", loadNamespace("Rsirius"))
+        self$`subscriptions` <- ApiClient$new()$deserializeObj(this_object$`subscriptions`, "array[Subscription]", loadNamespace("RSirius"))
       }
       if (!is.null(this_object$`activeSubscriptionId`)) {
         self$`activeSubscriptionId` <- this_object$`activeSubscriptionId`
@@ -182,7 +182,7 @@ AccountInfo <- R6::R6Class(
       self$`username` <- this_object$`username`
       self$`userEmail` <- this_object$`userEmail`
       self$`gravatarURL` <- this_object$`gravatarURL`
-      self$`subscriptions` <- ApiClient$new()$deserializeObj(this_object$`subscriptions`, "array[Subscription]", loadNamespace("Rsirius"))
+      self$`subscriptions` <- ApiClient$new()$deserializeObj(this_object$`subscriptions`, "array[Subscription]", loadNamespace("RSirius"))
       self$`activeSubscriptionId` <- this_object$`activeSubscriptionId`
       self
     },

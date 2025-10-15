@@ -7,8 +7,9 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **spec_match_id** | **str** |  | [optional] 
 **rank** | **int** |  | [optional] 
-**similarity** | **float** |  | 
-**shared_peaks** | **int** |  | [optional] 
+**similarity** | **float** | Similarity between query and reference spectrum | 
+**shared_peaks** | **int** | Number of shared/matched peaks | [optional] 
+**shared_peak_mapping** | [**List[PeakPair]**](PeakPair.md) | List of paired/matched peak indices.   Maps indices of peaks from the query spectrum (mass sorted)  to indices of matched peaks in the reference spectrum (mass sorted) | [optional] 
 **query_spectrum_index** | **int** |  | 
 **db_name** | **str** |  | [optional] 
 **db_id** | **str** |  | [optional] 
@@ -16,10 +17,13 @@ Name | Type | Description | Notes
 **splash** | **str** |  | [optional] 
 **molecular_formula** | **str** |  | [optional] 
 **adduct** | **str** |  | [optional] 
-**exact_mass** | **str** |  | [optional] 
+**exact_mass** | **float** |  | [optional] 
 **smiles** | **str** |  | [optional] 
+**type** | [**SpectralMatchType**](SpectralMatchType.md) |  | [optional] [default to SpectralMatchType.IDENTITY]
 **inchi_key** | **str** |  | 
+**reference_spectrum_type** | [**SpectrumType**](SpectrumType.md) |  | [optional] 
 **reference_spectrum** | [**BasicSpectrum**](BasicSpectrum.md) |  | [optional] 
+**query_spectrum_type** | [**SpectrumType**](SpectrumType.md) |  | [optional] 
 
 ## Example
 

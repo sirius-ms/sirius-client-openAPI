@@ -99,13 +99,13 @@ Axes <- R6::R6Class(
     fromJSON = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       if (!is.null(this_object$`scanNumber`)) {
-        self$`scanNumber` <- ApiClient$new()$deserializeObj(this_object$`scanNumber`, "array[integer]", loadNamespace("Rsirius"))
+        self$`scanNumber` <- ApiClient$new()$deserializeObj(this_object$`scanNumber`, "array[integer]", loadNamespace("RSirius"))
       }
       if (!is.null(this_object$`scanIds`)) {
-        self$`scanIds` <- ApiClient$new()$deserializeObj(this_object$`scanIds`, "array[character]", loadNamespace("Rsirius"))
+        self$`scanIds` <- ApiClient$new()$deserializeObj(this_object$`scanIds`, "array[character]", loadNamespace("RSirius"))
       }
       if (!is.null(this_object$`retentionTimeInSeconds`)) {
-        self$`retentionTimeInSeconds` <- ApiClient$new()$deserializeObj(this_object$`retentionTimeInSeconds`, "array[numeric]", loadNamespace("Rsirius"))
+        self$`retentionTimeInSeconds` <- ApiClient$new()$deserializeObj(this_object$`retentionTimeInSeconds`, "array[numeric]", loadNamespace("RSirius"))
       }
       self
     },
@@ -128,9 +128,9 @@ Axes <- R6::R6Class(
     #' @return the instance of Axes
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
-      self$`scanNumber` <- ApiClient$new()$deserializeObj(this_object$`scanNumber`, "array[integer]", loadNamespace("Rsirius"))
-      self$`scanIds` <- ApiClient$new()$deserializeObj(this_object$`scanIds`, "array[character]", loadNamespace("Rsirius"))
-      self$`retentionTimeInSeconds` <- ApiClient$new()$deserializeObj(this_object$`retentionTimeInSeconds`, "array[numeric]", loadNamespace("Rsirius"))
+      self$`scanNumber` <- ApiClient$new()$deserializeObj(this_object$`scanNumber`, "array[integer]", loadNamespace("RSirius"))
+      self$`scanIds` <- ApiClient$new()$deserializeObj(this_object$`scanIds`, "array[character]", loadNamespace("RSirius"))
+      self$`retentionTimeInSeconds` <- ApiClient$new()$deserializeObj(this_object$`retentionTimeInSeconds`, "array[numeric]", loadNamespace("RSirius"))
       self
     },
 

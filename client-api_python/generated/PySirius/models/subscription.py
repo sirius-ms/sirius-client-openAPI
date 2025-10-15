@@ -18,6 +18,7 @@ import json
 from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
+from PySirius.models.allowed_features import AllowedFeatures
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -40,7 +41,8 @@ class Subscription(BaseModel):
     name: Optional[StrictStr] = None
     tos: Optional[StrictStr] = None
     pp: Optional[StrictStr] = None
-    __properties: ClassVar[List[str]] = ["sid", "subscriberId", "subscriberName", "expirationDate", "startDate", "countQueries", "instanceLimit", "instanceHashRecordingTime", "maxQueriesPerInstance", "maxUserAccounts", "serviceUrl", "description", "name", "tos", "pp"]
+    allowed_features: Optional[AllowedFeatures] = Field(default=None, alias="allowedFeatures")
+    __properties: ClassVar[List[str]] = ["sid", "subscriberId", "subscriberName", "expirationDate", "startDate", "countQueries", "instanceLimit", "instanceHashRecordingTime", "maxQueriesPerInstance", "maxUserAccounts", "serviceUrl", "description", "name", "tos", "pp", "allowedFeatures"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -81,6 +83,9 @@ class Subscription(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of allowed_features
+        if self.allowed_features:
+            _dict['allowedFeatures'] = self.allowed_features.to_dict()
         # set to None if subscriber_name (nullable) is None
         # and model_fields_set contains the field
         if self.subscriber_name is None and "subscriber_name" in self.model_fields_set:
@@ -167,7 +172,8 @@ class Subscription(BaseModel):
             "description": obj.get("description"),
             "name": obj.get("name"),
             "tos": obj.get("tos"),
-            "pp": obj.get("pp")
+            "pp": obj.get("pp"),
+            "allowedFeatures": AllowedFeatures.from_dict(obj["allowedFeatures"]) if obj.get("allowedFeatures") is not None else None
         })
         return _obj
 

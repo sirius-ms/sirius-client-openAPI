@@ -15,7 +15,7 @@
 #' \dontrun{
 #' ####################  DeleteJob  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to delete job from
 #' var_job_id <- "job_id_example" # character | of the job to be deleted
 #' var_cancel_if_running <- TRUE # character | If true, job will be canceled if it is not finished. Otherwise,                         deletion will fail for running jobs or request will block until job has finished. (Optional)
@@ -29,7 +29,7 @@
 #'
 #' ####################  DeleteJobConfig  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_name <- "name_example" # character | name of the job-config to delete
 #'
 #' #Delete job configuration with given name.
@@ -40,7 +40,7 @@
 #'
 #' ####################  DeleteJobs  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to delete jobs from
 #' var_cancel_if_running <- TRUE # character | If true, job will be canceled if it is not finished. Otherwise,                         deletion will fail for running jobs or request will block until job has finished. (Optional)
 #' var_await_deletion <- TRUE # character | If true, request will block until deletion succeeded or failed.                         If the job is still running the request will wait until the job has finished. (Optional)
@@ -51,12 +51,26 @@
 #' api_instance$jobs_api$DeleteJobs(var_project_id, cancel_if_running = var_cancel_if_running, await_deletion = var_await_deletion)
 #'
 #'
+#' ####################  GetCommand  ####################
+#'
+#' library(RSirius)
+#' var_job_submission <- JobSubmission$new(c("compoundIds_example"), c("alignedFeatureIds_example"), c("fallbackAdducts_example"), c("enforcedAdducts_example"), c("detectableAdducts_example"), "recompute_example", SpectralLibrarySearch$new("enabled_example", c("spectraSearchDBs_example"), 123, 123, 123, "enableAnalogueSearch_example", 123, 123, "INTENSITY", 123), Sirius$new("enabled_example", "QTOF", 123, 123, 123, "IGNORE", "filterByIsotopePattern_example", "enforceElGordoFormula_example", "performBottomUpSearch_example", 123, c("formulaSearchDBs_example"), "applyFormulaConstraintsToDBAndBottomUpSearch_example", "enforcedFormulaConstraints_example", "fallbackFormulaConstraints_example", c("detectableElements_example"), Timeout$new(123, 123), UseHeuristic$new(123, 123), "injectSpecLibMatchFormulas_example", 123, 123), Zodiac$new("enabled_example", 123, 123, "runInTwoSteps_example", ZodiacEdgeFilterThresholds$new(123, 123, 123), ZodiacEpochs$new(123, 123, 123), ZodiacLibraryScoring$new("enabled_example", 123), ZodiacAnalogueNodes$new("enabled_example", 123, 123)), FingerprintPrediction$new("enabled_example", "useScoreThreshold_example", "alwaysPredictHighRefMatches_example"), Canopus$new("enabled_example"), StructureDbSearch$new("enabled_example", c("structureSearchDBs_example"), "tagStructuresWithLipidClass_example", "OFF"), MsNovelist$new("enabled_example", 123), c(key = "inner_example")) # JobSubmission | 
+#'
+#' #Get a CLI command for the given job configuration.
+#' api_instance <- rsirius_api$new()
+#'
+#' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
+#' # result <- api_instance$GetCommand(var_job_submissiondata_file = "result.txt")
+#' result <- api_instance$jobs_api$GetCommand(var_job_submission)
+#' dput(result)
+#'
+#'
 #' ####################  GetDefaultJobConfig  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_include_config_map <- FALSE # character | if true, generic configmap with-defaults will be included (Optional)
 #' var_move_parameters_to_config_map <- FALSE # character | if true, object-based parameters will be converted to and added to the generic configMap parameters (Optional)
-#' var_include_custom_dbs_for_structure_search <- FALSE # character | if true, default database selection of structure db search contains also all available custom DB. (Optional)
+#' var_include_custom_dbs_for_structure_search <- FALSE # character | if true, default database selection of structure db search                                            spectral library search contains also all available custom DB.                                            If No custom dbs are selected, spectral library search is disabled by default. (Optional)
 #'
 #' #Request default job configuration
 #' api_instance <- rsirius_api$new()
@@ -69,7 +83,7 @@
 #'
 #' ####################  GetJob  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to run jobs on
 #' var_job_id <- "job_id_example" # character | of the job to be returned
 #' var_opt_fields <- c("none") # array[character] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
@@ -85,7 +99,7 @@
 #'
 #' ####################  GetJobConfig  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_name <- "name_example" # character | name of the job-config to return
 #' var_move_parameters_to_config_map <- FALSE # character | if true, object-based parameters will be converted to and added to the generic configMap parameters (Optional)
 #'
@@ -100,9 +114,9 @@
 #'
 #' ####################  GetJobConfigNames  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #'
-#' #DEPRECATED: use /job-configs to get all configs with names.
+#' #[DEPRECATED] Get all (non-default) job configuration names  
 #' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
@@ -113,7 +127,7 @@
 #'
 #' ####################  GetJobConfigs  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #'
 #' #Request all available job configurations
 #' api_instance <- rsirius_api$new()
@@ -126,7 +140,7 @@
 #'
 #' ####################  GetJobs  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to run jobs on
 #' var_opt_fields <- c("none") # array[character] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
 #'
@@ -141,7 +155,7 @@
 #'
 #' ####################  GetJobsPaged  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to run jobs on
 #' var_page <- 0 # integer | Zero-based page index (0..N) (Optional)
 #' var_size <- 20 # integer | The size of the page to be returned (Optional)
@@ -159,7 +173,7 @@
 #'
 #' ####################  HasJobs  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | 
 #' var_include_finished <- FALSE # character |  (Optional)
 #'
@@ -173,9 +187,9 @@
 #'
 #' ####################  SaveJobConfig  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_name <- "name_example" # character | name of the job-config to add
-#' var_job_submission <- JobSubmission$new(c("compoundIds_example"), c("alignedFeatureIds_example"), c("fallbackAdducts_example"), c("enforcedAdducts_example"), c("detectableAdducts_example"), "recompute_example", SpectralLibrarySearch$new("enabled_example", c("spectraSearchDBs_example"), 123, 123, "INTENSITY"), Sirius$new("enabled_example", "QTOF", 123, 123, 123, "IGNORE", "filterByIsotopePattern_example", "enforceElGordoFormula_example", "performBottomUpSearch_example", 123, c("formulaSearchDBs_example"), "applyFormulaConstraintsToDBAndBottomUpSearch_example", "enforcedFormulaConstraints_example", "fallbackFormulaConstraints_example", c("detectableElements_example"), Timeout$new(123, 123), UseHeuristic$new(123, 123), "injectSpecLibMatchFormulas_example", 123, 123), Zodiac$new("enabled_example", 123, 123, "runInTwoSteps_example", ZodiacEdgeFilterThresholds$new(123, 123, 123), ZodiacEpochs$new(123, 123, 123)), FingerprintPrediction$new("enabled_example", "useScoreThreshold_example", "alwaysPredictHighRefMatches_example"), Canopus$new("enabled_example"), StructureDbSearch$new("enabled_example", c("structureSearchDBs_example"), "tagStructuresWithLipidClass_example", "OFF"), MsNovelist$new("enabled_example", 123), c(key = "inner_example")) # JobSubmission | to add
+#' var_job_submission <- JobSubmission$new(c("compoundIds_example"), c("alignedFeatureIds_example"), c("fallbackAdducts_example"), c("enforcedAdducts_example"), c("detectableAdducts_example"), "recompute_example", SpectralLibrarySearch$new("enabled_example", c("spectraSearchDBs_example"), 123, 123, 123, "enableAnalogueSearch_example", 123, 123, "INTENSITY", 123), Sirius$new("enabled_example", "QTOF", 123, 123, 123, "IGNORE", "filterByIsotopePattern_example", "enforceElGordoFormula_example", "performBottomUpSearch_example", 123, c("formulaSearchDBs_example"), "applyFormulaConstraintsToDBAndBottomUpSearch_example", "enforcedFormulaConstraints_example", "fallbackFormulaConstraints_example", c("detectableElements_example"), Timeout$new(123, 123), UseHeuristic$new(123, 123), "injectSpecLibMatchFormulas_example", 123, 123), Zodiac$new("enabled_example", 123, 123, "runInTwoSteps_example", ZodiacEdgeFilterThresholds$new(123, 123, 123), ZodiacEpochs$new(123, 123, 123), ZodiacLibraryScoring$new("enabled_example", 123), ZodiacAnalogueNodes$new("enabled_example", 123, 123)), FingerprintPrediction$new("enabled_example", "useScoreThreshold_example", "alwaysPredictHighRefMatches_example"), Canopus$new("enabled_example"), StructureDbSearch$new("enabled_example", c("structureSearchDBs_example"), "tagStructuresWithLipidClass_example", "OFF"), MsNovelist$new("enabled_example", 123), c(key = "inner_example")) # JobSubmission | to add
 #' var_override_existing <- FALSE # character |  (Optional)
 #' var_move_parameters_to_config_map <- FALSE # character | if true, object-based parameters will be converted to and added to the generic configMap parameters in the return object (Optional)
 #'
@@ -190,9 +204,9 @@
 #'
 #' ####################  StartJob  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to run jobs on
-#' var_job_submission <- JobSubmission$new(c("compoundIds_example"), c("alignedFeatureIds_example"), c("fallbackAdducts_example"), c("enforcedAdducts_example"), c("detectableAdducts_example"), "recompute_example", SpectralLibrarySearch$new("enabled_example", c("spectraSearchDBs_example"), 123, 123, "INTENSITY"), Sirius$new("enabled_example", "QTOF", 123, 123, 123, "IGNORE", "filterByIsotopePattern_example", "enforceElGordoFormula_example", "performBottomUpSearch_example", 123, c("formulaSearchDBs_example"), "applyFormulaConstraintsToDBAndBottomUpSearch_example", "enforcedFormulaConstraints_example", "fallbackFormulaConstraints_example", c("detectableElements_example"), Timeout$new(123, 123), UseHeuristic$new(123, 123), "injectSpecLibMatchFormulas_example", 123, 123), Zodiac$new("enabled_example", 123, 123, "runInTwoSteps_example", ZodiacEdgeFilterThresholds$new(123, 123, 123), ZodiacEpochs$new(123, 123, 123)), FingerprintPrediction$new("enabled_example", "useScoreThreshold_example", "alwaysPredictHighRefMatches_example"), Canopus$new("enabled_example"), StructureDbSearch$new("enabled_example", c("structureSearchDBs_example"), "tagStructuresWithLipidClass_example", "OFF"), MsNovelist$new("enabled_example", 123), c(key = "inner_example")) # JobSubmission | configuration of the job that will be submitted of the job to be returned
+#' var_job_submission <- JobSubmission$new(c("compoundIds_example"), c("alignedFeatureIds_example"), c("fallbackAdducts_example"), c("enforcedAdducts_example"), c("detectableAdducts_example"), "recompute_example", SpectralLibrarySearch$new("enabled_example", c("spectraSearchDBs_example"), 123, 123, 123, "enableAnalogueSearch_example", 123, 123, "INTENSITY", 123), Sirius$new("enabled_example", "QTOF", 123, 123, 123, "IGNORE", "filterByIsotopePattern_example", "enforceElGordoFormula_example", "performBottomUpSearch_example", 123, c("formulaSearchDBs_example"), "applyFormulaConstraintsToDBAndBottomUpSearch_example", "enforcedFormulaConstraints_example", "fallbackFormulaConstraints_example", c("detectableElements_example"), Timeout$new(123, 123), UseHeuristic$new(123, 123), "injectSpecLibMatchFormulas_example", 123, 123), Zodiac$new("enabled_example", 123, 123, "runInTwoSteps_example", ZodiacEdgeFilterThresholds$new(123, 123, 123), ZodiacEpochs$new(123, 123, 123), ZodiacLibraryScoring$new("enabled_example", 123), ZodiacAnalogueNodes$new("enabled_example", 123, 123)), FingerprintPrediction$new("enabled_example", "useScoreThreshold_example", "alwaysPredictHighRefMatches_example"), Canopus$new("enabled_example"), StructureDbSearch$new("enabled_example", c("structureSearchDBs_example"), "tagStructuresWithLipidClass_example", "OFF"), MsNovelist$new("enabled_example", 123), c(key = "inner_example")) # JobSubmission | configuration of the job that will be submitted of the job to be returned
 #' var_opt_fields <- c("none") # array[character] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
 #'
 #' #Start computation for given compounds and with given parameters.
@@ -206,7 +220,7 @@
 #'
 #' ####################  StartJobFromConfig  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to run jobs on
 #' var_job_config_name <- "job_config_name_example" # character | name if the config to be used
 #' var_request_body <- c("property_example") # array[character] | List of alignedFeatureIds to be computed
@@ -521,11 +535,135 @@ JobsApi <- R6::R6Class(
     },
 
     #' @description
+    #' Get a CLI command for the given job configuration.
+    #'
+    #' @param job_submission 
+    #' @param data_file (optional) name of the data file to save the result
+    #' @param ... Other optional arguments
+    #'
+    #' @return array[character]
+    GetCommand = function(job_submission, data_file = NULL, ...) {
+      local_var_response <- self$GetCommandWithHttpInfo(job_submission, data_file = data_file, ...)
+      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
+        local_var_response$content
+      } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
+        local_var_response
+      } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
+        local_var_response
+      } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
+        local_var_response
+      }
+    },
+
+    #' @description
+    #' Get a CLI command for the given job configuration.
+    #'
+    #' @param job_submission 
+    #' @param data_file (optional) name of the data file to save the result
+    #' @param ... Other optional arguments
+    #'
+    #' @return API response (array[character]) with additional information such as HTTP status code, headers
+    GetCommandWithHttpInfo = function(job_submission, data_file = NULL, ...) {
+      args <- list(...)
+      query_params <- list()
+      header_params <- c()
+      form_params <- list()
+      file_params <- list()
+      local_var_body <- NULL
+      oauth_scopes <- NULL
+      is_oauth <- FALSE
+
+      if (missing(`job_submission`)) {
+        stop("Missing required parameter `job_submission`.")
+      }
+
+
+      if (!is.null(`job_submission`)) {
+        local_var_body <- `job_submission`$toJSONString()
+      } else {
+        body <- NULL
+      }
+
+      local_var_url_path <- "/api/job-configs/get-command"
+
+      # The Accept request HTTP header
+      local_var_accepts <- list("application/json")
+
+      # The Content-Type representation header
+      local_var_content_types <- list("application/json")
+
+      local_var_resp <- self$api_client$CallApi(url = paste0(self$api_client$base_path, local_var_url_path),
+                                 method = "POST",
+                                 query_params = query_params,
+                                 header_params = header_params,
+                                 form_params = form_params,
+                                 file_params = file_params,
+                                 accepts = local_var_accepts,
+                                 content_types = local_var_content_types,
+                                 body = local_var_body,
+                                 is_oauth = is_oauth,
+                                 oauth_scopes = oauth_scopes,
+                                 ...)
+
+      if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
+        # save response in a file
+        if (!is.null(data_file)) {
+          write(local_var_resp$response, data_file)
+        }
+
+        # Check if we are expecting a CSV response
+        is_csv_response <- any(grepl("csv", local_var_accepts, ignore.case = TRUE))
+
+        if (is_csv_response) {
+          # For CSV responses, parse into data.frame
+          csv_resp_obj <- tryCatch(
+            {
+              csv_text <- rawToChar(local_var_resp$response)
+
+              # Detect separator by examining first line
+              first_line <- strsplit(csv_text, "\n")[[1]][1]
+              if (grepl("\t", first_line)) {
+                # Tab-separated (TSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = "\t")
+              } else {
+                # Comma-separated (CSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = ",")
+              }
+            },
+            error = function(e) {
+              stop("Failed to parse CSV response")
+            }
+          )
+          local_var_resp$content <- csv_resp_obj
+        } else {
+          # For JSON responses, deserialize normally
+          deserialized_resp_obj <- tryCatch(
+            self$api_client$deserialize(local_var_resp$response_as_text(), "array[character]", loadNamespace("RSirius")),
+            error = function(e) {
+              stop("Failed to deserialize response")
+            }
+          )
+          local_var_resp$content <- deserialized_resp_obj
+        }
+        local_var_resp
+      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
+      } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
+        ApiResponse$new("API client error", local_var_resp)
+      } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
+        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
+          local_var_resp$response <- "API server error"
+        }
+        local_var_resp
+      }
+    },
+
+    #' @description
     #' Request default job configuration
     #'
     #' @param include_config_map (optional) if true, generic configmap with-defaults will be included (default value: FALSE)
     #' @param move_parameters_to_config_map (optional) if true, object-based parameters will be converted to and added to the generic configMap parameters (default value: FALSE)
-    #' @param include_custom_dbs_for_structure_search (optional) if true, default database selection of structure db search contains also all available custom DB. (default value: FALSE)
+    #' @param include_custom_dbs_for_structure_search (optional) if true, default database selection of structure db search                                            spectral library search contains also all available custom DB.                                            If No custom dbs are selected, spectral library search is disabled by default. (default value: FALSE)
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
@@ -548,7 +686,7 @@ JobsApi <- R6::R6Class(
     #'
     #' @param include_config_map (optional) if true, generic configmap with-defaults will be included (default value: FALSE)
     #' @param move_parameters_to_config_map (optional) if true, object-based parameters will be converted to and added to the generic configMap parameters (default value: FALSE)
-    #' @param include_custom_dbs_for_structure_search (optional) if true, default database selection of structure db search contains also all available custom DB. (default value: FALSE)
+    #' @param include_custom_dbs_for_structure_search (optional) if true, default database selection of structure db search                                            spectral library search contains also all available custom DB.                                            If No custom dbs are selected, spectral library search is disabled by default. (default value: FALSE)
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
@@ -599,13 +737,40 @@ JobsApi <- R6::R6Class(
           write(local_var_resp$response, data_file)
         }
 
-        deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "JobSubmission", loadNamespace("Rsirius")),
-          error = function(e) {
-            stop("Failed to deserialize response")
-          }
-        )
-        local_var_resp$content <- deserialized_resp_obj
+        # Check if we are expecting a CSV response
+        is_csv_response <- any(grepl("csv", local_var_accepts, ignore.case = TRUE))
+
+        if (is_csv_response) {
+          # For CSV responses, parse into data.frame
+          csv_resp_obj <- tryCatch(
+            {
+              csv_text <- rawToChar(local_var_resp$response)
+
+              # Detect separator by examining first line
+              first_line <- strsplit(csv_text, "\n")[[1]][1]
+              if (grepl("\t", first_line)) {
+                # Tab-separated (TSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = "\t")
+              } else {
+                # Comma-separated (CSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = ",")
+              }
+            },
+            error = function(e) {
+              stop("Failed to parse CSV response")
+            }
+          )
+          local_var_resp$content <- csv_resp_obj
+        } else {
+          # For JSON responses, deserialize normally
+          deserialized_resp_obj <- tryCatch(
+            self$api_client$deserialize(local_var_resp$response_as_text(), "JobSubmission", loadNamespace("RSirius")),
+            error = function(e) {
+              stop("Failed to deserialize response")
+            }
+          )
+          local_var_resp$content <- deserialized_resp_obj
+        }
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
@@ -717,13 +882,40 @@ JobsApi <- R6::R6Class(
           write(local_var_resp$response, data_file)
         }
 
-        deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "Job", loadNamespace("Rsirius")),
-          error = function(e) {
-            stop("Failed to deserialize response")
-          }
-        )
-        local_var_resp$content <- deserialized_resp_obj
+        # Check if we are expecting a CSV response
+        is_csv_response <- any(grepl("csv", local_var_accepts, ignore.case = TRUE))
+
+        if (is_csv_response) {
+          # For CSV responses, parse into data.frame
+          csv_resp_obj <- tryCatch(
+            {
+              csv_text <- rawToChar(local_var_resp$response)
+
+              # Detect separator by examining first line
+              first_line <- strsplit(csv_text, "\n")[[1]][1]
+              if (grepl("\t", first_line)) {
+                # Tab-separated (TSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = "\t")
+              } else {
+                # Comma-separated (CSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = ",")
+              }
+            },
+            error = function(e) {
+              stop("Failed to parse CSV response")
+            }
+          )
+          local_var_resp$content <- csv_resp_obj
+        } else {
+          # For JSON responses, deserialize normally
+          deserialized_resp_obj <- tryCatch(
+            self$api_client$deserialize(local_var_resp$response_as_text(), "Job", loadNamespace("RSirius")),
+            error = function(e) {
+              stop("Failed to deserialize response")
+            }
+          )
+          local_var_resp$content <- deserialized_resp_obj
+        }
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
@@ -817,13 +1009,40 @@ JobsApi <- R6::R6Class(
           write(local_var_resp$response, data_file)
         }
 
-        deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "StoredJobSubmission", loadNamespace("Rsirius")),
-          error = function(e) {
-            stop("Failed to deserialize response")
-          }
-        )
-        local_var_resp$content <- deserialized_resp_obj
+        # Check if we are expecting a CSV response
+        is_csv_response <- any(grepl("csv", local_var_accepts, ignore.case = TRUE))
+
+        if (is_csv_response) {
+          # For CSV responses, parse into data.frame
+          csv_resp_obj <- tryCatch(
+            {
+              csv_text <- rawToChar(local_var_resp$response)
+
+              # Detect separator by examining first line
+              first_line <- strsplit(csv_text, "\n")[[1]][1]
+              if (grepl("\t", first_line)) {
+                # Tab-separated (TSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = "\t")
+              } else {
+                # Comma-separated (CSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = ",")
+              }
+            },
+            error = function(e) {
+              stop("Failed to parse CSV response")
+            }
+          )
+          local_var_resp$content <- csv_resp_obj
+        } else {
+          # For JSON responses, deserialize normally
+          deserialized_resp_obj <- tryCatch(
+            self$api_client$deserialize(local_var_resp$response_as_text(), "StoredJobSubmission", loadNamespace("RSirius")),
+            error = function(e) {
+              stop("Failed to deserialize response")
+            }
+          )
+          local_var_resp$content <- deserialized_resp_obj
+        }
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
@@ -838,7 +1057,7 @@ JobsApi <- R6::R6Class(
     },
 
     #' @description
-    #' DEPRECATED: use /job-configs to get all configs with names.
+    #' [DEPRECATED] Get all (non-default) job configuration names  
     #'
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
@@ -858,7 +1077,7 @@ JobsApi <- R6::R6Class(
     },
 
     #' @description
-    #' DEPRECATED: use /job-configs to get all configs with names.
+    #' [DEPRECATED] Get all (non-default) job configuration names  
     #'
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
@@ -901,13 +1120,40 @@ JobsApi <- R6::R6Class(
           write(local_var_resp$response, data_file)
         }
 
-        deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "array[character]", loadNamespace("Rsirius")),
-          error = function(e) {
-            stop("Failed to deserialize response")
-          }
-        )
-        local_var_resp$content <- deserialized_resp_obj
+        # Check if we are expecting a CSV response
+        is_csv_response <- any(grepl("csv", local_var_accepts, ignore.case = TRUE))
+
+        if (is_csv_response) {
+          # For CSV responses, parse into data.frame
+          csv_resp_obj <- tryCatch(
+            {
+              csv_text <- rawToChar(local_var_resp$response)
+
+              # Detect separator by examining first line
+              first_line <- strsplit(csv_text, "\n")[[1]][1]
+              if (grepl("\t", first_line)) {
+                # Tab-separated (TSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = "\t")
+              } else {
+                # Comma-separated (CSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = ",")
+              }
+            },
+            error = function(e) {
+              stop("Failed to parse CSV response")
+            }
+          )
+          local_var_resp$content <- csv_resp_obj
+        } else {
+          # For JSON responses, deserialize normally
+          deserialized_resp_obj <- tryCatch(
+            self$api_client$deserialize(local_var_resp$response_as_text(), "array[character]", loadNamespace("RSirius")),
+            error = function(e) {
+              stop("Failed to deserialize response")
+            }
+          )
+          local_var_resp$content <- deserialized_resp_obj
+        }
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
@@ -985,13 +1231,40 @@ JobsApi <- R6::R6Class(
           write(local_var_resp$response, data_file)
         }
 
-        deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "array[StoredJobSubmission]", loadNamespace("Rsirius")),
-          error = function(e) {
-            stop("Failed to deserialize response")
-          }
-        )
-        local_var_resp$content <- deserialized_resp_obj
+        # Check if we are expecting a CSV response
+        is_csv_response <- any(grepl("csv", local_var_accepts, ignore.case = TRUE))
+
+        if (is_csv_response) {
+          # For CSV responses, parse into data.frame
+          csv_resp_obj <- tryCatch(
+            {
+              csv_text <- rawToChar(local_var_resp$response)
+
+              # Detect separator by examining first line
+              first_line <- strsplit(csv_text, "\n")[[1]][1]
+              if (grepl("\t", first_line)) {
+                # Tab-separated (TSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = "\t")
+              } else {
+                # Comma-separated (CSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = ",")
+              }
+            },
+            error = function(e) {
+              stop("Failed to parse CSV response")
+            }
+          )
+          local_var_resp$content <- csv_resp_obj
+        } else {
+          # For JSON responses, deserialize normally
+          deserialized_resp_obj <- tryCatch(
+            self$api_client$deserialize(local_var_resp$response_as_text(), "array[StoredJobSubmission]", loadNamespace("RSirius")),
+            error = function(e) {
+              stop("Failed to deserialize response")
+            }
+          )
+          local_var_resp$content <- deserialized_resp_obj
+        }
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
@@ -1092,13 +1365,40 @@ JobsApi <- R6::R6Class(
           write(local_var_resp$response, data_file)
         }
 
-        deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "array[Job]", loadNamespace("Rsirius")),
-          error = function(e) {
-            stop("Failed to deserialize response")
-          }
-        )
-        local_var_resp$content <- deserialized_resp_obj
+        # Check if we are expecting a CSV response
+        is_csv_response <- any(grepl("csv", local_var_accepts, ignore.case = TRUE))
+
+        if (is_csv_response) {
+          # For CSV responses, parse into data.frame
+          csv_resp_obj <- tryCatch(
+            {
+              csv_text <- rawToChar(local_var_resp$response)
+
+              # Detect separator by examining first line
+              first_line <- strsplit(csv_text, "\n")[[1]][1]
+              if (grepl("\t", first_line)) {
+                # Tab-separated (TSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = "\t")
+              } else {
+                # Comma-separated (CSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = ",")
+              }
+            },
+            error = function(e) {
+              stop("Failed to parse CSV response")
+            }
+          )
+          local_var_resp$content <- csv_resp_obj
+        } else {
+          # For JSON responses, deserialize normally
+          deserialized_resp_obj <- tryCatch(
+            self$api_client$deserialize(local_var_resp$response_as_text(), "array[Job]", loadNamespace("RSirius")),
+            error = function(e) {
+              stop("Failed to deserialize response")
+            }
+          )
+          local_var_resp$content <- deserialized_resp_obj
+        }
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
@@ -1223,13 +1523,40 @@ JobsApi <- R6::R6Class(
           write(local_var_resp$response, data_file)
         }
 
-        deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "PagedModelJob", loadNamespace("Rsirius")),
-          error = function(e) {
-            stop("Failed to deserialize response")
-          }
-        )
-        local_var_resp$content <- deserialized_resp_obj
+        # Check if we are expecting a CSV response
+        is_csv_response <- any(grepl("csv", local_var_accepts, ignore.case = TRUE))
+
+        if (is_csv_response) {
+          # For CSV responses, parse into data.frame
+          csv_resp_obj <- tryCatch(
+            {
+              csv_text <- rawToChar(local_var_resp$response)
+
+              # Detect separator by examining first line
+              first_line <- strsplit(csv_text, "\n")[[1]][1]
+              if (grepl("\t", first_line)) {
+                # Tab-separated (TSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = "\t")
+              } else {
+                # Comma-separated (CSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = ",")
+              }
+            },
+            error = function(e) {
+              stop("Failed to parse CSV response")
+            }
+          )
+          local_var_resp$content <- csv_resp_obj
+        } else {
+          # For JSON responses, deserialize normally
+          deserialized_resp_obj <- tryCatch(
+            self$api_client$deserialize(local_var_resp$response_as_text(), "PagedModelJob", loadNamespace("RSirius")),
+            error = function(e) {
+              stop("Failed to deserialize response")
+            }
+          )
+          local_var_resp$content <- deserialized_resp_obj
+        }
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
@@ -1323,13 +1650,40 @@ JobsApi <- R6::R6Class(
           write(local_var_resp$response, data_file)
         }
 
-        deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "character", loadNamespace("Rsirius")),
-          error = function(e) {
-            stop("Failed to deserialize response")
-          }
-        )
-        local_var_resp$content <- deserialized_resp_obj
+        # Check if we are expecting a CSV response
+        is_csv_response <- any(grepl("csv", local_var_accepts, ignore.case = TRUE))
+
+        if (is_csv_response) {
+          # For CSV responses, parse into data.frame
+          csv_resp_obj <- tryCatch(
+            {
+              csv_text <- rawToChar(local_var_resp$response)
+
+              # Detect separator by examining first line
+              first_line <- strsplit(csv_text, "\n")[[1]][1]
+              if (grepl("\t", first_line)) {
+                # Tab-separated (TSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = "\t")
+              } else {
+                # Comma-separated (CSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = ",")
+              }
+            },
+            error = function(e) {
+              stop("Failed to parse CSV response")
+            }
+          )
+          local_var_resp$content <- csv_resp_obj
+        } else {
+          # For JSON responses, deserialize normally
+          deserialized_resp_obj <- tryCatch(
+            self$api_client$deserialize(local_var_resp$response_as_text(), "character", loadNamespace("RSirius")),
+            error = function(e) {
+              stop("Failed to deserialize response")
+            }
+          )
+          local_var_resp$content <- deserialized_resp_obj
+        }
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
@@ -1441,13 +1795,40 @@ JobsApi <- R6::R6Class(
           write(local_var_resp$response, data_file)
         }
 
-        deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "StoredJobSubmission", loadNamespace("Rsirius")),
-          error = function(e) {
-            stop("Failed to deserialize response")
-          }
-        )
-        local_var_resp$content <- deserialized_resp_obj
+        # Check if we are expecting a CSV response
+        is_csv_response <- any(grepl("csv", local_var_accepts, ignore.case = TRUE))
+
+        if (is_csv_response) {
+          # For CSV responses, parse into data.frame
+          csv_resp_obj <- tryCatch(
+            {
+              csv_text <- rawToChar(local_var_resp$response)
+
+              # Detect separator by examining first line
+              first_line <- strsplit(csv_text, "\n")[[1]][1]
+              if (grepl("\t", first_line)) {
+                # Tab-separated (TSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = "\t")
+              } else {
+                # Comma-separated (CSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = ",")
+              }
+            },
+            error = function(e) {
+              stop("Failed to parse CSV response")
+            }
+          )
+          local_var_resp$content <- csv_resp_obj
+        } else {
+          # For JSON responses, deserialize normally
+          deserialized_resp_obj <- tryCatch(
+            self$api_client$deserialize(local_var_resp$response_as_text(), "StoredJobSubmission", loadNamespace("RSirius")),
+            error = function(e) {
+              stop("Failed to deserialize response")
+            }
+          )
+          local_var_resp$content <- deserialized_resp_obj
+        }
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
@@ -1561,13 +1942,40 @@ JobsApi <- R6::R6Class(
           write(local_var_resp$response, data_file)
         }
 
-        deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "Job", loadNamespace("Rsirius")),
-          error = function(e) {
-            stop("Failed to deserialize response")
-          }
-        )
-        local_var_resp$content <- deserialized_resp_obj
+        # Check if we are expecting a CSV response
+        is_csv_response <- any(grepl("csv", local_var_accepts, ignore.case = TRUE))
+
+        if (is_csv_response) {
+          # For CSV responses, parse into data.frame
+          csv_resp_obj <- tryCatch(
+            {
+              csv_text <- rawToChar(local_var_resp$response)
+
+              # Detect separator by examining first line
+              first_line <- strsplit(csv_text, "\n")[[1]][1]
+              if (grepl("\t", first_line)) {
+                # Tab-separated (TSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = "\t")
+              } else {
+                # Comma-separated (CSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = ",")
+              }
+            },
+            error = function(e) {
+              stop("Failed to parse CSV response")
+            }
+          )
+          local_var_resp$content <- csv_resp_obj
+        } else {
+          # For JSON responses, deserialize normally
+          deserialized_resp_obj <- tryCatch(
+            self$api_client$deserialize(local_var_resp$response_as_text(), "Job", loadNamespace("RSirius")),
+            error = function(e) {
+              stop("Failed to deserialize response")
+            }
+          )
+          local_var_resp$content <- deserialized_resp_obj
+        }
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
@@ -1660,8 +2068,12 @@ JobsApi <- R6::R6Class(
 
       if (!is.null(`request_body`)) {
         body.items <- paste(unlist(lapply(`request_body`, function(param) {
-                                                             param$toJSONString()
-                                                         })), collapse = ",")
+          if (inherits(param, "character")) {
+            param
+          } else {
+            param$toJSONString()
+          }
+        })), collapse = ",")
         local_var_body <- paste0("[", body.items, "]")
       } else {
         body <- NULL
@@ -1698,13 +2110,40 @@ JobsApi <- R6::R6Class(
           write(local_var_resp$response, data_file)
         }
 
-        deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "Job", loadNamespace("Rsirius")),
-          error = function(e) {
-            stop("Failed to deserialize response")
-          }
-        )
-        local_var_resp$content <- deserialized_resp_obj
+        # Check if we are expecting a CSV response
+        is_csv_response <- any(grepl("csv", local_var_accepts, ignore.case = TRUE))
+
+        if (is_csv_response) {
+          # For CSV responses, parse into data.frame
+          csv_resp_obj <- tryCatch(
+            {
+              csv_text <- rawToChar(local_var_resp$response)
+
+              # Detect separator by examining first line
+              first_line <- strsplit(csv_text, "\n")[[1]][1]
+              if (grepl("\t", first_line)) {
+                # Tab-separated (TSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = "\t")
+              } else {
+                # Comma-separated (CSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = ",")
+              }
+            },
+            error = function(e) {
+              stop("Failed to parse CSV response")
+            }
+          )
+          local_var_resp$content <- csv_resp_obj
+        } else {
+          # For JSON responses, deserialize normally
+          deserialized_resp_obj <- tryCatch(
+            self$api_client$deserialize(local_var_resp$response_as_text(), "Job", loadNamespace("RSirius")),
+            error = function(e) {
+              stop("Failed to deserialize response")
+            }
+          )
+          local_var_resp$content <- deserialized_resp_obj
+        }
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)

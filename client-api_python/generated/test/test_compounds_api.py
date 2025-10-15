@@ -11,20 +11,15 @@
 
 import os
 import json
-import shutil
 import unittest
-
-import PySirius
-from PySirius import PySiriusAPI, SiriusSDK, PagedModelCompound
-from PySirius.models.compound import Compound
-from PySirius.models.compound_import import CompoundImport
+from PySirius import PySiriusAPI, SiriusSDK, PagedModelCompound, Compound, CompoundImport
 
 
 class TestCompoundsApi(unittest.TestCase):
     """CompoundsApi unit test stubs"""
 
     def setUp(self) -> None:
-        self.api = SiriusSDK().attach_or_start_sirius()
+        self.api = SiriusSDK().attach_to_sirius(sirius_port=8080)
         self.project_id = "test_compounds_api"
         self.path_to_project = f"{os.environ.get('HOME')}/test_compounds_api.sirius"
         self.api.projects().create_project(self.project_id, self.path_to_project)
@@ -61,7 +56,7 @@ class TestCompoundsApi(unittest.TestCase):
 
         compound_import_instance = CompoundImport.from_json(json.dumps(compound_import_json))
         compound_import = [compound_import_instance]
-        self.api.compounds().add_compounds(self.project_id, compound_import)
+        self.add_response = self.api.compounds().add_compounds(self.project_id, compound_import)
 
     def tearDown(self) -> None:
         self.api.projects().close_project(self.project_id)
@@ -72,7 +67,9 @@ class TestCompoundsApi(unittest.TestCase):
 
         Import Compounds and its contained features.
         """
-        pass
+        self.assertIsInstance(self.add_response, list)
+        self.assertIsInstance(self.add_response[0], Compound)
+
 
     def test_delete_compound(self) -> None:
         """Test case for delete_compound
@@ -117,15 +114,6 @@ class TestCompoundsApi(unittest.TestCase):
         """
         response = self.api.compounds().get_compounds_paged(self.project_id)
         self.assertIsInstance(response, PagedModelCompound)
-
-    def test_get_traces(self) -> None:
-        """Test case for get_traces
-
-        """
-        # TODO "No trace information available for project id = test_compounds_api and compound id = 599595888450877371"
-        # compound_id = self.api.compounds().get_compounds(self.project_id)[0].compound_id
-        # response = self.api.compounds().get_traces(self.project_id, compound_id)
-        # self.assertIsInstance(response, TraceSet)
 
 if __name__ == '__main__':
     unittest.main()

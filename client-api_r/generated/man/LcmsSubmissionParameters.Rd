@@ -33,6 +33,16 @@ df
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
 \item{\code{alignLCMSRuns}}{Specifies whether LC/MS runs should be aligned character [optional]}
+
+\item{\code{noiseIntensity}}{Noise level under which all peaks are considered to be likely noise. A peak has to be at least 3x noise level  to be picked as feature. Peaks with MS/MS are still picked even though they might be below noise level.  If not specified, the noise intensity is detected automatically from data. We recommend to NOT specify  this parameter, as the automated detection is usually sufficient. numeric [optional]}
+
+\item{\code{traceMaxMassDeviation}}{\link{Deviation} [optional]}
+
+\item{\code{alignMaxMassDeviation}}{\link{Deviation} [optional]}
+
+\item{\code{alignMaxRetentionTimeDeviation}}{Maximal allowed retention time error in seconds for aligning features. If not specified, this parameter is estimated from data. numeric [optional]}
+
+\item{\code{minSNR}}{Minimum ratio between peak height and noise intensity for detecting features. By default, this value is 3. Features with good MS/MS are always picked independent of their intensity. For picking very low intensive features we recommend a min-snr of 2, but this will increase runtime and storage memory numeric [optional]}
 }
 \if{html}{\out{</div>}}
 }
@@ -60,13 +70,31 @@ df
 \subsection{Method \code{new()}}{
 Initialize a new LcmsSubmissionParameters class.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{LcmsSubmissionParameters$new(alignLCMSRuns = TRUE, ...)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{LcmsSubmissionParameters$new(
+  alignLCMSRuns = TRUE,
+  noiseIntensity = -1,
+  traceMaxMassDeviation = NULL,
+  alignMaxMassDeviation = NULL,
+  alignMaxRetentionTimeDeviation = -1,
+  minSNR = 3,
+  ...
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{alignLCMSRuns}}{Specifies whether LC/MS runs should be aligned. Default to TRUE.}
+
+\item{\code{noiseIntensity}}{Noise level under which all peaks are considered to be likely noise. A peak has to be at least 3x noise level  to be picked as feature. Peaks with MS/MS are still picked even though they might be below noise level.  If not specified, the noise intensity is detected automatically from data. We recommend to NOT specify  this parameter, as the automated detection is usually sufficient.. Default to -1.}
+
+\item{\code{traceMaxMassDeviation}}{traceMaxMassDeviation}
+
+\item{\code{alignMaxMassDeviation}}{alignMaxMassDeviation}
+
+\item{\code{alignMaxRetentionTimeDeviation}}{Maximal allowed retention time error in seconds for aligning features. If not specified, this parameter is estimated from data.. Default to -1.}
+
+\item{\code{minSNR}}{Minimum ratio between peak height and noise intensity for detecting features. By default, this value is 3. Features with good MS/MS are always picked independent of their intensity. For picking very low intensive features we recommend a min-snr of 2, but this will increase runtime and storage memory. Default to 3.}
 
 \item{\code{...}}{Other optional arguments.}
 }

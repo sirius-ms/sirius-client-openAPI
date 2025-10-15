@@ -38,7 +38,7 @@ ApiClient  <- R6::R6Class(
     # base path of all requests
     base_path = "http://localhost:8080",
     # user agent in the HTTP request
-    user_agent = "OpenAPI-Generator/6.1.1/r",
+    user_agent = "OpenAPI-Generator/6.3.3/r",
     # default headers in the HTTP request
     default_headers = NULL,
     # username (HTTP basic authentication)
@@ -210,12 +210,43 @@ ApiClient  <- R6::R6Class(
 
       # has file upload?
       if (!is.null(file_params) && length(file_params) != 0) {
-        req <- req %>% req_body_multipart(!!!file_params)
+        # Create multipart body data
+        multipart_data <- list()
 
-        # add form parameters via req_body_multipart
+        # Add form parameters first
         if (!is.null(form_params) && length(form_params) != 0) {
-          req <- req %>% req_body_multipart(!!!form_params)
+          for (param_name in names(form_params)) {
+            param_value <- form_params[[param_name]]
+            is_json <- tryCatch({
+              jsonlite::validate(param_value)
+            }, error = function(e) {
+              FALSE
+            })
+
+            if (is_json) {
+              multipart_data[[param_name]] <- curl::form_data(param_value, type = "application/json")
+            } else {
+              multipart_data[[param_name]] <- param_value
+            }
+          }
         }
+
+        # Add file parameters - handle multiple files with same name
+        for (param_name in names(file_params)) {
+          param_value <- file_params[[param_name]]
+
+          if (is.list(param_value) && length(param_value) > 1) {
+            # Multiple files with same parameter name
+            for (i in seq_along(param_value)) {
+              multipart_data[[length(multipart_data) + 1]] <- param_value[[i]]
+              names(multipart_data)[length(multipart_data)] <- param_name
+            }
+          } else {
+            # Single file
+            multipart_data[[param_name]] <- param_value[[1]]
+          }
+        }
+        req <- req %>% req_body_multipart(!!!multipart_data)
       } else { # no file upload
         # add form parameters via req_body_form
         if (!is.null(form_params) && length(form_params) != 0) {
@@ -329,7 +360,7 @@ ApiClient  <- R6::R6Class(
             return_obj <- vector("list", length = nrow(obj))
             if (nrow(obj) > 0) {
               for (row in 1:nrow(obj)) {
-                return_obj[[row]] <- self$deserializeObj(obj[row, , drop = FALSE],
+                return_obj[[row]] <- self$deserializeObj(as.list(obj[row, , drop = FALSE]),
                                                          inner_return_type, pkg_env)
               }
             }
@@ -354,7 +385,7 @@ ApiClient  <- R6::R6Class(
           return_obj <- return_type$new()
         }
         return_obj$fromJSON(
-          jsonlite::toJSON(obj, digits = NA, auto_unbox = TRUE, null = 'null')
+          jsonlite::toJSON(obj, digits = NA, auto_unbox = TRUE, null = 'null', na = 'null')
         )
       } else {
         # To handle primitive type
@@ -383,7 +414,7 @@ ApiClient  <- R6::R6Class(
         }
 
         # not json mime type, simply return the first one
-        return(headers[1])
+        return(headers[[1]])
       }
     }
   )

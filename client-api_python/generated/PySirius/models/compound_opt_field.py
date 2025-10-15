@@ -28,6 +28,7 @@ class CompoundOptField(str, Enum):
     CONSENSUSANNOTATIONS = 'consensusAnnotations'
     CONSENSUSANNOTATIONSDENOVO = 'consensusAnnotationsDeNovo'
     CUSTOMANNOTATIONS = 'customAnnotations'
+    TAGS = 'tags'
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:

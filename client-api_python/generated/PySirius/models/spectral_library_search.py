@@ -15,7 +15,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from PySirius.models.spectral_matching_type import SpectralMatchingType
 from typing import Optional, Set
@@ -27,10 +27,15 @@ class SpectralLibrarySearch(BaseModel):
     """ # noqa: E501
     enabled: Optional[StrictBool] = Field(default=None, description="tags whether the tool is enabled")
     spectra_search_dbs: Optional[List[Optional[StrictStr]]] = Field(default=None, description="Structure Databases with Reference spectra to search in.  <p>  Defaults to BIO + Custom Databases. Possible values are available to Database API.", alias="spectraSearchDBs")
-    peak_deviation_ppm: Optional[float] = Field(default=None, description="Maximum allowed mass deviation in ppm for matching peaks.", alias="peakDeviationPpm")
     precursor_deviation_ppm: Optional[float] = Field(default=None, description="Maximum allowed mass deviation in ppm for matching the precursor. If not specified, the same value as for the peaks is used.", alias="precursorDeviationPpm")
+    min_similarity: Optional[float] = Field(default=None, description="Minimal spectral similarity of a spectral match to be considered a hit.", alias="minSimilarity")
+    min_num_of_peaks: Optional[StrictInt] = Field(default=None, description="Minimal number of matching peaks of a spectral match to be considered a hit.", alias="minNumOfPeaks")
+    enable_analogue_search: Optional[StrictBool] = Field(default=None, description="Enable analogue search in addition to the identity spectral library search", alias="enableAnalogueSearch")
+    min_similarity_analogue: Optional[float] = Field(default=None, description="Minimal spectral similarity of a spectral match to be considered an analogue hit.", alias="minSimilarityAnalogue")
+    min_num_of_peaks_analogue: Optional[StrictInt] = Field(default=None, description="Minimal number of matching peaks of a spectral match to be considered an analogue hit.", alias="minNumOfPeaksAnalogue")
     scoring: Optional[SpectralMatchingType] = None
-    __properties: ClassVar[List[str]] = ["enabled", "spectraSearchDBs", "peakDeviationPpm", "precursorDeviationPpm", "scoring"]
+    peak_deviation_ppm: Optional[float] = Field(default=None, description="NO LONGER SUPPORTED (IGNORED)  Maximum allowed mass deviation in ppm for matching peaks.", alias="peakDeviationPpm")
+    __properties: ClassVar[List[str]] = ["enabled", "spectraSearchDBs", "precursorDeviationPpm", "minSimilarity", "minNumOfPeaks", "enableAnalogueSearch", "minSimilarityAnalogue", "minNumOfPeaksAnalogue", "scoring", "peakDeviationPpm"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -76,20 +81,40 @@ class SpectralLibrarySearch(BaseModel):
         if self.spectra_search_dbs is None and "spectra_search_dbs" in self.model_fields_set:
             _dict['spectraSearchDBs'] = None
 
-        # set to None if peak_deviation_ppm (nullable) is None
-        # and model_fields_set contains the field
-        if self.peak_deviation_ppm is None and "peak_deviation_ppm" in self.model_fields_set:
-            _dict['peakDeviationPpm'] = None
-
         # set to None if precursor_deviation_ppm (nullable) is None
         # and model_fields_set contains the field
         if self.precursor_deviation_ppm is None and "precursor_deviation_ppm" in self.model_fields_set:
             _dict['precursorDeviationPpm'] = None
 
+        # set to None if min_similarity (nullable) is None
+        # and model_fields_set contains the field
+        if self.min_similarity is None and "min_similarity" in self.model_fields_set:
+            _dict['minSimilarity'] = None
+
+        # set to None if min_num_of_peaks (nullable) is None
+        # and model_fields_set contains the field
+        if self.min_num_of_peaks is None and "min_num_of_peaks" in self.model_fields_set:
+            _dict['minNumOfPeaks'] = None
+
+        # set to None if min_similarity_analogue (nullable) is None
+        # and model_fields_set contains the field
+        if self.min_similarity_analogue is None and "min_similarity_analogue" in self.model_fields_set:
+            _dict['minSimilarityAnalogue'] = None
+
+        # set to None if min_num_of_peaks_analogue (nullable) is None
+        # and model_fields_set contains the field
+        if self.min_num_of_peaks_analogue is None and "min_num_of_peaks_analogue" in self.model_fields_set:
+            _dict['minNumOfPeaksAnalogue'] = None
+
         # set to None if scoring (nullable) is None
         # and model_fields_set contains the field
         if self.scoring is None and "scoring" in self.model_fields_set:
             _dict['scoring'] = None
+
+        # set to None if peak_deviation_ppm (nullable) is None
+        # and model_fields_set contains the field
+        if self.peak_deviation_ppm is None and "peak_deviation_ppm" in self.model_fields_set:
+            _dict['peakDeviationPpm'] = None
 
         return _dict
 
@@ -105,9 +130,14 @@ class SpectralLibrarySearch(BaseModel):
         _obj = cls.model_validate({
             "enabled": obj.get("enabled"),
             "spectraSearchDBs": obj.get("spectraSearchDBs"),
-            "peakDeviationPpm": obj.get("peakDeviationPpm"),
             "precursorDeviationPpm": obj.get("precursorDeviationPpm"),
-            "scoring": obj.get("scoring")
+            "minSimilarity": obj.get("minSimilarity"),
+            "minNumOfPeaks": obj.get("minNumOfPeaks"),
+            "enableAnalogueSearch": obj.get("enableAnalogueSearch"),
+            "minSimilarityAnalogue": obj.get("minSimilarityAnalogue"),
+            "minNumOfPeaksAnalogue": obj.get("minNumOfPeaksAnalogue"),
+            "scoring": obj.get("scoring"),
+            "peakDeviationPpm": obj.get("peakDeviationPpm")
         })
         return _obj
 

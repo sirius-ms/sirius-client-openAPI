@@ -1,4 +1,4 @@
-# Rsirius::TraceExperimental
+# RSirius::TraceExperimental
 
 EXPERIMENTAL: This schema is experimental and may be changed (or even removed) without notice until it is declared stable.
 
@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **sampleId** | **character** |  | [optional] 
 **sampleName** | **character** |  | [optional] 
 **label** | **character** |  | [optional] 
+**color** | **character** |  | [optional] 
 **intensities** | **array[numeric]** |  | [optional] 
 **annotations** | [**array[TraceAnnotationExperimental]**](TraceAnnotationExperimental.md) |  | [optional] 
 **mz** | **numeric** |  | [optional] 

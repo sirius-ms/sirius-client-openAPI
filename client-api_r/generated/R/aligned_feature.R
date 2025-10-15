@@ -25,6 +25,7 @@
 #' @field topAnnotationsDeNovo  \link{FeatureAnnotations} [optional]
 #' @field computing Write lock for this feature. If the feature is locked no write operations are possible.  True if any computation is modifying this feature or its results character [optional]
 #' @field computedTools  \link{ComputedSubtools} [optional]
+#' @field tags Key: tagName, value: tag named list(\link{Tag}) [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
 #' @export
@@ -49,6 +50,7 @@ AlignedFeature <- R6::R6Class(
     `topAnnotationsDeNovo` = NULL,
     `computing` = NULL,
     `computedTools` = NULL,
+    `tags` = NULL,
 
     #' @description
     #' Initialize a new AlignedFeature class.
@@ -71,8 +73,9 @@ AlignedFeature <- R6::R6Class(
     #' @param topAnnotationsDeNovo topAnnotationsDeNovo
     #' @param computing Write lock for this feature. If the feature is locked no write operations are possible.  True if any computation is modifying this feature or its results
     #' @param computedTools computedTools
+    #' @param tags Key: tagName, value: tag
     #' @param ... Other optional arguments.
-    initialize = function(`charge`, `detectedAdducts`, `alignedFeatureId` = NULL, `compoundId` = NULL, `name` = NULL, `externalFeatureId` = NULL, `ionMass` = NULL, `rtStartSeconds` = NULL, `rtEndSeconds` = NULL, `rtApexSeconds` = NULL, `quality` = NULL, `hasMs1` = NULL, `hasMsMs` = NULL, `msData` = NULL, `topAnnotations` = NULL, `topAnnotationsDeNovo` = NULL, `computing` = NULL, `computedTools` = NULL, ...) {
+    initialize = function(`charge`, `detectedAdducts`, `alignedFeatureId` = NULL, `compoundId` = NULL, `name` = NULL, `externalFeatureId` = NULL, `ionMass` = NULL, `rtStartSeconds` = NULL, `rtEndSeconds` = NULL, `rtApexSeconds` = NULL, `quality` = NULL, `hasMs1` = NULL, `hasMsMs` = NULL, `msData` = NULL, `topAnnotations` = NULL, `topAnnotationsDeNovo` = NULL, `computing` = NULL, `computedTools` = NULL, `tags` = NULL, ...) {
       if (!missing(`charge`)) {
         if (!(is.numeric(`charge`) && length(`charge`) == 1)) {
           stop(paste("Error! Invalid data for `charge`. Must be an integer:", `charge`))
@@ -177,6 +180,11 @@ AlignedFeature <- R6::R6Class(
       if (!is.null(`computedTools`)) {
         stopifnot(R6::is.R6(`computedTools`))
         self$`computedTools` <- `computedTools`
+      }
+      if (!is.null(`tags`)) {
+        stopifnot(is.vector(`tags`), length(`tags`) != 0)
+        sapply(`tags`, function(x) stopifnot(R6::is.R6(x)))
+        self$`tags` <- `tags`
       }
     },
 
@@ -283,6 +291,10 @@ AlignedFeature <- R6::R6Class(
         AlignedFeatureObject[["computedTools"]] <-
           self$`computedTools`$toSimpleType()
       }
+      if (!is.null(self$`tags`)) {
+        AlignedFeatureObject[["tags"]] <-
+          lapply(self$`tags`, function(x) x$toSimpleType())
+      }
       return(AlignedFeatureObject)
     },
 
@@ -312,7 +324,7 @@ AlignedFeature <- R6::R6Class(
         self$`charge` <- this_object$`charge`
       }
       if (!is.null(this_object$`detectedAdducts`)) {
-        self$`detectedAdducts` <- ApiClient$new()$deserializeObj(this_object$`detectedAdducts`, "set[character]", loadNamespace("Rsirius"))
+        self$`detectedAdducts` <- ApiClient$new()$deserializeObj(this_object$`detectedAdducts`, "set[character]", loadNamespace("RSirius"))
         if (!identical(self$`detectedAdducts`, unique(self$`detectedAdducts`))) {
           stop("Error! Items in `detectedAdducts` are not unique.")
         }
@@ -361,6 +373,9 @@ AlignedFeature <- R6::R6Class(
         `computedtools_object`$fromJSON(jsonlite::toJSON(this_object$`computedTools`, auto_unbox = TRUE, digits = NA, null = 'null'))
         self$`computedTools` <- `computedtools_object`
       }
+      if (!is.null(this_object$`tags`)) {
+        self$`tags` <- ApiClient$new()$deserializeObj(this_object$`tags`, "map(Tag)", loadNamespace("RSirius"))
+      }
       self
     },
 
@@ -388,7 +403,7 @@ AlignedFeature <- R6::R6Class(
       self$`externalFeatureId` <- this_object$`externalFeatureId`
       self$`ionMass` <- this_object$`ionMass`
       self$`charge` <- this_object$`charge`
-      self$`detectedAdducts` <- ApiClient$new()$deserializeObj(this_object$`detectedAdducts`, "set[character]", loadNamespace("Rsirius"))
+      self$`detectedAdducts` <- ApiClient$new()$deserializeObj(this_object$`detectedAdducts`, "set[character]", loadNamespace("RSirius"))
       if (!identical(self$`detectedAdducts`, unique(self$`detectedAdducts`))) {
         stop("Error! Items in `detectedAdducts` are not unique.")
       }
@@ -406,6 +421,7 @@ AlignedFeature <- R6::R6Class(
       self$`topAnnotationsDeNovo` <- FeatureAnnotations$new()$fromJSON(jsonlite::toJSON(this_object$`topAnnotationsDeNovo`, auto_unbox = TRUE, digits = NA, null = 'null'))
       self$`computing` <- this_object$`computing`
       self$`computedTools` <- ComputedSubtools$new()$fromJSON(jsonlite::toJSON(this_object$`computedTools`, auto_unbox = TRUE, digits = NA, null = 'null'))
+      self$`tags` <- ApiClient$new()$deserializeObj(this_object$`tags`, "map(Tag)", loadNamespace("RSirius"))
       self
     },
 

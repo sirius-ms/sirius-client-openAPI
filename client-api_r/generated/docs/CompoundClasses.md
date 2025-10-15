@@ -1,4 +1,4 @@
-# Rsirius::CompoundClasses
+# RSirius::CompoundClasses
 
 Container class that holds the most likely compound class for different levels of each ontology for a  certain Compound/Feature/FormulaCandidate/PredictedFingerprint.
 

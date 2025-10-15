@@ -120,7 +120,7 @@ StructureDbSearch <- R6::R6Class(
         self$`enabled` <- this_object$`enabled`
       }
       if (!is.null(this_object$`structureSearchDBs`)) {
-        self$`structureSearchDBs` <- ApiClient$new()$deserializeObj(this_object$`structureSearchDBs`, "array[character]", loadNamespace("Rsirius"))
+        self$`structureSearchDBs` <- ApiClient$new()$deserializeObj(this_object$`structureSearchDBs`, "array[character]", loadNamespace("RSirius"))
       }
       if (!is.null(this_object$`tagStructuresWithLipidClass`)) {
         self$`tagStructuresWithLipidClass` <- this_object$`tagStructuresWithLipidClass`
@@ -153,7 +153,7 @@ StructureDbSearch <- R6::R6Class(
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       self$`enabled` <- this_object$`enabled`
-      self$`structureSearchDBs` <- ApiClient$new()$deserializeObj(this_object$`structureSearchDBs`, "array[character]", loadNamespace("Rsirius"))
+      self$`structureSearchDBs` <- ApiClient$new()$deserializeObj(this_object$`structureSearchDBs`, "array[character]", loadNamespace("RSirius"))
       self$`tagStructuresWithLipidClass` <- this_object$`tagStructuresWithLipidClass`
       if (!is.null(this_object$`expansiveSearchConfidenceMode`) && !(this_object$`expansiveSearchConfidenceMode` %in% c("OFF", "EXACT", "APPROXIMATE"))) {
         stop(paste("Error! \"", this_object$`expansiveSearchConfidenceMode`, "\" cannot be assigned to `expansiveSearchConfidenceMode`. Must be \"OFF\", \"EXACT\", \"APPROXIMATE\".", sep = ""))

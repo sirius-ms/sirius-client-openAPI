@@ -14,6 +14,7 @@ Name | Type | Description | Notes
 **consensus_annotations** | [**ConsensusAnnotationsCSI**](ConsensusAnnotationsCSI.md) |  | [optional] 
 **consensus_annotations_de_novo** | [**ConsensusAnnotationsDeNovo**](ConsensusAnnotationsDeNovo.md) |  | [optional] 
 **custom_annotations** | [**ConsensusAnnotationsCSI**](ConsensusAnnotationsCSI.md) |  | [optional] 
+**tags** | [**Dict[str, Tag]**](Tag.md) | Key: tagName, value: tag | [optional] 
 
 ## Example
 

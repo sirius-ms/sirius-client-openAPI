@@ -10,9 +10,10 @@
 #' @field inchiKey  character [optional]
 #' @field smiles  character [optional]
 #' @field structureName  character [optional]
-#' @field xlogP  numeric [optional]
+#' @field structureSvg SVG graphics of the structure candidate  OPTIONAL: needs to be added by parameter character [optional]
 #' @field dbLinks List of structure database links belonging to this structure candidate  OPTIONAL: needs to be added by parameter list(\link{DBLink}) [optional]
 #' @field spectralLibraryMatches List of spectral library matches belonging to this structure candidate  OPTIONAL: needs to be added by parameter list(\link{SpectralLibraryMatch}) [optional]
+#' @field xlogP  numeric [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
 #' @export
@@ -22,9 +23,10 @@ StructureCandidate <- R6::R6Class(
     `inchiKey` = NULL,
     `smiles` = NULL,
     `structureName` = NULL,
-    `xlogP` = NULL,
+    `structureSvg` = NULL,
     `dbLinks` = NULL,
     `spectralLibraryMatches` = NULL,
+    `xlogP` = NULL,
 
     #' @description
     #' Initialize a new StructureCandidate class.
@@ -32,11 +34,12 @@ StructureCandidate <- R6::R6Class(
     #' @param inchiKey inchiKey
     #' @param smiles smiles
     #' @param structureName structureName
-    #' @param xlogP xlogP
+    #' @param structureSvg SVG graphics of the structure candidate  OPTIONAL: needs to be added by parameter
     #' @param dbLinks List of structure database links belonging to this structure candidate  OPTIONAL: needs to be added by parameter
     #' @param spectralLibraryMatches List of spectral library matches belonging to this structure candidate  OPTIONAL: needs to be added by parameter
+    #' @param xlogP xlogP
     #' @param ... Other optional arguments.
-    initialize = function(`inchiKey` = NULL, `smiles` = NULL, `structureName` = NULL, `xlogP` = NULL, `dbLinks` = NULL, `spectralLibraryMatches` = NULL, ...) {
+    initialize = function(`inchiKey` = NULL, `smiles` = NULL, `structureName` = NULL, `structureSvg` = NULL, `dbLinks` = NULL, `spectralLibraryMatches` = NULL, `xlogP` = NULL, ...) {
       if (!is.null(`inchiKey`)) {
         if (!(is.character(`inchiKey`) && length(`inchiKey`) == 1)) {
           stop(paste("Error! Invalid data for `inchiKey`. Must be a string:", `inchiKey`))
@@ -55,11 +58,11 @@ StructureCandidate <- R6::R6Class(
         }
         self$`structureName` <- `structureName`
       }
-      if (!is.null(`xlogP`)) {
-        if (!(is.numeric(`xlogP`) && length(`xlogP`) == 1)) {
-          stop(paste("Error! Invalid data for `xlogP`. Must be a number:", `xlogP`))
+      if (!is.null(`structureSvg`)) {
+        if (!(is.character(`structureSvg`) && length(`structureSvg`) == 1)) {
+          stop(paste("Error! Invalid data for `structureSvg`. Must be a string:", `structureSvg`))
         }
-        self$`xlogP` <- `xlogP`
+        self$`structureSvg` <- `structureSvg`
       }
       if (!is.null(`dbLinks`)) {
         stopifnot(is.vector(`dbLinks`), length(`dbLinks`) != 0)
@@ -70,6 +73,12 @@ StructureCandidate <- R6::R6Class(
         stopifnot(is.vector(`spectralLibraryMatches`), length(`spectralLibraryMatches`) != 0)
         sapply(`spectralLibraryMatches`, function(x) stopifnot(R6::is.R6(x)))
         self$`spectralLibraryMatches` <- `spectralLibraryMatches`
+      }
+      if (!is.null(`xlogP`)) {
+        if (!(is.numeric(`xlogP`) && length(`xlogP`) == 1)) {
+          stop(paste("Error! Invalid data for `xlogP`. Must be a number:", `xlogP`))
+        }
+        self$`xlogP` <- `xlogP`
       }
     },
 
@@ -116,9 +125,9 @@ StructureCandidate <- R6::R6Class(
         StructureCandidateObject[["structureName"]] <-
           self$`structureName`
       }
-      if (!is.null(self$`xlogP`)) {
-        StructureCandidateObject[["xlogP"]] <-
-          self$`xlogP`
+      if (!is.null(self$`structureSvg`)) {
+        StructureCandidateObject[["structureSvg"]] <-
+          self$`structureSvg`
       }
       if (!is.null(self$`dbLinks`)) {
         StructureCandidateObject[["dbLinks"]] <-
@@ -127,6 +136,10 @@ StructureCandidate <- R6::R6Class(
       if (!is.null(self$`spectralLibraryMatches`)) {
         StructureCandidateObject[["spectralLibraryMatches"]] <-
           lapply(self$`spectralLibraryMatches`, function(x) x$toSimpleType())
+      }
+      if (!is.null(self$`xlogP`)) {
+        StructureCandidateObject[["xlogP"]] <-
+          self$`xlogP`
       }
       return(StructureCandidateObject)
     },
@@ -147,14 +160,17 @@ StructureCandidate <- R6::R6Class(
       if (!is.null(this_object$`structureName`)) {
         self$`structureName` <- this_object$`structureName`
       }
-      if (!is.null(this_object$`xlogP`)) {
-        self$`xlogP` <- this_object$`xlogP`
+      if (!is.null(this_object$`structureSvg`)) {
+        self$`structureSvg` <- this_object$`structureSvg`
       }
       if (!is.null(this_object$`dbLinks`)) {
-        self$`dbLinks` <- ApiClient$new()$deserializeObj(this_object$`dbLinks`, "array[DBLink]", loadNamespace("Rsirius"))
+        self$`dbLinks` <- ApiClient$new()$deserializeObj(this_object$`dbLinks`, "array[DBLink]", loadNamespace("RSirius"))
       }
       if (!is.null(this_object$`spectralLibraryMatches`)) {
-        self$`spectralLibraryMatches` <- ApiClient$new()$deserializeObj(this_object$`spectralLibraryMatches`, "array[SpectralLibraryMatch]", loadNamespace("Rsirius"))
+        self$`spectralLibraryMatches` <- ApiClient$new()$deserializeObj(this_object$`spectralLibraryMatches`, "array[SpectralLibraryMatch]", loadNamespace("RSirius"))
+      }
+      if (!is.null(this_object$`xlogP`)) {
+        self$`xlogP` <- this_object$`xlogP`
       }
       self
     },
@@ -180,9 +196,10 @@ StructureCandidate <- R6::R6Class(
       self$`inchiKey` <- this_object$`inchiKey`
       self$`smiles` <- this_object$`smiles`
       self$`structureName` <- this_object$`structureName`
+      self$`structureSvg` <- this_object$`structureSvg`
+      self$`dbLinks` <- ApiClient$new()$deserializeObj(this_object$`dbLinks`, "array[DBLink]", loadNamespace("RSirius"))
+      self$`spectralLibraryMatches` <- ApiClient$new()$deserializeObj(this_object$`spectralLibraryMatches`, "array[SpectralLibraryMatch]", loadNamespace("RSirius"))
       self$`xlogP` <- this_object$`xlogP`
-      self$`dbLinks` <- ApiClient$new()$deserializeObj(this_object$`dbLinks`, "array[DBLink]", loadNamespace("Rsirius"))
-      self$`spectralLibraryMatches` <- ApiClient$new()$deserializeObj(this_object$`spectralLibraryMatches`, "array[SpectralLibraryMatch]", loadNamespace("Rsirius"))
       self
     },
 

@@ -10,17 +10,14 @@
 
 
 import unittest
-
-import PySirius
-from PySirius import PySiriusAPI, SiriusSDK
-from PySirius.models.account_info import AccountInfo
+from PySirius import PySiriusAPI, SiriusSDK, AccountInfo
 
 
 class TestLoginAndAccountApi(unittest.TestCase):
     """LoginAndAccountApi unit test stubs"""
 
     def setUp(self) -> None:
-        self.api = SiriusSDK().attach_or_start_sirius()
+        self.api = SiriusSDK().attach_to_sirius(sirius_port=8080)
         self.login_api = self.api.account()
 
 

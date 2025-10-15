@@ -17,8 +17,10 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt
 from typing import Any, ClassVar, Dict, List, Optional
+from PySirius.models.zodiac_analogue_nodes import ZodiacAnalogueNodes
 from PySirius.models.zodiac_edge_filter_thresholds import ZodiacEdgeFilterThresholds
 from PySirius.models.zodiac_epochs import ZodiacEpochs
+from PySirius.models.zodiac_library_scoring import ZodiacLibraryScoring
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -32,7 +34,9 @@ class Zodiac(BaseModel):
     run_in_two_steps: Optional[StrictBool] = Field(default=None, description="As default ZODIAC runs a 2-step approach. First running 'good quality compounds' only, and afterwards including the remaining.", alias="runInTwoSteps")
     edge_filter_thresholds: Optional[ZodiacEdgeFilterThresholds] = Field(default=None, alias="edgeFilterThresholds")
     gibbs_sampler_parameters: Optional[ZodiacEpochs] = Field(default=None, alias="gibbsSamplerParameters")
-    __properties: ClassVar[List[str]] = ["enabled", "consideredCandidatesAt300Mz", "consideredCandidatesAt800Mz", "runInTwoSteps", "edgeFilterThresholds", "gibbsSamplerParameters"]
+    library_search_anchors: Optional[ZodiacLibraryScoring] = Field(default=None, alias="librarySearchAnchors")
+    analogue_search_anchors: Optional[ZodiacAnalogueNodes] = Field(default=None, alias="analogueSearchAnchors")
+    __properties: ClassVar[List[str]] = ["enabled", "consideredCandidatesAt300Mz", "consideredCandidatesAt800Mz", "runInTwoSteps", "edgeFilterThresholds", "gibbsSamplerParameters", "librarySearchAnchors", "analogueSearchAnchors"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -79,6 +83,12 @@ class Zodiac(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of gibbs_sampler_parameters
         if self.gibbs_sampler_parameters:
             _dict['gibbsSamplerParameters'] = self.gibbs_sampler_parameters.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of library_search_anchors
+        if self.library_search_anchors:
+            _dict['librarySearchAnchors'] = self.library_search_anchors.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of analogue_search_anchors
+        if self.analogue_search_anchors:
+            _dict['analogueSearchAnchors'] = self.analogue_search_anchors.to_dict()
         # set to None if considered_candidates_at300_mz (nullable) is None
         # and model_fields_set contains the field
         if self.considered_candidates_at300_mz is None and "considered_candidates_at300_mz" in self.model_fields_set:
@@ -104,6 +114,16 @@ class Zodiac(BaseModel):
         if self.gibbs_sampler_parameters is None and "gibbs_sampler_parameters" in self.model_fields_set:
             _dict['gibbsSamplerParameters'] = None
 
+        # set to None if library_search_anchors (nullable) is None
+        # and model_fields_set contains the field
+        if self.library_search_anchors is None and "library_search_anchors" in self.model_fields_set:
+            _dict['librarySearchAnchors'] = None
+
+        # set to None if analogue_search_anchors (nullable) is None
+        # and model_fields_set contains the field
+        if self.analogue_search_anchors is None and "analogue_search_anchors" in self.model_fields_set:
+            _dict['analogueSearchAnchors'] = None
+
         return _dict
 
     @classmethod
@@ -121,7 +141,9 @@ class Zodiac(BaseModel):
             "consideredCandidatesAt800Mz": obj.get("consideredCandidatesAt800Mz"),
             "runInTwoSteps": obj.get("runInTwoSteps"),
             "edgeFilterThresholds": ZodiacEdgeFilterThresholds.from_dict(obj["edgeFilterThresholds"]) if obj.get("edgeFilterThresholds") is not None else None,
-            "gibbsSamplerParameters": ZodiacEpochs.from_dict(obj["gibbsSamplerParameters"]) if obj.get("gibbsSamplerParameters") is not None else None
+            "gibbsSamplerParameters": ZodiacEpochs.from_dict(obj["gibbsSamplerParameters"]) if obj.get("gibbsSamplerParameters") is not None else None,
+            "librarySearchAnchors": ZodiacLibraryScoring.from_dict(obj["librarySearchAnchors"]) if obj.get("librarySearchAnchors") is not None else None,
+            "analogueSearchAnchors": ZodiacAnalogueNodes.from_dict(obj["analogueSearchAnchors"]) if obj.get("analogueSearchAnchors") is not None else None
         })
         return _obj
 

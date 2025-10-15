@@ -20,8 +20,8 @@ jobs:
     - name: Download latest generators
       run: |
         cd .updater/openapi_generator
-        wget https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/7.10.0/openapi-generator-cli-7.10.0.jar -O openapi-generator-cli.jar
-        java -jar openapi-generator-cli.jar version > version
+        wget -nv https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/7.10.0/openapi-generator-cli-7.10.0.jar -O openapi-generator-cli-7.10.jar
+        wget -nv https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/7.16.0/openapi-generator-cli-7.16.0.jar -O openapi-generator-cli-7.16.jar
     - name: Download latest Sirius Release
       uses: nick-fields/retry@v2
       with:
@@ -34,7 +34,7 @@ jobs:
             echo "Writing Version files: $packageVersion"
             echo $packageVersion > ./packageVersion.txt
             echo "Downloading Version: $packageVersion"
-            cat ./releases.json | grep 'browser_download_url.*linux-x64.zip\"' | sort | tac | head -n 1 | cut -d : -f 2,3 | tr -d \" | wget -i -
+            cat ./releases.json | grep 'browser_download_url.*linux-x64.zip\"' | sort | tac | head -n 1 | cut -d : -f 2,3 | tr -d \" | wget -nv -i -
             echo "Download Complete"
             unzip *.zip
             echo "Api Ready"
@@ -45,7 +45,7 @@ jobs:
       run: |
         while ! nc -z localhost 8080; do sleep 0.1; done
         cd .updater/api
-        wget http://localhost:8080/v3/api-docs -O api-docs-strings.json
+        wget -nv http://localhost:8080/v3/api-docs -O api-docs-strings.json
     - name: Shutdown SIRIUS
       run: curl -X POST http://localhost:8080/actuator/shutdown
     - name: Run Rest Api with enums
@@ -55,7 +55,7 @@ jobs:
       run: |
         while ! nc -z localhost 8080; do sleep 0.1; done
         cd .updater/api
-        wget http://localhost:8080/v3/api-docs -O api-docs-enums.json
+        wget -nv http://localhost:8080/v3/api-docs -O api-docs-enums.json
     - name: Shutdown SIRIUS
       run: curl -X POST http://localhost:8080/actuator/shutdown
     - name: Update Clients
@@ -67,7 +67,7 @@ jobs:
         rm -rf client-api_python/generated/docs
         rm -rf client-api_python/generated/PySirius
        
-        java -jar .updater/openapi_generator/openapi-generator-cli.jar generate -i .updater/api/api-docs-enums.json -c .updater/config/Python/config.json -g python -o client-api_python/generated -t client-api_python/templates/python --additional-properties=packageVersion=$packageVersion
+        java -jar .updater/openapi_generator/openapi-generator-cli-7.16.jar generate -i .updater/api/api-docs-enums.json -c .updater/config/Python/config.json -g python -o client-api_python/generated -t client-api_python/templates/python --additional-properties=packageVersion=$packageVersion
         
         echo "temporarily move R manual folder"
         mv client-api_r/generated/man/ client-api_r/
@@ -76,28 +76,28 @@ jobs:
         rm -rf client-api_r/generated/docs
         rm -rf client-api_r/generated/R
 
-        java -jar .updater/openapi_generator/openapi-generator-cli.jar generate -i .updater/api/api-docs-strings.json -c .updater/config/R/config.json -g r -o client-api_r/generated -t client-api_r/templates/r --additional-properties=packageVersion=$packageVersion
+        java -jar .updater/openapi_generator/openapi-generator-cli-7.10.jar generate -i .updater/api/api-docs-strings.json -c .updater/config/R/config.json -g r -o client-api_r/generated -t client-api_r/templates/r --additional-properties=packageVersion=$packageVersion
         
         echo "recover R manual folder"
         mv client-api_r/man/ client-api_r/generated/
         
-        # echo "generating Ruby Code"
-        # rm -rf client-api_ruby/generated/*
-        # java -jar .updater/openapi_generator/openapi-generator-cli.jar generate -i .updater/api/api-docs.json -c .updater/config/Ruby/config.json -g ruby -o client-api_ruby/generated
         echo "generating Finished!"
     - name: Format Python Package
       run: |
-         cp client-api_python/sirius_api.py client-api_python/generated/PySirius
-         cp client-api_python/sirius.py client-api_python/generated/PySirius
-
-         echo "from PySirius.sirius_api import PySiriusAPI" >> client-api_python/generated/PySirius/__init__.py
-         echo "from PySirius.sirius import SiriusSDK" >> client-api_python/generated/PySirius/__init__.py
+        cp client-api_python/pysirius_api.py client-api_python/generated/PySirius
+        cp client-api_python/pysirius_sdk.py client-api_python/generated/PySirius
+        cp client-api_python/pysirius_helper.py client-api_python/generated/PySirius
+        
+        chmod +x ./client-api_python/formatting/format_init.sh
+        ./client-api_python/formatting/format_init.sh
     - name: Format R package
       run: |
-        cp client-api_r/SiriusSDK.R  client-api_r/generated/R/SiriusSDK.R
+        cp client-api_r/rsirius_sdk.R  client-api_r/generated/R/rsirius_sdk.R
+        cp client-api_r/rsirius_helper.R  client-api_r/generated/R/rsirius_helper.R
         echo >> client-api_r/generated/NAMESPACE
         echo "# SDK" >> client-api_r/generated/NAMESPACE
         echo "export(SiriusSDK)" >> client-api_r/generated/NAMESPACE
+        echo "export(Helper)" >> client-api_r/generated/NAMESPACE
         
         chmod +x ./client-api_r/patches/list_syntax_fix.sh
         ./client-api_r/patches/list_syntax_fix.sh
@@ -109,7 +109,7 @@ jobs:
         echo "Done"
     - name: Remove Openapi Generator Files
       run: |
-        rm .updater/openapi_generator/openapi-generator-cli.jar
+        rm .updater/openapi_generator/*.jar
         ls ./.github/workflows
         echo "Done"
     - name: update file and push to remote

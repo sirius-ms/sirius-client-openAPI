@@ -225,19 +225,19 @@ JobSubmission <- R6::R6Class(
     fromJSON = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       if (!is.null(this_object$`compoundIds`)) {
-        self$`compoundIds` <- ApiClient$new()$deserializeObj(this_object$`compoundIds`, "array[character]", loadNamespace("Rsirius"))
+        self$`compoundIds` <- ApiClient$new()$deserializeObj(this_object$`compoundIds`, "array[character]", loadNamespace("RSirius"))
       }
       if (!is.null(this_object$`alignedFeatureIds`)) {
-        self$`alignedFeatureIds` <- ApiClient$new()$deserializeObj(this_object$`alignedFeatureIds`, "array[character]", loadNamespace("Rsirius"))
+        self$`alignedFeatureIds` <- ApiClient$new()$deserializeObj(this_object$`alignedFeatureIds`, "array[character]", loadNamespace("RSirius"))
       }
       if (!is.null(this_object$`fallbackAdducts`)) {
-        self$`fallbackAdducts` <- ApiClient$new()$deserializeObj(this_object$`fallbackAdducts`, "array[character]", loadNamespace("Rsirius"))
+        self$`fallbackAdducts` <- ApiClient$new()$deserializeObj(this_object$`fallbackAdducts`, "array[character]", loadNamespace("RSirius"))
       }
       if (!is.null(this_object$`enforcedAdducts`)) {
-        self$`enforcedAdducts` <- ApiClient$new()$deserializeObj(this_object$`enforcedAdducts`, "array[character]", loadNamespace("Rsirius"))
+        self$`enforcedAdducts` <- ApiClient$new()$deserializeObj(this_object$`enforcedAdducts`, "array[character]", loadNamespace("RSirius"))
       }
       if (!is.null(this_object$`detectableAdducts`)) {
-        self$`detectableAdducts` <- ApiClient$new()$deserializeObj(this_object$`detectableAdducts`, "array[character]", loadNamespace("Rsirius"))
+        self$`detectableAdducts` <- ApiClient$new()$deserializeObj(this_object$`detectableAdducts`, "array[character]", loadNamespace("RSirius"))
       }
       if (!is.null(this_object$`recompute`)) {
         self$`recompute` <- this_object$`recompute`
@@ -278,7 +278,7 @@ JobSubmission <- R6::R6Class(
         self$`msNovelistParams` <- `msnovelistparams_object`
       }
       if (!is.null(this_object$`configMap`)) {
-        self$`configMap` <- ApiClient$new()$deserializeObj(this_object$`configMap`, "map(character)", loadNamespace("Rsirius"))
+        self$`configMap` <- ApiClient$new()$deserializeObj(this_object$`configMap`, "map(character)", loadNamespace("RSirius"))
       }
       self
     },
@@ -301,11 +301,11 @@ JobSubmission <- R6::R6Class(
     #' @return the instance of JobSubmission
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
-      self$`compoundIds` <- ApiClient$new()$deserializeObj(this_object$`compoundIds`, "array[character]", loadNamespace("Rsirius"))
-      self$`alignedFeatureIds` <- ApiClient$new()$deserializeObj(this_object$`alignedFeatureIds`, "array[character]", loadNamespace("Rsirius"))
-      self$`fallbackAdducts` <- ApiClient$new()$deserializeObj(this_object$`fallbackAdducts`, "array[character]", loadNamespace("Rsirius"))
-      self$`enforcedAdducts` <- ApiClient$new()$deserializeObj(this_object$`enforcedAdducts`, "array[character]", loadNamespace("Rsirius"))
-      self$`detectableAdducts` <- ApiClient$new()$deserializeObj(this_object$`detectableAdducts`, "array[character]", loadNamespace("Rsirius"))
+      self$`compoundIds` <- ApiClient$new()$deserializeObj(this_object$`compoundIds`, "array[character]", loadNamespace("RSirius"))
+      self$`alignedFeatureIds` <- ApiClient$new()$deserializeObj(this_object$`alignedFeatureIds`, "array[character]", loadNamespace("RSirius"))
+      self$`fallbackAdducts` <- ApiClient$new()$deserializeObj(this_object$`fallbackAdducts`, "array[character]", loadNamespace("RSirius"))
+      self$`enforcedAdducts` <- ApiClient$new()$deserializeObj(this_object$`enforcedAdducts`, "array[character]", loadNamespace("RSirius"))
+      self$`detectableAdducts` <- ApiClient$new()$deserializeObj(this_object$`detectableAdducts`, "array[character]", loadNamespace("RSirius"))
       self$`recompute` <- this_object$`recompute`
       self$`spectraSearchParams` <- SpectralLibrarySearch$new()$fromJSON(jsonlite::toJSON(this_object$`spectraSearchParams`, auto_unbox = TRUE, digits = NA, null = 'null'))
       self$`formulaIdParams` <- Sirius$new()$fromJSON(jsonlite::toJSON(this_object$`formulaIdParams`, auto_unbox = TRUE, digits = NA, null = 'null'))
@@ -314,7 +314,7 @@ JobSubmission <- R6::R6Class(
       self$`canopusParams` <- Canopus$new()$fromJSON(jsonlite::toJSON(this_object$`canopusParams`, auto_unbox = TRUE, digits = NA, null = 'null'))
       self$`structureDbSearchParams` <- StructureDbSearch$new()$fromJSON(jsonlite::toJSON(this_object$`structureDbSearchParams`, auto_unbox = TRUE, digits = NA, null = 'null'))
       self$`msNovelistParams` <- MsNovelist$new()$fromJSON(jsonlite::toJSON(this_object$`msNovelistParams`, auto_unbox = TRUE, digits = NA, null = 'null'))
-      self$`configMap` <- ApiClient$new()$deserializeObj(this_object$`configMap`, "map(character)", loadNamespace("Rsirius"))
+      self$`configMap` <- ApiClient$new()$deserializeObj(this_object$`configMap`, "map(character)", loadNamespace("RSirius"))
       self
     },
 

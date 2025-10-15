@@ -1,4 +1,4 @@
-# Rsirius::BinaryFingerprint
+# RSirius::BinaryFingerprint
 
 
 ## Properties

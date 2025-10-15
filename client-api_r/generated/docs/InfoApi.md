@@ -15,7 +15,7 @@ Method | HTTP request | Description
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 
 api_instance <- rsirius_api$new()
@@ -53,7 +53,7 @@ No authorization required
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # prepare function argument(s)
 var_server_info <- TRUE # character |  (Optional)

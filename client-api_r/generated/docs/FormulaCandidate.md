@@ -1,4 +1,4 @@
-# Rsirius::FormulaCandidate
+# RSirius::FormulaCandidate
 
 Molecular formula candidate that holds a unique identifier (molecular formula + adduct).  It can be extended with optional scoring metrics and the raw results  such as fragmentation trees and simulated isotope pattern.
 

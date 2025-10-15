@@ -3,7 +3,9 @@
 
 context("Test LoginAndAccountApi")
 
-api_instance <- LoginAndAccountApi$new()
+sdk <- SiriusSDK$new()
+api <- sdk$attach_to_sirius(sirius_port=8080)
+api_instance <- api$login_and_account_api
 
 test_that("GetAccountInfo", {
   # tests for GetAccountInfo
@@ -24,7 +26,6 @@ test_that("GetSignUpURL", {
   # Get SignUp URL (For signUp via web browser)
   # @return [character]
 
-  # TODO deserialize error
   response <- api_instance$GetSignUpURL()
   expect_true(inherits(response, "character"))
 })

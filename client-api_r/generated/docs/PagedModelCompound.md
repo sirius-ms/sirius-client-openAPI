@@ -1,4 +1,4 @@
-# Rsirius::PagedModelCompound
+# RSirius::PagedModelCompound
 
 
 ## Properties

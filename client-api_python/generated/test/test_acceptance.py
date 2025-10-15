@@ -1,8 +1,6 @@
 import unittest
 import os
-import time
-
-from PySirius import SiriusSDK, AlignedFeatureOptField, FragmentationTree, FormulaCandidate
+from PySirius import SiriusSDK, AlignedFeatureOptField, FragmentationTree, FormulaCandidate, JobState, Helper
 
 # a general purpose acceptance test that tests basic packe behaviour and can be used as blueprint for testing packages in CI/CD pipelines
 class TestAcceptance(unittest.TestCase):
@@ -17,7 +15,7 @@ class TestAcceptance(unittest.TestCase):
     def test_simple_computation(self):
         path_to_project = self.path_to_project
         # start acceptance test for packages
-        api = SiriusSDK().attach_or_start_sirius(headless=True)
+        api = SiriusSDK().attach_to_sirius(sirius_port=8080)
         ps_info = api.projects().create_project("testProject", os.path.abspath(path_to_project))
         try:
             path = os.getenv('RECIPE_DIR') + "/Kaempferol.ms"
@@ -35,17 +33,10 @@ class TestAcceptance(unittest.TestCase):
             job_sub.ms_novelist_params.enabled = False
 
             job = api.jobs().start_job(project_id=ps_info.project_id, job_submission=job_sub)
+            Helper.wait_for_job_completion(ps_info, job, api)
 
-            while True:
-                if api.jobs().get_job(ps_info.project_id, job.id).progress.state != 'DONE':
-                    time.sleep(10)
-                else:
-                    break
-
-            formula_candidate = api.features().get_aligned_feature(ps_info.project_id, feature_id, [AlignedFeatureOptField.TOPANNOTATIONS]).top_annotations.formula_annotation
+            formula_candidate = api.features().get_aligned_feature(ps_info.project_id, feature_id, opt_fields=["topAnnotations"]).top_annotations.formula_annotation
             tree = api.features().get_frag_tree(ps_info.project_id, feature_id, formula_candidate.formula_id)
-
-            print(tree.to_json())
 
             self.assertIsInstance(formula_candidate, FormulaCandidate)
             self.assertIsInstance(tree, FragmentationTree)

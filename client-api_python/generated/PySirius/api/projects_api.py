@@ -46,6 +46,7 @@ class ProjectsApi:
     def close_project(
         self,
         project_id: Annotated[StrictStr, Field(description="unique name/identifier of the  project-space to be closed.")],
+        compact: Annotated[Optional[StrictBool], Field(description="if true, compact project storage after closing. DEPRECATED: Compacting acts on the local filesystem and will likely be removed in a later version.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -59,12 +60,14 @@ class ProjectsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> None:
-        """Close project-space and remove it from application
+        """Close project-space and remove it from the application
 
-        Close project-space and remove it from application. Project will NOT be deleted from disk.  <p>  ATTENTION: This will cancel and remove all jobs running on this Project before closing it.  If there are many jobs, this might take some time.
+        Close project-space and remove it from the application. The Project will NOT be deleted from disk.  <p>  ATTENTION: This will cancel and remove all jobs running on this Project before closing it.  If there are many jobs, this might take some time.
 
         :param project_id: unique name/identifier of the  project-space to be closed. (required)
         :type project_id: str
+        :param compact: if true, compact project storage after closing. DEPRECATED: Compacting acts on the local filesystem and will likely be removed in a later version.
+        :type compact: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -89,6 +92,7 @@ class ProjectsApi:
 
         _param = self._close_project_serialize(
             project_id=project_id,
+            compact=compact,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -113,6 +117,7 @@ class ProjectsApi:
     def close_project_with_http_info(
         self,
         project_id: Annotated[StrictStr, Field(description="unique name/identifier of the  project-space to be closed.")],
+        compact: Annotated[Optional[StrictBool], Field(description="if true, compact project storage after closing. DEPRECATED: Compacting acts on the local filesystem and will likely be removed in a later version.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -126,12 +131,14 @@ class ProjectsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[None]:
-        """Close project-space and remove it from application
+        """Close project-space and remove it from the application
 
-        Close project-space and remove it from application. Project will NOT be deleted from disk.  <p>  ATTENTION: This will cancel and remove all jobs running on this Project before closing it.  If there are many jobs, this might take some time.
+        Close project-space and remove it from the application. The Project will NOT be deleted from disk.  <p>  ATTENTION: This will cancel and remove all jobs running on this Project before closing it.  If there are many jobs, this might take some time.
 
         :param project_id: unique name/identifier of the  project-space to be closed. (required)
         :type project_id: str
+        :param compact: if true, compact project storage after closing. DEPRECATED: Compacting acts on the local filesystem and will likely be removed in a later version.
+        :type compact: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -156,6 +163,7 @@ class ProjectsApi:
 
         _param = self._close_project_serialize(
             project_id=project_id,
+            compact=compact,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -180,6 +188,7 @@ class ProjectsApi:
     def close_project_without_preload_content(
         self,
         project_id: Annotated[StrictStr, Field(description="unique name/identifier of the  project-space to be closed.")],
+        compact: Annotated[Optional[StrictBool], Field(description="if true, compact project storage after closing. DEPRECATED: Compacting acts on the local filesystem and will likely be removed in a later version.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -193,12 +202,14 @@ class ProjectsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Close project-space and remove it from application
+        """Close project-space and remove it from the application
 
-        Close project-space and remove it from application. Project will NOT be deleted from disk.  <p>  ATTENTION: This will cancel and remove all jobs running on this Project before closing it.  If there are many jobs, this might take some time.
+        Close project-space and remove it from the application. The Project will NOT be deleted from disk.  <p>  ATTENTION: This will cancel and remove all jobs running on this Project before closing it.  If there are many jobs, this might take some time.
 
         :param project_id: unique name/identifier of the  project-space to be closed. (required)
         :type project_id: str
+        :param compact: if true, compact project storage after closing. DEPRECATED: Compacting acts on the local filesystem and will likely be removed in a later version.
+        :type compact: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -223,6 +234,7 @@ class ProjectsApi:
 
         _param = self._close_project_serialize(
             project_id=project_id,
+            compact=compact,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -242,6 +254,7 @@ class ProjectsApi:
     def _close_project_serialize(
         self,
         project_id,
+        compact,
         _request_auth,
         _content_type,
         _headers,
@@ -257,13 +270,19 @@ class ProjectsApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, str] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
         if project_id is not None:
             _path_params['projectId'] = project_id
         # process the query parameters
+        if compact is not None:
+            
+            _query_params.append(('compact', compact))
+            
         # process the header parameters
         # process the form parameters
         # process the body parameter
@@ -535,7 +554,9 @@ class ProjectsApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, str] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -556,11 +577,12 @@ class ProjectsApi:
 
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/json'
-            ]
-        )
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -810,7 +832,9 @@ class ProjectsApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, str] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -827,12 +851,13 @@ class ProjectsApi:
 
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/csv', 
-                'application/CSV'
-            ]
-        )
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/csv', 
+                    'application/CSV'
+                ]
+            )
 
 
         # authentication setting
@@ -1082,7 +1107,9 @@ class ProjectsApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, str] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -1099,12 +1126,13 @@ class ProjectsApi:
 
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/csv', 
-                'application/CSV'
-            ]
-        )
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/csv', 
+                    'application/CSV'
+                ]
+            )
 
 
         # authentication setting
@@ -1354,7 +1382,9 @@ class ProjectsApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, str] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -1371,12 +1401,13 @@ class ProjectsApi:
 
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/csv', 
-                'application/CSV'
-            ]
-        )
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/csv', 
+                    'application/CSV'
+                ]
+            )
 
 
         # authentication setting
@@ -1630,7 +1661,9 @@ class ProjectsApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, str] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -1647,11 +1680,12 @@ class ProjectsApi:
 
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/json'
-            ]
-        )
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -1878,7 +1912,9 @@ class ProjectsApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, str] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -1889,11 +1925,12 @@ class ProjectsApi:
 
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/json'
-            ]
-        )
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -1922,8 +1959,8 @@ class ProjectsApi:
     def import_ms_run_data(
         self,
         project_id: Annotated[StrictStr, Field(description="Project-space to import into.")],
-        input_files: Optional[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]]] = None,
-        parameters: Optional[LcmsSubmissionParameters] = None,
+        input_files: Annotated[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]], Field(description="Files to import into project.")],
+        parameters: LcmsSubmissionParameters,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1943,9 +1980,9 @@ class ProjectsApi:
 
         :param project_id: Project-space to import into. (required)
         :type project_id: str
-        :param input_files:
+        :param input_files: Files to import into project. (required)
         :type input_files: List[bytearray]
-        :param parameters:
+        :param parameters: (required)
         :type parameters: LcmsSubmissionParameters
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -1997,8 +2034,8 @@ class ProjectsApi:
     def import_ms_run_data_with_http_info(
         self,
         project_id: Annotated[StrictStr, Field(description="Project-space to import into.")],
-        input_files: Optional[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]]] = None,
-        parameters: Optional[LcmsSubmissionParameters] = None,
+        input_files: Annotated[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]], Field(description="Files to import into project.")],
+        parameters: LcmsSubmissionParameters,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2018,9 +2055,9 @@ class ProjectsApi:
 
         :param project_id: Project-space to import into. (required)
         :type project_id: str
-        :param input_files:
+        :param input_files: Files to import into project. (required)
         :type input_files: List[bytearray]
-        :param parameters:
+        :param parameters: (required)
         :type parameters: LcmsSubmissionParameters
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -2072,8 +2109,8 @@ class ProjectsApi:
     def import_ms_run_data_without_preload_content(
         self,
         project_id: Annotated[StrictStr, Field(description="Project-space to import into.")],
-        input_files: Optional[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]]] = None,
-        parameters: Optional[LcmsSubmissionParameters] = None,
+        input_files: Annotated[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]], Field(description="Files to import into project.")],
+        parameters: LcmsSubmissionParameters,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2093,9 +2130,9 @@ class ProjectsApi:
 
         :param project_id: Project-space to import into. (required)
         :type project_id: str
-        :param input_files:
+        :param input_files: Files to import into project. (required)
         :type input_files: List[bytearray]
-        :param parameters:
+        :param parameters: (required)
         :type parameters: LcmsSubmissionParameters
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -2153,14 +2190,16 @@ class ProjectsApi:
         _host = None
 
         _collection_formats: Dict[str, str] = {
-            'inputFiles': 'csv',
+            'inputFiles': 'multi',
         }
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, str] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -2172,16 +2211,26 @@ class ProjectsApi:
         if input_files is not None:
             _files['inputFiles'] = input_files
         if parameters is not None:
-            _form_params.append(('parameters', parameters))
+            # JSON-encode model parameters for multipart/form-data
+            import json
+            if hasattr(parameters, 'model_dump'):
+                params_dict = parameters.model_dump(mode='json')
+            elif hasattr(parameters, 'dict'):
+                params_dict = parameters.dict()
+            else:
+                params_dict = parameters
+            params_json = json.dumps(params_dict, default=str, separators=(',', ':'))
+            _form_params.append(('parameters', (None, params_json, 'application/json')))
         # process the body parameter
 
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/json'
-            ]
-        )
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
         # set the HTTP header `Content-Type`
         if _content_type:
@@ -2223,9 +2272,9 @@ class ProjectsApi:
     def import_ms_run_data_as_job(
         self,
         project_id: Annotated[StrictStr, Field(description="Project-space to import into.")],
+        input_files: Annotated[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]], Field(description="Files to import into project.")],
+        parameters: LcmsSubmissionParameters,
         opt_fields: Annotated[Optional[List[Optional[JobOptField]]], Field(description="Set of optional fields to be included. Use 'none' only to override defaults.")] = None,
-        input_files: Optional[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]]] = None,
-        parameters: Optional[LcmsSubmissionParameters] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2245,12 +2294,12 @@ class ProjectsApi:
 
         :param project_id: Project-space to import into. (required)
         :type project_id: str
+        :param input_files: Files to import into project. (required)
+        :type input_files: List[bytearray]
+        :param parameters: (required)
+        :type parameters: LcmsSubmissionParameters
         :param opt_fields: Set of optional fields to be included. Use 'none' only to override defaults.
         :type opt_fields: List[JobOptField]
-        :param input_files:
-        :type input_files: List[bytearray]
-        :param parameters:
-        :type parameters: LcmsSubmissionParameters
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2275,9 +2324,9 @@ class ProjectsApi:
 
         _param = self._import_ms_run_data_as_job_serialize(
             project_id=project_id,
-            opt_fields=opt_fields,
             input_files=input_files,
             parameters=parameters,
+            opt_fields=opt_fields,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2302,9 +2351,9 @@ class ProjectsApi:
     def import_ms_run_data_as_job_with_http_info(
         self,
         project_id: Annotated[StrictStr, Field(description="Project-space to import into.")],
+        input_files: Annotated[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]], Field(description="Files to import into project.")],
+        parameters: LcmsSubmissionParameters,
         opt_fields: Annotated[Optional[List[Optional[JobOptField]]], Field(description="Set of optional fields to be included. Use 'none' only to override defaults.")] = None,
-        input_files: Optional[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]]] = None,
-        parameters: Optional[LcmsSubmissionParameters] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2324,12 +2373,12 @@ class ProjectsApi:
 
         :param project_id: Project-space to import into. (required)
         :type project_id: str
+        :param input_files: Files to import into project. (required)
+        :type input_files: List[bytearray]
+        :param parameters: (required)
+        :type parameters: LcmsSubmissionParameters
         :param opt_fields: Set of optional fields to be included. Use 'none' only to override defaults.
         :type opt_fields: List[JobOptField]
-        :param input_files:
-        :type input_files: List[bytearray]
-        :param parameters:
-        :type parameters: LcmsSubmissionParameters
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2354,9 +2403,9 @@ class ProjectsApi:
 
         _param = self._import_ms_run_data_as_job_serialize(
             project_id=project_id,
-            opt_fields=opt_fields,
             input_files=input_files,
             parameters=parameters,
+            opt_fields=opt_fields,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2381,9 +2430,9 @@ class ProjectsApi:
     def import_ms_run_data_as_job_without_preload_content(
         self,
         project_id: Annotated[StrictStr, Field(description="Project-space to import into.")],
+        input_files: Annotated[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]], Field(description="Files to import into project.")],
+        parameters: LcmsSubmissionParameters,
         opt_fields: Annotated[Optional[List[Optional[JobOptField]]], Field(description="Set of optional fields to be included. Use 'none' only to override defaults.")] = None,
-        input_files: Optional[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]]] = None,
-        parameters: Optional[LcmsSubmissionParameters] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2403,12 +2452,12 @@ class ProjectsApi:
 
         :param project_id: Project-space to import into. (required)
         :type project_id: str
+        :param input_files: Files to import into project. (required)
+        :type input_files: List[bytearray]
+        :param parameters: (required)
+        :type parameters: LcmsSubmissionParameters
         :param opt_fields: Set of optional fields to be included. Use 'none' only to override defaults.
         :type opt_fields: List[JobOptField]
-        :param input_files:
-        :type input_files: List[bytearray]
-        :param parameters:
-        :type parameters: LcmsSubmissionParameters
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2433,9 +2482,9 @@ class ProjectsApi:
 
         _param = self._import_ms_run_data_as_job_serialize(
             project_id=project_id,
-            opt_fields=opt_fields,
             input_files=input_files,
             parameters=parameters,
+            opt_fields=opt_fields,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2455,9 +2504,9 @@ class ProjectsApi:
     def _import_ms_run_data_as_job_serialize(
         self,
         project_id,
-        opt_fields,
         input_files,
         parameters,
+        opt_fields,
         _request_auth,
         _content_type,
         _headers,
@@ -2467,15 +2516,17 @@ class ProjectsApi:
         _host = None
 
         _collection_formats: Dict[str, str] = {
+            'inputFiles': 'multi',
             'optFields': 'multi',
-            'inputFiles': 'csv',
         }
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, str] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -2491,16 +2542,26 @@ class ProjectsApi:
         if input_files is not None:
             _files['inputFiles'] = input_files
         if parameters is not None:
-            _form_params.append(('parameters', parameters))
+            # JSON-encode model parameters for multipart/form-data
+            import json
+            if hasattr(parameters, 'model_dump'):
+                params_dict = parameters.model_dump(mode='json')
+            elif hasattr(parameters, 'dict'):
+                params_dict = parameters.dict()
+            else:
+                params_dict = parameters
+            params_json = json.dumps(params_dict, default=str, separators=(',', ':'))
+            _form_params.append(('parameters', (None, params_json, 'application/json')))
         # process the body parameter
 
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/json'
-            ]
-        )
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
         # set the HTTP header `Content-Type`
         if _content_type:
@@ -2542,9 +2603,9 @@ class ProjectsApi:
     def import_preprocessed_data(
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to import into.")],
+        input_files: Annotated[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]], Field(description="files to import into project")],
         ignore_formulas: Optional[StrictBool] = None,
         allow_ms1_only: Optional[StrictBool] = None,
-        input_files: Optional[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]]] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2564,12 +2625,12 @@ class ProjectsApi:
 
         :param project_id: project-space to import into. (required)
         :type project_id: str
+        :param input_files: files to import into project (required)
+        :type input_files: List[bytearray]
         :param ignore_formulas:
         :type ignore_formulas: bool
         :param allow_ms1_only:
         :type allow_ms1_only: bool
-        :param input_files:
-        :type input_files: List[bytearray]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2594,9 +2655,9 @@ class ProjectsApi:
 
         _param = self._import_preprocessed_data_serialize(
             project_id=project_id,
+            input_files=input_files,
             ignore_formulas=ignore_formulas,
             allow_ms1_only=allow_ms1_only,
-            input_files=input_files,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2621,9 +2682,9 @@ class ProjectsApi:
     def import_preprocessed_data_with_http_info(
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to import into.")],
+        input_files: Annotated[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]], Field(description="files to import into project")],
         ignore_formulas: Optional[StrictBool] = None,
         allow_ms1_only: Optional[StrictBool] = None,
-        input_files: Optional[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]]] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2643,12 +2704,12 @@ class ProjectsApi:
 
         :param project_id: project-space to import into. (required)
         :type project_id: str
+        :param input_files: files to import into project (required)
+        :type input_files: List[bytearray]
         :param ignore_formulas:
         :type ignore_formulas: bool
         :param allow_ms1_only:
         :type allow_ms1_only: bool
-        :param input_files:
-        :type input_files: List[bytearray]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2673,9 +2734,9 @@ class ProjectsApi:
 
         _param = self._import_preprocessed_data_serialize(
             project_id=project_id,
+            input_files=input_files,
             ignore_formulas=ignore_formulas,
             allow_ms1_only=allow_ms1_only,
-            input_files=input_files,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2700,9 +2761,9 @@ class ProjectsApi:
     def import_preprocessed_data_without_preload_content(
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to import into.")],
+        input_files: Annotated[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]], Field(description="files to import into project")],
         ignore_formulas: Optional[StrictBool] = None,
         allow_ms1_only: Optional[StrictBool] = None,
-        input_files: Optional[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]]] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2722,12 +2783,12 @@ class ProjectsApi:
 
         :param project_id: project-space to import into. (required)
         :type project_id: str
+        :param input_files: files to import into project (required)
+        :type input_files: List[bytearray]
         :param ignore_formulas:
         :type ignore_formulas: bool
         :param allow_ms1_only:
         :type allow_ms1_only: bool
-        :param input_files:
-        :type input_files: List[bytearray]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2752,9 +2813,9 @@ class ProjectsApi:
 
         _param = self._import_preprocessed_data_serialize(
             project_id=project_id,
+            input_files=input_files,
             ignore_formulas=ignore_formulas,
             allow_ms1_only=allow_ms1_only,
-            input_files=input_files,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2774,9 +2835,9 @@ class ProjectsApi:
     def _import_preprocessed_data_serialize(
         self,
         project_id,
+        input_files,
         ignore_formulas,
         allow_ms1_only,
-        input_files,
         _request_auth,
         _content_type,
         _headers,
@@ -2793,7 +2854,9 @@ class ProjectsApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, str] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -2816,11 +2879,12 @@ class ProjectsApi:
 
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/json'
-            ]
-        )
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
         # set the HTTP header `Content-Type`
         if _content_type:
@@ -2862,10 +2926,10 @@ class ProjectsApi:
     def import_preprocessed_data_as_job(
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to import into.")],
+        input_files: List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]],
         ignore_formulas: Optional[StrictBool] = None,
         allow_ms1_only: Optional[StrictBool] = None,
         opt_fields: Annotated[Optional[List[Optional[JobOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
-        input_files: Optional[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]]] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2885,14 +2949,14 @@ class ProjectsApi:
 
         :param project_id: project-space to import into. (required)
         :type project_id: str
+        :param input_files: (required)
+        :type input_files: List[bytearray]
         :param ignore_formulas:
         :type ignore_formulas: bool
         :param allow_ms1_only:
         :type allow_ms1_only: bool
         :param opt_fields: set of optional fields to be included. Use 'none' only to override defaults.
         :type opt_fields: List[JobOptField]
-        :param input_files:
-        :type input_files: List[bytearray]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2917,10 +2981,10 @@ class ProjectsApi:
 
         _param = self._import_preprocessed_data_as_job_serialize(
             project_id=project_id,
+            input_files=input_files,
             ignore_formulas=ignore_formulas,
             allow_ms1_only=allow_ms1_only,
             opt_fields=opt_fields,
-            input_files=input_files,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2945,10 +3009,10 @@ class ProjectsApi:
     def import_preprocessed_data_as_job_with_http_info(
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to import into.")],
+        input_files: List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]],
         ignore_formulas: Optional[StrictBool] = None,
         allow_ms1_only: Optional[StrictBool] = None,
         opt_fields: Annotated[Optional[List[Optional[JobOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
-        input_files: Optional[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]]] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2968,14 +3032,14 @@ class ProjectsApi:
 
         :param project_id: project-space to import into. (required)
         :type project_id: str
+        :param input_files: (required)
+        :type input_files: List[bytearray]
         :param ignore_formulas:
         :type ignore_formulas: bool
         :param allow_ms1_only:
         :type allow_ms1_only: bool
         :param opt_fields: set of optional fields to be included. Use 'none' only to override defaults.
         :type opt_fields: List[JobOptField]
-        :param input_files:
-        :type input_files: List[bytearray]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3000,10 +3064,10 @@ class ProjectsApi:
 
         _param = self._import_preprocessed_data_as_job_serialize(
             project_id=project_id,
+            input_files=input_files,
             ignore_formulas=ignore_formulas,
             allow_ms1_only=allow_ms1_only,
             opt_fields=opt_fields,
-            input_files=input_files,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3028,10 +3092,10 @@ class ProjectsApi:
     def import_preprocessed_data_as_job_without_preload_content(
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to import into.")],
+        input_files: List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]],
         ignore_formulas: Optional[StrictBool] = None,
         allow_ms1_only: Optional[StrictBool] = None,
         opt_fields: Annotated[Optional[List[Optional[JobOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
-        input_files: Optional[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]]] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3051,14 +3115,14 @@ class ProjectsApi:
 
         :param project_id: project-space to import into. (required)
         :type project_id: str
+        :param input_files: (required)
+        :type input_files: List[bytearray]
         :param ignore_formulas:
         :type ignore_formulas: bool
         :param allow_ms1_only:
         :type allow_ms1_only: bool
         :param opt_fields: set of optional fields to be included. Use 'none' only to override defaults.
         :type opt_fields: List[JobOptField]
-        :param input_files:
-        :type input_files: List[bytearray]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3083,10 +3147,10 @@ class ProjectsApi:
 
         _param = self._import_preprocessed_data_as_job_serialize(
             project_id=project_id,
+            input_files=input_files,
             ignore_formulas=ignore_formulas,
             allow_ms1_only=allow_ms1_only,
             opt_fields=opt_fields,
-            input_files=input_files,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3106,10 +3170,10 @@ class ProjectsApi:
     def _import_preprocessed_data_as_job_serialize(
         self,
         project_id,
+        input_files,
         ignore_formulas,
         allow_ms1_only,
         opt_fields,
-        input_files,
         _request_auth,
         _content_type,
         _headers,
@@ -3119,15 +3183,17 @@ class ProjectsApi:
         _host = None
 
         _collection_formats: Dict[str, str] = {
-            'optFields': 'multi',
             'inputFiles': 'csv',
+            'optFields': 'multi',
         }
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, str] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -3154,11 +3220,12 @@ class ProjectsApi:
 
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/json'
-            ]
-        )
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
         # set the HTTP header `Content-Type`
         if _content_type:
@@ -3438,7 +3505,9 @@ class ProjectsApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, str] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -3459,11 +3528,12 @@ class ProjectsApi:
 
 
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/json'
-            ]
-        )
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting

@@ -113,7 +113,7 @@ AlignedFeatureQualityExperimental <- R6::R6Class(
         self$`overallQuality` <- this_object$`overallQuality`
       }
       if (!is.null(this_object$`categories`)) {
-        self$`categories` <- ApiClient$new()$deserializeObj(this_object$`categories`, "map(Category)", loadNamespace("Rsirius"))
+        self$`categories` <- ApiClient$new()$deserializeObj(this_object$`categories`, "map(Category)", loadNamespace("RSirius"))
       }
       self
     },
@@ -141,7 +141,7 @@ AlignedFeatureQualityExperimental <- R6::R6Class(
         stop(paste("Error! \"", this_object$`overallQuality`, "\" cannot be assigned to `overallQuality`. Must be \"NOT_APPLICABLE\", \"LOWEST\", \"BAD\", \"DECENT\", \"GOOD\".", sep = ""))
       }
       self$`overallQuality` <- this_object$`overallQuality`
-      self$`categories` <- ApiClient$new()$deserializeObj(this_object$`categories`, "map(Category)", loadNamespace("Rsirius"))
+      self$`categories` <- ApiClient$new()$deserializeObj(this_object$`categories`, "map(Category)", loadNamespace("RSirius"))
       self
     },
 

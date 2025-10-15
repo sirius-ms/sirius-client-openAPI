@@ -29,10 +29,11 @@ class StructureCandidate(BaseModel):
     inchi_key: Optional[StrictStr] = Field(default=None, alias="inchiKey")
     smiles: Optional[StrictStr] = None
     structure_name: Optional[StrictStr] = Field(default=None, alias="structureName")
-    xlog_p: Optional[float] = Field(default=None, alias="xlogP")
+    structure_svg: Optional[StrictStr] = Field(default=None, description="SVG graphics of the structure candidate  OPTIONAL: needs to be added by parameter", alias="structureSvg")
     db_links: Optional[List[Optional[DBLink]]] = Field(default=None, description="List of structure database links belonging to this structure candidate  OPTIONAL: needs to be added by parameter", alias="dbLinks")
     spectral_library_matches: Optional[List[Optional[SpectralLibraryMatch]]] = Field(default=None, description="List of spectral library matches belonging to this structure candidate  OPTIONAL: needs to be added by parameter", alias="spectralLibraryMatches")
-    __properties: ClassVar[List[str]] = ["inchiKey", "smiles", "structureName", "xlogP", "dbLinks", "spectralLibraryMatches"]
+    xlog_p: Optional[float] = Field(default=None, alias="xlogP")
+    __properties: ClassVar[List[str]] = ["inchiKey", "smiles", "structureName", "structureSvg", "dbLinks", "spectralLibraryMatches", "xlogP"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -92,10 +93,10 @@ class StructureCandidate(BaseModel):
         if self.structure_name is None and "structure_name" in self.model_fields_set:
             _dict['structureName'] = None
 
-        # set to None if xlog_p (nullable) is None
+        # set to None if structure_svg (nullable) is None
         # and model_fields_set contains the field
-        if self.xlog_p is None and "xlog_p" in self.model_fields_set:
-            _dict['xlogP'] = None
+        if self.structure_svg is None and "structure_svg" in self.model_fields_set:
+            _dict['structureSvg'] = None
 
         # set to None if db_links (nullable) is None
         # and model_fields_set contains the field
@@ -106,6 +107,11 @@ class StructureCandidate(BaseModel):
         # and model_fields_set contains the field
         if self.spectral_library_matches is None and "spectral_library_matches" in self.model_fields_set:
             _dict['spectralLibraryMatches'] = None
+
+        # set to None if xlog_p (nullable) is None
+        # and model_fields_set contains the field
+        if self.xlog_p is None and "xlog_p" in self.model_fields_set:
+            _dict['xlogP'] = None
 
         return _dict
 
@@ -122,9 +128,10 @@ class StructureCandidate(BaseModel):
             "inchiKey": obj.get("inchiKey"),
             "smiles": obj.get("smiles"),
             "structureName": obj.get("structureName"),
-            "xlogP": obj.get("xlogP"),
+            "structureSvg": obj.get("structureSvg"),
             "dbLinks": [DBLink.from_dict(_item) for _item in obj["dbLinks"]] if obj.get("dbLinks") is not None else None,
-            "spectralLibraryMatches": [SpectralLibraryMatch.from_dict(_item) for _item in obj["spectralLibraryMatches"]] if obj.get("spectralLibraryMatches") is not None else None
+            "spectralLibraryMatches": [SpectralLibraryMatch.from_dict(_item) for _item in obj["spectralLibraryMatches"]] if obj.get("spectralLibraryMatches") is not None else None,
+            "xlogP": obj.get("xlogP")
         })
         return _obj
 

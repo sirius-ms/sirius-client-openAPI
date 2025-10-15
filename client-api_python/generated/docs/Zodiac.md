@@ -12,6 +12,8 @@ Name | Type | Description | Notes
 **run_in_two_steps** | **bool** | As default ZODIAC runs a 2-step approach. First running &#39;good quality compounds&#39; only, and afterwards including the remaining. | [optional] 
 **edge_filter_thresholds** | [**ZodiacEdgeFilterThresholds**](ZodiacEdgeFilterThresholds.md) |  | [optional] 
 **gibbs_sampler_parameters** | [**ZodiacEpochs**](ZodiacEpochs.md) |  | [optional] 
+**library_search_anchors** | [**ZodiacLibraryScoring**](ZodiacLibraryScoring.md) |  | [optional] 
+**analogue_search_anchors** | [**ZodiacAnalogueNodes**](ZodiacAnalogueNodes.md) |  | [optional] 
 
 ## Example
 

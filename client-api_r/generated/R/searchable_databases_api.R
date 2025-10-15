@@ -15,7 +15,7 @@
 #' \dontrun{
 #' ####################  AddDatabases  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_request_body <- c("property_example") # array[character] | 
 #'
 #' #DEPRECATED: this endpoint is based on local file paths and will likely be replaced in future versions of this API.
@@ -29,7 +29,7 @@
 #'
 #' ####################  CreateDatabase  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_database_id <- "database_id_example" # character | 
 #' var_searchable_database_parameters <- SearchableDatabaseParameters$new("displayName_example", "location_example", "matchRtOfReferenceSpectra_example") # SearchableDatabaseParameters |  (Optional)
 #'
@@ -43,7 +43,7 @@
 #'
 #' ####################  GetCustomDatabases  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_include_stats <- FALSE # character |  (Optional)
 #' var_include_with_errors <- FALSE # character |  (Optional)
 #'
@@ -57,7 +57,7 @@
 #'
 #' ####################  GetDatabase  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_database_id <- "database_id_example" # character | 
 #' var_include_stats <- TRUE # character |  (Optional)
 #'
@@ -71,7 +71,7 @@
 #'
 #' ####################  GetDatabases  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_include_stats <- FALSE # character |  (Optional)
 #' var_include_with_errors <- FALSE # character |  (Optional)
 #'
@@ -85,7 +85,7 @@
 #'
 #' ####################  GetIncludedDatabases  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_include_stats <- FALSE # character |  (Optional)
 #'
 #' api_instance <- rsirius_api$new()
@@ -98,23 +98,24 @@
 #'
 #' ####################  ImportIntoDatabase  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_database_id <- "database_id_example" # character | database to import into
+#' var_input_files <- c(123) # array[data.frame] | files to be imported
 #' var_buffer_size <- 1000 # integer |  (Optional)
-#' var_input_files <- c(123) # array[data.frame] |  (Optional)
+#' var_bio_transformer_parameters <- BioTransformerParameters$new("RULE_BASED", "BT_RULE_BASED", c(BioTransformerSequenceStep$new("PHASE_1_CYP450", 123)), "useDB_example") # BioTransformerParameters |  (Optional)
 #'
 #' #Start import of structure and spectra files into the specified database.
 #' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-#' # result <- api_instance$ImportIntoDatabase(var_database_id, buffer_size = var_buffer_size, input_files = var_input_filesdata_file = "result.txt")
-#' result <- api_instance$searchable_databases_api$ImportIntoDatabase(var_database_id, buffer_size = var_buffer_size, input_files = var_input_files)
+#' # result <- api_instance$ImportIntoDatabase(var_database_id, var_input_files, buffer_size = var_buffer_size, bio_transformer_parameters = var_bio_transformer_parametersdata_file = "result.txt")
+#' result <- api_instance$searchable_databases_api$ImportIntoDatabase(var_database_id, var_input_files, buffer_size = var_buffer_size, bio_transformer_parameters = var_bio_transformer_parameters)
 #' dput(result)
 #'
 #'
 #' ####################  RemoveDatabase  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_database_id <- "database_id_example" # character | 
 #' var_delete <- FALSE # character |  (Optional)
 #'
@@ -125,7 +126,7 @@
 #'
 #' ####################  UpdateDatabase  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_database_id <- "database_id_example" # character | 
 #' var_searchable_database_parameters <- SearchableDatabaseParameters$new("displayName_example", "location_example", "matchRtOfReferenceSpectra_example") # SearchableDatabaseParameters |  (Optional)
 #'
@@ -204,8 +205,12 @@ SearchableDatabasesApi <- R6::R6Class(
 
       if (!is.null(`request_body`)) {
         body.items <- paste(unlist(lapply(`request_body`, function(param) {
-                                                             param$toJSONString()
-                                                         })), collapse = ",")
+          if (inherits(param, "character")) {
+            param
+          } else {
+            param$toJSONString()
+          }
+        })), collapse = ",")
         local_var_body <- paste0("[", body.items, "]")
       } else {
         body <- NULL
@@ -238,13 +243,40 @@ SearchableDatabasesApi <- R6::R6Class(
           write(local_var_resp$response, data_file)
         }
 
-        deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "array[SearchableDatabase]", loadNamespace("Rsirius")),
-          error = function(e) {
-            stop("Failed to deserialize response")
-          }
-        )
-        local_var_resp$content <- deserialized_resp_obj
+        # Check if we are expecting a CSV response
+        is_csv_response <- any(grepl("csv", local_var_accepts, ignore.case = TRUE))
+
+        if (is_csv_response) {
+          # For CSV responses, parse into data.frame
+          csv_resp_obj <- tryCatch(
+            {
+              csv_text <- rawToChar(local_var_resp$response)
+
+              # Detect separator by examining first line
+              first_line <- strsplit(csv_text, "\n")[[1]][1]
+              if (grepl("\t", first_line)) {
+                # Tab-separated (TSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = "\t")
+              } else {
+                # Comma-separated (CSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = ",")
+              }
+            },
+            error = function(e) {
+              stop("Failed to parse CSV response")
+            }
+          )
+          local_var_resp$content <- csv_resp_obj
+        } else {
+          # For JSON responses, deserialize normally
+          deserialized_resp_obj <- tryCatch(
+            self$api_client$deserialize(local_var_resp$response_as_text(), "array[SearchableDatabase]", loadNamespace("RSirius")),
+            error = function(e) {
+              stop("Failed to deserialize response")
+            }
+          )
+          local_var_resp$content <- deserialized_resp_obj
+        }
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
@@ -345,13 +377,40 @@ SearchableDatabasesApi <- R6::R6Class(
           write(local_var_resp$response, data_file)
         }
 
-        deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "SearchableDatabase", loadNamespace("Rsirius")),
-          error = function(e) {
-            stop("Failed to deserialize response")
-          }
-        )
-        local_var_resp$content <- deserialized_resp_obj
+        # Check if we are expecting a CSV response
+        is_csv_response <- any(grepl("csv", local_var_accepts, ignore.case = TRUE))
+
+        if (is_csv_response) {
+          # For CSV responses, parse into data.frame
+          csv_resp_obj <- tryCatch(
+            {
+              csv_text <- rawToChar(local_var_resp$response)
+
+              # Detect separator by examining first line
+              first_line <- strsplit(csv_text, "\n")[[1]][1]
+              if (grepl("\t", first_line)) {
+                # Tab-separated (TSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = "\t")
+              } else {
+                # Comma-separated (CSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = ",")
+              }
+            },
+            error = function(e) {
+              stop("Failed to parse CSV response")
+            }
+          )
+          local_var_resp$content <- csv_resp_obj
+        } else {
+          # For JSON responses, deserialize normally
+          deserialized_resp_obj <- tryCatch(
+            self$api_client$deserialize(local_var_resp$response_as_text(), "SearchableDatabase", loadNamespace("RSirius")),
+            error = function(e) {
+              stop("Failed to deserialize response")
+            }
+          )
+          local_var_resp$content <- deserialized_resp_obj
+        }
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
@@ -439,13 +498,40 @@ SearchableDatabasesApi <- R6::R6Class(
           write(local_var_resp$response, data_file)
         }
 
-        deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "array[SearchableDatabase]", loadNamespace("Rsirius")),
-          error = function(e) {
-            stop("Failed to deserialize response")
-          }
-        )
-        local_var_resp$content <- deserialized_resp_obj
+        # Check if we are expecting a CSV response
+        is_csv_response <- any(grepl("csv", local_var_accepts, ignore.case = TRUE))
+
+        if (is_csv_response) {
+          # For CSV responses, parse into data.frame
+          csv_resp_obj <- tryCatch(
+            {
+              csv_text <- rawToChar(local_var_resp$response)
+
+              # Detect separator by examining first line
+              first_line <- strsplit(csv_text, "\n")[[1]][1]
+              if (grepl("\t", first_line)) {
+                # Tab-separated (TSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = "\t")
+              } else {
+                # Comma-separated (CSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = ",")
+              }
+            },
+            error = function(e) {
+              stop("Failed to parse CSV response")
+            }
+          )
+          local_var_resp$content <- csv_resp_obj
+        } else {
+          # For JSON responses, deserialize normally
+          deserialized_resp_obj <- tryCatch(
+            self$api_client$deserialize(local_var_resp$response_as_text(), "array[SearchableDatabase]", loadNamespace("RSirius")),
+            error = function(e) {
+              stop("Failed to deserialize response")
+            }
+          )
+          local_var_resp$content <- deserialized_resp_obj
+        }
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
@@ -539,13 +625,40 @@ SearchableDatabasesApi <- R6::R6Class(
           write(local_var_resp$response, data_file)
         }
 
-        deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "SearchableDatabase", loadNamespace("Rsirius")),
-          error = function(e) {
-            stop("Failed to deserialize response")
-          }
-        )
-        local_var_resp$content <- deserialized_resp_obj
+        # Check if we are expecting a CSV response
+        is_csv_response <- any(grepl("csv", local_var_accepts, ignore.case = TRUE))
+
+        if (is_csv_response) {
+          # For CSV responses, parse into data.frame
+          csv_resp_obj <- tryCatch(
+            {
+              csv_text <- rawToChar(local_var_resp$response)
+
+              # Detect separator by examining first line
+              first_line <- strsplit(csv_text, "\n")[[1]][1]
+              if (grepl("\t", first_line)) {
+                # Tab-separated (TSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = "\t")
+              } else {
+                # Comma-separated (CSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = ",")
+              }
+            },
+            error = function(e) {
+              stop("Failed to parse CSV response")
+            }
+          )
+          local_var_resp$content <- csv_resp_obj
+        } else {
+          # For JSON responses, deserialize normally
+          deserialized_resp_obj <- tryCatch(
+            self$api_client$deserialize(local_var_resp$response_as_text(), "SearchableDatabase", loadNamespace("RSirius")),
+            error = function(e) {
+              stop("Failed to deserialize response")
+            }
+          )
+          local_var_resp$content <- deserialized_resp_obj
+        }
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
@@ -633,13 +746,40 @@ SearchableDatabasesApi <- R6::R6Class(
           write(local_var_resp$response, data_file)
         }
 
-        deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "array[SearchableDatabase]", loadNamespace("Rsirius")),
-          error = function(e) {
-            stop("Failed to deserialize response")
-          }
-        )
-        local_var_resp$content <- deserialized_resp_obj
+        # Check if we are expecting a CSV response
+        is_csv_response <- any(grepl("csv", local_var_accepts, ignore.case = TRUE))
+
+        if (is_csv_response) {
+          # For CSV responses, parse into data.frame
+          csv_resp_obj <- tryCatch(
+            {
+              csv_text <- rawToChar(local_var_resp$response)
+
+              # Detect separator by examining first line
+              first_line <- strsplit(csv_text, "\n")[[1]][1]
+              if (grepl("\t", first_line)) {
+                # Tab-separated (TSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = "\t")
+              } else {
+                # Comma-separated (CSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = ",")
+              }
+            },
+            error = function(e) {
+              stop("Failed to parse CSV response")
+            }
+          )
+          local_var_resp$content <- csv_resp_obj
+        } else {
+          # For JSON responses, deserialize normally
+          deserialized_resp_obj <- tryCatch(
+            self$api_client$deserialize(local_var_resp$response_as_text(), "array[SearchableDatabase]", loadNamespace("RSirius")),
+            error = function(e) {
+              stop("Failed to deserialize response")
+            }
+          )
+          local_var_resp$content <- deserialized_resp_obj
+        }
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
@@ -722,13 +862,40 @@ SearchableDatabasesApi <- R6::R6Class(
           write(local_var_resp$response, data_file)
         }
 
-        deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "array[SearchableDatabase]", loadNamespace("Rsirius")),
-          error = function(e) {
-            stop("Failed to deserialize response")
-          }
-        )
-        local_var_resp$content <- deserialized_resp_obj
+        # Check if we are expecting a CSV response
+        is_csv_response <- any(grepl("csv", local_var_accepts, ignore.case = TRUE))
+
+        if (is_csv_response) {
+          # For CSV responses, parse into data.frame
+          csv_resp_obj <- tryCatch(
+            {
+              csv_text <- rawToChar(local_var_resp$response)
+
+              # Detect separator by examining first line
+              first_line <- strsplit(csv_text, "\n")[[1]][1]
+              if (grepl("\t", first_line)) {
+                # Tab-separated (TSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = "\t")
+              } else {
+                # Comma-separated (CSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = ",")
+              }
+            },
+            error = function(e) {
+              stop("Failed to parse CSV response")
+            }
+          )
+          local_var_resp$content <- csv_resp_obj
+        } else {
+          # For JSON responses, deserialize normally
+          deserialized_resp_obj <- tryCatch(
+            self$api_client$deserialize(local_var_resp$response_as_text(), "array[SearchableDatabase]", loadNamespace("RSirius")),
+            error = function(e) {
+              stop("Failed to deserialize response")
+            }
+          )
+          local_var_resp$content <- deserialized_resp_obj
+        }
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
@@ -746,14 +913,15 @@ SearchableDatabasesApi <- R6::R6Class(
     #' Start import of structure and spectra files into the specified database.
     #'
     #' @param database_id database to import into
+    #' @param input_files files to be imported
     #' @param buffer_size (optional) No description (default value: 1000)
-    #' @param input_files (optional) No description
+    #' @param bio_transformer_parameters (optional) No description
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return SearchableDatabase
-    ImportIntoDatabase = function(database_id, buffer_size = 1000, input_files = NULL, data_file = NULL, ...) {
-      local_var_response <- self$ImportIntoDatabaseWithHttpInfo(database_id, buffer_size, input_files, data_file = data_file, ...)
+    ImportIntoDatabase = function(database_id, input_files, buffer_size = 1000, bio_transformer_parameters = NULL, data_file = NULL, ...) {
+      local_var_response <- self$ImportIntoDatabaseWithHttpInfo(database_id, input_files, buffer_size, bio_transformer_parameters, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
@@ -769,13 +937,14 @@ SearchableDatabasesApi <- R6::R6Class(
     #' Start import of structure and spectra files into the specified database.
     #'
     #' @param database_id database to import into
+    #' @param input_files files to be imported
     #' @param buffer_size (optional) No description (default value: 1000)
-    #' @param input_files (optional) No description
+    #' @param bio_transformer_parameters (optional) No description
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return API response (SearchableDatabase) with additional information such as HTTP status code, headers
-    ImportIntoDatabaseWithHttpInfo = function(database_id, buffer_size = 1000, input_files = NULL, data_file = NULL, ...) {
+    ImportIntoDatabaseWithHttpInfo = function(database_id, input_files, buffer_size = 1000, bio_transformer_parameters = NULL, data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -789,12 +958,26 @@ SearchableDatabasesApi <- R6::R6Class(
         stop("Missing required parameter `database_id`.")
       }
 
+      if (missing(`input_files`)) {
+        stop("Missing required parameter `input_files`.")
+      }
+
+
 
 
 
       query_params[["bufferSize"]] <- `buffer_size`
 
-      file_params[["inputFiles"]] <- curl::form_file(`input_files`)
+      file_params[["inputFiles"]] <- lapply(`input_files`, function(param) {
+        curl::form_file(param)
+      })
+      if (!is.null(`bio_transformer_parameters`)) {
+        if (inherits(`bio_transformer_parameters`, "R6")) {
+          form_params[["bioTransformerParameters"]] <- `bio_transformer_parameters`$toJSONString()
+        } else {
+          form_params[["bioTransformerParameters"]] <- `bio_transformer_parameters`
+        }
+      }
       local_var_url_path <- "/api/databases/{databaseId}/import/from-files"
       if (!missing(`database_id`)) {
         local_var_url_path <- gsub("\\{databaseId\\}", URLencode(as.character(`database_id`), reserved = TRUE), local_var_url_path)
@@ -826,13 +1009,40 @@ SearchableDatabasesApi <- R6::R6Class(
           write(local_var_resp$response, data_file)
         }
 
-        deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "SearchableDatabase", loadNamespace("Rsirius")),
-          error = function(e) {
-            stop("Failed to deserialize response")
-          }
-        )
-        local_var_resp$content <- deserialized_resp_obj
+        # Check if we are expecting a CSV response
+        is_csv_response <- any(grepl("csv", local_var_accepts, ignore.case = TRUE))
+
+        if (is_csv_response) {
+          # For CSV responses, parse into data.frame
+          csv_resp_obj <- tryCatch(
+            {
+              csv_text <- rawToChar(local_var_resp$response)
+
+              # Detect separator by examining first line
+              first_line <- strsplit(csv_text, "\n")[[1]][1]
+              if (grepl("\t", first_line)) {
+                # Tab-separated (TSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = "\t")
+              } else {
+                # Comma-separated (CSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = ",")
+              }
+            },
+            error = function(e) {
+              stop("Failed to parse CSV response")
+            }
+          )
+          local_var_resp$content <- csv_resp_obj
+        } else {
+          # For JSON responses, deserialize normally
+          deserialized_resp_obj <- tryCatch(
+            self$api_client$deserialize(local_var_resp$response_as_text(), "SearchableDatabase", loadNamespace("RSirius")),
+            error = function(e) {
+              stop("Failed to deserialize response")
+            }
+          )
+          local_var_resp$content <- deserialized_resp_obj
+        }
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
@@ -1017,13 +1227,40 @@ SearchableDatabasesApi <- R6::R6Class(
           write(local_var_resp$response, data_file)
         }
 
-        deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "SearchableDatabase", loadNamespace("Rsirius")),
-          error = function(e) {
-            stop("Failed to deserialize response")
-          }
-        )
-        local_var_resp$content <- deserialized_resp_obj
+        # Check if we are expecting a CSV response
+        is_csv_response <- any(grepl("csv", local_var_accepts, ignore.case = TRUE))
+
+        if (is_csv_response) {
+          # For CSV responses, parse into data.frame
+          csv_resp_obj <- tryCatch(
+            {
+              csv_text <- rawToChar(local_var_resp$response)
+
+              # Detect separator by examining first line
+              first_line <- strsplit(csv_text, "\n")[[1]][1]
+              if (grepl("\t", first_line)) {
+                # Tab-separated (TSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = "\t")
+              } else {
+                # Comma-separated (CSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = ",")
+              }
+            },
+            error = function(e) {
+              stop("Failed to parse CSV response")
+            }
+          )
+          local_var_resp$content <- csv_resp_obj
+        } else {
+          # For JSON responses, deserialize normally
+          deserialized_resp_obj <- tryCatch(
+            self$api_client$deserialize(local_var_resp$response_as_text(), "SearchableDatabase", loadNamespace("RSirius")),
+            error = function(e) {
+              stop("Failed to deserialize response")
+            }
+          )
+          local_var_resp$content <- deserialized_resp_obj
+        }
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)

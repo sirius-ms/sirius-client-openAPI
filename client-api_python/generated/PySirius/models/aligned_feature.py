@@ -21,6 +21,7 @@ from PySirius.models.computed_subtools import ComputedSubtools
 from PySirius.models.data_quality import DataQuality
 from PySirius.models.feature_annotations import FeatureAnnotations
 from PySirius.models.ms_data import MsData
+from PySirius.models.tag import Tag
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -46,7 +47,8 @@ class AlignedFeature(BaseModel):
     top_annotations_de_novo: Optional[FeatureAnnotations] = Field(default=None, alias="topAnnotationsDeNovo")
     computing: Optional[StrictBool] = Field(default=None, description="Write lock for this feature. If the feature is locked no write operations are possible.  True if any computation is modifying this feature or its results")
     computed_tools: Optional[ComputedSubtools] = Field(default=None, alias="computedTools")
-    __properties: ClassVar[List[str]] = ["alignedFeatureId", "compoundId", "name", "externalFeatureId", "ionMass", "charge", "detectedAdducts", "rtStartSeconds", "rtEndSeconds", "rtApexSeconds", "quality", "hasMs1", "hasMsMs", "msData", "topAnnotations", "topAnnotationsDeNovo", "computing", "computedTools"]
+    tags: Optional[Dict[str, Tag]] = Field(default=None, description="Key: tagName, value: tag")
+    __properties: ClassVar[List[str]] = ["alignedFeatureId", "compoundId", "name", "externalFeatureId", "ionMass", "charge", "detectedAdducts", "rtStartSeconds", "rtEndSeconds", "rtApexSeconds", "quality", "hasMs1", "hasMsMs", "msData", "topAnnotations", "topAnnotationsDeNovo", "computing", "computedTools", "tags"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -99,6 +101,13 @@ class AlignedFeature(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of computed_tools
         if self.computed_tools:
             _dict['computedTools'] = self.computed_tools.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of each value in tags (dict)
+        _field_dict = {}
+        if self.tags:
+            for _key_tags in self.tags:
+                if self.tags[_key_tags]:
+                    _field_dict[_key_tags] = self.tags[_key_tags].to_dict()
+            _dict['tags'] = _field_dict
         # set to None if rt_start_seconds (nullable) is None
         # and model_fields_set contains the field
         if self.rt_start_seconds is None and "rt_start_seconds" in self.model_fields_set:
@@ -139,6 +148,11 @@ class AlignedFeature(BaseModel):
         if self.computed_tools is None and "computed_tools" in self.model_fields_set:
             _dict['computedTools'] = None
 
+        # set to None if tags (nullable) is None
+        # and model_fields_set contains the field
+        if self.tags is None and "tags" in self.model_fields_set:
+            _dict['tags'] = None
+
         return _dict
 
     @classmethod
@@ -168,7 +182,13 @@ class AlignedFeature(BaseModel):
             "topAnnotations": FeatureAnnotations.from_dict(obj["topAnnotations"]) if obj.get("topAnnotations") is not None else None,
             "topAnnotationsDeNovo": FeatureAnnotations.from_dict(obj["topAnnotationsDeNovo"]) if obj.get("topAnnotationsDeNovo") is not None else None,
             "computing": obj.get("computing"),
-            "computedTools": ComputedSubtools.from_dict(obj["computedTools"]) if obj.get("computedTools") is not None else None
+            "computedTools": ComputedSubtools.from_dict(obj["computedTools"]) if obj.get("computedTools") is not None else None,
+            "tags": dict(
+                (_k, Tag.from_dict(_v))
+                for _k, _v in obj["tags"].items()
+            )
+            if obj.get("tags") is not None
+            else None
         })
         return _obj
 

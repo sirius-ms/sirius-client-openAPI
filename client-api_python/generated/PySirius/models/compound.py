@@ -20,6 +20,7 @@ from typing import Any, ClassVar, Dict, List, Optional
 from PySirius.models.aligned_feature import AlignedFeature
 from PySirius.models.consensus_annotations_csi import ConsensusAnnotationsCSI
 from PySirius.models.consensus_annotations_de_novo import ConsensusAnnotationsDeNovo
+from PySirius.models.tag import Tag
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -36,7 +37,8 @@ class Compound(BaseModel):
     consensus_annotations: Optional[ConsensusAnnotationsCSI] = Field(default=None, alias="consensusAnnotations")
     consensus_annotations_de_novo: Optional[ConsensusAnnotationsDeNovo] = Field(default=None, alias="consensusAnnotationsDeNovo")
     custom_annotations: Optional[ConsensusAnnotationsCSI] = Field(default=None, alias="customAnnotations")
-    __properties: ClassVar[List[str]] = ["compoundId", "name", "rtStartSeconds", "rtEndSeconds", "neutralMass", "features", "consensusAnnotations", "consensusAnnotationsDeNovo", "customAnnotations"]
+    tags: Optional[Dict[str, Tag]] = Field(default=None, description="Key: tagName, value: tag")
+    __properties: ClassVar[List[str]] = ["compoundId", "name", "rtStartSeconds", "rtEndSeconds", "neutralMass", "features", "consensusAnnotations", "consensusAnnotationsDeNovo", "customAnnotations", "tags"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -93,6 +95,13 @@ class Compound(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of custom_annotations
         if self.custom_annotations:
             _dict['customAnnotations'] = self.custom_annotations.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of each value in tags (dict)
+        _field_dict = {}
+        if self.tags:
+            for _key_tags in self.tags:
+                if self.tags[_key_tags]:
+                    _field_dict[_key_tags] = self.tags[_key_tags].to_dict()
+            _dict['tags'] = _field_dict
         # set to None if name (nullable) is None
         # and model_fields_set contains the field
         if self.name is None and "name" in self.model_fields_set:
@@ -128,6 +137,11 @@ class Compound(BaseModel):
         if self.custom_annotations is None and "custom_annotations" in self.model_fields_set:
             _dict['customAnnotations'] = None
 
+        # set to None if tags (nullable) is None
+        # and model_fields_set contains the field
+        if self.tags is None and "tags" in self.model_fields_set:
+            _dict['tags'] = None
+
         return _dict
 
     @classmethod
@@ -148,7 +162,13 @@ class Compound(BaseModel):
             "features": [AlignedFeature.from_dict(_item) for _item in obj["features"]] if obj.get("features") is not None else None,
             "consensusAnnotations": ConsensusAnnotationsCSI.from_dict(obj["consensusAnnotations"]) if obj.get("consensusAnnotations") is not None else None,
             "consensusAnnotationsDeNovo": ConsensusAnnotationsDeNovo.from_dict(obj["consensusAnnotationsDeNovo"]) if obj.get("consensusAnnotationsDeNovo") is not None else None,
-            "customAnnotations": ConsensusAnnotationsCSI.from_dict(obj["customAnnotations"]) if obj.get("customAnnotations") is not None else None
+            "customAnnotations": ConsensusAnnotationsCSI.from_dict(obj["customAnnotations"]) if obj.get("customAnnotations") is not None else None,
+            "tags": dict(
+                (_k, Tag.from_dict(_v))
+                for _k, _v in obj["tags"].items()
+            )
+            if obj.get("tags") is not None
+            else None
         })
         return _obj
 

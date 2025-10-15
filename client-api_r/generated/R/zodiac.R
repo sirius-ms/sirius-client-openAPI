@@ -13,6 +13,8 @@
 #' @field runInTwoSteps As default ZODIAC runs a 2-step approach. First running 'good quality compounds' only, and afterwards including the remaining. character [optional]
 #' @field edgeFilterThresholds  \link{ZodiacEdgeFilterThresholds} [optional]
 #' @field gibbsSamplerParameters  \link{ZodiacEpochs} [optional]
+#' @field librarySearchAnchors  \link{ZodiacLibraryScoring} [optional]
+#' @field analogueSearchAnchors  \link{ZodiacAnalogueNodes} [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
 #' @export
@@ -25,6 +27,8 @@ Zodiac <- R6::R6Class(
     `runInTwoSteps` = NULL,
     `edgeFilterThresholds` = NULL,
     `gibbsSamplerParameters` = NULL,
+    `librarySearchAnchors` = NULL,
+    `analogueSearchAnchors` = NULL,
 
     #' @description
     #' Initialize a new Zodiac class.
@@ -35,8 +39,10 @@ Zodiac <- R6::R6Class(
     #' @param runInTwoSteps As default ZODIAC runs a 2-step approach. First running 'good quality compounds' only, and afterwards including the remaining.
     #' @param edgeFilterThresholds edgeFilterThresholds
     #' @param gibbsSamplerParameters gibbsSamplerParameters
+    #' @param librarySearchAnchors librarySearchAnchors
+    #' @param analogueSearchAnchors analogueSearchAnchors
     #' @param ... Other optional arguments.
-    initialize = function(`enabled` = NULL, `consideredCandidatesAt300Mz` = NULL, `consideredCandidatesAt800Mz` = NULL, `runInTwoSteps` = NULL, `edgeFilterThresholds` = NULL, `gibbsSamplerParameters` = NULL, ...) {
+    initialize = function(`enabled` = NULL, `consideredCandidatesAt300Mz` = NULL, `consideredCandidatesAt800Mz` = NULL, `runInTwoSteps` = NULL, `edgeFilterThresholds` = NULL, `gibbsSamplerParameters` = NULL, `librarySearchAnchors` = NULL, `analogueSearchAnchors` = NULL, ...) {
       if (!is.null(`enabled`)) {
         if (!(is.logical(`enabled`) && length(`enabled`) == 1)) {
           stop(paste("Error! Invalid data for `enabled`. Must be a boolean:", `enabled`))
@@ -68,6 +74,14 @@ Zodiac <- R6::R6Class(
       if (!is.null(`gibbsSamplerParameters`)) {
         stopifnot(R6::is.R6(`gibbsSamplerParameters`))
         self$`gibbsSamplerParameters` <- `gibbsSamplerParameters`
+      }
+      if (!is.null(`librarySearchAnchors`)) {
+        stopifnot(R6::is.R6(`librarySearchAnchors`))
+        self$`librarySearchAnchors` <- `librarySearchAnchors`
+      }
+      if (!is.null(`analogueSearchAnchors`)) {
+        stopifnot(R6::is.R6(`analogueSearchAnchors`))
+        self$`analogueSearchAnchors` <- `analogueSearchAnchors`
       }
     },
 
@@ -126,6 +140,14 @@ Zodiac <- R6::R6Class(
         ZodiacObject[["gibbsSamplerParameters"]] <-
           self$`gibbsSamplerParameters`$toSimpleType()
       }
+      if (!is.null(self$`librarySearchAnchors`)) {
+        ZodiacObject[["librarySearchAnchors"]] <-
+          self$`librarySearchAnchors`$toSimpleType()
+      }
+      if (!is.null(self$`analogueSearchAnchors`)) {
+        ZodiacObject[["analogueSearchAnchors"]] <-
+          self$`analogueSearchAnchors`$toSimpleType()
+      }
       return(ZodiacObject)
     },
 
@@ -158,6 +180,16 @@ Zodiac <- R6::R6Class(
         `gibbssamplerparameters_object`$fromJSON(jsonlite::toJSON(this_object$`gibbsSamplerParameters`, auto_unbox = TRUE, digits = NA, null = 'null'))
         self$`gibbsSamplerParameters` <- `gibbssamplerparameters_object`
       }
+      if (!is.null(this_object$`librarySearchAnchors`)) {
+        `librarysearchanchors_object` <- ZodiacLibraryScoring$new()
+        `librarysearchanchors_object`$fromJSON(jsonlite::toJSON(this_object$`librarySearchAnchors`, auto_unbox = TRUE, digits = NA, null = 'null'))
+        self$`librarySearchAnchors` <- `librarysearchanchors_object`
+      }
+      if (!is.null(this_object$`analogueSearchAnchors`)) {
+        `analoguesearchanchors_object` <- ZodiacAnalogueNodes$new()
+        `analoguesearchanchors_object`$fromJSON(jsonlite::toJSON(this_object$`analogueSearchAnchors`, auto_unbox = TRUE, digits = NA, null = 'null'))
+        self$`analogueSearchAnchors` <- `analoguesearchanchors_object`
+      }
       self
     },
 
@@ -185,6 +217,8 @@ Zodiac <- R6::R6Class(
       self$`runInTwoSteps` <- this_object$`runInTwoSteps`
       self$`edgeFilterThresholds` <- ZodiacEdgeFilterThresholds$new()$fromJSON(jsonlite::toJSON(this_object$`edgeFilterThresholds`, auto_unbox = TRUE, digits = NA, null = 'null'))
       self$`gibbsSamplerParameters` <- ZodiacEpochs$new()$fromJSON(jsonlite::toJSON(this_object$`gibbsSamplerParameters`, auto_unbox = TRUE, digits = NA, null = 'null'))
+      self$`librarySearchAnchors` <- ZodiacLibraryScoring$new()$fromJSON(jsonlite::toJSON(this_object$`librarySearchAnchors`, auto_unbox = TRUE, digits = NA, null = 'null'))
+      self$`analogueSearchAnchors` <- ZodiacAnalogueNodes$new()$fromJSON(jsonlite::toJSON(this_object$`analogueSearchAnchors`, auto_unbox = TRUE, digits = NA, null = 'null'))
       self
     },
 

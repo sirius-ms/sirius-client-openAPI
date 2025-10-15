@@ -15,7 +15,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from PySirius.models.simple_peak import SimplePeak
 from typing import Optional, Set
@@ -31,9 +31,15 @@ class BasicSpectrum(BaseModel):
     instrument: Optional[StrictStr] = Field(default=None, description="Instrument information.")
     precursor_mz: Optional[float] = Field(default=None, description="Precursor m/z of the MS/MS spectrum  Null for spectra where precursor m/z is not applicable", alias="precursorMz")
     scan_number: Optional[StrictInt] = Field(default=None, description="Scan number of the spectrum.  Might be null for artificial spectra with no scan number (e.g. Simulated Isotope patterns or merged spectra)", alias="scanNumber")
+    cosine_query: StrictBool = Field(description="True if spectrum is in cosine query normalized format.  Such spectrum is compatible with SpectralLibraryMatch peak assignments to reference spectra.", alias="cosineQuery")
+    precursor_peak: Optional[SimplePeak] = Field(default=None, alias="precursorPeak")
     peaks: List[SimplePeak] = Field(description="The peaks of this spectrum which might contain additional annotations such as molecular formulas.")
-    abs_intensity_factor: Optional[float] = Field(default=None, description="Factor to convert relative intensities to absolute intensities.  Might be null or 1 for spectra where absolute intensities are not available (E.g. artificial or merged spectra)", alias="absIntensityFactor")
-    __properties: ClassVar[List[str]] = ["name", "msLevel", "collisionEnergy", "instrument", "precursorMz", "scanNumber", "peaks", "absIntensityFactor"]
+    abs_intensity_factor: Optional[float] = Field(default=None, description="Factor to convert relative intensities to absolute intensities.  Might be null or 1 for spectra where absolute intensities are not available (E.g. artificial or merged spectra)  <p>  DEPRECATED: Spectra are always returned with raw intensities.  Use provided normalization factors to normalize on the fly.", alias="absIntensityFactor")
+    max_norm_factor: Optional[float] = Field(default=None, description="Factor to convert absolute intensities to MAX norm.", alias="maxNormFactor")
+    sum_norm_factor: Optional[float] = Field(default=None, description="Factor to convert absolute intensities to SUM norm.", alias="sumNormFactor")
+    l2_norm_factor: Optional[float] = Field(default=None, description="Factor to convert absolute intensities to L2 (Euclidean) norm.", alias="l2NormFactor")
+    first_peak_norm_factor: Optional[float] = Field(default=None, description="Factor to convert absolute intensities to normalize intensities by first peak intensity.", alias="firstPeakNormFactor")
+    __properties: ClassVar[List[str]] = ["name", "msLevel", "collisionEnergy", "instrument", "precursorMz", "scanNumber", "cosineQuery", "precursorPeak", "peaks", "absIntensityFactor", "maxNormFactor", "sumNormFactor", "l2NormFactor", "firstPeakNormFactor"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -74,6 +80,9 @@ class BasicSpectrum(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of precursor_peak
+        if self.precursor_peak:
+            _dict['precursorPeak'] = self.precursor_peak.to_dict()
         # override the default output from pydantic by calling `to_dict()` of each item in peaks (list)
         _items = []
         if self.peaks:
@@ -116,6 +125,26 @@ class BasicSpectrum(BaseModel):
         if self.abs_intensity_factor is None and "abs_intensity_factor" in self.model_fields_set:
             _dict['absIntensityFactor'] = None
 
+        # set to None if max_norm_factor (nullable) is None
+        # and model_fields_set contains the field
+        if self.max_norm_factor is None and "max_norm_factor" in self.model_fields_set:
+            _dict['maxNormFactor'] = None
+
+        # set to None if sum_norm_factor (nullable) is None
+        # and model_fields_set contains the field
+        if self.sum_norm_factor is None and "sum_norm_factor" in self.model_fields_set:
+            _dict['sumNormFactor'] = None
+
+        # set to None if l2_norm_factor (nullable) is None
+        # and model_fields_set contains the field
+        if self.l2_norm_factor is None and "l2_norm_factor" in self.model_fields_set:
+            _dict['l2NormFactor'] = None
+
+        # set to None if first_peak_norm_factor (nullable) is None
+        # and model_fields_set contains the field
+        if self.first_peak_norm_factor is None and "first_peak_norm_factor" in self.model_fields_set:
+            _dict['firstPeakNormFactor'] = None
+
         return _dict
 
     @classmethod
@@ -134,8 +163,14 @@ class BasicSpectrum(BaseModel):
             "instrument": obj.get("instrument"),
             "precursorMz": obj.get("precursorMz"),
             "scanNumber": obj.get("scanNumber"),
+            "cosineQuery": obj.get("cosineQuery") if obj.get("cosineQuery") is not None else False,
+            "precursorPeak": SimplePeak.from_dict(obj["precursorPeak"]) if obj.get("precursorPeak") is not None else None,
             "peaks": [SimplePeak.from_dict(_item) for _item in obj["peaks"]] if obj.get("peaks") is not None else None,
-            "absIntensityFactor": obj.get("absIntensityFactor")
+            "absIntensityFactor": obj.get("absIntensityFactor"),
+            "maxNormFactor": obj.get("maxNormFactor"),
+            "sumNormFactor": obj.get("sumNormFactor"),
+            "l2NormFactor": obj.get("l2NormFactor"),
+            "firstPeakNormFactor": obj.get("firstPeakNormFactor")
         })
         return _obj
 

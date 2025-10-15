@@ -3,8 +3,10 @@
 
 context("Test CompoundsApi")
 
-api_instance <- CompoundsApi$new()
-projects_api <- ProjectsApi$new()
+sdk <- SiriusSDK$new()
+api <- sdk$attach_to_sirius(sirius_port=8080)
+api_instance <- api$compounds_api
+projects_api <- api$projects_api
 
 basic_spectrum <- c(BasicSpectrum$new(peaks = c(SimplePeak$new(1.23, 4.56)), precursorMz = 1.23))
 feature_import <- c(FeatureImport$new(ionMass = 1.23, charge = 1, ms1Spectra = basic_spectrum, ms2Spectra = basic_spectrum))
@@ -21,16 +23,22 @@ test_that("AddCompounds", {
   # @param opt_fields_features array[AlignedFeatureOptField] set of optional fields of the nested features to be included. Use 'none' to override defaults. (optional)
   # @return [array[Compound]]
 
-  project_id <- "AddCompounds"
-  project_dir <- paste(Sys.getenv("HOME"), "AddCompounds", sep="/")
-  projects_api$CreateProject(project_id, project_dir)
+  tryCatch({
 
-  response <- api_instance$AddCompounds(project_id, compound_import)
-  expect_true(inherits(response, "list"))
-  expect_true(inherits(response[[1]], "Compound"))
+    project_id <- "AddCompounds"
+    project_dir <- paste(Sys.getenv("HOME"), paste0(project_id, ".sirius"), sep = "/")
+    projects_api$CreateProject(project_id, project_dir)
 
-  withr::defer(projects_api$CloseProject(project_id))
-  withr::defer(unlink(project_dir, recursive=TRUE))
+    response <- api_instance$AddCompounds(project_id, compound_import)
+    expect_true(inherits(response, "list"))
+    expect_true(inherits(response[[1]], "Compound"))
+
+  }, finally = {
+
+    projects_api$CloseProject(project_id)
+    unlink(project_dir, recursive = TRUE)
+
+  })
 })
 
 test_that("DeleteCompound", {
@@ -42,20 +50,26 @@ test_that("DeleteCompound", {
   # @param compound_id character identifier of the compound to delete.
   # @return [Void]
 
-  project_id <- "DeleteCompound"
-  project_dir <- paste(Sys.getenv("HOME"), "DeleteCompound", sep="/")
-  projects_api$CreateProject(project_id, project_dir)
-  api_instance$AddCompounds(project_id, compound_import)
-  compound_id <- api_instance$GetCompounds(project_id)[[1]]$compoundId
+  tryCatch({
 
-  response_before <- api_instance$GetCompounds(project_id)
-  api_instance$DeleteCompound(project_id, compound_id)
-  response_after <- api_instance$GetCompounds(project_id)
+    project_id <- "DeleteCompound"
+    project_dir <- paste(Sys.getenv("HOME"), paste0(project_id, ".sirius"), sep = "/")
+    projects_api$CreateProject(project_id, project_dir)
+    api_instance$AddCompounds(project_id, compound_import)
+    compound_id <- api_instance$GetCompounds(project_id)[[1]]$compoundId
 
-  expect_equal(length(response_before) - length(response_after), 1)
+    response_before <- api_instance$GetCompounds(project_id)
+    api_instance$DeleteCompound(project_id, compound_id)
+    response_after <- api_instance$GetCompounds(project_id)
 
-  withr::defer(projects_api$CloseProject(project_id))
-  withr::defer(unlink(project_dir, recursive=TRUE))
+    expect_equal(length(response_before) - length(response_after), 1)
+
+  }, finally = {
+
+    projects_api$CloseProject(project_id)
+    unlink(project_dir, recursive = TRUE)
+
+  })
 })
 
 test_that("GetCompound", {
@@ -69,17 +83,23 @@ test_that("GetCompound", {
   # @param opt_fields_features array[AlignedFeatureOptField]  (optional)
   # @return [Compound]
 
-  project_id <- "GetCompound"
-  project_dir <- paste(Sys.getenv("HOME"), "GetCompound", sep="/")
-  projects_api$CreateProject(project_id, project_dir)
-  api_instance$AddCompounds(project_id, compound_import)
-  compound_id <- api_instance$GetCompounds(project_id)[[1]]$compoundId
+  tryCatch({
 
-  response <- api_instance$GetCompound(project_id, compound_id)
-  expect_true(inherits(response, "Compound"))
+    project_id <- "GetCompound"
+    project_dir <- paste(Sys.getenv("HOME"), paste0(project_id, ".sirius"), sep = "/")
+    projects_api$CreateProject(project_id, project_dir)
+    api_instance$AddCompounds(project_id, compound_import)
+    compound_id <- api_instance$GetCompounds(project_id)[[1]]$compoundId
 
-  withr::defer(projects_api$CloseProject(project_id))
-  withr::defer(unlink(project_dir, recursive=TRUE))
+    response <- api_instance$GetCompound(project_id, compound_id)
+    expect_true(inherits(response, "Compound"))
+
+  }, finally = {
+
+    projects_api$CloseProject(project_id)
+    unlink(project_dir, recursive = TRUE)
+
+  })
 })
 
 test_that("GetCompounds", {
@@ -92,17 +112,23 @@ test_that("GetCompounds", {
   # @param opt_fields_features array[AlignedFeatureOptField]  (optional)
   # @return [array[Compound]]
 
-  project_id <- "GetCompounds"
-  project_dir <- paste(Sys.getenv("HOME"), "GetCompounds", sep="/")
-  projects_api$CreateProject(project_id, project_dir)
-  api_instance$AddCompounds(project_id, compound_import)
+  tryCatch({
 
-  response <- api_instance$GetCompounds(project_id)
-  expect_true(inherits(response, "list"))
-  expect_true(inherits(response[[1]], "Compound"))
+    project_id <- "GetCompounds"
+    project_dir <- paste(Sys.getenv("HOME"), paste0(project_id, ".sirius"), sep = "/")
+    projects_api$CreateProject(project_id, project_dir)
+    api_instance$AddCompounds(project_id, compound_import)
 
-  withr::defer(projects_api$CloseProject(project_id))
-  withr::defer(unlink(project_dir, recursive=TRUE))
+    response <- api_instance$GetCompounds(project_id)
+    expect_true(inherits(response, "list"))
+    expect_true(inherits(response[[1]], "Compound"))
+
+  }, finally = {
+
+    projects_api$CloseProject(project_id)
+    unlink(project_dir, recursive = TRUE)
+
+  })
 })
 
 test_that("GetCompoundsPaged", {
@@ -118,34 +144,19 @@ test_that("GetCompoundsPaged", {
   # @param opt_fields_features array[AlignedFeatureOptField]  (optional)
   # @return [PageCompound]
 
-  project_id <- "GetCompoundsPaged"
-  project_dir <- paste(Sys.getenv("HOME"), "GetCompoundsPaged", sep="/")
-  projects_api$CreateProject(project_id, project_dir)
+  tryCatch({
 
-  response <- api_instance$GetCompoundsPaged(project_id)
-  expect_true(inherits(response, "PagedModelCompound"))
+    project_id <- "GetCompoundsPaged"
+    project_dir <- paste(Sys.getenv("HOME"), paste0(project_id, ".sirius"), sep = "/")
+    projects_api$CreateProject(project_id, project_dir)
 
-  withr::defer(projects_api$CloseProject(project_id))
-  withr::defer(unlink(project_dir, recursive=TRUE))
-})
+    response <- api_instance$GetCompoundsPaged(project_id)
+    expect_true(inherits(response, "PagedModelCompound"))
 
-test_that("GetTraces", {
-  # tests for GetTraces
-  # base path: http://localhost:8080
-  # @param project_id character
-  # @param compound_id character
-  # @return [TraceSet]
+  }, finally = {
 
-#   TODO feature has no trace
-#   project_id <- "GetTraces"
-#   project_dir <- paste(Sys.getenv("HOME"), "GetTraces", sep="/")
-#   projects_api$CreateProject(project_id, project_dir)
-#   api_instance$AddCompounds(project_id, compound_import)
-#   compound_id <- api_instance$GetCompounds(project_id)[[1]]$compoundId
-#
-#   response <- api_instance$GetTraces(project_id, compound_id)
-#   expect_true(inherits(response, "TraceSet"))
-#
-#   withr::defer(projects_api$CloseProject(project_id))
-#   withr::defer(unlink(project_dir, recursive=TRUE))
+    projects_api$CloseProject(project_id)
+    unlink(project_dir, recursive = TRUE)
+
+  })
 })

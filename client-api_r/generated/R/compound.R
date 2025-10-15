@@ -16,6 +16,7 @@
 #' @field consensusAnnotations  \link{ConsensusAnnotationsCSI} [optional]
 #' @field consensusAnnotationsDeNovo  \link{ConsensusAnnotationsDeNovo} [optional]
 #' @field customAnnotations  \link{ConsensusAnnotationsCSI} [optional]
+#' @field tags Key: tagName, value: tag named list(\link{Tag}) [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
 #' @export
@@ -31,6 +32,7 @@ Compound <- R6::R6Class(
     `consensusAnnotations` = NULL,
     `consensusAnnotationsDeNovo` = NULL,
     `customAnnotations` = NULL,
+    `tags` = NULL,
 
     #' @description
     #' Initialize a new Compound class.
@@ -44,8 +46,9 @@ Compound <- R6::R6Class(
     #' @param consensusAnnotations consensusAnnotations
     #' @param consensusAnnotationsDeNovo consensusAnnotationsDeNovo
     #' @param customAnnotations customAnnotations
+    #' @param tags Key: tagName, value: tag
     #' @param ... Other optional arguments.
-    initialize = function(`compoundId` = NULL, `name` = NULL, `rtStartSeconds` = NULL, `rtEndSeconds` = NULL, `neutralMass` = NULL, `features` = NULL, `consensusAnnotations` = NULL, `consensusAnnotationsDeNovo` = NULL, `customAnnotations` = NULL, ...) {
+    initialize = function(`compoundId` = NULL, `name` = NULL, `rtStartSeconds` = NULL, `rtEndSeconds` = NULL, `neutralMass` = NULL, `features` = NULL, `consensusAnnotations` = NULL, `consensusAnnotationsDeNovo` = NULL, `customAnnotations` = NULL, `tags` = NULL, ...) {
       if (!is.null(`compoundId`)) {
         if (!(is.character(`compoundId`) && length(`compoundId`) == 1)) {
           stop(paste("Error! Invalid data for `compoundId`. Must be a string:", `compoundId`))
@@ -92,6 +95,11 @@ Compound <- R6::R6Class(
       if (!is.null(`customAnnotations`)) {
         stopifnot(R6::is.R6(`customAnnotations`))
         self$`customAnnotations` <- `customAnnotations`
+      }
+      if (!is.null(`tags`)) {
+        stopifnot(is.vector(`tags`), length(`tags`) != 0)
+        sapply(`tags`, function(x) stopifnot(R6::is.R6(x)))
+        self$`tags` <- `tags`
       }
     },
 
@@ -162,6 +170,10 @@ Compound <- R6::R6Class(
         CompoundObject[["customAnnotations"]] <-
           self$`customAnnotations`$toSimpleType()
       }
+      if (!is.null(self$`tags`)) {
+        CompoundObject[["tags"]] <-
+          lapply(self$`tags`, function(x) x$toSimpleType())
+      }
       return(CompoundObject)
     },
 
@@ -188,7 +200,7 @@ Compound <- R6::R6Class(
         self$`neutralMass` <- this_object$`neutralMass`
       }
       if (!is.null(this_object$`features`)) {
-        self$`features` <- ApiClient$new()$deserializeObj(this_object$`features`, "array[AlignedFeature]", loadNamespace("Rsirius"))
+        self$`features` <- ApiClient$new()$deserializeObj(this_object$`features`, "array[AlignedFeature]", loadNamespace("RSirius"))
       }
       if (!is.null(this_object$`consensusAnnotations`)) {
         `consensusannotations_object` <- ConsensusAnnotationsCSI$new()
@@ -204,6 +216,9 @@ Compound <- R6::R6Class(
         `customannotations_object` <- ConsensusAnnotationsCSI$new()
         `customannotations_object`$fromJSON(jsonlite::toJSON(this_object$`customAnnotations`, auto_unbox = TRUE, digits = NA, null = 'null'))
         self$`customAnnotations` <- `customannotations_object`
+      }
+      if (!is.null(this_object$`tags`)) {
+        self$`tags` <- ApiClient$new()$deserializeObj(this_object$`tags`, "map(Tag)", loadNamespace("RSirius"))
       }
       self
     },
@@ -231,10 +246,11 @@ Compound <- R6::R6Class(
       self$`rtStartSeconds` <- this_object$`rtStartSeconds`
       self$`rtEndSeconds` <- this_object$`rtEndSeconds`
       self$`neutralMass` <- this_object$`neutralMass`
-      self$`features` <- ApiClient$new()$deserializeObj(this_object$`features`, "array[AlignedFeature]", loadNamespace("Rsirius"))
+      self$`features` <- ApiClient$new()$deserializeObj(this_object$`features`, "array[AlignedFeature]", loadNamespace("RSirius"))
       self$`consensusAnnotations` <- ConsensusAnnotationsCSI$new()$fromJSON(jsonlite::toJSON(this_object$`consensusAnnotations`, auto_unbox = TRUE, digits = NA, null = 'null'))
       self$`consensusAnnotationsDeNovo` <- ConsensusAnnotationsDeNovo$new()$fromJSON(jsonlite::toJSON(this_object$`consensusAnnotationsDeNovo`, auto_unbox = TRUE, digits = NA, null = 'null'))
       self$`customAnnotations` <- ConsensusAnnotationsCSI$new()$fromJSON(jsonlite::toJSON(this_object$`customAnnotations`, auto_unbox = TRUE, digits = NA, null = 'null'))
+      self$`tags` <- ApiClient$new()$deserializeObj(this_object$`tags`, "map(Tag)", loadNamespace("RSirius"))
       self
     },
 

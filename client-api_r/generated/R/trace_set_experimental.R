@@ -139,7 +139,7 @@ TraceSetExperimental <- R6::R6Class(
         self$`axes` <- `axes_object`
       }
       if (!is.null(this_object$`traces`)) {
-        self$`traces` <- ApiClient$new()$deserializeObj(this_object$`traces`, "array[TraceExperimental]", loadNamespace("Rsirius"))
+        self$`traces` <- ApiClient$new()$deserializeObj(this_object$`traces`, "array[TraceExperimental]", loadNamespace("RSirius"))
       }
       self
     },
@@ -166,7 +166,7 @@ TraceSetExperimental <- R6::R6Class(
       self$`sampleId` <- this_object$`sampleId`
       self$`sampleName` <- this_object$`sampleName`
       self$`axes` <- Axes$new()$fromJSON(jsonlite::toJSON(this_object$`axes`, auto_unbox = TRUE, digits = NA, null = 'null'))
-      self$`traces` <- ApiClient$new()$deserializeObj(this_object$`traces`, "array[TraceExperimental]", loadNamespace("Rsirius"))
+      self$`traces` <- ApiClient$new()$deserializeObj(this_object$`traces`, "array[TraceExperimental]", loadNamespace("RSirius"))
       self
     },
 

@@ -43,6 +43,10 @@ df
 \item{\code{edgeFilterThresholds}}{\link{ZodiacEdgeFilterThresholds} [optional]}
 
 \item{\code{gibbsSamplerParameters}}{\link{ZodiacEpochs} [optional]}
+
+\item{\code{librarySearchAnchors}}{\link{ZodiacLibraryScoring} [optional]}
+
+\item{\code{analogueSearchAnchors}}{\link{ZodiacAnalogueNodes} [optional]}
 }
 \if{html}{\out{</div>}}
 }
@@ -77,6 +81,8 @@ Initialize a new Zodiac class.
   runInTwoSteps = NULL,
   edgeFilterThresholds = NULL,
   gibbsSamplerParameters = NULL,
+  librarySearchAnchors = NULL,
+  analogueSearchAnchors = NULL,
   ...
 )}\if{html}{\out{</div>}}
 }
@@ -95,6 +101,10 @@ Initialize a new Zodiac class.
 \item{\code{edgeFilterThresholds}}{edgeFilterThresholds}
 
 \item{\code{gibbsSamplerParameters}}{gibbsSamplerParameters}
+
+\item{\code{librarySearchAnchors}}{librarySearchAnchors}
+
+\item{\code{analogueSearchAnchors}}{analogueSearchAnchors}
 
 \item{\code{...}}{Other optional arguments.}
 }

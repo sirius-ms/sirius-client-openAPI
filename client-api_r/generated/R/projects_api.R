@@ -15,18 +15,19 @@
 #' \dontrun{
 #' ####################  CloseProject  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | unique name/identifier of the  project-space to be closed.
+#' var_compact <- FALSE # character | if true, compact project storage after closing. DEPRECATED: Compacting acts on the local filesystem and will likely be removed in a later version. (Optional)
 #'
-#' #Close project-space and remove it from application
+#' #Close project-space and remove it from the application
 #' api_instance <- rsirius_api$new()
 #'
-#' api_instance$projects_api$CloseProject(var_project_id)
+#' api_instance$projects_api$CloseProject(var_project_id, compact = var_compact)
 #'
 #'
 #' ####################  CreateProject  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | unique name/identifier that shall be used to access the newly created project-space. Must consist only of [a-zA-Z0-9_-].
 #' var_path_to_project <- "path_to_project_example" # character | local file path where the project will be created. If NULL, project will be stored by its projectId in default project location. DEPRECATED: This parameter relies on the local filesystem and will likely be removed in later versions of this API to allow for more flexible use cases. (Optional)
 #' var_opt_fields <- c("none") # array[character] |  (Optional)
@@ -42,7 +43,7 @@
 #'
 #' ####################  GetCanopusClassyFireData  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | 
 #' var_charge <- 56 # integer | 
 #'
@@ -57,7 +58,7 @@
 #'
 #' ####################  GetCanopusNpcData  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | 
 #' var_charge <- 56 # integer | 
 #'
@@ -72,7 +73,7 @@
 #'
 #' ####################  GetFingerIdData  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | 
 #' var_charge <- 56 # integer | 
 #'
@@ -87,7 +88,7 @@
 #'
 #' ####################  GetProject  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | unique name/identifier tof the project-space to be accessed.
 #' var_opt_fields <- c("none") # array[character] |  (Optional)
 #'
@@ -102,7 +103,7 @@
 #'
 #' ####################  GetProjects  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #'
 #' #List opened project spaces.
 #' api_instance <- rsirius_api$new()
@@ -115,75 +116,75 @@
 #'
 #' ####################  ImportMsRunData  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | Project-space to import into.
-#' var_input_files <- c(123) # array[data.frame] |  (Optional)
-#' var_parameters <- LcmsSubmissionParameters$new("alignLCMSRuns_example") # LcmsSubmissionParameters |  (Optional)
+#' var_input_files <- c(123) # array[data.frame] | Files to import into project.
+#' var_parameters <- LcmsSubmissionParameters$new("alignLCMSRuns_example", 123, Deviation$new(123, 123), Deviation$new(123, 123), 123, 123) # LcmsSubmissionParameters | 
 #'
 #' #Import and Align full MS-Runs from various formats into the specified project  Possible formats (mzML, mzXML)
 #' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-#' # result <- api_instance$ImportMsRunData(var_project_id, input_files = var_input_files, parameters = var_parametersdata_file = "result.txt")
-#' result <- api_instance$projects_api$ImportMsRunData(var_project_id, input_files = var_input_files, parameters = var_parameters)
+#' # result <- api_instance$ImportMsRunData(var_project_id, var_input_files, var_parametersdata_file = "result.txt")
+#' result <- api_instance$projects_api$ImportMsRunData(var_project_id, var_input_files, var_parameters)
 #' dput(result)
 #'
 #'
 #' ####################  ImportMsRunDataAsJob  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | Project-space to import into.
+#' var_input_files <- c(123) # array[data.frame] | Files to import into project.
+#' var_parameters <- LcmsSubmissionParameters$new("alignLCMSRuns_example", 123, Deviation$new(123, 123), Deviation$new(123, 123), 123, 123) # LcmsSubmissionParameters | 
 #' var_opt_fields <- c("none") # array[character] | Set of optional fields to be included. Use 'none' only to override defaults. (Optional)
-#' var_input_files <- c(123) # array[data.frame] |  (Optional)
-#' var_parameters <- LcmsSubmissionParameters$new("alignLCMSRuns_example") # LcmsSubmissionParameters |  (Optional)
 #'
 #' #Import and Align full MS-Runs from various formats into the specified project as background job.
 #' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-#' # result <- api_instance$ImportMsRunDataAsJob(var_project_id, opt_fields = var_opt_fields, input_files = var_input_files, parameters = var_parametersdata_file = "result.txt")
-#' result <- api_instance$projects_api$ImportMsRunDataAsJob(var_project_id, opt_fields = var_opt_fields, input_files = var_input_files, parameters = var_parameters)
+#' # result <- api_instance$ImportMsRunDataAsJob(var_project_id, var_input_files, var_parameters, opt_fields = var_opt_fieldsdata_file = "result.txt")
+#' result <- api_instance$projects_api$ImportMsRunDataAsJob(var_project_id, var_input_files, var_parameters, opt_fields = var_opt_fields)
 #' dput(result)
 #'
 #'
 #' ####################  ImportPreprocessedData  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to import into.
+#' var_input_files <- c(123) # array[data.frame] | files to import into project
 #' var_ignore_formulas <- FALSE # character |  (Optional)
 #' var_allow_ms1_only <- TRUE # character |  (Optional)
-#' var_input_files <- c(123) # array[data.frame] |  (Optional)
 #'
 #' #Import already preprocessed ms/ms data from various formats into the specified project  Possible formats (ms, mgf, cef, msp)
 #' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-#' # result <- api_instance$ImportPreprocessedData(var_project_id, ignore_formulas = var_ignore_formulas, allow_ms1_only = var_allow_ms1_only, input_files = var_input_filesdata_file = "result.txt")
-#' result <- api_instance$projects_api$ImportPreprocessedData(var_project_id, ignore_formulas = var_ignore_formulas, allow_ms1_only = var_allow_ms1_only, input_files = var_input_files)
+#' # result <- api_instance$ImportPreprocessedData(var_project_id, var_input_files, ignore_formulas = var_ignore_formulas, allow_ms1_only = var_allow_ms1_onlydata_file = "result.txt")
+#' result <- api_instance$projects_api$ImportPreprocessedData(var_project_id, var_input_files, ignore_formulas = var_ignore_formulas, allow_ms1_only = var_allow_ms1_only)
 #' dput(result)
 #'
 #'
 #' ####################  ImportPreprocessedDataAsJob  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to import into.
+#' var_input_files <- c(123) # array[data.frame] | 
 #' var_ignore_formulas <- FALSE # character |  (Optional)
 #' var_allow_ms1_only <- TRUE # character |  (Optional)
 #' var_opt_fields <- c("none") # array[character] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
-#' var_input_files <- c(123) # array[data.frame] |  (Optional)
 #'
 #' #Import ms/ms data from the given format into the specified project-space as background job.
 #' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-#' # result <- api_instance$ImportPreprocessedDataAsJob(var_project_id, ignore_formulas = var_ignore_formulas, allow_ms1_only = var_allow_ms1_only, opt_fields = var_opt_fields, input_files = var_input_filesdata_file = "result.txt")
-#' result <- api_instance$projects_api$ImportPreprocessedDataAsJob(var_project_id, ignore_formulas = var_ignore_formulas, allow_ms1_only = var_allow_ms1_only, opt_fields = var_opt_fields, input_files = var_input_files)
+#' # result <- api_instance$ImportPreprocessedDataAsJob(var_project_id, var_input_files, ignore_formulas = var_ignore_formulas, allow_ms1_only = var_allow_ms1_only, opt_fields = var_opt_fieldsdata_file = "result.txt")
+#' result <- api_instance$projects_api$ImportPreprocessedDataAsJob(var_project_id, var_input_files, ignore_formulas = var_ignore_formulas, allow_ms1_only = var_allow_ms1_only, opt_fields = var_opt_fields)
 #' dput(result)
 #'
 #'
 #' ####################  OpenProject  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | unique name/identifier that shall be used to access the opened project-space. Must consist only of [a-zA-Z0-9_-].
 #' var_path_to_project <- "path_to_project_example" # character | local file path to open the project from. If NULL, project will be loaded by it projectId from default project location.  DEPRECATED: This parameter relies on the local filesystem and will likely be removed in later versions of this API to allow for more flexible use cases. (Optional)
 #' var_opt_fields <- c("none") # array[character] |  (Optional)
@@ -219,14 +220,15 @@ ProjectsApi <- R6::R6Class(
     },
 
     #' @description
-    #' Close project-space and remove it from application
+    #' Close project-space and remove it from the application
     #'
     #' @param project_id unique name/identifier of the  project-space to be closed.
+    #' @param compact (optional) if true, compact project storage after closing. DEPRECATED: Compacting acts on the local filesystem and will likely be removed in a later version. (default value: FALSE)
     #' @param ... Other optional arguments
     #'
     #' @return void
-    CloseProject = function(project_id, ...) {
-      local_var_response <- self$CloseProjectWithHttpInfo(project_id, ...)
+    CloseProject = function(project_id, compact = FALSE, ...) {
+      local_var_response <- self$CloseProjectWithHttpInfo(project_id, compact, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
@@ -239,13 +241,14 @@ ProjectsApi <- R6::R6Class(
     },
 
     #' @description
-    #' Close project-space and remove it from application
+    #' Close project-space and remove it from the application
     #'
     #' @param project_id unique name/identifier of the  project-space to be closed.
+    #' @param compact (optional) if true, compact project storage after closing. DEPRECATED: Compacting acts on the local filesystem and will likely be removed in a later version. (default value: FALSE)
     #' @param ... Other optional arguments
     #'
     #' @return API response (void) with additional information such as HTTP status code, headers
-    CloseProjectWithHttpInfo = function(project_id, ...) {
+    CloseProjectWithHttpInfo = function(project_id, compact = FALSE, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -259,6 +262,9 @@ ProjectsApi <- R6::R6Class(
         stop("Missing required parameter `project_id`.")
       }
 
+
+
+      query_params[["compact"]] <- `compact`
 
       local_var_url_path <- "/api/projects/{projectId}"
       if (!missing(`project_id`)) {
@@ -392,13 +398,40 @@ ProjectsApi <- R6::R6Class(
           write(local_var_resp$response, data_file)
         }
 
-        deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "ProjectInfo", loadNamespace("Rsirius")),
-          error = function(e) {
-            stop("Failed to deserialize response")
-          }
-        )
-        local_var_resp$content <- deserialized_resp_obj
+        # Check if we are expecting a CSV response
+        is_csv_response <- any(grepl("csv", local_var_accepts, ignore.case = TRUE))
+
+        if (is_csv_response) {
+          # For CSV responses, parse into data.frame
+          csv_resp_obj <- tryCatch(
+            {
+              csv_text <- rawToChar(local_var_resp$response)
+
+              # Detect separator by examining first line
+              first_line <- strsplit(csv_text, "\n")[[1]][1]
+              if (grepl("\t", first_line)) {
+                # Tab-separated (TSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = "\t")
+              } else {
+                # Comma-separated (CSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = ",")
+              }
+            },
+            error = function(e) {
+              stop("Failed to parse CSV response")
+            }
+          )
+          local_var_resp$content <- csv_resp_obj
+        } else {
+          # For JSON responses, deserialize normally
+          deserialized_resp_obj <- tryCatch(
+            self$api_client$deserialize(local_var_resp$response_as_text(), "ProjectInfo", loadNamespace("RSirius")),
+            error = function(e) {
+              stop("Failed to deserialize response")
+            }
+          )
+          local_var_resp$content <- deserialized_resp_obj
+        }
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
@@ -496,13 +529,40 @@ ProjectsApi <- R6::R6Class(
           write(local_var_resp$response, data_file)
         }
 
-        deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "character", loadNamespace("Rsirius")),
-          error = function(e) {
-            stop("Failed to deserialize response")
-          }
-        )
-        local_var_resp$content <- deserialized_resp_obj
+        # Check if we are expecting a CSV response
+        is_csv_response <- any(grepl("csv", local_var_accepts, ignore.case = TRUE))
+
+        if (is_csv_response) {
+          # For CSV responses, parse into data.frame
+          csv_resp_obj <- tryCatch(
+            {
+              csv_text <- rawToChar(local_var_resp$response)
+
+              # Detect separator by examining first line
+              first_line <- strsplit(csv_text, "\n")[[1]][1]
+              if (grepl("\t", first_line)) {
+                # Tab-separated (TSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = "\t")
+              } else {
+                # Comma-separated (CSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = ",")
+              }
+            },
+            error = function(e) {
+              stop("Failed to parse CSV response")
+            }
+          )
+          local_var_resp$content <- csv_resp_obj
+        } else {
+          # For JSON responses, deserialize normally
+          deserialized_resp_obj <- tryCatch(
+            self$api_client$deserialize(local_var_resp$response_as_text(), "character", loadNamespace("RSirius")),
+            error = function(e) {
+              stop("Failed to deserialize response")
+            }
+          )
+          local_var_resp$content <- deserialized_resp_obj
+        }
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
@@ -600,13 +660,40 @@ ProjectsApi <- R6::R6Class(
           write(local_var_resp$response, data_file)
         }
 
-        deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "character", loadNamespace("Rsirius")),
-          error = function(e) {
-            stop("Failed to deserialize response")
-          }
-        )
-        local_var_resp$content <- deserialized_resp_obj
+        # Check if we are expecting a CSV response
+        is_csv_response <- any(grepl("csv", local_var_accepts, ignore.case = TRUE))
+
+        if (is_csv_response) {
+          # For CSV responses, parse into data.frame
+          csv_resp_obj <- tryCatch(
+            {
+              csv_text <- rawToChar(local_var_resp$response)
+
+              # Detect separator by examining first line
+              first_line <- strsplit(csv_text, "\n")[[1]][1]
+              if (grepl("\t", first_line)) {
+                # Tab-separated (TSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = "\t")
+              } else {
+                # Comma-separated (CSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = ",")
+              }
+            },
+            error = function(e) {
+              stop("Failed to parse CSV response")
+            }
+          )
+          local_var_resp$content <- csv_resp_obj
+        } else {
+          # For JSON responses, deserialize normally
+          deserialized_resp_obj <- tryCatch(
+            self$api_client$deserialize(local_var_resp$response_as_text(), "character", loadNamespace("RSirius")),
+            error = function(e) {
+              stop("Failed to deserialize response")
+            }
+          )
+          local_var_resp$content <- deserialized_resp_obj
+        }
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
@@ -704,13 +791,40 @@ ProjectsApi <- R6::R6Class(
           write(local_var_resp$response, data_file)
         }
 
-        deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "character", loadNamespace("Rsirius")),
-          error = function(e) {
-            stop("Failed to deserialize response")
-          }
-        )
-        local_var_resp$content <- deserialized_resp_obj
+        # Check if we are expecting a CSV response
+        is_csv_response <- any(grepl("csv", local_var_accepts, ignore.case = TRUE))
+
+        if (is_csv_response) {
+          # For CSV responses, parse into data.frame
+          csv_resp_obj <- tryCatch(
+            {
+              csv_text <- rawToChar(local_var_resp$response)
+
+              # Detect separator by examining first line
+              first_line <- strsplit(csv_text, "\n")[[1]][1]
+              if (grepl("\t", first_line)) {
+                # Tab-separated (TSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = "\t")
+              } else {
+                # Comma-separated (CSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = ",")
+              }
+            },
+            error = function(e) {
+              stop("Failed to parse CSV response")
+            }
+          )
+          local_var_resp$content <- csv_resp_obj
+        } else {
+          # For JSON responses, deserialize normally
+          deserialized_resp_obj <- tryCatch(
+            self$api_client$deserialize(local_var_resp$response_as_text(), "character", loadNamespace("RSirius")),
+            error = function(e) {
+              stop("Failed to deserialize response")
+            }
+          )
+          local_var_resp$content <- deserialized_resp_obj
+        }
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
@@ -811,13 +925,40 @@ ProjectsApi <- R6::R6Class(
           write(local_var_resp$response, data_file)
         }
 
-        deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "ProjectInfo", loadNamespace("Rsirius")),
-          error = function(e) {
-            stop("Failed to deserialize response")
-          }
-        )
-        local_var_resp$content <- deserialized_resp_obj
+        # Check if we are expecting a CSV response
+        is_csv_response <- any(grepl("csv", local_var_accepts, ignore.case = TRUE))
+
+        if (is_csv_response) {
+          # For CSV responses, parse into data.frame
+          csv_resp_obj <- tryCatch(
+            {
+              csv_text <- rawToChar(local_var_resp$response)
+
+              # Detect separator by examining first line
+              first_line <- strsplit(csv_text, "\n")[[1]][1]
+              if (grepl("\t", first_line)) {
+                # Tab-separated (TSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = "\t")
+              } else {
+                # Comma-separated (CSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = ",")
+              }
+            },
+            error = function(e) {
+              stop("Failed to parse CSV response")
+            }
+          )
+          local_var_resp$content <- csv_resp_obj
+        } else {
+          # For JSON responses, deserialize normally
+          deserialized_resp_obj <- tryCatch(
+            self$api_client$deserialize(local_var_resp$response_as_text(), "ProjectInfo", loadNamespace("RSirius")),
+            error = function(e) {
+              stop("Failed to deserialize response")
+            }
+          )
+          local_var_resp$content <- deserialized_resp_obj
+        }
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
@@ -895,13 +1036,40 @@ ProjectsApi <- R6::R6Class(
           write(local_var_resp$response, data_file)
         }
 
-        deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "array[ProjectInfo]", loadNamespace("Rsirius")),
-          error = function(e) {
-            stop("Failed to deserialize response")
-          }
-        )
-        local_var_resp$content <- deserialized_resp_obj
+        # Check if we are expecting a CSV response
+        is_csv_response <- any(grepl("csv", local_var_accepts, ignore.case = TRUE))
+
+        if (is_csv_response) {
+          # For CSV responses, parse into data.frame
+          csv_resp_obj <- tryCatch(
+            {
+              csv_text <- rawToChar(local_var_resp$response)
+
+              # Detect separator by examining first line
+              first_line <- strsplit(csv_text, "\n")[[1]][1]
+              if (grepl("\t", first_line)) {
+                # Tab-separated (TSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = "\t")
+              } else {
+                # Comma-separated (CSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = ",")
+              }
+            },
+            error = function(e) {
+              stop("Failed to parse CSV response")
+            }
+          )
+          local_var_resp$content <- csv_resp_obj
+        } else {
+          # For JSON responses, deserialize normally
+          deserialized_resp_obj <- tryCatch(
+            self$api_client$deserialize(local_var_resp$response_as_text(), "array[ProjectInfo]", loadNamespace("RSirius")),
+            error = function(e) {
+              stop("Failed to deserialize response")
+            }
+          )
+          local_var_resp$content <- deserialized_resp_obj
+        }
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
@@ -919,13 +1087,13 @@ ProjectsApi <- R6::R6Class(
     #' Import and Align full MS-Runs from various formats into the specified project  Possible formats (mzML, mzXML)
     #'
     #' @param project_id Project-space to import into.
-    #' @param input_files (optional) No description
-    #' @param parameters (optional) No description
+    #' @param input_files Files to import into project.
+    #' @param parameters 
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return ImportResult
-    ImportMsRunData = function(project_id, input_files = NULL, parameters = NULL, data_file = NULL, ...) {
+    ImportMsRunData = function(project_id, input_files, parameters, data_file = NULL, ...) {
       local_var_response <- self$ImportMsRunDataWithHttpInfo(project_id, input_files, parameters, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
@@ -942,13 +1110,13 @@ ProjectsApi <- R6::R6Class(
     #' Import and Align full MS-Runs from various formats into the specified project  Possible formats (mzML, mzXML)
     #'
     #' @param project_id Project-space to import into.
-    #' @param input_files (optional) No description
-    #' @param parameters (optional) No description
+    #' @param input_files Files to import into project.
+    #' @param parameters 
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return API response (ImportResult) with additional information such as HTTP status code, headers
-    ImportMsRunDataWithHttpInfo = function(project_id, input_files = NULL, parameters = NULL, data_file = NULL, ...) {
+    ImportMsRunDataWithHttpInfo = function(project_id, input_files, parameters, data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -962,11 +1130,27 @@ ProjectsApi <- R6::R6Class(
         stop("Missing required parameter `project_id`.")
       }
 
+      if (missing(`input_files`)) {
+        stop("Missing required parameter `input_files`.")
+      }
+
+      if (missing(`parameters`)) {
+        stop("Missing required parameter `parameters`.")
+      }
 
 
 
-      file_params[["inputFiles"]] <- curl::form_file(`input_files`)
-      form_params["parameters"] <- `parameters`
+
+      file_params[["inputFiles"]] <- lapply(`input_files`, function(param) {
+        curl::form_file(param)
+      })
+      if (!is.null(`parameters`)) {
+        if (inherits(`parameters`, "R6")) {
+          form_params[["parameters"]] <- `parameters`$toJSONString()
+        } else {
+          form_params[["parameters"]] <- `parameters`
+        }
+      }
       local_var_url_path <- "/api/projects/{projectId}/import/ms-data-files"
       if (!missing(`project_id`)) {
         local_var_url_path <- gsub("\\{projectId\\}", URLencode(as.character(`project_id`), reserved = TRUE), local_var_url_path)
@@ -998,13 +1182,40 @@ ProjectsApi <- R6::R6Class(
           write(local_var_resp$response, data_file)
         }
 
-        deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "ImportResult", loadNamespace("Rsirius")),
-          error = function(e) {
-            stop("Failed to deserialize response")
-          }
-        )
-        local_var_resp$content <- deserialized_resp_obj
+        # Check if we are expecting a CSV response
+        is_csv_response <- any(grepl("csv", local_var_accepts, ignore.case = TRUE))
+
+        if (is_csv_response) {
+          # For CSV responses, parse into data.frame
+          csv_resp_obj <- tryCatch(
+            {
+              csv_text <- rawToChar(local_var_resp$response)
+
+              # Detect separator by examining first line
+              first_line <- strsplit(csv_text, "\n")[[1]][1]
+              if (grepl("\t", first_line)) {
+                # Tab-separated (TSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = "\t")
+              } else {
+                # Comma-separated (CSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = ",")
+              }
+            },
+            error = function(e) {
+              stop("Failed to parse CSV response")
+            }
+          )
+          local_var_resp$content <- csv_resp_obj
+        } else {
+          # For JSON responses, deserialize normally
+          deserialized_resp_obj <- tryCatch(
+            self$api_client$deserialize(local_var_resp$response_as_text(), "ImportResult", loadNamespace("RSirius")),
+            error = function(e) {
+              stop("Failed to deserialize response")
+            }
+          )
+          local_var_resp$content <- deserialized_resp_obj
+        }
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
@@ -1022,15 +1233,15 @@ ProjectsApi <- R6::R6Class(
     #' Import and Align full MS-Runs from various formats into the specified project as background job.
     #'
     #' @param project_id Project-space to import into.
+    #' @param input_files Files to import into project.
+    #' @param parameters 
     #' @param opt_fields (optional) Set of optional fields to be included. Use 'none' only to override defaults. (default value: ["progress"])
-    #' @param input_files (optional) No description
-    #' @param parameters (optional) No description
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return Job
-    ImportMsRunDataAsJob = function(project_id, opt_fields = list("progress"), input_files = NULL, parameters = NULL, data_file = NULL, ...) {
-      local_var_response <- self$ImportMsRunDataAsJobWithHttpInfo(project_id, opt_fields, input_files, parameters, data_file = data_file, ...)
+    ImportMsRunDataAsJob = function(project_id, input_files, parameters, opt_fields = list("progress"), data_file = NULL, ...) {
+      local_var_response <- self$ImportMsRunDataAsJobWithHttpInfo(project_id, input_files, parameters, opt_fields, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
@@ -1046,14 +1257,14 @@ ProjectsApi <- R6::R6Class(
     #' Import and Align full MS-Runs from various formats into the specified project as background job.
     #'
     #' @param project_id Project-space to import into.
+    #' @param input_files Files to import into project.
+    #' @param parameters 
     #' @param opt_fields (optional) Set of optional fields to be included. Use 'none' only to override defaults. (default value: ["progress"])
-    #' @param input_files (optional) No description
-    #' @param parameters (optional) No description
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return API response (Job) with additional information such as HTTP status code, headers
-    ImportMsRunDataAsJobWithHttpInfo = function(project_id, opt_fields = list("progress"), input_files = NULL, parameters = NULL, data_file = NULL, ...) {
+    ImportMsRunDataAsJobWithHttpInfo = function(project_id, input_files, parameters, opt_fields = list("progress"), data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -1065,6 +1276,14 @@ ProjectsApi <- R6::R6Class(
 
       if (missing(`project_id`)) {
         stop("Missing required parameter `project_id`.")
+      }
+
+      if (missing(`input_files`)) {
+        stop("Missing required parameter `input_files`.")
+      }
+
+      if (missing(`parameters`)) {
+        stop("Missing required parameter `parameters`.")
       }
 
 
@@ -1080,8 +1299,16 @@ ProjectsApi <- R6::R6Class(
         query_params[["optFields"]] <- c(query_params[["optFields"]], list(`optFields` = query_item))
       }
 
-      file_params[["inputFiles"]] <- curl::form_file(`input_files`)
-      form_params["parameters"] <- `parameters`
+      file_params[["inputFiles"]] <- lapply(`input_files`, function(param) {
+        curl::form_file(param)
+      })
+      if (!is.null(`parameters`)) {
+        if (inherits(`parameters`, "R6")) {
+          form_params[["parameters"]] <- `parameters`$toJSONString()
+        } else {
+          form_params[["parameters"]] <- `parameters`
+        }
+      }
       local_var_url_path <- "/api/projects/{projectId}/import/ms-data-files-job"
       if (!missing(`project_id`)) {
         local_var_url_path <- gsub("\\{projectId\\}", URLencode(as.character(`project_id`), reserved = TRUE), local_var_url_path)
@@ -1113,13 +1340,40 @@ ProjectsApi <- R6::R6Class(
           write(local_var_resp$response, data_file)
         }
 
-        deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "Job", loadNamespace("Rsirius")),
-          error = function(e) {
-            stop("Failed to deserialize response")
-          }
-        )
-        local_var_resp$content <- deserialized_resp_obj
+        # Check if we are expecting a CSV response
+        is_csv_response <- any(grepl("csv", local_var_accepts, ignore.case = TRUE))
+
+        if (is_csv_response) {
+          # For CSV responses, parse into data.frame
+          csv_resp_obj <- tryCatch(
+            {
+              csv_text <- rawToChar(local_var_resp$response)
+
+              # Detect separator by examining first line
+              first_line <- strsplit(csv_text, "\n")[[1]][1]
+              if (grepl("\t", first_line)) {
+                # Tab-separated (TSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = "\t")
+              } else {
+                # Comma-separated (CSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = ",")
+              }
+            },
+            error = function(e) {
+              stop("Failed to parse CSV response")
+            }
+          )
+          local_var_resp$content <- csv_resp_obj
+        } else {
+          # For JSON responses, deserialize normally
+          deserialized_resp_obj <- tryCatch(
+            self$api_client$deserialize(local_var_resp$response_as_text(), "Job", loadNamespace("RSirius")),
+            error = function(e) {
+              stop("Failed to deserialize response")
+            }
+          )
+          local_var_resp$content <- deserialized_resp_obj
+        }
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
@@ -1137,15 +1391,15 @@ ProjectsApi <- R6::R6Class(
     #' Import already preprocessed ms/ms data from various formats into the specified project  Possible formats (ms, mgf, cef, msp)
     #'
     #' @param project_id project-space to import into.
+    #' @param input_files files to import into project
     #' @param ignore_formulas (optional) No description (default value: FALSE)
     #' @param allow_ms1_only (optional) No description (default value: TRUE)
-    #' @param input_files (optional) No description
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return ImportResult
-    ImportPreprocessedData = function(project_id, ignore_formulas = FALSE, allow_ms1_only = TRUE, input_files = NULL, data_file = NULL, ...) {
-      local_var_response <- self$ImportPreprocessedDataWithHttpInfo(project_id, ignore_formulas, allow_ms1_only, input_files, data_file = data_file, ...)
+    ImportPreprocessedData = function(project_id, input_files, ignore_formulas = FALSE, allow_ms1_only = TRUE, data_file = NULL, ...) {
+      local_var_response <- self$ImportPreprocessedDataWithHttpInfo(project_id, input_files, ignore_formulas, allow_ms1_only, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
@@ -1161,14 +1415,14 @@ ProjectsApi <- R6::R6Class(
     #' Import already preprocessed ms/ms data from various formats into the specified project  Possible formats (ms, mgf, cef, msp)
     #'
     #' @param project_id project-space to import into.
+    #' @param input_files files to import into project
     #' @param ignore_formulas (optional) No description (default value: FALSE)
     #' @param allow_ms1_only (optional) No description (default value: TRUE)
-    #' @param input_files (optional) No description
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return API response (ImportResult) with additional information such as HTTP status code, headers
-    ImportPreprocessedDataWithHttpInfo = function(project_id, ignore_formulas = FALSE, allow_ms1_only = TRUE, input_files = NULL, data_file = NULL, ...) {
+    ImportPreprocessedDataWithHttpInfo = function(project_id, input_files, ignore_formulas = FALSE, allow_ms1_only = TRUE, data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -1182,6 +1436,10 @@ ProjectsApi <- R6::R6Class(
         stop("Missing required parameter `project_id`.")
       }
 
+      if (missing(`input_files`)) {
+        stop("Missing required parameter `input_files`.")
+      }
+
 
 
 
@@ -1190,7 +1448,9 @@ ProjectsApi <- R6::R6Class(
 
       query_params[["allowMs1Only"]] <- `allow_ms1_only`
 
-      file_params[["inputFiles"]] <- curl::form_file(`input_files`)
+      file_params[["inputFiles"]] <- lapply(`input_files`, function(param) {
+        curl::form_file(param)
+      })
       local_var_url_path <- "/api/projects/{projectId}/import/preprocessed-data-files"
       if (!missing(`project_id`)) {
         local_var_url_path <- gsub("\\{projectId\\}", URLencode(as.character(`project_id`), reserved = TRUE), local_var_url_path)
@@ -1222,13 +1482,40 @@ ProjectsApi <- R6::R6Class(
           write(local_var_resp$response, data_file)
         }
 
-        deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "ImportResult", loadNamespace("Rsirius")),
-          error = function(e) {
-            stop("Failed to deserialize response")
-          }
-        )
-        local_var_resp$content <- deserialized_resp_obj
+        # Check if we are expecting a CSV response
+        is_csv_response <- any(grepl("csv", local_var_accepts, ignore.case = TRUE))
+
+        if (is_csv_response) {
+          # For CSV responses, parse into data.frame
+          csv_resp_obj <- tryCatch(
+            {
+              csv_text <- rawToChar(local_var_resp$response)
+
+              # Detect separator by examining first line
+              first_line <- strsplit(csv_text, "\n")[[1]][1]
+              if (grepl("\t", first_line)) {
+                # Tab-separated (TSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = "\t")
+              } else {
+                # Comma-separated (CSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = ",")
+              }
+            },
+            error = function(e) {
+              stop("Failed to parse CSV response")
+            }
+          )
+          local_var_resp$content <- csv_resp_obj
+        } else {
+          # For JSON responses, deserialize normally
+          deserialized_resp_obj <- tryCatch(
+            self$api_client$deserialize(local_var_resp$response_as_text(), "ImportResult", loadNamespace("RSirius")),
+            error = function(e) {
+              stop("Failed to deserialize response")
+            }
+          )
+          local_var_resp$content <- deserialized_resp_obj
+        }
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
@@ -1246,16 +1533,16 @@ ProjectsApi <- R6::R6Class(
     #' Import ms/ms data from the given format into the specified project-space as background job.
     #'
     #' @param project_id project-space to import into.
+    #' @param input_files 
     #' @param ignore_formulas (optional) No description (default value: FALSE)
     #' @param allow_ms1_only (optional) No description (default value: TRUE)
     #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["progress"])
-    #' @param input_files (optional) No description
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return Job
-    ImportPreprocessedDataAsJob = function(project_id, ignore_formulas = FALSE, allow_ms1_only = TRUE, opt_fields = list("progress"), input_files = NULL, data_file = NULL, ...) {
-      local_var_response <- self$ImportPreprocessedDataAsJobWithHttpInfo(project_id, ignore_formulas, allow_ms1_only, opt_fields, input_files, data_file = data_file, ...)
+    ImportPreprocessedDataAsJob = function(project_id, input_files, ignore_formulas = FALSE, allow_ms1_only = TRUE, opt_fields = list("progress"), data_file = NULL, ...) {
+      local_var_response <- self$ImportPreprocessedDataAsJobWithHttpInfo(project_id, input_files, ignore_formulas, allow_ms1_only, opt_fields, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
@@ -1271,15 +1558,15 @@ ProjectsApi <- R6::R6Class(
     #' Import ms/ms data from the given format into the specified project-space as background job.
     #'
     #' @param project_id project-space to import into.
+    #' @param input_files 
     #' @param ignore_formulas (optional) No description (default value: FALSE)
     #' @param allow_ms1_only (optional) No description (default value: TRUE)
     #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["progress"])
-    #' @param input_files (optional) No description
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return API response (Job) with additional information such as HTTP status code, headers
-    ImportPreprocessedDataAsJobWithHttpInfo = function(project_id, ignore_formulas = FALSE, allow_ms1_only = TRUE, opt_fields = list("progress"), input_files = NULL, data_file = NULL, ...) {
+    ImportPreprocessedDataAsJobWithHttpInfo = function(project_id, input_files, ignore_formulas = FALSE, allow_ms1_only = TRUE, opt_fields = list("progress"), data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -1291,6 +1578,10 @@ ProjectsApi <- R6::R6Class(
 
       if (missing(`project_id`)) {
         stop("Missing required parameter `project_id`.")
+      }
+
+      if (missing(`input_files`)) {
+        stop("Missing required parameter `input_files`.")
       }
 
 
@@ -1311,7 +1602,9 @@ ProjectsApi <- R6::R6Class(
         query_params[["optFields"]] <- c(query_params[["optFields"]], list(`optFields` = query_item))
       }
 
-      file_params[["inputFiles"]] <- curl::form_file(`input_files`)
+      file_params[["inputFiles"]] <- lapply(`input_files`, function(param) {
+        curl::form_file(param)
+      })
       local_var_url_path <- "/api/projects/{projectId}/import/preprocessed-data-files-job"
       if (!missing(`project_id`)) {
         local_var_url_path <- gsub("\\{projectId\\}", URLencode(as.character(`project_id`), reserved = TRUE), local_var_url_path)
@@ -1343,13 +1636,40 @@ ProjectsApi <- R6::R6Class(
           write(local_var_resp$response, data_file)
         }
 
-        deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "Job", loadNamespace("Rsirius")),
-          error = function(e) {
-            stop("Failed to deserialize response")
-          }
-        )
-        local_var_resp$content <- deserialized_resp_obj
+        # Check if we are expecting a CSV response
+        is_csv_response <- any(grepl("csv", local_var_accepts, ignore.case = TRUE))
+
+        if (is_csv_response) {
+          # For CSV responses, parse into data.frame
+          csv_resp_obj <- tryCatch(
+            {
+              csv_text <- rawToChar(local_var_resp$response)
+
+              # Detect separator by examining first line
+              first_line <- strsplit(csv_text, "\n")[[1]][1]
+              if (grepl("\t", first_line)) {
+                # Tab-separated (TSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = "\t")
+              } else {
+                # Comma-separated (CSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = ",")
+              }
+            },
+            error = function(e) {
+              stop("Failed to parse CSV response")
+            }
+          )
+          local_var_resp$content <- csv_resp_obj
+        } else {
+          # For JSON responses, deserialize normally
+          deserialized_resp_obj <- tryCatch(
+            self$api_client$deserialize(local_var_resp$response_as_text(), "Job", loadNamespace("RSirius")),
+            error = function(e) {
+              stop("Failed to deserialize response")
+            }
+          )
+          local_var_resp$content <- deserialized_resp_obj
+        }
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
@@ -1455,13 +1775,40 @@ ProjectsApi <- R6::R6Class(
           write(local_var_resp$response, data_file)
         }
 
-        deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "ProjectInfo", loadNamespace("Rsirius")),
-          error = function(e) {
-            stop("Failed to deserialize response")
-          }
-        )
-        local_var_resp$content <- deserialized_resp_obj
+        # Check if we are expecting a CSV response
+        is_csv_response <- any(grepl("csv", local_var_accepts, ignore.case = TRUE))
+
+        if (is_csv_response) {
+          # For CSV responses, parse into data.frame
+          csv_resp_obj <- tryCatch(
+            {
+              csv_text <- rawToChar(local_var_resp$response)
+
+              # Detect separator by examining first line
+              first_line <- strsplit(csv_text, "\n")[[1]][1]
+              if (grepl("\t", first_line)) {
+                # Tab-separated (TSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = "\t")
+              } else {
+                # Comma-separated (CSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = ",")
+              }
+            },
+            error = function(e) {
+              stop("Failed to parse CSV response")
+            }
+          )
+          local_var_resp$content <- csv_resp_obj
+        } else {
+          # For JSON responses, deserialize normally
+          deserialized_resp_obj <- tryCatch(
+            self$api_client$deserialize(local_var_resp$response_as_text(), "ProjectInfo", loadNamespace("RSirius")),
+            error = function(e) {
+              stop("Failed to deserialize response")
+            }
+          )
+          local_var_resp$content <- deserialized_resp_obj
+        }
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)

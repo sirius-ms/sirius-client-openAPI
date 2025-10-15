@@ -67,6 +67,8 @@ df
 \item{\code{computing}}{Write lock for this feature. If the feature is locked no write operations are possible.  True if any computation is modifying this feature or its results character [optional]}
 
 \item{\code{computedTools}}{\link{ComputedSubtools} [optional]}
+
+\item{\code{tags}}{Key: tagName, value: tag named list(\link{Tag}) [optional]}
 }
 \if{html}{\out{</div>}}
 }
@@ -113,6 +115,7 @@ Initialize a new AlignedFeature class.
   topAnnotationsDeNovo = NULL,
   computing = NULL,
   computedTools = NULL,
+  tags = NULL,
   ...
 )}\if{html}{\out{</div>}}
 }
@@ -155,6 +158,8 @@ Initialize a new AlignedFeature class.
 \item{\code{computing}}{Write lock for this feature. If the feature is locked no write operations are possible.  True if any computation is modifying this feature or its results}
 
 \item{\code{computedTools}}{computedTools}
+
+\item{\code{tags}}{Key: tagName, value: tag}
 
 \item{\code{...}}{Other optional arguments.}
 }

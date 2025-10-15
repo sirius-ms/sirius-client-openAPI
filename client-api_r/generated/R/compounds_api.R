@@ -15,9 +15,9 @@
 #' \dontrun{
 #' ####################  AddCompounds  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to import into.
-#' var_compound_import <- c(CompoundImport$new(c(FeatureImport$new(123, 123, "name_example", "externalFeatureId_example", c("detectedAdducts_example"), 123, 123, 123, "NOT_APPLICABLE", BasicSpectrum$new(c(SimplePeak$new(123, 123)), "name_example", 123, "collisionEnergy_example", "instrument_example", 123, 123, 123), c(BasicSpectrum$new(c(SimplePeak$new(..., ...)), "name_example", 123, "collisionEnergy_example", "instrument_example", 123, 123, 123)), c(BasicSpectrum$new(c(SimplePeak$new(..., ...)), "name_example", 123, "collisionEnergy_example", "instrument_example", 123, 123, 123)))), "name_example")) # array[CompoundImport] | the compound data to be imported
+#' var_compound_import <- c(CompoundImport$new(c(FeatureImport$new(123, 123, "name_example", "externalFeatureId_example", c("detectedAdducts_example"), 123, 123, 123, "NOT_APPLICABLE", BasicSpectrum$new("cosineQuery_example", c(SimplePeak$new(123, 123)), "name_example", 123, "collisionEnergy_example", "instrument_example", 123, 123, SimplePeak$new(123, 123), 123, 123, 123, 123, 123), c(BasicSpectrum$new("cosineQuery_example", c(SimplePeak$new(..., ...)), "name_example", 123, "collisionEnergy_example", "instrument_example", 123, 123, SimplePeak$new(123, 123), 123, 123, 123, 123, 123)), c(BasicSpectrum$new("cosineQuery_example", c(SimplePeak$new(..., ...)), "name_example", 123, "collisionEnergy_example", "instrument_example", 123, 123, SimplePeak$new(123, 123), 123, 123, 123, 123, 123)))), "name_example")) # array[CompoundImport] | the compound data to be imported
 #' var_profile <- "profile_example" # character | profile describing the instrument used to measure the data. Used to merge spectra. (Optional)
 #' var_opt_fields <- c("none") # array[character] | set of optional fields to be included. Use 'none' to override defaults. (Optional)
 #' var_opt_fields_features <- c("none") # array[character] | set of optional fields of the nested features to be included. Use 'none' to override defaults. (Optional)
@@ -31,9 +31,25 @@
 #' dput(result)
 #'
 #'
+#' ####################  AddTagsToCompoundExperimental  ####################
+#'
+#' library(RSirius)
+#' var_project_id <- "project_id_example" # character | project-space to add to.
+#' var_compound_id <- "compound_id_example" # character | compound (group of ion identities) to add tags to.
+#' var_tag <- c(Tag$new("tagName_example", 123)) # array[Tag] | tags to add.
+#'
+#' #[EXPERIMENTAL] Tags with the same name will be overwritten
+#' api_instance <- rsirius_api$new()
+#'
+#' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
+#' # result <- api_instance$AddTagsToCompoundExperimental(var_project_id, var_compound_id, var_tagdata_file = "result.txt")
+#' result <- api_instance$compounds_api$AddTagsToCompoundExperimental(var_project_id, var_compound_id, var_tag)
+#' dput(result)
+#'
+#'
 #' ####################  DeleteCompound  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to delete from.
 #' var_compound_id <- "compound_id_example" # character | identifier of the compound to delete.
 #'
@@ -45,9 +61,10 @@
 #'
 #' ####################  GetCompound  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_compound_id <- "compound_id_example" # character | identifier of the compound (group of ion identities) to access.
+#' var_ms_data_search_prepared <- FALSE # character | Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. (Optional)
 #' var_opt_fields <- c("none") # array[character] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
 #' var_opt_fields_features <- c("none") # array[character] |  (Optional)
 #'
@@ -55,19 +72,50 @@
 #' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-#' # result <- api_instance$GetCompound(var_project_id, var_compound_id, opt_fields = var_opt_fields, opt_fields_features = var_opt_fields_featuresdata_file = "result.txt")
-#' result <- api_instance$compounds_api$GetCompound(var_project_id, var_compound_id, opt_fields = var_opt_fields, opt_fields_features = var_opt_fields_features)
+#' # result <- api_instance$GetCompound(var_project_id, var_compound_id, ms_data_search_prepared = var_ms_data_search_prepared, opt_fields = var_opt_fields, opt_fields_features = var_opt_fields_featuresdata_file = "result.txt")
+#' result <- api_instance$compounds_api$GetCompound(var_project_id, var_compound_id, ms_data_search_prepared = var_ms_data_search_prepared, opt_fields = var_opt_fields, opt_fields_features = var_opt_fields_features)
+#' dput(result)
+#'
+#'
+#' ####################  GetCompoundQuantTableExperimental  ####################
+#'
+#' library(RSirius)
+#' var_project_id <- "project_id_example" # character | project-space to read from.
+#' var_type <- "APEX_HEIGHT" # character | quantification type. (Optional)
+#'
+#' #[EXPERIMENTAL] Returns the full quantification table of compounds
+#' api_instance <- rsirius_api$new()
+#'
+#' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
+#' # result <- api_instance$GetCompoundQuantTableExperimental(var_project_id, type = var_typedata_file = "result.txt")
+#' result <- api_instance$compounds_api$GetCompoundQuantTableExperimental(var_project_id, type = var_type)
+#' dput(result)
+#'
+#'
+#' ####################  GetCompoundQuantTableRowExperimental  ####################
+#'
+#' library(RSirius)
+#' var_project_id <- "project_id_example" # character | project-space to read from.
+#' var_compound_id <- "compound_id_example" # character | compound which should be read out
+#' var_type <- "APEX_HEIGHT" # character | quantification type. (Optional)
+#'
+#' #[EXPERIMENTAL] Returns a single quantification table row for the given compound
+#' api_instance <- rsirius_api$new()
+#'
+#' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
+#' # result <- api_instance$GetCompoundQuantTableRowExperimental(var_project_id, var_compound_id, type = var_typedata_file = "result.txt")
+#' result <- api_instance$compounds_api$GetCompoundQuantTableRowExperimental(var_project_id, var_compound_id, type = var_type)
 #' dput(result)
 #'
 #'
 #' ####################  GetCompoundTracesExperimental  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_compound_id <- "compound_id_example" # character | compound which intensities should be read out
 #' var_feature_id <- "" # character |  (Optional)
 #'
-#' #EXPERIMENTAL: This endpoint is experimental and may be changed (or even removed) without notice until it is declared stable.
+#' #[EXPERIMENTAL] Returns the traces of the given compound
 #' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
@@ -78,8 +126,9 @@
 #'
 #' ####################  GetCompounds  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
+#' var_ms_data_search_prepared <- FALSE # character | Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. (Optional)
 #' var_opt_fields <- c("none") # array[character] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
 #' var_opt_fields_features <- c("none") # array[character] |  (Optional)
 #'
@@ -87,18 +136,57 @@
 #' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-#' # result <- api_instance$GetCompounds(var_project_id, opt_fields = var_opt_fields, opt_fields_features = var_opt_fields_featuresdata_file = "result.txt")
-#' result <- api_instance$compounds_api$GetCompounds(var_project_id, opt_fields = var_opt_fields, opt_fields_features = var_opt_fields_features)
+#' # result <- api_instance$GetCompounds(var_project_id, ms_data_search_prepared = var_ms_data_search_prepared, opt_fields = var_opt_fields, opt_fields_features = var_opt_fields_featuresdata_file = "result.txt")
+#' result <- api_instance$compounds_api$GetCompounds(var_project_id, ms_data_search_prepared = var_ms_data_search_prepared, opt_fields = var_opt_fields, opt_fields_features = var_opt_fields_features)
+#' dput(result)
+#'
+#'
+#' ####################  GetCompoundsByGroupExperimental  ####################
+#'
+#' library(RSirius)
+#' var_project_id <- "project_id_example" # character | project-space to delete from.
+#' var_group_name <- "group_name_example" # character | tag group name.
+#' var_page <- 0 # integer | Zero-based page index (0..N) (Optional)
+#' var_size <- 20 # integer | The size of the page to be returned (Optional)
+#' var_sort <- c("inner_example") # array[character] | Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (Optional)
+#' var_opt_fields <- c("none") # array[character] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
+#'
+#' #[EXPERIMENTAL] Get compounds (group of ion identities) by tag group
+#' api_instance <- rsirius_api$new()
+#'
+#' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
+#' # result <- api_instance$GetCompoundsByGroupExperimental(var_project_id, var_group_name, page = var_page, size = var_size, sort = var_sort, opt_fields = var_opt_fieldsdata_file = "result.txt")
+#' result <- api_instance$compounds_api$GetCompoundsByGroupExperimental(var_project_id, var_group_name, page = var_page, size = var_size, sort = var_sort, opt_fields = var_opt_fields)
+#' dput(result)
+#'
+#'
+#' ####################  GetCompoundsByTagExperimental  ####################
+#'
+#' library(RSirius)
+#' var_project_id <- "project_id_example" # character | project space to get compounds (group of ion identities) from.
+#' var_filter <- "" # character | tag filter. (Optional)
+#' var_page <- 0 # integer | Zero-based page index (0..N) (Optional)
+#' var_size <- 20 # integer | The size of the page to be returned (Optional)
+#' var_sort <- c("inner_example") # array[character] | Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (Optional)
+#' var_opt_fields <- c("none") # array[character] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
+#'
+#' #[EXPERIMENTAL] Get compounds (group of ion identities) by tag
+#' api_instance <- rsirius_api$new()
+#'
+#' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
+#' # result <- api_instance$GetCompoundsByTagExperimental(var_project_id, filter = var_filter, page = var_page, size = var_size, sort = var_sort, opt_fields = var_opt_fieldsdata_file = "result.txt")
+#' result <- api_instance$compounds_api$GetCompoundsByTagExperimental(var_project_id, filter = var_filter, page = var_page, size = var_size, sort = var_sort, opt_fields = var_opt_fields)
 #' dput(result)
 #'
 #'
 #' ####################  GetCompoundsPaged  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_page <- 0 # integer | Zero-based page index (0..N) (Optional)
 #' var_size <- 20 # integer | The size of the page to be returned (Optional)
 #' var_sort <- c("inner_example") # array[character] | Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (Optional)
+#' var_ms_data_search_prepared <- FALSE # character | Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. (Optional)
 #' var_opt_fields <- c("none") # array[character] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
 #' var_opt_fields_features <- c("none") # array[character] |  (Optional)
 #'
@@ -106,9 +194,37 @@
 #' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-#' # result <- api_instance$GetCompoundsPaged(var_project_id, page = var_page, size = var_size, sort = var_sort, opt_fields = var_opt_fields, opt_fields_features = var_opt_fields_featuresdata_file = "result.txt")
-#' result <- api_instance$compounds_api$GetCompoundsPaged(var_project_id, page = var_page, size = var_size, sort = var_sort, opt_fields = var_opt_fields, opt_fields_features = var_opt_fields_features)
+#' # result <- api_instance$GetCompoundsPaged(var_project_id, page = var_page, size = var_size, sort = var_sort, ms_data_search_prepared = var_ms_data_search_prepared, opt_fields = var_opt_fields, opt_fields_features = var_opt_fields_featuresdata_file = "result.txt")
+#' result <- api_instance$compounds_api$GetCompoundsPaged(var_project_id, page = var_page, size = var_size, sort = var_sort, ms_data_search_prepared = var_ms_data_search_prepared, opt_fields = var_opt_fields, opt_fields_features = var_opt_fields_features)
 #' dput(result)
+#'
+#'
+#' ####################  GetTagsForCompoundExperimental  ####################
+#'
+#' library(RSirius)
+#' var_project_id <- "project_id_example" # character | project-space to get from.
+#' var_object_id <- "object_id_example" # character | CompoundId to get tags for.
+#'
+#' #[EXPERIMENTAL] Get all tags associated with this Compound
+#' api_instance <- rsirius_api$new()
+#'
+#' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
+#' # result <- api_instance$GetTagsForCompoundExperimental(var_project_id, var_object_iddata_file = "result.txt")
+#' result <- api_instance$compounds_api$GetTagsForCompoundExperimental(var_project_id, var_object_id)
+#' dput(result)
+#'
+#'
+#' ####################  RemoveTagFromCompoundExperimental  ####################
+#'
+#' library(RSirius)
+#' var_project_id <- "project_id_example" # character | project-space to delete from.
+#' var_compound_id <- "compound_id_example" # character | compound (group of ion identities) to delete tag from.
+#' var_tag_name <- "tag_name_example" # character | name of the tag to delete.
+#'
+#' #[EXPERIMENTAL] Delete tag with the given name from the compound (group of ion identities) with the specified ID in the specified project-space
+#' api_instance <- rsirius_api$new()
+#'
+#' api_instance$compounds_api$RemoveTagFromCompoundExperimental(var_project_id, var_compound_id, var_tag_name)
 #'
 #'
 #' }
@@ -200,8 +316,8 @@ CompoundsApi <- R6::R6Class(
       # explore
       for (query_item in `opt_fields`) {
         # validate enum values
-        if (!is.null(query_item) && !(query_item %in% c("none", "consensusAnnotations", "consensusAnnotationsDeNovo", "customAnnotations"))) {
-          stop("Invalid value for opt_fields when calling CompoundsApi$AddCompounds. Must be [none, consensusAnnotations, consensusAnnotationsDeNovo, customAnnotations].")
+        if (!is.null(query_item) && !(query_item %in% c("none", "consensusAnnotations", "consensusAnnotationsDeNovo", "customAnnotations", "tags"))) {
+          stop("Invalid value for opt_fields when calling CompoundsApi$AddCompounds. Must be [none, consensusAnnotations, consensusAnnotationsDeNovo, customAnnotations, tags].")
         }
         query_params[["optFields"]] <- c(query_params[["optFields"]], list(`optFields` = query_item))
       }
@@ -209,16 +325,20 @@ CompoundsApi <- R6::R6Class(
       # explore
       for (query_item in `opt_fields_features`) {
         # validate enum values
-        if (!is.null(query_item) && !(query_item %in% c("none", "msData", "topAnnotations", "topAnnotationsDeNovo", "computedTools"))) {
-          stop("Invalid value for opt_fields_features when calling CompoundsApi$AddCompounds. Must be [none, msData, topAnnotations, topAnnotationsDeNovo, computedTools].")
+        if (!is.null(query_item) && !(query_item %in% c("none", "msData", "topAnnotationsSummary", "topAnnotations", "topAnnotationsDeNovo", "computedTools", "tags"))) {
+          stop("Invalid value for opt_fields_features when calling CompoundsApi$AddCompounds. Must be [none, msData, topAnnotationsSummary, topAnnotations, topAnnotationsDeNovo, computedTools, tags].")
         }
         query_params[["optFieldsFeatures"]] <- c(query_params[["optFieldsFeatures"]], list(`optFieldsFeatures` = query_item))
       }
 
       if (!is.null(`compound_import`)) {
         body.items <- paste(unlist(lapply(`compound_import`, function(param) {
-                                                             param$toJSONString()
-                                                         })), collapse = ",")
+          if (inherits(param, "character")) {
+            param
+          } else {
+            param$toJSONString()
+          }
+        })), collapse = ",")
         local_var_body <- paste0("[", body.items, "]")
       } else {
         body <- NULL
@@ -255,13 +375,193 @@ CompoundsApi <- R6::R6Class(
           write(local_var_resp$response, data_file)
         }
 
-        deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "array[Compound]", loadNamespace("Rsirius")),
-          error = function(e) {
-            stop("Failed to deserialize response")
+        # Check if we are expecting a CSV response
+        is_csv_response <- any(grepl("csv", local_var_accepts, ignore.case = TRUE))
+
+        if (is_csv_response) {
+          # For CSV responses, parse into data.frame
+          csv_resp_obj <- tryCatch(
+            {
+              csv_text <- rawToChar(local_var_resp$response)
+
+              # Detect separator by examining first line
+              first_line <- strsplit(csv_text, "\n")[[1]][1]
+              if (grepl("\t", first_line)) {
+                # Tab-separated (TSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = "\t")
+              } else {
+                # Comma-separated (CSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = ",")
+              }
+            },
+            error = function(e) {
+              stop("Failed to parse CSV response")
+            }
+          )
+          local_var_resp$content <- csv_resp_obj
+        } else {
+          # For JSON responses, deserialize normally
+          deserialized_resp_obj <- tryCatch(
+            self$api_client$deserialize(local_var_resp$response_as_text(), "array[Compound]", loadNamespace("RSirius")),
+            error = function(e) {
+              stop("Failed to deserialize response")
+            }
+          )
+          local_var_resp$content <- deserialized_resp_obj
+        }
+        local_var_resp
+      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
+      } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
+        ApiResponse$new("API client error", local_var_resp)
+      } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
+        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
+          local_var_resp$response <- "API server error"
+        }
+        local_var_resp
+      }
+    },
+
+    #' @description
+    #' [EXPERIMENTAL] Tags with the same name will be overwritten
+    #'
+    #' @param project_id project-space to add to.
+    #' @param compound_id compound (group of ion identities) to add tags to.
+    #' @param tag tags to add.
+    #' @param data_file (optional) name of the data file to save the result
+    #' @param ... Other optional arguments
+    #'
+    #' @return array[Tag]
+    AddTagsToCompoundExperimental = function(project_id, compound_id, tag, data_file = NULL, ...) {
+      local_var_response <- self$AddTagsToCompoundExperimentalWithHttpInfo(project_id, compound_id, tag, data_file = data_file, ...)
+      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
+        local_var_response$content
+      } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
+        local_var_response
+      } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
+        local_var_response
+      } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
+        local_var_response
+      }
+    },
+
+    #' @description
+    #' [EXPERIMENTAL] Tags with the same name will be overwritten
+    #'
+    #' @param project_id project-space to add to.
+    #' @param compound_id compound (group of ion identities) to add tags to.
+    #' @param tag tags to add.
+    #' @param data_file (optional) name of the data file to save the result
+    #' @param ... Other optional arguments
+    #'
+    #' @return API response (array[Tag]) with additional information such as HTTP status code, headers
+    AddTagsToCompoundExperimentalWithHttpInfo = function(project_id, compound_id, tag, data_file = NULL, ...) {
+      args <- list(...)
+      query_params <- list()
+      header_params <- c()
+      form_params <- list()
+      file_params <- list()
+      local_var_body <- NULL
+      oauth_scopes <- NULL
+      is_oauth <- FALSE
+
+      if (missing(`project_id`)) {
+        stop("Missing required parameter `project_id`.")
+      }
+
+      if (missing(`compound_id`)) {
+        stop("Missing required parameter `compound_id`.")
+      }
+
+      if (missing(`tag`)) {
+        stop("Missing required parameter `tag`.")
+      }
+
+
+
+
+      if (!is.null(`tag`)) {
+        body.items <- paste(unlist(lapply(`tag`, function(param) {
+          if (inherits(param, "character")) {
+            param
+          } else {
+            param$toJSONString()
           }
-        )
-        local_var_resp$content <- deserialized_resp_obj
+        })), collapse = ",")
+        local_var_body <- paste0("[", body.items, "]")
+      } else {
+        body <- NULL
+      }
+
+      local_var_url_path <- "/api/projects/{projectId}/compounds/tags/{compoundId}"
+      if (!missing(`project_id`)) {
+        local_var_url_path <- gsub("\\{projectId\\}", URLencode(as.character(`project_id`), reserved = TRUE), local_var_url_path)
+      }
+
+      if (!missing(`compound_id`)) {
+        local_var_url_path <- gsub("\\{compoundId\\}", URLencode(as.character(`compound_id`), reserved = TRUE), local_var_url_path)
+      }
+
+
+      # The Accept request HTTP header
+      local_var_accepts <- list("application/json")
+
+      # The Content-Type representation header
+      local_var_content_types <- list("application/json")
+
+      local_var_resp <- self$api_client$CallApi(url = paste0(self$api_client$base_path, local_var_url_path),
+                                 method = "PUT",
+                                 query_params = query_params,
+                                 header_params = header_params,
+                                 form_params = form_params,
+                                 file_params = file_params,
+                                 accepts = local_var_accepts,
+                                 content_types = local_var_content_types,
+                                 body = local_var_body,
+                                 is_oauth = is_oauth,
+                                 oauth_scopes = oauth_scopes,
+                                 ...)
+
+      if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
+        # save response in a file
+        if (!is.null(data_file)) {
+          write(local_var_resp$response, data_file)
+        }
+
+        # Check if we are expecting a CSV response
+        is_csv_response <- any(grepl("csv", local_var_accepts, ignore.case = TRUE))
+
+        if (is_csv_response) {
+          # For CSV responses, parse into data.frame
+          csv_resp_obj <- tryCatch(
+            {
+              csv_text <- rawToChar(local_var_resp$response)
+
+              # Detect separator by examining first line
+              first_line <- strsplit(csv_text, "\n")[[1]][1]
+              if (grepl("\t", first_line)) {
+                # Tab-separated (TSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = "\t")
+              } else {
+                # Comma-separated (CSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = ",")
+              }
+            },
+            error = function(e) {
+              stop("Failed to parse CSV response")
+            }
+          )
+          local_var_resp$content <- csv_resp_obj
+        } else {
+          # For JSON responses, deserialize normally
+          deserialized_resp_obj <- tryCatch(
+            self$api_client$deserialize(local_var_resp$response_as_text(), "array[Tag]", loadNamespace("RSirius")),
+            error = function(e) {
+              stop("Failed to deserialize response")
+            }
+          )
+          local_var_resp$content <- deserialized_resp_obj
+        }
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
@@ -373,14 +673,15 @@ CompoundsApi <- R6::R6Class(
     #'
     #' @param project_id project-space to read from.
     #' @param compound_id identifier of the compound (group of ion identities) to access.
+    #' @param ms_data_search_prepared (optional) Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. (default value: FALSE)
     #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])
     #' @param opt_fields_features (optional) No description (default value: ["none"])
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return Compound
-    GetCompound = function(project_id, compound_id, opt_fields = list("none"), opt_fields_features = list("none"), data_file = NULL, ...) {
-      local_var_response <- self$GetCompoundWithHttpInfo(project_id, compound_id, opt_fields, opt_fields_features, data_file = data_file, ...)
+    GetCompound = function(project_id, compound_id, ms_data_search_prepared = FALSE, opt_fields = list("none"), opt_fields_features = list("none"), data_file = NULL, ...) {
+      local_var_response <- self$GetCompoundWithHttpInfo(project_id, compound_id, ms_data_search_prepared, opt_fields, opt_fields_features, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
@@ -397,13 +698,14 @@ CompoundsApi <- R6::R6Class(
     #'
     #' @param project_id project-space to read from.
     #' @param compound_id identifier of the compound (group of ion identities) to access.
+    #' @param ms_data_search_prepared (optional) Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. (default value: FALSE)
     #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])
     #' @param opt_fields_features (optional) No description (default value: ["none"])
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return API response (Compound) with additional information such as HTTP status code, headers
-    GetCompoundWithHttpInfo = function(project_id, compound_id, opt_fields = list("none"), opt_fields_features = list("none"), data_file = NULL, ...) {
+    GetCompoundWithHttpInfo = function(project_id, compound_id, ms_data_search_prepared = FALSE, opt_fields = list("none"), opt_fields_features = list("none"), data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -425,11 +727,14 @@ CompoundsApi <- R6::R6Class(
 
 
 
+
+      query_params[["msDataSearchPrepared"]] <- `ms_data_search_prepared`
+
       # explore
       for (query_item in `opt_fields`) {
         # validate enum values
-        if (!is.null(query_item) && !(query_item %in% c("none", "consensusAnnotations", "consensusAnnotationsDeNovo", "customAnnotations"))) {
-          stop("Invalid value for opt_fields when calling CompoundsApi$GetCompound. Must be [none, consensusAnnotations, consensusAnnotationsDeNovo, customAnnotations].")
+        if (!is.null(query_item) && !(query_item %in% c("none", "consensusAnnotations", "consensusAnnotationsDeNovo", "customAnnotations", "tags"))) {
+          stop("Invalid value for opt_fields when calling CompoundsApi$GetCompound. Must be [none, consensusAnnotations, consensusAnnotationsDeNovo, customAnnotations, tags].")
         }
         query_params[["optFields"]] <- c(query_params[["optFields"]], list(`optFields` = query_item))
       }
@@ -437,8 +742,8 @@ CompoundsApi <- R6::R6Class(
       # explore
       for (query_item in `opt_fields_features`) {
         # validate enum values
-        if (!is.null(query_item) && !(query_item %in% c("none", "msData", "topAnnotations", "topAnnotationsDeNovo", "computedTools"))) {
-          stop("Invalid value for opt_fields_features when calling CompoundsApi$GetCompound. Must be [none, msData, topAnnotations, topAnnotationsDeNovo, computedTools].")
+        if (!is.null(query_item) && !(query_item %in% c("none", "msData", "topAnnotationsSummary", "topAnnotations", "topAnnotationsDeNovo", "computedTools", "tags"))) {
+          stop("Invalid value for opt_fields_features when calling CompoundsApi$GetCompound. Must be [none, msData, topAnnotationsSummary, topAnnotations, topAnnotationsDeNovo, computedTools, tags].")
         }
         query_params[["optFieldsFeatures"]] <- c(query_params[["optFieldsFeatures"]], list(`optFieldsFeatures` = query_item))
       }
@@ -478,13 +783,40 @@ CompoundsApi <- R6::R6Class(
           write(local_var_resp$response, data_file)
         }
 
-        deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "Compound", loadNamespace("Rsirius")),
-          error = function(e) {
-            stop("Failed to deserialize response")
-          }
-        )
-        local_var_resp$content <- deserialized_resp_obj
+        # Check if we are expecting a CSV response
+        is_csv_response <- any(grepl("csv", local_var_accepts, ignore.case = TRUE))
+
+        if (is_csv_response) {
+          # For CSV responses, parse into data.frame
+          csv_resp_obj <- tryCatch(
+            {
+              csv_text <- rawToChar(local_var_resp$response)
+
+              # Detect separator by examining first line
+              first_line <- strsplit(csv_text, "\n")[[1]][1]
+              if (grepl("\t", first_line)) {
+                # Tab-separated (TSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = "\t")
+              } else {
+                # Comma-separated (CSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = ",")
+              }
+            },
+            error = function(e) {
+              stop("Failed to parse CSV response")
+            }
+          )
+          local_var_resp$content <- csv_resp_obj
+        } else {
+          # For JSON responses, deserialize normally
+          deserialized_resp_obj <- tryCatch(
+            self$api_client$deserialize(local_var_resp$response_as_text(), "Compound", loadNamespace("RSirius")),
+            error = function(e) {
+              stop("Failed to deserialize response")
+            }
+          )
+          local_var_resp$content <- deserialized_resp_obj
+        }
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
@@ -499,7 +831,278 @@ CompoundsApi <- R6::R6Class(
     },
 
     #' @description
-    #' EXPERIMENTAL: This endpoint is experimental and may be changed (or even removed) without notice until it is declared stable.
+    #' [EXPERIMENTAL] Returns the full quantification table of compounds
+    #'
+    #' @param project_id project-space to read from.
+    #' @param type (optional) quantification type. (default value: "APEX_HEIGHT")
+    #' @param data_file (optional) name of the data file to save the result
+    #' @param ... Other optional arguments
+    #'
+    #' @return QuantTableExperimental
+    GetCompoundQuantTableExperimental = function(project_id, type = "APEX_HEIGHT", data_file = NULL, ...) {
+      local_var_response <- self$GetCompoundQuantTableExperimentalWithHttpInfo(project_id, type, data_file = data_file, ...)
+      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
+        local_var_response$content
+      } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
+        local_var_response
+      } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
+        local_var_response
+      } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
+        local_var_response
+      }
+    },
+
+    #' @description
+    #' [EXPERIMENTAL] Returns the full quantification table of compounds
+    #'
+    #' @param project_id project-space to read from.
+    #' @param type (optional) quantification type. (default value: "APEX_HEIGHT")
+    #' @param data_file (optional) name of the data file to save the result
+    #' @param ... Other optional arguments
+    #'
+    #' @return API response (QuantTableExperimental) with additional information such as HTTP status code, headers
+    GetCompoundQuantTableExperimentalWithHttpInfo = function(project_id, type = "APEX_HEIGHT", data_file = NULL, ...) {
+      args <- list(...)
+      query_params <- list()
+      header_params <- c()
+      form_params <- list()
+      file_params <- list()
+      local_var_body <- NULL
+      oauth_scopes <- NULL
+      is_oauth <- FALSE
+
+      if (missing(`project_id`)) {
+        stop("Missing required parameter `project_id`.")
+      }
+
+
+
+      if (!is.null(`type`) && !(`type` %in% c("APEX_INTENSITY", "AREA_UNDER_CURVE"))) {
+        stop("Invalid value for type when calling CompoundsApi$GetCompoundQuantTableExperimental. Must be [APEX_INTENSITY, AREA_UNDER_CURVE].")
+      }
+      query_params[["type"]] <- `type`
+
+      local_var_url_path <- "/api/projects/{projectId}/compounds/quant-table"
+      if (!missing(`project_id`)) {
+        local_var_url_path <- gsub("\\{projectId\\}", URLencode(as.character(`project_id`), reserved = TRUE), local_var_url_path)
+      }
+
+
+      # The Accept request HTTP header
+      local_var_accepts <- list("application/json")
+
+      # The Content-Type representation header
+      local_var_content_types <- list()
+
+      local_var_resp <- self$api_client$CallApi(url = paste0(self$api_client$base_path, local_var_url_path),
+                                 method = "GET",
+                                 query_params = query_params,
+                                 header_params = header_params,
+                                 form_params = form_params,
+                                 file_params = file_params,
+                                 accepts = local_var_accepts,
+                                 content_types = local_var_content_types,
+                                 body = local_var_body,
+                                 is_oauth = is_oauth,
+                                 oauth_scopes = oauth_scopes,
+                                 ...)
+
+      if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
+        # save response in a file
+        if (!is.null(data_file)) {
+          write(local_var_resp$response, data_file)
+        }
+
+        # Check if we are expecting a CSV response
+        is_csv_response <- any(grepl("csv", local_var_accepts, ignore.case = TRUE))
+
+        if (is_csv_response) {
+          # For CSV responses, parse into data.frame
+          csv_resp_obj <- tryCatch(
+            {
+              csv_text <- rawToChar(local_var_resp$response)
+
+              # Detect separator by examining first line
+              first_line <- strsplit(csv_text, "\n")[[1]][1]
+              if (grepl("\t", first_line)) {
+                # Tab-separated (TSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = "\t")
+              } else {
+                # Comma-separated (CSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = ",")
+              }
+            },
+            error = function(e) {
+              stop("Failed to parse CSV response")
+            }
+          )
+          local_var_resp$content <- csv_resp_obj
+        } else {
+          # For JSON responses, deserialize normally
+          deserialized_resp_obj <- tryCatch(
+            self$api_client$deserialize(local_var_resp$response_as_text(), "QuantTableExperimental", loadNamespace("RSirius")),
+            error = function(e) {
+              stop("Failed to deserialize response")
+            }
+          )
+          local_var_resp$content <- deserialized_resp_obj
+        }
+        local_var_resp
+      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
+      } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
+        ApiResponse$new("API client error", local_var_resp)
+      } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
+        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
+          local_var_resp$response <- "API server error"
+        }
+        local_var_resp
+      }
+    },
+
+    #' @description
+    #' [EXPERIMENTAL] Returns a single quantification table row for the given compound
+    #'
+    #' @param project_id project-space to read from.
+    #' @param compound_id compound which should be read out
+    #' @param type (optional) quantification type. (default value: "APEX_HEIGHT")
+    #' @param data_file (optional) name of the data file to save the result
+    #' @param ... Other optional arguments
+    #'
+    #' @return QuantTableExperimental
+    GetCompoundQuantTableRowExperimental = function(project_id, compound_id, type = "APEX_HEIGHT", data_file = NULL, ...) {
+      local_var_response <- self$GetCompoundQuantTableRowExperimentalWithHttpInfo(project_id, compound_id, type, data_file = data_file, ...)
+      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
+        local_var_response$content
+      } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
+        local_var_response
+      } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
+        local_var_response
+      } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
+        local_var_response
+      }
+    },
+
+    #' @description
+    #' [EXPERIMENTAL] Returns a single quantification table row for the given compound
+    #'
+    #' @param project_id project-space to read from.
+    #' @param compound_id compound which should be read out
+    #' @param type (optional) quantification type. (default value: "APEX_HEIGHT")
+    #' @param data_file (optional) name of the data file to save the result
+    #' @param ... Other optional arguments
+    #'
+    #' @return API response (QuantTableExperimental) with additional information such as HTTP status code, headers
+    GetCompoundQuantTableRowExperimentalWithHttpInfo = function(project_id, compound_id, type = "APEX_HEIGHT", data_file = NULL, ...) {
+      args <- list(...)
+      query_params <- list()
+      header_params <- c()
+      form_params <- list()
+      file_params <- list()
+      local_var_body <- NULL
+      oauth_scopes <- NULL
+      is_oauth <- FALSE
+
+      if (missing(`project_id`)) {
+        stop("Missing required parameter `project_id`.")
+      }
+
+      if (missing(`compound_id`)) {
+        stop("Missing required parameter `compound_id`.")
+      }
+
+
+
+
+      if (!is.null(`type`) && !(`type` %in% c("APEX_INTENSITY", "AREA_UNDER_CURVE"))) {
+        stop("Invalid value for type when calling CompoundsApi$GetCompoundQuantTableRowExperimental. Must be [APEX_INTENSITY, AREA_UNDER_CURVE].")
+      }
+      query_params[["type"]] <- `type`
+
+      local_var_url_path <- "/api/projects/{projectId}/compounds/{compoundId}/quant-table-row"
+      if (!missing(`project_id`)) {
+        local_var_url_path <- gsub("\\{projectId\\}", URLencode(as.character(`project_id`), reserved = TRUE), local_var_url_path)
+      }
+
+      if (!missing(`compound_id`)) {
+        local_var_url_path <- gsub("\\{compoundId\\}", URLencode(as.character(`compound_id`), reserved = TRUE), local_var_url_path)
+      }
+
+
+      # The Accept request HTTP header
+      local_var_accepts <- list("application/json")
+
+      # The Content-Type representation header
+      local_var_content_types <- list()
+
+      local_var_resp <- self$api_client$CallApi(url = paste0(self$api_client$base_path, local_var_url_path),
+                                 method = "GET",
+                                 query_params = query_params,
+                                 header_params = header_params,
+                                 form_params = form_params,
+                                 file_params = file_params,
+                                 accepts = local_var_accepts,
+                                 content_types = local_var_content_types,
+                                 body = local_var_body,
+                                 is_oauth = is_oauth,
+                                 oauth_scopes = oauth_scopes,
+                                 ...)
+
+      if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
+        # save response in a file
+        if (!is.null(data_file)) {
+          write(local_var_resp$response, data_file)
+        }
+
+        # Check if we are expecting a CSV response
+        is_csv_response <- any(grepl("csv", local_var_accepts, ignore.case = TRUE))
+
+        if (is_csv_response) {
+          # For CSV responses, parse into data.frame
+          csv_resp_obj <- tryCatch(
+            {
+              csv_text <- rawToChar(local_var_resp$response)
+
+              # Detect separator by examining first line
+              first_line <- strsplit(csv_text, "\n")[[1]][1]
+              if (grepl("\t", first_line)) {
+                # Tab-separated (TSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = "\t")
+              } else {
+                # Comma-separated (CSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = ",")
+              }
+            },
+            error = function(e) {
+              stop("Failed to parse CSV response")
+            }
+          )
+          local_var_resp$content <- csv_resp_obj
+        } else {
+          # For JSON responses, deserialize normally
+          deserialized_resp_obj <- tryCatch(
+            self$api_client$deserialize(local_var_resp$response_as_text(), "QuantTableExperimental", loadNamespace("RSirius")),
+            error = function(e) {
+              stop("Failed to deserialize response")
+            }
+          )
+          local_var_resp$content <- deserialized_resp_obj
+        }
+        local_var_resp
+      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
+      } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
+        ApiResponse$new("API client error", local_var_resp)
+      } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
+        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
+          local_var_resp$response <- "API server error"
+        }
+        local_var_resp
+      }
+    },
+
+    #' @description
+    #' [EXPERIMENTAL] Returns the traces of the given compound
     #'
     #' @param project_id project-space to read from.
     #' @param compound_id compound which intensities should be read out
@@ -522,7 +1125,7 @@ CompoundsApi <- R6::R6Class(
     },
 
     #' @description
-    #' EXPERIMENTAL: This endpoint is experimental and may be changed (or even removed) without notice until it is declared stable.
+    #' [EXPERIMENTAL] Returns the traces of the given compound
     #'
     #' @param project_id project-space to read from.
     #' @param compound_id compound which intensities should be read out
@@ -589,13 +1192,40 @@ CompoundsApi <- R6::R6Class(
           write(local_var_resp$response, data_file)
         }
 
-        deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "TraceSetExperimental", loadNamespace("Rsirius")),
-          error = function(e) {
-            stop("Failed to deserialize response")
-          }
-        )
-        local_var_resp$content <- deserialized_resp_obj
+        # Check if we are expecting a CSV response
+        is_csv_response <- any(grepl("csv", local_var_accepts, ignore.case = TRUE))
+
+        if (is_csv_response) {
+          # For CSV responses, parse into data.frame
+          csv_resp_obj <- tryCatch(
+            {
+              csv_text <- rawToChar(local_var_resp$response)
+
+              # Detect separator by examining first line
+              first_line <- strsplit(csv_text, "\n")[[1]][1]
+              if (grepl("\t", first_line)) {
+                # Tab-separated (TSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = "\t")
+              } else {
+                # Comma-separated (CSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = ",")
+              }
+            },
+            error = function(e) {
+              stop("Failed to parse CSV response")
+            }
+          )
+          local_var_resp$content <- csv_resp_obj
+        } else {
+          # For JSON responses, deserialize normally
+          deserialized_resp_obj <- tryCatch(
+            self$api_client$deserialize(local_var_resp$response_as_text(), "TraceSetExperimental", loadNamespace("RSirius")),
+            error = function(e) {
+              stop("Failed to deserialize response")
+            }
+          )
+          local_var_resp$content <- deserialized_resp_obj
+        }
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
@@ -613,14 +1243,15 @@ CompoundsApi <- R6::R6Class(
     #' List of all available compounds (group of ion identities) in the given project-space.
     #'
     #' @param project_id project-space to read from.
+    #' @param ms_data_search_prepared (optional) Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. (default value: FALSE)
     #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])
     #' @param opt_fields_features (optional) No description (default value: ["none"])
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return array[Compound]
-    GetCompounds = function(project_id, opt_fields = list("none"), opt_fields_features = list("none"), data_file = NULL, ...) {
-      local_var_response <- self$GetCompoundsWithHttpInfo(project_id, opt_fields, opt_fields_features, data_file = data_file, ...)
+    GetCompounds = function(project_id, ms_data_search_prepared = FALSE, opt_fields = list("none"), opt_fields_features = list("none"), data_file = NULL, ...) {
+      local_var_response <- self$GetCompoundsWithHttpInfo(project_id, ms_data_search_prepared, opt_fields, opt_fields_features, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
@@ -636,13 +1267,14 @@ CompoundsApi <- R6::R6Class(
     #' List of all available compounds (group of ion identities) in the given project-space.
     #'
     #' @param project_id project-space to read from.
+    #' @param ms_data_search_prepared (optional) Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. (default value: FALSE)
     #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])
     #' @param opt_fields_features (optional) No description (default value: ["none"])
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return API response (array[Compound]) with additional information such as HTTP status code, headers
-    GetCompoundsWithHttpInfo = function(project_id, opt_fields = list("none"), opt_fields_features = list("none"), data_file = NULL, ...) {
+    GetCompoundsWithHttpInfo = function(project_id, ms_data_search_prepared = FALSE, opt_fields = list("none"), opt_fields_features = list("none"), data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -659,11 +1291,14 @@ CompoundsApi <- R6::R6Class(
 
 
 
+
+      query_params[["msDataSearchPrepared"]] <- `ms_data_search_prepared`
+
       # explore
       for (query_item in `opt_fields`) {
         # validate enum values
-        if (!is.null(query_item) && !(query_item %in% c("none", "consensusAnnotations", "consensusAnnotationsDeNovo", "customAnnotations"))) {
-          stop("Invalid value for opt_fields when calling CompoundsApi$GetCompounds. Must be [none, consensusAnnotations, consensusAnnotationsDeNovo, customAnnotations].")
+        if (!is.null(query_item) && !(query_item %in% c("none", "consensusAnnotations", "consensusAnnotationsDeNovo", "customAnnotations", "tags"))) {
+          stop("Invalid value for opt_fields when calling CompoundsApi$GetCompounds. Must be [none, consensusAnnotations, consensusAnnotationsDeNovo, customAnnotations, tags].")
         }
         query_params[["optFields"]] <- c(query_params[["optFields"]], list(`optFields` = query_item))
       }
@@ -671,8 +1306,8 @@ CompoundsApi <- R6::R6Class(
       # explore
       for (query_item in `opt_fields_features`) {
         # validate enum values
-        if (!is.null(query_item) && !(query_item %in% c("none", "msData", "topAnnotations", "topAnnotationsDeNovo", "computedTools"))) {
-          stop("Invalid value for opt_fields_features when calling CompoundsApi$GetCompounds. Must be [none, msData, topAnnotations, topAnnotationsDeNovo, computedTools].")
+        if (!is.null(query_item) && !(query_item %in% c("none", "msData", "topAnnotationsSummary", "topAnnotations", "topAnnotationsDeNovo", "computedTools", "tags"))) {
+          stop("Invalid value for opt_fields_features when calling CompoundsApi$GetCompounds. Must be [none, msData, topAnnotationsSummary, topAnnotations, topAnnotationsDeNovo, computedTools, tags].")
         }
         query_params[["optFieldsFeatures"]] <- c(query_params[["optFieldsFeatures"]], list(`optFieldsFeatures` = query_item))
       }
@@ -708,13 +1343,370 @@ CompoundsApi <- R6::R6Class(
           write(local_var_resp$response, data_file)
         }
 
-        deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "array[Compound]", loadNamespace("Rsirius")),
-          error = function(e) {
-            stop("Failed to deserialize response")
-          }
-        )
-        local_var_resp$content <- deserialized_resp_obj
+        # Check if we are expecting a CSV response
+        is_csv_response <- any(grepl("csv", local_var_accepts, ignore.case = TRUE))
+
+        if (is_csv_response) {
+          # For CSV responses, parse into data.frame
+          csv_resp_obj <- tryCatch(
+            {
+              csv_text <- rawToChar(local_var_resp$response)
+
+              # Detect separator by examining first line
+              first_line <- strsplit(csv_text, "\n")[[1]][1]
+              if (grepl("\t", first_line)) {
+                # Tab-separated (TSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = "\t")
+              } else {
+                # Comma-separated (CSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = ",")
+              }
+            },
+            error = function(e) {
+              stop("Failed to parse CSV response")
+            }
+          )
+          local_var_resp$content <- csv_resp_obj
+        } else {
+          # For JSON responses, deserialize normally
+          deserialized_resp_obj <- tryCatch(
+            self$api_client$deserialize(local_var_resp$response_as_text(), "array[Compound]", loadNamespace("RSirius")),
+            error = function(e) {
+              stop("Failed to deserialize response")
+            }
+          )
+          local_var_resp$content <- deserialized_resp_obj
+        }
+        local_var_resp
+      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
+      } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
+        ApiResponse$new("API client error", local_var_resp)
+      } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
+        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
+          local_var_resp$response <- "API server error"
+        }
+        local_var_resp
+      }
+    },
+
+    #' @description
+    #' [EXPERIMENTAL] Get compounds (group of ion identities) by tag group
+    #'
+    #' @param project_id project-space to delete from.
+    #' @param group_name tag group name.
+    #' @param page (optional) Zero-based page index (0..N) (default value: 0)
+    #' @param size (optional) The size of the page to be returned (default value: 20)
+    #' @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])
+    #' @param data_file (optional) name of the data file to save the result
+    #' @param ... Other optional arguments
+    #'
+    #' @return PagedModelCompound
+    GetCompoundsByGroupExperimental = function(project_id, group_name, page = 0, size = 20, sort = NULL, opt_fields = list("none"), data_file = NULL, ...) {
+      local_var_response <- self$GetCompoundsByGroupExperimentalWithHttpInfo(project_id, group_name, page, size, sort, opt_fields, data_file = data_file, ...)
+      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
+        local_var_response$content
+      } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
+        local_var_response
+      } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
+        local_var_response
+      } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
+        local_var_response
+      }
+    },
+
+    #' @description
+    #' [EXPERIMENTAL] Get compounds (group of ion identities) by tag group
+    #'
+    #' @param project_id project-space to delete from.
+    #' @param group_name tag group name.
+    #' @param page (optional) Zero-based page index (0..N) (default value: 0)
+    #' @param size (optional) The size of the page to be returned (default value: 20)
+    #' @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])
+    #' @param data_file (optional) name of the data file to save the result
+    #' @param ... Other optional arguments
+    #'
+    #' @return API response (PagedModelCompound) with additional information such as HTTP status code, headers
+    GetCompoundsByGroupExperimentalWithHttpInfo = function(project_id, group_name, page = 0, size = 20, sort = NULL, opt_fields = list("none"), data_file = NULL, ...) {
+      args <- list(...)
+      query_params <- list()
+      header_params <- c()
+      form_params <- list()
+      file_params <- list()
+      local_var_body <- NULL
+      oauth_scopes <- NULL
+      is_oauth <- FALSE
+
+      if (missing(`project_id`)) {
+        stop("Missing required parameter `project_id`.")
+      }
+
+      if (missing(`group_name`)) {
+        stop("Missing required parameter `group_name`.")
+      }
+
+
+
+      if (`page` < 0) {
+        stop("Invalid value for `page` when calling CompoundsApi$GetCompoundsByGroupExperimental, must be bigger than or equal to 0.")
+      }
+
+      if (`size` < 1) {
+        stop("Invalid value for `size` when calling CompoundsApi$GetCompoundsByGroupExperimental, must be bigger than or equal to 1.")
+      }
+
+
+
+      query_params[["groupName"]] <- `group_name`
+
+      query_params[["page"]] <- `page`
+
+      query_params[["size"]] <- `size`
+
+      # explore
+      for (query_item in `sort`) {
+        query_params[["sort"]] <- c(query_params[["sort"]], list(`sort` = query_item))
+      }
+
+      # explore
+      for (query_item in `opt_fields`) {
+        # validate enum values
+        if (!is.null(query_item) && !(query_item %in% c("none", "consensusAnnotations", "consensusAnnotationsDeNovo", "customAnnotations", "tags"))) {
+          stop("Invalid value for opt_fields when calling CompoundsApi$GetCompoundsByGroupExperimental. Must be [none, consensusAnnotations, consensusAnnotationsDeNovo, customAnnotations, tags].")
+        }
+        query_params[["optFields"]] <- c(query_params[["optFields"]], list(`optFields` = query_item))
+      }
+
+      local_var_url_path <- "/api/projects/{projectId}/compounds/grouped"
+      if (!missing(`project_id`)) {
+        local_var_url_path <- gsub("\\{projectId\\}", URLencode(as.character(`project_id`), reserved = TRUE), local_var_url_path)
+      }
+
+
+      # The Accept request HTTP header
+      local_var_accepts <- list("application/json")
+
+      # The Content-Type representation header
+      local_var_content_types <- list()
+
+      local_var_resp <- self$api_client$CallApi(url = paste0(self$api_client$base_path, local_var_url_path),
+                                 method = "GET",
+                                 query_params = query_params,
+                                 header_params = header_params,
+                                 form_params = form_params,
+                                 file_params = file_params,
+                                 accepts = local_var_accepts,
+                                 content_types = local_var_content_types,
+                                 body = local_var_body,
+                                 is_oauth = is_oauth,
+                                 oauth_scopes = oauth_scopes,
+                                 ...)
+
+      if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
+        # save response in a file
+        if (!is.null(data_file)) {
+          write(local_var_resp$response, data_file)
+        }
+
+        # Check if we are expecting a CSV response
+        is_csv_response <- any(grepl("csv", local_var_accepts, ignore.case = TRUE))
+
+        if (is_csv_response) {
+          # For CSV responses, parse into data.frame
+          csv_resp_obj <- tryCatch(
+            {
+              csv_text <- rawToChar(local_var_resp$response)
+
+              # Detect separator by examining first line
+              first_line <- strsplit(csv_text, "\n")[[1]][1]
+              if (grepl("\t", first_line)) {
+                # Tab-separated (TSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = "\t")
+              } else {
+                # Comma-separated (CSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = ",")
+              }
+            },
+            error = function(e) {
+              stop("Failed to parse CSV response")
+            }
+          )
+          local_var_resp$content <- csv_resp_obj
+        } else {
+          # For JSON responses, deserialize normally
+          deserialized_resp_obj <- tryCatch(
+            self$api_client$deserialize(local_var_resp$response_as_text(), "PagedModelCompound", loadNamespace("RSirius")),
+            error = function(e) {
+              stop("Failed to deserialize response")
+            }
+          )
+          local_var_resp$content <- deserialized_resp_obj
+        }
+        local_var_resp
+      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
+      } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
+        ApiResponse$new("API client error", local_var_resp)
+      } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
+        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
+          local_var_resp$response <- "API server error"
+        }
+        local_var_resp
+      }
+    },
+
+    #' @description
+    #' [EXPERIMENTAL] Get compounds (group of ion identities) by tag
+    #'
+    #' @param project_id project space to get compounds (group of ion identities) from.
+    #' @param filter (optional) tag filter. (default value: "")
+    #' @param page (optional) Zero-based page index (0..N) (default value: 0)
+    #' @param size (optional) The size of the page to be returned (default value: 20)
+    #' @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [])
+    #' @param data_file (optional) name of the data file to save the result
+    #' @param ... Other optional arguments
+    #'
+    #' @return PagedModelCompound
+    GetCompoundsByTagExperimental = function(project_id, filter = "", page = 0, size = 20, sort = NULL, opt_fields = list(), data_file = NULL, ...) {
+      local_var_response <- self$GetCompoundsByTagExperimentalWithHttpInfo(project_id, filter, page, size, sort, opt_fields, data_file = data_file, ...)
+      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
+        local_var_response$content
+      } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
+        local_var_response
+      } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
+        local_var_response
+      } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
+        local_var_response
+      }
+    },
+
+    #' @description
+    #' [EXPERIMENTAL] Get compounds (group of ion identities) by tag
+    #'
+    #' @param project_id project space to get compounds (group of ion identities) from.
+    #' @param filter (optional) tag filter. (default value: "")
+    #' @param page (optional) Zero-based page index (0..N) (default value: 0)
+    #' @param size (optional) The size of the page to be returned (default value: 20)
+    #' @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [])
+    #' @param data_file (optional) name of the data file to save the result
+    #' @param ... Other optional arguments
+    #'
+    #' @return API response (PagedModelCompound) with additional information such as HTTP status code, headers
+    GetCompoundsByTagExperimentalWithHttpInfo = function(project_id, filter = "", page = 0, size = 20, sort = NULL, opt_fields = list(), data_file = NULL, ...) {
+      args <- list(...)
+      query_params <- list()
+      header_params <- c()
+      form_params <- list()
+      file_params <- list()
+      local_var_body <- NULL
+      oauth_scopes <- NULL
+      is_oauth <- FALSE
+
+      if (missing(`project_id`)) {
+        stop("Missing required parameter `project_id`.")
+      }
+
+
+
+      if (`page` < 0) {
+        stop("Invalid value for `page` when calling CompoundsApi$GetCompoundsByTagExperimental, must be bigger than or equal to 0.")
+      }
+
+      if (`size` < 1) {
+        stop("Invalid value for `size` when calling CompoundsApi$GetCompoundsByTagExperimental, must be bigger than or equal to 1.")
+      }
+
+
+
+      query_params[["filter"]] <- `filter`
+
+      query_params[["page"]] <- `page`
+
+      query_params[["size"]] <- `size`
+
+      # explore
+      for (query_item in `sort`) {
+        query_params[["sort"]] <- c(query_params[["sort"]], list(`sort` = query_item))
+      }
+
+      # explore
+      for (query_item in `opt_fields`) {
+        # validate enum values
+        if (!is.null(query_item) && !(query_item %in% c("none", "consensusAnnotations", "consensusAnnotationsDeNovo", "customAnnotations", "tags"))) {
+          stop("Invalid value for opt_fields when calling CompoundsApi$GetCompoundsByTagExperimental. Must be [none, consensusAnnotations, consensusAnnotationsDeNovo, customAnnotations, tags].")
+        }
+        query_params[["optFields"]] <- c(query_params[["optFields"]], list(`optFields` = query_item))
+      }
+
+      local_var_url_path <- "/api/projects/{projectId}/compounds/tagged"
+      if (!missing(`project_id`)) {
+        local_var_url_path <- gsub("\\{projectId\\}", URLencode(as.character(`project_id`), reserved = TRUE), local_var_url_path)
+      }
+
+
+      # The Accept request HTTP header
+      local_var_accepts <- list("application/json")
+
+      # The Content-Type representation header
+      local_var_content_types <- list()
+
+      local_var_resp <- self$api_client$CallApi(url = paste0(self$api_client$base_path, local_var_url_path),
+                                 method = "GET",
+                                 query_params = query_params,
+                                 header_params = header_params,
+                                 form_params = form_params,
+                                 file_params = file_params,
+                                 accepts = local_var_accepts,
+                                 content_types = local_var_content_types,
+                                 body = local_var_body,
+                                 is_oauth = is_oauth,
+                                 oauth_scopes = oauth_scopes,
+                                 ...)
+
+      if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
+        # save response in a file
+        if (!is.null(data_file)) {
+          write(local_var_resp$response, data_file)
+        }
+
+        # Check if we are expecting a CSV response
+        is_csv_response <- any(grepl("csv", local_var_accepts, ignore.case = TRUE))
+
+        if (is_csv_response) {
+          # For CSV responses, parse into data.frame
+          csv_resp_obj <- tryCatch(
+            {
+              csv_text <- rawToChar(local_var_resp$response)
+
+              # Detect separator by examining first line
+              first_line <- strsplit(csv_text, "\n")[[1]][1]
+              if (grepl("\t", first_line)) {
+                # Tab-separated (TSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = "\t")
+              } else {
+                # Comma-separated (CSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = ",")
+              }
+            },
+            error = function(e) {
+              stop("Failed to parse CSV response")
+            }
+          )
+          local_var_resp$content <- csv_resp_obj
+        } else {
+          # For JSON responses, deserialize normally
+          deserialized_resp_obj <- tryCatch(
+            self$api_client$deserialize(local_var_resp$response_as_text(), "PagedModelCompound", loadNamespace("RSirius")),
+            error = function(e) {
+              stop("Failed to deserialize response")
+            }
+          )
+          local_var_resp$content <- deserialized_resp_obj
+        }
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
@@ -735,14 +1727,15 @@ CompoundsApi <- R6::R6Class(
     #' @param page (optional) Zero-based page index (0..N) (default value: 0)
     #' @param size (optional) The size of the page to be returned (default value: 20)
     #' @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+    #' @param ms_data_search_prepared (optional) Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. (default value: FALSE)
     #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])
     #' @param opt_fields_features (optional) No description (default value: ["none"])
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return PagedModelCompound
-    GetCompoundsPaged = function(project_id, page = 0, size = 20, sort = NULL, opt_fields = list("none"), opt_fields_features = list("none"), data_file = NULL, ...) {
-      local_var_response <- self$GetCompoundsPagedWithHttpInfo(project_id, page, size, sort, opt_fields, opt_fields_features, data_file = data_file, ...)
+    GetCompoundsPaged = function(project_id, page = 0, size = 20, sort = NULL, ms_data_search_prepared = FALSE, opt_fields = list("none"), opt_fields_features = list("none"), data_file = NULL, ...) {
+      local_var_response <- self$GetCompoundsPagedWithHttpInfo(project_id, page, size, sort, ms_data_search_prepared, opt_fields, opt_fields_features, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
@@ -761,13 +1754,14 @@ CompoundsApi <- R6::R6Class(
     #' @param page (optional) Zero-based page index (0..N) (default value: 0)
     #' @param size (optional) The size of the page to be returned (default value: 20)
     #' @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+    #' @param ms_data_search_prepared (optional) Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. (default value: FALSE)
     #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])
     #' @param opt_fields_features (optional) No description (default value: ["none"])
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return API response (PagedModelCompound) with additional information such as HTTP status code, headers
-    GetCompoundsPagedWithHttpInfo = function(project_id, page = 0, size = 20, sort = NULL, opt_fields = list("none"), opt_fields_features = list("none"), data_file = NULL, ...) {
+    GetCompoundsPagedWithHttpInfo = function(project_id, page = 0, size = 20, sort = NULL, ms_data_search_prepared = FALSE, opt_fields = list("none"), opt_fields_features = list("none"), data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -793,6 +1787,7 @@ CompoundsApi <- R6::R6Class(
 
 
 
+
       query_params[["page"]] <- `page`
 
       query_params[["size"]] <- `size`
@@ -802,11 +1797,13 @@ CompoundsApi <- R6::R6Class(
         query_params[["sort"]] <- c(query_params[["sort"]], list(`sort` = query_item))
       }
 
+      query_params[["msDataSearchPrepared"]] <- `ms_data_search_prepared`
+
       # explore
       for (query_item in `opt_fields`) {
         # validate enum values
-        if (!is.null(query_item) && !(query_item %in% c("none", "consensusAnnotations", "consensusAnnotationsDeNovo", "customAnnotations"))) {
-          stop("Invalid value for opt_fields when calling CompoundsApi$GetCompoundsPaged. Must be [none, consensusAnnotations, consensusAnnotationsDeNovo, customAnnotations].")
+        if (!is.null(query_item) && !(query_item %in% c("none", "consensusAnnotations", "consensusAnnotationsDeNovo", "customAnnotations", "tags"))) {
+          stop("Invalid value for opt_fields when calling CompoundsApi$GetCompoundsPaged. Must be [none, consensusAnnotations, consensusAnnotationsDeNovo, customAnnotations, tags].")
         }
         query_params[["optFields"]] <- c(query_params[["optFields"]], list(`optFields` = query_item))
       }
@@ -814,8 +1811,8 @@ CompoundsApi <- R6::R6Class(
       # explore
       for (query_item in `opt_fields_features`) {
         # validate enum values
-        if (!is.null(query_item) && !(query_item %in% c("none", "msData", "topAnnotations", "topAnnotationsDeNovo", "computedTools"))) {
-          stop("Invalid value for opt_fields_features when calling CompoundsApi$GetCompoundsPaged. Must be [none, msData, topAnnotations, topAnnotationsDeNovo, computedTools].")
+        if (!is.null(query_item) && !(query_item %in% c("none", "msData", "topAnnotationsSummary", "topAnnotations", "topAnnotationsDeNovo", "computedTools", "tags"))) {
+          stop("Invalid value for opt_fields_features when calling CompoundsApi$GetCompoundsPaged. Must be [none, msData, topAnnotationsSummary, topAnnotations, topAnnotationsDeNovo, computedTools, tags].")
         }
         query_params[["optFieldsFeatures"]] <- c(query_params[["optFieldsFeatures"]], list(`optFieldsFeatures` = query_item))
       }
@@ -851,13 +1848,277 @@ CompoundsApi <- R6::R6Class(
           write(local_var_resp$response, data_file)
         }
 
-        deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "PagedModelCompound", loadNamespace("Rsirius")),
-          error = function(e) {
-            stop("Failed to deserialize response")
-          }
-        )
-        local_var_resp$content <- deserialized_resp_obj
+        # Check if we are expecting a CSV response
+        is_csv_response <- any(grepl("csv", local_var_accepts, ignore.case = TRUE))
+
+        if (is_csv_response) {
+          # For CSV responses, parse into data.frame
+          csv_resp_obj <- tryCatch(
+            {
+              csv_text <- rawToChar(local_var_resp$response)
+
+              # Detect separator by examining first line
+              first_line <- strsplit(csv_text, "\n")[[1]][1]
+              if (grepl("\t", first_line)) {
+                # Tab-separated (TSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = "\t")
+              } else {
+                # Comma-separated (CSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = ",")
+              }
+            },
+            error = function(e) {
+              stop("Failed to parse CSV response")
+            }
+          )
+          local_var_resp$content <- csv_resp_obj
+        } else {
+          # For JSON responses, deserialize normally
+          deserialized_resp_obj <- tryCatch(
+            self$api_client$deserialize(local_var_resp$response_as_text(), "PagedModelCompound", loadNamespace("RSirius")),
+            error = function(e) {
+              stop("Failed to deserialize response")
+            }
+          )
+          local_var_resp$content <- deserialized_resp_obj
+        }
+        local_var_resp
+      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
+      } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
+        ApiResponse$new("API client error", local_var_resp)
+      } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
+        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
+          local_var_resp$response <- "API server error"
+        }
+        local_var_resp
+      }
+    },
+
+    #' @description
+    #' [EXPERIMENTAL] Get all tags associated with this Compound
+    #'
+    #' @param project_id project-space to get from.
+    #' @param object_id CompoundId to get tags for.
+    #' @param data_file (optional) name of the data file to save the result
+    #' @param ... Other optional arguments
+    #'
+    #' @return array[Tag]
+    GetTagsForCompoundExperimental = function(project_id, object_id, data_file = NULL, ...) {
+      local_var_response <- self$GetTagsForCompoundExperimentalWithHttpInfo(project_id, object_id, data_file = data_file, ...)
+      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
+        local_var_response$content
+      } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
+        local_var_response
+      } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
+        local_var_response
+      } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
+        local_var_response
+      }
+    },
+
+    #' @description
+    #' [EXPERIMENTAL] Get all tags associated with this Compound
+    #'
+    #' @param project_id project-space to get from.
+    #' @param object_id CompoundId to get tags for.
+    #' @param data_file (optional) name of the data file to save the result
+    #' @param ... Other optional arguments
+    #'
+    #' @return API response (array[Tag]) with additional information such as HTTP status code, headers
+    GetTagsForCompoundExperimentalWithHttpInfo = function(project_id, object_id, data_file = NULL, ...) {
+      args <- list(...)
+      query_params <- list()
+      header_params <- c()
+      form_params <- list()
+      file_params <- list()
+      local_var_body <- NULL
+      oauth_scopes <- NULL
+      is_oauth <- FALSE
+
+      if (missing(`project_id`)) {
+        stop("Missing required parameter `project_id`.")
+      }
+
+      if (missing(`object_id`)) {
+        stop("Missing required parameter `object_id`.")
+      }
+
+
+
+      local_var_url_path <- "/api/projects/{projectId}/compounds/tags/{objectId}"
+      if (!missing(`project_id`)) {
+        local_var_url_path <- gsub("\\{projectId\\}", URLencode(as.character(`project_id`), reserved = TRUE), local_var_url_path)
+      }
+
+      if (!missing(`object_id`)) {
+        local_var_url_path <- gsub("\\{objectId\\}", URLencode(as.character(`object_id`), reserved = TRUE), local_var_url_path)
+      }
+
+
+      # The Accept request HTTP header
+      local_var_accepts <- list("application/json")
+
+      # The Content-Type representation header
+      local_var_content_types <- list()
+
+      local_var_resp <- self$api_client$CallApi(url = paste0(self$api_client$base_path, local_var_url_path),
+                                 method = "GET",
+                                 query_params = query_params,
+                                 header_params = header_params,
+                                 form_params = form_params,
+                                 file_params = file_params,
+                                 accepts = local_var_accepts,
+                                 content_types = local_var_content_types,
+                                 body = local_var_body,
+                                 is_oauth = is_oauth,
+                                 oauth_scopes = oauth_scopes,
+                                 ...)
+
+      if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
+        # save response in a file
+        if (!is.null(data_file)) {
+          write(local_var_resp$response, data_file)
+        }
+
+        # Check if we are expecting a CSV response
+        is_csv_response <- any(grepl("csv", local_var_accepts, ignore.case = TRUE))
+
+        if (is_csv_response) {
+          # For CSV responses, parse into data.frame
+          csv_resp_obj <- tryCatch(
+            {
+              csv_text <- rawToChar(local_var_resp$response)
+
+              # Detect separator by examining first line
+              first_line <- strsplit(csv_text, "\n")[[1]][1]
+              if (grepl("\t", first_line)) {
+                # Tab-separated (TSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = "\t")
+              } else {
+                # Comma-separated (CSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = ",")
+              }
+            },
+            error = function(e) {
+              stop("Failed to parse CSV response")
+            }
+          )
+          local_var_resp$content <- csv_resp_obj
+        } else {
+          # For JSON responses, deserialize normally
+          deserialized_resp_obj <- tryCatch(
+            self$api_client$deserialize(local_var_resp$response_as_text(), "array[Tag]", loadNamespace("RSirius")),
+            error = function(e) {
+              stop("Failed to deserialize response")
+            }
+          )
+          local_var_resp$content <- deserialized_resp_obj
+        }
+        local_var_resp
+      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
+      } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
+        ApiResponse$new("API client error", local_var_resp)
+      } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
+        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
+          local_var_resp$response <- "API server error"
+        }
+        local_var_resp
+      }
+    },
+
+    #' @description
+    #' [EXPERIMENTAL] Delete tag with the given name from the compound (group of ion identities) with the specified ID in the specified project-space
+    #'
+    #' @param project_id project-space to delete from.
+    #' @param compound_id compound (group of ion identities) to delete tag from.
+    #' @param tag_name name of the tag to delete.
+    #' @param ... Other optional arguments
+    #'
+    #' @return void
+    RemoveTagFromCompoundExperimental = function(project_id, compound_id, tag_name, ...) {
+      local_var_response <- self$RemoveTagFromCompoundExperimentalWithHttpInfo(project_id, compound_id, tag_name, ...)
+      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
+        local_var_response$content
+      } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
+        local_var_response
+      } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
+        local_var_response
+      } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
+        local_var_response
+      }
+    },
+
+    #' @description
+    #' [EXPERIMENTAL] Delete tag with the given name from the compound (group of ion identities) with the specified ID in the specified project-space
+    #'
+    #' @param project_id project-space to delete from.
+    #' @param compound_id compound (group of ion identities) to delete tag from.
+    #' @param tag_name name of the tag to delete.
+    #' @param ... Other optional arguments
+    #'
+    #' @return API response (void) with additional information such as HTTP status code, headers
+    RemoveTagFromCompoundExperimentalWithHttpInfo = function(project_id, compound_id, tag_name, ...) {
+      args <- list(...)
+      query_params <- list()
+      header_params <- c()
+      form_params <- list()
+      file_params <- list()
+      local_var_body <- NULL
+      oauth_scopes <- NULL
+      is_oauth <- FALSE
+
+      if (missing(`project_id`)) {
+        stop("Missing required parameter `project_id`.")
+      }
+
+      if (missing(`compound_id`)) {
+        stop("Missing required parameter `compound_id`.")
+      }
+
+      if (missing(`tag_name`)) {
+        stop("Missing required parameter `tag_name`.")
+      }
+
+
+
+
+      local_var_url_path <- "/api/projects/{projectId}/compounds/tags/{compoundId}/{tagName}"
+      if (!missing(`project_id`)) {
+        local_var_url_path <- gsub("\\{projectId\\}", URLencode(as.character(`project_id`), reserved = TRUE), local_var_url_path)
+      }
+
+      if (!missing(`compound_id`)) {
+        local_var_url_path <- gsub("\\{compoundId\\}", URLencode(as.character(`compound_id`), reserved = TRUE), local_var_url_path)
+      }
+
+      if (!missing(`tag_name`)) {
+        local_var_url_path <- gsub("\\{tagName\\}", URLencode(as.character(`tag_name`), reserved = TRUE), local_var_url_path)
+      }
+
+
+      # The Accept request HTTP header
+      local_var_accepts <- list()
+
+      # The Content-Type representation header
+      local_var_content_types <- list()
+
+      local_var_resp <- self$api_client$CallApi(url = paste0(self$api_client$base_path, local_var_url_path),
+                                 method = "DELETE",
+                                 query_params = query_params,
+                                 header_params = header_params,
+                                 form_params = form_params,
+                                 file_params = file_params,
+                                 accepts = local_var_accepts,
+                                 content_types = local_var_content_types,
+                                 body = local_var_body,
+                                 is_oauth = is_oauth,
+                                 oauth_scopes = oauth_scopes,
+                                 ...)
+
+      if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
+        local_var_resp$content <- NULL
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)

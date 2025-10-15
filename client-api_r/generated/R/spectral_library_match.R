@@ -9,8 +9,9 @@
 #' @format An \code{R6Class} generator object
 #' @field specMatchId  character [optional]
 #' @field rank  integer [optional]
-#' @field similarity  numeric
-#' @field sharedPeaks  integer [optional]
+#' @field similarity Similarity between query and reference spectrum numeric
+#' @field sharedPeaks Number of shared/matched peaks integer [optional]
+#' @field sharedPeakMapping List of paired/matched peak indices.   Maps indices of peaks from the query spectrum (mass sorted)  to indices of matched peaks in the reference spectrum (mass sorted) list(\link{PeakPair}) [optional]
 #' @field querySpectrumIndex  integer
 #' @field dbName  character [optional]
 #' @field dbId  character [optional]
@@ -18,10 +19,13 @@
 #' @field splash  character [optional]
 #' @field molecularFormula  character [optional]
 #' @field adduct  character [optional]
-#' @field exactMass  character [optional]
+#' @field exactMass  numeric [optional]
 #' @field smiles  character [optional]
+#' @field type  character [optional]
 #' @field inchiKey  character
+#' @field referenceSpectrumType  character [optional]
 #' @field referenceSpectrum  \link{BasicSpectrum} [optional]
+#' @field querySpectrumType  character [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
 #' @export
@@ -32,6 +36,7 @@ SpectralLibraryMatch <- R6::R6Class(
     `rank` = NULL,
     `similarity` = NULL,
     `sharedPeaks` = NULL,
+    `sharedPeakMapping` = NULL,
     `querySpectrumIndex` = NULL,
     `dbName` = NULL,
     `dbId` = NULL,
@@ -41,19 +46,23 @@ SpectralLibraryMatch <- R6::R6Class(
     `adduct` = NULL,
     `exactMass` = NULL,
     `smiles` = NULL,
+    `type` = NULL,
     `inchiKey` = NULL,
+    `referenceSpectrumType` = NULL,
     `referenceSpectrum` = NULL,
+    `querySpectrumType` = NULL,
 
     #' @description
     #' Initialize a new SpectralLibraryMatch class.
     #'
-    #' @param similarity similarity
+    #' @param similarity Similarity between query and reference spectrum
     #' @param querySpectrumIndex querySpectrumIndex
     #' @param uuid uuid
     #' @param inchiKey inchiKey
     #' @param specMatchId specMatchId
     #' @param rank rank
-    #' @param sharedPeaks sharedPeaks
+    #' @param sharedPeaks Number of shared/matched peaks
+    #' @param sharedPeakMapping List of paired/matched peak indices.   Maps indices of peaks from the query spectrum (mass sorted)  to indices of matched peaks in the reference spectrum (mass sorted)
     #' @param dbName dbName
     #' @param dbId dbId
     #' @param splash splash
@@ -61,9 +70,12 @@ SpectralLibraryMatch <- R6::R6Class(
     #' @param adduct adduct
     #' @param exactMass exactMass
     #' @param smiles smiles
+    #' @param type type. Default to "IDENTITY".
+    #' @param referenceSpectrumType referenceSpectrumType. Default to "SPECTRUM".
     #' @param referenceSpectrum referenceSpectrum
+    #' @param querySpectrumType querySpectrumType
     #' @param ... Other optional arguments.
-    initialize = function(`similarity`, `querySpectrumIndex`, `uuid`, `inchiKey`, `specMatchId` = NULL, `rank` = NULL, `sharedPeaks` = NULL, `dbName` = NULL, `dbId` = NULL, `splash` = NULL, `molecularFormula` = NULL, `adduct` = NULL, `exactMass` = NULL, `smiles` = NULL, `referenceSpectrum` = NULL, ...) {
+    initialize = function(`similarity`, `querySpectrumIndex`, `uuid`, `inchiKey`, `specMatchId` = NULL, `rank` = NULL, `sharedPeaks` = NULL, `sharedPeakMapping` = NULL, `dbName` = NULL, `dbId` = NULL, `splash` = NULL, `molecularFormula` = NULL, `adduct` = NULL, `exactMass` = NULL, `smiles` = NULL, `type` = "IDENTITY", `referenceSpectrumType` = "SPECTRUM", `referenceSpectrum` = NULL, `querySpectrumType` = NULL, ...) {
       if (!missing(`similarity`)) {
         if (!(is.numeric(`similarity`) && length(`similarity`) == 1)) {
           stop(paste("Error! Invalid data for `similarity`. Must be a number:", `similarity`))
@@ -106,6 +118,11 @@ SpectralLibraryMatch <- R6::R6Class(
         }
         self$`sharedPeaks` <- `sharedPeaks`
       }
+      if (!is.null(`sharedPeakMapping`)) {
+        stopifnot(is.vector(`sharedPeakMapping`), length(`sharedPeakMapping`) != 0)
+        sapply(`sharedPeakMapping`, function(x) stopifnot(R6::is.R6(x)))
+        self$`sharedPeakMapping` <- `sharedPeakMapping`
+      }
       if (!is.null(`dbName`)) {
         if (!(is.character(`dbName`) && length(`dbName`) == 1)) {
           stop(paste("Error! Invalid data for `dbName`. Must be a string:", `dbName`))
@@ -137,8 +154,8 @@ SpectralLibraryMatch <- R6::R6Class(
         self$`adduct` <- `adduct`
       }
       if (!is.null(`exactMass`)) {
-        if (!(is.character(`exactMass`) && length(`exactMass`) == 1)) {
-          stop(paste("Error! Invalid data for `exactMass`. Must be a string:", `exactMass`))
+        if (!(is.numeric(`exactMass`) && length(`exactMass`) == 1)) {
+          stop(paste("Error! Invalid data for `exactMass`. Must be a number:", `exactMass`))
         }
         self$`exactMass` <- `exactMass`
       }
@@ -148,9 +165,36 @@ SpectralLibraryMatch <- R6::R6Class(
         }
         self$`smiles` <- `smiles`
       }
+      if (!is.null(`type`)) {
+        if (!(`type` %in% c("IDENTITY", "ANALOG"))) {
+          stop(paste("Error! \"", `type`, "\" cannot be assigned to `type`. Must be \"IDENTITY\", \"ANALOG\".", sep = ""))
+        }
+        if (!(is.character(`type`) && length(`type`) == 1)) {
+          stop(paste("Error! Invalid data for `type`. Must be a string:", `type`))
+        }
+        self$`type` <- `type`
+      }
+      if (!is.null(`referenceSpectrumType`)) {
+        if (!(`referenceSpectrumType` %in% c("SPECTRUM", "MERGED_SPECTRUM"))) {
+          stop(paste("Error! \"", `referenceSpectrumType`, "\" cannot be assigned to `referenceSpectrumType`. Must be \"SPECTRUM\", \"MERGED_SPECTRUM\".", sep = ""))
+        }
+        if (!(is.character(`referenceSpectrumType`) && length(`referenceSpectrumType`) == 1)) {
+          stop(paste("Error! Invalid data for `referenceSpectrumType`. Must be a string:", `referenceSpectrumType`))
+        }
+        self$`referenceSpectrumType` <- `referenceSpectrumType`
+      }
       if (!is.null(`referenceSpectrum`)) {
         stopifnot(R6::is.R6(`referenceSpectrum`))
         self$`referenceSpectrum` <- `referenceSpectrum`
+      }
+      if (!is.null(`querySpectrumType`)) {
+        if (!(`querySpectrumType` %in% c("SPECTRUM", "MERGED_SPECTRUM"))) {
+          stop(paste("Error! \"", `querySpectrumType`, "\" cannot be assigned to `querySpectrumType`. Must be \"SPECTRUM\", \"MERGED_SPECTRUM\".", sep = ""))
+        }
+        if (!(is.character(`querySpectrumType`) && length(`querySpectrumType`) == 1)) {
+          stop(paste("Error! Invalid data for `querySpectrumType`. Must be a string:", `querySpectrumType`))
+        }
+        self$`querySpectrumType` <- `querySpectrumType`
       }
     },
 
@@ -201,6 +245,10 @@ SpectralLibraryMatch <- R6::R6Class(
         SpectralLibraryMatchObject[["sharedPeaks"]] <-
           self$`sharedPeaks`
       }
+      if (!is.null(self$`sharedPeakMapping`)) {
+        SpectralLibraryMatchObject[["sharedPeakMapping"]] <-
+          lapply(self$`sharedPeakMapping`, function(x) x$toSimpleType())
+      }
       if (!is.null(self$`querySpectrumIndex`)) {
         SpectralLibraryMatchObject[["querySpectrumIndex"]] <-
           self$`querySpectrumIndex`
@@ -237,13 +285,25 @@ SpectralLibraryMatch <- R6::R6Class(
         SpectralLibraryMatchObject[["smiles"]] <-
           self$`smiles`
       }
+      if (!is.null(self$`type`)) {
+        SpectralLibraryMatchObject[["type"]] <-
+          self$`type`
+      }
       if (!is.null(self$`inchiKey`)) {
         SpectralLibraryMatchObject[["inchiKey"]] <-
           self$`inchiKey`
       }
+      if (!is.null(self$`referenceSpectrumType`)) {
+        SpectralLibraryMatchObject[["referenceSpectrumType"]] <-
+          self$`referenceSpectrumType`
+      }
       if (!is.null(self$`referenceSpectrum`)) {
         SpectralLibraryMatchObject[["referenceSpectrum"]] <-
           self$`referenceSpectrum`$toSimpleType()
+      }
+      if (!is.null(self$`querySpectrumType`)) {
+        SpectralLibraryMatchObject[["querySpectrumType"]] <-
+          self$`querySpectrumType`
       }
       return(SpectralLibraryMatchObject)
     },
@@ -266,6 +326,9 @@ SpectralLibraryMatch <- R6::R6Class(
       }
       if (!is.null(this_object$`sharedPeaks`)) {
         self$`sharedPeaks` <- this_object$`sharedPeaks`
+      }
+      if (!is.null(this_object$`sharedPeakMapping`)) {
+        self$`sharedPeakMapping` <- ApiClient$new()$deserializeObj(this_object$`sharedPeakMapping`, "array[PeakPair]", loadNamespace("RSirius"))
       }
       if (!is.null(this_object$`querySpectrumIndex`)) {
         self$`querySpectrumIndex` <- this_object$`querySpectrumIndex`
@@ -294,13 +357,31 @@ SpectralLibraryMatch <- R6::R6Class(
       if (!is.null(this_object$`smiles`)) {
         self$`smiles` <- this_object$`smiles`
       }
+      if (!is.null(this_object$`type`)) {
+        if (!is.null(this_object$`type`) && !(this_object$`type` %in% c("IDENTITY", "ANALOG"))) {
+          stop(paste("Error! \"", this_object$`type`, "\" cannot be assigned to `type`. Must be \"IDENTITY\", \"ANALOG\".", sep = ""))
+        }
+        self$`type` <- this_object$`type`
+      }
       if (!is.null(this_object$`inchiKey`)) {
         self$`inchiKey` <- this_object$`inchiKey`
+      }
+      if (!is.null(this_object$`referenceSpectrumType`)) {
+        if (!is.null(this_object$`referenceSpectrumType`) && !(this_object$`referenceSpectrumType` %in% c("SPECTRUM", "MERGED_SPECTRUM"))) {
+          stop(paste("Error! \"", this_object$`referenceSpectrumType`, "\" cannot be assigned to `referenceSpectrumType`. Must be \"SPECTRUM\", \"MERGED_SPECTRUM\".", sep = ""))
+        }
+        self$`referenceSpectrumType` <- this_object$`referenceSpectrumType`
       }
       if (!is.null(this_object$`referenceSpectrum`)) {
         `referencespectrum_object` <- BasicSpectrum$new()
         `referencespectrum_object`$fromJSON(jsonlite::toJSON(this_object$`referenceSpectrum`, auto_unbox = TRUE, digits = NA, null = 'null'))
         self$`referenceSpectrum` <- `referencespectrum_object`
+      }
+      if (!is.null(this_object$`querySpectrumType`)) {
+        if (!is.null(this_object$`querySpectrumType`) && !(this_object$`querySpectrumType` %in% c("SPECTRUM", "MERGED_SPECTRUM"))) {
+          stop(paste("Error! \"", this_object$`querySpectrumType`, "\" cannot be assigned to `querySpectrumType`. Must be \"SPECTRUM\", \"MERGED_SPECTRUM\".", sep = ""))
+        }
+        self$`querySpectrumType` <- this_object$`querySpectrumType`
       }
       self
     },
@@ -327,6 +408,7 @@ SpectralLibraryMatch <- R6::R6Class(
       self$`rank` <- this_object$`rank`
       self$`similarity` <- this_object$`similarity`
       self$`sharedPeaks` <- this_object$`sharedPeaks`
+      self$`sharedPeakMapping` <- ApiClient$new()$deserializeObj(this_object$`sharedPeakMapping`, "array[PeakPair]", loadNamespace("RSirius"))
       self$`querySpectrumIndex` <- this_object$`querySpectrumIndex`
       self$`dbName` <- this_object$`dbName`
       self$`dbId` <- this_object$`dbId`
@@ -336,8 +418,20 @@ SpectralLibraryMatch <- R6::R6Class(
       self$`adduct` <- this_object$`adduct`
       self$`exactMass` <- this_object$`exactMass`
       self$`smiles` <- this_object$`smiles`
+      if (!is.null(this_object$`type`) && !(this_object$`type` %in% c("IDENTITY", "ANALOG"))) {
+        stop(paste("Error! \"", this_object$`type`, "\" cannot be assigned to `type`. Must be \"IDENTITY\", \"ANALOG\".", sep = ""))
+      }
+      self$`type` <- this_object$`type`
       self$`inchiKey` <- this_object$`inchiKey`
+      if (!is.null(this_object$`referenceSpectrumType`) && !(this_object$`referenceSpectrumType` %in% c("SPECTRUM", "MERGED_SPECTRUM"))) {
+        stop(paste("Error! \"", this_object$`referenceSpectrumType`, "\" cannot be assigned to `referenceSpectrumType`. Must be \"SPECTRUM\", \"MERGED_SPECTRUM\".", sep = ""))
+      }
+      self$`referenceSpectrumType` <- this_object$`referenceSpectrumType`
       self$`referenceSpectrum` <- BasicSpectrum$new()$fromJSON(jsonlite::toJSON(this_object$`referenceSpectrum`, auto_unbox = TRUE, digits = NA, null = 'null'))
+      if (!is.null(this_object$`querySpectrumType`) && !(this_object$`querySpectrumType` %in% c("SPECTRUM", "MERGED_SPECTRUM"))) {
+        stop(paste("Error! \"", this_object$`querySpectrumType`, "\" cannot be assigned to `querySpectrumType`. Must be \"SPECTRUM\", \"MERGED_SPECTRUM\".", sep = ""))
+      }
+      self$`querySpectrumType` <- this_object$`querySpectrumType`
       self
     },
 

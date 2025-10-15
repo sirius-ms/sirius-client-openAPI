@@ -15,7 +15,7 @@
 #' \dontrun{
 #' ####################  GetAccountInfo  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_include_subs <- FALSE # character | include available and active subscriptions in {@link AccountInfo AccountInfo}. (Optional)
 #'
 #' #Get information about the account currently logged in.
@@ -29,7 +29,7 @@
 #'
 #' ####################  GetSignUpURL  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #'
 #' #Get SignUp URL (For signUp via web browser)
 #' api_instance <- rsirius_api$new()
@@ -42,7 +42,7 @@
 #'
 #' ####################  GetSubscriptions  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #'
 #' #Get available subscriptions of the account currently logged in.
 #' api_instance <- rsirius_api$new()
@@ -55,7 +55,7 @@
 #'
 #' ####################  IsLoggedIn  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #'
 #' #Check if a user is logged in.
 #' api_instance <- rsirius_api$new()
@@ -68,7 +68,7 @@
 #'
 #' ####################  Login  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_accept_terms <- "accept_terms_example" # character | 
 #' var_account_credentials <- AccountCredentials$new("username_example", "password_example", "refreshToken_example") # AccountCredentials | used to log in.
 #' var_fail_when_logged_in <- FALSE # character | if true request fails if an active login already exists. (Optional)
@@ -85,7 +85,7 @@
 #'
 #' ####################  Logout  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #'
 #' #Logout from SIRIUS web services.
 #' api_instance <- rsirius_api$new()
@@ -95,7 +95,7 @@
 #'
 #' ####################  OpenPortal  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #'
 #' #Open User portal in browser.
 #' api_instance <- rsirius_api$new()
@@ -105,7 +105,7 @@
 #'
 #' ####################  SelectSubscription  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_sid <- "sid_example" # character | 
 #'
 #' #Select a subscription as active subscription to be used for computations.
@@ -119,7 +119,7 @@
 #'
 #' ####################  SignUp  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #'
 #' #Open SignUp window in system browser and return signUp link.
 #' api_instance <- rsirius_api$new()
@@ -220,13 +220,40 @@ LoginAndAccountApi <- R6::R6Class(
           write(local_var_resp$response, data_file)
         }
 
-        deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "AccountInfo", loadNamespace("Rsirius")),
-          error = function(e) {
-            stop("Failed to deserialize response")
-          }
-        )
-        local_var_resp$content <- deserialized_resp_obj
+        # Check if we are expecting a CSV response
+        is_csv_response <- any(grepl("csv", local_var_accepts, ignore.case = TRUE))
+
+        if (is_csv_response) {
+          # For CSV responses, parse into data.frame
+          csv_resp_obj <- tryCatch(
+            {
+              csv_text <- rawToChar(local_var_resp$response)
+
+              # Detect separator by examining first line
+              first_line <- strsplit(csv_text, "\n")[[1]][1]
+              if (grepl("\t", first_line)) {
+                # Tab-separated (TSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = "\t")
+              } else {
+                # Comma-separated (CSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = ",")
+              }
+            },
+            error = function(e) {
+              stop("Failed to parse CSV response")
+            }
+          )
+          local_var_resp$content <- csv_resp_obj
+        } else {
+          # For JSON responses, deserialize normally
+          deserialized_resp_obj <- tryCatch(
+            self$api_client$deserialize(local_var_resp$response_as_text(), "AccountInfo", loadNamespace("RSirius")),
+            error = function(e) {
+              stop("Failed to deserialize response")
+            }
+          )
+          local_var_resp$content <- deserialized_resp_obj
+        }
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
@@ -304,13 +331,40 @@ LoginAndAccountApi <- R6::R6Class(
           write(local_var_resp$response, data_file)
         }
 
-        deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "character", loadNamespace("Rsirius")),
-          error = function(e) {
-            stop("Failed to deserialize response")
-          }
-        )
-        local_var_resp$content <- deserialized_resp_obj
+        # Check if we are expecting a CSV response
+        is_csv_response <- any(grepl("csv", local_var_accepts, ignore.case = TRUE))
+
+        if (is_csv_response) {
+          # For CSV responses, parse into data.frame
+          csv_resp_obj <- tryCatch(
+            {
+              csv_text <- rawToChar(local_var_resp$response)
+
+              # Detect separator by examining first line
+              first_line <- strsplit(csv_text, "\n")[[1]][1]
+              if (grepl("\t", first_line)) {
+                # Tab-separated (TSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = "\t")
+              } else {
+                # Comma-separated (CSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = ",")
+              }
+            },
+            error = function(e) {
+              stop("Failed to parse CSV response")
+            }
+          )
+          local_var_resp$content <- csv_resp_obj
+        } else {
+          # For JSON responses, deserialize normally
+          deserialized_resp_obj <- tryCatch(
+            self$api_client$deserialize(local_var_resp$response_as_text(), "character", loadNamespace("RSirius")),
+            error = function(e) {
+              stop("Failed to deserialize response")
+            }
+          )
+          local_var_resp$content <- deserialized_resp_obj
+        }
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
@@ -388,13 +442,40 @@ LoginAndAccountApi <- R6::R6Class(
           write(local_var_resp$response, data_file)
         }
 
-        deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "array[Subscription]", loadNamespace("Rsirius")),
-          error = function(e) {
-            stop("Failed to deserialize response")
-          }
-        )
-        local_var_resp$content <- deserialized_resp_obj
+        # Check if we are expecting a CSV response
+        is_csv_response <- any(grepl("csv", local_var_accepts, ignore.case = TRUE))
+
+        if (is_csv_response) {
+          # For CSV responses, parse into data.frame
+          csv_resp_obj <- tryCatch(
+            {
+              csv_text <- rawToChar(local_var_resp$response)
+
+              # Detect separator by examining first line
+              first_line <- strsplit(csv_text, "\n")[[1]][1]
+              if (grepl("\t", first_line)) {
+                # Tab-separated (TSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = "\t")
+              } else {
+                # Comma-separated (CSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = ",")
+              }
+            },
+            error = function(e) {
+              stop("Failed to parse CSV response")
+            }
+          )
+          local_var_resp$content <- csv_resp_obj
+        } else {
+          # For JSON responses, deserialize normally
+          deserialized_resp_obj <- tryCatch(
+            self$api_client$deserialize(local_var_resp$response_as_text(), "array[Subscription]", loadNamespace("RSirius")),
+            error = function(e) {
+              stop("Failed to deserialize response")
+            }
+          )
+          local_var_resp$content <- deserialized_resp_obj
+        }
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
@@ -472,13 +553,40 @@ LoginAndAccountApi <- R6::R6Class(
           write(local_var_resp$response, data_file)
         }
 
-        deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "character", loadNamespace("Rsirius")),
-          error = function(e) {
-            stop("Failed to deserialize response")
-          }
-        )
-        local_var_resp$content <- deserialized_resp_obj
+        # Check if we are expecting a CSV response
+        is_csv_response <- any(grepl("csv", local_var_accepts, ignore.case = TRUE))
+
+        if (is_csv_response) {
+          # For CSV responses, parse into data.frame
+          csv_resp_obj <- tryCatch(
+            {
+              csv_text <- rawToChar(local_var_resp$response)
+
+              # Detect separator by examining first line
+              first_line <- strsplit(csv_text, "\n")[[1]][1]
+              if (grepl("\t", first_line)) {
+                # Tab-separated (TSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = "\t")
+              } else {
+                # Comma-separated (CSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = ",")
+              }
+            },
+            error = function(e) {
+              stop("Failed to parse CSV response")
+            }
+          )
+          local_var_resp$content <- csv_resp_obj
+        } else {
+          # For JSON responses, deserialize normally
+          deserialized_resp_obj <- tryCatch(
+            self$api_client$deserialize(local_var_resp$response_as_text(), "character", loadNamespace("RSirius")),
+            error = function(e) {
+              stop("Failed to deserialize response")
+            }
+          )
+          local_var_resp$content <- deserialized_resp_obj
+        }
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
@@ -588,13 +696,40 @@ LoginAndAccountApi <- R6::R6Class(
           write(local_var_resp$response, data_file)
         }
 
-        deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "AccountInfo", loadNamespace("Rsirius")),
-          error = function(e) {
-            stop("Failed to deserialize response")
-          }
-        )
-        local_var_resp$content <- deserialized_resp_obj
+        # Check if we are expecting a CSV response
+        is_csv_response <- any(grepl("csv", local_var_accepts, ignore.case = TRUE))
+
+        if (is_csv_response) {
+          # For CSV responses, parse into data.frame
+          csv_resp_obj <- tryCatch(
+            {
+              csv_text <- rawToChar(local_var_resp$response)
+
+              # Detect separator by examining first line
+              first_line <- strsplit(csv_text, "\n")[[1]][1]
+              if (grepl("\t", first_line)) {
+                # Tab-separated (TSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = "\t")
+              } else {
+                # Comma-separated (CSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = ",")
+              }
+            },
+            error = function(e) {
+              stop("Failed to parse CSV response")
+            }
+          )
+          local_var_resp$content <- csv_resp_obj
+        } else {
+          # For JSON responses, deserialize normally
+          deserialized_resp_obj <- tryCatch(
+            self$api_client$deserialize(local_var_resp$response_as_text(), "AccountInfo", loadNamespace("RSirius")),
+            error = function(e) {
+              stop("Failed to deserialize response")
+            }
+          )
+          local_var_resp$content <- deserialized_resp_obj
+        }
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
@@ -823,13 +958,40 @@ LoginAndAccountApi <- R6::R6Class(
           write(local_var_resp$response, data_file)
         }
 
-        deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "AccountInfo", loadNamespace("Rsirius")),
-          error = function(e) {
-            stop("Failed to deserialize response")
-          }
-        )
-        local_var_resp$content <- deserialized_resp_obj
+        # Check if we are expecting a CSV response
+        is_csv_response <- any(grepl("csv", local_var_accepts, ignore.case = TRUE))
+
+        if (is_csv_response) {
+          # For CSV responses, parse into data.frame
+          csv_resp_obj <- tryCatch(
+            {
+              csv_text <- rawToChar(local_var_resp$response)
+
+              # Detect separator by examining first line
+              first_line <- strsplit(csv_text, "\n")[[1]][1]
+              if (grepl("\t", first_line)) {
+                # Tab-separated (TSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = "\t")
+              } else {
+                # Comma-separated (CSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = ",")
+              }
+            },
+            error = function(e) {
+              stop("Failed to parse CSV response")
+            }
+          )
+          local_var_resp$content <- csv_resp_obj
+        } else {
+          # For JSON responses, deserialize normally
+          deserialized_resp_obj <- tryCatch(
+            self$api_client$deserialize(local_var_resp$response_as_text(), "AccountInfo", loadNamespace("RSirius")),
+            error = function(e) {
+              stop("Failed to deserialize response")
+            }
+          )
+          local_var_resp$content <- deserialized_resp_obj
+        }
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
@@ -907,13 +1069,40 @@ LoginAndAccountApi <- R6::R6Class(
           write(local_var_resp$response, data_file)
         }
 
-        deserialized_resp_obj <- tryCatch(
-          self$api_client$deserialize(local_var_resp$response_as_text(), "character", loadNamespace("Rsirius")),
-          error = function(e) {
-            stop("Failed to deserialize response")
-          }
-        )
-        local_var_resp$content <- deserialized_resp_obj
+        # Check if we are expecting a CSV response
+        is_csv_response <- any(grepl("csv", local_var_accepts, ignore.case = TRUE))
+
+        if (is_csv_response) {
+          # For CSV responses, parse into data.frame
+          csv_resp_obj <- tryCatch(
+            {
+              csv_text <- rawToChar(local_var_resp$response)
+
+              # Detect separator by examining first line
+              first_line <- strsplit(csv_text, "\n")[[1]][1]
+              if (grepl("\t", first_line)) {
+                # Tab-separated (TSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = "\t")
+              } else {
+                # Comma-separated (CSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = ",")
+              }
+            },
+            error = function(e) {
+              stop("Failed to parse CSV response")
+            }
+          )
+          local_var_resp$content <- csv_resp_obj
+        } else {
+          # For JSON responses, deserialize normally
+          deserialized_resp_obj <- tryCatch(
+            self$api_client$deserialize(local_var_resp$response_as_text(), "character", loadNamespace("RSirius")),
+            error = function(e) {
+              stop("Failed to deserialize response")
+            }
+          )
+          local_var_resp$content <- deserialized_resp_obj
+        }
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
