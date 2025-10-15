@@ -1,4 +1,4 @@
-# Rsirius::SearchableDatabaseParameters
+# RSirius::SearchableDatabaseParameters
 
 
 ## Properties

@@ -107,7 +107,7 @@ AdductNodeExperimental <- R6::R6Class(
         self$`mz` <- this_object$`mz`
       }
       if (!is.null(this_object$`adductAnnotations`)) {
-        self$`adductAnnotations` <- ApiClient$new()$deserializeObj(this_object$`adductAnnotations`, "map(numeric)", loadNamespace("Rsirius"))
+        self$`adductAnnotations` <- ApiClient$new()$deserializeObj(this_object$`adductAnnotations`, "map(numeric)", loadNamespace("RSirius"))
       }
       self
     },
@@ -132,7 +132,7 @@ AdductNodeExperimental <- R6::R6Class(
       this_object <- jsonlite::fromJSON(input_json)
       self$`alignedFeatureId` <- this_object$`alignedFeatureId`
       self$`mz` <- this_object$`mz`
-      self$`adductAnnotations` <- ApiClient$new()$deserializeObj(this_object$`adductAnnotations`, "map(numeric)", loadNamespace("Rsirius"))
+      self$`adductAnnotations` <- ApiClient$new()$deserializeObj(this_object$`adductAnnotations`, "map(numeric)", loadNamespace("RSirius"))
       self
     },
 

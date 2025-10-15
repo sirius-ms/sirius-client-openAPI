@@ -1,4 +1,4 @@
-# Rsirius::PagedModelJob
+# RSirius::PagedModelJob
 
 
 ## Properties

@@ -15,7 +15,7 @@
 #' \dontrun{
 #' ####################  CloseProject  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | unique name/identifier of the  project-space to be closed.
 #' var_compact <- FALSE # character | if true, compact project storage after closing. DEPRECATED: Compacting acts on the local filesystem and will likely be removed in a later version. (Optional)
 #'
@@ -27,7 +27,7 @@
 #'
 #' ####################  CreateProject  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | unique name/identifier that shall be used to access the newly created project-space. Must consist only of [a-zA-Z0-9_-].
 #' var_path_to_project <- "path_to_project_example" # character | local file path where the project will be created. If NULL, project will be stored by its projectId in default project location. DEPRECATED: This parameter relies on the local filesystem and will likely be removed in later versions of this API to allow for more flexible use cases. (Optional)
 #' var_opt_fields <- c("none") # array[character] |  (Optional)
@@ -43,7 +43,7 @@
 #'
 #' ####################  GetCanopusClassyFireData  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | 
 #' var_charge <- 56 # integer | 
 #'
@@ -58,7 +58,7 @@
 #'
 #' ####################  GetCanopusNpcData  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | 
 #' var_charge <- 56 # integer | 
 #'
@@ -73,7 +73,7 @@
 #'
 #' ####################  GetFingerIdData  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | 
 #' var_charge <- 56 # integer | 
 #'
@@ -88,7 +88,7 @@
 #'
 #' ####################  GetProject  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | unique name/identifier tof the project-space to be accessed.
 #' var_opt_fields <- c("none") # array[character] |  (Optional)
 #'
@@ -103,7 +103,7 @@
 #'
 #' ####################  GetProjects  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #'
 #' #List opened project spaces.
 #' api_instance <- rsirius_api$new()
@@ -116,7 +116,7 @@
 #'
 #' ####################  ImportMsRunData  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | Project-space to import into.
 #' var_input_files <- c(123) # array[data.frame] | Files to import into project.
 #' var_parameters <- LcmsSubmissionParameters$new("alignLCMSRuns_example", 123, Deviation$new(123, 123), Deviation$new(123, 123), 123, 123) # LcmsSubmissionParameters | 
@@ -132,7 +132,7 @@
 #'
 #' ####################  ImportMsRunDataAsJob  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | Project-space to import into.
 #' var_input_files <- c(123) # array[data.frame] | Files to import into project.
 #' var_parameters <- LcmsSubmissionParameters$new("alignLCMSRuns_example", 123, Deviation$new(123, 123), Deviation$new(123, 123), 123, 123) # LcmsSubmissionParameters | 
@@ -149,7 +149,7 @@
 #'
 #' ####################  ImportPreprocessedData  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to import into.
 #' var_input_files <- c(123) # array[data.frame] | files to import into project
 #' var_ignore_formulas <- FALSE # character |  (Optional)
@@ -166,7 +166,7 @@
 #'
 #' ####################  ImportPreprocessedDataAsJob  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to import into.
 #' var_input_files <- c(123) # array[data.frame] | 
 #' var_ignore_formulas <- FALSE # character |  (Optional)
@@ -184,7 +184,7 @@
 #'
 #' ####################  OpenProject  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | unique name/identifier that shall be used to access the opened project-space. Must consist only of [a-zA-Z0-9_-].
 #' var_path_to_project <- "path_to_project_example" # character | local file path to open the project from. If NULL, project will be loaded by it projectId from default project location.  DEPRECATED: This parameter relies on the local filesystem and will likely be removed in later versions of this API to allow for more flexible use cases. (Optional)
 #' var_opt_fields <- c("none") # array[character] |  (Optional)
@@ -425,7 +425,7 @@ ProjectsApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "ProjectInfo", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "ProjectInfo", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -556,7 +556,7 @@ ProjectsApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "character", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "character", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -687,7 +687,7 @@ ProjectsApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "character", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "character", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -818,7 +818,7 @@ ProjectsApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "character", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "character", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -952,7 +952,7 @@ ProjectsApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "ProjectInfo", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "ProjectInfo", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -1063,7 +1063,7 @@ ProjectsApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "array[ProjectInfo]", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "array[ProjectInfo]", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -1209,7 +1209,7 @@ ProjectsApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "ImportResult", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "ImportResult", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -1367,7 +1367,7 @@ ProjectsApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "Job", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "Job", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -1509,7 +1509,7 @@ ProjectsApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "ImportResult", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "ImportResult", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -1663,7 +1663,7 @@ ProjectsApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "Job", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "Job", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -1802,7 +1802,7 @@ ProjectsApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "ProjectInfo", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "ProjectInfo", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }

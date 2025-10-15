@@ -1,4 +1,4 @@
-# Rsirius::AnnotatedSpectrum
+# RSirius::AnnotatedSpectrum
 
 Spectrum model with peak annotations based on the fragmentation tree and Epimetheus substructure annotations.  Molecular formula and adduct of the spectrum are identical to the ones of the corresponding molecular formula candidate and FragmentationTree.  Fragment molecular formulas and adducts correspond to the FragmentationTree's FragmentNodes
 

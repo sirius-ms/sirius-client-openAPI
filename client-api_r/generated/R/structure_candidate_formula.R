@@ -266,10 +266,10 @@ StructureCandidateFormula <- R6::R6Class(
         self$`structureSvg` <- this_object$`structureSvg`
       }
       if (!is.null(this_object$`dbLinks`)) {
-        self$`dbLinks` <- ApiClient$new()$deserializeObj(this_object$`dbLinks`, "array[DBLink]", loadNamespace("Rsirius"))
+        self$`dbLinks` <- ApiClient$new()$deserializeObj(this_object$`dbLinks`, "array[DBLink]", loadNamespace("RSirius"))
       }
       if (!is.null(this_object$`spectralLibraryMatches`)) {
-        self$`spectralLibraryMatches` <- ApiClient$new()$deserializeObj(this_object$`spectralLibraryMatches`, "array[SpectralLibraryMatch]", loadNamespace("Rsirius"))
+        self$`spectralLibraryMatches` <- ApiClient$new()$deserializeObj(this_object$`spectralLibraryMatches`, "array[SpectralLibraryMatch]", loadNamespace("RSirius"))
       }
       if (!is.null(this_object$`xlogP`)) {
         self$`xlogP` <- this_object$`xlogP`
@@ -325,8 +325,8 @@ StructureCandidateFormula <- R6::R6Class(
       self$`smiles` <- this_object$`smiles`
       self$`structureName` <- this_object$`structureName`
       self$`structureSvg` <- this_object$`structureSvg`
-      self$`dbLinks` <- ApiClient$new()$deserializeObj(this_object$`dbLinks`, "array[DBLink]", loadNamespace("Rsirius"))
-      self$`spectralLibraryMatches` <- ApiClient$new()$deserializeObj(this_object$`spectralLibraryMatches`, "array[SpectralLibraryMatch]", loadNamespace("Rsirius"))
+      self$`dbLinks` <- ApiClient$new()$deserializeObj(this_object$`dbLinks`, "array[DBLink]", loadNamespace("RSirius"))
+      self$`spectralLibraryMatches` <- ApiClient$new()$deserializeObj(this_object$`spectralLibraryMatches`, "array[SpectralLibraryMatch]", loadNamespace("RSirius"))
       self$`xlogP` <- this_object$`xlogP`
       self$`rank` <- this_object$`rank`
       self$`csiScore` <- this_object$`csiScore`

@@ -1,4 +1,4 @@
-# Rsirius::LicenseInfo
+# RSirius::LicenseInfo
 
 
 ## Properties

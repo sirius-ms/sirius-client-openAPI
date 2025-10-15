@@ -1,4 +1,4 @@
-# Rsirius::SpectralLibrarySearch
+# RSirius::SpectralLibrarySearch
 
 User/developer friendly parameter subset for the Spectral library search tool.
 

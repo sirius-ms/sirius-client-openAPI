@@ -1,4 +1,4 @@
-# Rsirius::ZodiacEdgeFilterThresholds
+# RSirius::ZodiacEdgeFilterThresholds
 
 
 ## Properties

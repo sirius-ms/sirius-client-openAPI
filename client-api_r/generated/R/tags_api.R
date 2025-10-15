@@ -15,7 +15,7 @@
 #' \dontrun{
 #' ####################  AddGroup  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to add to.
 #' var_group_name <- "group_name_example" # character | name of the new group
 #' var_filter <- "filter_example" # character | filter query to create the group
@@ -32,7 +32,7 @@
 #'
 #' ####################  AddPossibleValuesToTagDefinition  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to add to.
 #' var_tag_name <- "tag_name_example" # character | the tag definition to add the values to
 #' var_request_body <- c(123) # array[object] | 
@@ -48,7 +48,7 @@
 #'
 #' ####################  CreateTags  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to add to.
 #' var_tag_definition_import <- c(TagDefinitionImport$new("tagName_example", "NONE", "description_example", "tagType_example", c(123), 123, 123)) # array[TagDefinitionImport] | the tag definitions to be created
 #'
@@ -63,7 +63,7 @@
 #'
 #' ####################  DeleteGroup  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to delete from.
 #' var_group_name <- "group_name_example" # character | name of group to delete.
 #'
@@ -75,7 +75,7 @@
 #'
 #' ####################  DeleteTag  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to delete from.
 #' var_tag_name <- "tag_name_example" # character | name of the tag definition to delete.
 #'
@@ -87,7 +87,7 @@
 #'
 #' ####################  GetGroupByName  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_group_name <- "group_name_example" # character | name of the group
 #'
@@ -102,7 +102,7 @@
 #'
 #' ####################  GetGroups  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_group_type <- "group_type_example" # character | type of the group (Optional)
 #'
@@ -117,7 +117,7 @@
 #'
 #' ####################  GetTag  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_tag_name <- "tag_name_example" # character | name of the tag
 #'
@@ -132,7 +132,7 @@
 #'
 #' ####################  GetTags  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_tag_type <- "tag_type_example" # character | scope of the tag (optional) (Optional)
 #'
@@ -297,7 +297,7 @@ TagsApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "TagGroup", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "TagGroup", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -450,7 +450,7 @@ TagsApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "TagDefinition", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "TagDefinition", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -592,7 +592,7 @@ TagsApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "array[TagDefinition]", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "array[TagDefinition]", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -911,7 +911,7 @@ TagsApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "TagGroup", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "TagGroup", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -1038,7 +1038,7 @@ TagsApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "array[TagGroup]", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "array[TagGroup]", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -1171,7 +1171,7 @@ TagsApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "TagDefinition", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "TagDefinition", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -1298,7 +1298,7 @@ TagsApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "array[TagDefinition]", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "array[TagDefinition]", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }

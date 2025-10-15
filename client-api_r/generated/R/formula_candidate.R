@@ -369,7 +369,7 @@ FormulaCandidate <- R6::R6Class(
         self$`lipidAnnotation` <- `lipidannotation_object`
       }
       if (!is.null(this_object$`predictedFingerprint`)) {
-        self$`predictedFingerprint` <- ApiClient$new()$deserializeObj(this_object$`predictedFingerprint`, "array[numeric]", loadNamespace("Rsirius"))
+        self$`predictedFingerprint` <- ApiClient$new()$deserializeObj(this_object$`predictedFingerprint`, "array[numeric]", loadNamespace("RSirius"))
       }
       if (!is.null(this_object$`compoundClasses`)) {
         `compoundclasses_object` <- CompoundClasses$new()
@@ -419,7 +419,7 @@ FormulaCandidate <- R6::R6Class(
       self$`annotatedSpectrum` <- AnnotatedSpectrum$new()$fromJSON(jsonlite::toJSON(this_object$`annotatedSpectrum`, auto_unbox = TRUE, digits = NA, null = 'null'))
       self$`isotopePatternAnnotation` <- IsotopePatternAnnotation$new()$fromJSON(jsonlite::toJSON(this_object$`isotopePatternAnnotation`, auto_unbox = TRUE, digits = NA, null = 'null'))
       self$`lipidAnnotation` <- LipidAnnotation$new()$fromJSON(jsonlite::toJSON(this_object$`lipidAnnotation`, auto_unbox = TRUE, digits = NA, null = 'null'))
-      self$`predictedFingerprint` <- ApiClient$new()$deserializeObj(this_object$`predictedFingerprint`, "array[numeric]", loadNamespace("Rsirius"))
+      self$`predictedFingerprint` <- ApiClient$new()$deserializeObj(this_object$`predictedFingerprint`, "array[numeric]", loadNamespace("RSirius"))
       self$`compoundClasses` <- CompoundClasses$new()$fromJSON(jsonlite::toJSON(this_object$`compoundClasses`, auto_unbox = TRUE, digits = NA, null = 'null'))
       self$`canopusPrediction` <- CanopusPrediction$new()$fromJSON(jsonlite::toJSON(this_object$`canopusPrediction`, auto_unbox = TRUE, digits = NA, null = 'null'))
       self

@@ -247,10 +247,10 @@ Info <- R6::R6Class(
         self$`fingerprintId` <- this_object$`fingerprintId`
       }
       if (!is.null(this_object$`availableILPSolvers`)) {
-        self$`availableILPSolvers` <- ApiClient$new()$deserializeObj(this_object$`availableILPSolvers`, "array[character]", loadNamespace("Rsirius"))
+        self$`availableILPSolvers` <- ApiClient$new()$deserializeObj(this_object$`availableILPSolvers`, "array[character]", loadNamespace("RSirius"))
       }
       if (!is.null(this_object$`supportedILPSolvers`)) {
-        self$`supportedILPSolvers` <- ApiClient$new()$deserializeObj(this_object$`supportedILPSolvers`, "map(character)", loadNamespace("Rsirius"))
+        self$`supportedILPSolvers` <- ApiClient$new()$deserializeObj(this_object$`supportedILPSolvers`, "map(character)", loadNamespace("RSirius"))
       }
       self
     },
@@ -283,8 +283,8 @@ Info <- R6::R6Class(
       self$`chemDbVersion` <- this_object$`chemDbVersion`
       self$`fingerIdModelVersion` <- this_object$`fingerIdModelVersion`
       self$`fingerprintId` <- this_object$`fingerprintId`
-      self$`availableILPSolvers` <- ApiClient$new()$deserializeObj(this_object$`availableILPSolvers`, "array[character]", loadNamespace("Rsirius"))
-      self$`supportedILPSolvers` <- ApiClient$new()$deserializeObj(this_object$`supportedILPSolvers`, "map(character)", loadNamespace("Rsirius"))
+      self$`availableILPSolvers` <- ApiClient$new()$deserializeObj(this_object$`availableILPSolvers`, "array[character]", loadNamespace("RSirius"))
+      self$`supportedILPSolvers` <- ApiClient$new()$deserializeObj(this_object$`supportedILPSolvers`, "map(character)", loadNamespace("RSirius"))
       self
     },
 

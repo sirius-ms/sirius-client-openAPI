@@ -15,7 +15,7 @@
 #' \dontrun{
 #' ####################  AddAlignedFeatures  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to import into.
 #' var_feature_import <- c(FeatureImport$new(123, 123, "name_example", "externalFeatureId_example", c("detectedAdducts_example"), 123, 123, 123, "NOT_APPLICABLE", BasicSpectrum$new("cosineQuery_example", c(SimplePeak$new(123, 123)), "name_example", 123, "collisionEnergy_example", "instrument_example", 123, 123, SimplePeak$new(123, 123), 123, 123, 123, 123, 123), c(BasicSpectrum$new("cosineQuery_example", c(SimplePeak$new(123, 123)), "name_example", 123, "collisionEnergy_example", "instrument_example", 123, 123, SimplePeak$new(123, 123), 123, 123, 123, 123, 123)), c(BasicSpectrum$new("cosineQuery_example", c(SimplePeak$new(123, 123)), "name_example", 123, "collisionEnergy_example", "instrument_example", 123, 123, SimplePeak$new(123, 123), 123, 123, 123, 123, 123)))) # array[FeatureImport] | the feature data to be imported
 #' var_profile <- "profile_example" # character | profile describing the instrument used to measure the data. Used to merge spectra. (Optional)
@@ -32,7 +32,7 @@
 #'
 #' ####################  AddDeNovoStructureCandidate  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_aligned_feature_id <- "aligned_feature_id_example" # character | feature (aligned over runs) the structure candidates belong to.
 #' var_smiles <- "none" # character | smiles (Optional)
@@ -48,7 +48,7 @@
 #'
 #' ####################  AddTagsToAlignedFeatureExperimental  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to add to.
 #' var_aligned_feature_id <- "aligned_feature_id_example" # character | run to add tags to.
 #' var_tag <- c(Tag$new("tagName_example", 123)) # array[Tag] | tags to add.
@@ -64,7 +64,7 @@
 #'
 #' ####################  DeleteAlignedFeature  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to delete from.
 #' var_aligned_feature_id <- "aligned_feature_id_example" # character | identifier of feature (aligned over runs) to delete.
 #'
@@ -76,7 +76,7 @@
 #'
 #' ####################  DeleteAlignedFeatures  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to delete from.
 #' var_request_body <- c("property_example") # array[character] | 
 #'
@@ -88,7 +88,7 @@
 #'
 #' ####################  GetAdductNetworkWithMergedTracesExperimental  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_aligned_feature_id <- "aligned_feature_id_example" # character | one feature that is considered the main feature of the adduct network
 #'
@@ -103,7 +103,7 @@
 #'
 #' ####################  GetAlignedFeature  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_aligned_feature_id <- "aligned_feature_id_example" # character | identifier of feature (aligned over runs) to access.
 #' var_ms_data_search_prepared <- FALSE # character | Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. (Optional)
@@ -120,7 +120,7 @@
 #'
 #' ####################  GetAlignedFeatureQualityExperimental  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_aligned_feature_id <- "aligned_feature_id_example" # character | identifier of feature (aligned over runs) to access.
 #'
@@ -135,7 +135,7 @@
 #'
 #' ####################  GetAlignedFeatures  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_ms_data_search_prepared <- FALSE # character | Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. (Optional)
 #' var_opt_fields <- c("none") # array[character] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
@@ -151,7 +151,7 @@
 #'
 #' ####################  GetAlignedFeaturesByGroupExperimental  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to delete from.
 #' var_group_name <- "group_name_example" # character | tag group name.
 #' var_page <- 0 # integer | Zero-based page index (0..N) (Optional)
@@ -170,7 +170,7 @@
 #'
 #' ####################  GetAlignedFeaturesByTagExperimental  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project space to get features (aligned over runs) from.
 #' var_filter <- "" # character | tag filter. (Optional)
 #' var_page <- 0 # integer | Zero-based page index (0..N) (Optional)
@@ -189,7 +189,7 @@
 #'
 #' ####################  GetAlignedFeaturesPaged  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_page <- 0 # integer | Zero-based page index (0..N) (Optional)
 #' var_size <- 20 # integer | The size of the page to be returned (Optional)
@@ -208,7 +208,7 @@
 #'
 #' ####################  GetBestMatchingCompoundClasses  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_aligned_feature_id <- "aligned_feature_id_example" # character | feature (aligned over runs) the formula result belongs to.
 #' var_formula_id <- "formula_id_example" # character | identifier of the requested formula result
@@ -224,7 +224,7 @@
 #'
 #' ####################  GetCanopusPrediction  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_aligned_feature_id <- "aligned_feature_id_example" # character | feature (aligned over runs) the formula result belongs to.
 #' var_formula_id <- "formula_id_example" # character | identifier of the requested formula result
@@ -240,7 +240,7 @@
 #'
 #' ####################  GetDeNovoStructureCandidates  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_aligned_feature_id <- "aligned_feature_id_example" # character | feature (aligned over runs) the structure candidates belong to.
 #' var_opt_fields <- c("none") # array[character] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
@@ -256,7 +256,7 @@
 #'
 #' ####################  GetDeNovoStructureCandidatesByFormula  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_aligned_feature_id <- "aligned_feature_id_example" # character | feature (aligned over runs) the formula result belongs to.
 #' var_formula_id <- "formula_id_example" # character | identifier of the requested formula result
@@ -273,7 +273,7 @@
 #'
 #' ####################  GetDeNovoStructureCandidatesByFormulaPaged  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_aligned_feature_id <- "aligned_feature_id_example" # character | feature (aligned over runs) the formula result belongs to.
 #' var_formula_id <- "formula_id_example" # character | identifier of the requested formula result
@@ -293,7 +293,7 @@
 #'
 #' ####################  GetDeNovoStructureCandidatesPaged  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_aligned_feature_id <- "aligned_feature_id_example" # character | feature (aligned over runs) the structure candidates belong to.
 #' var_page <- 0 # integer | Zero-based page index (0..N) (Optional)
@@ -312,7 +312,7 @@
 #'
 #' ####################  GetFeatureQuantTableExperimental  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_type <- "APEX_HEIGHT" # character | quantification type. (Optional)
 #'
@@ -327,7 +327,7 @@
 #'
 #' ####################  GetFingerprintPrediction  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_aligned_feature_id <- "aligned_feature_id_example" # character | feature (aligned over runs) the formula result belongs to.
 #' var_formula_id <- "formula_id_example" # character | identifier of the requested formula result
@@ -343,7 +343,7 @@
 #'
 #' ####################  GetFormulaAnnotatedMsMsData  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_aligned_feature_id <- "aligned_feature_id_example" # character | feature (aligned over runs) the formula result belongs to.
 #' var_formula_id <- "formula_id_example" # character | identifier of the requested formula result
@@ -360,7 +360,7 @@
 #'
 #' ####################  GetFormulaAnnotatedSpectrum  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_aligned_feature_id <- "aligned_feature_id_example" # character | feature (aligned over runs) the formula result belongs to.
 #' var_formula_id <- "formula_id_example" # character | identifier of the requested formula result
@@ -378,7 +378,7 @@
 #'
 #' ####################  GetFormulaCandidate  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_aligned_feature_id <- "aligned_feature_id_example" # character | feature (aligned over runs) the formula result belongs to.
 #' var_formula_id <- "formula_id_example" # character | identifier of the requested formula result
@@ -396,7 +396,7 @@
 #'
 #' ####################  GetFormulaCandidates  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_aligned_feature_id <- "aligned_feature_id_example" # character | feature (aligned over runs) the formula result belongs to.
 #' var_ms_data_search_prepared <- FALSE # character | Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. (Optional)
@@ -413,7 +413,7 @@
 #'
 #' ####################  GetFormulaCandidatesPaged  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_aligned_feature_id <- "aligned_feature_id_example" # character | feature (aligned over runs) the formula result belongs to.
 #' var_page <- 0 # integer | Zero-based page index (0..N) (Optional)
@@ -433,7 +433,7 @@
 #'
 #' ####################  GetFragTree  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_aligned_feature_id <- "aligned_feature_id_example" # character | feature (aligned over runs) the formula result belongs to.
 #' var_formula_id <- "formula_id_example" # character | identifier of the requested formula result
@@ -449,7 +449,7 @@
 #'
 #' ####################  GetIsotopePatternAnnotation  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_aligned_feature_id <- "aligned_feature_id_example" # character | feature (aligned over runs) the formula result belongs to.
 #' var_formula_id <- "formula_id_example" # character | identifier of the requested formula result
@@ -465,7 +465,7 @@
 #'
 #' ####################  GetLipidAnnotation  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_aligned_feature_id <- "aligned_feature_id_example" # character | feature (aligned over runs) the formula result belongs to.
 #' var_formula_id <- "formula_id_example" # character | identifier of the requested formula result
@@ -481,7 +481,7 @@
 #'
 #' ####################  GetMsData  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_aligned_feature_id <- "aligned_feature_id_example" # character | feature (aligned over runs) the Mass Spec data belongs to.
 #' var_ms_data_search_prepared <- FALSE # character | Returns all fragment spectra in a preprocessed form as used for fast                          Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                          peak assignments and reference spectra. (Optional)
@@ -497,7 +497,7 @@
 #'
 #' ####################  GetQuantTableRowExperimental  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_aligned_feature_id <- "aligned_feature_id_example" # character | feature which quantity should be read out
 #' var_type <- "APEX_HEIGHT" # character | quantification type. Currently, only APEX_HEIGHT is supported, which is the intensity of the feature at its apex. (Optional)
@@ -513,7 +513,7 @@
 #'
 #' ####################  GetSpectralLibraryMatch  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_aligned_feature_id <- "aligned_feature_id_example" # character | feature (aligned over runs) the structure candidates belong to.
 #' var_match_id <- "match_id_example" # character | id of the library match to be returned.
@@ -530,7 +530,7 @@
 #'
 #' ####################  GetSpectralLibraryMatches  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_aligned_feature_id <- "aligned_feature_id_example" # character | feature (aligned over runs) the structure candidates belong to.
 #' var_min_shared_peaks <- 1 # integer |  (Optional)
@@ -549,7 +549,7 @@
 #'
 #' ####################  GetSpectralLibraryMatchesPaged  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_aligned_feature_id <- "aligned_feature_id_example" # character | feature (aligned over runs) the structure candidates belong to.
 #' var_page <- 0 # integer | Zero-based page index (0..N) (Optional)
@@ -571,7 +571,7 @@
 #'
 #' ####################  GetSpectralLibraryMatchesSummary  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_aligned_feature_id <- "aligned_feature_id_example" # character | feature (aligned over runs) the structure candidates belong to.
 #' var_min_shared_peaks <- 1 # integer | min threshold of shared peaks. (Optional)
@@ -589,7 +589,7 @@
 #'
 #' ####################  GetStructureAnnotatedMsDataExperimental  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_aligned_feature_id <- "aligned_feature_id_example" # character | feature (aligned over runs) the formula result belongs to.
 #' var_formula_id <- "formula_id_example" # character | identifier of the requested formula result
@@ -607,7 +607,7 @@
 #'
 #' ####################  GetStructureAnnotatedSpectralLibraryMatchExperimental  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_aligned_feature_id <- "aligned_feature_id_example" # character | feature (aligned over runs) the structure candidates belong to.
 #' var_match_id <- "match_id_example" # character | id of the library match to be returned.
@@ -623,7 +623,7 @@
 #'
 #' ####################  GetStructureAnnotatedSpectrumExperimental  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_aligned_feature_id <- "aligned_feature_id_example" # character | feature (aligned over runs) the formula result belongs to.
 #' var_formula_id <- "formula_id_example" # character | identifier of the requested formula result
@@ -642,7 +642,7 @@
 #'
 #' ####################  GetStructureCandidates  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_aligned_feature_id <- "aligned_feature_id_example" # character | feature (aligned over runs) the structure candidates belong to.
 #' var_opt_fields <- c("none") # array[character] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
@@ -658,7 +658,7 @@
 #'
 #' ####################  GetStructureCandidatesByFormula  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_aligned_feature_id <- "aligned_feature_id_example" # character | feature (aligned over runs) the formula result belongs to.
 #' var_formula_id <- "formula_id_example" # character | identifier of the requested formula result
@@ -675,7 +675,7 @@
 #'
 #' ####################  GetStructureCandidatesByFormulaPaged  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_aligned_feature_id <- "aligned_feature_id_example" # character | feature (aligned over runs) the formula result belongs to.
 #' var_formula_id <- "formula_id_example" # character | identifier of the requested formula result
@@ -695,7 +695,7 @@
 #'
 #' ####################  GetStructureCandidatesPaged  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_aligned_feature_id <- "aligned_feature_id_example" # character | feature (aligned over runs) the structure candidates belong to.
 #' var_page <- 0 # integer | Zero-based page index (0..N) (Optional)
@@ -714,7 +714,7 @@
 #'
 #' ####################  GetTagsForAlignedFeaturesExperimental  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to get from.
 #' var_object_id <- "object_id_example" # character | object to get tags for.
 #'
@@ -729,7 +729,7 @@
 #'
 #' ####################  GetTracesExperimental  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_aligned_feature_id <- "aligned_feature_id_example" # character | feature which intensities should be read out
 #' var_include_all <- FALSE # character | when true, return all samples that belong to the same merged trace. when false, only return samples which contain the aligned feature. (Optional)
@@ -745,7 +745,7 @@
 #'
 #' ####################  RemoveTagFromAlignedFeatureExperimental  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to delete from.
 #' var_aligned_feature_id <- "aligned_feature_id_example" # character | feature (aligned over runs) to delete tag from.
 #' var_tag_name <- "tag_name_example" # character | name of the tag to delete.
@@ -919,7 +919,7 @@ FeaturesApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "array[AlignedFeature]", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "array[AlignedFeature]", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -1057,7 +1057,7 @@ FeaturesApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "array[StructureCandidateFormula]", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "array[StructureCandidateFormula]", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -1210,7 +1210,7 @@ FeaturesApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "array[Tag]", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "array[Tag]", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -1538,7 +1538,7 @@ FeaturesApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "TraceSetExperimental", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "TraceSetExperimental", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -1688,7 +1688,7 @@ FeaturesApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "AlignedFeature", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "AlignedFeature", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -1821,7 +1821,7 @@ FeaturesApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "AlignedFeatureQualityExperimental", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "AlignedFeatureQualityExperimental", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -1960,7 +1960,7 @@ FeaturesApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "array[AlignedFeature]", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "array[AlignedFeature]", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -2127,7 +2127,7 @@ FeaturesApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "PagedModelAlignedFeature", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "PagedModelAlignedFeature", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -2290,7 +2290,7 @@ FeaturesApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "PagedModelAlignedFeature", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "PagedModelAlignedFeature", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -2453,7 +2453,7 @@ FeaturesApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "PagedModelAlignedFeature", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "PagedModelAlignedFeature", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -2597,7 +2597,7 @@ FeaturesApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "CompoundClasses", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "CompoundClasses", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -2741,7 +2741,7 @@ FeaturesApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "CanopusPrediction", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "CanopusPrediction", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -2886,7 +2886,7 @@ FeaturesApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "array[StructureCandidateFormula]", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "array[StructureCandidateFormula]", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -3042,7 +3042,7 @@ FeaturesApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "array[StructureCandidateScored]", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "array[StructureCandidateScored]", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -3222,7 +3222,7 @@ FeaturesApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "PagedModelStructureCandidateScored", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "PagedModelStructureCandidateScored", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -3391,7 +3391,7 @@ FeaturesApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "PagedModelStructureCandidateFormula", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "PagedModelStructureCandidateFormula", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -3521,7 +3521,7 @@ FeaturesApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "QuantTableExperimental", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "QuantTableExperimental", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -3665,7 +3665,7 @@ FeaturesApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "array[numeric]", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "array[numeric]", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -3814,7 +3814,7 @@ FeaturesApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "AnnotatedMsMsData", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "AnnotatedMsMsData", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -3968,7 +3968,7 @@ FeaturesApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "AnnotatedSpectrum", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "AnnotatedSpectrum", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -4129,7 +4129,7 @@ FeaturesApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "FormulaCandidate", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "FormulaCandidate", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -4279,7 +4279,7 @@ FeaturesApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "array[FormulaCandidate]", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "array[FormulaCandidate]", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -4453,7 +4453,7 @@ FeaturesApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "PagedModelFormulaCandidate", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "PagedModelFormulaCandidate", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -4597,7 +4597,7 @@ FeaturesApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "FragmentationTree", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "FragmentationTree", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -4741,7 +4741,7 @@ FeaturesApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "IsotopePatternAnnotation", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "IsotopePatternAnnotation", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -4885,7 +4885,7 @@ FeaturesApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "LipidAnnotation", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "LipidAnnotation", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -5023,7 +5023,7 @@ FeaturesApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "MsData", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "MsData", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -5164,7 +5164,7 @@ FeaturesApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "QuantTableExperimental", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "QuantTableExperimental", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -5320,7 +5320,7 @@ FeaturesApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "SpectralLibraryMatch", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "SpectralLibraryMatch", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -5480,7 +5480,7 @@ FeaturesApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "array[SpectralLibraryMatch]", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "array[SpectralLibraryMatch]", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -5664,7 +5664,7 @@ FeaturesApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "PagedModelSpectralLibraryMatch", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "PagedModelSpectralLibraryMatch", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -5812,7 +5812,7 @@ FeaturesApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "SpectralLibraryMatchSummary", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "SpectralLibraryMatchSummary", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -5972,7 +5972,7 @@ FeaturesApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "AnnotatedMsMsData", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "AnnotatedMsMsData", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -6116,7 +6116,7 @@ FeaturesApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "AnnotatedSpectrum", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "AnnotatedSpectrum", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -6281,7 +6281,7 @@ FeaturesApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "AnnotatedSpectrum", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "AnnotatedSpectrum", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -6426,7 +6426,7 @@ FeaturesApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "array[StructureCandidateFormula]", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "array[StructureCandidateFormula]", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -6582,7 +6582,7 @@ FeaturesApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "array[StructureCandidateScored]", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "array[StructureCandidateScored]", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -6762,7 +6762,7 @@ FeaturesApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "PagedModelStructureCandidateScored", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "PagedModelStructureCandidateScored", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -6931,7 +6931,7 @@ FeaturesApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "PagedModelStructureCandidateFormula", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "PagedModelStructureCandidateFormula", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -7064,7 +7064,7 @@ FeaturesApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "array[Tag]", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "array[Tag]", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -7202,7 +7202,7 @@ FeaturesApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "TraceSetExperimental", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "TraceSetExperimental", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }

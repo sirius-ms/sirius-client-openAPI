@@ -1,4 +1,4 @@
-Package: Rsirius
+Package: RSirius
 Title: R Package Client for SIRIUS Nightsky API
 Version: 6.3.3
 Author: person("OpenAPI Generator community", email = "team@openapitools.org", role = c("aut", "cre"))

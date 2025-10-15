@@ -24,12 +24,12 @@ jobs:
       uses: r-lib/actions/setup-r@v2
       with:
         r-version: ${{ matrix.r-version }}
-    - name: Install Rsirius dependencies
+    - name: Install RSirius dependencies
       uses: r-lib/actions/setup-r-dependencies@v2
       with:
         cache: false
         working-directory: ./client-api_r/generated
-    - name: Install Rsirius
+    - name: Install RSirius
       id: rsirius_install
       run: |
         install.packages("/home/runner/work/sirius-client-openAPI/sirius-client-openAPI/client-api_r/generated", repos = NULL, type = "source")
@@ -62,7 +62,7 @@ jobs:
     - name: Login to SIRIUS
       id: login
       run: |
-        library(Rsirius)
+        library(RSirius)
         var_accept_terms <- TRUE
         var_account_credentials <- AccountCredentials$new(Sys.getenv('SIRIUS_USER'), Sys.getenv('SIRIUS_PW'))
         api_instance <- rsirius_api$new()
@@ -78,7 +78,7 @@ jobs:
     - name: Test Actuator API
       if: always() && steps.api_start.outcome == 'success' && steps.rsirius_install.outcome == 'success' && steps.login.outcome == 'success'
       run: |
-        library(Rsirius)
+        library(RSirius)
         library(testthat)
         multi_reporter = MultiReporter$new(reporters=list(SummaryReporter$new(), FailReporter$new()))
         test_file("client-api_r/generated/tests/testthat/test_actuator_api.R", reporter=multi_reporter)
@@ -86,7 +86,7 @@ jobs:
     - name: Test Info API
       if: always() && steps.api_start.outcome == 'success' && steps.rsirius_install.outcome == 'success' && steps.login.outcome == 'success'
       run: |
-        library(Rsirius)
+        library(RSirius)
         library(testthat)
         multi_reporter = MultiReporter$new(reporters=list(SummaryReporter$new(), FailReporter$new()))
         test_file("client-api_r/generated/tests/testthat/test_info_api.R", reporter=multi_reporter)
@@ -94,7 +94,7 @@ jobs:
     - name: Test Login and Account API
       if: always() && steps.api_start.outcome == 'success' && steps.rsirius_install.outcome == 'success' && steps.login.outcome == 'success'
       run: |
-        library(Rsirius)
+        library(RSirius)
         library(testthat)
         multi_reporter = MultiReporter$new(reporters=list(SummaryReporter$new(), FailReporter$new()))
         test_file("client-api_r/generated/tests/testthat/test_login_and_account_api.R", reporter=multi_reporter)
@@ -102,7 +102,7 @@ jobs:
     - name: Test Projects API
       if: always() && steps.api_start.outcome == 'success' && steps.rsirius_install.outcome == 'success' && steps.login.outcome == 'success'
       run: |
-        library(Rsirius)
+        library(RSirius)
         library(testthat)
         multi_reporter = MultiReporter$new(reporters=list(SummaryReporter$new(), FailReporter$new()))
         test_file("client-api_r/generated/tests/testthat/test_projects_api.R", reporter=multi_reporter)
@@ -110,7 +110,7 @@ jobs:
     - name: Test Compounds API
       if: always() && steps.api_start.outcome == 'success' && steps.rsirius_install.outcome == 'success' && steps.login.outcome == 'success'
       run: |
-        library(Rsirius)
+        library(RSirius)
         library(testthat)
         multi_reporter = MultiReporter$new(reporters=list(SummaryReporter$new(), FailReporter$new()))
         test_file("client-api_r/generated/tests/testthat/test_compounds_api.R", reporter=multi_reporter)
@@ -118,7 +118,7 @@ jobs:
     - name: Test Databases API
       if: always() && steps.api_start.outcome == 'success' && steps.rsirius_install.outcome == 'success' && steps.login.outcome == 'success'
       run: |
-        library(Rsirius)
+        library(RSirius)
         library(testthat)
         multi_reporter = MultiReporter$new(reporters=list(SummaryReporter$new(), FailReporter$new()))
         test_file("client-api_r/generated/tests/testthat/test_searchable_databases_api.R", reporter=multi_reporter)
@@ -126,7 +126,7 @@ jobs:
     - name: Test Features API
       if: always() && steps.api_start.outcome == 'success' && steps.rsirius_install.outcome == 'success' && steps.login.outcome == 'success'
       run: |
-        library(Rsirius)
+        library(RSirius)
         library(testthat)
         multi_reporter = MultiReporter$new(reporters=list(SummaryReporter$new(), FailReporter$new()))
         test_file("client-api_r/generated/tests/testthat/test_features_api.R", reporter=multi_reporter)
@@ -134,7 +134,7 @@ jobs:
     - name: Test Jobs API
       if: always() && steps.api_start.outcome == 'success' && steps.rsirius_install.outcome == 'success' && steps.login.outcome == 'success'
       run: |
-        library(Rsirius)
+        library(RSirius)
         library(testthat)
         multi_reporter = MultiReporter$new(reporters=list(SummaryReporter$new(), FailReporter$new()))
         test_file("client-api_r/generated/tests/testthat/test_jobs_api.R", reporter=multi_reporter)
@@ -142,7 +142,7 @@ jobs:
     - name: Test acceptance
       if: always() && steps.api_start.outcome == 'success' && steps.rsirius_install.outcome == 'success' && steps.login.outcome == 'success'
       run: |
-        library(Rsirius)
+        library(RSirius)
         library(testthat)
         multi_reporter = MultiReporter$new(reporters=list(SummaryReporter$new(), FailReporter$new()))
         test_file("client-api_r/generated/tests/testthat/test_acceptance.R", reporter=multi_reporter)

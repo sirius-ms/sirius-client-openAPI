@@ -27,7 +27,7 @@ Close project-space and remove it from the application. The Project will NOT be 
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # Close project-space and remove it from the application
 #
@@ -73,7 +73,7 @@ Create and open a new project-space at given location and make it accessible via
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # Create and open a new project-space at given location and make it accessible via the given projectId.
 #
@@ -122,7 +122,7 @@ Get CANOPUS prediction vector definition for ClassyFire classes
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # Get CANOPUS prediction vector definition for ClassyFire classes
 #
@@ -169,7 +169,7 @@ Get CANOPUS prediction vector definition for NPC classes
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # Get CANOPUS prediction vector definition for NPC classes
 #
@@ -216,7 +216,7 @@ Get CSI:FingerID fingerprint (prediction vector) definition
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # Get CSI:FingerID fingerprint (prediction vector) definition
 #
@@ -265,7 +265,7 @@ Get project space info by its projectId.
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # Get project space info by its projectId.
 #
@@ -314,7 +314,7 @@ List opened project spaces.
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # List opened project spaces.
 #
@@ -356,7 +356,7 @@ Import and Align full MS-Runs from various formats into the specified project  P
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # Import and Align full MS-Runs from various formats into the specified project  Possible formats (mzML, mzXML)
 #
@@ -407,7 +407,7 @@ Import and Align full MS-Runs from various formats into the specified project as
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # Import and Align full MS-Runs from various formats into the specified project as background job.
 #
@@ -460,7 +460,7 @@ Import already preprocessed ms/ms data from various formats into the specified p
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # Import already preprocessed ms/ms data from various formats into the specified project  Possible formats (ms, mgf, cef, msp)
 #
@@ -513,7 +513,7 @@ Import ms/ms data from the given format into the specified project-space as back
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # Import ms/ms data from the given format into the specified project-space as background job.
 #
@@ -568,7 +568,7 @@ Open an existing project-space and make it accessible via the given projectId.
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # Open an existing project-space and make it accessible via the given projectId.
 #

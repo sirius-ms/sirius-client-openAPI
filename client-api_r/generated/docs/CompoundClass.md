@@ -1,4 +1,4 @@
-# Rsirius::CompoundClass
+# RSirius::CompoundClass
 
 Predicted compound class with name, probability and id if available.  (ClassyFire and NPC). This can be seen as the set of classes a feature most likely belongs to
 

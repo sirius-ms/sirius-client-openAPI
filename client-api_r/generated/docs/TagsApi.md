@@ -24,7 +24,7 @@ Method | HTTP request | Description
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # [EXPERIMENTAL] Group tags in the project
 #
@@ -77,7 +77,7 @@ No authorization required
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # [EXPERIMENTAL] Add a possible value to the tag definition in the project
 #
@@ -128,7 +128,7 @@ No authorization required
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # [EXPERIMENTAL] Add tags to the project
 #
@@ -177,7 +177,7 @@ No authorization required
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # [EXPERIMENTAL] Delete tag groups with the given name from the specified project-space
 #
@@ -223,7 +223,7 @@ No authorization required
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # [EXPERIMENTAL] Delete tag definition with the given name from the specified project-space
 #
@@ -269,7 +269,7 @@ No authorization required
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # [EXPERIMENTAL] Get tag group by name in the given project-space
 #
@@ -318,7 +318,7 @@ No authorization required
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # [EXPERIMENTAL] Get all tag based groups in the given project-space
 #
@@ -367,7 +367,7 @@ No authorization required
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # [EXPERIMENTAL] Get tag definition by its name in the given project-space
 #
@@ -416,7 +416,7 @@ No authorization required
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # [EXPERIMENTAL] Get all tag definitions in the given project-space
 #

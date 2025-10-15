@@ -19,7 +19,7 @@ Method | HTTP request | Description
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # [EXPERIMENTAL] Compute the fold change between two groups of runs
 #
@@ -76,7 +76,7 @@ No authorization required
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # [EXPERIMENTAL] Delete fold changes
 #
@@ -128,7 +128,7 @@ No authorization required
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # [EXPERIMENTAL] Get table of all fold changes in the project space
 #
@@ -179,7 +179,7 @@ No authorization required
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # [EXPERIMENTAL] List all fold changes that are associated with an object
 #

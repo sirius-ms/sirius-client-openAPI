@@ -15,7 +15,7 @@
 #' \dontrun{
 #' ####################  ComputeAlignedFeatureFoldChangesExperimental  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to compute the fold change in.
 #' var_left_group_name <- "left_group_name_example" # character | name of the left tag group.
 #' var_right_group_name <- "right_group_name_example" # character | name of the right tag group.
@@ -34,7 +34,7 @@
 #'
 #' ####################  DeleteAlignedFeatureFoldChangesExperimental  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to delete from.
 #' var_left_group_name <- "left_group_name_example" # character | name of the left group.
 #' var_right_group_name <- "right_group_name_example" # character | name of the right group.
@@ -49,7 +49,7 @@
 #'
 #' ####################  GetAlignedFeatureFoldChangeTableExperimental  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_aggregation <- "AVG" # character | aggregation type. (Optional)
 #' var_quantification <- "APEX_INTENSITY" # character | quantification type. (Optional)
@@ -65,7 +65,7 @@
 #'
 #' ####################  GetFoldChangesByAlignedFeatureExperimental  ####################
 #'
-#' library(Rsirius)
+#' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_object_id <- "object_id_example" # character | id of the object the fold changes are assigned to.
 #'
@@ -247,7 +247,7 @@ FeatureStatisticsApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "Job", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "Job", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -501,7 +501,7 @@ FeatureStatisticsApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "StatisticsTable", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "StatisticsTable", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -634,7 +634,7 @@ FeatureStatisticsApi <- R6::R6Class(
         } else {
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "array[FoldChange]", loadNamespace("Rsirius")),
+            self$api_client$deserialize(local_var_resp$response_as_text(), "array[FoldChange]", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }

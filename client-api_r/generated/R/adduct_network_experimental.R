@@ -87,10 +87,10 @@ AdductNetworkExperimental <- R6::R6Class(
     fromJSON = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       if (!is.null(this_object$`nodes`)) {
-        self$`nodes` <- ApiClient$new()$deserializeObj(this_object$`nodes`, "array[AdductNodeExperimental]", loadNamespace("Rsirius"))
+        self$`nodes` <- ApiClient$new()$deserializeObj(this_object$`nodes`, "array[AdductNodeExperimental]", loadNamespace("RSirius"))
       }
       if (!is.null(this_object$`edges`)) {
-        self$`edges` <- ApiClient$new()$deserializeObj(this_object$`edges`, "array[AdductEdgeExperimental]", loadNamespace("Rsirius"))
+        self$`edges` <- ApiClient$new()$deserializeObj(this_object$`edges`, "array[AdductEdgeExperimental]", loadNamespace("RSirius"))
       }
       self
     },
@@ -113,8 +113,8 @@ AdductNetworkExperimental <- R6::R6Class(
     #' @return the instance of AdductNetworkExperimental
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
-      self$`nodes` <- ApiClient$new()$deserializeObj(this_object$`nodes`, "array[AdductNodeExperimental]", loadNamespace("Rsirius"))
-      self$`edges` <- ApiClient$new()$deserializeObj(this_object$`edges`, "array[AdductEdgeExperimental]", loadNamespace("Rsirius"))
+      self$`nodes` <- ApiClient$new()$deserializeObj(this_object$`nodes`, "array[AdductNodeExperimental]", loadNamespace("RSirius"))
+      self$`edges` <- ApiClient$new()$deserializeObj(this_object$`edges`, "array[AdductEdgeExperimental]", loadNamespace("RSirius"))
       self
     },
 

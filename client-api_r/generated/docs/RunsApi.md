@@ -23,7 +23,7 @@ Method | HTTP request | Description
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # [EXPERIMENTAL] Add tags to a run in the project
 #
@@ -74,7 +74,7 @@ No authorization required
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # **EXPERIMENTAL** Compute the fold changes that are required for the fold change filter
 #
@@ -125,7 +125,7 @@ No authorization required
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # [EXPERIMENTAL] Get run with the given identifier from the specified project-space
 #
@@ -176,7 +176,7 @@ No authorization required
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # [EXPERIMENTAL] Get all available runs in the given project-space
 #
@@ -231,7 +231,7 @@ No authorization required
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # [EXPERIMENTAL] Get runs by tag group
 #
@@ -288,7 +288,7 @@ No authorization required
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # [EXPERIMENTAL] Get runs by tag
 #
@@ -345,7 +345,7 @@ No authorization required
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # [EXPERIMENTAL] Get all tags associated with this Run
 #
@@ -394,7 +394,7 @@ No authorization required
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # [EXPERIMENTAL] Delete tag with the given name from the run with the specified ID in the specified project-space
 #

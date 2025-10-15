@@ -1,4 +1,4 @@
-# Rsirius::Deviation
+# RSirius::Deviation
 
 
 ## Properties

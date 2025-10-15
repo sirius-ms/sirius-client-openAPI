@@ -1,5 +1,5 @@
 {
-	"packageName" : "Rsirius",
+	"packageName" : "RSirius",
 	"generateWrapper": true,
 	"library": "httr2",
 	"hideGenerationTimestamp": true

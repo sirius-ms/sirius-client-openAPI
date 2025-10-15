@@ -15,7 +15,7 @@ Actuator web endpoint 'health'
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # Actuator web endpoint 'health'
 #
@@ -55,7 +55,7 @@ Actuator web endpoint 'shutdown'
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # Actuator web endpoint 'shutdown'
 #

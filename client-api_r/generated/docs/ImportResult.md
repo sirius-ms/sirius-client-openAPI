@@ -1,4 +1,4 @@
-# Rsirius::ImportResult
+# RSirius::ImportResult
 
 
 ## Properties

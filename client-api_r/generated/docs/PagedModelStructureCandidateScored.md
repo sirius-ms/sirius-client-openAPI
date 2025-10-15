@@ -1,4 +1,4 @@
-# Rsirius::PagedModelStructureCandidateScored
+# RSirius::PagedModelStructureCandidateScored
 
 
 ## Properties

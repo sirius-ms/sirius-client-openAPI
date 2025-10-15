@@ -22,7 +22,7 @@ DEPRECATED: this endpoint is based on local file paths and will likely be replac
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # DEPRECATED: this endpoint is based on local file paths and will likely be replaced in future versions of this API.
 #
@@ -67,7 +67,7 @@ No authorization required
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # prepare function argument(s)
 var_database_id <- "database_id_example" # character | 
@@ -112,7 +112,7 @@ No authorization required
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # prepare function argument(s)
 var_include_stats <- FALSE # character |  (Optional)
@@ -157,7 +157,7 @@ No authorization required
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # prepare function argument(s)
 var_database_id <- "database_id_example" # character | 
@@ -202,7 +202,7 @@ No authorization required
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # prepare function argument(s)
 var_include_stats <- FALSE # character |  (Optional)
@@ -247,7 +247,7 @@ No authorization required
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # prepare function argument(s)
 var_include_stats <- FALSE # character |  (Optional)
@@ -292,7 +292,7 @@ Start import of structure and spectra files into the specified database.
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # Start import of structure and spectra files into the specified database.
 #
@@ -343,7 +343,7 @@ No authorization required
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # prepare function argument(s)
 var_database_id <- "database_id_example" # character | 
@@ -385,7 +385,7 @@ No authorization required
 
 ### Example
 ```R
-library(Rsirius)
+library(RSirius)
 
 # prepare function argument(s)
 var_database_id <- "database_id_example" # character | 
