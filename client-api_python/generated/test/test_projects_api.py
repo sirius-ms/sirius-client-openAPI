@@ -105,24 +105,20 @@ class TestProjectsApi(unittest.TestCase):
 
         Import and Align full MS-Runs from various formats into the specified project  Possible formats (mzML, mzXML)
         """
-        # TODO this still has API side issues
-        # input_files = [self.full_ms_file]
-        # parameters = LcmsSubmissionParameters(align_lcms_runs=False)
-        # response = self.projects.import_ms_run_data(project_id=self.project_id, parameters=parameters, input_files=input_files)
-        # self.assertIsInstance(response, ImportResult)
-        pass
+        input_files = [self.full_ms_file]
+        parameters = LcmsSubmissionParameters(align_lcms_runs=False, noise_intensity=0.05, trace_max_mass_deviation=None, align_max_mass_deviation=None)
+        response = self.projects.import_ms_run_data(project_id=self.project_id, parameters=parameters, input_files=input_files)
+        self.assertIsInstance(response, ImportResult)
 
     def test_import_ms_run_data_as_job(self) -> None:
         """Test case for import_ms_run_data_as_job
 
         Import and Align full MS-Runs from various formats into the specified project as background job.
         """
-        # TODO this still has API side issues
-        # input_files = [self.full_ms_file]
-        # parameters = LcmsSubmissionParameters(align_lcms_runs=False)
-        # response = self.projects.import_ms_run_data_as_job(project_id=self.project_id, parameters=parameters, input_files=input_files)
-        # self.assertIsInstance(response, Job)
-        pass
+        input_files = [self.full_ms_file]
+        parameters = LcmsSubmissionParameters(align_lcms_runs=False, noise_intensity=0.05, trace_max_mass_deviation=None, align_max_mass_deviation=None)
+        response = self.projects.import_ms_run_data_as_job(project_id=self.project_id, parameters=parameters, input_files=input_files)
+        self.assertIsInstance(response, Job)
 
     def test_import_preprocessed_data(self) -> None:
         """Test case for import_preprocessed_data
