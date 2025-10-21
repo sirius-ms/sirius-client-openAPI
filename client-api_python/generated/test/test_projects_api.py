@@ -64,7 +64,11 @@ class TestProjectsApi(unittest.TestCase):
 
         Get CANOPUS prediction vector definition for ClassyFire classes
         """
-        response = self.projects.get_canopus_classy_fire_data(self.project_id, 0)
+        try:
+            self.projects.open_project("tomato", f"{os.environ.get('HOME')}/tomato_small.sirius")
+            response = self.projects.get_canopus_classy_fire_data("tomato", 1)
+        finally:
+            self.projects.close_project("tomato")
         self.assertIsInstance(response, str)
 
     def test_get_canopus_npc_data(self) -> None:
@@ -72,7 +76,11 @@ class TestProjectsApi(unittest.TestCase):
 
         Get CANOPUS prediction vector definition for NPC classes
         """
-        response = self.projects.get_canopus_npc_data(self.project_id, 0)
+        try:
+            self.projects.open_project("tomato", f"{os.environ.get('HOME')}/tomato_small.sirius")
+            response = self.projects.get_canopus_npc_data("tomato", 1)
+        finally:
+            self.projects.close_project("tomato")
         self.assertIsInstance(response, str)
 
     def test_get_finger_id_data(self) -> None:
@@ -80,7 +88,11 @@ class TestProjectsApi(unittest.TestCase):
 
         Get CSI:FingerID fingerprint (prediction vector) definition
         """
-        response = self.projects.get_finger_id_data(self.project_id, 0)
+        try:
+            self.projects.open_project("tomato", f"{os.environ.get('HOME')}/tomato_small.sirius")
+            response = self.projects.get_finger_id_data("tomato", 1)
+        finally:
+            self.projects.close_project("tomato")
         self.assertIsInstance(response, str)
 
     def test_get_project(self) -> None:
@@ -143,8 +155,10 @@ class TestProjectsApi(unittest.TestCase):
 
         Open an existing project-space and make it accessible via the given projectId.
         """
-        response = self.projects.open_project("tomato", f"{os.environ.get('HOME')}/tomato_small.sirius")
-        self.projects.close_project("tomato")
+        try:
+            response = self.projects.open_project("tomato", f"{os.environ.get('HOME')}/tomato_small.sirius")
+        finally:
+            self.projects.close_project("tomato")
         self.assertIsInstance(response, ProjectInfo)
 
 if __name__ == '__main__':
