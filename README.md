@@ -98,7 +98,7 @@ Publishing to a package registry makes installation trivial for end users and en
 
 We understand that this process involves many moving parts, and our workflow setup can be complex even for experienced developers. The interaction between code generation, custom components, testing workflows, and CI/CD integration is not always straightforward. If you run into any issues, have questions about any step in the process, or just want to discuss your approach before diving in, please don't hesitate to reach out.
 
-The best way to get help is through [GitHub Issues](https://github.com/your-repo/issues) on this repository, where you can ask questions, report problems, or discuss your implementation plans. Issues are public, so other contributors can benefit from the discussion as well. Alternatively, you can join our [Matrix channel](https://matrix.to/#/!hdOUNOBgAzoSCmSMwc:gitter.im?via=gitter.im&via=matrix.org) for more real-time communication with the SIRIUS development team and community.
+The best way to get help is through [GitHub Issues](https://github.com/sirius-ms/sirius-client-openAPI/issues) on this repository, where you can ask questions, report problems, or discuss your implementation plans. Issues are public, so other contributors can benefit from the discussion as well. Alternatively, you can join our [Matrix channel](https://matrix.to/#/!hdOUNOBgAzoSCmSMwc:gitter.im?via=gitter.im&via=matrix.org) for more real-time communication with the SIRIUS development team and community.
 
 ---
 
