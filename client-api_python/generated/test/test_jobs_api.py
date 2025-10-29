@@ -205,7 +205,7 @@ class TestJobsApi(unittest.TestCase):
         job_submission = JobSubmission.from_json(json.dumps(job_submission_json))
         response = self.api.jobs().start_job(self.project_id, job_submission)
 
-        Helper.wait_for_job_completion(self.project_id, response.id, self.api.jobs())
+        self.api.wait_for_job_completion(self.project_id, response.id)
 
         self.assertIsInstance(response, Job)
 
@@ -232,7 +232,7 @@ class TestJobsApi(unittest.TestCase):
         self.api.jobs().save_job_config(config_name, job_submission, True)
         response = self.api.jobs().start_job_from_config(self.project_id, config_name, [aligned_feature_id])
 
-        Helper.wait_for_job_completion(self.project_id, response.id, self.api.jobs())
+        self.api.wait_for_job_completion(self.project_id, response.id)
 
         self.api.jobs().delete_job_config(config_name)
         self.assertIsInstance(response, Job)

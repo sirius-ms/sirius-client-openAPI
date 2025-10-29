@@ -1,6 +1,10 @@
 # THIS FILE IS NOT AUTO GENERATED AND MIGHT NEED TO BE CHANGED WHEN API ENDPOINTS CHANGE
 
 import PySirius
+import logging
+import traceback
+import time
+from PySirius import Job, ProjectInfo
 
 
 class PySiriusAPI:
@@ -63,3 +67,17 @@ class PySiriusAPI:
     def models(self):
         """returns the Superclass of all models"""
         return PySirius.models
+
+    def wait_for_job_completion(self, project_id, job_id, timeout_in_sec=None):
+        if isinstance(project_id, ProjectInfo):
+            project_id = project_id.project_id
+        if isinstance(job_id, Job):
+            job_id = job_id.id
+        try:
+            while PySirius.JobsApi(self.api_client).get_job(project_id, job_id).progress.state not in ["CANCELED", "FAILED", "DONE"]:
+                time.sleep(1)
+                if isinstance(timeout_in_sec, int):
+                    timeout_in_sec = timeout_in_sec - 1
+                    if timeout_in_sec == 0: return
+        except Exception as e:
+            logging.error(traceback.format_exc())

@@ -101,6 +101,9 @@ jobs:
         
         chmod +x ./client-api_r/patches/list_syntax_fix.sh
         ./client-api_r/patches/list_syntax_fix.sh
+        
+        chmod +x ./client-api_r/patches/insert_wait_for_job_completion_in_rsirius_api.sh
+        ./client-api_r/patches/insert_wait_for_job_completion_in_rsirius_api.sh
     - name: Remove Sirius Rest Api
       run: |
         cd .updater/api
