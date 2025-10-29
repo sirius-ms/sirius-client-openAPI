@@ -52,6 +52,10 @@ The more convenient approach is to use one of the pre-generated API documentatio
 
 Keep in mind that the documentation files in this repository always reflect the latest development build of SIRIUS. If you need to work with a specific SNAPSHOT version or a particular release, you'll need to extract the documentation manually using Option A from that specific SIRIUS version.
 
+**Custom Configs**
+
+The OpenAPI Generator can also take config files like the ones under [.updater/config/](.updater/config/) as input. These config files are used to set e.g. the `packageName` (like `RSirius` and `PySirius`) or things like `hideGenerationTimestamp`. We ask you to please set `"hideGenerationTimestamp": true` in your config. Otherwise, automatic updates will always commit a change in the timestamp, even if no code has changed.
+
 ### 2. Generate Client Code
 
 Once you have the API specification file, you're ready to generate the client library. However, raw code generation is only the first step. We've established a sophisticated automation pipeline using GitHub workflows to handle not just generation, but also post-processing, bug fixes, and integration of custom components.
