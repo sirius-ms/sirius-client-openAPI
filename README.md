@@ -1,6 +1,7 @@
 [![conda-forge | r-sirius-ms](https://img.shields.io/conda/vn/conda-forge/r-sirius-ms?logo=anaconda&label=r-sirius-ms)](https://anaconda.org/conda-forge/r-sirius-ms)
 [![conda-forge | py-sirius-ms](https://img.shields.io/conda/vn/conda-forge/py-sirius-ms?logo=anaconda&label=py-sirius-ms)](https://anaconda.org/conda-forge/py-sirius-ms)
 [![conda-forge | sirius-ms](https://img.shields.io/conda/vn/conda-forge/sirius-ms?logo=anaconda&label=sirius-ms)](https://anaconda.org/conda-forge/sirius-ms)
+[![Java SDK](https://img.shields.io/badge/Java_SDK-GitLab/Maven-fc6d26?labelColor=555&logo=gitlab&logoColor=white)](https://gitlab.com/bright-giant/registry-public/-/packages/)
 
 > [!WARNING]
 > `Rsirius` is now `RSirius`! Starting with `v3.1+sirius6.3.3`, `Rsirius` is renamed to `RSirius` to fit the naming convention of `PySirius`. Please make sure you update your library imports accordingly!
