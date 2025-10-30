@@ -21,8 +21,7 @@ job_submission$canopusParams$enabled <- FALSE
 job_submission$msNovelistParams$enabled <- FALSE
 
 job <- sirius_api$jobs_api$StartJob(project_id, job_submission)
-Helper$new()$wait_for_job_completion(project_id, job$id, sirius_api$jobs_api)
-
+api$wait_for_job_completion(project_id, job$id, 60)
 aligned_feature_id <- sirius_api$features_api$GetAlignedFeatures(project_id)[[1]]$alignedFeatureId
 formula_id <- sirius_api$features_api$GetAlignedFeature(project_id, aligned_feature_id, opt_fields = list("topAnnotations"))$topAnnotations$formulaAnnotation$formulaId
 tree <- sirius_api$features_api$GetFragTree(project_id, aligned_feature_id, formula_id)
