@@ -2,6 +2,7 @@ Helper <- R6::R6Class(
   "Helper",
   public = list(
     wait_for_job_completion = function(project_id, job_id, jobs_api) {
+      .Deprecated("rsirius_api$wait_for_job_completion")
       if (inherits(jobs_api, "rsirius_api")) {
         jobs_api <- jobs_api$jobs_api
       }

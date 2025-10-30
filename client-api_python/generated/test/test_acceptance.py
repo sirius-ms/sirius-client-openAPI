@@ -33,7 +33,7 @@ class TestAcceptance(unittest.TestCase):
             job_sub.ms_novelist_params.enabled = False
 
             job = api.jobs().start_job(project_id=ps_info.project_id, job_submission=job_sub)
-            Helper.wait_for_job_completion(ps_info, job, api)
+            api.wait_for_job_completion(ps_info, job, 60)
 
             formula_candidate = api.features().get_aligned_feature(ps_info.project_id, feature_id, opt_fields=["topAnnotations"]).top_annotations.formula_annotation
             tree = api.features().get_frag_tree(ps_info.project_id, feature_id, formula_candidate.formula_id)

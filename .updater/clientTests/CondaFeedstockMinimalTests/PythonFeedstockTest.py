@@ -19,7 +19,7 @@ jobSub.canopus_params.enabled = False
 jobSub.ms_novelist_params.enabled = False
 
 job = api.jobs().start_job(project_id=ps_info.project_id, job_submission=jobSub)
-Helper.wait_for_job_completion(ps_info.project_id, job.id, api.jobs())
+api.wait_for_job_completion(ps_info.project_id, job.id, 60)
 
 formula_id = api.features().get_aligned_feature(ps_info.project_id, featureId, [AlignedFeatureOptField.TOPANNOTATIONS]
                                                 ).top_annotations.formula_annotation.formula_id

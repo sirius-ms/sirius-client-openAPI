@@ -324,7 +324,7 @@ test_that("StartJob", {
     job_submission$alignedFeatureIds <- list(features_api$GetAlignedFeatures(project_id)[[1]]$alignedFeatureId)
 
     response <- api_instance$StartJob(project_id, job_submission)
-    Helper$new()$wait_for_job_completion(project_id, response$id, api_instance)
+    api$wait_for_job_completion(project_id, response$id)
 
     expect_true(inherits(response, "Job"))
 
@@ -366,7 +366,7 @@ test_that("StartJobFromConfig", {
 
     api_instance$SaveJobConfig(project_id, job_submission, TRUE)
     response <- api_instance$StartJobFromConfig(project_id, project_id, job_submission$alignedFeatureIds)
-    Helper$new()$wait_for_job_completion(project_id, response$id, api_instance)
+    api$wait_for_job_completion(project_id, response$id)
 
     expect_true(inherits(response, "Job"))
 
