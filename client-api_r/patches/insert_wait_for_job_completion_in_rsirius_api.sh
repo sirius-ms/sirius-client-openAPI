@@ -16,15 +16,23 @@ cat >> "${FILE}.tmp" << 'EOF'
       if (inherits(job_id, "Job")) {
         job_id <- job_id$id
       }
-      while (!(self$jobs_api$GetJob(project_id, job_id)$progress$state %in% c("CANCELED", "FAILED", "DONE"))) {
-        Sys.sleep(1)
-        if (inherits(timeout_in_sec, "numeric")) {
-          timeout_in_sec <- timeout_in_sec - 1
-          if (timeout_in_sec == 0) {
-            return()
+      tryCatch({
+        while (!(self$jobs_api$GetJob(project_id, job_id)$progress$state %in% c("CANCELED", "FAILED", "DONE"))) {
+          Sys.sleep(1)
+          if (inherits(timeout_in_sec, "numeric")) {
+            timeout_in_sec <- timeout_in_sec - 1
+            if (timeout_in_sec == 0) {
+              return()
+            }
           }
         }
-      }
+      }, error = function(e){
+        message('Caught an error!')
+        message(e)
+      }, warning = function(w){
+        message('Caught an warning!')
+        message(w)
+      })
     }
   )
 )
