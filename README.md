@@ -8,9 +8,11 @@
 
 # sirius-client-openAPI
 
-Maintained and prebuild OpenAPI based SIRIUS SDKs for different programming languages such as R, Python and Java.
+Maintained and prebuild [OpenAPI](https://www.openapis.org/) based SIRIUS SDKs for different programming languages such as R, Python and Java.
 SDKs for other languages can be created using [OpenAPI Generator](https://openapi-generator.tech/).
 If you are interested in contributing, please have a look at our [contribution guidelines](#contributing-sirius-client-libraries).
+
+For more information about SIRIUS itself, see the [SIRIUS repository](https://github.com/sirius-ms/sirius) and [SIRIUS documentation](https://v6.docs.sirius-ms.io/).
 
 ## Libraries for different programming languages
 
