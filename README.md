@@ -44,7 +44,7 @@ The OpenAPI Generator requires a JSON specification file to generate client code
 If you have SIRIUS running locally, you can fetch the API documentation directly from the REST API endpoint using the following command:
 
 ```bash
-wget -nv http://localhost:<PORT>/v3/api-docs -O api-docs-enums.json
+wget -nv http://localhost:<PORT>/v3/api-docs -O api-docs.json
 ```
 
 Replace `<PORT>` with the actual port number where your SIRIUS instance is running. Note that we focus on all table endpoints and functions for the client libraries. To get only the stable docs, run SIRIUS with
