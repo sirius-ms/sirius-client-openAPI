@@ -45,11 +45,19 @@ If you have SIRIUS running locally, you can fetch the API documentation directly
 wget -nv http://localhost:<PORT>/v3/api-docs -O api-docs-enums.json
 ```
 
-Replace `<PORT>` with the actual port number where your SIRIUS instance is running.
+Replace `<PORT>` with the actual port number where your SIRIUS instance is running. Note that we focus on all table endpoints and functions for the client libraries. To get only the stable docs, run SIRIUS with
+
+```bash
+sirius REST --api-mode=STABLE
+```
 
 **Option B: From this repository (recommended)**
 
-The more convenient approach is to use one of the pre-generated API documentation files available in the [.updater/api/](.updater/api/) directory of this repository. We provide two variants of the specification to accommodate different language requirements. The enum-based variant is the standard version and should be used whenever possible. However, some programming languages like R do not have native support for enum types, so we also maintain a string-based variant that replaces enums with simple string types.
+The more convenient approach is to use one of the pre-generated API documentation files available in the [.updater/api/](.updater/api/) directory of this repository. We provide two variants of the specification to accommodate different language requirements. The enum-based variant is the standard version and should be used whenever possible. However, some programming languages like R do not have native support for enum types, so we also maintain a string-based variant that replaces enums with simple string types. The string based docs are the default, to get the enum based docs run SIRIUS with
+
+```bash
+sirius REST --api-mode=STABLE --enums-as-ref
+```
 
 Keep in mind that the documentation files in this repository always reflect the latest development build of SIRIUS. If you need to work with a specific SNAPSHOT version or a particular release, you'll need to extract the documentation manually using Option A from that specific SIRIUS version.
 
