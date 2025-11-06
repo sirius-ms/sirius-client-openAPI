@@ -227,6 +227,8 @@ api$searchable_databases_api$ImportIntoDatabase(db_name, input_files = c(input_f
 
 # we can add our database manually or get a new default submission form that includes it
 job_submission_customdb <- api$jobs_api$GetDefaultJobConfig(include_custom_dbs_for_structure_search = TRUE)
+
+# enable spectral library search
 job_submission_customdb$spectraSearchParams$enabled <- TRUE
 
 # allow SIRIUS to overwrite existing results
