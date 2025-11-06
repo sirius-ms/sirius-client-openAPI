@@ -41,14 +41,14 @@ SiriusSDK <- R6::R6Class(
         return(RSirius::rsirius_api(self$api_client))
       }
       cat("Cannot reconnect, api_client and/or process are NULL or process has terminated.\n")
-      return(NULL)
+      return()
     },
 
     restart_sirius = function() {
       if (!is.null(self$run_command) && !is.null(self$run_args) && !is.null(self$process) && !is.null(self$api_client)) {
         if (inherits(self$shutdown_sirius(), "logical")) {
           cat("Shutdown seems to have gone wrong, aborting restart...\n")
-          return(NULL)
+          return()
         }
 
         self$process <- processx::process$new(command = self$run_command, args = self$run_args)
@@ -60,7 +60,7 @@ SiriusSDK <- R6::R6Class(
               if (!found) {
                 cat("Could not find sirius.port file. Please terminate SIRIUS if needed and try specifying a port\n")
                 cat("Alternatively, try attaching to a running SIRIUS instance with attach_to_running_sirius()\n")
-                return(NULL)
+                return()
               }
               # connect() sets self$host and self$api_client
               host <- paste0('http://localhost:', self$port)
@@ -77,17 +77,17 @@ SiriusSDK <- R6::R6Class(
 
         cat("SIRIUS seems to have problems starting. Resetting SiriusSDK...\n")
         self$reset_sdk_class()
-        return(NULL)
+        return()
       }
       cat("Could not attempt REST restart, run_command, run_args, process or api_client are NULL.\n")
-      return(NULL)
+      return()
     },
 
     attach_or_start_sirius = function(headless = NULL) {
       sirius_api <- self$attach_to_sirius()
       # attachment encountered issue
       if (is.logical(sirius_api)) {
-        return(NULL)
+        return()
       }
       # attachment did not encounter issue but also found no SIRIUS
       else if (is.null(sirius_api)) {
@@ -153,7 +153,7 @@ SiriusSDK <- R6::R6Class(
         if (!found) {
           message("No port file matching ~/.sirius/sirius-X.X.port was found.")
           message("Please try providing the port.")
-          return(NULL)
+          return()
         }
       }
 
@@ -174,7 +174,7 @@ SiriusSDK <- R6::R6Class(
       private$delete_sirius_pid_and_port(sirius_major_version)
       self$reset_sdk_class()
 
-      return(NULL)
+      return()
     },
 
     start_sirius = function(sirius_path = NULL, port = NULL, projectspace = NULL, workspace = NULL, forceStart = FALSE, headless = NULL) {
@@ -184,7 +184,7 @@ SiriusSDK <- R6::R6Class(
         cat("Use shutdown_sirius() and then start_sirius() to restart SIRIUS and get a new API instance.\n")
         cat("If you are sure the process is not running anymore, use reset_sdk_process() or reset the complete SDK using reset_sdk_class() before calling start() again.\n")
         cat("[NOT RECOMMENDED] Use start with forceStart=TRUE to skip this warning and start a second service.\n")
-        return(NULL)
+        return()
       }
 
       self$workspace <- workspace
@@ -193,14 +193,14 @@ SiriusSDK <- R6::R6Class(
         if (!file.exists(sirius_path)) {
           cat("Wrong path to executable.\n")
           self$reset_sdk_class()
-          return(NULL)
+          return()
         }
         self$sirius_path <- normalizePath(sirius_path)
       } else {
         if (Sys.getenv("PATH") == "" || !grepl("sirius", Sys.getenv("PATH"))) {
           cat("Please provide a path to the sirius executable if not declared in PATH!\n")
           self$reset_sdk_class()
-          return(NULL)
+          return()
         }
         cat("Found SIRIUS in PATH! Using this information to start the application.\n")
         self$sirius_path <- 'sirius'
@@ -210,7 +210,7 @@ SiriusSDK <- R6::R6Class(
         if (!file.exists(projectspace)) {
           cat("Wrong path to project space.\n")
           self$reset_sdk_class()
-          return(NULL)
+          return()
         }
         self$projectspace <- normalizePath(projectspace)
         run_args <- c("--output", self$projectspace, "REST", "-s")
@@ -222,7 +222,7 @@ SiriusSDK <- R6::R6Class(
         if (!file.exists(workspace)) {
           cat("Wrong path to workspace\n")
           self$reset_sdk_class()
-          return(NULL)
+          return()
         }
         cat("[WARNING] Overwriting workspace location [NOT RECOMMENDED]\n")
         self$workspace <- normalizePath(workspace)
@@ -255,7 +255,7 @@ SiriusSDK <- R6::R6Class(
         if (!found) {
           cat("Could not find sirius.port file. Please terminate SIRIUS if needed and try specifying a port\n")
           cat("Alternatively, try attaching to a running SIRIUS instance with attach_to_running_sirius()\n")
-          return(NULL)
+          return()
         }
       }
 
@@ -281,30 +281,31 @@ SiriusSDK <- R6::R6Class(
 
       cat("SIRIUS seems to have problems starting. Resetting SiriusSDK...\n")
       self$reset_sdk_class()
-      return(NULL)
+      return()
     },
 
     shutdown_sirius = function() {
-      if (!is.null(self$process)) {
-        tryCatch({
-          RSirius::ActuatorApi$new(self$api_client)$Shutdown()
-          Sys.sleep(3)
-          if (!self$process$is_alive()) {
-            cat("Sirius was shut down successfully\n")
-            self$reset_sdk_process()
-            return(NULL)
-          }
-        }, error = function(e) {
-          cat("An Exception occurred while trying to gracefully shutdown SIRIUS!\n")
-          cat(e$message, "\n")
-        })
 
+      tryCatch({
+        code <- RSirius::ActuatorApi$new(self$api_client)$ShutdownWithHttpInfo()$status_code
+        Sys.sleep(3)
+        if (code == 200) {
+          cat("Sirius was shut down successfully\n")
+          self$reset_sdk_process()
+          return()
+        }
+      }, error = function(e) {
+        cat("An Exception occurred while trying to gracefully shutdown SIRIUS!\n")
+        cat(e$message, "\n")
+      })
+
+      if (!is.null(self$process)) {
         self$process$interrupt()
         Sys.sleep(3)
         if (!self$process$is_alive()) {
           cat("Sirius process has been terminated.\n")
           self$reset_sdk_process()
-          return(NULL)
+          return()
         }
 
         self$process$kill()
@@ -312,7 +313,7 @@ SiriusSDK <- R6::R6Class(
         if (!self$process$is_alive()) {
           cat("Sirius process has been killed.\n")
           self$reset_sdk_process()
-          return(NULL)
+          return()
         }
 
         cat("Unable to stop Sirius! - Please manually terminate the process with PID ", self$process$get_pid(), "\n")
@@ -326,7 +327,7 @@ SiriusSDK <- R6::R6Class(
         }, error = function(e) {
           cat("Sirius process has been terminated.\n")
           self$reset_sdk_process()
-          return(NULL)
+          return()
         })
 
         system(paste("kill -SIGKILL", self$process_id))
@@ -336,7 +337,7 @@ SiriusSDK <- R6::R6Class(
         }, error = function(e) {
           cat("Sirius process has been killed.\n")
           self$reset_sdk_process()
-          return(NULL)
+          return()
         })
 
         cat("Unable to stop Sirius! - Please manually terminate the process with PID ", self$process_id, "\n")

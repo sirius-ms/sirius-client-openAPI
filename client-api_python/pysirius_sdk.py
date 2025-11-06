@@ -323,19 +323,21 @@ class SiriusSDK:
 
     def shutdown_sirius(self):
         """shuts down the via the start function started sirius rest application, returns the exit code of the shutdown order"""
-        if SiriusSDK.process is not None:
-            # Terminate via Rest Call
-            try:
-                PySirius.ActuatorApi(SiriusSDK.api_client).shutdown()
-                time.sleep(3)
-                if SiriusSDK.process.poll() is not None:
-                    print("Sirius was shut down succesfully")
-                    SiriusSDK.reset_sdk_process(self)
-                    return
-            except Exception as e:
-                print("An Exception occured while trying to gracefully shutdown SIRIUS!")
-                print(str(e))
 
+        # Terminate via Rest Call
+        try:
+            code = PySirius.ActuatorApi(SiriusSDK.api_client).shutdown_with_http_info().status_code
+            time.sleep(3)
+            if code == 200:
+                print("Sirius was shut down succesfully")
+                SiriusSDK.reset_sdk_process(self)
+                return
+        except Exception as e:
+            print("An Exception occured while trying to gracefully shutdown SIRIUS!")
+            print(str(e))
+
+
+        if SiriusSDK.process is not None:
             # Terminate via SIGTERM
             SiriusSDK.process.terminate()
             time.sleep(3)
