@@ -150,7 +150,7 @@ var_account_credentials <- AccountCredentials$new('SIRIUS_USER', 'SIRIUS_PW')
 api$login_and_account_api$Login(var_accept_terms, var_account_credentials)
 ```
 
-Create a project space using the [**Projects API**](./generated/docs/ProjectsApi.md). This `.sirius` file (default location: `/home/<USER>/sirius-projects/<PROJECT_ID>.sirius`) contains all input data and annotation results. Access the path via [project info](./generated/docs/ProjectInfo.md).
+Create a project space using the [**Projects API**](./generated/docs/ProjectsApi.md). This `.sirius` file (default location: `/home/<USER>/sirius-projects/<projectId>.sirius`) contains all input data and annotation results. Access the path via [project info](./generated/docs/ProjectInfo.md).
 
 ```R
 project_info <- api$projects_api$CreateProject("ExampleProject")
@@ -159,9 +159,9 @@ project_info <- api$projects_api$CreateProject("ExampleProject")
 Import [preprocessed](./generated/docs/ProjectsApi.md#ImportPreprocessedData) data or [mzML](./generated/docs/ProjectsApi.md#ImportMsRunData) runs. Here we use preprocessed data from [`Kaempferol.ms`](../.updater/clientTests/Data/Kaempferol.ms), which contains three MS2 and one MS1 spectra forming one feature. Import as a [job](./generated/docs/Job.md) to enable waiting for completion (available for both [preprocessed](./generated/docs/ProjectsApi.md#ImportPreprocessedDataAsJob) and [mzML](./generated/docs/ProjectsApi.md#ImportMsRunDataAsJob) data).
 
 ```R
-input_file <- "/sirius-client-openAPI/.updater/clientTests/Data/Kaempferol.mgf"
-import_job <- api$projects_api$ImportPreprocessedDataAsJob(project_info$project_id, input_file)
-api$wait_for_job_completion(project_info$project_id, import_job$id)
+input_file <- "/sirius-client-openAPI/.updater/clientTests/Data/Kaempferol.ms"
+import_job <- api$projects_api$ImportPreprocessedDataAsJob(project_info$projectId, input_file)
+api$wait_for_job_completion(project_info$projectId, import_job$id)
 ```
 
 We've now imported our [aligned feature](./generated/docs/AlignedFeature.md). The [**Features API**](./generated/docs/FeaturesApi.md) lets you select and extract feature information, primarily useful after computation.
@@ -179,44 +179,42 @@ job_submission <- api$jobs_api$GetDefaultJobConfig()
 
 # (optional) specify which features to analyze; default: all features
 # we know we only have one feature -> Kaempferol
-kaempferol_feature <- api$features_api$GetAlignedFeatures(project_info$project_id)[[1]]
+kaempferol_feature <- api$features_api$GetAlignedFeatures(project_info$projectId)[[1]]
 job_submission$alignedFeatureIds <- list(kaempferol_feature$alignedFeatureId)
 
-job <- api$jobs_api$StartJob(project_info$project_id, job_submission)
-api$wait_for_job_completion(project_info$project_id, job$id)
+job <- api$jobs_api$StartJob(project_info$projectId, job_submission)
+api$wait_for_job_completion(project_info$projectId, job$id)
 ```
 
 Now you can extract results from your aligned features. [Compounds](./generated/docs/Compound.md), managed by the [**Compounds API**](./generated/docs/CompoundsApi.md), differ from features: one compound can produce multiple features and multiple features can belong to one compound. Retrieve [structure candidates](./generated/docs/StructureCandidateFormula.md) from the aligned feature and the [consensus annotation](./generated/docs/ConsensusAnnotationsCSI.md) from its top annotated compound:
 
 ```R
 # all structure annotations for our feature
-feature_structure_annotations <- api$features_api$GetStructureCandidates(project_info$project_id, kaempferol_feature$alignedFeatureId)
+feature_structure_annotations <- api$features_api$GetStructureCandidates(project_info$projectId, kaempferol_feature$alignedFeatureId)
+# best ranking structure SMILES
+print(feature_structure_annotations[[1]]$smiles)
 
 # get the compound and its consensus annotation
-compound <- api$compounds_api$GetCompound(project_info$project_id, kaempferol_feature$compoundId)
-compound_structure_annotations <- compound$consensusAnnotations$csiFingerIdStructure
+compound <- api$compounds_api$GetCompound(project_info$projectId, kaempferol_feature$compoundId, opt_fields = list("consensusAnnotations"))
+compound_structure_annotation <- compound$consensusAnnotations$csiFingerIdStructure
+# consensus structure SMILES; if compound has one feature, they are equal
+print(compound_structure_annotation$smiles)
 ```
 
 You might also want to examine all predicted CANOPUS compound classes across your dataset:
 
 ```R
 # use "topAnnotations" to get only the best scoring annotation per feature
-features <- api$features_api$GetAlignedFeatures(var_project_id, opt_fields = list("topAnnotations"))
+features <- api$features_api$GetAlignedFeatures(project_info$projectId, opt_fields = list("topAnnotations"))
 
 # filter NULL annotations
 features_filtered <- Filter(function(f) !is.null(f$topAnnotations$compoundClassAnnotation), features)
 
-# example: group classes and sort by count
-df <- do.call(rbind, lapply(features_filtered, function(f) {
-  lineage <- f$topAnnotations$compoundClassAnnotation$classyFireLineage
-  row <- list(number = f$alignedFeatureId)
-  for (cls in lineage) {
-    row[[cls$level]] <- cls$name
-  }
-  as.data.frame(row, stringsAsFactors = FALSE)
-}))
-grouped <- aggregate(number ~ ., data = df, FUN = length, na.action = na.pass)
-grouped <- grouped[order(grouped$number), ]
+# example: get NPC classes
+for (f in features_filtered) {
+  class <- f$topAnnotations$compoundClassAnnotation$npcClass
+  print(paste("Feature with ID", f$alignedFeatureId, "is of class", class$name))
+}
 ```
 
 Not satisfied with your results? Create custom databases using the [**Searchable Databases API**](./generated/docs/SearchableDatabasesApi.md)! Import the example Kaempferol file (containing three annotated spectra and a SMILES) to enable spectral library matching and structure database search, then re-run identification using your custom database.
@@ -227,22 +225,28 @@ db_params <- SearchableDatabaseParameters$new(display_name = db_name, location =
 api$searchable_databases_api$CreateDatabase(db_name, db_params)
 api$searchable_databases_api$ImportIntoDatabase(db_name, input_files = c(input_file))
 
+# we can add our database manually or get a new default submission form that includes it
+job_submission_customdb <- api$jobs_api$GetDefaultJobConfig(include_custom_dbs_for_structure_search = TRUE)
+job_submission_customdb$spectraSearchParams$enabled <- TRUE
+
 # allow SIRIUS to overwrite existing results
-job_submission$recompute <- TRUE
+job_submission_customdb$recompute <- TRUE
 
-# note: this disables all other DBs; you can alternatively add it to the pre-defined list
-job_submission$structureDbSearchParams$structureSearchDBs <- list(db_name)
+job_customdb <- api$jobs_api$StartJob(project_info$projectId, job_submission_customdb)
+api$wait_for_job_completion(project_info$projectId, job_customdb$id)
+```
 
-job_submission$spectraSearchParams$enabled <- TRUE
-job_submission$spectraSearchParams$spectraSearchDBs <- list(db_name)
+Now we can look into the results again just as we did before. There is one new thing we enabled just now, that is the spectral library search. Let's look at our spectral library matches:
 
-job_2 <- api$jobs_api$StartJob(project_info$project_id, job_submission)
-api$wait_for_job_completion(project_info$project_id, job_2$id)
+```R
+library_matches <- api$features_api$GetSpectralLibraryMatches(project_info$projectId, kaempferol_feature$alignedFeatureId)
+# SMILES of best spectral library match
+library_matches[[1]]$smiles
 ```
 
 Hopefully you've found something valuable! After completing your analysis, close the project and shut down SIRIUS:
 
 ```R
-api$projects_api$CloseProject(project_info$project_id)
+api$projects_api$CloseProject(project_info$projectId)
 sdk$shutdown_sirius()
 ```
