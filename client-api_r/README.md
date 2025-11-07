@@ -190,12 +190,19 @@ Now you can extract results from your aligned features. [Compounds](./generated/
 
 ```R
 # all structure annotations for our feature
-feature_structure_annotations <- api$features_api$GetStructureCandidates(project_info$projectId, kaempferol_feature$alignedFeatureId)
+feature_structure_annotations <- api$features_api$GetStructureCandidates(
+  project_info$projectId, 
+  kaempferol_feature$alignedFeatureId
+)
 # best ranking structure SMILES
 print(feature_structure_annotations[[1]]$smiles)
 
 # get the compound and its consensus annotation
-compound <- api$compounds_api$GetCompound(project_info$projectId, kaempferol_feature$compoundId, opt_fields = list("consensusAnnotations"))
+compound <- api$compounds_api$GetCompound(
+  project_info$projectId, 
+  kaempferol_feature$compoundId, 
+  opt_fields = list("consensusAnnotations")
+)
 compound_structure_annotation <- compound$consensusAnnotations$csiFingerIdStructure
 # consensus structure SMILES; if compound has one feature, they are equal
 print(compound_structure_annotation$smiles)
@@ -205,7 +212,10 @@ You might also want to examine all predicted CANOPUS compound classes across you
 
 ```R
 # use "topAnnotations" to get only the best scoring annotation per feature
-features <- api$features_api$GetAlignedFeatures(project_info$projectId, opt_fields = list("topAnnotations"))
+features <- api$features_api$GetAlignedFeatures(
+  project_info$projectId, 
+  opt_fields = list("topAnnotations")
+)
 
 # filter NULL annotations
 features_filtered <- Filter(function(f) !is.null(f$topAnnotations$compoundClassAnnotation), features)
@@ -221,12 +231,20 @@ Not satisfied with your results? Create custom databases using the [**Searchable
 
 ```R
 db_name <- "KaempferolDB"
-db_params <- SearchableDatabaseParameters$new(display_name = db_name, location = "/my/path/KaempferolDB.siriusdb")
+db_params <- SearchableDatabaseParameters$new(
+  display_name = db_name, 
+  location = "/my/path/KaempferolDB.siriusdb"
+)
 api$searchable_databases_api$CreateDatabase(db_name, db_params)
-api$searchable_databases_api$ImportIntoDatabase(db_name, input_files = c(input_file))
+api$searchable_databases_api$ImportIntoDatabase(
+  db_name, 
+  input_files = c(input_file)
+)
 
 # we can add our database manually or get a new default submission form that includes it
-job_submission_customdb <- api$jobs_api$GetDefaultJobConfig(include_custom_dbs_for_structure_search = TRUE)
+job_submission_customdb <- api$jobs_api$GetDefaultJobConfig(
+  include_custom_dbs_for_structure_search = TRUE
+)
 
 # enable spectral library search
 job_submission_customdb$spectraSearchParams$enabled <- TRUE
@@ -234,14 +252,20 @@ job_submission_customdb$spectraSearchParams$enabled <- TRUE
 # allow SIRIUS to overwrite existing results
 job_submission_customdb$recompute <- TRUE
 
-job_customdb <- api$jobs_api$StartJob(project_info$projectId, job_submission_customdb)
+job_customdb <- api$jobs_api$StartJob(
+  project_info$projectId, 
+  job_submission_customdb
+)
 api$wait_for_job_completion(project_info$projectId, job_customdb$id)
 ```
 
 Now we can look into the results again just as we did before. There is one new thing we enabled just now, that is the spectral library search. Let's look at our spectral library matches:
 
 ```R
-library_matches <- api$features_api$GetSpectralLibraryMatches(project_info$projectId, kaempferol_feature$alignedFeatureId)
+library_matches <- api$features_api$GetSpectralLibraryMatches(
+  project_info$projectId, 
+  kaempferol_feature$alignedFeatureId
+)
 # SMILES of best spectral library match
 library_matches[[1]]$smiles
 ```
