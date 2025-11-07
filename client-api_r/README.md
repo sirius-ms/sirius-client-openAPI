@@ -113,11 +113,11 @@ api <- sdk$connect("http://localhost:8080")
 
 For more niche functionality and insights, find the SiriusSDK class [here](rsirius_sdk.R).
 
-### Documentation for API Endpoints
+## Documentation for API Endpoints
 
 Please click [here](generated/README.md#documentation-for-api-endpoints)
 
-### Documentation For Models
+## Documentation For Models
 
 Please click [here](generated/README.md#documentation-for-models)
 

@@ -1,6 +1,9 @@
 # PySirius
 REST API that provides the full functionality of SIRIUS and its web services as background service. It is intended as entry-point for scripting languages and software integration SDKs.
 
+- to [fine-grained documentation](#documentation-for-api-endpoints)
+- to our [example workflow](#example-usage-of-pysirius)
+
 ## Installation & Usage
 
 ### conda install (preferred)
@@ -107,11 +110,6 @@ api = sdk.connect("http://localhost:8080")
 ### SiriusSDK class
 
 For more niche functionality and insights, find the SiriusSDK class [here](pysirius_sdk.py).
-
-### Example code
-Our feedstocks for the conda-forge packages are running an automated minimal test.
-We included the scripts [here](../.updater/clientTests/CondaFeedstockMinimalTests). 
-Feel free to take them as example usages of the packages.
 
 ## Documentation for API Endpoints
 Please click [here](generated/README.md#documentation-for-api-endpoints)
