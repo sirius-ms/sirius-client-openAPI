@@ -10,7 +10,7 @@
 
 Maintained and prebuild [OpenAPI](https://www.openapis.org/) based SIRIUS SDKs for different programming languages such as R, Python and Java.
 SDKs for other languages can be created using [OpenAPI Generator](https://openapi-generator.tech/).
-If you are interested in contributing, please have a look at our [contribution guidelines](#contributing-sirius-client-libraries).
+If you are interested in contributing, please have a look at our [contribution guidelines](CONTRIBUTING.md).
 
 For more information about SIRIUS itself, see the [SIRIUS repository](https://github.com/sirius-ms/sirius) and [SIRIUS documentation](https://v6.docs.sirius-ms.io/).
 
@@ -24,3 +24,7 @@ For more information about SIRIUS itself, see the [SIRIUS repository](https://gi
   - For installation via **conda** (conda-forge) see [here](https://anaconda.org/conda-forge/r-sirius-ms) 
 #### [**Java**](https://github.com/sirius-ms/sirius/tree/stable/sirius-sdk)
 The java SDK is part of the [SIRIUS project](https://github.com/sirius-ms/sirius) and will be updated with every SIRIUS release. Further instruction can be found [here](https://github.com/sirius-ms/sirius/tree/stable/sirius-sdk/README.md).
+
+## Versioning
+
+The client library versions are combinations of the **API version** and the **SIRIUS version**. Example: `v3.1+sirius6.3.3` is the client library for SIRIUS 6.3.3 with API version 3.1.
