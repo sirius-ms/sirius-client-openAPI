@@ -10,9 +10,6 @@ on:
   repository_dispatch:
 
 jobs:
-  UpdateCache:
-    uses: ./.github/workflows/update-api.yml
-
   UpdateOnNewBranch:
     runs-on: ubuntu-latest
     steps:
