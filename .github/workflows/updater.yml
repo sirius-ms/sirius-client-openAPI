@@ -12,15 +12,21 @@ on:
 jobs:
   UpdateOnNewBranch:
     runs-on: ubuntu-latest
+    outputs:
+      target_branch: ${{ steps.setup.outputs.target_branch }}
     steps:
       - name: checkout repo
         uses: actions/checkout@v3
       - name: Call SetupBranch
+        id: setup
         run: |
-          version_input=""
+          target_branch=$(echo -en temp_;date +"%Y%m%d%H%M%S%N")
+          echo "target_branch=$target_branch" >> $GITHUB_OUTPUT
+          
           if [ -n "${{ inputs.sirius_version }}" ]; then
-            version_input="-f sirius_version=${{ inputs.sirius_version }}"
+            gh workflow run SetupBranch.yml --ref ${GITHUB_REF##*/} -f target_branch=$target_branch -f sirius_version=${{ inputs.sirius_version }}
+          else
+            gh workflow run SetupBranch.yml --ref ${GITHUB_REF##*/} -f target_branch=$target_branch
           fi
-          gh workflow run SetupBranch.yml --ref ${GITHUB_REF##*/} -f target_branch=$(echo -en temp_;date +"%Y%m%d%H%M%S%N") $version_input
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

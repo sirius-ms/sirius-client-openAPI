@@ -15,6 +15,8 @@ on:
 jobs:
   CreateTempBranch:
     runs-on: ubuntu-latest
+    outputs:
+      target_branch: ${{ steps.output.outputs.target_branch }}
     steps:
       - name: Create Branch
         uses: peterjgrainger/action-create-branch@v2.2.0
@@ -22,6 +24,10 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           branch: ${{ inputs.target_branch }}
+      - name: Set output
+        id: output
+        run: |
+          echo "target_branch=${{ inputs.target_branch }}" >> $GITHUB_OUTPUT
 
   UpdateOnNewBranch:
     needs: CreateTempBranch
@@ -31,10 +37,10 @@ jobs:
         uses: actions/checkout@v3
       - name: Call NewUpdate
         run: |
-          version_input=""
           if [ -n "${{ inputs.sirius_version }}" ]; then
-            version_input="-f sirius_version=${{ inputs.sirius_version }}"
+            gh workflow run NewUpdate.yml --ref ${{ inputs.target_branch }} -f target_branch=${GITHUB_REF##*/} -f sirius_version=${{ inputs.sirius_version }}
+          else
+            gh workflow run NewUpdate.yml --ref ${{ inputs.target_branch }} -f target_branch=${GITHUB_REF##*/}
           fi
-          gh workflow run NewUpdate.yml --ref ${{ inputs.target_branch }} -f target_branch=${GITHUB_REF##*/} $version_input
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
