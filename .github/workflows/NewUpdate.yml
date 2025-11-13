@@ -36,23 +36,18 @@ jobs:
             if [ -n "${{ github.event.inputs.sirius_version }}" ]; then
               # Manual version provided
               version="${{ github.event.inputs.sirius_version }}"
-              echo "Using manually provided SIRIUS version: $version"
-              echo "$version" > ./packageVersion.txt
-            
-              url="https://github.com/sirius-ms/sirius/releases/download/v${version}/sirius-${version}-linux-x64.zip"
-              echo "Downloading from: $url"
-              wget -nv "$url" -O sirius-${version}-linux-x64.zip
+              echo "Using manually provided SIRIUS version: $version"          
             else
               # Fallback to automatic latest detection
               echo "No version provided — fetching latest release..."
               version=$(curl -s https://api.github.com/repos/sirius-ms/sirius/releases/latest | jq -r '.tag_name' | sed 's/^v//')
               echo "Latest version: $version"
-              echo "$version" > ./packageVersion.txt
-            
-              url=$(jq -r '.assets[] | select(.name | test("linux-x64.zip$")) | .browser_download_url' ./release.json)
-              echo "Downloading from: $url"
-              wget -nv "$url" -O sirius-${version}-linux-x64.zip
             fi
+            
+            echo "$version" > ./packageVersion.txt
+            url="https://github.com/sirius-ms/sirius/releases/download/v${version}/sirius-${version}-linux-x64.zip"
+            echo "Downloading from: $url"
+            wget -nv "$url" -O sirius-${version}-linux-x64.zip
             
             echo "Unzipping..."
             unzip -q sirius-*-linux-x64.zip
