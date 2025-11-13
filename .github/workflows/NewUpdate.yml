@@ -21,6 +21,7 @@ jobs:
         uses: actions/checkout@v3.1.0
       - name: Download latest generators
         run: |
+          mkdir .updater/openapi_generator
           cd .updater/openapi_generator
           wget -nv https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/7.10.0/openapi-generator-cli-7.10.0.jar -O openapi-generator-cli-7.10.jar
           wget -nv https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/7.16.0/openapi-generator-cli-7.16.0.jar -O openapi-generator-cli-7.16.jar
@@ -131,7 +132,7 @@ jobs:
           echo "Done"
       - name: Remove Openapi Generator Files
         run: |
-          rm .updater/openapi_generator/*.jar
+          rm -rf .updater/openapi_generator
           ls ./.github/workflows
           echo "Done"
       - name: update file and push to remote
