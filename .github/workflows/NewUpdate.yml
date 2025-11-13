@@ -45,9 +45,7 @@ jobs:
             else
               # Fallback to automatic latest detection
               echo "No version provided — fetching latest release..."
-              curl -s https://api.github.com/repos/sirius-ms/sirius/releases/latest > ./release.json
-              version=$(jq -r '.tag_name' ./release.json | sed 's/^v//')
-              rm ./release.json
+              version=$(curl -s https://api.github.com/repos/sirius-ms/sirius/releases/latest | jq -r '.tag_name' | sed 's/^v//')
               echo "Latest version: $version"
               echo "$version" > ./packageVersion.txt
             
