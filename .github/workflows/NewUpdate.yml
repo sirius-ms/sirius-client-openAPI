@@ -6,6 +6,7 @@ on:
       target_branch:
         type: string
         required: true
+        description: "Target branch to put update commits on."
       sirius_version:
         description: "Optional SIRIUS version to download (e.g. 6.3.3). Leave blank for latest."
         type: string
