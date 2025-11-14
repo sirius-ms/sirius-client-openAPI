@@ -1,33 +1,40 @@
-
 name: SetupBranch
 
-# Controls when the action will run. Workflow runs when manually triggered using the UI
-# or API.
 on:
   workflow_dispatch:
     inputs:
       target_branch:
         type: string
         required: true
-  
-  
+        description: "Temporary branch to create (NewUpdate will commit to that branch)."
+      sirius_version:
+        description: "Optional: specify SIRIUS version to use (e.g. 6.3.3)"
+        required: false
+        type: string
+
 jobs:
   CreateTempBranch:
     runs-on: ubuntu-latest
     steps:
-    - name: Create Branch
-      uses: peterjgrainger/action-create-branch@v2.2.0
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        branch: ${{ inputs.target_branch }}
+      - name: Create Branch
+        uses: peterjgrainger/action-create-branch@v3.0.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          branch: ${{ inputs.target_branch }}
+
   UpdateOnNewBranch:
     needs: CreateTempBranch
     runs-on: ubuntu-latest
     steps:
       - name: checkout repo
-        uses: actions/checkout@v3.1.0
-      - name: Call Workflow
-        run: gh workflow run NewUpdate.yml --ref ${{ inputs.target_branch }} -f target_branch=${GITHUB_REF##*/}
+        uses: actions/checkout@v3
+      - name: Call NewUpdate
+        run: |
+          if [ -n "${{ inputs.sirius_version }}" ]; then
+            gh workflow run NewUpdate.yml --ref ${{ inputs.target_branch }} -f target_branch=${GITHUB_REF##*/} -f sirius_version=${{ inputs.sirius_version }}
+          else
+            gh workflow run NewUpdate.yml --ref ${{ inputs.target_branch }} -f target_branch=${GITHUB_REF##*/}
+          fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

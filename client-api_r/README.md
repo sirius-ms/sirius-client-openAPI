@@ -7,8 +7,9 @@
 REST API that provides the full functionality of SIRIUS and its web services as background service. It is intended as
 entry-point for scripting languages and software integration SDKs.
 
-- to [fine-grained documentation](#documentation-for-api-endpoints)
-- to our [example workflow](#example-usage-of-rsirius)
+- To our [example workflow](#example-usage-of-rsirius)
+- To the [fine-grained documentation](#documentation-for-api-endpoints)
+- To the [tests](generated/tests/testthat/)
 
 ## Installation & Usage
 
