@@ -27,7 +27,7 @@ class Subscription(BaseModel):
     Subscription
     """ # noqa: E501
     sid: Optional[StrictStr] = Field(default=None, description="Unique identifier of this subscription")
-    subscriber_id: Optional[StrictStr] = Field(default=None, description="ID of the owner of the subscription.  This can be the ID of any SubscriptionOwner (e.g.  Group or  User)  depending on the level on which a subscription should be is valid.", alias="subscriberId")
+    subscriber_id: Optional[StrictStr] = Field(default=None, description="ID of the owner of the subscription.  This can be the ID of any SubscriptionOwner (e.g.  TagGroup or  User)  depending on the level on which a subscription should be is valid.", alias="subscriberId")
     subscriber_name: Optional[StrictStr] = Field(default=None, description="Optional name of the owner of this subscription", alias="subscriberName")
     expiration_date: Optional[datetime] = Field(default=None, alias="expirationDate")
     start_date: Optional[datetime] = Field(default=None, alias="startDate")

@@ -12,7 +12,7 @@
 """  # noqa: E501
 
 
-__version__ = "6.3.3"
+__version__ = "6.4.0"
 
 # Define package exports
 __all__ = [
@@ -81,10 +81,12 @@ __all__ = [
     "DataImportEvent",
     "DataQuality",
     "Deviation",
+    "DownloadableDatabase",
     "FeatureAnnotations",
     "FeatureImport",
     "FingerprintPrediction",
     "FoldChange",
+    "FoldChangeJobSubmission",
     "FormulaCandidate",
     "FormulaCandidateOptField",
     "FragmentNode",
@@ -132,7 +134,6 @@ __all__ = [
     "QuantTableExperimental",
     "Run",
     "RunOptField",
-    "SampleTypeFoldChangeRequest",
     "SearchableDatabase",
     "SearchableDatabaseParameters",
     "SecurityContext",
@@ -162,6 +163,7 @@ __all__ = [
     "TagDefinition",
     "TagDefinitionImport",
     "TagGroup",
+    "TagSubmission",
     "Term",
     "Timeout",
     "TraceAnnotationExperimental",
@@ -251,10 +253,12 @@ from PySirius.models.db_link import DBLink as DBLink
 from PySirius.models.data_import_event import DataImportEvent as DataImportEvent
 from PySirius.models.data_quality import DataQuality as DataQuality
 from PySirius.models.deviation import Deviation as Deviation
+from PySirius.models.downloadable_database import DownloadableDatabase as DownloadableDatabase
 from PySirius.models.feature_annotations import FeatureAnnotations as FeatureAnnotations
 from PySirius.models.feature_import import FeatureImport as FeatureImport
 from PySirius.models.fingerprint_prediction import FingerprintPrediction as FingerprintPrediction
 from PySirius.models.fold_change import FoldChange as FoldChange
+from PySirius.models.fold_change_job_submission import FoldChangeJobSubmission as FoldChangeJobSubmission
 from PySirius.models.formula_candidate import FormulaCandidate as FormulaCandidate
 from PySirius.models.formula_candidate_opt_field import FormulaCandidateOptField as FormulaCandidateOptField
 from PySirius.models.fragment_node import FragmentNode as FragmentNode
@@ -302,7 +306,6 @@ from PySirius.models.quant_row_type import QuantRowType as QuantRowType
 from PySirius.models.quant_table_experimental import QuantTableExperimental as QuantTableExperimental
 from PySirius.models.run import Run as Run
 from PySirius.models.run_opt_field import RunOptField as RunOptField
-from PySirius.models.sample_type_fold_change_request import SampleTypeFoldChangeRequest as SampleTypeFoldChangeRequest
 from PySirius.models.searchable_database import SearchableDatabase as SearchableDatabase
 from PySirius.models.searchable_database_parameters import SearchableDatabaseParameters as SearchableDatabaseParameters
 from PySirius.models.security_context import SecurityContext as SecurityContext
@@ -332,6 +335,7 @@ from PySirius.models.tag import Tag as Tag
 from PySirius.models.tag_definition import TagDefinition as TagDefinition
 from PySirius.models.tag_definition_import import TagDefinitionImport as TagDefinitionImport
 from PySirius.models.tag_group import TagGroup as TagGroup
+from PySirius.models.tag_submission import TagSubmission as TagSubmission
 from PySirius.models.term import Term as Term
 from PySirius.models.timeout import Timeout as Timeout
 from PySirius.models.trace_annotation_experimental import TraceAnnotationExperimental as TraceAnnotationExperimental

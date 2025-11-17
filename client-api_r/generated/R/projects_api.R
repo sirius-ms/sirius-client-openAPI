@@ -13,6 +13,18 @@
 #'
 #' @examples
 #' \dontrun{
+#' ####################  BuildSearchIndex  ####################
+#'
+#' library(RSirius)
+#' var_project_id <- "project_id_example" # character | unique name/identifier of the project to create the index for.
+#' var_force <- FALSE # character | if true an existing index will be deleted and recreated. (Optional)
+#'
+#' #Create a search index for the given project.
+#' api_instance <- rsirius_api$new()
+#'
+#' api_instance$projects_api$BuildSearchIndex(var_project_id, force = var_force)
+#'
+#'
 #' ####################  CloseProject  ####################
 #'
 #' library(RSirius)
@@ -118,8 +130,8 @@
 #'
 #' library(RSirius)
 #' var_project_id <- "project_id_example" # character | Project-space to import into.
-#' var_input_files <- c(123) # array[data.frame] | Files to import into project.
-#' var_parameters <- LcmsSubmissionParameters$new("alignLCMSRuns_example", 123, Deviation$new(123, 123), Deviation$new(123, 123), 123, 123) # LcmsSubmissionParameters | 
+#' var_input_files <- c(123) # array[data.frame] | files to import into project
+#' var_parameters <- LcmsSubmissionParameters$new(c("sampleTypes_example"), "alignLCMSRuns_example", 123, Deviation$new(123, 123), Deviation$new(123, 123), 123, 123) # LcmsSubmissionParameters | 
 #'
 #' #Import and Align full MS-Runs from various formats into the specified project  Possible formats (mzML, mzXML)
 #' api_instance <- rsirius_api$new()
@@ -134,8 +146,8 @@
 #'
 #' library(RSirius)
 #' var_project_id <- "project_id_example" # character | Project-space to import into.
-#' var_input_files <- c(123) # array[data.frame] | Files to import into project.
-#' var_parameters <- LcmsSubmissionParameters$new("alignLCMSRuns_example", 123, Deviation$new(123, 123), Deviation$new(123, 123), 123, 123) # LcmsSubmissionParameters | 
+#' var_input_files <- c(123) # array[data.frame] | files to import into project
+#' var_parameters <- LcmsSubmissionParameters$new(c("sampleTypes_example"), "alignLCMSRuns_example", 123, Deviation$new(123, 123), Deviation$new(123, 123), 123, 123) # LcmsSubmissionParameters | 
 #' var_opt_fields <- c("none") # array[character] | Set of optional fields to be included. Use 'none' only to override defaults. (Optional)
 #'
 #' #Import and Align full MS-Runs from various formats into the specified project as background job.
@@ -168,7 +180,7 @@
 #'
 #' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to import into.
-#' var_input_files <- c(123) # array[data.frame] | 
+#' var_input_files <- c(123) # array[data.frame] | files to import into project
 #' var_ignore_formulas <- FALSE # character |  (Optional)
 #' var_allow_ms1_only <- TRUE # character |  (Optional)
 #' var_opt_fields <- c("none") # array[character] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
@@ -216,6 +228,93 @@ ProjectsApi <- R6::R6Class(
         self$api_client <- api_client
       } else {
         self$api_client <- ApiClient$new()
+      }
+    },
+
+    #' @description
+    #' Create a search index for the given project.
+    #'
+    #' @param project_id unique name/identifier of the project to create the index for.
+    #' @param force (optional) if true an existing index will be deleted and recreated. (default value: FALSE)
+    #' @param ... Other optional arguments
+    #'
+    #' @return void
+    BuildSearchIndex = function(project_id, force = FALSE, ...) {
+      local_var_response <- self$BuildSearchIndexWithHttpInfo(project_id, force, ...)
+      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
+        local_var_response$content
+      } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
+        local_var_response
+      } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
+        local_var_response
+      } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
+        local_var_response
+      }
+    },
+
+    #' @description
+    #' Create a search index for the given project.
+    #'
+    #' @param project_id unique name/identifier of the project to create the index for.
+    #' @param force (optional) if true an existing index will be deleted and recreated. (default value: FALSE)
+    #' @param ... Other optional arguments
+    #'
+    #' @return API response (void) with additional information such as HTTP status code, headers
+    BuildSearchIndexWithHttpInfo = function(project_id, force = FALSE, ...) {
+      args <- list(...)
+      query_params <- list()
+      header_params <- c()
+      form_params <- list()
+      file_params <- list()
+      local_var_body <- NULL
+      oauth_scopes <- NULL
+      is_oauth <- FALSE
+
+      if (missing(`project_id`)) {
+        stop("Missing required parameter `project_id`.")
+      }
+
+
+
+      query_params[["force"]] <- `force`
+
+      local_var_url_path <- "/api/projects/{projectId}/index"
+      if (!missing(`project_id`)) {
+        local_var_url_path <- gsub("\\{projectId\\}", URLencode(as.character(`project_id`), reserved = TRUE), local_var_url_path)
+      }
+
+
+      # The Accept request HTTP header
+      local_var_accepts <- list()
+
+      # The Content-Type representation header
+      local_var_content_types <- list()
+
+      local_var_resp <- self$api_client$CallApi(url = paste0(self$api_client$base_path, local_var_url_path),
+                                 method = "PUT",
+                                 query_params = query_params,
+                                 header_params = header_params,
+                                 form_params = form_params,
+                                 file_params = file_params,
+                                 accepts = local_var_accepts,
+                                 content_types = local_var_content_types,
+                                 body = local_var_body,
+                                 is_oauth = is_oauth,
+                                 oauth_scopes = oauth_scopes,
+                                 ...)
+
+      if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
+        local_var_resp$content <- NULL
+        local_var_resp
+      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
+      } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
+        ApiResponse$new("API client error", local_var_resp)
+      } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
+        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
+          local_var_resp$response <- "API server error"
+        }
+        local_var_resp
       }
     },
 
@@ -361,8 +460,8 @@ ProjectsApi <- R6::R6Class(
       # explore
       for (query_item in `opt_fields`) {
         # validate enum values
-        if (!is.null(query_item) && !(query_item %in% c("none", "compatibilityInfo", "sizeInformation"))) {
-          stop("Invalid value for opt_fields when calling ProjectsApi$CreateProject. Must be [none, compatibilityInfo, sizeInformation].")
+        if (!is.null(query_item) && !(query_item %in% c("none", "compatibilityInfo", "sizeInformation", "detectedAdducts"))) {
+          stop("Invalid value for opt_fields when calling ProjectsApi$CreateProject. Must be [none, compatibilityInfo, sizeInformation, detectedAdducts].")
         }
         query_params[["optFields"]] <- c(query_params[["optFields"]], list(`optFields` = query_item))
       }
@@ -888,8 +987,8 @@ ProjectsApi <- R6::R6Class(
       # explore
       for (query_item in `opt_fields`) {
         # validate enum values
-        if (!is.null(query_item) && !(query_item %in% c("none", "compatibilityInfo", "sizeInformation"))) {
-          stop("Invalid value for opt_fields when calling ProjectsApi$GetProject. Must be [none, compatibilityInfo, sizeInformation].")
+        if (!is.null(query_item) && !(query_item %in% c("none", "compatibilityInfo", "sizeInformation", "detectedAdducts"))) {
+          stop("Invalid value for opt_fields when calling ProjectsApi$GetProject. Must be [none, compatibilityInfo, sizeInformation, detectedAdducts].")
         }
         query_params[["optFields"]] <- c(query_params[["optFields"]], list(`optFields` = query_item))
       }
@@ -1087,7 +1186,7 @@ ProjectsApi <- R6::R6Class(
     #' Import and Align full MS-Runs from various formats into the specified project  Possible formats (mzML, mzXML)
     #'
     #' @param project_id Project-space to import into.
-    #' @param input_files Files to import into project.
+    #' @param input_files files to import into project
     #' @param parameters 
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
@@ -1110,7 +1209,7 @@ ProjectsApi <- R6::R6Class(
     #' Import and Align full MS-Runs from various formats into the specified project  Possible formats (mzML, mzXML)
     #'
     #' @param project_id Project-space to import into.
-    #' @param input_files Files to import into project.
+    #' @param input_files files to import into project
     #' @param parameters 
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
@@ -1233,7 +1332,7 @@ ProjectsApi <- R6::R6Class(
     #' Import and Align full MS-Runs from various formats into the specified project as background job.
     #'
     #' @param project_id Project-space to import into.
-    #' @param input_files Files to import into project.
+    #' @param input_files files to import into project
     #' @param parameters 
     #' @param opt_fields (optional) Set of optional fields to be included. Use 'none' only to override defaults. (default value: ["progress"])
     #' @param data_file (optional) name of the data file to save the result
@@ -1257,7 +1356,7 @@ ProjectsApi <- R6::R6Class(
     #' Import and Align full MS-Runs from various formats into the specified project as background job.
     #'
     #' @param project_id Project-space to import into.
-    #' @param input_files Files to import into project.
+    #' @param input_files files to import into project
     #' @param parameters 
     #' @param opt_fields (optional) Set of optional fields to be included. Use 'none' only to override defaults. (default value: ["progress"])
     #' @param data_file (optional) name of the data file to save the result
@@ -1533,7 +1632,7 @@ ProjectsApi <- R6::R6Class(
     #' Import ms/ms data from the given format into the specified project-space as background job.
     #'
     #' @param project_id project-space to import into.
-    #' @param input_files 
+    #' @param input_files files to import into project
     #' @param ignore_formulas (optional) No description (default value: FALSE)
     #' @param allow_ms1_only (optional) No description (default value: TRUE)
     #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["progress"])
@@ -1558,7 +1657,7 @@ ProjectsApi <- R6::R6Class(
     #' Import ms/ms data from the given format into the specified project-space as background job.
     #'
     #' @param project_id project-space to import into.
-    #' @param input_files 
+    #' @param input_files files to import into project
     #' @param ignore_formulas (optional) No description (default value: FALSE)
     #' @param allow_ms1_only (optional) No description (default value: TRUE)
     #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["progress"])
@@ -1738,8 +1837,8 @@ ProjectsApi <- R6::R6Class(
       # explore
       for (query_item in `opt_fields`) {
         # validate enum values
-        if (!is.null(query_item) && !(query_item %in% c("none", "compatibilityInfo", "sizeInformation"))) {
-          stop("Invalid value for opt_fields when calling ProjectsApi$OpenProject. Must be [none, compatibilityInfo, sizeInformation].")
+        if (!is.null(query_item) && !(query_item %in% c("none", "compatibilityInfo", "sizeInformation", "detectedAdducts"))) {
+          stop("Invalid value for opt_fields when calling ProjectsApi$OpenProject. Must be [none, compatibilityInfo, sizeInformation, detectedAdducts].")
         }
         query_params[["optFields"]] <- c(query_params[["optFields"]], list(`optFields` = query_item))
       }

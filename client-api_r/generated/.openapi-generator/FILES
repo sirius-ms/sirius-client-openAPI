@@ -40,12 +40,14 @@ R/consensus_annotations_de_novo.R
 R/data_import_event.R
 R/db_link.R
 R/deviation.R
+R/downloadable_database.R
 R/feature_annotations.R
 R/feature_import.R
 R/feature_statistics_api.R
 R/features_api.R
 R/fingerprint_prediction.R
 R/fold_change.R
+R/fold_change_job_submission.R
 R/formula_candidate.R
 R/fragment_node.R
 R/fragmentation_tree.R
@@ -85,7 +87,6 @@ R/rsirius_api.R
 R/run.R
 R/run_opt_field.R
 R/runs_api.R
-R/sample_type_fold_change_request.R
 R/searchable_database.R
 R/searchable_database_parameters.R
 R/searchable_databases_api.R
@@ -109,6 +110,7 @@ R/tag.R
 R/tag_definition.R
 R/tag_definition_import.R
 R/tag_group.R
+R/tag_submission.R
 R/tags_api.R
 R/term.R
 R/timeout.R
@@ -158,12 +160,14 @@ docs/ConsensusAnnotationsDeNovo.md
 docs/DBLink.md
 docs/DataImportEvent.md
 docs/Deviation.md
+docs/DownloadableDatabase.md
 docs/FeatureAnnotations.md
 docs/FeatureImport.md
 docs/FeatureStatisticsApi.md
 docs/FeaturesApi.md
 docs/FingerprintPrediction.md
 docs/FoldChange.md
+docs/FoldChangeJobSubmission.md
 docs/FormulaCandidate.md
 docs/FragmentNode.md
 docs/FragmentationTree.md
@@ -202,7 +206,6 @@ docs/QuantTableExperimental.md
 docs/Run.md
 docs/RunOptField.md
 docs/RunsApi.md
-docs/SampleTypeFoldChangeRequest.md
 docs/SearchableDatabase.md
 docs/SearchableDatabaseParameters.md
 docs/SearchableDatabasesApi.md
@@ -226,6 +229,7 @@ docs/Tag.md
 docs/TagDefinition.md
 docs/TagDefinitionImport.md
 docs/TagGroup.md
+docs/TagSubmission.md
 docs/TagsApi.md
 docs/Term.md
 docs/Timeout.md

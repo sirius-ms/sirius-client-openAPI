@@ -9,6 +9,7 @@ Method | HTTP request | Description
 [**GetCustomDatabases**](SearchableDatabasesApi.md#GetCustomDatabases) | **GET** /api/databases/custom | 
 [**GetDatabase**](SearchableDatabasesApi.md#GetDatabase) | **GET** /api/databases/{databaseId} | 
 [**GetDatabases**](SearchableDatabasesApi.md#GetDatabases) | **GET** /api/databases | 
+[**GetDownloadableDatabases**](SearchableDatabasesApi.md#GetDownloadableDatabases) | **GET** /api/databases/downloadable | Get list of curated custom databases downloadable from the SIRIUS web service for local use
 [**GetIncludedDatabases**](SearchableDatabasesApi.md#GetIncludedDatabases) | **GET** /api/databases/included | 
 [**ImportIntoDatabase**](SearchableDatabasesApi.md#ImportIntoDatabase) | **POST** /api/databases/{databaseId}/import/from-files | Start import of structure and spectra files into the specified database.
 [**RemoveDatabase**](SearchableDatabasesApi.md#RemoveDatabase) | **DELETE** /api/databases/{databaseId} | 
@@ -240,6 +241,48 @@ No authorization required
 |-------------|-------------|------------------|
 | **200** | OK |  -  |
 
+# **GetDownloadableDatabases**
+> array[DownloadableDatabase] GetDownloadableDatabases()
+
+Get list of curated custom databases downloadable from the SIRIUS web service for local use
+
+Get list of curated custom databases downloadable from the SIRIUS web service for local use.  <p>  [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.  [DEPRECATED] This endpoint will likely be removed or changed in future versions of this API.
+
+### Example
+```R
+library(RSirius)
+
+# Get list of curated custom databases downloadable from the SIRIUS web service for local use
+#
+
+api_instance <- rsirius_api$new()
+# to save the result into a file, simply add the optional `data_file` parameter, e.g.
+# result <- api_instance$GetDownloadableDatabases(data_file = "result.txt")
+result <- api_instance$searchable_databases_api$GetDownloadableDatabases()
+dput(result)
+```
+
+### Parameters
+This endpoint does not need any parameter.
+
+### Return type
+
+[**array[DownloadableDatabase]**](DownloadableDatabase.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json, application/problem+json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | list of databases available for downloading. |  -  |
+
 # **GetIncludedDatabases**
 > array[SearchableDatabase] GetIncludedDatabases(include_stats = FALSE)
 
@@ -298,7 +341,7 @@ library(RSirius)
 #
 # prepare function argument(s)
 var_database_id <- "database_id_example" # character | database to import into
-var_input_files <- c(123) # array[data.frame] | files to be imported
+var_input_files <- c(123) # array[data.frame] | files to import into project
 var_buffer_size <- 1000 # integer |  (Optional)
 var_bio_transformer_parameters <- BioTransformerParameters$new("RULE_BASED", "BT_RULE_BASED", c(BioTransformerSequenceStep$new("PHASE_1_CYP450", 123)), "useDB_example") # BioTransformerParameters |  (Optional)
 
@@ -314,7 +357,7 @@ dput(result)
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **database_id** | **character**| database to import into | 
- **input_files** | list( **data.frame** )| files to be imported | 
+ **input_files** | list( **data.frame** )| files to import into project | 
  **buffer_size** | **integer**|  | [optional] [default to 1000]
  **bio_transformer_parameters** | [**BioTransformerParameters**](BioTransformerParameters.md)|  | [optional] 
 

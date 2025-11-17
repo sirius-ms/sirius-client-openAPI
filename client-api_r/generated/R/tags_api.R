@@ -21,7 +21,7 @@
 #' var_filter <- "filter_example" # character | filter query to create the group
 #' var_type <- "type_example" # character | type of the group
 #'
-#' #[EXPERIMENTAL] Group tags in the project
+#' #[EXPERIMENTAL] TagGroup tags in the project
 #' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
@@ -167,7 +167,7 @@ TagsApi <- R6::R6Class(
     },
 
     #' @description
-    #' [EXPERIMENTAL] Group tags in the project
+    #' [EXPERIMENTAL] TagGroup tags in the project
     #'
     #' @param project_id project-space to add to.
     #' @param group_name name of the new group
@@ -191,7 +191,7 @@ TagsApi <- R6::R6Class(
     },
 
     #' @description
-    #' [EXPERIMENTAL] Group tags in the project
+    #' [EXPERIMENTAL] TagGroup tags in the project
     #'
     #' @param project_id project-space to add to.
     #' @param group_name name of the new group

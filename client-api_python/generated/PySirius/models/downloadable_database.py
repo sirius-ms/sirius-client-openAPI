@@ -15,18 +15,19 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
-from typing import Any, ClassVar, Dict, List
+from pydantic import BaseModel, ConfigDict, StrictInt, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
 
-class ImportResult(BaseModel):
+class DownloadableDatabase(BaseModel):
     """
-    ImportResult
+    DownloadableDatabase
     """ # noqa: E501
-    affected_compound_ids: List[StrictStr] = Field(description="List of compoundIds that have been imported.", alias="affectedCompoundIds")
-    affected_aligned_feature_ids: List[StrictStr] = Field(description="List of alignedFeatureIds that have been imported.", alias="affectedAlignedFeatureIds")
-    __properties: ClassVar[List[str]] = ["affectedCompoundIds", "affectedAlignedFeatureIds"]
+    id: Optional[StrictStr] = None
+    description: Optional[StrictStr] = None
+    size: Optional[StrictInt] = None
+    __properties: ClassVar[List[str]] = ["id", "description", "size"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -46,7 +47,7 @@ class ImportResult(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of ImportResult from a JSON string"""
+        """Create an instance of DownloadableDatabase from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -71,7 +72,7 @@ class ImportResult(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of ImportResult from a dict"""
+        """Create an instance of DownloadableDatabase from a dict"""
         if obj is None:
             return None
 
@@ -79,8 +80,9 @@ class ImportResult(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "affectedCompoundIds": obj.get("affectedCompoundIds"),
-            "affectedAlignedFeatureIds": obj.get("affectedAlignedFeatureIds")
+            "id": obj.get("id"),
+            "description": obj.get("description"),
+            "size": obj.get("size")
         })
         return _obj
 

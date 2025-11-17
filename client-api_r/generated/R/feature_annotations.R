@@ -12,7 +12,7 @@
 #' @field compoundClassAnnotation  \link{CompoundClasses} [optional]
 #' @field confidenceExactMatch Confidence Score that represents the confidence whether the top hit is correct. numeric [optional]
 #' @field confidenceApproxMatch Confidence Score that represents the confidence whether the top hit or a very similar hit (estimated by MCES distance) is correct. numeric [optional]
-#' @field expansiveSearchState Result that shows if structure annotation was expanded by using PubChem as fallback and if so, which confidence mode was used (as per input paramter) character [optional]
+#' @field expansiveSearchState Result that shows if structure annotation was expanded by using PubChem as fallback and if so, which confidence mode was used (as per input parameter) character [optional]
 #' @field specifiedDatabases List of databases that have been specified by for structure db search. Null if no structure db search has been performed. list(character) [optional]
 #' @field expandedDatabases List of databases that have been used to expand search space during expansive search. Null if no structure db search has been performed. list(character) [optional]
 #' @importFrom R6 R6Class
@@ -38,7 +38,7 @@ FeatureAnnotations <- R6::R6Class(
     #' @param compoundClassAnnotation compoundClassAnnotation
     #' @param confidenceExactMatch Confidence Score that represents the confidence whether the top hit is correct.
     #' @param confidenceApproxMatch Confidence Score that represents the confidence whether the top hit or a very similar hit (estimated by MCES distance) is correct.
-    #' @param expansiveSearchState Result that shows if structure annotation was expanded by using PubChem as fallback and if so, which confidence mode was used (as per input paramter)
+    #' @param expansiveSearchState Result that shows if structure annotation was expanded by using PubChem as fallback and if so, which confidence mode was used (as per input parameter)
     #' @param specifiedDatabases List of databases that have been specified by for structure db search. Null if no structure db search has been performed.
     #' @param expandedDatabases List of databases that have been used to expand search space during expansive search. Null if no structure db search has been performed.
     #' @param ... Other optional arguments.

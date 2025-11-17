@@ -55,10 +55,12 @@ from PySirius.models.db_link import DBLink
 from PySirius.models.data_import_event import DataImportEvent
 from PySirius.models.data_quality import DataQuality
 from PySirius.models.deviation import Deviation
+from PySirius.models.downloadable_database import DownloadableDatabase
 from PySirius.models.feature_annotations import FeatureAnnotations
 from PySirius.models.feature_import import FeatureImport
 from PySirius.models.fingerprint_prediction import FingerprintPrediction
 from PySirius.models.fold_change import FoldChange
+from PySirius.models.fold_change_job_submission import FoldChangeJobSubmission
 from PySirius.models.formula_candidate import FormulaCandidate
 from PySirius.models.formula_candidate_opt_field import FormulaCandidateOptField
 from PySirius.models.fragment_node import FragmentNode
@@ -106,7 +108,6 @@ from PySirius.models.quant_row_type import QuantRowType
 from PySirius.models.quant_table_experimental import QuantTableExperimental
 from PySirius.models.run import Run
 from PySirius.models.run_opt_field import RunOptField
-from PySirius.models.sample_type_fold_change_request import SampleTypeFoldChangeRequest
 from PySirius.models.searchable_database import SearchableDatabase
 from PySirius.models.searchable_database_parameters import SearchableDatabaseParameters
 from PySirius.models.security_context import SecurityContext
@@ -136,6 +137,7 @@ from PySirius.models.tag import Tag
 from PySirius.models.tag_definition import TagDefinition
 from PySirius.models.tag_definition_import import TagDefinitionImport
 from PySirius.models.tag_group import TagGroup
+from PySirius.models.tag_submission import TagSubmission
 from PySirius.models.term import Term
 from PySirius.models.timeout import Timeout
 from PySirius.models.trace_annotation_experimental import TraceAnnotationExperimental

@@ -29,20 +29,16 @@
 #' dput(result)
 #'
 #'
-#' ####################  ComputeFoldChangeForBlankSubtraction  ####################
+#' ####################  AddTagsToRunsExperimental  ####################
 #'
 #' library(RSirius)
-#' var_project_id <- "project_id_example" # character | project-space to compute the fold change in.
-#' var_sample_type_fold_change_request <- SampleTypeFoldChangeRequest$new(c("sampleRunIds_example"), c("blankRunIds_example"), c("controlRunIds_example")) # SampleTypeFoldChangeRequest | request with lists of run IDs that are sample, blank, and control runs
-#' var_opt_fields <- c("none") # array[character] | job opt fields. (Optional)
+#' var_project_id <- "project_id_example" # character | project-space to add to.
+#' var_tag_submission <- c(TagSubmission$new("tagName_example", "taggedObjectId_example", 123)) # array[TagSubmission] | tags with the id of run they shall be added to.
 #'
-#' #**EXPERIMENTAL** Compute the fold changes that are required for the fold change filter
+#' #[EXPERIMENTAL] Add tags to a run in the project
 #' api_instance <- rsirius_api$new()
 #'
-#' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-#' # result <- api_instance$ComputeFoldChangeForBlankSubtraction(var_project_id, var_sample_type_fold_change_request, opt_fields = var_opt_fieldsdata_file = "result.txt")
-#' result <- api_instance$runs_api$ComputeFoldChangeForBlankSubtraction(var_project_id, var_sample_type_fold_change_request, opt_fields = var_opt_fields)
-#' dput(result)
+#' api_instance$runs_api$AddTagsToRunsExperimental(var_project_id, var_tag_submission)
 #'
 #'
 #' ####################  GetRunExperimental  ####################
@@ -58,24 +54,6 @@
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
 #' # result <- api_instance$GetRunExperimental(var_project_id, var_run_id, opt_fields = var_opt_fieldsdata_file = "result.txt")
 #' result <- api_instance$runs_api$GetRunExperimental(var_project_id, var_run_id, opt_fields = var_opt_fields)
-#' dput(result)
-#'
-#'
-#' ####################  GetRunPageExperimental  ####################
-#'
-#' library(RSirius)
-#' var_project_id <- "project_id_example" # character | project-space to read from.
-#' var_page <- 0 # integer | Zero-based page index (0..N) (Optional)
-#' var_size <- 20 # integer | The size of the page to be returned (Optional)
-#' var_sort <- c("inner_example") # array[character] | Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (Optional)
-#' var_opt_fields <- c(RunOptField$new()) # array[RunOptField] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
-#'
-#' #[EXPERIMENTAL] Get all available runs in the given project-space
-#' api_instance <- rsirius_api$new()
-#'
-#' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-#' # result <- api_instance$GetRunPageExperimental(var_project_id, page = var_page, size = var_size, sort = var_sort, opt_fields = var_opt_fieldsdata_file = "result.txt")
-#' result <- api_instance$runs_api$GetRunPageExperimental(var_project_id, page = var_page, size = var_size, sort = var_sort, opt_fields = var_opt_fields)
 #' dput(result)
 #'
 #'
@@ -98,22 +76,22 @@
 #' dput(result)
 #'
 #'
-#' ####################  GetRunsByTagExperimental  ####################
+#' ####################  GetRunsPageExperimental  ####################
 #'
 #' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project space to get runs from.
-#' var_filter <- "" # character | tag filter. (Optional)
+#' var_search_query <- "search_query_example" # character | optional search query in lucene syntax. (Optional)
 #' var_page <- 0 # integer | Zero-based page index (0..N) (Optional)
 #' var_size <- 20 # integer | The size of the page to be returned (Optional)
 #' var_sort <- c("inner_example") # array[character] | Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (Optional)
 #' var_opt_fields <- c(RunOptField$new()) # array[RunOptField] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
 #'
-#' #[EXPERIMENTAL] Get runs by tag
+#' #[EXPERIMENTAL] Get runs in the given project-space
 #' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-#' # result <- api_instance$GetRunsByTagExperimental(var_project_id, filter = var_filter, page = var_page, size = var_size, sort = var_sort, opt_fields = var_opt_fieldsdata_file = "result.txt")
-#' result <- api_instance$runs_api$GetRunsByTagExperimental(var_project_id, filter = var_filter, page = var_page, size = var_size, sort = var_sort, opt_fields = var_opt_fields)
+#' # result <- api_instance$GetRunsPageExperimental(var_project_id, search_query = var_search_query, page = var_page, size = var_size, sort = var_sort, opt_fields = var_opt_fieldsdata_file = "result.txt")
+#' result <- api_instance$runs_api$GetRunsPageExperimental(var_project_id, search_query = var_search_query, page = var_page, size = var_size, sort = var_sort, opt_fields = var_opt_fields)
 #' dput(result)
 #'
 #'
@@ -320,17 +298,15 @@ RunsApi <- R6::R6Class(
     },
 
     #' @description
-    #' **EXPERIMENTAL** Compute the fold changes that are required for the fold change filter
+    #' [EXPERIMENTAL] Add tags to a run in the project
     #'
-    #' @param project_id project-space to compute the fold change in.
-    #' @param sample_type_fold_change_request request with lists of run IDs that are sample, blank, and control runs
-    #' @param opt_fields (optional) job opt fields. (default value: ["progress"])
-    #' @param data_file (optional) name of the data file to save the result
+    #' @param project_id project-space to add to.
+    #' @param tag_submission tags with the id of run they shall be added to.
     #' @param ... Other optional arguments
     #'
-    #' @return Job
-    ComputeFoldChangeForBlankSubtraction = function(project_id, sample_type_fold_change_request, opt_fields = list("progress"), data_file = NULL, ...) {
-      local_var_response <- self$ComputeFoldChangeForBlankSubtractionWithHttpInfo(project_id, sample_type_fold_change_request, opt_fields, data_file = data_file, ...)
+    #' @return void
+    AddTagsToRunsExperimental = function(project_id, tag_submission, ...) {
+      local_var_response <- self$AddTagsToRunsExperimentalWithHttpInfo(project_id, tag_submission, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
@@ -343,16 +319,14 @@ RunsApi <- R6::R6Class(
     },
 
     #' @description
-    #' **EXPERIMENTAL** Compute the fold changes that are required for the fold change filter
+    #' [EXPERIMENTAL] Add tags to a run in the project
     #'
-    #' @param project_id project-space to compute the fold change in.
-    #' @param sample_type_fold_change_request request with lists of run IDs that are sample, blank, and control runs
-    #' @param opt_fields (optional) job opt fields. (default value: ["progress"])
-    #' @param data_file (optional) name of the data file to save the result
+    #' @param project_id project-space to add to.
+    #' @param tag_submission tags with the id of run they shall be added to.
     #' @param ... Other optional arguments
     #'
-    #' @return API response (Job) with additional information such as HTTP status code, headers
-    ComputeFoldChangeForBlankSubtractionWithHttpInfo = function(project_id, sample_type_fold_change_request, opt_fields = list("progress"), data_file = NULL, ...) {
+    #' @return API response (void) with additional information such as HTTP status code, headers
+    AddTagsToRunsExperimentalWithHttpInfo = function(project_id, tag_submission, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -366,36 +340,33 @@ RunsApi <- R6::R6Class(
         stop("Missing required parameter `project_id`.")
       }
 
-      if (missing(`sample_type_fold_change_request`)) {
-        stop("Missing required parameter `sample_type_fold_change_request`.")
+      if (missing(`tag_submission`)) {
+        stop("Missing required parameter `tag_submission`.")
       }
 
 
 
-
-      # explore
-      for (query_item in `opt_fields`) {
-        # validate enum values
-        if (!is.null(query_item) && !(query_item %in% c("none", "command", "progress", "affectedIds"))) {
-          stop("Invalid value for opt_fields when calling RunsApi$ComputeFoldChangeForBlankSubtraction. Must be [none, command, progress, affectedIds].")
-        }
-        query_params[["optFields"]] <- c(query_params[["optFields"]], list(`optFields` = query_item))
-      }
-
-      if (!is.null(`sample_type_fold_change_request`)) {
-        local_var_body <- `sample_type_fold_change_request`$toJSONString()
+      if (!is.null(`tag_submission`)) {
+        body.items <- paste(unlist(lapply(`tag_submission`, function(param) {
+          if (inherits(param, "character")) {
+            param
+          } else {
+            param$toJSONString()
+          }
+        })), collapse = ",")
+        local_var_body <- paste0("[", body.items, "]")
       } else {
         body <- NULL
       }
 
-      local_var_url_path <- "/api/projects/{projectId}/runs/blanksubtract/compute"
+      local_var_url_path <- "/api/projects/{projectId}/runs/tags"
       if (!missing(`project_id`)) {
         local_var_url_path <- gsub("\\{projectId\\}", URLencode(as.character(`project_id`), reserved = TRUE), local_var_url_path)
       }
 
 
       # The Accept request HTTP header
-      local_var_accepts <- list("application/json")
+      local_var_accepts <- list()
 
       # The Content-Type representation header
       local_var_content_types <- list("application/json")
@@ -414,45 +385,7 @@ RunsApi <- R6::R6Class(
                                  ...)
 
       if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
-        # save response in a file
-        if (!is.null(data_file)) {
-          write(local_var_resp$response, data_file)
-        }
-
-        # Check if we are expecting a CSV response
-        is_csv_response <- any(grepl("csv", local_var_accepts, ignore.case = TRUE))
-
-        if (is_csv_response) {
-          # For CSV responses, parse into data.frame
-          csv_resp_obj <- tryCatch(
-            {
-              csv_text <- rawToChar(local_var_resp$response)
-
-              # Detect separator by examining first line
-              first_line <- strsplit(csv_text, "\n")[[1]][1]
-              if (grepl("\t", first_line)) {
-                # Tab-separated (TSV)
-                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = "\t")
-              } else {
-                # Comma-separated (CSV)
-                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = ",")
-              }
-            },
-            error = function(e) {
-              stop("Failed to parse CSV response")
-            }
-          )
-          local_var_resp$content <- csv_resp_obj
-        } else {
-          # For JSON responses, deserialize normally
-          deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "Job", loadNamespace("RSirius")),
-            error = function(e) {
-              stop("Failed to deserialize response")
-            }
-          )
-          local_var_resp$content <- deserialized_resp_obj
-        }
+        local_var_resp$content <- NULL
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
@@ -588,160 +521,6 @@ RunsApi <- R6::R6Class(
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
             self$api_client$deserialize(local_var_resp$response_as_text(), "Run", loadNamespace("RSirius")),
-            error = function(e) {
-              stop("Failed to deserialize response")
-            }
-          )
-          local_var_resp$content <- deserialized_resp_obj
-        }
-        local_var_resp
-      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
-        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
-      } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
-        ApiResponse$new("API client error", local_var_resp)
-      } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
-        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
-          local_var_resp$response <- "API server error"
-        }
-        local_var_resp
-      }
-    },
-
-    #' @description
-    #' [EXPERIMENTAL] Get all available runs in the given project-space
-    #'
-    #' @param project_id project-space to read from.
-    #' @param page (optional) Zero-based page index (0..N) (default value: 0)
-    #' @param size (optional) The size of the page to be returned (default value: 20)
-    #' @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
-    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [])
-    #' @param data_file (optional) name of the data file to save the result
-    #' @param ... Other optional arguments
-    #'
-    #' @return PagedModelRun
-    GetRunPageExperimental = function(project_id, page = 0, size = 20, sort = NULL, opt_fields = list(), data_file = NULL, ...) {
-      local_var_response <- self$GetRunPageExperimentalWithHttpInfo(project_id, page, size, sort, opt_fields, data_file = data_file, ...)
-      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
-        local_var_response$content
-      } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
-        local_var_response
-      } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
-        local_var_response
-      } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
-        local_var_response
-      }
-    },
-
-    #' @description
-    #' [EXPERIMENTAL] Get all available runs in the given project-space
-    #'
-    #' @param project_id project-space to read from.
-    #' @param page (optional) Zero-based page index (0..N) (default value: 0)
-    #' @param size (optional) The size of the page to be returned (default value: 20)
-    #' @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
-    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [])
-    #' @param data_file (optional) name of the data file to save the result
-    #' @param ... Other optional arguments
-    #'
-    #' @return API response (PagedModelRun) with additional information such as HTTP status code, headers
-    GetRunPageExperimentalWithHttpInfo = function(project_id, page = 0, size = 20, sort = NULL, opt_fields = list(), data_file = NULL, ...) {
-      args <- list(...)
-      query_params <- list()
-      header_params <- c()
-      form_params <- list()
-      file_params <- list()
-      local_var_body <- NULL
-      oauth_scopes <- NULL
-      is_oauth <- FALSE
-
-      if (missing(`project_id`)) {
-        stop("Missing required parameter `project_id`.")
-      }
-
-
-      if (`page` < 0) {
-        stop("Invalid value for `page` when calling RunsApi$GetRunPageExperimental, must be bigger than or equal to 0.")
-      }
-
-      if (`size` < 1) {
-        stop("Invalid value for `size` when calling RunsApi$GetRunPageExperimental, must be bigger than or equal to 1.")
-      }
-
-
-
-      query_params[["page"]] <- `page`
-
-      query_params[["size"]] <- `size`
-
-      # explore
-      for (query_item in `sort`) {
-        query_params[["sort"]] <- c(query_params[["sort"]], list(`sort` = query_item))
-      }
-
-      # explore
-      for (query_item in `opt_fields`) {
-        query_params[["optFields"]] <- c(query_params[["optFields"]], list(`optFields` = query_item))
-      }
-
-      local_var_url_path <- "/api/projects/{projectId}/runs/page"
-      if (!missing(`project_id`)) {
-        local_var_url_path <- gsub("\\{projectId\\}", URLencode(as.character(`project_id`), reserved = TRUE), local_var_url_path)
-      }
-
-
-      # The Accept request HTTP header
-      local_var_accepts <- list("application/json")
-
-      # The Content-Type representation header
-      local_var_content_types <- list()
-
-      local_var_resp <- self$api_client$CallApi(url = paste0(self$api_client$base_path, local_var_url_path),
-                                 method = "GET",
-                                 query_params = query_params,
-                                 header_params = header_params,
-                                 form_params = form_params,
-                                 file_params = file_params,
-                                 accepts = local_var_accepts,
-                                 content_types = local_var_content_types,
-                                 body = local_var_body,
-                                 is_oauth = is_oauth,
-                                 oauth_scopes = oauth_scopes,
-                                 ...)
-
-      if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
-        # save response in a file
-        if (!is.null(data_file)) {
-          write(local_var_resp$response, data_file)
-        }
-
-        # Check if we are expecting a CSV response
-        is_csv_response <- any(grepl("csv", local_var_accepts, ignore.case = TRUE))
-
-        if (is_csv_response) {
-          # For CSV responses, parse into data.frame
-          csv_resp_obj <- tryCatch(
-            {
-              csv_text <- rawToChar(local_var_resp$response)
-
-              # Detect separator by examining first line
-              first_line <- strsplit(csv_text, "\n")[[1]][1]
-              if (grepl("\t", first_line)) {
-                # Tab-separated (TSV)
-                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = "\t")
-              } else {
-                # Comma-separated (CSV)
-                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = ",")
-              }
-            },
-            error = function(e) {
-              stop("Failed to parse CSV response")
-            }
-          )
-          local_var_resp$content <- csv_resp_obj
-        } else {
-          # For JSON responses, deserialize normally
-          deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "PagedModelRun", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }
@@ -925,10 +704,10 @@ RunsApi <- R6::R6Class(
     },
 
     #' @description
-    #' [EXPERIMENTAL] Get runs by tag
+    #' [EXPERIMENTAL] Get runs in the given project-space
     #'
     #' @param project_id project space to get runs from.
-    #' @param filter (optional) tag filter. (default value: "")
+    #' @param search_query (optional) optional search query in lucene syntax.
     #' @param page (optional) Zero-based page index (0..N) (default value: 0)
     #' @param size (optional) The size of the page to be returned (default value: 20)
     #' @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
@@ -937,8 +716,8 @@ RunsApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #'
     #' @return PagedModelRun
-    GetRunsByTagExperimental = function(project_id, filter = "", page = 0, size = 20, sort = NULL, opt_fields = list(), data_file = NULL, ...) {
-      local_var_response <- self$GetRunsByTagExperimentalWithHttpInfo(project_id, filter, page, size, sort, opt_fields, data_file = data_file, ...)
+    GetRunsPageExperimental = function(project_id, search_query = NULL, page = 0, size = 20, sort = NULL, opt_fields = list(), data_file = NULL, ...) {
+      local_var_response <- self$GetRunsPageExperimentalWithHttpInfo(project_id, search_query, page, size, sort, opt_fields, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
@@ -951,10 +730,10 @@ RunsApi <- R6::R6Class(
     },
 
     #' @description
-    #' [EXPERIMENTAL] Get runs by tag
+    #' [EXPERIMENTAL] Get runs in the given project-space
     #'
     #' @param project_id project space to get runs from.
-    #' @param filter (optional) tag filter. (default value: "")
+    #' @param search_query (optional) optional search query in lucene syntax.
     #' @param page (optional) Zero-based page index (0..N) (default value: 0)
     #' @param size (optional) The size of the page to be returned (default value: 20)
     #' @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
@@ -963,7 +742,7 @@ RunsApi <- R6::R6Class(
     #' @param ... Other optional arguments
     #'
     #' @return API response (PagedModelRun) with additional information such as HTTP status code, headers
-    GetRunsByTagExperimentalWithHttpInfo = function(project_id, filter = "", page = 0, size = 20, sort = NULL, opt_fields = list(), data_file = NULL, ...) {
+    GetRunsPageExperimentalWithHttpInfo = function(project_id, search_query = NULL, page = 0, size = 20, sort = NULL, opt_fields = list(), data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -980,16 +759,16 @@ RunsApi <- R6::R6Class(
 
 
       if (`page` < 0) {
-        stop("Invalid value for `page` when calling RunsApi$GetRunsByTagExperimental, must be bigger than or equal to 0.")
+        stop("Invalid value for `page` when calling RunsApi$GetRunsPageExperimental, must be bigger than or equal to 0.")
       }
 
       if (`size` < 1) {
-        stop("Invalid value for `size` when calling RunsApi$GetRunsByTagExperimental, must be bigger than or equal to 1.")
+        stop("Invalid value for `size` when calling RunsApi$GetRunsPageExperimental, must be bigger than or equal to 1.")
       }
 
 
 
-      query_params[["filter"]] <- `filter`
+      query_params[["searchQuery"]] <- `search_query`
 
       query_params[["page"]] <- `page`
 
@@ -1005,7 +784,7 @@ RunsApi <- R6::R6Class(
         query_params[["optFields"]] <- c(query_params[["optFields"]], list(`optFields` = query_item))
       }
 
-      local_var_url_path <- "/api/projects/{projectId}/runs/tagged"
+      local_var_url_path <- "/api/projects/{projectId}/runs/page"
       if (!missing(`project_id`)) {
         local_var_url_path <- gsub("\\{projectId\\}", URLencode(as.character(`project_id`), reserved = TRUE), local_var_url_path)
       }

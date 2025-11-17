@@ -7,6 +7,7 @@
 #' @title Category
 #' @description Category Class
 #' @format An \code{R6Class} generator object
+#' @field categoryId  character [optional]
 #' @field categoryName  character [optional]
 #' @field overallQuality  character [optional]
 #' @field items  list(\link{QualityItem}) [optional]
@@ -16,6 +17,7 @@
 Category <- R6::R6Class(
   "Category",
   public = list(
+    `categoryId` = NULL,
     `categoryName` = NULL,
     `overallQuality` = NULL,
     `items` = NULL,
@@ -23,11 +25,18 @@ Category <- R6::R6Class(
     #' @description
     #' Initialize a new Category class.
     #'
+    #' @param categoryId categoryId
     #' @param categoryName categoryName
     #' @param overallQuality overallQuality
     #' @param items items
     #' @param ... Other optional arguments.
-    initialize = function(`categoryName` = NULL, `overallQuality` = NULL, `items` = NULL, ...) {
+    initialize = function(`categoryId` = NULL, `categoryName` = NULL, `overallQuality` = NULL, `items` = NULL, ...) {
+      if (!is.null(`categoryId`)) {
+        if (!(is.character(`categoryId`) && length(`categoryId`) == 1)) {
+          stop(paste("Error! Invalid data for `categoryId`. Must be a string:", `categoryId`))
+        }
+        self$`categoryId` <- `categoryId`
+      }
       if (!is.null(`categoryName`)) {
         if (!(is.character(`categoryName`) && length(`categoryName`) == 1)) {
           stop(paste("Error! Invalid data for `categoryName`. Must be a string:", `categoryName`))
@@ -81,6 +90,10 @@ Category <- R6::R6Class(
     #' @return A base R type, e.g. a list or numeric/character array.
     toSimpleType = function() {
       CategoryObject <- list()
+      if (!is.null(self$`categoryId`)) {
+        CategoryObject[["categoryId"]] <-
+          self$`categoryId`
+      }
       if (!is.null(self$`categoryName`)) {
         CategoryObject[["categoryName"]] <-
           self$`categoryName`
@@ -103,6 +116,9 @@ Category <- R6::R6Class(
     #' @return the instance of Category
     fromJSON = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
+      if (!is.null(this_object$`categoryId`)) {
+        self$`categoryId` <- this_object$`categoryId`
+      }
       if (!is.null(this_object$`categoryName`)) {
         self$`categoryName` <- this_object$`categoryName`
       }
@@ -136,6 +152,7 @@ Category <- R6::R6Class(
     #' @return the instance of Category
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
+      self$`categoryId` <- this_object$`categoryId`
       self$`categoryName` <- this_object$`categoryName`
       if (!is.null(this_object$`overallQuality`) && !(this_object$`overallQuality` %in% c("NOT_APPLICABLE", "LOWEST", "BAD", "DECENT", "GOOD"))) {
         stop(paste("Error! \"", this_object$`overallQuality`, "\" cannot be assigned to `overallQuality`. Must be \"NOT_APPLICABLE\", \"LOWEST\", \"BAD\", \"DECENT\", \"GOOD\".", sep = ""))

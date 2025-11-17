@@ -47,8 +47,9 @@ class AlignedFeature(BaseModel):
     top_annotations_de_novo: Optional[FeatureAnnotations] = Field(default=None, alias="topAnnotationsDeNovo")
     computing: Optional[StrictBool] = Field(default=None, description="Write lock for this feature. If the feature is locked no write operations are possible.  True if any computation is modifying this feature or its results")
     computed_tools: Optional[ComputedSubtools] = Field(default=None, alias="computedTools")
+    qualities: Optional[Dict[str, Optional[DataQuality]]] = Field(default=None, description="Qualities per top level quality category.")
     tags: Optional[Dict[str, Tag]] = Field(default=None, description="Key: tagName, value: tag")
-    __properties: ClassVar[List[str]] = ["alignedFeatureId", "compoundId", "name", "externalFeatureId", "ionMass", "charge", "detectedAdducts", "rtStartSeconds", "rtEndSeconds", "rtApexSeconds", "quality", "hasMs1", "hasMsMs", "msData", "topAnnotations", "topAnnotationsDeNovo", "computing", "computedTools", "tags"]
+    __properties: ClassVar[List[str]] = ["alignedFeatureId", "compoundId", "name", "externalFeatureId", "ionMass", "charge", "detectedAdducts", "rtStartSeconds", "rtEndSeconds", "rtApexSeconds", "quality", "hasMs1", "hasMsMs", "msData", "topAnnotations", "topAnnotationsDeNovo", "computing", "computedTools", "qualities", "tags"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -148,6 +149,11 @@ class AlignedFeature(BaseModel):
         if self.computed_tools is None and "computed_tools" in self.model_fields_set:
             _dict['computedTools'] = None
 
+        # set to None if qualities (nullable) is None
+        # and model_fields_set contains the field
+        if self.qualities is None and "qualities" in self.model_fields_set:
+            _dict['qualities'] = None
+
         # set to None if tags (nullable) is None
         # and model_fields_set contains the field
         if self.tags is None and "tags" in self.model_fields_set:
@@ -183,6 +189,7 @@ class AlignedFeature(BaseModel):
             "topAnnotationsDeNovo": FeatureAnnotations.from_dict(obj["topAnnotationsDeNovo"]) if obj.get("topAnnotationsDeNovo") is not None else None,
             "computing": obj.get("computing"),
             "computedTools": ComputedSubtools.from_dict(obj["computedTools"]) if obj.get("computedTools") is not None else None,
+            "qualities": dict((_k, _v) for _k, _v in obj.get("qualities").items()) if obj.get("qualities") is not None else None,
             "tags": dict(
                 (_k, Tag.from_dict(_v))
                 for _k, _v in obj["tags"].items()

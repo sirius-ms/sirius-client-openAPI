@@ -6,7 +6,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **sid** | **str** | Unique identifier of this subscription | [optional] 
-**subscriber_id** | **str** | ID of the owner of the subscription.  This can be the ID of any SubscriptionOwner (e.g.  Group or  User)  depending on the level on which a subscription should be is valid. | [optional] 
+**subscriber_id** | **str** | ID of the owner of the subscription.  This can be the ID of any SubscriptionOwner (e.g.  TagGroup or  User)  depending on the level on which a subscription should be is valid. | [optional] 
 **subscriber_name** | **str** | Optional name of the owner of this subscription | [optional] 
 **expiration_date** | **datetime** |  | [optional] 
 **start_date** | **datetime** |  | [optional] 

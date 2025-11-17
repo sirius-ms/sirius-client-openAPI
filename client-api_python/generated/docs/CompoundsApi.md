@@ -6,6 +6,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**add_compounds**](CompoundsApi.md#add_compounds) | **POST** /api/projects/{projectId}/compounds | Import Compounds and its contained features.
 [**add_tags_to_compound_experimental**](CompoundsApi.md#add_tags_to_compound_experimental) | **PUT** /api/projects/{projectId}/compounds/tags/{compoundId} | [EXPERIMENTAL] Tags with the same name will be overwritten
+[**add_tags_to_objects**](CompoundsApi.md#add_tags_to_objects) | **PUT** /api/projects/{projectId}/compounds/tags | Tags with the same name will be overwritten.
 [**delete_compound**](CompoundsApi.md#delete_compound) | **DELETE** /api/projects/{projectId}/compounds/{compoundId} | Delete compound (group of ion identities) with the given identifier (and the included features) from the  specified project-space.
 [**get_compound**](CompoundsApi.md#get_compound) | **GET** /api/projects/{projectId}/compounds/{compoundId} | Get compound (group of ion identities) with the given identifier from the specified project-space.
 [**get_compound_quant_table_experimental**](CompoundsApi.md#get_compound_quant_table_experimental) | **GET** /api/projects/{projectId}/compounds/quant-table | [EXPERIMENTAL] Returns the full quantification table of compounds
@@ -13,8 +14,7 @@ Method | HTTP request | Description
 [**get_compound_traces_experimental**](CompoundsApi.md#get_compound_traces_experimental) | **GET** /api/projects/{projectId}/compounds/{compoundId}/traces | [EXPERIMENTAL] Returns the traces of the given compound
 [**get_compounds**](CompoundsApi.md#get_compounds) | **GET** /api/projects/{projectId}/compounds | List of all available compounds (group of ion identities) in the given project-space.
 [**get_compounds_by_group_experimental**](CompoundsApi.md#get_compounds_by_group_experimental) | **GET** /api/projects/{projectId}/compounds/grouped | [EXPERIMENTAL] Get compounds (group of ion identities) by tag group
-[**get_compounds_by_tag_experimental**](CompoundsApi.md#get_compounds_by_tag_experimental) | **GET** /api/projects/{projectId}/compounds/tagged | [EXPERIMENTAL] Get compounds (group of ion identities) by tag
-[**get_compounds_paged**](CompoundsApi.md#get_compounds_paged) | **GET** /api/projects/{projectId}/compounds/page | Page of available compounds (group of ion identities) in the given project-space.
+[**get_compounds_page_experimental**](CompoundsApi.md#get_compounds_page_experimental) | **GET** /api/projects/{projectId}/compounds/page | [EXPERIMENTAL] Page of available compounds (group of ion identities) in the given project-space
 [**get_tags_for_compound_experimental**](CompoundsApi.md#get_tags_for_compound_experimental) | **GET** /api/projects/{projectId}/compounds/tags/{objectId} | [EXPERIMENTAL] Get all tags associated with this Compound
 [**remove_tag_from_compound_experimental**](CompoundsApi.md#remove_tag_from_compound_experimental) | **DELETE** /api/projects/{projectId}/compounds/tags/{compoundId}/{tagName} | [EXPERIMENTAL] Delete tag with the given name from the compound (group of ion identities) with the specified ID in the specified project-space
 
@@ -171,6 +171,74 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | the tags that have been added |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **add_tags_to_objects**
+> add_tags_to_objects(project_id, tag_submission)
+
+Tags with the same name will be overwritten.
+
+Tags with the same name will be overwritten.
+
+### Example
+
+
+```python
+import PySirius
+from PySirius.models.tag_submission import TagSubmission
+from PySirius.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to http://localhost:8080
+# See configuration.py for a list of all supported configuration parameters.
+configuration = PySirius.Configuration(
+    host = "http://localhost:8080"
+)
+
+
+# Enter a context with an instance of the API client
+with PySirius.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = PySirius.CompoundsApi(api_client)
+    project_id = 'project_id_example' # str | project-space to add to.
+    tag_submission = [PySirius.TagSubmission()] # List[TagSubmission] | tags with id of the object to be added to.
+
+    try:
+        # Tags with the same name will be overwritten.
+        api_instance.add_tags_to_objects(project_id, tag_submission)
+    except Exception as e:
+        print("Exception when calling CompoundsApi->add_tags_to_objects: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **project_id** | **str**| project-space to add to. | 
+ **tag_submission** | [**List[TagSubmission]**](TagSubmission.md)| tags with id of the object to be added to. | 
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: Not defined
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -631,7 +699,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_compounds_by_group_experimental**
-> PagedModelCompound get_compounds_by_group_experimental(project_id, group_name, page=page, size=size, sort=sort, opt_fields=opt_fields)
+> PagedModelCompound get_compounds_by_group_experimental(project_id, group_name, page=page, size=size, sort=sort, ms_data_as_cosine_query=ms_data_as_cosine_query, opt_fields=opt_fields, opt_fields_features=opt_fields_features)
 
 [EXPERIMENTAL] Get compounds (group of ion identities) by tag group
 
@@ -644,6 +712,7 @@ No authorization required
 
 ```python
 import PySirius
+from PySirius.models.aligned_feature_opt_field import AlignedFeatureOptField
 from PySirius.models.compound_opt_field import CompoundOptField
 from PySirius.models.paged_model_compound import PagedModelCompound
 from PySirius.rest import ApiException
@@ -665,11 +734,13 @@ with PySirius.ApiClient(configuration) as api_client:
     page = 0 # int | Zero-based page index (0..N) (optional) (default to 0)
     size = 20 # int | The size of the page to be returned (optional) (default to 20)
     sort = ['sort_example'] # List[str] | Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (optional)
+    ms_data_as_cosine_query = False # bool | Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. (optional) (default to False)
     opt_fields = ["none"] # List[CompoundOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to ["none"])
+    opt_fields_features = ["none"] # List[AlignedFeatureOptField] |  (optional) (default to ["none"])
 
     try:
         # [EXPERIMENTAL] Get compounds (group of ion identities) by tag group
-        api_response = api_instance.get_compounds_by_group_experimental(project_id, group_name, page=page, size=size, sort=sort, opt_fields=opt_fields)
+        api_response = api_instance.get_compounds_by_group_experimental(project_id, group_name, page=page, size=size, sort=sort, ms_data_as_cosine_query=ms_data_as_cosine_query, opt_fields=opt_fields, opt_fields_features=opt_fields_features)
         print("The response of CompoundsApi->get_compounds_by_group_experimental:\n")
         pprint(api_response)
     except Exception as e:
@@ -688,7 +759,9 @@ Name | Type | Description  | Notes
  **page** | **int**| Zero-based page index (0..N) | [optional] [default to 0]
  **size** | **int**| The size of the page to be returned | [optional] [default to 20]
  **sort** | [**List[str]**](str.md)| Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. | [optional] 
+ **ms_data_as_cosine_query** | **bool**| Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. | [optional] [default to False]
  **opt_fields** | [**List[CompoundOptField]**](CompoundOptField.md)| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;none&quot;]]
+ **opt_fields_features** | [**List[AlignedFeatureOptField]**](AlignedFeatureOptField.md)|  | [optional] [default to [&quot;none&quot;]]
 
 ### Return type
 
@@ -711,19 +784,19 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_compounds_by_tag_experimental**
-> PagedModelCompound get_compounds_by_tag_experimental(project_id, filter=filter, page=page, size=size, sort=sort, opt_fields=opt_fields)
+# **get_compounds_page_experimental**
+> PagedModelCompound get_compounds_page_experimental(project_id, search_query=search_query, page=page, size=size, sort=sort, ms_data_search_prepared=ms_data_search_prepared, opt_fields=opt_fields, opt_fields_features=opt_fields_features)
 
-[EXPERIMENTAL] Get compounds (group of ion identities) by tag
+[EXPERIMENTAL] Page of available compounds (group of ion identities) in the given project-space
 
-[EXPERIMENTAL] Get compounds (group of ion identities) by tag.
+[EXPERIMENTAL] Page of available compounds (group of ion identities) in the given project-space.
 
  <h2>Supported filter syntax</h2>
 
  <p>The filter string must contain one or more clauses. A clause is prefíxed
  by a field name.
  </p>
-
+ <p>
  Currently the only searchable fields are names of tags (<code>tagName</code>) followed by a clause that is valued for the value type of the tag (See TagDefinition).
  Tag name based field need to be prefixed with the namespace <code>tags.</code>.
  Possible value types of tags are <strong>bool</strong>, <strong>integer</strong>, <strong>real</strong>, <strong>text</strong>, <strong>date</strong>, or <strong>time</strong> - tag value
@@ -746,87 +819,8 @@ No authorization required
  <p>The syntax allows to build complex filter queries such as:</p>
 
  <p><code>tags.city:&quot;new york&quot; AND tags.ATextTag:/[mb]oat/ AND tags.count:[1 TO *] OR tags.realNumberTag&lt;=3.2 OR tags.MyDateTag:2024-01-01 OR tags.MyDateTag:[2023-10-01 TO 2023-12-24] OR tags.MyDateTag&lt;2022-01-01 OR tags.time:12\:00\:00 OR tags.time:[12\:00\:00 TO 14\:00\:00] OR tags.time&lt;10\:00\:00 </code></p>
-
+ <p>
  [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.
-
-### Example
-
-
-```python
-import PySirius
-from PySirius.models.compound_opt_field import CompoundOptField
-from PySirius.models.paged_model_compound import PagedModelCompound
-from PySirius.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to http://localhost:8080
-# See configuration.py for a list of all supported configuration parameters.
-configuration = PySirius.Configuration(
-    host = "http://localhost:8080"
-)
-
-
-# Enter a context with an instance of the API client
-with PySirius.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = PySirius.CompoundsApi(api_client)
-    project_id = 'project_id_example' # str | project space to get compounds (group of ion identities) from.
-    filter = '' # str | tag filter. (optional) (default to '')
-    page = 0 # int | Zero-based page index (0..N) (optional) (default to 0)
-    size = 20 # int | The size of the page to be returned (optional) (default to 20)
-    sort = ['sort_example'] # List[str] | Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (optional)
-    opt_fields = [] # List[CompoundOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to [])
-
-    try:
-        # [EXPERIMENTAL] Get compounds (group of ion identities) by tag
-        api_response = api_instance.get_compounds_by_tag_experimental(project_id, filter=filter, page=page, size=size, sort=sort, opt_fields=opt_fields)
-        print("The response of CompoundsApi->get_compounds_by_tag_experimental:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling CompoundsApi->get_compounds_by_tag_experimental: %s\n" % e)
-```
-
-
-
-### Parameters
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **project_id** | **str**| project space to get compounds (group of ion identities) from. | 
- **filter** | **str**| tag filter. | [optional] [default to &#39;&#39;]
- **page** | **int**| Zero-based page index (0..N) | [optional] [default to 0]
- **size** | **int**| The size of the page to be returned | [optional] [default to 20]
- **sort** | [**List[str]**](str.md)| Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. | [optional] 
- **opt_fields** | [**List[CompoundOptField]**](CompoundOptField.md)| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to []]
-
-### Return type
-
-[**PagedModelCompound**](PagedModelCompound.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | tagged compounds (group of ion identities) |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **get_compounds_paged**
-> PagedModelCompound get_compounds_paged(project_id, page=page, size=size, sort=sort, ms_data_search_prepared=ms_data_search_prepared, opt_fields=opt_fields, opt_fields_features=opt_fields_features)
-
-Page of available compounds (group of ion identities) in the given project-space.
-
-Page of available compounds (group of ion identities) in the given project-space.
 
 ### Example
 
@@ -851,6 +845,7 @@ with PySirius.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = PySirius.CompoundsApi(api_client)
     project_id = 'project_id_example' # str | project-space to read from.
+    search_query = 'search_query_example' # str | search query in lucene syntax. (optional)
     page = 0 # int | Zero-based page index (0..N) (optional) (default to 0)
     size = 20 # int | The size of the page to be returned (optional) (default to 20)
     sort = ['sort_example'] # List[str] | Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (optional)
@@ -859,12 +854,12 @@ with PySirius.ApiClient(configuration) as api_client:
     opt_fields_features = ["none"] # List[AlignedFeatureOptField] |  (optional) (default to ["none"])
 
     try:
-        # Page of available compounds (group of ion identities) in the given project-space.
-        api_response = api_instance.get_compounds_paged(project_id, page=page, size=size, sort=sort, ms_data_search_prepared=ms_data_search_prepared, opt_fields=opt_fields, opt_fields_features=opt_fields_features)
-        print("The response of CompoundsApi->get_compounds_paged:\n")
+        # [EXPERIMENTAL] Page of available compounds (group of ion identities) in the given project-space
+        api_response = api_instance.get_compounds_page_experimental(project_id, search_query=search_query, page=page, size=size, sort=sort, ms_data_search_prepared=ms_data_search_prepared, opt_fields=opt_fields, opt_fields_features=opt_fields_features)
+        print("The response of CompoundsApi->get_compounds_page_experimental:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling CompoundsApi->get_compounds_paged: %s\n" % e)
+        print("Exception when calling CompoundsApi->get_compounds_page_experimental: %s\n" % e)
 ```
 
 
@@ -875,6 +870,7 @@ with PySirius.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **str**| project-space to read from. | 
+ **search_query** | **str**| search query in lucene syntax. | [optional] 
  **page** | **int**| Zero-based page index (0..N) | [optional] [default to 0]
  **size** | **int**| The size of the page to be returned | [optional] [default to 20]
  **sort** | [**List[str]**](str.md)| Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. | [optional] 
@@ -899,7 +895,7 @@ No authorization required
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Compounds with additional optional fields (if specified). |  -  |
+**200** | tagged compounds (group of ion identities) |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

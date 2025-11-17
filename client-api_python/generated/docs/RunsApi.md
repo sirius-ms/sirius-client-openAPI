@@ -5,11 +5,10 @@ All URIs are relative to *http://localhost:8080*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**add_tags_to_run_experimental**](RunsApi.md#add_tags_to_run_experimental) | **PUT** /api/projects/{projectId}/runs/tags/{runId} | [EXPERIMENTAL] Add tags to a run in the project
-[**compute_fold_change_for_blank_subtraction**](RunsApi.md#compute_fold_change_for_blank_subtraction) | **PUT** /api/projects/{projectId}/runs/blanksubtract/compute | **EXPERIMENTAL** Compute the fold changes that are required for the fold change filter
+[**add_tags_to_runs_experimental**](RunsApi.md#add_tags_to_runs_experimental) | **PUT** /api/projects/{projectId}/runs/tags | [EXPERIMENTAL] Add tags to a run in the project
 [**get_run_experimental**](RunsApi.md#get_run_experimental) | **GET** /api/projects/{projectId}/runs/{runId} | [EXPERIMENTAL] Get run with the given identifier from the specified project-space
-[**get_run_page_experimental**](RunsApi.md#get_run_page_experimental) | **GET** /api/projects/{projectId}/runs/page | [EXPERIMENTAL] Get all available runs in the given project-space
 [**get_runs_by_group_experimental**](RunsApi.md#get_runs_by_group_experimental) | **GET** /api/projects/{projectId}/runs/grouped | [EXPERIMENTAL] Get runs by tag group
-[**get_runs_by_tag_experimental**](RunsApi.md#get_runs_by_tag_experimental) | **GET** /api/projects/{projectId}/runs/tagged | [EXPERIMENTAL] Get runs by tag
+[**get_runs_page_experimental**](RunsApi.md#get_runs_page_experimental) | **GET** /api/projects/{projectId}/runs/page | [EXPERIMENTAL] Get runs in the given project-space
 [**get_tags_for_run_experimental**](RunsApi.md#get_tags_for_run_experimental) | **GET** /api/projects/{projectId}/runs/tags/{objectId} | [EXPERIMENTAL] Get all tags associated with this Run
 [**remove_tag_from_run_experimental**](RunsApi.md#remove_tag_from_run_experimental) | **DELETE** /api/projects/{projectId}/runs/tags/{runId}/{tagName} | [EXPERIMENTAL] Delete tag with the given name from the run with the specified ID in the specified project-space
 
@@ -88,23 +87,21 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **compute_fold_change_for_blank_subtraction**
-> Job compute_fold_change_for_blank_subtraction(project_id, sample_type_fold_change_request, opt_fields=opt_fields)
+# **add_tags_to_runs_experimental**
+> add_tags_to_runs_experimental(project_id, tag_submission)
 
-**EXPERIMENTAL** Compute the fold changes that are required for the fold change filter
+[EXPERIMENTAL] Add tags to a run in the project
 
-**EXPERIMENTAL** Compute the fold changes that are required for the fold change filter.
-
- <p>This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.</p>
+[EXPERIMENTAL] Add tags to a run in the project. Tags with the same name will be overwritten.
+ <p>
+ [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.
 
 ### Example
 
 
 ```python
 import PySirius
-from PySirius.models.job import Job
-from PySirius.models.job_opt_field import JobOptField
-from PySirius.models.sample_type_fold_change_request import SampleTypeFoldChangeRequest
+from PySirius.models.tag_submission import TagSubmission
 from PySirius.rest import ApiException
 from pprint import pprint
 
@@ -119,17 +116,14 @@ configuration = PySirius.Configuration(
 with PySirius.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = PySirius.RunsApi(api_client)
-    project_id = 'project_id_example' # str | project-space to compute the fold change in.
-    sample_type_fold_change_request = PySirius.SampleTypeFoldChangeRequest() # SampleTypeFoldChangeRequest | request with lists of run IDs that are sample, blank, and control runs
-    opt_fields = ["progress"] # List[JobOptField] | job opt fields. (optional) (default to ["progress"])
+    project_id = 'project_id_example' # str | project-space to add to.
+    tag_submission = [PySirius.TagSubmission()] # List[TagSubmission] | tags with the id of run they shall be added to.
 
     try:
-        # **EXPERIMENTAL** Compute the fold changes that are required for the fold change filter
-        api_response = api_instance.compute_fold_change_for_blank_subtraction(project_id, sample_type_fold_change_request, opt_fields=opt_fields)
-        print("The response of RunsApi->compute_fold_change_for_blank_subtraction:\n")
-        pprint(api_response)
+        # [EXPERIMENTAL] Add tags to a run in the project
+        api_instance.add_tags_to_runs_experimental(project_id, tag_submission)
     except Exception as e:
-        print("Exception when calling RunsApi->compute_fold_change_for_blank_subtraction: %s\n" % e)
+        print("Exception when calling RunsApi->add_tags_to_runs_experimental: %s\n" % e)
 ```
 
 
@@ -139,13 +133,12 @@ with PySirius.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **project_id** | **str**| project-space to compute the fold change in. | 
- **sample_type_fold_change_request** | [**SampleTypeFoldChangeRequest**](SampleTypeFoldChangeRequest.md)| request with lists of run IDs that are sample, blank, and control runs | 
- **opt_fields** | [**List[JobOptField]**](JobOptField.md)| job opt fields. | [optional] [default to [&quot;progress&quot;]]
+ **project_id** | **str**| project-space to add to. | 
+ **tag_submission** | [**List[TagSubmission]**](TagSubmission.md)| tags with the id of run they shall be added to. | 
 
 ### Return type
 
-[**Job**](Job.md)
+void (empty response body)
 
 ### Authorization
 
@@ -154,7 +147,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: application/json
+ - **Accept**: Not defined
 
 ### HTTP response details
 
@@ -239,85 +232,6 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_run_page_experimental**
-> PagedModelRun get_run_page_experimental(project_id, page=page, size=size, sort=sort, opt_fields=opt_fields)
-
-[EXPERIMENTAL] Get all available runs in the given project-space
-
-[EXPERIMENTAL] Get all available runs in the given project-space.
- <p>
- [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.
-
-### Example
-
-
-```python
-import PySirius
-from PySirius.models.paged_model_run import PagedModelRun
-from PySirius.models.run_opt_field import RunOptField
-from PySirius.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to http://localhost:8080
-# See configuration.py for a list of all supported configuration parameters.
-configuration = PySirius.Configuration(
-    host = "http://localhost:8080"
-)
-
-
-# Enter a context with an instance of the API client
-with PySirius.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = PySirius.RunsApi(api_client)
-    project_id = 'project_id_example' # str | project-space to read from.
-    page = 0 # int | Zero-based page index (0..N) (optional) (default to 0)
-    size = 20 # int | The size of the page to be returned (optional) (default to 20)
-    sort = ['sort_example'] # List[str] | Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (optional)
-    opt_fields = [] # List[RunOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to [])
-
-    try:
-        # [EXPERIMENTAL] Get all available runs in the given project-space
-        api_response = api_instance.get_run_page_experimental(project_id, page=page, size=size, sort=sort, opt_fields=opt_fields)
-        print("The response of RunsApi->get_run_page_experimental:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling RunsApi->get_run_page_experimental: %s\n" % e)
-```
-
-
-
-### Parameters
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **project_id** | **str**| project-space to read from. | 
- **page** | **int**| Zero-based page index (0..N) | [optional] [default to 0]
- **size** | **int**| The size of the page to be returned | [optional] [default to 20]
- **sort** | [**List[str]**](str.md)| Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. | [optional] 
- **opt_fields** | [**List[RunOptField]**](RunOptField.md)| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to []]
-
-### Return type
-
-[**PagedModelRun**](PagedModelRun.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | Runs with tags (if specified). |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
 # **get_runs_by_group_experimental**
 > PagedModelRun get_runs_by_group_experimental(project_id, group_name, page=page, size=size, sort=sort, opt_fields=opt_fields)
 
@@ -399,12 +313,12 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_runs_by_tag_experimental**
-> PagedModelRun get_runs_by_tag_experimental(project_id, filter=filter, page=page, size=size, sort=sort, opt_fields=opt_fields)
+# **get_runs_page_experimental**
+> PagedModelRun get_runs_page_experimental(project_id, search_query=search_query, page=page, size=size, sort=sort, opt_fields=opt_fields)
 
-[EXPERIMENTAL] Get runs by tag
+[EXPERIMENTAL] Get runs in the given project-space
 
-[EXPERIMENTAL] Get runs by tag.
+[EXPERIMENTAL] Get runs in the given project-space.
 
  <h2>Supported filter syntax</h2>
 
@@ -459,19 +373,19 @@ with PySirius.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = PySirius.RunsApi(api_client)
     project_id = 'project_id_example' # str | project space to get runs from.
-    filter = '' # str | tag filter. (optional) (default to '')
+    search_query = 'search_query_example' # str | optional search query in lucene syntax. (optional)
     page = 0 # int | Zero-based page index (0..N) (optional) (default to 0)
     size = 20 # int | The size of the page to be returned (optional) (default to 20)
     sort = ['sort_example'] # List[str] | Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (optional)
     opt_fields = [] # List[RunOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to [])
 
     try:
-        # [EXPERIMENTAL] Get runs by tag
-        api_response = api_instance.get_runs_by_tag_experimental(project_id, filter=filter, page=page, size=size, sort=sort, opt_fields=opt_fields)
-        print("The response of RunsApi->get_runs_by_tag_experimental:\n")
+        # [EXPERIMENTAL] Get runs in the given project-space
+        api_response = api_instance.get_runs_page_experimental(project_id, search_query=search_query, page=page, size=size, sort=sort, opt_fields=opt_fields)
+        print("The response of RunsApi->get_runs_page_experimental:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling RunsApi->get_runs_by_tag_experimental: %s\n" % e)
+        print("Exception when calling RunsApi->get_runs_page_experimental: %s\n" % e)
 ```
 
 
@@ -482,7 +396,7 @@ with PySirius.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **str**| project space to get runs from. | 
- **filter** | **str**| tag filter. | [optional] [default to &#39;&#39;]
+ **search_query** | **str**| optional search query in lucene syntax. | [optional] 
  **page** | **int**| Zero-based page index (0..N) | [optional] [default to 0]
  **size** | **int**| The size of the page to be returned | [optional] [default to 20]
  **sort** | [**List[str]**](str.md)| Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. | [optional] 

@@ -19,6 +19,7 @@ from typing import List, Optional
 from typing_extensions import Annotated
 from PySirius.models.aggregation_type import AggregationType
 from PySirius.models.fold_change import FoldChange
+from PySirius.models.fold_change_job_submission import FoldChangeJobSubmission
 from PySirius.models.job import Job
 from PySirius.models.job_opt_field import JobOptField
 from PySirius.models.quant_measure import QuantMeasure
@@ -46,10 +47,7 @@ class FeatureStatisticsApi:
     def compute_aligned_feature_fold_changes_experimental(
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to compute the fold change in.")],
-        left_group_name: Annotated[StrictStr, Field(description="name of the left tag group.")],
-        right_group_name: Annotated[StrictStr, Field(description="name of the right tag group.")],
-        aggregation: Annotated[Optional[AggregationType], Field(description="aggregation type.")] = None,
-        quantification: Annotated[Optional[QuantMeasure], Field(description="quantification type.")] = None,
+        fold_change_job_submission: Annotated[FoldChangeJobSubmission, Field(description="Parameters of fold change job")],
         opt_fields: Annotated[Optional[List[Optional[JobOptField]]], Field(description="job opt fields.")] = None,
         _request_timeout: Union[
             None,
@@ -70,14 +68,8 @@ class FeatureStatisticsApi:
 
         :param project_id: project-space to compute the fold change in. (required)
         :type project_id: str
-        :param left_group_name: name of the left tag group. (required)
-        :type left_group_name: str
-        :param right_group_name: name of the right tag group. (required)
-        :type right_group_name: str
-        :param aggregation: aggregation type.
-        :type aggregation: AggregationType
-        :param quantification: quantification type.
-        :type quantification: QuantMeasure
+        :param fold_change_job_submission: Parameters of fold change job (required)
+        :type fold_change_job_submission: FoldChangeJobSubmission
         :param opt_fields: job opt fields.
         :type opt_fields: List[JobOptField]
         :param _request_timeout: timeout setting for this request. If one
@@ -104,10 +96,7 @@ class FeatureStatisticsApi:
 
         _param = self._compute_aligned_feature_fold_changes_experimental_serialize(
             project_id=project_id,
-            left_group_name=left_group_name,
-            right_group_name=right_group_name,
-            aggregation=aggregation,
-            quantification=quantification,
+            fold_change_job_submission=fold_change_job_submission,
             opt_fields=opt_fields,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -133,10 +122,7 @@ class FeatureStatisticsApi:
     def compute_aligned_feature_fold_changes_experimental_with_http_info(
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to compute the fold change in.")],
-        left_group_name: Annotated[StrictStr, Field(description="name of the left tag group.")],
-        right_group_name: Annotated[StrictStr, Field(description="name of the right tag group.")],
-        aggregation: Annotated[Optional[AggregationType], Field(description="aggregation type.")] = None,
-        quantification: Annotated[Optional[QuantMeasure], Field(description="quantification type.")] = None,
+        fold_change_job_submission: Annotated[FoldChangeJobSubmission, Field(description="Parameters of fold change job")],
         opt_fields: Annotated[Optional[List[Optional[JobOptField]]], Field(description="job opt fields.")] = None,
         _request_timeout: Union[
             None,
@@ -157,14 +143,8 @@ class FeatureStatisticsApi:
 
         :param project_id: project-space to compute the fold change in. (required)
         :type project_id: str
-        :param left_group_name: name of the left tag group. (required)
-        :type left_group_name: str
-        :param right_group_name: name of the right tag group. (required)
-        :type right_group_name: str
-        :param aggregation: aggregation type.
-        :type aggregation: AggregationType
-        :param quantification: quantification type.
-        :type quantification: QuantMeasure
+        :param fold_change_job_submission: Parameters of fold change job (required)
+        :type fold_change_job_submission: FoldChangeJobSubmission
         :param opt_fields: job opt fields.
         :type opt_fields: List[JobOptField]
         :param _request_timeout: timeout setting for this request. If one
@@ -191,10 +171,7 @@ class FeatureStatisticsApi:
 
         _param = self._compute_aligned_feature_fold_changes_experimental_serialize(
             project_id=project_id,
-            left_group_name=left_group_name,
-            right_group_name=right_group_name,
-            aggregation=aggregation,
-            quantification=quantification,
+            fold_change_job_submission=fold_change_job_submission,
             opt_fields=opt_fields,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -220,10 +197,7 @@ class FeatureStatisticsApi:
     def compute_aligned_feature_fold_changes_experimental_without_preload_content(
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to compute the fold change in.")],
-        left_group_name: Annotated[StrictStr, Field(description="name of the left tag group.")],
-        right_group_name: Annotated[StrictStr, Field(description="name of the right tag group.")],
-        aggregation: Annotated[Optional[AggregationType], Field(description="aggregation type.")] = None,
-        quantification: Annotated[Optional[QuantMeasure], Field(description="quantification type.")] = None,
+        fold_change_job_submission: Annotated[FoldChangeJobSubmission, Field(description="Parameters of fold change job")],
         opt_fields: Annotated[Optional[List[Optional[JobOptField]]], Field(description="job opt fields.")] = None,
         _request_timeout: Union[
             None,
@@ -244,14 +218,8 @@ class FeatureStatisticsApi:
 
         :param project_id: project-space to compute the fold change in. (required)
         :type project_id: str
-        :param left_group_name: name of the left tag group. (required)
-        :type left_group_name: str
-        :param right_group_name: name of the right tag group. (required)
-        :type right_group_name: str
-        :param aggregation: aggregation type.
-        :type aggregation: AggregationType
-        :param quantification: quantification type.
-        :type quantification: QuantMeasure
+        :param fold_change_job_submission: Parameters of fold change job (required)
+        :type fold_change_job_submission: FoldChangeJobSubmission
         :param opt_fields: job opt fields.
         :type opt_fields: List[JobOptField]
         :param _request_timeout: timeout setting for this request. If one
@@ -278,10 +246,7 @@ class FeatureStatisticsApi:
 
         _param = self._compute_aligned_feature_fold_changes_experimental_serialize(
             project_id=project_id,
-            left_group_name=left_group_name,
-            right_group_name=right_group_name,
-            aggregation=aggregation,
-            quantification=quantification,
+            fold_change_job_submission=fold_change_job_submission,
             opt_fields=opt_fields,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -302,10 +267,7 @@ class FeatureStatisticsApi:
     def _compute_aligned_feature_fold_changes_experimental_serialize(
         self,
         project_id,
-        left_group_name,
-        right_group_name,
-        aggregation,
-        quantification,
+        fold_change_job_submission,
         opt_fields,
         _request_auth,
         _content_type,
@@ -332,22 +294,6 @@ class FeatureStatisticsApi:
         if project_id is not None:
             _path_params['projectId'] = project_id
         # process the query parameters
-        if left_group_name is not None:
-            
-            _query_params.append(('leftGroupName', left_group_name))
-            
-        if right_group_name is not None:
-            
-            _query_params.append(('rightGroupName', right_group_name))
-            
-        if aggregation is not None:
-            
-            _query_params.append(('aggregation', aggregation.value))
-            
-        if quantification is not None:
-            
-            _query_params.append(('quantification', quantification.value))
-            
         if opt_fields is not None:
             
             _query_params.append(('optFields', opt_fields))
@@ -355,6 +301,8 @@ class FeatureStatisticsApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if fold_change_job_submission is not None:
+            _body_params = fold_change_job_submission
 
 
         # set the HTTP header `Accept`
@@ -365,6 +313,19 @@ class FeatureStatisticsApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [

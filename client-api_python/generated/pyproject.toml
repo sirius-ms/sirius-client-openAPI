@@ -1,6 +1,6 @@
 [project]
 name = "PySirius"
-version = "6.3.3"
+version = "6.4.0"
 description = "SIRIUS Nightsky API"
 authors = [
   {name = "OpenAPI Generator Community",email = "team@openapitools.org"},

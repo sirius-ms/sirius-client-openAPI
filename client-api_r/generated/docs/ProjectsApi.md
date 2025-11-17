@@ -4,6 +4,7 @@ All URIs are relative to *http://localhost:8080*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**BuildSearchIndex**](ProjectsApi.md#BuildSearchIndex) | **PUT** /api/projects/{projectId}/index | Create a search index for the given project.
 [**CloseProject**](ProjectsApi.md#CloseProject) | **DELETE** /api/projects/{projectId} | Close project-space and remove it from the application
 [**CreateProject**](ProjectsApi.md#CreateProject) | **POST** /api/projects/{projectId} | Create and open a new project-space at given location and make it accessible via the given projectId.
 [**GetCanopusClassyFireData**](ProjectsApi.md#GetCanopusClassyFireData) | **GET** /api/projects/{projectId}/cf-data | Get CANOPUS prediction vector definition for ClassyFire classes
@@ -17,6 +18,52 @@ Method | HTTP request | Description
 [**ImportPreprocessedDataAsJob**](ProjectsApi.md#ImportPreprocessedDataAsJob) | **POST** /api/projects/{projectId}/import/preprocessed-data-files-job | Import ms/ms data from the given format into the specified project-space as background job.
 [**OpenProject**](ProjectsApi.md#OpenProject) | **PUT** /api/projects/{projectId} | Open an existing project-space and make it accessible via the given projectId.
 
+
+# **BuildSearchIndex**
+> BuildSearchIndex(project_id, force = FALSE)
+
+Create a search index for the given project.
+
+Create a search index for the given project.
+
+### Example
+```R
+library(RSirius)
+
+# Create a search index for the given project.
+#
+# prepare function argument(s)
+var_project_id <- "project_id_example" # character | unique name/identifier of the project to create the index for.
+var_force <- FALSE # character | if true an existing index will be deleted and recreated. (Optional)
+
+api_instance <- rsirius_api$new()
+api_instance$projects_api$BuildSearchIndex(var_project_id, force = var_force)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **project_id** | **character**| unique name/identifier of the project to create the index for. | 
+ **force** | **character**| if true an existing index will be deleted and recreated. | [optional] [default to FALSE]
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: Not defined
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | OK |  -  |
 
 # **CloseProject**
 > CloseProject(project_id, compact = FALSE)
@@ -95,7 +142,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **character**| unique name/identifier that shall be used to access the newly created project-space. Must consist only of [a-zA-Z0-9_-]. | 
  **path_to_project** | **character**| local file path where the project will be created. If NULL, project will be stored by its projectId in default project location. DEPRECATED: This parameter relies on the local filesystem and will likely be removed in later versions of this API to allow for more flexible use cases. | [optional] 
- **opt_fields** | Enum [none, compatibilityInfo, sizeInformation] |  | [optional] [default to [&quot;none&quot;]]
+ **opt_fields** | Enum [none, compatibilityInfo, sizeInformation, detectedAdducts] |  | [optional] [default to [&quot;none&quot;]]
 
 ### Return type
 
@@ -285,7 +332,7 @@ dput(result)
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **character**| unique name/identifier tof the project-space to be accessed. | 
- **opt_fields** | Enum [none, compatibilityInfo, sizeInformation] |  | [optional] [default to [&quot;none&quot;]]
+ **opt_fields** | Enum [none, compatibilityInfo, sizeInformation, detectedAdducts] |  | [optional] [default to [&quot;none&quot;]]
 
 ### Return type
 
@@ -362,8 +409,8 @@ library(RSirius)
 #
 # prepare function argument(s)
 var_project_id <- "project_id_example" # character | Project-space to import into.
-var_input_files <- c(123) # array[data.frame] | Files to import into project.
-var_parameters <- LcmsSubmissionParameters$new("alignLCMSRuns_example", 123, Deviation$new(123, 123), Deviation$new(123, 123), 123, 123) # LcmsSubmissionParameters | 
+var_input_files <- c(123) # array[data.frame] | files to import into project
+var_parameters <- LcmsSubmissionParameters$new(c("sampleTypes_example"), "alignLCMSRuns_example", 123, Deviation$new(123, 123), Deviation$new(123, 123), 123, 123) # LcmsSubmissionParameters | 
 
 api_instance <- rsirius_api$new()
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
@@ -377,7 +424,7 @@ dput(result)
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **character**| Project-space to import into. | 
- **input_files** | list( **data.frame** )| Files to import into project. | 
+ **input_files** | list( **data.frame** )| files to import into project | 
  **parameters** | [**LcmsSubmissionParameters**](LcmsSubmissionParameters.md)|  | 
 
 ### Return type
@@ -413,8 +460,8 @@ library(RSirius)
 #
 # prepare function argument(s)
 var_project_id <- "project_id_example" # character | Project-space to import into.
-var_input_files <- c(123) # array[data.frame] | Files to import into project.
-var_parameters <- LcmsSubmissionParameters$new("alignLCMSRuns_example", 123, Deviation$new(123, 123), Deviation$new(123, 123), 123, 123) # LcmsSubmissionParameters | 
+var_input_files <- c(123) # array[data.frame] | files to import into project
+var_parameters <- LcmsSubmissionParameters$new(c("sampleTypes_example"), "alignLCMSRuns_example", 123, Deviation$new(123, 123), Deviation$new(123, 123), 123, 123) # LcmsSubmissionParameters | 
 var_opt_fields <- c("none") # array[character] | Set of optional fields to be included. Use 'none' only to override defaults. (Optional)
 
 api_instance <- rsirius_api$new()
@@ -429,7 +476,7 @@ dput(result)
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **character**| Project-space to import into. | 
- **input_files** | list( **data.frame** )| Files to import into project. | 
+ **input_files** | list( **data.frame** )| files to import into project | 
  **parameters** | [**LcmsSubmissionParameters**](LcmsSubmissionParameters.md)|  | 
  **opt_fields** | Enum [none, command, progress, affectedIds] | Set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;progress&quot;]]
 
@@ -519,7 +566,7 @@ library(RSirius)
 #
 # prepare function argument(s)
 var_project_id <- "project_id_example" # character | project-space to import into.
-var_input_files <- c(123) # array[data.frame] | 
+var_input_files <- c(123) # array[data.frame] | files to import into project
 var_ignore_formulas <- FALSE # character |  (Optional)
 var_allow_ms1_only <- TRUE # character |  (Optional)
 var_opt_fields <- c("none") # array[character] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
@@ -536,7 +583,7 @@ dput(result)
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **character**| project-space to import into. | 
- **input_files** | list( **data.frame** )|  | 
+ **input_files** | list( **data.frame** )| files to import into project | 
  **ignore_formulas** | **character**|  | [optional] [default to FALSE]
  **allow_ms1_only** | **character**|  | [optional] [default to TRUE]
  **opt_fields** | Enum [none, command, progress, affectedIds] | set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;progress&quot;]]
@@ -590,7 +637,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **character**| unique name/identifier that shall be used to access the opened project-space. Must consist only of [a-zA-Z0-9_-]. | 
  **path_to_project** | **character**| local file path to open the project from. If NULL, project will be loaded by it projectId from default project location.  DEPRECATED: This parameter relies on the local filesystem and will likely be removed in later versions of this API to allow for more flexible use cases. | [optional] 
- **opt_fields** | Enum [none, compatibilityInfo, sizeInformation] |  | [optional] [default to [&quot;none&quot;]]
+ **opt_fields** | Enum [none, compatibilityInfo, sizeInformation, detectedAdducts] |  | [optional] [default to [&quot;none&quot;]]
 
 ### Return type
 

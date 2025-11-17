@@ -5,6 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**category_id** | **str** |  | [optional] 
 **category_name** | **str** |  | [optional] 
 **overall_quality** | [**DataQuality**](DataQuality.md) |  | [optional] 
 **items** | [**List[QualityItem]**](QualityItem.md) |  | [optional] 

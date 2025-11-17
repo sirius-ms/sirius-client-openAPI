@@ -4,6 +4,7 @@ All URIs are relative to *http://localhost:8080*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**build_search_index**](ProjectsApi.md#build_search_index) | **PUT** /api/projects/{projectId}/index | Create a search index for the given project.
 [**close_project**](ProjectsApi.md#close_project) | **DELETE** /api/projects/{projectId} | Close project-space and remove it from the application
 [**create_project**](ProjectsApi.md#create_project) | **POST** /api/projects/{projectId} | Create and open a new project-space at given location and make it accessible via the given projectId.
 [**get_canopus_classy_fire_data**](ProjectsApi.md#get_canopus_classy_fire_data) | **GET** /api/projects/{projectId}/cf-data | Get CANOPUS prediction vector definition for ClassyFire classes
@@ -17,6 +18,73 @@ Method | HTTP request | Description
 [**import_preprocessed_data_as_job**](ProjectsApi.md#import_preprocessed_data_as_job) | **POST** /api/projects/{projectId}/import/preprocessed-data-files-job | Import ms/ms data from the given format into the specified project-space as background job.
 [**open_project**](ProjectsApi.md#open_project) | **PUT** /api/projects/{projectId} | Open an existing project-space and make it accessible via the given projectId.
 
+
+# **build_search_index**
+> build_search_index(project_id, force=force)
+
+Create a search index for the given project.
+
+Create a search index for the given project.
+
+### Example
+
+
+```python
+import PySirius
+from PySirius.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to http://localhost:8080
+# See configuration.py for a list of all supported configuration parameters.
+configuration = PySirius.Configuration(
+    host = "http://localhost:8080"
+)
+
+
+# Enter a context with an instance of the API client
+with PySirius.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = PySirius.ProjectsApi(api_client)
+    project_id = 'project_id_example' # str | unique name/identifier of the project to create the index for.
+    force = False # bool | if true an existing index will be deleted and recreated. (optional) (default to False)
+
+    try:
+        # Create a search index for the given project.
+        api_instance.build_search_index(project_id, force=force)
+    except Exception as e:
+        print("Exception when calling ProjectsApi->build_search_index: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **project_id** | **str**| unique name/identifier of the project to create the index for. | 
+ **force** | **bool**| if true an existing index will be deleted and recreated. | [optional] [default to False]
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: Not defined
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **close_project**
 > close_project(project_id, compact=compact)
@@ -527,7 +595,7 @@ with PySirius.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = PySirius.ProjectsApi(api_client)
     project_id = 'project_id_example' # str | Project-space to import into.
-    input_files = None # List[bytearray] | Files to import into project.
+    input_files = None # List[bytearray] | files to import into project
     parameters = PySirius.LcmsSubmissionParameters() # LcmsSubmissionParameters | 
 
     try:
@@ -547,7 +615,7 @@ with PySirius.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **str**| Project-space to import into. | 
- **input_files** | **List[bytearray]**| Files to import into project. | 
+ **input_files** | **List[bytearray]**| files to import into project | 
  **parameters** | [**LcmsSubmissionParameters**](LcmsSubmissionParameters.md)|  | 
 
 ### Return type
@@ -602,7 +670,7 @@ with PySirius.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = PySirius.ProjectsApi(api_client)
     project_id = 'project_id_example' # str | Project-space to import into.
-    input_files = None # List[bytearray] | Files to import into project.
+    input_files = None # List[bytearray] | files to import into project
     parameters = PySirius.LcmsSubmissionParameters() # LcmsSubmissionParameters | 
     opt_fields = ["progress"] # List[JobOptField] | Set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to ["progress"])
 
@@ -623,7 +691,7 @@ with PySirius.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **str**| Project-space to import into. | 
- **input_files** | **List[bytearray]**| Files to import into project. | 
+ **input_files** | **List[bytearray]**| files to import into project | 
  **parameters** | [**LcmsSubmissionParameters**](LcmsSubmissionParameters.md)|  | 
  **opt_fields** | [**List[JobOptField]**](JobOptField.md)| Set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;progress&quot;]]
 
@@ -753,7 +821,7 @@ with PySirius.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = PySirius.ProjectsApi(api_client)
     project_id = 'project_id_example' # str | project-space to import into.
-    input_files = None # List[bytearray] | 
+    input_files = None # List[bytearray] | files to import into project
     ignore_formulas = False # bool |  (optional) (default to False)
     allow_ms1_only = True # bool |  (optional) (default to True)
     opt_fields = ["progress"] # List[JobOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to ["progress"])
@@ -775,7 +843,7 @@ with PySirius.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **str**| project-space to import into. | 
- **input_files** | **List[bytearray]**|  | 
+ **input_files** | **List[bytearray]**| files to import into project | 
  **ignore_formulas** | **bool**|  | [optional] [default to False]
  **allow_ms1_only** | **bool**|  | [optional] [default to True]
  **opt_fields** | [**List[JobOptField]**](JobOptField.md)| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;progress&quot;]]

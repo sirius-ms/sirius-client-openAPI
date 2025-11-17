@@ -11,7 +11,7 @@ Method | HTTP request | Description
 
 
 # **compute_aligned_feature_fold_changes_experimental**
-> Job compute_aligned_feature_fold_changes_experimental(project_id, left_group_name, right_group_name, aggregation=aggregation, quantification=quantification, opt_fields=opt_fields)
+> Job compute_aligned_feature_fold_changes_experimental(project_id, fold_change_job_submission, opt_fields=opt_fields)
 
 [EXPERIMENTAL] Compute the fold change between two groups of runs
 
@@ -26,10 +26,9 @@ Method | HTTP request | Description
 
 ```python
 import PySirius
-from PySirius.models.aggregation_type import AggregationType
+from PySirius.models.fold_change_job_submission import FoldChangeJobSubmission
 from PySirius.models.job import Job
 from PySirius.models.job_opt_field import JobOptField
-from PySirius.models.quant_measure import QuantMeasure
 from PySirius.rest import ApiException
 from pprint import pprint
 
@@ -45,15 +44,12 @@ with PySirius.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = PySirius.FeatureStatisticsApi(api_client)
     project_id = 'project_id_example' # str | project-space to compute the fold change in.
-    left_group_name = 'left_group_name_example' # str | name of the left tag group.
-    right_group_name = 'right_group_name_example' # str | name of the right tag group.
-    aggregation = PySirius.AggregationType() # AggregationType | aggregation type. (optional)
-    quantification = PySirius.QuantMeasure() # QuantMeasure | quantification type. (optional)
+    fold_change_job_submission = PySirius.FoldChangeJobSubmission() # FoldChangeJobSubmission | Parameters of fold change job
     opt_fields = ["progress"] # List[JobOptField] | job opt fields. (optional) (default to ["progress"])
 
     try:
         # [EXPERIMENTAL] Compute the fold change between two groups of runs
-        api_response = api_instance.compute_aligned_feature_fold_changes_experimental(project_id, left_group_name, right_group_name, aggregation=aggregation, quantification=quantification, opt_fields=opt_fields)
+        api_response = api_instance.compute_aligned_feature_fold_changes_experimental(project_id, fold_change_job_submission, opt_fields=opt_fields)
         print("The response of FeatureStatisticsApi->compute_aligned_feature_fold_changes_experimental:\n")
         pprint(api_response)
     except Exception as e:
@@ -68,10 +64,7 @@ with PySirius.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **str**| project-space to compute the fold change in. | 
- **left_group_name** | **str**| name of the left tag group. | 
- **right_group_name** | **str**| name of the right tag group. | 
- **aggregation** | [**AggregationType**](.md)| aggregation type. | [optional] 
- **quantification** | [**QuantMeasure**](.md)| quantification type. | [optional] 
+ **fold_change_job_submission** | [**FoldChangeJobSubmission**](FoldChangeJobSubmission.md)| Parameters of fold change job | 
  **opt_fields** | [**List[JobOptField]**](JobOptField.md)| job opt fields. | [optional] [default to [&quot;progress&quot;]]
 
 ### Return type
@@ -84,7 +77,7 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details

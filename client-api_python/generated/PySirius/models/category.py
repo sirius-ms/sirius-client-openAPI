@@ -26,10 +26,11 @@ class Category(BaseModel):
     """
     Category
     """ # noqa: E501
+    category_id: Optional[StrictStr] = Field(default=None, alias="categoryId")
     category_name: Optional[StrictStr] = Field(default=None, alias="categoryName")
     overall_quality: Optional[DataQuality] = Field(default=None, alias="overallQuality")
     items: Optional[List[QualityItem]] = None
-    __properties: ClassVar[List[str]] = ["categoryName", "overallQuality", "items"]
+    __properties: ClassVar[List[str]] = ["categoryId", "categoryName", "overallQuality", "items"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -94,6 +95,7 @@ class Category(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
+            "categoryId": obj.get("categoryId"),
             "categoryName": obj.get("categoryName"),
             "overallQuality": obj.get("overallQuality"),
             "items": [QualityItem.from_dict(_item) for _item in obj["items"]] if obj.get("items") is not None else None

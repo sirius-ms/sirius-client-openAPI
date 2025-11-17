@@ -36,13 +36,14 @@
 #' var_project_id <- "project_id_example" # character | project-space to read from.
 #' var_aligned_feature_id <- "aligned_feature_id_example" # character | feature (aligned over runs) the structure candidates belong to.
 #' var_smiles <- "none" # character | smiles (Optional)
+#' var_skip_existence_check <- FALSE # character | if true, skips a check if this compound is an existing candidate, potentially leading to duplicate structures. (Optional)
 #'
 #' #[EXPERIMENTAL] Add molecular structures (as SMILES) to the list of de novo structures.
 #' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-#' # result <- api_instance$AddDeNovoStructureCandidate(var_project_id, var_aligned_feature_id, smiles = var_smilesdata_file = "result.txt")
-#' result <- api_instance$features_api$AddDeNovoStructureCandidate(var_project_id, var_aligned_feature_id, smiles = var_smiles)
+#' # result <- api_instance$AddDeNovoStructureCandidate(var_project_id, var_aligned_feature_id, smiles = var_smiles, skip_existence_check = var_skip_existence_checkdata_file = "result.txt")
+#' result <- api_instance$features_api$AddDeNovoStructureCandidate(var_project_id, var_aligned_feature_id, smiles = var_smiles, skip_existence_check = var_skip_existence_check)
 #' dput(result)
 #'
 #'
@@ -50,7 +51,7 @@
 #'
 #' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to add to.
-#' var_aligned_feature_id <- "aligned_feature_id_example" # character | run to add tags to.
+#' var_aligned_feature_id <- "aligned_feature_id_example" # character | feature to add tags to.
 #' var_tag <- c(Tag$new("tagName_example", 123)) # array[Tag] | tags to add.
 #'
 #' #[EXPERIMENTAL] Add tags to a feature (aligned over runs) in the project
@@ -60,6 +61,18 @@
 #' # result <- api_instance$AddTagsToAlignedFeatureExperimental(var_project_id, var_aligned_feature_id, var_tagdata_file = "result.txt")
 #' result <- api_instance$features_api$AddTagsToAlignedFeatureExperimental(var_project_id, var_aligned_feature_id, var_tag)
 #' dput(result)
+#'
+#'
+#' ####################  AddTagsToAlignedFeaturesExperimental  ####################
+#'
+#' library(RSirius)
+#' var_project_id <- "project_id_example" # character | project-space to add to.
+#' var_tag_submission <- c(TagSubmission$new("tagName_example", "taggedObjectId_example", 123)) # array[TagSubmission] | tags with the id of feature they shall be added to.
+#'
+#' #[EXPERIMENTAL] Add tags to a feature (aligned over runs) in the project
+#' api_instance <- rsirius_api$new()
+#'
+#' api_instance$features_api$AddTagsToAlignedFeaturesExperimental(var_project_id, var_tag_submission)
 #'
 #'
 #' ####################  DeleteAlignedFeature  ####################
@@ -157,52 +170,35 @@
 #' var_page <- 0 # integer | Zero-based page index (0..N) (Optional)
 #' var_size <- 20 # integer | The size of the page to be returned (Optional)
 #' var_sort <- c("inner_example") # array[character] | Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (Optional)
+#' var_ms_data_search_prepared <- FALSE # character | Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. (Optional)
 #' var_opt_fields <- c("none") # array[character] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
 #'
 #' #[EXPERIMENTAL] Get features (aligned over runs) by tag group
 #' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-#' # result <- api_instance$GetAlignedFeaturesByGroupExperimental(var_project_id, var_group_name, page = var_page, size = var_size, sort = var_sort, opt_fields = var_opt_fieldsdata_file = "result.txt")
-#' result <- api_instance$features_api$GetAlignedFeaturesByGroupExperimental(var_project_id, var_group_name, page = var_page, size = var_size, sort = var_sort, opt_fields = var_opt_fields)
+#' # result <- api_instance$GetAlignedFeaturesByGroupExperimental(var_project_id, var_group_name, page = var_page, size = var_size, sort = var_sort, ms_data_search_prepared = var_ms_data_search_prepared, opt_fields = var_opt_fieldsdata_file = "result.txt")
+#' result <- api_instance$features_api$GetAlignedFeaturesByGroupExperimental(var_project_id, var_group_name, page = var_page, size = var_size, sort = var_sort, ms_data_search_prepared = var_ms_data_search_prepared, opt_fields = var_opt_fields)
 #' dput(result)
 #'
 #'
-#' ####################  GetAlignedFeaturesByTagExperimental  ####################
+#' ####################  GetAlignedFeaturesPageExperimental  ####################
 #'
 #' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project space to get features (aligned over runs) from.
-#' var_filter <- "" # character | tag filter. (Optional)
 #' var_page <- 0 # integer | Zero-based page index (0..N) (Optional)
 #' var_size <- 20 # integer | The size of the page to be returned (Optional)
 #' var_sort <- c("inner_example") # array[character] | Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (Optional)
-#' var_opt_fields <- c("none") # array[character] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
-#'
-#' #[EXPERIMENTAL] Get features (aligned over runs) by tag
-#' api_instance <- rsirius_api$new()
-#'
-#' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-#' # result <- api_instance$GetAlignedFeaturesByTagExperimental(var_project_id, filter = var_filter, page = var_page, size = var_size, sort = var_sort, opt_fields = var_opt_fieldsdata_file = "result.txt")
-#' result <- api_instance$features_api$GetAlignedFeaturesByTagExperimental(var_project_id, filter = var_filter, page = var_page, size = var_size, sort = var_sort, opt_fields = var_opt_fields)
-#' dput(result)
-#'
-#'
-#' ####################  GetAlignedFeaturesPaged  ####################
-#'
-#' library(RSirius)
-#' var_project_id <- "project_id_example" # character | project-space to read from.
-#' var_page <- 0 # integer | Zero-based page index (0..N) (Optional)
-#' var_size <- 20 # integer | The size of the page to be returned (Optional)
-#' var_sort <- c("inner_example") # array[character] | Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (Optional)
+#' var_search_query <- "search_query_example" # character | optional search query in lucene syntax. (Optional)
 #' var_ms_data_search_prepared <- FALSE # character | Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. (Optional)
 #' var_opt_fields <- c("none") # array[character] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
 #'
-#' #Get all available features (aligned over runs) in the given project-space.
+#' #[EXPERIMENTAL] Get features (aligned over runs) in the given project-space
 #' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-#' # result <- api_instance$GetAlignedFeaturesPaged(var_project_id, page = var_page, size = var_size, sort = var_sort, ms_data_search_prepared = var_ms_data_search_prepared, opt_fields = var_opt_fieldsdata_file = "result.txt")
-#' result <- api_instance$features_api$GetAlignedFeaturesPaged(var_project_id, page = var_page, size = var_size, sort = var_sort, ms_data_search_prepared = var_ms_data_search_prepared, opt_fields = var_opt_fields)
+#' # result <- api_instance$GetAlignedFeaturesPageExperimental(var_project_id, page = var_page, size = var_size, sort = var_sort, search_query = var_search_query, ms_data_search_prepared = var_ms_data_search_prepared, opt_fields = var_opt_fieldsdata_file = "result.txt")
+#' result <- api_instance$features_api$GetAlignedFeaturesPageExperimental(var_project_id, page = var_page, size = var_size, sort = var_sort, search_query = var_search_query, ms_data_search_prepared = var_ms_data_search_prepared, opt_fields = var_opt_fields)
 #' dput(result)
 #'
 #'
@@ -842,8 +838,8 @@ FeaturesApi <- R6::R6Class(
       # explore
       for (query_item in `opt_fields`) {
         # validate enum values
-        if (!is.null(query_item) && !(query_item %in% c("none", "msData", "topAnnotationsSummary", "topAnnotations", "topAnnotationsDeNovo", "computedTools", "tags"))) {
-          stop("Invalid value for opt_fields when calling FeaturesApi$AddAlignedFeatures. Must be [none, msData, topAnnotationsSummary, topAnnotations, topAnnotationsDeNovo, computedTools, tags].")
+        if (!is.null(query_item) && !(query_item %in% c("none", "msData", "topAnnotationsSummary", "topAnnotations", "topAnnotationsDeNovo", "computedTools", "qualities", "tags"))) {
+          stop("Invalid value for opt_fields when calling FeaturesApi$AddAlignedFeatures. Must be [none, msData, topAnnotationsSummary, topAnnotations, topAnnotationsDeNovo, computedTools, qualities, tags].")
         }
         query_params[["optFields"]] <- c(query_params[["optFields"]], list(`optFields` = query_item))
       }
@@ -945,12 +941,13 @@ FeaturesApi <- R6::R6Class(
     #' @param project_id project-space to read from.
     #' @param aligned_feature_id feature (aligned over runs) the structure candidates belong to.
     #' @param smiles (optional) smiles (default value: "none")
+    #' @param skip_existence_check (optional) if true, skips a check if this compound is an existing candidate, potentially leading to duplicate structures. (default value: FALSE)
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return array[StructureCandidateFormula]
-    AddDeNovoStructureCandidate = function(project_id, aligned_feature_id, smiles = "none", data_file = NULL, ...) {
-      local_var_response <- self$AddDeNovoStructureCandidateWithHttpInfo(project_id, aligned_feature_id, smiles, data_file = data_file, ...)
+    AddDeNovoStructureCandidate = function(project_id, aligned_feature_id, smiles = "none", skip_existence_check = FALSE, data_file = NULL, ...) {
+      local_var_response <- self$AddDeNovoStructureCandidateWithHttpInfo(project_id, aligned_feature_id, smiles, skip_existence_check, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
@@ -968,11 +965,12 @@ FeaturesApi <- R6::R6Class(
     #' @param project_id project-space to read from.
     #' @param aligned_feature_id feature (aligned over runs) the structure candidates belong to.
     #' @param smiles (optional) smiles (default value: "none")
+    #' @param skip_existence_check (optional) if true, skips a check if this compound is an existing candidate, potentially leading to duplicate structures. (default value: FALSE)
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return API response (array[StructureCandidateFormula]) with additional information such as HTTP status code, headers
-    AddDeNovoStructureCandidateWithHttpInfo = function(project_id, aligned_feature_id, smiles = "none", data_file = NULL, ...) {
+    AddDeNovoStructureCandidateWithHttpInfo = function(project_id, aligned_feature_id, smiles = "none", skip_existence_check = FALSE, data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -993,7 +991,10 @@ FeaturesApi <- R6::R6Class(
 
 
 
+
       query_params[["smiles"]] <- `smiles`
+
+      query_params[["skipExistenceCheck"]] <- `skip_existence_check`
 
       local_var_url_path <- "/api/projects/{projectId}/aligned-features/{alignedFeatureId}/denovo-structures"
       if (!missing(`project_id`)) {
@@ -1081,7 +1082,7 @@ FeaturesApi <- R6::R6Class(
     #' [EXPERIMENTAL] Add tags to a feature (aligned over runs) in the project
     #'
     #' @param project_id project-space to add to.
-    #' @param aligned_feature_id run to add tags to.
+    #' @param aligned_feature_id feature to add tags to.
     #' @param tag tags to add.
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
@@ -1104,7 +1105,7 @@ FeaturesApi <- R6::R6Class(
     #' [EXPERIMENTAL] Add tags to a feature (aligned over runs) in the project
     #'
     #' @param project_id project-space to add to.
-    #' @param aligned_feature_id run to add tags to.
+    #' @param aligned_feature_id feature to add tags to.
     #' @param tag tags to add.
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
@@ -1217,6 +1218,108 @@ FeaturesApi <- R6::R6Class(
           )
           local_var_resp$content <- deserialized_resp_obj
         }
+        local_var_resp
+      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
+      } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
+        ApiResponse$new("API client error", local_var_resp)
+      } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
+        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
+          local_var_resp$response <- "API server error"
+        }
+        local_var_resp
+      }
+    },
+
+    #' @description
+    #' [EXPERIMENTAL] Add tags to a feature (aligned over runs) in the project
+    #'
+    #' @param project_id project-space to add to.
+    #' @param tag_submission tags with the id of feature they shall be added to.
+    #' @param ... Other optional arguments
+    #'
+    #' @return void
+    AddTagsToAlignedFeaturesExperimental = function(project_id, tag_submission, ...) {
+      local_var_response <- self$AddTagsToAlignedFeaturesExperimentalWithHttpInfo(project_id, tag_submission, ...)
+      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
+        local_var_response$content
+      } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
+        local_var_response
+      } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
+        local_var_response
+      } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
+        local_var_response
+      }
+    },
+
+    #' @description
+    #' [EXPERIMENTAL] Add tags to a feature (aligned over runs) in the project
+    #'
+    #' @param project_id project-space to add to.
+    #' @param tag_submission tags with the id of feature they shall be added to.
+    #' @param ... Other optional arguments
+    #'
+    #' @return API response (void) with additional information such as HTTP status code, headers
+    AddTagsToAlignedFeaturesExperimentalWithHttpInfo = function(project_id, tag_submission, ...) {
+      args <- list(...)
+      query_params <- list()
+      header_params <- c()
+      form_params <- list()
+      file_params <- list()
+      local_var_body <- NULL
+      oauth_scopes <- NULL
+      is_oauth <- FALSE
+
+      if (missing(`project_id`)) {
+        stop("Missing required parameter `project_id`.")
+      }
+
+      if (missing(`tag_submission`)) {
+        stop("Missing required parameter `tag_submission`.")
+      }
+
+
+
+      if (!is.null(`tag_submission`)) {
+        body.items <- paste(unlist(lapply(`tag_submission`, function(param) {
+          if (inherits(param, "character")) {
+            param
+          } else {
+            param$toJSONString()
+          }
+        })), collapse = ",")
+        local_var_body <- paste0("[", body.items, "]")
+      } else {
+        body <- NULL
+      }
+
+      local_var_url_path <- "/api/projects/{projectId}/aligned-features/tags"
+      if (!missing(`project_id`)) {
+        local_var_url_path <- gsub("\\{projectId\\}", URLencode(as.character(`project_id`), reserved = TRUE), local_var_url_path)
+      }
+
+
+      # The Accept request HTTP header
+      local_var_accepts <- list()
+
+      # The Content-Type representation header
+      local_var_content_types <- list("application/json")
+
+      local_var_resp <- self$api_client$CallApi(url = paste0(self$api_client$base_path, local_var_url_path),
+                                 method = "PUT",
+                                 query_params = query_params,
+                                 header_params = header_params,
+                                 form_params = form_params,
+                                 file_params = file_params,
+                                 accepts = local_var_accepts,
+                                 content_types = local_var_content_types,
+                                 body = local_var_body,
+                                 is_oauth = is_oauth,
+                                 oauth_scopes = oauth_scopes,
+                                 ...)
+
+      if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
+        local_var_resp$content <- NULL
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
         ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
@@ -1620,8 +1723,8 @@ FeaturesApi <- R6::R6Class(
       # explore
       for (query_item in `opt_fields`) {
         # validate enum values
-        if (!is.null(query_item) && !(query_item %in% c("none", "msData", "topAnnotationsSummary", "topAnnotations", "topAnnotationsDeNovo", "computedTools", "tags"))) {
-          stop("Invalid value for opt_fields when calling FeaturesApi$GetAlignedFeature. Must be [none, msData, topAnnotationsSummary, topAnnotations, topAnnotationsDeNovo, computedTools, tags].")
+        if (!is.null(query_item) && !(query_item %in% c("none", "msData", "topAnnotationsSummary", "topAnnotations", "topAnnotationsDeNovo", "computedTools", "qualities", "tags"))) {
+          stop("Invalid value for opt_fields when calling FeaturesApi$GetAlignedFeature. Must be [none, msData, topAnnotationsSummary, topAnnotations, topAnnotationsDeNovo, computedTools, qualities, tags].")
         }
         query_params[["optFields"]] <- c(query_params[["optFields"]], list(`optFields` = query_item))
       }
@@ -1896,8 +1999,8 @@ FeaturesApi <- R6::R6Class(
       # explore
       for (query_item in `opt_fields`) {
         # validate enum values
-        if (!is.null(query_item) && !(query_item %in% c("none", "msData", "topAnnotationsSummary", "topAnnotations", "topAnnotationsDeNovo", "computedTools", "tags"))) {
-          stop("Invalid value for opt_fields when calling FeaturesApi$GetAlignedFeatures. Must be [none, msData, topAnnotationsSummary, topAnnotations, topAnnotationsDeNovo, computedTools, tags].")
+        if (!is.null(query_item) && !(query_item %in% c("none", "msData", "topAnnotationsSummary", "topAnnotations", "topAnnotationsDeNovo", "computedTools", "qualities", "tags"))) {
+          stop("Invalid value for opt_fields when calling FeaturesApi$GetAlignedFeatures. Must be [none, msData, topAnnotationsSummary, topAnnotations, topAnnotationsDeNovo, computedTools, qualities, tags].")
         }
         query_params[["optFields"]] <- c(query_params[["optFields"]], list(`optFields` = query_item))
       }
@@ -1988,13 +2091,14 @@ FeaturesApi <- R6::R6Class(
     #' @param page (optional) Zero-based page index (0..N) (default value: 0)
     #' @param size (optional) The size of the page to be returned (default value: 20)
     #' @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+    #' @param ms_data_search_prepared (optional) Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. (default value: FALSE)
     #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return PagedModelAlignedFeature
-    GetAlignedFeaturesByGroupExperimental = function(project_id, group_name, page = 0, size = 20, sort = NULL, opt_fields = list("none"), data_file = NULL, ...) {
-      local_var_response <- self$GetAlignedFeaturesByGroupExperimentalWithHttpInfo(project_id, group_name, page, size, sort, opt_fields, data_file = data_file, ...)
+    GetAlignedFeaturesByGroupExperimental = function(project_id, group_name, page = 0, size = 20, sort = NULL, ms_data_search_prepared = FALSE, opt_fields = list("none"), data_file = NULL, ...) {
+      local_var_response <- self$GetAlignedFeaturesByGroupExperimentalWithHttpInfo(project_id, group_name, page, size, sort, ms_data_search_prepared, opt_fields, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
@@ -2014,12 +2118,13 @@ FeaturesApi <- R6::R6Class(
     #' @param page (optional) Zero-based page index (0..N) (default value: 0)
     #' @param size (optional) The size of the page to be returned (default value: 20)
     #' @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+    #' @param ms_data_search_prepared (optional) Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. (default value: FALSE)
     #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return API response (PagedModelAlignedFeature) with additional information such as HTTP status code, headers
-    GetAlignedFeaturesByGroupExperimentalWithHttpInfo = function(project_id, group_name, page = 0, size = 20, sort = NULL, opt_fields = list("none"), data_file = NULL, ...) {
+    GetAlignedFeaturesByGroupExperimentalWithHttpInfo = function(project_id, group_name, page = 0, size = 20, sort = NULL, ms_data_search_prepared = FALSE, opt_fields = list("none"), data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -2049,6 +2154,7 @@ FeaturesApi <- R6::R6Class(
 
 
 
+
       query_params[["groupName"]] <- `group_name`
 
       query_params[["page"]] <- `page`
@@ -2060,11 +2166,13 @@ FeaturesApi <- R6::R6Class(
         query_params[["sort"]] <- c(query_params[["sort"]], list(`sort` = query_item))
       }
 
+      query_params[["msDataSearchPrepared"]] <- `ms_data_search_prepared`
+
       # explore
       for (query_item in `opt_fields`) {
         # validate enum values
-        if (!is.null(query_item) && !(query_item %in% c("none", "msData", "topAnnotationsSummary", "topAnnotations", "topAnnotationsDeNovo", "computedTools", "tags"))) {
-          stop("Invalid value for opt_fields when calling FeaturesApi$GetAlignedFeaturesByGroupExperimental. Must be [none, msData, topAnnotationsSummary, topAnnotations, topAnnotationsDeNovo, computedTools, tags].")
+        if (!is.null(query_item) && !(query_item %in% c("none", "msData", "topAnnotationsSummary", "topAnnotations", "topAnnotationsDeNovo", "computedTools", "qualities", "tags"))) {
+          stop("Invalid value for opt_fields when calling FeaturesApi$GetAlignedFeaturesByGroupExperimental. Must be [none, msData, topAnnotationsSummary, topAnnotations, topAnnotationsDeNovo, computedTools, qualities, tags].")
         }
         query_params[["optFields"]] <- c(query_params[["optFields"]], list(`optFields` = query_item))
       }
@@ -2148,20 +2256,21 @@ FeaturesApi <- R6::R6Class(
     },
 
     #' @description
-    #' [EXPERIMENTAL] Get features (aligned over runs) by tag
+    #' [EXPERIMENTAL] Get features (aligned over runs) in the given project-space
     #'
     #' @param project_id project space to get features (aligned over runs) from.
-    #' @param filter (optional) tag filter. (default value: "")
     #' @param page (optional) Zero-based page index (0..N) (default value: 0)
     #' @param size (optional) The size of the page to be returned (default value: 20)
     #' @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
-    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [])
+    #' @param search_query (optional) optional search query in lucene syntax.
+    #' @param ms_data_search_prepared (optional) Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. (default value: FALSE)
+    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["computedTools","qualities","tags"])
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return PagedModelAlignedFeature
-    GetAlignedFeaturesByTagExperimental = function(project_id, filter = "", page = 0, size = 20, sort = NULL, opt_fields = list(), data_file = NULL, ...) {
-      local_var_response <- self$GetAlignedFeaturesByTagExperimentalWithHttpInfo(project_id, filter, page, size, sort, opt_fields, data_file = data_file, ...)
+    GetAlignedFeaturesPageExperimental = function(project_id, page = 0, size = 20, sort = NULL, search_query = NULL, ms_data_search_prepared = FALSE, opt_fields = list("computedTools","qualities","tags"), data_file = NULL, ...) {
+      local_var_response <- self$GetAlignedFeaturesPageExperimentalWithHttpInfo(project_id, page, size, sort, search_query, ms_data_search_prepared, opt_fields, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
@@ -2174,182 +2283,20 @@ FeaturesApi <- R6::R6Class(
     },
 
     #' @description
-    #' [EXPERIMENTAL] Get features (aligned over runs) by tag
+    #' [EXPERIMENTAL] Get features (aligned over runs) in the given project-space
     #'
     #' @param project_id project space to get features (aligned over runs) from.
-    #' @param filter (optional) tag filter. (default value: "")
     #' @param page (optional) Zero-based page index (0..N) (default value: 0)
     #' @param size (optional) The size of the page to be returned (default value: 20)
     #' @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
-    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [])
+    #' @param search_query (optional) optional search query in lucene syntax.
+    #' @param ms_data_search_prepared (optional) Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. (default value: FALSE)
+    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["computedTools","qualities","tags"])
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return API response (PagedModelAlignedFeature) with additional information such as HTTP status code, headers
-    GetAlignedFeaturesByTagExperimentalWithHttpInfo = function(project_id, filter = "", page = 0, size = 20, sort = NULL, opt_fields = list(), data_file = NULL, ...) {
-      args <- list(...)
-      query_params <- list()
-      header_params <- c()
-      form_params <- list()
-      file_params <- list()
-      local_var_body <- NULL
-      oauth_scopes <- NULL
-      is_oauth <- FALSE
-
-      if (missing(`project_id`)) {
-        stop("Missing required parameter `project_id`.")
-      }
-
-
-
-      if (`page` < 0) {
-        stop("Invalid value for `page` when calling FeaturesApi$GetAlignedFeaturesByTagExperimental, must be bigger than or equal to 0.")
-      }
-
-      if (`size` < 1) {
-        stop("Invalid value for `size` when calling FeaturesApi$GetAlignedFeaturesByTagExperimental, must be bigger than or equal to 1.")
-      }
-
-
-
-      query_params[["filter"]] <- `filter`
-
-      query_params[["page"]] <- `page`
-
-      query_params[["size"]] <- `size`
-
-      # explore
-      for (query_item in `sort`) {
-        query_params[["sort"]] <- c(query_params[["sort"]], list(`sort` = query_item))
-      }
-
-      # explore
-      for (query_item in `opt_fields`) {
-        # validate enum values
-        if (!is.null(query_item) && !(query_item %in% c("none", "msData", "topAnnotationsSummary", "topAnnotations", "topAnnotationsDeNovo", "computedTools", "tags"))) {
-          stop("Invalid value for opt_fields when calling FeaturesApi$GetAlignedFeaturesByTagExperimental. Must be [none, msData, topAnnotationsSummary, topAnnotations, topAnnotationsDeNovo, computedTools, tags].")
-        }
-        query_params[["optFields"]] <- c(query_params[["optFields"]], list(`optFields` = query_item))
-      }
-
-      local_var_url_path <- "/api/projects/{projectId}/aligned-features/tagged"
-      if (!missing(`project_id`)) {
-        local_var_url_path <- gsub("\\{projectId\\}", URLencode(as.character(`project_id`), reserved = TRUE), local_var_url_path)
-      }
-
-
-      # The Accept request HTTP header
-      local_var_accepts <- list("application/json")
-
-      # The Content-Type representation header
-      local_var_content_types <- list()
-
-      local_var_resp <- self$api_client$CallApi(url = paste0(self$api_client$base_path, local_var_url_path),
-                                 method = "GET",
-                                 query_params = query_params,
-                                 header_params = header_params,
-                                 form_params = form_params,
-                                 file_params = file_params,
-                                 accepts = local_var_accepts,
-                                 content_types = local_var_content_types,
-                                 body = local_var_body,
-                                 is_oauth = is_oauth,
-                                 oauth_scopes = oauth_scopes,
-                                 ...)
-
-      if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
-        # save response in a file
-        if (!is.null(data_file)) {
-          write(local_var_resp$response, data_file)
-        }
-
-        # Check if we are expecting a CSV response
-        is_csv_response <- any(grepl("csv", local_var_accepts, ignore.case = TRUE))
-
-        if (is_csv_response) {
-          # For CSV responses, parse into data.frame
-          csv_resp_obj <- tryCatch(
-            {
-              csv_text <- rawToChar(local_var_resp$response)
-
-              # Detect separator by examining first line
-              first_line <- strsplit(csv_text, "\n")[[1]][1]
-              if (grepl("\t", first_line)) {
-                # Tab-separated (TSV)
-                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = "\t")
-              } else {
-                # Comma-separated (CSV)
-                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = ",")
-              }
-            },
-            error = function(e) {
-              stop("Failed to parse CSV response")
-            }
-          )
-          local_var_resp$content <- csv_resp_obj
-        } else {
-          # For JSON responses, deserialize normally
-          deserialized_resp_obj <- tryCatch(
-            self$api_client$deserialize(local_var_resp$response_as_text(), "PagedModelAlignedFeature", loadNamespace("RSirius")),
-            error = function(e) {
-              stop("Failed to deserialize response")
-            }
-          )
-          local_var_resp$content <- deserialized_resp_obj
-        }
-        local_var_resp
-      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
-        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
-      } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
-        ApiResponse$new("API client error", local_var_resp)
-      } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
-        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
-          local_var_resp$response <- "API server error"
-        }
-        local_var_resp
-      }
-    },
-
-    #' @description
-    #' Get all available features (aligned over runs) in the given project-space.
-    #'
-    #' @param project_id project-space to read from.
-    #' @param page (optional) Zero-based page index (0..N) (default value: 0)
-    #' @param size (optional) The size of the page to be returned (default value: 20)
-    #' @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
-    #' @param ms_data_search_prepared (optional) Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. (default value: FALSE)
-    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])
-    #' @param data_file (optional) name of the data file to save the result
-    #' @param ... Other optional arguments
-    #'
-    #' @return PagedModelAlignedFeature
-    GetAlignedFeaturesPaged = function(project_id, page = 0, size = 20, sort = NULL, ms_data_search_prepared = FALSE, opt_fields = list("none"), data_file = NULL, ...) {
-      local_var_response <- self$GetAlignedFeaturesPagedWithHttpInfo(project_id, page, size, sort, ms_data_search_prepared, opt_fields, data_file = data_file, ...)
-      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
-        local_var_response$content
-      } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
-        local_var_response
-      } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
-        local_var_response
-      } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
-        local_var_response
-      }
-    },
-
-    #' @description
-    #' Get all available features (aligned over runs) in the given project-space.
-    #'
-    #' @param project_id project-space to read from.
-    #' @param page (optional) Zero-based page index (0..N) (default value: 0)
-    #' @param size (optional) The size of the page to be returned (default value: 20)
-    #' @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
-    #' @param ms_data_search_prepared (optional) Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. (default value: FALSE)
-    #' @param opt_fields (optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])
-    #' @param data_file (optional) name of the data file to save the result
-    #' @param ... Other optional arguments
-    #'
-    #' @return API response (PagedModelAlignedFeature) with additional information such as HTTP status code, headers
-    GetAlignedFeaturesPagedWithHttpInfo = function(project_id, page = 0, size = 20, sort = NULL, ms_data_search_prepared = FALSE, opt_fields = list("none"), data_file = NULL, ...) {
+    GetAlignedFeaturesPageExperimentalWithHttpInfo = function(project_id, page = 0, size = 20, sort = NULL, search_query = NULL, ms_data_search_prepared = FALSE, opt_fields = list("computedTools","qualities","tags"), data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -2365,12 +2312,13 @@ FeaturesApi <- R6::R6Class(
 
 
       if (`page` < 0) {
-        stop("Invalid value for `page` when calling FeaturesApi$GetAlignedFeaturesPaged, must be bigger than or equal to 0.")
+        stop("Invalid value for `page` when calling FeaturesApi$GetAlignedFeaturesPageExperimental, must be bigger than or equal to 0.")
       }
 
       if (`size` < 1) {
-        stop("Invalid value for `size` when calling FeaturesApi$GetAlignedFeaturesPaged, must be bigger than or equal to 1.")
+        stop("Invalid value for `size` when calling FeaturesApi$GetAlignedFeaturesPageExperimental, must be bigger than or equal to 1.")
       }
+
 
 
 
@@ -2383,14 +2331,16 @@ FeaturesApi <- R6::R6Class(
       for (query_item in `sort`) {
         query_params[["sort"]] <- c(query_params[["sort"]], list(`sort` = query_item))
       }
+
+      query_params[["searchQuery"]] <- `search_query`
 
       query_params[["msDataSearchPrepared"]] <- `ms_data_search_prepared`
 
       # explore
       for (query_item in `opt_fields`) {
         # validate enum values
-        if (!is.null(query_item) && !(query_item %in% c("none", "msData", "topAnnotationsSummary", "topAnnotations", "topAnnotationsDeNovo", "computedTools", "tags"))) {
-          stop("Invalid value for opt_fields when calling FeaturesApi$GetAlignedFeaturesPaged. Must be [none, msData, topAnnotationsSummary, topAnnotations, topAnnotationsDeNovo, computedTools, tags].")
+        if (!is.null(query_item) && !(query_item %in% c("none", "msData", "topAnnotationsSummary", "topAnnotations", "topAnnotationsDeNovo", "computedTools", "qualities", "tags"))) {
+          stop("Invalid value for opt_fields when calling FeaturesApi$GetAlignedFeaturesPageExperimental. Must be [none, msData, topAnnotationsSummary, topAnnotations, topAnnotationsDeNovo, computedTools, qualities, tags].")
         }
         query_params[["optFields"]] <- c(query_params[["optFields"]], list(`optFields` = query_item))
       }

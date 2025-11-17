@@ -4,7 +4,7 @@ All URIs are relative to *http://localhost:8080*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**add_group**](TagsApi.md#add_group) | **POST** /api/projects/{projectId}/groups/{groupName} | [EXPERIMENTAL] Group tags in the project
+[**add_group**](TagsApi.md#add_group) | **POST** /api/projects/{projectId}/groups/{groupName} | [EXPERIMENTAL] TagGroup tags in the project
 [**add_possible_values_to_tag_definition**](TagsApi.md#add_possible_values_to_tag_definition) | **PATCH** /api/projects/{projectId}/tags/{tagName} | [EXPERIMENTAL] Add a possible value to the tag definition in the project
 [**create_tags**](TagsApi.md#create_tags) | **PUT** /api/projects/{projectId}/tags | [EXPERIMENTAL] Add tags to the project
 [**delete_group**](TagsApi.md#delete_group) | **DELETE** /api/projects/{projectId}/groups/{groupName} | [EXPERIMENTAL] Delete tag groups with the given name from the specified project-space
@@ -18,9 +18,9 @@ Method | HTTP request | Description
 # **add_group**
 > TagGroup add_group(project_id, group_name, filter, type)
 
-[EXPERIMENTAL] Group tags in the project
+[EXPERIMENTAL] TagGroup tags in the project
 
-[EXPERIMENTAL] Group tags in the project. The group name must not exist in the project.
+[EXPERIMENTAL] TagGroup tags in the project. The group name must not exist in the project.
 
  <p>
  See <code>/tagged</code> for filter syntax.
@@ -54,7 +54,7 @@ with PySirius.ApiClient(configuration) as api_client:
     type = 'type_example' # str | type of the group
 
     try:
-        # [EXPERIMENTAL] Group tags in the project
+        # [EXPERIMENTAL] TagGroup tags in the project
         api_response = api_instance.add_group(project_id, group_name, filter, type)
         print("The response of TagsApi->add_group:\n")
         pprint(api_response)

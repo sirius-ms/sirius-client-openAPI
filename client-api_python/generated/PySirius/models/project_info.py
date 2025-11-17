@@ -33,7 +33,8 @@ class ProjectInfo(BaseModel):
     num_of_features: Optional[StrictInt] = Field(default=None, description="Number of features (aligned over runs) in this project. If NULL, information has not been requested (See OptField 'sizeInformation').", alias="numOfFeatures")
     num_of_compounds: Optional[StrictInt] = Field(default=None, description="Number of compounds (group of ion identities) in this project. If NULL, Information has not been requested (See OptField 'sizeInformation') or might be unavailable for this project type.", alias="numOfCompounds")
     num_of_bytes: Optional[StrictInt] = Field(default=None, description="Size in Bytes this project consumes on disk If NULL, Information has not been requested (See OptField 'sizeInformation').", alias="numOfBytes")
-    __properties: ClassVar[List[str]] = ["projectId", "location", "description", "type", "compatible", "numOfFeatures", "numOfCompounds", "numOfBytes"]
+    detected_adducts: Optional[List[Optional[StrictStr]]] = Field(default=None, description="Set of all detected adducts available in this projects", alias="detectedAdducts")
+    __properties: ClassVar[List[str]] = ["projectId", "location", "description", "type", "compatible", "numOfFeatures", "numOfCompounds", "numOfBytes", "detectedAdducts"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -104,6 +105,11 @@ class ProjectInfo(BaseModel):
         if self.num_of_bytes is None and "num_of_bytes" in self.model_fields_set:
             _dict['numOfBytes'] = None
 
+        # set to None if detected_adducts (nullable) is None
+        # and model_fields_set contains the field
+        if self.detected_adducts is None and "detected_adducts" in self.model_fields_set:
+            _dict['detectedAdducts'] = None
+
         return _dict
 
     @classmethod
@@ -123,7 +129,8 @@ class ProjectInfo(BaseModel):
             "compatible": obj.get("compatible"),
             "numOfFeatures": obj.get("numOfFeatures"),
             "numOfCompounds": obj.get("numOfCompounds"),
-            "numOfBytes": obj.get("numOfBytes")
+            "numOfBytes": obj.get("numOfBytes"),
+            "detectedAdducts": obj.get("detectedAdducts")
         })
         return _obj
 

@@ -4,7 +4,7 @@ All URIs are relative to *http://localhost:8080*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**AddGroup**](TagsApi.md#AddGroup) | **POST** /api/projects/{projectId}/groups/{groupName} | [EXPERIMENTAL] Group tags in the project
+[**AddGroup**](TagsApi.md#AddGroup) | **POST** /api/projects/{projectId}/groups/{groupName} | [EXPERIMENTAL] TagGroup tags in the project
 [**AddPossibleValuesToTagDefinition**](TagsApi.md#AddPossibleValuesToTagDefinition) | **PATCH** /api/projects/{projectId}/tags/{tagName} | [EXPERIMENTAL] Add a possible value to the tag definition in the project
 [**CreateTags**](TagsApi.md#CreateTags) | **PUT** /api/projects/{projectId}/tags | [EXPERIMENTAL] Add tags to the project
 [**DeleteGroup**](TagsApi.md#DeleteGroup) | **DELETE** /api/projects/{projectId}/groups/{groupName} | [EXPERIMENTAL] Delete tag groups with the given name from the specified project-space
@@ -18,15 +18,15 @@ Method | HTTP request | Description
 # **AddGroup**
 > TagGroup AddGroup(project_id, group_name, filter, type)
 
-[EXPERIMENTAL] Group tags in the project
+[EXPERIMENTAL] TagGroup tags in the project
 
-[EXPERIMENTAL] Group tags in the project. The group name must not exist in the project.   <p>  See <code>/tagged</code> for filter syntax.  </p>   [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.
+[EXPERIMENTAL] TagGroup tags in the project. The group name must not exist in the project.   <p>  See <code>/tagged</code> for filter syntax.  </p>   [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.
 
 ### Example
 ```R
 library(RSirius)
 
-# [EXPERIMENTAL] Group tags in the project
+# [EXPERIMENTAL] TagGroup tags in the project
 #
 # prepare function argument(s)
 var_project_id <- "project_id_example" # character | project-space to add to.

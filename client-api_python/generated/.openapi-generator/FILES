@@ -62,10 +62,12 @@ PySirius/models/data_import_event.py
 PySirius/models/data_quality.py
 PySirius/models/db_link.py
 PySirius/models/deviation.py
+PySirius/models/downloadable_database.py
 PySirius/models/feature_annotations.py
 PySirius/models/feature_import.py
 PySirius/models/fingerprint_prediction.py
 PySirius/models/fold_change.py
+PySirius/models/fold_change_job_submission.py
 PySirius/models/formula_candidate.py
 PySirius/models/formula_candidate_opt_field.py
 PySirius/models/fragment_node.py
@@ -113,7 +115,6 @@ PySirius/models/quant_row_type.py
 PySirius/models/quant_table_experimental.py
 PySirius/models/run.py
 PySirius/models/run_opt_field.py
-PySirius/models/sample_type_fold_change_request.py
 PySirius/models/searchable_database.py
 PySirius/models/searchable_database_parameters.py
 PySirius/models/security_context.py
@@ -143,6 +144,7 @@ PySirius/models/tag.py
 PySirius/models/tag_definition.py
 PySirius/models/tag_definition_import.py
 PySirius/models/tag_group.py
+PySirius/models/tag_submission.py
 PySirius/models/term.py
 PySirius/models/timeout.py
 PySirius/models/trace_annotation_experimental.py
@@ -207,12 +209,14 @@ docs/DBLink.md
 docs/DataImportEvent.md
 docs/DataQuality.md
 docs/Deviation.md
+docs/DownloadableDatabase.md
 docs/FeatureAnnotations.md
 docs/FeatureImport.md
 docs/FeatureStatisticsApi.md
 docs/FeaturesApi.md
 docs/FingerprintPrediction.md
 docs/FoldChange.md
+docs/FoldChangeJobSubmission.md
 docs/FormulaCandidate.md
 docs/FormulaCandidateOptField.md
 docs/FragmentNode.md
@@ -265,7 +269,6 @@ docs/QuantTableExperimental.md
 docs/Run.md
 docs/RunOptField.md
 docs/RunsApi.md
-docs/SampleTypeFoldChangeRequest.md
 docs/SearchableDatabase.md
 docs/SearchableDatabaseParameters.md
 docs/SearchableDatabasesApi.md
@@ -296,6 +299,7 @@ docs/Tag.md
 docs/TagDefinition.md
 docs/TagDefinitionImport.md
 docs/TagGroup.md
+docs/TagSubmission.md
 docs/TagsApi.md
 docs/Term.md
 docs/Timeout.md

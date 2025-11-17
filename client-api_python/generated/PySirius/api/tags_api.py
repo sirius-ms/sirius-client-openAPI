@@ -59,9 +59,9 @@ class TagsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> TagGroup:
-        """[EXPERIMENTAL] Group tags in the project
+        """[EXPERIMENTAL] TagGroup tags in the project
 
-        [EXPERIMENTAL] Group tags in the project. The group name must not exist in the project.   <p>  See <code>/tagged</code> for filter syntax.  </p>   [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.
+        [EXPERIMENTAL] TagGroup tags in the project. The group name must not exist in the project.   <p>  See <code>/tagged</code> for filter syntax.  </p>   [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.
 
         :param project_id: project-space to add to. (required)
         :type project_id: str
@@ -138,9 +138,9 @@ class TagsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[TagGroup]:
-        """[EXPERIMENTAL] Group tags in the project
+        """[EXPERIMENTAL] TagGroup tags in the project
 
-        [EXPERIMENTAL] Group tags in the project. The group name must not exist in the project.   <p>  See <code>/tagged</code> for filter syntax.  </p>   [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.
+        [EXPERIMENTAL] TagGroup tags in the project. The group name must not exist in the project.   <p>  See <code>/tagged</code> for filter syntax.  </p>   [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.
 
         :param project_id: project-space to add to. (required)
         :type project_id: str
@@ -217,9 +217,9 @@ class TagsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """[EXPERIMENTAL] Group tags in the project
+        """[EXPERIMENTAL] TagGroup tags in the project
 
-        [EXPERIMENTAL] Group tags in the project. The group name must not exist in the project.   <p>  See <code>/tagged</code> for filter syntax.  </p>   [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.
+        [EXPERIMENTAL] TagGroup tags in the project. The group name must not exist in the project.   <p>  See <code>/tagged</code> for filter syntax.  </p>   [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.
 
         :param project_id: project-space to add to. (required)
         :type project_id: str

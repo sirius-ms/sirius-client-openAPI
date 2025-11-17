@@ -20,14 +20,14 @@ from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
 
-class SampleTypeFoldChangeRequest(BaseModel):
+class TagSubmission(BaseModel):
     """
-    SampleTypeFoldChangeRequest
+    TagSubmission
     """ # noqa: E501
-    sample_run_ids: Optional[List[StrictStr]] = Field(default=None, alias="sampleRunIds")
-    blank_run_ids: Optional[List[StrictStr]] = Field(default=None, alias="blankRunIds")
-    control_run_ids: Optional[List[StrictStr]] = Field(default=None, alias="controlRunIds")
-    __properties: ClassVar[List[str]] = ["sampleRunIds", "blankRunIds", "controlRunIds"]
+    tag_name: StrictStr = Field(description="Name of the tag as defined by the corresponding TagDefinition  Links tag object to their definition.", alias="tagName")
+    value: Optional[Dict[str, Any]] = Field(default=None, description="Optional value of the tag.  <p>  Generic value of the tag as defined by the corresponding TagDefinition.  Can be Integer, Double, Boolean and String, whereas String values can represent Text, Date (yyyy-MM-dd) or Time (HH:mm:ss).")
+    tagged_object_id: StrictStr = Field(description="ID of the object where the tag should be added.  Then Object type is taken from context of the API endpoint.", alias="taggedObjectId")
+    __properties: ClassVar[List[str]] = ["tagName", "value", "taggedObjectId"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -47,7 +47,7 @@ class SampleTypeFoldChangeRequest(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of SampleTypeFoldChangeRequest from a JSON string"""
+        """Create an instance of TagSubmission from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -68,11 +68,16 @@ class SampleTypeFoldChangeRequest(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if value (nullable) is None
+        # and model_fields_set contains the field
+        if self.value is None and "value" in self.model_fields_set:
+            _dict['value'] = None
+
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of SampleTypeFoldChangeRequest from a dict"""
+        """Create an instance of TagSubmission from a dict"""
         if obj is None:
             return None
 
@@ -80,9 +85,9 @@ class SampleTypeFoldChangeRequest(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "sampleRunIds": obj.get("sampleRunIds"),
-            "blankRunIds": obj.get("blankRunIds"),
-            "controlRunIds": obj.get("controlRunIds")
+            "tagName": obj.get("tagName"),
+            "value": obj.get("value"),
+            "taggedObjectId": obj.get("taggedObjectId")
         })
         return _obj
 

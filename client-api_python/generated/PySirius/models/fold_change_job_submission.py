@@ -16,17 +16,21 @@ import re  # noqa: F401
 import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
-from typing import Any, ClassVar, Dict, List
+from typing import Any, ClassVar, Dict, List, Optional
+from PySirius.models.aggregation_type import AggregationType
+from PySirius.models.quant_measure import QuantMeasure
 from typing import Optional, Set
 from typing_extensions import Self
 
-class ImportResult(BaseModel):
+class FoldChangeJobSubmission(BaseModel):
     """
-    ImportResult
+    FoldChangeJobSubmission
     """ # noqa: E501
-    affected_compound_ids: List[StrictStr] = Field(description="List of compoundIds that have been imported.", alias="affectedCompoundIds")
-    affected_aligned_feature_ids: List[StrictStr] = Field(description="List of alignedFeatureIds that have been imported.", alias="affectedAlignedFeatureIds")
-    __properties: ClassVar[List[str]] = ["affectedCompoundIds", "affectedAlignedFeatureIds"]
+    left_run_group: Optional[StrictStr] = Field(default=None, alias="leftRunGroup")
+    right_run_group: Optional[StrictStr] = Field(default=None, alias="rightRunGroup")
+    aggregation_types: Optional[List[AggregationType]] = Field(default=None, alias="aggregationTypes")
+    quantification_measures: Optional[List[QuantMeasure]] = Field(default=None, alias="quantificationMeasures")
+    __properties: ClassVar[List[str]] = ["leftRunGroup", "rightRunGroup", "aggregationTypes", "quantificationMeasures"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -46,7 +50,7 @@ class ImportResult(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of ImportResult from a JSON string"""
+        """Create an instance of FoldChangeJobSubmission from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -71,7 +75,7 @@ class ImportResult(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of ImportResult from a dict"""
+        """Create an instance of FoldChangeJobSubmission from a dict"""
         if obj is None:
             return None
 
@@ -79,8 +83,10 @@ class ImportResult(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "affectedCompoundIds": obj.get("affectedCompoundIds"),
-            "affectedAlignedFeatureIds": obj.get("affectedAlignedFeatureIds")
+            "leftRunGroup": obj.get("leftRunGroup"),
+            "rightRunGroup": obj.get("rightRunGroup"),
+            "aggregationTypes": obj.get("aggregationTypes"),
+            "quantificationMeasures": obj.get("quantificationMeasures")
         })
         return _obj
 

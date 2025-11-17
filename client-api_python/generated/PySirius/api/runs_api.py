@@ -17,13 +17,11 @@ from typing_extensions import Annotated
 from pydantic import Field, StrictStr
 from typing import List, Optional
 from typing_extensions import Annotated
-from PySirius.models.job import Job
-from PySirius.models.job_opt_field import JobOptField
 from PySirius.models.paged_model_run import PagedModelRun
 from PySirius.models.run import Run
 from PySirius.models.run_opt_field import RunOptField
-from PySirius.models.sample_type_fold_change_request import SampleTypeFoldChangeRequest
 from PySirius.models.tag import Tag
+from PySirius.models.tag_submission import TagSubmission
 
 from PySirius.api_client import ApiClient, RequestSerialized
 from PySirius.api_response import ApiResponse
@@ -348,11 +346,10 @@ class RunsApi:
 
 
     @validate_call
-    def compute_fold_change_for_blank_subtraction(
+    def add_tags_to_runs_experimental(
         self,
-        project_id: Annotated[StrictStr, Field(description="project-space to compute the fold change in.")],
-        sample_type_fold_change_request: Annotated[SampleTypeFoldChangeRequest, Field(description="request with lists of run IDs that are sample, blank, and control runs")],
-        opt_fields: Annotated[Optional[List[Optional[JobOptField]]], Field(description="job opt fields.")] = None,
+        project_id: Annotated[StrictStr, Field(description="project-space to add to.")],
+        tag_submission: Annotated[List[TagSubmission], Field(description="tags with the id of run they shall be added to.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -365,17 +362,15 @@ class RunsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Job:
-        """**EXPERIMENTAL** Compute the fold changes that are required for the fold change filter
+    ) -> None:
+        """[EXPERIMENTAL] Add tags to a run in the project
 
-        **EXPERIMENTAL** Compute the fold changes that are required for the fold change filter.   <p>This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.</p>
+        [EXPERIMENTAL] Add tags to a run in the project. Tags with the same name will be overwritten.  <p>  [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.
 
-        :param project_id: project-space to compute the fold change in. (required)
+        :param project_id: project-space to add to. (required)
         :type project_id: str
-        :param sample_type_fold_change_request: request with lists of run IDs that are sample, blank, and control runs (required)
-        :type sample_type_fold_change_request: SampleTypeFoldChangeRequest
-        :param opt_fields: job opt fields.
-        :type opt_fields: List[JobOptField]
+        :param tag_submission: tags with the id of run they shall be added to. (required)
+        :type tag_submission: List[TagSubmission]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -398,10 +393,9 @@ class RunsApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._compute_fold_change_for_blank_subtraction_serialize(
+        _param = self._add_tags_to_runs_experimental_serialize(
             project_id=project_id,
-            sample_type_fold_change_request=sample_type_fold_change_request,
-            opt_fields=opt_fields,
+            tag_submission=tag_submission,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -409,7 +403,7 @@ class RunsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Job",
+            '200': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -423,11 +417,10 @@ class RunsApi:
 
 
     @validate_call
-    def compute_fold_change_for_blank_subtraction_with_http_info(
+    def add_tags_to_runs_experimental_with_http_info(
         self,
-        project_id: Annotated[StrictStr, Field(description="project-space to compute the fold change in.")],
-        sample_type_fold_change_request: Annotated[SampleTypeFoldChangeRequest, Field(description="request with lists of run IDs that are sample, blank, and control runs")],
-        opt_fields: Annotated[Optional[List[Optional[JobOptField]]], Field(description="job opt fields.")] = None,
+        project_id: Annotated[StrictStr, Field(description="project-space to add to.")],
+        tag_submission: Annotated[List[TagSubmission], Field(description="tags with the id of run they shall be added to.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -440,17 +433,15 @@ class RunsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[Job]:
-        """**EXPERIMENTAL** Compute the fold changes that are required for the fold change filter
+    ) -> ApiResponse[None]:
+        """[EXPERIMENTAL] Add tags to a run in the project
 
-        **EXPERIMENTAL** Compute the fold changes that are required for the fold change filter.   <p>This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.</p>
+        [EXPERIMENTAL] Add tags to a run in the project. Tags with the same name will be overwritten.  <p>  [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.
 
-        :param project_id: project-space to compute the fold change in. (required)
+        :param project_id: project-space to add to. (required)
         :type project_id: str
-        :param sample_type_fold_change_request: request with lists of run IDs that are sample, blank, and control runs (required)
-        :type sample_type_fold_change_request: SampleTypeFoldChangeRequest
-        :param opt_fields: job opt fields.
-        :type opt_fields: List[JobOptField]
+        :param tag_submission: tags with the id of run they shall be added to. (required)
+        :type tag_submission: List[TagSubmission]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -473,10 +464,9 @@ class RunsApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._compute_fold_change_for_blank_subtraction_serialize(
+        _param = self._add_tags_to_runs_experimental_serialize(
             project_id=project_id,
-            sample_type_fold_change_request=sample_type_fold_change_request,
-            opt_fields=opt_fields,
+            tag_submission=tag_submission,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -484,7 +474,7 @@ class RunsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Job",
+            '200': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -498,11 +488,10 @@ class RunsApi:
 
 
     @validate_call
-    def compute_fold_change_for_blank_subtraction_without_preload_content(
+    def add_tags_to_runs_experimental_without_preload_content(
         self,
-        project_id: Annotated[StrictStr, Field(description="project-space to compute the fold change in.")],
-        sample_type_fold_change_request: Annotated[SampleTypeFoldChangeRequest, Field(description="request with lists of run IDs that are sample, blank, and control runs")],
-        opt_fields: Annotated[Optional[List[Optional[JobOptField]]], Field(description="job opt fields.")] = None,
+        project_id: Annotated[StrictStr, Field(description="project-space to add to.")],
+        tag_submission: Annotated[List[TagSubmission], Field(description="tags with the id of run they shall be added to.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -516,16 +505,14 @@ class RunsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """**EXPERIMENTAL** Compute the fold changes that are required for the fold change filter
+        """[EXPERIMENTAL] Add tags to a run in the project
 
-        **EXPERIMENTAL** Compute the fold changes that are required for the fold change filter.   <p>This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.</p>
+        [EXPERIMENTAL] Add tags to a run in the project. Tags with the same name will be overwritten.  <p>  [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.
 
-        :param project_id: project-space to compute the fold change in. (required)
+        :param project_id: project-space to add to. (required)
         :type project_id: str
-        :param sample_type_fold_change_request: request with lists of run IDs that are sample, blank, and control runs (required)
-        :type sample_type_fold_change_request: SampleTypeFoldChangeRequest
-        :param opt_fields: job opt fields.
-        :type opt_fields: List[JobOptField]
+        :param tag_submission: tags with the id of run they shall be added to. (required)
+        :type tag_submission: List[TagSubmission]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -548,10 +535,9 @@ class RunsApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._compute_fold_change_for_blank_subtraction_serialize(
+        _param = self._add_tags_to_runs_experimental_serialize(
             project_id=project_id,
-            sample_type_fold_change_request=sample_type_fold_change_request,
-            opt_fields=opt_fields,
+            tag_submission=tag_submission,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -559,7 +545,7 @@ class RunsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Job",
+            '200': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -568,11 +554,10 @@ class RunsApi:
         return response_data.response
 
 
-    def _compute_fold_change_for_blank_subtraction_serialize(
+    def _add_tags_to_runs_experimental_serialize(
         self,
         project_id,
-        sample_type_fold_change_request,
-        opt_fields,
+        tag_submission,
         _request_auth,
         _content_type,
         _headers,
@@ -582,7 +567,7 @@ class RunsApi:
         _host = None
 
         _collection_formats: Dict[str, str] = {
-            'optFields': 'multi',
+            'TagSubmission': '',
         }
 
         _path_params: Dict[str, str] = {}
@@ -598,24 +583,13 @@ class RunsApi:
         if project_id is not None:
             _path_params['projectId'] = project_id
         # process the query parameters
-        if opt_fields is not None:
-            
-            _query_params.append(('optFields', opt_fields))
-            
         # process the header parameters
         # process the form parameters
         # process the body parameter
-        if sample_type_fold_change_request is not None:
-            _body_params = sample_type_fold_change_request
+        if tag_submission is not None:
+            _body_params = tag_submission
 
 
-        # set the HTTP header `Accept`
-        if 'Accept' not in _header_params:
-            _header_params['Accept'] = self.api_client.select_header_accept(
-                [
-                    'application/json'
-                ]
-            )
 
         # set the HTTP header `Content-Type`
         if _content_type:
@@ -637,7 +611,7 @@ class RunsApi:
 
         return self.api_client.param_serialize(
             method='PUT',
-            resource_path='/api/projects/{projectId}/runs/blanksubtract/compute',
+            resource_path='/api/projects/{projectId}/runs/tags',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -931,336 +905,6 @@ class RunsApi:
         return self.api_client.param_serialize(
             method='GET',
             resource_path='/api/projects/{projectId}/runs/{runId}',
-            path_params=_path_params,
-            query_params=_query_params,
-            header_params=_header_params,
-            body=_body_params,
-            post_params=_form_params,
-            files=_files,
-            auth_settings=_auth_settings,
-            collection_formats=_collection_formats,
-            _host=_host,
-            _request_auth=_request_auth
-        )
-
-
-
-
-    @validate_call
-    def get_run_page_experimental(
-        self,
-        project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
-        page: Annotated[Optional[Annotated[int, Field(strict=True, ge=0)]], Field(description="Zero-based page index (0..N)")] = None,
-        size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
-        sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
-        opt_fields: Annotated[Optional[List[Optional[RunOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> PagedModelRun:
-        """[EXPERIMENTAL] Get all available runs in the given project-space
-
-        [EXPERIMENTAL] Get all available runs in the given project-space.  <p>  [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.
-
-        :param project_id: project-space to read from. (required)
-        :type project_id: str
-        :param page: Zero-based page index (0..N)
-        :type page: int
-        :param size: The size of the page to be returned
-        :type size: int
-        :param sort: Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
-        :type sort: List[str]
-        :param opt_fields: set of optional fields to be included. Use 'none' only to override defaults.
-        :type opt_fields: List[RunOptField]
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """ # noqa: E501
-
-        _param = self._get_run_page_experimental_serialize(
-            project_id=project_id,
-            page=page,
-            size=size,
-            sort=sort,
-            opt_fields=opt_fields,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            '200': "PagedModelRun",
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
-        )
-        response_data.read()
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        ).data
-
-
-    @validate_call
-    def get_run_page_experimental_with_http_info(
-        self,
-        project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
-        page: Annotated[Optional[Annotated[int, Field(strict=True, ge=0)]], Field(description="Zero-based page index (0..N)")] = None,
-        size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
-        sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
-        opt_fields: Annotated[Optional[List[Optional[RunOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[PagedModelRun]:
-        """[EXPERIMENTAL] Get all available runs in the given project-space
-
-        [EXPERIMENTAL] Get all available runs in the given project-space.  <p>  [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.
-
-        :param project_id: project-space to read from. (required)
-        :type project_id: str
-        :param page: Zero-based page index (0..N)
-        :type page: int
-        :param size: The size of the page to be returned
-        :type size: int
-        :param sort: Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
-        :type sort: List[str]
-        :param opt_fields: set of optional fields to be included. Use 'none' only to override defaults.
-        :type opt_fields: List[RunOptField]
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """ # noqa: E501
-
-        _param = self._get_run_page_experimental_serialize(
-            project_id=project_id,
-            page=page,
-            size=size,
-            sort=sort,
-            opt_fields=opt_fields,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            '200': "PagedModelRun",
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
-        )
-        response_data.read()
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        )
-
-
-    @validate_call
-    def get_run_page_experimental_without_preload_content(
-        self,
-        project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
-        page: Annotated[Optional[Annotated[int, Field(strict=True, ge=0)]], Field(description="Zero-based page index (0..N)")] = None,
-        size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
-        sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
-        opt_fields: Annotated[Optional[List[Optional[RunOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """[EXPERIMENTAL] Get all available runs in the given project-space
-
-        [EXPERIMENTAL] Get all available runs in the given project-space.  <p>  [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.
-
-        :param project_id: project-space to read from. (required)
-        :type project_id: str
-        :param page: Zero-based page index (0..N)
-        :type page: int
-        :param size: The size of the page to be returned
-        :type size: int
-        :param sort: Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
-        :type sort: List[str]
-        :param opt_fields: set of optional fields to be included. Use 'none' only to override defaults.
-        :type opt_fields: List[RunOptField]
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """ # noqa: E501
-
-        _param = self._get_run_page_experimental_serialize(
-            project_id=project_id,
-            page=page,
-            size=size,
-            sort=sort,
-            opt_fields=opt_fields,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            '200': "PagedModelRun",
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
-        )
-        return response_data.response
-
-
-    def _get_run_page_experimental_serialize(
-        self,
-        project_id,
-        page,
-        size,
-        sort,
-        opt_fields,
-        _request_auth,
-        _content_type,
-        _headers,
-        _host_index,
-    ) -> RequestSerialized:
-
-        _host = None
-
-        _collection_formats: Dict[str, str] = {
-            'sort': 'multi',
-            'optFields': 'multi',
-        }
-
-        _path_params: Dict[str, str] = {}
-        _query_params: List[Tuple[str, str]] = []
-        _header_params: Dict[str, Optional[str]] = _headers or {}
-        _form_params: List[Tuple[str, str]] = []
-        _files: Dict[
-            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
-        ] = {}
-        _body_params: Optional[bytes] = None
-
-        # process the path parameters
-        if project_id is not None:
-            _path_params['projectId'] = project_id
-        # process the query parameters
-        if page is not None:
-            
-            _query_params.append(('page', page))
-            
-        if size is not None:
-            
-            _query_params.append(('size', size))
-            
-        if sort is not None:
-            
-            _query_params.append(('sort', sort))
-            
-        if opt_fields is not None:
-            
-            _query_params.append(('optFields', opt_fields))
-            
-        # process the header parameters
-        # process the form parameters
-        # process the body parameter
-
-
-        # set the HTTP header `Accept`
-        if 'Accept' not in _header_params:
-            _header_params['Accept'] = self.api_client.select_header_accept(
-                [
-                    'application/json'
-                ]
-            )
-
-
-        # authentication setting
-        _auth_settings: List[str] = [
-        ]
-
-        return self.api_client.param_serialize(
-            method='GET',
-            resource_path='/api/projects/{projectId}/runs/page',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -1624,10 +1268,10 @@ class RunsApi:
 
 
     @validate_call
-    def get_runs_by_tag_experimental(
+    def get_runs_page_experimental(
         self,
         project_id: Annotated[StrictStr, Field(description="project space to get runs from.")],
-        filter: Annotated[Optional[StrictStr], Field(description="tag filter.")] = None,
+        search_query: Annotated[Optional[StrictStr], Field(description="optional search query in lucene syntax.")] = None,
         page: Annotated[Optional[Annotated[int, Field(strict=True, ge=0)]], Field(description="Zero-based page index (0..N)")] = None,
         size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
         sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
@@ -1645,14 +1289,14 @@ class RunsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> PagedModelRun:
-        """[EXPERIMENTAL] Get runs by tag
+        """[EXPERIMENTAL] Get runs in the given project-space
 
-        [EXPERIMENTAL] Get runs by tag.   <h2>Supported filter syntax</h2>   <p>The filter string must contain one or more clauses. A clause is prefíxed  by a field name.  </p>   Currently the only searchable fields are names of tags (<code>tagName</code>) followed by a clause that is valued for the value type of the tag (See TagDefinition).  Tag name based field need to be prefixed with the namespace <code>tags.</code>.  Possible value types of tags are <strong>bool</strong>, <strong>integer</strong>, <strong>real</strong>, <strong>text</strong>, <strong>date</strong>, or <strong>time</strong> - tag value   <p>The format of the <strong>date</strong> type is <code>yyyy-MM-dd</code> and of the <strong>time</strong> type is <code>HH\\:mm\\:ss</code>.</p>   <p>A clause may be:</p>  <ul>      <li>a <strong>term</strong>: field name followed by a colon and the search term, e.g. <code>tags.MyTagA:sample</code></li>      <li>a <strong>phrase</strong>: field name followed by a colon and the search phrase in doublequotes, e.g. <code>tags.MyTagA:&quot;Some Text&quot;</code></li>      <li>a <strong>regular expression</strong>: field name followed by a colon and the regex in slashes, e.g. <code>tags.MyTagA:/[mb]oat/</code></li>      <li>a <strong>comparison</strong>: field name followed by a comparison operator and a value, e.g. <code>tags.MyTagB&lt;3</code></li>      <li>a <strong>range</strong>: field name followed by a colon and an open (indiced by <code>[ </code> and <code>] </code>) or (semi-)closed range (indiced by <code>{</code> and <code>}</code>), e.g. <code>tags.MyTagB:[* TO 3] </code></li>  </ul>   <p>Clauses may be <strong>grouped</strong> with brackets <code>( </code> and <code>) </code> and / or <strong>joined</strong> with <code>AND</code> or <code>OR </code> (or <code>&amp;&amp; </code> and <code>|| </code>)</p>   <h3>Example</h3>   <p>The syntax allows to build complex filter queries such as:</p>   <p><code>tags.city:&quot;new york&quot; AND tags.ATextTag:/[mb]oat/ AND tags.count:[1 TO *] OR tags.realNumberTag&lt;=3.2 OR tags.MyDateTag:2024-01-01 OR tags.MyDateTag:[2023-10-01 TO 2023-12-24] OR tags.MyDateTag&lt;2022-01-01 OR tags.time:12\\:00\\:00 OR tags.time:[12\\:00\\:00 TO 14\\:00\\:00] OR tags.time&lt;10\\:00\\:00 </code></p>   [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.
+        [EXPERIMENTAL] Get runs in the given project-space.   <h2>Supported filter syntax</h2>   <p>The filter string must contain one or more clauses. A clause is prefíxed  by a field name.  </p>   Currently the only searchable fields are names of tags (<code>tagName</code>) followed by a clause that is valued for the value type of the tag (See TagDefinition).  Tag name based field need to be prefixed with the namespace <code>tags.</code>.  Possible value types of tags are <strong>bool</strong>, <strong>integer</strong>, <strong>real</strong>, <strong>text</strong>, <strong>date</strong>, or <strong>time</strong> - tag value   <p>The format of the <strong>date</strong> type is <code>yyyy-MM-dd</code> and of the <strong>time</strong> type is <code>HH\\:mm\\:ss</code>.</p>   <p>A clause may be:</p>  <ul>      <li>a <strong>term</strong>: field name followed by a colon and the search term, e.g. <code>tags.MyTagA:sample</code></li>      <li>a <strong>phrase</strong>: field name followed by a colon and the search phrase in doublequotes, e.g. <code>tags.MyTagA:&quot;Some Text&quot;</code></li>      <li>a <strong>regular expression</strong>: field name followed by a colon and the regex in slashes, e.g. <code>tags.MyTagA:/[mb]oat/</code></li>      <li>a <strong>comparison</strong>: field name followed by a comparison operator and a value, e.g. <code>tags.MyTagB&lt;3</code></li>      <li>a <strong>range</strong>: field name followed by a colon and an open (indiced by <code>[ </code> and <code>] </code>) or (semi-)closed range (indiced by <code>{</code> and <code>}</code>), e.g. <code>tags.MyTagB:[* TO 3] </code></li>  </ul>   <p>Clauses may be <strong>grouped</strong> with brackets <code>( </code> and <code>) </code> and / or <strong>joined</strong> with <code>AND</code> or <code>OR </code> (or <code>&amp;&amp; </code> and <code>|| </code>)</p>   <h3>Example</h3>   <p>The syntax allows to build complex filter queries such as:</p>   <p><code>tags.city:&quot;new york&quot; AND tags.ATextTag:/[mb]oat/ AND tags.count:[1 TO *] OR tags.realNumberTag&lt;=3.2 OR tags.MyDateTag:2024-01-01 OR tags.MyDateTag:[2023-10-01 TO 2023-12-24] OR tags.MyDateTag&lt;2022-01-01 OR tags.time:12\\:00\\:00 OR tags.time:[12\\:00\\:00 TO 14\\:00\\:00] OR tags.time&lt;10\\:00\\:00 </code></p>   [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.
 
         :param project_id: project space to get runs from. (required)
         :type project_id: str
-        :param filter: tag filter.
-        :type filter: str
+        :param search_query: optional search query in lucene syntax.
+        :type search_query: str
         :param page: Zero-based page index (0..N)
         :type page: int
         :param size: The size of the page to be returned
@@ -1683,9 +1327,9 @@ class RunsApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._get_runs_by_tag_experimental_serialize(
+        _param = self._get_runs_page_experimental_serialize(
             project_id=project_id,
-            filter=filter,
+            search_query=search_query,
             page=page,
             size=size,
             sort=sort,
@@ -1711,10 +1355,10 @@ class RunsApi:
 
 
     @validate_call
-    def get_runs_by_tag_experimental_with_http_info(
+    def get_runs_page_experimental_with_http_info(
         self,
         project_id: Annotated[StrictStr, Field(description="project space to get runs from.")],
-        filter: Annotated[Optional[StrictStr], Field(description="tag filter.")] = None,
+        search_query: Annotated[Optional[StrictStr], Field(description="optional search query in lucene syntax.")] = None,
         page: Annotated[Optional[Annotated[int, Field(strict=True, ge=0)]], Field(description="Zero-based page index (0..N)")] = None,
         size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
         sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
@@ -1732,14 +1376,14 @@ class RunsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[PagedModelRun]:
-        """[EXPERIMENTAL] Get runs by tag
+        """[EXPERIMENTAL] Get runs in the given project-space
 
-        [EXPERIMENTAL] Get runs by tag.   <h2>Supported filter syntax</h2>   <p>The filter string must contain one or more clauses. A clause is prefíxed  by a field name.  </p>   Currently the only searchable fields are names of tags (<code>tagName</code>) followed by a clause that is valued for the value type of the tag (See TagDefinition).  Tag name based field need to be prefixed with the namespace <code>tags.</code>.  Possible value types of tags are <strong>bool</strong>, <strong>integer</strong>, <strong>real</strong>, <strong>text</strong>, <strong>date</strong>, or <strong>time</strong> - tag value   <p>The format of the <strong>date</strong> type is <code>yyyy-MM-dd</code> and of the <strong>time</strong> type is <code>HH\\:mm\\:ss</code>.</p>   <p>A clause may be:</p>  <ul>      <li>a <strong>term</strong>: field name followed by a colon and the search term, e.g. <code>tags.MyTagA:sample</code></li>      <li>a <strong>phrase</strong>: field name followed by a colon and the search phrase in doublequotes, e.g. <code>tags.MyTagA:&quot;Some Text&quot;</code></li>      <li>a <strong>regular expression</strong>: field name followed by a colon and the regex in slashes, e.g. <code>tags.MyTagA:/[mb]oat/</code></li>      <li>a <strong>comparison</strong>: field name followed by a comparison operator and a value, e.g. <code>tags.MyTagB&lt;3</code></li>      <li>a <strong>range</strong>: field name followed by a colon and an open (indiced by <code>[ </code> and <code>] </code>) or (semi-)closed range (indiced by <code>{</code> and <code>}</code>), e.g. <code>tags.MyTagB:[* TO 3] </code></li>  </ul>   <p>Clauses may be <strong>grouped</strong> with brackets <code>( </code> and <code>) </code> and / or <strong>joined</strong> with <code>AND</code> or <code>OR </code> (or <code>&amp;&amp; </code> and <code>|| </code>)</p>   <h3>Example</h3>   <p>The syntax allows to build complex filter queries such as:</p>   <p><code>tags.city:&quot;new york&quot; AND tags.ATextTag:/[mb]oat/ AND tags.count:[1 TO *] OR tags.realNumberTag&lt;=3.2 OR tags.MyDateTag:2024-01-01 OR tags.MyDateTag:[2023-10-01 TO 2023-12-24] OR tags.MyDateTag&lt;2022-01-01 OR tags.time:12\\:00\\:00 OR tags.time:[12\\:00\\:00 TO 14\\:00\\:00] OR tags.time&lt;10\\:00\\:00 </code></p>   [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.
+        [EXPERIMENTAL] Get runs in the given project-space.   <h2>Supported filter syntax</h2>   <p>The filter string must contain one or more clauses. A clause is prefíxed  by a field name.  </p>   Currently the only searchable fields are names of tags (<code>tagName</code>) followed by a clause that is valued for the value type of the tag (See TagDefinition).  Tag name based field need to be prefixed with the namespace <code>tags.</code>.  Possible value types of tags are <strong>bool</strong>, <strong>integer</strong>, <strong>real</strong>, <strong>text</strong>, <strong>date</strong>, or <strong>time</strong> - tag value   <p>The format of the <strong>date</strong> type is <code>yyyy-MM-dd</code> and of the <strong>time</strong> type is <code>HH\\:mm\\:ss</code>.</p>   <p>A clause may be:</p>  <ul>      <li>a <strong>term</strong>: field name followed by a colon and the search term, e.g. <code>tags.MyTagA:sample</code></li>      <li>a <strong>phrase</strong>: field name followed by a colon and the search phrase in doublequotes, e.g. <code>tags.MyTagA:&quot;Some Text&quot;</code></li>      <li>a <strong>regular expression</strong>: field name followed by a colon and the regex in slashes, e.g. <code>tags.MyTagA:/[mb]oat/</code></li>      <li>a <strong>comparison</strong>: field name followed by a comparison operator and a value, e.g. <code>tags.MyTagB&lt;3</code></li>      <li>a <strong>range</strong>: field name followed by a colon and an open (indiced by <code>[ </code> and <code>] </code>) or (semi-)closed range (indiced by <code>{</code> and <code>}</code>), e.g. <code>tags.MyTagB:[* TO 3] </code></li>  </ul>   <p>Clauses may be <strong>grouped</strong> with brackets <code>( </code> and <code>) </code> and / or <strong>joined</strong> with <code>AND</code> or <code>OR </code> (or <code>&amp;&amp; </code> and <code>|| </code>)</p>   <h3>Example</h3>   <p>The syntax allows to build complex filter queries such as:</p>   <p><code>tags.city:&quot;new york&quot; AND tags.ATextTag:/[mb]oat/ AND tags.count:[1 TO *] OR tags.realNumberTag&lt;=3.2 OR tags.MyDateTag:2024-01-01 OR tags.MyDateTag:[2023-10-01 TO 2023-12-24] OR tags.MyDateTag&lt;2022-01-01 OR tags.time:12\\:00\\:00 OR tags.time:[12\\:00\\:00 TO 14\\:00\\:00] OR tags.time&lt;10\\:00\\:00 </code></p>   [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.
 
         :param project_id: project space to get runs from. (required)
         :type project_id: str
-        :param filter: tag filter.
-        :type filter: str
+        :param search_query: optional search query in lucene syntax.
+        :type search_query: str
         :param page: Zero-based page index (0..N)
         :type page: int
         :param size: The size of the page to be returned
@@ -1770,9 +1414,9 @@ class RunsApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._get_runs_by_tag_experimental_serialize(
+        _param = self._get_runs_page_experimental_serialize(
             project_id=project_id,
-            filter=filter,
+            search_query=search_query,
             page=page,
             size=size,
             sort=sort,
@@ -1798,10 +1442,10 @@ class RunsApi:
 
 
     @validate_call
-    def get_runs_by_tag_experimental_without_preload_content(
+    def get_runs_page_experimental_without_preload_content(
         self,
         project_id: Annotated[StrictStr, Field(description="project space to get runs from.")],
-        filter: Annotated[Optional[StrictStr], Field(description="tag filter.")] = None,
+        search_query: Annotated[Optional[StrictStr], Field(description="optional search query in lucene syntax.")] = None,
         page: Annotated[Optional[Annotated[int, Field(strict=True, ge=0)]], Field(description="Zero-based page index (0..N)")] = None,
         size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
         sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
@@ -1819,14 +1463,14 @@ class RunsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """[EXPERIMENTAL] Get runs by tag
+        """[EXPERIMENTAL] Get runs in the given project-space
 
-        [EXPERIMENTAL] Get runs by tag.   <h2>Supported filter syntax</h2>   <p>The filter string must contain one or more clauses. A clause is prefíxed  by a field name.  </p>   Currently the only searchable fields are names of tags (<code>tagName</code>) followed by a clause that is valued for the value type of the tag (See TagDefinition).  Tag name based field need to be prefixed with the namespace <code>tags.</code>.  Possible value types of tags are <strong>bool</strong>, <strong>integer</strong>, <strong>real</strong>, <strong>text</strong>, <strong>date</strong>, or <strong>time</strong> - tag value   <p>The format of the <strong>date</strong> type is <code>yyyy-MM-dd</code> and of the <strong>time</strong> type is <code>HH\\:mm\\:ss</code>.</p>   <p>A clause may be:</p>  <ul>      <li>a <strong>term</strong>: field name followed by a colon and the search term, e.g. <code>tags.MyTagA:sample</code></li>      <li>a <strong>phrase</strong>: field name followed by a colon and the search phrase in doublequotes, e.g. <code>tags.MyTagA:&quot;Some Text&quot;</code></li>      <li>a <strong>regular expression</strong>: field name followed by a colon and the regex in slashes, e.g. <code>tags.MyTagA:/[mb]oat/</code></li>      <li>a <strong>comparison</strong>: field name followed by a comparison operator and a value, e.g. <code>tags.MyTagB&lt;3</code></li>      <li>a <strong>range</strong>: field name followed by a colon and an open (indiced by <code>[ </code> and <code>] </code>) or (semi-)closed range (indiced by <code>{</code> and <code>}</code>), e.g. <code>tags.MyTagB:[* TO 3] </code></li>  </ul>   <p>Clauses may be <strong>grouped</strong> with brackets <code>( </code> and <code>) </code> and / or <strong>joined</strong> with <code>AND</code> or <code>OR </code> (or <code>&amp;&amp; </code> and <code>|| </code>)</p>   <h3>Example</h3>   <p>The syntax allows to build complex filter queries such as:</p>   <p><code>tags.city:&quot;new york&quot; AND tags.ATextTag:/[mb]oat/ AND tags.count:[1 TO *] OR tags.realNumberTag&lt;=3.2 OR tags.MyDateTag:2024-01-01 OR tags.MyDateTag:[2023-10-01 TO 2023-12-24] OR tags.MyDateTag&lt;2022-01-01 OR tags.time:12\\:00\\:00 OR tags.time:[12\\:00\\:00 TO 14\\:00\\:00] OR tags.time&lt;10\\:00\\:00 </code></p>   [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.
+        [EXPERIMENTAL] Get runs in the given project-space.   <h2>Supported filter syntax</h2>   <p>The filter string must contain one or more clauses. A clause is prefíxed  by a field name.  </p>   Currently the only searchable fields are names of tags (<code>tagName</code>) followed by a clause that is valued for the value type of the tag (See TagDefinition).  Tag name based field need to be prefixed with the namespace <code>tags.</code>.  Possible value types of tags are <strong>bool</strong>, <strong>integer</strong>, <strong>real</strong>, <strong>text</strong>, <strong>date</strong>, or <strong>time</strong> - tag value   <p>The format of the <strong>date</strong> type is <code>yyyy-MM-dd</code> and of the <strong>time</strong> type is <code>HH\\:mm\\:ss</code>.</p>   <p>A clause may be:</p>  <ul>      <li>a <strong>term</strong>: field name followed by a colon and the search term, e.g. <code>tags.MyTagA:sample</code></li>      <li>a <strong>phrase</strong>: field name followed by a colon and the search phrase in doublequotes, e.g. <code>tags.MyTagA:&quot;Some Text&quot;</code></li>      <li>a <strong>regular expression</strong>: field name followed by a colon and the regex in slashes, e.g. <code>tags.MyTagA:/[mb]oat/</code></li>      <li>a <strong>comparison</strong>: field name followed by a comparison operator and a value, e.g. <code>tags.MyTagB&lt;3</code></li>      <li>a <strong>range</strong>: field name followed by a colon and an open (indiced by <code>[ </code> and <code>] </code>) or (semi-)closed range (indiced by <code>{</code> and <code>}</code>), e.g. <code>tags.MyTagB:[* TO 3] </code></li>  </ul>   <p>Clauses may be <strong>grouped</strong> with brackets <code>( </code> and <code>) </code> and / or <strong>joined</strong> with <code>AND</code> or <code>OR </code> (or <code>&amp;&amp; </code> and <code>|| </code>)</p>   <h3>Example</h3>   <p>The syntax allows to build complex filter queries such as:</p>   <p><code>tags.city:&quot;new york&quot; AND tags.ATextTag:/[mb]oat/ AND tags.count:[1 TO *] OR tags.realNumberTag&lt;=3.2 OR tags.MyDateTag:2024-01-01 OR tags.MyDateTag:[2023-10-01 TO 2023-12-24] OR tags.MyDateTag&lt;2022-01-01 OR tags.time:12\\:00\\:00 OR tags.time:[12\\:00\\:00 TO 14\\:00\\:00] OR tags.time&lt;10\\:00\\:00 </code></p>   [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.
 
         :param project_id: project space to get runs from. (required)
         :type project_id: str
-        :param filter: tag filter.
-        :type filter: str
+        :param search_query: optional search query in lucene syntax.
+        :type search_query: str
         :param page: Zero-based page index (0..N)
         :type page: int
         :param size: The size of the page to be returned
@@ -1857,9 +1501,9 @@ class RunsApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._get_runs_by_tag_experimental_serialize(
+        _param = self._get_runs_page_experimental_serialize(
             project_id=project_id,
-            filter=filter,
+            search_query=search_query,
             page=page,
             size=size,
             sort=sort,
@@ -1880,10 +1524,10 @@ class RunsApi:
         return response_data.response
 
 
-    def _get_runs_by_tag_experimental_serialize(
+    def _get_runs_page_experimental_serialize(
         self,
         project_id,
-        filter,
+        search_query,
         page,
         size,
         sort,
@@ -1914,9 +1558,9 @@ class RunsApi:
         if project_id is not None:
             _path_params['projectId'] = project_id
         # process the query parameters
-        if filter is not None:
+        if search_query is not None:
             
-            _query_params.append(('filter', filter))
+            _query_params.append(('searchQuery', search_query))
             
         if page is not None:
             
@@ -1954,7 +1598,7 @@ class RunsApi:
 
         return self.api_client.param_serialize(
             method='GET',
-            resource_path='/api/projects/{projectId}/runs/tagged',
+            resource_path='/api/projects/{projectId}/runs/page',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,

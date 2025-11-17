@@ -17,18 +17,15 @@
 #'
 #' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to compute the fold change in.
-#' var_left_group_name <- "left_group_name_example" # character | name of the left tag group.
-#' var_right_group_name <- "right_group_name_example" # character | name of the right tag group.
-#' var_aggregation <- "AVG" # character | aggregation type. (Optional)
-#' var_quantification <- "APEX_INTENSITY" # character | quantification type. (Optional)
+#' var_fold_change_job_submission <- FoldChangeJobSubmission$new("leftRunGroup_example", "rightRunGroup_example", c("AVG"), c("APEX_INTENSITY")) # FoldChangeJobSubmission | Parameters of fold change job
 #' var_opt_fields <- c("none") # array[character] | job opt fields. (Optional)
 #'
 #' #[EXPERIMENTAL] Compute the fold change between two groups of runs
 #' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-#' # result <- api_instance$ComputeAlignedFeatureFoldChangesExperimental(var_project_id, var_left_group_name, var_right_group_name, aggregation = var_aggregation, quantification = var_quantification, opt_fields = var_opt_fieldsdata_file = "result.txt")
-#' result <- api_instance$feature_statistics_api$ComputeAlignedFeatureFoldChangesExperimental(var_project_id, var_left_group_name, var_right_group_name, aggregation = var_aggregation, quantification = var_quantification, opt_fields = var_opt_fields)
+#' # result <- api_instance$ComputeAlignedFeatureFoldChangesExperimental(var_project_id, var_fold_change_job_submission, opt_fields = var_opt_fieldsdata_file = "result.txt")
+#' result <- api_instance$feature_statistics_api$ComputeAlignedFeatureFoldChangesExperimental(var_project_id, var_fold_change_job_submission, opt_fields = var_opt_fields)
 #' dput(result)
 #'
 #'
@@ -103,17 +100,14 @@ FeatureStatisticsApi <- R6::R6Class(
     #' [EXPERIMENTAL] Compute the fold change between two groups of runs
     #'
     #' @param project_id project-space to compute the fold change in.
-    #' @param left_group_name name of the left tag group.
-    #' @param right_group_name name of the right tag group.
-    #' @param aggregation (optional) aggregation type. (default value: "AVG")
-    #' @param quantification (optional) quantification type. (default value: "APEX_INTENSITY")
+    #' @param fold_change_job_submission Parameters of fold change job
     #' @param opt_fields (optional) job opt fields. (default value: ["progress"])
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return Job
-    ComputeAlignedFeatureFoldChangesExperimental = function(project_id, left_group_name, right_group_name, aggregation = "AVG", quantification = "APEX_INTENSITY", opt_fields = list("progress"), data_file = NULL, ...) {
-      local_var_response <- self$ComputeAlignedFeatureFoldChangesExperimentalWithHttpInfo(project_id, left_group_name, right_group_name, aggregation, quantification, opt_fields, data_file = data_file, ...)
+    ComputeAlignedFeatureFoldChangesExperimental = function(project_id, fold_change_job_submission, opt_fields = list("progress"), data_file = NULL, ...) {
+      local_var_response <- self$ComputeAlignedFeatureFoldChangesExperimentalWithHttpInfo(project_id, fold_change_job_submission, opt_fields, data_file = data_file, ...)
       if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
@@ -129,16 +123,13 @@ FeatureStatisticsApi <- R6::R6Class(
     #' [EXPERIMENTAL] Compute the fold change between two groups of runs
     #'
     #' @param project_id project-space to compute the fold change in.
-    #' @param left_group_name name of the left tag group.
-    #' @param right_group_name name of the right tag group.
-    #' @param aggregation (optional) aggregation type. (default value: "AVG")
-    #' @param quantification (optional) quantification type. (default value: "APEX_INTENSITY")
+    #' @param fold_change_job_submission Parameters of fold change job
     #' @param opt_fields (optional) job opt fields. (default value: ["progress"])
     #' @param data_file (optional) name of the data file to save the result
     #' @param ... Other optional arguments
     #'
     #' @return API response (Job) with additional information such as HTTP status code, headers
-    ComputeAlignedFeatureFoldChangesExperimentalWithHttpInfo = function(project_id, left_group_name, right_group_name, aggregation = "AVG", quantification = "APEX_INTENSITY", opt_fields = list("progress"), data_file = NULL, ...) {
+    ComputeAlignedFeatureFoldChangesExperimentalWithHttpInfo = function(project_id, fold_change_job_submission, opt_fields = list("progress"), data_file = NULL, ...) {
       args <- list(...)
       query_params <- list()
       header_params <- c()
@@ -152,33 +143,12 @@ FeatureStatisticsApi <- R6::R6Class(
         stop("Missing required parameter `project_id`.")
       }
 
-      if (missing(`left_group_name`)) {
-        stop("Missing required parameter `left_group_name`.")
-      }
-
-      if (missing(`right_group_name`)) {
-        stop("Missing required parameter `right_group_name`.")
+      if (missing(`fold_change_job_submission`)) {
+        stop("Missing required parameter `fold_change_job_submission`.")
       }
 
 
 
-
-
-
-
-      query_params[["leftGroupName"]] <- `left_group_name`
-
-      query_params[["rightGroupName"]] <- `right_group_name`
-
-      if (!is.null(`aggregation`) && !(`aggregation` %in% c("AVG", "MIN", "MAX"))) {
-        stop("Invalid value for aggregation when calling FeatureStatisticsApi$ComputeAlignedFeatureFoldChangesExperimental. Must be [AVG, MIN, MAX].")
-      }
-      query_params[["aggregation"]] <- `aggregation`
-
-      if (!is.null(`quantification`) && !(`quantification` %in% c("APEX_INTENSITY", "AREA_UNDER_CURVE"))) {
-        stop("Invalid value for quantification when calling FeatureStatisticsApi$ComputeAlignedFeatureFoldChangesExperimental. Must be [APEX_INTENSITY, AREA_UNDER_CURVE].")
-      }
-      query_params[["quantification"]] <- `quantification`
 
       # explore
       for (query_item in `opt_fields`) {
@@ -187,6 +157,12 @@ FeatureStatisticsApi <- R6::R6Class(
           stop("Invalid value for opt_fields when calling FeatureStatisticsApi$ComputeAlignedFeatureFoldChangesExperimental. Must be [none, command, progress, affectedIds].")
         }
         query_params[["optFields"]] <- c(query_params[["optFields"]], list(`optFields` = query_item))
+      }
+
+      if (!is.null(`fold_change_job_submission`)) {
+        local_var_body <- `fold_change_job_submission`$toJSONString()
+      } else {
+        body <- NULL
       }
 
       local_var_url_path <- "/api/projects/{projectId}/aligned-features/statistics/foldchange/compute"
@@ -199,7 +175,7 @@ FeatureStatisticsApi <- R6::R6Class(
       local_var_accepts <- list("application/json")
 
       # The Content-Type representation header
-      local_var_content_types <- list()
+      local_var_content_types <- list("application/json")
 
       local_var_resp <- self$api_client$CallApi(url = paste0(self$api_client$base_path, local_var_url_path),
                                  method = "PUT",
