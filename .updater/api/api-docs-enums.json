@@ -351,6 +351,46 @@
         }
       }
     },
+    "/api/projects/{projectId}/runs/tags": {
+      "put": {
+        "tags": [
+          "Runs"
+        ],
+        "summary": "[EXPERIMENTAL] Add tags to a run in the project",
+        "description": "[EXPERIMENTAL] Add tags to a run in the project. Tags with the same name will be overwritten.\n <p>\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
+        "operationId": "addTagsToRunsExperimental",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "description": "project-space to add to.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "tags with the id of run they shall be added to.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/TagSubmission"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/projects/{projectId}/runs/tags/{runId}": {
       "put": {
         "tags": [
@@ -410,46 +450,70 @@
         }
       }
     },
-    "/api/projects/{projectId}/runs/blanksubtract/compute": {
+    "/api/projects/{projectId}/index": {
       "put": {
         "tags": [
-          "Runs"
+          "Projects"
         ],
-        "summary": "**EXPERIMENTAL** Compute the fold changes that are required for the fold change filter",
-        "description": "**EXPERIMENTAL** Compute the fold changes that are required for the fold change filter.\n\n <p>This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.</p>",
-        "operationId": "computeFoldChangeForBlankSubtraction",
+        "summary": "Create a search index for the given project.",
+        "description": "Create a search index for the given project.",
+        "operationId": "buildSearchIndex",
         "parameters": [
           {
             "name": "projectId",
             "in": "path",
-            "description": "project-space to compute the fold change in.",
+            "description": "unique name/identifier of the project to create the index for.",
             "required": true,
             "schema": {
               "type": "string"
             }
           },
           {
-            "name": "optFields",
+            "name": "force",
             "in": "query",
-            "description": "job opt fields.",
+            "description": "if true an existing index will be deleted and recreated.",
             "required": false,
             "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/components/schemas/JobOptField"
-              },
-              "default": [
-                "progress"
-              ]
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/projects/{projectId}/compounds/tags": {
+      "put": {
+        "tags": [
+          "Compounds"
+        ],
+        "summary": "Tags with the same name will be overwritten.",
+        "description": "Tags with the same name will be overwritten.",
+        "operationId": "addTagsToObjects",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "description": "project-space to add to.",
+            "required": true,
+            "schema": {
+              "type": "string"
             }
           }
         ],
         "requestBody": {
-          "description": "request with lists of run IDs that are sample, blank, and control runs",
+          "description": "tags with id of the object to be added to.",
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/SampleTypeFoldChangeRequest"
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/TagSubmission"
+                }
               }
             }
           },
@@ -457,14 +521,7 @@
         },
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Job"
-                }
-              }
-            }
+            "description": "OK"
           }
         }
       }
@@ -547,42 +604,6 @@
             }
           },
           {
-            "name": "leftGroupName",
-            "in": "query",
-            "description": "name of the left tag group.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "rightGroupName",
-            "in": "query",
-            "description": "name of the right tag group.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "aggregation",
-            "in": "query",
-            "description": "aggregation type.",
-            "required": false,
-            "schema": {
-              "$ref": "#/components/schemas/AggregationType"
-            }
-          },
-          {
-            "name": "quantification",
-            "in": "query",
-            "description": "quantification type.",
-            "required": false,
-            "schema": {
-              "$ref": "#/components/schemas/QuantMeasure"
-            }
-          },
-          {
             "name": "optFields",
             "in": "query",
             "description": "job opt fields.",
@@ -598,6 +619,17 @@
             }
           }
         ],
+        "requestBody": {
+          "description": "Parameters of fold change job",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FoldChangeJobSubmission"
+              }
+            }
+          },
+          "required": true
+        },
         "responses": {
           "200": {
             "description": "OK",
@@ -706,6 +738,16 @@
               "type": "string",
               "default": "none"
             }
+          },
+          {
+            "name": "skipExistenceCheck",
+            "in": "query",
+            "description": "if true, skips a check if this compound is an existing candidate, potentially leading to duplicate structures.",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
           }
         ],
         "responses": {
@@ -721,6 +763,46 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/api/projects/{projectId}/aligned-features/tags": {
+      "put": {
+        "tags": [
+          "Features"
+        ],
+        "summary": "[EXPERIMENTAL] Add tags to a feature (aligned over runs) in the project",
+        "description": "[EXPERIMENTAL] Add tags to a feature (aligned over runs) in the project. Tags with the same name will be overwritten.\n <p>\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
+        "operationId": "addTagsToAlignedFeaturesExperimental",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "description": "project-space to add to.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "tags with the id of feature they shall be added to.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/TagSubmission"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
           }
         }
       }
@@ -746,7 +828,7 @@
           {
             "name": "alignedFeatureId",
             "in": "path",
-            "description": "run to add tags to.",
+            "description": "feature to add tags to.",
             "required": true,
             "schema": {
               "type": "string"
@@ -803,42 +885,6 @@
             }
           },
           {
-            "name": "leftGroupName",
-            "in": "query",
-            "description": "name of the left tag group.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "rightGroupName",
-            "in": "query",
-            "description": "name of the right tag group.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "aggregation",
-            "in": "query",
-            "description": "aggregation type.",
-            "required": false,
-            "schema": {
-              "$ref": "#/components/schemas/AggregationType"
-            }
-          },
-          {
-            "name": "quantification",
-            "in": "query",
-            "description": "quantification type.",
-            "required": false,
-            "schema": {
-              "$ref": "#/components/schemas/QuantMeasure"
-            }
-          },
-          {
             "name": "optFields",
             "in": "query",
             "description": "job opt fields.",
@@ -854,6 +900,17 @@
             }
           }
         ],
+        "requestBody": {
+          "description": "Parameters of fold change job",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FoldChangeJobSubmission"
+              }
+            }
+          },
+          "required": true
+        },
         "responses": {
           "200": {
             "description": "OK",
@@ -1453,6 +1510,7 @@
                 "properties": {
                   "inputFiles": {
                     "type": "array",
+                    "description": "files to import into project",
                     "items": {
                       "type": "string",
                       "format": "binary"
@@ -1508,7 +1566,7 @@
                 "properties": {
                   "inputFiles": {
                     "type": "array",
-                    "description": "Files to import into project.",
+                    "description": "files to import into project",
                     "items": {
                       "type": "string",
                       "format": "binary"
@@ -1590,7 +1648,7 @@
                 "properties": {
                   "inputFiles": {
                     "type": "array",
-                    "description": "Files to import into project.",
+                    "description": "files to import into project",
                     "items": {
                       "type": "string",
                       "format": "binary"
@@ -1671,8 +1729,8 @@
         "tags": [
           "Tags"
         ],
-        "summary": "[EXPERIMENTAL] Group tags in the project",
-        "description": "[EXPERIMENTAL] Group tags in the project. The group name must not exist in the project.\n\n <p>\n See <code>/tagged</code> for filter syntax.\n </p>\n\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
+        "summary": "[EXPERIMENTAL] TagGroup tags in the project",
+        "description": "[EXPERIMENTAL] TagGroup tags in the project. The group name must not exist in the project.\n\n <p>\n See <code>/tagged</code> for filter syntax.\n </p>\n\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
         "operationId": "addGroup",
         "parameters": [
           {
@@ -2336,7 +2394,7 @@
                 "properties": {
                   "inputFiles": {
                     "type": "array",
-                    "description": "files to be imported",
+                    "description": "files to import into project",
                     "items": {
                       "type": "string",
                       "format": "binary"
@@ -2720,14 +2778,14 @@
         }
       }
     },
-    "/api/projects/{projectId}/runs/tagged": {
+    "/api/projects/{projectId}/runs/page": {
       "get": {
         "tags": [
           "Runs"
         ],
-        "summary": "[EXPERIMENTAL] Get runs by tag",
-        "description": "[EXPERIMENTAL] Get runs by tag.\n\n <h2>Supported filter syntax</h2>\n\n <p>The filter string must contain one or more clauses. A clause is prefíxed\n by a field name.\n </p>\n\n Currently the only searchable fields are names of tags (<code>tagName</code>) followed by a clause that is valued for the value type of the tag (See TagDefinition).\n Tag name based field need to be prefixed with the namespace <code>tags.</code>.\n Possible value types of tags are <strong>bool</strong>, <strong>integer</strong>, <strong>real</strong>, <strong>text</strong>, <strong>date</strong>, or <strong>time</strong> - tag value\n\n <p>The format of the <strong>date</strong> type is <code>yyyy-MM-dd</code> and of the <strong>time</strong> type is <code>HH\\:mm\\:ss</code>.</p>\n\n <p>A clause may be:</p>\n <ul>\n     <li>a <strong>term</strong>: field name followed by a colon and the search term, e.g. <code>tags.MyTagA:sample</code></li>\n     <li>a <strong>phrase</strong>: field name followed by a colon and the search phrase in doublequotes, e.g. <code>tags.MyTagA:&quot;Some Text&quot;</code></li>\n     <li>a <strong>regular expression</strong>: field name followed by a colon and the regex in slashes, e.g. <code>tags.MyTagA:/[mb]oat/</code></li>\n     <li>a <strong>comparison</strong>: field name followed by a comparison operator and a value, e.g. <code>tags.MyTagB&lt;3</code></li>\n     <li>a <strong>range</strong>: field name followed by a colon and an open (indiced by <code>[ </code> and <code>] </code>) or (semi-)closed range (indiced by <code>{</code> and <code>}</code>), e.g. <code>tags.MyTagB:[* TO 3] </code></li>\n </ul>\n\n <p>Clauses may be <strong>grouped</strong> with brackets <code>( </code> and <code>) </code> and / or <strong>joined</strong> with <code>AND</code> or <code>OR </code> (or <code>&amp;&amp; </code> and <code>|| </code>)</p>\n\n <h3>Example</h3>\n\n <p>The syntax allows to build complex filter queries such as:</p>\n\n <p><code>tags.city:&quot;new york&quot; AND tags.ATextTag:/[mb]oat/ AND tags.count:[1 TO *] OR tags.realNumberTag&lt;=3.2 OR tags.MyDateTag:2024-01-01 OR tags.MyDateTag:[2023-10-01 TO 2023-12-24] OR tags.MyDateTag&lt;2022-01-01 OR tags.time:12\\:00\\:00 OR tags.time:[12\\:00\\:00 TO 14\\:00\\:00] OR tags.time&lt;10\\:00\\:00 </code></p>\n\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
-        "operationId": "getRunsByTagExperimental",
+        "summary": "[EXPERIMENTAL] Get runs in the given project-space",
+        "description": "[EXPERIMENTAL] Get runs in the given project-space.\n\n <h2>Supported filter syntax</h2>\n\n <p>The filter string must contain one or more clauses. A clause is prefíxed\n by a field name.\n </p>\n\n Currently the only searchable fields are names of tags (<code>tagName</code>) followed by a clause that is valued for the value type of the tag (See TagDefinition).\n Tag name based field need to be prefixed with the namespace <code>tags.</code>.\n Possible value types of tags are <strong>bool</strong>, <strong>integer</strong>, <strong>real</strong>, <strong>text</strong>, <strong>date</strong>, or <strong>time</strong> - tag value\n\n <p>The format of the <strong>date</strong> type is <code>yyyy-MM-dd</code> and of the <strong>time</strong> type is <code>HH\\:mm\\:ss</code>.</p>\n\n <p>A clause may be:</p>\n <ul>\n     <li>a <strong>term</strong>: field name followed by a colon and the search term, e.g. <code>tags.MyTagA:sample</code></li>\n     <li>a <strong>phrase</strong>: field name followed by a colon and the search phrase in doublequotes, e.g. <code>tags.MyTagA:&quot;Some Text&quot;</code></li>\n     <li>a <strong>regular expression</strong>: field name followed by a colon and the regex in slashes, e.g. <code>tags.MyTagA:/[mb]oat/</code></li>\n     <li>a <strong>comparison</strong>: field name followed by a comparison operator and a value, e.g. <code>tags.MyTagB&lt;3</code></li>\n     <li>a <strong>range</strong>: field name followed by a colon and an open (indiced by <code>[ </code> and <code>] </code>) or (semi-)closed range (indiced by <code>{</code> and <code>}</code>), e.g. <code>tags.MyTagB:[* TO 3] </code></li>\n </ul>\n\n <p>Clauses may be <strong>grouped</strong> with brackets <code>( </code> and <code>) </code> and / or <strong>joined</strong> with <code>AND</code> or <code>OR </code> (or <code>&amp;&amp; </code> and <code>|| </code>)</p>\n\n <h3>Example</h3>\n\n <p>The syntax allows to build complex filter queries such as:</p>\n\n <p><code>tags.city:&quot;new york&quot; AND tags.ATextTag:/[mb]oat/ AND tags.count:[1 TO *] OR tags.realNumberTag&lt;=3.2 OR tags.MyDateTag:2024-01-01 OR tags.MyDateTag:[2023-10-01 TO 2023-12-24] OR tags.MyDateTag&lt;2022-01-01 OR tags.time:12\\:00\\:00 OR tags.time:[12\\:00\\:00 TO 14\\:00\\:00] OR tags.time&lt;10\\:00\\:00 </code></p>\n\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
+        "operationId": "getRunsPageExperimental",
         "parameters": [
           {
             "name": "projectId",
@@ -2739,13 +2797,12 @@
             }
           },
           {
-            "name": "filter",
+            "name": "searchQuery",
             "in": "query",
-            "description": "tag filter.",
+            "description": "optional search query in lucene syntax.",
             "required": false,
             "schema": {
-              "type": "string",
-              "default": ""
+              "type": "string"
             }
           },
           {
@@ -2799,86 +2856,6 @@
         "responses": {
           "200": {
             "description": "tagged runs",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/PagedModelRun"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/projects/{projectId}/runs/page": {
-      "get": {
-        "tags": [
-          "Runs"
-        ],
-        "summary": "[EXPERIMENTAL] Get all available runs in the given project-space",
-        "description": "[EXPERIMENTAL] Get all available runs in the given project-space.\n <p>\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
-        "operationId": "getRunPageExperimental",
-        "parameters": [
-          {
-            "name": "projectId",
-            "in": "path",
-            "description": "project-space to read from.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "page",
-            "in": "query",
-            "description": "Zero-based page index (0..N)",
-            "required": false,
-            "schema": {
-              "minimum": 0,
-              "type": "integer",
-              "default": 0
-            }
-          },
-          {
-            "name": "size",
-            "in": "query",
-            "description": "The size of the page to be returned",
-            "required": false,
-            "schema": {
-              "minimum": 1,
-              "type": "integer",
-              "default": 20
-            }
-          },
-          {
-            "name": "sort",
-            "in": "query",
-            "description": "Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.",
-            "required": false,
-            "schema": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            }
-          },
-          {
-            "name": "optFields",
-            "in": "query",
-            "description": "set of optional fields to be included. Use 'none' only to override defaults.",
-            "required": false,
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/components/schemas/RunOptField"
-              },
-              "default": []
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Runs with tags (if specified).",
             "content": {
               "application/json": {
                 "schema": {
@@ -3608,96 +3585,6 @@
         }
       }
     },
-    "/api/projects/{projectId}/compounds/tagged": {
-      "get": {
-        "tags": [
-          "Compounds"
-        ],
-        "summary": "[EXPERIMENTAL] Get compounds (group of ion identities) by tag",
-        "description": "[EXPERIMENTAL] Get compounds (group of ion identities) by tag.\n\n <h2>Supported filter syntax</h2>\n\n <p>The filter string must contain one or more clauses. A clause is prefíxed\n by a field name.\n </p>\n\n Currently the only searchable fields are names of tags (<code>tagName</code>) followed by a clause that is valued for the value type of the tag (See TagDefinition).\n Tag name based field need to be prefixed with the namespace <code>tags.</code>.\n Possible value types of tags are <strong>bool</strong>, <strong>integer</strong>, <strong>real</strong>, <strong>text</strong>, <strong>date</strong>, or <strong>time</strong> - tag value\n\n <p>The format of the <strong>date</strong> type is <code>yyyy-MM-dd</code> and of the <strong>time</strong> type is <code>HH\\:mm\\:ss</code>.</p>\n\n <p>A clause may be:</p>\n <ul>\n     <li>a <strong>term</strong>: field name followed by a colon and the search term, e.g. <code>tags.MyTagA:sample</code></li>\n     <li>a <strong>phrase</strong>: field name followed by a colon and the search phrase in doublequotes, e.g. <code>tags.MyTagA:&quot;Some Text&quot;</code></li>\n     <li>a <strong>regular expression</strong>: field name followed by a colon and the regex in slashes, e.g. <code>tags.MyTagA:/[mb]oat/</code></li>\n     <li>a <strong>comparison</strong>: field name followed by a comparison operator and a value, e.g. <code>tags.MyTagB&lt;3</code></li>\n     <li>a <strong>range</strong>: field name followed by a colon and an open (indiced by <code>[ </code> and <code>] </code>) or (semi-)closed range (indiced by <code>{</code> and <code>}</code>), e.g. <code>tags.MyTagB:[* TO 3] </code></li>\n </ul>\n\n <p>Clauses may be <strong>grouped</strong> with brackets <code>( </code> and <code>) </code> and / or <strong>joined</strong> with <code>AND</code> or <code>OR </code> (or <code>&amp;&amp; </code> and <code>|| </code>)</p>\n\n <h3>Example</h3>\n\n <p>The syntax allows to build complex filter queries such as:</p>\n\n <p><code>tags.city:&quot;new york&quot; AND tags.ATextTag:/[mb]oat/ AND tags.count:[1 TO *] OR tags.realNumberTag&lt;=3.2 OR tags.MyDateTag:2024-01-01 OR tags.MyDateTag:[2023-10-01 TO 2023-12-24] OR tags.MyDateTag&lt;2022-01-01 OR tags.time:12\\:00\\:00 OR tags.time:[12\\:00\\:00 TO 14\\:00\\:00] OR tags.time&lt;10\\:00\\:00 </code></p>\n\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
-        "operationId": "getCompoundsByTagExperimental",
-        "parameters": [
-          {
-            "name": "projectId",
-            "in": "path",
-            "description": "project space to get compounds (group of ion identities) from.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "filter",
-            "in": "query",
-            "description": "tag filter.",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "default": ""
-            }
-          },
-          {
-            "name": "page",
-            "in": "query",
-            "description": "Zero-based page index (0..N)",
-            "required": false,
-            "schema": {
-              "minimum": 0,
-              "type": "integer",
-              "default": 0
-            }
-          },
-          {
-            "name": "size",
-            "in": "query",
-            "description": "The size of the page to be returned",
-            "required": false,
-            "schema": {
-              "minimum": 1,
-              "type": "integer",
-              "default": 20
-            }
-          },
-          {
-            "name": "sort",
-            "in": "query",
-            "description": "Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.",
-            "required": false,
-            "schema": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            }
-          },
-          {
-            "name": "optFields",
-            "in": "query",
-            "description": "set of optional fields to be included. Use 'none' only to override defaults.",
-            "required": false,
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/components/schemas/CompoundOptField"
-              },
-              "default": []
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "tagged compounds (group of ion identities)",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/PagedModelCompound"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/api/projects/{projectId}/compounds/statistics/foldchanges/{objectId}": {
       "get": {
         "tags": [
@@ -3841,15 +3728,24 @@
         "tags": [
           "Compounds"
         ],
-        "summary": "Page of available compounds (group of ion identities) in the given project-space.",
-        "description": "Page of available compounds (group of ion identities) in the given project-space.",
-        "operationId": "getCompoundsPaged",
+        "summary": "[EXPERIMENTAL] Page of available compounds (group of ion identities) in the given project-space",
+        "description": "[EXPERIMENTAL] Page of available compounds (group of ion identities) in the given project-space.\n\n <h2>Supported filter syntax</h2>\n\n <p>The filter string must contain one or more clauses. A clause is prefíxed\n by a field name.\n </p>\n <p>\n Currently the only searchable fields are names of tags (<code>tagName</code>) followed by a clause that is valued for the value type of the tag (See TagDefinition).\n Tag name based field need to be prefixed with the namespace <code>tags.</code>.\n Possible value types of tags are <strong>bool</strong>, <strong>integer</strong>, <strong>real</strong>, <strong>text</strong>, <strong>date</strong>, or <strong>time</strong> - tag value\n\n <p>The format of the <strong>date</strong> type is <code>yyyy-MM-dd</code> and of the <strong>time</strong> type is <code>HH\\:mm\\:ss</code>.</p>\n\n <p>A clause may be:</p>\n <ul>\n     <li>a <strong>term</strong>: field name followed by a colon and the search term, e.g. <code>tags.MyTagA:sample</code></li>\n     <li>a <strong>phrase</strong>: field name followed by a colon and the search phrase in doublequotes, e.g. <code>tags.MyTagA:&quot;Some Text&quot;</code></li>\n     <li>a <strong>regular expression</strong>: field name followed by a colon and the regex in slashes, e.g. <code>tags.MyTagA:/[mb]oat/</code></li>\n     <li>a <strong>comparison</strong>: field name followed by a comparison operator and a value, e.g. <code>tags.MyTagB&lt;3</code></li>\n     <li>a <strong>range</strong>: field name followed by a colon and an open (indiced by <code>[ </code> and <code>] </code>) or (semi-)closed range (indiced by <code>{</code> and <code>}</code>), e.g. <code>tags.MyTagB:[* TO 3] </code></li>\n </ul>\n\n <p>Clauses may be <strong>grouped</strong> with brackets <code>( </code> and <code>) </code> and / or <strong>joined</strong> with <code>AND</code> or <code>OR </code> (or <code>&amp;&amp; </code> and <code>|| </code>)</p>\n\n <h3>Example</h3>\n\n <p>The syntax allows to build complex filter queries such as:</p>\n\n <p><code>tags.city:&quot;new york&quot; AND tags.ATextTag:/[mb]oat/ AND tags.count:[1 TO *] OR tags.realNumberTag&lt;=3.2 OR tags.MyDateTag:2024-01-01 OR tags.MyDateTag:[2023-10-01 TO 2023-12-24] OR tags.MyDateTag&lt;2022-01-01 OR tags.time:12\\:00\\:00 OR tags.time:[12\\:00\\:00 TO 14\\:00\\:00] OR tags.time&lt;10\\:00\\:00 </code></p>\n <p>\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
+        "operationId": "getCompoundsPageExperimental",
         "parameters": [
           {
             "name": "projectId",
             "in": "path",
             "description": "project-space to read from.",
             "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "searchQuery",
+            "in": "query",
+            "description": "search query in lucene syntax.",
+            "required": false,
             "schema": {
               "type": "string"
             }
@@ -3930,7 +3826,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Compounds with additional optional fields (if specified).",
+            "description": "tagged compounds (group of ion identities)",
             "content": {
               "application/json": {
                 "schema": {
@@ -4004,6 +3900,16 @@
             }
           },
           {
+            "name": "msDataAsCosineQuery",
+            "in": "query",
+            "description": "Returns all fragment spectra in a preprocessed form as used for fast\n                            Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch\n                            peak assignments and reference spectra.",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
             "name": "optFields",
             "in": "query",
             "description": "set of optional fields to be included. Use 'none' only to override defaults.",
@@ -4012,6 +3918,20 @@
               "type": "array",
               "items": {
                 "$ref": "#/components/schemas/CompoundOptField"
+              },
+              "default": [
+                "none"
+              ]
+            }
+          },
+          {
+            "name": "optFieldsFeatures",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/AlignedFeatureOptField"
               },
               "default": [
                 "none"
@@ -6279,96 +6199,6 @@
         }
       }
     },
-    "/api/projects/{projectId}/aligned-features/tagged": {
-      "get": {
-        "tags": [
-          "Features"
-        ],
-        "summary": "[EXPERIMENTAL] Get features (aligned over runs) by tag",
-        "description": "[EXPERIMENTAL] Get features (aligned over runs) by tag.\n\n <h2>Supported filter syntax</h2>\n\n <p>The filter string must contain one or more clauses. A clause is prefíxed\n by a field name.\n </p>\n <p>\n Currently the only searchable fields are names of tags (<code>tagName</code>) followed by a clause that is valued for the value type of the tag (See TagDefinition).\n Tag name based field need to be prefixed with the namespace <code>tags.</code>.\n Possible value types of tags are <strong>bool</strong>, <strong>integer</strong>, <strong>real</strong>, <strong>text</strong>, <strong>date</strong>, or <strong>time</strong> - tag value\n\n <p>The format of the <strong>date</strong> type is <code>yyyy-MM-dd</code> and of the <strong>time</strong> type is <code>HH\\:mm\\:ss</code>.</p>\n\n <p>A clause may be:</p>\n <ul>\n     <li>a <strong>term</strong>: field name followed by a colon and the search term, e.g. <code>tags.MyTagA:sample</code></li>\n     <li>a <strong>phrase</strong>: field name followed by a colon and the search phrase in doublequotes, e.g. <code>tags.MyTagA:&quot;Some Text&quot;</code></li>\n     <li>a <strong>regular expression</strong>: field name followed by a colon and the regex in slashes, e.g. <code>tags.MyTagA:/[mb]oat/</code></li>\n     <li>a <strong>comparison</strong>: field name followed by a comparison operator and a value, e.g. <code>tags.MyTagB&lt;3</code></li>\n     <li>a <strong>range</strong>: field name followed by a colon and an open (indiced by <code>[ </code> and <code>] </code>) or (semi-)closed range (indiced by <code>{</code> and <code>}</code>), e.g. <code>tags.MyTagB:[* TO 3] </code></li>\n </ul>\n\n <p>Clauses may be <strong>grouped</strong> with brackets <code>( </code> and <code>) </code> and / or <strong>joined</strong> with <code>AND</code> or <code>OR </code> (or <code>&amp;&amp; </code> and <code>|| </code>)</p>\n\n <h3>Example</h3>\n\n <p>The syntax allows to build complex filter queries such as:</p>\n\n <p><code>tags.city:&quot;new york&quot; AND tags.ATextTag:/[mb]oat/ AND tags.count:[1 TO *] OR tags.realNumberTag&lt;=3.2 OR tags.MyDateTag:2024-01-01 OR tags.MyDateTag:[2023-10-01 TO 2023-12-24] OR tags.MyDateTag&lt;2022-01-01 OR tags.time:12\\:00\\:00 OR tags.time:[12\\:00\\:00 TO 14\\:00\\:00] OR tags.time&lt;10\\:00\\:00 </code></p>\n <p>\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
-        "operationId": "getAlignedFeaturesByTagExperimental",
-        "parameters": [
-          {
-            "name": "projectId",
-            "in": "path",
-            "description": "project space to get features (aligned over runs) from.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "filter",
-            "in": "query",
-            "description": "tag filter.",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "default": ""
-            }
-          },
-          {
-            "name": "page",
-            "in": "query",
-            "description": "Zero-based page index (0..N)",
-            "required": false,
-            "schema": {
-              "minimum": 0,
-              "type": "integer",
-              "default": 0
-            }
-          },
-          {
-            "name": "size",
-            "in": "query",
-            "description": "The size of the page to be returned",
-            "required": false,
-            "schema": {
-              "minimum": 1,
-              "type": "integer",
-              "default": 20
-            }
-          },
-          {
-            "name": "sort",
-            "in": "query",
-            "description": "Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.",
-            "required": false,
-            "schema": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            }
-          },
-          {
-            "name": "optFields",
-            "in": "query",
-            "description": "set of optional fields to be included. Use 'none' only to override defaults.",
-            "required": false,
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/components/schemas/AlignedFeatureOptField"
-              },
-              "default": []
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "tagged features (aligned over runs)",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/PagedModelAlignedFeature"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/api/projects/{projectId}/aligned-features/statistics/foldchanges/{objectId}": {
       "get": {
         "tags": [
@@ -6512,14 +6342,14 @@
         "tags": [
           "Features"
         ],
-        "summary": "Get all available features (aligned over runs) in the given project-space.",
-        "description": "Get all available features (aligned over runs) in the given project-space.",
-        "operationId": "getAlignedFeaturesPaged",
+        "summary": "[EXPERIMENTAL] Get features (aligned over runs) in the given project-space",
+        "description": "[EXPERIMENTAL] Get features (aligned over runs) in the given project-space.\n\n <h2>Supported filter syntax</h2>\n\n <p>The filter string must contain one or more clauses. A clause is prefíxed\n by a field name.\n </p>\n\n Currently the only searchable fields are names of tags (<code>tagName</code>) followed by a clause that is valued for the value type of the tag (See TagDefinition).\n Tag name based field need to be prefixed with the namespace <code>tags.</code>.\n Possible value types of tags are <strong>bool</strong>, <strong>integer</strong>, <strong>real</strong>, <strong>text</strong>, <strong>date</strong>, or <strong>time</strong> - tag value\n\n <p>The format of the <strong>date</strong> type is <code>yyyy-MM-dd</code> and of the <strong>time</strong> type is <code>HH\\:mm\\:ss</code>.</p>\n\n <p>A clause may be:</p>\n <ul>\n     <li>a <strong>term</strong>: field name followed by a colon and the search term, e.g. <code>tags.MyTagA:sample</code></li>\n     <li>a <strong>phrase</strong>: field name followed by a colon and the search phrase in doublequotes, e.g. <code>tags.MyTagA:&quot;Some Text&quot;</code></li>\n     <li>a <strong>regular expression</strong>: field name followed by a colon and the regex in slashes, e.g. <code>tags.MyTagA:/[mb]oat/</code></li>\n     <li>a <strong>comparison</strong>: field name followed by a comparison operator and a value, e.g. <code>tags.MyTagB&lt;3</code></li>\n     <li>a <strong>range</strong>: field name followed by a colon and an open (indiced by <code>[ </code> and <code>] </code>) or (semi-)closed range (indiced by <code>{</code> and <code>}</code>), e.g. <code>tags.MyTagB:[* TO 3] </code></li>\n </ul>\n\n <p>Clauses may be <strong>grouped</strong> with brackets <code>( </code> and <code>) </code> and / or <strong>joined</strong> with <code>AND</code> or <code>OR </code> (or <code>&amp;&amp; </code> and <code>|| </code>)</p>\n\n <h3>Example</h3>\n\n <p>The syntax allows to build complex filter queries such as:</p>\n\n <p><code>tags.city:&quot;new york&quot; AND tags.ATextTag:/[mb]oat/ AND tags.count:[1 TO *] OR tags.realNumberTag&lt;=3.2 OR tags.MyDateTag:2024-01-01 OR tags.MyDateTag:[2023-10-01 TO 2023-12-24] OR tags.MyDateTag&lt;2022-01-01 OR tags.time:12\\:00\\:00 OR tags.time:[12\\:00\\:00 TO 14\\:00\\:00] OR tags.time&lt;10\\:00\\:00 </code></p>\n\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
+        "operationId": "getAlignedFeaturesPageExperimental",
         "parameters": [
           {
             "name": "projectId",
             "in": "path",
-            "description": "project-space to read from.",
+            "description": "project space to get features (aligned over runs) from.",
             "required": true,
             "schema": {
               "type": "string"
@@ -6560,6 +6390,15 @@
             }
           },
           {
+            "name": "searchQuery",
+            "in": "query",
+            "description": "optional search query in lucene syntax.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
             "name": "msDataSearchPrepared",
             "in": "query",
             "description": "Returns all fragment spectra in a preprocessed form as used for fast\n                            Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch\n                            peak assignments and reference spectra.",
@@ -6580,14 +6419,16 @@
                 "$ref": "#/components/schemas/AlignedFeatureOptField"
               },
               "default": [
-                "none"
+                "computedTools",
+                "qualities",
+                "tags"
               ]
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "AlignedFeatures with additional annotations and MS/MS data (if specified).",
+            "description": "tagged features (aligned over runs)",
             "content": {
               "application/json": {
                 "schema": {
@@ -6658,6 +6499,16 @@
               "items": {
                 "type": "string"
               }
+            }
+          },
+          {
+            "name": "msDataSearchPrepared",
+            "in": "query",
+            "description": "Returns all fragment spectra in a preprocessed form as used for fast\n                            Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch\n                            peak assignments and reference spectra.",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false
             }
           },
           {
@@ -6867,6 +6718,40 @@
             }
           }
         }
+      }
+    },
+    "/api/databases/downloadable": {
+      "get": {
+        "tags": [
+          "Searchable Databases"
+        ],
+        "summary": "Get list of curated custom databases downloadable from the SIRIUS web service for local use",
+        "description": "Get list of curated custom databases downloadable from the SIRIUS web service for local use.\n <p>\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.\n [DEPRECATED] This endpoint will likely be removed or changed in future versions of this API.",
+        "operationId": "getDownloadableDatabases",
+        "responses": {
+          "200": {
+            "description": "list of databases available for downloading.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DownloadableDatabase"
+                  }
+                }
+              },
+              "application/problem+json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DownloadableDatabase"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "deprecated": true
       }
     },
     "/api/databases/custom": {
@@ -7459,7 +7344,8 @@
         "enum": [
           "none",
           "compatibilityInfo",
-          "sizeInformation"
+          "sizeInformation",
+          "detectedAdducts"
         ]
       },
       "ProjectInfo": {
@@ -7503,6 +7389,16 @@
             "description": "Size in Bytes this project consumes on disk If NULL, Information has not been requested (See OptField 'sizeInformation').",
             "format": "int64",
             "nullable": true
+          },
+          "detectedAdducts": {
+            "uniqueItems": true,
+            "type": "array",
+            "description": "Set of all detected adducts available in this projects",
+            "nullable": true,
+            "items": {
+              "type": "string",
+              "nullable": true
+            }
           }
         }
       },
@@ -7616,6 +7512,28 @@
           }
         }
       },
+      "TagSubmission": {
+        "required": [
+          "tagName",
+          "taggedObjectId"
+        ],
+        "type": "object",
+        "properties": {
+          "tagName": {
+            "type": "string",
+            "description": "Name of the tag as defined by the corresponding TagDefinition\n Links tag object to their definition."
+          },
+          "value": {
+            "type": "object",
+            "description": "Optional value of the tag.\n <p>\n Generic value of the tag as defined by the corresponding TagDefinition.\n Can be Integer, Double, Boolean and String, whereas String values can represent Text, Date (yyyy-MM-dd) or Time (HH:mm:ss).",
+            "nullable": true
+          },
+          "taggedObjectId": {
+            "type": "string",
+            "description": "ID of the object where the tag should be added.\n Then Object type is taken from context of the API endpoint."
+          }
+        }
+      },
       "Tag": {
         "required": [
           "tagName"
@@ -7633,28 +7551,43 @@
           }
         }
       },
-      "SampleTypeFoldChangeRequest": {
+      "AggregationType": {
+        "type": "string",
+        "enum": [
+          "AVG",
+          "MIN",
+          "MAX"
+        ]
+      },
+      "FoldChangeJobSubmission": {
         "type": "object",
         "properties": {
-          "sampleRunIds": {
+          "leftRunGroup": {
+            "type": "string"
+          },
+          "rightRunGroup": {
+            "type": "string"
+          },
+          "aggregationTypes": {
             "type": "array",
             "items": {
-              "type": "string"
+              "$ref": "#/components/schemas/AggregationType"
             }
           },
-          "blankRunIds": {
+          "quantificationMeasures": {
             "type": "array",
             "items": {
-              "type": "string"
-            }
-          },
-          "controlRunIds": {
-            "type": "array",
-            "items": {
-              "type": "string"
+              "$ref": "#/components/schemas/QuantMeasure"
             }
           }
         }
+      },
+      "QuantMeasure": {
+        "type": "string",
+        "enum": [
+          "APEX_INTENSITY",
+          "AREA_UNDER_CURVE"
+        ]
       },
       "JobOptField": {
         "type": "string",
@@ -7762,21 +7695,6 @@
           "CANCELED",
           "FAILED",
           "DONE"
-        ]
-      },
-      "AggregationType": {
-        "type": "string",
-        "enum": [
-          "AVG",
-          "MIN",
-          "MAX"
-        ]
-      },
-      "QuantMeasure": {
-        "type": "string",
-        "enum": [
-          "APEX_INTENSITY",
-          "AREA_UNDER_CURVE"
         ]
       },
       "BasicSpectrum": {
@@ -8265,7 +8183,7 @@
           },
           "subscriberId": {
             "type": "string",
-            "description": "ID of the owner of the subscription.\n This can be the ID of any SubscriptionOwner (e.g.  Group or  User)\n depending on the level on which a subscription should be is valid."
+            "description": "ID of the owner of the subscription.\n This can be the ID of any SubscriptionOwner (e.g.  TagGroup or  User)\n depending on the level on which a subscription should be is valid."
           },
           "subscriberName": {
             "type": "string",
@@ -8858,7 +8776,7 @@
           },
           "affectedAlignedFeatureIds": {
             "type": "array",
-            "description": "List of alignedFeatureIds that have been imported..",
+            "description": "List of alignedFeatureIds that have been imported.",
             "items": {
               "type": "string"
             }
@@ -8877,11 +8795,20 @@
             "format": "double"
           }
         },
-        "nullable": true
+        "default": null
       },
       "LcmsSubmissionParameters": {
         "type": "object",
         "properties": {
+          "sampleTypes": {
+            "type": "array",
+            "description": "Sample type for each input file to be used to compute fold changes between blank and sample runs\n If NULL or empty no fold changes will be computed during preprocessing.",
+            "nullable": true,
+            "items": {
+              "type": "string",
+              "nullable": true
+            }
+          },
           "alignLCMSRuns": {
             "type": "boolean",
             "description": "Specifies whether LC/MS runs should be aligned",
@@ -9055,6 +8982,7 @@
           "topAnnotations",
           "topAnnotationsDeNovo",
           "computedTools",
+          "qualities",
           "tags"
         ]
       },
@@ -9136,6 +9064,14 @@
           },
           "computedTools": {
             "$ref": "#/components/schemas/ComputedSubtools"
+          },
+          "qualities": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/DataQuality"
+            },
+            "description": "Qualities per top level quality category.",
+            "nullable": true
           },
           "tags": {
             "type": "object",
@@ -10642,20 +10578,6 @@
         },
         "description": "EXPERIMENTAL: This schema is experimental and may be changed (or even removed) without notice until it is declared stable."
       },
-      "PagedModelCompound": {
-        "type": "object",
-        "properties": {
-          "content": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Compound"
-            }
-          },
-          "page": {
-            "$ref": "#/components/schemas/PageMetadata"
-          }
-        }
-      },
       "FoldChange": {
         "required": [
           "foldChange",
@@ -10745,6 +10667,20 @@
           "FOLD_CHANGE"
         ]
       },
+      "PagedModelCompound": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Compound"
+            }
+          },
+          "page": {
+            "$ref": "#/components/schemas/PageMetadata"
+          }
+        }
+      },
       "SpectralLibraryMatchOptField": {
         "type": "string",
         "nullable": true,
@@ -10820,6 +10756,9 @@
       "Category": {
         "type": "object",
         "properties": {
+          "categoryId": {
+            "type": "string"
+          },
           "categoryName": {
             "type": "string"
           },
@@ -11036,6 +10975,21 @@
           "GLPK",
           "CLP"
         ]
+      },
+      "DownloadableDatabase": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
       },
       "ConnectionCheck": {
         "required": [

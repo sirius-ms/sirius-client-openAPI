@@ -25,53 +25,53 @@ jobs:
           cd .updater/openapi_generator
           wget -nv https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/7.10.0/openapi-generator-cli-7.10.0.jar -O openapi-generator-cli-7.10.jar
           wget -nv https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/7.16.0/openapi-generator-cli-7.16.0.jar -O openapi-generator-cli-7.16.jar
-      - name: Download SIRIUS Release
-        uses: nick-fields/retry@v2
-        with:
-          max_attempts: 5
-          timeout_minutes: 5
-          command: |
-            cd .updater/api
-            
-            if [ -n "${{ github.event.inputs.sirius_version }}" ]; then
-              # Manual version provided
-              version="${{ github.event.inputs.sirius_version }}"
-              echo "Using manually provided SIRIUS version: $version"          
-            else
-              # Fallback to automatic latest detection
-              echo "No version provided — fetching latest release..."
-              version=$(curl -s https://api.github.com/repos/sirius-ms/sirius/releases/latest | jq -r '.tag_name' | sed 's/^v//')
-              echo "Latest version: $version"
-            fi
-            
-            echo "$version" > ./packageVersion.txt
-            url="https://github.com/sirius-ms/sirius/releases/download/v${version}/sirius-${version}-linux-x64.zip"
-            echo "Downloading from: $url"
-            wget -nv "$url" -O sirius-${version}-linux-x64.zip
-            
-            echo "Unzipping..."
-            unzip -q sirius-*-linux-x64.zip
-            echo "API Ready"
-      - name: Run Rest Api with strings
-        run: |
-          bash .updater/api/sirius/bin/sirius REST --headless --api-mode=STABLE -p 8080 -s &
-      - name: Update api-docs-strings.json
-        run: |
-          while ! nc -z localhost 8080; do sleep 0.1; done
-          cd .updater/api
-          wget -nv http://localhost:8080/v3/api-docs -O api-docs-strings.json
-      - name: Shutdown SIRIUS
-        run: curl -X POST http://localhost:8080/actuator/shutdown
-      - name: Run Rest Api with enums
-        run: |
-          bash .updater/api/sirius/bin/sirius REST --headless --api-mode=STABLE --enums-as-ref -p 8080 -s &
-      - name: Update api-docs-enums.json
-        run: |
-          while ! nc -z localhost 8080; do sleep 0.1; done
-          cd .updater/api
-          wget -nv http://localhost:8080/v3/api-docs -O api-docs-enums.json
-      - name: Shutdown SIRIUS
-        run: curl -X POST http://localhost:8080/actuator/shutdown
+#      - name: Download SIRIUS Release
+#        uses: nick-fields/retry@v2
+#        with:
+#          max_attempts: 5
+#          timeout_minutes: 5
+#          command: |
+#            cd .updater/api
+#
+#            if [ -n "${{ github.event.inputs.sirius_version }}" ]; then
+#              # Manual version provided
+#              version="${{ github.event.inputs.sirius_version }}"
+#              echo "Using manually provided SIRIUS version: $version"
+#            else
+#              # Fallback to automatic latest detection
+#              echo "No version provided — fetching latest release..."
+#              version=$(curl -s https://api.github.com/repos/sirius-ms/sirius/releases/latest | jq -r '.tag_name' | sed 's/^v//')
+#              echo "Latest version: $version"
+#            fi
+#
+#            echo "$version" > ./packageVersion.txt
+#            url="https://github.com/sirius-ms/sirius/releases/download/v${version}/sirius-${version}-linux-x64.zip"
+#            echo "Downloading from: $url"
+#            wget -nv "$url" -O sirius-${version}-linux-x64.zip
+#
+#            echo "Unzipping..."
+#            unzip -q sirius-*-linux-x64.zip
+#            echo "API Ready"
+#      - name: Run Rest Api with strings
+#        run: |
+#          bash .updater/api/sirius/bin/sirius REST --headless --api-mode=STABLE -p 8080 -s &
+#      - name: Update api-docs-strings.json
+#        run: |
+#          while ! nc -z localhost 8080; do sleep 0.1; done
+#          cd .updater/api
+#          wget -nv http://localhost:8080/v3/api-docs -O api-docs-strings.json
+#      - name: Shutdown SIRIUS
+#        run: curl -X POST http://localhost:8080/actuator/shutdown
+#      - name: Run Rest Api with enums
+#        run: |
+#          bash .updater/api/sirius/bin/sirius REST --headless --api-mode=STABLE --enums-as-ref -p 8080 -s &
+#      - name: Update api-docs-enums.json
+#        run: |
+#          while ! nc -z localhost 8080; do sleep 0.1; done
+#          cd .updater/api
+#          wget -nv http://localhost:8080/v3/api-docs -O api-docs-enums.json
+#      - name: Shutdown SIRIUS
+#        run: curl -X POST http://localhost:8080/actuator/shutdown
       - name: Update Clients
         run: |
           # load package version from file
