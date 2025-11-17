@@ -1,13 +1,28 @@
-# This workflow will start all individual Tests
-
 name: RunTests
 
-on: [workflow_dispatch, workflow_call, pull_request]
+on:
+  workflow_dispatch:
+    inputs:
+      sirius_version:
+        description: "SIRIUS version to test (passed from NewUpdate)"
+        required: false
+        type: string
+  workflow_call:
+    inputs:
+      sirius_version:
+        required: false
+        type: string
+  pull_request:
 
 jobs:
   RTest:
     uses: ./.github/workflows/RTest.yml
     secrets: inherit
+    with:
+      sirius_version: ${{ inputs.sirius_version }}
+
   PythonTest:
     uses: ./.github/workflows/PythonTest.yml
     secrets: inherit
+    with:
+      sirius_version: ${{ inputs.sirius_version }}

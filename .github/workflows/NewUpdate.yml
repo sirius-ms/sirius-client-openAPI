@@ -6,163 +6,179 @@ on:
       target_branch:
         type: string
         required: true
-  
+        description: "Target branch to put update commits on."
+      sirius_version:
+        description: "Optional SIRIUS version to download (e.g. 6.3.3). Leave blank for latest."
+        type: string
+        required: false
+
 jobs:
   UpdateClients:
-    # The type of runner that the job will run on
     runs-on: ubuntu-latest
     timeout-minutes: 90
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    # Runs using the runners shell
-    - name: checkout repo
-      uses: actions/checkout@v3.1.0
-    - name: Download latest generators
-      run: |
-        cd .updater/openapi_generator
-        wget -nv https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/7.10.0/openapi-generator-cli-7.10.0.jar -O openapi-generator-cli-7.10.jar
-        wget -nv https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/7.16.0/openapi-generator-cli-7.16.0.jar -O openapi-generator-cli-7.16.jar
-    - name: Download latest Sirius Release
-      uses: nick-fields/retry@v2
-      with:
-        max_attempts: 5
-        timeout_minutes: 5
-        command: |
+      - name: checkout repo
+        uses: actions/checkout@v3.1.0
+      - name: Download latest generators
+        run: |
+          mkdir .updater/openapi_generator
+          cd .updater/openapi_generator
+          wget -nv https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/7.10.0/openapi-generator-cli-7.10.0.jar -O openapi-generator-cli-7.10.jar
+          wget -nv https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/7.16.0/openapi-generator-cli-7.16.0.jar -O openapi-generator-cli-7.16.jar
+      - name: Download SIRIUS Release
+        uses: nick-fields/retry@v2
+        with:
+          max_attempts: 5
+          timeout_minutes: 5
+          command: |
             cd .updater/api
-            curl -s https://api.github.com/repositories/94561614/releases > ./releases.json
-            packageVersion=$(cat ./releases.json  | grep 'name.*linux-x64.zip\"' | sort | tac | head -n 1 | cut -d - -f 2)
-            echo "Writing Version files: $packageVersion"
-            echo $packageVersion > ./packageVersion.txt
-            echo "Downloading Version: $packageVersion"
-            cat ./releases.json | grep 'browser_download_url.*linux-x64.zip\"' | sort | tac | head -n 1 | cut -d : -f 2,3 | tr -d \" | wget -nv -i -
-            echo "Download Complete"
-            unzip *.zip
-            echo "Api Ready"
-    - name: Run Rest Api with strings
-      run: |
-        bash .updater/api/sirius/bin/sirius REST --headless --api-mode=STABLE -p 8080 -s &
-    - name: Update api-docs-strings.json
-      run: |
-        while ! nc -z localhost 8080; do sleep 0.1; done
-        cd .updater/api
-        wget -nv http://localhost:8080/v3/api-docs -O api-docs-strings.json
-    - name: Shutdown SIRIUS
-      run: curl -X POST http://localhost:8080/actuator/shutdown
-    - name: Run Rest Api with enums
-      run: |
-        bash .updater/api/sirius/bin/sirius REST --headless --api-mode=STABLE --enums-as-ref -p 8080 -s &
-    - name: Update api-docs-enums.json
-      run: |
-        while ! nc -z localhost 8080; do sleep 0.1; done
-        cd .updater/api
-        wget -nv http://localhost:8080/v3/api-docs -O api-docs-enums.json
-    - name: Shutdown SIRIUS
-      run: curl -X POST http://localhost:8080/actuator/shutdown
-    - name: Update Clients
-      run: |
-        # load package version from file
-        packageVersion=$(cat .updater/api/packageVersion.txt)
-        
-        echo "generating Python Code with packageVersion=$packageVersion"
-        rm -rf client-api_python/generated/docs
-        rm -rf client-api_python/generated/PySirius
-       
-        java -jar .updater/openapi_generator/openapi-generator-cli-7.16.jar generate -i .updater/api/api-docs-enums.json -c .updater/config/Python/config.json -g python -o client-api_python/generated -t client-api_python/templates/python --additional-properties=packageVersion=$packageVersion
-        
-        echo "temporarily move R manual folder"
-        mv client-api_r/generated/man/ client-api_r/
-        
-        echo "generating R Code with packageVersion=$packageVersion"
-        rm -rf client-api_r/generated/docs
-        rm -rf client-api_r/generated/R
-
-        java -jar .updater/openapi_generator/openapi-generator-cli-7.10.jar generate -i .updater/api/api-docs-strings.json -c .updater/config/R/config.json -g r -o client-api_r/generated -t client-api_r/templates/r --additional-properties=packageVersion=$packageVersion
-        
-        echo "recover R manual folder"
-        mv client-api_r/man/ client-api_r/generated/
-        
-        echo "generating Finished!"
-    - name: Format Python Package
-      run: |
-        cp client-api_python/pysirius_api.py client-api_python/generated/PySirius
-        cp client-api_python/pysirius_sdk.py client-api_python/generated/PySirius
-        cp client-api_python/pysirius_helper.py client-api_python/generated/PySirius
-        
-        chmod +x ./client-api_python/formatting/format_init.sh
-        ./client-api_python/formatting/format_init.sh
-    - name: Format R package
-      run: |
-        cp client-api_r/rsirius_sdk.R  client-api_r/generated/R/rsirius_sdk.R
-        cp client-api_r/rsirius_helper.R  client-api_r/generated/R/rsirius_helper.R
-        echo >> client-api_r/generated/NAMESPACE
-        echo "# SDK" >> client-api_r/generated/NAMESPACE
-        echo "export(SiriusSDK)" >> client-api_r/generated/NAMESPACE
-        echo "export(Helper)" >> client-api_r/generated/NAMESPACE
-        
-        chmod +x ./client-api_r/patches/list_syntax_fix.sh
-        ./client-api_r/patches/list_syntax_fix.sh
-        
-        chmod +x ./client-api_r/patches/insert_wait_for_job_completion_in_rsirius_api.sh
-        ./client-api_r/patches/insert_wait_for_job_completion_in_rsirius_api.sh
-    - name: Remove Sirius Rest Api
-      run: |
-        cd .updater/api
-        rm -rf *sirius*
-        rm -rf releases.json
-        echo "Done"
-    - name: Remove Openapi Generator Files
-      run: |
-        rm .updater/openapi_generator/*.jar
-        ls ./.github/workflows
-        echo "Done"
-    - name: update file and push to remote
-      uses: stefanzweifel/git-auto-commit-action@v4.15.2
-      with:
-        commit_message: Auto-Updated OpenAPI Clients
-    - name: Run RManualGeneration
-      run: |
-        gh workflow run RManualGeneration.yml --ref ${GITHUB_REF##*/}
-        echo "dispatched workflow"
-        echo "sleeping for 30s to make sure it started"
-        sleep 30
-        list=$(gh run list --workflow RManualGeneration --branch ${GITHUB_REF##*/})
-        id=$(echo $list | grep -oP 'in_progress RManualGeneration RManualGeneration [^ ]* workflow_dispatch \K\d+')
-        echo "run ID of RManualGeneration is: $id"
-        gh run watch $id --exit-status --interval 3
-        echo "generation done!"
-      env:
-        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    - name: update file and create pull request
-      id: open-pr
-      uses: repo-sync/pull-request@v2
-      with:
+            
+            if [ -n "${{ github.event.inputs.sirius_version }}" ]; then
+              # Manual version provided
+              version="${{ github.event.inputs.sirius_version }}"
+              echo "Using manually provided SIRIUS version: $version"          
+            else
+              # Fallback to automatic latest detection
+              echo "No version provided — fetching latest release..."
+              version=$(curl -s https://api.github.com/repos/sirius-ms/sirius/releases/latest | jq -r '.tag_name' | sed 's/^v//')
+              echo "Latest version: $version"
+            fi
+            
+            echo "$version" > ./packageVersion.txt
+            url="https://github.com/sirius-ms/sirius/releases/download/v${version}/sirius-${version}-linux-x64.zip"
+            echo "Downloading from: $url"
+            wget -nv "$url" -O sirius-${version}-linux-x64.zip
+            
+            echo "Unzipping..."
+            unzip -q sirius-*-linux-x64.zip
+            echo "API Ready"
+      - name: Run Rest Api with strings
+        run: |
+          bash .updater/api/sirius/bin/sirius REST --headless --api-mode=STABLE -p 8080 -s &
+      - name: Update api-docs-strings.json
+        run: |
+          while ! nc -z localhost 8080; do sleep 0.1; done
+          cd .updater/api
+          wget -nv http://localhost:8080/v3/api-docs -O api-docs-strings.json
+      - name: Shutdown SIRIUS
+        run: curl -X POST http://localhost:8080/actuator/shutdown
+      - name: Run Rest Api with enums
+        run: |
+          bash .updater/api/sirius/bin/sirius REST --headless --api-mode=STABLE --enums-as-ref -p 8080 -s &
+      - name: Update api-docs-enums.json
+        run: |
+          while ! nc -z localhost 8080; do sleep 0.1; done
+          cd .updater/api
+          wget -nv http://localhost:8080/v3/api-docs -O api-docs-enums.json
+      - name: Shutdown SIRIUS
+        run: curl -X POST http://localhost:8080/actuator/shutdown
+      - name: Update Clients
+        run: |
+          # load package version from file
+          packageVersion=$(cat .updater/api/packageVersion.txt)
+          
+          echo "generating Python Code with packageVersion=$packageVersion"
+          rm -rf client-api_python/generated/docs
+          rm -rf client-api_python/generated/PySirius
+          
+          java -jar .updater/openapi_generator/openapi-generator-cli-7.16.jar generate -i .updater/api/api-docs-enums.json -c .updater/config/Python/config.json -g python -o client-api_python/generated -t client-api_python/templates/python --additional-properties=packageVersion=$packageVersion
+          
+          echo "temporarily move R manual folder"
+          mv client-api_r/generated/man/ client-api_r/
+          
+          echo "generating R Code with packageVersion=$packageVersion"
+          rm -rf client-api_r/generated/docs
+          rm -rf client-api_r/generated/R
+          
+          java -jar .updater/openapi_generator/openapi-generator-cli-7.10.jar generate -i .updater/api/api-docs-strings.json -c .updater/config/R/config.json -g r -o client-api_r/generated -t client-api_r/templates/r --additional-properties=packageVersion=$packageVersion
+          
+          echo "recover R manual folder"
+          mv client-api_r/man/ client-api_r/generated/
+          
+          echo "generating Finished!"
+      - name: Format Python Package
+        run: |
+          cp client-api_python/pysirius_api.py client-api_python/generated/PySirius
+          cp client-api_python/pysirius_sdk.py client-api_python/generated/PySirius
+          cp client-api_python/pysirius_helper.py client-api_python/generated/PySirius
+          
+          chmod +x ./client-api_python/formatting/format_init.sh
+          ./client-api_python/formatting/format_init.sh
+      - name: Format R package
+        run: |
+          cp client-api_r/rsirius_sdk.R  client-api_r/generated/R/rsirius_sdk.R
+          cp client-api_r/rsirius_helper.R  client-api_r/generated/R/rsirius_helper.R
+          echo >> client-api_r/generated/NAMESPACE
+          echo "# SDK" >> client-api_r/generated/NAMESPACE
+          echo "export(SiriusSDK)" >> client-api_r/generated/NAMESPACE
+          echo "export(Helper)" >> client-api_r/generated/NAMESPACE
+          
+          chmod +x ./client-api_r/patches/list_syntax_fix.sh
+          ./client-api_r/patches/list_syntax_fix.sh
+          
+          chmod +x ./client-api_r/patches/insert_wait_for_job_completion_in_rsirius_api.sh
+          ./client-api_r/patches/insert_wait_for_job_completion_in_rsirius_api.sh
+      - name: Remove Sirius Rest Api
+        run: |
+          cd .updater/api
+          rm -rf *sirius*
+          rm -rf releases.json
+          echo "Done"
+      - name: Remove Openapi Generator Files
+        run: |
+          rm -rf .updater/openapi_generator
+          ls ./.github/workflows
+          echo "Done"
+      - name: update file and push to remote
+        uses: stefanzweifel/git-auto-commit-action@v4.15.2
+        with:
+          commit_message: Auto-Updated OpenAPI Clients
+      - name: Run RManualGeneration
+        run: |
+          gh workflow run RManualGeneration.yml --ref ${GITHUB_REF##*/}
+          echo "dispatched workflow"
+          echo "sleeping for 30s to make sure it started"
+          sleep 30
+          list=$(gh run list --workflow RManualGeneration --branch ${GITHUB_REF##*/})
+          id=$(echo $list | grep -oP 'in_progress RManualGeneration RManualGeneration [^ ]* workflow_dispatch \K\d+')
+          echo "run ID of RManualGeneration is: $id"
+          gh run watch $id --exit-status --interval 3
+          echo "generation done!"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: update file and create pull request
+        id: open-pr
+        uses: repo-sync/pull-request@v2
+        with:
           destination_branch: ${{ inputs.target_branch }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
           pr_label: "Feature"
           pr_title: "AutoUpdated"
           pr_allow_empty: true
-    - name: check if request has been created
-      run: echo ${{steps.open-pr.outputs.pr_created}}
-    - name: lock pull request
-      continue-on-error: true
-      id: lockpull
-      uses: sudo-bot/action-pull-request-lock@v1.1.0
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        number: ${{steps.open-pr.outputs.pr_number}}
-        lock-reason: resolved
-    - name: Run tests if no changes occure
-      env:
-        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#      if: steps.lockpull.outcome == 'failure'
-      run: |
-        gh workflow run RunTests.yml --ref ${GITHUB_REF##*/}
-        echo "sleeping for 30min before temp branch removal"
-        sleep 1800
-    - name: Delete temp branches if no changes occure
-      if: steps.lockpull.outcome == 'failure'
-      uses: dawidd6/action-delete-branch@v3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        prefix: temp_
-        soft_fail: true
+      - name: check if request has been created
+        run: echo ${{steps.open-pr.outputs.pr_created}}
+      - name: lock pull request
+        continue-on-error: true
+        id: lockpull
+        uses: sudo-bot/action-pull-request-lock@v1.1.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          number: ${{steps.open-pr.outputs.pr_number}}
+          lock-reason: resolved
+      - name: Run tests if no changes occure
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          version=$(cat .updater/api/packageVersion.txt)
+          echo "Running RunTests workflow with SIRIUS version: $version"
+          gh workflow run RunTests.yml --ref ${GITHUB_REF##*/} -f sirius_version="$version"
+          echo "sleeping for 30min before temp branch removal"
+          sleep 1800
+        #      if: steps.lockpull.outcome == 'failure'
+      - name: Delete temp branches if no changes occure
+        if: steps.lockpull.outcome == 'failure'
+        uses: dawidd6/action-delete-branch@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          prefix: temp_
+          soft_fail: true

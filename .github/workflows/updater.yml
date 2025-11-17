@@ -1,32 +1,32 @@
-# This is a basic workflow that is manually triggered
-
 name: Client_Updater
 
-# Controls when the action will run. Workflow runs when manually triggered using the UI
-# or API.
 on:
-  [workflow_dispatch, repository_dispatch]
-    # Inputs the workflow accepts.
-#    inputs:
- #     name:
-  #      # Friendly description to be shown in the UI instead of 'name'
-   #     description: 'Person to greet'
-    #    # Default value if no value is explicitly provided
-     ##   default: 'World'
-       # # Input has to be provided for the workflow to run
-        #required: true
+  workflow_dispatch:
+    inputs:
+      sirius_version:
+        description: "Optional: specify SIRIUS version to use (e.g. 6.3.3)"
+        required: false
+        type: string
+  repository_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # does not run on the temp branch itself
-  UpdateCache:
-    uses: ./.github/workflows/update-api.yml
   UpdateOnNewBranch:
     runs-on: ubuntu-latest
+    outputs:
+      target_branch: ${{ steps.setup.outputs.target_branch }}
     steps:
       - name: checkout repo
-        uses: actions/checkout@v3.1.0
-      - name: Call Workflow
-        run: gh workflow run SetupBranch.yml --ref ${GITHUB_REF##*/} -f target_branch=$(echo -en temp_;date +"%Y%m%d%H%M%S%N")
+        uses: actions/checkout@v3
+      - name: Call SetupBranch
+        id: setup
+        run: |
+          target_branch=$(echo -en temp_;date +"%Y%m%d%H%M%S%N")
+          echo "target_branch=$target_branch" >> $GITHUB_OUTPUT
+          
+          if [ -n "${{ inputs.sirius_version }}" ]; then
+            gh workflow run SetupBranch.yml --ref ${GITHUB_REF##*/} -f target_branch=$target_branch -f sirius_version=${{ inputs.sirius_version }}
+          else
+            gh workflow run SetupBranch.yml --ref ${GITHUB_REF##*/} -f target_branch=$target_branch
+          fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
