@@ -36,20 +36,16 @@ result <- api_instance$runs_api$AddTagsToRunExperimental(var_project_id, var_run
 dput(result)
 
 
-####################  ComputeFoldChangeForBlankSubtraction  ####################
+####################  AddTagsToRunsExperimental  ####################
 
 library(RSirius)
-var_project_id <- "project_id_example" # character | project-space to compute the fold change in.
-var_sample_type_fold_change_request <- SampleTypeFoldChangeRequest$new(c("sampleRunIds_example"), c("blankRunIds_example"), c("controlRunIds_example")) # SampleTypeFoldChangeRequest | request with lists of run IDs that are sample, blank, and control runs
-var_opt_fields <- c("none") # array[character] | job opt fields. (Optional)
+var_project_id <- "project_id_example" # character | project-space to add to.
+var_tag_submission <- c(TagSubmission$new("tagName_example", "taggedObjectId_example", 123)) # array[TagSubmission] | tags with the id of run they shall be added to.
 
-#**EXPERIMENTAL** Compute the fold changes that are required for the fold change filter
+#[EXPERIMENTAL] Add tags to a run in the project
 api_instance <- rsirius_api$new()
 
-# to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$ComputeFoldChangeForBlankSubtraction(var_project_id, var_sample_type_fold_change_request, opt_fields = var_opt_fieldsdata_file = "result.txt")
-result <- api_instance$runs_api$ComputeFoldChangeForBlankSubtraction(var_project_id, var_sample_type_fold_change_request, opt_fields = var_opt_fields)
-dput(result)
+api_instance$runs_api$AddTagsToRunsExperimental(var_project_id, var_tag_submission)
 
 
 ####################  GetRunExperimental  ####################
@@ -65,24 +61,6 @@ api_instance <- rsirius_api$new()
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
 # result <- api_instance$GetRunExperimental(var_project_id, var_run_id, opt_fields = var_opt_fieldsdata_file = "result.txt")
 result <- api_instance$runs_api$GetRunExperimental(var_project_id, var_run_id, opt_fields = var_opt_fields)
-dput(result)
-
-
-####################  GetRunPageExperimental  ####################
-
-library(RSirius)
-var_project_id <- "project_id_example" # character | project-space to read from.
-var_page <- 0 # integer | Zero-based page index (0..N) (Optional)
-var_size <- 20 # integer | The size of the page to be returned (Optional)
-var_sort <- c("inner_example") # array[character] | Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (Optional)
-var_opt_fields <- c(RunOptField$new()) # array[RunOptField] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
-
-#[EXPERIMENTAL] Get all available runs in the given project-space
-api_instance <- rsirius_api$new()
-
-# to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$GetRunPageExperimental(var_project_id, page = var_page, size = var_size, sort = var_sort, opt_fields = var_opt_fieldsdata_file = "result.txt")
-result <- api_instance$runs_api$GetRunPageExperimental(var_project_id, page = var_page, size = var_size, sort = var_sort, opt_fields = var_opt_fields)
 dput(result)
 
 
@@ -105,22 +83,22 @@ result <- api_instance$runs_api$GetRunsByGroupExperimental(var_project_id, var_g
 dput(result)
 
 
-####################  GetRunsByTagExperimental  ####################
+####################  GetRunsPageExperimental  ####################
 
 library(RSirius)
 var_project_id <- "project_id_example" # character | project space to get runs from.
-var_filter <- "" # character | tag filter. (Optional)
+var_search_query <- "search_query_example" # character | optional search query in lucene syntax. (Optional)
 var_page <- 0 # integer | Zero-based page index (0..N) (Optional)
 var_size <- 20 # integer | The size of the page to be returned (Optional)
 var_sort <- c("inner_example") # array[character] | Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (Optional)
 var_opt_fields <- c(RunOptField$new()) # array[RunOptField] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
 
-#[EXPERIMENTAL] Get runs by tag
+#[EXPERIMENTAL] Get runs in the given project-space
 api_instance <- rsirius_api$new()
 
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$GetRunsByTagExperimental(var_project_id, filter = var_filter, page = var_page, size = var_size, sort = var_sort, opt_fields = var_opt_fieldsdata_file = "result.txt")
-result <- api_instance$runs_api$GetRunsByTagExperimental(var_project_id, filter = var_filter, page = var_page, size = var_size, sort = var_sort, opt_fields = var_opt_fields)
+# result <- api_instance$GetRunsPageExperimental(var_project_id, search_query = var_search_query, page = var_page, size = var_size, sort = var_sort, opt_fields = var_opt_fieldsdata_file = "result.txt")
+result <- api_instance$runs_api$GetRunsPageExperimental(var_project_id, search_query = var_search_query, page = var_page, size = var_size, sort = var_sort, opt_fields = var_opt_fields)
 dput(result)
 
 
@@ -167,16 +145,14 @@ api_instance$runs_api$RemoveTagFromRunExperimental(var_project_id, var_run_id, v
 \item \href{#method-RunsApi-new}{\code{RunsApi$new()}}
 \item \href{#method-RunsApi-AddTagsToRunExperimental}{\code{RunsApi$AddTagsToRunExperimental()}}
 \item \href{#method-RunsApi-AddTagsToRunExperimentalWithHttpInfo}{\code{RunsApi$AddTagsToRunExperimentalWithHttpInfo()}}
-\item \href{#method-RunsApi-ComputeFoldChangeForBlankSubtraction}{\code{RunsApi$ComputeFoldChangeForBlankSubtraction()}}
-\item \href{#method-RunsApi-ComputeFoldChangeForBlankSubtractionWithHttpInfo}{\code{RunsApi$ComputeFoldChangeForBlankSubtractionWithHttpInfo()}}
+\item \href{#method-RunsApi-AddTagsToRunsExperimental}{\code{RunsApi$AddTagsToRunsExperimental()}}
+\item \href{#method-RunsApi-AddTagsToRunsExperimentalWithHttpInfo}{\code{RunsApi$AddTagsToRunsExperimentalWithHttpInfo()}}
 \item \href{#method-RunsApi-GetRunExperimental}{\code{RunsApi$GetRunExperimental()}}
 \item \href{#method-RunsApi-GetRunExperimentalWithHttpInfo}{\code{RunsApi$GetRunExperimentalWithHttpInfo()}}
-\item \href{#method-RunsApi-GetRunPageExperimental}{\code{RunsApi$GetRunPageExperimental()}}
-\item \href{#method-RunsApi-GetRunPageExperimentalWithHttpInfo}{\code{RunsApi$GetRunPageExperimentalWithHttpInfo()}}
 \item \href{#method-RunsApi-GetRunsByGroupExperimental}{\code{RunsApi$GetRunsByGroupExperimental()}}
 \item \href{#method-RunsApi-GetRunsByGroupExperimentalWithHttpInfo}{\code{RunsApi$GetRunsByGroupExperimentalWithHttpInfo()}}
-\item \href{#method-RunsApi-GetRunsByTagExperimental}{\code{RunsApi$GetRunsByTagExperimental()}}
-\item \href{#method-RunsApi-GetRunsByTagExperimentalWithHttpInfo}{\code{RunsApi$GetRunsByTagExperimentalWithHttpInfo()}}
+\item \href{#method-RunsApi-GetRunsPageExperimental}{\code{RunsApi$GetRunsPageExperimental()}}
+\item \href{#method-RunsApi-GetRunsPageExperimentalWithHttpInfo}{\code{RunsApi$GetRunsPageExperimentalWithHttpInfo()}}
 \item \href{#method-RunsApi-GetTagsForRunExperimental}{\code{RunsApi$GetTagsForRunExperimental()}}
 \item \href{#method-RunsApi-GetTagsForRunExperimentalWithHttpInfo}{\code{RunsApi$GetTagsForRunExperimentalWithHttpInfo()}}
 \item \href{#method-RunsApi-RemoveTagFromRunExperimental}{\code{RunsApi$RemoveTagFromRunExperimental()}}
@@ -270,71 +246,51 @@ API response (array[Tag]) with additional information such as HTTP status code, 
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-RunsApi-ComputeFoldChangeForBlankSubtraction"></a>}}
-\if{latex}{\out{\hypertarget{method-RunsApi-ComputeFoldChangeForBlankSubtraction}{}}}
-\subsection{Method \code{ComputeFoldChangeForBlankSubtraction()}}{
-**EXPERIMENTAL** Compute the fold changes that are required for the fold change filter
+\if{html}{\out{<a id="method-RunsApi-AddTagsToRunsExperimental"></a>}}
+\if{latex}{\out{\hypertarget{method-RunsApi-AddTagsToRunsExperimental}{}}}
+\subsection{Method \code{AddTagsToRunsExperimental()}}{
+[EXPERIMENTAL] Add tags to a run in the project
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{RunsApi$ComputeFoldChangeForBlankSubtraction(
-  project_id,
-  sample_type_fold_change_request,
-  opt_fields = list("progress"),
-  data_file = NULL,
-  ...
-)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{RunsApi$AddTagsToRunsExperimental(project_id, tag_submission, ...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{project_id}}{project-space to compute the fold change in.}
+\item{\code{project_id}}{project-space to add to.}
 
-\item{\code{sample_type_fold_change_request}}{request with lists of run IDs that are sample, blank, and control runs}
-
-\item{\code{opt_fields}}{(optional) job opt fields. (default value: ["progress"])}
-
-\item{\code{data_file}}{(optional) name of the data file to save the result}
+\item{\code{tag_submission}}{tags with the id of run they shall be added to.}
 
 \item{\code{...}}{Other optional arguments}
 }
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-Job
+void
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-RunsApi-ComputeFoldChangeForBlankSubtractionWithHttpInfo"></a>}}
-\if{latex}{\out{\hypertarget{method-RunsApi-ComputeFoldChangeForBlankSubtractionWithHttpInfo}{}}}
-\subsection{Method \code{ComputeFoldChangeForBlankSubtractionWithHttpInfo()}}{
-**EXPERIMENTAL** Compute the fold changes that are required for the fold change filter
+\if{html}{\out{<a id="method-RunsApi-AddTagsToRunsExperimentalWithHttpInfo"></a>}}
+\if{latex}{\out{\hypertarget{method-RunsApi-AddTagsToRunsExperimentalWithHttpInfo}{}}}
+\subsection{Method \code{AddTagsToRunsExperimentalWithHttpInfo()}}{
+[EXPERIMENTAL] Add tags to a run in the project
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{RunsApi$ComputeFoldChangeForBlankSubtractionWithHttpInfo(
-  project_id,
-  sample_type_fold_change_request,
-  opt_fields = list("progress"),
-  data_file = NULL,
-  ...
-)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{RunsApi$AddTagsToRunsExperimentalWithHttpInfo(project_id, tag_submission, ...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{project_id}}{project-space to compute the fold change in.}
+\item{\code{project_id}}{project-space to add to.}
 
-\item{\code{sample_type_fold_change_request}}{request with lists of run IDs that are sample, blank, and control runs}
-
-\item{\code{opt_fields}}{(optional) job opt fields. (default value: ["progress"])}
-
-\item{\code{data_file}}{(optional) name of the data file to save the result}
+\item{\code{tag_submission}}{tags with the id of run they shall be added to.}
 
 \item{\code{...}}{Other optional arguments}
 }
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-API response (Job) with additional information such as HTTP status code, headers
+API response (void) with additional information such as HTTP status code, headers
 }
 }
 \if{html}{\out{<hr>}}
@@ -403,86 +359,6 @@ Run
 }
 \subsection{Returns}{
 API response (Run) with additional information such as HTTP status code, headers
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-RunsApi-GetRunPageExperimental"></a>}}
-\if{latex}{\out{\hypertarget{method-RunsApi-GetRunPageExperimental}{}}}
-\subsection{Method \code{GetRunPageExperimental()}}{
-[EXPERIMENTAL] Get all available runs in the given project-space
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{RunsApi$GetRunPageExperimental(
-  project_id,
-  page = 0,
-  size = 20,
-  sort = NULL,
-  opt_fields = list(),
-  data_file = NULL,
-  ...
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{project_id}}{project-space to read from.}
-
-\item{\code{page}}{(optional) Zero-based page index (0..N) (default value: 0)}
-
-\item{\code{size}}{(optional) The size of the page to be returned (default value: 20)}
-
-\item{\code{sort}}{(optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.}
-
-\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [])}
-
-\item{\code{data_file}}{(optional) name of the data file to save the result}
-
-\item{\code{...}}{Other optional arguments}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-PagedModelRun
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-RunsApi-GetRunPageExperimentalWithHttpInfo"></a>}}
-\if{latex}{\out{\hypertarget{method-RunsApi-GetRunPageExperimentalWithHttpInfo}{}}}
-\subsection{Method \code{GetRunPageExperimentalWithHttpInfo()}}{
-[EXPERIMENTAL] Get all available runs in the given project-space
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{RunsApi$GetRunPageExperimentalWithHttpInfo(
-  project_id,
-  page = 0,
-  size = 20,
-  sort = NULL,
-  opt_fields = list(),
-  data_file = NULL,
-  ...
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{project_id}}{project-space to read from.}
-
-\item{\code{page}}{(optional) Zero-based page index (0..N) (default value: 0)}
-
-\item{\code{size}}{(optional) The size of the page to be returned (default value: 20)}
-
-\item{\code{sort}}{(optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.}
-
-\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [])}
-
-\item{\code{data_file}}{(optional) name of the data file to save the result}
-
-\item{\code{...}}{Other optional arguments}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-API response (PagedModelRun) with additional information such as HTTP status code, headers
 }
 }
 \if{html}{\out{<hr>}}
@@ -572,14 +448,14 @@ API response (PagedModelRun) with additional information such as HTTP status cod
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-RunsApi-GetRunsByTagExperimental"></a>}}
-\if{latex}{\out{\hypertarget{method-RunsApi-GetRunsByTagExperimental}{}}}
-\subsection{Method \code{GetRunsByTagExperimental()}}{
-[EXPERIMENTAL] Get runs by tag
+\if{html}{\out{<a id="method-RunsApi-GetRunsPageExperimental"></a>}}
+\if{latex}{\out{\hypertarget{method-RunsApi-GetRunsPageExperimental}{}}}
+\subsection{Method \code{GetRunsPageExperimental()}}{
+[EXPERIMENTAL] Get runs in the given project-space
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{RunsApi$GetRunsByTagExperimental(
+\if{html}{\out{<div class="r">}}\preformatted{RunsApi$GetRunsPageExperimental(
   project_id,
-  filter = "",
+  search_query = NULL,
   page = 0,
   size = 20,
   sort = NULL,
@@ -594,7 +470,7 @@ API response (PagedModelRun) with additional information such as HTTP status cod
 \describe{
 \item{\code{project_id}}{project space to get runs from.}
 
-\item{\code{filter}}{(optional) tag filter. (default value: "")}
+\item{\code{search_query}}{(optional) optional search query in lucene syntax.}
 
 \item{\code{page}}{(optional) Zero-based page index (0..N) (default value: 0)}
 
@@ -615,14 +491,14 @@ PagedModelRun
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-RunsApi-GetRunsByTagExperimentalWithHttpInfo"></a>}}
-\if{latex}{\out{\hypertarget{method-RunsApi-GetRunsByTagExperimentalWithHttpInfo}{}}}
-\subsection{Method \code{GetRunsByTagExperimentalWithHttpInfo()}}{
-[EXPERIMENTAL] Get runs by tag
+\if{html}{\out{<a id="method-RunsApi-GetRunsPageExperimentalWithHttpInfo"></a>}}
+\if{latex}{\out{\hypertarget{method-RunsApi-GetRunsPageExperimentalWithHttpInfo}{}}}
+\subsection{Method \code{GetRunsPageExperimentalWithHttpInfo()}}{
+[EXPERIMENTAL] Get runs in the given project-space
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{RunsApi$GetRunsByTagExperimentalWithHttpInfo(
+\if{html}{\out{<div class="r">}}\preformatted{RunsApi$GetRunsPageExperimentalWithHttpInfo(
   project_id,
-  filter = "",
+  search_query = NULL,
   page = 0,
   size = 20,
   sort = NULL,
@@ -637,7 +513,7 @@ PagedModelRun
 \describe{
 \item{\code{project_id}}{project space to get runs from.}
 
-\item{\code{filter}}{(optional) tag filter. (default value: "")}
+\item{\code{search_query}}{(optional) optional search query in lucene syntax.}
 
 \item{\code{page}}{(optional) Zero-based page index (0..N) (default value: 0)}
 

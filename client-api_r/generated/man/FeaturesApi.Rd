@@ -43,13 +43,14 @@ library(RSirius)
 var_project_id <- "project_id_example" # character | project-space to read from.
 var_aligned_feature_id <- "aligned_feature_id_example" # character | feature (aligned over runs) the structure candidates belong to.
 var_smiles <- "none" # character | smiles (Optional)
+var_skip_existence_check <- FALSE # character | if true, skips a check if this compound is an existing candidate, potentially leading to duplicate structures. (Optional)
 
 #[EXPERIMENTAL] Add molecular structures (as SMILES) to the list of de novo structures.
 api_instance <- rsirius_api$new()
 
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$AddDeNovoStructureCandidate(var_project_id, var_aligned_feature_id, smiles = var_smilesdata_file = "result.txt")
-result <- api_instance$features_api$AddDeNovoStructureCandidate(var_project_id, var_aligned_feature_id, smiles = var_smiles)
+# result <- api_instance$AddDeNovoStructureCandidate(var_project_id, var_aligned_feature_id, smiles = var_smiles, skip_existence_check = var_skip_existence_checkdata_file = "result.txt")
+result <- api_instance$features_api$AddDeNovoStructureCandidate(var_project_id, var_aligned_feature_id, smiles = var_smiles, skip_existence_check = var_skip_existence_check)
 dput(result)
 
 
@@ -57,7 +58,7 @@ dput(result)
 
 library(RSirius)
 var_project_id <- "project_id_example" # character | project-space to add to.
-var_aligned_feature_id <- "aligned_feature_id_example" # character | run to add tags to.
+var_aligned_feature_id <- "aligned_feature_id_example" # character | feature to add tags to.
 var_tag <- c(Tag$new("tagName_example", 123)) # array[Tag] | tags to add.
 
 #[EXPERIMENTAL] Add tags to a feature (aligned over runs) in the project
@@ -67,6 +68,18 @@ api_instance <- rsirius_api$new()
 # result <- api_instance$AddTagsToAlignedFeatureExperimental(var_project_id, var_aligned_feature_id, var_tagdata_file = "result.txt")
 result <- api_instance$features_api$AddTagsToAlignedFeatureExperimental(var_project_id, var_aligned_feature_id, var_tag)
 dput(result)
+
+
+####################  AddTagsToAlignedFeaturesExperimental  ####################
+
+library(RSirius)
+var_project_id <- "project_id_example" # character | project-space to add to.
+var_tag_submission <- c(TagSubmission$new("tagName_example", "taggedObjectId_example", 123)) # array[TagSubmission] | tags with the id of feature they shall be added to.
+
+#[EXPERIMENTAL] Add tags to a feature (aligned over runs) in the project
+api_instance <- rsirius_api$new()
+
+api_instance$features_api$AddTagsToAlignedFeaturesExperimental(var_project_id, var_tag_submission)
 
 
 ####################  DeleteAlignedFeature  ####################
@@ -164,52 +177,35 @@ var_group_name <- "group_name_example" # character | tag group name.
 var_page <- 0 # integer | Zero-based page index (0..N) (Optional)
 var_size <- 20 # integer | The size of the page to be returned (Optional)
 var_sort <- c("inner_example") # array[character] | Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (Optional)
+var_ms_data_search_prepared <- FALSE # character | Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. (Optional)
 var_opt_fields <- c("none") # array[character] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
 
 #[EXPERIMENTAL] Get features (aligned over runs) by tag group
 api_instance <- rsirius_api$new()
 
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$GetAlignedFeaturesByGroupExperimental(var_project_id, var_group_name, page = var_page, size = var_size, sort = var_sort, opt_fields = var_opt_fieldsdata_file = "result.txt")
-result <- api_instance$features_api$GetAlignedFeaturesByGroupExperimental(var_project_id, var_group_name, page = var_page, size = var_size, sort = var_sort, opt_fields = var_opt_fields)
+# result <- api_instance$GetAlignedFeaturesByGroupExperimental(var_project_id, var_group_name, page = var_page, size = var_size, sort = var_sort, ms_data_search_prepared = var_ms_data_search_prepared, opt_fields = var_opt_fieldsdata_file = "result.txt")
+result <- api_instance$features_api$GetAlignedFeaturesByGroupExperimental(var_project_id, var_group_name, page = var_page, size = var_size, sort = var_sort, ms_data_search_prepared = var_ms_data_search_prepared, opt_fields = var_opt_fields)
 dput(result)
 
 
-####################  GetAlignedFeaturesByTagExperimental  ####################
+####################  GetAlignedFeaturesPageExperimental  ####################
 
 library(RSirius)
 var_project_id <- "project_id_example" # character | project space to get features (aligned over runs) from.
-var_filter <- "" # character | tag filter. (Optional)
 var_page <- 0 # integer | Zero-based page index (0..N) (Optional)
 var_size <- 20 # integer | The size of the page to be returned (Optional)
 var_sort <- c("inner_example") # array[character] | Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (Optional)
-var_opt_fields <- c("none") # array[character] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
-
-#[EXPERIMENTAL] Get features (aligned over runs) by tag
-api_instance <- rsirius_api$new()
-
-# to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$GetAlignedFeaturesByTagExperimental(var_project_id, filter = var_filter, page = var_page, size = var_size, sort = var_sort, opt_fields = var_opt_fieldsdata_file = "result.txt")
-result <- api_instance$features_api$GetAlignedFeaturesByTagExperimental(var_project_id, filter = var_filter, page = var_page, size = var_size, sort = var_sort, opt_fields = var_opt_fields)
-dput(result)
-
-
-####################  GetAlignedFeaturesPaged  ####################
-
-library(RSirius)
-var_project_id <- "project_id_example" # character | project-space to read from.
-var_page <- 0 # integer | Zero-based page index (0..N) (Optional)
-var_size <- 20 # integer | The size of the page to be returned (Optional)
-var_sort <- c("inner_example") # array[character] | Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (Optional)
+var_search_query <- "search_query_example" # character | optional search query in lucene syntax. (Optional)
 var_ms_data_search_prepared <- FALSE # character | Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. (Optional)
 var_opt_fields <- c("none") # array[character] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
 
-#Get all available features (aligned over runs) in the given project-space.
+#[EXPERIMENTAL] Get features (aligned over runs) in the given project-space
 api_instance <- rsirius_api$new()
 
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$GetAlignedFeaturesPaged(var_project_id, page = var_page, size = var_size, sort = var_sort, ms_data_search_prepared = var_ms_data_search_prepared, opt_fields = var_opt_fieldsdata_file = "result.txt")
-result <- api_instance$features_api$GetAlignedFeaturesPaged(var_project_id, page = var_page, size = var_size, sort = var_sort, ms_data_search_prepared = var_ms_data_search_prepared, opt_fields = var_opt_fields)
+# result <- api_instance$GetAlignedFeaturesPageExperimental(var_project_id, page = var_page, size = var_size, sort = var_sort, search_query = var_search_query, ms_data_search_prepared = var_ms_data_search_prepared, opt_fields = var_opt_fieldsdata_file = "result.txt")
+result <- api_instance$features_api$GetAlignedFeaturesPageExperimental(var_project_id, page = var_page, size = var_size, sort = var_sort, search_query = var_search_query, ms_data_search_prepared = var_ms_data_search_prepared, opt_fields = var_opt_fields)
 dput(result)
 
 
@@ -782,6 +778,8 @@ api_instance$features_api$RemoveTagFromAlignedFeatureExperimental(var_project_id
 \item \href{#method-FeaturesApi-AddDeNovoStructureCandidateWithHttpInfo}{\code{FeaturesApi$AddDeNovoStructureCandidateWithHttpInfo()}}
 \item \href{#method-FeaturesApi-AddTagsToAlignedFeatureExperimental}{\code{FeaturesApi$AddTagsToAlignedFeatureExperimental()}}
 \item \href{#method-FeaturesApi-AddTagsToAlignedFeatureExperimentalWithHttpInfo}{\code{FeaturesApi$AddTagsToAlignedFeatureExperimentalWithHttpInfo()}}
+\item \href{#method-FeaturesApi-AddTagsToAlignedFeaturesExperimental}{\code{FeaturesApi$AddTagsToAlignedFeaturesExperimental()}}
+\item \href{#method-FeaturesApi-AddTagsToAlignedFeaturesExperimentalWithHttpInfo}{\code{FeaturesApi$AddTagsToAlignedFeaturesExperimentalWithHttpInfo()}}
 \item \href{#method-FeaturesApi-DeleteAlignedFeature}{\code{FeaturesApi$DeleteAlignedFeature()}}
 \item \href{#method-FeaturesApi-DeleteAlignedFeatureWithHttpInfo}{\code{FeaturesApi$DeleteAlignedFeatureWithHttpInfo()}}
 \item \href{#method-FeaturesApi-DeleteAlignedFeatures}{\code{FeaturesApi$DeleteAlignedFeatures()}}
@@ -796,10 +794,8 @@ api_instance$features_api$RemoveTagFromAlignedFeatureExperimental(var_project_id
 \item \href{#method-FeaturesApi-GetAlignedFeaturesWithHttpInfo}{\code{FeaturesApi$GetAlignedFeaturesWithHttpInfo()}}
 \item \href{#method-FeaturesApi-GetAlignedFeaturesByGroupExperimental}{\code{FeaturesApi$GetAlignedFeaturesByGroupExperimental()}}
 \item \href{#method-FeaturesApi-GetAlignedFeaturesByGroupExperimentalWithHttpInfo}{\code{FeaturesApi$GetAlignedFeaturesByGroupExperimentalWithHttpInfo()}}
-\item \href{#method-FeaturesApi-GetAlignedFeaturesByTagExperimental}{\code{FeaturesApi$GetAlignedFeaturesByTagExperimental()}}
-\item \href{#method-FeaturesApi-GetAlignedFeaturesByTagExperimentalWithHttpInfo}{\code{FeaturesApi$GetAlignedFeaturesByTagExperimentalWithHttpInfo()}}
-\item \href{#method-FeaturesApi-GetAlignedFeaturesPaged}{\code{FeaturesApi$GetAlignedFeaturesPaged()}}
-\item \href{#method-FeaturesApi-GetAlignedFeaturesPagedWithHttpInfo}{\code{FeaturesApi$GetAlignedFeaturesPagedWithHttpInfo()}}
+\item \href{#method-FeaturesApi-GetAlignedFeaturesPageExperimental}{\code{FeaturesApi$GetAlignedFeaturesPageExperimental()}}
+\item \href{#method-FeaturesApi-GetAlignedFeaturesPageExperimentalWithHttpInfo}{\code{FeaturesApi$GetAlignedFeaturesPageExperimentalWithHttpInfo()}}
 \item \href{#method-FeaturesApi-GetBestMatchingCompoundClasses}{\code{FeaturesApi$GetBestMatchingCompoundClasses()}}
 \item \href{#method-FeaturesApi-GetBestMatchingCompoundClassesWithHttpInfo}{\code{FeaturesApi$GetBestMatchingCompoundClassesWithHttpInfo()}}
 \item \href{#method-FeaturesApi-GetCanopusPrediction}{\code{FeaturesApi$GetCanopusPrediction()}}
@@ -968,6 +964,7 @@ API response (array[AlignedFeature]) with additional information such as HTTP st
   project_id,
   aligned_feature_id,
   smiles = "none",
+  skip_existence_check = FALSE,
   data_file = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -981,6 +978,8 @@ API response (array[AlignedFeature]) with additional information such as HTTP st
 \item{\code{aligned_feature_id}}{feature (aligned over runs) the structure candidates belong to.}
 
 \item{\code{smiles}}{(optional) smiles (default value: "none")}
+
+\item{\code{skip_existence_check}}{(optional) if true, skips a check if this compound is an existing candidate, potentially leading to duplicate structures. (default value: FALSE)}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 
@@ -1002,6 +1001,7 @@ array[StructureCandidateFormula]
   project_id,
   aligned_feature_id,
   smiles = "none",
+  skip_existence_check = FALSE,
   data_file = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -1015,6 +1015,8 @@ array[StructureCandidateFormula]
 \item{\code{aligned_feature_id}}{feature (aligned over runs) the structure candidates belong to.}
 
 \item{\code{smiles}}{(optional) smiles (default value: "none")}
+
+\item{\code{skip_existence_check}}{(optional) if true, skips a check if this compound is an existing candidate, potentially leading to duplicate structures. (default value: FALSE)}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 
@@ -1046,7 +1048,7 @@ API response (array[StructureCandidateFormula]) with additional information such
 \describe{
 \item{\code{project_id}}{project-space to add to.}
 
-\item{\code{aligned_feature_id}}{run to add tags to.}
+\item{\code{aligned_feature_id}}{feature to add tags to.}
 
 \item{\code{tag}}{tags to add.}
 
@@ -1080,7 +1082,7 @@ array[Tag]
 \describe{
 \item{\code{project_id}}{project-space to add to.}
 
-\item{\code{aligned_feature_id}}{run to add tags to.}
+\item{\code{aligned_feature_id}}{feature to add tags to.}
 
 \item{\code{tag}}{tags to add.}
 
@@ -1092,6 +1094,62 @@ array[Tag]
 }
 \subsection{Returns}{
 API response (array[Tag]) with additional information such as HTTP status code, headers
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-FeaturesApi-AddTagsToAlignedFeaturesExperimental"></a>}}
+\if{latex}{\out{\hypertarget{method-FeaturesApi-AddTagsToAlignedFeaturesExperimental}{}}}
+\subsection{Method \code{AddTagsToAlignedFeaturesExperimental()}}{
+[EXPERIMENTAL] Add tags to a feature (aligned over runs) in the project
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{FeaturesApi$AddTagsToAlignedFeaturesExperimental(
+  project_id,
+  tag_submission,
+  ...
+)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{project_id}}{project-space to add to.}
+
+\item{\code{tag_submission}}{tags with the id of feature they shall be added to.}
+
+\item{\code{...}}{Other optional arguments}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+void
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-FeaturesApi-AddTagsToAlignedFeaturesExperimentalWithHttpInfo"></a>}}
+\if{latex}{\out{\hypertarget{method-FeaturesApi-AddTagsToAlignedFeaturesExperimentalWithHttpInfo}{}}}
+\subsection{Method \code{AddTagsToAlignedFeaturesExperimentalWithHttpInfo()}}{
+[EXPERIMENTAL] Add tags to a feature (aligned over runs) in the project
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{FeaturesApi$AddTagsToAlignedFeaturesExperimentalWithHttpInfo(
+  project_id,
+  tag_submission,
+  ...
+)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{project_id}}{project-space to add to.}
+
+\item{\code{tag_submission}}{tags with the id of feature they shall be added to.}
+
+\item{\code{...}}{Other optional arguments}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+API response (void) with additional information such as HTTP status code, headers
 }
 }
 \if{html}{\out{<hr>}}
@@ -1472,6 +1530,7 @@ API response (array[AlignedFeature]) with additional information such as HTTP st
   page = 0,
   size = 20,
   sort = NULL,
+  ms_data_search_prepared = FALSE,
   opt_fields = list("none"),
   data_file = NULL,
   ...
@@ -1490,6 +1549,8 @@ API response (array[AlignedFeature]) with additional information such as HTTP st
 \item{\code{size}}{(optional) The size of the page to be returned (default value: 20)}
 
 \item{\code{sort}}{(optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.}
+
+\item{\code{ms_data_search_prepared}}{(optional) Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. (default value: FALSE)}
 
 \item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])}
 
@@ -1515,6 +1576,7 @@ PagedModelAlignedFeature
   page = 0,
   size = 20,
   sort = NULL,
+  ms_data_search_prepared = FALSE,
   opt_fields = list("none"),
   data_file = NULL,
   ...
@@ -1534,6 +1596,8 @@ PagedModelAlignedFeature
 
 \item{\code{sort}}{(optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.}
 
+\item{\code{ms_data_search_prepared}}{(optional) Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. (default value: FALSE)}
+
 \item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
@@ -1547,18 +1611,19 @@ API response (PagedModelAlignedFeature) with additional information such as HTTP
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-FeaturesApi-GetAlignedFeaturesByTagExperimental"></a>}}
-\if{latex}{\out{\hypertarget{method-FeaturesApi-GetAlignedFeaturesByTagExperimental}{}}}
-\subsection{Method \code{GetAlignedFeaturesByTagExperimental()}}{
-[EXPERIMENTAL] Get features (aligned over runs) by tag
+\if{html}{\out{<a id="method-FeaturesApi-GetAlignedFeaturesPageExperimental"></a>}}
+\if{latex}{\out{\hypertarget{method-FeaturesApi-GetAlignedFeaturesPageExperimental}{}}}
+\subsection{Method \code{GetAlignedFeaturesPageExperimental()}}{
+[EXPERIMENTAL] Get features (aligned over runs) in the given project-space
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FeaturesApi$GetAlignedFeaturesByTagExperimental(
+\if{html}{\out{<div class="r">}}\preformatted{FeaturesApi$GetAlignedFeaturesPageExperimental(
   project_id,
-  filter = "",
   page = 0,
   size = 20,
   sort = NULL,
-  opt_fields = list(),
+  search_query = NULL,
+  ms_data_search_prepared = FALSE,
+  opt_fields = list("computedTools", "qualities", "tags"),
   data_file = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -1569,15 +1634,17 @@ API response (PagedModelAlignedFeature) with additional information such as HTTP
 \describe{
 \item{\code{project_id}}{project space to get features (aligned over runs) from.}
 
-\item{\code{filter}}{(optional) tag filter. (default value: "")}
-
 \item{\code{page}}{(optional) Zero-based page index (0..N) (default value: 0)}
 
 \item{\code{size}}{(optional) The size of the page to be returned (default value: 20)}
 
 \item{\code{sort}}{(optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.}
 
-\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [])}
+\item{\code{search_query}}{(optional) optional search query in lucene syntax.}
+
+\item{\code{ms_data_search_prepared}}{(optional) Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. (default value: FALSE)}
+
+\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["computedTools","qualities","tags"])}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 
@@ -1590,18 +1657,19 @@ PagedModelAlignedFeature
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-FeaturesApi-GetAlignedFeaturesByTagExperimentalWithHttpInfo"></a>}}
-\if{latex}{\out{\hypertarget{method-FeaturesApi-GetAlignedFeaturesByTagExperimentalWithHttpInfo}{}}}
-\subsection{Method \code{GetAlignedFeaturesByTagExperimentalWithHttpInfo()}}{
-[EXPERIMENTAL] Get features (aligned over runs) by tag
+\if{html}{\out{<a id="method-FeaturesApi-GetAlignedFeaturesPageExperimentalWithHttpInfo"></a>}}
+\if{latex}{\out{\hypertarget{method-FeaturesApi-GetAlignedFeaturesPageExperimentalWithHttpInfo}{}}}
+\subsection{Method \code{GetAlignedFeaturesPageExperimentalWithHttpInfo()}}{
+[EXPERIMENTAL] Get features (aligned over runs) in the given project-space
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FeaturesApi$GetAlignedFeaturesByTagExperimentalWithHttpInfo(
+\if{html}{\out{<div class="r">}}\preformatted{FeaturesApi$GetAlignedFeaturesPageExperimentalWithHttpInfo(
   project_id,
-  filter = "",
   page = 0,
   size = 20,
   sort = NULL,
-  opt_fields = list(),
+  search_query = NULL,
+  ms_data_search_prepared = FALSE,
+  opt_fields = list("computedTools", "qualities", "tags"),
   data_file = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -1612,101 +1680,17 @@ PagedModelAlignedFeature
 \describe{
 \item{\code{project_id}}{project space to get features (aligned over runs) from.}
 
-\item{\code{filter}}{(optional) tag filter. (default value: "")}
-
 \item{\code{page}}{(optional) Zero-based page index (0..N) (default value: 0)}
 
 \item{\code{size}}{(optional) The size of the page to be returned (default value: 20)}
 
 \item{\code{sort}}{(optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.}
 
-\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [])}
-
-\item{\code{data_file}}{(optional) name of the data file to save the result}
-
-\item{\code{...}}{Other optional arguments}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-API response (PagedModelAlignedFeature) with additional information such as HTTP status code, headers
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-FeaturesApi-GetAlignedFeaturesPaged"></a>}}
-\if{latex}{\out{\hypertarget{method-FeaturesApi-GetAlignedFeaturesPaged}{}}}
-\subsection{Method \code{GetAlignedFeaturesPaged()}}{
-Get all available features (aligned over runs) in the given project-space.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FeaturesApi$GetAlignedFeaturesPaged(
-  project_id,
-  page = 0,
-  size = 20,
-  sort = NULL,
-  ms_data_search_prepared = FALSE,
-  opt_fields = list("none"),
-  data_file = NULL,
-  ...
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{project_id}}{project-space to read from.}
-
-\item{\code{page}}{(optional) Zero-based page index (0..N) (default value: 0)}
-
-\item{\code{size}}{(optional) The size of the page to be returned (default value: 20)}
-
-\item{\code{sort}}{(optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.}
+\item{\code{search_query}}{(optional) optional search query in lucene syntax.}
 
 \item{\code{ms_data_search_prepared}}{(optional) Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. (default value: FALSE)}
 
-\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])}
-
-\item{\code{data_file}}{(optional) name of the data file to save the result}
-
-\item{\code{...}}{Other optional arguments}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-PagedModelAlignedFeature
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-FeaturesApi-GetAlignedFeaturesPagedWithHttpInfo"></a>}}
-\if{latex}{\out{\hypertarget{method-FeaturesApi-GetAlignedFeaturesPagedWithHttpInfo}{}}}
-\subsection{Method \code{GetAlignedFeaturesPagedWithHttpInfo()}}{
-Get all available features (aligned over runs) in the given project-space.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FeaturesApi$GetAlignedFeaturesPagedWithHttpInfo(
-  project_id,
-  page = 0,
-  size = 20,
-  sort = NULL,
-  ms_data_search_prepared = FALSE,
-  opt_fields = list("none"),
-  data_file = NULL,
-  ...
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{project_id}}{project-space to read from.}
-
-\item{\code{page}}{(optional) Zero-based page index (0..N) (default value: 0)}
-
-\item{\code{size}}{(optional) The size of the page to be returned (default value: 20)}
-
-\item{\code{sort}}{(optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.}
-
-\item{\code{ms_data_search_prepared}}{(optional) Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. (default value: FALSE)}
-
-\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])}
+\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["computedTools","qualities","tags"])}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 

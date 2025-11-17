@@ -54,6 +54,18 @@ result <- api_instance$compounds_api$AddTagsToCompoundExperimental(var_project_i
 dput(result)
 
 
+####################  AddTagsToObjects  ####################
+
+library(RSirius)
+var_project_id <- "project_id_example" # character | project-space to add to.
+var_tag_submission <- c(TagSubmission$new("tagName_example", "taggedObjectId_example", 123)) # array[TagSubmission] | tags with id of the object to be added to.
+
+#Tags with the same name will be overwritten.
+api_instance <- rsirius_api$new()
+
+api_instance$compounds_api$AddTagsToObjects(var_project_id, var_tag_submission)
+
+
 ####################  DeleteCompound  ####################
 
 library(RSirius)
@@ -156,40 +168,24 @@ var_group_name <- "group_name_example" # character | tag group name.
 var_page <- 0 # integer | Zero-based page index (0..N) (Optional)
 var_size <- 20 # integer | The size of the page to be returned (Optional)
 var_sort <- c("inner_example") # array[character] | Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (Optional)
+var_ms_data_as_cosine_query <- FALSE # character | Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. (Optional)
 var_opt_fields <- c("none") # array[character] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
+var_opt_fields_features <- c("none") # array[character] |  (Optional)
 
 #[EXPERIMENTAL] Get compounds (group of ion identities) by tag group
 api_instance <- rsirius_api$new()
 
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$GetCompoundsByGroupExperimental(var_project_id, var_group_name, page = var_page, size = var_size, sort = var_sort, opt_fields = var_opt_fieldsdata_file = "result.txt")
-result <- api_instance$compounds_api$GetCompoundsByGroupExperimental(var_project_id, var_group_name, page = var_page, size = var_size, sort = var_sort, opt_fields = var_opt_fields)
+# result <- api_instance$GetCompoundsByGroupExperimental(var_project_id, var_group_name, page = var_page, size = var_size, sort = var_sort, ms_data_as_cosine_query = var_ms_data_as_cosine_query, opt_fields = var_opt_fields, opt_fields_features = var_opt_fields_featuresdata_file = "result.txt")
+result <- api_instance$compounds_api$GetCompoundsByGroupExperimental(var_project_id, var_group_name, page = var_page, size = var_size, sort = var_sort, ms_data_as_cosine_query = var_ms_data_as_cosine_query, opt_fields = var_opt_fields, opt_fields_features = var_opt_fields_features)
 dput(result)
 
 
-####################  GetCompoundsByTagExperimental  ####################
-
-library(RSirius)
-var_project_id <- "project_id_example" # character | project space to get compounds (group of ion identities) from.
-var_filter <- "" # character | tag filter. (Optional)
-var_page <- 0 # integer | Zero-based page index (0..N) (Optional)
-var_size <- 20 # integer | The size of the page to be returned (Optional)
-var_sort <- c("inner_example") # array[character] | Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (Optional)
-var_opt_fields <- c("none") # array[character] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
-
-#[EXPERIMENTAL] Get compounds (group of ion identities) by tag
-api_instance <- rsirius_api$new()
-
-# to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$GetCompoundsByTagExperimental(var_project_id, filter = var_filter, page = var_page, size = var_size, sort = var_sort, opt_fields = var_opt_fieldsdata_file = "result.txt")
-result <- api_instance$compounds_api$GetCompoundsByTagExperimental(var_project_id, filter = var_filter, page = var_page, size = var_size, sort = var_sort, opt_fields = var_opt_fields)
-dput(result)
-
-
-####################  GetCompoundsPaged  ####################
+####################  GetCompoundsPageExperimental  ####################
 
 library(RSirius)
 var_project_id <- "project_id_example" # character | project-space to read from.
+var_search_query <- "search_query_example" # character | search query in lucene syntax. (Optional)
 var_page <- 0 # integer | Zero-based page index (0..N) (Optional)
 var_size <- 20 # integer | The size of the page to be returned (Optional)
 var_sort <- c("inner_example") # array[character] | Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (Optional)
@@ -197,12 +193,12 @@ var_ms_data_search_prepared <- FALSE # character | Returns all fragment spectra 
 var_opt_fields <- c("none") # array[character] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
 var_opt_fields_features <- c("none") # array[character] |  (Optional)
 
-#Page of available compounds (group of ion identities) in the given project-space.
+#[EXPERIMENTAL] Page of available compounds (group of ion identities) in the given project-space
 api_instance <- rsirius_api$new()
 
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$GetCompoundsPaged(var_project_id, page = var_page, size = var_size, sort = var_sort, ms_data_search_prepared = var_ms_data_search_prepared, opt_fields = var_opt_fields, opt_fields_features = var_opt_fields_featuresdata_file = "result.txt")
-result <- api_instance$compounds_api$GetCompoundsPaged(var_project_id, page = var_page, size = var_size, sort = var_sort, ms_data_search_prepared = var_ms_data_search_prepared, opt_fields = var_opt_fields, opt_fields_features = var_opt_fields_features)
+# result <- api_instance$GetCompoundsPageExperimental(var_project_id, search_query = var_search_query, page = var_page, size = var_size, sort = var_sort, ms_data_search_prepared = var_ms_data_search_prepared, opt_fields = var_opt_fields, opt_fields_features = var_opt_fields_featuresdata_file = "result.txt")
+result <- api_instance$compounds_api$GetCompoundsPageExperimental(var_project_id, search_query = var_search_query, page = var_page, size = var_size, sort = var_sort, ms_data_search_prepared = var_ms_data_search_prepared, opt_fields = var_opt_fields, opt_fields_features = var_opt_fields_features)
 dput(result)
 
 
@@ -251,6 +247,8 @@ api_instance$compounds_api$RemoveTagFromCompoundExperimental(var_project_id, var
 \item \href{#method-CompoundsApi-AddCompoundsWithHttpInfo}{\code{CompoundsApi$AddCompoundsWithHttpInfo()}}
 \item \href{#method-CompoundsApi-AddTagsToCompoundExperimental}{\code{CompoundsApi$AddTagsToCompoundExperimental()}}
 \item \href{#method-CompoundsApi-AddTagsToCompoundExperimentalWithHttpInfo}{\code{CompoundsApi$AddTagsToCompoundExperimentalWithHttpInfo()}}
+\item \href{#method-CompoundsApi-AddTagsToObjects}{\code{CompoundsApi$AddTagsToObjects()}}
+\item \href{#method-CompoundsApi-AddTagsToObjectsWithHttpInfo}{\code{CompoundsApi$AddTagsToObjectsWithHttpInfo()}}
 \item \href{#method-CompoundsApi-DeleteCompound}{\code{CompoundsApi$DeleteCompound()}}
 \item \href{#method-CompoundsApi-DeleteCompoundWithHttpInfo}{\code{CompoundsApi$DeleteCompoundWithHttpInfo()}}
 \item \href{#method-CompoundsApi-GetCompound}{\code{CompoundsApi$GetCompound()}}
@@ -265,10 +263,8 @@ api_instance$compounds_api$RemoveTagFromCompoundExperimental(var_project_id, var
 \item \href{#method-CompoundsApi-GetCompoundsWithHttpInfo}{\code{CompoundsApi$GetCompoundsWithHttpInfo()}}
 \item \href{#method-CompoundsApi-GetCompoundsByGroupExperimental}{\code{CompoundsApi$GetCompoundsByGroupExperimental()}}
 \item \href{#method-CompoundsApi-GetCompoundsByGroupExperimentalWithHttpInfo}{\code{CompoundsApi$GetCompoundsByGroupExperimentalWithHttpInfo()}}
-\item \href{#method-CompoundsApi-GetCompoundsByTagExperimental}{\code{CompoundsApi$GetCompoundsByTagExperimental()}}
-\item \href{#method-CompoundsApi-GetCompoundsByTagExperimentalWithHttpInfo}{\code{CompoundsApi$GetCompoundsByTagExperimentalWithHttpInfo()}}
-\item \href{#method-CompoundsApi-GetCompoundsPaged}{\code{CompoundsApi$GetCompoundsPaged()}}
-\item \href{#method-CompoundsApi-GetCompoundsPagedWithHttpInfo}{\code{CompoundsApi$GetCompoundsPagedWithHttpInfo()}}
+\item \href{#method-CompoundsApi-GetCompoundsPageExperimental}{\code{CompoundsApi$GetCompoundsPageExperimental()}}
+\item \href{#method-CompoundsApi-GetCompoundsPageExperimentalWithHttpInfo}{\code{CompoundsApi$GetCompoundsPageExperimentalWithHttpInfo()}}
 \item \href{#method-CompoundsApi-GetTagsForCompoundExperimental}{\code{CompoundsApi$GetTagsForCompoundExperimental()}}
 \item \href{#method-CompoundsApi-GetTagsForCompoundExperimentalWithHttpInfo}{\code{CompoundsApi$GetTagsForCompoundExperimentalWithHttpInfo()}}
 \item \href{#method-CompoundsApi-RemoveTagFromCompoundExperimental}{\code{CompoundsApi$RemoveTagFromCompoundExperimental()}}
@@ -439,6 +435,54 @@ array[Tag]
 }
 \subsection{Returns}{
 API response (array[Tag]) with additional information such as HTTP status code, headers
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-CompoundsApi-AddTagsToObjects"></a>}}
+\if{latex}{\out{\hypertarget{method-CompoundsApi-AddTagsToObjects}{}}}
+\subsection{Method \code{AddTagsToObjects()}}{
+Tags with the same name will be overwritten.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{CompoundsApi$AddTagsToObjects(project_id, tag_submission, ...)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{project_id}}{project-space to add to.}
+
+\item{\code{tag_submission}}{tags with id of the object to be added to.}
+
+\item{\code{...}}{Other optional arguments}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+void
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-CompoundsApi-AddTagsToObjectsWithHttpInfo"></a>}}
+\if{latex}{\out{\hypertarget{method-CompoundsApi-AddTagsToObjectsWithHttpInfo}{}}}
+\subsection{Method \code{AddTagsToObjectsWithHttpInfo()}}{
+Tags with the same name will be overwritten.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{CompoundsApi$AddTagsToObjectsWithHttpInfo(project_id, tag_submission, ...)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{project_id}}{project-space to add to.}
+
+\item{\code{tag_submission}}{tags with id of the object to be added to.}
+
+\item{\code{...}}{Other optional arguments}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+API response (void) with additional information such as HTTP status code, headers
 }
 }
 \if{html}{\out{<hr>}}
@@ -853,7 +897,9 @@ API response (array[Compound]) with additional information such as HTTP status c
   page = 0,
   size = 20,
   sort = NULL,
+  ms_data_as_cosine_query = FALSE,
   opt_fields = list("none"),
+  opt_fields_features = list("none"),
   data_file = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -872,7 +918,11 @@ API response (array[Compound]) with additional information such as HTTP status c
 
 \item{\code{sort}}{(optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.}
 
+\item{\code{ms_data_as_cosine_query}}{(optional) Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. (default value: FALSE)}
+
 \item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])}
+
+\item{\code{opt_fields_features}}{(optional) No description (default value: ["none"])}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 
@@ -896,7 +946,9 @@ PagedModelCompound
   page = 0,
   size = 20,
   sort = NULL,
+  ms_data_as_cosine_query = FALSE,
   opt_fields = list("none"),
+  opt_fields_features = list("none"),
   data_file = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -915,93 +967,11 @@ PagedModelCompound
 
 \item{\code{sort}}{(optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.}
 
+\item{\code{ms_data_as_cosine_query}}{(optional) Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. (default value: FALSE)}
+
 \item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])}
 
-\item{\code{data_file}}{(optional) name of the data file to save the result}
-
-\item{\code{...}}{Other optional arguments}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-API response (PagedModelCompound) with additional information such as HTTP status code, headers
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-CompoundsApi-GetCompoundsByTagExperimental"></a>}}
-\if{latex}{\out{\hypertarget{method-CompoundsApi-GetCompoundsByTagExperimental}{}}}
-\subsection{Method \code{GetCompoundsByTagExperimental()}}{
-[EXPERIMENTAL] Get compounds (group of ion identities) by tag
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{CompoundsApi$GetCompoundsByTagExperimental(
-  project_id,
-  filter = "",
-  page = 0,
-  size = 20,
-  sort = NULL,
-  opt_fields = list(),
-  data_file = NULL,
-  ...
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{project_id}}{project space to get compounds (group of ion identities) from.}
-
-\item{\code{filter}}{(optional) tag filter. (default value: "")}
-
-\item{\code{page}}{(optional) Zero-based page index (0..N) (default value: 0)}
-
-\item{\code{size}}{(optional) The size of the page to be returned (default value: 20)}
-
-\item{\code{sort}}{(optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.}
-
-\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [])}
-
-\item{\code{data_file}}{(optional) name of the data file to save the result}
-
-\item{\code{...}}{Other optional arguments}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-PagedModelCompound
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-CompoundsApi-GetCompoundsByTagExperimentalWithHttpInfo"></a>}}
-\if{latex}{\out{\hypertarget{method-CompoundsApi-GetCompoundsByTagExperimentalWithHttpInfo}{}}}
-\subsection{Method \code{GetCompoundsByTagExperimentalWithHttpInfo()}}{
-[EXPERIMENTAL] Get compounds (group of ion identities) by tag
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{CompoundsApi$GetCompoundsByTagExperimentalWithHttpInfo(
-  project_id,
-  filter = "",
-  page = 0,
-  size = 20,
-  sort = NULL,
-  opt_fields = list(),
-  data_file = NULL,
-  ...
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{project_id}}{project space to get compounds (group of ion identities) from.}
-
-\item{\code{filter}}{(optional) tag filter. (default value: "")}
-
-\item{\code{page}}{(optional) Zero-based page index (0..N) (default value: 0)}
-
-\item{\code{size}}{(optional) The size of the page to be returned (default value: 20)}
-
-\item{\code{sort}}{(optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.}
-
-\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [])}
+\item{\code{opt_fields_features}}{(optional) No description (default value: ["none"])}
 
 \item{\code{data_file}}{(optional) name of the data file to save the result}
 
@@ -1014,13 +984,14 @@ API response (PagedModelCompound) with additional information such as HTTP statu
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-CompoundsApi-GetCompoundsPaged"></a>}}
-\if{latex}{\out{\hypertarget{method-CompoundsApi-GetCompoundsPaged}{}}}
-\subsection{Method \code{GetCompoundsPaged()}}{
-Page of available compounds (group of ion identities) in the given project-space.
+\if{html}{\out{<a id="method-CompoundsApi-GetCompoundsPageExperimental"></a>}}
+\if{latex}{\out{\hypertarget{method-CompoundsApi-GetCompoundsPageExperimental}{}}}
+\subsection{Method \code{GetCompoundsPageExperimental()}}{
+[EXPERIMENTAL] Page of available compounds (group of ion identities) in the given project-space
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{CompoundsApi$GetCompoundsPaged(
+\if{html}{\out{<div class="r">}}\preformatted{CompoundsApi$GetCompoundsPageExperimental(
   project_id,
+  search_query = NULL,
   page = 0,
   size = 20,
   sort = NULL,
@@ -1036,6 +1007,8 @@ Page of available compounds (group of ion identities) in the given project-space
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{project_id}}{project-space to read from.}
+
+\item{\code{search_query}}{(optional) search query in lucene syntax.}
 
 \item{\code{page}}{(optional) Zero-based page index (0..N) (default value: 0)}
 
@@ -1060,13 +1033,14 @@ PagedModelCompound
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-CompoundsApi-GetCompoundsPagedWithHttpInfo"></a>}}
-\if{latex}{\out{\hypertarget{method-CompoundsApi-GetCompoundsPagedWithHttpInfo}{}}}
-\subsection{Method \code{GetCompoundsPagedWithHttpInfo()}}{
-Page of available compounds (group of ion identities) in the given project-space.
+\if{html}{\out{<a id="method-CompoundsApi-GetCompoundsPageExperimentalWithHttpInfo"></a>}}
+\if{latex}{\out{\hypertarget{method-CompoundsApi-GetCompoundsPageExperimentalWithHttpInfo}{}}}
+\subsection{Method \code{GetCompoundsPageExperimentalWithHttpInfo()}}{
+[EXPERIMENTAL] Page of available compounds (group of ion identities) in the given project-space
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{CompoundsApi$GetCompoundsPagedWithHttpInfo(
+\if{html}{\out{<div class="r">}}\preformatted{CompoundsApi$GetCompoundsPageExperimentalWithHttpInfo(
   project_id,
+  search_query = NULL,
   page = 0,
   size = 20,
   sort = NULL,
@@ -1082,6 +1056,8 @@ Page of available compounds (group of ion identities) in the given project-space
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{project_id}}{project-space to read from.}
+
+\item{\code{search_query}}{(optional) search query in lucene syntax.}
 
 \item{\code{page}}{(optional) Zero-based page index (0..N) (default value: 0)}
 

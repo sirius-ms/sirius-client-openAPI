@@ -32,6 +32,8 @@ df
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
+\item{\code{categoryId}}{character [optional]}
+
 \item{\code{categoryName}}{character [optional]}
 
 \item{\code{overallQuality}}{character [optional]}
@@ -64,12 +66,20 @@ df
 \subsection{Method \code{new()}}{
 Initialize a new Category class.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Category$new(categoryName = NULL, overallQuality = NULL, items = NULL, ...)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Category$new(
+  categoryId = NULL,
+  categoryName = NULL,
+  overallQuality = NULL,
+  items = NULL,
+  ...
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
+\item{\code{categoryId}}{categoryId}
+
 \item{\code{categoryName}}{categoryName}
 
 \item{\code{overallQuality}}{overallQuality}

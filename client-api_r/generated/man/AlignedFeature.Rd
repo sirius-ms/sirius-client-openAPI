@@ -52,7 +52,7 @@ df
 
 \item{\code{rtApexSeconds}}{numeric [optional]}
 
-\item{\code{quality}}{Quality of this feature. character [optional]}
+\item{\code{quality}}{Overall Quality of this feature.  If no Quality data are available for this feature the value is NOT_APPLICABLE character [optional]}
 
 \item{\code{hasMs1}}{If true, the feature has at lease one MS1 spectrum character [optional]}
 
@@ -67,6 +67,8 @@ df
 \item{\code{computing}}{Write lock for this feature. If the feature is locked no write operations are possible.  True if any computation is modifying this feature or its results character [optional]}
 
 \item{\code{computedTools}}{\link{ComputedSubtools} [optional]}
+
+\item{\code{qualities}}{Qualities per top level quality category. named list(character) [optional]}
 
 \item{\code{tags}}{Key: tagName, value: tag named list(\link{Tag}) [optional]}
 }
@@ -115,6 +117,7 @@ Initialize a new AlignedFeature class.
   topAnnotationsDeNovo = NULL,
   computing = NULL,
   computedTools = NULL,
+  qualities = NULL,
   tags = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -143,7 +146,7 @@ Initialize a new AlignedFeature class.
 
 \item{\code{rtApexSeconds}}{rtApexSeconds}
 
-\item{\code{quality}}{Quality of this feature.}
+\item{\code{quality}}{Overall Quality of this feature.  If no Quality data are available for this feature the value is NOT_APPLICABLE}
 
 \item{\code{hasMs1}}{If true, the feature has at lease one MS1 spectrum}
 
@@ -158,6 +161,8 @@ Initialize a new AlignedFeature class.
 \item{\code{computing}}{Write lock for this feature. If the feature is locked no write operations are possible.  True if any computation is modifying this feature or its results}
 
 \item{\code{computedTools}}{computedTools}
+
+\item{\code{qualities}}{Qualities per top level quality category.}
 
 \item{\code{tags}}{Key: tagName, value: tag}
 

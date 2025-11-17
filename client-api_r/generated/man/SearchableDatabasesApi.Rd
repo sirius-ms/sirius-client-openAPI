@@ -90,6 +90,19 @@ result <- api_instance$searchable_databases_api$GetDatabases(include_stats = var
 dput(result)
 
 
+####################  GetDownloadableDatabases  ####################
+
+library(RSirius)
+
+#Get list of curated custom databases downloadable from the SIRIUS web service for local use
+api_instance <- rsirius_api$new()
+
+# to save the result into a file, simply add the optional `data_file` parameter, e.g.
+# result <- api_instance$GetDownloadableDatabases(data_file = "result.txt")
+result <- api_instance$searchable_databases_api$GetDownloadableDatabases()
+dput(result)
+
+
 ####################  GetIncludedDatabases  ####################
 
 library(RSirius)
@@ -107,7 +120,7 @@ dput(result)
 
 library(RSirius)
 var_database_id <- "database_id_example" # character | database to import into
-var_input_files <- c(123) # array[data.frame] | files to be imported
+var_input_files <- c(123) # array[data.frame] | files to import into project
 var_buffer_size <- 1000 # integer |  (Optional)
 var_bio_transformer_parameters <- BioTransformerParameters$new("RULE_BASED", "BT_RULE_BASED", c(BioTransformerSequenceStep$new("PHASE_1_CYP450", 123)), "useDB_example") # BioTransformerParameters |  (Optional)
 
@@ -168,6 +181,8 @@ dput(result)
 \item \href{#method-SearchableDatabasesApi-GetDatabaseWithHttpInfo}{\code{SearchableDatabasesApi$GetDatabaseWithHttpInfo()}}
 \item \href{#method-SearchableDatabasesApi-GetDatabases}{\code{SearchableDatabasesApi$GetDatabases()}}
 \item \href{#method-SearchableDatabasesApi-GetDatabasesWithHttpInfo}{\code{SearchableDatabasesApi$GetDatabasesWithHttpInfo()}}
+\item \href{#method-SearchableDatabasesApi-GetDownloadableDatabases}{\code{SearchableDatabasesApi$GetDownloadableDatabases()}}
+\item \href{#method-SearchableDatabasesApi-GetDownloadableDatabasesWithHttpInfo}{\code{SearchableDatabasesApi$GetDownloadableDatabasesWithHttpInfo()}}
 \item \href{#method-SearchableDatabasesApi-GetIncludedDatabases}{\code{SearchableDatabasesApi$GetIncludedDatabases()}}
 \item \href{#method-SearchableDatabasesApi-GetIncludedDatabasesWithHttpInfo}{\code{SearchableDatabasesApi$GetIncludedDatabasesWithHttpInfo()}}
 \item \href{#method-SearchableDatabasesApi-ImportIntoDatabase}{\code{SearchableDatabasesApi$ImportIntoDatabase()}}
@@ -489,6 +504,53 @@ API response (array[SearchableDatabase]) with additional information such as HTT
 }
 }
 \if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-SearchableDatabasesApi-GetDownloadableDatabases"></a>}}
+\if{latex}{\out{\hypertarget{method-SearchableDatabasesApi-GetDownloadableDatabases}{}}}
+\subsection{Method \code{GetDownloadableDatabases()}}{
+Get list of curated custom databases downloadable from the SIRIUS web service for local use
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{SearchableDatabasesApi$GetDownloadableDatabases(data_file = NULL, ...)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{data_file}}{(optional) name of the data file to save the result}
+
+\item{\code{...}}{Other optional arguments}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+array[DownloadableDatabase]
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-SearchableDatabasesApi-GetDownloadableDatabasesWithHttpInfo"></a>}}
+\if{latex}{\out{\hypertarget{method-SearchableDatabasesApi-GetDownloadableDatabasesWithHttpInfo}{}}}
+\subsection{Method \code{GetDownloadableDatabasesWithHttpInfo()}}{
+Get list of curated custom databases downloadable from the SIRIUS web service for local use
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{SearchableDatabasesApi$GetDownloadableDatabasesWithHttpInfo(
+  data_file = NULL,
+  ...
+)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{data_file}}{(optional) name of the data file to save the result}
+
+\item{\code{...}}{Other optional arguments}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+API response (array[DownloadableDatabase]) with additional information such as HTTP status code, headers
+}
+}
+\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-SearchableDatabasesApi-GetIncludedDatabases"></a>}}
 \if{latex}{\out{\hypertarget{method-SearchableDatabasesApi-GetIncludedDatabases}{}}}
 \subsection{Method \code{GetIncludedDatabases()}}{
@@ -563,7 +625,7 @@ Start import of structure and spectra files into the specified database.
 \describe{
 \item{\code{database_id}}{database to import into}
 
-\item{\code{input_files}}{files to be imported}
+\item{\code{input_files}}{files to import into project}
 
 \item{\code{buffer_size}}{(optional) No description (default value: 1000)}
 
@@ -600,7 +662,7 @@ Start import of structure and spectra files into the specified database.
 \describe{
 \item{\code{database_id}}{database to import into}
 
-\item{\code{input_files}}{files to be imported}
+\item{\code{input_files}}{files to import into project}
 
 \item{\code{buffer_size}}{(optional) No description (default value: 1000)}
 

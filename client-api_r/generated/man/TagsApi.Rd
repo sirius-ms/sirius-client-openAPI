@@ -28,7 +28,7 @@ var_group_name <- "group_name_example" # character | name of the new group
 var_filter <- "filter_example" # character | filter query to create the group
 var_type <- "type_example" # character | type of the group
 
-#[EXPERIMENTAL] Group tags in the project
+#[EXPERIMENTAL] TagGroup tags in the project
 api_instance <- rsirius_api$new()
 
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
@@ -207,7 +207,7 @@ Initialize a new TagsApi.
 \if{html}{\out{<a id="method-TagsApi-AddGroup"></a>}}
 \if{latex}{\out{\hypertarget{method-TagsApi-AddGroup}{}}}
 \subsection{Method \code{AddGroup()}}{
-[EXPERIMENTAL] Group tags in the project
+[EXPERIMENTAL] TagGroup tags in the project
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{TagsApi$AddGroup(project_id, group_name, filter, type, data_file = NULL, ...)}\if{html}{\out{</div>}}
 }
@@ -237,7 +237,7 @@ TagGroup
 \if{html}{\out{<a id="method-TagsApi-AddGroupWithHttpInfo"></a>}}
 \if{latex}{\out{\hypertarget{method-TagsApi-AddGroupWithHttpInfo}{}}}
 \subsection{Method \code{AddGroupWithHttpInfo()}}{
-[EXPERIMENTAL] Group tags in the project
+[EXPERIMENTAL] TagGroup tags in the project
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{TagsApi$AddGroupWithHttpInfo(
   project_id,
