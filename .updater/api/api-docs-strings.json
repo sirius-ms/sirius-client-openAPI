@@ -9180,7 +9180,7 @@
             "format": "double"
           }
         },
-        "default": null
+        "nullable": true
       },
       "LcmsSubmissionParameters": {
         "type": "object",
