@@ -7,15 +7,11 @@
   },
   "servers": [
     {
-      "url": "http://localhost:8080",
+      "url": "http://localhost:8888",
       "description": "Generated server url"
     }
   ],
   "tags": [
-    {
-      "name": "Tags",
-      "description": "[EXPERIMENTAL] This API allows managing tags and tag based data groupings. All endpoints are experimental and not part of the stable API specification. These endpoints can change at any time, even in minor updates."
-    },
     {
       "name": "Info",
       "description": "Status und Information"
@@ -31,6 +27,26 @@
     {
       "name": "Compounds",
       "description": "This compound based API allows to retrieve all AlignedFeatures that belong to the same compound (also known as a group of ion identities). It also provides for each AlignedFeature the corresponding annotation results (which are usually computed on a per-feature basis)"
+    },
+    {
+      "name": "Gui",
+      "description": "GUI Control: Open, control and close SIRIUS Graphical User Interface (GUI) on specified projects."
+    },
+    {
+      "name": "Projects",
+      "description": "Manage SIRIUS projects."
+    },
+    {
+      "name": "Runs",
+      "description": "[EXPERIMENTAL] This API allows accessing LC/MS runs. All endpoints are experimental and not part of the stable API specification. These endpoints can change at any time, even in minor updates."
+    },
+    {
+      "name": "Compound Statistics",
+      "description": "[EXPERIMENTAL] This compound based API allows allows computing and accessing statistics for compounds (also known as a group of ion identities). All endpoints are experimental and not part of the stable API specification. These endpoints can change at any time, even in minor updates."
+    },
+    {
+      "name": "Tags",
+      "description": "[EXPERIMENTAL] This API allows managing tags and tag based data groupings. All endpoints are experimental and not part of the stable API specification. These endpoints can change at any time, even in minor updates."
     },
     {
       "name": "Login and Account",
@@ -51,18 +67,6 @@
     {
       "name": "Features",
       "description": "This feature based API allows access features (aligned over runs) and there Annotations of a specified project-space. This is the entry point to access all raw annotation results an there summaries."
-    },
-    {
-      "name": "Projects",
-      "description": "Manage SIRIUS projects."
-    },
-    {
-      "name": "Runs",
-      "description": "[EXPERIMENTAL] This API allows accessing LC/MS runs. All endpoints are experimental and not part of the stable API specification. These endpoints can change at any time, even in minor updates."
-    },
-    {
-      "name": "Compound Statistics",
-      "description": "[EXPERIMENTAL] This compound based API allows allows computing and accessing statistics for compounds (also known as a group of ion identities). All endpoints are experimental and not part of the stable API specification. These endpoints can change at any time, even in minor updates."
     }
   ],
   "paths": {
@@ -227,7 +231,7 @@
           "Projects"
         ],
         "summary": "Close project-space and remove it from the application",
-        "description": "Close project-space and remove it from the application. The Project will NOT be deleted from disk.\n <p>\n ATTENTION: This will cancel and remove all jobs running on this Project before closing it.\n If there are many jobs, this might take some time.",
+        "description": "Close project-space and remove it from the application. The Project will NOT be deleted from disk.\n \u003cp\u003e\n ATTENTION: This will cancel and remove all jobs running on this Project before closing it.\n If there are many jobs, this might take some time.",
         "operationId": "closeProject",
         "parameters": [
           {
@@ -264,7 +268,7 @@
           "Tags"
         ],
         "summary": "[EXPERIMENTAL] Get all tag definitions in the given project-space",
-        "description": "[EXPERIMENTAL] Get all tag definitions in the given project-space.\n <p>\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
+        "description": "[EXPERIMENTAL] Get all tag definitions in the given project-space.\n \u003cp\u003e\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
         "operationId": "getTags",
         "parameters": [
           {
@@ -307,7 +311,7 @@
           "Tags"
         ],
         "summary": "[EXPERIMENTAL] Add tags to the project",
-        "description": "[EXPERIMENTAL] Add tags to the project. Tag names must not exist in the project.\n <p>\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
+        "description": "[EXPERIMENTAL] Add tags to the project. Tag names must not exist in the project.\n \u003cp\u003e\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
         "operationId": "createTags",
         "parameters": [
           {
@@ -357,7 +361,7 @@
           "Runs"
         ],
         "summary": "[EXPERIMENTAL] Add tags to a run in the project",
-        "description": "[EXPERIMENTAL] Add tags to a run in the project. Tags with the same name will be overwritten.\n <p>\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
+        "description": "[EXPERIMENTAL] Add tags to a run in the project. Tags with the same name will be overwritten.\n \u003cp\u003e\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
         "operationId": "addTagsToRunsExperimental",
         "parameters": [
           {
@@ -397,7 +401,7 @@
           "Runs"
         ],
         "summary": "[EXPERIMENTAL] Add tags to a run in the project",
-        "description": "[EXPERIMENTAL] Add tags to a run in the project. Tags with the same name will be overwritten.\n <p>\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
+        "description": "[EXPERIMENTAL] Add tags to a run in the project. Tags with the same name will be overwritten.\n \u003cp\u003e\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
         "operationId": "addTagsToRunExperimental",
         "parameters": [
           {
@@ -486,6 +490,72 @@
         }
       }
     },
+    "/api/projects/{projectId}/copy": {
+      "put": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "DEPRECATED: this endpoint is based on local file paths and will likely be removed in future versions of this API.",
+        "description": "[DEPRECATED] Move an existing (opened) project-space to another location.\n \u003cp\u003e\n [DEPRECATED] this endpoint is based on local file paths and will likely be removed in future versions of this API.",
+        "operationId": "copyProject",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "description": "unique name/identifier of the project-space that shall be copied.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pathToCopiedProject",
+            "in": "query",
+            "description": "target location where the source project will be copied to.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "copyProjectId",
+            "in": "query",
+            "description": "optional id/mame of the newly created project (copy). If given the project will be opened.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "optFields",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/ProjectInfoOptField"
+              },
+              "default": [
+                "none"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ProjectInfo of the newly created project if opened (copyProjectId !\u003d null) or the project info of\n the source project otherwise",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProjectInfo"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": true
+      }
+    },
     "/api/projects/{projectId}/compounds/tags": {
       "put": {
         "tags": [
@@ -532,7 +602,7 @@
           "Compounds"
         ],
         "summary": "[EXPERIMENTAL] Tags with the same name will be overwritten",
-        "description": "[EXPERIMENTAL] Tags with the same name will be overwritten.\n <p>\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
+        "description": "[EXPERIMENTAL] Tags with the same name will be overwritten.\n \u003cp\u003e\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
         "operationId": "addTagsToCompoundExperimental",
         "parameters": [
           {
@@ -591,7 +661,7 @@
           "Compound Statistics"
         ],
         "summary": "[EXPERIMENTAL] Compute the fold change between two groups of runs",
-        "description": "[EXPERIMENTAL] Compute the fold change between two groups of runs.\n <p>\n The runs need to be tagged and grouped.\n <p>\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
+        "description": "[EXPERIMENTAL] Compute the fold change between two groups of runs.\n \u003cp\u003e\n The runs need to be tagged and grouped.\n \u003cp\u003e\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
         "operationId": "computeCompoundFoldChangesExperimental",
         "parameters": [
           {
@@ -649,8 +719,8 @@
         "tags": [
           "Features"
         ],
-        "summary": "List of de novo structure candidates (e.g. generated by MsNovelist) ranked by CSI:FingerID score for the given 'alignedFeatureId' with minimal information.\n StructureCandidates can be enriched with molecular fingerprint.",
-        "description": "List of de novo structure candidates (e.g. generated by MsNovelist) ranked by CSI:FingerID score for the given 'alignedFeatureId' with minimal information.\n StructureCandidates can be enriched with molecular fingerprint.",
+        "summary": "List of de novo structure candidates (e.g. generated by MsNovelist) ranked by CSI:FingerID score for the given \u0027alignedFeatureId\u0027 with minimal information.\n StructureCandidates can be enriched with molecular fingerprint.",
+        "description": "List of de novo structure candidates (e.g. generated by MsNovelist) ranked by CSI:FingerID score for the given \u0027alignedFeatureId\u0027 with minimal information.\n StructureCandidates can be enriched with molecular fingerprint.",
         "operationId": "getDeNovoStructureCandidates",
         "parameters": [
           {
@@ -674,7 +744,7 @@
           {
             "name": "optFields",
             "in": "query",
-            "description": "set of optional fields to be included. Use 'none' only to override defaults.",
+            "description": "set of optional fields to be included. Use \u0027none\u0027 only to override defaults.",
             "required": false,
             "schema": {
               "type": "array",
@@ -773,7 +843,7 @@
           "Features"
         ],
         "summary": "[EXPERIMENTAL] Add tags to a feature (aligned over runs) in the project",
-        "description": "[EXPERIMENTAL] Add tags to a feature (aligned over runs) in the project. Tags with the same name will be overwritten.\n <p>\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
+        "description": "[EXPERIMENTAL] Add tags to a feature (aligned over runs) in the project. Tags with the same name will be overwritten.\n \u003cp\u003e\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
         "operationId": "addTagsToAlignedFeaturesExperimental",
         "parameters": [
           {
@@ -813,7 +883,7 @@
           "Features"
         ],
         "summary": "[EXPERIMENTAL] Add tags to a feature (aligned over runs) in the project",
-        "description": "[EXPERIMENTAL] Add tags to a feature (aligned over runs) in the project. Tags with the same name will be overwritten.\n <p>\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
+        "description": "[EXPERIMENTAL] Add tags to a feature (aligned over runs) in the project. Tags with the same name will be overwritten.\n \u003cp\u003e\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
         "operationId": "addTagsToAlignedFeatureExperimental",
         "parameters": [
           {
@@ -872,7 +942,7 @@
           "Feature Statistics"
         ],
         "summary": "[EXPERIMENTAL] Compute the fold change between two groups of runs",
-        "description": "[EXPERIMENTAL] Compute the fold change between two groups of runs.\n <p>\n The runs need to be tagged and grouped.\n <p>\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
+        "description": "[EXPERIMENTAL] Compute the fold change between two groups of runs.\n \u003cp\u003e\n The runs need to be tagged and grouped.\n \u003cp\u003e\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
         "operationId": "computeAlignedFeatureFoldChangesExperimental",
         "parameters": [
           {
@@ -1161,7 +1231,7 @@
           {
             "name": "optFields",
             "in": "query",
-            "description": "set of optional fields to be included. Use 'none' only to override defaults.",
+            "description": "set of optional fields to be included. Use \u0027none\u0027 only to override defaults.",
             "required": false,
             "schema": {
               "type": "array",
@@ -1210,7 +1280,7 @@
           {
             "name": "optFields",
             "in": "query",
-            "description": "set of optional fields to be included. Use 'none' only to override defaults.",
+            "description": "set of optional fields to be included. Use \u0027none\u0027 only to override defaults.",
             "required": false,
             "schema": {
               "type": "array",
@@ -1293,6 +1363,66 @@
         }
       }
     },
+    "/api/projects/{projectId}/jobs/run-command": {
+      "post": {
+        "tags": [
+          "Jobs"
+        ],
+        "summary": "[DEPRECATED] Start computation for given command and input",
+        "description": "[DEPRECATED] Start computation for given command and input.\n \u003cp\u003e\n [DEPRECATED] this endpoint is based on local file paths and will likely be removed in future versions of this API.",
+        "operationId": "startCommand",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "description": "project-space to perform the command for.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "optFields",
+            "in": "query",
+            "description": "set of optional fields to be included. Use \u0027none\u0027 only to override defaults.",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/JobOptField"
+              },
+              "default": [
+                "progress"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "the command and the input to be executed",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CommandSubmission"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Job of the command to be executed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Job"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": true
+      }
+    },
     "/api/projects/{projectId}/jobs/from-config": {
       "post": {
         "tags": [
@@ -1332,7 +1462,7 @@
           {
             "name": "optFields",
             "in": "query",
-            "description": "set of optional fields to be included. Use 'none' only to override defaults.",
+            "description": "set of optional fields to be included. Use \u0027none\u0027 only to override defaults.",
             "required": false,
             "schema": {
               "type": "array",
@@ -1372,6 +1502,152 @@
             }
           }
         }
+      }
+    },
+    "/api/projects/{projectId}/import/preprocessed-local-data-files": {
+      "post": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "[DEPRECATED] Import already preprocessed ms/ms data from various formats into the specified project\n Possible formats (ms, mgf, cef, msp)\n ",
+        "description": "[DEPRECATED] Import already preprocessed ms/ms data from various formats into the specified project\n Possible formats (ms, mgf, cef, msp)\n \u003cp\u003e\n ATTENTION: This is loading input files from the filesystem where the SIRIUS service is running,\n not on the system where the client SDK is running.\n Is more efficient than MultipartFile upload in cases where client (SDK) and server (SIRIUS service)\n are running on the same host.\n \u003cp\u003e\n API to allow for more flexible use cases. Use \u0027preprocessed-data-files\u0027 instead.\n \u003cp\u003e\n [DEPRECATED] this endpoint is based on local file paths and will likely be removed in future versions of this API.",
+        "operationId": "importPreprocessedDataLocally",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "description": "project-space to import into.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ignoreFormulas",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "allowMs1Only",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "files to import into project",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ImportResult"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": true
+      }
+    },
+    "/api/projects/{projectId}/import/preprocessed-local-data-files-job": {
+      "post": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "[DEPRECATED] Import ms/ms data from the given format into the specified project-space as background job",
+        "description": "[DEPRECATED] Import ms/ms data from the given format into the specified project-space as background job.\n Possible formats (ms, mgf, cef, msp)\n \u003cp\u003e\n ATTENTION: This is loading input files from the filesystem where the SIRIUS service is running,\n not on the system where the client SDK is running.\n Is more efficient than MultipartFile upload in cases where client (SDK) and server (SIRIUS service)\n are running on the same host.\n \u003cp\u003e\n API to allow for more flexible use cases. Use \u0027preprocessed-data-files-job\u0027 instead.\n \u003cp\u003e\n [DEPRECATED] this endpoint is based on local file paths and will likely be removed in future versions of this API.",
+        "operationId": "importPreprocessedDataAsJobLocally",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "description": "project-space to import into.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ignoreFormulas",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "allowMs1Only",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
+          },
+          {
+            "name": "optFields",
+            "in": "query",
+            "description": "set of optional fields to be included. Use \u0027none\u0027 only to override defaults.",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/JobOptField"
+              },
+              "default": [
+                "progress"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "the import job.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Job"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": true
       }
     },
     "/api/projects/{projectId}/import/preprocessed-data-files": {
@@ -1486,7 +1762,7 @@
           {
             "name": "optFields",
             "in": "query",
-            "description": "set of optional fields to be included. Use 'none' only to override defaults.",
+            "description": "set of optional fields to be included. Use \u0027none\u0027 only to override defaults.",
             "required": false,
             "schema": {
               "type": "array",
@@ -1533,6 +1809,135 @@
             }
           }
         }
+      }
+    },
+    "/api/projects/{projectId}/import/ms-local-data-files": {
+      "post": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "[DEPRECATED] Import and Align full MS-Runs from various formats into the specified project\n Possible formats (mzML, mzXML)\n ",
+        "description": "[DEPRECATED] Import and Align full MS-Runs from various formats into the specified project\n Possible formats (mzML, mzXML)\n \u003cp\u003e\n ATTENTION: This is loading input files from the filesystem where the SIRIUS service is running,\n not on the system where the client SDK is running.\n Is more efficient than MultipartFile upload in cases where client (SDK) and server (SIRIUS service)\n are running on the same host.\n \u003cp\u003e\n API to allow for more flexible use cases. Use \u0027ms-data-files\u0027 instead.\n \u003cp\u003e\n [DEPRECATED] this endpoint is based on local file paths and will likely be removed in future versions of this API.",
+        "operationId": "importMsRunDataLocally",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "description": "Project to import into.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "parameters",
+            "in": "query",
+            "description": "Parameters for feature alignment and feature finding.",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/LcmsSubmissionParameters"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Local files to import into project.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ImportResult"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": true
+      }
+    },
+    "/api/projects/{projectId}/import/ms-data-local-files-job": {
+      "post": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "[DEPRECATED] Import and Align full MS-Runs from various formats into the specified project as background job",
+        "description": "[DEPRECATED] Import and Align full MS-Runs from various formats into the specified project as background job.\n Possible formats (mzML, mzXML)\n \u003cp\u003e\n ATTENTION: This is loading input files from the filesystem where the SIRIUS service is running,\n not on the system where the client SDK is running.\n Is more efficient than MultipartFile upload in cases where client (SDK) and server (SIRIUS service)\n are running on the same host.\n \u003cp\u003e\n API to allow for more flexible use cases. Use \u0027ms-data-files-job\u0027 instead.\n \u003cp\u003e\n [DEPRECATED] this endpoint is based on local file paths and will likely be removed in future versions of this API.",
+        "operationId": "importMsRunDataAsJobLocally",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "description": "Project-space to import into.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "parameters",
+            "in": "query",
+            "description": "Parameters for feature alignment and feature finding.",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/LcmsSubmissionParameters"
+            }
+          },
+          {
+            "name": "optFields",
+            "in": "query",
+            "description": "Set of optional fields to be included. Use \u0027none\u0027 only to override defaults.",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/JobOptField"
+              },
+              "default": [
+                "progress"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Local files to import into project.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "the import job.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Job"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": true
       }
     },
     "/api/projects/{projectId}/import/ms-data-files": {
@@ -1623,7 +2028,7 @@
           {
             "name": "optFields",
             "in": "query",
-            "description": "Set of optional fields to be included. Use 'none' only to override defaults.",
+            "description": "Set of optional fields to be included. Use \u0027none\u0027 only to override defaults.",
             "required": false,
             "schema": {
               "type": "array",
@@ -1684,13 +2089,78 @@
         }
       }
     },
+    "/api/projects/{projectId}/gui": {
+      "post": {
+        "tags": [
+          "Gui"
+        ],
+        "summary": "Open GUI instance on specified project-space and bring the GUI window to foreground.",
+        "description": "Open GUI instance on specified project-space and bring the GUI window to foreground.",
+        "operationId": "openGui",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "description": "of project-space the GUI instance will connect to.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Gui"
+        ],
+        "summary": "Close GUI instance of given project-space if available.",
+        "description": "Close GUI instance of given project-space if available.",
+        "operationId": "closeGui",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "description": "if project-space the GUI instance is connected to.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "closeProject",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/projects/{projectId}/groups/{groupName}": {
       "get": {
         "tags": [
           "Tags"
         ],
         "summary": "[EXPERIMENTAL] Get tag group by name in the given project-space",
-        "description": "[EXPERIMENTAL] Get tag group by name in the given project-space.\n <p>\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
+        "description": "[EXPERIMENTAL] Get tag group by name in the given project-space.\n \u003cp\u003e\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
         "operationId": "getGroupByName",
         "parameters": [
           {
@@ -1730,7 +2200,7 @@
           "Tags"
         ],
         "summary": "[EXPERIMENTAL] TagGroup tags in the project",
-        "description": "[EXPERIMENTAL] TagGroup tags in the project. The group name must not exist in the project.\n\n <p>\n See <code>/tagged</code> for filter syntax.\n </p>\n\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
+        "description": "[EXPERIMENTAL] TagGroup tags in the project. The group name must not exist in the project.\n\n \u003cp\u003e\n See \u003ccode\u003e/tagged\u003c/code\u003e for filter syntax.\n \u003c/p\u003e\n\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
         "operationId": "addGroup",
         "parameters": [
           {
@@ -1788,7 +2258,7 @@
           "Tags"
         ],
         "summary": "[EXPERIMENTAL] Delete tag groups with the given name from the specified project-space",
-        "description": "[EXPERIMENTAL] Delete tag groups with the given name from the specified project-space.\n <p>\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
+        "description": "[EXPERIMENTAL] Delete tag groups with the given name from the specified project-space.\n \u003cp\u003e\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
         "operationId": "deleteGroup",
         "parameters": [
           {
@@ -1848,7 +2318,7 @@
           {
             "name": "optFields",
             "in": "query",
-            "description": "set of optional fields to be included. Use 'none' only to override defaults.",
+            "description": "set of optional fields to be included. Use \u0027none\u0027 only to override defaults.",
             "required": false,
             "schema": {
               "type": "array",
@@ -1920,7 +2390,7 @@
           {
             "name": "optFields",
             "in": "query",
-            "description": "set of optional fields to be included. Use 'none' to override defaults.",
+            "description": "set of optional fields to be included. Use \u0027none\u0027 to override defaults.",
             "required": false,
             "schema": {
               "type": "array",
@@ -1935,7 +2405,7 @@
           {
             "name": "optFieldsFeatures",
             "in": "query",
-            "description": "set of optional fields of the nested features to be included. Use 'none' to override defaults.",
+            "description": "set of optional fields of the nested features to be included. Use \u0027none\u0027 to override defaults.",
             "required": false,
             "schema": {
               "type": "array",
@@ -2010,7 +2480,7 @@
           {
             "name": "optFields",
             "in": "query",
-            "description": "set of optional fields to be included. Use 'none' only to override defaults.",
+            "description": "set of optional fields to be included. Use \u0027none\u0027 only to override defaults.",
             "required": false,
             "schema": {
               "type": "array",
@@ -2068,7 +2538,7 @@
           {
             "name": "optFields",
             "in": "query",
-            "description": "set of optional fields to be included. Use 'none' to override defaults.",
+            "description": "set of optional fields to be included. Use \u0027none\u0027 to override defaults.",
             "required": false,
             "schema": {
               "type": "array",
@@ -2105,6 +2575,44 @@
                   "items": {
                     "$ref": "#/components/schemas/AlignedFeature"
                   }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/projects/create": {
+      "post": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "Create and open a new project with unique autogenerated projectId.",
+        "description": "Create and open a new project with unique autogenerated projectId. On local filesystems the project will be located in temporary directory.",
+        "operationId": "create",
+        "parameters": [
+          {
+            "name": "optFields",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/ProjectInfoOptField"
+              },
+              "default": [
+                "none"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProjectInfo"
                 }
               }
             }
@@ -2513,7 +3021,7 @@
         "tags": [
           "Actuator"
         ],
-        "summary": "Actuator web endpoint 'shutdown'",
+        "summary": "Actuator web endpoint \u0027shutdown\u0027",
         "operationId": "shutdown",
         "responses": {
           "204": {
@@ -2531,7 +3039,7 @@
           "Tags"
         ],
         "summary": "[EXPERIMENTAL] Get tag definition by its name in the given project-space",
-        "description": "[EXPERIMENTAL] Get tag definition by its name in the given project-space.\n <p>\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
+        "description": "[EXPERIMENTAL] Get tag definition by its name in the given project-space.\n \u003cp\u003e\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
         "operationId": "getTag",
         "parameters": [
           {
@@ -2571,7 +3079,7 @@
           "Tags"
         ],
         "summary": "[EXPERIMENTAL] Delete tag definition with the given name from the specified project-space",
-        "description": "[EXPERIMENTAL] Delete tag definition with the given name from the specified project-space.\n <p>\n This will also remove all tags belonging to this definition from every tagged entity.\n </p>\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
+        "description": "[EXPERIMENTAL] Delete tag definition with the given name from the specified project-space.\n \u003cp\u003e\n This will also remove all tags belonging to this definition from every tagged entity.\n \u003c/p\u003e\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
         "operationId": "deleteTag",
         "parameters": [
           {
@@ -2604,7 +3112,7 @@
           "Tags"
         ],
         "summary": "[EXPERIMENTAL] Add a possible value to the tag definition in the project",
-        "description": "[EXPERIMENTAL] Add a possible value to the tag definition in the project.\n <p>\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
+        "description": "[EXPERIMENTAL] Add a possible value to the tag definition in the project.\n \u003cp\u003e\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
         "operationId": "addPossibleValuesToTagDefinition",
         "parameters": [
           {
@@ -2684,7 +3192,7 @@
           "Runs"
         ],
         "summary": "[EXPERIMENTAL] Get run with the given identifier from the specified project-space",
-        "description": "[EXPERIMENTAL] Get run with the given identifier from the specified project-space.\n <p>\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
+        "description": "[EXPERIMENTAL] Get run with the given identifier from the specified project-space.\n \u003cp\u003e\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
         "operationId": "getRunExperimental",
         "parameters": [
           {
@@ -2708,7 +3216,7 @@
           {
             "name": "optFields",
             "in": "query",
-            "description": "set of optional fields to be included. Use 'none' only to override defaults.",
+            "description": "set of optional fields to be included. Use \u0027none\u0027 only to override defaults.",
             "required": false,
             "schema": {
               "type": "array",
@@ -2784,7 +3292,7 @@
           "Runs"
         ],
         "summary": "[EXPERIMENTAL] Get runs in the given project-space",
-        "description": "[EXPERIMENTAL] Get runs in the given project-space.\n\n <h2>Supported filter syntax</h2>\n\n <p>The filter string must contain one or more clauses. A clause is prefíxed\n by a field name.\n </p>\n\n Currently the only searchable fields are names of tags (<code>tagName</code>) followed by a clause that is valued for the value type of the tag (See TagDefinition).\n Tag name based field need to be prefixed with the namespace <code>tags.</code>.\n Possible value types of tags are <strong>bool</strong>, <strong>integer</strong>, <strong>real</strong>, <strong>text</strong>, <strong>date</strong>, or <strong>time</strong> - tag value\n\n <p>The format of the <strong>date</strong> type is <code>yyyy-MM-dd</code> and of the <strong>time</strong> type is <code>HH\\:mm\\:ss</code>.</p>\n\n <p>A clause may be:</p>\n <ul>\n     <li>a <strong>term</strong>: field name followed by a colon and the search term, e.g. <code>tags.MyTagA:sample</code></li>\n     <li>a <strong>phrase</strong>: field name followed by a colon and the search phrase in doublequotes, e.g. <code>tags.MyTagA:&quot;Some Text&quot;</code></li>\n     <li>a <strong>regular expression</strong>: field name followed by a colon and the regex in slashes, e.g. <code>tags.MyTagA:/[mb]oat/</code></li>\n     <li>a <strong>comparison</strong>: field name followed by a comparison operator and a value, e.g. <code>tags.MyTagB&lt;3</code></li>\n     <li>a <strong>range</strong>: field name followed by a colon and an open (indiced by <code>[ </code> and <code>] </code>) or (semi-)closed range (indiced by <code>{</code> and <code>}</code>), e.g. <code>tags.MyTagB:[* TO 3] </code></li>\n </ul>\n\n <p>Clauses may be <strong>grouped</strong> with brackets <code>( </code> and <code>) </code> and / or <strong>joined</strong> with <code>AND</code> or <code>OR </code> (or <code>&amp;&amp; </code> and <code>|| </code>)</p>\n\n <h3>Example</h3>\n\n <p>The syntax allows to build complex filter queries such as:</p>\n\n <p><code>tags.city:&quot;new york&quot; AND tags.ATextTag:/[mb]oat/ AND tags.count:[1 TO *] OR tags.realNumberTag&lt;=3.2 OR tags.MyDateTag:2024-01-01 OR tags.MyDateTag:[2023-10-01 TO 2023-12-24] OR tags.MyDateTag&lt;2022-01-01 OR tags.time:12\\:00\\:00 OR tags.time:[12\\:00\\:00 TO 14\\:00\\:00] OR tags.time&lt;10\\:00\\:00 </code></p>\n\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
+        "description": "[EXPERIMENTAL] Get runs in the given project-space.\n\n \u003ch2\u003eSupported filter syntax\u003c/h2\u003e\n\n \u003cp\u003eThe filter string must contain one or more clauses. A clause is prefíxed\n by a field name.\n \u003c/p\u003e\n\n Currently the only searchable fields are names of tags (\u003ccode\u003etagName\u003c/code\u003e) followed by a clause that is valued for the value type of the tag (See TagDefinition).\n Tag name based field need to be prefixed with the namespace \u003ccode\u003etags.\u003c/code\u003e.\n Possible value types of tags are \u003cstrong\u003ebool\u003c/strong\u003e, \u003cstrong\u003einteger\u003c/strong\u003e, \u003cstrong\u003ereal\u003c/strong\u003e, \u003cstrong\u003etext\u003c/strong\u003e, \u003cstrong\u003edate\u003c/strong\u003e, or \u003cstrong\u003etime\u003c/strong\u003e - tag value\n\n \u003cp\u003eThe format of the \u003cstrong\u003edate\u003c/strong\u003e type is \u003ccode\u003eyyyy-MM-dd\u003c/code\u003e and of the \u003cstrong\u003etime\u003c/strong\u003e type is \u003ccode\u003eHH\\:mm\\:ss\u003c/code\u003e.\u003c/p\u003e\n\n \u003cp\u003eA clause may be:\u003c/p\u003e\n \u003cul\u003e\n     \u003cli\u003ea \u003cstrong\u003eterm\u003c/strong\u003e: field name followed by a colon and the search term, e.g. \u003ccode\u003etags.MyTagA:sample\u003c/code\u003e\u003c/li\u003e\n     \u003cli\u003ea \u003cstrong\u003ephrase\u003c/strong\u003e: field name followed by a colon and the search phrase in doublequotes, e.g. \u003ccode\u003etags.MyTagA:\u0026quot;Some Text\u0026quot;\u003c/code\u003e\u003c/li\u003e\n     \u003cli\u003ea \u003cstrong\u003eregular expression\u003c/strong\u003e: field name followed by a colon and the regex in slashes, e.g. \u003ccode\u003etags.MyTagA:/[mb]oat/\u003c/code\u003e\u003c/li\u003e\n     \u003cli\u003ea \u003cstrong\u003ecomparison\u003c/strong\u003e: field name followed by a comparison operator and a value, e.g. \u003ccode\u003etags.MyTagB\u0026lt;3\u003c/code\u003e\u003c/li\u003e\n     \u003cli\u003ea \u003cstrong\u003erange\u003c/strong\u003e: field name followed by a colon and an open (indiced by \u003ccode\u003e[ \u003c/code\u003e and \u003ccode\u003e] \u003c/code\u003e) or (semi-)closed range (indiced by \u003ccode\u003e{\u003c/code\u003e and \u003ccode\u003e}\u003c/code\u003e), e.g. \u003ccode\u003etags.MyTagB:[* TO 3] \u003c/code\u003e\u003c/li\u003e\n \u003c/ul\u003e\n\n \u003cp\u003eClauses may be \u003cstrong\u003egrouped\u003c/strong\u003e with brackets \u003ccode\u003e( \u003c/code\u003e and \u003ccode\u003e) \u003c/code\u003e and / or \u003cstrong\u003ejoined\u003c/strong\u003e with \u003ccode\u003eAND\u003c/code\u003e or \u003ccode\u003eOR \u003c/code\u003e (or \u003ccode\u003e\u0026amp;\u0026amp; \u003c/code\u003e and \u003ccode\u003e|| \u003c/code\u003e)\u003c/p\u003e\n\n \u003ch3\u003eExample\u003c/h3\u003e\n\n \u003cp\u003eThe syntax allows to build complex filter queries such as:\u003c/p\u003e\n\n \u003cp\u003e\u003ccode\u003etags.city:\u0026quot;new york\u0026quot; AND tags.ATextTag:/[mb]oat/ AND tags.count:[1 TO *] OR tags.realNumberTag\u0026lt;\u003d3.2 OR tags.MyDateTag:2024-01-01 OR tags.MyDateTag:[2023-10-01 TO 2023-12-24] OR tags.MyDateTag\u0026lt;2022-01-01 OR tags.time:12\\:00\\:00 OR tags.time:[12\\:00\\:00 TO 14\\:00\\:00] OR tags.time\u0026lt;10\\:00\\:00 \u003c/code\u003e\u003c/p\u003e\n\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
         "operationId": "getRunsPageExperimental",
         "parameters": [
           {
@@ -2842,7 +3350,7 @@
           {
             "name": "optFields",
             "in": "query",
-            "description": "set of optional fields to be included. Use 'none' only to override defaults.",
+            "description": "set of optional fields to be included. Use \u0027none\u0027 only to override defaults.",
             "required": false,
             "schema": {
               "type": "array",
@@ -2873,7 +3381,7 @@
           "Runs"
         ],
         "summary": "[EXPERIMENTAL] Get runs by tag group",
-        "description": "[EXPERIMENTAL] Get runs by tag group.\n <p>\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
+        "description": "[EXPERIMENTAL] Get runs by tag group.\n \u003cp\u003e\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
         "operationId": "getRunsByGroupExperimental",
         "parameters": [
           {
@@ -2931,7 +3439,7 @@
           {
             "name": "optFields",
             "in": "query",
-            "description": "set of optional fields to be included. Use 'none' only to override defaults.",
+            "description": "set of optional fields to be included. Use \u0027none\u0027 only to override defaults.",
             "required": false,
             "schema": {
               "type": "array",
@@ -3033,7 +3541,7 @@
           {
             "name": "optFields",
             "in": "query",
-            "description": "set of optional fields to be included. Use 'none' only to override defaults.",
+            "description": "set of optional fields to be included. Use \u0027none\u0027 only to override defaults.",
             "required": false,
             "schema": {
               "type": "array",
@@ -3168,7 +3676,7 @@
           {
             "name": "optFields",
             "in": "query",
-            "description": "set of optional fields to be included. Use 'none' only to override defaults.",
+            "description": "set of optional fields to be included. Use \u0027none\u0027 only to override defaults.",
             "required": false,
             "schema": {
               "type": "array",
@@ -3240,7 +3748,7 @@
           "Tags"
         ],
         "summary": "[EXPERIMENTAL] Get all tag based groups in the given project-space",
-        "description": "[EXPERIMENTAL] Get all tag based groups in the given project-space.\n <p>\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
+        "description": "[EXPERIMENTAL] Get all tag based groups in the given project-space.\n \u003cp\u003e\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
         "operationId": "getGroups",
         "parameters": [
           {
@@ -3364,7 +3872,7 @@
           {
             "name": "optFields",
             "in": "query",
-            "description": "set of optional fields to be included. Use 'none' only to override defaults.",
+            "description": "set of optional fields to be included. Use \u0027none\u0027 only to override defaults.",
             "required": false,
             "schema": {
               "type": "array",
@@ -3444,7 +3952,7 @@
           "Compounds"
         ],
         "summary": "[EXPERIMENTAL] Returns the traces of the given compound",
-        "description": "[EXPERIMENTAL] Returns the traces of the given compound.\n <p>\n A trace consists of m/z and intensity values over the retention\n time axis. All the returned traces are 'projected', which means they refer not to the original retention time axis,\n but to a recalibrated axis. This means the data points in the trace are not exactly the same as in the raw data.\n However, this also means that all traces can be directly compared against each other, as they all lie in the same\n retention time axis.\n <p>\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.*",
+        "description": "[EXPERIMENTAL] Returns the traces of the given compound.\n \u003cp\u003e\n A trace consists of m/z and intensity values over the retention\n time axis. All the returned traces are \u0027projected\u0027, which means they refer not to the original retention time axis,\n but to a recalibrated axis. This means the data points in the trace are not exactly the same as in the raw data.\n However, this also means that all traces can be directly compared against each other, as they all lie in the same\n retention time axis.\n \u003cp\u003e\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.*",
         "operationId": "getCompoundTracesExperimental",
         "parameters": [
           {
@@ -3495,7 +4003,7 @@
           "Compounds"
         ],
         "summary": "[EXPERIMENTAL] Returns a single quantification table row for the given compound",
-        "description": "[EXPERIMENTAL] Returns a single quantification table row for the given compound.\n <p>\n The quantification table contains a quantification of the feature within all\n samples it is contained in.\n <p>\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.*",
+        "description": "[EXPERIMENTAL] Returns a single quantification table row for the given compound.\n \u003cp\u003e\n The quantification table contains a quantification of the feature within all\n samples it is contained in.\n \u003cp\u003e\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.*",
         "operationId": "getCompoundQuantTableRowExperimental",
         "parameters": [
           {
@@ -3591,7 +4099,7 @@
           "Compound Statistics"
         ],
         "summary": "[EXPERIMENTAL] List all fold changes that are associated with an object",
-        "description": "[EXPERIMENTAL] List all fold changes that are associated with an object.\n <p>\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
+        "description": "[EXPERIMENTAL] List all fold changes that are associated with an object.\n \u003cp\u003e\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
         "operationId": "getFoldChangesByCompoundExperimental",
         "parameters": [
           {
@@ -3636,7 +4144,7 @@
           "Compound Statistics"
         ],
         "summary": "[EXPERIMENTAL] Get table of all fold changes in the project space",
-        "description": "[EXPERIMENTAL] Get table of all fold changes in the project space.\n <p>\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
+        "description": "[EXPERIMENTAL] Get table of all fold changes in the project space.\n \u003cp\u003e\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
         "operationId": "getCompoundFoldChangeTableExperimental",
         "parameters": [
           {
@@ -3687,7 +4195,7 @@
           "Compounds"
         ],
         "summary": "[EXPERIMENTAL] Returns the full quantification table of compounds",
-        "description": "[EXPERIMENTAL] Returns the full quantification table of compounds.\n <p>\n The quantification table contains a quantification of the features within all\n runs they are contained in.\n <p>\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.*",
+        "description": "[EXPERIMENTAL] Returns the full quantification table of compounds.\n \u003cp\u003e\n The quantification table contains a quantification of the features within all\n runs they are contained in.\n \u003cp\u003e\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.*",
         "operationId": "getCompoundQuantTableExperimental",
         "parameters": [
           {
@@ -3729,7 +4237,7 @@
           "Compounds"
         ],
         "summary": "[EXPERIMENTAL] Page of available compounds (group of ion identities) in the given project-space",
-        "description": "[EXPERIMENTAL] Page of available compounds (group of ion identities) in the given project-space.\n\n <h2>Supported filter syntax</h2>\n\n <p>The filter string must contain one or more clauses. A clause is prefíxed\n by a field name.\n </p>\n <p>\n Currently the only searchable fields are names of tags (<code>tagName</code>) followed by a clause that is valued for the value type of the tag (See TagDefinition).\n Tag name based field need to be prefixed with the namespace <code>tags.</code>.\n Possible value types of tags are <strong>bool</strong>, <strong>integer</strong>, <strong>real</strong>, <strong>text</strong>, <strong>date</strong>, or <strong>time</strong> - tag value\n\n <p>The format of the <strong>date</strong> type is <code>yyyy-MM-dd</code> and of the <strong>time</strong> type is <code>HH\\:mm\\:ss</code>.</p>\n\n <p>A clause may be:</p>\n <ul>\n     <li>a <strong>term</strong>: field name followed by a colon and the search term, e.g. <code>tags.MyTagA:sample</code></li>\n     <li>a <strong>phrase</strong>: field name followed by a colon and the search phrase in doublequotes, e.g. <code>tags.MyTagA:&quot;Some Text&quot;</code></li>\n     <li>a <strong>regular expression</strong>: field name followed by a colon and the regex in slashes, e.g. <code>tags.MyTagA:/[mb]oat/</code></li>\n     <li>a <strong>comparison</strong>: field name followed by a comparison operator and a value, e.g. <code>tags.MyTagB&lt;3</code></li>\n     <li>a <strong>range</strong>: field name followed by a colon and an open (indiced by <code>[ </code> and <code>] </code>) or (semi-)closed range (indiced by <code>{</code> and <code>}</code>), e.g. <code>tags.MyTagB:[* TO 3] </code></li>\n </ul>\n\n <p>Clauses may be <strong>grouped</strong> with brackets <code>( </code> and <code>) </code> and / or <strong>joined</strong> with <code>AND</code> or <code>OR </code> (or <code>&amp;&amp; </code> and <code>|| </code>)</p>\n\n <h3>Example</h3>\n\n <p>The syntax allows to build complex filter queries such as:</p>\n\n <p><code>tags.city:&quot;new york&quot; AND tags.ATextTag:/[mb]oat/ AND tags.count:[1 TO *] OR tags.realNumberTag&lt;=3.2 OR tags.MyDateTag:2024-01-01 OR tags.MyDateTag:[2023-10-01 TO 2023-12-24] OR tags.MyDateTag&lt;2022-01-01 OR tags.time:12\\:00\\:00 OR tags.time:[12\\:00\\:00 TO 14\\:00\\:00] OR tags.time&lt;10\\:00\\:00 </code></p>\n <p>\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
+        "description": "[EXPERIMENTAL] Page of available compounds (group of ion identities) in the given project-space.\n\n \u003ch2\u003eSupported filter syntax\u003c/h2\u003e\n\n \u003cp\u003eThe filter string must contain one or more clauses. A clause is prefíxed\n by a field name.\n \u003c/p\u003e\n \u003cp\u003e\n Currently the only searchable fields are names of tags (\u003ccode\u003etagName\u003c/code\u003e) followed by a clause that is valued for the value type of the tag (See TagDefinition).\n Tag name based field need to be prefixed with the namespace \u003ccode\u003etags.\u003c/code\u003e.\n Possible value types of tags are \u003cstrong\u003ebool\u003c/strong\u003e, \u003cstrong\u003einteger\u003c/strong\u003e, \u003cstrong\u003ereal\u003c/strong\u003e, \u003cstrong\u003etext\u003c/strong\u003e, \u003cstrong\u003edate\u003c/strong\u003e, or \u003cstrong\u003etime\u003c/strong\u003e - tag value\n\n \u003cp\u003eThe format of the \u003cstrong\u003edate\u003c/strong\u003e type is \u003ccode\u003eyyyy-MM-dd\u003c/code\u003e and of the \u003cstrong\u003etime\u003c/strong\u003e type is \u003ccode\u003eHH\\:mm\\:ss\u003c/code\u003e.\u003c/p\u003e\n\n \u003cp\u003eA clause may be:\u003c/p\u003e\n \u003cul\u003e\n     \u003cli\u003ea \u003cstrong\u003eterm\u003c/strong\u003e: field name followed by a colon and the search term, e.g. \u003ccode\u003etags.MyTagA:sample\u003c/code\u003e\u003c/li\u003e\n     \u003cli\u003ea \u003cstrong\u003ephrase\u003c/strong\u003e: field name followed by a colon and the search phrase in doublequotes, e.g. \u003ccode\u003etags.MyTagA:\u0026quot;Some Text\u0026quot;\u003c/code\u003e\u003c/li\u003e\n     \u003cli\u003ea \u003cstrong\u003eregular expression\u003c/strong\u003e: field name followed by a colon and the regex in slashes, e.g. \u003ccode\u003etags.MyTagA:/[mb]oat/\u003c/code\u003e\u003c/li\u003e\n     \u003cli\u003ea \u003cstrong\u003ecomparison\u003c/strong\u003e: field name followed by a comparison operator and a value, e.g. \u003ccode\u003etags.MyTagB\u0026lt;3\u003c/code\u003e\u003c/li\u003e\n     \u003cli\u003ea \u003cstrong\u003erange\u003c/strong\u003e: field name followed by a colon and an open (indiced by \u003ccode\u003e[ \u003c/code\u003e and \u003ccode\u003e] \u003c/code\u003e) or (semi-)closed range (indiced by \u003ccode\u003e{\u003c/code\u003e and \u003ccode\u003e}\u003c/code\u003e), e.g. \u003ccode\u003etags.MyTagB:[* TO 3] \u003c/code\u003e\u003c/li\u003e\n \u003c/ul\u003e\n\n \u003cp\u003eClauses may be \u003cstrong\u003egrouped\u003c/strong\u003e with brackets \u003ccode\u003e( \u003c/code\u003e and \u003ccode\u003e) \u003c/code\u003e and / or \u003cstrong\u003ejoined\u003c/strong\u003e with \u003ccode\u003eAND\u003c/code\u003e or \u003ccode\u003eOR \u003c/code\u003e (or \u003ccode\u003e\u0026amp;\u0026amp; \u003c/code\u003e and \u003ccode\u003e|| \u003c/code\u003e)\u003c/p\u003e\n\n \u003ch3\u003eExample\u003c/h3\u003e\n\n \u003cp\u003eThe syntax allows to build complex filter queries such as:\u003c/p\u003e\n\n \u003cp\u003e\u003ccode\u003etags.city:\u0026quot;new york\u0026quot; AND tags.ATextTag:/[mb]oat/ AND tags.count:[1 TO *] OR tags.realNumberTag\u0026lt;\u003d3.2 OR tags.MyDateTag:2024-01-01 OR tags.MyDateTag:[2023-10-01 TO 2023-12-24] OR tags.MyDateTag\u0026lt;2022-01-01 OR tags.time:12\\:00\\:00 OR tags.time:[12\\:00\\:00 TO 14\\:00\\:00] OR tags.time\u0026lt;10\\:00\\:00 \u003c/code\u003e\u003c/p\u003e\n \u003cp\u003e\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
         "operationId": "getCompoundsPageExperimental",
         "parameters": [
           {
@@ -3797,7 +4305,7 @@
           {
             "name": "optFields",
             "in": "query",
-            "description": "set of optional fields to be included. Use 'none' only to override defaults.",
+            "description": "set of optional fields to be included. Use \u0027none\u0027 only to override defaults.",
             "required": false,
             "schema": {
               "type": "array",
@@ -3844,7 +4352,7 @@
           "Compounds"
         ],
         "summary": "[EXPERIMENTAL] Get compounds (group of ion identities) by tag group",
-        "description": "[EXPERIMENTAL] Get compounds (group of ion identities) by tag group.\n <p>\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
+        "description": "[EXPERIMENTAL] Get compounds (group of ion identities) by tag group.\n \u003cp\u003e\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
         "operationId": "getCompoundsByGroupExperimental",
         "parameters": [
           {
@@ -3912,7 +4420,7 @@
           {
             "name": "optFields",
             "in": "query",
-            "description": "set of optional fields to be included. Use 'none' only to override defaults.",
+            "description": "set of optional fields to be included. Use \u0027none\u0027 only to override defaults.",
             "required": false,
             "schema": {
               "type": "array",
@@ -4038,7 +4546,7 @@
           {
             "name": "optFields",
             "in": "query",
-            "description": "set of optional fields to be included. Use 'none' only to override defaults.",
+            "description": "set of optional fields to be included. Use \u0027none\u0027 only to override defaults.",
             "required": false,
             "schema": {
               "type": "array",
@@ -4104,7 +4612,7 @@
           "Features"
         ],
         "summary": "[EXPERIMENTAL] Returns the traces of the given feature (alignedFeatureId)",
-        "description": "[EXPERIMENTAL] Returns the traces of the given feature (alignedFeatureId).\n <p>\n Returns the traces of the given feature. A trace consists of m/z and intensity values over the retention\n time axis. All the returned traces are 'projected', which means they refer not to the original retention time axis,\n but to a recalibrated axis. This means the data points in the trace are not exactly the same as in the raw data.\n However, this also means that all traces can be directly compared against each other, as they all lie in the same\n retention time axis.\n By default, this method only returns traces of samples the aligned feature appears in. When includeAll is set,\n it also includes samples in which the same trace appears in.\n <p>\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
+        "description": "[EXPERIMENTAL] Returns the traces of the given feature (alignedFeatureId).\n \u003cp\u003e\n Returns the traces of the given feature. A trace consists of m/z and intensity values over the retention\n time axis. All the returned traces are \u0027projected\u0027, which means they refer not to the original retention time axis,\n but to a recalibrated axis. This means the data points in the trace are not exactly the same as in the raw data.\n However, this also means that all traces can be directly compared against each other, as they all lie in the same\n retention time axis.\n By default, this method only returns traces of samples the aligned feature appears in. When includeAll is set,\n it also includes samples in which the same trace appears in.\n \u003cp\u003e\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
         "operationId": "getTracesExperimental",
         "parameters": [
           {
@@ -4155,8 +4663,8 @@
         "tags": [
           "Features"
         ],
-        "summary": "List of spectral library matches for the given 'alignedFeatureId'.",
-        "description": "List of spectral library matches for the given 'alignedFeatureId'.",
+        "summary": "List of spectral library matches for the given \u0027alignedFeatureId\u0027.",
+        "description": "List of spectral library matches for the given \u0027alignedFeatureId\u0027.",
         "operationId": "getSpectralLibraryMatches",
         "parameters": [
           {
@@ -4243,8 +4751,8 @@
         "tags": [
           "Features"
         ],
-        "summary": "Spectral library match for the given 'alignedFeatureId'.",
-        "description": "Spectral library match for the given 'alignedFeatureId'.",
+        "summary": "Spectral library match for the given \u0027alignedFeatureId\u0027.",
+        "description": "Spectral library match for the given \u0027alignedFeatureId\u0027.",
         "operationId": "getSpectralLibraryMatch",
         "parameters": [
           {
@@ -4308,8 +4816,8 @@
         "tags": [
           "Features"
         ],
-        "summary": "[EXPERIMENTAL] Spectral library match for the given 'alignedFeatureId' with additional molecular formula and substructure annotations",
-        "description": "[EXPERIMENTAL] Spectral library match for the given 'alignedFeatureId' with additional molecular formula and substructure annotations.\n <p>\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
+        "summary": "[EXPERIMENTAL] Spectral library match for the given \u0027alignedFeatureId\u0027 with additional molecular formula and substructure annotations",
+        "description": "[EXPERIMENTAL] Spectral library match for the given \u0027alignedFeatureId\u0027 with additional molecular formula and substructure annotations.\n \u003cp\u003e\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
         "operationId": "getStructureAnnotatedSpectralLibraryMatchExperimental",
         "parameters": [
           {
@@ -4359,8 +4867,8 @@
         "tags": [
           "Features"
         ],
-        "summary": "Summarize matched reference spectra for the given 'alignedFeatureId'.",
-        "description": "Summarize matched reference spectra for the given 'alignedFeatureId'.\n If a 'inchiKey' (2D) is provided, summarizes only contains matches for the database compound with the given InChI key.",
+        "summary": "Summarize matched reference spectra for the given \u0027alignedFeatureId\u0027.",
+        "description": "Summarize matched reference spectra for the given \u0027alignedFeatureId\u0027.\n If a \u0027inchiKey\u0027 (2D) is provided, summarizes only contains matches for the database compound with the given InChI key.",
         "operationId": "getSpectralLibraryMatchesSummary",
         "parameters": [
           {
@@ -4433,8 +4941,8 @@
         "tags": [
           "Features"
         ],
-        "summary": "Page of spectral library matches for the given 'alignedFeatureId'.",
-        "description": "Page of spectral library matches for the given 'alignedFeatureId'.\n If a 'inchiKey' (2D) is provided, returns only matches for the database compound with the given InChI key.",
+        "summary": "Page of spectral library matches for the given \u0027alignedFeatureId\u0027.",
+        "description": "Page of spectral library matches for the given \u0027alignedFeatureId\u0027.\n If a \u0027inchiKey\u0027 (2D) is provided, returns only matches for the database compound with the given InChI key.",
         "operationId": "getSpectralLibraryMatchesPaged",
         "parameters": [
           {
@@ -4553,7 +5061,7 @@
           "Features"
         ],
         "summary": "[EXPERIMENTAL] Returns a single quantification table row for the given feature (alignedFeatureId)",
-        "description": "[EXPERIMENTAL] Returns a single quantification table row for the given feature (alignedFeatureId).\n <p>\n The quantification table contains a quantity of the feature within all samples it is contained in.\n <p>\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
+        "description": "[EXPERIMENTAL] Returns a single quantification table row for the given feature (alignedFeatureId).\n \u003cp\u003e\n The quantification table contains a quantity of the feature within all samples it is contained in.\n \u003cp\u003e\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
         "operationId": "getQuantTableRowExperimental",
         "parameters": [
           {
@@ -4604,7 +5112,7 @@
           "Features"
         ],
         "summary": "[EXPERIMENTAL] Returns data quality information for given feature (alignedFeatureId)\n ",
-        "description": "[EXPERIMENTAL] Returns data quality information for given feature (alignedFeatureId)\n <p>\n Get data quality information for feature (aligned over runs) with the given identifier from the specified project-space.\n <p>\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
+        "description": "[EXPERIMENTAL] Returns data quality information for given feature (alignedFeatureId)\n \u003cp\u003e\n Get data quality information for feature (aligned over runs) with the given identifier from the specified project-space.\n \u003cp\u003e\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
         "operationId": "getAlignedFeatureQualityExperimental",
         "parameters": [
           {
@@ -4645,8 +5153,8 @@
         "tags": [
           "Features"
         ],
-        "summary": "Mass Spec data (input data) for the given 'alignedFeatureId' .",
-        "description": "Mass Spec data (input data) for the given 'alignedFeatureId' .",
+        "summary": "Mass Spec data (input data) for the given \u0027alignedFeatureId\u0027 .",
+        "description": "Mass Spec data (input data) for the given \u0027alignedFeatureId\u0027 .",
         "operationId": "getMsData",
         "parameters": [
           {
@@ -4732,7 +5240,7 @@
           {
             "name": "optFields",
             "in": "query",
-            "description": "set of optional fields to be included. Use 'none' only to override defaults.",
+            "description": "set of optional fields to be included. Use \u0027none\u0027 only to override defaults.",
             "required": false,
             "schema": {
               "type": "array",
@@ -4767,8 +5275,8 @@
         "tags": [
           "Features"
         ],
-        "summary": "FormulaResultContainers for the given 'formulaId' with minimal information.",
-        "description": "FormulaResultContainers for the given 'formulaId' with minimal information.\n Can be enriched with an optional results overview and formula candidate information.",
+        "summary": "FormulaResultContainers for the given \u0027formulaId\u0027 with minimal information.",
+        "description": "FormulaResultContainers for the given \u0027formulaId\u0027 with minimal information.\n Can be enriched with an optional results overview and formula candidate information.",
         "operationId": "getFormulaCandidate",
         "parameters": [
           {
@@ -4811,7 +5319,7 @@
           {
             "name": "optFields",
             "in": "query",
-            "description": "set of optional fields to be included. Use 'none' only to override defaults.",
+            "description": "set of optional fields to be included. Use \u0027none\u0027 only to override defaults.",
             "required": false,
             "schema": {
               "type": "array",
@@ -4844,7 +5352,7 @@
           "Features"
         ],
         "summary": "[EXPERIMENTAL] Returns a fragmentation spectrum annotated with fragments and losses for the given formulaId and inChIKey\n ",
-        "description": "[EXPERIMENTAL] Returns a fragmentation spectrum annotated with fragments and losses for the given formulaId and inChIKey\n <p>\n Returns a fragmentation spectrum (e.g. Merged MS/MS) which is annotated with fragments and losses for the selected formula result\n These annotations are only available if a fragmentation tree is available.\n <p>\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
+        "description": "[EXPERIMENTAL] Returns a fragmentation spectrum annotated with fragments and losses for the given formulaId and inChIKey\n \u003cp\u003e\n Returns a fragmentation spectrum (e.g. Merged MS/MS) which is annotated with fragments and losses for the selected formula result\n These annotations are only available if a fragmentation tree is available.\n \u003cp\u003e\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
         "operationId": "getStructureAnnotatedSpectrumExperimental",
         "parameters": [
           {
@@ -4886,7 +5394,7 @@
           {
             "name": "spectrumIndex",
             "in": "query",
-            "description": "index of the spectrum to be annotated. Merged MS/MS will be used if spectrumIndex < 0 (default)",
+            "description": "index of the spectrum to be annotated. Merged MS/MS will be used if spectrumIndex \u003c 0 (default)",
             "required": false,
             "schema": {
               "type": "integer",
@@ -4924,7 +5432,7 @@
           "Features"
         ],
         "summary": "[EXPERIMENTAL] Returns MS/MS Data annotated with fragments and losses for given formulaId and inChIKey",
-        "description": "[EXPERIMENTAL] Returns MS/MS Data annotated with fragments and losses for given formulaId and inChIKey.\n <p>\n Returns MS/MS Data (Merged MS/MS and list of measured MS/MS ) which are annotated with fragments and losses\n for the given formula result identifier and structure candidate inChIKey.\n These annotations are only available if a fragmentation tree and the structure candidate are available.\n <p>\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
+        "description": "[EXPERIMENTAL] Returns MS/MS Data annotated with fragments and losses for given formulaId and inChIKey.\n \u003cp\u003e\n Returns MS/MS Data (Merged MS/MS and list of measured MS/MS ) which are annotated with fragments and losses\n for the given formula result identifier and structure candidate inChIKey.\n These annotations are only available if a fragmentation tree and the structure candidate are available.\n \u003cp\u003e\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
         "operationId": "getStructureAnnotatedMsDataExperimental",
         "parameters": [
           {
@@ -4988,13 +5496,64 @@
         }
       }
     },
+    "/api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/sirius-fragtree": {
+      "get": {
+        "tags": [
+          "Features"
+        ],
+        "summary": "[INTERNAL] Returns fragmentation tree (SIRIUS) for the given formula result identifier in SIRIUS\u0027 internal format",
+        "description": "[INTERNAL] Returns fragmentation tree (SIRIUS) for the given formula result identifier in SIRIUS\u0027 internal format.\n \u003cp\u003e\n [INTERNAL]: This is an internal api endpoint and not part of the official public API. It might be changed or removed at any time.",
+        "operationId": "getSiriusFragTreeInternal",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "description": "project-space to read from.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "alignedFeatureId",
+            "in": "path",
+            "description": "feature (aligned over runs) the formula result belongs to.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "formulaId",
+            "in": "path",
+            "description": "identifier of the requested formula result",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Fragmentation Tree in internal format.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/lipid-annotation": {
       "get": {
         "tags": [
           "Features"
         ],
         "summary": "Returns Lipid annotation (ElGordo) for the given formulaId",
-        "description": "Returns Lipid annotation (ElGordo) for the given formulaId.\n <p>\n ElGordo lipid annotation runs as part of the SIRIUS formula identification step.",
+        "description": "Returns Lipid annotation (ElGordo) for the given formulaId.\n \u003cp\u003e\n ElGordo lipid annotation runs as part of the SIRIUS formula identification step.",
         "operationId": "getLipidAnnotation",
         "parameters": [
           {
@@ -5045,7 +5604,7 @@
           "Features"
         ],
         "summary": "Returns Isotope pattern information for given formulaId\n ",
-        "description": "Returns Isotope pattern information for given formulaId\n <p>\n Returns Isotope pattern information (simulated isotope pattern, measured isotope pattern, isotope pattern highlighting)\n for the given formula result identifier. This simulated isotope pattern is used to rank formula candidates (treeScore).",
+        "description": "Returns Isotope pattern information for given formulaId\n \u003cp\u003e\n Returns Isotope pattern information (simulated isotope pattern, measured isotope pattern, isotope pattern highlighting)\n for the given formula result identifier. This simulated isotope pattern is used to rank formula candidates (treeScore).",
         "operationId": "getIsotopePatternAnnotation",
         "parameters": [
           {
@@ -5096,7 +5655,7 @@
           "Features"
         ],
         "summary": "Returns fragmentation tree (SIRIUS) for the given formula result identifier\n ",
-        "description": "Returns fragmentation tree (SIRIUS) for the given formula result identifier\n <p>\n This tree is used to rank formula candidates (treeScore).",
+        "description": "Returns fragmentation tree (SIRIUS) for the given formula result identifier\n \u003cp\u003e\n This tree is used to rank formula candidates (treeScore).",
         "operationId": "getFragTree",
         "parameters": [
           {
@@ -5147,7 +5706,7 @@
           "Features"
         ],
         "summary": "Returns predicted fingerprint (CSI:FingerID) for the given formula result identifier (formulaId)\n ",
-        "description": "Returns predicted fingerprint (CSI:FingerID) for the given formula result identifier (formulaId)\n <p>\n This fingerprint is used to perform structure database search and predict compound classes.",
+        "description": "Returns predicted fingerprint (CSI:FingerID) for the given formula result identifier (formulaId)\n \u003cp\u003e\n This fingerprint is used to perform structure database search and predict compound classes.",
         "operationId": "getFingerprintPrediction",
         "parameters": [
           {
@@ -5201,8 +5760,8 @@
         "tags": [
           "Features"
         ],
-        "summary": "List of de novo structure candidates (e.g. generated by MsNovelist) ranked by CSI:FingerID score for the given 'formulaId' with minimal information.\n StructureCandidates can be enriched with molecular fingerprint.",
-        "description": "List of de novo structure candidates (e.g. generated by MsNovelist) ranked by CSI:FingerID score for the given 'formulaId' with minimal information.\n StructureCandidates can be enriched with molecular fingerprint.",
+        "summary": "List of de novo structure candidates (e.g. generated by MsNovelist) ranked by CSI:FingerID score for the given \u0027formulaId\u0027 with minimal information.\n StructureCandidates can be enriched with molecular fingerprint.",
+        "description": "List of de novo structure candidates (e.g. generated by MsNovelist) ranked by CSI:FingerID score for the given \u0027formulaId\u0027 with minimal information.\n StructureCandidates can be enriched with molecular fingerprint.",
         "operationId": "getDeNovoStructureCandidatesByFormula",
         "parameters": [
           {
@@ -5235,7 +5794,7 @@
           {
             "name": "optFields",
             "in": "query",
-            "description": "set of optional fields to be included. Use 'none' only to override defaults.",
+            "description": "set of optional fields to be included. Use \u0027none\u0027 only to override defaults.",
             "required": false,
             "schema": {
               "type": "array",
@@ -5270,8 +5829,8 @@
         "tags": [
           "Features"
         ],
-        "summary": "Page of de novo structure candidates (e.g. generated by MsNovelist) ranked by CSI:FingerID score for the given 'formulaId' with minimal information.\n StructureCandidates can be enriched with molecular fingerprint.",
-        "description": "Page of de novo structure candidates (e.g. generated by MsNovelist) ranked by CSI:FingerID score for the given 'formulaId' with minimal information.\n StructureCandidates can be enriched with molecular fingerprint.",
+        "summary": "Page of de novo structure candidates (e.g. generated by MsNovelist) ranked by CSI:FingerID score for the given \u0027formulaId\u0027 with minimal information.\n StructureCandidates can be enriched with molecular fingerprint.",
+        "description": "Page of de novo structure candidates (e.g. generated by MsNovelist) ranked by CSI:FingerID score for the given \u0027formulaId\u0027 with minimal information.\n StructureCandidates can be enriched with molecular fingerprint.",
         "operationId": "getDeNovoStructureCandidatesByFormulaPaged",
         "parameters": [
           {
@@ -5338,7 +5897,7 @@
           {
             "name": "optFields",
             "in": "query",
-            "description": "set of optional fields to be included. Use 'none' only to override defaults.",
+            "description": "set of optional fields to be included. Use \u0027none\u0027 only to override defaults.",
             "required": false,
             "schema": {
               "type": "array",
@@ -5370,8 +5929,8 @@
         "tags": [
           "Features"
         ],
-        "summary": "List of CSI:FingerID structure database search candidates for the given 'formulaId' with minimal information.",
-        "description": "List of CSI:FingerID structure database search candidates for the given 'formulaId' with minimal information.\n StructureCandidates can be enriched with molecular fingerprint, structure database links.",
+        "summary": "List of CSI:FingerID structure database search candidates for the given \u0027formulaId\u0027 with minimal information.",
+        "description": "List of CSI:FingerID structure database search candidates for the given \u0027formulaId\u0027 with minimal information.\n StructureCandidates can be enriched with molecular fingerprint, structure database links.",
         "operationId": "getStructureCandidatesByFormula",
         "parameters": [
           {
@@ -5404,7 +5963,7 @@
           {
             "name": "optFields",
             "in": "query",
-            "description": "set of optional fields to be included. Use 'none' only to override defaults.",
+            "description": "set of optional fields to be included. Use \u0027none\u0027 only to override defaults.",
             "required": false,
             "schema": {
               "type": "array",
@@ -5439,8 +5998,8 @@
         "tags": [
           "Features"
         ],
-        "summary": "Page of CSI:FingerID structure database search candidates for the given 'formulaId' with minimal information.",
-        "description": "Page of CSI:FingerID structure database search candidates for the given 'formulaId' with minimal information.\n StructureCandidates can be enriched with molecular fingerprint, structure database links.",
+        "summary": "Page of CSI:FingerID structure database search candidates for the given \u0027formulaId\u0027 with minimal information.",
+        "description": "Page of CSI:FingerID structure database search candidates for the given \u0027formulaId\u0027 with minimal information.\n StructureCandidates can be enriched with molecular fingerprint, structure database links.",
         "operationId": "getStructureCandidatesByFormulaPaged",
         "parameters": [
           {
@@ -5507,7 +6066,7 @@
           {
             "name": "optFields",
             "in": "query",
-            "description": "set of optional fields to be included. Use 'none' only to override defaults.",
+            "description": "set of optional fields to be included. Use \u0027none\u0027 only to override defaults.",
             "required": false,
             "schema": {
               "type": "array",
@@ -5591,7 +6150,7 @@
           "Features"
         ],
         "summary": "Return Best matching compound classes for given formulaId",
-        "description": "Return Best matching compound classes for given formulaId.\n <p>\n Set of the highest scoring compound classes (CANOPUS) on each hierarchy level of  the ClassyFire and NPC ontology,",
+        "description": "Return Best matching compound classes for given formulaId.\n \u003cp\u003e\n Set of the highest scoring compound classes (CANOPUS) on each hierarchy level of  the ClassyFire and NPC ontology,",
         "operationId": "getBestMatchingCompoundClasses",
         "parameters": [
           {
@@ -5642,7 +6201,7 @@
           "Features"
         ],
         "summary": "Returns a fragmentation spectrum (e",
-        "description": "Returns a fragmentation spectrum (e.g. Merged MS/MS) which is annotated with fragments and losses for the given formula result identifier\n <p>\n These annotations are only available if a fragmentation tree is available.",
+        "description": "Returns a fragmentation spectrum (e.g. Merged MS/MS) which is annotated with fragments and losses for the given formula result identifier\n \u003cp\u003e\n These annotations are only available if a fragmentation tree is available.",
         "operationId": "getFormulaAnnotatedSpectrum",
         "parameters": [
           {
@@ -5675,7 +6234,7 @@
           {
             "name": "spectrumIndex",
             "in": "query",
-            "description": "index of the spectrum to be annotated. Merged MS/MS will be used if spectrumIndex < 0 (default)",
+            "description": "index of the spectrum to be annotated. Merged MS/MS will be used if spectrumIndex \u003c 0 (default)",
             "required": false,
             "schema": {
               "type": "integer",
@@ -5714,7 +6273,7 @@
           "Features"
         ],
         "summary": "Returns MS/MS Spectrum annotated with fragments and losses for provided formulaId",
-        "description": "Returns MS/MS Spectrum annotated with fragments and losses for provided formulaId.\n <p>\n Returns MS/MS Spectrum (Merged MS/MS and measured MS/MS) which is annotated with fragments and losses\n for the given formula result identifier\n These annotations are only available if a fragmentation tree and the structure candidate are available.",
+        "description": "Returns MS/MS Spectrum annotated with fragments and losses for provided formulaId.\n \u003cp\u003e\n Returns MS/MS Spectrum (Merged MS/MS and measured MS/MS) which is annotated with fragments and losses\n for the given formula result identifier\n These annotations are only available if a fragmentation tree and the structure candidate are available.",
         "operationId": "getFormulaAnnotatedMsMsData",
         "parameters": [
           {
@@ -5843,7 +6402,7 @@
           {
             "name": "optFields",
             "in": "query",
-            "description": "set of optional fields to be included. Use 'none' only to override defaults.",
+            "description": "set of optional fields to be included. Use \u0027none\u0027 only to override defaults.",
             "required": false,
             "schema": {
               "type": "array",
@@ -5875,8 +6434,8 @@
         "tags": [
           "Features"
         ],
-        "summary": "Page of de novo structure candidates (e.g. generated by MsNovelist) ranked by CSI:FingerID score for the given 'alignedFeatureId' with minimal information.\n StructureCandidates can be enriched with molecular fingerprint.",
-        "description": "Page of de novo structure candidates (e.g. generated by MsNovelist) ranked by CSI:FingerID score for the given 'alignedFeatureId' with minimal information.\n StructureCandidates can be enriched with molecular fingerprint.",
+        "summary": "Page of de novo structure candidates (e.g. generated by MsNovelist) ranked by CSI:FingerID score for the given \u0027alignedFeatureId\u0027 with minimal information.\n StructureCandidates can be enriched with molecular fingerprint.",
+        "description": "Page of de novo structure candidates (e.g. generated by MsNovelist) ranked by CSI:FingerID score for the given \u0027alignedFeatureId\u0027 with minimal information.\n StructureCandidates can be enriched with molecular fingerprint.",
         "operationId": "getDeNovoStructureCandidatesPaged",
         "parameters": [
           {
@@ -5934,7 +6493,7 @@
           {
             "name": "optFields",
             "in": "query",
-            "description": "set of optional fields to be included. Use 'none' only to override defaults.",
+            "description": "set of optional fields to be included. Use \u0027none\u0027 only to override defaults.",
             "required": false,
             "schema": {
               "type": "array",
@@ -5966,8 +6525,8 @@
         "tags": [
           "Features"
         ],
-        "summary": "List of structure database search candidates ranked by CSI:FingerID score for the given 'alignedFeatureId' with minimal information.",
-        "description": "List of structure database search candidates ranked by CSI:FingerID score for the given 'alignedFeatureId' with minimal information.\n StructureCandidates can be enriched with molecular fingerprint, structure database links.",
+        "summary": "List of structure database search candidates ranked by CSI:FingerID score for the given \u0027alignedFeatureId\u0027 with minimal information.",
+        "description": "List of structure database search candidates ranked by CSI:FingerID score for the given \u0027alignedFeatureId\u0027 with minimal information.\n StructureCandidates can be enriched with molecular fingerprint, structure database links.",
         "operationId": "getStructureCandidates",
         "parameters": [
           {
@@ -5991,7 +6550,7 @@
           {
             "name": "optFields",
             "in": "query",
-            "description": "set of optional fields to be included. Use 'none' only to override defaults.",
+            "description": "set of optional fields to be included. Use \u0027none\u0027 only to override defaults.",
             "required": false,
             "schema": {
               "type": "array",
@@ -6026,8 +6585,8 @@
         "tags": [
           "Features"
         ],
-        "summary": "Page of structure database search candidates ranked by CSI:FingerID score for the given 'alignedFeatureId' with minimal information.",
-        "description": "Page of structure database search candidates ranked by CSI:FingerID score for the given 'alignedFeatureId' with minimal information.\n StructureCandidates can be enriched with molecular fingerprint, structure database links.",
+        "summary": "Page of structure database search candidates ranked by CSI:FingerID score for the given \u0027alignedFeatureId\u0027 with minimal information.",
+        "description": "Page of structure database search candidates ranked by CSI:FingerID score for the given \u0027alignedFeatureId\u0027 with minimal information.\n StructureCandidates can be enriched with molecular fingerprint, structure database links.",
         "operationId": "getStructureCandidatesPaged",
         "parameters": [
           {
@@ -6085,7 +6644,7 @@
           {
             "name": "optFields",
             "in": "query",
-            "description": "set of optional fields to be included. Use 'none' only to override defaults.",
+            "description": "set of optional fields to be included. Use \u0027none\u0027 only to override defaults.",
             "required": false,
             "schema": {
               "type": "array",
@@ -6118,7 +6677,7 @@
           "Features"
         ],
         "summary": "[EXPERIMENTAL] Returns the adduct network for a given alignedFeatureId together with all merged traces contained in the network",
-        "description": "[EXPERIMENTAL] Returns the adduct network for a given alignedFeatureId together with all merged traces contained in the network.\n <p>\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
+        "description": "[EXPERIMENTAL] Returns the adduct network for a given alignedFeatureId together with all merged traces contained in the network.\n \u003cp\u003e\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
         "operationId": "getAdductNetworkWithMergedTracesExperimental",
         "parameters": [
           {
@@ -6205,7 +6764,7 @@
           "Feature Statistics"
         ],
         "summary": "[EXPERIMENTAL] List all fold changes that are associated with an object",
-        "description": "[EXPERIMENTAL] List all fold changes that are associated with an object.\n <p>\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
+        "description": "[EXPERIMENTAL] List all fold changes that are associated with an object.\n \u003cp\u003e\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
         "operationId": "getFoldChangesByAlignedFeatureExperimental",
         "parameters": [
           {
@@ -6250,7 +6809,7 @@
           "Feature Statistics"
         ],
         "summary": "[EXPERIMENTAL] Get table of all fold changes in the project space",
-        "description": "[EXPERIMENTAL] Get table of all fold changes in the project space.\n <p>\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
+        "description": "[EXPERIMENTAL] Get table of all fold changes in the project space.\n \u003cp\u003e\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
         "operationId": "getAlignedFeatureFoldChangeTableExperimental",
         "parameters": [
           {
@@ -6301,7 +6860,7 @@
           "Features"
         ],
         "summary": "[EXPERIMENTAL]  Returns the full quantification table for the given feature (alignedFeatureId)",
-        "description": "[EXPERIMENTAL]  Returns the full quantification table for the given feature (alignedFeatureId).\n <p>\n Returns the full quantification table. The quantification table contains a quantities of the features within all\n runs they are contained in.\n <p>\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
+        "description": "[EXPERIMENTAL]  Returns the full quantification table for the given feature (alignedFeatureId).\n \u003cp\u003e\n Returns the full quantification table. The quantification table contains a quantities of the features within all\n runs they are contained in.\n \u003cp\u003e\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
         "operationId": "getFeatureQuantTableExperimental",
         "parameters": [
           {
@@ -6343,7 +6902,7 @@
           "Features"
         ],
         "summary": "[EXPERIMENTAL] Get features (aligned over runs) in the given project-space",
-        "description": "[EXPERIMENTAL] Get features (aligned over runs) in the given project-space.\n\n <h2>Supported filter syntax</h2>\n\n <p>The filter string must contain one or more clauses. A clause is prefíxed\n by a field name.\n </p>\n\n Currently the only searchable fields are names of tags (<code>tagName</code>) followed by a clause that is valued for the value type of the tag (See TagDefinition).\n Tag name based field need to be prefixed with the namespace <code>tags.</code>.\n Possible value types of tags are <strong>bool</strong>, <strong>integer</strong>, <strong>real</strong>, <strong>text</strong>, <strong>date</strong>, or <strong>time</strong> - tag value\n\n <p>The format of the <strong>date</strong> type is <code>yyyy-MM-dd</code> and of the <strong>time</strong> type is <code>HH\\:mm\\:ss</code>.</p>\n\n <p>A clause may be:</p>\n <ul>\n     <li>a <strong>term</strong>: field name followed by a colon and the search term, e.g. <code>tags.MyTagA:sample</code></li>\n     <li>a <strong>phrase</strong>: field name followed by a colon and the search phrase in doublequotes, e.g. <code>tags.MyTagA:&quot;Some Text&quot;</code></li>\n     <li>a <strong>regular expression</strong>: field name followed by a colon and the regex in slashes, e.g. <code>tags.MyTagA:/[mb]oat/</code></li>\n     <li>a <strong>comparison</strong>: field name followed by a comparison operator and a value, e.g. <code>tags.MyTagB&lt;3</code></li>\n     <li>a <strong>range</strong>: field name followed by a colon and an open (indiced by <code>[ </code> and <code>] </code>) or (semi-)closed range (indiced by <code>{</code> and <code>}</code>), e.g. <code>tags.MyTagB:[* TO 3] </code></li>\n </ul>\n\n <p>Clauses may be <strong>grouped</strong> with brackets <code>( </code> and <code>) </code> and / or <strong>joined</strong> with <code>AND</code> or <code>OR </code> (or <code>&amp;&amp; </code> and <code>|| </code>)</p>\n\n <h3>Example</h3>\n\n <p>The syntax allows to build complex filter queries such as:</p>\n\n <p><code>tags.city:&quot;new york&quot; AND tags.ATextTag:/[mb]oat/ AND tags.count:[1 TO *] OR tags.realNumberTag&lt;=3.2 OR tags.MyDateTag:2024-01-01 OR tags.MyDateTag:[2023-10-01 TO 2023-12-24] OR tags.MyDateTag&lt;2022-01-01 OR tags.time:12\\:00\\:00 OR tags.time:[12\\:00\\:00 TO 14\\:00\\:00] OR tags.time&lt;10\\:00\\:00 </code></p>\n\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
+        "description": "[EXPERIMENTAL] Get features (aligned over runs) in the given project-space.\n\n \u003ch2\u003eSupported filter syntax\u003c/h2\u003e\n\n \u003cp\u003eThe filter string must contain one or more clauses. A clause is prefíxed\n by a field name.\n \u003c/p\u003e\n\n Currently the only searchable fields are names of tags (\u003ccode\u003etagName\u003c/code\u003e) followed by a clause that is valued for the value type of the tag (See TagDefinition).\n Tag name based field need to be prefixed with the namespace \u003ccode\u003etags.\u003c/code\u003e.\n Possible value types of tags are \u003cstrong\u003ebool\u003c/strong\u003e, \u003cstrong\u003einteger\u003c/strong\u003e, \u003cstrong\u003ereal\u003c/strong\u003e, \u003cstrong\u003etext\u003c/strong\u003e, \u003cstrong\u003edate\u003c/strong\u003e, or \u003cstrong\u003etime\u003c/strong\u003e - tag value\n\n \u003cp\u003eThe format of the \u003cstrong\u003edate\u003c/strong\u003e type is \u003ccode\u003eyyyy-MM-dd\u003c/code\u003e and of the \u003cstrong\u003etime\u003c/strong\u003e type is \u003ccode\u003eHH\\:mm\\:ss\u003c/code\u003e.\u003c/p\u003e\n\n \u003cp\u003eA clause may be:\u003c/p\u003e\n \u003cul\u003e\n     \u003cli\u003ea \u003cstrong\u003eterm\u003c/strong\u003e: field name followed by a colon and the search term, e.g. \u003ccode\u003etags.MyTagA:sample\u003c/code\u003e\u003c/li\u003e\n     \u003cli\u003ea \u003cstrong\u003ephrase\u003c/strong\u003e: field name followed by a colon and the search phrase in doublequotes, e.g. \u003ccode\u003etags.MyTagA:\u0026quot;Some Text\u0026quot;\u003c/code\u003e\u003c/li\u003e\n     \u003cli\u003ea \u003cstrong\u003eregular expression\u003c/strong\u003e: field name followed by a colon and the regex in slashes, e.g. \u003ccode\u003etags.MyTagA:/[mb]oat/\u003c/code\u003e\u003c/li\u003e\n     \u003cli\u003ea \u003cstrong\u003ecomparison\u003c/strong\u003e: field name followed by a comparison operator and a value, e.g. \u003ccode\u003etags.MyTagB\u0026lt;3\u003c/code\u003e\u003c/li\u003e\n     \u003cli\u003ea \u003cstrong\u003erange\u003c/strong\u003e: field name followed by a colon and an open (indiced by \u003ccode\u003e[ \u003c/code\u003e and \u003ccode\u003e] \u003c/code\u003e) or (semi-)closed range (indiced by \u003ccode\u003e{\u003c/code\u003e and \u003ccode\u003e}\u003c/code\u003e), e.g. \u003ccode\u003etags.MyTagB:[* TO 3] \u003c/code\u003e\u003c/li\u003e\n \u003c/ul\u003e\n\n \u003cp\u003eClauses may be \u003cstrong\u003egrouped\u003c/strong\u003e with brackets \u003ccode\u003e( \u003c/code\u003e and \u003ccode\u003e) \u003c/code\u003e and / or \u003cstrong\u003ejoined\u003c/strong\u003e with \u003ccode\u003eAND\u003c/code\u003e or \u003ccode\u003eOR \u003c/code\u003e (or \u003ccode\u003e\u0026amp;\u0026amp; \u003c/code\u003e and \u003ccode\u003e|| \u003c/code\u003e)\u003c/p\u003e\n\n \u003ch3\u003eExample\u003c/h3\u003e\n\n \u003cp\u003eThe syntax allows to build complex filter queries such as:\u003c/p\u003e\n\n \u003cp\u003e\u003ccode\u003etags.city:\u0026quot;new york\u0026quot; AND tags.ATextTag:/[mb]oat/ AND tags.count:[1 TO *] OR tags.realNumberTag\u0026lt;\u003d3.2 OR tags.MyDateTag:2024-01-01 OR tags.MyDateTag:[2023-10-01 TO 2023-12-24] OR tags.MyDateTag\u0026lt;2022-01-01 OR tags.time:12\\:00\\:00 OR tags.time:[12\\:00\\:00 TO 14\\:00\\:00] OR tags.time\u0026lt;10\\:00\\:00 \u003c/code\u003e\u003c/p\u003e\n\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
         "operationId": "getAlignedFeaturesPageExperimental",
         "parameters": [
           {
@@ -6411,7 +6970,7 @@
           {
             "name": "optFields",
             "in": "query",
-            "description": "set of optional fields to be included. Use 'none' only to override defaults.",
+            "description": "set of optional fields to be included. Use \u0027none\u0027 only to override defaults.",
             "required": false,
             "schema": {
               "type": "array",
@@ -6446,7 +7005,7 @@
           "Features"
         ],
         "summary": "[EXPERIMENTAL] Get features (aligned over runs) by tag group",
-        "description": "[EXPERIMENTAL] Get features (aligned over runs) by tag group.\n <p>\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
+        "description": "[EXPERIMENTAL] Get features (aligned over runs) by tag group.\n \u003cp\u003e\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
         "operationId": "getAlignedFeaturesByGroupExperimental",
         "parameters": [
           {
@@ -6514,7 +7073,7 @@
           {
             "name": "optFields",
             "in": "query",
-            "description": "set of optional fields to be included. Use 'none' only to override defaults.",
+            "description": "set of optional fields to be included. Use \u0027none\u0027 only to override defaults.",
             "required": false,
             "schema": {
               "type": "array",
@@ -6572,7 +7131,7 @@
           "Jobs"
         ],
         "summary": "[DEPRECATED] Get all (non-default) job configuration names\n ",
-        "description": "[DEPRECATED] Get all (non-default) job configuration names\n <p>\n [DEPRECATED] Use /job-configs to get all configs with names. This endpoint is based on local file paths and will likely be removed in future versions of this API.",
+        "description": "[DEPRECATED] Get all (non-default) job configuration names\n \u003cp\u003e\n [DEPRECATED] Use /job-configs to get all configs with names. This endpoint is based on local file paths and will likely be removed in future versions of this API.",
         "operationId": "getJobConfigNames",
         "responses": {
           "200": {
@@ -6625,6 +7184,31 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Info"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/guis": {
+      "get": {
+        "tags": [
+          "Gui"
+        ],
+        "summary": "Get list of currently running gui windows, managed by this SIRIUS instance.",
+        "description": "Get list of currently running gui windows, managed by this SIRIUS instance.\n Note this will not show any Clients that are connected from a separate process!",
+        "operationId": "getGuis",
+        "responses": {
+          "200": {
+            "description": "List of GUI windows that are currently managed by this SIRIUS instance.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GuiInfo"
+                  }
                 }
               }
             }
@@ -6726,7 +7310,7 @@
           "Searchable Databases"
         ],
         "summary": "Get list of curated custom databases downloadable from the SIRIUS web service for local use",
-        "description": "Get list of curated custom databases downloadable from the SIRIUS web service for local use.\n <p>\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.\n [DEPRECATED] This endpoint will likely be removed or changed in future versions of this API.",
+        "description": "Get list of curated custom databases downloadable from the SIRIUS web service for local use.\n \u003cp\u003e\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.\n [DEPRECATED] This endpoint will likely be removed or changed in future versions of this API.",
         "operationId": "getDownloadableDatabases",
         "responses": {
           "200": {
@@ -6854,7 +7438,7 @@
           "200": {
             "description": "OK",
             "content": {
-              "text/plain;charset=UTF-8": {
+              "text/plain;charset\u003dUTF-8": {
                 "schema": {
                   "type": "string"
                 }
@@ -6876,7 +7460,7 @@
           "200": {
             "description": "OK",
             "content": {
-              "text/plain;charset=UTF-8": {
+              "text/plain;charset\u003dUTF-8": {
                 "schema": {
                   "type": "string"
                 }
@@ -6962,7 +7546,7 @@
         "tags": [
           "Actuator"
         ],
-        "summary": "Actuator web endpoint 'health'",
+        "summary": "Actuator web endpoint \u0027health\u0027",
         "operationId": "health",
         "responses": {
           "200": {
@@ -6994,7 +7578,7 @@
           "Runs"
         ],
         "summary": "[EXPERIMENTAL] Delete tag with the given name from the run with the specified ID in the specified project-space",
-        "description": "[EXPERIMENTAL] Delete tag with the given name from the run with the specified ID in the specified project-space.\n <p>\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
+        "description": "[EXPERIMENTAL] Delete tag with the given name from the run with the specified ID in the specified project-space.\n \u003cp\u003e\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
         "operationId": "removeTagFromRunExperimental",
         "parameters": [
           {
@@ -7038,7 +7622,7 @@
           "Compounds"
         ],
         "summary": "[EXPERIMENTAL] Delete tag with the given name from the compound (group of ion identities) with the specified ID in the specified project-space",
-        "description": "[EXPERIMENTAL] Delete tag with the given name from the compound (group of ion identities) with the specified ID in the specified project-space.\n <p>\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
+        "description": "[EXPERIMENTAL] Delete tag with the given name from the compound (group of ion identities) with the specified ID in the specified project-space.\n \u003cp\u003e\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
         "operationId": "removeTagFromCompoundExperimental",
         "parameters": [
           {
@@ -7082,7 +7666,7 @@
           "Compound Statistics"
         ],
         "summary": "[EXPERIMENTAL] Delete fold changes",
-        "description": "[EXPERIMENTAL] Delete fold changes.\n <p>\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
+        "description": "[EXPERIMENTAL] Delete fold changes.\n \u003cp\u003e\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
         "operationId": "deleteCompoundFoldChangesExperimental",
         "parameters": [
           {
@@ -7142,7 +7726,7 @@
           "Features"
         ],
         "summary": "[EXPERIMENTAL] Delete tag with the given name from the feature (aligned over runs) with the specified ID in the specified project-space",
-        "description": "[EXPERIMENTAL] Delete tag with the given name from the feature (aligned over runs) with the specified ID in the specified project-space.\n <p>\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
+        "description": "[EXPERIMENTAL] Delete tag with the given name from the feature (aligned over runs) with the specified ID in the specified project-space.\n \u003cp\u003e\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
         "operationId": "removeTagFromAlignedFeatureExperimental",
         "parameters": [
           {
@@ -7186,7 +7770,7 @@
           "Feature Statistics"
         ],
         "summary": "[EXPERIMENTAL] Delete fold changes",
-        "description": "[EXPERIMENTAL] Delete fold changes.\n <p>\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
+        "description": "[EXPERIMENTAL] Delete fold changes.\n \u003cp\u003e\n [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.",
         "operationId": "deleteAlignedFeatureFoldChangesExperimental",
         "parameters": [
           {
@@ -7374,19 +7958,19 @@
           },
           "numOfFeatures": {
             "type": "integer",
-            "description": "Number of features (aligned over runs) in this project. If NULL, information has not been requested (See OptField 'sizeInformation').",
+            "description": "Number of features (aligned over runs) in this project. If NULL, information has not been requested (See OptField \u0027sizeInformation\u0027).",
             "format": "int32",
             "nullable": true
           },
           "numOfCompounds": {
             "type": "integer",
-            "description": "Number of compounds (group of ion identities) in this project. If NULL, Information has not been requested (See OptField 'sizeInformation') or might be unavailable for this project type.",
+            "description": "Number of compounds (group of ion identities) in this project. If NULL, Information has not been requested (See OptField \u0027sizeInformation\u0027) or might be unavailable for this project type.",
             "format": "int32",
             "nullable": true
           },
           "numOfBytes": {
             "type": "integer",
-            "description": "Size in Bytes this project consumes on disk If NULL, Information has not been requested (See OptField 'sizeInformation').",
+            "description": "Size in Bytes this project consumes on disk If NULL, Information has not been requested (See OptField \u0027sizeInformation\u0027).",
             "format": "int64",
             "nullable": true
           },
@@ -7525,7 +8109,7 @@
           },
           "value": {
             "type": "object",
-            "description": "Optional value of the tag.\n <p>\n Generic value of the tag as defined by the corresponding TagDefinition.\n Can be Integer, Double, Boolean and String, whereas String values can represent Text, Date (yyyy-MM-dd) or Time (HH:mm:ss).",
+            "description": "Optional value of the tag.\n \u003cp\u003e\n Generic value of the tag as defined by the corresponding TagDefinition.\n Can be Integer, Double, Boolean and String, whereas String values can represent Text, Date (yyyy-MM-dd) or Time (HH:mm:ss).",
             "nullable": true
           },
           "taggedObjectId": {
@@ -7546,7 +8130,7 @@
           },
           "value": {
             "type": "object",
-            "description": "Optional value of the tag.\n <p>\n Generic value of the tag as defined by the corresponding TagDefinition.\n Can be Integer, Double, Boolean and String, whereas String values can represent Text, Date (yyyy-MM-dd) or Time (HH:mm:ss).",
+            "description": "Optional value of the tag.\n \u003cp\u003e\n Generic value of the tag as defined by the corresponding TagDefinition.\n Can be Integer, Double, Boolean and String, whereas String values can represent Text, Date (yyyy-MM-dd) or Time (HH:mm:ss).",
             "nullable": true
           }
         }
@@ -7681,7 +8265,7 @@
             "nullable": true
           }
         },
-        "description": "Progress information of a computation job that has already been submitted to SIRIUS.\n if  currentProgress == maxProgress job is finished and should change to state done soon.\n if a job is DONE all results can be accessed via the Project-Spaces api.",
+        "description": "Progress information of a computation job that has already been submitted to SIRIUS.\n if  currentProgress \u003d\u003d maxProgress job is finished and should change to state done soon.\n if a job is DONE all results can be accessed via the Project-Spaces api.",
         "nullable": true
       },
       "JobState": {
@@ -7754,7 +8338,7 @@
           },
           "absIntensityFactor": {
             "type": "number",
-            "description": "Factor to convert relative intensities to absolute intensities.\n Might be null or 1 for spectra where absolute intensities are not available (E.g. artificial or merged spectra)\n <p>\n DEPRECATED: Spectra are always returned with raw intensities.\n Use provided normalization factors to normalize on the fly.",
+            "description": "Factor to convert relative intensities to absolute intensities.\n Might be null or 1 for spectra where absolute intensities are not available (E.g. artificial or merged spectra)\n \u003cp\u003e\n DEPRECATED: Spectra are always returned with raw intensities.\n Use provided normalization factors to normalize on the fly.",
             "format": "double",
             "nullable": true,
             "deprecated": true
@@ -8285,7 +8869,7 @@
           },
           "alwaysPredictHighRefMatches": {
             "type": "boolean",
-            "description": "If true Fingerprint/Classes/Structures will be predicted for formulas candidates with\n reference spectrum similarity > Sirius.minReferenceMatchScoreToInject will be predicted no matter which\n score threshold rules apply.\n If NULL default value will be used.",
+            "description": "If true Fingerprint/Classes/Structures will be predicted for formulas candidates with\n reference spectrum similarity \u003e Sirius.minReferenceMatchScoreToInject will be predicted no matter which\n score threshold rules apply.\n If NULL default value will be used.",
             "nullable": true
           }
         },
@@ -8405,7 +8989,7 @@
           },
           "numberOfCandidateToPredict": {
             "type": "integer",
-            "description": "Number of structure candidates to be predicted by MsNovelist.\n Max Value 128. Values > 128 will be set to 128.\n Actual number of returned candidate might be lower du to duplicates being created by MsNovelist.",
+            "description": "Number of structure candidates to be predicted by MsNovelist.\n Max Value 128. Values \u003e 128 will be set to 128.\n Actual number of returned candidate might be lower du to duplicates being created by MsNovelist.",
             "format": "int32",
             "nullable": true
           }
@@ -8430,7 +9014,7 @@
           },
           "numberOfCandidatesPerIonization": {
             "type": "integer",
-            "description": "Use this parameter if you want to force SIRIUS to report at least\n NumberOfCandidatesPerIonization results per ionization.\n if <= 0, this parameter will have no effect and just the top\n NumberOfCandidates results will be reported.",
+            "description": "Use this parameter if you want to force SIRIUS to report at least\n NumberOfCandidatesPerIonization results per ionization.\n if \u003c\u003d 0, this parameter will have no effect and just the top\n NumberOfCandidates results will be reported.",
             "format": "int32",
             "nullable": true
           },
@@ -8480,17 +9064,17 @@
           },
           "enforcedFormulaConstraints": {
             "type": "string",
-            "description": "These configurations hold the information how to autodetect elements based on the given formula constraints.\n Note: If the compound is already assigned to a specific molecular formula, this annotation is ignored.\n <p>\n Enforced: Enforced elements are always considered",
+            "description": "These configurations hold the information how to autodetect elements based on the given formula constraints.\n Note: If the compound is already assigned to a specific molecular formula, this annotation is ignored.\n \u003cp\u003e\n Enforced: Enforced elements are always considered",
             "nullable": true
           },
           "fallbackFormulaConstraints": {
             "type": "string",
-            "description": "These configurations hold the information how to autodetect elements based on the given formula constraints.\n Note: If the compound is already assigned to a specific molecular formula, this annotation is ignored.\n <p>\n Fallback: Fallback elements are used, if the auto-detection fails (e.g. no isotope pattern available)",
+            "description": "These configurations hold the information how to autodetect elements based on the given formula constraints.\n Note: If the compound is already assigned to a specific molecular formula, this annotation is ignored.\n \u003cp\u003e\n Fallback: Fallback elements are used, if the auto-detection fails (e.g. no isotope pattern available)",
             "nullable": true
           },
           "detectableElements": {
             "type": "array",
-            "description": "These configurations hold the information how to autodetect elements based on the given formula constraints.\n Note: If the compound is already assigned to a specific molecular formula, this annotation is ignored.\n <p>\n Detectable: Detectable elements are added to the chemical alphabet, if there are indications for them (e.g. in isotope pattern)",
+            "description": "These configurations hold the information how to autodetect elements based on the given formula constraints.\n Note: If the compound is already assigned to a specific molecular formula, this annotation is ignored.\n \u003cp\u003e\n Detectable: Detectable elements are added to the chemical alphabet, if there are indications for them (e.g. in isotope pattern)",
             "nullable": true,
             "items": {
               "type": "string",
@@ -8510,7 +9094,7 @@
           },
           "minScoreToInjectSpecLibMatch": {
             "type": "number",
-            "description": "Similarity Threshold to inject formula candidates no matter which score/rank they have or which filter settings are applied.\n If threshold >= 0 formulas candidates with reference spectrum similarity above the threshold will be injected.",
+            "description": "Similarity Threshold to inject formula candidates no matter which score/rank they have or which filter settings are applied.\n If threshold \u003e\u003d 0 formulas candidates with reference spectrum similarity above the threshold will be injected.",
             "format": "double",
             "nullable": true
           },
@@ -8533,7 +9117,7 @@
           },
           "spectraSearchDBs": {
             "type": "array",
-            "description": "Structure Databases with Reference spectra to search in.\n <p>\n Defaults to BIO + Custom Databases. Possible values are available to Database API.",
+            "description": "Structure Databases with Reference spectra to search in.\n \u003cp\u003e\n Defaults to BIO + Custom Databases. Possible values are available to Database API.",
             "nullable": true,
             "items": {
               "type": "string",
@@ -8607,7 +9191,7 @@
           },
           "structureSearchDBs": {
             "type": "array",
-            "description": "Structure databases to search in, If expansive search is enabled this DB selection will be expanded to PubChem\n if not high confidence hit was found in the selected databases.\n <p>\n Defaults to BIO + Custom Databases. Possible values are available to Database API.",
+            "description": "Structure databases to search in, If expansive search is enabled this DB selection will be expanded to PubChem\n if not high confidence hit was found in the selected databases.\n \u003cp\u003e\n Defaults to BIO + Custom Databases. Possible values are available to Database API.",
             "nullable": true,
             "items": {
               "type": "string",
@@ -8616,7 +9200,7 @@
           },
           "tagStructuresWithLipidClass": {
             "type": "boolean",
-            "description": "Candidates matching the lipid class estimated by El Gordo will be tagged.\n The lipid class will only be available if El Gordo predicts that the MS/MS is a lipid spectrum.\n If this parameter is set to 'false' El Gordo will still be executed and e.g. improve the fragmentation\n tree, but the matching structure candidates will not be tagged if they match lipid class.",
+            "description": "Candidates matching the lipid class estimated by El Gordo will be tagged.\n The lipid class will only be available if El Gordo predicts that the MS/MS is a lipid spectrum.\n If this parameter is set to \u0027false\u0027 El Gordo will still be executed and e.g. improve the fragmentation\n tree, but the matching structure candidates will not be tagged if they match lipid class.",
             "nullable": true
           },
           "expansiveSearchConfidenceMode": {
@@ -8675,7 +9259,7 @@
           },
           "runInTwoSteps": {
             "type": "boolean",
-            "description": "As default ZODIAC runs a 2-step approach. First running 'good quality compounds' only, and afterwards including the remaining.",
+            "description": "As default ZODIAC runs a 2-step approach. First running \u0027good quality compounds\u0027 only, and afterwards including the remaining.",
             "nullable": true
           },
           "edgeFilterThresholds": {
@@ -8760,6 +9344,38 @@
         },
         "nullable": true
       },
+      "CommandSubmission": {
+        "required": [
+          "command"
+        ],
+        "type": "object",
+        "properties": {
+          "compoundIds": {
+            "type": "array",
+            "description": "Compounds that should be the input for this Job\n Will be converted to the respective alignedFeatureIds for computation.\n\n At least one compoundId or alignedFeatureId needs to be specified.",
+            "nullable": true,
+            "items": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          "alignedFeatureIds": {
+            "type": "array",
+            "description": "Features (aligned over runs) that should be the input for this Job\n\n At least one compoundId or alignedFeatureId needs to be specified.",
+            "nullable": true,
+            "items": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          "command": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
       "ImportResult": {
         "required": [
           "affectedAlignedFeatureIds",
@@ -8794,8 +9410,7 @@
             "type": "number",
             "format": "double"
           }
-        },
-        "nullable": true
+        }
       },
       "LcmsSubmissionParameters": {
         "type": "object",
@@ -8944,7 +9559,7 @@
           },
           "ms1Spectra": {
             "type": "array",
-            "description": "List of MS1Spectra belonging to this feature. These spectra will be merged an only a representative\n mergedMs1 spectrum will be stored in SIRIUS. At least one of these spectra should contain the\n isotope pattern of the precursor ion.\n Note: Will be ignored if 'mergedMs1' is given.",
+            "description": "List of MS1Spectra belonging to this feature. These spectra will be merged an only a representative\n mergedMs1 spectrum will be stored in SIRIUS. At least one of these spectra should contain the\n isotope pattern of the precursor ion.\n Note: Will be ignored if \u0027mergedMs1\u0027 is given.",
             "nullable": true,
             "items": {
               "$ref": "#/components/schemas/BasicSpectrum"
@@ -9157,7 +9772,7 @@
           },
           "absIntensityFactor": {
             "type": "number",
-            "description": "Factor to convert relative intensities to absolute intensities.\n Might be null or 1 for spectra where absolute intensities are not available (E.g. artificial or merged spectra)\n <p>\n DEPRECATED: Spectra are always returned with raw intensities.\n Use provided normalization factors to normalize on the fly.",
+            "description": "Factor to convert relative intensities to absolute intensities.\n Might be null or 1 for spectra where absolute intensities are not available (E.g. artificial or merged spectra)\n \u003cp\u003e\n DEPRECATED: Spectra are always returned with raw intensities.\n Use provided normalization factors to normalize on the fly.",
             "format": "double",
             "nullable": true,
             "deprecated": true
@@ -9190,7 +9805,7 @@
             "$ref": "#/components/schemas/SpectrumAnnotation"
           }
         },
-        "description": "Spectrum model with peak annotations based on the fragmentation tree and Epimetheus substructure annotations.\n Molecular formula and adduct of the spectrum are identical to the ones of the corresponding molecular formula candidate and FragmentationTree.\n Fragment molecular formulas and adducts correspond to the FragmentationTree's FragmentNodes",
+        "description": "Spectrum model with peak annotations based on the fragmentation tree and Epimetheus substructure annotations.\n Molecular formula and adduct of the spectrum are identical to the ones of the corresponding molecular formula candidate and FragmentationTree.\n Fragment molecular formulas and adducts correspond to the FragmentationTree\u0027s FragmentNodes",
         "nullable": true
       },
       "CanopusPrediction": {
@@ -9794,7 +10409,7 @@
             }
           }
         },
-        "description": "The MsData wraps all spectral input data belonging to a (aligned) feature. All spectra fields are optional.\n However, at least one Spectrum field needs to be set to create a valid MsData Object.\n The different types of spectra fields can be extended to adapt to other MassSpec measurement techniques not covered yet.\n <p>\n Each Feature can have:\n - One extracted isotope pattern (optional)\n - One merged MS/MS spectrum (optional)\n - One merged MS spectrum (optional)\n - many MS/MS spectra (optional)\n - many MS spectra (optional)\n <p>\n Each non-merged spectrum has an index which can be used to access the spectrum.\n <p>\n In the future we might add some additional information like chromatographic peak or something similar",
+        "description": "The MsData wraps all spectral input data belonging to a (aligned) feature. All spectra fields are optional.\n However, at least one Spectrum field needs to be set to create a valid MsData Object.\n The different types of spectra fields can be extended to adapt to other MassSpec measurement techniques not covered yet.\n \u003cp\u003e\n Each Feature can have:\n - One extracted isotope pattern (optional)\n - One merged MS/MS spectrum (optional)\n - One merged MS spectrum (optional)\n - many MS/MS spectra (optional)\n - many MS spectra (optional)\n \u003cp\u003e\n Each non-merged spectrum has an index which can be used to access the spectrum.\n \u003cp\u003e\n In the future we might add some additional information like chromatographic peak or something similar",
         "nullable": true
       },
       "ParentPeak": {
@@ -9909,7 +10524,7 @@
           },
           "substructureScore": {
             "type": "number",
-            "description": "EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.\n\n This score roughly reflects the probability of this fragment forming.\n\n This is the score of the path from root to this node which has the maximal score or \"profit\".\n The score of a path is equal to the sum of scores of its contained fragments and edges.\n Note: Refers to 'totalScore' in CombinatorialNode\n\n Null if substructure annotation not available or not requested.",
+            "description": "EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.\n\n This score roughly reflects the probability of this fragment forming.\n\n This is the score of the path from root to this node which has the maximal score or \"profit\".\n The score of a path is equal to the sum of scores of its contained fragments and edges.\n Note: Refers to \u0027totalScore\u0027 in CombinatorialNode\n\n Null if substructure annotation not available or not requested.",
             "format": "float",
             "nullable": true
           },
@@ -9955,22 +10570,22 @@
           },
           "structureAnnotationSmiles": {
             "type": "string",
-            "description": "EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.\n <p>\n Smiles of the structure candidate used to derive substructure peak annotations via epimetheus insilico fragmentation\n Substructure highlighting (bond and atom indices) refer to this specific SMILES.\n If you standardize or canonicalize this SMILES in any way the indices of substructure highlighting might\n not match correctly anymore.\n <p>\n Null if substructure annotation not available or not requested.",
+            "description": "EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.\n \u003cp\u003e\n Smiles of the structure candidate used to derive substructure peak annotations via epimetheus insilico fragmentation\n Substructure highlighting (bond and atom indices) refer to this specific SMILES.\n If you standardize or canonicalize this SMILES in any way the indices of substructure highlighting might\n not match correctly anymore.\n \u003cp\u003e\n Null if substructure annotation not available or not requested.",
             "nullable": true
           },
           "structureAnnotationName": {
             "type": "string",
-            "description": "EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.\n <p>\n Name of the structure candidate used to derive substructure peak annotations via epimetheus insilico fragmentation.\n <p>\n Null if substructure annotation not available or not requested.",
+            "description": "EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.\n \u003cp\u003e\n Name of the structure candidate used to derive substructure peak annotations via epimetheus insilico fragmentation.\n \u003cp\u003e\n Null if substructure annotation not available or not requested.",
             "nullable": true
           },
           "structureAnnotationSvg": {
             "type": "string",
-            "description": "EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.\n <p>\n SVG graphics of the structure candidate used to derive substructure peak annotations via epimetheus insilico fragmentation\n Substructure highlighting (bond and atom indices) refers to this SVG.\n <p>\n Null if substructure annotation not available or not requested.",
+            "description": "EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.\n \u003cp\u003e\n SVG graphics of the structure candidate used to derive substructure peak annotations via epimetheus insilico fragmentation\n Substructure highlighting (bond and atom indices) refers to this SVG.\n \u003cp\u003e\n Null if substructure annotation not available or not requested.",
             "nullable": true
           },
           "structureAnnotationScore": {
             "type": "number",
-            "description": "EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.\n <p>\n Overall score of all substructure annotations computed for this structure candidate (structureAnnotationSmiles)\n <p>\n Null if substructure annotation not available or not requested.",
+            "description": "EXPERIMENTAL: This field is experimental and may be changed (or even removed) without notice until it is declared stable.\n \u003cp\u003e\n Overall score of all substructure annotations computed for this structure candidate (structureAnnotationSmiles)\n \u003cp\u003e\n Null if substructure annotation not available or not requested.",
             "format": "double",
             "nullable": true
           }
@@ -10975,6 +11590,15 @@
           "GLPK",
           "CLP"
         ]
+      },
+      "GuiInfo": {
+        "type": "object",
+        "properties": {
+          "projectId": {
+            "type": "string",
+            "description": "The project this instance is running on"
+          }
+        }
       },
       "DownloadableDatabase": {
         "type": "object",
