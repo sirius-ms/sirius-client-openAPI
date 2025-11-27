@@ -34,6 +34,7 @@ from PySirius.models.bio_transformer_sequence_step import BioTransformerSequence
 from PySirius.models.canopus import Canopus
 from PySirius.models.canopus_prediction import CanopusPrediction
 from PySirius.models.category import Category
+from PySirius.models.command_submission import CommandSubmission
 from PySirius.models.compound import Compound
 from PySirius.models.compound_class import CompoundClass
 from PySirius.models.compound_class_type import CompoundClassType
@@ -65,6 +66,7 @@ from PySirius.models.formula_candidate import FormulaCandidate
 from PySirius.models.formula_candidate_opt_field import FormulaCandidateOptField
 from PySirius.models.fragment_node import FragmentNode
 from PySirius.models.fragmentation_tree import FragmentationTree
+from PySirius.models.gui_info import GuiInfo
 from PySirius.models.import_result import ImportResult
 from PySirius.models.info import Info
 from PySirius.models.instrument_profile import InstrumentProfile

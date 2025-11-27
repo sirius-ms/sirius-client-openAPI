@@ -6,6 +6,7 @@ from PySirius.api.compound_statistics_api import CompoundStatisticsApi
 from PySirius.api.compounds_api import CompoundsApi
 from PySirius.api.feature_statistics_api import FeatureStatisticsApi
 from PySirius.api.features_api import FeaturesApi
+from PySirius.api.gui_api import GuiApi
 from PySirius.api.info_api import InfoApi
 from PySirius.api.jobs_api import JobsApi
 from PySirius.api.login_and_account_api import LoginAndAccountApi

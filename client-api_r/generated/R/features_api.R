@@ -507,6 +507,22 @@
 #' dput(result)
 #'
 #'
+#' ####################  GetSiriusFragTreeInternal  ####################
+#'
+#' library(RSirius)
+#' var_project_id <- "project_id_example" # character | project-space to read from.
+#' var_aligned_feature_id <- "aligned_feature_id_example" # character | feature (aligned over runs) the formula result belongs to.
+#' var_formula_id <- "formula_id_example" # character | identifier of the requested formula result
+#'
+#' #[INTERNAL] Returns fragmentation tree (SIRIUS) for the given formula result identifier in SIRIUS' internal format
+#' api_instance <- rsirius_api$new()
+#'
+#' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
+#' # result <- api_instance$GetSiriusFragTreeInternal(var_project_id, var_aligned_feature_id, var_formula_iddata_file = "result.txt")
+#' result <- api_instance$features_api$GetSiriusFragTreeInternal(var_project_id, var_aligned_feature_id, var_formula_id)
+#' dput(result)
+#'
+#'
 #' ####################  GetSpectralLibraryMatch  ####################
 #'
 #' library(RSirius)
@@ -5115,6 +5131,150 @@ FeaturesApi <- R6::R6Class(
           # For JSON responses, deserialize normally
           deserialized_resp_obj <- tryCatch(
             self$api_client$deserialize(local_var_resp$response_as_text(), "QuantTableExperimental", loadNamespace("RSirius")),
+            error = function(e) {
+              stop("Failed to deserialize response")
+            }
+          )
+          local_var_resp$content <- deserialized_resp_obj
+        }
+        local_var_resp
+      } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
+        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
+      } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
+        ApiResponse$new("API client error", local_var_resp)
+      } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
+        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
+          local_var_resp$response <- "API server error"
+        }
+        local_var_resp
+      }
+    },
+
+    #' @description
+    #' [INTERNAL] Returns fragmentation tree (SIRIUS) for the given formula result identifier in SIRIUS' internal format
+    #'
+    #' @param project_id project-space to read from.
+    #' @param aligned_feature_id feature (aligned over runs) the formula result belongs to.
+    #' @param formula_id identifier of the requested formula result
+    #' @param data_file (optional) name of the data file to save the result
+    #' @param ... Other optional arguments
+    #'
+    #' @return character
+    GetSiriusFragTreeInternal = function(project_id, aligned_feature_id, formula_id, data_file = NULL, ...) {
+      local_var_response <- self$GetSiriusFragTreeInternalWithHttpInfo(project_id, aligned_feature_id, formula_id, data_file = data_file, ...)
+      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
+        local_var_response$content
+      } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
+        local_var_response
+      } else if (local_var_response$status_code >= 400 && local_var_response$status_code <= 499) {
+        local_var_response
+      } else if (local_var_response$status_code >= 500 && local_var_response$status_code <= 599) {
+        local_var_response
+      }
+    },
+
+    #' @description
+    #' [INTERNAL] Returns fragmentation tree (SIRIUS) for the given formula result identifier in SIRIUS' internal format
+    #'
+    #' @param project_id project-space to read from.
+    #' @param aligned_feature_id feature (aligned over runs) the formula result belongs to.
+    #' @param formula_id identifier of the requested formula result
+    #' @param data_file (optional) name of the data file to save the result
+    #' @param ... Other optional arguments
+    #'
+    #' @return API response (character) with additional information such as HTTP status code, headers
+    GetSiriusFragTreeInternalWithHttpInfo = function(project_id, aligned_feature_id, formula_id, data_file = NULL, ...) {
+      args <- list(...)
+      query_params <- list()
+      header_params <- c()
+      form_params <- list()
+      file_params <- list()
+      local_var_body <- NULL
+      oauth_scopes <- NULL
+      is_oauth <- FALSE
+
+      if (missing(`project_id`)) {
+        stop("Missing required parameter `project_id`.")
+      }
+
+      if (missing(`aligned_feature_id`)) {
+        stop("Missing required parameter `aligned_feature_id`.")
+      }
+
+      if (missing(`formula_id`)) {
+        stop("Missing required parameter `formula_id`.")
+      }
+
+
+
+
+      local_var_url_path <- "/api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/sirius-fragtree"
+      if (!missing(`project_id`)) {
+        local_var_url_path <- gsub("\\{projectId\\}", URLencode(as.character(`project_id`), reserved = TRUE), local_var_url_path)
+      }
+
+      if (!missing(`aligned_feature_id`)) {
+        local_var_url_path <- gsub("\\{alignedFeatureId\\}", URLencode(as.character(`aligned_feature_id`), reserved = TRUE), local_var_url_path)
+      }
+
+      if (!missing(`formula_id`)) {
+        local_var_url_path <- gsub("\\{formulaId\\}", URLencode(as.character(`formula_id`), reserved = TRUE), local_var_url_path)
+      }
+
+
+      # The Accept request HTTP header
+      local_var_accepts <- list("application/json")
+
+      # The Content-Type representation header
+      local_var_content_types <- list()
+
+      local_var_resp <- self$api_client$CallApi(url = paste0(self$api_client$base_path, local_var_url_path),
+                                 method = "GET",
+                                 query_params = query_params,
+                                 header_params = header_params,
+                                 form_params = form_params,
+                                 file_params = file_params,
+                                 accepts = local_var_accepts,
+                                 content_types = local_var_content_types,
+                                 body = local_var_body,
+                                 is_oauth = is_oauth,
+                                 oauth_scopes = oauth_scopes,
+                                 ...)
+
+      if (local_var_resp$status_code >= 200 && local_var_resp$status_code <= 299) {
+        # save response in a file
+        if (!is.null(data_file)) {
+          write(local_var_resp$response, data_file)
+        }
+
+        # Check if we are expecting a CSV response
+        is_csv_response <- any(grepl("csv", local_var_accepts, ignore.case = TRUE))
+
+        if (is_csv_response) {
+          # For CSV responses, parse into data.frame
+          csv_resp_obj <- tryCatch(
+            {
+              csv_text <- rawToChar(local_var_resp$response)
+
+              # Detect separator by examining first line
+              first_line <- strsplit(csv_text, "\n")[[1]][1]
+              if (grepl("\t", first_line)) {
+                # Tab-separated (TSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = "\t")
+              } else {
+                # Comma-separated (CSV)
+                read.csv(text = csv_text, stringsAsFactors = FALSE, sep = ",")
+              }
+            },
+            error = function(e) {
+              stop("Failed to parse CSV response")
+            }
+          )
+          local_var_resp$content <- csv_resp_obj
+        } else {
+          # For JSON responses, deserialize normally
+          deserialized_resp_obj <- tryCatch(
+            self$api_client$deserialize(local_var_resp$response_as_text(), "character", loadNamespace("RSirius")),
             error = function(e) {
               stop("Failed to deserialize response")
             }

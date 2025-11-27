@@ -55,10 +55,10 @@ import PySirius
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8080
+# Defining the host is optional and defaults to http://localhost:8888
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8080"
+    host = "http://localhost:8888"
 )
 
 
@@ -80,7 +80,7 @@ with PySirius.ApiClient(configuration) as api_client:
 
 ## Documentation for API Endpoints
 
-All URIs are relative to *http://localhost:8080*
+All URIs are relative to *http://localhost:8888*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
@@ -137,6 +137,7 @@ Class | Method | HTTP request | Description
 *FeaturesApi* | [**get_lipid_annotation**](docs/FeaturesApi.md#get_lipid_annotation) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/lipid-annotation | Returns Lipid annotation (ElGordo) for the given formulaId
 *FeaturesApi* | [**get_ms_data**](docs/FeaturesApi.md#get_ms_data) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/ms-data | Mass Spec data (input data) for the given &#39;alignedFeatureId&#39; .
 *FeaturesApi* | [**get_quant_table_row_experimental**](docs/FeaturesApi.md#get_quant_table_row_experimental) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/quant-table-row | [EXPERIMENTAL] Returns a single quantification table row for the given feature (alignedFeatureId)
+*FeaturesApi* | [**get_sirius_frag_tree_internal**](docs/FeaturesApi.md#get_sirius_frag_tree_internal) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/sirius-fragtree | [INTERNAL] Returns fragmentation tree (SIRIUS) for the given formula result identifier in SIRIUS&#39; internal format
 *FeaturesApi* | [**get_spectral_library_match**](docs/FeaturesApi.md#get_spectral_library_match) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/spectral-library-matches/{matchId} | Spectral library match for the given &#39;alignedFeatureId&#39;.
 *FeaturesApi* | [**get_spectral_library_matches**](docs/FeaturesApi.md#get_spectral_library_matches) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/spectral-library-matches | List of spectral library matches for the given &#39;alignedFeatureId&#39;.
 *FeaturesApi* | [**get_spectral_library_matches_paged**](docs/FeaturesApi.md#get_spectral_library_matches_paged) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/spectral-library-matches/page | Page of spectral library matches for the given &#39;alignedFeatureId&#39;.
@@ -151,6 +152,9 @@ Class | Method | HTTP request | Description
 *FeaturesApi* | [**get_tags_for_aligned_features_experimental**](docs/FeaturesApi.md#get_tags_for_aligned_features_experimental) | **GET** /api/projects/{projectId}/aligned-features/tags/{objectId} | [EXPERIMENTAL] Get all tags associated with this Object
 *FeaturesApi* | [**get_traces_experimental**](docs/FeaturesApi.md#get_traces_experimental) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/traces | [EXPERIMENTAL] Returns the traces of the given feature (alignedFeatureId)
 *FeaturesApi* | [**remove_tag_from_aligned_feature_experimental**](docs/FeaturesApi.md#remove_tag_from_aligned_feature_experimental) | **DELETE** /api/projects/{projectId}/aligned-features/tags/{alignedFeatureId}/{tagName} | [EXPERIMENTAL] Delete tag with the given name from the feature (aligned over runs) with the specified ID in the specified project-space
+*GuiApi* | [**close_gui**](docs/GuiApi.md#close_gui) | **DELETE** /api/projects/{projectId}/gui | Close GUI instance of given project-space if available.
+*GuiApi* | [**get_guis**](docs/GuiApi.md#get_guis) | **GET** /api/guis | Get list of currently running gui windows, managed by this SIRIUS instance.
+*GuiApi* | [**open_gui**](docs/GuiApi.md#open_gui) | **POST** /api/projects/{projectId}/gui | Open GUI instance on specified project-space and bring the GUI window to foreground.
 *InfoApi* | [**get_connection_check**](docs/InfoApi.md#get_connection_check) | **GET** /api/connection-status | 
 *InfoApi* | [**get_info**](docs/InfoApi.md#get_info) | **GET** /api/info | 
 *JobsApi* | [**delete_job**](docs/JobsApi.md#delete_job) | **DELETE** /api/projects/{projectId}/jobs/{jobId} | Delete job.
@@ -166,6 +170,7 @@ Class | Method | HTTP request | Description
 *JobsApi* | [**get_jobs_paged**](docs/JobsApi.md#get_jobs_paged) | **GET** /api/projects/{projectId}/jobs/page | Get Page of jobs with information such as current state and progress (if available).
 *JobsApi* | [**has_jobs**](docs/JobsApi.md#has_jobs) | **GET** /api/projects/{projectId}/has-jobs | 
 *JobsApi* | [**save_job_config**](docs/JobsApi.md#save_job_config) | **POST** /api/job-configs/{name} | Add new job configuration with given name.
+*JobsApi* | [**start_command**](docs/JobsApi.md#start_command) | **POST** /api/projects/{projectId}/jobs/run-command | [DEPRECATED] Start computation for given command and input
 *JobsApi* | [**start_job**](docs/JobsApi.md#start_job) | **POST** /api/projects/{projectId}/jobs | Start computation for given compounds and with given parameters.
 *JobsApi* | [**start_job_from_config**](docs/JobsApi.md#start_job_from_config) | **POST** /api/projects/{projectId}/jobs/from-config | Start computation for given compounds and with parameters from a stored job-config.
 *LoginAndAccountApi* | [**get_account_info**](docs/LoginAndAccountApi.md#get_account_info) | **GET** /api/account/ | Get information about the account currently logged in.
@@ -179,6 +184,8 @@ Class | Method | HTTP request | Description
 *LoginAndAccountApi* | [**sign_up**](docs/LoginAndAccountApi.md#sign_up) | **GET** /api/account/signUp | Open SignUp window in system browser and return signUp link.
 *ProjectsApi* | [**build_search_index**](docs/ProjectsApi.md#build_search_index) | **PUT** /api/projects/{projectId}/index | Create a search index for the given project.
 *ProjectsApi* | [**close_project**](docs/ProjectsApi.md#close_project) | **DELETE** /api/projects/{projectId} | Close project-space and remove it from the application
+*ProjectsApi* | [**copy_project**](docs/ProjectsApi.md#copy_project) | **PUT** /api/projects/{projectId}/copy | DEPRECATED: this endpoint is based on local file paths and will likely be removed in future versions of this API.
+*ProjectsApi* | [**create**](docs/ProjectsApi.md#create) | **POST** /api/projects/create | Create and open a new project with unique autogenerated projectId.
 *ProjectsApi* | [**create_project**](docs/ProjectsApi.md#create_project) | **POST** /api/projects/{projectId} | Create and open a new project-space at given location and make it accessible via the given projectId.
 *ProjectsApi* | [**get_canopus_classy_fire_data**](docs/ProjectsApi.md#get_canopus_classy_fire_data) | **GET** /api/projects/{projectId}/cf-data | Get CANOPUS prediction vector definition for ClassyFire classes
 *ProjectsApi* | [**get_canopus_npc_data**](docs/ProjectsApi.md#get_canopus_npc_data) | **GET** /api/projects/{projectId}/npc-data | Get CANOPUS prediction vector definition for NPC classes
@@ -187,8 +194,12 @@ Class | Method | HTTP request | Description
 *ProjectsApi* | [**get_projects**](docs/ProjectsApi.md#get_projects) | **GET** /api/projects | List opened project spaces.
 *ProjectsApi* | [**import_ms_run_data**](docs/ProjectsApi.md#import_ms_run_data) | **POST** /api/projects/{projectId}/import/ms-data-files | Import and Align full MS-Runs from various formats into the specified project  Possible formats (mzML, mzXML)
 *ProjectsApi* | [**import_ms_run_data_as_job**](docs/ProjectsApi.md#import_ms_run_data_as_job) | **POST** /api/projects/{projectId}/import/ms-data-files-job | Import and Align full MS-Runs from various formats into the specified project as background job.
+*ProjectsApi* | [**import_ms_run_data_as_job_locally**](docs/ProjectsApi.md#import_ms_run_data_as_job_locally) | **POST** /api/projects/{projectId}/import/ms-data-local-files-job | [DEPRECATED] Import and Align full MS-Runs from various formats into the specified project as background job
+*ProjectsApi* | [**import_ms_run_data_locally**](docs/ProjectsApi.md#import_ms_run_data_locally) | **POST** /api/projects/{projectId}/import/ms-local-data-files | [DEPRECATED] Import and Align full MS-Runs from various formats into the specified project  Possible formats (mzML, mzXML)  
 *ProjectsApi* | [**import_preprocessed_data**](docs/ProjectsApi.md#import_preprocessed_data) | **POST** /api/projects/{projectId}/import/preprocessed-data-files | Import already preprocessed ms/ms data from various formats into the specified project  Possible formats (ms, mgf, cef, msp)
 *ProjectsApi* | [**import_preprocessed_data_as_job**](docs/ProjectsApi.md#import_preprocessed_data_as_job) | **POST** /api/projects/{projectId}/import/preprocessed-data-files-job | Import ms/ms data from the given format into the specified project-space as background job.
+*ProjectsApi* | [**import_preprocessed_data_as_job_locally**](docs/ProjectsApi.md#import_preprocessed_data_as_job_locally) | **POST** /api/projects/{projectId}/import/preprocessed-local-data-files-job | [DEPRECATED] Import ms/ms data from the given format into the specified project-space as background job
+*ProjectsApi* | [**import_preprocessed_data_locally**](docs/ProjectsApi.md#import_preprocessed_data_locally) | **POST** /api/projects/{projectId}/import/preprocessed-local-data-files | [DEPRECATED] Import already preprocessed ms/ms data from various formats into the specified project  Possible formats (ms, mgf, cef, msp)  
 *ProjectsApi* | [**open_project**](docs/ProjectsApi.md#open_project) | **PUT** /api/projects/{projectId} | Open an existing project-space and make it accessible via the given projectId.
 *RunsApi* | [**add_tags_to_run_experimental**](docs/RunsApi.md#add_tags_to_run_experimental) | **PUT** /api/projects/{projectId}/runs/tags/{runId} | [EXPERIMENTAL] Add tags to a run in the project
 *RunsApi* | [**add_tags_to_runs_experimental**](docs/RunsApi.md#add_tags_to_runs_experimental) | **PUT** /api/projects/{projectId}/runs/tags | [EXPERIMENTAL] Add tags to a run in the project
@@ -243,6 +254,7 @@ Class | Method | HTTP request | Description
  - [Canopus](docs/Canopus.md)
  - [CanopusPrediction](docs/CanopusPrediction.md)
  - [Category](docs/Category.md)
+ - [CommandSubmission](docs/CommandSubmission.md)
  - [Compound](docs/Compound.md)
  - [CompoundClass](docs/CompoundClass.md)
  - [CompoundClassType](docs/CompoundClassType.md)
@@ -274,6 +286,7 @@ Class | Method | HTTP request | Description
  - [FormulaCandidateOptField](docs/FormulaCandidateOptField.md)
  - [FragmentNode](docs/FragmentNode.md)
  - [FragmentationTree](docs/FragmentationTree.md)
+ - [GuiInfo](docs/GuiInfo.md)
  - [ImportResult](docs/ImportResult.md)
  - [Info](docs/Info.md)
  - [InstrumentProfile](docs/InstrumentProfile.md)

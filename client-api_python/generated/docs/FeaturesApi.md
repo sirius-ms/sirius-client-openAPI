@@ -1,6 +1,6 @@
 # PySirius.FeaturesApi
 
-All URIs are relative to *http://localhost:8080*
+All URIs are relative to *http://localhost:8888*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -34,6 +34,7 @@ Method | HTTP request | Description
 [**get_lipid_annotation**](FeaturesApi.md#get_lipid_annotation) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/lipid-annotation | Returns Lipid annotation (ElGordo) for the given formulaId
 [**get_ms_data**](FeaturesApi.md#get_ms_data) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/ms-data | Mass Spec data (input data) for the given &#39;alignedFeatureId&#39; .
 [**get_quant_table_row_experimental**](FeaturesApi.md#get_quant_table_row_experimental) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/quant-table-row | [EXPERIMENTAL] Returns a single quantification table row for the given feature (alignedFeatureId)
+[**get_sirius_frag_tree_internal**](FeaturesApi.md#get_sirius_frag_tree_internal) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/sirius-fragtree | [INTERNAL] Returns fragmentation tree (SIRIUS) for the given formula result identifier in SIRIUS&#39; internal format
 [**get_spectral_library_match**](FeaturesApi.md#get_spectral_library_match) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/spectral-library-matches/{matchId} | Spectral library match for the given &#39;alignedFeatureId&#39;.
 [**get_spectral_library_matches**](FeaturesApi.md#get_spectral_library_matches) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/spectral-library-matches | List of spectral library matches for the given &#39;alignedFeatureId&#39;.
 [**get_spectral_library_matches_paged**](FeaturesApi.md#get_spectral_library_matches_paged) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/spectral-library-matches/page | Page of spectral library matches for the given &#39;alignedFeatureId&#39;.
@@ -70,10 +71,10 @@ from PySirius.models.instrument_profile import InstrumentProfile
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8080
+# Defining the host is optional and defaults to http://localhost:8888
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8080"
+    host = "http://localhost:8888"
 )
 
 
@@ -144,10 +145,10 @@ from PySirius.models.structure_candidate_formula import StructureCandidateFormul
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8080
+# Defining the host is optional and defaults to http://localhost:8888
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8080"
+    host = "http://localhost:8888"
 )
 
 
@@ -220,10 +221,10 @@ from PySirius.models.tag import Tag
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8080
+# Defining the host is optional and defaults to http://localhost:8888
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8080"
+    host = "http://localhost:8888"
 )
 
 
@@ -294,10 +295,10 @@ from PySirius.models.tag_submission import TagSubmission
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8080
+# Defining the host is optional and defaults to http://localhost:8888
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8080"
+    host = "http://localhost:8888"
 )
 
 
@@ -361,10 +362,10 @@ import PySirius
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8080
+# Defining the host is optional and defaults to http://localhost:8888
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8080"
+    host = "http://localhost:8888"
 )
 
 
@@ -428,10 +429,10 @@ import PySirius
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8080
+# Defining the host is optional and defaults to http://localhost:8888
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8080"
+    host = "http://localhost:8888"
 )
 
 
@@ -498,10 +499,10 @@ from PySirius.models.trace_set_experimental import TraceSetExperimental
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8080
+# Defining the host is optional and defaults to http://localhost:8888
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8080"
+    host = "http://localhost:8888"
 )
 
 
@@ -569,10 +570,10 @@ from PySirius.models.aligned_feature_opt_field import AlignedFeatureOptField
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8080
+# Defining the host is optional and defaults to http://localhost:8888
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8080"
+    host = "http://localhost:8888"
 )
 
 
@@ -647,10 +648,10 @@ from PySirius.models.aligned_feature_quality_experimental import AlignedFeatureQ
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8080
+# Defining the host is optional and defaults to http://localhost:8888
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8080"
+    host = "http://localhost:8888"
 )
 
 
@@ -718,10 +719,10 @@ from PySirius.models.aligned_feature_opt_field import AlignedFeatureOptField
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8080
+# Defining the host is optional and defaults to http://localhost:8888
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8080"
+    host = "http://localhost:8888"
 )
 
 
@@ -793,10 +794,10 @@ from PySirius.models.paged_model_aligned_feature import PagedModelAlignedFeature
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8080
+# Defining the host is optional and defaults to http://localhost:8888
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8080"
+    host = "http://localhost:8888"
 )
 
 
@@ -905,10 +906,10 @@ from PySirius.models.paged_model_aligned_feature import PagedModelAlignedFeature
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8080
+# Defining the host is optional and defaults to http://localhost:8888
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8080"
+    host = "http://localhost:8888"
 )
 
 
@@ -987,10 +988,10 @@ from PySirius.models.compound_classes import CompoundClasses
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8080
+# Defining the host is optional and defaults to http://localhost:8888
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8080"
+    host = "http://localhost:8888"
 )
 
 
@@ -1059,10 +1060,10 @@ from PySirius.models.canopus_prediction import CanopusPrediction
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8080
+# Defining the host is optional and defaults to http://localhost:8888
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8080"
+    host = "http://localhost:8888"
 )
 
 
@@ -1133,10 +1134,10 @@ from PySirius.models.structure_candidate_opt_field import StructureCandidateOptF
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8080
+# Defining the host is optional and defaults to http://localhost:8888
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8080"
+    host = "http://localhost:8888"
 )
 
 
@@ -1207,10 +1208,10 @@ from PySirius.models.structure_candidate_scored import StructureCandidateScored
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8080
+# Defining the host is optional and defaults to http://localhost:8888
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8080"
+    host = "http://localhost:8888"
 )
 
 
@@ -1283,10 +1284,10 @@ from PySirius.models.structure_candidate_opt_field import StructureCandidateOptF
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8080
+# Defining the host is optional and defaults to http://localhost:8888
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8080"
+    host = "http://localhost:8888"
 )
 
 
@@ -1365,10 +1366,10 @@ from PySirius.models.structure_candidate_opt_field import StructureCandidateOptF
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8080
+# Defining the host is optional and defaults to http://localhost:8888
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8080"
+    host = "http://localhost:8888"
 )
 
 
@@ -1449,10 +1450,10 @@ from PySirius.models.quant_table_experimental import QuantTableExperimental
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8080
+# Defining the host is optional and defaults to http://localhost:8888
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8080"
+    host = "http://localhost:8888"
 )
 
 
@@ -1520,10 +1521,10 @@ import PySirius
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8080
+# Defining the host is optional and defaults to http://localhost:8888
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8080"
+    host = "http://localhost:8888"
 )
 
 
@@ -1596,10 +1597,10 @@ from PySirius.models.annotated_ms_ms_data import AnnotatedMsMsData
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8080
+# Defining the host is optional and defaults to http://localhost:8888
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8080"
+    host = "http://localhost:8888"
 )
 
 
@@ -1672,10 +1673,10 @@ from PySirius.models.annotated_spectrum import AnnotatedSpectrum
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8080
+# Defining the host is optional and defaults to http://localhost:8888
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8080"
+    host = "http://localhost:8888"
 )
 
 
@@ -1750,10 +1751,10 @@ from PySirius.models.formula_candidate_opt_field import FormulaCandidateOptField
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8080
+# Defining the host is optional and defaults to http://localhost:8888
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8080"
+    host = "http://localhost:8888"
 )
 
 
@@ -1828,10 +1829,10 @@ from PySirius.models.formula_candidate_opt_field import FormulaCandidateOptField
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8080
+# Defining the host is optional and defaults to http://localhost:8888
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8080"
+    host = "http://localhost:8888"
 )
 
 
@@ -1904,10 +1905,10 @@ from PySirius.models.paged_model_formula_candidate import PagedModelFormulaCandi
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8080
+# Defining the host is optional and defaults to http://localhost:8888
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8080"
+    host = "http://localhost:8888"
 )
 
 
@@ -1986,10 +1987,10 @@ from PySirius.models.fragmentation_tree import FragmentationTree
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8080
+# Defining the host is optional and defaults to http://localhost:8888
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8080"
+    host = "http://localhost:8888"
 )
 
 
@@ -2061,10 +2062,10 @@ from PySirius.models.isotope_pattern_annotation import IsotopePatternAnnotation
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8080
+# Defining the host is optional and defaults to http://localhost:8888
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8080"
+    host = "http://localhost:8888"
 )
 
 
@@ -2135,10 +2136,10 @@ from PySirius.models.lipid_annotation import LipidAnnotation
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8080
+# Defining the host is optional and defaults to http://localhost:8888
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8080"
+    host = "http://localhost:8888"
 )
 
 
@@ -2207,10 +2208,10 @@ from PySirius.models.ms_data import MsData
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8080
+# Defining the host is optional and defaults to http://localhost:8888
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8080"
+    host = "http://localhost:8888"
 )
 
 
@@ -2284,10 +2285,10 @@ from PySirius.models.quant_table_experimental import QuantTableExperimental
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8080
+# Defining the host is optional and defaults to http://localhost:8888
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8080"
+    host = "http://localhost:8888"
 )
 
 
@@ -2340,6 +2341,79 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **get_sirius_frag_tree_internal**
+> str get_sirius_frag_tree_internal(project_id, aligned_feature_id, formula_id)
+
+[INTERNAL] Returns fragmentation tree (SIRIUS) for the given formula result identifier in SIRIUS' internal format
+
+[INTERNAL] Returns fragmentation tree (SIRIUS) for the given formula result identifier in SIRIUS' internal format.
+ <p>
+ [INTERNAL]: This is an internal api endpoint and not part of the official public API. It might be changed or removed at any time.
+
+### Example
+
+
+```python
+import PySirius
+from PySirius.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to http://localhost:8888
+# See configuration.py for a list of all supported configuration parameters.
+configuration = PySirius.Configuration(
+    host = "http://localhost:8888"
+)
+
+
+# Enter a context with an instance of the API client
+with PySirius.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = PySirius.FeaturesApi(api_client)
+    project_id = 'project_id_example' # str | project-space to read from.
+    aligned_feature_id = 'aligned_feature_id_example' # str | feature (aligned over runs) the formula result belongs to.
+    formula_id = 'formula_id_example' # str | identifier of the requested formula result
+
+    try:
+        # [INTERNAL] Returns fragmentation tree (SIRIUS) for the given formula result identifier in SIRIUS' internal format
+        api_response = api_instance.get_sirius_frag_tree_internal(project_id, aligned_feature_id, formula_id)
+        print("The response of FeaturesApi->get_sirius_frag_tree_internal:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling FeaturesApi->get_sirius_frag_tree_internal: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **project_id** | **str**| project-space to read from. | 
+ **aligned_feature_id** | **str**| feature (aligned over runs) the formula result belongs to. | 
+ **formula_id** | **str**| identifier of the requested formula result | 
+
+### Return type
+
+**str**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Fragmentation Tree in internal format. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **get_spectral_library_match**
 > SpectralLibraryMatch get_spectral_library_match(project_id, aligned_feature_id, match_id, opt_fields=opt_fields)
 
@@ -2357,10 +2431,10 @@ from PySirius.models.spectral_library_match_opt_field import SpectralLibraryMatc
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8080
+# Defining the host is optional and defaults to http://localhost:8888
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8080"
+    host = "http://localhost:8888"
 )
 
 
@@ -2432,10 +2506,10 @@ from PySirius.models.spectral_library_match_opt_field import SpectralLibraryMatc
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8080
+# Defining the host is optional and defaults to http://localhost:8888
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8080"
+    host = "http://localhost:8888"
 )
 
 
@@ -2512,10 +2586,10 @@ from PySirius.models.spectral_library_match_opt_field import SpectralLibraryMatc
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8080
+# Defining the host is optional and defaults to http://localhost:8888
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8080"
+    host = "http://localhost:8888"
 )
 
 
@@ -2597,10 +2671,10 @@ from PySirius.models.spectral_library_match_summary import SpectralLibraryMatchS
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8080
+# Defining the host is optional and defaults to http://localhost:8888
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8080"
+    host = "http://localhost:8888"
 )
 
 
@@ -2679,10 +2753,10 @@ from PySirius.models.annotated_ms_ms_data import AnnotatedMsMsData
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8080
+# Defining the host is optional and defaults to http://localhost:8888
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8080"
+    host = "http://localhost:8888"
 )
 
 
@@ -2757,10 +2831,10 @@ from PySirius.models.annotated_spectrum import AnnotatedSpectrum
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8080
+# Defining the host is optional and defaults to http://localhost:8888
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8080"
+    host = "http://localhost:8888"
 )
 
 
@@ -2834,10 +2908,10 @@ from PySirius.models.annotated_spectrum import AnnotatedSpectrum
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8080
+# Defining the host is optional and defaults to http://localhost:8888
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8080"
+    host = "http://localhost:8888"
 )
 
 
@@ -2914,10 +2988,10 @@ from PySirius.models.structure_candidate_opt_field import StructureCandidateOptF
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8080
+# Defining the host is optional and defaults to http://localhost:8888
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8080"
+    host = "http://localhost:8888"
 )
 
 
@@ -2988,10 +3062,10 @@ from PySirius.models.structure_candidate_scored import StructureCandidateScored
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8080
+# Defining the host is optional and defaults to http://localhost:8888
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8080"
+    host = "http://localhost:8888"
 )
 
 
@@ -3064,10 +3138,10 @@ from PySirius.models.structure_candidate_opt_field import StructureCandidateOptF
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8080
+# Defining the host is optional and defaults to http://localhost:8888
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8080"
+    host = "http://localhost:8888"
 )
 
 
@@ -3146,10 +3220,10 @@ from PySirius.models.structure_candidate_opt_field import StructureCandidateOptF
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8080
+# Defining the host is optional and defaults to http://localhost:8888
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8080"
+    host = "http://localhost:8888"
 )
 
 
@@ -3224,10 +3298,10 @@ from PySirius.models.tag import Tag
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8080
+# Defining the host is optional and defaults to http://localhost:8888
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8080"
+    host = "http://localhost:8888"
 )
 
 
@@ -3304,10 +3378,10 @@ from PySirius.models.trace_set_experimental import TraceSetExperimental
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8080
+# Defining the host is optional and defaults to http://localhost:8888
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8080"
+    host = "http://localhost:8888"
 )
 
 
@@ -3377,10 +3451,10 @@ import PySirius
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8080
+# Defining the host is optional and defaults to http://localhost:8888
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8080"
+    host = "http://localhost:8888"
 )
 
 

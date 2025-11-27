@@ -21,6 +21,7 @@ __all__ = [
     "CompoundsApi",
     "FeatureStatisticsApi",
     "FeaturesApi",
+    "GuiApi",
     "InfoApi",
     "JobsApi",
     "LoginAndAccountApi",
@@ -60,6 +61,7 @@ __all__ = [
     "Canopus",
     "CanopusPrediction",
     "Category",
+    "CommandSubmission",
     "Compound",
     "CompoundClass",
     "CompoundClassType",
@@ -91,6 +93,7 @@ __all__ = [
     "FormulaCandidateOptField",
     "FragmentNode",
     "FragmentationTree",
+    "GuiInfo",
     "ImportResult",
     "Info",
     "InstrumentProfile",
@@ -189,6 +192,7 @@ from PySirius.api.compound_statistics_api import CompoundStatisticsApi as Compou
 from PySirius.api.compounds_api import CompoundsApi as CompoundsApi
 from PySirius.api.feature_statistics_api import FeatureStatisticsApi as FeatureStatisticsApi
 from PySirius.api.features_api import FeaturesApi as FeaturesApi
+from PySirius.api.gui_api import GuiApi as GuiApi
 from PySirius.api.info_api import InfoApi as InfoApi
 from PySirius.api.jobs_api import JobsApi as JobsApi
 from PySirius.api.login_and_account_api import LoginAndAccountApi as LoginAndAccountApi
@@ -232,6 +236,7 @@ from PySirius.models.bio_transformer_sequence_step import BioTransformerSequence
 from PySirius.models.canopus import Canopus as Canopus
 from PySirius.models.canopus_prediction import CanopusPrediction as CanopusPrediction
 from PySirius.models.category import Category as Category
+from PySirius.models.command_submission import CommandSubmission as CommandSubmission
 from PySirius.models.compound import Compound as Compound
 from PySirius.models.compound_class import CompoundClass as CompoundClass
 from PySirius.models.compound_class_type import CompoundClassType as CompoundClassType
@@ -263,6 +268,7 @@ from PySirius.models.formula_candidate import FormulaCandidate as FormulaCandida
 from PySirius.models.formula_candidate_opt_field import FormulaCandidateOptField as FormulaCandidateOptField
 from PySirius.models.fragment_node import FragmentNode as FragmentNode
 from PySirius.models.fragmentation_tree import FragmentationTree as FragmentationTree
+from PySirius.models.gui_info import GuiInfo as GuiInfo
 from PySirius.models.import_result import ImportResult as ImportResult
 from PySirius.models.info import Info as Info
 from PySirius.models.instrument_profile import InstrumentProfile as InstrumentProfile

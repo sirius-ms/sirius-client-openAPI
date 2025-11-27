@@ -26,6 +26,7 @@ R/bio_transformer_sequence_step.R
 R/canopus.R
 R/canopus_prediction.R
 R/category.R
+R/command_submission.R
 R/compound.R
 R/compound_class.R
 R/compound_classes.R
@@ -51,6 +52,8 @@ R/fold_change_job_submission.R
 R/formula_candidate.R
 R/fragment_node.R
 R/fragmentation_tree.R
+R/gui_api.R
+R/gui_info.R
 R/import_result.R
 R/info.R
 R/info_api.R
@@ -146,6 +149,7 @@ docs/BioTransformerSequenceStep.md
 docs/Canopus.md
 docs/CanopusPrediction.md
 docs/Category.md
+docs/CommandSubmission.md
 docs/Compound.md
 docs/CompoundClass.md
 docs/CompoundClasses.md
@@ -171,6 +175,8 @@ docs/FoldChangeJobSubmission.md
 docs/FormulaCandidate.md
 docs/FragmentNode.md
 docs/FragmentationTree.md
+docs/GuiApi.md
+docs/GuiInfo.md
 docs/ImportResult.md
 docs/Info.md
 docs/InfoApi.md

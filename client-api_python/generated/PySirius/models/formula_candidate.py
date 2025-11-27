@@ -153,11 +153,6 @@ class FormulaCandidate(BaseModel):
         if self.total_explained_intensity is None and "total_explained_intensity" in self.model_fields_set:
             _dict['totalExplainedIntensity'] = None
 
-        # set to None if median_mass_deviation (nullable) is None
-        # and model_fields_set contains the field
-        if self.median_mass_deviation is None and "median_mass_deviation" in self.model_fields_set:
-            _dict['medianMassDeviation'] = None
-
         # set to None if fragmentation_tree (nullable) is None
         # and model_fields_set contains the field
         if self.fragmentation_tree is None and "fragmentation_tree" in self.model_fields_set:

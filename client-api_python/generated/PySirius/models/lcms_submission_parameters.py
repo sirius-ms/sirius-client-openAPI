@@ -84,16 +84,6 @@ class LcmsSubmissionParameters(BaseModel):
         if self.sample_types is None and "sample_types" in self.model_fields_set:
             _dict['sampleTypes'] = None
 
-        # set to None if trace_max_mass_deviation (nullable) is None
-        # and model_fields_set contains the field
-        if self.trace_max_mass_deviation is None and "trace_max_mass_deviation" in self.model_fields_set:
-            _dict['traceMaxMassDeviation'] = None
-
-        # set to None if align_max_mass_deviation (nullable) is None
-        # and model_fields_set contains the field
-        if self.align_max_mass_deviation is None and "align_max_mass_deviation" in self.model_fields_set:
-            _dict['alignMaxMassDeviation'] = None
-
         return _dict
 
     @classmethod

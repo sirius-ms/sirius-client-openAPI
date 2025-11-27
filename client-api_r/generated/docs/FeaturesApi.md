@@ -1,6 +1,6 @@
 # FeaturesApi
 
-All URIs are relative to *http://localhost:8080*
+All URIs are relative to *http://localhost:8888*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -34,6 +34,7 @@ Method | HTTP request | Description
 [**GetLipidAnnotation**](FeaturesApi.md#GetLipidAnnotation) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/lipid-annotation | Returns Lipid annotation (ElGordo) for the given formulaId
 [**GetMsData**](FeaturesApi.md#GetMsData) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/ms-data | Mass Spec data (input data) for the given &#39;alignedFeatureId&#39; .
 [**GetQuantTableRowExperimental**](FeaturesApi.md#GetQuantTableRowExperimental) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/quant-table-row | [EXPERIMENTAL] Returns a single quantification table row for the given feature (alignedFeatureId)
+[**GetSiriusFragTreeInternal**](FeaturesApi.md#GetSiriusFragTreeInternal) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/sirius-fragtree | [INTERNAL] Returns fragmentation tree (SIRIUS) for the given formula result identifier in SIRIUS&#39; internal format
 [**GetSpectralLibraryMatch**](FeaturesApi.md#GetSpectralLibraryMatch) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/spectral-library-matches/{matchId} | Spectral library match for the given &#39;alignedFeatureId&#39;.
 [**GetSpectralLibraryMatches**](FeaturesApi.md#GetSpectralLibraryMatches) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/spectral-library-matches | List of spectral library matches for the given &#39;alignedFeatureId&#39;.
 [**GetSpectralLibraryMatchesPaged**](FeaturesApi.md#GetSpectralLibraryMatchesPaged) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/spectral-library-matches/page | Page of spectral library matches for the given &#39;alignedFeatureId&#39;.
@@ -1616,6 +1617,57 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Quant table row for this feature |  -  |
+
+# **GetSiriusFragTreeInternal**
+> character GetSiriusFragTreeInternal(project_id, aligned_feature_id, formula_id)
+
+[INTERNAL] Returns fragmentation tree (SIRIUS) for the given formula result identifier in SIRIUS' internal format
+
+[INTERNAL] Returns fragmentation tree (SIRIUS) for the given formula result identifier in SIRIUS' internal format.  <p>  [INTERNAL]: This is an internal api endpoint and not part of the official public API. It might be changed or removed at any time.
+
+### Example
+```R
+library(RSirius)
+
+# [INTERNAL] Returns fragmentation tree (SIRIUS) for the given formula result identifier in SIRIUS' internal format
+#
+# prepare function argument(s)
+var_project_id <- "project_id_example" # character | project-space to read from.
+var_aligned_feature_id <- "aligned_feature_id_example" # character | feature (aligned over runs) the formula result belongs to.
+var_formula_id <- "formula_id_example" # character | identifier of the requested formula result
+
+api_instance <- rsirius_api$new()
+# to save the result into a file, simply add the optional `data_file` parameter, e.g.
+# result <- api_instance$GetSiriusFragTreeInternal(var_project_id, var_aligned_feature_id, var_formula_iddata_file = "result.txt")
+result <- api_instance$features_api$GetSiriusFragTreeInternal(var_project_id, var_aligned_feature_id, var_formula_id)
+dput(result)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **project_id** | **character**| project-space to read from. | 
+ **aligned_feature_id** | **character**| feature (aligned over runs) the formula result belongs to. | 
+ **formula_id** | **character**| identifier of the requested formula result | 
+
+### Return type
+
+**character**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Fragmentation Tree in internal format. |  -  |
 
 # **GetSpectralLibraryMatch**
 > SpectralLibraryMatch GetSpectralLibraryMatch(project_id, aligned_feature_id, match_id, opt_fields = ["none"])
