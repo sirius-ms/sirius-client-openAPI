@@ -514,6 +514,22 @@ result <- api_instance$features_api$GetQuantTableRowExperimental(var_project_id,
 dput(result)
 
 
+####################  GetSiriusFragTreeInternal  ####################
+
+library(RSirius)
+var_project_id <- "project_id_example" # character | project-space to read from.
+var_aligned_feature_id <- "aligned_feature_id_example" # character | feature (aligned over runs) the formula result belongs to.
+var_formula_id <- "formula_id_example" # character | identifier of the requested formula result
+
+#[INTERNAL] Returns fragmentation tree (SIRIUS) for the given formula result identifier in SIRIUS' internal format
+api_instance <- rsirius_api$new()
+
+# to save the result into a file, simply add the optional `data_file` parameter, e.g.
+# result <- api_instance$GetSiriusFragTreeInternal(var_project_id, var_aligned_feature_id, var_formula_iddata_file = "result.txt")
+result <- api_instance$features_api$GetSiriusFragTreeInternal(var_project_id, var_aligned_feature_id, var_formula_id)
+dput(result)
+
+
 ####################  GetSpectralLibraryMatch  ####################
 
 library(RSirius)
@@ -832,6 +848,8 @@ api_instance$features_api$RemoveTagFromAlignedFeatureExperimental(var_project_id
 \item \href{#method-FeaturesApi-GetMsDataWithHttpInfo}{\code{FeaturesApi$GetMsDataWithHttpInfo()}}
 \item \href{#method-FeaturesApi-GetQuantTableRowExperimental}{\code{FeaturesApi$GetQuantTableRowExperimental()}}
 \item \href{#method-FeaturesApi-GetQuantTableRowExperimentalWithHttpInfo}{\code{FeaturesApi$GetQuantTableRowExperimentalWithHttpInfo()}}
+\item \href{#method-FeaturesApi-GetSiriusFragTreeInternal}{\code{FeaturesApi$GetSiriusFragTreeInternal()}}
+\item \href{#method-FeaturesApi-GetSiriusFragTreeInternalWithHttpInfo}{\code{FeaturesApi$GetSiriusFragTreeInternalWithHttpInfo()}}
 \item \href{#method-FeaturesApi-GetSpectralLibraryMatch}{\code{FeaturesApi$GetSpectralLibraryMatch()}}
 \item \href{#method-FeaturesApi-GetSpectralLibraryMatchWithHttpInfo}{\code{FeaturesApi$GetSpectralLibraryMatchWithHttpInfo()}}
 \item \href{#method-FeaturesApi-GetSpectralLibraryMatches}{\code{FeaturesApi$GetSpectralLibraryMatches()}}
@@ -3026,6 +3044,74 @@ QuantTableExperimental
 }
 \subsection{Returns}{
 API response (QuantTableExperimental) with additional information such as HTTP status code, headers
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-FeaturesApi-GetSiriusFragTreeInternal"></a>}}
+\if{latex}{\out{\hypertarget{method-FeaturesApi-GetSiriusFragTreeInternal}{}}}
+\subsection{Method \code{GetSiriusFragTreeInternal()}}{
+[INTERNAL] Returns fragmentation tree (SIRIUS) for the given formula result identifier in SIRIUS' internal format
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{FeaturesApi$GetSiriusFragTreeInternal(
+  project_id,
+  aligned_feature_id,
+  formula_id,
+  data_file = NULL,
+  ...
+)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{project_id}}{project-space to read from.}
+
+\item{\code{aligned_feature_id}}{feature (aligned over runs) the formula result belongs to.}
+
+\item{\code{formula_id}}{identifier of the requested formula result}
+
+\item{\code{data_file}}{(optional) name of the data file to save the result}
+
+\item{\code{...}}{Other optional arguments}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+character
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-FeaturesApi-GetSiriusFragTreeInternalWithHttpInfo"></a>}}
+\if{latex}{\out{\hypertarget{method-FeaturesApi-GetSiriusFragTreeInternalWithHttpInfo}{}}}
+\subsection{Method \code{GetSiriusFragTreeInternalWithHttpInfo()}}{
+[INTERNAL] Returns fragmentation tree (SIRIUS) for the given formula result identifier in SIRIUS' internal format
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{FeaturesApi$GetSiriusFragTreeInternalWithHttpInfo(
+  project_id,
+  aligned_feature_id,
+  formula_id,
+  data_file = NULL,
+  ...
+)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{project_id}}{project-space to read from.}
+
+\item{\code{aligned_feature_id}}{feature (aligned over runs) the formula result belongs to.}
+
+\item{\code{formula_id}}{identifier of the requested formula result}
+
+\item{\code{data_file}}{(optional) name of the data file to save the result}
+
+\item{\code{...}}{Other optional arguments}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+API response (character) with additional information such as HTTP status code, headers
 }
 }
 \if{html}{\out{<hr>}}
