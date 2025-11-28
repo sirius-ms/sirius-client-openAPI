@@ -28,3 +28,11 @@ The java SDK is part of the [SIRIUS project](https://github.com/sirius-ms/sirius
 ## Versioning
 
 The client library versions are combinations of the **API version** and the **SIRIUS version**. Example: `v3.1+sirius6.3.3` is the client library for SIRIUS 6.3.3 with API version 3.1.
+
+## Testing
+
+For local testig we suggest following the approaches in [PythonTest](.github/workflows/PythonTest.yml) and [RTest](.github/workflows/RTest.yml) (refer also to [our contribution guidelines](CONTRIBUTING.md#testing-and-integration)). 
+
+Note that our tests always assume the REST service running on port 8080 and that we start SIRIUS manually on this port. This is mainly due to GitHub runners having special layouts of e.g. file hierarchy. Automatic detection of port and PID by the `SiriusSDK` classes is tested in the conda-forge build process for Windows, macOS and Linux. If you make use of this, you need to remove the hardcoded port from the tests. 
+
+Note also that our tests can **not** be run in parallel, due to the nature of them running on one instance of SIRIUS. A simple example: If the test for job deletion checks if there is one less job after deletion, a parallel test may have already added two more jobs to SIRIUS, making the job deletion test fail even if it worked. 
