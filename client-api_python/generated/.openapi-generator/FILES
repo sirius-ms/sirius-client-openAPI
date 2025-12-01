@@ -32,6 +32,7 @@ PySirius/models/allowed_features.py
 PySirius/models/annotated_ms_ms_data.py
 PySirius/models/annotated_peak.py
 PySirius/models/annotated_spectrum.py
+PySirius/models/any_value.py
 PySirius/models/api_version.py
 PySirius/models/axes.py
 PySirius/models/background_computations_state_event.py
@@ -179,6 +180,7 @@ docs/AllowedFeatures.md
 docs/AnnotatedMsMsData.md
 docs/AnnotatedPeak.md
 docs/AnnotatedSpectrum.md
+docs/AnyValue.md
 docs/ApiVersion.md
 docs/Axes.md
 docs/BackgroundComputationsStateEvent.md

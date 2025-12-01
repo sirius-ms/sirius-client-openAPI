@@ -24,6 +24,7 @@ from PySirius.models.allowed_features import AllowedFeatures
 from PySirius.models.annotated_ms_ms_data import AnnotatedMsMsData
 from PySirius.models.annotated_peak import AnnotatedPeak
 from PySirius.models.annotated_spectrum import AnnotatedSpectrum
+from PySirius.models.any_value import AnyValue
 from PySirius.models.api_version import ApiVersion
 from PySirius.models.axes import Axes
 from PySirius.models.background_computations_state_event import BackgroundComputationsStateEvent

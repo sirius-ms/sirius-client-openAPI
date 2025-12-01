@@ -17,6 +17,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
+from PySirius.models.any_value import AnyValue
 from PySirius.models.value_type import ValueType
 from typing import Optional, Set
 from typing_extensions import Self
@@ -29,9 +30,9 @@ class TagDefinition(BaseModel):
     description: Optional[StrictStr] = Field(default=None, description="A human-readable description about the purpose of this tag.")
     tag_type: Optional[StrictStr] = Field(default=None, description="A simple string based identifier to specify the type/scope/purpose of this tag.", alias="tagType")
     value_type: ValueType = Field(alias="valueType")
-    possible_values: Optional[List[Optional[Dict[str, Any]]]] = Field(default=None, alias="possibleValues")
-    min_value: Optional[Dict[str, Any]] = Field(default=None, alias="minValue")
-    max_value: Optional[Dict[str, Any]] = Field(default=None, alias="maxValue")
+    possible_values: Optional[List[Optional[AnyValue]]] = Field(default=None, alias="possibleValues")
+    min_value: Optional[AnyValue] = Field(default=None, alias="minValue")
+    max_value: Optional[AnyValue] = Field(default=None, alias="maxValue")
     editable: Optional[StrictBool] = None
     __properties: ClassVar[List[str]] = ["tagName", "description", "tagType", "valueType", "possibleValues", "minValue", "maxValue", "editable"]
 
@@ -74,6 +75,19 @@ class TagDefinition(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of each item in possible_values (list)
+        _items = []
+        if self.possible_values:
+            for _item_possible_values in self.possible_values:
+                if _item_possible_values:
+                    _items.append(_item_possible_values.to_dict())
+            _dict['possibleValues'] = _items
+        # override the default output from pydantic by calling `to_dict()` of min_value
+        if self.min_value:
+            _dict['minValue'] = self.min_value.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of max_value
+        if self.max_value:
+            _dict['maxValue'] = self.max_value.to_dict()
         # set to None if description (nullable) is None
         # and model_fields_set contains the field
         if self.description is None and "description" in self.model_fields_set:
@@ -115,9 +129,9 @@ class TagDefinition(BaseModel):
             "description": obj.get("description"),
             "tagType": obj.get("tagType"),
             "valueType": obj.get("valueType"),
-            "possibleValues": obj.get("possibleValues"),
-            "minValue": obj.get("minValue"),
-            "maxValue": obj.get("maxValue"),
+            "possibleValues": [AnyValue.from_dict(_item) for _item in obj["possibleValues"]] if obj.get("possibleValues") is not None else None,
+            "minValue": AnyValue.from_dict(obj["minValue"]) if obj.get("minValue") is not None else None,
+            "maxValue": AnyValue.from_dict(obj["maxValue"]) if obj.get("maxValue") is not None else None,
             "editable": obj.get("editable")
         })
         return _obj

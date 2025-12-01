@@ -244,6 +244,7 @@ Class | Method | HTTP request | Description
  - [AnnotatedMsMsData](docs/AnnotatedMsMsData.md)
  - [AnnotatedPeak](docs/AnnotatedPeak.md)
  - [AnnotatedSpectrum](docs/AnnotatedSpectrum.md)
+ - [AnyValue](docs/AnyValue.md)
  - [ApiVersion](docs/ApiVersion.md)
  - [Axes](docs/Axes.md)
  - [BackgroundComputationsStateEvent](docs/BackgroundComputationsStateEvent.md)

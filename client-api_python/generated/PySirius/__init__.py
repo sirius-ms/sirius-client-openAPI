@@ -51,6 +51,7 @@ __all__ = [
     "AnnotatedMsMsData",
     "AnnotatedPeak",
     "AnnotatedSpectrum",
+    "AnyValue",
     "ApiVersion",
     "Axes",
     "BackgroundComputationsStateEvent",
@@ -226,6 +227,7 @@ from PySirius.models.allowed_features import AllowedFeatures as AllowedFeatures
 from PySirius.models.annotated_ms_ms_data import AnnotatedMsMsData as AnnotatedMsMsData
 from PySirius.models.annotated_peak import AnnotatedPeak as AnnotatedPeak
 from PySirius.models.annotated_spectrum import AnnotatedSpectrum as AnnotatedSpectrum
+from PySirius.models.any_value import AnyValue as AnyValue
 from PySirius.models.api_version import ApiVersion as ApiVersion
 from PySirius.models.axes import Axes as Axes
 from PySirius.models.background_computations_state_event import BackgroundComputationsStateEvent as BackgroundComputationsStateEvent

@@ -11,9 +11,9 @@
 #' @field description A human-readable description about the purpose of this tag. character [optional]
 #' @field tagType A simple string based identifier to specify the type/scope/purpose of this tag. character [optional]
 #' @field valueType  character
-#' @field possibleValues  list(object) [optional]
-#' @field minValue  object [optional]
-#' @field maxValue  object [optional]
+#' @field possibleValues  list(\link{AnyValue}) [optional]
+#' @field minValue  \link{AnyValue} [optional]
+#' @field maxValue  \link{AnyValue} [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
 #' @export
@@ -69,13 +69,15 @@ TagDefinitionImport <- R6::R6Class(
       }
       if (!is.null(`possibleValues`)) {
         stopifnot(is.vector(`possibleValues`), length(`possibleValues`) != 0)
-        sapply(`possibleValues`, function(x) stopifnot(is.character(x)))
+        sapply(`possibleValues`, function(x) stopifnot(R6::is.R6(x)))
         self$`possibleValues` <- `possibleValues`
       }
       if (!is.null(`minValue`)) {
+        stopifnot(R6::is.R6(`minValue`))
         self$`minValue` <- `minValue`
       }
       if (!is.null(`maxValue`)) {
+        stopifnot(R6::is.R6(`maxValue`))
         self$`maxValue` <- `maxValue`
       }
     },
@@ -129,15 +131,15 @@ TagDefinitionImport <- R6::R6Class(
       }
       if (!is.null(self$`possibleValues`)) {
         TagDefinitionImportObject[["possibleValues"]] <-
-          self$`possibleValues`
+          lapply(self$`possibleValues`, function(x) x$toSimpleType())
       }
       if (!is.null(self$`minValue`)) {
         TagDefinitionImportObject[["minValue"]] <-
-          self$`minValue`
+          self$`minValue`$toSimpleType()
       }
       if (!is.null(self$`maxValue`)) {
         TagDefinitionImportObject[["maxValue"]] <-
-          self$`maxValue`
+          self$`maxValue`$toSimpleType()
       }
       return(TagDefinitionImportObject)
     },
@@ -165,13 +167,17 @@ TagDefinitionImport <- R6::R6Class(
         self$`valueType` <- this_object$`valueType`
       }
       if (!is.null(this_object$`possibleValues`)) {
-        self$`possibleValues` <- ApiClient$new()$deserializeObj(this_object$`possibleValues`, "array[object]", loadNamespace("RSirius"))
+        self$`possibleValues` <- ApiClient$new()$deserializeObj(this_object$`possibleValues`, "array[AnyValue]", loadNamespace("RSirius"))
       }
       if (!is.null(this_object$`minValue`)) {
-        self$`minValue` <- this_object$`minValue`
+        `minvalue_object` <- AnyValue$new()
+        `minvalue_object`$fromJSON(jsonlite::toJSON(this_object$`minValue`, auto_unbox = TRUE, digits = NA, null = 'null'))
+        self$`minValue` <- `minvalue_object`
       }
       if (!is.null(this_object$`maxValue`)) {
-        self$`maxValue` <- this_object$`maxValue`
+        `maxvalue_object` <- AnyValue$new()
+        `maxvalue_object`$fromJSON(jsonlite::toJSON(this_object$`maxValue`, auto_unbox = TRUE, digits = NA, null = 'null'))
+        self$`maxValue` <- `maxvalue_object`
       }
       self
     },
@@ -201,9 +207,9 @@ TagDefinitionImport <- R6::R6Class(
         stop(paste("Error! \"", this_object$`valueType`, "\" cannot be assigned to `valueType`. Must be \"NONE\", \"BOOLEAN\", \"INTEGER\", \"REAL\", \"TEXT\", \"DATE\", \"TIME\".", sep = ""))
       }
       self$`valueType` <- this_object$`valueType`
-      self$`possibleValues` <- ApiClient$new()$deserializeObj(this_object$`possibleValues`, "array[object]", loadNamespace("RSirius"))
-      self$`minValue` <- this_object$`minValue`
-      self$`maxValue` <- this_object$`maxValue`
+      self$`possibleValues` <- ApiClient$new()$deserializeObj(this_object$`possibleValues`, "array[AnyValue]", loadNamespace("RSirius"))
+      self$`minValue` <- AnyValue$new()$fromJSON(jsonlite::toJSON(this_object$`minValue`, auto_unbox = TRUE, digits = NA, null = 'null'))
+      self$`maxValue` <- AnyValue$new()$fromJSON(jsonlite::toJSON(this_object$`maxValue`, auto_unbox = TRUE, digits = NA, null = 'null'))
       self
     },
 

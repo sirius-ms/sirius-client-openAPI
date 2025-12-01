@@ -15,6 +15,7 @@ R/allowed_features.R
 R/annotated_ms_ms_data.R
 R/annotated_peak.R
 R/annotated_spectrum.R
+R/any_value.R
 R/api_client.R
 R/api_response.R
 R/axes.R
@@ -140,6 +141,7 @@ docs/AllowedFeatures.md
 docs/AnnotatedMsMsData.md
 docs/AnnotatedPeak.md
 docs/AnnotatedSpectrum.md
+docs/AnyValue.md
 docs/Axes.md
 docs/BackgroundComputationsStateEvent.md
 docs/BasicSpectrum.md

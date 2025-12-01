@@ -134,7 +134,7 @@ library(RSirius)
 #
 # prepare function argument(s)
 var_project_id <- "project_id_example" # character | project-space to add to.
-var_tag_definition_import <- c(TagDefinitionImport$new("tagName_example", "NONE", "description_example", "tagType_example", c(123), 123, 123)) # array[TagDefinitionImport] | the tag definitions to be created
+var_tag_definition_import <- c(TagDefinitionImport$new("tagName_example", "NONE", "description_example", "tagType_example", c(AnyValue$new()), AnyValue$new(), AnyValue$new())) # array[TagDefinitionImport] | the tag definitions to be created
 
 api_instance <- rsirius_api$new()
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
