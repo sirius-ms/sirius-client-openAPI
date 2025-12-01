@@ -59,7 +59,7 @@ dput(result)
 library(RSirius)
 var_project_id <- "project_id_example" # character | project-space to add to.
 var_aligned_feature_id <- "aligned_feature_id_example" # character | feature to add tags to.
-var_tag <- c(Tag$new("tagName_example", 123)) # array[Tag] | tags to add.
+var_tag <- c(Tag$new("tagName_example", AnyValue$new())) # array[Tag] | tags to add.
 
 #[EXPERIMENTAL] Add tags to a feature (aligned over runs) in the project
 api_instance <- rsirius_api$new()
@@ -74,7 +74,7 @@ dput(result)
 
 library(RSirius)
 var_project_id <- "project_id_example" # character | project-space to add to.
-var_tag_submission <- c(TagSubmission$new("tagName_example", "taggedObjectId_example", 123)) # array[TagSubmission] | tags with the id of feature they shall be added to.
+var_tag_submission <- c(TagSubmission$new("tagName_example", "taggedObjectId_example", AnyValue$new())) # array[TagSubmission] | tags with the id of feature they shall be added to.
 
 #[EXPERIMENTAL] Add tags to a feature (aligned over runs) in the project
 api_instance <- rsirius_api$new()
