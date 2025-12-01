@@ -40,11 +40,11 @@ df
 
 \item{\code{valueType}}{character}
 
-\item{\code{possibleValues}}{list(object) [optional]}
+\item{\code{possibleValues}}{list(\link{AnyValue}) [optional]}
 
-\item{\code{minValue}}{object [optional]}
+\item{\code{minValue}}{\link{AnyValue} [optional]}
 
-\item{\code{maxValue}}{object [optional]}
+\item{\code{maxValue}}{\link{AnyValue} [optional]}
 }
 \if{html}{\out{</div>}}
 }
