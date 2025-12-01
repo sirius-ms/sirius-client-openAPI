@@ -884,6 +884,8 @@ No authorization required
      <li>a <strong>regular expression</strong>: field name followed by a colon and the regex in slashes, e.g. <code>tags.MyTagA:/[mb]oat/</code></li>
      <li>a <strong>comparison</strong>: field name followed by a comparison operator and a value, e.g. <code>tags.MyTagB&lt;3</code></li>
      <li>a <strong>range</strong>: field name followed by a colon and an open (indiced by <code>[ </code> and <code>] </code>) or (semi-)closed range (indiced by <code>{</code> and <code>}</code>), e.g. <code>tags.MyTagB:[* TO 3] </code></li>
+     <li>a <strong>boolean</strong>: tags with boolean value are matched as follows: e.g. <code>tags.MyTagA:true</code>, <code>tags.MyTagA:false</code></li>
+     <li>a <strong>value-less</strong>: tags without values (See TagDefinition) are matched as follows: e.g. <code>tags.MyTagA:*</code> or <code>tags.MyTagA:true</code></li>
  </ul>
 
  <p>Clauses may be <strong>grouped</strong> with brackets <code>( </code> and <code>) </code> and / or <strong>joined</strong> with <code>AND</code> or <code>OR </code> (or <code>&amp;&amp; </code> and <code>|| </code>)</p>

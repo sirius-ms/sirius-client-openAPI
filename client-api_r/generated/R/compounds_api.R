@@ -36,7 +36,7 @@
 #' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to add to.
 #' var_compound_id <- "compound_id_example" # character | compound (group of ion identities) to add tags to.
-#' var_tag <- c(Tag$new("tagName_example", 123)) # array[Tag] | tags to add.
+#' var_tag <- c(Tag$new("tagName_example", AnyValue$new())) # array[Tag] | tags to add.
 #'
 #' #[EXPERIMENTAL] Tags with the same name will be overwritten
 #' api_instance <- rsirius_api$new()
@@ -51,7 +51,7 @@
 #'
 #' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to add to.
-#' var_tag_submission <- c(TagSubmission$new("tagName_example", "taggedObjectId_example", 123)) # array[TagSubmission] | tags with id of the object to be added to.
+#' var_tag_submission <- c(TagSubmission$new("tagName_example", "taggedObjectId_example", AnyValue$new())) # array[TagSubmission] | tags with id of the object to be added to.
 #'
 #' #Tags with the same name will be overwritten.
 #' api_instance <- rsirius_api$new()

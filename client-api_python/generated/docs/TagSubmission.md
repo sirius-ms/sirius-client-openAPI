@@ -6,7 +6,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **tag_name** | **str** | Name of the tag as defined by the corresponding TagDefinition  Links tag object to their definition. | 
-**value** | **object** | Optional value of the tag.  &lt;p&gt;  Generic value of the tag as defined by the corresponding TagDefinition.  Can be Integer, Double, Boolean and String, whereas String values can represent Text, Date (yyyy-MM-dd) or Time (HH:mm:ss). | [optional] 
+**value** | [**AnyValue**](AnyValue.md) |  | [optional] 
 **tagged_object_id** | **str** | ID of the object where the tag should be added.  Then Object type is taken from context of the API endpoint. | 
 
 ## Example

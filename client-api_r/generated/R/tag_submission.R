@@ -8,7 +8,7 @@
 #' @description TagSubmission Class
 #' @format An \code{R6Class} generator object
 #' @field tagName Name of the tag as defined by the corresponding TagDefinition  Links tag object to their definition. character
-#' @field value Optional value of the tag.  <p>  Generic value of the tag as defined by the corresponding TagDefinition.  Can be Integer, Double, Boolean and String, whereas String values can represent Text, Date (yyyy-MM-dd) or Time (HH:mm:ss). object [optional]
+#' @field value  \link{AnyValue} [optional]
 #' @field taggedObjectId ID of the object where the tag should be added.  Then Object type is taken from context of the API endpoint. character
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
@@ -25,7 +25,7 @@ TagSubmission <- R6::R6Class(
     #'
     #' @param tagName Name of the tag as defined by the corresponding TagDefinition  Links tag object to their definition.
     #' @param taggedObjectId ID of the object where the tag should be added.  Then Object type is taken from context of the API endpoint.
-    #' @param value Optional value of the tag.  <p>  Generic value of the tag as defined by the corresponding TagDefinition.  Can be Integer, Double, Boolean and String, whereas String values can represent Text, Date (yyyy-MM-dd) or Time (HH:mm:ss).
+    #' @param value value
     #' @param ... Other optional arguments.
     initialize = function(`tagName`, `taggedObjectId`, `value` = NULL, ...) {
       if (!missing(`tagName`)) {
@@ -41,6 +41,7 @@ TagSubmission <- R6::R6Class(
         self$`taggedObjectId` <- `taggedObjectId`
       }
       if (!is.null(`value`)) {
+        stopifnot(R6::is.R6(`value`))
         self$`value` <- `value`
       }
     },
@@ -82,7 +83,7 @@ TagSubmission <- R6::R6Class(
       }
       if (!is.null(self$`value`)) {
         TagSubmissionObject[["value"]] <-
-          self$`value`
+          self$`value`$toSimpleType()
       }
       if (!is.null(self$`taggedObjectId`)) {
         TagSubmissionObject[["taggedObjectId"]] <-
@@ -102,7 +103,9 @@ TagSubmission <- R6::R6Class(
         self$`tagName` <- this_object$`tagName`
       }
       if (!is.null(this_object$`value`)) {
-        self$`value` <- this_object$`value`
+        `value_object` <- AnyValue$new()
+        `value_object`$fromJSON(jsonlite::toJSON(this_object$`value`, auto_unbox = TRUE, digits = NA, null = 'null'))
+        self$`value` <- `value_object`
       }
       if (!is.null(this_object$`taggedObjectId`)) {
         self$`taggedObjectId` <- this_object$`taggedObjectId`
@@ -129,7 +132,7 @@ TagSubmission <- R6::R6Class(
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       self$`tagName` <- this_object$`tagName`
-      self$`value` <- this_object$`value`
+      self$`value` <- AnyValue$new()$fromJSON(jsonlite::toJSON(this_object$`value`, auto_unbox = TRUE, digits = NA, null = 'null'))
       self$`taggedObjectId` <- this_object$`taggedObjectId`
       self
     },

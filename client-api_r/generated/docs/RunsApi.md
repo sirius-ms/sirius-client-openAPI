@@ -29,7 +29,7 @@ library(RSirius)
 # prepare function argument(s)
 var_project_id <- "project_id_example" # character | project-space to add to.
 var_run_id <- "run_id_example" # character | run to add tags to.
-var_tag <- c(Tag$new("tagName_example", 123)) # array[Tag] | tags to add.
+var_tag <- c(Tag$new("tagName_example", AnyValue$new())) # array[Tag] | tags to add.
 
 api_instance <- rsirius_api$new()
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
@@ -79,7 +79,7 @@ library(RSirius)
 #
 # prepare function argument(s)
 var_project_id <- "project_id_example" # character | project-space to add to.
-var_tag_submission <- c(TagSubmission$new("tagName_example", "taggedObjectId_example", 123)) # array[TagSubmission] | tags with the id of run they shall be added to.
+var_tag_submission <- c(TagSubmission$new("tagName_example", "taggedObjectId_example", AnyValue$new())) # array[TagSubmission] | tags with the id of run they shall be added to.
 
 api_instance <- rsirius_api$new()
 api_instance$runs_api$AddTagsToRunsExperimental(var_project_id, var_tag_submission)
