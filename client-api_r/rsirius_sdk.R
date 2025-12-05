@@ -226,7 +226,7 @@ SiriusSDK <- R6::R6Class(
         }
         cat("[WARNING] Overwriting workspace location [NOT RECOMMENDED]\n")
         self$workspace <- normalizePath(workspace)
-        run_args <- append(run_args, c("--workspace", workspace), 3)
+        run_args <- append(run_args, c("--workspace", workspace), 0)
       }
 
       if (!is.null(port)) {
