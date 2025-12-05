@@ -270,8 +270,8 @@ class SiriusSDK:
                 return None
             print("\033[93m [WARNING] Overwriting workspace location [NOT RECOMMENDED] \033[0m")
             SiriusSDK.workspace = os.path.abspath(workspace)
-            run_command.insert(3, "--workspace")
-            run_command.insert(4, workspace)
+            run_command.insert(1, "--workspace")
+            run_command.insert(2, workspace)
 
         # check for port
         if port is not None:

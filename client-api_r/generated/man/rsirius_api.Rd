@@ -61,6 +61,7 @@ Do not edit the class manually.
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-rsirius_api-new}{\code{rsirius_api$new()}}
+\item \href{#method-rsirius_api-wait_for_job_completion}{\code{rsirius_api$wait_for_job_completion()}}
 \item \href{#method-rsirius_api-clone}{\code{rsirius_api$clone()}}
 }
 }
@@ -80,6 +81,15 @@ Initialize a new RSirius API Class.
 }
 \if{html}{\out{</div>}}
 }
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-rsirius_api-wait_for_job_completion"></a>}}
+\if{latex}{\out{\hypertarget{method-rsirius_api-wait_for_job_completion}{}}}
+\subsection{Method \code{wait_for_job_completion()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{rsirius_api$wait_for_job_completion(project_id, job_id, timeout_in_sec = NULL)}\if{html}{\out{</div>}}
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-rsirius_api-clone"></a>}}
