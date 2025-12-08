@@ -11,7 +11,6 @@ Method | HTTP request | Description
 [**GetDefaultJobConfig**](JobsApi.md#GetDefaultJobConfig) | **GET** /api/default-job-config | Request default job configuration
 [**GetJob**](JobsApi.md#GetJob) | **GET** /api/projects/{projectId}/jobs/{jobId} | Get job information and its current state and progress (if available).
 [**GetJobConfig**](JobsApi.md#GetJobConfig) | **GET** /api/job-configs/{name} | Request job configuration with given name.
-[**GetJobConfigNames**](JobsApi.md#GetJobConfigNames) | **GET** /api/job-config-names | [DEPRECATED] Get all (non-default) job configuration names  
 [**GetJobConfigs**](JobsApi.md#GetJobConfigs) | **GET** /api/job-configs | Request all available job configurations
 [**GetJobs**](JobsApi.md#GetJobs) | **GET** /api/projects/{projectId}/jobs | Get List of all available jobs with information such as current state and progress (if available).
 [**GetJobsPaged**](JobsApi.md#GetJobsPaged) | **GET** /api/projects/{projectId}/jobs/page | Get Page of jobs with information such as current state and progress (if available).
@@ -362,48 +361,6 @@ No authorization required
 |-------------|-------------|------------------|
 | **200** | {@link JobSubmission JobSubmission} for given name. |  -  |
 
-# **GetJobConfigNames**
-> array[character] GetJobConfigNames()
-
-[DEPRECATED] Get all (non-default) job configuration names  
-
-[DEPRECATED] Get all (non-default) job configuration names  <p>  [DEPRECATED] Use /job-configs to get all configs with names. This endpoint is based on local file paths and will likely be removed in future versions of this API.
-
-### Example
-```R
-library(RSirius)
-
-# [DEPRECATED] Get all (non-default) job configuration names  
-#
-
-api_instance <- rsirius_api$new()
-# to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$GetJobConfigNames(data_file = "result.txt")
-result <- api_instance$jobs_api$GetJobConfigNames()
-dput(result)
-```
-
-### Parameters
-This endpoint does not need any parameter.
-
-### Return type
-
-**array[character]**
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **200** | OK |  -  |
-
 # **GetJobConfigs**
 > array[StoredJobSubmission] GetJobConfigs()
 
@@ -653,7 +610,7 @@ No authorization required
 
 [DEPRECATED] Start computation for given command and input
 
-[DEPRECATED] Start computation for given command and input.  <p>  [DEPRECATED] this endpoint is based on local file paths and will likely be removed in future versions of this API.
+[DEPRECATED] Start computation for given command and input.  <p>  [DEPRECATED] this endpoint is based on local file paths and will likely be removed in future versions of this API.  [INTERNAL] This endpoint is for internal use and not intended to become part of the stable API specification at any time. This endpoint can change (or be removed) at any time, even in minor updates.
 
 ### Example
 ```R

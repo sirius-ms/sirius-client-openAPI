@@ -4,7 +4,7 @@ All URIs are relative to *http://localhost:8888*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**AddDatabases**](SearchableDatabasesApi.md#AddDatabases) | **POST** /api/databases | DEPRECATED: this endpoint is based on local file paths and will likely be replaced in future versions of this API.
+[**AddDatabases**](SearchableDatabasesApi.md#AddDatabases) | **POST** /api/databases | [DEPRECATED] This endpoint is based on local file paths and will likely be replaced in future versions of this API.
 [**CreateDatabase**](SearchableDatabasesApi.md#CreateDatabase) | **POST** /api/databases/{databaseId} | 
 [**GetCustomDatabases**](SearchableDatabasesApi.md#GetCustomDatabases) | **GET** /api/databases/custom | 
 [**GetDatabase**](SearchableDatabasesApi.md#GetDatabase) | **GET** /api/databases/{databaseId} | 
@@ -19,13 +19,13 @@ Method | HTTP request | Description
 # **AddDatabases**
 > array[SearchableDatabase] AddDatabases(request_body)
 
-DEPRECATED: this endpoint is based on local file paths and will likely be replaced in future versions of this API.
+[DEPRECATED] This endpoint is based on local file paths and will likely be replaced in future versions of this API.
 
 ### Example
 ```R
 library(RSirius)
 
-# DEPRECATED: this endpoint is based on local file paths and will likely be replaced in future versions of this API.
+# [DEPRECATED] This endpoint is based on local file paths and will likely be replaced in future versions of this API.
 #
 # prepare function argument(s)
 var_request_body <- c("property_example") # array[character] | 
@@ -246,7 +246,7 @@ No authorization required
 
 Get list of curated custom databases downloadable from the SIRIUS web service for local use
 
-Get list of curated custom databases downloadable from the SIRIUS web service for local use.  <p>  [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.  [DEPRECATED] This endpoint will likely be removed or changed in future versions of this API.
+Get list of curated custom databases downloadable from the SIRIUS web service for local use.  <p>  [DEPRECATED] This endpoint will likely be removed or changed in future versions of this API.  [INTERNAL] This endpoint is for internal use and not intended to become part of the stable API specification at any time. This endpoint can change (or be removed) at any time, even in minor updates.
 
 ### Example
 ```R

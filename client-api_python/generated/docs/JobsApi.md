@@ -11,7 +11,6 @@ Method | HTTP request | Description
 [**get_default_job_config**](JobsApi.md#get_default_job_config) | **GET** /api/default-job-config | Request default job configuration
 [**get_job**](JobsApi.md#get_job) | **GET** /api/projects/{projectId}/jobs/{jobId} | Get job information and its current state and progress (if available).
 [**get_job_config**](JobsApi.md#get_job_config) | **GET** /api/job-configs/{name} | Request job configuration with given name.
-[**get_job_config_names**](JobsApi.md#get_job_config_names) | **GET** /api/job-config-names | [DEPRECATED] Get all (non-default) job configuration names  
 [**get_job_configs**](JobsApi.md#get_job_configs) | **GET** /api/job-configs | Request all available job configurations
 [**get_jobs**](JobsApi.md#get_jobs) | **GET** /api/projects/{projectId}/jobs | Get List of all available jobs with information such as current state and progress (if available).
 [**get_jobs_paged**](JobsApi.md#get_jobs_paged) | **GET** /api/projects/{projectId}/jobs/page | Get Page of jobs with information such as current state and progress (if available).
@@ -510,71 +509,6 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_job_config_names**
-> List[str] get_job_config_names()
-
-[DEPRECATED] Get all (non-default) job configuration names  
-
-[DEPRECATED] Get all (non-default) job configuration names
- <p>
- [DEPRECATED] Use /job-configs to get all configs with names. This endpoint is based on local file paths and will likely be removed in future versions of this API.
-
-### Example
-
-
-```python
-import PySirius
-from PySirius.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to http://localhost:8888
-# See configuration.py for a list of all supported configuration parameters.
-configuration = PySirius.Configuration(
-    host = "http://localhost:8888"
-)
-
-
-# Enter a context with an instance of the API client
-with PySirius.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = PySirius.JobsApi(api_client)
-
-    try:
-        # [DEPRECATED] Get all (non-default) job configuration names  
-        api_response = api_instance.get_job_config_names()
-        print("The response of JobsApi->get_job_config_names:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling JobsApi->get_job_config_names: %s\n" % e)
-```
-
-
-
-### Parameters
-
-This endpoint does not need any parameter.
-
-### Return type
-
-**List[str]**
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | OK |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
 # **get_job_configs**
 > List[StoredJobSubmission] get_job_configs()
 
@@ -934,6 +868,7 @@ No authorization required
 [DEPRECATED] Start computation for given command and input.
  <p>
  [DEPRECATED] this endpoint is based on local file paths and will likely be removed in future versions of this API.
+ [INTERNAL] This endpoint is for internal use and not intended to become part of the stable API specification at any time. This endpoint can change (or be removed) at any time, even in minor updates.
 
 ### Example
 

@@ -18,7 +18,7 @@
 #' library(RSirius)
 #' var_request_body <- c("property_example") # array[character] | 
 #'
-#' #DEPRECATED: this endpoint is based on local file paths and will likely be replaced in future versions of this API.
+#' #[DEPRECATED] This endpoint is based on local file paths and will likely be replaced in future versions of this API.
 #' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
@@ -173,7 +173,7 @@ SearchableDatabasesApi <- R6::R6Class(
     },
 
     #' @description
-    #' DEPRECATED: this endpoint is based on local file paths and will likely be replaced in future versions of this API.
+    #' [DEPRECATED] This endpoint is based on local file paths and will likely be replaced in future versions of this API.
     #'
     #' @param request_body 
     #' @param data_file (optional) name of the data file to save the result
@@ -194,7 +194,7 @@ SearchableDatabasesApi <- R6::R6Class(
     },
 
     #' @description
-    #' DEPRECATED: this endpoint is based on local file paths and will likely be replaced in future versions of this API.
+    #' [DEPRECATED] This endpoint is based on local file paths and will likely be replaced in future versions of this API.
     #'
     #' @param request_body 
     #' @param data_file (optional) name of the data file to save the result

@@ -4,7 +4,7 @@ All URIs are relative to *http://localhost:8888*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**add_databases**](SearchableDatabasesApi.md#add_databases) | **POST** /api/databases | DEPRECATED: this endpoint is based on local file paths and will likely be replaced in future versions of this API.
+[**add_databases**](SearchableDatabasesApi.md#add_databases) | **POST** /api/databases | [DEPRECATED] This endpoint is based on local file paths and will likely be replaced in future versions of this API.
 [**create_database**](SearchableDatabasesApi.md#create_database) | **POST** /api/databases/{databaseId} | 
 [**get_custom_databases**](SearchableDatabasesApi.md#get_custom_databases) | **GET** /api/databases/custom | 
 [**get_database**](SearchableDatabasesApi.md#get_database) | **GET** /api/databases/{databaseId} | 
@@ -19,7 +19,7 @@ Method | HTTP request | Description
 # **add_databases**
 > List[SearchableDatabase] add_databases(request_body)
 
-DEPRECATED: this endpoint is based on local file paths and will likely be replaced in future versions of this API.
+[DEPRECATED] This endpoint is based on local file paths and will likely be replaced in future versions of this API.
 
 ### Example
 
@@ -44,7 +44,7 @@ with PySirius.ApiClient(configuration) as api_client:
     request_body = ['request_body_example'] # List[str] | 
 
     try:
-        # DEPRECATED: this endpoint is based on local file paths and will likely be replaced in future versions of this API.
+        # [DEPRECATED] This endpoint is based on local file paths and will likely be replaced in future versions of this API.
         api_response = api_instance.add_databases(request_body)
         print("The response of SearchableDatabasesApi->add_databases:\n")
         pprint(api_response)
@@ -350,8 +350,8 @@ Get list of curated custom databases downloadable from the SIRIUS web service fo
 
 Get list of curated custom databases downloadable from the SIRIUS web service for local use.
  <p>
- [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.
  [DEPRECATED] This endpoint will likely be removed or changed in future versions of this API.
+ [INTERNAL] This endpoint is for internal use and not intended to become part of the stable API specification at any time. This endpoint can change (or be removed) at any time, even in minor updates.
 
 ### Example
 

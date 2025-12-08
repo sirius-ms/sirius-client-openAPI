@@ -45,7 +45,7 @@
 #' var_copy_project_id <- "copy_project_id_example" # character | optional id/mame of the newly created project (copy). If given the project will be opened. (Optional)
 #' var_opt_fields <- c("none") # array[character] |  (Optional)
 #'
-#' #DEPRECATED: this endpoint is based on local file paths and will likely be removed in future versions of this API.
+#' #[DEPRECATED] [INTERNAL] This endpoint is based on local file paths and will likely be removed in future versions of this API.
 #' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
@@ -505,7 +505,7 @@ ProjectsApi <- R6::R6Class(
     },
 
     #' @description
-    #' DEPRECATED: this endpoint is based on local file paths and will likely be removed in future versions of this API.
+    #' [DEPRECATED] [INTERNAL] This endpoint is based on local file paths and will likely be removed in future versions of this API.
     #'
     #' @param project_id unique name/identifier of the project-space that shall be copied.
     #' @param path_to_copied_project target location where the source project will be copied to.
@@ -529,7 +529,7 @@ ProjectsApi <- R6::R6Class(
     },
 
     #' @description
-    #' DEPRECATED: this endpoint is based on local file paths and will likely be removed in future versions of this API.
+    #' [DEPRECATED] [INTERNAL] This endpoint is based on local file paths and will likely be removed in future versions of this API.
     #'
     #' @param project_id unique name/identifier of the project-space that shall be copied.
     #' @param path_to_copied_project target location where the source project will be copied to.

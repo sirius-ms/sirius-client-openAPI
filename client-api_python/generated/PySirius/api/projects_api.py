@@ -602,9 +602,9 @@ class ProjectsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ProjectInfo:
-        """(Deprecated) DEPRECATED: this endpoint is based on local file paths and will likely be removed in future versions of this API.
+        """(Deprecated) [DEPRECATED] [INTERNAL] This endpoint is based on local file paths and will likely be removed in future versions of this API.
 
-        [DEPRECATED] Move an existing (opened) project-space to another location.  <p>  [DEPRECATED] this endpoint is based on local file paths and will likely be removed in future versions of this API.
+        [DEPRECATED] Move an existing (opened) project-space to another location.  <p>  [DEPRECATED] this endpoint is based on local file paths and will likely be removed in future versions of this API.  [INTERNAL] This endpoint is for internal use and not intended to become part of the stable API specification at any time. This endpoint can change (or be removed) at any time, even in minor updates.
 
         :param project_id: unique name/identifier of the project-space that shall be copied. (required)
         :type project_id: str
@@ -682,9 +682,9 @@ class ProjectsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[ProjectInfo]:
-        """(Deprecated) DEPRECATED: this endpoint is based on local file paths and will likely be removed in future versions of this API.
+        """(Deprecated) [DEPRECATED] [INTERNAL] This endpoint is based on local file paths and will likely be removed in future versions of this API.
 
-        [DEPRECATED] Move an existing (opened) project-space to another location.  <p>  [DEPRECATED] this endpoint is based on local file paths and will likely be removed in future versions of this API.
+        [DEPRECATED] Move an existing (opened) project-space to another location.  <p>  [DEPRECATED] this endpoint is based on local file paths and will likely be removed in future versions of this API.  [INTERNAL] This endpoint is for internal use and not intended to become part of the stable API specification at any time. This endpoint can change (or be removed) at any time, even in minor updates.
 
         :param project_id: unique name/identifier of the project-space that shall be copied. (required)
         :type project_id: str
@@ -762,9 +762,9 @@ class ProjectsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """(Deprecated) DEPRECATED: this endpoint is based on local file paths and will likely be removed in future versions of this API.
+        """(Deprecated) [DEPRECATED] [INTERNAL] This endpoint is based on local file paths and will likely be removed in future versions of this API.
 
-        [DEPRECATED] Move an existing (opened) project-space to another location.  <p>  [DEPRECATED] this endpoint is based on local file paths and will likely be removed in future versions of this API.
+        [DEPRECATED] Move an existing (opened) project-space to another location.  <p>  [DEPRECATED] this endpoint is based on local file paths and will likely be removed in future versions of this API.  [INTERNAL] This endpoint is for internal use and not intended to become part of the stable API specification at any time. This endpoint can change (or be removed) at any time, even in minor updates.
 
         :param project_id: unique name/identifier of the project-space that shall be copied. (required)
         :type project_id: str
@@ -3061,13 +3061,18 @@ class ProjectsApi:
         if parameters is not None:
             # JSON-encode model parameters for multipart/form-data
             import json
-            if hasattr(parameters, 'model_dump'):
-                params_dict = parameters.model_dump(mode='json')
-            elif hasattr(parameters, 'dict'):
-                params_dict = parameters.dict()
+            # If parameters is already a string or bytes, use it directly
+            # to avoid double-serialization (e.g. '"{\"key\": \"val\"}"')
+            if isinstance(parameters, (str, bytes)):
+                params_json = parameters
             else:
-                params_dict = parameters
-            params_json = json.dumps(params_dict, default=str, separators=(',', ':'))
+                if hasattr(parameters, 'model_dump'):
+                    params_dict = parameters.model_dump(mode='json')
+                elif hasattr(parameters, 'dict'):
+                    params_dict = parameters.dict()
+                else:
+                    params_dict = parameters
+                params_json = json.dumps(params_dict, default=str, separators=(',', ':'))
             _form_params.append(('parameters', (None, params_json, 'application/json')))
         # process the body parameter
 
@@ -3392,13 +3397,18 @@ class ProjectsApi:
         if parameters is not None:
             # JSON-encode model parameters for multipart/form-data
             import json
-            if hasattr(parameters, 'model_dump'):
-                params_dict = parameters.model_dump(mode='json')
-            elif hasattr(parameters, 'dict'):
-                params_dict = parameters.dict()
+            # If parameters is already a string or bytes, use it directly
+            # to avoid double-serialization (e.g. '"{\"key\": \"val\"}"')
+            if isinstance(parameters, (str, bytes)):
+                params_json = parameters
             else:
-                params_dict = parameters
-            params_json = json.dumps(params_dict, default=str, separators=(',', ':'))
+                if hasattr(parameters, 'model_dump'):
+                    params_dict = parameters.model_dump(mode='json')
+                elif hasattr(parameters, 'dict'):
+                    params_dict = parameters.dict()
+                else:
+                    params_dict = parameters
+                params_json = json.dumps(params_dict, default=str, separators=(',', ':'))
             _form_params.append(('parameters', (None, params_json, 'application/json')))
         # process the body parameter
 
@@ -3469,7 +3479,7 @@ class ProjectsApi:
     ) -> Job:
         """(Deprecated) [DEPRECATED] Import and Align full MS-Runs from various formats into the specified project as background job
 
-        [DEPRECATED] Import and Align full MS-Runs from various formats into the specified project as background job.  Possible formats (mzML, mzXML)  <p>  ATTENTION: This is loading input files from the filesystem where the SIRIUS service is running,  not on the system where the client SDK is running.  Is more efficient than MultipartFile upload in cases where client (SDK) and server (SIRIUS service)  are running on the same host.  <p>  API to allow for more flexible use cases. Use 'ms-data-files-job' instead.  <p>  [DEPRECATED] this endpoint is based on local file paths and will likely be removed in future versions of this API.
+        [DEPRECATED] Import and Align full MS-Runs from various formats into the specified project as background job.  Possible formats (mzML, mzXML)  <p>  ATTENTION: This is loading input files from the filesystem where the SIRIUS service is running,  not on the system where the client SDK is running.  Is more efficient than MultipartFile upload in cases where client (SDK) and server (SIRIUS service)  are running on the same host.  <p>  API to allow for more flexible use cases. Use 'ms-data-files-job' instead.  <p>  [DEPRECATED] this endpoint is based on local file paths and will likely be removed in future versions of this API.  [INTERNAL] This endpoint is for internal use and not intended to become part of the stable API specification at any time. This endpoint can change (or be removed) at any time, even in minor updates.
 
         :param project_id: Project-space to import into. (required)
         :type project_id: str
@@ -3549,7 +3559,7 @@ class ProjectsApi:
     ) -> ApiResponse[Job]:
         """(Deprecated) [DEPRECATED] Import and Align full MS-Runs from various formats into the specified project as background job
 
-        [DEPRECATED] Import and Align full MS-Runs from various formats into the specified project as background job.  Possible formats (mzML, mzXML)  <p>  ATTENTION: This is loading input files from the filesystem where the SIRIUS service is running,  not on the system where the client SDK is running.  Is more efficient than MultipartFile upload in cases where client (SDK) and server (SIRIUS service)  are running on the same host.  <p>  API to allow for more flexible use cases. Use 'ms-data-files-job' instead.  <p>  [DEPRECATED] this endpoint is based on local file paths and will likely be removed in future versions of this API.
+        [DEPRECATED] Import and Align full MS-Runs from various formats into the specified project as background job.  Possible formats (mzML, mzXML)  <p>  ATTENTION: This is loading input files from the filesystem where the SIRIUS service is running,  not on the system where the client SDK is running.  Is more efficient than MultipartFile upload in cases where client (SDK) and server (SIRIUS service)  are running on the same host.  <p>  API to allow for more flexible use cases. Use 'ms-data-files-job' instead.  <p>  [DEPRECATED] this endpoint is based on local file paths and will likely be removed in future versions of this API.  [INTERNAL] This endpoint is for internal use and not intended to become part of the stable API specification at any time. This endpoint can change (or be removed) at any time, even in minor updates.
 
         :param project_id: Project-space to import into. (required)
         :type project_id: str
@@ -3629,7 +3639,7 @@ class ProjectsApi:
     ) -> RESTResponseType:
         """(Deprecated) [DEPRECATED] Import and Align full MS-Runs from various formats into the specified project as background job
 
-        [DEPRECATED] Import and Align full MS-Runs from various formats into the specified project as background job.  Possible formats (mzML, mzXML)  <p>  ATTENTION: This is loading input files from the filesystem where the SIRIUS service is running,  not on the system where the client SDK is running.  Is more efficient than MultipartFile upload in cases where client (SDK) and server (SIRIUS service)  are running on the same host.  <p>  API to allow for more flexible use cases. Use 'ms-data-files-job' instead.  <p>  [DEPRECATED] this endpoint is based on local file paths and will likely be removed in future versions of this API.
+        [DEPRECATED] Import and Align full MS-Runs from various formats into the specified project as background job.  Possible formats (mzML, mzXML)  <p>  ATTENTION: This is loading input files from the filesystem where the SIRIUS service is running,  not on the system where the client SDK is running.  Is more efficient than MultipartFile upload in cases where client (SDK) and server (SIRIUS service)  are running on the same host.  <p>  API to allow for more flexible use cases. Use 'ms-data-files-job' instead.  <p>  [DEPRECATED] this endpoint is based on local file paths and will likely be removed in future versions of this API.  [INTERNAL] This endpoint is for internal use and not intended to become part of the stable API specification at any time. This endpoint can change (or be removed) at any time, even in minor updates.
 
         :param project_id: Project-space to import into. (required)
         :type project_id: str
@@ -3795,7 +3805,7 @@ class ProjectsApi:
     ) -> ImportResult:
         """(Deprecated) [DEPRECATED] Import and Align full MS-Runs from various formats into the specified project  Possible formats (mzML, mzXML)  
 
-        [DEPRECATED] Import and Align full MS-Runs from various formats into the specified project  Possible formats (mzML, mzXML)  <p>  ATTENTION: This is loading input files from the filesystem where the SIRIUS service is running,  not on the system where the client SDK is running.  Is more efficient than MultipartFile upload in cases where client (SDK) and server (SIRIUS service)  are running on the same host.  <p>  API to allow for more flexible use cases. Use 'ms-data-files' instead.  <p>  [DEPRECATED] this endpoint is based on local file paths and will likely be removed in future versions of this API.
+        [DEPRECATED] Import and Align full MS-Runs from various formats into the specified project  Possible formats (mzML, mzXML)  <p>  ATTENTION: This is loading input files from the filesystem where the SIRIUS service is running,  not on the system where the client SDK is running.  Is more efficient than MultipartFile upload in cases where client (SDK) and server (SIRIUS service)  are running on the same host.  <p>  API to allow for more flexible use cases. Use 'ms-data-files' instead.  <p>  [DEPRECATED] this endpoint is based on local file paths and will likely be removed in future versions of this API.  [INTERNAL] This endpoint is for internal use and not intended to become part of the stable API specification at any time. This endpoint can change (or be removed) at any time, even in minor updates.
 
         :param project_id: Project to import into. (required)
         :type project_id: str
@@ -3871,7 +3881,7 @@ class ProjectsApi:
     ) -> ApiResponse[ImportResult]:
         """(Deprecated) [DEPRECATED] Import and Align full MS-Runs from various formats into the specified project  Possible formats (mzML, mzXML)  
 
-        [DEPRECATED] Import and Align full MS-Runs from various formats into the specified project  Possible formats (mzML, mzXML)  <p>  ATTENTION: This is loading input files from the filesystem where the SIRIUS service is running,  not on the system where the client SDK is running.  Is more efficient than MultipartFile upload in cases where client (SDK) and server (SIRIUS service)  are running on the same host.  <p>  API to allow for more flexible use cases. Use 'ms-data-files' instead.  <p>  [DEPRECATED] this endpoint is based on local file paths and will likely be removed in future versions of this API.
+        [DEPRECATED] Import and Align full MS-Runs from various formats into the specified project  Possible formats (mzML, mzXML)  <p>  ATTENTION: This is loading input files from the filesystem where the SIRIUS service is running,  not on the system where the client SDK is running.  Is more efficient than MultipartFile upload in cases where client (SDK) and server (SIRIUS service)  are running on the same host.  <p>  API to allow for more flexible use cases. Use 'ms-data-files' instead.  <p>  [DEPRECATED] this endpoint is based on local file paths and will likely be removed in future versions of this API.  [INTERNAL] This endpoint is for internal use and not intended to become part of the stable API specification at any time. This endpoint can change (or be removed) at any time, even in minor updates.
 
         :param project_id: Project to import into. (required)
         :type project_id: str
@@ -3947,7 +3957,7 @@ class ProjectsApi:
     ) -> RESTResponseType:
         """(Deprecated) [DEPRECATED] Import and Align full MS-Runs from various formats into the specified project  Possible formats (mzML, mzXML)  
 
-        [DEPRECATED] Import and Align full MS-Runs from various formats into the specified project  Possible formats (mzML, mzXML)  <p>  ATTENTION: This is loading input files from the filesystem where the SIRIUS service is running,  not on the system where the client SDK is running.  Is more efficient than MultipartFile upload in cases where client (SDK) and server (SIRIUS service)  are running on the same host.  <p>  API to allow for more flexible use cases. Use 'ms-data-files' instead.  <p>  [DEPRECATED] this endpoint is based on local file paths and will likely be removed in future versions of this API.
+        [DEPRECATED] Import and Align full MS-Runs from various formats into the specified project  Possible formats (mzML, mzXML)  <p>  ATTENTION: This is loading input files from the filesystem where the SIRIUS service is running,  not on the system where the client SDK is running.  Is more efficient than MultipartFile upload in cases where client (SDK) and server (SIRIUS service)  are running on the same host.  <p>  API to allow for more flexible use cases. Use 'ms-data-files' instead.  <p>  [DEPRECATED] this endpoint is based on local file paths and will likely be removed in future versions of this API.  [INTERNAL] This endpoint is for internal use and not intended to become part of the stable API specification at any time. This endpoint can change (or be removed) at any time, even in minor updates.
 
         :param project_id: Project to import into. (required)
         :type project_id: str
@@ -4770,7 +4780,7 @@ class ProjectsApi:
     ) -> Job:
         """(Deprecated) [DEPRECATED] Import ms/ms data from the given format into the specified project-space as background job
 
-        [DEPRECATED] Import ms/ms data from the given format into the specified project-space as background job.  Possible formats (ms, mgf, cef, msp)  <p>  ATTENTION: This is loading input files from the filesystem where the SIRIUS service is running,  not on the system where the client SDK is running.  Is more efficient than MultipartFile upload in cases where client (SDK) and server (SIRIUS service)  are running on the same host.  <p>  API to allow for more flexible use cases. Use 'preprocessed-data-files-job' instead.  <p>  [DEPRECATED] this endpoint is based on local file paths and will likely be removed in future versions of this API.
+        [DEPRECATED] Import ms/ms data from the given format into the specified project-space as background job.  Possible formats (ms, mgf, cef, msp)  <p>  ATTENTION: This is loading input files from the filesystem where the SIRIUS service is running,  not on the system where the client SDK is running.  Is more efficient than MultipartFile upload in cases where client (SDK) and server (SIRIUS service)  are running on the same host.  <p>  API to allow for more flexible use cases. Use 'preprocessed-data-files-job' instead.  <p>  [DEPRECATED] this endpoint is based on local file paths and will likely be removed in future versions of this API.  [INTERNAL] This endpoint is for internal use and not intended to become part of the stable API specification at any time. This endpoint can change (or be removed) at any time, even in minor updates.
 
         :param project_id: project-space to import into. (required)
         :type project_id: str
@@ -4854,7 +4864,7 @@ class ProjectsApi:
     ) -> ApiResponse[Job]:
         """(Deprecated) [DEPRECATED] Import ms/ms data from the given format into the specified project-space as background job
 
-        [DEPRECATED] Import ms/ms data from the given format into the specified project-space as background job.  Possible formats (ms, mgf, cef, msp)  <p>  ATTENTION: This is loading input files from the filesystem where the SIRIUS service is running,  not on the system where the client SDK is running.  Is more efficient than MultipartFile upload in cases where client (SDK) and server (SIRIUS service)  are running on the same host.  <p>  API to allow for more flexible use cases. Use 'preprocessed-data-files-job' instead.  <p>  [DEPRECATED] this endpoint is based on local file paths and will likely be removed in future versions of this API.
+        [DEPRECATED] Import ms/ms data from the given format into the specified project-space as background job.  Possible formats (ms, mgf, cef, msp)  <p>  ATTENTION: This is loading input files from the filesystem where the SIRIUS service is running,  not on the system where the client SDK is running.  Is more efficient than MultipartFile upload in cases where client (SDK) and server (SIRIUS service)  are running on the same host.  <p>  API to allow for more flexible use cases. Use 'preprocessed-data-files-job' instead.  <p>  [DEPRECATED] this endpoint is based on local file paths and will likely be removed in future versions of this API.  [INTERNAL] This endpoint is for internal use and not intended to become part of the stable API specification at any time. This endpoint can change (or be removed) at any time, even in minor updates.
 
         :param project_id: project-space to import into. (required)
         :type project_id: str
@@ -4938,7 +4948,7 @@ class ProjectsApi:
     ) -> RESTResponseType:
         """(Deprecated) [DEPRECATED] Import ms/ms data from the given format into the specified project-space as background job
 
-        [DEPRECATED] Import ms/ms data from the given format into the specified project-space as background job.  Possible formats (ms, mgf, cef, msp)  <p>  ATTENTION: This is loading input files from the filesystem where the SIRIUS service is running,  not on the system where the client SDK is running.  Is more efficient than MultipartFile upload in cases where client (SDK) and server (SIRIUS service)  are running on the same host.  <p>  API to allow for more flexible use cases. Use 'preprocessed-data-files-job' instead.  <p>  [DEPRECATED] this endpoint is based on local file paths and will likely be removed in future versions of this API.
+        [DEPRECATED] Import ms/ms data from the given format into the specified project-space as background job.  Possible formats (ms, mgf, cef, msp)  <p>  ATTENTION: This is loading input files from the filesystem where the SIRIUS service is running,  not on the system where the client SDK is running.  Is more efficient than MultipartFile upload in cases where client (SDK) and server (SIRIUS service)  are running on the same host.  <p>  API to allow for more flexible use cases. Use 'preprocessed-data-files-job' instead.  <p>  [DEPRECATED] this endpoint is based on local file paths and will likely be removed in future versions of this API.  [INTERNAL] This endpoint is for internal use and not intended to become part of the stable API specification at any time. This endpoint can change (or be removed) at any time, even in minor updates.
 
         :param project_id: project-space to import into. (required)
         :type project_id: str
@@ -5113,7 +5123,7 @@ class ProjectsApi:
     ) -> ImportResult:
         """(Deprecated) [DEPRECATED] Import already preprocessed ms/ms data from various formats into the specified project  Possible formats (ms, mgf, cef, msp)  
 
-        [DEPRECATED] Import already preprocessed ms/ms data from various formats into the specified project  Possible formats (ms, mgf, cef, msp)  <p>  ATTENTION: This is loading input files from the filesystem where the SIRIUS service is running,  not on the system where the client SDK is running.  Is more efficient than MultipartFile upload in cases where client (SDK) and server (SIRIUS service)  are running on the same host.  <p>  API to allow for more flexible use cases. Use 'preprocessed-data-files' instead.  <p>  [DEPRECATED] this endpoint is based on local file paths and will likely be removed in future versions of this API.
+        [DEPRECATED] Import already preprocessed ms/ms data from various formats into the specified project  Possible formats (ms, mgf, cef, msp)  <p>  ATTENTION: This is loading input files from the filesystem where the SIRIUS service is running,  not on the system where the client SDK is running.  Is more efficient than MultipartFile upload in cases where client (SDK) and server (SIRIUS service)  are running on the same host.  <p>  API to allow for more flexible use cases. Use 'preprocessed-data-files' instead.  <p>  [DEPRECATED] this endpoint is based on local file paths and will likely be removed in future versions of this API.  [INTERNAL] This endpoint is for internal use and not intended to become part of the stable API specification at any time. This endpoint can change (or be removed) at any time, even in minor updates.
 
         :param project_id: project-space to import into. (required)
         :type project_id: str
@@ -5193,7 +5203,7 @@ class ProjectsApi:
     ) -> ApiResponse[ImportResult]:
         """(Deprecated) [DEPRECATED] Import already preprocessed ms/ms data from various formats into the specified project  Possible formats (ms, mgf, cef, msp)  
 
-        [DEPRECATED] Import already preprocessed ms/ms data from various formats into the specified project  Possible formats (ms, mgf, cef, msp)  <p>  ATTENTION: This is loading input files from the filesystem where the SIRIUS service is running,  not on the system where the client SDK is running.  Is more efficient than MultipartFile upload in cases where client (SDK) and server (SIRIUS service)  are running on the same host.  <p>  API to allow for more flexible use cases. Use 'preprocessed-data-files' instead.  <p>  [DEPRECATED] this endpoint is based on local file paths and will likely be removed in future versions of this API.
+        [DEPRECATED] Import already preprocessed ms/ms data from various formats into the specified project  Possible formats (ms, mgf, cef, msp)  <p>  ATTENTION: This is loading input files from the filesystem where the SIRIUS service is running,  not on the system where the client SDK is running.  Is more efficient than MultipartFile upload in cases where client (SDK) and server (SIRIUS service)  are running on the same host.  <p>  API to allow for more flexible use cases. Use 'preprocessed-data-files' instead.  <p>  [DEPRECATED] this endpoint is based on local file paths and will likely be removed in future versions of this API.  [INTERNAL] This endpoint is for internal use and not intended to become part of the stable API specification at any time. This endpoint can change (or be removed) at any time, even in minor updates.
 
         :param project_id: project-space to import into. (required)
         :type project_id: str
@@ -5273,7 +5283,7 @@ class ProjectsApi:
     ) -> RESTResponseType:
         """(Deprecated) [DEPRECATED] Import already preprocessed ms/ms data from various formats into the specified project  Possible formats (ms, mgf, cef, msp)  
 
-        [DEPRECATED] Import already preprocessed ms/ms data from various formats into the specified project  Possible formats (ms, mgf, cef, msp)  <p>  ATTENTION: This is loading input files from the filesystem where the SIRIUS service is running,  not on the system where the client SDK is running.  Is more efficient than MultipartFile upload in cases where client (SDK) and server (SIRIUS service)  are running on the same host.  <p>  API to allow for more flexible use cases. Use 'preprocessed-data-files' instead.  <p>  [DEPRECATED] this endpoint is based on local file paths and will likely be removed in future versions of this API.
+        [DEPRECATED] Import already preprocessed ms/ms data from various formats into the specified project  Possible formats (ms, mgf, cef, msp)  <p>  ATTENTION: This is loading input files from the filesystem where the SIRIUS service is running,  not on the system where the client SDK is running.  Is more efficient than MultipartFile upload in cases where client (SDK) and server (SIRIUS service)  are running on the same host.  <p>  API to allow for more flexible use cases. Use 'preprocessed-data-files' instead.  <p>  [DEPRECATED] this endpoint is based on local file paths and will likely be removed in future versions of this API.  [INTERNAL] This endpoint is for internal use and not intended to become part of the stable API specification at any time. This endpoint can change (or be removed) at any time, even in minor updates.
 
         :param project_id: project-space to import into. (required)
         :type project_id: str

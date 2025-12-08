@@ -57,7 +57,7 @@ class SearchableDatabasesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> List[SearchableDatabase]:
-        """(Deprecated) DEPRECATED: this endpoint is based on local file paths and will likely be replaced in future versions of this API.
+        """(Deprecated) [DEPRECATED] This endpoint is based on local file paths and will likely be replaced in future versions of this API.
 
 
         :param request_body: (required)
@@ -124,7 +124,7 @@ class SearchableDatabasesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[List[SearchableDatabase]]:
-        """(Deprecated) DEPRECATED: this endpoint is based on local file paths and will likely be replaced in future versions of this API.
+        """(Deprecated) [DEPRECATED] This endpoint is based on local file paths and will likely be replaced in future versions of this API.
 
 
         :param request_body: (required)
@@ -191,7 +191,7 @@ class SearchableDatabasesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """(Deprecated) DEPRECATED: this endpoint is based on local file paths and will likely be replaced in future versions of this API.
+        """(Deprecated) [DEPRECATED] This endpoint is based on local file paths and will likely be replaced in future versions of this API.
 
 
         :param request_body: (required)
@@ -1443,7 +1443,7 @@ class SearchableDatabasesApi:
     ) -> List[DownloadableDatabase]:
         """(Deprecated) Get list of curated custom databases downloadable from the SIRIUS web service for local use
 
-        Get list of curated custom databases downloadable from the SIRIUS web service for local use.  <p>  [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.  [DEPRECATED] This endpoint will likely be removed or changed in future versions of this API.
+        Get list of curated custom databases downloadable from the SIRIUS web service for local use.  <p>  [DEPRECATED] This endpoint will likely be removed or changed in future versions of this API.  [INTERNAL] This endpoint is for internal use and not intended to become part of the stable API specification at any time. This endpoint can change (or be removed) at any time, even in minor updates.
 
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -1507,7 +1507,7 @@ class SearchableDatabasesApi:
     ) -> ApiResponse[List[DownloadableDatabase]]:
         """(Deprecated) Get list of curated custom databases downloadable from the SIRIUS web service for local use
 
-        Get list of curated custom databases downloadable from the SIRIUS web service for local use.  <p>  [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.  [DEPRECATED] This endpoint will likely be removed or changed in future versions of this API.
+        Get list of curated custom databases downloadable from the SIRIUS web service for local use.  <p>  [DEPRECATED] This endpoint will likely be removed or changed in future versions of this API.  [INTERNAL] This endpoint is for internal use and not intended to become part of the stable API specification at any time. This endpoint can change (or be removed) at any time, even in minor updates.
 
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -1571,7 +1571,7 @@ class SearchableDatabasesApi:
     ) -> RESTResponseType:
         """(Deprecated) Get list of curated custom databases downloadable from the SIRIUS web service for local use
 
-        Get list of curated custom databases downloadable from the SIRIUS web service for local use.  <p>  [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.  [DEPRECATED] This endpoint will likely be removed or changed in future versions of this API.
+        Get list of curated custom databases downloadable from the SIRIUS web service for local use.  <p>  [DEPRECATED] This endpoint will likely be removed or changed in future versions of this API.  [INTERNAL] This endpoint is for internal use and not intended to become part of the stable API specification at any time. This endpoint can change (or be removed) at any time, even in minor updates.
 
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -2208,13 +2208,18 @@ class SearchableDatabasesApi:
         if bio_transformer_parameters is not None:
             # JSON-encode model parameters for multipart/form-data
             import json
-            if hasattr(bio_transformer_parameters, 'model_dump'):
-                params_dict = bio_transformer_parameters.model_dump(mode='json')
-            elif hasattr(bio_transformer_parameters, 'dict'):
-                params_dict = bio_transformer_parameters.dict()
+            # If parameters is already a string or bytes, use it directly
+            # to avoid double-serialization (e.g. '"{\"key\": \"val\"}"')
+            if isinstance(parameters, (str, bytes)):
+                params_json = parameters
             else:
-                params_dict = bio_transformer_parameters
-            params_json = json.dumps(params_dict, default=str, separators=(',', ':'))
+                if hasattr(bio_transformer_parameters, 'model_dump'):
+                    params_dict = bio_transformer_parameters.model_dump(mode='json')
+                elif hasattr(bio_transformer_parameters, 'dict'):
+                    params_dict = bio_transformer_parameters.dict()
+                else:
+                    params_dict = bio_transformer_parameters
+                params_json = json.dumps(params_dict, default=str, separators=(',', ':'))
             _form_params.append(('bioTransformerParameters', (None, params_json, 'application/json')))
         # process the body parameter
 
