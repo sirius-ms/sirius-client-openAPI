@@ -119,19 +119,6 @@ result <- api_instance$jobs_api$GetJobConfig(var_name, move_parameters_to_config
 dput(result)
 
 
-####################  GetJobConfigNames  ####################
-
-library(RSirius)
-
-#[DEPRECATED] Get all (non-default) job configuration names  
-api_instance <- rsirius_api$new()
-
-# to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$GetJobConfigNames(data_file = "result.txt")
-result <- api_instance$jobs_api$GetJobConfigNames()
-dput(result)
-
-
 ####################  GetJobConfigs  ####################
 
 library(RSirius)
@@ -286,8 +273,6 @@ dput(result)
 \item \href{#method-JobsApi-GetJobWithHttpInfo}{\code{JobsApi$GetJobWithHttpInfo()}}
 \item \href{#method-JobsApi-GetJobConfig}{\code{JobsApi$GetJobConfig()}}
 \item \href{#method-JobsApi-GetJobConfigWithHttpInfo}{\code{JobsApi$GetJobConfigWithHttpInfo()}}
-\item \href{#method-JobsApi-GetJobConfigNames}{\code{JobsApi$GetJobConfigNames()}}
-\item \href{#method-JobsApi-GetJobConfigNamesWithHttpInfo}{\code{JobsApi$GetJobConfigNamesWithHttpInfo()}}
 \item \href{#method-JobsApi-GetJobConfigs}{\code{JobsApi$GetJobConfigs()}}
 \item \href{#method-JobsApi-GetJobConfigsWithHttpInfo}{\code{JobsApi$GetJobConfigsWithHttpInfo()}}
 \item \href{#method-JobsApi-GetJobs}{\code{JobsApi$GetJobs()}}
@@ -742,50 +727,6 @@ Request job configuration with given name.
 }
 \subsection{Returns}{
 API response (StoredJobSubmission) with additional information such as HTTP status code, headers
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-JobsApi-GetJobConfigNames"></a>}}
-\if{latex}{\out{\hypertarget{method-JobsApi-GetJobConfigNames}{}}}
-\subsection{Method \code{GetJobConfigNames()}}{
-[DEPRECATED] Get all (non-default) job configuration names
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{JobsApi$GetJobConfigNames(data_file = NULL, ...)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{data_file}}{(optional) name of the data file to save the result}
-
-\item{\code{...}}{Other optional arguments}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-array[character]
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-JobsApi-GetJobConfigNamesWithHttpInfo"></a>}}
-\if{latex}{\out{\hypertarget{method-JobsApi-GetJobConfigNamesWithHttpInfo}{}}}
-\subsection{Method \code{GetJobConfigNamesWithHttpInfo()}}{
-[DEPRECATED] Get all (non-default) job configuration names
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{JobsApi$GetJobConfigNamesWithHttpInfo(data_file = NULL, ...)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{data_file}}{(optional) name of the data file to save the result}
-
-\item{\code{...}}{Other optional arguments}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-API response (array[character]) with additional information such as HTTP status code, headers
 }
 }
 \if{html}{\out{<hr>}}

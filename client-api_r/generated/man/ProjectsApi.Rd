@@ -52,7 +52,7 @@ var_path_to_copied_project <- "path_to_copied_project_example" # character | tar
 var_copy_project_id <- "copy_project_id_example" # character | optional id/mame of the newly created project (copy). If given the project will be opened. (Optional)
 var_opt_fields <- c("none") # array[character] |  (Optional)
 
-#DEPRECATED: this endpoint is based on local file paths and will likely be removed in future versions of this API.
+#[DEPRECATED] [INTERNAL] This endpoint is based on local file paths and will likely be removed in future versions of this API.
 api_instance <- rsirius_api$new()
 
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
@@ -487,7 +487,7 @@ API response (void) with additional information such as HTTP status code, header
 \if{html}{\out{<a id="method-ProjectsApi-CopyProject"></a>}}
 \if{latex}{\out{\hypertarget{method-ProjectsApi-CopyProject}{}}}
 \subsection{Method \code{CopyProject()}}{
-DEPRECATED: this endpoint is based on local file paths and will likely be removed in future versions of this API.
+[DEPRECATED] [INTERNAL] This endpoint is based on local file paths and will likely be removed in future versions of this API.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ProjectsApi$CopyProject(
   project_id,
@@ -524,7 +524,7 @@ ProjectInfo
 \if{html}{\out{<a id="method-ProjectsApi-CopyProjectWithHttpInfo"></a>}}
 \if{latex}{\out{\hypertarget{method-ProjectsApi-CopyProjectWithHttpInfo}{}}}
 \subsection{Method \code{CopyProjectWithHttpInfo()}}{
-DEPRECATED: this endpoint is based on local file paths and will likely be removed in future versions of this API.
+[DEPRECATED] [INTERNAL] This endpoint is based on local file paths and will likely be removed in future versions of this API.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ProjectsApi$CopyProjectWithHttpInfo(
   project_id,
