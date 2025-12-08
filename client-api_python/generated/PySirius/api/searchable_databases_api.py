@@ -2208,18 +2208,13 @@ class SearchableDatabasesApi:
         if bio_transformer_parameters is not None:
             # JSON-encode model parameters for multipart/form-data
             import json
-            # If parameters is already a string or bytes, use it directly
-            # to avoid double-serialization (e.g. '"{\"key\": \"val\"}"')
-            if isinstance(parameters, (str, bytes)):
-                params_json = parameters
+            if hasattr(bio_transformer_parameters, 'model_dump'):
+                params_dict = bio_transformer_parameters.model_dump(mode='json', by_alias=True)
+            elif hasattr(bio_transformer_parameters, 'dict'):
+                params_dict = bio_transformer_parameters.dict()
             else:
-                if hasattr(bio_transformer_parameters, 'model_dump'):
-                    params_dict = bio_transformer_parameters.model_dump(mode='json')
-                elif hasattr(bio_transformer_parameters, 'dict'):
-                    params_dict = bio_transformer_parameters.dict()
-                else:
-                    params_dict = bio_transformer_parameters
-                params_json = json.dumps(params_dict, default=str, separators=(',', ':'))
+                params_dict = bio_transformer_parameters
+            params_json = json.dumps(params_dict, default=str, separators=(',', ':'))
             _form_params.append(('bioTransformerParameters', (None, params_json, 'application/json')))
         # process the body parameter
 
