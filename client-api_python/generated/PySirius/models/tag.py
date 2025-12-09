@@ -17,7 +17,6 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from PySirius.models.any_value import AnyValue
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -26,7 +25,7 @@ class Tag(BaseModel):
     Tag
     """ # noqa: E501
     tag_name: StrictStr = Field(description="Name of the tag as defined by the corresponding TagDefinition  Links tag object to their definition.", alias="tagName")
-    value: Optional[AnyValue] = None
+    value: Optional[Dict[str, Any]] = Field(default=None, description="Optional value of the tag.  <p>  Generic value of the tag as defined by the corresponding TagDefinition.  Can be Integer, Double, Boolean and String, whereas String values can represent Text, Date (yyyy-MM-dd) or Time (HH:mm:ss).")
     __properties: ClassVar[List[str]] = ["tagName", "value"]
 
     model_config = ConfigDict(
@@ -68,9 +67,6 @@ class Tag(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of value
-        if self.value:
-            _dict['value'] = self.value.to_dict()
         # set to None if value (nullable) is None
         # and model_fields_set contains the field
         if self.value is None and "value" in self.model_fields_set:
@@ -89,7 +85,7 @@ class Tag(BaseModel):
 
         _obj = cls.model_validate({
             "tagName": obj.get("tagName"),
-            "value": AnyValue.from_dict(obj["value"]) if obj.get("value") is not None else None
+            "value": obj.get("value")
         })
         return _obj
 

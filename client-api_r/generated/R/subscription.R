@@ -8,7 +8,7 @@
 #' @description Subscription Class
 #' @format An \code{R6Class} generator object
 #' @field sid Unique identifier of this subscription character [optional]
-#' @field subscriberId ID of the owner of the subscription.  This can be the ID of any SubscriptionOwner (e.g.  TagGroup or  User)  depending on the level on which a subscription should be is valid. character [optional]
+#' @field subscriberId ID of the owner of the subscription.  This can be the ID of any SubscriptionOwner (e.g.  Group or  User)  depending on the level on which a subscription should be is valid. character [optional]
 #' @field subscriberName Optional name of the owner of this subscription character [optional]
 #' @field expirationDate  character [optional]
 #' @field startDate  character [optional]
@@ -50,7 +50,7 @@ Subscription <- R6::R6Class(
     #' Initialize a new Subscription class.
     #'
     #' @param sid Unique identifier of this subscription
-    #' @param subscriberId ID of the owner of the subscription.  This can be the ID of any SubscriptionOwner (e.g.  TagGroup or  User)  depending on the level on which a subscription should be is valid.
+    #' @param subscriberId ID of the owner of the subscription.  This can be the ID of any SubscriptionOwner (e.g.  Group or  User)  depending on the level on which a subscription should be is valid.
     #' @param subscriberName Optional name of the owner of this subscription
     #' @param expirationDate expirationDate
     #' @param startDate startDate

@@ -1,6 +1,6 @@
 # InfoApi
 
-All URIs are relative to *http://localhost:8888*
+All URIs are relative to *http://localhost:8080*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------

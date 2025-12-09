@@ -17,7 +17,7 @@
 #' @field rtStartSeconds  numeric [optional]
 #' @field rtEndSeconds  numeric [optional]
 #' @field rtApexSeconds  numeric [optional]
-#' @field quality Overall Quality of this feature.  If no Quality data are available for this feature the value is NOT_APPLICABLE character [optional]
+#' @field quality Quality of this feature. character [optional]
 #' @field hasMs1 If true, the feature has at lease one MS1 spectrum character [optional]
 #' @field hasMsMs If true, the feature has at lease one MS/MS spectrum character [optional]
 #' @field msData  \link{MsData} [optional]
@@ -25,7 +25,6 @@
 #' @field topAnnotationsDeNovo  \link{FeatureAnnotations} [optional]
 #' @field computing Write lock for this feature. If the feature is locked no write operations are possible.  True if any computation is modifying this feature or its results character [optional]
 #' @field computedTools  \link{ComputedSubtools} [optional]
-#' @field qualities Qualities per top level quality category. named list(character) [optional]
 #' @field tags Key: tagName, value: tag named list(\link{Tag}) [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
@@ -51,7 +50,6 @@ AlignedFeature <- R6::R6Class(
     `topAnnotationsDeNovo` = NULL,
     `computing` = NULL,
     `computedTools` = NULL,
-    `qualities` = NULL,
     `tags` = NULL,
 
     #' @description
@@ -67,7 +65,7 @@ AlignedFeature <- R6::R6Class(
     #' @param rtStartSeconds rtStartSeconds
     #' @param rtEndSeconds rtEndSeconds
     #' @param rtApexSeconds rtApexSeconds
-    #' @param quality Overall Quality of this feature.  If no Quality data are available for this feature the value is NOT_APPLICABLE
+    #' @param quality Quality of this feature.
     #' @param hasMs1 If true, the feature has at lease one MS1 spectrum
     #' @param hasMsMs If true, the feature has at lease one MS/MS spectrum
     #' @param msData msData
@@ -75,10 +73,9 @@ AlignedFeature <- R6::R6Class(
     #' @param topAnnotationsDeNovo topAnnotationsDeNovo
     #' @param computing Write lock for this feature. If the feature is locked no write operations are possible.  True if any computation is modifying this feature or its results
     #' @param computedTools computedTools
-    #' @param qualities Qualities per top level quality category.
     #' @param tags Key: tagName, value: tag
     #' @param ... Other optional arguments.
-    initialize = function(`charge`, `detectedAdducts`, `alignedFeatureId` = NULL, `compoundId` = NULL, `name` = NULL, `externalFeatureId` = NULL, `ionMass` = NULL, `rtStartSeconds` = NULL, `rtEndSeconds` = NULL, `rtApexSeconds` = NULL, `quality` = NULL, `hasMs1` = NULL, `hasMsMs` = NULL, `msData` = NULL, `topAnnotations` = NULL, `topAnnotationsDeNovo` = NULL, `computing` = NULL, `computedTools` = NULL, `qualities` = NULL, `tags` = NULL, ...) {
+    initialize = function(`charge`, `detectedAdducts`, `alignedFeatureId` = NULL, `compoundId` = NULL, `name` = NULL, `externalFeatureId` = NULL, `ionMass` = NULL, `rtStartSeconds` = NULL, `rtEndSeconds` = NULL, `rtApexSeconds` = NULL, `quality` = NULL, `hasMs1` = NULL, `hasMsMs` = NULL, `msData` = NULL, `topAnnotations` = NULL, `topAnnotationsDeNovo` = NULL, `computing` = NULL, `computedTools` = NULL, `tags` = NULL, ...) {
       if (!missing(`charge`)) {
         if (!(is.numeric(`charge`) && length(`charge`) == 1)) {
           stop(paste("Error! Invalid data for `charge`. Must be an integer:", `charge`))
@@ -183,11 +180,6 @@ AlignedFeature <- R6::R6Class(
       if (!is.null(`computedTools`)) {
         stopifnot(R6::is.R6(`computedTools`))
         self$`computedTools` <- `computedTools`
-      }
-      if (!is.null(`qualities`)) {
-        stopifnot(is.vector(`qualities`), length(`qualities`) != 0)
-        sapply(`qualities`, function(x) stopifnot(is.character(x)))
-        self$`qualities` <- `qualities`
       }
       if (!is.null(`tags`)) {
         stopifnot(is.vector(`tags`), length(`tags`) != 0)
@@ -299,10 +291,6 @@ AlignedFeature <- R6::R6Class(
         AlignedFeatureObject[["computedTools"]] <-
           self$`computedTools`$toSimpleType()
       }
-      if (!is.null(self$`qualities`)) {
-        AlignedFeatureObject[["qualities"]] <-
-          self$`qualities`
-      }
       if (!is.null(self$`tags`)) {
         AlignedFeatureObject[["tags"]] <-
           lapply(self$`tags`, function(x) x$toSimpleType())
@@ -385,9 +373,6 @@ AlignedFeature <- R6::R6Class(
         `computedtools_object`$fromJSON(jsonlite::toJSON(this_object$`computedTools`, auto_unbox = TRUE, digits = NA, null = 'null'))
         self$`computedTools` <- `computedtools_object`
       }
-      if (!is.null(this_object$`qualities`)) {
-        self$`qualities` <- ApiClient$new()$deserializeObj(this_object$`qualities`, "map(character)", loadNamespace("RSirius"))
-      }
       if (!is.null(this_object$`tags`)) {
         self$`tags` <- ApiClient$new()$deserializeObj(this_object$`tags`, "map(Tag)", loadNamespace("RSirius"))
       }
@@ -436,7 +421,6 @@ AlignedFeature <- R6::R6Class(
       self$`topAnnotationsDeNovo` <- FeatureAnnotations$new()$fromJSON(jsonlite::toJSON(this_object$`topAnnotationsDeNovo`, auto_unbox = TRUE, digits = NA, null = 'null'))
       self$`computing` <- this_object$`computing`
       self$`computedTools` <- ComputedSubtools$new()$fromJSON(jsonlite::toJSON(this_object$`computedTools`, auto_unbox = TRUE, digits = NA, null = 'null'))
-      self$`qualities` <- ApiClient$new()$deserializeObj(this_object$`qualities`, "map(character)", loadNamespace("RSirius"))
       self$`tags` <- ApiClient$new()$deserializeObj(this_object$`tags`, "map(Tag)", loadNamespace("RSirius"))
       self
     },

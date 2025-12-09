@@ -1,6 +1,6 @@
 # PySirius.SearchableDatabasesApi
 
-All URIs are relative to *http://localhost:8888*
+All URIs are relative to *http://localhost:8080*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -9,7 +9,6 @@ Method | HTTP request | Description
 [**get_custom_databases**](SearchableDatabasesApi.md#get_custom_databases) | **GET** /api/databases/custom | 
 [**get_database**](SearchableDatabasesApi.md#get_database) | **GET** /api/databases/{databaseId} | 
 [**get_databases**](SearchableDatabasesApi.md#get_databases) | **GET** /api/databases | 
-[**get_downloadable_databases**](SearchableDatabasesApi.md#get_downloadable_databases) | **GET** /api/databases/downloadable | Get list of curated custom databases downloadable from the SIRIUS web service for local use
 [**get_included_databases**](SearchableDatabasesApi.md#get_included_databases) | **GET** /api/databases/included | 
 [**import_into_database**](SearchableDatabasesApi.md#import_into_database) | **POST** /api/databases/{databaseId}/import/from-files | Start import of structure and spectra files into the specified database.
 [**remove_database**](SearchableDatabasesApi.md#remove_database) | **DELETE** /api/databases/{databaseId} | 
@@ -30,10 +29,10 @@ from PySirius.models.searchable_database import SearchableDatabase
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8888
+# Defining the host is optional and defaults to http://localhost:8080
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8888"
+    host = "http://localhost:8080"
 )
 
 
@@ -95,10 +94,10 @@ from PySirius.models.searchable_database_parameters import SearchableDatabasePar
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8888
+# Defining the host is optional and defaults to http://localhost:8080
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8888"
+    host = "http://localhost:8080"
 )
 
 
@@ -160,10 +159,10 @@ from PySirius.models.searchable_database import SearchableDatabase
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8888
+# Defining the host is optional and defaults to http://localhost:8080
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8888"
+    host = "http://localhost:8080"
 )
 
 
@@ -225,10 +224,10 @@ from PySirius.models.searchable_database import SearchableDatabase
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8888
+# Defining the host is optional and defaults to http://localhost:8080
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8888"
+    host = "http://localhost:8080"
 )
 
 
@@ -290,10 +289,10 @@ from PySirius.models.searchable_database import SearchableDatabase
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8888
+# Defining the host is optional and defaults to http://localhost:8080
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8888"
+    host = "http://localhost:8080"
 )
 
 
@@ -343,73 +342,6 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_downloadable_databases**
-> List[DownloadableDatabase] get_downloadable_databases()
-
-Get list of curated custom databases downloadable from the SIRIUS web service for local use
-
-Get list of curated custom databases downloadable from the SIRIUS web service for local use.
- <p>
- [DEPRECATED] This endpoint will likely be removed or changed in future versions of this API.
- [INTERNAL] This endpoint is for internal use and not intended to become part of the stable API specification at any time. This endpoint can change (or be removed) at any time, even in minor updates.
-
-### Example
-
-
-```python
-import PySirius
-from PySirius.models.downloadable_database import DownloadableDatabase
-from PySirius.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to http://localhost:8888
-# See configuration.py for a list of all supported configuration parameters.
-configuration = PySirius.Configuration(
-    host = "http://localhost:8888"
-)
-
-
-# Enter a context with an instance of the API client
-with PySirius.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = PySirius.SearchableDatabasesApi(api_client)
-
-    try:
-        # Get list of curated custom databases downloadable from the SIRIUS web service for local use
-        api_response = api_instance.get_downloadable_databases()
-        print("The response of SearchableDatabasesApi->get_downloadable_databases:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling SearchableDatabasesApi->get_downloadable_databases: %s\n" % e)
-```
-
-
-
-### Parameters
-
-This endpoint does not need any parameter.
-
-### Return type
-
-[**List[DownloadableDatabase]**](DownloadableDatabase.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json, application/problem+json
-
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | list of databases available for downloading. |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
 # **get_included_databases**
 > List[SearchableDatabase] get_included_databases(include_stats=include_stats)
 
@@ -422,10 +354,10 @@ from PySirius.models.searchable_database import SearchableDatabase
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8888
+# Defining the host is optional and defaults to http://localhost:8080
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8888"
+    host = "http://localhost:8080"
 )
 
 
@@ -490,10 +422,10 @@ from PySirius.models.searchable_database import SearchableDatabase
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8888
+# Defining the host is optional and defaults to http://localhost:8080
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8888"
+    host = "http://localhost:8080"
 )
 
 
@@ -559,10 +491,10 @@ import PySirius
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8888
+# Defining the host is optional and defaults to http://localhost:8080
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8888"
+    host = "http://localhost:8080"
 )
 
 
@@ -623,10 +555,10 @@ from PySirius.models.searchable_database_parameters import SearchableDatabasePar
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8888
+# Defining the host is optional and defaults to http://localhost:8080
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8888"
+    host = "http://localhost:8080"
 )
 
 

@@ -8,7 +8,7 @@
 #' @description ImportResult Class
 #' @format An \code{R6Class} generator object
 #' @field affectedCompoundIds List of compoundIds that have been imported. list(character)
-#' @field affectedAlignedFeatureIds List of alignedFeatureIds that have been imported. list(character)
+#' @field affectedAlignedFeatureIds List of alignedFeatureIds that have been imported.. list(character)
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
 #' @export
@@ -22,7 +22,7 @@ ImportResult <- R6::R6Class(
     #' Initialize a new ImportResult class.
     #'
     #' @param affectedCompoundIds List of compoundIds that have been imported.
-    #' @param affectedAlignedFeatureIds List of alignedFeatureIds that have been imported.
+    #' @param affectedAlignedFeatureIds List of alignedFeatureIds that have been imported..
     #' @param ... Other optional arguments.
     initialize = function(`affectedCompoundIds`, `affectedAlignedFeatureIds`, ...) {
       if (!missing(`affectedCompoundIds`)) {

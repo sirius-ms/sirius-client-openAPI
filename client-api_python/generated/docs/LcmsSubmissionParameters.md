@@ -5,7 +5,6 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**sample_types** | **List[Optional[str]]** | Sample type for each input file to be used to compute fold changes between blank and sample runs  If NULL or empty no fold changes will be computed during preprocessing. | [optional] 
 **align_lcms_runs** | **bool** | Specifies whether LC/MS runs should be aligned | [optional] [default to True]
 **noise_intensity** | **float** | Noise level under which all peaks are considered to be likely noise. A peak has to be at least 3x noise level  to be picked as feature. Peaks with MS/MS are still picked even though they might be below noise level.  If not specified, the noise intensity is detected automatically from data. We recommend to NOT specify  this parameter, as the automated detection is usually sufficient. | [optional] [default to -1]
 **trace_max_mass_deviation** | [**Deviation**](Deviation.md) |  | [optional] 

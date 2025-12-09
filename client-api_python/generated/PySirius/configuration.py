@@ -186,7 +186,7 @@ class Configuration:
     ) -> None:
         """Constructor
         """
-        self._base_path = "http://localhost:8888" if host is None else host
+        self._base_path = "http://localhost:8080" if host is None else host
         """Default Base url
         """
         self.server_index = 0 if server_index is None and host is None else server_index
@@ -499,7 +499,7 @@ class Configuration:
                "OS: {env}\n"\
                "Python Version: {pyversion}\n"\
                "Version of the API: 3.1\n"\
-               "SDK Package Version: 6.4.0".\
+               "SDK Package Version: 6.3.3".\
                format(env=sys.platform, pyversion=sys.version)
 
     def get_host_settings(self) -> List[HostSetting]:
@@ -509,7 +509,7 @@ class Configuration:
         """
         return [
             {
-                'url': "http://localhost:8888",
+                'url': "http://localhost:8080",
                 'description': "Generated server url",
             }
         ]

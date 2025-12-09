@@ -12,6 +12,5 @@ Name | Type | Description | Notes
 **numOfFeatures** | **integer** | Number of features (aligned over runs) in this project. If NULL, information has not been requested (See OptField &#39;sizeInformation&#39;). | [optional] 
 **numOfCompounds** | **integer** | Number of compounds (group of ion identities) in this project. If NULL, Information has not been requested (See OptField &#39;sizeInformation&#39;) or might be unavailable for this project type. | [optional] 
 **numOfBytes** | **integer** | Size in Bytes this project consumes on disk If NULL, Information has not been requested (See OptField &#39;sizeInformation&#39;). | [optional] 
-**detectedAdducts** | **set[character]** | Set of all detected adducts available in this projects | [optional] 
 
 

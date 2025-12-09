@@ -1,6 +1,6 @@
 # JobsApi
 
-All URIs are relative to *http://localhost:8888*
+All URIs are relative to *http://localhost:8080*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -11,12 +11,12 @@ Method | HTTP request | Description
 [**GetDefaultJobConfig**](JobsApi.md#GetDefaultJobConfig) | **GET** /api/default-job-config | Request default job configuration
 [**GetJob**](JobsApi.md#GetJob) | **GET** /api/projects/{projectId}/jobs/{jobId} | Get job information and its current state and progress (if available).
 [**GetJobConfig**](JobsApi.md#GetJobConfig) | **GET** /api/job-configs/{name} | Request job configuration with given name.
+[**GetJobConfigNames**](JobsApi.md#GetJobConfigNames) | **GET** /api/job-config-names | [DEPRECATED] Get all (non-default) job configuration names  
 [**GetJobConfigs**](JobsApi.md#GetJobConfigs) | **GET** /api/job-configs | Request all available job configurations
 [**GetJobs**](JobsApi.md#GetJobs) | **GET** /api/projects/{projectId}/jobs | Get List of all available jobs with information such as current state and progress (if available).
 [**GetJobsPaged**](JobsApi.md#GetJobsPaged) | **GET** /api/projects/{projectId}/jobs/page | Get Page of jobs with information such as current state and progress (if available).
 [**HasJobs**](JobsApi.md#HasJobs) | **GET** /api/projects/{projectId}/has-jobs | 
 [**SaveJobConfig**](JobsApi.md#SaveJobConfig) | **POST** /api/job-configs/{name} | Add new job configuration with given name.
-[**StartCommand**](JobsApi.md#StartCommand) | **POST** /api/projects/{projectId}/jobs/run-command | [DEPRECATED] Start computation for given command and input
 [**StartJob**](JobsApi.md#StartJob) | **POST** /api/projects/{projectId}/jobs | Start computation for given compounds and with given parameters.
 [**StartJobFromConfig**](JobsApi.md#StartJobFromConfig) | **POST** /api/projects/{projectId}/jobs/from-config | Start computation for given compounds and with parameters from a stored job-config.
 
@@ -361,6 +361,48 @@ No authorization required
 |-------------|-------------|------------------|
 | **200** | {@link JobSubmission JobSubmission} for given name. |  -  |
 
+# **GetJobConfigNames**
+> array[character] GetJobConfigNames()
+
+[DEPRECATED] Get all (non-default) job configuration names  
+
+[DEPRECATED] Get all (non-default) job configuration names  <p>  [DEPRECATED] Use /job-configs to get all configs with names. This endpoint is based on local file paths and will likely be removed in future versions of this API.
+
+### Example
+```R
+library(RSirius)
+
+# [DEPRECATED] Get all (non-default) job configuration names  
+#
+
+api_instance <- rsirius_api$new()
+# to save the result into a file, simply add the optional `data_file` parameter, e.g.
+# result <- api_instance$GetJobConfigNames(data_file = "result.txt")
+result <- api_instance$jobs_api$GetJobConfigNames()
+dput(result)
+```
+
+### Parameters
+This endpoint does not need any parameter.
+
+### Return type
+
+**array[character]**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | OK |  -  |
+
 # **GetJobConfigs**
 > array[StoredJobSubmission] GetJobConfigs()
 
@@ -604,57 +646,6 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | StoredJobSubmission that contains the JobSubmission and the probably modified name of the config (to ensure path compatibility). |  -  |
-
-# **StartCommand**
-> Job StartCommand(project_id, command_submission, opt_fields = ["progress"])
-
-[DEPRECATED] Start computation for given command and input
-
-[DEPRECATED] Start computation for given command and input.  <p>  [DEPRECATED] this endpoint is based on local file paths and will likely be removed in future versions of this API.  [INTERNAL] This endpoint is for internal use and not intended to become part of the stable API specification at any time. This endpoint can change (or be removed) at any time, even in minor updates.
-
-### Example
-```R
-library(RSirius)
-
-# [DEPRECATED] Start computation for given command and input
-#
-# prepare function argument(s)
-var_project_id <- "project_id_example" # character | project-space to perform the command for.
-var_command_submission <- CommandSubmission$new(c("command_example"), c("compoundIds_example"), c("alignedFeatureIds_example")) # CommandSubmission | the command and the input to be executed
-var_opt_fields <- c("none") # array[character] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
-
-api_instance <- rsirius_api$new()
-# to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$StartCommand(var_project_id, var_command_submission, opt_fields = var_opt_fieldsdata_file = "result.txt")
-result <- api_instance$jobs_api$StartCommand(var_project_id, var_command_submission, opt_fields = var_opt_fields)
-dput(result)
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **project_id** | **character**| project-space to perform the command for. | 
- **command_submission** | [**CommandSubmission**](CommandSubmission.md)| the command and the input to be executed | 
- **opt_fields** | Enum [none, command, progress, affectedIds] | set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;progress&quot;]]
-
-### Return type
-
-[**Job**](Job.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **200** | Job of the command to be executed. |  -  |
 
 # **StartJob**
 > Job StartJob(project_id, job_submission, opt_fields = ["command","progress"])

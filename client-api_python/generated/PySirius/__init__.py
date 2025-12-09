@@ -12,23 +12,18 @@
 """  # noqa: E501
 
 
-__version__ = "6.4.0"
+__version__ = "6.3.3"
 
 # Define package exports
 __all__ = [
     "ActuatorApi",
-    "CompoundStatisticsApi",
     "CompoundsApi",
-    "FeatureStatisticsApi",
     "FeaturesApi",
-    "GuiApi",
     "InfoApi",
     "JobsApi",
     "LoginAndAccountApi",
     "ProjectsApi",
-    "RunsApi",
     "SearchableDatabasesApi",
-    "TagsApi",
     "ApiResponse",
     "ApiClient",
     "Configuration",
@@ -40,20 +35,13 @@ __all__ = [
     "ApiException",
     "AccountCredentials",
     "AccountInfo",
-    "AdductEdgeExperimental",
-    "AdductNetworkExperimental",
-    "AdductNodeExperimental",
-    "AggregationType",
     "AlignedFeature",
     "AlignedFeatureOptField",
-    "AlignedFeatureQualityExperimental",
     "AllowedFeatures",
     "AnnotatedMsMsData",
     "AnnotatedPeak",
     "AnnotatedSpectrum",
-    "AnyValue",
     "ApiVersion",
-    "Axes",
     "BackgroundComputationsStateEvent",
     "BasicSpectrum",
     "BinaryFingerprint",
@@ -61,8 +49,6 @@ __all__ = [
     "BioTransformerSequenceStep",
     "Canopus",
     "CanopusPrediction",
-    "Category",
-    "CommandSubmission",
     "Compound",
     "CompoundClass",
     "CompoundClassType",
@@ -84,17 +70,13 @@ __all__ = [
     "DataImportEvent",
     "DataQuality",
     "Deviation",
-    "DownloadableDatabase",
     "FeatureAnnotations",
     "FeatureImport",
     "FingerprintPrediction",
-    "FoldChange",
-    "FoldChangeJobSubmission",
     "FormulaCandidate",
     "FormulaCandidateOptField",
     "FragmentNode",
     "FragmentationTree",
-    "GuiInfo",
     "ImportResult",
     "Info",
     "InstrumentProfile",
@@ -119,7 +101,6 @@ __all__ = [
     "PagedModelCompound",
     "PagedModelFormulaCandidate",
     "PagedModelJob",
-    "PagedModelRun",
     "PagedModelSpectralLibraryMatch",
     "PagedModelStructureCandidateFormula",
     "PagedModelStructureCandidateScored",
@@ -131,13 +112,6 @@ __all__ = [
     "ProjectInfo",
     "ProjectInfoOptField",
     "ProjectType",
-    "QualityItem",
-    "QualityWeight",
-    "QuantMeasure",
-    "QuantRowType",
-    "QuantTableExperimental",
-    "Run",
-    "RunOptField",
     "SearchableDatabase",
     "SearchableDatabaseParameters",
     "SecurityContext",
@@ -153,8 +127,6 @@ __all__ = [
     "SpectralMatchingType",
     "SpectrumAnnotation",
     "SpectrumType",
-    "StatisticsTable",
-    "StatisticsType",
     "StoredJobSubmission",
     "StructureCandidate",
     "StructureCandidateFormula",
@@ -164,18 +136,9 @@ __all__ = [
     "Subscription",
     "SubscriptionConsumables",
     "Tag",
-    "TagDefinition",
-    "TagDefinitionImport",
-    "TagGroup",
-    "TagSubmission",
     "Term",
     "Timeout",
-    "TraceAnnotationExperimental",
-    "TraceAnnotationTypeExperimental",
-    "TraceExperimental",
-    "TraceSetExperimental",
     "UseHeuristic",
-    "ValueType",
     "WebServerNamespace",
     "Zodiac",
     "ZodiacAnalogueNodes",
@@ -189,18 +152,13 @@ __all__ = [
 
 # import apis into sdk package
 from PySirius.api.actuator_api import ActuatorApi as ActuatorApi
-from PySirius.api.compound_statistics_api import CompoundStatisticsApi as CompoundStatisticsApi
 from PySirius.api.compounds_api import CompoundsApi as CompoundsApi
-from PySirius.api.feature_statistics_api import FeatureStatisticsApi as FeatureStatisticsApi
 from PySirius.api.features_api import FeaturesApi as FeaturesApi
-from PySirius.api.gui_api import GuiApi as GuiApi
 from PySirius.api.info_api import InfoApi as InfoApi
 from PySirius.api.jobs_api import JobsApi as JobsApi
 from PySirius.api.login_and_account_api import LoginAndAccountApi as LoginAndAccountApi
 from PySirius.api.projects_api import ProjectsApi as ProjectsApi
-from PySirius.api.runs_api import RunsApi as RunsApi
 from PySirius.api.searchable_databases_api import SearchableDatabasesApi as SearchableDatabasesApi
-from PySirius.api.tags_api import TagsApi as TagsApi
 
 # import ApiClient
 from PySirius.api_response import ApiResponse as ApiResponse
@@ -216,20 +174,13 @@ from PySirius.exceptions import ApiException as ApiException
 # import models into sdk package
 from PySirius.models.account_credentials import AccountCredentials as AccountCredentials
 from PySirius.models.account_info import AccountInfo as AccountInfo
-from PySirius.models.adduct_edge_experimental import AdductEdgeExperimental as AdductEdgeExperimental
-from PySirius.models.adduct_network_experimental import AdductNetworkExperimental as AdductNetworkExperimental
-from PySirius.models.adduct_node_experimental import AdductNodeExperimental as AdductNodeExperimental
-from PySirius.models.aggregation_type import AggregationType as AggregationType
 from PySirius.models.aligned_feature import AlignedFeature as AlignedFeature
 from PySirius.models.aligned_feature_opt_field import AlignedFeatureOptField as AlignedFeatureOptField
-from PySirius.models.aligned_feature_quality_experimental import AlignedFeatureQualityExperimental as AlignedFeatureQualityExperimental
 from PySirius.models.allowed_features import AllowedFeatures as AllowedFeatures
 from PySirius.models.annotated_ms_ms_data import AnnotatedMsMsData as AnnotatedMsMsData
 from PySirius.models.annotated_peak import AnnotatedPeak as AnnotatedPeak
 from PySirius.models.annotated_spectrum import AnnotatedSpectrum as AnnotatedSpectrum
-from PySirius.models.any_value import AnyValue as AnyValue
 from PySirius.models.api_version import ApiVersion as ApiVersion
-from PySirius.models.axes import Axes as Axes
 from PySirius.models.background_computations_state_event import BackgroundComputationsStateEvent as BackgroundComputationsStateEvent
 from PySirius.models.basic_spectrum import BasicSpectrum as BasicSpectrum
 from PySirius.models.binary_fingerprint import BinaryFingerprint as BinaryFingerprint
@@ -237,8 +188,6 @@ from PySirius.models.bio_transformer_parameters import BioTransformerParameters 
 from PySirius.models.bio_transformer_sequence_step import BioTransformerSequenceStep as BioTransformerSequenceStep
 from PySirius.models.canopus import Canopus as Canopus
 from PySirius.models.canopus_prediction import CanopusPrediction as CanopusPrediction
-from PySirius.models.category import Category as Category
-from PySirius.models.command_submission import CommandSubmission as CommandSubmission
 from PySirius.models.compound import Compound as Compound
 from PySirius.models.compound_class import CompoundClass as CompoundClass
 from PySirius.models.compound_class_type import CompoundClassType as CompoundClassType
@@ -260,17 +209,13 @@ from PySirius.models.db_link import DBLink as DBLink
 from PySirius.models.data_import_event import DataImportEvent as DataImportEvent
 from PySirius.models.data_quality import DataQuality as DataQuality
 from PySirius.models.deviation import Deviation as Deviation
-from PySirius.models.downloadable_database import DownloadableDatabase as DownloadableDatabase
 from PySirius.models.feature_annotations import FeatureAnnotations as FeatureAnnotations
 from PySirius.models.feature_import import FeatureImport as FeatureImport
 from PySirius.models.fingerprint_prediction import FingerprintPrediction as FingerprintPrediction
-from PySirius.models.fold_change import FoldChange as FoldChange
-from PySirius.models.fold_change_job_submission import FoldChangeJobSubmission as FoldChangeJobSubmission
 from PySirius.models.formula_candidate import FormulaCandidate as FormulaCandidate
 from PySirius.models.formula_candidate_opt_field import FormulaCandidateOptField as FormulaCandidateOptField
 from PySirius.models.fragment_node import FragmentNode as FragmentNode
 from PySirius.models.fragmentation_tree import FragmentationTree as FragmentationTree
-from PySirius.models.gui_info import GuiInfo as GuiInfo
 from PySirius.models.import_result import ImportResult as ImportResult
 from PySirius.models.info import Info as Info
 from PySirius.models.instrument_profile import InstrumentProfile as InstrumentProfile
@@ -295,7 +240,6 @@ from PySirius.models.paged_model_aligned_feature import PagedModelAlignedFeature
 from PySirius.models.paged_model_compound import PagedModelCompound as PagedModelCompound
 from PySirius.models.paged_model_formula_candidate import PagedModelFormulaCandidate as PagedModelFormulaCandidate
 from PySirius.models.paged_model_job import PagedModelJob as PagedModelJob
-from PySirius.models.paged_model_run import PagedModelRun as PagedModelRun
 from PySirius.models.paged_model_spectral_library_match import PagedModelSpectralLibraryMatch as PagedModelSpectralLibraryMatch
 from PySirius.models.paged_model_structure_candidate_formula import PagedModelStructureCandidateFormula as PagedModelStructureCandidateFormula
 from PySirius.models.paged_model_structure_candidate_scored import PagedModelStructureCandidateScored as PagedModelStructureCandidateScored
@@ -307,13 +251,6 @@ from PySirius.models.project_event_type import ProjectEventType as ProjectEventT
 from PySirius.models.project_info import ProjectInfo as ProjectInfo
 from PySirius.models.project_info_opt_field import ProjectInfoOptField as ProjectInfoOptField
 from PySirius.models.project_type import ProjectType as ProjectType
-from PySirius.models.quality_item import QualityItem as QualityItem
-from PySirius.models.quality_weight import QualityWeight as QualityWeight
-from PySirius.models.quant_measure import QuantMeasure as QuantMeasure
-from PySirius.models.quant_row_type import QuantRowType as QuantRowType
-from PySirius.models.quant_table_experimental import QuantTableExperimental as QuantTableExperimental
-from PySirius.models.run import Run as Run
-from PySirius.models.run_opt_field import RunOptField as RunOptField
 from PySirius.models.searchable_database import SearchableDatabase as SearchableDatabase
 from PySirius.models.searchable_database_parameters import SearchableDatabaseParameters as SearchableDatabaseParameters
 from PySirius.models.security_context import SecurityContext as SecurityContext
@@ -329,8 +266,6 @@ from PySirius.models.spectral_match_type import SpectralMatchType as SpectralMat
 from PySirius.models.spectral_matching_type import SpectralMatchingType as SpectralMatchingType
 from PySirius.models.spectrum_annotation import SpectrumAnnotation as SpectrumAnnotation
 from PySirius.models.spectrum_type import SpectrumType as SpectrumType
-from PySirius.models.statistics_table import StatisticsTable as StatisticsTable
-from PySirius.models.statistics_type import StatisticsType as StatisticsType
 from PySirius.models.stored_job_submission import StoredJobSubmission as StoredJobSubmission
 from PySirius.models.structure_candidate import StructureCandidate as StructureCandidate
 from PySirius.models.structure_candidate_formula import StructureCandidateFormula as StructureCandidateFormula
@@ -340,18 +275,9 @@ from PySirius.models.structure_db_search import StructureDbSearch as StructureDb
 from PySirius.models.subscription import Subscription as Subscription
 from PySirius.models.subscription_consumables import SubscriptionConsumables as SubscriptionConsumables
 from PySirius.models.tag import Tag as Tag
-from PySirius.models.tag_definition import TagDefinition as TagDefinition
-from PySirius.models.tag_definition_import import TagDefinitionImport as TagDefinitionImport
-from PySirius.models.tag_group import TagGroup as TagGroup
-from PySirius.models.tag_submission import TagSubmission as TagSubmission
 from PySirius.models.term import Term as Term
 from PySirius.models.timeout import Timeout as Timeout
-from PySirius.models.trace_annotation_experimental import TraceAnnotationExperimental as TraceAnnotationExperimental
-from PySirius.models.trace_annotation_type_experimental import TraceAnnotationTypeExperimental as TraceAnnotationTypeExperimental
-from PySirius.models.trace_experimental import TraceExperimental as TraceExperimental
-from PySirius.models.trace_set_experimental import TraceSetExperimental as TraceSetExperimental
 from PySirius.models.use_heuristic import UseHeuristic as UseHeuristic
-from PySirius.models.value_type import ValueType as ValueType
 from PySirius.models.web_server_namespace import WebServerNamespace as WebServerNamespace
 from PySirius.models.zodiac import Zodiac as Zodiac
 from PySirius.models.zodiac_analogue_nodes import ZodiacAnalogueNodes as ZodiacAnalogueNodes

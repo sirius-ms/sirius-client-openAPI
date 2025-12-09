@@ -27,7 +27,6 @@ class ProjectInfoOptField(str, Enum):
     NONE = 'none'
     COMPATIBILITYINFO = 'compatibilityInfo'
     SIZEINFORMATION = 'sizeInformation'
-    DETECTEDADDUCTS = 'detectedAdducts'
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:

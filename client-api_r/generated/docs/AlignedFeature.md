@@ -15,7 +15,7 @@ Name | Type | Description | Notes
 **rtStartSeconds** | **numeric** |  | [optional] 
 **rtEndSeconds** | **numeric** |  | [optional] 
 **rtApexSeconds** | **numeric** |  | [optional] 
-**quality** | **character** | Overall Quality of this feature.  If no Quality data are available for this feature the value is NOT_APPLICABLE | [optional] [Enum: [NOT_APPLICABLE, LOWEST, BAD, DECENT, GOOD]] 
+**quality** | **character** | Quality of this feature. | [optional] [Enum: [NOT_APPLICABLE, LOWEST, BAD, DECENT, GOOD]] 
 **hasMs1** | **character** | If true, the feature has at lease one MS1 spectrum | [optional] 
 **hasMsMs** | **character** | If true, the feature has at lease one MS/MS spectrum | [optional] 
 **msData** | [**MsData**](MsData.md) |  | [optional] 
@@ -23,7 +23,6 @@ Name | Type | Description | Notes
 **topAnnotationsDeNovo** | [**FeatureAnnotations**](FeatureAnnotations.md) |  | [optional] 
 **computing** | **character** | Write lock for this feature. If the feature is locked no write operations are possible.  True if any computation is modifying this feature or its results | [optional] 
 **computedTools** | [**ComputedSubtools**](ComputedSubtools.md) |  | [optional] 
-**qualities** | **map(character)** | Qualities per top level quality category. | [optional] [Enum: ] 
 **tags** | [**map(Tag)**](Tag.md) | Key: tagName, value: tag | [optional] 
 
 

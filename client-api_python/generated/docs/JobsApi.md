@@ -1,6 +1,6 @@
 # PySirius.JobsApi
 
-All URIs are relative to *http://localhost:8888*
+All URIs are relative to *http://localhost:8080*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -11,12 +11,12 @@ Method | HTTP request | Description
 [**get_default_job_config**](JobsApi.md#get_default_job_config) | **GET** /api/default-job-config | Request default job configuration
 [**get_job**](JobsApi.md#get_job) | **GET** /api/projects/{projectId}/jobs/{jobId} | Get job information and its current state and progress (if available).
 [**get_job_config**](JobsApi.md#get_job_config) | **GET** /api/job-configs/{name} | Request job configuration with given name.
+[**get_job_config_names**](JobsApi.md#get_job_config_names) | **GET** /api/job-config-names | [DEPRECATED] Get all (non-default) job configuration names  
 [**get_job_configs**](JobsApi.md#get_job_configs) | **GET** /api/job-configs | Request all available job configurations
 [**get_jobs**](JobsApi.md#get_jobs) | **GET** /api/projects/{projectId}/jobs | Get List of all available jobs with information such as current state and progress (if available).
 [**get_jobs_paged**](JobsApi.md#get_jobs_paged) | **GET** /api/projects/{projectId}/jobs/page | Get Page of jobs with information such as current state and progress (if available).
 [**has_jobs**](JobsApi.md#has_jobs) | **GET** /api/projects/{projectId}/has-jobs | 
 [**save_job_config**](JobsApi.md#save_job_config) | **POST** /api/job-configs/{name} | Add new job configuration with given name.
-[**start_command**](JobsApi.md#start_command) | **POST** /api/projects/{projectId}/jobs/run-command | [DEPRECATED] Start computation for given command and input
 [**start_job**](JobsApi.md#start_job) | **POST** /api/projects/{projectId}/jobs | Start computation for given compounds and with given parameters.
 [**start_job_from_config**](JobsApi.md#start_job_from_config) | **POST** /api/projects/{projectId}/jobs/from-config | Start computation for given compounds and with parameters from a stored job-config.
 
@@ -36,10 +36,10 @@ import PySirius
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8888
+# Defining the host is optional and defaults to http://localhost:8080
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8888"
+    host = "http://localhost:8080"
 )
 
 
@@ -107,10 +107,10 @@ import PySirius
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8888
+# Defining the host is optional and defaults to http://localhost:8080
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8888"
+    host = "http://localhost:8080"
 )
 
 
@@ -172,10 +172,10 @@ import PySirius
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8888
+# Defining the host is optional and defaults to http://localhost:8080
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8888"
+    host = "http://localhost:8080"
 )
 
 
@@ -242,10 +242,10 @@ from PySirius.models.job_submission import JobSubmission
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8888
+# Defining the host is optional and defaults to http://localhost:8080
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8888"
+    host = "http://localhost:8080"
 )
 
 
@@ -310,10 +310,10 @@ from PySirius.models.job_submission import JobSubmission
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8888
+# Defining the host is optional and defaults to http://localhost:8080
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8888"
+    host = "http://localhost:8080"
 )
 
 
@@ -383,10 +383,10 @@ from PySirius.models.job_opt_field import JobOptField
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8888
+# Defining the host is optional and defaults to http://localhost:8080
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8888"
+    host = "http://localhost:8080"
 )
 
 
@@ -455,10 +455,10 @@ from PySirius.models.stored_job_submission import StoredJobSubmission
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8888
+# Defining the host is optional and defaults to http://localhost:8080
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8888"
+    host = "http://localhost:8080"
 )
 
 
@@ -509,6 +509,71 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **get_job_config_names**
+> List[str] get_job_config_names()
+
+[DEPRECATED] Get all (non-default) job configuration names  
+
+[DEPRECATED] Get all (non-default) job configuration names
+ <p>
+ [DEPRECATED] Use /job-configs to get all configs with names. This endpoint is based on local file paths and will likely be removed in future versions of this API.
+
+### Example
+
+
+```python
+import PySirius
+from PySirius.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to http://localhost:8080
+# See configuration.py for a list of all supported configuration parameters.
+configuration = PySirius.Configuration(
+    host = "http://localhost:8080"
+)
+
+
+# Enter a context with an instance of the API client
+with PySirius.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = PySirius.JobsApi(api_client)
+
+    try:
+        # [DEPRECATED] Get all (non-default) job configuration names  
+        api_response = api_instance.get_job_config_names()
+        print("The response of JobsApi->get_job_config_names:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling JobsApi->get_job_config_names: %s\n" % e)
+```
+
+
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+**List[str]**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **get_job_configs**
 > List[StoredJobSubmission] get_job_configs()
 
@@ -525,10 +590,10 @@ from PySirius.models.stored_job_submission import StoredJobSubmission
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8888
+# Defining the host is optional and defaults to http://localhost:8080
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8888"
+    host = "http://localhost:8080"
 )
 
 
@@ -590,10 +655,10 @@ from PySirius.models.job_opt_field import JobOptField
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8888
+# Defining the host is optional and defaults to http://localhost:8080
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8888"
+    host = "http://localhost:8080"
 )
 
 
@@ -661,10 +726,10 @@ from PySirius.models.paged_model_job import PagedModelJob
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8888
+# Defining the host is optional and defaults to http://localhost:8080
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8888"
+    host = "http://localhost:8080"
 )
 
 
@@ -732,10 +797,10 @@ import PySirius
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8888
+# Defining the host is optional and defaults to http://localhost:8080
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8888"
+    host = "http://localhost:8080"
 )
 
 
@@ -802,10 +867,10 @@ from PySirius.models.stored_job_submission import StoredJobSubmission
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8888
+# Defining the host is optional and defaults to http://localhost:8080
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8888"
+    host = "http://localhost:8080"
 )
 
 
@@ -860,83 +925,6 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **start_command**
-> Job start_command(project_id, command_submission, opt_fields=opt_fields)
-
-[DEPRECATED] Start computation for given command and input
-
-[DEPRECATED] Start computation for given command and input.
- <p>
- [DEPRECATED] this endpoint is based on local file paths and will likely be removed in future versions of this API.
- [INTERNAL] This endpoint is for internal use and not intended to become part of the stable API specification at any time. This endpoint can change (or be removed) at any time, even in minor updates.
-
-### Example
-
-
-```python
-import PySirius
-from PySirius.models.command_submission import CommandSubmission
-from PySirius.models.job import Job
-from PySirius.models.job_opt_field import JobOptField
-from PySirius.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to http://localhost:8888
-# See configuration.py for a list of all supported configuration parameters.
-configuration = PySirius.Configuration(
-    host = "http://localhost:8888"
-)
-
-
-# Enter a context with an instance of the API client
-with PySirius.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = PySirius.JobsApi(api_client)
-    project_id = 'project_id_example' # str | project-space to perform the command for.
-    command_submission = PySirius.CommandSubmission() # CommandSubmission | the command and the input to be executed
-    opt_fields = ["progress"] # List[JobOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to ["progress"])
-
-    try:
-        # [DEPRECATED] Start computation for given command and input
-        api_response = api_instance.start_command(project_id, command_submission, opt_fields=opt_fields)
-        print("The response of JobsApi->start_command:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling JobsApi->start_command: %s\n" % e)
-```
-
-
-
-### Parameters
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **project_id** | **str**| project-space to perform the command for. | 
- **command_submission** | [**CommandSubmission**](CommandSubmission.md)| the command and the input to be executed | 
- **opt_fields** | [**List[JobOptField]**](JobOptField.md)| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;progress&quot;]]
-
-### Return type
-
-[**Job**](Job.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | Job of the command to be executed. |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
 # **start_job**
 > Job start_job(project_id, job_submission, opt_fields=opt_fields)
 
@@ -955,10 +943,10 @@ from PySirius.models.job_submission import JobSubmission
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8888
+# Defining the host is optional and defaults to http://localhost:8080
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8888"
+    host = "http://localhost:8080"
 )
 
 
@@ -1028,10 +1016,10 @@ from PySirius.models.job_opt_field import JobOptField
 from PySirius.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost:8888
+# Defining the host is optional and defaults to http://localhost:8080
 # See configuration.py for a list of all supported configuration parameters.
 configuration = PySirius.Configuration(
-    host = "http://localhost:8888"
+    host = "http://localhost:8080"
 )
 
 

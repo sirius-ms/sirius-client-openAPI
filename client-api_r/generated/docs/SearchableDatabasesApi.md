@@ -1,6 +1,6 @@
 # SearchableDatabasesApi
 
-All URIs are relative to *http://localhost:8888*
+All URIs are relative to *http://localhost:8080*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -9,7 +9,6 @@ Method | HTTP request | Description
 [**GetCustomDatabases**](SearchableDatabasesApi.md#GetCustomDatabases) | **GET** /api/databases/custom | 
 [**GetDatabase**](SearchableDatabasesApi.md#GetDatabase) | **GET** /api/databases/{databaseId} | 
 [**GetDatabases**](SearchableDatabasesApi.md#GetDatabases) | **GET** /api/databases | 
-[**GetDownloadableDatabases**](SearchableDatabasesApi.md#GetDownloadableDatabases) | **GET** /api/databases/downloadable | Get list of curated custom databases downloadable from the SIRIUS web service for local use
 [**GetIncludedDatabases**](SearchableDatabasesApi.md#GetIncludedDatabases) | **GET** /api/databases/included | 
 [**ImportIntoDatabase**](SearchableDatabasesApi.md#ImportIntoDatabase) | **POST** /api/databases/{databaseId}/import/from-files | Start import of structure and spectra files into the specified database.
 [**RemoveDatabase**](SearchableDatabasesApi.md#RemoveDatabase) | **DELETE** /api/databases/{databaseId} | 
@@ -240,48 +239,6 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | OK |  -  |
-
-# **GetDownloadableDatabases**
-> array[DownloadableDatabase] GetDownloadableDatabases()
-
-Get list of curated custom databases downloadable from the SIRIUS web service for local use
-
-Get list of curated custom databases downloadable from the SIRIUS web service for local use.  <p>  [DEPRECATED] This endpoint will likely be removed or changed in future versions of this API.  [INTERNAL] This endpoint is for internal use and not intended to become part of the stable API specification at any time. This endpoint can change (or be removed) at any time, even in minor updates.
-
-### Example
-```R
-library(RSirius)
-
-# Get list of curated custom databases downloadable from the SIRIUS web service for local use
-#
-
-api_instance <- rsirius_api$new()
-# to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$GetDownloadableDatabases(data_file = "result.txt")
-result <- api_instance$searchable_databases_api$GetDownloadableDatabases()
-dput(result)
-```
-
-### Parameters
-This endpoint does not need any parameter.
-
-### Return type
-
-[**array[DownloadableDatabase]**](DownloadableDatabase.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json, application/problem+json
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **200** | list of databases available for downloading. |  -  |
 
 # **GetIncludedDatabases**
 > array[SearchableDatabase] GetIncludedDatabases(include_stats = FALSE)

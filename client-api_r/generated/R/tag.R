@@ -8,7 +8,7 @@
 #' @description Tag Class
 #' @format An \code{R6Class} generator object
 #' @field tagName Name of the tag as defined by the corresponding TagDefinition  Links tag object to their definition. character
-#' @field value  \link{AnyValue} [optional]
+#' @field value Optional value of the tag.  <p>  Generic value of the tag as defined by the corresponding TagDefinition.  Can be Integer, Double, Boolean and String, whereas String values can represent Text, Date (yyyy-MM-dd) or Time (HH:mm:ss). object [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
 #' @export
@@ -22,7 +22,7 @@ Tag <- R6::R6Class(
     #' Initialize a new Tag class.
     #'
     #' @param tagName Name of the tag as defined by the corresponding TagDefinition  Links tag object to their definition.
-    #' @param value value
+    #' @param value Optional value of the tag.  <p>  Generic value of the tag as defined by the corresponding TagDefinition.  Can be Integer, Double, Boolean and String, whereas String values can represent Text, Date (yyyy-MM-dd) or Time (HH:mm:ss).
     #' @param ... Other optional arguments.
     initialize = function(`tagName`, `value` = NULL, ...) {
       if (!missing(`tagName`)) {
@@ -32,7 +32,6 @@ Tag <- R6::R6Class(
         self$`tagName` <- `tagName`
       }
       if (!is.null(`value`)) {
-        stopifnot(R6::is.R6(`value`))
         self$`value` <- `value`
       }
     },
@@ -74,7 +73,7 @@ Tag <- R6::R6Class(
       }
       if (!is.null(self$`value`)) {
         TagObject[["value"]] <-
-          self$`value`$toSimpleType()
+          self$`value`
       }
       return(TagObject)
     },
@@ -90,9 +89,7 @@ Tag <- R6::R6Class(
         self$`tagName` <- this_object$`tagName`
       }
       if (!is.null(this_object$`value`)) {
-        `value_object` <- AnyValue$new()
-        `value_object`$fromJSON(jsonlite::toJSON(this_object$`value`, auto_unbox = TRUE, digits = NA, null = 'null'))
-        self$`value` <- `value_object`
+        self$`value` <- this_object$`value`
       }
       self
     },
@@ -116,7 +113,7 @@ Tag <- R6::R6Class(
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
       self$`tagName` <- this_object$`tagName`
-      self$`value` <- AnyValue$new()$fromJSON(jsonlite::toJSON(this_object$`value`, auto_unbox = TRUE, digits = NA, null = 'null'))
+      self$`value` <- this_object$`value`
       self
     },
 

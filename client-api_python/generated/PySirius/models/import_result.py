@@ -25,7 +25,7 @@ class ImportResult(BaseModel):
     ImportResult
     """ # noqa: E501
     affected_compound_ids: List[StrictStr] = Field(description="List of compoundIds that have been imported.", alias="affectedCompoundIds")
-    affected_aligned_feature_ids: List[StrictStr] = Field(description="List of alignedFeatureIds that have been imported.", alias="affectedAlignedFeatureIds")
+    affected_aligned_feature_ids: List[StrictStr] = Field(description="List of alignedFeatureIds that have been imported..", alias="affectedAlignedFeatureIds")
     __properties: ClassVar[List[str]] = ["affectedCompoundIds", "affectedAlignedFeatureIds"]
 
     model_config = ConfigDict(
