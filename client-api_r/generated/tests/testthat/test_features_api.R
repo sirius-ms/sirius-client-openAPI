@@ -268,8 +268,7 @@ test_that("GetDeNovoStructureCandidatesPaged", {
     projects_api$OpenProject(project_id, tomato_project)
 
     response <- api_instance$GetDeNovoStructureCandidatesPaged(project_id, aligned_feature_id)
-    expect_true(inherits(response, "list"))
-    expect_true(inherits(response[[1]], "PagedModelStructureCandidateFormula"))
+    expect_true(inherits(response, "PagedModelStructureCandidateFormula"))
 
   }, finally = {
 
