@@ -90,19 +90,6 @@ result <- api_instance$searchable_databases_api$GetDatabases(include_stats = var
 dput(result)
 
 
-####################  GetDownloadableDatabases  ####################
-
-library(RSirius)
-
-#Get list of curated custom databases downloadable from the SIRIUS web service for local use
-api_instance <- rsirius_api$new()
-
-# to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$GetDownloadableDatabases(data_file = "result.txt")
-result <- api_instance$searchable_databases_api$GetDownloadableDatabases()
-dput(result)
-
-
 ####################  GetIncludedDatabases  ####################
 
 library(RSirius)
@@ -181,8 +168,6 @@ dput(result)
 \item \href{#method-SearchableDatabasesApi-GetDatabaseWithHttpInfo}{\code{SearchableDatabasesApi$GetDatabaseWithHttpInfo()}}
 \item \href{#method-SearchableDatabasesApi-GetDatabases}{\code{SearchableDatabasesApi$GetDatabases()}}
 \item \href{#method-SearchableDatabasesApi-GetDatabasesWithHttpInfo}{\code{SearchableDatabasesApi$GetDatabasesWithHttpInfo()}}
-\item \href{#method-SearchableDatabasesApi-GetDownloadableDatabases}{\code{SearchableDatabasesApi$GetDownloadableDatabases()}}
-\item \href{#method-SearchableDatabasesApi-GetDownloadableDatabasesWithHttpInfo}{\code{SearchableDatabasesApi$GetDownloadableDatabasesWithHttpInfo()}}
 \item \href{#method-SearchableDatabasesApi-GetIncludedDatabases}{\code{SearchableDatabasesApi$GetIncludedDatabases()}}
 \item \href{#method-SearchableDatabasesApi-GetIncludedDatabasesWithHttpInfo}{\code{SearchableDatabasesApi$GetIncludedDatabasesWithHttpInfo()}}
 \item \href{#method-SearchableDatabasesApi-ImportIntoDatabase}{\code{SearchableDatabasesApi$ImportIntoDatabase()}}
@@ -501,53 +486,6 @@ array[SearchableDatabase]
 }
 \subsection{Returns}{
 API response (array[SearchableDatabase]) with additional information such as HTTP status code, headers
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-SearchableDatabasesApi-GetDownloadableDatabases"></a>}}
-\if{latex}{\out{\hypertarget{method-SearchableDatabasesApi-GetDownloadableDatabases}{}}}
-\subsection{Method \code{GetDownloadableDatabases()}}{
-Get list of curated custom databases downloadable from the SIRIUS web service for local use
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{SearchableDatabasesApi$GetDownloadableDatabases(data_file = NULL, ...)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{data_file}}{(optional) name of the data file to save the result}
-
-\item{\code{...}}{Other optional arguments}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-array[DownloadableDatabase]
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-SearchableDatabasesApi-GetDownloadableDatabasesWithHttpInfo"></a>}}
-\if{latex}{\out{\hypertarget{method-SearchableDatabasesApi-GetDownloadableDatabasesWithHttpInfo}{}}}
-\subsection{Method \code{GetDownloadableDatabasesWithHttpInfo()}}{
-Get list of curated custom databases downloadable from the SIRIUS web service for local use
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{SearchableDatabasesApi$GetDownloadableDatabasesWithHttpInfo(
-  data_file = NULL,
-  ...
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{data_file}}{(optional) name of the data file to save the result}
-
-\item{\code{...}}{Other optional arguments}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-API response (array[DownloadableDatabase]) with additional information such as HTTP status code, headers
 }
 }
 \if{html}{\out{<hr>}}

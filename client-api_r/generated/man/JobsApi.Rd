@@ -119,6 +119,19 @@ result <- api_instance$jobs_api$GetJobConfig(var_name, move_parameters_to_config
 dput(result)
 
 
+####################  GetJobConfigNames  ####################
+
+library(RSirius)
+
+#[DEPRECATED] Get all (non-default) job configuration names  
+api_instance <- rsirius_api$new()
+
+# to save the result into a file, simply add the optional `data_file` parameter, e.g.
+# result <- api_instance$GetJobConfigNames(data_file = "result.txt")
+result <- api_instance$jobs_api$GetJobConfigNames()
+dput(result)
+
+
 ####################  GetJobConfigs  ####################
 
 library(RSirius)
@@ -196,22 +209,6 @@ result <- api_instance$jobs_api$SaveJobConfig(var_name, var_job_submission, over
 dput(result)
 
 
-####################  StartCommand  ####################
-
-library(RSirius)
-var_project_id <- "project_id_example" # character | project-space to perform the command for.
-var_command_submission <- CommandSubmission$new(c("command_example"), c("compoundIds_example"), c("alignedFeatureIds_example")) # CommandSubmission | the command and the input to be executed
-var_opt_fields <- c("none") # array[character] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
-
-#[DEPRECATED] Start computation for given command and input
-api_instance <- rsirius_api$new()
-
-# to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$StartCommand(var_project_id, var_command_submission, opt_fields = var_opt_fieldsdata_file = "result.txt")
-result <- api_instance$jobs_api$StartCommand(var_project_id, var_command_submission, opt_fields = var_opt_fields)
-dput(result)
-
-
 ####################  StartJob  ####################
 
 library(RSirius)
@@ -273,6 +270,8 @@ dput(result)
 \item \href{#method-JobsApi-GetJobWithHttpInfo}{\code{JobsApi$GetJobWithHttpInfo()}}
 \item \href{#method-JobsApi-GetJobConfig}{\code{JobsApi$GetJobConfig()}}
 \item \href{#method-JobsApi-GetJobConfigWithHttpInfo}{\code{JobsApi$GetJobConfigWithHttpInfo()}}
+\item \href{#method-JobsApi-GetJobConfigNames}{\code{JobsApi$GetJobConfigNames()}}
+\item \href{#method-JobsApi-GetJobConfigNamesWithHttpInfo}{\code{JobsApi$GetJobConfigNamesWithHttpInfo()}}
 \item \href{#method-JobsApi-GetJobConfigs}{\code{JobsApi$GetJobConfigs()}}
 \item \href{#method-JobsApi-GetJobConfigsWithHttpInfo}{\code{JobsApi$GetJobConfigsWithHttpInfo()}}
 \item \href{#method-JobsApi-GetJobs}{\code{JobsApi$GetJobs()}}
@@ -283,8 +282,6 @@ dput(result)
 \item \href{#method-JobsApi-HasJobsWithHttpInfo}{\code{JobsApi$HasJobsWithHttpInfo()}}
 \item \href{#method-JobsApi-SaveJobConfig}{\code{JobsApi$SaveJobConfig()}}
 \item \href{#method-JobsApi-SaveJobConfigWithHttpInfo}{\code{JobsApi$SaveJobConfigWithHttpInfo()}}
-\item \href{#method-JobsApi-StartCommand}{\code{JobsApi$StartCommand()}}
-\item \href{#method-JobsApi-StartCommandWithHttpInfo}{\code{JobsApi$StartCommandWithHttpInfo()}}
 \item \href{#method-JobsApi-StartJob}{\code{JobsApi$StartJob()}}
 \item \href{#method-JobsApi-StartJobWithHttpInfo}{\code{JobsApi$StartJobWithHttpInfo()}}
 \item \href{#method-JobsApi-StartJobFromConfig}{\code{JobsApi$StartJobFromConfig()}}
@@ -730,6 +727,50 @@ API response (StoredJobSubmission) with additional information such as HTTP stat
 }
 }
 \if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-JobsApi-GetJobConfigNames"></a>}}
+\if{latex}{\out{\hypertarget{method-JobsApi-GetJobConfigNames}{}}}
+\subsection{Method \code{GetJobConfigNames()}}{
+[DEPRECATED] Get all (non-default) job configuration names
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{JobsApi$GetJobConfigNames(data_file = NULL, ...)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{data_file}}{(optional) name of the data file to save the result}
+
+\item{\code{...}}{Other optional arguments}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+array[character]
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-JobsApi-GetJobConfigNamesWithHttpInfo"></a>}}
+\if{latex}{\out{\hypertarget{method-JobsApi-GetJobConfigNamesWithHttpInfo}{}}}
+\subsection{Method \code{GetJobConfigNamesWithHttpInfo()}}{
+[DEPRECATED] Get all (non-default) job configuration names
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{JobsApi$GetJobConfigNamesWithHttpInfo(data_file = NULL, ...)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{data_file}}{(optional) name of the data file to save the result}
+
+\item{\code{...}}{Other optional arguments}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+API response (array[character]) with additional information such as HTTP status code, headers
+}
+}
+\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-JobsApi-GetJobConfigs"></a>}}
 \if{latex}{\out{\hypertarget{method-JobsApi-GetJobConfigs}{}}}
 \subsection{Method \code{GetJobConfigs()}}{
@@ -1037,74 +1078,6 @@ Add new job configuration with given name.
 }
 \subsection{Returns}{
 API response (StoredJobSubmission) with additional information such as HTTP status code, headers
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-JobsApi-StartCommand"></a>}}
-\if{latex}{\out{\hypertarget{method-JobsApi-StartCommand}{}}}
-\subsection{Method \code{StartCommand()}}{
-[DEPRECATED] Start computation for given command and input
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{JobsApi$StartCommand(
-  project_id,
-  command_submission,
-  opt_fields = list("progress"),
-  data_file = NULL,
-  ...
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{project_id}}{project-space to perform the command for.}
-
-\item{\code{command_submission}}{the command and the input to be executed}
-
-\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["progress"])}
-
-\item{\code{data_file}}{(optional) name of the data file to save the result}
-
-\item{\code{...}}{Other optional arguments}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-Job
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-JobsApi-StartCommandWithHttpInfo"></a>}}
-\if{latex}{\out{\hypertarget{method-JobsApi-StartCommandWithHttpInfo}{}}}
-\subsection{Method \code{StartCommandWithHttpInfo()}}{
-[DEPRECATED] Start computation for given command and input
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{JobsApi$StartCommandWithHttpInfo(
-  project_id,
-  command_submission,
-  opt_fields = list("progress"),
-  data_file = NULL,
-  ...
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{project_id}}{project-space to perform the command for.}
-
-\item{\code{command_submission}}{the command and the input to be executed}
-
-\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["progress"])}
-
-\item{\code{data_file}}{(optional) name of the data file to save the result}
-
-\item{\code{...}}{Other optional arguments}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-API response (Job) with additional information such as HTTP status code, headers
 }
 }
 \if{html}{\out{<hr>}}

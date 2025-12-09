@@ -32,8 +32,6 @@ df
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{sampleTypes}}{Sample type for each input file to be used to compute fold changes between blank and sample runs  If NULL or empty no fold changes will be computed during preprocessing. list(character) [optional]}
-
 \item{\code{alignLCMSRuns}}{Specifies whether LC/MS runs should be aligned character [optional]}
 
 \item{\code{noiseIntensity}}{Noise level under which all peaks are considered to be likely noise. A peak has to be at least 3x noise level  to be picked as feature. Peaks with MS/MS are still picked even though they might be below noise level.  If not specified, the noise intensity is detected automatically from data. We recommend to NOT specify  this parameter, as the automated detection is usually sufficient. numeric [optional]}
@@ -73,7 +71,6 @@ df
 Initialize a new LcmsSubmissionParameters class.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{LcmsSubmissionParameters$new(
-  sampleTypes = NULL,
   alignLCMSRuns = TRUE,
   noiseIntensity = -1,
   traceMaxMassDeviation = NULL,
@@ -87,8 +84,6 @@ Initialize a new LcmsSubmissionParameters class.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{sampleTypes}}{Sample type for each input file to be used to compute fold changes between blank and sample runs  If NULL or empty no fold changes will be computed during preprocessing.}
-
 \item{\code{alignLCMSRuns}}{Specifies whether LC/MS runs should be aligned. Default to TRUE.}
 
 \item{\code{noiseIntensity}}{Noise level under which all peaks are considered to be likely noise. A peak has to be at least 3x noise level  to be picked as feature. Peaks with MS/MS are still picked even though they might be below noise level.  If not specified, the noise intensity is detected automatically from data. We recommend to NOT specify  this parameter, as the automated detection is usually sufficient.. Default to -1.}

@@ -38,34 +38,6 @@ result <- api_instance$compounds_api$AddCompounds(var_project_id, var_compound_i
 dput(result)
 
 
-####################  AddTagsToCompoundExperimental  ####################
-
-library(RSirius)
-var_project_id <- "project_id_example" # character | project-space to add to.
-var_compound_id <- "compound_id_example" # character | compound (group of ion identities) to add tags to.
-var_tag <- c(Tag$new("tagName_example", AnyValue$new())) # array[Tag] | tags to add.
-
-#[EXPERIMENTAL] Tags with the same name will be overwritten
-api_instance <- rsirius_api$new()
-
-# to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$AddTagsToCompoundExperimental(var_project_id, var_compound_id, var_tagdata_file = "result.txt")
-result <- api_instance$compounds_api$AddTagsToCompoundExperimental(var_project_id, var_compound_id, var_tag)
-dput(result)
-
-
-####################  AddTagsToObjects  ####################
-
-library(RSirius)
-var_project_id <- "project_id_example" # character | project-space to add to.
-var_tag_submission <- c(TagSubmission$new("tagName_example", "taggedObjectId_example", AnyValue$new())) # array[TagSubmission] | tags with id of the object to be added to.
-
-#Tags with the same name will be overwritten.
-api_instance <- rsirius_api$new()
-
-api_instance$compounds_api$AddTagsToObjects(var_project_id, var_tag_submission)
-
-
 ####################  DeleteCompound  ####################
 
 library(RSirius)
@@ -96,53 +68,6 @@ result <- api_instance$compounds_api$GetCompound(var_project_id, var_compound_id
 dput(result)
 
 
-####################  GetCompoundQuantTableExperimental  ####################
-
-library(RSirius)
-var_project_id <- "project_id_example" # character | project-space to read from.
-var_type <- "APEX_HEIGHT" # character | quantification type. (Optional)
-
-#[EXPERIMENTAL] Returns the full quantification table of compounds
-api_instance <- rsirius_api$new()
-
-# to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$GetCompoundQuantTableExperimental(var_project_id, type = var_typedata_file = "result.txt")
-result <- api_instance$compounds_api$GetCompoundQuantTableExperimental(var_project_id, type = var_type)
-dput(result)
-
-
-####################  GetCompoundQuantTableRowExperimental  ####################
-
-library(RSirius)
-var_project_id <- "project_id_example" # character | project-space to read from.
-var_compound_id <- "compound_id_example" # character | compound which should be read out
-var_type <- "APEX_HEIGHT" # character | quantification type. (Optional)
-
-#[EXPERIMENTAL] Returns a single quantification table row for the given compound
-api_instance <- rsirius_api$new()
-
-# to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$GetCompoundQuantTableRowExperimental(var_project_id, var_compound_id, type = var_typedata_file = "result.txt")
-result <- api_instance$compounds_api$GetCompoundQuantTableRowExperimental(var_project_id, var_compound_id, type = var_type)
-dput(result)
-
-
-####################  GetCompoundTracesExperimental  ####################
-
-library(RSirius)
-var_project_id <- "project_id_example" # character | project-space to read from.
-var_compound_id <- "compound_id_example" # character | compound which intensities should be read out
-var_feature_id <- "" # character |  (Optional)
-
-#[EXPERIMENTAL] Returns the traces of the given compound
-api_instance <- rsirius_api$new()
-
-# to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$GetCompoundTracesExperimental(var_project_id, var_compound_id, feature_id = var_feature_iddata_file = "result.txt")
-result <- api_instance$compounds_api$GetCompoundTracesExperimental(var_project_id, var_compound_id, feature_id = var_feature_id)
-dput(result)
-
-
 ####################  GetCompounds  ####################
 
 library(RSirius)
@@ -160,32 +85,10 @@ result <- api_instance$compounds_api$GetCompounds(var_project_id, ms_data_search
 dput(result)
 
 
-####################  GetCompoundsByGroupExperimental  ####################
-
-library(RSirius)
-var_project_id <- "project_id_example" # character | project-space to delete from.
-var_group_name <- "group_name_example" # character | tag group name.
-var_page <- 0 # integer | Zero-based page index (0..N) (Optional)
-var_size <- 20 # integer | The size of the page to be returned (Optional)
-var_sort <- c("inner_example") # array[character] | Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (Optional)
-var_ms_data_as_cosine_query <- FALSE # character | Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. (Optional)
-var_opt_fields <- c("none") # array[character] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
-var_opt_fields_features <- c("none") # array[character] |  (Optional)
-
-#[EXPERIMENTAL] Get compounds (group of ion identities) by tag group
-api_instance <- rsirius_api$new()
-
-# to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$GetCompoundsByGroupExperimental(var_project_id, var_group_name, page = var_page, size = var_size, sort = var_sort, ms_data_as_cosine_query = var_ms_data_as_cosine_query, opt_fields = var_opt_fields, opt_fields_features = var_opt_fields_featuresdata_file = "result.txt")
-result <- api_instance$compounds_api$GetCompoundsByGroupExperimental(var_project_id, var_group_name, page = var_page, size = var_size, sort = var_sort, ms_data_as_cosine_query = var_ms_data_as_cosine_query, opt_fields = var_opt_fields, opt_fields_features = var_opt_fields_features)
-dput(result)
-
-
-####################  GetCompoundsPageExperimental  ####################
+####################  GetCompoundsPaged  ####################
 
 library(RSirius)
 var_project_id <- "project_id_example" # character | project-space to read from.
-var_search_query <- "search_query_example" # character | search query in lucene syntax. (Optional)
 var_page <- 0 # integer | Zero-based page index (0..N) (Optional)
 var_size <- 20 # integer | The size of the page to be returned (Optional)
 var_sort <- c("inner_example") # array[character] | Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (Optional)
@@ -193,41 +96,13 @@ var_ms_data_search_prepared <- FALSE # character | Returns all fragment spectra 
 var_opt_fields <- c("none") # array[character] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
 var_opt_fields_features <- c("none") # array[character] |  (Optional)
 
-#[EXPERIMENTAL] Page of available compounds (group of ion identities) in the given project-space
+#Page of available compounds (group of ion identities) in the given project-space.
 api_instance <- rsirius_api$new()
 
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$GetCompoundsPageExperimental(var_project_id, search_query = var_search_query, page = var_page, size = var_size, sort = var_sort, ms_data_search_prepared = var_ms_data_search_prepared, opt_fields = var_opt_fields, opt_fields_features = var_opt_fields_featuresdata_file = "result.txt")
-result <- api_instance$compounds_api$GetCompoundsPageExperimental(var_project_id, search_query = var_search_query, page = var_page, size = var_size, sort = var_sort, ms_data_search_prepared = var_ms_data_search_prepared, opt_fields = var_opt_fields, opt_fields_features = var_opt_fields_features)
+# result <- api_instance$GetCompoundsPaged(var_project_id, page = var_page, size = var_size, sort = var_sort, ms_data_search_prepared = var_ms_data_search_prepared, opt_fields = var_opt_fields, opt_fields_features = var_opt_fields_featuresdata_file = "result.txt")
+result <- api_instance$compounds_api$GetCompoundsPaged(var_project_id, page = var_page, size = var_size, sort = var_sort, ms_data_search_prepared = var_ms_data_search_prepared, opt_fields = var_opt_fields, opt_fields_features = var_opt_fields_features)
 dput(result)
-
-
-####################  GetTagsForCompoundExperimental  ####################
-
-library(RSirius)
-var_project_id <- "project_id_example" # character | project-space to get from.
-var_object_id <- "object_id_example" # character | CompoundId to get tags for.
-
-#[EXPERIMENTAL] Get all tags associated with this Compound
-api_instance <- rsirius_api$new()
-
-# to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$GetTagsForCompoundExperimental(var_project_id, var_object_iddata_file = "result.txt")
-result <- api_instance$compounds_api$GetTagsForCompoundExperimental(var_project_id, var_object_id)
-dput(result)
-
-
-####################  RemoveTagFromCompoundExperimental  ####################
-
-library(RSirius)
-var_project_id <- "project_id_example" # character | project-space to delete from.
-var_compound_id <- "compound_id_example" # character | compound (group of ion identities) to delete tag from.
-var_tag_name <- "tag_name_example" # character | name of the tag to delete.
-
-#[EXPERIMENTAL] Delete tag with the given name from the compound (group of ion identities) with the specified ID in the specified project-space
-api_instance <- rsirius_api$new()
-
-api_instance$compounds_api$RemoveTagFromCompoundExperimental(var_project_id, var_compound_id, var_tag_name)
 
 
 }
@@ -245,30 +120,14 @@ api_instance$compounds_api$RemoveTagFromCompoundExperimental(var_project_id, var
 \item \href{#method-CompoundsApi-new}{\code{CompoundsApi$new()}}
 \item \href{#method-CompoundsApi-AddCompounds}{\code{CompoundsApi$AddCompounds()}}
 \item \href{#method-CompoundsApi-AddCompoundsWithHttpInfo}{\code{CompoundsApi$AddCompoundsWithHttpInfo()}}
-\item \href{#method-CompoundsApi-AddTagsToCompoundExperimental}{\code{CompoundsApi$AddTagsToCompoundExperimental()}}
-\item \href{#method-CompoundsApi-AddTagsToCompoundExperimentalWithHttpInfo}{\code{CompoundsApi$AddTagsToCompoundExperimentalWithHttpInfo()}}
-\item \href{#method-CompoundsApi-AddTagsToObjects}{\code{CompoundsApi$AddTagsToObjects()}}
-\item \href{#method-CompoundsApi-AddTagsToObjectsWithHttpInfo}{\code{CompoundsApi$AddTagsToObjectsWithHttpInfo()}}
 \item \href{#method-CompoundsApi-DeleteCompound}{\code{CompoundsApi$DeleteCompound()}}
 \item \href{#method-CompoundsApi-DeleteCompoundWithHttpInfo}{\code{CompoundsApi$DeleteCompoundWithHttpInfo()}}
 \item \href{#method-CompoundsApi-GetCompound}{\code{CompoundsApi$GetCompound()}}
 \item \href{#method-CompoundsApi-GetCompoundWithHttpInfo}{\code{CompoundsApi$GetCompoundWithHttpInfo()}}
-\item \href{#method-CompoundsApi-GetCompoundQuantTableExperimental}{\code{CompoundsApi$GetCompoundQuantTableExperimental()}}
-\item \href{#method-CompoundsApi-GetCompoundQuantTableExperimentalWithHttpInfo}{\code{CompoundsApi$GetCompoundQuantTableExperimentalWithHttpInfo()}}
-\item \href{#method-CompoundsApi-GetCompoundQuantTableRowExperimental}{\code{CompoundsApi$GetCompoundQuantTableRowExperimental()}}
-\item \href{#method-CompoundsApi-GetCompoundQuantTableRowExperimentalWithHttpInfo}{\code{CompoundsApi$GetCompoundQuantTableRowExperimentalWithHttpInfo()}}
-\item \href{#method-CompoundsApi-GetCompoundTracesExperimental}{\code{CompoundsApi$GetCompoundTracesExperimental()}}
-\item \href{#method-CompoundsApi-GetCompoundTracesExperimentalWithHttpInfo}{\code{CompoundsApi$GetCompoundTracesExperimentalWithHttpInfo()}}
 \item \href{#method-CompoundsApi-GetCompounds}{\code{CompoundsApi$GetCompounds()}}
 \item \href{#method-CompoundsApi-GetCompoundsWithHttpInfo}{\code{CompoundsApi$GetCompoundsWithHttpInfo()}}
-\item \href{#method-CompoundsApi-GetCompoundsByGroupExperimental}{\code{CompoundsApi$GetCompoundsByGroupExperimental()}}
-\item \href{#method-CompoundsApi-GetCompoundsByGroupExperimentalWithHttpInfo}{\code{CompoundsApi$GetCompoundsByGroupExperimentalWithHttpInfo()}}
-\item \href{#method-CompoundsApi-GetCompoundsPageExperimental}{\code{CompoundsApi$GetCompoundsPageExperimental()}}
-\item \href{#method-CompoundsApi-GetCompoundsPageExperimentalWithHttpInfo}{\code{CompoundsApi$GetCompoundsPageExperimentalWithHttpInfo()}}
-\item \href{#method-CompoundsApi-GetTagsForCompoundExperimental}{\code{CompoundsApi$GetTagsForCompoundExperimental()}}
-\item \href{#method-CompoundsApi-GetTagsForCompoundExperimentalWithHttpInfo}{\code{CompoundsApi$GetTagsForCompoundExperimentalWithHttpInfo()}}
-\item \href{#method-CompoundsApi-RemoveTagFromCompoundExperimental}{\code{CompoundsApi$RemoveTagFromCompoundExperimental()}}
-\item \href{#method-CompoundsApi-RemoveTagFromCompoundExperimentalWithHttpInfo}{\code{CompoundsApi$RemoveTagFromCompoundExperimentalWithHttpInfo()}}
+\item \href{#method-CompoundsApi-GetCompoundsPaged}{\code{CompoundsApi$GetCompoundsPaged()}}
+\item \href{#method-CompoundsApi-GetCompoundsPagedWithHttpInfo}{\code{CompoundsApi$GetCompoundsPagedWithHttpInfo()}}
 \item \href{#method-CompoundsApi-clone}{\code{CompoundsApi$clone()}}
 }
 }
@@ -367,122 +226,6 @@ Import Compounds and its contained features.
 }
 \subsection{Returns}{
 API response (array[Compound]) with additional information such as HTTP status code, headers
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-CompoundsApi-AddTagsToCompoundExperimental"></a>}}
-\if{latex}{\out{\hypertarget{method-CompoundsApi-AddTagsToCompoundExperimental}{}}}
-\subsection{Method \code{AddTagsToCompoundExperimental()}}{
-[EXPERIMENTAL] Tags with the same name will be overwritten
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{CompoundsApi$AddTagsToCompoundExperimental(
-  project_id,
-  compound_id,
-  tag,
-  data_file = NULL,
-  ...
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{project_id}}{project-space to add to.}
-
-\item{\code{compound_id}}{compound (group of ion identities) to add tags to.}
-
-\item{\code{tag}}{tags to add.}
-
-\item{\code{data_file}}{(optional) name of the data file to save the result}
-
-\item{\code{...}}{Other optional arguments}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-array[Tag]
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-CompoundsApi-AddTagsToCompoundExperimentalWithHttpInfo"></a>}}
-\if{latex}{\out{\hypertarget{method-CompoundsApi-AddTagsToCompoundExperimentalWithHttpInfo}{}}}
-\subsection{Method \code{AddTagsToCompoundExperimentalWithHttpInfo()}}{
-[EXPERIMENTAL] Tags with the same name will be overwritten
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{CompoundsApi$AddTagsToCompoundExperimentalWithHttpInfo(
-  project_id,
-  compound_id,
-  tag,
-  data_file = NULL,
-  ...
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{project_id}}{project-space to add to.}
-
-\item{\code{compound_id}}{compound (group of ion identities) to add tags to.}
-
-\item{\code{tag}}{tags to add.}
-
-\item{\code{data_file}}{(optional) name of the data file to save the result}
-
-\item{\code{...}}{Other optional arguments}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-API response (array[Tag]) with additional information such as HTTP status code, headers
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-CompoundsApi-AddTagsToObjects"></a>}}
-\if{latex}{\out{\hypertarget{method-CompoundsApi-AddTagsToObjects}{}}}
-\subsection{Method \code{AddTagsToObjects()}}{
-Tags with the same name will be overwritten.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{CompoundsApi$AddTagsToObjects(project_id, tag_submission, ...)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{project_id}}{project-space to add to.}
-
-\item{\code{tag_submission}}{tags with id of the object to be added to.}
-
-\item{\code{...}}{Other optional arguments}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-void
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-CompoundsApi-AddTagsToObjectsWithHttpInfo"></a>}}
-\if{latex}{\out{\hypertarget{method-CompoundsApi-AddTagsToObjectsWithHttpInfo}{}}}
-\subsection{Method \code{AddTagsToObjectsWithHttpInfo()}}{
-Tags with the same name will be overwritten.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{CompoundsApi$AddTagsToObjectsWithHttpInfo(project_id, tag_submission, ...)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{project_id}}{project-space to add to.}
-
-\item{\code{tag_submission}}{tags with id of the object to be added to.}
-
-\item{\code{...}}{Other optional arguments}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-API response (void) with additional information such as HTTP status code, headers
 }
 }
 \if{html}{\out{<hr>}}
@@ -614,204 +357,6 @@ API response (Compound) with additional information such as HTTP status code, he
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-CompoundsApi-GetCompoundQuantTableExperimental"></a>}}
-\if{latex}{\out{\hypertarget{method-CompoundsApi-GetCompoundQuantTableExperimental}{}}}
-\subsection{Method \code{GetCompoundQuantTableExperimental()}}{
-[EXPERIMENTAL] Returns the full quantification table of compounds
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{CompoundsApi$GetCompoundQuantTableExperimental(
-  project_id,
-  type = "APEX_HEIGHT",
-  data_file = NULL,
-  ...
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{project_id}}{project-space to read from.}
-
-\item{\code{type}}{(optional) quantification type. (default value: "APEX_HEIGHT")}
-
-\item{\code{data_file}}{(optional) name of the data file to save the result}
-
-\item{\code{...}}{Other optional arguments}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-QuantTableExperimental
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-CompoundsApi-GetCompoundQuantTableExperimentalWithHttpInfo"></a>}}
-\if{latex}{\out{\hypertarget{method-CompoundsApi-GetCompoundQuantTableExperimentalWithHttpInfo}{}}}
-\subsection{Method \code{GetCompoundQuantTableExperimentalWithHttpInfo()}}{
-[EXPERIMENTAL] Returns the full quantification table of compounds
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{CompoundsApi$GetCompoundQuantTableExperimentalWithHttpInfo(
-  project_id,
-  type = "APEX_HEIGHT",
-  data_file = NULL,
-  ...
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{project_id}}{project-space to read from.}
-
-\item{\code{type}}{(optional) quantification type. (default value: "APEX_HEIGHT")}
-
-\item{\code{data_file}}{(optional) name of the data file to save the result}
-
-\item{\code{...}}{Other optional arguments}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-API response (QuantTableExperimental) with additional information such as HTTP status code, headers
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-CompoundsApi-GetCompoundQuantTableRowExperimental"></a>}}
-\if{latex}{\out{\hypertarget{method-CompoundsApi-GetCompoundQuantTableRowExperimental}{}}}
-\subsection{Method \code{GetCompoundQuantTableRowExperimental()}}{
-[EXPERIMENTAL] Returns a single quantification table row for the given compound
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{CompoundsApi$GetCompoundQuantTableRowExperimental(
-  project_id,
-  compound_id,
-  type = "APEX_HEIGHT",
-  data_file = NULL,
-  ...
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{project_id}}{project-space to read from.}
-
-\item{\code{compound_id}}{compound which should be read out}
-
-\item{\code{type}}{(optional) quantification type. (default value: "APEX_HEIGHT")}
-
-\item{\code{data_file}}{(optional) name of the data file to save the result}
-
-\item{\code{...}}{Other optional arguments}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-QuantTableExperimental
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-CompoundsApi-GetCompoundQuantTableRowExperimentalWithHttpInfo"></a>}}
-\if{latex}{\out{\hypertarget{method-CompoundsApi-GetCompoundQuantTableRowExperimentalWithHttpInfo}{}}}
-\subsection{Method \code{GetCompoundQuantTableRowExperimentalWithHttpInfo()}}{
-[EXPERIMENTAL] Returns a single quantification table row for the given compound
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{CompoundsApi$GetCompoundQuantTableRowExperimentalWithHttpInfo(
-  project_id,
-  compound_id,
-  type = "APEX_HEIGHT",
-  data_file = NULL,
-  ...
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{project_id}}{project-space to read from.}
-
-\item{\code{compound_id}}{compound which should be read out}
-
-\item{\code{type}}{(optional) quantification type. (default value: "APEX_HEIGHT")}
-
-\item{\code{data_file}}{(optional) name of the data file to save the result}
-
-\item{\code{...}}{Other optional arguments}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-API response (QuantTableExperimental) with additional information such as HTTP status code, headers
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-CompoundsApi-GetCompoundTracesExperimental"></a>}}
-\if{latex}{\out{\hypertarget{method-CompoundsApi-GetCompoundTracesExperimental}{}}}
-\subsection{Method \code{GetCompoundTracesExperimental()}}{
-[EXPERIMENTAL] Returns the traces of the given compound
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{CompoundsApi$GetCompoundTracesExperimental(
-  project_id,
-  compound_id,
-  feature_id = "",
-  data_file = NULL,
-  ...
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{project_id}}{project-space to read from.}
-
-\item{\code{compound_id}}{compound which intensities should be read out}
-
-\item{\code{feature_id}}{(optional) No description (default value: "")}
-
-\item{\code{data_file}}{(optional) name of the data file to save the result}
-
-\item{\code{...}}{Other optional arguments}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-TraceSetExperimental
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-CompoundsApi-GetCompoundTracesExperimentalWithHttpInfo"></a>}}
-\if{latex}{\out{\hypertarget{method-CompoundsApi-GetCompoundTracesExperimentalWithHttpInfo}{}}}
-\subsection{Method \code{GetCompoundTracesExperimentalWithHttpInfo()}}{
-[EXPERIMENTAL] Returns the traces of the given compound
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{CompoundsApi$GetCompoundTracesExperimentalWithHttpInfo(
-  project_id,
-  compound_id,
-  feature_id = "",
-  data_file = NULL,
-  ...
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{project_id}}{project-space to read from.}
-
-\item{\code{compound_id}}{compound which intensities should be read out}
-
-\item{\code{feature_id}}{(optional) No description (default value: "")}
-
-\item{\code{data_file}}{(optional) name of the data file to save the result}
-
-\item{\code{...}}{Other optional arguments}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-API response (TraceSetExperimental) with additional information such as HTTP status code, headers
-}
-}
-\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-CompoundsApi-GetCompounds"></a>}}
 \if{latex}{\out{\hypertarget{method-CompoundsApi-GetCompounds}{}}}
 \subsection{Method \code{GetCompounds()}}{
@@ -886,112 +431,13 @@ API response (array[Compound]) with additional information such as HTTP status c
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-CompoundsApi-GetCompoundsByGroupExperimental"></a>}}
-\if{latex}{\out{\hypertarget{method-CompoundsApi-GetCompoundsByGroupExperimental}{}}}
-\subsection{Method \code{GetCompoundsByGroupExperimental()}}{
-[EXPERIMENTAL] Get compounds (group of ion identities) by tag group
+\if{html}{\out{<a id="method-CompoundsApi-GetCompoundsPaged"></a>}}
+\if{latex}{\out{\hypertarget{method-CompoundsApi-GetCompoundsPaged}{}}}
+\subsection{Method \code{GetCompoundsPaged()}}{
+Page of available compounds (group of ion identities) in the given project-space.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{CompoundsApi$GetCompoundsByGroupExperimental(
+\if{html}{\out{<div class="r">}}\preformatted{CompoundsApi$GetCompoundsPaged(
   project_id,
-  group_name,
-  page = 0,
-  size = 20,
-  sort = NULL,
-  ms_data_as_cosine_query = FALSE,
-  opt_fields = list("none"),
-  opt_fields_features = list("none"),
-  data_file = NULL,
-  ...
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{project_id}}{project-space to delete from.}
-
-\item{\code{group_name}}{tag group name.}
-
-\item{\code{page}}{(optional) Zero-based page index (0..N) (default value: 0)}
-
-\item{\code{size}}{(optional) The size of the page to be returned (default value: 20)}
-
-\item{\code{sort}}{(optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.}
-
-\item{\code{ms_data_as_cosine_query}}{(optional) Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. (default value: FALSE)}
-
-\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])}
-
-\item{\code{opt_fields_features}}{(optional) No description (default value: ["none"])}
-
-\item{\code{data_file}}{(optional) name of the data file to save the result}
-
-\item{\code{...}}{Other optional arguments}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-PagedModelCompound
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-CompoundsApi-GetCompoundsByGroupExperimentalWithHttpInfo"></a>}}
-\if{latex}{\out{\hypertarget{method-CompoundsApi-GetCompoundsByGroupExperimentalWithHttpInfo}{}}}
-\subsection{Method \code{GetCompoundsByGroupExperimentalWithHttpInfo()}}{
-[EXPERIMENTAL] Get compounds (group of ion identities) by tag group
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{CompoundsApi$GetCompoundsByGroupExperimentalWithHttpInfo(
-  project_id,
-  group_name,
-  page = 0,
-  size = 20,
-  sort = NULL,
-  ms_data_as_cosine_query = FALSE,
-  opt_fields = list("none"),
-  opt_fields_features = list("none"),
-  data_file = NULL,
-  ...
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{project_id}}{project-space to delete from.}
-
-\item{\code{group_name}}{tag group name.}
-
-\item{\code{page}}{(optional) Zero-based page index (0..N) (default value: 0)}
-
-\item{\code{size}}{(optional) The size of the page to be returned (default value: 20)}
-
-\item{\code{sort}}{(optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.}
-
-\item{\code{ms_data_as_cosine_query}}{(optional) Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra. (default value: FALSE)}
-
-\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])}
-
-\item{\code{opt_fields_features}}{(optional) No description (default value: ["none"])}
-
-\item{\code{data_file}}{(optional) name of the data file to save the result}
-
-\item{\code{...}}{Other optional arguments}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-API response (PagedModelCompound) with additional information such as HTTP status code, headers
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-CompoundsApi-GetCompoundsPageExperimental"></a>}}
-\if{latex}{\out{\hypertarget{method-CompoundsApi-GetCompoundsPageExperimental}{}}}
-\subsection{Method \code{GetCompoundsPageExperimental()}}{
-[EXPERIMENTAL] Page of available compounds (group of ion identities) in the given project-space
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{CompoundsApi$GetCompoundsPageExperimental(
-  project_id,
-  search_query = NULL,
   page = 0,
   size = 20,
   sort = NULL,
@@ -1007,8 +453,6 @@ API response (PagedModelCompound) with additional information such as HTTP statu
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{project_id}}{project-space to read from.}
-
-\item{\code{search_query}}{(optional) search query in lucene syntax.}
 
 \item{\code{page}}{(optional) Zero-based page index (0..N) (default value: 0)}
 
@@ -1033,14 +477,13 @@ PagedModelCompound
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-CompoundsApi-GetCompoundsPageExperimentalWithHttpInfo"></a>}}
-\if{latex}{\out{\hypertarget{method-CompoundsApi-GetCompoundsPageExperimentalWithHttpInfo}{}}}
-\subsection{Method \code{GetCompoundsPageExperimentalWithHttpInfo()}}{
-[EXPERIMENTAL] Page of available compounds (group of ion identities) in the given project-space
+\if{html}{\out{<a id="method-CompoundsApi-GetCompoundsPagedWithHttpInfo"></a>}}
+\if{latex}{\out{\hypertarget{method-CompoundsApi-GetCompoundsPagedWithHttpInfo}{}}}
+\subsection{Method \code{GetCompoundsPagedWithHttpInfo()}}{
+Page of available compounds (group of ion identities) in the given project-space.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{CompoundsApi$GetCompoundsPageExperimentalWithHttpInfo(
+\if{html}{\out{<div class="r">}}\preformatted{CompoundsApi$GetCompoundsPagedWithHttpInfo(
   project_id,
-  search_query = NULL,
   page = 0,
   size = 20,
   sort = NULL,
@@ -1056,8 +499,6 @@ PagedModelCompound
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{project_id}}{project-space to read from.}
-
-\item{\code{search_query}}{(optional) search query in lucene syntax.}
 
 \item{\code{page}}{(optional) Zero-based page index (0..N) (default value: 0)}
 
@@ -1079,130 +520,6 @@ PagedModelCompound
 }
 \subsection{Returns}{
 API response (PagedModelCompound) with additional information such as HTTP status code, headers
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-CompoundsApi-GetTagsForCompoundExperimental"></a>}}
-\if{latex}{\out{\hypertarget{method-CompoundsApi-GetTagsForCompoundExperimental}{}}}
-\subsection{Method \code{GetTagsForCompoundExperimental()}}{
-[EXPERIMENTAL] Get all tags associated with this Compound
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{CompoundsApi$GetTagsForCompoundExperimental(
-  project_id,
-  object_id,
-  data_file = NULL,
-  ...
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{project_id}}{project-space to get from.}
-
-\item{\code{object_id}}{CompoundId to get tags for.}
-
-\item{\code{data_file}}{(optional) name of the data file to save the result}
-
-\item{\code{...}}{Other optional arguments}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-array[Tag]
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-CompoundsApi-GetTagsForCompoundExperimentalWithHttpInfo"></a>}}
-\if{latex}{\out{\hypertarget{method-CompoundsApi-GetTagsForCompoundExperimentalWithHttpInfo}{}}}
-\subsection{Method \code{GetTagsForCompoundExperimentalWithHttpInfo()}}{
-[EXPERIMENTAL] Get all tags associated with this Compound
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{CompoundsApi$GetTagsForCompoundExperimentalWithHttpInfo(
-  project_id,
-  object_id,
-  data_file = NULL,
-  ...
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{project_id}}{project-space to get from.}
-
-\item{\code{object_id}}{CompoundId to get tags for.}
-
-\item{\code{data_file}}{(optional) name of the data file to save the result}
-
-\item{\code{...}}{Other optional arguments}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-API response (array[Tag]) with additional information such as HTTP status code, headers
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-CompoundsApi-RemoveTagFromCompoundExperimental"></a>}}
-\if{latex}{\out{\hypertarget{method-CompoundsApi-RemoveTagFromCompoundExperimental}{}}}
-\subsection{Method \code{RemoveTagFromCompoundExperimental()}}{
-[EXPERIMENTAL] Delete tag with the given name from the compound (group of ion identities) with the specified ID in the specified project-space
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{CompoundsApi$RemoveTagFromCompoundExperimental(
-  project_id,
-  compound_id,
-  tag_name,
-  ...
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{project_id}}{project-space to delete from.}
-
-\item{\code{compound_id}}{compound (group of ion identities) to delete tag from.}
-
-\item{\code{tag_name}}{name of the tag to delete.}
-
-\item{\code{...}}{Other optional arguments}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-void
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-CompoundsApi-RemoveTagFromCompoundExperimentalWithHttpInfo"></a>}}
-\if{latex}{\out{\hypertarget{method-CompoundsApi-RemoveTagFromCompoundExperimentalWithHttpInfo}{}}}
-\subsection{Method \code{RemoveTagFromCompoundExperimentalWithHttpInfo()}}{
-[EXPERIMENTAL] Delete tag with the given name from the compound (group of ion identities) with the specified ID in the specified project-space
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{CompoundsApi$RemoveTagFromCompoundExperimentalWithHttpInfo(
-  project_id,
-  compound_id,
-  tag_name,
-  ...
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{project_id}}{project-space to delete from.}
-
-\item{\code{compound_id}}{compound (group of ion identities) to delete tag from.}
-
-\item{\code{tag_name}}{name of the tag to delete.}
-
-\item{\code{...}}{Other optional arguments}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-API response (void) with additional information such as HTTP status code, headers
 }
 }
 \if{html}{\out{<hr>}}

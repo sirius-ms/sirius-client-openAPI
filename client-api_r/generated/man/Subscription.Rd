@@ -34,7 +34,7 @@ df
 \describe{
 \item{\code{sid}}{Unique identifier of this subscription character [optional]}
 
-\item{\code{subscriberId}}{ID of the owner of the subscription.  This can be the ID of any SubscriptionOwner (e.g.  TagGroup or  User)  depending on the level on which a subscription should be is valid. character [optional]}
+\item{\code{subscriberId}}{ID of the owner of the subscription.  This can be the ID of any SubscriptionOwner (e.g.  Group or  User)  depending on the level on which a subscription should be is valid. character [optional]}
 
 \item{\code{subscriberName}}{Optional name of the owner of this subscription character [optional]}
 
@@ -116,7 +116,7 @@ Initialize a new Subscription class.
 \describe{
 \item{\code{sid}}{Unique identifier of this subscription}
 
-\item{\code{subscriberId}}{ID of the owner of the subscription.  This can be the ID of any SubscriptionOwner (e.g.  TagGroup or  User)  depending on the level on which a subscription should be is valid.}
+\item{\code{subscriberId}}{ID of the owner of the subscription.  This can be the ID of any SubscriptionOwner (e.g.  Group or  User)  depending on the level on which a subscription should be is valid.}
 
 \item{\code{subscriberName}}{Optional name of the owner of this subscription}
 

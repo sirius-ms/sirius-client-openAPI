@@ -47,8 +47,6 @@ df
 \item{\code{numOfCompounds}}{Number of compounds (group of ion identities) in this project. If NULL, Information has not been requested (See OptField 'sizeInformation') or might be unavailable for this project type. integer [optional]}
 
 \item{\code{numOfBytes}}{Size in Bytes this project consumes on disk If NULL, Information has not been requested (See OptField 'sizeInformation'). integer [optional]}
-
-\item{\code{detectedAdducts}}{Set of all detected adducts available in this projects list(character) [optional]}
 }
 \if{html}{\out{</div>}}
 }
@@ -85,7 +83,6 @@ Initialize a new ProjectInfo class.
   numOfFeatures = NULL,
   numOfCompounds = NULL,
   numOfBytes = NULL,
-  detectedAdducts = NULL,
   ...
 )}\if{html}{\out{</div>}}
 }
@@ -108,8 +105,6 @@ Initialize a new ProjectInfo class.
 \item{\code{numOfCompounds}}{Number of compounds (group of ion identities) in this project. If NULL, Information has not been requested (See OptField 'sizeInformation') or might be unavailable for this project type.}
 
 \item{\code{numOfBytes}}{Size in Bytes this project consumes on disk If NULL, Information has not been requested (See OptField 'sizeInformation').}
-
-\item{\code{detectedAdducts}}{Set of all detected adducts available in this projects}
 
 \item{\code{...}}{Other optional arguments.}
 }
