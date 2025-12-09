@@ -5633,8 +5633,7 @@
             "type": "number",
             "format": "double"
           }
-        },
-        "default": null
+        }
       },
       "LcmsSubmissionParameters": {
         "type": "object",
