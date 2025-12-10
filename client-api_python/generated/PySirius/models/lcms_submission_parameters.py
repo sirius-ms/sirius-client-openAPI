@@ -78,6 +78,16 @@ class LcmsSubmissionParameters(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of align_max_mass_deviation
         if self.align_max_mass_deviation:
             _dict['alignMaxMassDeviation'] = self.align_max_mass_deviation.to_dict()
+        # set to None if trace_max_mass_deviation (nullable) is None
+        # and model_fields_set contains the field
+        if self.trace_max_mass_deviation is None and "trace_max_mass_deviation" in self.model_fields_set:
+            _dict['traceMaxMassDeviation'] = None
+
+        # set to None if align_max_mass_deviation (nullable) is None
+        # and model_fields_set contains the field
+        if self.align_max_mass_deviation is None and "align_max_mass_deviation" in self.model_fields_set:
+            _dict['alignMaxMassDeviation'] = None
+
         return _dict
 
     @classmethod
