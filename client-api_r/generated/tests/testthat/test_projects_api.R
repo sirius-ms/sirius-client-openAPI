@@ -7,6 +7,7 @@ sdk <- SiriusSDK$new()
 api <- sdk$attach_to_sirius(sirius_port=8080)
 api_instance <- api$projects_api
 path_to_demo_data <- paste(Sys.getenv("HOME"), "sirius-client-openAPI/.updater/clientTests/Data", sep = "/")
+tomato_project <- paste(path_to_demo_data, "tomato_small.sirius", sep = "/")
 preproc_ms2_file_1 <- paste(path_to_demo_data, "Kaempferol.ms", sep = "/")
 preproc_ms2_file_2 <- paste(path_to_demo_data, "laudanosine.mgf", sep = "/")
 full_ms_file <- paste(path_to_demo_data, "SPF4_Eso3_GH6_01_22643.mzXML", sep = "/")
@@ -75,8 +76,7 @@ test_that("GetCanopusClassyFireData", {
   tryCatch({
 
     project_id <- "GetCanopusClassyFireData"
-    project_dir <- paste(Sys.getenv("HOME"), "tomato_small.sirius", sep = "/")
-    api_instance$OpenProject(project_id, project_dir)
+    api_instance$OpenProject(project_id, tomato_project)
 
     response <- api_instance$GetCanopusClassyFireData(project_id, 1)
     expect_true(inherits(response, "data.frame"))
@@ -99,8 +99,7 @@ test_that("GetCanopusNpcData", {
   tryCatch({
 
     project_id <- "GetCanopusNpcData"
-    project_dir <- paste(Sys.getenv("HOME"), "tomato_small.sirius", sep = "/")
-    api_instance$OpenProject(project_id, project_dir)
+    api_instance$OpenProject(project_id, tomato_project)
 
     response <- api_instance$GetCanopusNpcData(project_id, 1)
     expect_true(inherits(response, "data.frame"))
@@ -123,8 +122,7 @@ test_that("GetFingerIdData", {
   tryCatch({
 
     project_id <- "GetFingerIdData"
-    project_dir <- paste(Sys.getenv("HOME"), "tomato_small.sirius", sep = "/")
-    api_instance$OpenProject(project_id, project_dir)
+    api_instance$OpenProject(project_id, tomato_project)
 
     response <- api_instance$GetFingerIdData(project_id, 1)
     expect_true(inherits(response, "data.frame"))
@@ -478,9 +476,8 @@ test_that("OpenProject", {
   tryCatch({
 
     project_id <- "OpenProject"
-    project_dir <- paste(Sys.getenv("HOME"), "tomato_small.sirius", sep = "/")
 
-    response <- api_instance$OpenProject(project_id, project_dir)
+    response <- api_instance$OpenProject(project_id, tomato_project)
     expect_true(inherits(response, "ProjectInfo"))
 
   }, finally = {

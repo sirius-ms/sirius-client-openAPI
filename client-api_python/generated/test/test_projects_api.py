@@ -19,10 +19,11 @@ class TestProjectsApi(unittest.TestCase):
     def setUp(self) -> None:
         self.api = SiriusSDK().attach_to_sirius(sirius_port=8080)
         self.projects = self.api.projects()
-        path_to_demo_data = f"{os.environ.get('HOME')}/sirius-client-openAPI/.updater/clientTests/Data"
+        path_to_demo_data = os.environ.get('HOME') + "/sirius-client-openAPI/.updater/clientTests/Data"
         self.preproc_ms2_file_1 = path_to_demo_data + "/Kaempferol.ms"
         self.preproc_ms2_file_2 = path_to_demo_data + "/laudanosine.mgf"
         self.full_ms_file = path_to_demo_data + "/SPF4_Eso3_GH6_01_22643.mzXML"
+        self.tomato_project = path_to_demo_data + "/tomato_small.sirius"
 
         # equals test_create_project
         self.project_id = "test_projects_api"
@@ -65,7 +66,7 @@ class TestProjectsApi(unittest.TestCase):
         Get CANOPUS prediction vector definition for ClassyFire classes
         """
         try:
-            self.projects.open_project("tomato", f"{os.environ.get('HOME')}/tomato_small.sirius")
+            self.projects.open_project("tomato", self.tomato_project)
             response = self.projects.get_canopus_classy_fire_data("tomato", 1)
         finally:
             self.projects.close_project("tomato")
@@ -77,7 +78,7 @@ class TestProjectsApi(unittest.TestCase):
         Get CANOPUS prediction vector definition for NPC classes
         """
         try:
-            self.projects.open_project("tomato", f"{os.environ.get('HOME')}/tomato_small.sirius")
+            self.projects.open_project("tomato", self.tomato_project)
             response = self.projects.get_canopus_npc_data("tomato", 1)
         finally:
             self.projects.close_project("tomato")
@@ -89,7 +90,7 @@ class TestProjectsApi(unittest.TestCase):
         Get CSI:FingerID fingerprint (prediction vector) definition
         """
         try:
-            self.projects.open_project("tomato", f"{os.environ.get('HOME')}/tomato_small.sirius")
+            self.projects.open_project("tomato", self.tomato_project)
             response = self.projects.get_finger_id_data("tomato", 1)
         finally:
             self.projects.close_project("tomato")
@@ -156,7 +157,7 @@ class TestProjectsApi(unittest.TestCase):
         Open an existing project-space and make it accessible via the given projectId.
         """
         try:
-            response = self.projects.open_project("tomato", f"{os.environ.get('HOME')}/tomato_small.sirius")
+            response = self.projects.open_project("tomato", self.tomato_project)
         finally:
             self.projects.close_project("tomato")
         self.assertIsInstance(response, ProjectInfo)
