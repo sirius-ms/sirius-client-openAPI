@@ -31,8 +31,8 @@ The client library versions are combinations of the **API version** and the **SI
 
 ## Testing
 
-For local testig we suggest following the approaches in [PythonTest](.github/workflows/PythonTest.yml) and [RTest](.github/workflows/RTest.yml) (refer also to [our contribution guidelines](CONTRIBUTING.md#testing-and-integration)). 
+Testing is automated in [PythonTest](.github/workflows/PythonTest.yml) and [RTest](.github/workflows/RTest.yml). For local testing we recommend following these approaches (refer also to [our contribution guidelines](CONTRIBUTING.md#testing-and-integration)). 
 
 Note that our tests always assume the REST service running on port 8080 and that we start SIRIUS manually on this port. This is mainly due to GitHub runners having special layouts of e.g. file hierarchy. Automatic detection of port and PID by the `SiriusSDK` classes is tested in the conda-forge build process for Windows, macOS and Linux. If you make use of this, you need to remove the hardcoded port from the tests. 
 
-Note also that our tests can **not** be run in parallel, due to the nature of them running on one instance of SIRIUS. A simple example: If the test for job deletion checks if there is one less job after deletion, a parallel test may have already added two more jobs to SIRIUS, making the job deletion test fail even if it worked. 
+Note also that our tests can **not** be run in parallel, due to the nature of them running on one instance of SIRIUS and many making use of our [tomato example dataset](.updater/clientTests/Data/tomato_small.sirius). If you run locally, make sure you download the tomato dataset and check that **all** paths in the tests are correct for your setup. The tests often depend on project spaces (which are files), and incorrectly setting paths may lead to files not being cleaned up properly. We recomment starting with `test_projects_api` ([Python Script](client-api_python/generated/test/test_projects_api.py), [R Script](client-api_r/generated/tests/testthat/test_projects_api.R)) to see if your setup works.
