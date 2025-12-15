@@ -20,7 +20,11 @@ class TestFeaturesApi(unittest.TestCase):
     def setUp(self) -> None:
         self.api = SiriusSDK().attach_to_sirius(sirius_port=8080)
         self.project_id = "test_features_api"
-        self.path_to_project = f"{os.environ.get('HOME')}/tomato_small.sirius"
+        path_to_demo_data = os.environ.get('HOME') + "/sirius-client-openAPI/.updater/clientTests/Data"
+        self.preproc_ms2_file_1 = path_to_demo_data + "/Kaempferol.ms"
+        self.preproc_ms2_file_2 = path_to_demo_data + "/laudanosine.mgf"
+        self.path_to_project = path_to_demo_data + "/tomato_small.sirius"
+
         # check if test project already open -> allows to run tests in independent calls.
         if self.api.projects().get_project_without_preload_content(self.project_id).status == 404:
             self.project_info = self.api.projects().open_project(self.project_id, self.path_to_project)
@@ -86,10 +90,7 @@ class TestFeaturesApi(unittest.TestCase):
         project_info = self.api.projects().create_project(project_id="delete-feature-project")
         project_id = project_info.project_id
         try:
-            path_to_demo_data = f"{os.environ.get('HOME')}/sirius-client-openAPI/.updater/clientTests/Data"
-            preproc_ms2_file_1 = path_to_demo_data + "/Kaempferol.ms"
-            preproc_ms2_file_2 = path_to_demo_data + "/laudanosine.mgf"
-            input_files = [preproc_ms2_file_1, preproc_ms2_file_2]
+            input_files = [self.preproc_ms2_file_1, self.preproc_ms2_file_2]
             import_result = self.api.projects().import_preprocessed_data(project_id, input_files=input_files)
             feature_ids = import_result.affected_aligned_feature_ids
 
@@ -117,10 +118,7 @@ class TestFeaturesApi(unittest.TestCase):
         project_info = self.api.projects().create_project(project_id="delete-features-project")
         project_id = project_info.project_id
         try:
-            path_to_demo_data = f"{os.environ.get('HOME')}/sirius-client-openAPI/.updater/clientTests/Data"
-            preproc_ms2_file_1 = path_to_demo_data + "/Kaempferol.ms"
-            preproc_ms2_file_2 = path_to_demo_data + "/laudanosine.mgf"
-            input_files = [preproc_ms2_file_1, preproc_ms2_file_2]
+            input_files = [self.preproc_ms2_file_1, self.preproc_ms2_file_2]
             import_result = self.api.projects().import_preprocessed_data(project_id, input_files=input_files)
             feature_ids = import_result.affected_aligned_feature_ids
 

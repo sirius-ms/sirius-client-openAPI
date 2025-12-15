@@ -15,7 +15,7 @@ preproc_ms2_file_2 <- paste(path_to_demo_data, "laudanosine.mgf", sep = "/")
 
 # the single ID with MSNovelist AND spectral library search results computed
 aligned_feature_id <- "586487310566638367"
-tomato_project <- paste(Sys.getenv("HOME"), "tomato_small.sirius", sep = "/")
+tomato_project <- paste(path_to_demo_data, "tomato_small.sirius", sep = "/")
 basic_spectrum <- c(BasicSpectrum$new(peaks = c(SimplePeak$new(1.23, 4.56)), precursorMz = 1.23))
 feature_import <- c(FeatureImport$new(name = "testfeature", feature_id = "testfeature", ionMass = 1.23, adduct = "[M+?]+", ms1Spectra = basic_spectrum, ms2Spectra = basic_spectrum))
 
