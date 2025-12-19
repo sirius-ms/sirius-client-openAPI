@@ -142,7 +142,7 @@ project-wide summaries, thereby enabling more efficient and precisely targeted a
 The API separates the data persistence layer from the data access layer, which permits modifications to core SIRIUS
 functionality without invalidating existing project data structures. This architectural decision ensures forward
 compatibility for future SIRIUS updates, addressing the compatibility limitations encountered during the transition
-from SIRIUS version 5 to version 6.
+from SIRIUS version 5 to 6.
 
 ### Platform-agnostic integration capabilities
 
