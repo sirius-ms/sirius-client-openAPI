@@ -99,8 +99,9 @@ Furthermore, the SIRIUS API enables a more interactive data analysis paradigm. U
 entire project spaces (which can be gigabytes in size) into memory. Instead, they can fetch specific, fine-grained
 results on demand or selectively perform (re-)computations with new parameters.
 
-While the API is language-agnostic and accessible via standard HTTP libraries, dedicated client libraries for Python and
-R further streamline integration. Python and R dominate metabolomic data analysis, backed by libraries like
+# State of the field
+
+Python and R dominate metabolomic data analysis, backed by libraries like
 *pyOpenMS* [@roest14pyopenms], *matchms* [@huber20matchms], and the RforMassSpectrometry initiative including
 *Spectra* and *Metabonaut* [@louail25metabonaut].
 *PySirius* and *RSirius* bring SIRIUS into these established ecosystems, enabling
@@ -113,7 +114,7 @@ as [MZmine](https://github.com/mzmine/mzmine) (v4.8) [@schmid23integrative],
 are already based on the SIRIUS API, further demonstrating community demand for
 programmatic access to SIRIUS.
 
-# SIRIUS API
+# Software Design
 
 The SIRIUS Application Programming Interface (API), initially released with SIRIUS version 6.0.0, is a major
 architectural update that offers several strategic advantages:
@@ -220,7 +221,14 @@ loading data, running jobs, and retrieving results without leaving their analyti
 sharing
 of complete workflows in contained environments rather than describing multi-tool methodologies.
 
-## Existing integrations
+## Research Impact Statement
+
+SIRIUS and its contained methods have been named 
+"methods to watch" in Nature Methods on multiple occasions [@singh20tools; @singh23annotating]. 
+The core methods, such as CSI:FingerID and CANOPUS, are established standards in the field, 
+evidenced by hundreds of citations for their foundational papers. Furthermore, the web services for these tools recently 
+surpassed a combined [one billion queries](https://bio.informatik.uni-jena.de/2025/07/one-billion-queries-served/), 
+demonstrating large scale adoption.
 
 The Java client has enabled integration of SIRIUS into major metabolomics
 platforms. [MZmine](https://github.com/mzmine/mzmine) has incorporated SIRIUS
@@ -229,7 +237,8 @@ Agilent's [Mass Hunter Explorer](https://www.agilent.com/en/product/software-inf
 v2.0 integrates SIRIUS
 capabilities through a proprietary client implementation. The RforMassSpectrometry initiative is currently adapting
 *RSirius* as the foundation for [
-*RuSirius*](https://github.com/rformassspectrometry/RuSirius).
+*RuSirius*](https://github.com/rformassspectrometry/RuSirius). *PySirius* and *RSirius* show more than fifty thousand
+combined downloads on [Anaconda.org](https://anaconda.org/search?q=sirius-ms).
 
 ## Updates and maintainability
 
@@ -285,6 +294,10 @@ direct [releases](https://github.com/sirius-ms/sirius/releases) on GitHub.
 The Java client is hosted on a GitLab [package registry](https://gitlab.com/bright-giant/registry-public/-/packages/),
 and the SIRIUS API implementation is part of the
 [SIRIUS repository](https://github.com/sirius-ms/sirius/tree/stable/sirius_rest_service).
+
+# AI usage disclosure
+AI assistance was utilized for text editing of this manuscript and the [contribution guidelines](https://github.com/sirius-ms/sirius-client-openAPI/tree/master?tab=readme-ov-file#contributing-sirius-client-libraries)
+of the repository. All changes proposed by AI systems were manually reviewed.
 
 # Competing interests
 
