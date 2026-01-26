@@ -104,7 +104,7 @@ results on demand or selectively perform (re-)computations with new parameters.
 Python and R dominate metabolomic data analysis, backed by libraries like
 *pyOpenMS* [@roest14pyopenms], *matchms* [@huber20matchms], and the RforMassSpectrometry initiative including
 *Spectra* and *Metabonaut* [@louail25metabonaut].
-*PySirius* and *RSirius* bring SIRIUS into these established ecosystems, enabling
+*PySirius* and *RSirius* bring SIRIUS into these established ecosystems for the first time, enabling
 seamless workflows alongside statistical analyses, visualizations, and machine learning models.
 
 SIRIUS integrations for multiple widely used mass spectrometry tools such
@@ -119,7 +119,7 @@ programmatic access to SIRIUS.
 The SIRIUS Application Programming Interface (API), initially released with SIRIUS version 6.0.0, is a major
 architectural update that offers several strategic advantages:
 
-### Comprehensive programmatic access to functionality
+## Comprehensive programmatic access to functionality
 
 The API exposes the complete spectrum of SIRIUS analytical
 capabilities through programmatic interfaces, encompassing spectral library searching,
@@ -132,20 +132,20 @@ and additional methods.
 This avoids the need to parse command-line interface outputs or manipulate
 intermediate file formats.
 
-### Fine-grained and direct data retrieval
+## Fine-grained and direct data retrieval
 
 The API allows direct retrieval of specific data elements at
 arbitrary levels of granularity (\autoref{fig:hierarchy}). This spans from individual feature-level results to
 project-wide summaries, thereby enabling more efficient and precisely targeted analytical workflows.
 
-### Decoupled architectural design
+## Decoupled architectural design
 
 The API separates the data persistence layer from the data access layer, which permits modifications to core SIRIUS
 functionality without invalidating existing project data structures. This architectural decision ensures forward
 compatibility for future SIRIUS updates, addressing the compatibility limitations encountered during the transition
 from SIRIUS version 5 to 6.
 
-### Platform-agnostic integration capabilities
+## Platform-agnostic integration capabilities
 
 The implementation according to the OpenAPI Specification guarantees
 that SIRIUS functionality remains accessible from any programming language ecosystem equipped with standard HTTP
@@ -153,7 +153,7 @@ communication libraries.
 
 ![Annotation access hierarchy of SIRIUS \label{fig:hierarchy}](hierarchy_diagram.png)
 
-## API Architecture
+# API Architecture
 
 The core of the API consists of modules that enable programmatic control over the small molecule annotation workflow.
 These modules operate on the hierarchical structure of a SIRIUS project (\autoref{fig:hierarchy}), which typically
@@ -168,7 +168,7 @@ annotations in SIRIUS. This one-to-many relationship enables SIRIUS to provide c
 evidence across features associated with the same compound. The API focuses on enabling programmatic access to molecular
 annotations rather than low-level signal processing, though experimental data like traces remain accessible when needed
 
-### Projects API
+## Projects API
 
 The projects API module administers SIRIUS project spaces (blue in \autoref{fig:hierarchy}), which are isolated
 computational environments containing input spectral data and associated analysis results.
@@ -176,12 +176,12 @@ This module allows to manage (create, open, close, delete) projects
 and import mass spectrometry data from various formats. It further provides access to prediction vector definitions
 utilized by CSI:FingerID and CANOPUS.
 
-### Compounds API
+## Compounds API
 
 The compounds API module manages compound entities (purple in \autoref{fig:hierarchy}) within projects.
 Compound manipulation operations encompass addition, deletion, and information retrieval.
 
-### Features API
+## Features API
 
 The features API module facilitates manipulation of aligned features (green in \autoref{fig:hierarchy}) as well as
 retrieval of their associated annotation results. Analogous to the compounds API, available operations include addition,
@@ -189,7 +189,7 @@ deletion, and information retrieval. Accessible annotations include essentially 
 methods
 implemented within SIRIUS.
 
-### Searchable Databases API
+## Searchable Databases API
 
 The searchable databases API module manages custom spectral and structural database resources.
 This module supports creation and deletion of custom databases, import of new entries into existing
@@ -197,7 +197,7 @@ databases, retrieval of database metadata, and enumeration of all custom and bui
 available within the SIRIUS environment. As spectra must be annotated with a structure,
 any spectral library also functions as a structure database.
 
-### Jobs API
+## Jobs API
 
 The jobs API module controls annotation job workflows. Users can define custom job configurations specifying which
 analytical methods to apply to designated datasets. These jobs can then be executed, monitored, terminated, or deleted
@@ -221,7 +221,50 @@ loading data, running jobs, and retrieving results without leaving their analyti
 sharing
 of complete workflows in contained environments rather than describing multi-tool methodologies.
 
-## Research Impact Statement
+## Updates and maintainability
+
+A CI/CD pipeline automatically generates and tests the R and Python client libraries against the latest
+SIRIUS API for each new release. The new client versions are subsequently published to conda-forge. This automated
+workflow ensures the client libraries remain maintainable, up-to-date, and resilient as new clients are added. The
+SIRIUS Java SDK is part of the SIRIUS main application and is therefore built and distributed alongside it.
+
+## Expandability and contribution
+
+The OpenAPI specification enables generation of client libraries for
+any [supported programming language](https://openapi-generator.tech/docs/generators/) of the OpenAPI Generator.
+We welcome community contributions of additional client libraries and relegate interested readers
+to
+our [contribution guidelines](https://github.com/sirius-ms/sirius-client-openAPI/tree/master?tab=readme-ov-file#contributing-sirius-client-libraries).
+
+## Installation via conda-forge
+
+Installation of either *PySirius* or *RSirius* via conda-forge automatically installs SIRIUS as a dependency.
+
+```
+conda install -c conda-forge py-sirius-ms   # Python client library (PySirius)
+conda install -c conda-forge r-sirius-ms    # R client library (RSirius)
+conda install -c conda-forge sirius-ms      # SIRIUS (included in the above)
+```
+
+## Examples and documentation
+
+Minimalistic examples illustrating the fundamental usage of
+[*RSirius*](https://github.com/sirius-ms/sirius-client-openAPI/tree/master/client-api_r#example-usage-of-rsirius) and
+[*PySirius*](https://github.com/sirius-ms/sirius-client-openAPI/tree/master/client-api_python#example-usage-of-pysirius)
+are provided within
+the client library source code repository.
+Exemplary implementations demonstrating the usage of individual functions corresponding to
+each [API module](#api-architecture) are available in
+the test suites for [
+*RSirius*](https://github.com/sirius-ms/sirius-client-openAPI/tree/master/client-api_r/generated/tests/testthat) and [
+*PySirius*](https://github.com/sirius-ms/sirius-client-openAPI/tree/master/client-api_python/generated/test).
+Comprehensive documentation for [
+*RSirius*](https://github.com/sirius-ms/sirius-client-openAPI/blob/master/client-api_r/generated/README.md#documentation-for-api-endpoints)
+and [
+*PySirius*](https://github.com/sirius-ms/sirius-client-openAPI/blob/master/client-api_python/generated/README.md#documentation-for-api-endpoints)
+is also provided in the repository.
+
+# Research Impact Statement
 
 SIRIUS and its contained methods have been named 
 "methods to watch" in Nature Methods on multiple occasions [@singh20tools; @singh23annotating]. 
@@ -240,49 +283,6 @@ capabilities through a proprietary client implementation. The RforMassSpectromet
 *RuSirius*](https://github.com/rformassspectrometry/RuSirius). *PySirius* and *RSirius* show more than fifty thousand
 combined downloads on [Anaconda.org](https://anaconda.org/search?q=sirius-ms).
 
-## Updates and maintainability
-
-A CI/CD pipeline automatically generates and tests the R and Python client libraries against the latest
-SIRIUS API for each new release. The new client versions are subsequently published to conda-forge. This automated
-workflow ensures the client libraries remain maintainable, up-to-date, and resilient as new clients are added. The
-SIRIUS Java SDK is part of the SIRIUS main application and is therefore built and distributed alongside it.
-
-## Expandability and contribution
-
-The OpenAPI specification enables generation of client libraries for
-any [supported programming language](https://openapi-generator.tech/docs/generators/) of the OpenAPI Generator.
-We welcome community contributions of additional client libraries and relegate interested readers
-to
-our [contribution guidelines](https://github.com/sirius-ms/sirius-client-openAPI/tree/master?tab=readme-ov-file#contributing-sirius-client-libraries).
-
-# Installation via conda-forge
-
-Installation of either *PySirius* or *RSirius* via conda-forge automatically installs SIRIUS as a dependency.
-
-```
-conda install -c conda-forge py-sirius-ms   # Python client library (PySirius)
-conda install -c conda-forge r-sirius-ms    # R client library (RSirius)
-conda install -c conda-forge sirius-ms      # SIRIUS (included in the above)
-```
-
-# Examples and documentation
-
-Minimalistic examples illustrating the fundamental usage of
-[*RSirius*](https://github.com/sirius-ms/sirius-client-openAPI/tree/master/client-api_r#example-usage-of-rsirius) and
-[*PySirius*](https://github.com/sirius-ms/sirius-client-openAPI/tree/master/client-api_python#example-usage-of-pysirius)
-are provided within
-the client library source code repository.
-Exemplary implementations demonstrating the usage of individual functions corresponding to
-each [API module](#api-architecture) are available in
-the test suites for [
-*RSirius*](https://github.com/sirius-ms/sirius-client-openAPI/tree/master/client-api_r/generated/tests/testthat) and [
-*PySirius*](https://github.com/sirius-ms/sirius-client-openAPI/tree/master/client-api_python/generated/test).
-Comprehensive documentation for [
-*RSirius*](https://github.com/sirius-ms/sirius-client-openAPI/blob/master/client-api_r/generated/README.md#documentation-for-api-endpoints)
-and [
-*PySirius*](https://github.com/sirius-ms/sirius-client-openAPI/blob/master/client-api_python/generated/README.md#documentation-for-api-endpoints)
-is also provided in the repository.
-
 # Availability
 
 Both the [client library source code](https://github.com/sirius-ms/sirius-client-openAPI) and
@@ -297,7 +297,7 @@ and the SIRIUS API implementation is part of the
 
 # AI usage disclosure
 AI assistance was utilized for text editing of this manuscript and the [contribution guidelines](https://github.com/sirius-ms/sirius-client-openAPI/tree/master?tab=readme-ov-file#contributing-sirius-client-libraries)
-of the repository. All changes proposed by AI systems were manually reviewed.
+of the client repository. All changes proposed by AI systems were manually reviewed.
 
 # Competing interests
 
