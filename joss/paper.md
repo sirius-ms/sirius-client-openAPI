@@ -114,7 +114,7 @@ as [MZmine](https://github.com/mzmine/mzmine) (v4.8) [@schmid23integrative],
 are already based on the SIRIUS API, further demonstrating community demand for
 programmatic access to SIRIUS.
 
-# Software Design
+# Software design
 
 The SIRIUS Application Programming Interface (API), initially released with SIRIUS version 6.0.0, is a major
 architectural update that offers several strategic advantages:
@@ -153,7 +153,7 @@ communication libraries.
 
 ![Annotation access hierarchy of SIRIUS \label{fig:hierarchy}](hierarchy_diagram.png)
 
-# API Architecture
+# API architecture
 
 The core of the API consists of modules that enable programmatic control over the small molecule annotation workflow.
 These modules operate on the hierarchical structure of a SIRIUS project (\autoref{fig:hierarchy}), which typically
@@ -189,7 +189,7 @@ deletion, and information retrieval. Accessible annotations include essentially 
 methods
 implemented within SIRIUS.
 
-## Searchable Databases API
+## Searchable databases API
 
 The searchable databases API module manages custom spectral and structural database resources.
 This module supports creation and deletion of custom databases, import of new entries into existing
@@ -264,7 +264,7 @@ and [
 *PySirius*](https://github.com/sirius-ms/sirius-client-openAPI/blob/master/client-api_python/generated/README.md#documentation-for-api-endpoints)
 is also provided in the repository.
 
-# Research Impact Statement
+# Research impact statement
 
 SIRIUS and its contained methods have been named 
 "methods to watch" in Nature Methods on multiple occasions [@singh20tools; @singh23annotating]. 
