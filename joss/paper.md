@@ -57,7 +57,7 @@ bibliography: paper.bib
 Metabolomics plays a crucial role in understanding biological systems, with mass spectrometry being the method of choice
 for analyzing complex metabolite mixtures, due to its high sensitivity and throughput. However, compound annotation
 remains a major bottleneck in metabolomics workflows, as for the majority of detected signals no reference spectra are
-found in spectral libraries. This co-called "dark metabolome" [@dasilva15illuminating]
+found in spectral libraries. This so-called "dark metabolome" [@dasilva15illuminating]
 necessitates approaches that can annonate metabolites without relying on spectral library matching.
 SIRIUS [@boecker09sirius; @duehrkop19sirius4] is a comprehensive software framework for annotating
 metabolites and other small molecules from tandem mass spectrometry (MS/MS) data without the need of reference
