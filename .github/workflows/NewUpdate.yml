@@ -150,8 +150,7 @@ jobs:
           echo "dispatched workflow"
           echo "sleeping for 30s to make sure it started"
           sleep 30
-          list=$(gh run list --workflow RManualGeneration --branch ${GITHUB_REF##*/})
-          id=$(echo $list | grep -oP 'in_progress RManualGeneration RManualGeneration [^ ]* workflow_dispatch \K\d+')
+          id=$(gh run list --workflow RManualGeneration.yml --branch ${GITHUB_REF##*/} --json databaseId,status --jq '.[] | select(.status=="in_progress") | .databaseId')
           echo "run ID of RManualGeneration is: $id"
           gh run watch $id --exit-status --interval 3
           echo "generation done!"
