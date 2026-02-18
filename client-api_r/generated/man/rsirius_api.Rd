@@ -41,6 +41,8 @@ Do not edit the class manually.
 
 \item{\code{features_api}}{an instance of FeaturesApi}
 
+\item{\code{gui_api}}{an instance of GuiApi}
+
 \item{\code{info_api}}{an instance of InfoApi}
 
 \item{\code{jobs_api}}{an instance of JobsApi}
