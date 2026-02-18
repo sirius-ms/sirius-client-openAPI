@@ -33,8 +33,6 @@ jobs:
       SIRIUS_PW: ${{ secrets.SIRIUS_PW }}
     steps:
       - uses: actions/checkout@v3
-        with:
-          lfs: true
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v3
         with:
@@ -72,6 +70,11 @@ jobs:
           unzip -q sirius-${version}-linux-x64.zip
       - name: Change HOME to working directory of runner
         run: echo "HOME=/home/runner/work/sirius-client-openAPI" >> $GITHUB_ENV
+      - name: Download tomato_small project space
+        run: |
+          wget -nv ${{ secrets.TOMATO_SMALL_DOWNLOAD_LINK }} -O tomato_small.sirius
+          chmod 666 tomato_small.sirius
+        working-directory: .updater/clientTests/Data
       - name: Lint with flake8
         run: |
           # stop the build if there are Python syntax errors or undefined names
