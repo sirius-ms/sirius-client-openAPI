@@ -140,6 +140,9 @@ Class | Method | HTTP request | Description
 *FeaturesApi* | [**GetTagsForAlignedFeaturesExperimental**](docs/FeaturesApi.md#GetTagsForAlignedFeaturesExperimental) | **GET** /api/projects/{projectId}/aligned-features/tags/{objectId} | [EXPERIMENTAL] Get all tags associated with this Object
 *FeaturesApi* | [**GetTracesExperimental**](docs/FeaturesApi.md#GetTracesExperimental) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/traces | [EXPERIMENTAL] Returns the traces of the given feature (alignedFeatureId)
 *FeaturesApi* | [**RemoveTagFromAlignedFeatureExperimental**](docs/FeaturesApi.md#RemoveTagFromAlignedFeatureExperimental) | **DELETE** /api/projects/{projectId}/aligned-features/tags/{alignedFeatureId}/{tagName} | [EXPERIMENTAL] Delete tag with the given name from the feature (aligned over runs) with the specified ID in the specified project-space
+*GuiApi* | [**CloseGui**](docs/GuiApi.md#CloseGui) | **DELETE** /api/projects/{projectId}/gui | Close GUI instance of given project-space if available.
+*GuiApi* | [**GetGuis**](docs/GuiApi.md#GetGuis) | **GET** /api/guis | Get list of currently running gui windows, managed by this SIRIUS instance.
+*GuiApi* | [**OpenGui**](docs/GuiApi.md#OpenGui) | **POST** /api/projects/{projectId}/gui | Open GUI instance on specified project-space and bring the GUI window to foreground.
 *InfoApi* | [**GetConnectionCheck**](docs/InfoApi.md#GetConnectionCheck) | **GET** /api/connection-status | 
 *InfoApi* | [**GetInfo**](docs/InfoApi.md#GetInfo) | **GET** /api/info | 
 *JobsApi* | [**DeleteJob**](docs/JobsApi.md#DeleteJob) | **DELETE** /api/projects/{projectId}/jobs/{jobId} | Delete job.
@@ -247,6 +250,7 @@ Class | Method | HTTP request | Description
  - [FormulaCandidate](docs/FormulaCandidate.md)
  - [FragmentNode](docs/FragmentNode.md)
  - [FragmentationTree](docs/FragmentationTree.md)
+ - [GuiInfo](docs/GuiInfo.md)
  - [ImportResult](docs/ImportResult.md)
  - [Info](docs/Info.md)
  - [IsotopePatternAnnotation](docs/IsotopePatternAnnotation.md)

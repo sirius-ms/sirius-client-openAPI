@@ -6,6 +6,7 @@ PySirius/api/compound_statistics_api.py
 PySirius/api/compounds_api.py
 PySirius/api/feature_statistics_api.py
 PySirius/api/features_api.py
+PySirius/api/gui_api.py
 PySirius/api/info_api.py
 PySirius/api/jobs_api.py
 PySirius/api/login_and_account_api.py
@@ -70,6 +71,7 @@ PySirius/models/formula_candidate.py
 PySirius/models/formula_candidate_opt_field.py
 PySirius/models/fragment_node.py
 PySirius/models/fragmentation_tree.py
+PySirius/models/gui_info.py
 PySirius/models/import_result.py
 PySirius/models/info.py
 PySirius/models/instrument_profile.py
@@ -217,6 +219,8 @@ docs/FormulaCandidate.md
 docs/FormulaCandidateOptField.md
 docs/FragmentNode.md
 docs/FragmentationTree.md
+docs/GuiApi.md
+docs/GuiInfo.md
 docs/ImportResult.md
 docs/Info.md
 docs/InfoApi.md
