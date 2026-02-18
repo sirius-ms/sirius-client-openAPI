@@ -55,7 +55,7 @@ jobs:
       - name: Install Display Drivers & Libs
         run: |
           sudo apt-get update
-          sudo apt-get install -y xvfb libgtk-3-0 libx11-xcb1 libnss3 libasound2 libxss1
+          sudo apt-get install -y xvfb libgtk-3-0t64 libasound2t64 libx11-xcb1 libnss3 libxss1
       - name: Run Rest Api with strings
         run: |
           xvfb-run --auto-servernum --server-args="-screen 0 1024x768x24" \
