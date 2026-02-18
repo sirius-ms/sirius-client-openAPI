@@ -78,6 +78,11 @@ jobs:
           wget -nv http://localhost:8080/v3/api-docs -O api-docs-enums.json
       - name: Shutdown SIRIUS
         run: curl -X POST http://localhost:8080/actuator/shutdown
+      - name: Format JSON files
+        run: |
+          sudo apt-get install -y moreutils
+          jq . api-docs-strings.json | sponge api-docs-strings.json
+          jq . api-docs-enums.json | sponge api-docs-enums.json
       - name: Update Clients
         run: |
           # load package version from file
