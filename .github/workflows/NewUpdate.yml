@@ -63,8 +63,8 @@ jobs:
       - name: Update api-docs-strings.json
         run: |
           while ! nc -z localhost 8080; do sleep 0.1; done
-          cd .updater/api
           wget -nv http://localhost:8080/v3/api-docs -O api-docs-strings.json
+        working-directory: .updater/api
       - name: Shutdown SIRIUS
         run: curl -X POST http://localhost:8080/actuator/shutdown
       - name: Run Rest Api with enums
@@ -74,8 +74,8 @@ jobs:
       - name: Update api-docs-enums.json
         run: |
           while ! nc -z localhost 8080; do sleep 0.1; done
-          cd .updater/api
           wget -nv http://localhost:8080/v3/api-docs -O api-docs-enums.json
+        working-directory: .updater/api
       - name: Shutdown SIRIUS
         run: curl -X POST http://localhost:8080/actuator/shutdown
       - name: Format JSON files
@@ -83,6 +83,7 @@ jobs:
           sudo apt-get install -y moreutils
           jq . api-docs-strings.json | sponge api-docs-strings.json
           jq . api-docs-enums.json | sponge api-docs-enums.json
+        working-directory: .updater/api
       - name: Update Clients
         run: |
           # load package version from file
@@ -109,32 +110,34 @@ jobs:
           echo "generating Finished!"
       - name: Format Python Package
         run: |
-          cp client-api_python/pysirius_api.py client-api_python/generated/PySirius
-          cp client-api_python/pysirius_sdk.py client-api_python/generated/PySirius
-          cp client-api_python/pysirius_helper.py client-api_python/generated/PySirius
+          cp pysirius_api.py generated/PySirius
+          cp pysirius_sdk.py generated/PySirius
+          cp pysirius_helper.py generated/PySirius
           
-          chmod +x ./client-api_python/formatting/format_init.sh
-          ./client-api_python/formatting/format_init.sh
+          chmod +x ./formatting/format_init.sh
+          ./formatting/format_init.sh
+        working-directory: client-api_python
       - name: Format R package
         run: |
-          cp client-api_r/rsirius_sdk.R  client-api_r/generated/R/rsirius_sdk.R
-          cp client-api_r/rsirius_helper.R  client-api_r/generated/R/rsirius_helper.R
-          echo >> client-api_r/generated/NAMESPACE
-          echo "# SDK" >> client-api_r/generated/NAMESPACE
-          echo "export(SiriusSDK)" >> client-api_r/generated/NAMESPACE
-          echo "export(Helper)" >> client-api_r/generated/NAMESPACE
+          cp rsirius_sdk.R  generated/R/rsirius_sdk.R
+          cp rsirius_helper.R  generated/R/rsirius_helper.R
+          echo >> generated/NAMESPACE
+          echo "# SDK" >> generated/NAMESPACE
+          echo "export(SiriusSDK)" >> generated/NAMESPACE
+          echo "export(Helper)" >> generated/NAMESPACE
           
-          chmod +x ./client-api_r/patches/list_syntax_fix.sh
-          ./client-api_r/patches/list_syntax_fix.sh
+          chmod +x ./patches/list_syntax_fix.sh
+          ./patches/list_syntax_fix.sh
           
-          chmod +x ./client-api_r/patches/insert_wait_for_job_completion_in_rsirius_api.sh
-          ./client-api_r/patches/insert_wait_for_job_completion_in_rsirius_api.sh
+          chmod +x ./patches/insert_wait_for_job_completion_in_rsirius_api.sh
+          ./patches/insert_wait_for_job_completion_in_rsirius_api.sh
+        working-directory: client-api_r
       - name: Remove Sirius Rest Api
         run: |
-          cd .updater/api
           rm -rf *sirius*
           rm -rf releases.json
           echo "Done"
+        working-directory: .updater/api
       - name: Remove Openapi Generator Files
         run: |
           rm -rf .updater/openapi_generator
