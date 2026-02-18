@@ -36,6 +36,10 @@ class PySiriusAPI:
         """returns API endpoint of the FeaturesApi"""
         return PySirius.FeaturesApi(self.api_client)
 
+    def gui(self):
+        """returns API endpoint of the GuiApi"""
+        return PySirius.GuiApi(self.api_client)
+
     def infos(self):
         """returns API endpoint of the InfoApi"""
         return PySirius.InfoApi(self.api_client)

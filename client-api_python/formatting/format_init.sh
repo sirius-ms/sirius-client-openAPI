@@ -1,6 +1,6 @@
 #!/bin/bash
 
-file="./client-api_python/generated/PySirius/__init__.py"
+file="./generated/PySirius/__init__.py"
 
 # Use sed to insert the new items before the closing bracket
 sed -i '/^]$/i\    "PySiriusAPI",\n    "SiriusSDK",\n    "Helper",' "$file"

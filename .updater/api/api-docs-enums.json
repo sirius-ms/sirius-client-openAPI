@@ -13,10 +13,6 @@
   ],
   "tags": [
     {
-      "name": "Tags",
-      "description": "[EXPERIMENTAL] This API allows managing tags and tag based data groupings. All endpoints are experimental and not part of the stable API specification. These endpoints can change at any time, even in minor updates."
-    },
-    {
       "name": "Info",
       "description": "Status und Information"
     },
@@ -31,6 +27,26 @@
     {
       "name": "Compounds",
       "description": "This compound based API allows to retrieve all AlignedFeatures that belong to the same compound (also known as a group of ion identities). It also provides for each AlignedFeature the corresponding annotation results (which are usually computed on a per-feature basis)"
+    },
+    {
+      "name": "Gui",
+      "description": "GUI Control: Open, control and close SIRIUS Graphical User Interface (GUI) on specified projects."
+    },
+    {
+      "name": "Projects",
+      "description": "Manage SIRIUS projects."
+    },
+    {
+      "name": "Runs",
+      "description": "[EXPERIMENTAL] This API allows accessing LC/MS runs. All endpoints are experimental and not part of the stable API specification. These endpoints can change at any time, even in minor updates."
+    },
+    {
+      "name": "Compound Statistics",
+      "description": "[EXPERIMENTAL] This compound based API allows allows computing and accessing statistics for compounds (also known as a group of ion identities). All endpoints are experimental and not part of the stable API specification. These endpoints can change at any time, even in minor updates."
+    },
+    {
+      "name": "Tags",
+      "description": "[EXPERIMENTAL] This API allows managing tags and tag based data groupings. All endpoints are experimental and not part of the stable API specification. These endpoints can change at any time, even in minor updates."
     },
     {
       "name": "Login and Account",
@@ -51,18 +67,6 @@
     {
       "name": "Features",
       "description": "This feature based API allows access features (aligned over runs) and there Annotations of a specified project-space. This is the entry point to access all raw annotation results an there summaries."
-    },
-    {
-      "name": "Projects",
-      "description": "Manage SIRIUS projects."
-    },
-    {
-      "name": "Runs",
-      "description": "[EXPERIMENTAL] This API allows accessing LC/MS runs. All endpoints are experimental and not part of the stable API specification. These endpoints can change at any time, even in minor updates."
-    },
-    {
-      "name": "Compound Statistics",
-      "description": "[EXPERIMENTAL] This compound based API allows allows computing and accessing statistics for compounds (also known as a group of ion identities). All endpoints are experimental and not part of the stable API specification. These endpoints can change at any time, even in minor updates."
     }
   ],
   "paths": {
@@ -1619,6 +1623,71 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Job"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/projects/{projectId}/gui": {
+      "post": {
+        "tags": [
+          "Gui"
+        ],
+        "summary": "Open GUI instance on specified project-space and bring the GUI window to foreground.",
+        "description": "Open GUI instance on specified project-space and bring the GUI window to foreground.",
+        "operationId": "openGui",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "description": "of project-space the GUI instance will connect to.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Gui"
+        ],
+        "summary": "Close GUI instance of given project-space if available.",
+        "description": "Close GUI instance of given project-space if available.",
+        "operationId": "closeGui",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "description": "if project-space the GUI instance is connected to.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "closeProject",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
                 }
               }
             }
@@ -6781,6 +6850,31 @@
         }
       }
     },
+    "/api/guis": {
+      "get": {
+        "tags": [
+          "Gui"
+        ],
+        "summary": "Get list of currently running gui windows, managed by this SIRIUS instance.",
+        "description": "Get list of currently running gui windows, managed by this SIRIUS instance.\n Note this will not show any Clients that are connected from a separate process!",
+        "operationId": "getGuis",
+        "responses": {
+          "200": {
+            "description": "List of GUI windows that are currently managed by this SIRIUS instance.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GuiInfo"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/default-job-config": {
       "get": {
         "tags": [
@@ -11036,6 +11130,15 @@
           "GLPK",
           "CLP"
         ]
+      },
+      "GuiInfo": {
+        "type": "object",
+        "properties": {
+          "projectId": {
+            "type": "string",
+            "description": "The project this instance is running on"
+          }
+        }
       },
       "ConnectionCheck": {
         "required": [

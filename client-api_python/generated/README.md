@@ -151,6 +151,9 @@ Class | Method | HTTP request | Description
 *FeaturesApi* | [**get_tags_for_aligned_features_experimental**](docs/FeaturesApi.md#get_tags_for_aligned_features_experimental) | **GET** /api/projects/{projectId}/aligned-features/tags/{objectId} | [EXPERIMENTAL] Get all tags associated with this Object
 *FeaturesApi* | [**get_traces_experimental**](docs/FeaturesApi.md#get_traces_experimental) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/traces | [EXPERIMENTAL] Returns the traces of the given feature (alignedFeatureId)
 *FeaturesApi* | [**remove_tag_from_aligned_feature_experimental**](docs/FeaturesApi.md#remove_tag_from_aligned_feature_experimental) | **DELETE** /api/projects/{projectId}/aligned-features/tags/{alignedFeatureId}/{tagName} | [EXPERIMENTAL] Delete tag with the given name from the feature (aligned over runs) with the specified ID in the specified project-space
+*GuiApi* | [**close_gui**](docs/GuiApi.md#close_gui) | **DELETE** /api/projects/{projectId}/gui | Close GUI instance of given project-space if available.
+*GuiApi* | [**get_guis**](docs/GuiApi.md#get_guis) | **GET** /api/guis | Get list of currently running gui windows, managed by this SIRIUS instance.
+*GuiApi* | [**open_gui**](docs/GuiApi.md#open_gui) | **POST** /api/projects/{projectId}/gui | Open GUI instance on specified project-space and bring the GUI window to foreground.
 *InfoApi* | [**get_connection_check**](docs/InfoApi.md#get_connection_check) | **GET** /api/connection-status | 
 *InfoApi* | [**get_info**](docs/InfoApi.md#get_info) | **GET** /api/info | 
 *JobsApi* | [**delete_job**](docs/JobsApi.md#delete_job) | **DELETE** /api/projects/{projectId}/jobs/{jobId} | Delete job.
@@ -271,6 +274,7 @@ Class | Method | HTTP request | Description
  - [FormulaCandidateOptField](docs/FormulaCandidateOptField.md)
  - [FragmentNode](docs/FragmentNode.md)
  - [FragmentationTree](docs/FragmentationTree.md)
+ - [GuiInfo](docs/GuiInfo.md)
  - [ImportResult](docs/ImportResult.md)
  - [Info](docs/Info.md)
  - [InstrumentProfile](docs/InstrumentProfile.md)

@@ -49,6 +49,8 @@ R/fold_change.R
 R/formula_candidate.R
 R/fragment_node.R
 R/fragmentation_tree.R
+R/gui_api.R
+R/gui_info.R
 R/import_result.R
 R/info.R
 R/info_api.R
@@ -167,6 +169,8 @@ docs/FoldChange.md
 docs/FormulaCandidate.md
 docs/FragmentNode.md
 docs/FragmentationTree.md
+docs/GuiApi.md
+docs/GuiInfo.md
 docs/ImportResult.md
 docs/Info.md
 docs/InfoApi.md
