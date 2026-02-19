@@ -59,7 +59,7 @@ jobs:
       - name: Run Rest Api with strings
         run: |
           xvfb-run --auto-servernum --server-args="-screen 0 1024x768x24" \
-          bash .updater/api/sirius/bin/sirius REST --gui --api-mode=STABLE -p 8080 -s &
+          bash .updater/api/sirius/bin/sirius REST --api-mode=STABLE -p 8080 -s &
       - name: Update api-docs-strings.json
         run: |
           while ! nc -z localhost 8080; do sleep 0.1; done
@@ -70,7 +70,7 @@ jobs:
       - name: Run Rest Api with enums
         run: |
           xvfb-run --auto-servernum --server-args="-screen 0 1024x768x24" \
-          bash .updater/api/sirius/bin/sirius REST --gui --api-mode=STABLE --enums-as-ref -p 8080 -s &
+          bash .updater/api/sirius/bin/sirius REST --api-mode=STABLE --enums-as-ref -p 8080 -s &
       - name: Update api-docs-enums.json
         run: |
           while ! nc -z localhost 8080; do sleep 0.1; done
