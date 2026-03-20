@@ -149,11 +149,7 @@ jobs:
           commit_message: Auto-Updated OpenAPI Clients
       - name: Run RManualGeneration
         run: |
-          gh workflow run RManualGeneration.yml --ref ${GITHUB_REF##*/}
-          echo "dispatched workflow"
-          echo "sleeping for 30s to make sure it started"
-          sleep 30
-          id=$(gh run list --workflow RManualGeneration.yml --branch ${GITHUB_REF##*/} --json databaseId,status --jq '.[] | select(.status=="in_progress") | .databaseId')
+          id=$(gh workflow run RManualGeneration.yml --ref ${GITHUB_REF##*/} | grep -oP '(?<=runs/)\d+')
           echo "run ID of RManualGeneration is: $id"
           gh run watch $id --exit-status --interval 3
           echo "generation done!"
