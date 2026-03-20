@@ -1,0 +1,81 @@
+name: GenerateClients
+
+on:
+  workflow_dispatch:
+    inputs:
+      target_branch:
+        type: string
+        required: true
+        description: "Target branch to put update commits on."
+      sirius_version:
+        description: "SIRIUS version the api-docs were generated from (e.g. 6.3.3). Used for package versioning."
+        type: string
+        required: true
+
+jobs:
+  GenerateClients:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v3.1.0
+      - name: Download latest generators
+        run: |
+          mkdir .updater/openapi_generator
+          cd .updater/openapi_generator
+          wget -nv https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/7.10.0/openapi-generator-cli-7.10.0.jar -O openapi-generator-cli-7.10.jar
+          wget -nv https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/7.16.0/openapi-generator-cli-7.16.0.jar -O openapi-generator-cli-7.16.jar
+      - name: Update Clients
+        run: |
+          packageVersion="${{ github.event.inputs.sirius_version }}"
+          
+          echo "generating Python Code with packageVersion=$packageVersion"
+          rm -rf client-api_python/generated/docs
+          rm -rf client-api_python/generated/PySirius
+          
+          java -jar .updater/openapi_generator/openapi-generator-cli-7.16.jar generate -i .updater/api/api-docs-enums.json -c .updater/config/Python/config.json -g python -o client-api_python/generated -t client-api_python/templates/python --additional-properties=packageVersion=$packageVersion
+          
+          echo "temporarily move R manual folder"
+          mv client-api_r/generated/man/ client-api_r/
+          
+          echo "generating R Code with packageVersion=$packageVersion"
+          rm -rf client-api_r/generated/docs
+          rm -rf client-api_r/generated/R
+          
+          java -jar .updater/openapi_generator/openapi-generator-cli-7.10.jar generate -i .updater/api/api-docs-strings.json -c .updater/config/R/config.json -g r -o client-api_r/generated -t client-api_r/templates/r --additional-properties=packageVersion=$packageVersion
+          
+          echo "recover R manual folder"
+          mv client-api_r/man/ client-api_r/generated/
+          
+          echo "generating Finished!"
+      - name: Format Python Package
+        run: |
+          cp pysirius_api.py generated/PySirius
+          cp pysirius_sdk.py generated/PySirius
+          cp pysirius_helper.py generated/PySirius
+          
+          chmod +x ./formatting/format_init.sh
+          ./formatting/format_init.sh
+        working-directory: client-api_python
+      - name: Format R package
+        run: |
+          cp rsirius_sdk.R  generated/R/rsirius_sdk.R
+          cp rsirius_helper.R  generated/R/rsirius_helper.R
+          echo >> generated/NAMESPACE
+          echo "# SDK" >> generated/NAMESPACE
+          echo "export(SiriusSDK)" >> generated/NAMESPACE
+          echo "export(Helper)" >> generated/NAMESPACE
+          
+          chmod +x ./patches/list_syntax_fix.sh
+          ./patches/list_syntax_fix.sh
+          
+          chmod +x ./patches/insert_wait_for_job_completion_in_rsirius_api.sh
+          ./patches/insert_wait_for_job_completion_in_rsirius_api.sh
+        working-directory: client-api_r
+      - name: Remove Openapi Generator Files
+        run: rm -rf .updater/openapi_generator
+      - name: Commit and push to target branch
+        uses: stefanzweifel/git-auto-commit-action@v4.15.2
+        with:
+          commit_message: Auto-Generated OpenAPI Clients (v${{ github.event.inputs.sirius_version }})
+          branch: ${{ inputs.target_branch }}
