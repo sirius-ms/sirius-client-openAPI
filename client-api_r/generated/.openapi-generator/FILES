@@ -27,6 +27,7 @@ R/bio_transformer_sequence_step.R
 R/canopus.R
 R/canopus_prediction.R
 R/category.R
+R/classy_fire_class_statistics_api.R
 R/command_submission.R
 R/compound.R
 R/compound_class.R
@@ -70,6 +71,7 @@ R/login_and_account_api.R
 R/loss_edge.R
 R/ms_data.R
 R/ms_novelist.R
+R/npc_class_statistics_api.R
 R/page_metadata.R
 R/paged_model_aligned_feature.R
 R/paged_model_compound.R
@@ -151,6 +153,7 @@ docs/BioTransformerSequenceStep.md
 docs/Canopus.md
 docs/CanopusPrediction.md
 docs/Category.md
+docs/ClassyFireClassStatisticsApi.md
 docs/CommandSubmission.md
 docs/Compound.md
 docs/CompoundClass.md
@@ -194,6 +197,7 @@ docs/LoginAndAccountApi.md
 docs/LossEdge.md
 docs/MsData.md
 docs/MsNovelist.md
+docs/NPCClassStatisticsApi.md
 docs/PageMetadata.md
 docs/PagedModelAlignedFeature.md
 docs/PagedModelCompound.md

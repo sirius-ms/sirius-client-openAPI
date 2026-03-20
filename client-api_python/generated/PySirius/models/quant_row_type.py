@@ -26,6 +26,8 @@ class QuantRowType(str, Enum):
     """
     FEATURES = 'FEATURES'
     COMPOUNDS = 'COMPOUNDS'
+    NPC_CLASSES = 'NPC_CLASSES'
+    CLASSYFIRE_CLASSES = 'CLASSYFIRE_CLASSES'
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:

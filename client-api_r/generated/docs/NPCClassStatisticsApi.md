@@ -1,0 +1,165 @@
+# NPCClassStatisticsApi
+
+All URIs are relative to *http://localhost:8888*
+
+Method | HTTP request | Description
+------------- | ------------- | -------------
+[**ComputeNpcClassFoldChangesExperimental**](NPCClassStatisticsApi.md#ComputeNpcClassFoldChangesExperimental) | **PUT** /api/projects/{projectId}/npc-classes/statistics/foldchange/compute | [EXPERIMENTAL] Compute the fold change between two groups of runs
+[**DeleteNpcClassFoldChangesExperimental**](NPCClassStatisticsApi.md#DeleteNpcClassFoldChangesExperimental) | **DELETE** /api/projects/{projectId}/npc-classes/statistics/foldchanges | [EXPERIMENTAL] Delete fold changes
+[**GetNpcClassFoldChangeTableExperimental**](NPCClassStatisticsApi.md#GetNpcClassFoldChangeTableExperimental) | **GET** /api/projects/{projectId}/npc-classes/statistics/foldchanges/stats-table | [EXPERIMENTAL] Get table of all fold changes in the project space
+
+
+# **ComputeNpcClassFoldChangesExperimental**
+> Job ComputeNpcClassFoldChangesExperimental(project_id, fold_change_job_submission, opt_fields = ["progress"])
+
+[EXPERIMENTAL] Compute the fold change between two groups of runs
+
+[EXPERIMENTAL] Compute the fold change between two groups of runs.  <p>  The runs need to be tagged and grouped.  <p>  [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.
+
+### Example
+```R
+library(RSirius)
+
+# [EXPERIMENTAL] Compute the fold change between two groups of runs
+#
+# prepare function argument(s)
+var_project_id <- "project_id_example" # character | project-space to compute the fold change in.
+var_fold_change_job_submission <- FoldChangeJobSubmission$new("leftRunGroup_example", "rightRunGroup_example", c("AVG"), c("APEX_INTENSITY")) # FoldChangeJobSubmission | Parameters of fold change job
+var_opt_fields <- c("none") # array[character] | job opt fields. (Optional)
+
+api_instance <- rsirius_api$new()
+# to save the result into a file, simply add the optional `data_file` parameter, e.g.
+# result <- api_instance$ComputeNpcClassFoldChangesExperimental(var_project_id, var_fold_change_job_submission, opt_fields = var_opt_fieldsdata_file = "result.txt")
+result <- api_instance$npc_class_statistics_api$ComputeNpcClassFoldChangesExperimental(var_project_id, var_fold_change_job_submission, opt_fields = var_opt_fields)
+dput(result)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **project_id** | **character**| project-space to compute the fold change in. | 
+ **fold_change_job_submission** | [**FoldChangeJobSubmission**](FoldChangeJobSubmission.md)| Parameters of fold change job | 
+ **opt_fields** | Enum [none, command, progress, affectedIds] | job opt fields. | [optional] [default to [&quot;progress&quot;]]
+
+### Return type
+
+[**Job**](Job.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | OK |  -  |
+
+# **DeleteNpcClassFoldChangesExperimental**
+> DeleteNpcClassFoldChangesExperimental(project_id, left_group_name, right_group_name, aggregation = "AVG", quantification = "APEX_INTENSITY")
+
+[EXPERIMENTAL] Delete fold changes
+
+[EXPERIMENTAL] Delete fold changes.  <p>  [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.
+
+### Example
+```R
+library(RSirius)
+
+# [EXPERIMENTAL] Delete fold changes
+#
+# prepare function argument(s)
+var_project_id <- "project_id_example" # character | project-space to delete from.
+var_left_group_name <- "left_group_name_example" # character | name of the left group.
+var_right_group_name <- "right_group_name_example" # character | name of the right group.
+var_aggregation <- "AVG" # character |  (Optional)
+var_quantification <- "APEX_INTENSITY" # character |  (Optional)
+
+api_instance <- rsirius_api$new()
+api_instance$npc_class_statistics_api$DeleteNpcClassFoldChangesExperimental(var_project_id, var_left_group_name, var_right_group_name, aggregation = var_aggregation, quantification = var_quantification)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **project_id** | **character**| project-space to delete from. | 
+ **left_group_name** | **character**| name of the left group. | 
+ **right_group_name** | **character**| name of the right group. | 
+ **aggregation** | Enum [AVG, MIN, MAX] |  | [optional] [default to &quot;AVG&quot;]
+ **quantification** | Enum [APEX_INTENSITY, AREA_UNDER_CURVE] |  | [optional] [default to &quot;APEX_INTENSITY&quot;]
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: Not defined
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | OK |  -  |
+
+# **GetNpcClassFoldChangeTableExperimental**
+> StatisticsTable GetNpcClassFoldChangeTableExperimental(project_id, aggregation = "AVG", quantification = "APEX_INTENSITY")
+
+[EXPERIMENTAL] Get table of all fold changes in the project space
+
+[EXPERIMENTAL] Get table of all fold changes in the project space.  <p>  [EXPERIMENTAL] This endpoint is experimental and not part of the stable API specification. This endpoint can change at any time, even in minor updates.
+
+### Example
+```R
+library(RSirius)
+
+# [EXPERIMENTAL] Get table of all fold changes in the project space
+#
+# prepare function argument(s)
+var_project_id <- "project_id_example" # character | project-space to read from.
+var_aggregation <- "AVG" # character | aggregation type. (Optional)
+var_quantification <- "APEX_INTENSITY" # character | quantification type. (Optional)
+
+api_instance <- rsirius_api$new()
+# to save the result into a file, simply add the optional `data_file` parameter, e.g.
+# result <- api_instance$GetNpcClassFoldChangeTableExperimental(var_project_id, aggregation = var_aggregation, quantification = var_quantificationdata_file = "result.txt")
+result <- api_instance$npc_class_statistics_api$GetNpcClassFoldChangeTableExperimental(var_project_id, aggregation = var_aggregation, quantification = var_quantification)
+dput(result)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **project_id** | **character**| project-space to read from. | 
+ **aggregation** | Enum [AVG, MIN, MAX] | aggregation type. | [optional] [default to &quot;AVG&quot;]
+ **quantification** | Enum [APEX_INTENSITY, AREA_UNDER_CURVE] | quantification type. | [optional] [default to &quot;APEX_INTENSITY&quot;]
+
+### Return type
+
+[**StatisticsTable**](StatisticsTable.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | table of fold changes. |  -  |
+

@@ -2,6 +2,7 @@
 PySirius/__init__.py
 PySirius/api/__init__.py
 PySirius/api/actuator_api.py
+PySirius/api/classy_fire_class_statistics_api.py
 PySirius/api/compound_statistics_api.py
 PySirius/api/compounds_api.py
 PySirius/api/feature_statistics_api.py
@@ -10,6 +11,7 @@ PySirius/api/gui_api.py
 PySirius/api/info_api.py
 PySirius/api/jobs_api.py
 PySirius/api/login_and_account_api.py
+PySirius/api/npc_class_statistics_api.py
 PySirius/api/projects_api.py
 PySirius/api/runs_api.py
 PySirius/api/searchable_databases_api.py
@@ -191,6 +193,7 @@ docs/BioTransformerSequenceStep.md
 docs/Canopus.md
 docs/CanopusPrediction.md
 docs/Category.md
+docs/ClassyFireClassStatisticsApi.md
 docs/CommandSubmission.md
 docs/Compound.md
 docs/CompoundClass.md
@@ -250,6 +253,7 @@ docs/LossEdge.md
 docs/MetabolicTransformation.md
 docs/MsData.md
 docs/MsNovelist.md
+docs/NPCClassStatisticsApi.md
 docs/P2Mode.md
 docs/PageMetadata.md
 docs/PagedModelAlignedFeature.md

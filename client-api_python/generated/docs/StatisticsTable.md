@@ -14,6 +14,8 @@ Name | Type | Description | Notes
 **column_left_groups** | **List[str]** |  | [optional] 
 **column_right_groups** | **List[str]** |  | [optional] 
 **values** | **List[List[float]]** |  | [optional] 
+**row_names** | **List[str]** |  | [optional] 
+**row_levels** | **List[str]** |  | [optional] 
 
 ## Example
 

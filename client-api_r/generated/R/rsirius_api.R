@@ -19,6 +19,7 @@
 #' @format An \code{R6Class} generator object
 #' @field api_client API client
 #' @field actuator_api an instance of ActuatorApi
+#' @field classy_fire_class_statistics_api an instance of ClassyFireClassStatisticsApi
 #' @field compound_statistics_api an instance of CompoundStatisticsApi
 #' @field compounds_api an instance of CompoundsApi
 #' @field feature_statistics_api an instance of FeatureStatisticsApi
@@ -27,6 +28,7 @@
 #' @field info_api an instance of InfoApi
 #' @field jobs_api an instance of JobsApi
 #' @field login_and_account_api an instance of LoginAndAccountApi
+#' @field npc_class_statistics_api an instance of NPCClassStatisticsApi
 #' @field projects_api an instance of ProjectsApi
 #' @field runs_api an instance of RunsApi
 #' @field searchable_databases_api an instance of SearchableDatabasesApi
@@ -37,6 +39,7 @@ rsirius_api <- R6::R6Class(
   public = list(
     api_client = NULL,
     actuator_api = NULL,
+    classy_fire_class_statistics_api = NULL,
     compound_statistics_api = NULL,
     compounds_api = NULL,
     feature_statistics_api = NULL,
@@ -45,6 +48,7 @@ rsirius_api <- R6::R6Class(
     info_api = NULL,
     jobs_api = NULL,
     login_and_account_api = NULL,
+    npc_class_statistics_api = NULL,
     projects_api = NULL,
     runs_api = NULL,
     searchable_databases_api = NULL,
@@ -65,6 +69,8 @@ rsirius_api <- R6::R6Class(
 
       self$actuator_api <- ActuatorApi$new(self$api_client)
 
+      self$classy_fire_class_statistics_api <- ClassyFireClassStatisticsApi$new(self$api_client)
+
       self$compound_statistics_api <- CompoundStatisticsApi$new(self$api_client)
 
       self$compounds_api <- CompoundsApi$new(self$api_client)
@@ -80,6 +86,8 @@ rsirius_api <- R6::R6Class(
       self$jobs_api <- JobsApi$new(self$api_client)
 
       self$login_and_account_api <- LoginAndAccountApi$new(self$api_client)
+
+      self$npc_class_statistics_api <- NPCClassStatisticsApi$new(self$api_client)
 
       self$projects_api <- ProjectsApi$new(self$api_client)
 

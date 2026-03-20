@@ -17,6 +17,7 @@ __version__ = "6.4.0"
 # Define package exports
 __all__ = [
     "ActuatorApi",
+    "ClassyFireClassStatisticsApi",
     "CompoundStatisticsApi",
     "CompoundsApi",
     "FeatureStatisticsApi",
@@ -25,6 +26,7 @@ __all__ = [
     "InfoApi",
     "JobsApi",
     "LoginAndAccountApi",
+    "NPCClassStatisticsApi",
     "ProjectsApi",
     "RunsApi",
     "SearchableDatabasesApi",
@@ -189,6 +191,7 @@ __all__ = [
 
 # import apis into sdk package
 from PySirius.api.actuator_api import ActuatorApi as ActuatorApi
+from PySirius.api.classy_fire_class_statistics_api import ClassyFireClassStatisticsApi as ClassyFireClassStatisticsApi
 from PySirius.api.compound_statistics_api import CompoundStatisticsApi as CompoundStatisticsApi
 from PySirius.api.compounds_api import CompoundsApi as CompoundsApi
 from PySirius.api.feature_statistics_api import FeatureStatisticsApi as FeatureStatisticsApi
@@ -197,6 +200,7 @@ from PySirius.api.gui_api import GuiApi as GuiApi
 from PySirius.api.info_api import InfoApi as InfoApi
 from PySirius.api.jobs_api import JobsApi as JobsApi
 from PySirius.api.login_and_account_api import LoginAndAccountApi as LoginAndAccountApi
+from PySirius.api.npc_class_statistics_api import NPCClassStatisticsApi as NPCClassStatisticsApi
 from PySirius.api.projects_api import ProjectsApi as ProjectsApi
 from PySirius.api.runs_api import RunsApi as RunsApi
 from PySirius.api.searchable_databases_api import SearchableDatabasesApi as SearchableDatabasesApi

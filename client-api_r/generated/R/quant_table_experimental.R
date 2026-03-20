@@ -50,8 +50,8 @@ QuantTableExperimental <- R6::R6Class(
         self$`quantificationMeasure` <- `quantificationMeasure`
       }
       if (!is.null(`rowType`)) {
-        if (!(`rowType` %in% c("FEATURES", "COMPOUNDS"))) {
-          stop(paste("Error! \"", `rowType`, "\" cannot be assigned to `rowType`. Must be \"FEATURES\", \"COMPOUNDS\".", sep = ""))
+        if (!(`rowType` %in% c("FEATURES", "COMPOUNDS", "NPC_CLASSES", "CLASSYFIRE_CLASSES"))) {
+          stop(paste("Error! \"", `rowType`, "\" cannot be assigned to `rowType`. Must be \"FEATURES\", \"COMPOUNDS\", \"NPC_CLASSES\", \"CLASSYFIRE_CLASSES\".", sep = ""))
         }
         if (!(is.character(`rowType`) && length(`rowType`) == 1)) {
           stop(paste("Error! Invalid data for `rowType`. Must be a string:", `rowType`))
@@ -161,8 +161,8 @@ QuantTableExperimental <- R6::R6Class(
         self$`quantificationMeasure` <- this_object$`quantificationMeasure`
       }
       if (!is.null(this_object$`rowType`)) {
-        if (!is.null(this_object$`rowType`) && !(this_object$`rowType` %in% c("FEATURES", "COMPOUNDS"))) {
-          stop(paste("Error! \"", this_object$`rowType`, "\" cannot be assigned to `rowType`. Must be \"FEATURES\", \"COMPOUNDS\".", sep = ""))
+        if (!is.null(this_object$`rowType`) && !(this_object$`rowType` %in% c("FEATURES", "COMPOUNDS", "NPC_CLASSES", "CLASSYFIRE_CLASSES"))) {
+          stop(paste("Error! \"", this_object$`rowType`, "\" cannot be assigned to `rowType`. Must be \"FEATURES\", \"COMPOUNDS\", \"NPC_CLASSES\", \"CLASSYFIRE_CLASSES\".", sep = ""))
         }
         self$`rowType` <- this_object$`rowType`
       }
@@ -206,8 +206,8 @@ QuantTableExperimental <- R6::R6Class(
         stop(paste("Error! \"", this_object$`quantificationMeasure`, "\" cannot be assigned to `quantificationMeasure`. Must be \"APEX_INTENSITY\", \"AREA_UNDER_CURVE\".", sep = ""))
       }
       self$`quantificationMeasure` <- this_object$`quantificationMeasure`
-      if (!is.null(this_object$`rowType`) && !(this_object$`rowType` %in% c("FEATURES", "COMPOUNDS"))) {
-        stop(paste("Error! \"", this_object$`rowType`, "\" cannot be assigned to `rowType`. Must be \"FEATURES\", \"COMPOUNDS\".", sep = ""))
+      if (!is.null(this_object$`rowType`) && !(this_object$`rowType` %in% c("FEATURES", "COMPOUNDS", "NPC_CLASSES", "CLASSYFIRE_CLASSES"))) {
+        stop(paste("Error! \"", this_object$`rowType`, "\" cannot be assigned to `rowType`. Must be \"FEATURES\", \"COMPOUNDS\", \"NPC_CLASSES\", \"CLASSYFIRE_CLASSES\".", sep = ""))
       }
       self$`rowType` <- this_object$`rowType`
       self$`rowIds` <- ApiClient$new()$deserializeObj(this_object$`rowIds`, "array[integer]", loadNamespace("RSirius"))

@@ -6,7 +6,7 @@ EXPERIMENTAL: This schema is experimental and may be changed (or even removed) w
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **quantificationMeasure** | **character** |  | [optional] [Enum: [APEX_INTENSITY, AREA_UNDER_CURVE]] 
-**rowType** | **character** |  | [optional] [Enum: [FEATURES, COMPOUNDS]] 
+**rowType** | **character** |  | [optional] [Enum: [FEATURES, COMPOUNDS, NPC_CLASSES, CLASSYFIRE_CLASSES]] 
 **rowIds** | **array[integer]** |  | [optional] 
 **columnIds** | **array[integer]** |  | [optional] 
 **rowNames** | **array[character]** |  | [optional] 

@@ -16,6 +16,8 @@
 #' @field columnLeftGroups  list(character) [optional]
 #' @field columnRightGroups  list(character) [optional]
 #' @field values  list(list(numeric)) [optional]
+#' @field rowNames  list(character) [optional]
+#' @field rowLevels  list(character) [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
 #' @export
@@ -31,6 +33,8 @@ StatisticsTable <- R6::R6Class(
     `columnLeftGroups` = NULL,
     `columnRightGroups` = NULL,
     `values` = NULL,
+    `rowNames` = NULL,
+    `rowLevels` = NULL,
 
     #' @description
     #' Initialize a new StatisticsTable class.
@@ -44,8 +48,10 @@ StatisticsTable <- R6::R6Class(
     #' @param columnLeftGroups columnLeftGroups
     #' @param columnRightGroups columnRightGroups
     #' @param values values
+    #' @param rowNames rowNames
+    #' @param rowLevels rowLevels
     #' @param ... Other optional arguments.
-    initialize = function(`statisticsType` = NULL, `aggregationType` = NULL, `quantificationMeasure` = NULL, `rowType` = NULL, `rowIds` = NULL, `columnNames` = NULL, `columnLeftGroups` = NULL, `columnRightGroups` = NULL, `values` = NULL, ...) {
+    initialize = function(`statisticsType` = NULL, `aggregationType` = NULL, `quantificationMeasure` = NULL, `rowType` = NULL, `rowIds` = NULL, `columnNames` = NULL, `columnLeftGroups` = NULL, `columnRightGroups` = NULL, `values` = NULL, `rowNames` = NULL, `rowLevels` = NULL, ...) {
       if (!is.null(`statisticsType`)) {
         if (!(`statisticsType` %in% c("FOLD_CHANGE"))) {
           stop(paste("Error! \"", `statisticsType`, "\" cannot be assigned to `statisticsType`. Must be \"FOLD_CHANGE\".", sep = ""))
@@ -74,8 +80,8 @@ StatisticsTable <- R6::R6Class(
         self$`quantificationMeasure` <- `quantificationMeasure`
       }
       if (!is.null(`rowType`)) {
-        if (!(`rowType` %in% c("FEATURES", "COMPOUNDS"))) {
-          stop(paste("Error! \"", `rowType`, "\" cannot be assigned to `rowType`. Must be \"FEATURES\", \"COMPOUNDS\".", sep = ""))
+        if (!(`rowType` %in% c("FEATURES", "COMPOUNDS", "NPC_CLASSES", "CLASSYFIRE_CLASSES"))) {
+          stop(paste("Error! \"", `rowType`, "\" cannot be assigned to `rowType`. Must be \"FEATURES\", \"COMPOUNDS\", \"NPC_CLASSES\", \"CLASSYFIRE_CLASSES\".", sep = ""))
         }
         if (!(is.character(`rowType`) && length(`rowType`) == 1)) {
           stop(paste("Error! Invalid data for `rowType`. Must be a string:", `rowType`))
@@ -106,6 +112,16 @@ StatisticsTable <- R6::R6Class(
         stopifnot(is.vector(`values`), length(`values`) != 0)
         sapply(`values`, function(x) stopifnot(R6::is.R6(x)))
         self$`values` <- `values`
+      }
+      if (!is.null(`rowNames`)) {
+        stopifnot(is.vector(`rowNames`), length(`rowNames`) != 0)
+        sapply(`rowNames`, function(x) stopifnot(is.character(x)))
+        self$`rowNames` <- `rowNames`
+      }
+      if (!is.null(`rowLevels`)) {
+        stopifnot(is.vector(`rowLevels`), length(`rowLevels`) != 0)
+        sapply(`rowLevels`, function(x) stopifnot(is.character(x)))
+        self$`rowLevels` <- `rowLevels`
       }
     },
 
@@ -176,6 +192,14 @@ StatisticsTable <- R6::R6Class(
         StatisticsTableObject[["values"]] <-
           lapply(self$`values`, function(x) x$toSimpleType())
       }
+      if (!is.null(self$`rowNames`)) {
+        StatisticsTableObject[["rowNames"]] <-
+          self$`rowNames`
+      }
+      if (!is.null(self$`rowLevels`)) {
+        StatisticsTableObject[["rowLevels"]] <-
+          self$`rowLevels`
+      }
       return(StatisticsTableObject)
     },
 
@@ -205,8 +229,8 @@ StatisticsTable <- R6::R6Class(
         self$`quantificationMeasure` <- this_object$`quantificationMeasure`
       }
       if (!is.null(this_object$`rowType`)) {
-        if (!is.null(this_object$`rowType`) && !(this_object$`rowType` %in% c("FEATURES", "COMPOUNDS"))) {
-          stop(paste("Error! \"", this_object$`rowType`, "\" cannot be assigned to `rowType`. Must be \"FEATURES\", \"COMPOUNDS\".", sep = ""))
+        if (!is.null(this_object$`rowType`) && !(this_object$`rowType` %in% c("FEATURES", "COMPOUNDS", "NPC_CLASSES", "CLASSYFIRE_CLASSES"))) {
+          stop(paste("Error! \"", this_object$`rowType`, "\" cannot be assigned to `rowType`. Must be \"FEATURES\", \"COMPOUNDS\", \"NPC_CLASSES\", \"CLASSYFIRE_CLASSES\".", sep = ""))
         }
         self$`rowType` <- this_object$`rowType`
       }
@@ -224,6 +248,12 @@ StatisticsTable <- R6::R6Class(
       }
       if (!is.null(this_object$`values`)) {
         self$`values` <- ApiClient$new()$deserializeObj(this_object$`values`, "array[array[numeric]]", loadNamespace("RSirius"))
+      }
+      if (!is.null(this_object$`rowNames`)) {
+        self$`rowNames` <- ApiClient$new()$deserializeObj(this_object$`rowNames`, "array[character]", loadNamespace("RSirius"))
+      }
+      if (!is.null(this_object$`rowLevels`)) {
+        self$`rowLevels` <- ApiClient$new()$deserializeObj(this_object$`rowLevels`, "array[character]", loadNamespace("RSirius"))
       }
       self
     },
@@ -258,8 +288,8 @@ StatisticsTable <- R6::R6Class(
         stop(paste("Error! \"", this_object$`quantificationMeasure`, "\" cannot be assigned to `quantificationMeasure`. Must be \"APEX_INTENSITY\", \"AREA_UNDER_CURVE\".", sep = ""))
       }
       self$`quantificationMeasure` <- this_object$`quantificationMeasure`
-      if (!is.null(this_object$`rowType`) && !(this_object$`rowType` %in% c("FEATURES", "COMPOUNDS"))) {
-        stop(paste("Error! \"", this_object$`rowType`, "\" cannot be assigned to `rowType`. Must be \"FEATURES\", \"COMPOUNDS\".", sep = ""))
+      if (!is.null(this_object$`rowType`) && !(this_object$`rowType` %in% c("FEATURES", "COMPOUNDS", "NPC_CLASSES", "CLASSYFIRE_CLASSES"))) {
+        stop(paste("Error! \"", this_object$`rowType`, "\" cannot be assigned to `rowType`. Must be \"FEATURES\", \"COMPOUNDS\", \"NPC_CLASSES\", \"CLASSYFIRE_CLASSES\".", sep = ""))
       }
       self$`rowType` <- this_object$`rowType`
       self$`rowIds` <- ApiClient$new()$deserializeObj(this_object$`rowIds`, "array[character]", loadNamespace("RSirius"))
@@ -267,6 +297,8 @@ StatisticsTable <- R6::R6Class(
       self$`columnLeftGroups` <- ApiClient$new()$deserializeObj(this_object$`columnLeftGroups`, "array[character]", loadNamespace("RSirius"))
       self$`columnRightGroups` <- ApiClient$new()$deserializeObj(this_object$`columnRightGroups`, "array[character]", loadNamespace("RSirius"))
       self$`values` <- ApiClient$new()$deserializeObj(this_object$`values`, "array[array[numeric]]", loadNamespace("RSirius"))
+      self$`rowNames` <- ApiClient$new()$deserializeObj(this_object$`rowNames`, "array[character]", loadNamespace("RSirius"))
+      self$`rowLevels` <- ApiClient$new()$deserializeObj(this_object$`rowLevels`, "array[character]", loadNamespace("RSirius"))
       self
     },
 

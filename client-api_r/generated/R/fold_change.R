@@ -41,8 +41,8 @@ FoldChange <- R6::R6Class(
     #' @param ... Other optional arguments.
     initialize = function(`quantType`, `objectId`, `foldChange`, `leftGroup` = NULL, `rightGroup` = NULL, `aggregation` = NULL, `quantification` = NULL, ...) {
       if (!missing(`quantType`)) {
-        if (!(`quantType` %in% c("FEATURES", "COMPOUNDS"))) {
-          stop(paste("Error! \"", `quantType`, "\" cannot be assigned to `quantType`. Must be \"FEATURES\", \"COMPOUNDS\".", sep = ""))
+        if (!(`quantType` %in% c("FEATURES", "COMPOUNDS", "NPC_CLASSES", "CLASSYFIRE_CLASSES"))) {
+          stop(paste("Error! \"", `quantType`, "\" cannot be assigned to `quantType`. Must be \"FEATURES\", \"COMPOUNDS\", \"NPC_CLASSES\", \"CLASSYFIRE_CLASSES\".", sep = ""))
         }
         if (!(is.character(`quantType`) && length(`quantType`) == 1)) {
           stop(paste("Error! Invalid data for `quantType`. Must be a string:", `quantType`))
@@ -181,8 +181,8 @@ FoldChange <- R6::R6Class(
         self$`quantification` <- this_object$`quantification`
       }
       if (!is.null(this_object$`quantType`)) {
-        if (!is.null(this_object$`quantType`) && !(this_object$`quantType` %in% c("FEATURES", "COMPOUNDS"))) {
-          stop(paste("Error! \"", this_object$`quantType`, "\" cannot be assigned to `quantType`. Must be \"FEATURES\", \"COMPOUNDS\".", sep = ""))
+        if (!is.null(this_object$`quantType`) && !(this_object$`quantType` %in% c("FEATURES", "COMPOUNDS", "NPC_CLASSES", "CLASSYFIRE_CLASSES"))) {
+          stop(paste("Error! \"", this_object$`quantType`, "\" cannot be assigned to `quantType`. Must be \"FEATURES\", \"COMPOUNDS\", \"NPC_CLASSES\", \"CLASSYFIRE_CLASSES\".", sep = ""))
         }
         self$`quantType` <- this_object$`quantType`
       }
@@ -223,8 +223,8 @@ FoldChange <- R6::R6Class(
         stop(paste("Error! \"", this_object$`quantification`, "\" cannot be assigned to `quantification`. Must be \"APEX_INTENSITY\", \"AREA_UNDER_CURVE\".", sep = ""))
       }
       self$`quantification` <- this_object$`quantification`
-      if (!is.null(this_object$`quantType`) && !(this_object$`quantType` %in% c("FEATURES", "COMPOUNDS"))) {
-        stop(paste("Error! \"", this_object$`quantType`, "\" cannot be assigned to `quantType`. Must be \"FEATURES\", \"COMPOUNDS\".", sep = ""))
+      if (!is.null(this_object$`quantType`) && !(this_object$`quantType` %in% c("FEATURES", "COMPOUNDS", "NPC_CLASSES", "CLASSYFIRE_CLASSES"))) {
+        stop(paste("Error! \"", this_object$`quantType`, "\" cannot be assigned to `quantType`. Must be \"FEATURES\", \"COMPOUNDS\", \"NPC_CLASSES\", \"CLASSYFIRE_CLASSES\".", sep = ""))
       }
       self$`quantType` <- this_object$`quantType`
       self$`objectId` <- this_object$`objectId`
