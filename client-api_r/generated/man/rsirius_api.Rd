@@ -33,6 +33,8 @@ Do not edit the class manually.
 
 \item{\code{actuator_api}}{an instance of ActuatorApi}
 
+\item{\code{classy_fire_class_statistics_api}}{an instance of ClassyFireClassStatisticsApi}
+
 \item{\code{compound_statistics_api}}{an instance of CompoundStatisticsApi}
 
 \item{\code{compounds_api}}{an instance of CompoundsApi}
@@ -48,6 +50,8 @@ Do not edit the class manually.
 \item{\code{jobs_api}}{an instance of JobsApi}
 
 \item{\code{login_and_account_api}}{an instance of LoginAndAccountApi}
+
+\item{\code{npc_class_statistics_api}}{an instance of NPCClassStatisticsApi}
 
 \item{\code{projects_api}}{an instance of ProjectsApi}
 

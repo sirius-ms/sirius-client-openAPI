@@ -49,6 +49,10 @@ df
 \item{\code{columnRightGroups}}{list(character) [optional]}
 
 \item{\code{values}}{list(list(numeric)) [optional]}
+
+\item{\code{rowNames}}{list(character) [optional]}
+
+\item{\code{rowLevels}}{list(character) [optional]}
 }
 \if{html}{\out{</div>}}
 }
@@ -86,6 +90,8 @@ Initialize a new StatisticsTable class.
   columnLeftGroups = NULL,
   columnRightGroups = NULL,
   values = NULL,
+  rowNames = NULL,
+  rowLevels = NULL,
   ...
 )}\if{html}{\out{</div>}}
 }
@@ -110,6 +116,10 @@ Initialize a new StatisticsTable class.
 \item{\code{columnRightGroups}}{columnRightGroups}
 
 \item{\code{values}}{values}
+
+\item{\code{rowNames}}{rowNames}
+
+\item{\code{rowLevels}}{rowLevels}
 
 \item{\code{...}}{Other optional arguments.}
 }
