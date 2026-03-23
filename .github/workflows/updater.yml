@@ -16,7 +16,7 @@ jobs:
       target_branch: ${{ steps.setup.outputs.target_branch }}
     steps:
       - name: checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v6
       - name: Call SetupBranch
         id: setup
         run: |
