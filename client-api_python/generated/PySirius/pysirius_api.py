@@ -68,6 +68,14 @@ class PySiriusAPI:
         """returns the Superclass of all models"""
         return PySirius.models
 
+    def npc_class_statistics(self):
+        """returns API endpoint of the NPCClassStatisticsApi"""
+        return PySirius.NPCClassStatisticsApi(self.api_client)
+
+    def classyfire_class_statistics(self):
+        """returns API endpoint of the ClassyFireClassStatisticsApi"""
+        return PySirius.ClassyFireClassStatisticsApi(self.api_client)
+
     def wait_for_job_completion(self, project_id, job_id, timeout_in_sec=None):
         if isinstance(project_id, ProjectInfo):
             project_id = project_id.project_id
