@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Specify the folder path
-folder_path="./client-api_r/generated/R"
+folder_path="./generated/R"
 
 # Change directory to the specified folder
 cd "$folder_path" || exit

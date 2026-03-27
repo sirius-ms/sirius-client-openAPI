@@ -18,7 +18,7 @@
 #' library(RSirius)
 #' var_request_body <- c("property_example") # array[character] | 
 #'
-#' #DEPRECATED: this endpoint is based on local file paths and will likely be replaced in future versions of this API.
+#' #[DEPRECATED] This endpoint is based on local file paths and will likely be replaced in future versions of this API.
 #' api_instance <- rsirius_api$new()
 #'
 #' # to save the result into a file, simply add the optional `data_file` parameter, e.g.
@@ -100,7 +100,7 @@
 #'
 #' library(RSirius)
 #' var_database_id <- "database_id_example" # character | database to import into
-#' var_input_files <- c(123) # array[data.frame] | files to be imported
+#' var_input_files <- c(123) # array[data.frame] | files to import into project
 #' var_buffer_size <- 1000 # integer |  (Optional)
 #' var_bio_transformer_parameters <- BioTransformerParameters$new("RULE_BASED", "BT_RULE_BASED", c(BioTransformerSequenceStep$new("PHASE_1_CYP450", 123)), "useDB_example") # BioTransformerParameters |  (Optional)
 #'
@@ -160,7 +160,7 @@ SearchableDatabasesApi <- R6::R6Class(
     },
 
     #' @description
-    #' DEPRECATED: this endpoint is based on local file paths and will likely be replaced in future versions of this API.
+    #' [DEPRECATED] This endpoint is based on local file paths and will likely be replaced in future versions of this API.
     #'
     #' @param request_body 
     #' @param data_file (optional) name of the data file to save the result
@@ -181,7 +181,7 @@ SearchableDatabasesApi <- R6::R6Class(
     },
 
     #' @description
-    #' DEPRECATED: this endpoint is based on local file paths and will likely be replaced in future versions of this API.
+    #' [DEPRECATED] This endpoint is based on local file paths and will likely be replaced in future versions of this API.
     #'
     #' @param request_body 
     #' @param data_file (optional) name of the data file to save the result
@@ -913,7 +913,7 @@ SearchableDatabasesApi <- R6::R6Class(
     #' Start import of structure and spectra files into the specified database.
     #'
     #' @param database_id database to import into
-    #' @param input_files files to be imported
+    #' @param input_files files to import into project
     #' @param buffer_size (optional) No description (default value: 1000)
     #' @param bio_transformer_parameters (optional) No description
     #' @param data_file (optional) name of the data file to save the result
@@ -937,7 +937,7 @@ SearchableDatabasesApi <- R6::R6Class(
     #' Start import of structure and spectra files into the specified database.
     #'
     #' @param database_id database to import into
-    #' @param input_files files to be imported
+    #' @param input_files files to import into project
     #' @param buffer_size (optional) No description (default value: 1000)
     #' @param bio_transformer_parameters (optional) No description
     #' @param data_file (optional) name of the data file to save the result

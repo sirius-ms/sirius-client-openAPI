@@ -33,13 +33,11 @@ Do not edit the class manually.
 
 \item{\code{actuator_api}}{an instance of ActuatorApi}
 
-\item{\code{compound_statistics_api}}{an instance of CompoundStatisticsApi}
-
 \item{\code{compounds_api}}{an instance of CompoundsApi}
 
-\item{\code{feature_statistics_api}}{an instance of FeatureStatisticsApi}
-
 \item{\code{features_api}}{an instance of FeaturesApi}
+
+\item{\code{gui_api}}{an instance of GuiApi}
 
 \item{\code{info_api}}{an instance of InfoApi}
 
@@ -49,11 +47,7 @@ Do not edit the class manually.
 
 \item{\code{projects_api}}{an instance of ProjectsApi}
 
-\item{\code{runs_api}}{an instance of RunsApi}
-
 \item{\code{searchable_databases_api}}{an instance of SearchableDatabasesApi}
-
-\item{\code{tags_api}}{an instance of TagsApi}
 }
 \if{html}{\out{</div>}}
 }

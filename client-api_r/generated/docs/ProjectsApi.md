@@ -362,7 +362,7 @@ library(RSirius)
 #
 # prepare function argument(s)
 var_project_id <- "project_id_example" # character | Project-space to import into.
-var_input_files <- c(123) # array[data.frame] | Files to import into project.
+var_input_files <- c(123) # array[data.frame] | files to import into project
 var_parameters <- LcmsSubmissionParameters$new("alignLCMSRuns_example", 123, Deviation$new(123, 123), Deviation$new(123, 123), 123, 123) # LcmsSubmissionParameters | 
 
 api_instance <- rsirius_api$new()
@@ -377,7 +377,7 @@ dput(result)
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **character**| Project-space to import into. | 
- **input_files** | list( **data.frame** )| Files to import into project. | 
+ **input_files** | list( **data.frame** )| files to import into project | 
  **parameters** | [**LcmsSubmissionParameters**](LcmsSubmissionParameters.md)|  | 
 
 ### Return type
@@ -413,7 +413,7 @@ library(RSirius)
 #
 # prepare function argument(s)
 var_project_id <- "project_id_example" # character | Project-space to import into.
-var_input_files <- c(123) # array[data.frame] | Files to import into project.
+var_input_files <- c(123) # array[data.frame] | files to import into project
 var_parameters <- LcmsSubmissionParameters$new("alignLCMSRuns_example", 123, Deviation$new(123, 123), Deviation$new(123, 123), 123, 123) # LcmsSubmissionParameters | 
 var_opt_fields <- c("none") # array[character] | Set of optional fields to be included. Use 'none' only to override defaults. (Optional)
 
@@ -429,7 +429,7 @@ dput(result)
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **character**| Project-space to import into. | 
- **input_files** | list( **data.frame** )| Files to import into project. | 
+ **input_files** | list( **data.frame** )| files to import into project | 
  **parameters** | [**LcmsSubmissionParameters**](LcmsSubmissionParameters.md)|  | 
  **opt_fields** | Enum [none, command, progress, affectedIds] | Set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;progress&quot;]]
 
@@ -519,7 +519,7 @@ library(RSirius)
 #
 # prepare function argument(s)
 var_project_id <- "project_id_example" # character | project-space to import into.
-var_input_files <- c(123) # array[data.frame] | 
+var_input_files <- c(123) # array[data.frame] | files to import into project
 var_ignore_formulas <- FALSE # character |  (Optional)
 var_allow_ms1_only <- TRUE # character |  (Optional)
 var_opt_fields <- c("none") # array[character] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
@@ -536,7 +536,7 @@ dput(result)
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **character**| project-space to import into. | 
- **input_files** | list( **data.frame** )|  | 
+ **input_files** | list( **data.frame** )| files to import into project | 
  **ignore_formulas** | **character**|  | [optional] [default to FALSE]
  **allow_ms1_only** | **character**|  | [optional] [default to TRUE]
  **opt_fields** | Enum [none, command, progress, affectedIds] | set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;progress&quot;]]

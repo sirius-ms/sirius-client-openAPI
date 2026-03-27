@@ -1,6 +1,6 @@
 #!/bin/bash
 
-FILE="client-api_r/generated/R/rsirius_api.R"
+FILE="generated/R/rsirius_api.R"
 
 # Remove the last 3 lines (closing braces)
 head -n -3 "$FILE" > "${FILE}.tmp"
