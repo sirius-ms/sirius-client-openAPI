@@ -125,7 +125,7 @@ dput(result)
 
 library(RSirius)
 var_project_id <- "project_id_example" # character | Project-space to import into.
-var_input_files <- c(123) # array[data.frame] | Files to import into project.
+var_input_files <- c(123) # array[data.frame] | files to import into project
 var_parameters <- LcmsSubmissionParameters$new("alignLCMSRuns_example", 123, Deviation$new(123, 123), Deviation$new(123, 123), 123, 123) # LcmsSubmissionParameters | 
 
 #Import and Align full MS-Runs from various formats into the specified project  Possible formats (mzML, mzXML)
@@ -141,7 +141,7 @@ dput(result)
 
 library(RSirius)
 var_project_id <- "project_id_example" # character | Project-space to import into.
-var_input_files <- c(123) # array[data.frame] | Files to import into project.
+var_input_files <- c(123) # array[data.frame] | files to import into project
 var_parameters <- LcmsSubmissionParameters$new("alignLCMSRuns_example", 123, Deviation$new(123, 123), Deviation$new(123, 123), 123, 123) # LcmsSubmissionParameters | 
 var_opt_fields <- c("none") # array[character] | Set of optional fields to be included. Use 'none' only to override defaults. (Optional)
 
@@ -175,7 +175,7 @@ dput(result)
 
 library(RSirius)
 var_project_id <- "project_id_example" # character | project-space to import into.
-var_input_files <- c(123) # array[data.frame] | 
+var_input_files <- c(123) # array[data.frame] | files to import into project
 var_ignore_formulas <- FALSE # character |  (Optional)
 var_allow_ms1_only <- TRUE # character |  (Optional)
 var_opt_fields <- c("none") # array[character] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
@@ -675,7 +675,7 @@ Import and Align full MS-Runs from various formats into the specified project  P
 \describe{
 \item{\code{project_id}}{Project-space to import into.}
 
-\item{\code{input_files}}{Files to import into project.}
+\item{\code{input_files}}{files to import into project}
 
 \item{\code{parameters}}{}
 
@@ -709,7 +709,7 @@ Import and Align full MS-Runs from various formats into the specified project  P
 \describe{
 \item{\code{project_id}}{Project-space to import into.}
 
-\item{\code{input_files}}{Files to import into project.}
+\item{\code{input_files}}{files to import into project}
 
 \item{\code{parameters}}{}
 
@@ -744,7 +744,7 @@ Import and Align full MS-Runs from various formats into the specified project as
 \describe{
 \item{\code{project_id}}{Project-space to import into.}
 
-\item{\code{input_files}}{Files to import into project.}
+\item{\code{input_files}}{files to import into project}
 
 \item{\code{parameters}}{}
 
@@ -781,7 +781,7 @@ Import and Align full MS-Runs from various formats into the specified project as
 \describe{
 \item{\code{project_id}}{Project-space to import into.}
 
-\item{\code{input_files}}{Files to import into project.}
+\item{\code{input_files}}{files to import into project}
 
 \item{\code{parameters}}{}
 
@@ -893,7 +893,7 @@ Import ms/ms data from the given format into the specified project-space as back
 \describe{
 \item{\code{project_id}}{project-space to import into.}
 
-\item{\code{input_files}}{}
+\item{\code{input_files}}{files to import into project}
 
 \item{\code{ignore_formulas}}{(optional) No description (default value: FALSE)}
 
@@ -933,7 +933,7 @@ Import ms/ms data from the given format into the specified project-space as back
 \describe{
 \item{\code{project_id}}{project-space to import into.}
 
-\item{\code{input_files}}{}
+\item{\code{input_files}}{files to import into project}
 
 \item{\code{ignore_formulas}}{(optional) No description (default value: FALSE)}
 

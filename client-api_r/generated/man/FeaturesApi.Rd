@@ -37,38 +37,6 @@ result <- api_instance$features_api$AddAlignedFeatures(var_project_id, var_featu
 dput(result)
 
 
-####################  AddDeNovoStructureCandidate  ####################
-
-library(RSirius)
-var_project_id <- "project_id_example" # character | project-space to read from.
-var_aligned_feature_id <- "aligned_feature_id_example" # character | feature (aligned over runs) the structure candidates belong to.
-var_smiles <- "none" # character | smiles (Optional)
-
-#[EXPERIMENTAL] Add molecular structures (as SMILES) to the list of de novo structures.
-api_instance <- rsirius_api$new()
-
-# to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$AddDeNovoStructureCandidate(var_project_id, var_aligned_feature_id, smiles = var_smilesdata_file = "result.txt")
-result <- api_instance$features_api$AddDeNovoStructureCandidate(var_project_id, var_aligned_feature_id, smiles = var_smiles)
-dput(result)
-
-
-####################  AddTagsToAlignedFeatureExperimental  ####################
-
-library(RSirius)
-var_project_id <- "project_id_example" # character | project-space to add to.
-var_aligned_feature_id <- "aligned_feature_id_example" # character | run to add tags to.
-var_tag <- c(Tag$new("tagName_example", 123)) # array[Tag] | tags to add.
-
-#[EXPERIMENTAL] Add tags to a feature (aligned over runs) in the project
-api_instance <- rsirius_api$new()
-
-# to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$AddTagsToAlignedFeatureExperimental(var_project_id, var_aligned_feature_id, var_tagdata_file = "result.txt")
-result <- api_instance$features_api$AddTagsToAlignedFeatureExperimental(var_project_id, var_aligned_feature_id, var_tag)
-dput(result)
-
-
 ####################  DeleteAlignedFeature  ####################
 
 library(RSirius)
@@ -93,21 +61,6 @@ api_instance <- rsirius_api$new()
 api_instance$features_api$DeleteAlignedFeatures(var_project_id, var_request_body)
 
 
-####################  GetAdductNetworkWithMergedTracesExperimental  ####################
-
-library(RSirius)
-var_project_id <- "project_id_example" # character | project-space to read from.
-var_aligned_feature_id <- "aligned_feature_id_example" # character | one feature that is considered the main feature of the adduct network
-
-#[EXPERIMENTAL] Returns the adduct network for a given alignedFeatureId together with all merged traces contained in the network
-api_instance <- rsirius_api$new()
-
-# to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$GetAdductNetworkWithMergedTracesExperimental(var_project_id, var_aligned_feature_iddata_file = "result.txt")
-result <- api_instance$features_api$GetAdductNetworkWithMergedTracesExperimental(var_project_id, var_aligned_feature_id)
-dput(result)
-
-
 ####################  GetAlignedFeature  ####################
 
 library(RSirius)
@@ -125,21 +78,6 @@ result <- api_instance$features_api$GetAlignedFeature(var_project_id, var_aligne
 dput(result)
 
 
-####################  GetAlignedFeatureQualityExperimental  ####################
-
-library(RSirius)
-var_project_id <- "project_id_example" # character | project-space to read from.
-var_aligned_feature_id <- "aligned_feature_id_example" # character | identifier of feature (aligned over runs) to access.
-
-#[EXPERIMENTAL] Returns data quality information for given feature (alignedFeatureId)  
-api_instance <- rsirius_api$new()
-
-# to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$GetAlignedFeatureQualityExperimental(var_project_id, var_aligned_feature_iddata_file = "result.txt")
-result <- api_instance$features_api$GetAlignedFeatureQualityExperimental(var_project_id, var_aligned_feature_id)
-dput(result)
-
-
 ####################  GetAlignedFeatures  ####################
 
 library(RSirius)
@@ -153,44 +91,6 @@ api_instance <- rsirius_api$new()
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
 # result <- api_instance$GetAlignedFeatures(var_project_id, ms_data_search_prepared = var_ms_data_search_prepared, opt_fields = var_opt_fieldsdata_file = "result.txt")
 result <- api_instance$features_api$GetAlignedFeatures(var_project_id, ms_data_search_prepared = var_ms_data_search_prepared, opt_fields = var_opt_fields)
-dput(result)
-
-
-####################  GetAlignedFeaturesByGroupExperimental  ####################
-
-library(RSirius)
-var_project_id <- "project_id_example" # character | project-space to delete from.
-var_group_name <- "group_name_example" # character | tag group name.
-var_page <- 0 # integer | Zero-based page index (0..N) (Optional)
-var_size <- 20 # integer | The size of the page to be returned (Optional)
-var_sort <- c("inner_example") # array[character] | Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (Optional)
-var_opt_fields <- c("none") # array[character] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
-
-#[EXPERIMENTAL] Get features (aligned over runs) by tag group
-api_instance <- rsirius_api$new()
-
-# to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$GetAlignedFeaturesByGroupExperimental(var_project_id, var_group_name, page = var_page, size = var_size, sort = var_sort, opt_fields = var_opt_fieldsdata_file = "result.txt")
-result <- api_instance$features_api$GetAlignedFeaturesByGroupExperimental(var_project_id, var_group_name, page = var_page, size = var_size, sort = var_sort, opt_fields = var_opt_fields)
-dput(result)
-
-
-####################  GetAlignedFeaturesByTagExperimental  ####################
-
-library(RSirius)
-var_project_id <- "project_id_example" # character | project space to get features (aligned over runs) from.
-var_filter <- "" # character | tag filter. (Optional)
-var_page <- 0 # integer | Zero-based page index (0..N) (Optional)
-var_size <- 20 # integer | The size of the page to be returned (Optional)
-var_sort <- c("inner_example") # array[character] | Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. (Optional)
-var_opt_fields <- c("none") # array[character] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
-
-#[EXPERIMENTAL] Get features (aligned over runs) by tag
-api_instance <- rsirius_api$new()
-
-# to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$GetAlignedFeaturesByTagExperimental(var_project_id, filter = var_filter, page = var_page, size = var_size, sort = var_sort, opt_fields = var_opt_fieldsdata_file = "result.txt")
-result <- api_instance$features_api$GetAlignedFeaturesByTagExperimental(var_project_id, filter = var_filter, page = var_page, size = var_size, sort = var_sort, opt_fields = var_opt_fields)
 dput(result)
 
 
@@ -242,22 +142,6 @@ api_instance <- rsirius_api$new()
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
 # result <- api_instance$GetCanopusPrediction(var_project_id, var_aligned_feature_id, var_formula_iddata_file = "result.txt")
 result <- api_instance$features_api$GetCanopusPrediction(var_project_id, var_aligned_feature_id, var_formula_id)
-dput(result)
-
-
-####################  GetDeNovoStructureCandidates  ####################
-
-library(RSirius)
-var_project_id <- "project_id_example" # character | project-space to read from.
-var_aligned_feature_id <- "aligned_feature_id_example" # character | feature (aligned over runs) the structure candidates belong to.
-var_opt_fields <- c("none") # array[character] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
-
-#List of de novo structure candidates (e.g. generated by MsNovelist) ranked by CSI:FingerID score for the given 'alignedFeatureId' with minimal information.  StructureCandidates can be enriched with molecular fingerprint.
-api_instance <- rsirius_api$new()
-
-# to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$GetDeNovoStructureCandidates(var_project_id, var_aligned_feature_id, opt_fields = var_opt_fieldsdata_file = "result.txt")
-result <- api_instance$features_api$GetDeNovoStructureCandidates(var_project_id, var_aligned_feature_id, opt_fields = var_opt_fields)
 dput(result)
 
 
@@ -314,21 +198,6 @@ api_instance <- rsirius_api$new()
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
 # result <- api_instance$GetDeNovoStructureCandidatesPaged(var_project_id, var_aligned_feature_id, page = var_page, size = var_size, sort = var_sort, opt_fields = var_opt_fieldsdata_file = "result.txt")
 result <- api_instance$features_api$GetDeNovoStructureCandidatesPaged(var_project_id, var_aligned_feature_id, page = var_page, size = var_size, sort = var_sort, opt_fields = var_opt_fields)
-dput(result)
-
-
-####################  GetFeatureQuantTableExperimental  ####################
-
-library(RSirius)
-var_project_id <- "project_id_example" # character | project-space to read from.
-var_type <- "APEX_HEIGHT" # character | quantification type. (Optional)
-
-#[EXPERIMENTAL]  Returns the full quantification table for the given feature (alignedFeatureId)
-api_instance <- rsirius_api$new()
-
-# to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$GetFeatureQuantTableExperimental(var_project_id, type = var_typedata_file = "result.txt")
-result <- api_instance$features_api$GetFeatureQuantTableExperimental(var_project_id, type = var_type)
 dput(result)
 
 
@@ -502,22 +371,6 @@ result <- api_instance$features_api$GetMsData(var_project_id, var_aligned_featur
 dput(result)
 
 
-####################  GetQuantTableRowExperimental  ####################
-
-library(RSirius)
-var_project_id <- "project_id_example" # character | project-space to read from.
-var_aligned_feature_id <- "aligned_feature_id_example" # character | feature which quantity should be read out
-var_type <- "APEX_HEIGHT" # character | quantification type. Currently, only APEX_HEIGHT is supported, which is the intensity of the feature at its apex. (Optional)
-
-#[EXPERIMENTAL] Returns a single quantification table row for the given feature (alignedFeatureId)
-api_instance <- rsirius_api$new()
-
-# to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$GetQuantTableRowExperimental(var_project_id, var_aligned_feature_id, type = var_typedata_file = "result.txt")
-result <- api_instance$features_api$GetQuantTableRowExperimental(var_project_id, var_aligned_feature_id, type = var_type)
-dput(result)
-
-
 ####################  GetSpectralLibraryMatch  ####################
 
 library(RSirius)
@@ -594,59 +447,6 @@ result <- api_instance$features_api$GetSpectralLibraryMatchesSummary(var_project
 dput(result)
 
 
-####################  GetStructureAnnotatedMsDataExperimental  ####################
-
-library(RSirius)
-var_project_id <- "project_id_example" # character | project-space to read from.
-var_aligned_feature_id <- "aligned_feature_id_example" # character | feature (aligned over runs) the formula result belongs to.
-var_formula_id <- "formula_id_example" # character | identifier of the requested formula result
-var_inchi_key <- "inchi_key_example" # character | 2d InChIKey of the structure candidate to be used to annotate the spectrum annotation
-var_ms_data_search_prepared <- FALSE # character | Returns all fragment spectra in a preprocessed form as used for fast                          Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                          peak assignments and reference spectra. (Optional)
-
-#[EXPERIMENTAL] Returns MS/MS Data annotated with fragments and losses for given formulaId and inChIKey
-api_instance <- rsirius_api$new()
-
-# to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$GetStructureAnnotatedMsDataExperimental(var_project_id, var_aligned_feature_id, var_formula_id, var_inchi_key, ms_data_search_prepared = var_ms_data_search_prepareddata_file = "result.txt")
-result <- api_instance$features_api$GetStructureAnnotatedMsDataExperimental(var_project_id, var_aligned_feature_id, var_formula_id, var_inchi_key, ms_data_search_prepared = var_ms_data_search_prepared)
-dput(result)
-
-
-####################  GetStructureAnnotatedSpectralLibraryMatchExperimental  ####################
-
-library(RSirius)
-var_project_id <- "project_id_example" # character | project-space to read from.
-var_aligned_feature_id <- "aligned_feature_id_example" # character | feature (aligned over runs) the structure candidates belong to.
-var_match_id <- "match_id_example" # character | id of the library match to be returned.
-
-#[EXPERIMENTAL] Spectral library match for the given 'alignedFeatureId' with additional molecular formula and substructure annotations
-api_instance <- rsirius_api$new()
-
-# to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$GetStructureAnnotatedSpectralLibraryMatchExperimental(var_project_id, var_aligned_feature_id, var_match_iddata_file = "result.txt")
-result <- api_instance$features_api$GetStructureAnnotatedSpectralLibraryMatchExperimental(var_project_id, var_aligned_feature_id, var_match_id)
-dput(result)
-
-
-####################  GetStructureAnnotatedSpectrumExperimental  ####################
-
-library(RSirius)
-var_project_id <- "project_id_example" # character | project-space to read from.
-var_aligned_feature_id <- "aligned_feature_id_example" # character | feature (aligned over runs) the formula result belongs to.
-var_formula_id <- "formula_id_example" # character | identifier of the requested formula result
-var_inchi_key <- "inchi_key_example" # character | 2d InChIKey of the structure candidate to be used to annotate the spectrum annotation
-var_spectrum_index <- -1 # integer | index of the spectrum to be annotated. Merged MS/MS will be used if spectrumIndex < 0 (default) (Optional)
-var_search_prepared <- FALSE # character |  (Optional)
-
-#[EXPERIMENTAL] Returns a fragmentation spectrum annotated with fragments and losses for the given formulaId and inChIKey  
-api_instance <- rsirius_api$new()
-
-# to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$GetStructureAnnotatedSpectrumExperimental(var_project_id, var_aligned_feature_id, var_formula_id, var_inchi_key, spectrum_index = var_spectrum_index, search_prepared = var_search_prepareddata_file = "result.txt")
-result <- api_instance$features_api$GetStructureAnnotatedSpectrumExperimental(var_project_id, var_aligned_feature_id, var_formula_id, var_inchi_key, spectrum_index = var_spectrum_index, search_prepared = var_search_prepared)
-dput(result)
-
-
 ####################  GetStructureCandidates  ####################
 
 library(RSirius)
@@ -719,50 +519,6 @@ result <- api_instance$features_api$GetStructureCandidatesPaged(var_project_id, 
 dput(result)
 
 
-####################  GetTagsForAlignedFeaturesExperimental  ####################
-
-library(RSirius)
-var_project_id <- "project_id_example" # character | project-space to get from.
-var_object_id <- "object_id_example" # character | object to get tags for.
-
-#[EXPERIMENTAL] Get all tags associated with this Object
-api_instance <- rsirius_api$new()
-
-# to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$GetTagsForAlignedFeaturesExperimental(var_project_id, var_object_iddata_file = "result.txt")
-result <- api_instance$features_api$GetTagsForAlignedFeaturesExperimental(var_project_id, var_object_id)
-dput(result)
-
-
-####################  GetTracesExperimental  ####################
-
-library(RSirius)
-var_project_id <- "project_id_example" # character | project-space to read from.
-var_aligned_feature_id <- "aligned_feature_id_example" # character | feature which intensities should be read out
-var_include_all <- FALSE # character | when true, return all samples that belong to the same merged trace. when false, only return samples which contain the aligned feature. (Optional)
-
-#[EXPERIMENTAL] Returns the traces of the given feature (alignedFeatureId)
-api_instance <- rsirius_api$new()
-
-# to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$GetTracesExperimental(var_project_id, var_aligned_feature_id, include_all = var_include_alldata_file = "result.txt")
-result <- api_instance$features_api$GetTracesExperimental(var_project_id, var_aligned_feature_id, include_all = var_include_all)
-dput(result)
-
-
-####################  RemoveTagFromAlignedFeatureExperimental  ####################
-
-library(RSirius)
-var_project_id <- "project_id_example" # character | project-space to delete from.
-var_aligned_feature_id <- "aligned_feature_id_example" # character | feature (aligned over runs) to delete tag from.
-var_tag_name <- "tag_name_example" # character | name of the tag to delete.
-
-#[EXPERIMENTAL] Delete tag with the given name from the feature (aligned over runs) with the specified ID in the specified project-space
-api_instance <- rsirius_api$new()
-
-api_instance$features_api$RemoveTagFromAlignedFeatureExperimental(var_project_id, var_aligned_feature_id, var_tag_name)
-
-
 }
 }
 \section{Public fields}{
@@ -778,42 +534,26 @@ api_instance$features_api$RemoveTagFromAlignedFeatureExperimental(var_project_id
 \item \href{#method-FeaturesApi-new}{\code{FeaturesApi$new()}}
 \item \href{#method-FeaturesApi-AddAlignedFeatures}{\code{FeaturesApi$AddAlignedFeatures()}}
 \item \href{#method-FeaturesApi-AddAlignedFeaturesWithHttpInfo}{\code{FeaturesApi$AddAlignedFeaturesWithHttpInfo()}}
-\item \href{#method-FeaturesApi-AddDeNovoStructureCandidate}{\code{FeaturesApi$AddDeNovoStructureCandidate()}}
-\item \href{#method-FeaturesApi-AddDeNovoStructureCandidateWithHttpInfo}{\code{FeaturesApi$AddDeNovoStructureCandidateWithHttpInfo()}}
-\item \href{#method-FeaturesApi-AddTagsToAlignedFeatureExperimental}{\code{FeaturesApi$AddTagsToAlignedFeatureExperimental()}}
-\item \href{#method-FeaturesApi-AddTagsToAlignedFeatureExperimentalWithHttpInfo}{\code{FeaturesApi$AddTagsToAlignedFeatureExperimentalWithHttpInfo()}}
 \item \href{#method-FeaturesApi-DeleteAlignedFeature}{\code{FeaturesApi$DeleteAlignedFeature()}}
 \item \href{#method-FeaturesApi-DeleteAlignedFeatureWithHttpInfo}{\code{FeaturesApi$DeleteAlignedFeatureWithHttpInfo()}}
 \item \href{#method-FeaturesApi-DeleteAlignedFeatures}{\code{FeaturesApi$DeleteAlignedFeatures()}}
 \item \href{#method-FeaturesApi-DeleteAlignedFeaturesWithHttpInfo}{\code{FeaturesApi$DeleteAlignedFeaturesWithHttpInfo()}}
-\item \href{#method-FeaturesApi-GetAdductNetworkWithMergedTracesExperimental}{\code{FeaturesApi$GetAdductNetworkWithMergedTracesExperimental()}}
-\item \href{#method-FeaturesApi-GetAdductNetworkWithMergedTracesExperimentalWithHttpInfo}{\code{FeaturesApi$GetAdductNetworkWithMergedTracesExperimentalWithHttpInfo()}}
 \item \href{#method-FeaturesApi-GetAlignedFeature}{\code{FeaturesApi$GetAlignedFeature()}}
 \item \href{#method-FeaturesApi-GetAlignedFeatureWithHttpInfo}{\code{FeaturesApi$GetAlignedFeatureWithHttpInfo()}}
-\item \href{#method-FeaturesApi-GetAlignedFeatureQualityExperimental}{\code{FeaturesApi$GetAlignedFeatureQualityExperimental()}}
-\item \href{#method-FeaturesApi-GetAlignedFeatureQualityExperimentalWithHttpInfo}{\code{FeaturesApi$GetAlignedFeatureQualityExperimentalWithHttpInfo()}}
 \item \href{#method-FeaturesApi-GetAlignedFeatures}{\code{FeaturesApi$GetAlignedFeatures()}}
 \item \href{#method-FeaturesApi-GetAlignedFeaturesWithHttpInfo}{\code{FeaturesApi$GetAlignedFeaturesWithHttpInfo()}}
-\item \href{#method-FeaturesApi-GetAlignedFeaturesByGroupExperimental}{\code{FeaturesApi$GetAlignedFeaturesByGroupExperimental()}}
-\item \href{#method-FeaturesApi-GetAlignedFeaturesByGroupExperimentalWithHttpInfo}{\code{FeaturesApi$GetAlignedFeaturesByGroupExperimentalWithHttpInfo()}}
-\item \href{#method-FeaturesApi-GetAlignedFeaturesByTagExperimental}{\code{FeaturesApi$GetAlignedFeaturesByTagExperimental()}}
-\item \href{#method-FeaturesApi-GetAlignedFeaturesByTagExperimentalWithHttpInfo}{\code{FeaturesApi$GetAlignedFeaturesByTagExperimentalWithHttpInfo()}}
 \item \href{#method-FeaturesApi-GetAlignedFeaturesPaged}{\code{FeaturesApi$GetAlignedFeaturesPaged()}}
 \item \href{#method-FeaturesApi-GetAlignedFeaturesPagedWithHttpInfo}{\code{FeaturesApi$GetAlignedFeaturesPagedWithHttpInfo()}}
 \item \href{#method-FeaturesApi-GetBestMatchingCompoundClasses}{\code{FeaturesApi$GetBestMatchingCompoundClasses()}}
 \item \href{#method-FeaturesApi-GetBestMatchingCompoundClassesWithHttpInfo}{\code{FeaturesApi$GetBestMatchingCompoundClassesWithHttpInfo()}}
 \item \href{#method-FeaturesApi-GetCanopusPrediction}{\code{FeaturesApi$GetCanopusPrediction()}}
 \item \href{#method-FeaturesApi-GetCanopusPredictionWithHttpInfo}{\code{FeaturesApi$GetCanopusPredictionWithHttpInfo()}}
-\item \href{#method-FeaturesApi-GetDeNovoStructureCandidates}{\code{FeaturesApi$GetDeNovoStructureCandidates()}}
-\item \href{#method-FeaturesApi-GetDeNovoStructureCandidatesWithHttpInfo}{\code{FeaturesApi$GetDeNovoStructureCandidatesWithHttpInfo()}}
 \item \href{#method-FeaturesApi-GetDeNovoStructureCandidatesByFormula}{\code{FeaturesApi$GetDeNovoStructureCandidatesByFormula()}}
 \item \href{#method-FeaturesApi-GetDeNovoStructureCandidatesByFormulaWithHttpInfo}{\code{FeaturesApi$GetDeNovoStructureCandidatesByFormulaWithHttpInfo()}}
 \item \href{#method-FeaturesApi-GetDeNovoStructureCandidatesByFormulaPaged}{\code{FeaturesApi$GetDeNovoStructureCandidatesByFormulaPaged()}}
 \item \href{#method-FeaturesApi-GetDeNovoStructureCandidatesByFormulaPagedWithHttpInfo}{\code{FeaturesApi$GetDeNovoStructureCandidatesByFormulaPagedWithHttpInfo()}}
 \item \href{#method-FeaturesApi-GetDeNovoStructureCandidatesPaged}{\code{FeaturesApi$GetDeNovoStructureCandidatesPaged()}}
 \item \href{#method-FeaturesApi-GetDeNovoStructureCandidatesPagedWithHttpInfo}{\code{FeaturesApi$GetDeNovoStructureCandidatesPagedWithHttpInfo()}}
-\item \href{#method-FeaturesApi-GetFeatureQuantTableExperimental}{\code{FeaturesApi$GetFeatureQuantTableExperimental()}}
-\item \href{#method-FeaturesApi-GetFeatureQuantTableExperimentalWithHttpInfo}{\code{FeaturesApi$GetFeatureQuantTableExperimentalWithHttpInfo()}}
 \item \href{#method-FeaturesApi-GetFingerprintPrediction}{\code{FeaturesApi$GetFingerprintPrediction()}}
 \item \href{#method-FeaturesApi-GetFingerprintPredictionWithHttpInfo}{\code{FeaturesApi$GetFingerprintPredictionWithHttpInfo()}}
 \item \href{#method-FeaturesApi-GetFormulaAnnotatedMsMsData}{\code{FeaturesApi$GetFormulaAnnotatedMsMsData()}}
@@ -834,8 +574,6 @@ api_instance$features_api$RemoveTagFromAlignedFeatureExperimental(var_project_id
 \item \href{#method-FeaturesApi-GetLipidAnnotationWithHttpInfo}{\code{FeaturesApi$GetLipidAnnotationWithHttpInfo()}}
 \item \href{#method-FeaturesApi-GetMsData}{\code{FeaturesApi$GetMsData()}}
 \item \href{#method-FeaturesApi-GetMsDataWithHttpInfo}{\code{FeaturesApi$GetMsDataWithHttpInfo()}}
-\item \href{#method-FeaturesApi-GetQuantTableRowExperimental}{\code{FeaturesApi$GetQuantTableRowExperimental()}}
-\item \href{#method-FeaturesApi-GetQuantTableRowExperimentalWithHttpInfo}{\code{FeaturesApi$GetQuantTableRowExperimentalWithHttpInfo()}}
 \item \href{#method-FeaturesApi-GetSpectralLibraryMatch}{\code{FeaturesApi$GetSpectralLibraryMatch()}}
 \item \href{#method-FeaturesApi-GetSpectralLibraryMatchWithHttpInfo}{\code{FeaturesApi$GetSpectralLibraryMatchWithHttpInfo()}}
 \item \href{#method-FeaturesApi-GetSpectralLibraryMatches}{\code{FeaturesApi$GetSpectralLibraryMatches()}}
@@ -844,12 +582,6 @@ api_instance$features_api$RemoveTagFromAlignedFeatureExperimental(var_project_id
 \item \href{#method-FeaturesApi-GetSpectralLibraryMatchesPagedWithHttpInfo}{\code{FeaturesApi$GetSpectralLibraryMatchesPagedWithHttpInfo()}}
 \item \href{#method-FeaturesApi-GetSpectralLibraryMatchesSummary}{\code{FeaturesApi$GetSpectralLibraryMatchesSummary()}}
 \item \href{#method-FeaturesApi-GetSpectralLibraryMatchesSummaryWithHttpInfo}{\code{FeaturesApi$GetSpectralLibraryMatchesSummaryWithHttpInfo()}}
-\item \href{#method-FeaturesApi-GetStructureAnnotatedMsDataExperimental}{\code{FeaturesApi$GetStructureAnnotatedMsDataExperimental()}}
-\item \href{#method-FeaturesApi-GetStructureAnnotatedMsDataExperimentalWithHttpInfo}{\code{FeaturesApi$GetStructureAnnotatedMsDataExperimentalWithHttpInfo()}}
-\item \href{#method-FeaturesApi-GetStructureAnnotatedSpectralLibraryMatchExperimental}{\code{FeaturesApi$GetStructureAnnotatedSpectralLibraryMatchExperimental()}}
-\item \href{#method-FeaturesApi-GetStructureAnnotatedSpectralLibraryMatchExperimentalWithHttpInfo}{\code{FeaturesApi$GetStructureAnnotatedSpectralLibraryMatchExperimentalWithHttpInfo()}}
-\item \href{#method-FeaturesApi-GetStructureAnnotatedSpectrumExperimental}{\code{FeaturesApi$GetStructureAnnotatedSpectrumExperimental()}}
-\item \href{#method-FeaturesApi-GetStructureAnnotatedSpectrumExperimentalWithHttpInfo}{\code{FeaturesApi$GetStructureAnnotatedSpectrumExperimentalWithHttpInfo()}}
 \item \href{#method-FeaturesApi-GetStructureCandidates}{\code{FeaturesApi$GetStructureCandidates()}}
 \item \href{#method-FeaturesApi-GetStructureCandidatesWithHttpInfo}{\code{FeaturesApi$GetStructureCandidatesWithHttpInfo()}}
 \item \href{#method-FeaturesApi-GetStructureCandidatesByFormula}{\code{FeaturesApi$GetStructureCandidatesByFormula()}}
@@ -858,12 +590,6 @@ api_instance$features_api$RemoveTagFromAlignedFeatureExperimental(var_project_id
 \item \href{#method-FeaturesApi-GetStructureCandidatesByFormulaPagedWithHttpInfo}{\code{FeaturesApi$GetStructureCandidatesByFormulaPagedWithHttpInfo()}}
 \item \href{#method-FeaturesApi-GetStructureCandidatesPaged}{\code{FeaturesApi$GetStructureCandidatesPaged()}}
 \item \href{#method-FeaturesApi-GetStructureCandidatesPagedWithHttpInfo}{\code{FeaturesApi$GetStructureCandidatesPagedWithHttpInfo()}}
-\item \href{#method-FeaturesApi-GetTagsForAlignedFeaturesExperimental}{\code{FeaturesApi$GetTagsForAlignedFeaturesExperimental()}}
-\item \href{#method-FeaturesApi-GetTagsForAlignedFeaturesExperimentalWithHttpInfo}{\code{FeaturesApi$GetTagsForAlignedFeaturesExperimentalWithHttpInfo()}}
-\item \href{#method-FeaturesApi-GetTracesExperimental}{\code{FeaturesApi$GetTracesExperimental()}}
-\item \href{#method-FeaturesApi-GetTracesExperimentalWithHttpInfo}{\code{FeaturesApi$GetTracesExperimentalWithHttpInfo()}}
-\item \href{#method-FeaturesApi-RemoveTagFromAlignedFeatureExperimental}{\code{FeaturesApi$RemoveTagFromAlignedFeatureExperimental()}}
-\item \href{#method-FeaturesApi-RemoveTagFromAlignedFeatureExperimentalWithHttpInfo}{\code{FeaturesApi$RemoveTagFromAlignedFeatureExperimentalWithHttpInfo()}}
 \item \href{#method-FeaturesApi-clone}{\code{FeaturesApi$clone()}}
 }
 }
@@ -956,142 +682,6 @@ Import (aligned) features into the project.
 }
 \subsection{Returns}{
 API response (array[AlignedFeature]) with additional information such as HTTP status code, headers
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-FeaturesApi-AddDeNovoStructureCandidate"></a>}}
-\if{latex}{\out{\hypertarget{method-FeaturesApi-AddDeNovoStructureCandidate}{}}}
-\subsection{Method \code{AddDeNovoStructureCandidate()}}{
-[EXPERIMENTAL] Add molecular structures (as SMILES) to the list of de novo structures.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FeaturesApi$AddDeNovoStructureCandidate(
-  project_id,
-  aligned_feature_id,
-  smiles = "none",
-  data_file = NULL,
-  ...
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{project_id}}{project-space to read from.}
-
-\item{\code{aligned_feature_id}}{feature (aligned over runs) the structure candidates belong to.}
-
-\item{\code{smiles}}{(optional) smiles (default value: "none")}
-
-\item{\code{data_file}}{(optional) name of the data file to save the result}
-
-\item{\code{...}}{Other optional arguments}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-array[StructureCandidateFormula]
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-FeaturesApi-AddDeNovoStructureCandidateWithHttpInfo"></a>}}
-\if{latex}{\out{\hypertarget{method-FeaturesApi-AddDeNovoStructureCandidateWithHttpInfo}{}}}
-\subsection{Method \code{AddDeNovoStructureCandidateWithHttpInfo()}}{
-[EXPERIMENTAL] Add molecular structures (as SMILES) to the list of de novo structures.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FeaturesApi$AddDeNovoStructureCandidateWithHttpInfo(
-  project_id,
-  aligned_feature_id,
-  smiles = "none",
-  data_file = NULL,
-  ...
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{project_id}}{project-space to read from.}
-
-\item{\code{aligned_feature_id}}{feature (aligned over runs) the structure candidates belong to.}
-
-\item{\code{smiles}}{(optional) smiles (default value: "none")}
-
-\item{\code{data_file}}{(optional) name of the data file to save the result}
-
-\item{\code{...}}{Other optional arguments}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-API response (array[StructureCandidateFormula]) with additional information such as HTTP status code, headers
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-FeaturesApi-AddTagsToAlignedFeatureExperimental"></a>}}
-\if{latex}{\out{\hypertarget{method-FeaturesApi-AddTagsToAlignedFeatureExperimental}{}}}
-\subsection{Method \code{AddTagsToAlignedFeatureExperimental()}}{
-[EXPERIMENTAL] Add tags to a feature (aligned over runs) in the project
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FeaturesApi$AddTagsToAlignedFeatureExperimental(
-  project_id,
-  aligned_feature_id,
-  tag,
-  data_file = NULL,
-  ...
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{project_id}}{project-space to add to.}
-
-\item{\code{aligned_feature_id}}{run to add tags to.}
-
-\item{\code{tag}}{tags to add.}
-
-\item{\code{data_file}}{(optional) name of the data file to save the result}
-
-\item{\code{...}}{Other optional arguments}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-array[Tag]
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-FeaturesApi-AddTagsToAlignedFeatureExperimentalWithHttpInfo"></a>}}
-\if{latex}{\out{\hypertarget{method-FeaturesApi-AddTagsToAlignedFeatureExperimentalWithHttpInfo}{}}}
-\subsection{Method \code{AddTagsToAlignedFeatureExperimentalWithHttpInfo()}}{
-[EXPERIMENTAL] Add tags to a feature (aligned over runs) in the project
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FeaturesApi$AddTagsToAlignedFeatureExperimentalWithHttpInfo(
-  project_id,
-  aligned_feature_id,
-  tag,
-  data_file = NULL,
-  ...
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{project_id}}{project-space to add to.}
-
-\item{\code{aligned_feature_id}}{run to add tags to.}
-
-\item{\code{tag}}{tags to add.}
-
-\item{\code{data_file}}{(optional) name of the data file to save the result}
-
-\item{\code{...}}{Other optional arguments}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-API response (array[Tag]) with additional information such as HTTP status code, headers
 }
 }
 \if{html}{\out{<hr>}}
@@ -1195,68 +785,6 @@ API response (void) with additional information such as HTTP status code, header
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-FeaturesApi-GetAdductNetworkWithMergedTracesExperimental"></a>}}
-\if{latex}{\out{\hypertarget{method-FeaturesApi-GetAdductNetworkWithMergedTracesExperimental}{}}}
-\subsection{Method \code{GetAdductNetworkWithMergedTracesExperimental()}}{
-[EXPERIMENTAL] Returns the adduct network for a given alignedFeatureId together with all merged traces contained in the network
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FeaturesApi$GetAdductNetworkWithMergedTracesExperimental(
-  project_id,
-  aligned_feature_id,
-  data_file = NULL,
-  ...
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{project_id}}{project-space to read from.}
-
-\item{\code{aligned_feature_id}}{one feature that is considered the main feature of the adduct network}
-
-\item{\code{data_file}}{(optional) name of the data file to save the result}
-
-\item{\code{...}}{Other optional arguments}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-TraceSetExperimental
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-FeaturesApi-GetAdductNetworkWithMergedTracesExperimentalWithHttpInfo"></a>}}
-\if{latex}{\out{\hypertarget{method-FeaturesApi-GetAdductNetworkWithMergedTracesExperimentalWithHttpInfo}{}}}
-\subsection{Method \code{GetAdductNetworkWithMergedTracesExperimentalWithHttpInfo()}}{
-[EXPERIMENTAL] Returns the adduct network for a given alignedFeatureId together with all merged traces contained in the network
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FeaturesApi$GetAdductNetworkWithMergedTracesExperimentalWithHttpInfo(
-  project_id,
-  aligned_feature_id,
-  data_file = NULL,
-  ...
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{project_id}}{project-space to read from.}
-
-\item{\code{aligned_feature_id}}{one feature that is considered the main feature of the adduct network}
-
-\item{\code{data_file}}{(optional) name of the data file to save the result}
-
-\item{\code{...}}{Other optional arguments}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-API response (TraceSetExperimental) with additional information such as HTTP status code, headers
-}
-}
-\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-FeaturesApi-GetAlignedFeature"></a>}}
 \if{latex}{\out{\hypertarget{method-FeaturesApi-GetAlignedFeature}{}}}
 \subsection{Method \code{GetAlignedFeature()}}{
@@ -1331,68 +859,6 @@ API response (AlignedFeature) with additional information such as HTTP status co
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-FeaturesApi-GetAlignedFeatureQualityExperimental"></a>}}
-\if{latex}{\out{\hypertarget{method-FeaturesApi-GetAlignedFeatureQualityExperimental}{}}}
-\subsection{Method \code{GetAlignedFeatureQualityExperimental()}}{
-[EXPERIMENTAL] Returns data quality information for given feature (alignedFeatureId)
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FeaturesApi$GetAlignedFeatureQualityExperimental(
-  project_id,
-  aligned_feature_id,
-  data_file = NULL,
-  ...
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{project_id}}{project-space to read from.}
-
-\item{\code{aligned_feature_id}}{identifier of feature (aligned over runs) to access.}
-
-\item{\code{data_file}}{(optional) name of the data file to save the result}
-
-\item{\code{...}}{Other optional arguments}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-AlignedFeatureQualityExperimental
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-FeaturesApi-GetAlignedFeatureQualityExperimentalWithHttpInfo"></a>}}
-\if{latex}{\out{\hypertarget{method-FeaturesApi-GetAlignedFeatureQualityExperimentalWithHttpInfo}{}}}
-\subsection{Method \code{GetAlignedFeatureQualityExperimentalWithHttpInfo()}}{
-[EXPERIMENTAL] Returns data quality information for given feature (alignedFeatureId)
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FeaturesApi$GetAlignedFeatureQualityExperimentalWithHttpInfo(
-  project_id,
-  aligned_feature_id,
-  data_file = NULL,
-  ...
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{project_id}}{project-space to read from.}
-
-\item{\code{aligned_feature_id}}{identifier of feature (aligned over runs) to access.}
-
-\item{\code{data_file}}{(optional) name of the data file to save the result}
-
-\item{\code{...}}{Other optional arguments}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-API response (AlignedFeatureQualityExperimental) with additional information such as HTTP status code, headers
-}
-}
-\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-FeaturesApi-GetAlignedFeatures"></a>}}
 \if{latex}{\out{\hypertarget{method-FeaturesApi-GetAlignedFeatures}{}}}
 \subsection{Method \code{GetAlignedFeatures()}}{
@@ -1458,178 +924,6 @@ Get all available features (aligned over runs) in the given project-space.
 }
 \subsection{Returns}{
 API response (array[AlignedFeature]) with additional information such as HTTP status code, headers
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-FeaturesApi-GetAlignedFeaturesByGroupExperimental"></a>}}
-\if{latex}{\out{\hypertarget{method-FeaturesApi-GetAlignedFeaturesByGroupExperimental}{}}}
-\subsection{Method \code{GetAlignedFeaturesByGroupExperimental()}}{
-[EXPERIMENTAL] Get features (aligned over runs) by tag group
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FeaturesApi$GetAlignedFeaturesByGroupExperimental(
-  project_id,
-  group_name,
-  page = 0,
-  size = 20,
-  sort = NULL,
-  opt_fields = list("none"),
-  data_file = NULL,
-  ...
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{project_id}}{project-space to delete from.}
-
-\item{\code{group_name}}{tag group name.}
-
-\item{\code{page}}{(optional) Zero-based page index (0..N) (default value: 0)}
-
-\item{\code{size}}{(optional) The size of the page to be returned (default value: 20)}
-
-\item{\code{sort}}{(optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.}
-
-\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])}
-
-\item{\code{data_file}}{(optional) name of the data file to save the result}
-
-\item{\code{...}}{Other optional arguments}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-PagedModelAlignedFeature
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-FeaturesApi-GetAlignedFeaturesByGroupExperimentalWithHttpInfo"></a>}}
-\if{latex}{\out{\hypertarget{method-FeaturesApi-GetAlignedFeaturesByGroupExperimentalWithHttpInfo}{}}}
-\subsection{Method \code{GetAlignedFeaturesByGroupExperimentalWithHttpInfo()}}{
-[EXPERIMENTAL] Get features (aligned over runs) by tag group
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FeaturesApi$GetAlignedFeaturesByGroupExperimentalWithHttpInfo(
-  project_id,
-  group_name,
-  page = 0,
-  size = 20,
-  sort = NULL,
-  opt_fields = list("none"),
-  data_file = NULL,
-  ...
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{project_id}}{project-space to delete from.}
-
-\item{\code{group_name}}{tag group name.}
-
-\item{\code{page}}{(optional) Zero-based page index (0..N) (default value: 0)}
-
-\item{\code{size}}{(optional) The size of the page to be returned (default value: 20)}
-
-\item{\code{sort}}{(optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.}
-
-\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])}
-
-\item{\code{data_file}}{(optional) name of the data file to save the result}
-
-\item{\code{...}}{Other optional arguments}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-API response (PagedModelAlignedFeature) with additional information such as HTTP status code, headers
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-FeaturesApi-GetAlignedFeaturesByTagExperimental"></a>}}
-\if{latex}{\out{\hypertarget{method-FeaturesApi-GetAlignedFeaturesByTagExperimental}{}}}
-\subsection{Method \code{GetAlignedFeaturesByTagExperimental()}}{
-[EXPERIMENTAL] Get features (aligned over runs) by tag
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FeaturesApi$GetAlignedFeaturesByTagExperimental(
-  project_id,
-  filter = "",
-  page = 0,
-  size = 20,
-  sort = NULL,
-  opt_fields = list(),
-  data_file = NULL,
-  ...
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{project_id}}{project space to get features (aligned over runs) from.}
-
-\item{\code{filter}}{(optional) tag filter. (default value: "")}
-
-\item{\code{page}}{(optional) Zero-based page index (0..N) (default value: 0)}
-
-\item{\code{size}}{(optional) The size of the page to be returned (default value: 20)}
-
-\item{\code{sort}}{(optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.}
-
-\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [])}
-
-\item{\code{data_file}}{(optional) name of the data file to save the result}
-
-\item{\code{...}}{Other optional arguments}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-PagedModelAlignedFeature
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-FeaturesApi-GetAlignedFeaturesByTagExperimentalWithHttpInfo"></a>}}
-\if{latex}{\out{\hypertarget{method-FeaturesApi-GetAlignedFeaturesByTagExperimentalWithHttpInfo}{}}}
-\subsection{Method \code{GetAlignedFeaturesByTagExperimentalWithHttpInfo()}}{
-[EXPERIMENTAL] Get features (aligned over runs) by tag
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FeaturesApi$GetAlignedFeaturesByTagExperimentalWithHttpInfo(
-  project_id,
-  filter = "",
-  page = 0,
-  size = 20,
-  sort = NULL,
-  opt_fields = list(),
-  data_file = NULL,
-  ...
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{project_id}}{project space to get features (aligned over runs) from.}
-
-\item{\code{filter}}{(optional) tag filter. (default value: "")}
-
-\item{\code{page}}{(optional) Zero-based page index (0..N) (default value: 0)}
-
-\item{\code{size}}{(optional) The size of the page to be returned (default value: 20)}
-
-\item{\code{sort}}{(optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.}
-
-\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: [])}
-
-\item{\code{data_file}}{(optional) name of the data file to save the result}
-
-\item{\code{...}}{Other optional arguments}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-API response (PagedModelAlignedFeature) with additional information such as HTTP status code, headers
 }
 }
 \if{html}{\out{<hr>}}
@@ -1852,74 +1146,6 @@ All predicted compound classes (CANOPUS) from ClassyFire and NPC and their proba
 }
 \subsection{Returns}{
 API response (CanopusPrediction) with additional information such as HTTP status code, headers
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-FeaturesApi-GetDeNovoStructureCandidates"></a>}}
-\if{latex}{\out{\hypertarget{method-FeaturesApi-GetDeNovoStructureCandidates}{}}}
-\subsection{Method \code{GetDeNovoStructureCandidates()}}{
-List of de novo structure candidates (e.g. generated by MsNovelist) ranked by CSI:FingerID score for the given 'alignedFeatureId' with minimal information.  StructureCandidates can be enriched with molecular fingerprint.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FeaturesApi$GetDeNovoStructureCandidates(
-  project_id,
-  aligned_feature_id,
-  opt_fields = list("none"),
-  data_file = NULL,
-  ...
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{project_id}}{project-space to read from.}
-
-\item{\code{aligned_feature_id}}{feature (aligned over runs) the structure candidates belong to.}
-
-\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])}
-
-\item{\code{data_file}}{(optional) name of the data file to save the result}
-
-\item{\code{...}}{Other optional arguments}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-array[StructureCandidateFormula]
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-FeaturesApi-GetDeNovoStructureCandidatesWithHttpInfo"></a>}}
-\if{latex}{\out{\hypertarget{method-FeaturesApi-GetDeNovoStructureCandidatesWithHttpInfo}{}}}
-\subsection{Method \code{GetDeNovoStructureCandidatesWithHttpInfo()}}{
-List of de novo structure candidates (e.g. generated by MsNovelist) ranked by CSI:FingerID score for the given 'alignedFeatureId' with minimal information.  StructureCandidates can be enriched with molecular fingerprint.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FeaturesApi$GetDeNovoStructureCandidatesWithHttpInfo(
-  project_id,
-  aligned_feature_id,
-  opt_fields = list("none"),
-  data_file = NULL,
-  ...
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{project_id}}{project-space to read from.}
-
-\item{\code{aligned_feature_id}}{feature (aligned over runs) the structure candidates belong to.}
-
-\item{\code{opt_fields}}{(optional) set of optional fields to be included. Use 'none' only to override defaults. (default value: ["none"])}
-
-\item{\code{data_file}}{(optional) name of the data file to save the result}
-
-\item{\code{...}}{Other optional arguments}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-API response (array[StructureCandidateFormula]) with additional information such as HTTP status code, headers
 }
 }
 \if{html}{\out{<hr>}}
@@ -2172,68 +1398,6 @@ Page of de novo structure candidates (e.g. generated by MsNovelist) ranked by CS
 }
 \subsection{Returns}{
 API response (PagedModelStructureCandidateFormula) with additional information such as HTTP status code, headers
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-FeaturesApi-GetFeatureQuantTableExperimental"></a>}}
-\if{latex}{\out{\hypertarget{method-FeaturesApi-GetFeatureQuantTableExperimental}{}}}
-\subsection{Method \code{GetFeatureQuantTableExperimental()}}{
-[EXPERIMENTAL]  Returns the full quantification table for the given feature (alignedFeatureId)
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FeaturesApi$GetFeatureQuantTableExperimental(
-  project_id,
-  type = "APEX_HEIGHT",
-  data_file = NULL,
-  ...
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{project_id}}{project-space to read from.}
-
-\item{\code{type}}{(optional) quantification type. (default value: "APEX_HEIGHT")}
-
-\item{\code{data_file}}{(optional) name of the data file to save the result}
-
-\item{\code{...}}{Other optional arguments}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-QuantTableExperimental
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-FeaturesApi-GetFeatureQuantTableExperimentalWithHttpInfo"></a>}}
-\if{latex}{\out{\hypertarget{method-FeaturesApi-GetFeatureQuantTableExperimentalWithHttpInfo}{}}}
-\subsection{Method \code{GetFeatureQuantTableExperimentalWithHttpInfo()}}{
-[EXPERIMENTAL]  Returns the full quantification table for the given feature (alignedFeatureId)
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FeaturesApi$GetFeatureQuantTableExperimentalWithHttpInfo(
-  project_id,
-  type = "APEX_HEIGHT",
-  data_file = NULL,
-  ...
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{project_id}}{project-space to read from.}
-
-\item{\code{type}}{(optional) quantification type. (default value: "APEX_HEIGHT")}
-
-\item{\code{data_file}}{(optional) name of the data file to save the result}
-
-\item{\code{...}}{Other optional arguments}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-API response (QuantTableExperimental) with additional information such as HTTP status code, headers
 }
 }
 \if{html}{\out{<hr>}}
@@ -2977,74 +2141,6 @@ API response (MsData) with additional information such as HTTP status code, head
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-FeaturesApi-GetQuantTableRowExperimental"></a>}}
-\if{latex}{\out{\hypertarget{method-FeaturesApi-GetQuantTableRowExperimental}{}}}
-\subsection{Method \code{GetQuantTableRowExperimental()}}{
-[EXPERIMENTAL] Returns a single quantification table row for the given feature (alignedFeatureId)
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FeaturesApi$GetQuantTableRowExperimental(
-  project_id,
-  aligned_feature_id,
-  type = "APEX_HEIGHT",
-  data_file = NULL,
-  ...
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{project_id}}{project-space to read from.}
-
-\item{\code{aligned_feature_id}}{feature which quantity should be read out}
-
-\item{\code{type}}{(optional) quantification type. Currently, only APEX_HEIGHT is supported, which is the intensity of the feature at its apex. (default value: "APEX_HEIGHT")}
-
-\item{\code{data_file}}{(optional) name of the data file to save the result}
-
-\item{\code{...}}{Other optional arguments}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-QuantTableExperimental
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-FeaturesApi-GetQuantTableRowExperimentalWithHttpInfo"></a>}}
-\if{latex}{\out{\hypertarget{method-FeaturesApi-GetQuantTableRowExperimentalWithHttpInfo}{}}}
-\subsection{Method \code{GetQuantTableRowExperimentalWithHttpInfo()}}{
-[EXPERIMENTAL] Returns a single quantification table row for the given feature (alignedFeatureId)
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FeaturesApi$GetQuantTableRowExperimentalWithHttpInfo(
-  project_id,
-  aligned_feature_id,
-  type = "APEX_HEIGHT",
-  data_file = NULL,
-  ...
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{project_id}}{project-space to read from.}
-
-\item{\code{aligned_feature_id}}{feature which quantity should be read out}
-
-\item{\code{type}}{(optional) quantification type. Currently, only APEX_HEIGHT is supported, which is the intensity of the feature at its apex. (default value: "APEX_HEIGHT")}
-
-\item{\code{data_file}}{(optional) name of the data file to save the result}
-
-\item{\code{...}}{Other optional arguments}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-API response (QuantTableExperimental) with additional information such as HTTP status code, headers
-}
-}
-\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-FeaturesApi-GetSpectralLibraryMatch"></a>}}
 \if{latex}{\out{\hypertarget{method-FeaturesApi-GetSpectralLibraryMatch}{}}}
 \subsection{Method \code{GetSpectralLibraryMatch()}}{
@@ -3389,240 +2485,6 @@ API response (SpectralLibraryMatchSummary) with additional information such as H
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-FeaturesApi-GetStructureAnnotatedMsDataExperimental"></a>}}
-\if{latex}{\out{\hypertarget{method-FeaturesApi-GetStructureAnnotatedMsDataExperimental}{}}}
-\subsection{Method \code{GetStructureAnnotatedMsDataExperimental()}}{
-[EXPERIMENTAL] Returns MS/MS Data annotated with fragments and losses for given formulaId and inChIKey
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FeaturesApi$GetStructureAnnotatedMsDataExperimental(
-  project_id,
-  aligned_feature_id,
-  formula_id,
-  inchi_key,
-  ms_data_search_prepared = FALSE,
-  data_file = NULL,
-  ...
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{project_id}}{project-space to read from.}
-
-\item{\code{aligned_feature_id}}{feature (aligned over runs) the formula result belongs to.}
-
-\item{\code{formula_id}}{identifier of the requested formula result}
-
-\item{\code{inchi_key}}{2d InChIKey of the structure candidate to be used to annotate the spectrum annotation}
-
-\item{\code{ms_data_search_prepared}}{(optional) Returns all fragment spectra in a preprocessed form as used for fast                          Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                          peak assignments and reference spectra. (default value: FALSE)}
-
-\item{\code{data_file}}{(optional) name of the data file to save the result}
-
-\item{\code{...}}{Other optional arguments}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-AnnotatedMsMsData
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-FeaturesApi-GetStructureAnnotatedMsDataExperimentalWithHttpInfo"></a>}}
-\if{latex}{\out{\hypertarget{method-FeaturesApi-GetStructureAnnotatedMsDataExperimentalWithHttpInfo}{}}}
-\subsection{Method \code{GetStructureAnnotatedMsDataExperimentalWithHttpInfo()}}{
-[EXPERIMENTAL] Returns MS/MS Data annotated with fragments and losses for given formulaId and inChIKey
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FeaturesApi$GetStructureAnnotatedMsDataExperimentalWithHttpInfo(
-  project_id,
-  aligned_feature_id,
-  formula_id,
-  inchi_key,
-  ms_data_search_prepared = FALSE,
-  data_file = NULL,
-  ...
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{project_id}}{project-space to read from.}
-
-\item{\code{aligned_feature_id}}{feature (aligned over runs) the formula result belongs to.}
-
-\item{\code{formula_id}}{identifier of the requested formula result}
-
-\item{\code{inchi_key}}{2d InChIKey of the structure candidate to be used to annotate the spectrum annotation}
-
-\item{\code{ms_data_search_prepared}}{(optional) Returns all fragment spectra in a preprocessed form as used for fast                          Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                          peak assignments and reference spectra. (default value: FALSE)}
-
-\item{\code{data_file}}{(optional) name of the data file to save the result}
-
-\item{\code{...}}{Other optional arguments}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-API response (AnnotatedMsMsData) with additional information such as HTTP status code, headers
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-FeaturesApi-GetStructureAnnotatedSpectralLibraryMatchExperimental"></a>}}
-\if{latex}{\out{\hypertarget{method-FeaturesApi-GetStructureAnnotatedSpectralLibraryMatchExperimental}{}}}
-\subsection{Method \code{GetStructureAnnotatedSpectralLibraryMatchExperimental()}}{
-[EXPERIMENTAL] Spectral library match for the given 'alignedFeatureId' with additional molecular formula and substructure annotations
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FeaturesApi$GetStructureAnnotatedSpectralLibraryMatchExperimental(
-  project_id,
-  aligned_feature_id,
-  match_id,
-  data_file = NULL,
-  ...
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{project_id}}{project-space to read from.}
-
-\item{\code{aligned_feature_id}}{feature (aligned over runs) the structure candidates belong to.}
-
-\item{\code{match_id}}{id of the library match to be returned.}
-
-\item{\code{data_file}}{(optional) name of the data file to save the result}
-
-\item{\code{...}}{Other optional arguments}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-AnnotatedSpectrum
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-FeaturesApi-GetStructureAnnotatedSpectralLibraryMatchExperimentalWithHttpInfo"></a>}}
-\if{latex}{\out{\hypertarget{method-FeaturesApi-GetStructureAnnotatedSpectralLibraryMatchExperimentalWithHttpInfo}{}}}
-\subsection{Method \code{GetStructureAnnotatedSpectralLibraryMatchExperimentalWithHttpInfo()}}{
-[EXPERIMENTAL] Spectral library match for the given 'alignedFeatureId' with additional molecular formula and substructure annotations
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FeaturesApi$GetStructureAnnotatedSpectralLibraryMatchExperimentalWithHttpInfo(
-  project_id,
-  aligned_feature_id,
-  match_id,
-  data_file = NULL,
-  ...
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{project_id}}{project-space to read from.}
-
-\item{\code{aligned_feature_id}}{feature (aligned over runs) the structure candidates belong to.}
-
-\item{\code{match_id}}{id of the library match to be returned.}
-
-\item{\code{data_file}}{(optional) name of the data file to save the result}
-
-\item{\code{...}}{Other optional arguments}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-API response (AnnotatedSpectrum) with additional information such as HTTP status code, headers
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-FeaturesApi-GetStructureAnnotatedSpectrumExperimental"></a>}}
-\if{latex}{\out{\hypertarget{method-FeaturesApi-GetStructureAnnotatedSpectrumExperimental}{}}}
-\subsection{Method \code{GetStructureAnnotatedSpectrumExperimental()}}{
-[EXPERIMENTAL] Returns a fragmentation spectrum annotated with fragments and losses for the given formulaId and inChIKey
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FeaturesApi$GetStructureAnnotatedSpectrumExperimental(
-  project_id,
-  aligned_feature_id,
-  formula_id,
-  inchi_key,
-  spectrum_index = -1,
-  search_prepared = FALSE,
-  data_file = NULL,
-  ...
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{project_id}}{project-space to read from.}
-
-\item{\code{aligned_feature_id}}{feature (aligned over runs) the formula result belongs to.}
-
-\item{\code{formula_id}}{identifier of the requested formula result}
-
-\item{\code{inchi_key}}{2d InChIKey of the structure candidate to be used to annotate the spectrum annotation}
-
-\item{\code{spectrum_index}}{(optional) index of the spectrum to be annotated. Merged MS/MS will be used if spectrumIndex < 0 (default) (default value: -1)}
-
-\item{\code{search_prepared}}{(optional) No description (default value: FALSE)}
-
-\item{\code{data_file}}{(optional) name of the data file to save the result}
-
-\item{\code{...}}{Other optional arguments}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-AnnotatedSpectrum
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-FeaturesApi-GetStructureAnnotatedSpectrumExperimentalWithHttpInfo"></a>}}
-\if{latex}{\out{\hypertarget{method-FeaturesApi-GetStructureAnnotatedSpectrumExperimentalWithHttpInfo}{}}}
-\subsection{Method \code{GetStructureAnnotatedSpectrumExperimentalWithHttpInfo()}}{
-[EXPERIMENTAL] Returns a fragmentation spectrum annotated with fragments and losses for the given formulaId and inChIKey
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FeaturesApi$GetStructureAnnotatedSpectrumExperimentalWithHttpInfo(
-  project_id,
-  aligned_feature_id,
-  formula_id,
-  inchi_key,
-  spectrum_index = -1,
-  search_prepared = FALSE,
-  data_file = NULL,
-  ...
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{project_id}}{project-space to read from.}
-
-\item{\code{aligned_feature_id}}{feature (aligned over runs) the formula result belongs to.}
-
-\item{\code{formula_id}}{identifier of the requested formula result}
-
-\item{\code{inchi_key}}{2d InChIKey of the structure candidate to be used to annotate the spectrum annotation}
-
-\item{\code{spectrum_index}}{(optional) index of the spectrum to be annotated. Merged MS/MS will be used if spectrumIndex < 0 (default) (default value: -1)}
-
-\item{\code{search_prepared}}{(optional) No description (default value: FALSE)}
-
-\item{\code{data_file}}{(optional) name of the data file to save the result}
-
-\item{\code{...}}{Other optional arguments}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-API response (AnnotatedSpectrum) with additional information such as HTTP status code, headers
-}
-}
-\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-FeaturesApi-GetStructureCandidates"></a>}}
 \if{latex}{\out{\hypertarget{method-FeaturesApi-GetStructureCandidates}{}}}
 \subsection{Method \code{GetStructureCandidates()}}{
@@ -3940,198 +2802,6 @@ Page of structure database search candidates ranked by CSI:FingerID score for th
 }
 \subsection{Returns}{
 API response (PagedModelStructureCandidateFormula) with additional information such as HTTP status code, headers
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-FeaturesApi-GetTagsForAlignedFeaturesExperimental"></a>}}
-\if{latex}{\out{\hypertarget{method-FeaturesApi-GetTagsForAlignedFeaturesExperimental}{}}}
-\subsection{Method \code{GetTagsForAlignedFeaturesExperimental()}}{
-[EXPERIMENTAL] Get all tags associated with this Object
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FeaturesApi$GetTagsForAlignedFeaturesExperimental(
-  project_id,
-  object_id,
-  data_file = NULL,
-  ...
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{project_id}}{project-space to get from.}
-
-\item{\code{object_id}}{object to get tags for.}
-
-\item{\code{data_file}}{(optional) name of the data file to save the result}
-
-\item{\code{...}}{Other optional arguments}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-array[Tag]
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-FeaturesApi-GetTagsForAlignedFeaturesExperimentalWithHttpInfo"></a>}}
-\if{latex}{\out{\hypertarget{method-FeaturesApi-GetTagsForAlignedFeaturesExperimentalWithHttpInfo}{}}}
-\subsection{Method \code{GetTagsForAlignedFeaturesExperimentalWithHttpInfo()}}{
-[EXPERIMENTAL] Get all tags associated with this Object
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FeaturesApi$GetTagsForAlignedFeaturesExperimentalWithHttpInfo(
-  project_id,
-  object_id,
-  data_file = NULL,
-  ...
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{project_id}}{project-space to get from.}
-
-\item{\code{object_id}}{object to get tags for.}
-
-\item{\code{data_file}}{(optional) name of the data file to save the result}
-
-\item{\code{...}}{Other optional arguments}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-API response (array[Tag]) with additional information such as HTTP status code, headers
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-FeaturesApi-GetTracesExperimental"></a>}}
-\if{latex}{\out{\hypertarget{method-FeaturesApi-GetTracesExperimental}{}}}
-\subsection{Method \code{GetTracesExperimental()}}{
-[EXPERIMENTAL] Returns the traces of the given feature (alignedFeatureId)
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FeaturesApi$GetTracesExperimental(
-  project_id,
-  aligned_feature_id,
-  include_all = FALSE,
-  data_file = NULL,
-  ...
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{project_id}}{project-space to read from.}
-
-\item{\code{aligned_feature_id}}{feature which intensities should be read out}
-
-\item{\code{include_all}}{(optional) when true, return all samples that belong to the same merged trace. when false, only return samples which contain the aligned feature. (default value: FALSE)}
-
-\item{\code{data_file}}{(optional) name of the data file to save the result}
-
-\item{\code{...}}{Other optional arguments}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-TraceSetExperimental
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-FeaturesApi-GetTracesExperimentalWithHttpInfo"></a>}}
-\if{latex}{\out{\hypertarget{method-FeaturesApi-GetTracesExperimentalWithHttpInfo}{}}}
-\subsection{Method \code{GetTracesExperimentalWithHttpInfo()}}{
-[EXPERIMENTAL] Returns the traces of the given feature (alignedFeatureId)
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FeaturesApi$GetTracesExperimentalWithHttpInfo(
-  project_id,
-  aligned_feature_id,
-  include_all = FALSE,
-  data_file = NULL,
-  ...
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{project_id}}{project-space to read from.}
-
-\item{\code{aligned_feature_id}}{feature which intensities should be read out}
-
-\item{\code{include_all}}{(optional) when true, return all samples that belong to the same merged trace. when false, only return samples which contain the aligned feature. (default value: FALSE)}
-
-\item{\code{data_file}}{(optional) name of the data file to save the result}
-
-\item{\code{...}}{Other optional arguments}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-API response (TraceSetExperimental) with additional information such as HTTP status code, headers
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-FeaturesApi-RemoveTagFromAlignedFeatureExperimental"></a>}}
-\if{latex}{\out{\hypertarget{method-FeaturesApi-RemoveTagFromAlignedFeatureExperimental}{}}}
-\subsection{Method \code{RemoveTagFromAlignedFeatureExperimental()}}{
-[EXPERIMENTAL] Delete tag with the given name from the feature (aligned over runs) with the specified ID in the specified project-space
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FeaturesApi$RemoveTagFromAlignedFeatureExperimental(
-  project_id,
-  aligned_feature_id,
-  tag_name,
-  ...
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{project_id}}{project-space to delete from.}
-
-\item{\code{aligned_feature_id}}{feature (aligned over runs) to delete tag from.}
-
-\item{\code{tag_name}}{name of the tag to delete.}
-
-\item{\code{...}}{Other optional arguments}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-void
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-FeaturesApi-RemoveTagFromAlignedFeatureExperimentalWithHttpInfo"></a>}}
-\if{latex}{\out{\hypertarget{method-FeaturesApi-RemoveTagFromAlignedFeatureExperimentalWithHttpInfo}{}}}
-\subsection{Method \code{RemoveTagFromAlignedFeatureExperimentalWithHttpInfo()}}{
-[EXPERIMENTAL] Delete tag with the given name from the feature (aligned over runs) with the specified ID in the specified project-space
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FeaturesApi$RemoveTagFromAlignedFeatureExperimentalWithHttpInfo(
-  project_id,
-  aligned_feature_id,
-  tag_name,
-  ...
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{project_id}}{project-space to delete from.}
-
-\item{\code{aligned_feature_id}}{feature (aligned over runs) to delete tag from.}
-
-\item{\code{tag_name}}{name of the tag to delete.}
-
-\item{\code{...}}{Other optional arguments}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-API response (void) with additional information such as HTTP status code, headers
 }
 }
 \if{html}{\out{<hr>}}
