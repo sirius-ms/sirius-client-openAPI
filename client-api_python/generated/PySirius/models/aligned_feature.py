@@ -47,7 +47,7 @@ class AlignedFeature(BaseModel):
     top_annotations_de_novo: Optional[FeatureAnnotations] = Field(default=None, alias="topAnnotationsDeNovo")
     computing: Optional[StrictBool] = Field(default=None, description="Write lock for this feature. If the feature is locked no write operations are possible.  True if any computation is modifying this feature or its results")
     computed_tools: Optional[ComputedSubtools] = Field(default=None, alias="computedTools")
-    tags: Optional[Dict[str, Tag]] = Field(default=None, description="Key: tagName, value: tag")
+    tags: Optional[Dict[str, Optional[Tag]]] = Field(default=None, description="Key: tagName, value: tag")
     __properties: ClassVar[List[str]] = ["alignedFeatureId", "compoundId", "name", "externalFeatureId", "ionMass", "charge", "detectedAdducts", "rtStartSeconds", "rtEndSeconds", "rtApexSeconds", "quality", "hasMs1", "hasMsMs", "msData", "topAnnotations", "topAnnotationsDeNovo", "computing", "computedTools", "tags"]
 
     model_config = ConfigDict(

@@ -4,7 +4,7 @@ All URIs are relative to *http://localhost:8080*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**AddDatabases**](SearchableDatabasesApi.md#AddDatabases) | **POST** /api/databases | DEPRECATED: this endpoint is based on local file paths and will likely be replaced in future versions of this API.
+[**AddDatabases**](SearchableDatabasesApi.md#AddDatabases) | **POST** /api/databases | [DEPRECATED] This endpoint is based on local file paths and will likely be replaced in future versions of this API.
 [**CreateDatabase**](SearchableDatabasesApi.md#CreateDatabase) | **POST** /api/databases/{databaseId} | 
 [**GetCustomDatabases**](SearchableDatabasesApi.md#GetCustomDatabases) | **GET** /api/databases/custom | 
 [**GetDatabase**](SearchableDatabasesApi.md#GetDatabase) | **GET** /api/databases/{databaseId} | 
@@ -18,13 +18,13 @@ Method | HTTP request | Description
 # **AddDatabases**
 > array[SearchableDatabase] AddDatabases(request_body)
 
-DEPRECATED: this endpoint is based on local file paths and will likely be replaced in future versions of this API.
+[DEPRECATED] This endpoint is based on local file paths and will likely be replaced in future versions of this API.
 
 ### Example
 ```R
 library(RSirius)
 
-# DEPRECATED: this endpoint is based on local file paths and will likely be replaced in future versions of this API.
+# [DEPRECATED] This endpoint is based on local file paths and will likely be replaced in future versions of this API.
 #
 # prepare function argument(s)
 var_request_body <- c("property_example") # array[character] | 
@@ -298,7 +298,7 @@ library(RSirius)
 #
 # prepare function argument(s)
 var_database_id <- "database_id_example" # character | database to import into
-var_input_files <- c(123) # array[data.frame] | files to be imported
+var_input_files <- c(123) # array[data.frame] | files to import into project
 var_buffer_size <- 1000 # integer |  (Optional)
 var_bio_transformer_parameters <- BioTransformerParameters$new("RULE_BASED", "BT_RULE_BASED", c(BioTransformerSequenceStep$new("PHASE_1_CYP450", 123)), "useDB_example") # BioTransformerParameters |  (Optional)
 
@@ -314,7 +314,7 @@ dput(result)
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **database_id** | **character**| database to import into | 
- **input_files** | list( **data.frame** )| files to be imported | 
+ **input_files** | list( **data.frame** )| files to import into project | 
  **buffer_size** | **integer**|  | [optional] [default to 1000]
  **bio_transformer_parameters** | [**BioTransformerParameters**](BioTransformerParameters.md)|  | [optional] 
 
