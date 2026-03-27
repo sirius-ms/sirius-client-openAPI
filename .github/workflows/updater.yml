@@ -16,7 +16,7 @@ jobs:
       target_branch: ${{ steps.setup.outputs.target_branch }}
     steps:
       - name: checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v6
       - name: Call SetupBranch
         id: setup
         run: |
@@ -28,5 +28,50 @@ jobs:
           else
             gh workflow run SetupBranch.yml --ref ${GITHUB_REF##*/} -f target_branch=$target_branch
           fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  CleanupTempBranch:
+    needs: UpdateOnNewBranch
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v6
+      - name: Wait for NewUpdate to finish on temp branch
+        run: |
+          sleep 60
+          id=$(gh run list --workflow NewUpdate.yml --branch ${{ needs.UpdateOnNewBranch.outputs.target_branch }} --json databaseId,status \
+            --jq '.[] | select(.status=="in_progress" or .status=="queued") | .databaseId' | head -n1)
+          echo "Watching run ID: $id"
+          gh run watch $id --exit-status --interval 10
+      - name: Delete temp branch if no changes occurred
+        run: |
+          target_branch="${{ needs.UpdateOnNewBranch.outputs.target_branch }}"
+          
+          # Safety: must be a temp_ branch
+          if [[ ! "$target_branch" == temp_* ]]; then
+            echo "Not a temp_ branch, skipping deletion"
+            exit 0
+          fi
+          
+          # Safety: must have no open pull requests
+          pr_count=$(gh pr list --head "$target_branch" --json number --jq 'length')
+          if [ "$pr_count" -gt 0 ]; then
+            echo "Branch has open PRs, skipping deletion"
+            exit 0
+          fi
+          
+          # Safety: must have no commits ahead of its base
+          base_branch="${GITHUB_REF##*/}"
+          ahead=$(gh api repos/${{ github.repository }}/compare/${base_branch}...${target_branch} --jq '.ahead_by')
+          if [ "$ahead" -gt 0 ]; then
+            echo "Branch has $ahead commit(s) ahead of $base_branch, skipping deletion"
+            exit 0
+          fi
+          
+          gh api -X DELETE repos/${{ github.repository }}/git/refs/heads/$target_branch \
+            || echo "Failed to delete branch, skipping"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

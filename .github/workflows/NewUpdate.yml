@@ -18,7 +18,7 @@ jobs:
     timeout-minutes: 90
     steps:
       - name: checkout repo
-        uses: actions/checkout@v3.1.0
+        uses: actions/checkout@v6
       - name: Download latest generators
         run: |
           mkdir .updater/openapi_generator
@@ -26,7 +26,7 @@ jobs:
           wget -nv https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/7.10.0/openapi-generator-cli-7.10.0.jar -O openapi-generator-cli-7.10.jar
           wget -nv https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/7.16.0/openapi-generator-cli-7.16.0.jar -O openapi-generator-cli-7.16.jar
       - name: Download SIRIUS Release
-        uses: nick-fields/retry@v2
+        uses: nick-fields/retry@v4
         with:
           max_attempts: 5
           timeout_minutes: 5
@@ -144,18 +144,14 @@ jobs:
           ls ./.github/workflows
           echo "Done"
       - name: update file and push to remote
-        uses: stefanzweifel/git-auto-commit-action@v4.15.2
+        uses: stefanzweifel/git-auto-commit-action@v7
         with:
           commit_message: Auto-Updated OpenAPI Clients
       - name: Run RManualGeneration
         run: |
-          gh workflow run RManualGeneration.yml --ref ${GITHUB_REF##*/}
-          echo "dispatched workflow"
-          echo "sleeping for 30s to make sure it started"
-          sleep 30
-          id=$(gh run list --workflow RManualGeneration.yml --branch ${GITHUB_REF##*/} --json databaseId,status --jq '.[] | select(.status=="in_progress") | .databaseId')
+          id=$(gh workflow run RManualGeneration.yml --ref ${GITHUB_REF##*/} | grep -oP '(?<=runs/)\d+')
           echo "run ID of RManualGeneration is: $id"
-          gh run watch $id --exit-status --interval 3
+          gh run watch $id --exit-status --interval 10
           echo "generation done!"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -173,25 +169,18 @@ jobs:
       - name: lock pull request
         continue-on-error: true
         id: lockpull
-        uses: sudo-bot/action-pull-request-lock@v1.1.0
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          number: ${{steps.open-pr.outputs.pr_number}}
-          lock-reason: resolved
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh api -X PUT repos/${{ github.repository }}/issues/${{steps.open-pr.outputs.pr_number}}/lock \
+            -f lock_reason=resolved
       - name: Run tests if no changes occure
+        if: steps.lockpull.outcome == 'failure'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           version=$(cat .updater/api/packageVersion.txt)
           echo "Running RunTests workflow with SIRIUS version: $version"
-          gh workflow run RunTests.yml --ref ${GITHUB_REF##*/} -f sirius_version="$version"
-          echo "sleeping for 30min before temp branch removal"
-          sleep 1800
-        #      if: steps.lockpull.outcome == 'failure'
-      - name: Delete temp branches if no changes occure
-        if: steps.lockpull.outcome == 'failure'
-        uses: dawidd6/action-delete-branch@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          prefix: temp_
-          soft_fail: true
+          id=$(gh workflow run RunTests.yml --ref ${GITHUB_REF##*/} -f sirius_version="$version" | grep -oP '(?<=runs/)\d+')
+          echo "run ID of RunTests is: $id"
+          gh run watch $id --exit-status --interval 10

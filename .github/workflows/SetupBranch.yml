@@ -28,7 +28,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v6
       - name: Call NewUpdate
         run: |
           if [ -n "${{ inputs.sirius_version }}" ]; then
