@@ -1959,7 +1959,7 @@ class ProjectsApi:
     def import_ms_run_data(
         self,
         project_id: Annotated[StrictStr, Field(description="Project-space to import into.")],
-        input_files: Annotated[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]], Field(description="Files to import into project.")],
+        input_files: Annotated[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]], Field(description="files to import into project")],
         parameters: LcmsSubmissionParameters,
         _request_timeout: Union[
             None,
@@ -1980,7 +1980,7 @@ class ProjectsApi:
 
         :param project_id: Project-space to import into. (required)
         :type project_id: str
-        :param input_files: Files to import into project. (required)
+        :param input_files: files to import into project (required)
         :type input_files: List[bytearray]
         :param parameters: (required)
         :type parameters: LcmsSubmissionParameters
@@ -2034,7 +2034,7 @@ class ProjectsApi:
     def import_ms_run_data_with_http_info(
         self,
         project_id: Annotated[StrictStr, Field(description="Project-space to import into.")],
-        input_files: Annotated[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]], Field(description="Files to import into project.")],
+        input_files: Annotated[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]], Field(description="files to import into project")],
         parameters: LcmsSubmissionParameters,
         _request_timeout: Union[
             None,
@@ -2055,7 +2055,7 @@ class ProjectsApi:
 
         :param project_id: Project-space to import into. (required)
         :type project_id: str
-        :param input_files: Files to import into project. (required)
+        :param input_files: files to import into project (required)
         :type input_files: List[bytearray]
         :param parameters: (required)
         :type parameters: LcmsSubmissionParameters
@@ -2109,7 +2109,7 @@ class ProjectsApi:
     def import_ms_run_data_without_preload_content(
         self,
         project_id: Annotated[StrictStr, Field(description="Project-space to import into.")],
-        input_files: Annotated[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]], Field(description="Files to import into project.")],
+        input_files: Annotated[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]], Field(description="files to import into project")],
         parameters: LcmsSubmissionParameters,
         _request_timeout: Union[
             None,
@@ -2130,7 +2130,7 @@ class ProjectsApi:
 
         :param project_id: Project-space to import into. (required)
         :type project_id: str
-        :param input_files: Files to import into project. (required)
+        :param input_files: files to import into project (required)
         :type input_files: List[bytearray]
         :param parameters: (required)
         :type parameters: LcmsSubmissionParameters
@@ -2272,7 +2272,7 @@ class ProjectsApi:
     def import_ms_run_data_as_job(
         self,
         project_id: Annotated[StrictStr, Field(description="Project-space to import into.")],
-        input_files: Annotated[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]], Field(description="Files to import into project.")],
+        input_files: Annotated[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]], Field(description="files to import into project")],
         parameters: LcmsSubmissionParameters,
         opt_fields: Annotated[Optional[List[Optional[JobOptField]]], Field(description="Set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
@@ -2294,7 +2294,7 @@ class ProjectsApi:
 
         :param project_id: Project-space to import into. (required)
         :type project_id: str
-        :param input_files: Files to import into project. (required)
+        :param input_files: files to import into project (required)
         :type input_files: List[bytearray]
         :param parameters: (required)
         :type parameters: LcmsSubmissionParameters
@@ -2351,7 +2351,7 @@ class ProjectsApi:
     def import_ms_run_data_as_job_with_http_info(
         self,
         project_id: Annotated[StrictStr, Field(description="Project-space to import into.")],
-        input_files: Annotated[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]], Field(description="Files to import into project.")],
+        input_files: Annotated[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]], Field(description="files to import into project")],
         parameters: LcmsSubmissionParameters,
         opt_fields: Annotated[Optional[List[Optional[JobOptField]]], Field(description="Set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
@@ -2373,7 +2373,7 @@ class ProjectsApi:
 
         :param project_id: Project-space to import into. (required)
         :type project_id: str
-        :param input_files: Files to import into project. (required)
+        :param input_files: files to import into project (required)
         :type input_files: List[bytearray]
         :param parameters: (required)
         :type parameters: LcmsSubmissionParameters
@@ -2430,7 +2430,7 @@ class ProjectsApi:
     def import_ms_run_data_as_job_without_preload_content(
         self,
         project_id: Annotated[StrictStr, Field(description="Project-space to import into.")],
-        input_files: Annotated[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]], Field(description="Files to import into project.")],
+        input_files: Annotated[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]], Field(description="files to import into project")],
         parameters: LcmsSubmissionParameters,
         opt_fields: Annotated[Optional[List[Optional[JobOptField]]], Field(description="Set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
@@ -2452,7 +2452,7 @@ class ProjectsApi:
 
         :param project_id: Project-space to import into. (required)
         :type project_id: str
-        :param input_files: Files to import into project. (required)
+        :param input_files: files to import into project (required)
         :type input_files: List[bytearray]
         :param parameters: (required)
         :type parameters: LcmsSubmissionParameters
@@ -2926,7 +2926,7 @@ class ProjectsApi:
     def import_preprocessed_data_as_job(
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to import into.")],
-        input_files: List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]],
+        input_files: Annotated[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]], Field(description="files to import into project")],
         ignore_formulas: Optional[StrictBool] = None,
         allow_ms1_only: Optional[StrictBool] = None,
         opt_fields: Annotated[Optional[List[Optional[JobOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
@@ -2949,7 +2949,7 @@ class ProjectsApi:
 
         :param project_id: project-space to import into. (required)
         :type project_id: str
-        :param input_files: (required)
+        :param input_files: files to import into project (required)
         :type input_files: List[bytearray]
         :param ignore_formulas:
         :type ignore_formulas: bool
@@ -3009,7 +3009,7 @@ class ProjectsApi:
     def import_preprocessed_data_as_job_with_http_info(
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to import into.")],
-        input_files: List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]],
+        input_files: Annotated[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]], Field(description="files to import into project")],
         ignore_formulas: Optional[StrictBool] = None,
         allow_ms1_only: Optional[StrictBool] = None,
         opt_fields: Annotated[Optional[List[Optional[JobOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
@@ -3032,7 +3032,7 @@ class ProjectsApi:
 
         :param project_id: project-space to import into. (required)
         :type project_id: str
-        :param input_files: (required)
+        :param input_files: files to import into project (required)
         :type input_files: List[bytearray]
         :param ignore_formulas:
         :type ignore_formulas: bool
@@ -3092,7 +3092,7 @@ class ProjectsApi:
     def import_preprocessed_data_as_job_without_preload_content(
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to import into.")],
-        input_files: List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]],
+        input_files: Annotated[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]], Field(description="files to import into project")],
         ignore_formulas: Optional[StrictBool] = None,
         allow_ms1_only: Optional[StrictBool] = None,
         opt_fields: Annotated[Optional[List[Optional[JobOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
@@ -3115,7 +3115,7 @@ class ProjectsApi:
 
         :param project_id: project-space to import into. (required)
         :type project_id: str
-        :param input_files: (required)
+        :param input_files: files to import into project (required)
         :type input_files: List[bytearray]
         :param ignore_formulas:
         :type ignore_formulas: bool

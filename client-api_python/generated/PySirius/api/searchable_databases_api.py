@@ -56,7 +56,7 @@ class SearchableDatabasesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> List[SearchableDatabase]:
-        """(Deprecated) DEPRECATED: this endpoint is based on local file paths and will likely be replaced in future versions of this API.
+        """(Deprecated) [DEPRECATED] This endpoint is based on local file paths and will likely be replaced in future versions of this API.
 
 
         :param request_body: (required)
@@ -123,7 +123,7 @@ class SearchableDatabasesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[List[SearchableDatabase]]:
-        """(Deprecated) DEPRECATED: this endpoint is based on local file paths and will likely be replaced in future versions of this API.
+        """(Deprecated) [DEPRECATED] This endpoint is based on local file paths and will likely be replaced in future versions of this API.
 
 
         :param request_body: (required)
@@ -190,7 +190,7 @@ class SearchableDatabasesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """(Deprecated) DEPRECATED: this endpoint is based on local file paths and will likely be replaced in future versions of this API.
+        """(Deprecated) [DEPRECATED] This endpoint is based on local file paths and will likely be replaced in future versions of this API.
 
 
         :param request_body: (required)
@@ -1687,7 +1687,7 @@ class SearchableDatabasesApi:
     def import_into_database(
         self,
         database_id: Annotated[StrictStr, Field(description="database to import into")],
-        input_files: Annotated[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]], Field(description="files to be imported")],
+        input_files: Annotated[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]], Field(description="files to import into project")],
         buffer_size: Optional[StrictInt] = None,
         bio_transformer_parameters: Optional[BioTransformerParameters] = None,
         _request_timeout: Union[
@@ -1709,7 +1709,7 @@ class SearchableDatabasesApi:
 
         :param database_id: database to import into (required)
         :type database_id: str
-        :param input_files: files to be imported (required)
+        :param input_files: files to import into project (required)
         :type input_files: List[bytearray]
         :param buffer_size:
         :type buffer_size: int
@@ -1766,7 +1766,7 @@ class SearchableDatabasesApi:
     def import_into_database_with_http_info(
         self,
         database_id: Annotated[StrictStr, Field(description="database to import into")],
-        input_files: Annotated[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]], Field(description="files to be imported")],
+        input_files: Annotated[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]], Field(description="files to import into project")],
         buffer_size: Optional[StrictInt] = None,
         bio_transformer_parameters: Optional[BioTransformerParameters] = None,
         _request_timeout: Union[
@@ -1788,7 +1788,7 @@ class SearchableDatabasesApi:
 
         :param database_id: database to import into (required)
         :type database_id: str
-        :param input_files: files to be imported (required)
+        :param input_files: files to import into project (required)
         :type input_files: List[bytearray]
         :param buffer_size:
         :type buffer_size: int
@@ -1845,7 +1845,7 @@ class SearchableDatabasesApi:
     def import_into_database_without_preload_content(
         self,
         database_id: Annotated[StrictStr, Field(description="database to import into")],
-        input_files: Annotated[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]], Field(description="files to be imported")],
+        input_files: Annotated[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]], Field(description="files to import into project")],
         buffer_size: Optional[StrictInt] = None,
         bio_transformer_parameters: Optional[BioTransformerParameters] = None,
         _request_timeout: Union[
@@ -1867,7 +1867,7 @@ class SearchableDatabasesApi:
 
         :param database_id: database to import into (required)
         :type database_id: str
-        :param input_files: files to be imported (required)
+        :param input_files: files to import into project (required)
         :type input_files: List[bytearray]
         :param buffer_size:
         :type buffer_size: int

@@ -4,7 +4,7 @@ All URIs are relative to *http://localhost:8080*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**add_databases**](SearchableDatabasesApi.md#add_databases) | **POST** /api/databases | DEPRECATED: this endpoint is based on local file paths and will likely be replaced in future versions of this API.
+[**add_databases**](SearchableDatabasesApi.md#add_databases) | **POST** /api/databases | [DEPRECATED] This endpoint is based on local file paths and will likely be replaced in future versions of this API.
 [**create_database**](SearchableDatabasesApi.md#create_database) | **POST** /api/databases/{databaseId} | 
 [**get_custom_databases**](SearchableDatabasesApi.md#get_custom_databases) | **GET** /api/databases/custom | 
 [**get_database**](SearchableDatabasesApi.md#get_database) | **GET** /api/databases/{databaseId} | 
@@ -18,7 +18,7 @@ Method | HTTP request | Description
 # **add_databases**
 > List[SearchableDatabase] add_databases(request_body)
 
-DEPRECATED: this endpoint is based on local file paths and will likely be replaced in future versions of this API.
+[DEPRECATED] This endpoint is based on local file paths and will likely be replaced in future versions of this API.
 
 ### Example
 
@@ -43,7 +43,7 @@ with PySirius.ApiClient(configuration) as api_client:
     request_body = ['request_body_example'] # List[str] | 
 
     try:
-        # DEPRECATED: this endpoint is based on local file paths and will likely be replaced in future versions of this API.
+        # [DEPRECATED] This endpoint is based on local file paths and will likely be replaced in future versions of this API.
         api_response = api_instance.add_databases(request_body)
         print("The response of SearchableDatabasesApi->add_databases:\n")
         pprint(api_response)
@@ -434,7 +434,7 @@ with PySirius.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = PySirius.SearchableDatabasesApi(api_client)
     database_id = 'database_id_example' # str | database to import into
-    input_files = None # List[bytearray] | files to be imported
+    input_files = None # List[bytearray] | files to import into project
     buffer_size = 1000 # int |  (optional) (default to 1000)
     bio_transformer_parameters = PySirius.BioTransformerParameters() # BioTransformerParameters |  (optional)
 
@@ -455,7 +455,7 @@ with PySirius.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **database_id** | **str**| database to import into | 
- **input_files** | **List[bytearray]**| files to be imported | 
+ **input_files** | **List[bytearray]**| files to import into project | 
  **buffer_size** | **int**|  | [optional] [default to 1000]
  **bio_transformer_parameters** | [**BioTransformerParameters**](BioTransformerParameters.md)|  | [optional] 
 
