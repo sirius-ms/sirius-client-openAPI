@@ -37,6 +37,8 @@ jobs:
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
+      - name: checkout repo
+        uses: actions/checkout@v6
       - name: Wait for NewUpdate to finish on temp branch
         run: |
           sleep 60
@@ -71,3 +73,5 @@ jobs:
           
           gh api -X DELETE repos/${{ github.repository }}/git/refs/heads/$target_branch \
             || echo "Failed to delete branch, skipping"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
