@@ -37,7 +37,7 @@ class Compound(BaseModel):
     consensus_annotations: Optional[ConsensusAnnotationsCSI] = Field(default=None, alias="consensusAnnotations")
     consensus_annotations_de_novo: Optional[ConsensusAnnotationsDeNovo] = Field(default=None, alias="consensusAnnotationsDeNovo")
     custom_annotations: Optional[ConsensusAnnotationsCSI] = Field(default=None, alias="customAnnotations")
-    tags: Optional[Dict[str, Tag]] = Field(default=None, description="Key: tagName, value: tag")
+    tags: Optional[Dict[str, Optional[Tag]]] = Field(default=None, description="Key: tagName, value: tag")
     __properties: ClassVar[List[str]] = ["compoundId", "name", "rtStartSeconds", "rtEndSeconds", "neutralMass", "features", "consensusAnnotations", "consensusAnnotationsDeNovo", "customAnnotations", "tags"]
 
     model_config = ConfigDict(
