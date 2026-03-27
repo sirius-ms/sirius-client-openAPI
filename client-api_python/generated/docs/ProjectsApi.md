@@ -527,7 +527,7 @@ with PySirius.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = PySirius.ProjectsApi(api_client)
     project_id = 'project_id_example' # str | Project-space to import into.
-    input_files = None # List[bytearray] | Files to import into project.
+    input_files = None # List[bytearray] | files to import into project
     parameters = PySirius.LcmsSubmissionParameters() # LcmsSubmissionParameters | 
 
     try:
@@ -547,7 +547,7 @@ with PySirius.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **str**| Project-space to import into. | 
- **input_files** | **List[bytearray]**| Files to import into project. | 
+ **input_files** | **List[bytearray]**| files to import into project | 
  **parameters** | [**LcmsSubmissionParameters**](LcmsSubmissionParameters.md)|  | 
 
 ### Return type
@@ -602,7 +602,7 @@ with PySirius.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = PySirius.ProjectsApi(api_client)
     project_id = 'project_id_example' # str | Project-space to import into.
-    input_files = None # List[bytearray] | Files to import into project.
+    input_files = None # List[bytearray] | files to import into project
     parameters = PySirius.LcmsSubmissionParameters() # LcmsSubmissionParameters | 
     opt_fields = ["progress"] # List[JobOptField] | Set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to ["progress"])
 
@@ -623,7 +623,7 @@ with PySirius.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **str**| Project-space to import into. | 
- **input_files** | **List[bytearray]**| Files to import into project. | 
+ **input_files** | **List[bytearray]**| files to import into project | 
  **parameters** | [**LcmsSubmissionParameters**](LcmsSubmissionParameters.md)|  | 
  **opt_fields** | [**List[JobOptField]**](JobOptField.md)| Set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;progress&quot;]]
 
@@ -753,7 +753,7 @@ with PySirius.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = PySirius.ProjectsApi(api_client)
     project_id = 'project_id_example' # str | project-space to import into.
-    input_files = None # List[bytearray] | 
+    input_files = None # List[bytearray] | files to import into project
     ignore_formulas = False # bool |  (optional) (default to False)
     allow_ms1_only = True # bool |  (optional) (default to True)
     opt_fields = ["progress"] # List[JobOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to ["progress"])
@@ -775,7 +775,7 @@ with PySirius.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **str**| project-space to import into. | 
- **input_files** | **List[bytearray]**|  | 
+ **input_files** | **List[bytearray]**| files to import into project | 
  **ignore_formulas** | **bool**|  | [optional] [default to False]
  **allow_ms1_only** | **bool**|  | [optional] [default to True]
  **opt_fields** | [**List[JobOptField]**](JobOptField.md)| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;progress&quot;]]
