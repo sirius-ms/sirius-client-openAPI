@@ -45,6 +45,10 @@ df
 \item{\code{objectId}}{character}
 
 \item{\code{foldChange}}{numeric}
+
+\item{\code{leftAbundance}}{numeric}
+
+\item{\code{rightAbundance}}{numeric}
 }
 \if{html}{\out{</div>}}
 }
@@ -76,6 +80,8 @@ Initialize a new FoldChange class.
   quantType,
   objectId,
   foldChange,
+  leftAbundance,
+  rightAbundance,
   leftGroup = NULL,
   rightGroup = NULL,
   aggregation = NULL,
@@ -92,6 +98,10 @@ Initialize a new FoldChange class.
 \item{\code{objectId}}{objectId}
 
 \item{\code{foldChange}}{foldChange}
+
+\item{\code{leftAbundance}}{leftAbundance}
+
+\item{\code{rightAbundance}}{rightAbundance}
 
 \item{\code{leftGroup}}{leftGroup}
 

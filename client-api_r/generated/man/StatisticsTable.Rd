@@ -50,6 +50,10 @@ df
 
 \item{\code{values}}{list(list(numeric)) [optional]}
 
+\item{\code{leftAbundances}}{list(list(numeric)) [optional]}
+
+\item{\code{rightAbundances}}{list(list(numeric)) [optional]}
+
 \item{\code{rowNames}}{list(character) [optional]}
 
 \item{\code{rowLevels}}{list(character) [optional]}
@@ -90,6 +94,8 @@ Initialize a new StatisticsTable class.
   columnLeftGroups = NULL,
   columnRightGroups = NULL,
   values = NULL,
+  leftAbundances = NULL,
+  rightAbundances = NULL,
   rowNames = NULL,
   rowLevels = NULL,
   ...
@@ -116,6 +122,10 @@ Initialize a new StatisticsTable class.
 \item{\code{columnRightGroups}}{columnRightGroups}
 
 \item{\code{values}}{values}
+
+\item{\code{leftAbundances}}{leftAbundances}
+
+\item{\code{rightAbundances}}{rightAbundances}
 
 \item{\code{rowNames}}{rowNames}
 
