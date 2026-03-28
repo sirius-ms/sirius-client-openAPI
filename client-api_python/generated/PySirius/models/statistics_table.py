@@ -37,9 +37,11 @@ class StatisticsTable(BaseModel):
     column_left_groups: Optional[List[StrictStr]] = Field(default=None, alias="columnLeftGroups")
     column_right_groups: Optional[List[StrictStr]] = Field(default=None, alias="columnRightGroups")
     values: Optional[List[List[float]]] = None
+    left_abundances: Optional[List[List[float]]] = Field(default=None, alias="leftAbundances")
+    right_abundances: Optional[List[List[float]]] = Field(default=None, alias="rightAbundances")
     row_names: Optional[List[StrictStr]] = Field(default=None, alias="rowNames")
     row_levels: Optional[List[StrictStr]] = Field(default=None, alias="rowLevels")
-    __properties: ClassVar[List[str]] = ["statisticsType", "aggregationType", "quantificationMeasure", "rowType", "rowIds", "columnNames", "columnLeftGroups", "columnRightGroups", "values", "rowNames", "rowLevels"]
+    __properties: ClassVar[List[str]] = ["statisticsType", "aggregationType", "quantificationMeasure", "rowType", "rowIds", "columnNames", "columnLeftGroups", "columnRightGroups", "values", "leftAbundances", "rightAbundances", "rowNames", "rowLevels"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -101,6 +103,8 @@ class StatisticsTable(BaseModel):
             "columnLeftGroups": obj.get("columnLeftGroups"),
             "columnRightGroups": obj.get("columnRightGroups"),
             "values": obj.get("values"),
+            "leftAbundances": obj.get("leftAbundances"),
+            "rightAbundances": obj.get("rightAbundances"),
             "rowNames": obj.get("rowNames"),
             "rowLevels": obj.get("rowLevels")
         })

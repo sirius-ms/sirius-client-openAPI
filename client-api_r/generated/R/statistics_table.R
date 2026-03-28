@@ -16,6 +16,8 @@
 #' @field columnLeftGroups  list(character) [optional]
 #' @field columnRightGroups  list(character) [optional]
 #' @field values  list(list(numeric)) [optional]
+#' @field leftAbundances  list(list(numeric)) [optional]
+#' @field rightAbundances  list(list(numeric)) [optional]
 #' @field rowNames  list(character) [optional]
 #' @field rowLevels  list(character) [optional]
 #' @importFrom R6 R6Class
@@ -33,6 +35,8 @@ StatisticsTable <- R6::R6Class(
     `columnLeftGroups` = NULL,
     `columnRightGroups` = NULL,
     `values` = NULL,
+    `leftAbundances` = NULL,
+    `rightAbundances` = NULL,
     `rowNames` = NULL,
     `rowLevels` = NULL,
 
@@ -48,10 +52,12 @@ StatisticsTable <- R6::R6Class(
     #' @param columnLeftGroups columnLeftGroups
     #' @param columnRightGroups columnRightGroups
     #' @param values values
+    #' @param leftAbundances leftAbundances
+    #' @param rightAbundances rightAbundances
     #' @param rowNames rowNames
     #' @param rowLevels rowLevels
     #' @param ... Other optional arguments.
-    initialize = function(`statisticsType` = NULL, `aggregationType` = NULL, `quantificationMeasure` = NULL, `rowType` = NULL, `rowIds` = NULL, `columnNames` = NULL, `columnLeftGroups` = NULL, `columnRightGroups` = NULL, `values` = NULL, `rowNames` = NULL, `rowLevels` = NULL, ...) {
+    initialize = function(`statisticsType` = NULL, `aggregationType` = NULL, `quantificationMeasure` = NULL, `rowType` = NULL, `rowIds` = NULL, `columnNames` = NULL, `columnLeftGroups` = NULL, `columnRightGroups` = NULL, `values` = NULL, `leftAbundances` = NULL, `rightAbundances` = NULL, `rowNames` = NULL, `rowLevels` = NULL, ...) {
       if (!is.null(`statisticsType`)) {
         if (!(`statisticsType` %in% c("FOLD_CHANGE"))) {
           stop(paste("Error! \"", `statisticsType`, "\" cannot be assigned to `statisticsType`. Must be \"FOLD_CHANGE\".", sep = ""))
@@ -112,6 +118,16 @@ StatisticsTable <- R6::R6Class(
         stopifnot(is.vector(`values`), length(`values`) != 0)
         sapply(`values`, function(x) stopifnot(R6::is.R6(x)))
         self$`values` <- `values`
+      }
+      if (!is.null(`leftAbundances`)) {
+        stopifnot(is.vector(`leftAbundances`), length(`leftAbundances`) != 0)
+        sapply(`leftAbundances`, function(x) stopifnot(R6::is.R6(x)))
+        self$`leftAbundances` <- `leftAbundances`
+      }
+      if (!is.null(`rightAbundances`)) {
+        stopifnot(is.vector(`rightAbundances`), length(`rightAbundances`) != 0)
+        sapply(`rightAbundances`, function(x) stopifnot(R6::is.R6(x)))
+        self$`rightAbundances` <- `rightAbundances`
       }
       if (!is.null(`rowNames`)) {
         stopifnot(is.vector(`rowNames`), length(`rowNames`) != 0)
@@ -192,6 +208,14 @@ StatisticsTable <- R6::R6Class(
         StatisticsTableObject[["values"]] <-
           lapply(self$`values`, function(x) x$toSimpleType())
       }
+      if (!is.null(self$`leftAbundances`)) {
+        StatisticsTableObject[["leftAbundances"]] <-
+          lapply(self$`leftAbundances`, function(x) x$toSimpleType())
+      }
+      if (!is.null(self$`rightAbundances`)) {
+        StatisticsTableObject[["rightAbundances"]] <-
+          lapply(self$`rightAbundances`, function(x) x$toSimpleType())
+      }
       if (!is.null(self$`rowNames`)) {
         StatisticsTableObject[["rowNames"]] <-
           self$`rowNames`
@@ -249,6 +273,12 @@ StatisticsTable <- R6::R6Class(
       if (!is.null(this_object$`values`)) {
         self$`values` <- ApiClient$new()$deserializeObj(this_object$`values`, "array[array[numeric]]", loadNamespace("RSirius"))
       }
+      if (!is.null(this_object$`leftAbundances`)) {
+        self$`leftAbundances` <- ApiClient$new()$deserializeObj(this_object$`leftAbundances`, "array[array[numeric]]", loadNamespace("RSirius"))
+      }
+      if (!is.null(this_object$`rightAbundances`)) {
+        self$`rightAbundances` <- ApiClient$new()$deserializeObj(this_object$`rightAbundances`, "array[array[numeric]]", loadNamespace("RSirius"))
+      }
       if (!is.null(this_object$`rowNames`)) {
         self$`rowNames` <- ApiClient$new()$deserializeObj(this_object$`rowNames`, "array[character]", loadNamespace("RSirius"))
       }
@@ -297,6 +327,8 @@ StatisticsTable <- R6::R6Class(
       self$`columnLeftGroups` <- ApiClient$new()$deserializeObj(this_object$`columnLeftGroups`, "array[character]", loadNamespace("RSirius"))
       self$`columnRightGroups` <- ApiClient$new()$deserializeObj(this_object$`columnRightGroups`, "array[character]", loadNamespace("RSirius"))
       self$`values` <- ApiClient$new()$deserializeObj(this_object$`values`, "array[array[numeric]]", loadNamespace("RSirius"))
+      self$`leftAbundances` <- ApiClient$new()$deserializeObj(this_object$`leftAbundances`, "array[array[numeric]]", loadNamespace("RSirius"))
+      self$`rightAbundances` <- ApiClient$new()$deserializeObj(this_object$`rightAbundances`, "array[array[numeric]]", loadNamespace("RSirius"))
       self$`rowNames` <- ApiClient$new()$deserializeObj(this_object$`rowNames`, "array[character]", loadNamespace("RSirius"))
       self$`rowLevels` <- ApiClient$new()$deserializeObj(this_object$`rowLevels`, "array[character]", loadNamespace("RSirius"))
       self

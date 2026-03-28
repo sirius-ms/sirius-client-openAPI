@@ -11,5 +11,7 @@ Name | Type | Description | Notes
 **quantType** | **character** |  | [Enum: [FEATURES, COMPOUNDS, NPC_CLASSES, CLASSYFIRE_CLASSES]] 
 **objectId** | **character** |  | 
 **foldChange** | **numeric** |  | 
+**leftAbundance** | **numeric** |  | 
+**rightAbundance** | **numeric** |  | 
 
 

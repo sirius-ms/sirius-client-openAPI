@@ -14,6 +14,8 @@
 #' @field quantType  character
 #' @field objectId  character
 #' @field foldChange  numeric
+#' @field leftAbundance  numeric
+#' @field rightAbundance  numeric
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
 #' @export
@@ -27,6 +29,8 @@ FoldChange <- R6::R6Class(
     `quantType` = NULL,
     `objectId` = NULL,
     `foldChange` = NULL,
+    `leftAbundance` = NULL,
+    `rightAbundance` = NULL,
 
     #' @description
     #' Initialize a new FoldChange class.
@@ -34,12 +38,14 @@ FoldChange <- R6::R6Class(
     #' @param quantType quantType
     #' @param objectId objectId
     #' @param foldChange foldChange
+    #' @param leftAbundance leftAbundance
+    #' @param rightAbundance rightAbundance
     #' @param leftGroup leftGroup
     #' @param rightGroup rightGroup
     #' @param aggregation aggregation
     #' @param quantification quantification
     #' @param ... Other optional arguments.
-    initialize = function(`quantType`, `objectId`, `foldChange`, `leftGroup` = NULL, `rightGroup` = NULL, `aggregation` = NULL, `quantification` = NULL, ...) {
+    initialize = function(`quantType`, `objectId`, `foldChange`, `leftAbundance`, `rightAbundance`, `leftGroup` = NULL, `rightGroup` = NULL, `aggregation` = NULL, `quantification` = NULL, ...) {
       if (!missing(`quantType`)) {
         if (!(`quantType` %in% c("FEATURES", "COMPOUNDS", "NPC_CLASSES", "CLASSYFIRE_CLASSES"))) {
           stop(paste("Error! \"", `quantType`, "\" cannot be assigned to `quantType`. Must be \"FEATURES\", \"COMPOUNDS\", \"NPC_CLASSES\", \"CLASSYFIRE_CLASSES\".", sep = ""))
@@ -60,6 +66,18 @@ FoldChange <- R6::R6Class(
           stop(paste("Error! Invalid data for `foldChange`. Must be a number:", `foldChange`))
         }
         self$`foldChange` <- `foldChange`
+      }
+      if (!missing(`leftAbundance`)) {
+        if (!(is.numeric(`leftAbundance`) && length(`leftAbundance`) == 1)) {
+          stop(paste("Error! Invalid data for `leftAbundance`. Must be a number:", `leftAbundance`))
+        }
+        self$`leftAbundance` <- `leftAbundance`
+      }
+      if (!missing(`rightAbundance`)) {
+        if (!(is.numeric(`rightAbundance`) && length(`rightAbundance`) == 1)) {
+          stop(paste("Error! Invalid data for `rightAbundance`. Must be a number:", `rightAbundance`))
+        }
+        self$`rightAbundance` <- `rightAbundance`
       }
       if (!is.null(`leftGroup`)) {
         if (!(is.character(`leftGroup`) && length(`leftGroup`) == 1)) {
@@ -152,6 +170,14 @@ FoldChange <- R6::R6Class(
         FoldChangeObject[["foldChange"]] <-
           self$`foldChange`
       }
+      if (!is.null(self$`leftAbundance`)) {
+        FoldChangeObject[["leftAbundance"]] <-
+          self$`leftAbundance`
+      }
+      if (!is.null(self$`rightAbundance`)) {
+        FoldChangeObject[["rightAbundance"]] <-
+          self$`rightAbundance`
+      }
       return(FoldChangeObject)
     },
 
@@ -192,6 +218,12 @@ FoldChange <- R6::R6Class(
       if (!is.null(this_object$`foldChange`)) {
         self$`foldChange` <- this_object$`foldChange`
       }
+      if (!is.null(this_object$`leftAbundance`)) {
+        self$`leftAbundance` <- this_object$`leftAbundance`
+      }
+      if (!is.null(this_object$`rightAbundance`)) {
+        self$`rightAbundance` <- this_object$`rightAbundance`
+      }
       self
     },
 
@@ -229,6 +261,8 @@ FoldChange <- R6::R6Class(
       self$`quantType` <- this_object$`quantType`
       self$`objectId` <- this_object$`objectId`
       self$`foldChange` <- this_object$`foldChange`
+      self$`leftAbundance` <- this_object$`leftAbundance`
+      self$`rightAbundance` <- this_object$`rightAbundance`
       self
     },
 
@@ -262,6 +296,22 @@ FoldChange <- R6::R6Class(
       } else {
         stop(paste("The JSON input `", input, "` is invalid for FoldChange: the required field `foldChange` is missing."))
       }
+      # check the required field `leftAbundance`
+      if (!is.null(input_json$`leftAbundance`)) {
+        if (!(is.numeric(input_json$`leftAbundance`) && length(input_json$`leftAbundance`) == 1)) {
+          stop(paste("Error! Invalid data for `leftAbundance`. Must be a number:", input_json$`leftAbundance`))
+        }
+      } else {
+        stop(paste("The JSON input `", input, "` is invalid for FoldChange: the required field `leftAbundance` is missing."))
+      }
+      # check the required field `rightAbundance`
+      if (!is.null(input_json$`rightAbundance`)) {
+        if (!(is.numeric(input_json$`rightAbundance`) && length(input_json$`rightAbundance`) == 1)) {
+          stop(paste("Error! Invalid data for `rightAbundance`. Must be a number:", input_json$`rightAbundance`))
+        }
+      } else {
+        stop(paste("The JSON input `", input, "` is invalid for FoldChange: the required field `rightAbundance` is missing."))
+      }
     },
 
     #' @description
@@ -292,6 +342,16 @@ FoldChange <- R6::R6Class(
         return(FALSE)
       }
 
+      # check if the required `leftAbundance` is null
+      if (is.null(self$`leftAbundance`)) {
+        return(FALSE)
+      }
+
+      # check if the required `rightAbundance` is null
+      if (is.null(self$`rightAbundance`)) {
+        return(FALSE)
+      }
+
       TRUE
     },
 
@@ -314,6 +374,16 @@ FoldChange <- R6::R6Class(
       # check if the required `foldChange` is null
       if (is.null(self$`foldChange`)) {
         invalid_fields["foldChange"] <- "Non-nullable required field `foldChange` cannot be null."
+      }
+
+      # check if the required `leftAbundance` is null
+      if (is.null(self$`leftAbundance`)) {
+        invalid_fields["leftAbundance"] <- "Non-nullable required field `leftAbundance` cannot be null."
+      }
+
+      # check if the required `rightAbundance` is null
+      if (is.null(self$`rightAbundance`)) {
+        invalid_fields["rightAbundance"] <- "Non-nullable required field `rightAbundance` cannot be null."
       }
 
       invalid_fields

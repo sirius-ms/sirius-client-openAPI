@@ -34,7 +34,9 @@ class FoldChange(BaseModel):
     quant_type: QuantRowType = Field(alias="quantType")
     object_id: StrictStr = Field(alias="objectId")
     fold_change: float = Field(alias="foldChange")
-    __properties: ClassVar[List[str]] = ["leftGroup", "rightGroup", "aggregation", "quantification", "quantType", "objectId", "foldChange"]
+    left_abundance: float = Field(alias="leftAbundance")
+    right_abundance: float = Field(alias="rightAbundance")
+    __properties: ClassVar[List[str]] = ["leftGroup", "rightGroup", "aggregation", "quantification", "quantType", "objectId", "foldChange", "leftAbundance", "rightAbundance"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -93,7 +95,9 @@ class FoldChange(BaseModel):
             "quantification": obj.get("quantification"),
             "quantType": obj.get("quantType"),
             "objectId": obj.get("objectId"),
-            "foldChange": obj.get("foldChange")
+            "foldChange": obj.get("foldChange"),
+            "leftAbundance": obj.get("leftAbundance"),
+            "rightAbundance": obj.get("rightAbundance")
         })
         return _obj
 

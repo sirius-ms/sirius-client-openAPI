@@ -12,6 +12,8 @@ Name | Type | Description | Notes
 **quant_type** | [**QuantRowType**](QuantRowType.md) |  | 
 **object_id** | **str** |  | 
 **fold_change** | **float** |  | 
+**left_abundance** | **float** |  | 
+**right_abundance** | **float** |  | 
 
 ## Example
 

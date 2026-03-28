@@ -13,6 +13,8 @@ Name | Type | Description | Notes
 **columnLeftGroups** | **array[character]** |  | [optional] 
 **columnRightGroups** | **array[character]** |  | [optional] 
 **values** | [**array[array[numeric]]**](array.md) |  | [optional] 
+**leftAbundances** | [**array[array[numeric]]**](array.md) |  | [optional] 
+**rightAbundances** | [**array[array[numeric]]**](array.md) |  | [optional] 
 **rowNames** | **array[character]** |  | [optional] 
 **rowLevels** | **array[character]** |  | [optional] 
 
