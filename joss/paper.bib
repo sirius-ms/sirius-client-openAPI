@@ -173,15 +173,18 @@ SIRIUS 3 can be a part of an untargeted metabolomics workflow, allowing research
   timestamp = {2020.12.14},
 }
 
-@Article{stravs21msnovelist,
-  author       = {Stravs, Michael A. and D{\"u}hrkop, Kai and B{\"o}cker, Sebastian and Zamboni, Nicola},
-  journal      = {bioRxiv},
-  title        = {{MSNovelist}: De novo structure generation from mass spectra},
-  year         = {2021},
-  abstract     = {Structural elucidation of small molecules de novo from mass spectra is a longstanding, yet unsolved problem. Current methods rely on finding some similarity with spectra of known compounds deposited in spectral libraries, but do not solve the problem of predicting structures for novel or poorly represented compound classes. We present MSNovelist that combines fingerprint prediction with an encoder-decoder neural network to generate structures de novo from fragment spectra. In evaluation, MSNovelist correctly reproduced 61\% of database annotations for a GNPS reference dataset. In a bryophyte MS2 dataset, our de novo structure prediction substantially outscored the best database candidate for seven features, and a potential novel natural product with a flavonoid core was identified. MSNovelist allows predicting structures solely from MS2 data, and is therefore ideally suited to complement library-based annotation in the case of poorly represented analyte classes and novel compounds.Competing Interest StatementSB and KD are cofounders of Bright Giant GmbH.},
-  doi          = {10.1101/2021.07.06.450875},
-  elocation-id = {2021.07.06.450875},
-  publisher    = {Cold Spring Harbor Laboratory},
+@Article{stravs22msnovelist,
+  author   = {Stravs, Michael A. and D\"uhrkop, Kai and B\"ocker, Sebastian and Zamboni, Nicola},
+  journal  = {Nat Methods},
+  title    = {{MSNovelist}: de novo structure generation from mass spectra},
+  year     = {2022},
+  number   = {7},
+  pages    = {865--870},
+  volume   = {19},
+  abstract = {Current methods for structure elucidation of small molecules rely on finding similarity with spectra of known compounds, but do not predict structures de novo for unknown compound classes. We present MSNovelist, which combines fingerprint prediction with an encoder-decoder neural network to generate structures de novo solely from tandem mass spectrometry (MS ) spectra. In an evaluation with 3,863 MS  spectra from the Global Natural Product Social Molecular Networking site, MSNovelist predicted 25\% of structures correctly on first rank, retrieved 45\% of structures overall and reproduced 61\% of correct database annotations, without having ever seen the structure in the training phase. Similarly, for the CASMI 2016 challenge, MSNovelist correctly predicted 26\% and retrieved 57\% of structures, recovering 64\% of correct database annotations. Finally, we illustrate the application of MSNovelist in a bryophyte MS dataset, in which de novo structure prediction substantially outscored the best database candidate for seven spectra. MSNovelist is ideally suited to complement library-based annotation in the case of poorly represented analyte classes and novel compounds.},
+  doi      = {10.1038/s41592-022-01486-3},
+  keywords = {Jena; small molecules; MS; MS/MS;},
+  pmid     = {35637304},
 }
 
 @Article{singh20tools,
