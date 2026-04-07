@@ -24,7 +24,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ ubuntu-latest, macos-latest, windows-latest ]
+        os: [ ubuntu-latest, macos-latest, macos-26-intel, windows-latest ]
         python-version: [ "3.9", "3.10", "3.11", "3.12", "3.13" ]
     env:
       SIRIUS_USER: ${{ secrets.SIRIUS_USER }}
@@ -70,17 +70,22 @@ jobs:
           mkdir -p .updater/api
           cd .updater/api
           
-          # Determine the correct OS suffix for the download URL
+          # Match the exact suffixes including ARM64 vs Intel checks for macOS
           if [ "$RUNNER_OS" == "Linux" ]; then
             OS_SUFFIX="linux-x64"
           elif [ "$RUNNER_OS" == "macOS" ]; then
-            OS_SUFFIX="macos-x64"
+            if [ "$RUNNER_ARCH" == "ARM64" ]; then
+              OS_SUFFIX="macos-arm64"
+            else
+              OS_SUFFIX="macos-x64"
+            fi
           elif [ "$RUNNER_OS" == "Windows" ]; then
             OS_SUFFIX="win-x64"
           fi
           
           url="https://github.com/sirius-ms/sirius/releases/download/v${version}/sirius-${version}-${OS_SUFFIX}.zip"
           echo "Downloading $url"
+          
           curl -sL "$url" -o sirius-${version}-${OS_SUFFIX}.zip
           unzip -q sirius-${version}-${OS_SUFFIX}.zip
 
@@ -89,7 +94,7 @@ jobs:
 
       - name: Download tomato_small project space
         run: |
-          curl -sL ${{ secrets.TOMATO_SMALL_DOWNLOAD_LINK }} -o tomato_small.sirius
+          curl -sL "${{ secrets.TOMATO_SMALL_DOWNLOAD_LINK }}" -o tomato_small.sirius
           chmod 666 tomato_small.sirius
         working-directory: .updater/clientTests/Data
 
