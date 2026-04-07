@@ -85,7 +85,7 @@ jobs:
           unzip -q sirius-${version}-${OS_SUFFIX}.zip
 
       - name: Change HOME to working directory of runner
-        run: echo "HOME=$GITHUB_WORKSPACE" >> $GITHUB_ENV
+        run: echo "HOME=$RUNNER_WORKSPACE" >> $GITHUB_ENV
 
       - name: Download tomato_small project space
         run: |
