@@ -6,7 +6,6 @@ from PySirius import SiriusSDK, AlignedFeatureOptField, FragmentationTree, Formu
 class TestAcceptance(unittest.TestCase):
 
     def setUp(self) -> None:
-        os.environ["RECIPE_DIR"] = f"{os.environ.get('HOME')}/sirius-client-openAPI/.updater/clientTests/Data"
         self.path_to_project = f"{os.environ.get('HOME')}/testProject.sirius"
 
     def tearDown(self) -> None:
@@ -18,7 +17,7 @@ class TestAcceptance(unittest.TestCase):
         api = SiriusSDK().attach_to_sirius(sirius_port=8080)
         ps_info = api.projects().create_project("testProject", os.path.abspath(path_to_project))
         try:
-            path = os.getenv('RECIPE_DIR') + "/Kaempferol.ms"
+            path = f"{os.environ.get('HOME')}/sirius-client-openAPI/.updater/clientTests/Data/Kaempferol.ms"
             path = os.path.abspath(path)
             api.projects().import_preprocessed_data(ps_info.project_id, ignore_formulas=True, input_files=[path])
 
