@@ -31,7 +31,7 @@ jobs:
       SIRIUS_PW: ${{ secrets.SIRIUS_PW }}
     defaults:
       run:
-        shell: bash # Ensures commands like wget and unzip work on Windows via Git Bash
+        shell: bash
     steps:
       - uses: actions/checkout@v6
 
@@ -81,7 +81,7 @@ jobs:
           
           url="https://github.com/sirius-ms/sirius/releases/download/v${version}/sirius-${version}-${OS_SUFFIX}.zip"
           echo "Downloading $url"
-          wget -nv "$url" -O sirius-${version}-${OS_SUFFIX}.zip
+          curl -sL "$url" -o sirius-${version}-${OS_SUFFIX}.zip
           unzip -q sirius-${version}-${OS_SUFFIX}.zip
 
       - name: Change HOME to working directory of runner
@@ -89,7 +89,7 @@ jobs:
 
       - name: Download tomato_small project space
         run: |
-          wget -nv ${{ secrets.TOMATO_SMALL_DOWNLOAD_LINK }} -O tomato_small.sirius
+          curl -sL ${{ secrets.TOMATO_SMALL_DOWNLOAD_LINK }} -o tomato_small.sirius
           chmod 666 tomato_small.sirius
         working-directory: .updater/clientTests/Data
 
