@@ -107,18 +107,26 @@ jobs:
         run: |
           echo "Show content of cache download (.updater/api/)"
           ls -lah .updater/api/
-          echo "Show content of cache download (.updater/api/sirius)"
-          ls -lah .updater/api/sirius || true
-          echo "Show content of cache download (.updater/api/sirius/bin)"
-          ls -lah .updater/api/sirius/bin || true
+          
+          if [ "$RUNNER_OS" == "macOS" ]; then
+            echo "Show content of macOS app bundle (.updater/api/sirius.app/Contents/MacOS/)"
+            ls -lah .updater/api/sirius.app/Contents/MacOS/ || true
+          else
+            echo "Show content of SIRIUS directory (.updater/api/sirius)"
+            ls -lah .updater/api/sirius || true
+          fi
 
       - name: Run Rest Api
         run: |
           if [ "$RUNNER_OS" == "Windows" ]; then
-            EXEC_CMD=".updater/api/sirius/bin/sirius.bat"
+            EXEC_CMD=".updater/api/sirius/sirius.bat"
+          elif [ "$RUNNER_OS" == "macOS" ]; then
+            EXEC_CMD=".updater/api/sirius.app/Contents/MacOS/sirius"
           else
             EXEC_CMD=".updater/api/sirius/bin/sirius"
           fi
+          
+          chmod +x "$EXEC_CMD" || true
           $EXEC_CMD REST -p 8080 -s &
 
       - name: Wait for Api to start
