@@ -3,7 +3,6 @@
 
 name: PythonTest
 
-
 on:
   workflow_dispatch:
     inputs:
@@ -18,25 +17,29 @@ on:
         type: string
   pull_request:
 
-
-
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     timeout-minutes: 10
     strategy:
       fail-fast: false
       matrix:
+        os: [ ubuntu-latest, macos-latest, windows-latest ]
         python-version: [ "3.9", "3.10", "3.11", "3.12", "3.13" ]
     env:
       SIRIUS_USER: ${{ secrets.SIRIUS_USER }}
       SIRIUS_PW: ${{ secrets.SIRIUS_PW }}
+    defaults:
+      run:
+        shell: bash # Ensures commands like wget and unzip work on Windows via Git Bash
     steps:
       - uses: actions/checkout@v6
+
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python-version }}
+
       - name: Install dependencies
         id: pysirius_install
         run: |
@@ -44,6 +47,7 @@ jobs:
           python -m pip install flake8
           pip install ./client-api_python/generated
           echo "Finished Installing"
+
       - name: Determine SIRIUS version
         id: sirius_version
         run: |
@@ -59,43 +63,81 @@ jobs:
             version=$(curl -s https://api.github.com/repos/sirius-ms/sirius/releases/latest | jq -r '.tag_name' | sed 's/^v//')
             echo "version=$version" >> $GITHUB_OUTPUT
           fi
+
       - name: Download SIRIUS
         run: |
           version="${{ steps.sirius_version.outputs.version }}"
           mkdir -p .updater/api
           cd .updater/api
-          url="https://github.com/sirius-ms/sirius/releases/download/v${version}/sirius-${version}-linux-x64.zip"
+          
+          # Determine the correct OS suffix for the download URL
+          if [ "$RUNNER_OS" == "Linux" ]; then
+            OS_SUFFIX="linux-x64"
+          elif [ "$RUNNER_OS" == "macOS" ]; then
+            OS_SUFFIX="macos-x64"
+          elif [ "$RUNNER_OS" == "Windows" ]; then
+            OS_SUFFIX="win-x64"
+          fi
+          
+          url="https://github.com/sirius-ms/sirius/releases/download/v${version}/sirius-${version}-${OS_SUFFIX}.zip"
           echo "Downloading $url"
-          wget -nv "$url" -O sirius-${version}-linux-x64.zip
-          unzip -q sirius-${version}-linux-x64.zip
+          wget -nv "$url" -O sirius-${version}-${OS_SUFFIX}.zip
+          unzip -q sirius-${version}-${OS_SUFFIX}.zip
+
       - name: Change HOME to working directory of runner
-        run: echo "HOME=/home/runner/work/sirius-client-openAPI" >> $GITHUB_ENV
+        run: echo "HOME=$GITHUB_WORKSPACE" >> $GITHUB_ENV
+
       - name: Download tomato_small project space
         run: |
           wget -nv ${{ secrets.TOMATO_SMALL_DOWNLOAD_LINK }} -O tomato_small.sirius
           chmod 666 tomato_small.sirius
         working-directory: .updater/clientTests/Data
+
       - name: Lint with flake8
         run: |
           # stop the build if there are Python syntax errors or undefined names
           flake8 ./client-api_python --count --select=E9,F63,F7,F82 --show-source --statistics
           # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
           flake8 ./client-api_python --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+
       - name: Unset DISPLAY
         run: echo "JAVA_TOOL_OPTIONS=-Djava.awt.headless=true" >> $GITHUB_ENV
+
       - name: Check SIRIUS download
         run: |
           echo "Show content of cache download (.updater/api/)"
           ls -lah .updater/api/
           echo "Show content of cache download (.updater/api/sirius)"
-          ls -lah .updater/api/sirius
+          ls -lah .updater/api/sirius || true
           echo "Show content of cache download (.updater/api/sirius/bin)"
-          ls -lah .updater/api/sirius/bin
+          ls -lah .updater/api/sirius/bin || true
+
       - name: Run Rest Api
-        run: bash .updater/api/sirius/bin/sirius REST -p 8080 -s &
+        run: |
+          if [ "$RUNNER_OS" == "Windows" ]; then
+            EXEC_CMD=".updater/api/sirius/bin/sirius.bat"
+          else
+            EXEC_CMD=".updater/api/sirius/bin/sirius"
+          fi
+          $EXEC_CMD REST -p 8080 -s &
+
       - name: Wait for Api to start
         id: api_start
-        run: while ! nc -z localhost 8080; do sleep 0.1; done
+        run: |
+          cat << 'EOF' > wait_api.py
+          import socket, time
+          for _ in range(60):
+              try:
+                  socket.create_connection(("localhost", 8080), timeout=1)
+                  print("API is up!")
+                  exit(0)
+              except OSError:
+                  time.sleep(0.5)
+          print("Timeout waiting for API")
+          exit(1)
+          EOF
+          python wait_api.py
+
       - name: Login to SIRIUS
         id: login
         run: |
@@ -113,38 +155,47 @@ jobs:
             print('Login failed, aborting...')
             exit(1)
         shell: python
+
       - name: Test actuator API
         if: always() && steps.api_start.outcome == 'success' && steps.pysirius_install.outcome == 'success' && steps.login.outcome == 'success'
         run: python test_actuator_api.py
         working-directory: client-api_python/generated/test
+
       - name: Test info API
         if: always() && steps.api_start.outcome == 'success' && steps.pysirius_install.outcome == 'success' && steps.login.outcome == 'success'
         run: python test_info_api.py
         working-directory: client-api_python/generated/test
+
       - name: Test login_and_account API
         if: always() && steps.api_start.outcome == 'success' && steps.pysirius_install.outcome == 'success' && steps.login.outcome == 'success'
         run: python test_login_and_account_api.py
         working-directory: client-api_python/generated/test
+
       - name: Test projects API
         if: always() && steps.api_start.outcome == 'success' && steps.pysirius_install.outcome == 'success' && steps.login.outcome == 'success'
         run: python test_projects_api.py
         working-directory: client-api_python/generated/test
+
       - name: Test compounds API
         if: always() && steps.api_start.outcome == 'success' && steps.pysirius_install.outcome == 'success' && steps.login.outcome == 'success'
         run: python test_compounds_api.py
         working-directory: client-api_python/generated/test
+
       - name: Test searchable_databases API
         if: always() && steps.api_start.outcome == 'success' && steps.pysirius_install.outcome == 'success' && steps.login.outcome == 'success'
         run: python test_searchable_databases_api.py
         working-directory: client-api_python/generated/test
+
       - name: Test features API
         if: always() && steps.api_start.outcome == 'success' && steps.pysirius_install.outcome == 'success' && steps.login.outcome == 'success'
         run: python test_features_api.py
         working-directory: client-api_python/generated/test
+
       - name: Test jobs API
         if: always() && steps.api_start.outcome == 'success' && steps.pysirius_install.outcome == 'success' && steps.login.outcome == 'success'
         run: python test_jobs_api.py
         working-directory: client-api_python/generated/test
+
       - name: Test acceptance
         if: always() && steps.api_start.outcome == 'success' && steps.pysirius_install.outcome == 'success' && steps.login.outcome == 'success'
         run: python test_acceptance.py
