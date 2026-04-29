@@ -401,7 +401,7 @@ No authorization required
 
 Get aligned features and attach the top formula candidate enriched with statistics and fragmentation tree.
 
-This helper first calls `get_aligned_features` with `qualities` included in the aligned-feature optional fields, then calls `get_formula_candidates` for each returned feature with `statistics` and `fragmentationTree` optional fields. The first formula candidate is attached to each feature as `top_formula_candidate`.
+This helper first calls `get_aligned_features` with `qualities` and `topAnnotations` included in the aligned-feature optional fields. For MS/MS features, it uses the top formula id from `topAnnotations` to fetch that exact formula with `statistics` and `fragmentationTree`. If no top formula id is available, it falls back to `get_formula_candidates_paged(..., page=0, size=1)` with the same formula optional fields. The resulting formula candidate is attached to each feature as `top_formula_candidate`.
 
 ### Parameters
 
@@ -409,7 +409,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **str**| project-space to read from. | 
  **ms_data_search_prepared** | **bool**| Passed to `get_aligned_features` and `get_formula_candidates`. | [optional] [default to False]
- **opt_fields** | [**List[AlignedFeatureOptField]**](AlignedFeatureOptField.md)| Optional fields passed to `get_aligned_features`; `qualities` is added automatically. Formula candidates are always requested with `statistics` and `fragmentationTree`. | [optional]
+ **opt_fields** | [**List[AlignedFeatureOptField]**](AlignedFeatureOptField.md)| Optional fields passed to `get_aligned_features`; `qualities` and `topAnnotations` are added automatically. Formula candidates are always requested with `statistics` and `fragmentationTree`. | [optional]
 
 ### Return type
 

@@ -1337,9 +1337,9 @@ class FeaturesApi:
     ) -> List[AlignedFeature]:
         """Get aligned features and enrich each feature with its top formula tree.
 
-        Calls get_aligned_features first, then fetches formula candidates for each
-        feature with statistics and fragmentationTree optional fields. The first
-        formula candidate is attached as top_formula_candidate.
+        Calls get_aligned_features first with qualities and topAnnotations, then
+        fetches only the top formula candidate with statistics and
+        fragmentationTree optional fields for MS/MS features.
         """
         aligned_feature_opt_fields = list(opt_fields) if opt_fields is not None else []
         if not any(
@@ -1347,6 +1347,11 @@ class FeaturesApi:
             for field in aligned_feature_opt_fields
         ):
             aligned_feature_opt_fields.append(AlignedFeatureOptField.QUALITIES)
+        if not any(
+            field == AlignedFeatureOptField.TOPANNOTATIONS or field == AlignedFeatureOptField.TOPANNOTATIONS.value
+            for field in aligned_feature_opt_fields
+        ):
+            aligned_feature_opt_fields.append(AlignedFeatureOptField.TOPANNOTATIONS)
 
         features = self.get_aligned_features(
             project_id=project_id,
@@ -1365,12 +1370,33 @@ class FeaturesApi:
 
         for feature in features:
             feature.top_formula_candidate = None
-            if not feature.aligned_feature_id:
+            if feature.has_ms_ms is not True or not feature.aligned_feature_id:
                 continue
 
-            formula_candidates = self.get_formula_candidates(
+            top_formula = None
+            if feature.top_annotations and feature.top_annotations.formula_annotation:
+                top_formula = feature.top_annotations.formula_annotation
+
+            if top_formula and top_formula.formula_id:
+                feature.top_formula_candidate = self.get_formula_candidate(
+                    project_id=project_id,
+                    aligned_feature_id=feature.aligned_feature_id,
+                    formula_id=top_formula.formula_id,
+                    ms_data_search_prepared=ms_data_search_prepared,
+                    opt_fields=formula_opt_fields,
+                    _request_timeout=_request_timeout,
+                    _request_auth=_request_auth,
+                    _content_type=_content_type,
+                    _headers=_headers,
+                    _host_index=_host_index,
+                )
+                continue
+
+            formula_candidates_page = self.get_formula_candidates_paged(
                 project_id=project_id,
                 aligned_feature_id=feature.aligned_feature_id,
+                page=0,
+                size=1,
                 ms_data_search_prepared=ms_data_search_prepared,
                 opt_fields=formula_opt_fields,
                 _request_timeout=_request_timeout,
@@ -1379,8 +1405,8 @@ class FeaturesApi:
                 _headers=_headers,
                 _host_index=_host_index,
             )
-            if formula_candidates:
-                feature.top_formula_candidate = formula_candidates[0]
+            if formula_candidates_page.content:
+                feature.top_formula_candidate = formula_candidates_page.content[0]
 
         return features
 
