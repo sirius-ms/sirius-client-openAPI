@@ -20,6 +20,7 @@ from typing import Any, ClassVar, Dict, List, Optional
 from PySirius.models.computed_subtools import ComputedSubtools
 from PySirius.models.data_quality import DataQuality
 from PySirius.models.feature_annotations import FeatureAnnotations
+from PySirius.models.formula_candidate import FormulaCandidate
 from PySirius.models.ms_data import MsData
 from PySirius.models.tag import Tag
 from typing import Optional, Set
@@ -47,8 +48,10 @@ class AlignedFeature(BaseModel):
     top_annotations_de_novo: Optional[FeatureAnnotations] = Field(default=None, alias="topAnnotationsDeNovo")
     computing: Optional[StrictBool] = Field(default=None, description="Write lock for this feature. If the feature is locked no write operations are possible.  True if any computation is modifying this feature or its results")
     computed_tools: Optional[ComputedSubtools] = Field(default=None, alias="computedTools")
+    qualities: Optional[Dict[str, Optional[DataQuality]]] = Field(default=None, description="Qualities per top level quality category.")
+    top_formula_candidate: Optional[FormulaCandidate] = Field(default=None, description="Top ranking formula candidate enriched with statistics and fragmentation tree.", alias="topFormulaCandidate")
     tags: Optional[Dict[str, Optional[Tag]]] = Field(default=None, description="Key: tagName, value: tag")
-    __properties: ClassVar[List[str]] = ["alignedFeatureId", "compoundId", "name", "externalFeatureId", "ionMass", "charge", "detectedAdducts", "rtStartSeconds", "rtEndSeconds", "rtApexSeconds", "quality", "hasMs1", "hasMsMs", "msData", "topAnnotations", "topAnnotationsDeNovo", "computing", "computedTools", "tags"]
+    __properties: ClassVar[List[str]] = ["alignedFeatureId", "compoundId", "name", "externalFeatureId", "ionMass", "charge", "detectedAdducts", "rtStartSeconds", "rtEndSeconds", "rtApexSeconds", "quality", "hasMs1", "hasMsMs", "msData", "topAnnotations", "topAnnotationsDeNovo", "computing", "computedTools", "qualities", "topFormulaCandidate", "tags"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -101,6 +104,9 @@ class AlignedFeature(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of computed_tools
         if self.computed_tools:
             _dict['computedTools'] = self.computed_tools.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of top_formula_candidate
+        if self.top_formula_candidate:
+            _dict['topFormulaCandidate'] = self.top_formula_candidate.to_dict()
         # override the default output from pydantic by calling `to_dict()` of each value in tags (dict)
         _field_dict = {}
         if self.tags:
@@ -148,6 +154,16 @@ class AlignedFeature(BaseModel):
         if self.computed_tools is None and "computed_tools" in self.model_fields_set:
             _dict['computedTools'] = None
 
+        # set to None if qualities (nullable) is None
+        # and model_fields_set contains the field
+        if self.qualities is None and "qualities" in self.model_fields_set:
+            _dict['qualities'] = None
+
+        # set to None if top_formula_candidate (nullable) is None
+        # and model_fields_set contains the field
+        if self.top_formula_candidate is None and "top_formula_candidate" in self.model_fields_set:
+            _dict['topFormulaCandidate'] = None
+
         # set to None if tags (nullable) is None
         # and model_fields_set contains the field
         if self.tags is None and "tags" in self.model_fields_set:
@@ -164,32 +180,42 @@ class AlignedFeature(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
-            "alignedFeatureId": obj.get("alignedFeatureId"),
-            "compoundId": obj.get("compoundId"),
-            "name": obj.get("name"),
-            "externalFeatureId": obj.get("externalFeatureId"),
-            "ionMass": obj.get("ionMass"),
-            "charge": obj.get("charge"),
-            "detectedAdducts": obj.get("detectedAdducts"),
-            "rtStartSeconds": obj.get("rtStartSeconds"),
-            "rtEndSeconds": obj.get("rtEndSeconds"),
-            "rtApexSeconds": obj.get("rtApexSeconds"),
-            "quality": obj.get("quality"),
-            "hasMs1": obj.get("hasMs1"),
-            "hasMsMs": obj.get("hasMsMs"),
-            "msData": MsData.from_dict(obj["msData"]) if obj.get("msData") is not None else None,
-            "topAnnotations": FeatureAnnotations.from_dict(obj["topAnnotations"]) if obj.get("topAnnotations") is not None else None,
-            "topAnnotationsDeNovo": FeatureAnnotations.from_dict(obj["topAnnotationsDeNovo"]) if obj.get("topAnnotationsDeNovo") is not None else None,
-            "computing": obj.get("computing"),
-            "computedTools": ComputedSubtools.from_dict(obj["computedTools"]) if obj.get("computedTools") is not None else None,
-            "tags": dict(
+        _obj_data = {}
+        for _field in [
+            "alignedFeatureId",
+            "compoundId",
+            "name",
+            "externalFeatureId",
+            "ionMass",
+            "charge",
+            "detectedAdducts",
+            "rtStartSeconds",
+            "rtEndSeconds",
+            "rtApexSeconds",
+            "quality",
+            "hasMs1",
+            "hasMsMs",
+            "computing",
+            "qualities",
+        ]:
+            if _field in obj:
+                _obj_data[_field] = obj.get(_field)
+
+        if "msData" in obj:
+            _obj_data["msData"] = MsData.from_dict(obj["msData"]) if obj.get("msData") is not None else None
+        if "topAnnotations" in obj:
+            _obj_data["topAnnotations"] = FeatureAnnotations.from_dict(obj["topAnnotations"]) if obj.get("topAnnotations") is not None else None
+        if "topAnnotationsDeNovo" in obj:
+            _obj_data["topAnnotationsDeNovo"] = FeatureAnnotations.from_dict(obj["topAnnotationsDeNovo"]) if obj.get("topAnnotationsDeNovo") is not None else None
+        if "computedTools" in obj:
+            _obj_data["computedTools"] = ComputedSubtools.from_dict(obj["computedTools"]) if obj.get("computedTools") is not None else None
+        if "topFormulaCandidate" in obj:
+            _obj_data["topFormulaCandidate"] = FormulaCandidate.from_dict(obj["topFormulaCandidate"]) if obj.get("topFormulaCandidate") is not None else None
+        if "tags" in obj:
+            _obj_data["tags"] = dict(
                 (_k, Tag.from_dict(_v))
                 for _k, _v in obj["tags"].items()
-            )
-            if obj.get("tags") is not None
-            else None
-        })
+            ) if obj.get("tags") is not None else None
+
+        _obj = cls.model_validate(_obj_data)
         return _obj
-
-

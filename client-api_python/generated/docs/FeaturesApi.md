@@ -9,6 +9,7 @@ Method | HTTP request | Description
 [**delete_aligned_features**](FeaturesApi.md#delete_aligned_features) | **PUT** /api/projects/{projectId}/aligned-features/delete | Delete feature (aligned over runs) with the given identifier from the specified project-space.
 [**get_aligned_feature**](FeaturesApi.md#get_aligned_feature) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId} | Get feature (aligned over runs) with the given identifier from the specified project-space.
 [**get_aligned_features**](FeaturesApi.md#get_aligned_features) | **GET** /api/projects/{projectId}/aligned-features | Get all available features (aligned over runs) in the given project-space.
+[**get_aligned_features_with_top_tree**](FeaturesApi.md#get_aligned_features_with_top_tree) | helper | Get aligned features and attach the top formula candidate enriched with statistics and fragmentation tree.
 [**get_aligned_features_paged**](FeaturesApi.md#get_aligned_features_paged) | **GET** /api/projects/{projectId}/aligned-features/page | Get all available features (aligned over runs) in the given project-space.
 [**get_best_matching_compound_classes**](FeaturesApi.md#get_best_matching_compound_classes) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/best-compound-classes | Return Best matching compound classes for given formulaId
 [**get_canopus_prediction**](FeaturesApi.md#get_canopus_prediction) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/canopus-prediction | All predicted compound classes (CANOPUS) from ClassyFire and NPC and their probabilities,
@@ -392,6 +393,27 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | AlignedFeatures with additional annotations and MS/MS data (if specified). |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **get_aligned_features_with_top_tree**
+> List[AlignedFeature] get_aligned_features_with_top_tree(project_id, ms_data_search_prepared=ms_data_search_prepared, opt_fields=opt_fields)
+
+Get aligned features and attach the top formula candidate enriched with statistics and fragmentation tree.
+
+This helper first calls `get_aligned_features` with `qualities` included in the aligned-feature optional fields, then calls `get_formula_candidates` for each returned feature with `statistics` and `fragmentationTree` optional fields. The first formula candidate is attached to each feature as `top_formula_candidate`.
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **project_id** | **str**| project-space to read from. | 
+ **ms_data_search_prepared** | **bool**| Passed to `get_aligned_features` and `get_formula_candidates`. | [optional] [default to False]
+ **opt_fields** | [**List[AlignedFeatureOptField]**](AlignedFeatureOptField.md)| Optional fields passed to `get_aligned_features`; `qualities` is added automatically. Formula candidates are always requested with `statistics` and `fragmentationTree`. | [optional]
+
+### Return type
+
+[**List[AlignedFeature]**](AlignedFeature.md)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -2246,4 +2268,3 @@ No authorization required
 **200** | StructureCandidate of this feature (aligned over runs) candidate with specified optional fields. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-

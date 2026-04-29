@@ -1320,6 +1320,71 @@ class FeaturesApi:
         ).data
 
 
+    def get_aligned_features_with_top_tree(
+        self,
+        project_id: str,
+        ms_data_search_prepared: Optional[bool] = None,
+        opt_fields: Optional[List[Optional[AlignedFeatureOptField]]] = None,
+        _request_timeout: Union[
+            None,
+            float,
+            Tuple[float, float]
+        ] = None,
+        _request_auth: Optional[Dict[str, Any]] = None,
+        _content_type: Optional[str] = None,
+        _headers: Optional[Dict[str, Any]] = None,
+        _host_index: int = 0,
+    ) -> List[AlignedFeature]:
+        """Get aligned features and enrich each feature with its top formula tree.
+
+        Calls get_aligned_features first, then fetches formula candidates for each
+        feature with statistics and fragmentationTree optional fields. The first
+        formula candidate is attached as top_formula_candidate.
+        """
+        aligned_feature_opt_fields = list(opt_fields) if opt_fields is not None else []
+        if not any(
+            field == AlignedFeatureOptField.QUALITIES or field == AlignedFeatureOptField.QUALITIES.value
+            for field in aligned_feature_opt_fields
+        ):
+            aligned_feature_opt_fields.append(AlignedFeatureOptField.QUALITIES)
+
+        features = self.get_aligned_features(
+            project_id=project_id,
+            ms_data_search_prepared=ms_data_search_prepared,
+            opt_fields=aligned_feature_opt_fields,
+            _request_timeout=_request_timeout,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+        formula_opt_fields = [
+            FormulaCandidateOptField.STATISTICS,
+            FormulaCandidateOptField.FRAGMENTATIONTREE,
+        ]
+
+        for feature in features:
+            feature.top_formula_candidate = None
+            if not feature.aligned_feature_id:
+                continue
+
+            formula_candidates = self.get_formula_candidates(
+                project_id=project_id,
+                aligned_feature_id=feature.aligned_feature_id,
+                ms_data_search_prepared=ms_data_search_prepared,
+                opt_fields=formula_opt_fields,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+            if formula_candidates:
+                feature.top_formula_candidate = formula_candidates[0]
+
+        return features
+
+
     @validate_call
     def get_aligned_features_with_http_info(
         self,
@@ -9236,5 +9301,3 @@ class FeaturesApi:
             _host=_host,
             _request_auth=_request_auth
         )
-
-

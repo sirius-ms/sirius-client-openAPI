@@ -24,6 +24,8 @@ Name | Type | Description | Notes
 **top_annotations_de_novo** | [**FeatureAnnotations**](FeatureAnnotations.md) |  | [optional] 
 **computing** | **bool** | Write lock for this feature. If the feature is locked no write operations are possible.  True if any computation is modifying this feature or its results | [optional] 
 **computed_tools** | [**ComputedSubtools**](ComputedSubtools.md) |  | [optional] 
+**qualities** | [**Dict[str, DataQuality]**](DataQuality.md) | Qualities per top level quality category. | [optional] 
+**top_formula_candidate** | [**FormulaCandidate**](FormulaCandidate.md) | Top ranking formula candidate enriched with statistics and fragmentation tree. | [optional] 
 **tags** | [**Dict[str, Tag]**](Tag.md) | Key: tagName, value: tag | [optional] 
 
 ## Example
@@ -44,5 +46,3 @@ aligned_feature_dict = aligned_feature_instance.to_dict()
 aligned_feature_from_dict = AlignedFeature.from_dict(aligned_feature_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
-
-
