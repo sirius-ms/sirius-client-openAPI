@@ -127,7 +127,7 @@ computation of fragmentation trees [@boecker08towards; @boecker16fragmentation],
 annotation of molecular formulas [@duehrkop13molecular] (orange in \autoref{fig:hierarchy}),
 structure database search with CSI:FingerID [@duehrkop15searching],
 compound class prediction with CANOPUS [@duehrkop21systematic],
-*de novo* molecular structure prediction with MSNovelist [@stravs21msnovelist]
+*de novo* molecular structure prediction with MSNovelist [@stravs22msnovelist]
 and additional methods.
 This avoids the need to parse command-line interface outputs or manipulate
 intermediate file formats.
