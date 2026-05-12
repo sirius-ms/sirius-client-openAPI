@@ -10,6 +10,7 @@
 """  # noqa: E501
 
 import warnings
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
@@ -1417,12 +1418,105 @@ class FeaturesApi:
         )
 
 
+    def get_quant_table_experimental(
+        self,
+        project_id: str,
+        quantification_type: Optional[str] = "APEX_INTENSITY",
+        _request_timeout: Union[
+            None,
+            float,
+            Tuple[float, float]
+        ] = None,
+        _request_auth: Optional[Dict[str, Any]] = None,
+        _content_type: Optional[str] = None,
+        _headers: Optional[Dict[str, Any]] = None,
+        _host_index: int = 0,
+    ) -> Dict[str, Any]:
+        """Return the quantification table for aligned features."""
+        _param = self._get_quant_table_experimental_serialize(
+            project_id=project_id,
+            quantification_type=quantification_type,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    def _get_quant_table_experimental_serialize(
+        self,
+        project_id,
+        quantification_type,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {}
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        if project_id is not None:
+            _path_params['projectId'] = project_id
+        if quantification_type is not None:
+            _query_params.append(('type', quantification_type))
+
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+        _auth_settings: List[str] = [
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/api/projects/{projectId}/aligned-features/quant-table',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
     def get_aligned_features_with_top_tree_and_metadata(
         self,
         project_id: str,
         ms_data_search_prepared: Optional[bool] = None,
         opt_fields: Optional[List[Optional[AlignedFeatureOptField]]] = None,
         quantification_type: Optional[str] = "APEX_INTENSITY",
+        top_tree_max_workers: int = 8,
         _request_timeout: Union[
             None,
             float,
@@ -1461,27 +1555,30 @@ class FeaturesApi:
             FormulaCandidateOptField.STATISTICS,
             FormulaCandidateOptField.FRAGMENTATIONTREE,
         ]
+        quant_table = self.get_quant_table_experimental(
+            project_id=project_id,
+            quantification_type=quantification_type,
+            _request_timeout=_request_timeout,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+        quant_table_column_names = quant_table.get("columnNames")
+        quant_table_values_by_feature_id = {
+            str(row_id): values
+            for row_id, values in zip(
+                quant_table.get("rowIds") or [],
+                quant_table.get("values") or [],
+            )
+        }
+        features_with_ms_ms = [
+            feature
+            for feature in features
+            if feature.has_ms_ms is True and feature.aligned_feature_id
+        ]
 
-        for feature in features:
-            feature.top_formula_candidate = None
-            if feature.aligned_feature_id:
-                quant_table_row = self.get_quant_table_row_experimental(
-                    project_id=project_id,
-                    aligned_feature_id=feature.aligned_feature_id,
-                    quantification_type=quantification_type,
-                    _request_timeout=_request_timeout,
-                    _request_auth=_request_auth,
-                    _content_type=_content_type,
-                    _headers=_headers,
-                    _host_index=_host_index,
-                )
-                feature.column_names = quant_table_row.get("columnNames")
-                quant_table_values = quant_table_row.get("values") or []
-                feature.column_intetensity_value = quant_table_values[0] if quant_table_values else []
-
-            if feature.has_ms_ms is not True or not feature.aligned_feature_id:
-                continue
-
+        def fetch_top_formula_candidate(feature: AlignedFeature) -> Tuple[AlignedFeature, Optional[FormulaCandidate]]:
             formula_candidates_page = self.get_formula_candidates_paged(
                 project_id=project_id,
                 aligned_feature_id=feature.aligned_feature_id,
@@ -1496,7 +1593,29 @@ class FeaturesApi:
                 _host_index=_host_index,
             )
             if formula_candidates_page.content:
-                feature.top_formula_candidate = formula_candidates_page.content[0]
+                return feature, formula_candidates_page.content[0]
+            return feature, None
+
+        for feature in features:
+            feature.top_formula_candidate = None
+            if feature.aligned_feature_id and feature.aligned_feature_id in quant_table_values_by_feature_id:
+                feature.column_names = quant_table_column_names
+                feature.column_intetensity_value = quant_table_values_by_feature_id[feature.aligned_feature_id]
+
+        if top_tree_max_workers > 1 and len(features_with_ms_ms) > 1:
+            with ThreadPoolExecutor(max_workers=min(top_tree_max_workers, len(features_with_ms_ms))) as executor:
+                futures = [
+                    executor.submit(fetch_top_formula_candidate, feature)
+                    for feature in features_with_ms_ms
+                ]
+                for future in as_completed(futures):
+                    feature, top_formula_candidate = future.result()
+                    feature.top_formula_candidate = top_formula_candidate
+        else:
+            for feature in features_with_ms_ms:
+                feature, top_formula_candidate = fetch_top_formula_candidate(feature)
+                feature.top_formula_candidate = top_formula_candidate
+
 
         return features
 
@@ -1506,6 +1625,7 @@ class FeaturesApi:
         project_id: str,
         ms_data_search_prepared: Optional[bool] = None,
         opt_fields: Optional[List[Optional[AlignedFeatureOptField]]] = None,
+        top_tree_max_workers: int = 8,
         _request_timeout: Union[
             None,
             float,
@@ -1521,6 +1641,7 @@ class FeaturesApi:
             project_id=project_id,
             ms_data_search_prepared=ms_data_search_prepared,
             opt_fields=opt_fields,
+            top_tree_max_workers=top_tree_max_workers,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
