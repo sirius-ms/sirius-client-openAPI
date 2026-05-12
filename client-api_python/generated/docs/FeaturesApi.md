@@ -9,7 +9,7 @@ Method | HTTP request | Description
 [**delete_aligned_features**](FeaturesApi.md#delete_aligned_features) | **PUT** /api/projects/{projectId}/aligned-features/delete | Delete feature (aligned over runs) with the given identifier from the specified project-space.
 [**get_aligned_feature**](FeaturesApi.md#get_aligned_feature) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId} | Get feature (aligned over runs) with the given identifier from the specified project-space.
 [**get_aligned_features**](FeaturesApi.md#get_aligned_features) | **GET** /api/projects/{projectId}/aligned-features | Get all available features (aligned over runs) in the given project-space.
-[**get_aligned_features_with_top_tree**](FeaturesApi.md#get_aligned_features_with_top_tree) | helper | Get aligned features and attach the top formula candidate enriched with statistics and fragmentation tree.
+[**get_aligned_features_with_top_tree_and_metadata**](FeaturesApi.md#get_aligned_features_with_top_tree_and_metadata) | helper | Get aligned features and attach top formula tree plus quantification metadata.
 [**get_aligned_features_paged**](FeaturesApi.md#get_aligned_features_paged) | **GET** /api/projects/{projectId}/aligned-features/page | Get all available features (aligned over runs) in the given project-space.
 [**get_best_matching_compound_classes**](FeaturesApi.md#get_best_matching_compound_classes) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/best-compound-classes | Return Best matching compound classes for given formulaId
 [**get_canopus_prediction**](FeaturesApi.md#get_canopus_prediction) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/canopus-prediction | All predicted compound classes (CANOPUS) from ClassyFire and NPC and their probabilities,
@@ -26,6 +26,7 @@ Method | HTTP request | Description
 [**get_isotope_pattern_annotation**](FeaturesApi.md#get_isotope_pattern_annotation) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/isotope-pattern | Returns Isotope pattern information for given formulaId  
 [**get_lipid_annotation**](FeaturesApi.md#get_lipid_annotation) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/lipid-annotation | Returns Lipid annotation (ElGordo) for the given formulaId
 [**get_ms_data**](FeaturesApi.md#get_ms_data) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/ms-data | Mass Spec data (input data) for the given &#39;alignedFeatureId&#39; .
+[**get_quant_table_row_experimental**](FeaturesApi.md#get_quant_table_row_experimental) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/quant-table-row | Return one quantification table row for an aligned feature.
 [**get_spectral_library_match**](FeaturesApi.md#get_spectral_library_match) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/spectral-library-matches/{matchId} | Spectral library match for the given &#39;alignedFeatureId&#39;.
 [**get_spectral_library_matches**](FeaturesApi.md#get_spectral_library_matches) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/spectral-library-matches | List of spectral library matches for the given &#39;alignedFeatureId&#39;.
 [**get_spectral_library_matches_paged**](FeaturesApi.md#get_spectral_library_matches_paged) | **GET** /api/projects/{projectId}/aligned-features/{alignedFeatureId}/spectral-library-matches/page | Page of spectral library matches for the given &#39;alignedFeatureId&#39;.
@@ -396,12 +397,12 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_aligned_features_with_top_tree**
-> List[AlignedFeature] get_aligned_features_with_top_tree(project_id, ms_data_search_prepared=ms_data_search_prepared, opt_fields=opt_fields)
+# **get_aligned_features_with_top_tree_and_metadata**
+> List[AlignedFeature] get_aligned_features_with_top_tree_and_metadata(project_id, ms_data_search_prepared=ms_data_search_prepared, opt_fields=opt_fields, quantification_type=quantification_type)
 
-Get aligned features and attach the top formula candidate enriched with statistics and fragmentation tree.
+Get aligned features and attach the top formula candidate enriched with statistics and fragmentation tree plus quantification metadata.
 
-This helper first calls `get_aligned_features` with `qualities` included in the aligned-feature optional fields. For each MS/MS feature, it calls `get_formula_candidates_paged(..., page=0, size=1)` with `statistics` and `fragmentationTree` optional fields. The resulting top-ranked formula candidate is attached to each feature as `top_formula_candidate`.
+This helper first calls `get_aligned_features` with `qualities` included in the aligned-feature optional fields. For each feature with an ID, it calls `get_quant_table_row_experimental` and attaches only `columnNames` and the first values row as `column_intetensity_value`. For each MS/MS feature, it calls `get_formula_candidates_paged(..., page=0, size=1)` with `statistics` and `fragmentationTree` optional fields. The resulting top-ranked formula candidate is attached to each feature as `top_formula_candidate`.
 
 ### Parameters
 
@@ -410,10 +411,32 @@ Name | Type | Description  | Notes
  **project_id** | **str**| project-space to read from. | 
  **ms_data_search_prepared** | **bool**| Passed to `get_aligned_features` and `get_formula_candidates_paged`. | [optional] [default to False]
  **opt_fields** | [**List[AlignedFeatureOptField]**](AlignedFeatureOptField.md)| Optional fields passed to `get_aligned_features`; `qualities` is added automatically. Formula candidates are always requested with `statistics` and `fragmentationTree`. | [optional]
+ **quantification_type** | **str**| Quantification type passed as `type` to `/quant-table-row`. | [optional] [default to APEX_INTENSITY]
 
 ### Return type
 
 [**List[AlignedFeature]**](AlignedFeature.md)
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **get_quant_table_row_experimental**
+> Dict[str, Any] get_quant_table_row_experimental(project_id, aligned_feature_id, quantification_type=quantification_type)
+
+Return one quantification table row for an aligned feature.
+
+This endpoint returns the server's experimental quantification table row. The helper `get_aligned_features_with_top_tree_and_metadata` keeps only `columnNames` and the first row from `values`.
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **project_id** | **str**| project-space to read from. |
+ **aligned_feature_id** | **str**| feature whose quantity should be read. |
+ **quantification_type** | **str**| Quantification type passed as `type`. | [optional] [default to APEX_INTENSITY]
+
+### Return type
+
+**Dict[str, Any]**
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

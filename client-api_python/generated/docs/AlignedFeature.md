@@ -26,6 +26,8 @@ Name | Type | Description | Notes
 **computed_tools** | [**ComputedSubtools**](ComputedSubtools.md) |  | [optional] 
 **qualities** | [**Dict[str, DataQuality]**](DataQuality.md) | Qualities per top level quality category. | [optional] 
 **top_formula_candidate** | [**FormulaCandidate**](FormulaCandidate.md) | Top ranking formula candidate enriched with statistics and fragmentation tree. | [optional] 
+**column_names** | **List[str]** | Quantification table column names. | [optional]
+**column_intetensity_value** | **List[float]** | Quantification values for this feature, aligned with column_names. | [optional]
 **tags** | [**Dict[str, Tag]**](Tag.md) | Key: tagName, value: tag | [optional] 
 
 ## Example
