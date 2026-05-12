@@ -1320,11 +1320,109 @@ class FeaturesApi:
         ).data
 
 
-    def get_aligned_features_with_top_tree(
+    def get_quant_table_row_experimental(
+        self,
+        project_id: str,
+        aligned_feature_id: str,
+        quantification_type: Optional[str] = "APEX_INTENSITY",
+        _request_timeout: Union[
+            None,
+            float,
+            Tuple[float, float]
+        ] = None,
+        _request_auth: Optional[Dict[str, Any]] = None,
+        _content_type: Optional[str] = None,
+        _headers: Optional[Dict[str, Any]] = None,
+        _host_index: int = 0,
+    ) -> Dict[str, Any]:
+        """Return one quantification table row for an aligned feature."""
+        _param = self._get_quant_table_row_experimental_serialize(
+            project_id=project_id,
+            aligned_feature_id=aligned_feature_id,
+            quantification_type=quantification_type,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    def _get_quant_table_row_experimental_serialize(
+        self,
+        project_id,
+        aligned_feature_id,
+        quantification_type,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {}
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        if project_id is not None:
+            _path_params['projectId'] = project_id
+        if aligned_feature_id is not None:
+            _path_params['alignedFeatureId'] = aligned_feature_id
+        if quantification_type is not None:
+            _query_params.append(('type', quantification_type))
+
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+        _auth_settings: List[str] = [
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/api/projects/{projectId}/aligned-features/{alignedFeatureId}/quant-table-row',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+    def get_aligned_features_with_top_tree_and_metadata(
         self,
         project_id: str,
         ms_data_search_prepared: Optional[bool] = None,
         opt_fields: Optional[List[Optional[AlignedFeatureOptField]]] = None,
+        quantification_type: Optional[str] = "APEX_INTENSITY",
         _request_timeout: Union[
             None,
             float,
@@ -1335,11 +1433,13 @@ class FeaturesApi:
         _headers: Optional[Dict[str, Any]] = None,
         _host_index: int = 0,
     ) -> List[AlignedFeature]:
-        """Get aligned features and enrich each feature with its top formula tree.
+        """Get aligned features and enrich each feature with its top formula tree and metadata.
 
         Calls get_aligned_features first with qualities, then fetches the
         top-ranked formula candidate with statistics and fragmentationTree
-        optional fields for MS/MS features.
+        optional fields for MS/MS features. For all features with an ID, also
+        fetches the quantification table row and attaches columnNames plus the
+        first values row as column_intetensity_value.
         """
         aligned_feature_opt_fields = list(opt_fields) if opt_fields is not None else []
         if not any(
@@ -1364,6 +1464,21 @@ class FeaturesApi:
 
         for feature in features:
             feature.top_formula_candidate = None
+            if feature.aligned_feature_id:
+                quant_table_row = self.get_quant_table_row_experimental(
+                    project_id=project_id,
+                    aligned_feature_id=feature.aligned_feature_id,
+                    quantification_type=quantification_type,
+                    _request_timeout=_request_timeout,
+                    _request_auth=_request_auth,
+                    _content_type=_content_type,
+                    _headers=_headers,
+                    _host_index=_host_index,
+                )
+                feature.column_names = quant_table_row.get("columnNames")
+                quant_table_values = quant_table_row.get("values") or []
+                feature.column_intetensity_value = quant_table_values[0] if quant_table_values else []
+
             if feature.has_ms_ms is not True or not feature.aligned_feature_id:
                 continue
 
@@ -1384,6 +1499,34 @@ class FeaturesApi:
                 feature.top_formula_candidate = formula_candidates_page.content[0]
 
         return features
+
+
+    def get_aligned_features_with_top_tree(
+        self,
+        project_id: str,
+        ms_data_search_prepared: Optional[bool] = None,
+        opt_fields: Optional[List[Optional[AlignedFeatureOptField]]] = None,
+        _request_timeout: Union[
+            None,
+            float,
+            Tuple[float, float]
+        ] = None,
+        _request_auth: Optional[Dict[str, Any]] = None,
+        _content_type: Optional[str] = None,
+        _headers: Optional[Dict[str, Any]] = None,
+        _host_index: int = 0,
+    ) -> List[AlignedFeature]:
+        """Deprecated alias for get_aligned_features_with_top_tree_and_metadata."""
+        return self.get_aligned_features_with_top_tree_and_metadata(
+            project_id=project_id,
+            ms_data_search_prepared=ms_data_search_prepared,
+            opt_fields=opt_fields,
+            _request_timeout=_request_timeout,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
 
 
     @validate_call

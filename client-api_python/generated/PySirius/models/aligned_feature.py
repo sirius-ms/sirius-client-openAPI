@@ -50,8 +50,10 @@ class AlignedFeature(BaseModel):
     computed_tools: Optional[ComputedSubtools] = Field(default=None, alias="computedTools")
     qualities: Optional[Dict[str, Optional[DataQuality]]] = Field(default=None, description="Qualities per top level quality category.")
     top_formula_candidate: Optional[FormulaCandidate] = Field(default=None, description="Top ranking formula candidate enriched with statistics and fragmentation tree.", alias="topFormulaCandidate")
+    column_names: Optional[List[Optional[StrictStr]]] = Field(default=None, description="Quantification table column names.", alias="columnNames")
+    column_intetensity_value: Optional[List[Optional[float]]] = Field(default=None, description="Quantification values for this feature, aligned with column_names.", alias="columnIntetensityValue")
     tags: Optional[Dict[str, Optional[Tag]]] = Field(default=None, description="Key: tagName, value: tag")
-    __properties: ClassVar[List[str]] = ["alignedFeatureId", "compoundId", "name", "externalFeatureId", "ionMass", "charge", "detectedAdducts", "rtStartSeconds", "rtEndSeconds", "rtApexSeconds", "quality", "hasMs1", "hasMsMs", "msData", "topAnnotations", "topAnnotationsDeNovo", "computing", "computedTools", "qualities", "topFormulaCandidate", "tags"]
+    __properties: ClassVar[List[str]] = ["alignedFeatureId", "compoundId", "name", "externalFeatureId", "ionMass", "charge", "detectedAdducts", "rtStartSeconds", "rtEndSeconds", "rtApexSeconds", "quality", "hasMs1", "hasMsMs", "msData", "topAnnotations", "topAnnotationsDeNovo", "computing", "computedTools", "qualities", "topFormulaCandidate", "columnNames", "columnIntetensityValue", "tags"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -164,6 +166,16 @@ class AlignedFeature(BaseModel):
         if self.top_formula_candidate is None and "top_formula_candidate" in self.model_fields_set:
             _dict['topFormulaCandidate'] = None
 
+        # set to None if column_names (nullable) is None
+        # and model_fields_set contains the field
+        if self.column_names is None and "column_names" in self.model_fields_set:
+            _dict['columnNames'] = None
+
+        # set to None if column_intetensity_value (nullable) is None
+        # and model_fields_set contains the field
+        if self.column_intetensity_value is None and "column_intetensity_value" in self.model_fields_set:
+            _dict['columnIntetensityValue'] = None
+
         # set to None if tags (nullable) is None
         # and model_fields_set contains the field
         if self.tags is None and "tags" in self.model_fields_set:
@@ -197,6 +209,8 @@ class AlignedFeature(BaseModel):
             "hasMsMs",
             "computing",
             "qualities",
+            "columnNames",
+            "columnIntetensityValue",
         ]:
             if _field in obj:
                 _obj_data[_field] = obj.get(_field)
