@@ -13,7 +13,6 @@ from PySirius import (
     FeaturesApi,
     FormulaCandidate,
     FormulaCandidateOptField,
-    FragmentationTree,
     MsData,
     PagedModelFormulaCandidate,
     StructureCandidateFormula,
@@ -30,12 +29,50 @@ class DictModel:
         return self.data
 
 
+class FakeResponseData:
+    def __init__(self):
+        self.read_called = False
+
+    def read(self):
+        self.read_called = True
+
+
+class FakeApiResponse:
+    def __init__(self, data):
+        self.data = data
+
+
+class FakeApiClient:
+    def __init__(self):
+        self.param_serialize_call = None
+        self.call_api_call = None
+        self.response_deserialize_call = None
+        self.response_data = FakeResponseData()
+
+    def select_header_accept(self, values):
+        self.header_accept_values = values
+        return "application/json"
+
+    def param_serialize(self, **kwargs):
+        self.param_serialize_call = kwargs
+        return ("serialized-request",)
+
+    def call_api(self, *args, **kwargs):
+        self.call_api_call = {"args": args, "kwargs": kwargs}
+        return self.response_data
+
+    def response_deserialize(self, **kwargs):
+        self.response_deserialize_call = kwargs
+        return FakeApiResponse(DictModel({"treeScore": 17.5}))
+
+
 class FakeFeaturesApi(FeaturesApi):
     def __init__(self):
         self.formula_candidate_calls = []
         self.formula_candidates_paged_calls = []
         self.quant_table_row_calls = []
         self.quant_table_calls = []
+        self.sirius_frag_tree_calls = []
         self.active_formula_candidate_requests = 0
         self.max_active_formula_candidate_requests = 0
         self.formula_candidate_lock = threading.Lock()
@@ -172,6 +209,19 @@ class FakeFeaturesApi(FeaturesApi):
             ],
         })
 
+    def get_sirius_frag_tree_experimental(self, project_id, aligned_feature_id, formula_id, **kwargs):
+        self.sirius_frag_tree_calls.append({
+            "project_id": project_id,
+            "aligned_feature_id": aligned_feature_id,
+            "formula_id": formula_id,
+            "kwargs": kwargs,
+        })
+        return DictModel({
+            "fragments": [{"fragmentId": 0, "molecularFormula": "C2H6O"}],
+            "losses": [],
+            "treeScore": 17.5,
+        })
+
     def get_quant_table_row_experimental(self, project_id, aligned_feature_id, quantification_type="APEX_INTENSITY", **kwargs):
         self.quant_table_row_calls.append({
             "project_id": project_id,
@@ -211,6 +261,31 @@ class FakeFeaturesApi(FeaturesApi):
 
 
 class TestFeaturesApiHelpers(unittest.TestCase):
+    def test_get_sirius_frag_tree_experimental_uses_sirius_fragtree_endpoint(self) -> None:
+        api_client = FakeApiClient()
+        api = FeaturesApi(api_client=api_client)
+
+        result = api.get_sirius_frag_tree_experimental(
+            project_id="project-1",
+            aligned_feature_id="feature-1",
+            formula_id="formula-1",
+            _request_timeout=3.0,
+        )
+
+        self.assertEqual({"treeScore": 17.5}, result.to_dict())
+        self.assertTrue(api_client.response_data.read_called)
+        self.assertEqual(
+            "/api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/sirius-fragtree",
+            api_client.param_serialize_call["resource_path"],
+        )
+        self.assertEqual({
+            "projectId": "project-1",
+            "alignedFeatureId": "feature-1",
+            "formulaId": "formula-1",
+        }, api_client.param_serialize_call["path_params"])
+        self.assertEqual({"200": "FragmentationTree"}, api_client.response_deserialize_call["response_types_map"])
+        self.assertEqual({"_request_timeout": 3.0}, api_client.call_api_call["kwargs"])
+
     def test_helper_sources_coerces_numeric_strings_and_ignores_non_numeric_values(self) -> None:
         sources = FeaturesApi._helper_sources(
             "project-1",
@@ -400,7 +475,6 @@ class TestFeaturesApiHelpers(unittest.TestCase):
                 numOfExplainedPeaks=4,
                 numOfExplainablePeaks=5,
                 totalExplainedIntensity=0.9,
-                fragmentationTree=FragmentationTree.from_dict({"fragments": [], "losses": []}),
             )
 
         api.get_formula_candidate = get_formula_candidate
@@ -452,10 +526,29 @@ class TestFeaturesApiHelpers(unittest.TestCase):
         self.assertEqual(0.75, record["topStructureTanimoto"])
         self.assertTrue(record["annotated"])
         self.assertEqual(["[M+H]+"], record["detectedAdducts"])
-        self.assertEqual([FormulaCandidateOptField.STATISTICS, FormulaCandidateOptField.FRAGMENTATIONTREE], api.formula_candidate_calls[0]["opt_fields"])
+        self.assertNotIn("FragmentationTree", record)
+        self.assertNotIn("topAnnotationFormulaCandidate", record)
+        self.assertEqual({
+            "fragments": [{"fragmentId": 0, "molecularFormula": "C2H6O"}],
+            "losses": [],
+            "treeScore": 17.5,
+        }, record["SiriusFragTree"])
+        self.assertEqual([FormulaCandidateOptField.STATISTICS], api.formula_candidate_calls[0]["opt_fields"])
         self.assertEqual([StructureCandidateOptField.FINGERPRINT], api.structure_candidates_by_formula_call["opt_fields"])
         self.assertEqual([StructureCandidateOptField.FINGERPRINT], api.structure_candidates_call["opt_fields"])
         self.assertEqual("IK1", api.structure_annotated_spectrum_call["inchi_key"])
+        self.assertEqual({
+            "project_id": "project-1",
+            "aligned_feature_id": "feature-1",
+            "formula_id": "formula-1",
+            "kwargs": {
+                "_request_timeout": None,
+                "_request_auth": None,
+                "_content_type": None,
+                "_headers": None,
+                "_host_index": 0,
+            },
+        }, api.sirius_frag_tree_calls[0])
 
 
 if __name__ == "__main__":

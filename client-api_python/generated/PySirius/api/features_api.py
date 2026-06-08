@@ -1679,6 +1679,56 @@ class FeaturesApi:
         ).data
 
 
+    def get_sirius_frag_tree_experimental(
+        self,
+        project_id: str,
+        aligned_feature_id: str,
+        formula_id: str,
+        _request_timeout: Union[
+            None,
+            float,
+            Tuple[float, float]
+        ] = None,
+        _request_auth: Optional[Dict[str, Any]] = None,
+        _content_type: Optional[str] = None,
+        _headers: Optional[Dict[str, Any]] = None,
+        _host_index: int = 0,
+    ) -> FragmentationTree:
+        """Returns the SIRIUS fragmentation tree from the experimental endpoint."""
+        _host = None
+        _collection_formats: Dict[str, str] = {}
+        _path_params = {
+            "projectId": project_id,
+            "alignedFeatureId": aligned_feature_id,
+            "formulaId": formula_id,
+        }
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        if "Accept" not in _header_params:
+            _header_params["Accept"] = self.api_client.select_header_accept(["application/json"])
+
+        _param = self.api_client.param_serialize(
+            method="GET",
+            resource_path="/api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/sirius-fragtree",
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=None,
+            post_params=[],
+            files={},
+            auth_settings=[],
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth,
+        )
+        response_data = self.api_client.call_api(*_param, _request_timeout=_request_timeout)
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map={"200": "FragmentationTree"},
+        ).data
+
+
     @staticmethod
     def _helper_to_dict(value: Any) -> Any:
         if hasattr(value, "to_dict"):
@@ -1824,10 +1874,7 @@ class FeaturesApi:
                 quant_table.get("values") or [],
             )
         }
-        formula_opt_fields = [
-            FormulaCandidateOptField.STATISTICS,
-            FormulaCandidateOptField.FRAGMENTATIONTREE,
-        ]
+        formula_opt_fields = [FormulaCandidateOptField.STATISTICS]
         structure_opt_fields = [StructureCandidateOptField.FINGERPRINT]
 
         def enrich_feature(feature: AlignedFeature) -> Optional[Tuple[str, Dict[str, Any]]]:
@@ -1850,6 +1897,16 @@ class FeaturesApi:
                 formula_id=formula_id,
                 ms_data_search_prepared=ms_data_search_prepared,
                 opt_fields=formula_opt_fields,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            ).to_dict()
+            sirius_frag_tree = self.get_sirius_frag_tree_experimental(
+                project_id=project_id,
+                aligned_feature_id=feature_id,
+                formula_id=formula_id,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -1975,8 +2032,7 @@ class FeaturesApi:
                 ">source": project_path,
                 ">ms1peaks": merged_ms1.get("peaks"),
                 ">ms2peaks": merged_ms2.get("peaks"),
-                "FragmentationTree": top_annotation_formula.get("fragmentationTree"),
-                "topAnnotationFormulaCandidate": top_annotation_formula,
+                "SiriusFragTree": sirius_frag_tree,
             }
             return f"{project_id}_{feature_id}", record
 
