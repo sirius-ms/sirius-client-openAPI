@@ -211,6 +211,27 @@ class FakeFeaturesApi(FeaturesApi):
 
 
 class TestFeaturesApiHelpers(unittest.TestCase):
+    def test_helper_sources_coerces_numeric_strings_and_ignores_non_numeric_values(self) -> None:
+        sources = FeaturesApi._helper_sources(
+            "project-1",
+            ["sample-a", "sample-b", "sample-c", "sample-d"],
+            ["10.0", "bad", None, "20.0"],
+        )
+
+        self.assertEqual({
+            "Dataset": "project-1",
+            "SourceFiles": {
+                "sample-a": {
+                    "AbsoluteEicIntensity": 10.0,
+                    "RelativeEicIntensity": 0.5,
+                },
+                "sample-d": {
+                    "AbsoluteEicIntensity": 20.0,
+                    "RelativeEicIntensity": 1.0,
+                },
+            },
+        }, sources)
+
     def test_get_aligned_features_with_top_tree_and_metadata_attaches_formula_and_quant_values(self) -> None:
         api = FakeFeaturesApi()
 

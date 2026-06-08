@@ -9,6 +9,7 @@
     Do not edit the class manually.
 """  # noqa: E501
 
+import math
 import warnings
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
@@ -1732,20 +1733,32 @@ class FeaturesApi:
 
 
     @staticmethod
-    def _helper_sources(project_id: str, column_names: Optional[List[str]], values: Optional[List[Optional[float]]]) -> Dict[str, Any]:
+    def _helper_positive_float(value: Any) -> Optional[float]:
+        try:
+            numeric_value = float(value)
+        except (TypeError, ValueError):
+            return None
+        if not math.isfinite(numeric_value) or numeric_value <= 0:
+            return None
+        return numeric_value
+
+
+    @staticmethod
+    def _helper_sources(project_id: str, column_names: Optional[List[str]], values: Optional[List[Any]]) -> Dict[str, Any]:
         source_files = {}
-        positive_values = [
-            value for value in values or []
-            if value is not None and value == value and value > 0
-        ]
-        max_intensity = max(positive_values) if positive_values else 0
+        positive_values = []
+        for filename, value in zip(column_names or [], values or []):
+            intensity = FeaturesApi._helper_positive_float(value)
+            if intensity is not None:
+                positive_values.append((filename, intensity))
+
+        max_intensity = max((intensity for _, intensity in positive_values), default=0)
         if max_intensity:
-            for filename, intensity in zip(column_names or [], values or []):
-                if intensity is not None and intensity == intensity and intensity > 0:
-                    source_files[filename] = {
-                        "AbsoluteEicIntensity": intensity,
-                        "RelativeEicIntensity": intensity / max_intensity,
-                    }
+            for filename, intensity in positive_values:
+                source_files[filename] = {
+                    "AbsoluteEicIntensity": intensity,
+                    "RelativeEicIntensity": intensity / max_intensity,
+                }
         return {
             "Dataset": project_id,
             "SourceFiles": source_files,
