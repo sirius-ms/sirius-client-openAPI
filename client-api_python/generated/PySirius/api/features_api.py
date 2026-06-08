@@ -1620,6 +1620,379 @@ class FeaturesApi:
         return features
 
 
+    def get_structure_annotated_spectrum_experimental(
+        self,
+        project_id: str,
+        aligned_feature_id: str,
+        formula_id: str,
+        inchi_key: str,
+        spectrum_index: Optional[int] = None,
+        search_prepared: Optional[bool] = None,
+        _request_timeout: Union[
+            None,
+            float,
+            Tuple[float, float]
+        ] = None,
+        _request_auth: Optional[Dict[str, Any]] = None,
+        _content_type: Optional[str] = None,
+        _headers: Optional[Dict[str, Any]] = None,
+        _host_index: int = 0,
+    ) -> AnnotatedSpectrum:
+        """Returns the structure-annotated spectrum for the given top hit."""
+        _host = None
+        _collection_formats: Dict[str, str] = {}
+        _path_params = {
+            "projectId": project_id,
+            "alignedFeatureId": aligned_feature_id,
+            "formulaId": formula_id,
+            "inchiKey": inchi_key,
+        }
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        if spectrum_index is not None:
+            _query_params.append(("spectrumIndex", spectrum_index))
+        if search_prepared is not None:
+            _query_params.append(("searchPrepared", search_prepared))
+        if "Accept" not in _header_params:
+            _header_params["Accept"] = self.api_client.select_header_accept(["application/json"])
+
+        _param = self.api_client.param_serialize(
+            method="GET",
+            resource_path="/api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/structures/{inchiKey}/annotated-spectrum",
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=None,
+            post_params=[],
+            files={},
+            auth_settings=[],
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth,
+        )
+        response_data = self.api_client.call_api(*_param, _request_timeout=_request_timeout)
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map={"200": "AnnotatedSpectrum"},
+        ).data
+
+
+    @staticmethod
+    def _helper_to_dict(value: Any) -> Any:
+        if hasattr(value, "to_dict"):
+            return value.to_dict()
+        return value
+
+
+    @staticmethod
+    def _helper_quality_name(value: Any) -> Any:
+        if value is None:
+            return None
+        return getattr(value, "value", value)
+
+
+    @staticmethod
+    def _helper_f1_score(bits_a: set, bits_b: set) -> float:
+        if not bits_a and not bits_b:
+            return 0.0
+        intersection = len(bits_a & bits_b)
+        precision = intersection / len(bits_a) if bits_a else 0.0
+        recall = intersection / len(bits_b) if bits_b else 0.0
+        return 2 * precision * recall / (precision + recall) if precision + recall else 0.0
+
+
+    @staticmethod
+    def _helper_bits_not_common_to_all(bitsets: List[set]) -> List[int]:
+        if not bitsets:
+            return []
+        all_bits = set().union(*bitsets)
+        common_bits = set.intersection(*bitsets)
+        return sorted(all_bits - common_bits)
+
+
+    @staticmethod
+    def _helper_fingerprint_bits(candidate: Dict[str, Any]) -> set:
+        fingerprint = candidate.get("fingerprint") or {}
+        return set(fingerprint.get("bitsSet") or [])
+
+
+    @staticmethod
+    def _helper_epimetheus_intensity(peaks: List[Dict[str, Any]]) -> float:
+        total_intensity = 0.0
+        epimetheus_intensity = 0.0
+        for peak in peaks or []:
+            peak_annotation = peak.get("peakAnnotation")
+            if peak_annotation:
+                intensity = peak.get("intensity") or 0.0
+                total_intensity += intensity
+                if peak_annotation.get("substructureAtoms"):
+                    epimetheus_intensity += intensity
+        return epimetheus_intensity / total_intensity if total_intensity else 0.0
+
+
+    @staticmethod
+    def _helper_sources(project_id: str, column_names: Optional[List[str]], values: Optional[List[Optional[float]]]) -> Dict[str, Any]:
+        source_files = {}
+        positive_values = [
+            value for value in values or []
+            if value is not None and value == value and value > 0
+        ]
+        max_intensity = max(positive_values) if positive_values else 0
+        if max_intensity:
+            for filename, intensity in zip(column_names or [], values or []):
+                if intensity is not None and intensity == intensity and intensity > 0:
+                    source_files[filename] = {
+                        "AbsoluteEicIntensity": intensity,
+                        "RelativeEicIntensity": intensity / max_intensity,
+                    }
+        return {
+            "Dataset": project_id,
+            "SourceFiles": source_files,
+        }
+
+
+    def get_aligned_features_with_top_annotation_and_metadata(
+        self,
+        project_id: str,
+        project_path: Optional[str] = None,
+        ms_data_search_prepared: Optional[bool] = None,
+        opt_fields: Optional[List[Optional[AlignedFeatureOptField]]] = None,
+        quantification_type: Optional[str] = "APEX_INTENSITY",
+        top_annotation_max_workers: int = 8,
+        _request_timeout: Union[
+            None,
+            float,
+            Tuple[float, float]
+        ] = None,
+        _request_auth: Optional[Dict[str, Any]] = None,
+        _content_type: Optional[str] = None,
+        _headers: Optional[Dict[str, Any]] = None,
+        _host_index: int = 0,
+    ) -> Dict[str, Dict[str, Any]]:
+        """Return one combined metadata record per MS/MS feature with a top structure annotation."""
+        aligned_feature_opt_fields = list(opt_fields) if opt_fields is not None else []
+        required_opt_fields = [
+            AlignedFeatureOptField.MSDATA,
+            AlignedFeatureOptField.TOPANNOTATIONS,
+            AlignedFeatureOptField.QUALITIES,
+        ]
+        for required_field in required_opt_fields:
+            if not any(
+                field == required_field or field == required_field.value
+                for field in aligned_feature_opt_fields
+            ):
+                aligned_feature_opt_fields.append(required_field)
+
+        features = self.get_aligned_features(
+            project_id=project_id,
+            ms_data_search_prepared=ms_data_search_prepared,
+            opt_fields=aligned_feature_opt_fields,
+            _request_timeout=_request_timeout,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+        quant_table = self.get_quant_table_experimental(
+            project_id=project_id,
+            quantification_type=quantification_type,
+            _request_timeout=_request_timeout,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+        quant_table_column_names = quant_table.get("columnNames")
+        quant_table_values_by_feature_id = {
+            str(row_id): values
+            for row_id, values in zip(
+                quant_table.get("rowIds") or [],
+                quant_table.get("values") or [],
+            )
+        }
+        formula_opt_fields = [
+            FormulaCandidateOptField.STATISTICS,
+            FormulaCandidateOptField.FRAGMENTATIONTREE,
+        ]
+        structure_opt_fields = [StructureCandidateOptField.FINGERPRINT]
+
+        def enrich_feature(feature: AlignedFeature) -> Optional[Tuple[str, Dict[str, Any]]]:
+            feature_dict = feature.to_dict()
+            feature_id = feature_dict.get("alignedFeatureId")
+            if not feature_dict.get("hasMsMs") or not feature_id:
+                return None
+
+            top_annotations = feature_dict.get("topAnnotations") or {}
+            formula_annotation = top_annotations.get("formulaAnnotation") or {}
+            structure_annotation = top_annotations.get("structureAnnotation") or {}
+            formula_id = formula_annotation.get("formulaId")
+            inchi_key = structure_annotation.get("inchiKey")
+            if not formula_id or not inchi_key:
+                return None
+
+            top_annotation_formula = self.get_formula_candidate(
+                project_id=project_id,
+                aligned_feature_id=feature_id,
+                formula_id=formula_id,
+                ms_data_search_prepared=ms_data_search_prepared,
+                opt_fields=formula_opt_fields,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            ).to_dict()
+            formula_structure_candidates = [
+                self._helper_to_dict(candidate)
+                for candidate in self.get_structure_candidates(
+                    project_id=project_id,
+                    aligned_feature_id=feature_id,
+                    opt_fields=structure_opt_fields,
+                    _request_timeout=_request_timeout,
+                    _request_auth=_request_auth,
+                    _content_type=_content_type,
+                    _headers=_headers,
+                    _host_index=_host_index,
+                )
+            ]
+            structure_candidates = [
+                self._helper_to_dict(candidate)
+                for candidate in self.get_structure_candidates_by_formula(
+                    project_id=project_id,
+                    aligned_feature_id=feature_id,
+                    formula_id=formula_id,
+                    opt_fields=structure_opt_fields,
+                    _request_timeout=_request_timeout,
+                    _request_auth=_request_auth,
+                    _content_type=_content_type,
+                    _headers=_headers,
+                    _host_index=_host_index,
+                )
+            ]
+            top_structure_candidate = next(
+                (candidate for candidate in structure_candidates if candidate.get("inchiKey") == inchi_key),
+                structure_candidates[0] if structure_candidates else {},
+            )
+            annotation_bits = self._helper_fingerprint_bits(top_structure_candidate)
+            predicted_fingerprint = self.get_fingerprint_prediction(
+                project_id=project_id,
+                aligned_feature_id=feature_id,
+                formula_id=formula_id,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+            predicted_bits = {
+                index for index, value in enumerate(predicted_fingerprint or [])
+                if value > 0.5
+            }
+            annotated_spectrum = self.get_structure_annotated_spectrum_experimental(
+                project_id=project_id,
+                aligned_feature_id=feature_id,
+                formula_id=formula_id,
+                inchi_key=inchi_key,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            ).to_dict()
+            annotated_peaks = annotated_spectrum.get("peaks") or []
+            mismatch_count = len(predicted_bits.symmetric_difference(annotation_bits))
+            fingerprint_union = predicted_bits.union(annotation_bits)
+            mismatch_fraction = mismatch_count / len(fingerprint_union) if fingerprint_union else 1.0
+
+            smiles_candidates = []
+            fingerprints_to_mask = []
+            for candidate in formula_structure_candidates:
+                mces_distance = candidate.get("mcesDistToTopHit")
+                if mces_distance == float("inf"):
+                    break
+                if mces_distance is not None and mces_distance < float("inf"):
+                    if candidate.get("smiles"):
+                        smiles_candidates.append(candidate["smiles"])
+                    fingerprints_to_mask.append(self._helper_fingerprint_bits(candidate))
+
+            qualities = feature_dict.get("qualities") or {}
+            ms_data = feature_dict.get("msData") or {}
+            merged_ms1 = ms_data.get("mergedMs1") or {}
+            merged_ms2 = ms_data.get("mergedMs2") or {}
+            quant_values = quant_table_values_by_feature_id.get(str(feature_id))
+            median_mass_deviation = top_annotation_formula.get("medianMassDeviation") or {}
+            record = {
+                "IsotopeQuality": self._helper_quality_name(qualities.get("ISOTOPE_QUALITY")),
+                "PeakQuality": self._helper_quality_name(qualities.get("PEAK_QUALITY")),
+                "MS2Quality": self._helper_quality_name(qualities.get("MS2_QUALITY")),
+                "NumOfExplainedPeaks": top_annotation_formula.get("numOfExplainedPeaks"),
+                "NumOfExplainablePeaks": top_annotation_formula.get("numOfExplainablePeaks"),
+                "TotalExplainedIntensity": top_annotation_formula.get("totalExplainedIntensity"),
+                "MedianMassDeviationPPM": median_mass_deviation.get("ppm"),
+                "AbsoluteMedianMassDeviation": median_mass_deviation.get("absolute"),
+                "RTStartSeconds": feature_dict.get("rtStartSeconds"),
+                "RTEndSeconds": feature_dict.get("rtEndSeconds"),
+                "RTApexSeconds": feature_dict.get("rtApexSeconds"),
+                "Sources": self._helper_sources(project_id, quant_table_column_names, quant_values),
+                "confidence": max(0.0, top_annotations.get("confidenceApproxMatch") or 0.0),
+                "f1": self._helper_f1_score(predicted_bits, annotation_bits),
+                "epimetheus_intensity": self._helper_epimetheus_intensity(annotated_peaks),
+                "missmatches": mismatch_count,
+                "missmatches_frac": mismatch_fraction,
+                "smiles_candidates": smiles_candidates,
+                "best_inchi": inchi_key,
+                "predicted_fp": sorted(predicted_bits),
+                "feature_id": feature_id,
+                "best_formula_id": formula_id,
+                "formula_structure_candidates": len(formula_structure_candidates),
+                "to_mask": self._helper_bits_not_common_to_all(fingerprints_to_mask),
+                "topFingerprint": sorted(annotation_bits),
+                "topStructureCsiScore": structure_annotation.get("csiScore"),
+                "topStructureTanimoto": structure_annotation.get("tanimotoSimilarity"),
+                "annotated": True,
+                "detectedAdducts": feature_dict.get("detectedAdducts"),
+                ">compound": structure_annotation.get("structureName"),
+                ">formula": formula_annotation.get("molecularFormula"),
+                ">parentmass": feature_dict.get("ionMass"),
+                ">ionization": formula_annotation.get("adduct"),
+                ">InChIKey": inchi_key,
+                ">smiles": structure_annotation.get("smiles"),
+                ">instrumentation": merged_ms2.get("instrument"),
+                ">source": project_path,
+                ">ms1peaks": merged_ms1.get("peaks"),
+                ">ms2peaks": merged_ms2.get("peaks"),
+                "FragmentationTree": top_annotation_formula.get("fragmentationTree"),
+                "topAnnotationFormulaCandidate": top_annotation_formula,
+            }
+            return f"{project_id}_{feature_id}", record
+
+        features_to_enrich = [
+            feature
+            for feature in features
+            if feature.has_ms_ms is True and feature.aligned_feature_id
+        ]
+        records: Dict[str, Dict[str, Any]] = {}
+        if top_annotation_max_workers > 1 and len(features_to_enrich) > 1:
+            with ThreadPoolExecutor(max_workers=min(top_annotation_max_workers, len(features_to_enrich))) as executor:
+                futures = [
+                    executor.submit(enrich_feature, feature)
+                    for feature in features_to_enrich
+                ]
+                for future in as_completed(futures):
+                    item = future.result()
+                    if item is not None:
+                        key, record = item
+                        records[key] = record
+        else:
+            for feature in features_to_enrich:
+                item = enrich_feature(feature)
+                if item is not None:
+                    key, record = item
+                    records[key] = record
+        return records
+
+
     def get_aligned_features_with_top_tree(
         self,
         project_id: str,
