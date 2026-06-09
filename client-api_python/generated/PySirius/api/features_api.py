@@ -1823,6 +1823,7 @@ class FeaturesApi:
         opt_fields: Optional[List[Optional[AlignedFeatureOptField]]] = None,
         quantification_type: Optional[str] = "APEX_INTENSITY",
         top_annotation_max_workers: int = 8,
+        include_sirius_frag_tree: bool = True,
         _request_timeout: Union[
             None,
             float,
@@ -1903,16 +1904,18 @@ class FeaturesApi:
                 _headers=_headers,
                 _host_index=_host_index,
             ).to_dict()
-            sirius_frag_tree = self.get_sirius_frag_tree_experimental(
-                project_id=project_id,
-                aligned_feature_id=feature_id,
-                formula_id=formula_id,
-                _request_timeout=_request_timeout,
-                _request_auth=_request_auth,
-                _content_type=_content_type,
-                _headers=_headers,
-                _host_index=_host_index,
-            ).to_dict()
+            sirius_frag_tree = None
+            if include_sirius_frag_tree:
+                sirius_frag_tree = self.get_sirius_frag_tree_experimental(
+                    project_id=project_id,
+                    aligned_feature_id=feature_id,
+                    formula_id=formula_id,
+                    _request_timeout=_request_timeout,
+                    _request_auth=_request_auth,
+                    _content_type=_content_type,
+                    _headers=_headers,
+                    _host_index=_host_index,
+                ).to_dict()
             formula_structure_candidates = [
                 self._helper_to_dict(candidate)
                 for candidate in self.get_structure_candidates(
@@ -1975,7 +1978,8 @@ class FeaturesApi:
             fingerprint_union = predicted_bits.union(annotation_bits)
             mismatch_fraction = mismatch_count / len(fingerprint_union) if fingerprint_union else 1.0
 
-            smiles_candidates = []
+            smiles_at_mces2 = []
+            inchikey_at_mces2 = []
             fingerprints_to_mask = []
             for candidate in formula_structure_candidates:
                 mces_distance = candidate.get("mcesDistToTopHit")
@@ -1983,8 +1987,11 @@ class FeaturesApi:
                     break
                 if mces_distance is not None and mces_distance < float("inf"):
                     if candidate.get("smiles"):
-                        smiles_candidates.append(candidate["smiles"])
+                        smiles_at_mces2.append(candidate["smiles"])
+                    if candidate.get("inchiKey"):
+                        inchikey_at_mces2.append(candidate["inchiKey"])
                     fingerprints_to_mask.append(self._helper_fingerprint_bits(candidate))
+            top_structure_candidates = formula_structure_candidates[:10]
 
             qualities = feature_dict.get("qualities") or {}
             ms_data = feature_dict.get("msData") or {}
@@ -2010,7 +2017,18 @@ class FeaturesApi:
                 "epimetheus_intensity": self._helper_epimetheus_intensity(annotated_peaks),
                 "missmatches": mismatch_count,
                 "missmatches_frac": mismatch_fraction,
-                "smiles_candidates": smiles_candidates,
+                "smiles_at_mces2": smiles_at_mces2,
+                "inchikey_at_mces2": inchikey_at_mces2,
+                "top_strucuteres_smiles": [
+                    candidate["smiles"]
+                    for candidate in top_structure_candidates
+                    if candidate.get("smiles")
+                ],
+                "top_strucuteres_inchikey": [
+                    candidate["inchiKey"]
+                    for candidate in top_structure_candidates
+                    if candidate.get("inchiKey")
+                ],
                 "best_inchi": inchi_key,
                 "predicted_fp": sorted(predicted_bits),
                 "feature_id": feature_id,
@@ -2032,8 +2050,9 @@ class FeaturesApi:
                 ">source": project_path,
                 ">ms1peaks": merged_ms1.get("peaks"),
                 ">ms2peaks": merged_ms2.get("peaks"),
-                "SiriusFragTree": sirius_frag_tree,
             }
+            if include_sirius_frag_tree:
+                record["SiriusFragTree"] = sirius_frag_tree
             return f"{project_id}_{feature_id}", record
 
         features_to_enrich = [

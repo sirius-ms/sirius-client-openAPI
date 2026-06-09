@@ -92,6 +92,7 @@ class FakeFeaturesApi(FeaturesApi):
                 hasMsMs=True,
                 topAnnotations=FeatureAnnotations(
                     formulaAnnotation=FormulaCandidate(formulaId="C6H12O6", rank=1),
+                    structureAnnotation=StructureCandidateScored(inchiKey="IK1"),
                 ),
             ),
             AlignedFeature(alignedFeatureId="feature-2", charge=1, detectedAdducts=["[M+H]+"], hasMsMs=False),
@@ -307,6 +308,19 @@ class TestFeaturesApiHelpers(unittest.TestCase):
             },
         }, sources)
 
+    def test_top_annotation_metadata_can_skip_sirius_frag_tree(self) -> None:
+        api = FakeFeaturesApi()
+
+        records = api.get_aligned_features_with_top_annotation_and_metadata(
+            "project-1",
+            include_sirius_frag_tree=False,
+            top_annotation_max_workers=1,
+        )
+
+        self.assertEqual(["project-1_feature-1"], list(records))
+        self.assertNotIn("SiriusFragTree", records["project-1_feature-1"])
+        self.assertEqual([], api.sirius_frag_tree_calls)
+
     def test_get_aligned_features_with_top_tree_and_metadata_attaches_formula_and_quant_values(self) -> None:
         api = FakeFeaturesApi()
 
@@ -514,7 +528,11 @@ class TestFeaturesApiHelpers(unittest.TestCase):
         self.assertEqual(0.8, record["epimetheus_intensity"])
         self.assertEqual(0, record["missmatches"])
         self.assertEqual(0.0, record["missmatches_frac"])
-        self.assertEqual(["CCO", "CCC"], record["smiles_candidates"])
+        self.assertNotIn("smiles_candidates", record)
+        self.assertEqual(["CCO", "CCC"], record["smiles_at_mces2"])
+        self.assertEqual(["IK1", "IK2"], record["inchikey_at_mces2"])
+        self.assertEqual(["CCO", "CCC", "CCCC"], record["top_strucuteres_smiles"])
+        self.assertEqual(["IK1", "IK2", "IK3"], record["top_strucuteres_inchikey"])
         self.assertEqual("IK1", record["best_inchi"])
         self.assertEqual([0, 2], record["predicted_fp"])
         self.assertEqual("feature-1", record["feature_id"])
