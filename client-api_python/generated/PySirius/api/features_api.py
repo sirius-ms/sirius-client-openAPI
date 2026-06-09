@@ -1693,7 +1693,7 @@ class FeaturesApi:
         _content_type: Optional[str] = None,
         _headers: Optional[Dict[str, Any]] = None,
         _host_index: int = 0,
-    ) -> FragmentationTree:
+    ) -> Dict[str, Any]:
         """Returns the SIRIUS fragmentation tree from the experimental endpoint."""
         _host = None
         _collection_formats: Dict[str, str] = {}
@@ -1725,7 +1725,7 @@ class FeaturesApi:
         response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
-            response_types_map={"200": "FragmentationTree"},
+            response_types_map={"200": "object"},
         ).data
 
 
@@ -1915,7 +1915,8 @@ class FeaturesApi:
                     _content_type=_content_type,
                     _headers=_headers,
                     _host_index=_host_index,
-                ).to_dict()
+                )
+                sirius_frag_tree = self._helper_to_dict(sirius_frag_tree)
             formula_structure_candidates = [
                 self._helper_to_dict(candidate)
                 for candidate in self.get_structure_candidates(

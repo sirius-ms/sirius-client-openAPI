@@ -63,7 +63,31 @@ class FakeApiClient:
 
     def response_deserialize(self, **kwargs):
         self.response_deserialize_call = kwargs
-        return FakeApiResponse(DictModel({"treeScore": 17.5}))
+        return FakeApiResponse({
+            "molecularFormula": "C2H6O",
+            "root": "C2H6O",
+            "annotations": {
+                "treeType": "neutralized",
+                "statistics": {"explainedIntensity": 1.0},
+            },
+            "fragments": [
+                {
+                    "id": 0,
+                    "molecularFormula": "C2H6O",
+                    "scores": {"Mass Deviation": -0.01},
+                    "isotopes": {"score": 2.1},
+                    "peaks": [{"intensity": 100.0, "mz": 47.049}],
+                },
+            ],
+            "losses": [
+                {
+                    "source": 0,
+                    "target": 1,
+                    "molecularFormula": "H2O",
+                    "scores": {"CommonLossEdgeScorer": 1.4},
+                },
+            ],
+        })
 
 
 class FakeFeaturesApi(FeaturesApi):
@@ -273,7 +297,10 @@ class TestFeaturesApiHelpers(unittest.TestCase):
             _request_timeout=3.0,
         )
 
-        self.assertEqual({"treeScore": 17.5}, result.to_dict())
+        self.assertEqual("neutralized", result["annotations"]["treeType"])
+        self.assertEqual({"Mass Deviation": -0.01}, result["fragments"][0]["scores"])
+        self.assertEqual([{"intensity": 100.0, "mz": 47.049}], result["fragments"][0]["peaks"])
+        self.assertEqual({"CommonLossEdgeScorer": 1.4}, result["losses"][0]["scores"])
         self.assertTrue(api_client.response_data.read_called)
         self.assertEqual(
             "/api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/sirius-fragtree",
@@ -284,7 +311,7 @@ class TestFeaturesApiHelpers(unittest.TestCase):
             "alignedFeatureId": "feature-1",
             "formulaId": "formula-1",
         }, api_client.param_serialize_call["path_params"])
-        self.assertEqual({"200": "FragmentationTree"}, api_client.response_deserialize_call["response_types_map"])
+        self.assertEqual({"200": "object"}, api_client.response_deserialize_call["response_types_map"])
         self.assertEqual({"_request_timeout": 3.0}, api_client.call_api_call["kwargs"])
 
     def test_helper_sources_coerces_numeric_strings_and_ignores_non_numeric_values(self) -> None:
