@@ -15,6 +15,7 @@ from PySirius import (
     FormulaCandidateOptField,
     MsData,
     PagedModelFormulaCandidate,
+    SpectralLibraryMatch,
     StructureCandidateFormula,
     StructureCandidateOptField,
     StructureCandidateScored,
@@ -487,6 +488,34 @@ class TestFeaturesApiHelpers(unittest.TestCase):
                             structureName="ethanol",
                             csiScore=12.5,
                             tanimotoSimilarity=0.75,
+                            spectralLibraryMatches=[
+                                SpectralLibraryMatch(
+                                    rank=1,
+                                    similarity=0.91,
+                                    sharedPeaks=12,
+                                    querySpectrumIndex=0,
+                                    dbName="GNPS",
+                                    dbId="CCMSLIB00000000001",
+                                    uuid=101,
+                                    molecularFormula="C2H6O",
+                                    adduct="[M+H]+",
+                                    smiles="CCO",
+                                    inchiKey="IK1",
+                                ),
+                                SpectralLibraryMatch(
+                                    rank=2,
+                                    similarity=0.82,
+                                    sharedPeaks=9,
+                                    querySpectrumIndex=0,
+                                    dbName="GNPS",
+                                    dbId="CCMSLIB00000000002",
+                                    uuid=102,
+                                    molecularFormula="C2H6O",
+                                    adduct="[M+H]+",
+                                    smiles="CCO",
+                                    inchiKey="IK1",
+                                ),
+                            ],
                         ),
                     ),
                 ),
@@ -569,6 +598,20 @@ class TestFeaturesApiHelpers(unittest.TestCase):
         self.assertEqual([0, 2], record["topFingerprint"])
         self.assertEqual(12.5, record["topStructureCsiScore"])
         self.assertEqual(0.75, record["topStructureTanimoto"])
+        self.assertEqual({
+            "rank": 1,
+            "similarity": 0.91,
+            "sharedPeaks": 12,
+            "querySpectrumIndex": 0,
+            "dbName": "GNPS",
+            "dbId": "CCMSLIB00000000001",
+            "uuid": 101,
+            "molecularFormula": "C2H6O",
+            "adduct": "[M+H]+",
+            "smiles": "CCO",
+            "inchiKey": "IK1",
+            "type": "IDENTITY",
+        }, record["TopSpectralLibraryHit"])
         self.assertTrue(record["annotated"])
         self.assertEqual(["[M+H]+"], record["detectedAdducts"])
         self.assertNotIn("FragmentationTree", record)

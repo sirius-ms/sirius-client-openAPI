@@ -1744,6 +1744,21 @@ class FeaturesApi:
 
 
     @staticmethod
+    def _helper_plain_value(value: Any) -> Any:
+        if isinstance(value, dict):
+            return {
+                key: FeaturesApi._helper_plain_value(item)
+                for key, item in value.items()
+            }
+        if isinstance(value, list):
+            return [
+                FeaturesApi._helper_plain_value(item)
+                for item in value
+            ]
+        return getattr(value, "value", value)
+
+
+    @staticmethod
     def _helper_f1_score(bits_a: set, bits_b: set) -> float:
         if not bits_a and not bits_b:
             return 0.0
@@ -1887,6 +1902,7 @@ class FeaturesApi:
             top_annotations = feature_dict.get("topAnnotations") or {}
             formula_annotation = top_annotations.get("formulaAnnotation") or {}
             structure_annotation = top_annotations.get("structureAnnotation") or {}
+            spectral_library_matches = structure_annotation.get("spectralLibraryMatches") or []
             formula_id = formula_annotation.get("formulaId")
             inchi_key = structure_annotation.get("inchiKey")
             if not formula_id or not inchi_key:
@@ -2039,6 +2055,10 @@ class FeaturesApi:
                 "topFingerprint": sorted(annotation_bits),
                 "topStructureCsiScore": structure_annotation.get("csiScore"),
                 "topStructureTanimoto": structure_annotation.get("tanimotoSimilarity"),
+                "TopSpectralLibraryHit": (
+                    self._helper_plain_value(spectral_library_matches[0])
+                    if spectral_library_matches else None
+                ),
                 "annotated": True,
                 "detectedAdducts": feature_dict.get("detectedAdducts"),
                 ">compound": structure_annotation.get("structureName"),
