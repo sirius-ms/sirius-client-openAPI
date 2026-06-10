@@ -58,7 +58,7 @@ Metabolomics plays a crucial role in understanding biological systems, with mass
 for analyzing complex metabolite mixtures, due to its high sensitivity and throughput. However, compound annotation
 remains a major bottleneck in metabolomics workflows, as for the majority of detected signals no reference spectra are
 found in spectral libraries. This so-called "dark metabolome" [@dasilva15illuminating]
-necessitates approaches that can annonate metabolites without relying on spectral library matching.
+necessitates approaches that can annotate metabolites without relying on spectral library matching.
 SIRIUS [@boecker09sirius; @duehrkop19sirius4] is a comprehensive software framework for annotating
 metabolites and other small molecules from tandem mass spectrometry (MS/MS) data without the need of reference
 spectra, while still supporting spectral matching when reference spectra are available.
@@ -215,7 +215,7 @@ All client libraries include `SiriusSDK` helper classes that manage the SIRIUS R
 enable starting the service from within code with automated process detection, shutdown and restart capabilities,
 and attachment to existing instances. Methods return a central API client for streamlined access to all API modules and
 endpoints.
-Researchers can now analyze tandem mass spectrometry data with SIRIUS using standard Python, R and Java code. This
+Researchers can now analyze tandem mass spectrometry data with SIRIUS using standard Python, R, and Java code. This
 includes
 loading data, running jobs, and retrieving results without leaving their analytical environment. The clients enable
 sharing
@@ -301,11 +301,11 @@ of the client repository. All changes proposed by AI systems were manually revie
 
 # Competing interests
 
-MF, ML, MAH, KD and SB are co-founders of Bright Giant GmbH.
+MF, ML, MAH, KD, and SB are co-founders of Bright Giant GmbH.
 
 # Acknowledgements
 
-NAH, SB, MAH and MEL are supported by the Thüringer Ministerium für
+NAH, SB, MAH, and MEL are supported by the Thüringer Ministerium für
 Wirtschaft, Wissenschaft und Digitale Gesellschaft (TMWWDG) with
 funds from the European Union as part of the European Regional
 Development Fund (ERDF, 2023 VFE 0003 and 0029).
