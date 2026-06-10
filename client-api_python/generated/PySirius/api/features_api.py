@@ -1873,6 +1873,14 @@ class FeaturesApi:
             _headers=_headers,
             _host_index=_host_index,
         )
+        features_to_enrich = [
+            feature
+            for feature in features
+            if feature.has_ms_ms is True and feature.aligned_feature_id
+        ]
+        if not features_to_enrich:
+            return {}
+
         quant_table = self.get_quant_table_experimental(
             project_id=project_id,
             quantification_type=quantification_type,
@@ -2076,11 +2084,6 @@ class FeaturesApi:
                 record["SiriusFragTree"] = sirius_frag_tree
             return f"{project_id}_{feature_id}", record
 
-        features_to_enrich = [
-            feature
-            for feature in features
-            if feature.has_ms_ms is True and feature.aligned_feature_id
-        ]
         records: Dict[str, Dict[str, Any]] = {}
         if top_annotation_max_workers > 1 and len(features_to_enrich) > 1:
             with ThreadPoolExecutor(max_workers=min(top_annotation_max_workers, len(features_to_enrich))) as executor:

@@ -349,6 +349,29 @@ class TestFeaturesApiHelpers(unittest.TestCase):
         self.assertNotIn("SiriusFragTree", records["project-1_feature-1"])
         self.assertEqual([], api.sirius_frag_tree_calls)
 
+    def test_top_annotation_metadata_returns_empty_dict_without_quant_table_for_empty_project(self) -> None:
+        api = FakeFeaturesApi()
+
+        def get_aligned_features(project_id, ms_data_search_prepared=None, opt_fields=None, **kwargs):
+            api.aligned_call = {
+                "project_id": project_id,
+                "ms_data_search_prepared": ms_data_search_prepared,
+                "opt_fields": opt_fields,
+                "kwargs": kwargs,
+            }
+            return []
+
+        def get_quant_table_experimental(*args, **kwargs):
+            raise AssertionError("quant table should not be requested when there are no enrichable features")
+
+        api.get_aligned_features = get_aligned_features
+        api.get_quant_table_experimental = get_quant_table_experimental
+
+        records = api.get_aligned_features_with_top_annotation_and_metadata("empty-project")
+
+        self.assertEqual({}, records)
+        self.assertEqual("empty-project", api.aligned_call["project_id"])
+
     def test_get_aligned_features_with_top_tree_and_metadata_attaches_formula_and_quant_values(self) -> None:
         api = FakeFeaturesApi()
 
