@@ -47,6 +47,7 @@ from PySirius.models.structure_candidate_scored import StructureCandidateScored
 
 from PySirius.api_client import ApiClient, RequestSerialized
 from PySirius.api_response import ApiResponse
+from PySirius.exceptions import ServiceException
 from PySirius.rest import RESTResponseType
 
 
@@ -1987,18 +1988,30 @@ class FeaturesApi:
                 index for index, value in enumerate(predicted_fingerprint or [])
                 if value > 0.5
             }
-            annotated_spectrum = self.get_structure_annotated_spectrum_experimental(
-                project_id=project_id,
-                aligned_feature_id=feature_id,
-                formula_id=formula_id,
-                inchi_key=inchi_key,
-                _request_timeout=_request_timeout,
-                _request_auth=_request_auth,
-                _content_type=_content_type,
-                _headers=_headers,
-                _host_index=_host_index,
-            ).to_dict()
-            annotated_peaks = annotated_spectrum.get("peaks") or []
+            try:
+                annotated_spectrum = self.get_structure_annotated_spectrum_experimental(
+                    project_id=project_id,
+                    aligned_feature_id=feature_id,
+                    formula_id=formula_id,
+                    inchi_key=inchi_key,
+                    _request_timeout=_request_timeout,
+                    _request_auth=_request_auth,
+                    _content_type=_content_type,
+                    _headers=_headers,
+                    _host_index=_host_index,
+                ).to_dict()
+                annotated_peaks = annotated_spectrum.get("peaks") or []
+                epimetheus_intensity = self._helper_epimetheus_intensity(annotated_peaks)
+            except ServiceException as error:
+                if error.status != 500:
+                    raise
+                warnings.warn(
+                    "Could not retrieve the structure-annotated spectrum for "
+                    f"feature {feature_id}, formula {formula_id}, structure {inchi_key} "
+                    "after an HTTP 500; continuing with epimetheus_intensity=-1.0.",
+                    RuntimeWarning,
+                )
+                epimetheus_intensity = -1.0
             mismatch_count = len(predicted_bits.symmetric_difference(annotation_bits))
             fingerprint_union = predicted_bits.union(annotation_bits)
             mismatch_fraction = mismatch_count / len(fingerprint_union) if fingerprint_union else 1.0
@@ -2039,7 +2052,7 @@ class FeaturesApi:
                 "Sources": self._helper_sources(project_id, quant_table_column_names, quant_values),
                 "confidence": max(0.0, top_annotations.get("confidenceApproxMatch") or 0.0),
                 "f1": self._helper_f1_score(predicted_bits, annotation_bits),
-                "epimetheus_intensity": self._helper_epimetheus_intensity(annotated_peaks),
+                "epimetheus_intensity": epimetheus_intensity,
                 "missmatches": mismatch_count,
                 "missmatches_frac": mismatch_fraction,
                 "smiles_at_mces2": smiles_at_mces2,
