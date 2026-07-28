@@ -7,54 +7,39 @@
 #' @title ConsensusAnnotationsCSI
 #' @description ConsensusAnnotationsCSI Class
 #' @format An \code{R6Class} generator object
-#' @field molecularFormula Molecular formula of the consensus annotation  Might be null if no consensus formula is available. character [optional]
-#' @field compoundClasses  \link{CompoundClasses} [optional]
-#' @field supportingFeatureIds FeatureIds where the topAnnotation supports this annotation. list(character) [optional]
 #' @field selectionCriterion Null if this is a custom selection character [optional]
 #' @field csiFingerIdStructure  \link{StructureCandidate} [optional]
 #' @field confidenceExactMatch Confidence value that represents the certainty that reported consensus structure is exactly the measured one  If multiple features support this consensus structure the maximum confidence is reported numeric [optional]
 #' @field confidenceApproxMatch Confidence value that represents the certainty that the exact consensus structure or a very similar  structure (e.g. measured by Maximum Common Edge Subgraph Distance) is the measured one.  If multiple features support this consensus structure the maximum confidence is reported numeric [optional]
+#' @field molecularFormula Molecular formula of the consensus annotation  Might be null if no consensus formula is available. character [optional]
+#' @field compoundClasses  \link{CompoundClasses} [optional]
+#' @field supportingFeatureIds FeatureIds where the topAnnotation supports this annotation. list(character) [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
 #' @export
 ConsensusAnnotationsCSI <- R6::R6Class(
   "ConsensusAnnotationsCSI",
   public = list(
-    `molecularFormula` = NULL,
-    `compoundClasses` = NULL,
-    `supportingFeatureIds` = NULL,
     `selectionCriterion` = NULL,
     `csiFingerIdStructure` = NULL,
     `confidenceExactMatch` = NULL,
     `confidenceApproxMatch` = NULL,
+    `molecularFormula` = NULL,
+    `compoundClasses` = NULL,
+    `supportingFeatureIds` = NULL,
 
     #' @description
     #' Initialize a new ConsensusAnnotationsCSI class.
     #'
-    #' @param molecularFormula Molecular formula of the consensus annotation  Might be null if no consensus formula is available.
-    #' @param compoundClasses compoundClasses
-    #' @param supportingFeatureIds FeatureIds where the topAnnotation supports this annotation.
     #' @param selectionCriterion Null if this is a custom selection
     #' @param csiFingerIdStructure csiFingerIdStructure
     #' @param confidenceExactMatch Confidence value that represents the certainty that reported consensus structure is exactly the measured one  If multiple features support this consensus structure the maximum confidence is reported
     #' @param confidenceApproxMatch Confidence value that represents the certainty that the exact consensus structure or a very similar  structure (e.g. measured by Maximum Common Edge Subgraph Distance) is the measured one.  If multiple features support this consensus structure the maximum confidence is reported
+    #' @param molecularFormula Molecular formula of the consensus annotation  Might be null if no consensus formula is available.
+    #' @param compoundClasses compoundClasses
+    #' @param supportingFeatureIds FeatureIds where the topAnnotation supports this annotation.
     #' @param ... Other optional arguments.
-    initialize = function(`molecularFormula` = NULL, `compoundClasses` = NULL, `supportingFeatureIds` = NULL, `selectionCriterion` = NULL, `csiFingerIdStructure` = NULL, `confidenceExactMatch` = NULL, `confidenceApproxMatch` = NULL, ...) {
-      if (!is.null(`molecularFormula`)) {
-        if (!(is.character(`molecularFormula`) && length(`molecularFormula`) == 1)) {
-          stop(paste("Error! Invalid data for `molecularFormula`. Must be a string:", `molecularFormula`))
-        }
-        self$`molecularFormula` <- `molecularFormula`
-      }
-      if (!is.null(`compoundClasses`)) {
-        stopifnot(R6::is.R6(`compoundClasses`))
-        self$`compoundClasses` <- `compoundClasses`
-      }
-      if (!is.null(`supportingFeatureIds`)) {
-        stopifnot(is.vector(`supportingFeatureIds`), length(`supportingFeatureIds`) != 0)
-        sapply(`supportingFeatureIds`, function(x) stopifnot(is.character(x)))
-        self$`supportingFeatureIds` <- `supportingFeatureIds`
-      }
+    initialize = function(`selectionCriterion` = NULL, `csiFingerIdStructure` = NULL, `confidenceExactMatch` = NULL, `confidenceApproxMatch` = NULL, `molecularFormula` = NULL, `compoundClasses` = NULL, `supportingFeatureIds` = NULL, ...) {
       if (!is.null(`selectionCriterion`)) {
         if (!(`selectionCriterion` %in% c("MAJORITY_STRUCTURE", "CONFIDENCE_STRUCTURE", "SINGLETON_STRUCTURE", "MAJORITY_FORMULA", "TOP_FORMULA", "SINGLETON_FORMULA"))) {
           stop(paste("Error! \"", `selectionCriterion`, "\" cannot be assigned to `selectionCriterion`. Must be \"MAJORITY_STRUCTURE\", \"CONFIDENCE_STRUCTURE\", \"SINGLETON_STRUCTURE\", \"MAJORITY_FORMULA\", \"TOP_FORMULA\", \"SINGLETON_FORMULA\".", sep = ""))
@@ -79,6 +64,21 @@ ConsensusAnnotationsCSI <- R6::R6Class(
           stop(paste("Error! Invalid data for `confidenceApproxMatch`. Must be a number:", `confidenceApproxMatch`))
         }
         self$`confidenceApproxMatch` <- `confidenceApproxMatch`
+      }
+      if (!is.null(`molecularFormula`)) {
+        if (!(is.character(`molecularFormula`) && length(`molecularFormula`) == 1)) {
+          stop(paste("Error! Invalid data for `molecularFormula`. Must be a string:", `molecularFormula`))
+        }
+        self$`molecularFormula` <- `molecularFormula`
+      }
+      if (!is.null(`compoundClasses`)) {
+        stopifnot(R6::is.R6(`compoundClasses`))
+        self$`compoundClasses` <- `compoundClasses`
+      }
+      if (!is.null(`supportingFeatureIds`)) {
+        stopifnot(is.vector(`supportingFeatureIds`), length(`supportingFeatureIds`) != 0)
+        sapply(`supportingFeatureIds`, function(x) stopifnot(is.character(x)))
+        self$`supportingFeatureIds` <- `supportingFeatureIds`
       }
     },
 
@@ -113,18 +113,6 @@ ConsensusAnnotationsCSI <- R6::R6Class(
     #' @return A base R type, e.g. a list or numeric/character array.
     toSimpleType = function() {
       ConsensusAnnotationsCSIObject <- list()
-      if (!is.null(self$`molecularFormula`)) {
-        ConsensusAnnotationsCSIObject[["molecularFormula"]] <-
-          self$`molecularFormula`
-      }
-      if (!is.null(self$`compoundClasses`)) {
-        ConsensusAnnotationsCSIObject[["compoundClasses"]] <-
-          self$`compoundClasses`$toSimpleType()
-      }
-      if (!is.null(self$`supportingFeatureIds`)) {
-        ConsensusAnnotationsCSIObject[["supportingFeatureIds"]] <-
-          self$`supportingFeatureIds`
-      }
       if (!is.null(self$`selectionCriterion`)) {
         ConsensusAnnotationsCSIObject[["selectionCriterion"]] <-
           self$`selectionCriterion`
@@ -141,6 +129,18 @@ ConsensusAnnotationsCSI <- R6::R6Class(
         ConsensusAnnotationsCSIObject[["confidenceApproxMatch"]] <-
           self$`confidenceApproxMatch`
       }
+      if (!is.null(self$`molecularFormula`)) {
+        ConsensusAnnotationsCSIObject[["molecularFormula"]] <-
+          self$`molecularFormula`
+      }
+      if (!is.null(self$`compoundClasses`)) {
+        ConsensusAnnotationsCSIObject[["compoundClasses"]] <-
+          self$`compoundClasses`$toSimpleType()
+      }
+      if (!is.null(self$`supportingFeatureIds`)) {
+        ConsensusAnnotationsCSIObject[["supportingFeatureIds"]] <-
+          self$`supportingFeatureIds`
+      }
       return(ConsensusAnnotationsCSIObject)
     },
 
@@ -151,17 +151,6 @@ ConsensusAnnotationsCSI <- R6::R6Class(
     #' @return the instance of ConsensusAnnotationsCSI
     fromJSON = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
-      if (!is.null(this_object$`molecularFormula`)) {
-        self$`molecularFormula` <- this_object$`molecularFormula`
-      }
-      if (!is.null(this_object$`compoundClasses`)) {
-        `compoundclasses_object` <- CompoundClasses$new()
-        `compoundclasses_object`$fromJSON(jsonlite::toJSON(this_object$`compoundClasses`, auto_unbox = TRUE, digits = NA, null = 'null'))
-        self$`compoundClasses` <- `compoundclasses_object`
-      }
-      if (!is.null(this_object$`supportingFeatureIds`)) {
-        self$`supportingFeatureIds` <- ApiClient$new()$deserializeObj(this_object$`supportingFeatureIds`, "array[character]", loadNamespace("RSirius"))
-      }
       if (!is.null(this_object$`selectionCriterion`)) {
         if (!is.null(this_object$`selectionCriterion`) && !(this_object$`selectionCriterion` %in% c("MAJORITY_STRUCTURE", "CONFIDENCE_STRUCTURE", "SINGLETON_STRUCTURE", "MAJORITY_FORMULA", "TOP_FORMULA", "SINGLETON_FORMULA"))) {
           stop(paste("Error! \"", this_object$`selectionCriterion`, "\" cannot be assigned to `selectionCriterion`. Must be \"MAJORITY_STRUCTURE\", \"CONFIDENCE_STRUCTURE\", \"SINGLETON_STRUCTURE\", \"MAJORITY_FORMULA\", \"TOP_FORMULA\", \"SINGLETON_FORMULA\".", sep = ""))
@@ -178,6 +167,17 @@ ConsensusAnnotationsCSI <- R6::R6Class(
       }
       if (!is.null(this_object$`confidenceApproxMatch`)) {
         self$`confidenceApproxMatch` <- this_object$`confidenceApproxMatch`
+      }
+      if (!is.null(this_object$`molecularFormula`)) {
+        self$`molecularFormula` <- this_object$`molecularFormula`
+      }
+      if (!is.null(this_object$`compoundClasses`)) {
+        `compoundclasses_object` <- CompoundClasses$new()
+        `compoundclasses_object`$fromJSON(jsonlite::toJSON(this_object$`compoundClasses`, auto_unbox = TRUE, digits = NA, null = 'null'))
+        self$`compoundClasses` <- `compoundclasses_object`
+      }
+      if (!is.null(this_object$`supportingFeatureIds`)) {
+        self$`supportingFeatureIds` <- ApiClient$new()$deserializeObj(this_object$`supportingFeatureIds`, "array[character]", loadNamespace("RSirius"))
       }
       self
     },
@@ -200,9 +200,6 @@ ConsensusAnnotationsCSI <- R6::R6Class(
     #' @return the instance of ConsensusAnnotationsCSI
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
-      self$`molecularFormula` <- this_object$`molecularFormula`
-      self$`compoundClasses` <- CompoundClasses$new()$fromJSON(jsonlite::toJSON(this_object$`compoundClasses`, auto_unbox = TRUE, digits = NA, null = 'null'))
-      self$`supportingFeatureIds` <- ApiClient$new()$deserializeObj(this_object$`supportingFeatureIds`, "array[character]", loadNamespace("RSirius"))
       if (!is.null(this_object$`selectionCriterion`) && !(this_object$`selectionCriterion` %in% c("MAJORITY_STRUCTURE", "CONFIDENCE_STRUCTURE", "SINGLETON_STRUCTURE", "MAJORITY_FORMULA", "TOP_FORMULA", "SINGLETON_FORMULA"))) {
         stop(paste("Error! \"", this_object$`selectionCriterion`, "\" cannot be assigned to `selectionCriterion`. Must be \"MAJORITY_STRUCTURE\", \"CONFIDENCE_STRUCTURE\", \"SINGLETON_STRUCTURE\", \"MAJORITY_FORMULA\", \"TOP_FORMULA\", \"SINGLETON_FORMULA\".", sep = ""))
       }
@@ -210,6 +207,9 @@ ConsensusAnnotationsCSI <- R6::R6Class(
       self$`csiFingerIdStructure` <- StructureCandidate$new()$fromJSON(jsonlite::toJSON(this_object$`csiFingerIdStructure`, auto_unbox = TRUE, digits = NA, null = 'null'))
       self$`confidenceExactMatch` <- this_object$`confidenceExactMatch`
       self$`confidenceApproxMatch` <- this_object$`confidenceApproxMatch`
+      self$`molecularFormula` <- this_object$`molecularFormula`
+      self$`compoundClasses` <- CompoundClasses$new()$fromJSON(jsonlite::toJSON(this_object$`compoundClasses`, auto_unbox = TRUE, digits = NA, null = 'null'))
+      self$`supportingFeatureIds` <- ApiClient$new()$deserializeObj(this_object$`supportingFeatureIds`, "array[character]", loadNamespace("RSirius"))
       self
     },
 

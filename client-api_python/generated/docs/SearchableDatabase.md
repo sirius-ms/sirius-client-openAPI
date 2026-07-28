@@ -5,9 +5,6 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**display_name** | **str** | display name of the database  Should be short | [optional] 
-**location** | **str** | Storage location of user database  Might be NULL for non-user databases or if default location is used. | [optional] 
-**match_rt_of_reference_spectra** | **bool** | Indicates whether this database shall be used to use retention time information for library matching.  Typically used for in-house spectral libraries that have been measured on | [optional] [default to False]
 **database_id** | **str** | A unique identifier or name of the database.  Should only contain file path and url save characters  For user databases this is usually the file name. | 
 **custom_db** | **bool** | Indicates whether the database is a user managed custom database or if it is a  database that is included in SIRIUS which cannot be modified. | 
 **searchable** | **bool** | True when this database can be used as a search parameter.  False if the database is just an additional filter that can be applied after search. | 
@@ -18,6 +15,9 @@ Name | Type | Description | Notes
 **number_of_formulas** | **int** | Number of different molecular formulas available in this database. | [optional] 
 **number_of_reference_spectra** | **int** | Number of reference spectra available in this database | [optional] 
 **error_message** | **str** | Error message if the database could not be loaded | [optional] 
+**display_name** | **str** | display name of the database  Should be short | [optional] 
+**location** | **str** | Storage location of user database  Might be NULL for non-user databases or if default location is used. | [optional] 
+**match_rt_of_reference_spectra** | **bool** | Indicates whether this database shall be used to use retention time information for library matching.  Typically used for in-house spectral libraries that have been measured on | [optional] [default to False]
 
 ## Example
 

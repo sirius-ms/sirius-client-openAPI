@@ -5,10 +5,10 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**selection_criterion** | [**ConsensusCriterionDeNovo**](ConsensusCriterionDeNovo.md) |  | [optional] 
 **molecular_formula** | **str** | Molecular formula of the consensus annotation  Might be null if no consensus formula is available. | [optional] 
 **compound_classes** | [**CompoundClasses**](CompoundClasses.md) |  | [optional] 
 **supporting_feature_ids** | **List[Optional[str]]** | FeatureIds where the topAnnotation supports this annotation. | [optional] 
-**selection_criterion** | [**ConsensusCriterionDeNovo**](ConsensusCriterionDeNovo.md) |  | [optional] 
 
 ## Example
 

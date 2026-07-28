@@ -7,8 +7,6 @@
 #' @title JobSubmission
 #' @description JobSubmission Class
 #' @format An \code{R6Class} generator object
-#' @field compoundIds Compounds that should be the input for this Job  Will be converted to the respective alignedFeatureIds for computation.   At least one compoundId or alignedFeatureId needs to be specified. list(character) [optional]
-#' @field alignedFeatureIds Features (aligned over runs) that should be the input for this Job   At least one compoundId or alignedFeatureId needs to be specified. list(character) [optional]
 #' @field fallbackAdducts Describes how to deal with Adducts: Fallback adducts are considered if the auto detection did not find any indication for an ion mode.  Pos Examples: [M+H]+,[M]+,[M+K]+,[M+Na]+,[M+H-H2O]+,[M+Na2-H]+,[M+2K-H]+,[M+NH4]+,[M+H3O]+,[M+MeOH+H]+,[M+ACN+H]+,[M+2ACN+H]+,[M+IPA+H]+,[M+ACN+Na]+,[M+DMSO+H]+  Neg Examples: [M-H]-,[M]-,[M+K-2H]-,[M+Cl]-,[M-H2O-H]-,[M+Na-2H]-,M+FA-H]-,[M+Br]-,[M+HAc-H]-,[M+TFA-H]-,[M+ACN-H]- list(character) [optional]
 #' @field enforcedAdducts Describes how to deal with Adducts:  Enforced adducts that are always considered.  Pos Examples: [M+H]+,[M]+,[M+K]+,[M+Na]+,[M+H-H2O]+,[M+Na2-H]+,[M+2K-H]+,[M+NH4]+,[M+H3O]+,[M+MeOH+H]+,[M+ACN+H]+,[M+2ACN+H]+,[M+IPA+H]+,[M+ACN+Na]+,[M+DMSO+H]+  Neg Examples: [M-H]-,[M]-,[M+K-2H]-,[M+Cl]-,[M-H2O-H]-,[M+Na-2H]-,M+FA-H]-,[M+Br]-,[M+HAc-H]-,[M+TFA-H]-,[M+ACN-H]- list(character) [optional]
 #' @field detectableAdducts Describes how to deal with Adducts: Detectable adducts which are only considered if there is an indication in the MS1 scan (e.g. correct mass delta).  Pos Examples: [M+H]+,[M]+,[M+K]+,[M+Na]+,[M+H-H2O]+,[M+Na2-H]+,[M+2K-H]+,[M+NH4]+,[M+H3O]+,[M+MeOH+H]+,[M+ACN+H]+,[M+2ACN+H]+,[M+IPA+H]+,[M+ACN+Na]+,[M+DMSO+H]+  Neg Examples: [M-H]-,[M]-,[M+K-2H]-,[M+Cl]-,[M-H2O-H]-,[M+Na-2H]-,M+FA-H]-,[M+Br]-,[M+HAc-H]-,[M+TFA-H]-,[M+ACN-H]- list(character) [optional]
@@ -21,14 +19,14 @@
 #' @field structureDbSearchParams  \link{StructureDbSearch} [optional]
 #' @field msNovelistParams  \link{MsNovelist} [optional]
 #' @field configMap As an alternative to the object based parameters, this map allows to store key value pairs  of ALL SIRIUS parameters. All possible parameters can be retrieved from SIRIUS via the respective endpoint. named list(character) [optional]
+#' @field compoundIds Compounds that should be the input for this Job  Will be converted to the respective alignedFeatureIds for computation.   At least one compoundId or alignedFeatureId needs to be specified. list(character) [optional]
+#' @field alignedFeatureIds Features (aligned over runs) that should be the input for this Job   At least one compoundId or alignedFeatureId needs to be specified. list(character) [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
 #' @export
 JobSubmission <- R6::R6Class(
   "JobSubmission",
   public = list(
-    `compoundIds` = NULL,
-    `alignedFeatureIds` = NULL,
     `fallbackAdducts` = NULL,
     `enforcedAdducts` = NULL,
     `detectableAdducts` = NULL,
@@ -41,12 +39,12 @@ JobSubmission <- R6::R6Class(
     `structureDbSearchParams` = NULL,
     `msNovelistParams` = NULL,
     `configMap` = NULL,
+    `compoundIds` = NULL,
+    `alignedFeatureIds` = NULL,
 
     #' @description
     #' Initialize a new JobSubmission class.
     #'
-    #' @param compoundIds Compounds that should be the input for this Job  Will be converted to the respective alignedFeatureIds for computation.   At least one compoundId or alignedFeatureId needs to be specified.
-    #' @param alignedFeatureIds Features (aligned over runs) that should be the input for this Job   At least one compoundId or alignedFeatureId needs to be specified.
     #' @param fallbackAdducts Describes how to deal with Adducts: Fallback adducts are considered if the auto detection did not find any indication for an ion mode.  Pos Examples: [M+H]+,[M]+,[M+K]+,[M+Na]+,[M+H-H2O]+,[M+Na2-H]+,[M+2K-H]+,[M+NH4]+,[M+H3O]+,[M+MeOH+H]+,[M+ACN+H]+,[M+2ACN+H]+,[M+IPA+H]+,[M+ACN+Na]+,[M+DMSO+H]+  Neg Examples: [M-H]-,[M]-,[M+K-2H]-,[M+Cl]-,[M-H2O-H]-,[M+Na-2H]-,M+FA-H]-,[M+Br]-,[M+HAc-H]-,[M+TFA-H]-,[M+ACN-H]-
     #' @param enforcedAdducts Describes how to deal with Adducts:  Enforced adducts that are always considered.  Pos Examples: [M+H]+,[M]+,[M+K]+,[M+Na]+,[M+H-H2O]+,[M+Na2-H]+,[M+2K-H]+,[M+NH4]+,[M+H3O]+,[M+MeOH+H]+,[M+ACN+H]+,[M+2ACN+H]+,[M+IPA+H]+,[M+ACN+Na]+,[M+DMSO+H]+  Neg Examples: [M-H]-,[M]-,[M+K-2H]-,[M+Cl]-,[M-H2O-H]-,[M+Na-2H]-,M+FA-H]-,[M+Br]-,[M+HAc-H]-,[M+TFA-H]-,[M+ACN-H]-
     #' @param detectableAdducts Describes how to deal with Adducts: Detectable adducts which are only considered if there is an indication in the MS1 scan (e.g. correct mass delta).  Pos Examples: [M+H]+,[M]+,[M+K]+,[M+Na]+,[M+H-H2O]+,[M+Na2-H]+,[M+2K-H]+,[M+NH4]+,[M+H3O]+,[M+MeOH+H]+,[M+ACN+H]+,[M+2ACN+H]+,[M+IPA+H]+,[M+ACN+Na]+,[M+DMSO+H]+  Neg Examples: [M-H]-,[M]-,[M+K-2H]-,[M+Cl]-,[M-H2O-H]-,[M+Na-2H]-,M+FA-H]-,[M+Br]-,[M+HAc-H]-,[M+TFA-H]-,[M+ACN-H]-
@@ -59,18 +57,10 @@ JobSubmission <- R6::R6Class(
     #' @param structureDbSearchParams structureDbSearchParams
     #' @param msNovelistParams msNovelistParams
     #' @param configMap As an alternative to the object based parameters, this map allows to store key value pairs  of ALL SIRIUS parameters. All possible parameters can be retrieved from SIRIUS via the respective endpoint.
+    #' @param compoundIds Compounds that should be the input for this Job  Will be converted to the respective alignedFeatureIds for computation.   At least one compoundId or alignedFeatureId needs to be specified.
+    #' @param alignedFeatureIds Features (aligned over runs) that should be the input for this Job   At least one compoundId or alignedFeatureId needs to be specified.
     #' @param ... Other optional arguments.
-    initialize = function(`compoundIds` = NULL, `alignedFeatureIds` = NULL, `fallbackAdducts` = NULL, `enforcedAdducts` = NULL, `detectableAdducts` = NULL, `recompute` = NULL, `spectraSearchParams` = NULL, `formulaIdParams` = NULL, `zodiacParams` = NULL, `fingerprintPredictionParams` = NULL, `canopusParams` = NULL, `structureDbSearchParams` = NULL, `msNovelistParams` = NULL, `configMap` = NULL, ...) {
-      if (!is.null(`compoundIds`)) {
-        stopifnot(is.vector(`compoundIds`), length(`compoundIds`) != 0)
-        sapply(`compoundIds`, function(x) stopifnot(is.character(x)))
-        self$`compoundIds` <- `compoundIds`
-      }
-      if (!is.null(`alignedFeatureIds`)) {
-        stopifnot(is.vector(`alignedFeatureIds`), length(`alignedFeatureIds`) != 0)
-        sapply(`alignedFeatureIds`, function(x) stopifnot(is.character(x)))
-        self$`alignedFeatureIds` <- `alignedFeatureIds`
-      }
+    initialize = function(`fallbackAdducts` = NULL, `enforcedAdducts` = NULL, `detectableAdducts` = NULL, `recompute` = NULL, `spectraSearchParams` = NULL, `formulaIdParams` = NULL, `zodiacParams` = NULL, `fingerprintPredictionParams` = NULL, `canopusParams` = NULL, `structureDbSearchParams` = NULL, `msNovelistParams` = NULL, `configMap` = NULL, `compoundIds` = NULL, `alignedFeatureIds` = NULL, ...) {
       if (!is.null(`fallbackAdducts`)) {
         stopifnot(is.vector(`fallbackAdducts`), length(`fallbackAdducts`) != 0)
         sapply(`fallbackAdducts`, function(x) stopifnot(is.character(x)))
@@ -125,6 +115,16 @@ JobSubmission <- R6::R6Class(
         sapply(`configMap`, function(x) stopifnot(is.character(x)))
         self$`configMap` <- `configMap`
       }
+      if (!is.null(`compoundIds`)) {
+        stopifnot(is.vector(`compoundIds`), length(`compoundIds`) != 0)
+        sapply(`compoundIds`, function(x) stopifnot(is.character(x)))
+        self$`compoundIds` <- `compoundIds`
+      }
+      if (!is.null(`alignedFeatureIds`)) {
+        stopifnot(is.vector(`alignedFeatureIds`), length(`alignedFeatureIds`) != 0)
+        sapply(`alignedFeatureIds`, function(x) stopifnot(is.character(x)))
+        self$`alignedFeatureIds` <- `alignedFeatureIds`
+      }
     },
 
     #' @description
@@ -158,14 +158,6 @@ JobSubmission <- R6::R6Class(
     #' @return A base R type, e.g. a list or numeric/character array.
     toSimpleType = function() {
       JobSubmissionObject <- list()
-      if (!is.null(self$`compoundIds`)) {
-        JobSubmissionObject[["compoundIds"]] <-
-          self$`compoundIds`
-      }
-      if (!is.null(self$`alignedFeatureIds`)) {
-        JobSubmissionObject[["alignedFeatureIds"]] <-
-          self$`alignedFeatureIds`
-      }
       if (!is.null(self$`fallbackAdducts`)) {
         JobSubmissionObject[["fallbackAdducts"]] <-
           self$`fallbackAdducts`
@@ -214,6 +206,14 @@ JobSubmission <- R6::R6Class(
         JobSubmissionObject[["configMap"]] <-
           self$`configMap`
       }
+      if (!is.null(self$`compoundIds`)) {
+        JobSubmissionObject[["compoundIds"]] <-
+          self$`compoundIds`
+      }
+      if (!is.null(self$`alignedFeatureIds`)) {
+        JobSubmissionObject[["alignedFeatureIds"]] <-
+          self$`alignedFeatureIds`
+      }
       return(JobSubmissionObject)
     },
 
@@ -224,12 +224,6 @@ JobSubmission <- R6::R6Class(
     #' @return the instance of JobSubmission
     fromJSON = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
-      if (!is.null(this_object$`compoundIds`)) {
-        self$`compoundIds` <- ApiClient$new()$deserializeObj(this_object$`compoundIds`, "array[character]", loadNamespace("RSirius"))
-      }
-      if (!is.null(this_object$`alignedFeatureIds`)) {
-        self$`alignedFeatureIds` <- ApiClient$new()$deserializeObj(this_object$`alignedFeatureIds`, "array[character]", loadNamespace("RSirius"))
-      }
       if (!is.null(this_object$`fallbackAdducts`)) {
         self$`fallbackAdducts` <- ApiClient$new()$deserializeObj(this_object$`fallbackAdducts`, "array[character]", loadNamespace("RSirius"))
       }
@@ -280,6 +274,12 @@ JobSubmission <- R6::R6Class(
       if (!is.null(this_object$`configMap`)) {
         self$`configMap` <- ApiClient$new()$deserializeObj(this_object$`configMap`, "map(character)", loadNamespace("RSirius"))
       }
+      if (!is.null(this_object$`compoundIds`)) {
+        self$`compoundIds` <- ApiClient$new()$deserializeObj(this_object$`compoundIds`, "array[character]", loadNamespace("RSirius"))
+      }
+      if (!is.null(this_object$`alignedFeatureIds`)) {
+        self$`alignedFeatureIds` <- ApiClient$new()$deserializeObj(this_object$`alignedFeatureIds`, "array[character]", loadNamespace("RSirius"))
+      }
       self
     },
 
@@ -301,8 +301,6 @@ JobSubmission <- R6::R6Class(
     #' @return the instance of JobSubmission
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
-      self$`compoundIds` <- ApiClient$new()$deserializeObj(this_object$`compoundIds`, "array[character]", loadNamespace("RSirius"))
-      self$`alignedFeatureIds` <- ApiClient$new()$deserializeObj(this_object$`alignedFeatureIds`, "array[character]", loadNamespace("RSirius"))
       self$`fallbackAdducts` <- ApiClient$new()$deserializeObj(this_object$`fallbackAdducts`, "array[character]", loadNamespace("RSirius"))
       self$`enforcedAdducts` <- ApiClient$new()$deserializeObj(this_object$`enforcedAdducts`, "array[character]", loadNamespace("RSirius"))
       self$`detectableAdducts` <- ApiClient$new()$deserializeObj(this_object$`detectableAdducts`, "array[character]", loadNamespace("RSirius"))
@@ -315,6 +313,8 @@ JobSubmission <- R6::R6Class(
       self$`structureDbSearchParams` <- StructureDbSearch$new()$fromJSON(jsonlite::toJSON(this_object$`structureDbSearchParams`, auto_unbox = TRUE, digits = NA, null = 'null'))
       self$`msNovelistParams` <- MsNovelist$new()$fromJSON(jsonlite::toJSON(this_object$`msNovelistParams`, auto_unbox = TRUE, digits = NA, null = 'null'))
       self$`configMap` <- ApiClient$new()$deserializeObj(this_object$`configMap`, "map(character)", loadNamespace("RSirius"))
+      self$`compoundIds` <- ApiClient$new()$deserializeObj(this_object$`compoundIds`, "array[character]", loadNamespace("RSirius"))
+      self$`alignedFeatureIds` <- ApiClient$new()$deserializeObj(this_object$`alignedFeatureIds`, "array[character]", loadNamespace("RSirius"))
       self
     },
 

@@ -7,9 +7,6 @@
 #' @title SearchableDatabase
 #' @description SearchableDatabase Class
 #' @format An \code{R6Class} generator object
-#' @field displayName display name of the database  Should be short character [optional]
-#' @field location Storage location of user database  Might be NULL for non-user databases or if default location is used. character [optional]
-#' @field matchRtOfReferenceSpectra Indicates whether this database shall be used to use retention time information for library matching.  Typically used for in-house spectral libraries that have been measured on character [optional]
 #' @field databaseId A unique identifier or name of the database.  Should only contain file path and url save characters  For user databases this is usually the file name. character
 #' @field customDb Indicates whether the database is a user managed custom database or if it is a  database that is included in SIRIUS which cannot be modified. character
 #' @field searchable True when this database can be used as a search parameter.  False if the database is just an additional filter that can be applied after search. character
@@ -20,15 +17,15 @@
 #' @field numberOfFormulas Number of different molecular formulas available in this database. integer [optional]
 #' @field numberOfReferenceSpectra Number of reference spectra available in this database integer [optional]
 #' @field errorMessage Error message if the database could not be loaded character [optional]
+#' @field displayName display name of the database  Should be short character [optional]
+#' @field location Storage location of user database  Might be NULL for non-user databases or if default location is used. character [optional]
+#' @field matchRtOfReferenceSpectra Indicates whether this database shall be used to use retention time information for library matching.  Typically used for in-house spectral libraries that have been measured on character [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
 #' @export
 SearchableDatabase <- R6::R6Class(
   "SearchableDatabase",
   public = list(
-    `displayName` = NULL,
-    `location` = NULL,
-    `matchRtOfReferenceSpectra` = NULL,
     `databaseId` = NULL,
     `customDb` = NULL,
     `searchable` = NULL,
@@ -39,6 +36,9 @@ SearchableDatabase <- R6::R6Class(
     `numberOfFormulas` = NULL,
     `numberOfReferenceSpectra` = NULL,
     `errorMessage` = NULL,
+    `displayName` = NULL,
+    `location` = NULL,
+    `matchRtOfReferenceSpectra` = NULL,
 
     #' @description
     #' Initialize a new SearchableDatabase class.
@@ -47,17 +47,17 @@ SearchableDatabase <- R6::R6Class(
     #' @param customDb Indicates whether the database is a user managed custom database or if it is a  database that is included in SIRIUS which cannot be modified.
     #' @param searchable True when this database can be used as a search parameter.  False if the database is just an additional filter that can be applied after search.
     #' @param updateNeeded If true the database version is outdated and the database needs to be updated or re-imported before it can be used.
-    #' @param displayName display name of the database  Should be short
-    #' @param location Storage location of user database  Might be NULL for non-user databases or if default location is used.
-    #' @param matchRtOfReferenceSpectra Indicates whether this database shall be used to use retention time information for library matching.  Typically used for in-house spectral libraries that have been measured on. Default to FALSE.
     #' @param dbDate Date on which the data was imported / database was created.
     #' @param dbVersion database schema version
     #' @param numberOfStructures Number of unique compounds available in this database.
     #' @param numberOfFormulas Number of different molecular formulas available in this database.
     #' @param numberOfReferenceSpectra Number of reference spectra available in this database
     #' @param errorMessage Error message if the database could not be loaded
+    #' @param displayName display name of the database  Should be short
+    #' @param location Storage location of user database  Might be NULL for non-user databases or if default location is used.
+    #' @param matchRtOfReferenceSpectra Indicates whether this database shall be used to use retention time information for library matching.  Typically used for in-house spectral libraries that have been measured on. Default to FALSE.
     #' @param ... Other optional arguments.
-    initialize = function(`databaseId`, `customDb`, `searchable`, `updateNeeded`, `displayName` = NULL, `location` = NULL, `matchRtOfReferenceSpectra` = FALSE, `dbDate` = NULL, `dbVersion` = NULL, `numberOfStructures` = NULL, `numberOfFormulas` = NULL, `numberOfReferenceSpectra` = NULL, `errorMessage` = NULL, ...) {
+    initialize = function(`databaseId`, `customDb`, `searchable`, `updateNeeded`, `dbDate` = NULL, `dbVersion` = NULL, `numberOfStructures` = NULL, `numberOfFormulas` = NULL, `numberOfReferenceSpectra` = NULL, `errorMessage` = NULL, `displayName` = NULL, `location` = NULL, `matchRtOfReferenceSpectra` = FALSE, ...) {
       if (!missing(`databaseId`)) {
         if (!(is.character(`databaseId`) && length(`databaseId`) == 1)) {
           stop(paste("Error! Invalid data for `databaseId`. Must be a string:", `databaseId`))
@@ -81,24 +81,6 @@ SearchableDatabase <- R6::R6Class(
           stop(paste("Error! Invalid data for `updateNeeded`. Must be a boolean:", `updateNeeded`))
         }
         self$`updateNeeded` <- `updateNeeded`
-      }
-      if (!is.null(`displayName`)) {
-        if (!(is.character(`displayName`) && length(`displayName`) == 1)) {
-          stop(paste("Error! Invalid data for `displayName`. Must be a string:", `displayName`))
-        }
-        self$`displayName` <- `displayName`
-      }
-      if (!is.null(`location`)) {
-        if (!(is.character(`location`) && length(`location`) == 1)) {
-          stop(paste("Error! Invalid data for `location`. Must be a string:", `location`))
-        }
-        self$`location` <- `location`
-      }
-      if (!is.null(`matchRtOfReferenceSpectra`)) {
-        if (!(is.logical(`matchRtOfReferenceSpectra`) && length(`matchRtOfReferenceSpectra`) == 1)) {
-          stop(paste("Error! Invalid data for `matchRtOfReferenceSpectra`. Must be a boolean:", `matchRtOfReferenceSpectra`))
-        }
-        self$`matchRtOfReferenceSpectra` <- `matchRtOfReferenceSpectra`
       }
       if (!is.null(`dbDate`)) {
         if (!(is.character(`dbDate`) && length(`dbDate`) == 1)) {
@@ -136,6 +118,24 @@ SearchableDatabase <- R6::R6Class(
         }
         self$`errorMessage` <- `errorMessage`
       }
+      if (!is.null(`displayName`)) {
+        if (!(is.character(`displayName`) && length(`displayName`) == 1)) {
+          stop(paste("Error! Invalid data for `displayName`. Must be a string:", `displayName`))
+        }
+        self$`displayName` <- `displayName`
+      }
+      if (!is.null(`location`)) {
+        if (!(is.character(`location`) && length(`location`) == 1)) {
+          stop(paste("Error! Invalid data for `location`. Must be a string:", `location`))
+        }
+        self$`location` <- `location`
+      }
+      if (!is.null(`matchRtOfReferenceSpectra`)) {
+        if (!(is.logical(`matchRtOfReferenceSpectra`) && length(`matchRtOfReferenceSpectra`) == 1)) {
+          stop(paste("Error! Invalid data for `matchRtOfReferenceSpectra`. Must be a boolean:", `matchRtOfReferenceSpectra`))
+        }
+        self$`matchRtOfReferenceSpectra` <- `matchRtOfReferenceSpectra`
+      }
     },
 
     #' @description
@@ -169,18 +169,6 @@ SearchableDatabase <- R6::R6Class(
     #' @return A base R type, e.g. a list or numeric/character array.
     toSimpleType = function() {
       SearchableDatabaseObject <- list()
-      if (!is.null(self$`displayName`)) {
-        SearchableDatabaseObject[["displayName"]] <-
-          self$`displayName`
-      }
-      if (!is.null(self$`location`)) {
-        SearchableDatabaseObject[["location"]] <-
-          self$`location`
-      }
-      if (!is.null(self$`matchRtOfReferenceSpectra`)) {
-        SearchableDatabaseObject[["matchRtOfReferenceSpectra"]] <-
-          self$`matchRtOfReferenceSpectra`
-      }
       if (!is.null(self$`databaseId`)) {
         SearchableDatabaseObject[["databaseId"]] <-
           self$`databaseId`
@@ -221,6 +209,18 @@ SearchableDatabase <- R6::R6Class(
         SearchableDatabaseObject[["errorMessage"]] <-
           self$`errorMessage`
       }
+      if (!is.null(self$`displayName`)) {
+        SearchableDatabaseObject[["displayName"]] <-
+          self$`displayName`
+      }
+      if (!is.null(self$`location`)) {
+        SearchableDatabaseObject[["location"]] <-
+          self$`location`
+      }
+      if (!is.null(self$`matchRtOfReferenceSpectra`)) {
+        SearchableDatabaseObject[["matchRtOfReferenceSpectra"]] <-
+          self$`matchRtOfReferenceSpectra`
+      }
       return(SearchableDatabaseObject)
     },
 
@@ -231,15 +231,6 @@ SearchableDatabase <- R6::R6Class(
     #' @return the instance of SearchableDatabase
     fromJSON = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
-      if (!is.null(this_object$`displayName`)) {
-        self$`displayName` <- this_object$`displayName`
-      }
-      if (!is.null(this_object$`location`)) {
-        self$`location` <- this_object$`location`
-      }
-      if (!is.null(this_object$`matchRtOfReferenceSpectra`)) {
-        self$`matchRtOfReferenceSpectra` <- this_object$`matchRtOfReferenceSpectra`
-      }
       if (!is.null(this_object$`databaseId`)) {
         self$`databaseId` <- this_object$`databaseId`
       }
@@ -270,6 +261,15 @@ SearchableDatabase <- R6::R6Class(
       if (!is.null(this_object$`errorMessage`)) {
         self$`errorMessage` <- this_object$`errorMessage`
       }
+      if (!is.null(this_object$`displayName`)) {
+        self$`displayName` <- this_object$`displayName`
+      }
+      if (!is.null(this_object$`location`)) {
+        self$`location` <- this_object$`location`
+      }
+      if (!is.null(this_object$`matchRtOfReferenceSpectra`)) {
+        self$`matchRtOfReferenceSpectra` <- this_object$`matchRtOfReferenceSpectra`
+      }
       self
     },
 
@@ -291,9 +291,6 @@ SearchableDatabase <- R6::R6Class(
     #' @return the instance of SearchableDatabase
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
-      self$`displayName` <- this_object$`displayName`
-      self$`location` <- this_object$`location`
-      self$`matchRtOfReferenceSpectra` <- this_object$`matchRtOfReferenceSpectra`
       self$`databaseId` <- this_object$`databaseId`
       self$`customDb` <- this_object$`customDb`
       self$`searchable` <- this_object$`searchable`
@@ -304,6 +301,9 @@ SearchableDatabase <- R6::R6Class(
       self$`numberOfFormulas` <- this_object$`numberOfFormulas`
       self$`numberOfReferenceSpectra` <- this_object$`numberOfReferenceSpectra`
       self$`errorMessage` <- this_object$`errorMessage`
+      self$`displayName` <- this_object$`displayName`
+      self$`location` <- this_object$`location`
+      self$`matchRtOfReferenceSpectra` <- this_object$`matchRtOfReferenceSpectra`
       self
     },
 
@@ -380,6 +380,13 @@ SearchableDatabase <- R6::R6Class(
         return(FALSE)
       }
 
+      if (nchar(self$`displayName`) > 15) {
+        return(FALSE)
+      }
+      if (nchar(self$`displayName`) < 1) {
+        return(FALSE)
+      }
+
       TRUE
     },
 
@@ -407,6 +414,13 @@ SearchableDatabase <- R6::R6Class(
       # check if the required `updateNeeded` is null
       if (is.null(self$`updateNeeded`)) {
         invalid_fields["updateNeeded"] <- "Non-nullable required field `updateNeeded` cannot be null."
+      }
+
+      if (nchar(self$`displayName`) > 15) {
+        invalid_fields["displayName"] <- "Invalid length for `displayName`, must be smaller than or equal to 15."
+      }
+      if (nchar(self$`displayName`) < 1) {
+        invalid_fields["displayName"] <- "Invalid length for `displayName`, must be bigger than or equal to 1."
       }
 
       invalid_fields
