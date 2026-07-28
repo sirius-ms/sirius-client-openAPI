@@ -32,12 +32,6 @@ df
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{molecularFormula}}{Molecular formula of the consensus annotation  Might be null if no consensus formula is available. character [optional]}
-
-\item{\code{compoundClasses}}{\link{CompoundClasses} [optional]}
-
-\item{\code{supportingFeatureIds}}{FeatureIds where the topAnnotation supports this annotation. list(character) [optional]}
-
 \item{\code{selectionCriterion}}{Null if this is a custom selection character [optional]}
 
 \item{\code{csiFingerIdStructure}}{\link{StructureCandidate} [optional]}
@@ -45,6 +39,12 @@ df
 \item{\code{confidenceExactMatch}}{Confidence value that represents the certainty that reported consensus structure is exactly the measured one  If multiple features support this consensus structure the maximum confidence is reported numeric [optional]}
 
 \item{\code{confidenceApproxMatch}}{Confidence value that represents the certainty that the exact consensus structure or a very similar  structure (e.g. measured by Maximum Common Edge Subgraph Distance) is the measured one.  If multiple features support this consensus structure the maximum confidence is reported numeric [optional]}
+
+\item{\code{molecularFormula}}{Molecular formula of the consensus annotation  Might be null if no consensus formula is available. character [optional]}
+
+\item{\code{compoundClasses}}{\link{CompoundClasses} [optional]}
+
+\item{\code{supportingFeatureIds}}{FeatureIds where the topAnnotation supports this annotation. list(character) [optional]}
 }
 \if{html}{\out{</div>}}
 }
@@ -73,13 +73,13 @@ df
 Initialize a new ConsensusAnnotationsCSI class.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ConsensusAnnotationsCSI$new(
-  molecularFormula = NULL,
-  compoundClasses = NULL,
-  supportingFeatureIds = NULL,
   selectionCriterion = NULL,
   csiFingerIdStructure = NULL,
   confidenceExactMatch = NULL,
   confidenceApproxMatch = NULL,
+  molecularFormula = NULL,
+  compoundClasses = NULL,
+  supportingFeatureIds = NULL,
   ...
 )}\if{html}{\out{</div>}}
 }
@@ -87,12 +87,6 @@ Initialize a new ConsensusAnnotationsCSI class.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{molecularFormula}}{Molecular formula of the consensus annotation  Might be null if no consensus formula is available.}
-
-\item{\code{compoundClasses}}{compoundClasses}
-
-\item{\code{supportingFeatureIds}}{FeatureIds where the topAnnotation supports this annotation.}
-
 \item{\code{selectionCriterion}}{Null if this is a custom selection}
 
 \item{\code{csiFingerIdStructure}}{csiFingerIdStructure}
@@ -100,6 +94,12 @@ Initialize a new ConsensusAnnotationsCSI class.
 \item{\code{confidenceExactMatch}}{Confidence value that represents the certainty that reported consensus structure is exactly the measured one  If multiple features support this consensus structure the maximum confidence is reported}
 
 \item{\code{confidenceApproxMatch}}{Confidence value that represents the certainty that the exact consensus structure or a very similar  structure (e.g. measured by Maximum Common Edge Subgraph Distance) is the measured one.  If multiple features support this consensus structure the maximum confidence is reported}
+
+\item{\code{molecularFormula}}{Molecular formula of the consensus annotation  Might be null if no consensus formula is available.}
+
+\item{\code{compoundClasses}}{compoundClasses}
+
+\item{\code{supportingFeatureIds}}{FeatureIds where the topAnnotation supports this annotation.}
 
 \item{\code{...}}{Other optional arguments.}
 }

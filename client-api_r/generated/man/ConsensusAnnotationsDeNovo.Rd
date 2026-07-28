@@ -32,13 +32,13 @@ df
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
+\item{\code{selectionCriterion}}{Criterion that was used to select the consensus annotation. character [optional]}
+
 \item{\code{molecularFormula}}{Molecular formula of the consensus annotation  Might be null if no consensus formula is available. character [optional]}
 
 \item{\code{compoundClasses}}{\link{CompoundClasses} [optional]}
 
 \item{\code{supportingFeatureIds}}{FeatureIds where the topAnnotation supports this annotation. list(character) [optional]}
-
-\item{\code{selectionCriterion}}{Criterion that was used to select the consensus annotation. character [optional]}
 }
 \if{html}{\out{</div>}}
 }
@@ -67,10 +67,10 @@ df
 Initialize a new ConsensusAnnotationsDeNovo class.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ConsensusAnnotationsDeNovo$new(
+  selectionCriterion = NULL,
   molecularFormula = NULL,
   compoundClasses = NULL,
   supportingFeatureIds = NULL,
-  selectionCriterion = NULL,
   ...
 )}\if{html}{\out{</div>}}
 }
@@ -78,13 +78,13 @@ Initialize a new ConsensusAnnotationsDeNovo class.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
+\item{\code{selectionCriterion}}{Criterion that was used to select the consensus annotation.}
+
 \item{\code{molecularFormula}}{Molecular formula of the consensus annotation  Might be null if no consensus formula is available.}
 
 \item{\code{compoundClasses}}{compoundClasses}
 
 \item{\code{supportingFeatureIds}}{FeatureIds where the topAnnotation supports this annotation.}
-
-\item{\code{selectionCriterion}}{Criterion that was used to select the consensus annotation.}
 
 \item{\code{...}}{Other optional arguments.}
 }

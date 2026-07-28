@@ -32,10 +32,6 @@ df
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{compoundIds}}{Compounds that should be the input for this Job  Will be converted to the respective alignedFeatureIds for computation.   At least one compoundId or alignedFeatureId needs to be specified. list(character) [optional]}
-
-\item{\code{alignedFeatureIds}}{Features (aligned over runs) that should be the input for this Job   At least one compoundId or alignedFeatureId needs to be specified. list(character) [optional]}
-
 \item{\code{fallbackAdducts}}{Describes how to deal with Adducts: Fallback adducts are considered if the auto detection did not find any indication for an ion mode.  Pos Examples: [M+H]+,[M]+,[M+K]+,[M+Na]+,[M+H-H2O]+,[M+Na2-H]+,[M+2K-H]+,[M+NH4]+,[M+H3O]+,[M+MeOH+H]+,[M+ACN+H]+,[M+2ACN+H]+,[M+IPA+H]+,[M+ACN+Na]+,[M+DMSO+H]+  Neg Examples: [M-H]-,[M]-,[M+K-2H]-,[M+Cl]-,[M-H2O-H]-,[M+Na-2H]-,M+FA-H]-,[M+Br]-,[M+HAc-H]-,[M+TFA-H]-,[M+ACN-H]- list(character) [optional]}
 
 \item{\code{enforcedAdducts}}{Describes how to deal with Adducts:  Enforced adducts that are always considered.  Pos Examples: [M+H]+,[M]+,[M+K]+,[M+Na]+,[M+H-H2O]+,[M+Na2-H]+,[M+2K-H]+,[M+NH4]+,[M+H3O]+,[M+MeOH+H]+,[M+ACN+H]+,[M+2ACN+H]+,[M+IPA+H]+,[M+ACN+Na]+,[M+DMSO+H]+  Neg Examples: [M-H]-,[M]-,[M+K-2H]-,[M+Cl]-,[M-H2O-H]-,[M+Na-2H]-,M+FA-H]-,[M+Br]-,[M+HAc-H]-,[M+TFA-H]-,[M+ACN-H]- list(character) [optional]}
@@ -59,6 +55,10 @@ df
 \item{\code{msNovelistParams}}{\link{MsNovelist} [optional]}
 
 \item{\code{configMap}}{As an alternative to the object based parameters, this map allows to store key value pairs  of ALL SIRIUS parameters. All possible parameters can be retrieved from SIRIUS via the respective endpoint. named list(character) [optional]}
+
+\item{\code{compoundIds}}{Compounds that should be the input for this Job  Will be converted to the respective alignedFeatureIds for computation.   At least one compoundId or alignedFeatureId needs to be specified. list(character) [optional]}
+
+\item{\code{alignedFeatureIds}}{Features (aligned over runs) that should be the input for this Job   At least one compoundId or alignedFeatureId needs to be specified. list(character) [optional]}
 }
 \if{html}{\out{</div>}}
 }
@@ -87,8 +87,6 @@ df
 Initialize a new JobSubmission class.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{JobSubmission$new(
-  compoundIds = NULL,
-  alignedFeatureIds = NULL,
   fallbackAdducts = NULL,
   enforcedAdducts = NULL,
   detectableAdducts = NULL,
@@ -101,6 +99,8 @@ Initialize a new JobSubmission class.
   structureDbSearchParams = NULL,
   msNovelistParams = NULL,
   configMap = NULL,
+  compoundIds = NULL,
+  alignedFeatureIds = NULL,
   ...
 )}\if{html}{\out{</div>}}
 }
@@ -108,10 +108,6 @@ Initialize a new JobSubmission class.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{compoundIds}}{Compounds that should be the input for this Job  Will be converted to the respective alignedFeatureIds for computation.   At least one compoundId or alignedFeatureId needs to be specified.}
-
-\item{\code{alignedFeatureIds}}{Features (aligned over runs) that should be the input for this Job   At least one compoundId or alignedFeatureId needs to be specified.}
-
 \item{\code{fallbackAdducts}}{Describes how to deal with Adducts: Fallback adducts are considered if the auto detection did not find any indication for an ion mode.  Pos Examples: [M+H]+,[M]+,[M+K]+,[M+Na]+,[M+H-H2O]+,[M+Na2-H]+,[M+2K-H]+,[M+NH4]+,[M+H3O]+,[M+MeOH+H]+,[M+ACN+H]+,[M+2ACN+H]+,[M+IPA+H]+,[M+ACN+Na]+,[M+DMSO+H]+  Neg Examples: [M-H]-,[M]-,[M+K-2H]-,[M+Cl]-,[M-H2O-H]-,[M+Na-2H]-,M+FA-H]-,[M+Br]-,[M+HAc-H]-,[M+TFA-H]-,[M+ACN-H]-}
 
 \item{\code{enforcedAdducts}}{Describes how to deal with Adducts:  Enforced adducts that are always considered.  Pos Examples: [M+H]+,[M]+,[M+K]+,[M+Na]+,[M+H-H2O]+,[M+Na2-H]+,[M+2K-H]+,[M+NH4]+,[M+H3O]+,[M+MeOH+H]+,[M+ACN+H]+,[M+2ACN+H]+,[M+IPA+H]+,[M+ACN+Na]+,[M+DMSO+H]+  Neg Examples: [M-H]-,[M]-,[M+K-2H]-,[M+Cl]-,[M-H2O-H]-,[M+Na-2H]-,M+FA-H]-,[M+Br]-,[M+HAc-H]-,[M+TFA-H]-,[M+ACN-H]-}
@@ -135,6 +131,10 @@ Initialize a new JobSubmission class.
 \item{\code{msNovelistParams}}{msNovelistParams}
 
 \item{\code{configMap}}{As an alternative to the object based parameters, this map allows to store key value pairs  of ALL SIRIUS parameters. All possible parameters can be retrieved from SIRIUS via the respective endpoint.}
+
+\item{\code{compoundIds}}{Compounds that should be the input for this Job  Will be converted to the respective alignedFeatureIds for computation.   At least one compoundId or alignedFeatureId needs to be specified.}
+
+\item{\code{alignedFeatureIds}}{Features (aligned over runs) that should be the input for this Job   At least one compoundId or alignedFeatureId needs to be specified.}
 
 \item{\code{...}}{Other optional arguments.}
 }

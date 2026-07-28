@@ -32,12 +32,6 @@ df
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{displayName}}{display name of the database  Should be short character [optional]}
-
-\item{\code{location}}{Storage location of user database  Might be NULL for non-user databases or if default location is used. character [optional]}
-
-\item{\code{matchRtOfReferenceSpectra}}{Indicates whether this database shall be used to use retention time information for library matching.  Typically used for in-house spectral libraries that have been measured on character [optional]}
-
 \item{\code{databaseId}}{A unique identifier or name of the database.  Should only contain file path and url save characters  For user databases this is usually the file name. character}
 
 \item{\code{customDb}}{Indicates whether the database is a user managed custom database or if it is a  database that is included in SIRIUS which cannot be modified. character}
@@ -57,6 +51,12 @@ df
 \item{\code{numberOfReferenceSpectra}}{Number of reference spectra available in this database integer [optional]}
 
 \item{\code{errorMessage}}{Error message if the database could not be loaded character [optional]}
+
+\item{\code{displayName}}{display name of the database  Should be short character [optional]}
+
+\item{\code{location}}{Storage location of user database  Might be NULL for non-user databases or if default location is used. character [optional]}
+
+\item{\code{matchRtOfReferenceSpectra}}{Indicates whether this database shall be used to use retention time information for library matching.  Typically used for in-house spectral libraries that have been measured on character [optional]}
 }
 \if{html}{\out{</div>}}
 }
@@ -89,15 +89,15 @@ Initialize a new SearchableDatabase class.
   customDb,
   searchable,
   updateNeeded,
-  displayName = NULL,
-  location = NULL,
-  matchRtOfReferenceSpectra = FALSE,
   dbDate = NULL,
   dbVersion = NULL,
   numberOfStructures = NULL,
   numberOfFormulas = NULL,
   numberOfReferenceSpectra = NULL,
   errorMessage = NULL,
+  displayName = NULL,
+  location = NULL,
+  matchRtOfReferenceSpectra = FALSE,
   ...
 )}\if{html}{\out{</div>}}
 }
@@ -113,12 +113,6 @@ Initialize a new SearchableDatabase class.
 
 \item{\code{updateNeeded}}{If true the database version is outdated and the database needs to be updated or re-imported before it can be used.}
 
-\item{\code{displayName}}{display name of the database  Should be short}
-
-\item{\code{location}}{Storage location of user database  Might be NULL for non-user databases or if default location is used.}
-
-\item{\code{matchRtOfReferenceSpectra}}{Indicates whether this database shall be used to use retention time information for library matching.  Typically used for in-house spectral libraries that have been measured on. Default to FALSE.}
-
 \item{\code{dbDate}}{Date on which the data was imported / database was created.}
 
 \item{\code{dbVersion}}{database schema version}
@@ -130,6 +124,12 @@ Initialize a new SearchableDatabase class.
 \item{\code{numberOfReferenceSpectra}}{Number of reference spectra available in this database}
 
 \item{\code{errorMessage}}{Error message if the database could not be loaded}
+
+\item{\code{displayName}}{display name of the database  Should be short}
+
+\item{\code{location}}{Storage location of user database  Might be NULL for non-user databases or if default location is used.}
+
+\item{\code{matchRtOfReferenceSpectra}}{Indicates whether this database shall be used to use retention time information for library matching.  Typically used for in-house spectral libraries that have been measured on. Default to FALSE.}
 
 \item{\code{...}}{Other optional arguments.}
 }
