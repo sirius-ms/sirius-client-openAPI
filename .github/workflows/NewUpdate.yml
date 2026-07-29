@@ -11,6 +11,11 @@ on:
         description: "Optional SIRIUS version to download (e.g. 6.3.3). Leave blank for latest."
         type: string
         required: false
+      allow_breaking_api_changes:
+        description: "Continue even if the new API removes or changes parts that SDK users rely on. Only for deliberate breaking releases."
+        type: boolean
+        required: false
+        default: false
 
 jobs:
   UpdateClients:
@@ -84,6 +89,17 @@ jobs:
           jq . api-docs-strings.json | sponge api-docs-strings.json
           jq . api-docs-enums.json | sponge api-docs-enums.json
         working-directory: .updater/api
+      - name: Check API backward compatibility
+        # Compares the freshly fetched docs against the committed ones, i.e. the previous release.
+        # Fails on changes that would break SDK users (operations removed or renamed, schemas or
+        # properties removed, types changed, enum constants removed, request properties becoming
+        # mandatory) unless the API version was bumped. Removing something that the previous
+        # release already marked [EXPERIMENTAL]/[INTERNAL]/[DEPRECATED] is allowed.
+        run: |
+          git show HEAD:.updater/api/api-docs-strings.json > /tmp/api-docs-strings-previous.json
+          python3 .updater/tools/api_compat_check.py \
+            /tmp/api-docs-strings-previous.json .updater/api/api-docs-strings.json \
+            ${{ inputs.allow_breaking_api_changes && '--allow-breaking' || '' }}
       - name: Update Clients
         run: |
           # load package version from file

@@ -17,7 +17,10 @@ preproc_ms2_file_2 <- paste(path_to_demo_data, "laudanosine.mgf", sep = "/")
 aligned_feature_id <- "586487310566638367"
 tomato_project <- paste(path_to_demo_data, "tomato_small.sirius", sep = "/")
 basic_spectrum <- c(BasicSpectrum$new(peaks = c(SimplePeak$new(1.23, 4.56)), precursorMz = 1.23))
-feature_import <- c(FeatureImport$new(name = "testfeature", feature_id = "testfeature", ionMass = 1.23, adduct = "[M+?]+", ms1Spectra = basic_spectrum, ms2Spectra = basic_spectrum))
+# charge is required and has no default, so it must be given: the API rejects a payload without
+# it. externalFeatureId/detectedAdducts are the actual constructor arguments (feature_id/adduct
+# would silently disappear into ...), and detectedAdducts is an array, so it needs a list.
+feature_import <- c(FeatureImport$new(ionMass = 1.23, charge = 1, name = "testfeature", externalFeatureId = "testfeature", detectedAdducts = list("[M+?]+"), ms1Spectra = basic_spectrum, ms2Spectra = basic_spectrum))
 
 test_that("AddAlignedFeatures", {
   # tests for AddAlignedFeatures
