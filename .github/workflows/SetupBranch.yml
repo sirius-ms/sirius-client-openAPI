@@ -32,9 +32,9 @@ jobs:
       - name: Call NewUpdate
         run: |
           if [ -n "${{ inputs.sirius_version }}" ]; then
-            gh workflow run NewUpdate.yml --ref ${{ inputs.target_branch }} -f target_branch=${GITHUB_REF##*/} -f sirius_version=${{ inputs.sirius_version }}
+            gh workflow run NewUpdate.yml --ref ${{ inputs.target_branch }} -f target_branch=${GITHUB_REF_NAME} -f sirius_version=${{ inputs.sirius_version }}
           else
-            gh workflow run NewUpdate.yml --ref ${{ inputs.target_branch }} -f target_branch=${GITHUB_REF##*/}
+            gh workflow run NewUpdate.yml --ref ${{ inputs.target_branch }} -f target_branch=${GITHUB_REF_NAME}
           fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

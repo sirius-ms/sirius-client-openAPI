@@ -165,7 +165,7 @@ jobs:
           commit_message: Auto-Updated OpenAPI Clients
       - name: Run RManualGeneration
         run: |
-          id=$(gh workflow run RManualGeneration.yml --ref ${GITHUB_REF##*/} | grep -oP '(?<=runs/)\d+')
+          id=$(gh workflow run RManualGeneration.yml --ref ${GITHUB_REF_NAME} | grep -oP '(?<=runs/)\d+')
           echo "run ID of RManualGeneration is: $id"
           gh run watch $id --exit-status --interval 10
           echo "generation done!"
@@ -201,6 +201,6 @@ jobs:
         run: |
           version=$(cat .updater/api/packageVersion.txt)
           echo "Running RunTests workflow with SIRIUS version: $version"
-          id=$(gh workflow run RunTests.yml --ref ${GITHUB_REF##*/} -f sirius_version="$version" | grep -oP '(?<=runs/)\d+')
+          id=$(gh workflow run RunTests.yml --ref ${GITHUB_REF_NAME} -f sirius_version="$version" | grep -oP '(?<=runs/)\d+')
           echo "run ID of RunTests is: $id"
           gh run watch $id --exit-status --interval 10
