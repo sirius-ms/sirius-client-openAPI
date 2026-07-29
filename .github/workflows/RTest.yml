@@ -48,6 +48,16 @@ jobs:
         run: |
           install.packages("/home/runner/work/sirius-client-openAPI/sirius-client-openAPI/client-api_r/generated", repos = NULL, type = "source")
         shell: Rscript {0}
+      - name: Test serialization and error handling
+        # Unit tests, they deserialize from literal JSON and mock the HTTP responses, so they need
+        # neither a running SIRIUS nor a login and run before the service is started.
+        if: always() && steps.rsirius_install.outcome == 'success'
+        run: |
+          library(RSirius)
+          library(testthat)
+          multi_reporter = MultiReporter$new(reporters=list(SummaryReporter$new(), FailReporter$new()))
+          test_file("client-api_r/generated/tests/testthat/test_serialization.R", reporter=multi_reporter)
+        shell: Rscript {0}
       - name: Determine SIRIUS version
         id: sirius_version
         run: |
