@@ -161,7 +161,9 @@ LoginAndAccountApi <- R6::R6Class(
     #' @return AccountInfo
     GetAccountInfo = function(include_subs = FALSE, data_file = NULL, ...) {
       local_var_response <- self$GetAccountInfoWithHttpInfo(include_subs, data_file = data_file, ...)
-      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
+      if (is.null(local_var_response$status_code)) { # defensive: no status code means the call never reached the API
+        local_var_response
+      } else if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
         local_var_response
@@ -256,11 +258,14 @@ LoginAndAccountApi <- R6::R6Class(
         }
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
-        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
+        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
-        ApiResponse$new("API client error", local_var_resp)
+        ApiResponse$new("API client error", local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
-        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
+        # length() instead of == "": the response body is a raw vector, and comparing a raw vector
+        # with "" yields one logical per byte, which makes || abort with
+        # "'length = <n>' in coercion to 'logical(1)'" instead of reporting the server error.
+        if (length(local_var_resp$response) == 0) {
           local_var_resp$response <- "API server error"
         }
         local_var_resp
@@ -276,7 +281,9 @@ LoginAndAccountApi <- R6::R6Class(
     #' @return character
     GetSignUpURL = function(data_file = NULL, ...) {
       local_var_response <- self$GetSignUpURLWithHttpInfo(data_file = data_file, ...)
-      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
+      if (is.null(local_var_response$status_code)) { # defensive: no status code means the call never reached the API
+        local_var_response
+      } else if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
         local_var_response
@@ -367,11 +374,14 @@ LoginAndAccountApi <- R6::R6Class(
         }
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
-        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
+        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
-        ApiResponse$new("API client error", local_var_resp)
+        ApiResponse$new("API client error", local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
-        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
+        # length() instead of == "": the response body is a raw vector, and comparing a raw vector
+        # with "" yields one logical per byte, which makes || abort with
+        # "'length = <n>' in coercion to 'logical(1)'" instead of reporting the server error.
+        if (length(local_var_resp$response) == 0) {
           local_var_resp$response <- "API server error"
         }
         local_var_resp
@@ -387,7 +397,9 @@ LoginAndAccountApi <- R6::R6Class(
     #' @return array[Subscription]
     GetSubscriptions = function(data_file = NULL, ...) {
       local_var_response <- self$GetSubscriptionsWithHttpInfo(data_file = data_file, ...)
-      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
+      if (is.null(local_var_response$status_code)) { # defensive: no status code means the call never reached the API
+        local_var_response
+      } else if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
         local_var_response
@@ -478,11 +490,14 @@ LoginAndAccountApi <- R6::R6Class(
         }
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
-        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
+        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
-        ApiResponse$new("API client error", local_var_resp)
+        ApiResponse$new("API client error", local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
-        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
+        # length() instead of == "": the response body is a raw vector, and comparing a raw vector
+        # with "" yields one logical per byte, which makes || abort with
+        # "'length = <n>' in coercion to 'logical(1)'" instead of reporting the server error.
+        if (length(local_var_resp$response) == 0) {
           local_var_resp$response <- "API server error"
         }
         local_var_resp
@@ -498,7 +513,9 @@ LoginAndAccountApi <- R6::R6Class(
     #' @return character
     IsLoggedIn = function(data_file = NULL, ...) {
       local_var_response <- self$IsLoggedInWithHttpInfo(data_file = data_file, ...)
-      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
+      if (is.null(local_var_response$status_code)) { # defensive: no status code means the call never reached the API
+        local_var_response
+      } else if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
         local_var_response
@@ -589,11 +606,14 @@ LoginAndAccountApi <- R6::R6Class(
         }
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
-        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
+        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
-        ApiResponse$new("API client error", local_var_resp)
+        ApiResponse$new("API client error", local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
-        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
+        # length() instead of == "": the response body is a raw vector, and comparing a raw vector
+        # with "" yields one logical per byte, which makes || abort with
+        # "'length = <n>' in coercion to 'logical(1)'" instead of reporting the server error.
+        if (length(local_var_resp$response) == 0) {
           local_var_resp$response <- "API server error"
         }
         local_var_resp
@@ -613,7 +633,9 @@ LoginAndAccountApi <- R6::R6Class(
     #' @return AccountInfo
     Login = function(accept_terms, account_credentials, fail_when_logged_in = FALSE, include_subs = FALSE, data_file = NULL, ...) {
       local_var_response <- self$LoginWithHttpInfo(accept_terms, account_credentials, fail_when_logged_in, include_subs, data_file = data_file, ...)
-      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
+      if (is.null(local_var_response$status_code)) { # defensive: no status code means the call never reached the API
+        local_var_response
+      } else if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
         local_var_response
@@ -732,11 +754,14 @@ LoginAndAccountApi <- R6::R6Class(
         }
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
-        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
+        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
-        ApiResponse$new("API client error", local_var_resp)
+        ApiResponse$new("API client error", local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
-        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
+        # length() instead of == "": the response body is a raw vector, and comparing a raw vector
+        # with "" yields one logical per byte, which makes || abort with
+        # "'length = <n>' in coercion to 'logical(1)'" instead of reporting the server error.
+        if (length(local_var_resp$response) == 0) {
           local_var_resp$response <- "API server error"
         }
         local_var_resp
@@ -751,7 +776,9 @@ LoginAndAccountApi <- R6::R6Class(
     #' @return void
     Logout = function(...) {
       local_var_response <- self$LogoutWithHttpInfo(...)
-      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
+      if (is.null(local_var_response$status_code)) { # defensive: no status code means the call never reached the API
+        local_var_response
+      } else if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
         local_var_response
@@ -803,11 +830,14 @@ LoginAndAccountApi <- R6::R6Class(
         local_var_resp$content <- NULL
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
-        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
+        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
-        ApiResponse$new("API client error", local_var_resp)
+        ApiResponse$new("API client error", local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
-        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
+        # length() instead of == "": the response body is a raw vector, and comparing a raw vector
+        # with "" yields one logical per byte, which makes || abort with
+        # "'length = <n>' in coercion to 'logical(1)'" instead of reporting the server error.
+        if (length(local_var_resp$response) == 0) {
           local_var_resp$response <- "API server error"
         }
         local_var_resp
@@ -822,7 +852,9 @@ LoginAndAccountApi <- R6::R6Class(
     #' @return void
     OpenPortal = function(...) {
       local_var_response <- self$OpenPortalWithHttpInfo(...)
-      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
+      if (is.null(local_var_response$status_code)) { # defensive: no status code means the call never reached the API
+        local_var_response
+      } else if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
         local_var_response
@@ -874,11 +906,14 @@ LoginAndAccountApi <- R6::R6Class(
         local_var_resp$content <- NULL
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
-        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
+        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
-        ApiResponse$new("API client error", local_var_resp)
+        ApiResponse$new("API client error", local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
-        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
+        # length() instead of == "": the response body is a raw vector, and comparing a raw vector
+        # with "" yields one logical per byte, which makes || abort with
+        # "'length = <n>' in coercion to 'logical(1)'" instead of reporting the server error.
+        if (length(local_var_resp$response) == 0) {
           local_var_resp$response <- "API server error"
         }
         local_var_resp
@@ -895,7 +930,9 @@ LoginAndAccountApi <- R6::R6Class(
     #' @return AccountInfo
     SelectSubscription = function(sid, data_file = NULL, ...) {
       local_var_response <- self$SelectSubscriptionWithHttpInfo(sid, data_file = data_file, ...)
-      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
+      if (is.null(local_var_response$status_code)) { # defensive: no status code means the call never reached the API
+        local_var_response
+      } else if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
         local_var_response
@@ -994,11 +1031,14 @@ LoginAndAccountApi <- R6::R6Class(
         }
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
-        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
+        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
-        ApiResponse$new("API client error", local_var_resp)
+        ApiResponse$new("API client error", local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
-        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
+        # length() instead of == "": the response body is a raw vector, and comparing a raw vector
+        # with "" yields one logical per byte, which makes || abort with
+        # "'length = <n>' in coercion to 'logical(1)'" instead of reporting the server error.
+        if (length(local_var_resp$response) == 0) {
           local_var_resp$response <- "API server error"
         }
         local_var_resp
@@ -1014,7 +1054,9 @@ LoginAndAccountApi <- R6::R6Class(
     #' @return character
     SignUp = function(data_file = NULL, ...) {
       local_var_response <- self$SignUpWithHttpInfo(data_file = data_file, ...)
-      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
+      if (is.null(local_var_response$status_code)) { # defensive: no status code means the call never reached the API
+        local_var_response
+      } else if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
         local_var_response
@@ -1105,11 +1147,14 @@ LoginAndAccountApi <- R6::R6Class(
         }
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
-        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
+        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
-        ApiResponse$new("API client error", local_var_resp)
+        ApiResponse$new("API client error", local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
-        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
+        # length() instead of == "": the response body is a raw vector, and comparing a raw vector
+        # with "" yields one logical per byte, which makes || abort with
+        # "'length = <n>' in coercion to 'logical(1)'" instead of reporting the server error.
+        if (length(local_var_resp$response) == 0) {
           local_var_resp$response <- "API server error"
         }
         local_var_resp

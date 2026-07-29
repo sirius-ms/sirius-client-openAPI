@@ -31,8 +31,6 @@ class JobSubmission(BaseModel):
     """
     Object to submit a job to be executed by SIRIUS
     """ # noqa: E501
-    compound_ids: Optional[List[Optional[StrictStr]]] = Field(default=None, description="Compounds that should be the input for this Job  Will be converted to the respective alignedFeatureIds for computation.   At least one compoundId or alignedFeatureId needs to be specified.", alias="compoundIds")
-    aligned_feature_ids: Optional[List[Optional[StrictStr]]] = Field(default=None, description="Features (aligned over runs) that should be the input for this Job   At least one compoundId or alignedFeatureId needs to be specified.", alias="alignedFeatureIds")
     fallback_adducts: Optional[List[Optional[StrictStr]]] = Field(default=None, description="Describes how to deal with Adducts: Fallback adducts are considered if the auto detection did not find any indication for an ion mode.  Pos Examples: [M+H]+,[M]+,[M+K]+,[M+Na]+,[M+H-H2O]+,[M+Na2-H]+,[M+2K-H]+,[M+NH4]+,[M+H3O]+,[M+MeOH+H]+,[M+ACN+H]+,[M+2ACN+H]+,[M+IPA+H]+,[M+ACN+Na]+,[M+DMSO+H]+  Neg Examples: [M-H]-,[M]-,[M+K-2H]-,[M+Cl]-,[M-H2O-H]-,[M+Na-2H]-,M+FA-H]-,[M+Br]-,[M+HAc-H]-,[M+TFA-H]-,[M+ACN-H]-", alias="fallbackAdducts")
     enforced_adducts: Optional[List[Optional[StrictStr]]] = Field(default=None, description="Describes how to deal with Adducts:  Enforced adducts that are always considered.  Pos Examples: [M+H]+,[M]+,[M+K]+,[M+Na]+,[M+H-H2O]+,[M+Na2-H]+,[M+2K-H]+,[M+NH4]+,[M+H3O]+,[M+MeOH+H]+,[M+ACN+H]+,[M+2ACN+H]+,[M+IPA+H]+,[M+ACN+Na]+,[M+DMSO+H]+  Neg Examples: [M-H]-,[M]-,[M+K-2H]-,[M+Cl]-,[M-H2O-H]-,[M+Na-2H]-,M+FA-H]-,[M+Br]-,[M+HAc-H]-,[M+TFA-H]-,[M+ACN-H]-", alias="enforcedAdducts")
     detectable_adducts: Optional[List[Optional[StrictStr]]] = Field(default=None, description="Describes how to deal with Adducts: Detectable adducts which are only considered if there is an indication in the MS1 scan (e.g. correct mass delta).  Pos Examples: [M+H]+,[M]+,[M+K]+,[M+Na]+,[M+H-H2O]+,[M+Na2-H]+,[M+2K-H]+,[M+NH4]+,[M+H3O]+,[M+MeOH+H]+,[M+ACN+H]+,[M+2ACN+H]+,[M+IPA+H]+,[M+ACN+Na]+,[M+DMSO+H]+  Neg Examples: [M-H]-,[M]-,[M+K-2H]-,[M+Cl]-,[M-H2O-H]-,[M+Na-2H]-,M+FA-H]-,[M+Br]-,[M+HAc-H]-,[M+TFA-H]-,[M+ACN-H]-", alias="detectableAdducts")
@@ -45,7 +43,9 @@ class JobSubmission(BaseModel):
     structure_db_search_params: Optional[StructureDbSearch] = Field(default=None, alias="structureDbSearchParams")
     ms_novelist_params: Optional[MsNovelist] = Field(default=None, alias="msNovelistParams")
     config_map: Optional[Dict[str, Optional[StrictStr]]] = Field(default=None, description="As an alternative to the object based parameters, this map allows to store key value pairs  of ALL SIRIUS parameters. All possible parameters can be retrieved from SIRIUS via the respective endpoint.", alias="configMap")
-    __properties: ClassVar[List[str]] = ["compoundIds", "alignedFeatureIds", "fallbackAdducts", "enforcedAdducts", "detectableAdducts", "recompute", "spectraSearchParams", "formulaIdParams", "zodiacParams", "fingerprintPredictionParams", "canopusParams", "structureDbSearchParams", "msNovelistParams", "configMap"]
+    compound_ids: Optional[List[Optional[StrictStr]]] = Field(default=None, description="Compounds that should be the input for this Job  Will be converted to the respective alignedFeatureIds for computation.   At least one compoundId or alignedFeatureId needs to be specified.", alias="compoundIds")
+    aligned_feature_ids: Optional[List[Optional[StrictStr]]] = Field(default=None, description="Features (aligned over runs) that should be the input for this Job   At least one compoundId or alignedFeatureId needs to be specified.", alias="alignedFeatureIds")
+    __properties: ClassVar[List[str]] = ["fallbackAdducts", "enforcedAdducts", "detectableAdducts", "recompute", "spectraSearchParams", "formulaIdParams", "zodiacParams", "fingerprintPredictionParams", "canopusParams", "structureDbSearchParams", "msNovelistParams", "configMap", "compoundIds", "alignedFeatureIds"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -107,16 +107,6 @@ class JobSubmission(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of ms_novelist_params
         if self.ms_novelist_params:
             _dict['msNovelistParams'] = self.ms_novelist_params.to_dict()
-        # set to None if compound_ids (nullable) is None
-        # and model_fields_set contains the field
-        if self.compound_ids is None and "compound_ids" in self.model_fields_set:
-            _dict['compoundIds'] = None
-
-        # set to None if aligned_feature_ids (nullable) is None
-        # and model_fields_set contains the field
-        if self.aligned_feature_ids is None and "aligned_feature_ids" in self.model_fields_set:
-            _dict['alignedFeatureIds'] = None
-
         # set to None if fallback_adducts (nullable) is None
         # and model_fields_set contains the field
         if self.fallback_adducts is None and "fallback_adducts" in self.model_fields_set:
@@ -177,6 +167,16 @@ class JobSubmission(BaseModel):
         if self.config_map is None and "config_map" in self.model_fields_set:
             _dict['configMap'] = None
 
+        # set to None if compound_ids (nullable) is None
+        # and model_fields_set contains the field
+        if self.compound_ids is None and "compound_ids" in self.model_fields_set:
+            _dict['compoundIds'] = None
+
+        # set to None if aligned_feature_ids (nullable) is None
+        # and model_fields_set contains the field
+        if self.aligned_feature_ids is None and "aligned_feature_ids" in self.model_fields_set:
+            _dict['alignedFeatureIds'] = None
+
         return _dict
 
     @classmethod
@@ -189,8 +189,6 @@ class JobSubmission(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "compoundIds": obj.get("compoundIds"),
-            "alignedFeatureIds": obj.get("alignedFeatureIds"),
             "fallbackAdducts": obj.get("fallbackAdducts"),
             "enforcedAdducts": obj.get("enforcedAdducts"),
             "detectableAdducts": obj.get("detectableAdducts"),
@@ -202,7 +200,9 @@ class JobSubmission(BaseModel):
             "canopusParams": Canopus.from_dict(obj["canopusParams"]) if obj.get("canopusParams") is not None else None,
             "structureDbSearchParams": StructureDbSearch.from_dict(obj["structureDbSearchParams"]) if obj.get("structureDbSearchParams") is not None else None,
             "msNovelistParams": MsNovelist.from_dict(obj["msNovelistParams"]) if obj.get("msNovelistParams") is not None else None,
-            "configMap": obj.get("configMap")
+            "configMap": obj.get("configMap"),
+            "compoundIds": obj.get("compoundIds"),
+            "alignedFeatureIds": obj.get("alignedFeatureIds")
         })
         return _obj
 

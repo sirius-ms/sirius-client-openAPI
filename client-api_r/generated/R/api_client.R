@@ -38,7 +38,7 @@ ApiClient  <- R6::R6Class(
     # base path of all requests
     base_path = "http://localhost:8080",
     # user agent in the HTTP request
-    user_agent = "OpenAPI-Generator/6.3.4/r",
+    user_agent = "OpenAPI-Generator/6.3.12/r",
     # default headers in the HTTP request
     default_headers = NULL,
     # username (HTTP basic authentication)
@@ -316,7 +316,11 @@ ApiClient  <- R6::R6Class(
       if (grepl('^(http|https)://', raw_response)) {
         resp_obj <- raw_response
       } else {
-        resp_obj <- jsonlite::fromJSON(raw_response)
+        # simplifyDataFrame = FALSE is required: by default jsonlite turns an array of objects
+        # into a data.frame, and the generated models cannot read nested model arrays back out
+        # of that, so fields like dbLinks or spectralLibraryMatches silently stay NULL.
+        # Arrays of primitives still simplify to vectors, so plain fields are unaffected.
+        resp_obj <- jsonlite::fromJSON(raw_response, simplifyDataFrame = FALSE)
       }
       self$deserializeObj(resp_obj, return_type, pkg_env)
     },
@@ -364,6 +368,13 @@ ApiClient  <- R6::R6Class(
                                                          inner_return_type, pkg_env)
               }
             }
+          } else if (is.list(obj)) {
+            # A JSON array of objects that was not simplified into a data.frame arrives as a
+            # plain list. Without this branch it silently deserialises to NULL, which is how
+            # nested model arrays (dbLinks, spectralLibraryMatches, ...) used to get lost.
+            return_obj <- lapply(obj, function(item) {
+              self$deserializeObj(item, inner_return_type, pkg_env)
+            })
           }
         }
       } else if (exists(return_type, pkg_env) && !(c(return_type) %in% primitive_types)) {

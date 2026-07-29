@@ -54,7 +54,7 @@
 #' ####################  GetCommand  ####################
 #'
 #' library(RSirius)
-#' var_job_submission <- JobSubmission$new(c("compoundIds_example"), c("alignedFeatureIds_example"), c("fallbackAdducts_example"), c("enforcedAdducts_example"), c("detectableAdducts_example"), "recompute_example", SpectralLibrarySearch$new("enabled_example", c("spectraSearchDBs_example"), 123, 123, 123, "enableAnalogueSearch_example", 123, 123, "INTENSITY", 123), Sirius$new("enabled_example", "QTOF", 123, 123, 123, "IGNORE", "filterByIsotopePattern_example", "enforceElGordoFormula_example", "performBottomUpSearch_example", 123, c("formulaSearchDBs_example"), "applyFormulaConstraintsToDBAndBottomUpSearch_example", "enforcedFormulaConstraints_example", "fallbackFormulaConstraints_example", c("detectableElements_example"), Timeout$new(123, 123), UseHeuristic$new(123, 123), "injectSpecLibMatchFormulas_example", 123, 123), Zodiac$new("enabled_example", 123, 123, "runInTwoSteps_example", ZodiacEdgeFilterThresholds$new(123, 123, 123), ZodiacEpochs$new(123, 123, 123), ZodiacLibraryScoring$new("enabled_example", 123), ZodiacAnalogueNodes$new("enabled_example", 123, 123)), FingerprintPrediction$new("enabled_example", "useScoreThreshold_example", "alwaysPredictHighRefMatches_example"), Canopus$new("enabled_example"), StructureDbSearch$new("enabled_example", c("structureSearchDBs_example"), "tagStructuresWithLipidClass_example", "OFF"), MsNovelist$new("enabled_example", 123), c(key = "inner_example")) # JobSubmission | 
+#' var_job_submission <- JobSubmission$new(c("fallbackAdducts_example"), c("enforcedAdducts_example"), c("detectableAdducts_example"), "recompute_example", SpectralLibrarySearch$new("enabled_example", c("spectraSearchDBs_example"), 123, 123, 123, "enableAnalogueSearch_example", 123, 123, "INTENSITY", 123), Sirius$new("enabled_example", "QTOF", 123, 123, 123, "IGNORE", "filterByIsotopePattern_example", "enforceElGordoFormula_example", "performBottomUpSearch_example", 123, c("formulaSearchDBs_example"), "applyFormulaConstraintsToDBAndBottomUpSearch_example", "enforcedFormulaConstraints_example", "fallbackFormulaConstraints_example", c("detectableElements_example"), Timeout$new(123, 123), UseHeuristic$new(123, 123), "injectSpecLibMatchFormulas_example", 123, 123), Zodiac$new("enabled_example", 123, 123, "runInTwoSteps_example", ZodiacEdgeFilterThresholds$new(123, 123, 123), ZodiacEpochs$new(123, 123, 123), ZodiacLibraryScoring$new("enabled_example", 123), ZodiacAnalogueNodes$new("enabled_example", 123, 123)), FingerprintPrediction$new("enabled_example", "useScoreThreshold_example", "alwaysPredictHighRefMatches_example"), Canopus$new("enabled_example"), StructureDbSearch$new("enabled_example", c("structureSearchDBs_example"), "tagStructuresWithLipidClass_example", "OFF"), MsNovelist$new("enabled_example", 123), c(key = "inner_example"), c("compoundIds_example"), c("alignedFeatureIds_example")) # JobSubmission | 
 #'
 #' #Get a CLI command for the given job configuration.
 #' api_instance <- rsirius_api$new()
@@ -189,7 +189,7 @@
 #'
 #' library(RSirius)
 #' var_name <- "name_example" # character | name of the job-config to add
-#' var_job_submission <- JobSubmission$new(c("compoundIds_example"), c("alignedFeatureIds_example"), c("fallbackAdducts_example"), c("enforcedAdducts_example"), c("detectableAdducts_example"), "recompute_example", SpectralLibrarySearch$new("enabled_example", c("spectraSearchDBs_example"), 123, 123, 123, "enableAnalogueSearch_example", 123, 123, "INTENSITY", 123), Sirius$new("enabled_example", "QTOF", 123, 123, 123, "IGNORE", "filterByIsotopePattern_example", "enforceElGordoFormula_example", "performBottomUpSearch_example", 123, c("formulaSearchDBs_example"), "applyFormulaConstraintsToDBAndBottomUpSearch_example", "enforcedFormulaConstraints_example", "fallbackFormulaConstraints_example", c("detectableElements_example"), Timeout$new(123, 123), UseHeuristic$new(123, 123), "injectSpecLibMatchFormulas_example", 123, 123), Zodiac$new("enabled_example", 123, 123, "runInTwoSteps_example", ZodiacEdgeFilterThresholds$new(123, 123, 123), ZodiacEpochs$new(123, 123, 123), ZodiacLibraryScoring$new("enabled_example", 123), ZodiacAnalogueNodes$new("enabled_example", 123, 123)), FingerprintPrediction$new("enabled_example", "useScoreThreshold_example", "alwaysPredictHighRefMatches_example"), Canopus$new("enabled_example"), StructureDbSearch$new("enabled_example", c("structureSearchDBs_example"), "tagStructuresWithLipidClass_example", "OFF"), MsNovelist$new("enabled_example", 123), c(key = "inner_example")) # JobSubmission | to add
+#' var_job_submission <- JobSubmission$new(c("fallbackAdducts_example"), c("enforcedAdducts_example"), c("detectableAdducts_example"), "recompute_example", SpectralLibrarySearch$new("enabled_example", c("spectraSearchDBs_example"), 123, 123, 123, "enableAnalogueSearch_example", 123, 123, "INTENSITY", 123), Sirius$new("enabled_example", "QTOF", 123, 123, 123, "IGNORE", "filterByIsotopePattern_example", "enforceElGordoFormula_example", "performBottomUpSearch_example", 123, c("formulaSearchDBs_example"), "applyFormulaConstraintsToDBAndBottomUpSearch_example", "enforcedFormulaConstraints_example", "fallbackFormulaConstraints_example", c("detectableElements_example"), Timeout$new(123, 123), UseHeuristic$new(123, 123), "injectSpecLibMatchFormulas_example", 123, 123), Zodiac$new("enabled_example", 123, 123, "runInTwoSteps_example", ZodiacEdgeFilterThresholds$new(123, 123, 123), ZodiacEpochs$new(123, 123, 123), ZodiacLibraryScoring$new("enabled_example", 123), ZodiacAnalogueNodes$new("enabled_example", 123, 123)), FingerprintPrediction$new("enabled_example", "useScoreThreshold_example", "alwaysPredictHighRefMatches_example"), Canopus$new("enabled_example"), StructureDbSearch$new("enabled_example", c("structureSearchDBs_example"), "tagStructuresWithLipidClass_example", "OFF"), MsNovelist$new("enabled_example", 123), c(key = "inner_example"), c("compoundIds_example"), c("alignedFeatureIds_example")) # JobSubmission | to add
 #' var_override_existing <- FALSE # character |  (Optional)
 #' var_move_parameters_to_config_map <- FALSE # character | if true, object-based parameters will be converted to and added to the generic configMap parameters in the return object (Optional)
 #'
@@ -206,7 +206,7 @@
 #'
 #' library(RSirius)
 #' var_project_id <- "project_id_example" # character | project-space to run jobs on
-#' var_job_submission <- JobSubmission$new(c("compoundIds_example"), c("alignedFeatureIds_example"), c("fallbackAdducts_example"), c("enforcedAdducts_example"), c("detectableAdducts_example"), "recompute_example", SpectralLibrarySearch$new("enabled_example", c("spectraSearchDBs_example"), 123, 123, 123, "enableAnalogueSearch_example", 123, 123, "INTENSITY", 123), Sirius$new("enabled_example", "QTOF", 123, 123, 123, "IGNORE", "filterByIsotopePattern_example", "enforceElGordoFormula_example", "performBottomUpSearch_example", 123, c("formulaSearchDBs_example"), "applyFormulaConstraintsToDBAndBottomUpSearch_example", "enforcedFormulaConstraints_example", "fallbackFormulaConstraints_example", c("detectableElements_example"), Timeout$new(123, 123), UseHeuristic$new(123, 123), "injectSpecLibMatchFormulas_example", 123, 123), Zodiac$new("enabled_example", 123, 123, "runInTwoSteps_example", ZodiacEdgeFilterThresholds$new(123, 123, 123), ZodiacEpochs$new(123, 123, 123), ZodiacLibraryScoring$new("enabled_example", 123), ZodiacAnalogueNodes$new("enabled_example", 123, 123)), FingerprintPrediction$new("enabled_example", "useScoreThreshold_example", "alwaysPredictHighRefMatches_example"), Canopus$new("enabled_example"), StructureDbSearch$new("enabled_example", c("structureSearchDBs_example"), "tagStructuresWithLipidClass_example", "OFF"), MsNovelist$new("enabled_example", 123), c(key = "inner_example")) # JobSubmission | configuration of the job that will be submitted of the job to be returned
+#' var_job_submission <- JobSubmission$new(c("fallbackAdducts_example"), c("enforcedAdducts_example"), c("detectableAdducts_example"), "recompute_example", SpectralLibrarySearch$new("enabled_example", c("spectraSearchDBs_example"), 123, 123, 123, "enableAnalogueSearch_example", 123, 123, "INTENSITY", 123), Sirius$new("enabled_example", "QTOF", 123, 123, 123, "IGNORE", "filterByIsotopePattern_example", "enforceElGordoFormula_example", "performBottomUpSearch_example", 123, c("formulaSearchDBs_example"), "applyFormulaConstraintsToDBAndBottomUpSearch_example", "enforcedFormulaConstraints_example", "fallbackFormulaConstraints_example", c("detectableElements_example"), Timeout$new(123, 123), UseHeuristic$new(123, 123), "injectSpecLibMatchFormulas_example", 123, 123), Zodiac$new("enabled_example", 123, 123, "runInTwoSteps_example", ZodiacEdgeFilterThresholds$new(123, 123, 123), ZodiacEpochs$new(123, 123, 123), ZodiacLibraryScoring$new("enabled_example", 123), ZodiacAnalogueNodes$new("enabled_example", 123, 123)), FingerprintPrediction$new("enabled_example", "useScoreThreshold_example", "alwaysPredictHighRefMatches_example"), Canopus$new("enabled_example"), StructureDbSearch$new("enabled_example", c("structureSearchDBs_example"), "tagStructuresWithLipidClass_example", "OFF"), MsNovelist$new("enabled_example", 123), c(key = "inner_example"), c("compoundIds_example"), c("alignedFeatureIds_example")) # JobSubmission | configuration of the job that will be submitted of the job to be returned
 #' var_opt_fields <- c("none") # array[character] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
 #'
 #' #Start computation for given compounds and with given parameters.
@@ -269,7 +269,9 @@ JobsApi <- R6::R6Class(
     #' @return void
     DeleteJob = function(project_id, job_id, cancel_if_running = TRUE, await_deletion = TRUE, ...) {
       local_var_response <- self$DeleteJobWithHttpInfo(project_id, job_id, cancel_if_running, await_deletion, ...)
-      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
+      if (is.null(local_var_response$status_code)) { # defensive: no status code means the call never reached the API
+        local_var_response
+      } else if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
         local_var_response
@@ -349,11 +351,14 @@ JobsApi <- R6::R6Class(
         local_var_resp$content <- NULL
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
-        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
+        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
-        ApiResponse$new("API client error", local_var_resp)
+        ApiResponse$new("API client error", local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
-        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
+        # length() instead of == "": the response body is a raw vector, and comparing a raw vector
+        # with "" yields one logical per byte, which makes || abort with
+        # "'length = <n>' in coercion to 'logical(1)'" instead of reporting the server error.
+        if (length(local_var_resp$response) == 0) {
           local_var_resp$response <- "API server error"
         }
         local_var_resp
@@ -369,7 +374,9 @@ JobsApi <- R6::R6Class(
     #' @return void
     DeleteJobConfig = function(name, ...) {
       local_var_response <- self$DeleteJobConfigWithHttpInfo(name, ...)
-      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
+      if (is.null(local_var_response$status_code)) { # defensive: no status code means the call never reached the API
+        local_var_response
+      } else if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
         local_var_response
@@ -431,11 +438,14 @@ JobsApi <- R6::R6Class(
         local_var_resp$content <- NULL
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
-        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
+        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
-        ApiResponse$new("API client error", local_var_resp)
+        ApiResponse$new("API client error", local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
-        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
+        # length() instead of == "": the response body is a raw vector, and comparing a raw vector
+        # with "" yields one logical per byte, which makes || abort with
+        # "'length = <n>' in coercion to 'logical(1)'" instead of reporting the server error.
+        if (length(local_var_resp$response) == 0) {
           local_var_resp$response <- "API server error"
         }
         local_var_resp
@@ -453,7 +463,9 @@ JobsApi <- R6::R6Class(
     #' @return void
     DeleteJobs = function(project_id, cancel_if_running = TRUE, await_deletion = TRUE, ...) {
       local_var_response <- self$DeleteJobsWithHttpInfo(project_id, cancel_if_running, await_deletion, ...)
-      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
+      if (is.null(local_var_response$status_code)) { # defensive: no status code means the call never reached the API
+        local_var_response
+      } else if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
         local_var_response
@@ -523,11 +535,14 @@ JobsApi <- R6::R6Class(
         local_var_resp$content <- NULL
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
-        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
+        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
-        ApiResponse$new("API client error", local_var_resp)
+        ApiResponse$new("API client error", local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
-        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
+        # length() instead of == "": the response body is a raw vector, and comparing a raw vector
+        # with "" yields one logical per byte, which makes || abort with
+        # "'length = <n>' in coercion to 'logical(1)'" instead of reporting the server error.
+        if (length(local_var_resp$response) == 0) {
           local_var_resp$response <- "API server error"
         }
         local_var_resp
@@ -544,7 +559,9 @@ JobsApi <- R6::R6Class(
     #' @return array[character]
     GetCommand = function(job_submission, data_file = NULL, ...) {
       local_var_response <- self$GetCommandWithHttpInfo(job_submission, data_file = data_file, ...)
-      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
+      if (is.null(local_var_response$status_code)) { # defensive: no status code means the call never reached the API
+        local_var_response
+      } else if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
         local_var_response
@@ -647,11 +664,14 @@ JobsApi <- R6::R6Class(
         }
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
-        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
+        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
-        ApiResponse$new("API client error", local_var_resp)
+        ApiResponse$new("API client error", local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
-        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
+        # length() instead of == "": the response body is a raw vector, and comparing a raw vector
+        # with "" yields one logical per byte, which makes || abort with
+        # "'length = <n>' in coercion to 'logical(1)'" instead of reporting the server error.
+        if (length(local_var_resp$response) == 0) {
           local_var_resp$response <- "API server error"
         }
         local_var_resp
@@ -670,7 +690,9 @@ JobsApi <- R6::R6Class(
     #' @return JobSubmission
     GetDefaultJobConfig = function(include_config_map = FALSE, move_parameters_to_config_map = FALSE, include_custom_dbs_for_structure_search = FALSE, data_file = NULL, ...) {
       local_var_response <- self$GetDefaultJobConfigWithHttpInfo(include_config_map, move_parameters_to_config_map, include_custom_dbs_for_structure_search, data_file = data_file, ...)
-      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
+      if (is.null(local_var_response$status_code)) { # defensive: no status code means the call never reached the API
+        local_var_response
+      } else if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
         local_var_response
@@ -773,11 +795,14 @@ JobsApi <- R6::R6Class(
         }
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
-        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
+        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
-        ApiResponse$new("API client error", local_var_resp)
+        ApiResponse$new("API client error", local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
-        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
+        # length() instead of == "": the response body is a raw vector, and comparing a raw vector
+        # with "" yields one logical per byte, which makes || abort with
+        # "'length = <n>' in coercion to 'logical(1)'" instead of reporting the server error.
+        if (length(local_var_resp$response) == 0) {
           local_var_resp$response <- "API server error"
         }
         local_var_resp
@@ -796,7 +821,9 @@ JobsApi <- R6::R6Class(
     #' @return Job
     GetJob = function(project_id, job_id, opt_fields = list("progress"), data_file = NULL, ...) {
       local_var_response <- self$GetJobWithHttpInfo(project_id, job_id, opt_fields, data_file = data_file, ...)
-      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
+      if (is.null(local_var_response$status_code)) { # defensive: no status code means the call never reached the API
+        local_var_response
+      } else if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
         local_var_response
@@ -918,11 +945,14 @@ JobsApi <- R6::R6Class(
         }
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
-        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
+        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
-        ApiResponse$new("API client error", local_var_resp)
+        ApiResponse$new("API client error", local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
-        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
+        # length() instead of == "": the response body is a raw vector, and comparing a raw vector
+        # with "" yields one logical per byte, which makes || abort with
+        # "'length = <n>' in coercion to 'logical(1)'" instead of reporting the server error.
+        if (length(local_var_resp$response) == 0) {
           local_var_resp$response <- "API server error"
         }
         local_var_resp
@@ -940,7 +970,9 @@ JobsApi <- R6::R6Class(
     #' @return StoredJobSubmission
     GetJobConfig = function(name, move_parameters_to_config_map = FALSE, data_file = NULL, ...) {
       local_var_response <- self$GetJobConfigWithHttpInfo(name, move_parameters_to_config_map, data_file = data_file, ...)
-      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
+      if (is.null(local_var_response$status_code)) { # defensive: no status code means the call never reached the API
+        local_var_response
+      } else if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
         local_var_response
@@ -1045,11 +1077,14 @@ JobsApi <- R6::R6Class(
         }
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
-        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
+        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
-        ApiResponse$new("API client error", local_var_resp)
+        ApiResponse$new("API client error", local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
-        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
+        # length() instead of == "": the response body is a raw vector, and comparing a raw vector
+        # with "" yields one logical per byte, which makes || abort with
+        # "'length = <n>' in coercion to 'logical(1)'" instead of reporting the server error.
+        if (length(local_var_resp$response) == 0) {
           local_var_resp$response <- "API server error"
         }
         local_var_resp
@@ -1065,7 +1100,9 @@ JobsApi <- R6::R6Class(
     #' @return array[character]
     GetJobConfigNames = function(data_file = NULL, ...) {
       local_var_response <- self$GetJobConfigNamesWithHttpInfo(data_file = data_file, ...)
-      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
+      if (is.null(local_var_response$status_code)) { # defensive: no status code means the call never reached the API
+        local_var_response
+      } else if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
         local_var_response
@@ -1156,11 +1193,14 @@ JobsApi <- R6::R6Class(
         }
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
-        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
+        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
-        ApiResponse$new("API client error", local_var_resp)
+        ApiResponse$new("API client error", local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
-        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
+        # length() instead of == "": the response body is a raw vector, and comparing a raw vector
+        # with "" yields one logical per byte, which makes || abort with
+        # "'length = <n>' in coercion to 'logical(1)'" instead of reporting the server error.
+        if (length(local_var_resp$response) == 0) {
           local_var_resp$response <- "API server error"
         }
         local_var_resp
@@ -1176,7 +1216,9 @@ JobsApi <- R6::R6Class(
     #' @return array[StoredJobSubmission]
     GetJobConfigs = function(data_file = NULL, ...) {
       local_var_response <- self$GetJobConfigsWithHttpInfo(data_file = data_file, ...)
-      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
+      if (is.null(local_var_response$status_code)) { # defensive: no status code means the call never reached the API
+        local_var_response
+      } else if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
         local_var_response
@@ -1267,11 +1309,14 @@ JobsApi <- R6::R6Class(
         }
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
-        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
+        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
-        ApiResponse$new("API client error", local_var_resp)
+        ApiResponse$new("API client error", local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
-        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
+        # length() instead of == "": the response body is a raw vector, and comparing a raw vector
+        # with "" yields one logical per byte, which makes || abort with
+        # "'length = <n>' in coercion to 'logical(1)'" instead of reporting the server error.
+        if (length(local_var_resp$response) == 0) {
           local_var_resp$response <- "API server error"
         }
         local_var_resp
@@ -1289,7 +1334,9 @@ JobsApi <- R6::R6Class(
     #' @return array[Job]
     GetJobs = function(project_id, opt_fields = list("none"), data_file = NULL, ...) {
       local_var_response <- self$GetJobsWithHttpInfo(project_id, opt_fields, data_file = data_file, ...)
-      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
+      if (is.null(local_var_response$status_code)) { # defensive: no status code means the call never reached the API
+        local_var_response
+      } else if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
         local_var_response
@@ -1401,11 +1448,14 @@ JobsApi <- R6::R6Class(
         }
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
-        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
+        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
-        ApiResponse$new("API client error", local_var_resp)
+        ApiResponse$new("API client error", local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
-        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
+        # length() instead of == "": the response body is a raw vector, and comparing a raw vector
+        # with "" yields one logical per byte, which makes || abort with
+        # "'length = <n>' in coercion to 'logical(1)'" instead of reporting the server error.
+        if (length(local_var_resp$response) == 0) {
           local_var_resp$response <- "API server error"
         }
         local_var_resp
@@ -1426,7 +1476,9 @@ JobsApi <- R6::R6Class(
     #' @return PagedModelJob
     GetJobsPaged = function(project_id, page = 0, size = 20, sort = NULL, opt_fields = list("none"), data_file = NULL, ...) {
       local_var_response <- self$GetJobsPagedWithHttpInfo(project_id, page, size, sort, opt_fields, data_file = data_file, ...)
-      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
+      if (is.null(local_var_response$status_code)) { # defensive: no status code means the call never reached the API
+        local_var_response
+      } else if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
         local_var_response
@@ -1559,11 +1611,14 @@ JobsApi <- R6::R6Class(
         }
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
-        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
+        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
-        ApiResponse$new("API client error", local_var_resp)
+        ApiResponse$new("API client error", local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
-        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
+        # length() instead of == "": the response body is a raw vector, and comparing a raw vector
+        # with "" yields one logical per byte, which makes || abort with
+        # "'length = <n>' in coercion to 'logical(1)'" instead of reporting the server error.
+        if (length(local_var_resp$response) == 0) {
           local_var_resp$response <- "API server error"
         }
         local_var_resp
@@ -1581,7 +1636,9 @@ JobsApi <- R6::R6Class(
     #' @return character
     HasJobs = function(project_id, include_finished = FALSE, data_file = NULL, ...) {
       local_var_response <- self$HasJobsWithHttpInfo(project_id, include_finished, data_file = data_file, ...)
-      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
+      if (is.null(local_var_response$status_code)) { # defensive: no status code means the call never reached the API
+        local_var_response
+      } else if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
         local_var_response
@@ -1686,11 +1743,14 @@ JobsApi <- R6::R6Class(
         }
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
-        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
+        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
-        ApiResponse$new("API client error", local_var_resp)
+        ApiResponse$new("API client error", local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
-        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
+        # length() instead of == "": the response body is a raw vector, and comparing a raw vector
+        # with "" yields one logical per byte, which makes || abort with
+        # "'length = <n>' in coercion to 'logical(1)'" instead of reporting the server error.
+        if (length(local_var_resp$response) == 0) {
           local_var_resp$response <- "API server error"
         }
         local_var_resp
@@ -1710,7 +1770,9 @@ JobsApi <- R6::R6Class(
     #' @return StoredJobSubmission
     SaveJobConfig = function(name, job_submission, override_existing = FALSE, move_parameters_to_config_map = FALSE, data_file = NULL, ...) {
       local_var_response <- self$SaveJobConfigWithHttpInfo(name, job_submission, override_existing, move_parameters_to_config_map, data_file = data_file, ...)
-      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
+      if (is.null(local_var_response$status_code)) { # defensive: no status code means the call never reached the API
+        local_var_response
+      } else if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
         local_var_response
@@ -1831,11 +1893,14 @@ JobsApi <- R6::R6Class(
         }
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
-        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
+        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
-        ApiResponse$new("API client error", local_var_resp)
+        ApiResponse$new("API client error", local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
-        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
+        # length() instead of == "": the response body is a raw vector, and comparing a raw vector
+        # with "" yields one logical per byte, which makes || abort with
+        # "'length = <n>' in coercion to 'logical(1)'" instead of reporting the server error.
+        if (length(local_var_resp$response) == 0) {
           local_var_resp$response <- "API server error"
         }
         local_var_resp
@@ -1854,7 +1919,9 @@ JobsApi <- R6::R6Class(
     #' @return Job
     StartJob = function(project_id, job_submission, opt_fields = list("command","progress"), data_file = NULL, ...) {
       local_var_response <- self$StartJobWithHttpInfo(project_id, job_submission, opt_fields, data_file = data_file, ...)
-      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
+      if (is.null(local_var_response$status_code)) { # defensive: no status code means the call never reached the API
+        local_var_response
+      } else if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
         local_var_response
@@ -1978,11 +2045,14 @@ JobsApi <- R6::R6Class(
         }
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
-        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
+        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
-        ApiResponse$new("API client error", local_var_resp)
+        ApiResponse$new("API client error", local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
-        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
+        # length() instead of == "": the response body is a raw vector, and comparing a raw vector
+        # with "" yields one logical per byte, which makes || abort with
+        # "'length = <n>' in coercion to 'logical(1)'" instead of reporting the server error.
+        if (length(local_var_resp$response) == 0) {
           local_var_resp$response <- "API server error"
         }
         local_var_resp
@@ -2003,7 +2073,9 @@ JobsApi <- R6::R6Class(
     #' @return Job
     StartJobFromConfig = function(project_id, job_config_name, request_body, recompute = NULL, opt_fields = list("command","progress"), data_file = NULL, ...) {
       local_var_response <- self$StartJobFromConfigWithHttpInfo(project_id, job_config_name, request_body, recompute, opt_fields, data_file = data_file, ...)
-      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
+      if (is.null(local_var_response$status_code)) { # defensive: no status code means the call never reached the API
+        local_var_response
+      } else if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
         local_var_response
@@ -2146,11 +2218,14 @@ JobsApi <- R6::R6Class(
         }
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
-        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
+        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
-        ApiResponse$new("API client error", local_var_resp)
+        ApiResponse$new("API client error", local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
-        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
+        # length() instead of == "": the response body is a raw vector, and comparing a raw vector
+        # with "" yields one logical per byte, which makes || abort with
+        # "'length = <n>' in coercion to 'logical(1)'" instead of reporting the server error.
+        if (length(local_var_resp$response) == 0) {
           local_var_resp$response <- "API server error"
         }
         local_var_resp

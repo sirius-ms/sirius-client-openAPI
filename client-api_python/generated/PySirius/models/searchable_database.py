@@ -24,9 +24,6 @@ class SearchableDatabase(BaseModel):
     """
     SearchableDatabase
     """ # noqa: E501
-    display_name: Optional[StrictStr] = Field(default=None, description="display name of the database  Should be short", alias="displayName")
-    location: Optional[StrictStr] = Field(default=None, description="Storage location of user database  Might be NULL for non-user databases or if default location is used.")
-    match_rt_of_reference_spectra: Optional[StrictBool] = Field(default=False, description="Indicates whether this database shall be used to use retention time information for library matching.  Typically used for in-house spectral libraries that have been measured on", alias="matchRtOfReferenceSpectra")
     database_id: StrictStr = Field(description="A unique identifier or name of the database.  Should only contain file path and url save characters  For user databases this is usually the file name.", alias="databaseId")
     custom_db: StrictBool = Field(description="Indicates whether the database is a user managed custom database or if it is a  database that is included in SIRIUS which cannot be modified.", alias="customDb")
     searchable: StrictBool = Field(description="True when this database can be used as a search parameter.  False if the database is just an additional filter that can be applied after search.")
@@ -37,7 +34,10 @@ class SearchableDatabase(BaseModel):
     number_of_formulas: Optional[StrictInt] = Field(default=None, description="Number of different molecular formulas available in this database.", alias="numberOfFormulas")
     number_of_reference_spectra: Optional[StrictInt] = Field(default=None, description="Number of reference spectra available in this database", alias="numberOfReferenceSpectra")
     error_message: Optional[StrictStr] = Field(default=None, description="Error message if the database could not be loaded", alias="errorMessage")
-    __properties: ClassVar[List[str]] = ["displayName", "location", "matchRtOfReferenceSpectra", "databaseId", "customDb", "searchable", "dbDate", "dbVersion", "updateNeeded", "numberOfStructures", "numberOfFormulas", "numberOfReferenceSpectra", "errorMessage"]
+    display_name: Optional[StrictStr] = Field(default=None, description="display name of the database  Should be short", alias="displayName")
+    location: Optional[StrictStr] = Field(default=None, description="Storage location of user database  Might be NULL for non-user databases or if default location is used.")
+    match_rt_of_reference_spectra: Optional[StrictBool] = Field(default=False, description="Indicates whether this database shall be used to use retention time information for library matching.  Typically used for in-house spectral libraries that have been measured on", alias="matchRtOfReferenceSpectra")
+    __properties: ClassVar[List[str]] = ["databaseId", "customDb", "searchable", "dbDate", "dbVersion", "updateNeeded", "numberOfStructures", "numberOfFormulas", "numberOfReferenceSpectra", "errorMessage", "displayName", "location", "matchRtOfReferenceSpectra"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -78,21 +78,6 @@ class SearchableDatabase(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # set to None if display_name (nullable) is None
-        # and model_fields_set contains the field
-        if self.display_name is None and "display_name" in self.model_fields_set:
-            _dict['displayName'] = None
-
-        # set to None if location (nullable) is None
-        # and model_fields_set contains the field
-        if self.location is None and "location" in self.model_fields_set:
-            _dict['location'] = None
-
-        # set to None if match_rt_of_reference_spectra (nullable) is None
-        # and model_fields_set contains the field
-        if self.match_rt_of_reference_spectra is None and "match_rt_of_reference_spectra" in self.model_fields_set:
-            _dict['matchRtOfReferenceSpectra'] = None
-
         # set to None if db_date (nullable) is None
         # and model_fields_set contains the field
         if self.db_date is None and "db_date" in self.model_fields_set:
@@ -123,6 +108,21 @@ class SearchableDatabase(BaseModel):
         if self.error_message is None and "error_message" in self.model_fields_set:
             _dict['errorMessage'] = None
 
+        # set to None if display_name (nullable) is None
+        # and model_fields_set contains the field
+        if self.display_name is None and "display_name" in self.model_fields_set:
+            _dict['displayName'] = None
+
+        # set to None if location (nullable) is None
+        # and model_fields_set contains the field
+        if self.location is None and "location" in self.model_fields_set:
+            _dict['location'] = None
+
+        # set to None if match_rt_of_reference_spectra (nullable) is None
+        # and model_fields_set contains the field
+        if self.match_rt_of_reference_spectra is None and "match_rt_of_reference_spectra" in self.model_fields_set:
+            _dict['matchRtOfReferenceSpectra'] = None
+
         return _dict
 
     @classmethod
@@ -135,9 +135,6 @@ class SearchableDatabase(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "displayName": obj.get("displayName"),
-            "location": obj.get("location"),
-            "matchRtOfReferenceSpectra": obj.get("matchRtOfReferenceSpectra") if obj.get("matchRtOfReferenceSpectra") is not None else False,
             "databaseId": obj.get("databaseId"),
             "customDb": obj.get("customDb"),
             "searchable": obj.get("searchable"),
@@ -147,7 +144,10 @@ class SearchableDatabase(BaseModel):
             "numberOfStructures": obj.get("numberOfStructures"),
             "numberOfFormulas": obj.get("numberOfFormulas"),
             "numberOfReferenceSpectra": obj.get("numberOfReferenceSpectra"),
-            "errorMessage": obj.get("errorMessage")
+            "errorMessage": obj.get("errorMessage"),
+            "displayName": obj.get("displayName"),
+            "location": obj.get("location"),
+            "matchRtOfReferenceSpectra": obj.get("matchRtOfReferenceSpectra") if obj.get("matchRtOfReferenceSpectra") is not None else False
         })
         return _obj
 
