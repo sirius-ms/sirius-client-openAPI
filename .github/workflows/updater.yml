@@ -24,9 +24,9 @@ jobs:
           echo "target_branch=$target_branch" >> $GITHUB_OUTPUT
           
           if [ -n "${{ inputs.sirius_version }}" ]; then
-            gh workflow run SetupBranch.yml --ref ${GITHUB_REF##*/} -f target_branch=$target_branch -f sirius_version=${{ inputs.sirius_version }}
+            gh workflow run SetupBranch.yml --ref ${GITHUB_REF_NAME} -f target_branch=$target_branch -f sirius_version=${{ inputs.sirius_version }}
           else
-            gh workflow run SetupBranch.yml --ref ${GITHUB_REF##*/} -f target_branch=$target_branch
+            gh workflow run SetupBranch.yml --ref ${GITHUB_REF_NAME} -f target_branch=$target_branch
           fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -64,7 +64,7 @@ jobs:
           fi
           
           # Safety: must have no commits ahead of its base
-          base_branch="${GITHUB_REF##*/}"
+          base_branch="${GITHUB_REF_NAME}"
           ahead=$(gh api repos/${{ github.repository }}/compare/${base_branch}...${target_branch} --jq '.ahead_by')
           if [ "$ahead" -gt 0 ]; then
             echo "Branch has $ahead commit(s) ahead of $base_branch, skipping deletion"

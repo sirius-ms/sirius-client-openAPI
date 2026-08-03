@@ -2211,15 +2211,16 @@ class ProjectsApi:
         if input_files is not None:
             _files['inputFiles'] = input_files
         if parameters is not None:
-            # JSON-encode model parameters for multipart/form-data
+            # JSON-encode model parameters for multipart/form-data.
             import json
-            if hasattr(parameters, 'model_dump'):
-                params_dict = parameters.model_dump(mode='json')
+            if hasattr(parameters, 'to_json'):
+                params_json = parameters.to_json()
+            elif hasattr(parameters, 'model_dump'):
+                params_json = json.dumps(parameters.model_dump(mode='json', by_alias=True, exclude_none=True), default=str, separators=(',', ':'))
             elif hasattr(parameters, 'dict'):
-                params_dict = parameters.dict()
+                params_json = json.dumps(parameters.dict(by_alias=True), default=str, separators=(',', ':'))
             else:
-                params_dict = parameters
-            params_json = json.dumps(params_dict, default=str, separators=(',', ':'))
+                params_json = json.dumps(parameters, default=str, separators=(',', ':'))
             _form_params.append(('parameters', (None, params_json, 'application/json')))
         # process the body parameter
 
@@ -2542,15 +2543,16 @@ class ProjectsApi:
         if input_files is not None:
             _files['inputFiles'] = input_files
         if parameters is not None:
-            # JSON-encode model parameters for multipart/form-data
+            # JSON-encode model parameters for multipart/form-data.
             import json
-            if hasattr(parameters, 'model_dump'):
-                params_dict = parameters.model_dump(mode='json')
+            if hasattr(parameters, 'to_json'):
+                params_json = parameters.to_json()
+            elif hasattr(parameters, 'model_dump'):
+                params_json = json.dumps(parameters.model_dump(mode='json', by_alias=True, exclude_none=True), default=str, separators=(',', ':'))
             elif hasattr(parameters, 'dict'):
-                params_dict = parameters.dict()
+                params_json = json.dumps(parameters.dict(by_alias=True), default=str, separators=(',', ':'))
             else:
-                params_dict = parameters
-            params_json = json.dumps(params_dict, default=str, separators=(',', ':'))
+                params_json = json.dumps(parameters, default=str, separators=(',', ':'))
             _form_params.append(('parameters', (None, params_json, 'application/json')))
         # process the body parameter
 

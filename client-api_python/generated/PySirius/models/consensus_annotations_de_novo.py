@@ -26,11 +26,11 @@ class ConsensusAnnotationsDeNovo(BaseModel):
     """
     ConsensusAnnotationsDeNovo
     """ # noqa: E501
+    selection_criterion: Optional[ConsensusCriterionDeNovo] = Field(default=None, alias="selectionCriterion")
     molecular_formula: Optional[StrictStr] = Field(default=None, description="Molecular formula of the consensus annotation  Might be null if no consensus formula is available.", alias="molecularFormula")
     compound_classes: Optional[CompoundClasses] = Field(default=None, alias="compoundClasses")
     supporting_feature_ids: Optional[List[Optional[StrictStr]]] = Field(default=None, description="FeatureIds where the topAnnotation supports this annotation.", alias="supportingFeatureIds")
-    selection_criterion: Optional[ConsensusCriterionDeNovo] = Field(default=None, alias="selectionCriterion")
-    __properties: ClassVar[List[str]] = ["molecularFormula", "compoundClasses", "supportingFeatureIds", "selectionCriterion"]
+    __properties: ClassVar[List[str]] = ["selectionCriterion", "molecularFormula", "compoundClasses", "supportingFeatureIds"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -74,6 +74,11 @@ class ConsensusAnnotationsDeNovo(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of compound_classes
         if self.compound_classes:
             _dict['compoundClasses'] = self.compound_classes.to_dict()
+        # set to None if selection_criterion (nullable) is None
+        # and model_fields_set contains the field
+        if self.selection_criterion is None and "selection_criterion" in self.model_fields_set:
+            _dict['selectionCriterion'] = None
+
         # set to None if molecular_formula (nullable) is None
         # and model_fields_set contains the field
         if self.molecular_formula is None and "molecular_formula" in self.model_fields_set:
@@ -89,11 +94,6 @@ class ConsensusAnnotationsDeNovo(BaseModel):
         if self.supporting_feature_ids is None and "supporting_feature_ids" in self.model_fields_set:
             _dict['supportingFeatureIds'] = None
 
-        # set to None if selection_criterion (nullable) is None
-        # and model_fields_set contains the field
-        if self.selection_criterion is None and "selection_criterion" in self.model_fields_set:
-            _dict['selectionCriterion'] = None
-
         return _dict
 
     @classmethod
@@ -106,10 +106,10 @@ class ConsensusAnnotationsDeNovo(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
+            "selectionCriterion": obj.get("selectionCriterion"),
             "molecularFormula": obj.get("molecularFormula"),
             "compoundClasses": CompoundClasses.from_dict(obj["compoundClasses"]) if obj.get("compoundClasses") is not None else None,
-            "supportingFeatureIds": obj.get("supportingFeatureIds"),
-            "selectionCriterion": obj.get("selectionCriterion")
+            "supportingFeatureIds": obj.get("supportingFeatureIds")
         })
         return _obj
 

@@ -229,7 +229,9 @@ ProjectsApi <- R6::R6Class(
     #' @return void
     CloseProject = function(project_id, compact = FALSE, ...) {
       local_var_response <- self$CloseProjectWithHttpInfo(project_id, compact, ...)
-      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
+      if (is.null(local_var_response$status_code)) { # defensive: no status code means the call never reached the API
+        local_var_response
+      } else if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
         local_var_response
@@ -295,11 +297,11 @@ ProjectsApi <- R6::R6Class(
         local_var_resp$content <- NULL
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
-        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
+        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
-        ApiResponse$new("API client error", local_var_resp)
+        ApiResponse$new("API client error", local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
-        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
+        if (length(local_var_resp$response) == 0) {
           local_var_resp$response <- "API server error"
         }
         local_var_resp
@@ -318,7 +320,9 @@ ProjectsApi <- R6::R6Class(
     #' @return ProjectInfo
     CreateProject = function(project_id, path_to_project = NULL, opt_fields = list("none"), data_file = NULL, ...) {
       local_var_response <- self$CreateProjectWithHttpInfo(project_id, path_to_project, opt_fields, data_file = data_file, ...)
-      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
+      if (is.null(local_var_response$status_code)) { # defensive: no status code means the call never reached the API
+        local_var_response
+      } else if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
         local_var_response
@@ -434,11 +438,11 @@ ProjectsApi <- R6::R6Class(
         }
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
-        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
+        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
-        ApiResponse$new("API client error", local_var_resp)
+        ApiResponse$new("API client error", local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
-        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
+        if (length(local_var_resp$response) == 0) {
           local_var_resp$response <- "API server error"
         }
         local_var_resp
@@ -456,7 +460,9 @@ ProjectsApi <- R6::R6Class(
     #' @return character
     GetCanopusClassyFireData = function(project_id, charge, data_file = NULL, ...) {
       local_var_response <- self$GetCanopusClassyFireDataWithHttpInfo(project_id, charge, data_file = data_file, ...)
-      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
+      if (is.null(local_var_response$status_code)) { # defensive: no status code means the call never reached the API
+        local_var_response
+      } else if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
         local_var_response
@@ -565,11 +571,11 @@ ProjectsApi <- R6::R6Class(
         }
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
-        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
+        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
-        ApiResponse$new("API client error", local_var_resp)
+        ApiResponse$new("API client error", local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
-        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
+        if (length(local_var_resp$response) == 0) {
           local_var_resp$response <- "API server error"
         }
         local_var_resp
@@ -587,7 +593,9 @@ ProjectsApi <- R6::R6Class(
     #' @return character
     GetCanopusNpcData = function(project_id, charge, data_file = NULL, ...) {
       local_var_response <- self$GetCanopusNpcDataWithHttpInfo(project_id, charge, data_file = data_file, ...)
-      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
+      if (is.null(local_var_response$status_code)) { # defensive: no status code means the call never reached the API
+        local_var_response
+      } else if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
         local_var_response
@@ -696,11 +704,11 @@ ProjectsApi <- R6::R6Class(
         }
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
-        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
+        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
-        ApiResponse$new("API client error", local_var_resp)
+        ApiResponse$new("API client error", local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
-        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
+        if (length(local_var_resp$response) == 0) {
           local_var_resp$response <- "API server error"
         }
         local_var_resp
@@ -718,7 +726,9 @@ ProjectsApi <- R6::R6Class(
     #' @return character
     GetFingerIdData = function(project_id, charge, data_file = NULL, ...) {
       local_var_response <- self$GetFingerIdDataWithHttpInfo(project_id, charge, data_file = data_file, ...)
-      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
+      if (is.null(local_var_response$status_code)) { # defensive: no status code means the call never reached the API
+        local_var_response
+      } else if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
         local_var_response
@@ -827,11 +837,11 @@ ProjectsApi <- R6::R6Class(
         }
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
-        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
+        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
-        ApiResponse$new("API client error", local_var_resp)
+        ApiResponse$new("API client error", local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
-        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
+        if (length(local_var_resp$response) == 0) {
           local_var_resp$response <- "API server error"
         }
         local_var_resp
@@ -849,7 +859,9 @@ ProjectsApi <- R6::R6Class(
     #' @return ProjectInfo
     GetProject = function(project_id, opt_fields = list("none"), data_file = NULL, ...) {
       local_var_response <- self$GetProjectWithHttpInfo(project_id, opt_fields, data_file = data_file, ...)
-      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
+      if (is.null(local_var_response$status_code)) { # defensive: no status code means the call never reached the API
+        local_var_response
+      } else if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
         local_var_response
@@ -961,11 +973,11 @@ ProjectsApi <- R6::R6Class(
         }
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
-        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
+        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
-        ApiResponse$new("API client error", local_var_resp)
+        ApiResponse$new("API client error", local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
-        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
+        if (length(local_var_resp$response) == 0) {
           local_var_resp$response <- "API server error"
         }
         local_var_resp
@@ -981,7 +993,9 @@ ProjectsApi <- R6::R6Class(
     #' @return array[ProjectInfo]
     GetProjects = function(data_file = NULL, ...) {
       local_var_response <- self$GetProjectsWithHttpInfo(data_file = data_file, ...)
-      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
+      if (is.null(local_var_response$status_code)) { # defensive: no status code means the call never reached the API
+        local_var_response
+      } else if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
         local_var_response
@@ -1072,11 +1086,11 @@ ProjectsApi <- R6::R6Class(
         }
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
-        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
+        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
-        ApiResponse$new("API client error", local_var_resp)
+        ApiResponse$new("API client error", local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
-        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
+        if (length(local_var_resp$response) == 0) {
           local_var_resp$response <- "API server error"
         }
         local_var_resp
@@ -1095,7 +1109,9 @@ ProjectsApi <- R6::R6Class(
     #' @return ImportResult
     ImportMsRunData = function(project_id, input_files, parameters, data_file = NULL, ...) {
       local_var_response <- self$ImportMsRunDataWithHttpInfo(project_id, input_files, parameters, data_file = data_file, ...)
-      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
+      if (is.null(local_var_response$status_code)) { # defensive: no status code means the call never reached the API
+        local_var_response
+      } else if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
         local_var_response
@@ -1218,11 +1234,11 @@ ProjectsApi <- R6::R6Class(
         }
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
-        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
+        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
-        ApiResponse$new("API client error", local_var_resp)
+        ApiResponse$new("API client error", local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
-        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
+        if (length(local_var_resp$response) == 0) {
           local_var_resp$response <- "API server error"
         }
         local_var_resp
@@ -1242,7 +1258,9 @@ ProjectsApi <- R6::R6Class(
     #' @return Job
     ImportMsRunDataAsJob = function(project_id, input_files, parameters, opt_fields = list("progress"), data_file = NULL, ...) {
       local_var_response <- self$ImportMsRunDataAsJobWithHttpInfo(project_id, input_files, parameters, opt_fields, data_file = data_file, ...)
-      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
+      if (is.null(local_var_response$status_code)) { # defensive: no status code means the call never reached the API
+        local_var_response
+      } else if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
         local_var_response
@@ -1376,11 +1394,11 @@ ProjectsApi <- R6::R6Class(
         }
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
-        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
+        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
-        ApiResponse$new("API client error", local_var_resp)
+        ApiResponse$new("API client error", local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
-        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
+        if (length(local_var_resp$response) == 0) {
           local_var_resp$response <- "API server error"
         }
         local_var_resp
@@ -1400,7 +1418,9 @@ ProjectsApi <- R6::R6Class(
     #' @return ImportResult
     ImportPreprocessedData = function(project_id, input_files, ignore_formulas = FALSE, allow_ms1_only = TRUE, data_file = NULL, ...) {
       local_var_response <- self$ImportPreprocessedDataWithHttpInfo(project_id, input_files, ignore_formulas, allow_ms1_only, data_file = data_file, ...)
-      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
+      if (is.null(local_var_response$status_code)) { # defensive: no status code means the call never reached the API
+        local_var_response
+      } else if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
         local_var_response
@@ -1518,11 +1538,11 @@ ProjectsApi <- R6::R6Class(
         }
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
-        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
+        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
-        ApiResponse$new("API client error", local_var_resp)
+        ApiResponse$new("API client error", local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
-        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
+        if (length(local_var_resp$response) == 0) {
           local_var_resp$response <- "API server error"
         }
         local_var_resp
@@ -1543,7 +1563,9 @@ ProjectsApi <- R6::R6Class(
     #' @return Job
     ImportPreprocessedDataAsJob = function(project_id, input_files, ignore_formulas = FALSE, allow_ms1_only = TRUE, opt_fields = list("progress"), data_file = NULL, ...) {
       local_var_response <- self$ImportPreprocessedDataAsJobWithHttpInfo(project_id, input_files, ignore_formulas, allow_ms1_only, opt_fields, data_file = data_file, ...)
-      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
+      if (is.null(local_var_response$status_code)) { # defensive: no status code means the call never reached the API
+        local_var_response
+      } else if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
         local_var_response
@@ -1672,11 +1694,11 @@ ProjectsApi <- R6::R6Class(
         }
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
-        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
+        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
-        ApiResponse$new("API client error", local_var_resp)
+        ApiResponse$new("API client error", local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
-        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
+        if (length(local_var_resp$response) == 0) {
           local_var_resp$response <- "API server error"
         }
         local_var_resp
@@ -1695,7 +1717,9 @@ ProjectsApi <- R6::R6Class(
     #' @return ProjectInfo
     OpenProject = function(project_id, path_to_project = NULL, opt_fields = list("none"), data_file = NULL, ...) {
       local_var_response <- self$OpenProjectWithHttpInfo(project_id, path_to_project, opt_fields, data_file = data_file, ...)
-      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
+      if (is.null(local_var_response$status_code)) { # defensive: no status code means the call never reached the API
+        local_var_response
+      } else if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
         local_var_response
@@ -1811,11 +1835,11 @@ ProjectsApi <- R6::R6Class(
         }
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
-        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
+        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
-        ApiResponse$new("API client error", local_var_resp)
+        ApiResponse$new("API client error", local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
-        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
+        if (length(local_var_resp$response) == 0) {
           local_var_resp$response <- "API server error"
         }
         local_var_resp

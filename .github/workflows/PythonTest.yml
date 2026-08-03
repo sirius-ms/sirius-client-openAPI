@@ -81,6 +81,12 @@ jobs:
           flake8 ./client-api_python --count --select=E9,F63,F7,F82 --show-source --statistics
           # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
           flake8 ./client-api_python --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+      - name: Test request serialization
+        # Unit tests, they need neither a running SIRIUS nor a login, so they run unconditionally
+        # and before the service is started.
+        if: always() && steps.pysirius_install.outcome == 'success'
+        run: python test_multipart_serialization.py
+        working-directory: client-api_python/generated/test
       - name: Unset DISPLAY
         run: echo "JAVA_TOOL_OPTIONS=-Djava.awt.headless=true" >> $GITHUB_ENV
       - name: Check SIRIUS download

@@ -379,7 +379,7 @@ ApiClient  <- R6::R6Class(
       if (grepl('^(http|https)://', raw_response)) {
         resp_obj <- raw_response
       } else {
-        resp_obj <- jsonlite::fromJSON(raw_response)
+        resp_obj <- jsonlite::fromJSON(raw_response, simplifyDataFrame = FALSE)
       }
       self$deserializeObj(resp_obj, return_type, pkg_env)
     },
@@ -427,6 +427,10 @@ ApiClient  <- R6::R6Class(
                                                          inner_return_type, pkg_env)
               }
             }
+          } else if (is.list(obj)) {
+            return_obj <- lapply(obj, function(item) {
+              self$deserializeObj(item, inner_return_type, pkg_env)
+            })
           }
         }
       } else if (exists(return_type, pkg_env) && !(c(return_type) %in% primitive_types)) {

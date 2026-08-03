@@ -1956,15 +1956,16 @@ class SearchableDatabasesApi:
         if input_files is not None:
             _files['inputFiles'] = input_files
         if bio_transformer_parameters is not None:
-            # JSON-encode model parameters for multipart/form-data
+            # JSON-encode model parameters for multipart/form-data.
             import json
-            if hasattr(bio_transformer_parameters, 'model_dump'):
-                params_dict = bio_transformer_parameters.model_dump(mode='json')
+            if hasattr(bio_transformer_parameters, 'to_json'):
+                params_json = bio_transformer_parameters.to_json()
+            elif hasattr(bio_transformer_parameters, 'model_dump'):
+                params_json = json.dumps(bio_transformer_parameters.model_dump(mode='json', by_alias=True, exclude_none=True), default=str, separators=(',', ':'))
             elif hasattr(bio_transformer_parameters, 'dict'):
-                params_dict = bio_transformer_parameters.dict()
+                params_json = json.dumps(bio_transformer_parameters.dict(by_alias=True), default=str, separators=(',', ':'))
             else:
-                params_dict = bio_transformer_parameters
-            params_json = json.dumps(params_dict, default=str, separators=(',', ':'))
+                params_json = json.dumps(bio_transformer_parameters, default=str, separators=(',', ':'))
             _form_params.append(('bioTransformerParameters', (None, params_json, 'application/json')))
         # process the body parameter
 

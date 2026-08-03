@@ -161,15 +161,16 @@ class {{classname}}:
             {{/isFile}}
             {{^isFile}}
             {{#isModel}}
-            # JSON-encode model parameters for multipart/form-data
+            # JSON-encode model parameters for multipart/form-data.
             import json
-            if hasattr({{paramName}}, 'model_dump'):
-                params_dict = {{paramName}}.model_dump(mode='json')
+            if hasattr({{paramName}}, 'to_json'):
+                params_json = {{paramName}}.to_json()
+            elif hasattr({{paramName}}, 'model_dump'):
+                params_json = json.dumps({{paramName}}.model_dump(mode='json', by_alias=True, exclude_none=True), default=str, separators=(',', ':'))
             elif hasattr({{paramName}}, 'dict'):
-                params_dict = {{paramName}}.dict()
+                params_json = json.dumps({{paramName}}.dict(by_alias=True), default=str, separators=(',', ':'))
             else:
-                params_dict = {{paramName}}
-            params_json = json.dumps(params_dict, default=str, separators=(',', ':'))
+                params_json = json.dumps({{paramName}}, default=str, separators=(',', ':'))
             _form_params.append(('{{{baseName}}}', (None, params_json, 'application/json')))
             {{/isModel}}
             {{^isModel}}

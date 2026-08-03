@@ -169,7 +169,9 @@ SearchableDatabasesApi <- R6::R6Class(
     #' @return array[SearchableDatabase]
     AddDatabases = function(request_body, data_file = NULL, ...) {
       local_var_response <- self$AddDatabasesWithHttpInfo(request_body, data_file = data_file, ...)
-      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
+      if (is.null(local_var_response$status_code)) { # defensive: no status code means the call never reached the API
+        local_var_response
+      } else if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
         local_var_response
@@ -279,11 +281,11 @@ SearchableDatabasesApi <- R6::R6Class(
         }
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
-        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
+        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
-        ApiResponse$new("API client error", local_var_resp)
+        ApiResponse$new("API client error", local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
-        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
+        if (length(local_var_resp$response) == 0) {
           local_var_resp$response <- "API server error"
         }
         local_var_resp
@@ -301,7 +303,9 @@ SearchableDatabasesApi <- R6::R6Class(
     #' @return SearchableDatabase
     CreateDatabase = function(database_id, searchable_database_parameters = NULL, data_file = NULL, ...) {
       local_var_response <- self$CreateDatabaseWithHttpInfo(database_id, searchable_database_parameters, data_file = data_file, ...)
-      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
+      if (is.null(local_var_response$status_code)) { # defensive: no status code means the call never reached the API
+        local_var_response
+      } else if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
         local_var_response
@@ -413,11 +417,11 @@ SearchableDatabasesApi <- R6::R6Class(
         }
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
-        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
+        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
-        ApiResponse$new("API client error", local_var_resp)
+        ApiResponse$new("API client error", local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
-        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
+        if (length(local_var_resp$response) == 0) {
           local_var_resp$response <- "API server error"
         }
         local_var_resp
@@ -435,7 +439,9 @@ SearchableDatabasesApi <- R6::R6Class(
     #' @return array[SearchableDatabase]
     GetCustomDatabases = function(include_stats = FALSE, include_with_errors = FALSE, data_file = NULL, ...) {
       local_var_response <- self$GetCustomDatabasesWithHttpInfo(include_stats, include_with_errors, data_file = data_file, ...)
-      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
+      if (is.null(local_var_response$status_code)) { # defensive: no status code means the call never reached the API
+        local_var_response
+      } else if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
         local_var_response
@@ -534,11 +540,11 @@ SearchableDatabasesApi <- R6::R6Class(
         }
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
-        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
+        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
-        ApiResponse$new("API client error", local_var_resp)
+        ApiResponse$new("API client error", local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
-        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
+        if (length(local_var_resp$response) == 0) {
           local_var_resp$response <- "API server error"
         }
         local_var_resp
@@ -556,7 +562,9 @@ SearchableDatabasesApi <- R6::R6Class(
     #' @return SearchableDatabase
     GetDatabase = function(database_id, include_stats = TRUE, data_file = NULL, ...) {
       local_var_response <- self$GetDatabaseWithHttpInfo(database_id, include_stats, data_file = data_file, ...)
-      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
+      if (is.null(local_var_response$status_code)) { # defensive: no status code means the call never reached the API
+        local_var_response
+      } else if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
         local_var_response
@@ -661,11 +669,11 @@ SearchableDatabasesApi <- R6::R6Class(
         }
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
-        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
+        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
-        ApiResponse$new("API client error", local_var_resp)
+        ApiResponse$new("API client error", local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
-        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
+        if (length(local_var_resp$response) == 0) {
           local_var_resp$response <- "API server error"
         }
         local_var_resp
@@ -683,7 +691,9 @@ SearchableDatabasesApi <- R6::R6Class(
     #' @return array[SearchableDatabase]
     GetDatabases = function(include_stats = FALSE, include_with_errors = FALSE, data_file = NULL, ...) {
       local_var_response <- self$GetDatabasesWithHttpInfo(include_stats, include_with_errors, data_file = data_file, ...)
-      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
+      if (is.null(local_var_response$status_code)) { # defensive: no status code means the call never reached the API
+        local_var_response
+      } else if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
         local_var_response
@@ -782,11 +792,11 @@ SearchableDatabasesApi <- R6::R6Class(
         }
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
-        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
+        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
-        ApiResponse$new("API client error", local_var_resp)
+        ApiResponse$new("API client error", local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
-        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
+        if (length(local_var_resp$response) == 0) {
           local_var_resp$response <- "API server error"
         }
         local_var_resp
@@ -803,7 +813,9 @@ SearchableDatabasesApi <- R6::R6Class(
     #' @return array[SearchableDatabase]
     GetIncludedDatabases = function(include_stats = FALSE, data_file = NULL, ...) {
       local_var_response <- self$GetIncludedDatabasesWithHttpInfo(include_stats, data_file = data_file, ...)
-      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
+      if (is.null(local_var_response$status_code)) { # defensive: no status code means the call never reached the API
+        local_var_response
+      } else if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
         local_var_response
@@ -898,11 +910,11 @@ SearchableDatabasesApi <- R6::R6Class(
         }
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
-        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
+        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
-        ApiResponse$new("API client error", local_var_resp)
+        ApiResponse$new("API client error", local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
-        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
+        if (length(local_var_resp$response) == 0) {
           local_var_resp$response <- "API server error"
         }
         local_var_resp
@@ -922,7 +934,9 @@ SearchableDatabasesApi <- R6::R6Class(
     #' @return SearchableDatabase
     ImportIntoDatabase = function(database_id, input_files, buffer_size = 1000, bio_transformer_parameters = NULL, data_file = NULL, ...) {
       local_var_response <- self$ImportIntoDatabaseWithHttpInfo(database_id, input_files, buffer_size, bio_transformer_parameters, data_file = data_file, ...)
-      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
+      if (is.null(local_var_response$status_code)) { # defensive: no status code means the call never reached the API
+        local_var_response
+      } else if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
         local_var_response
@@ -1045,11 +1059,11 @@ SearchableDatabasesApi <- R6::R6Class(
         }
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
-        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
+        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
-        ApiResponse$new("API client error", local_var_resp)
+        ApiResponse$new("API client error", local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
-        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
+        if (length(local_var_resp$response) == 0) {
           local_var_resp$response <- "API server error"
         }
         local_var_resp
@@ -1066,7 +1080,9 @@ SearchableDatabasesApi <- R6::R6Class(
     #' @return void
     RemoveDatabase = function(database_id, delete = FALSE, ...) {
       local_var_response <- self$RemoveDatabaseWithHttpInfo(database_id, delete, ...)
-      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
+      if (is.null(local_var_response$status_code)) { # defensive: no status code means the call never reached the API
+        local_var_response
+      } else if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
         local_var_response
@@ -1132,11 +1148,11 @@ SearchableDatabasesApi <- R6::R6Class(
         local_var_resp$content <- NULL
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
-        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
+        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
-        ApiResponse$new("API client error", local_var_resp)
+        ApiResponse$new("API client error", local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
-        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
+        if (length(local_var_resp$response) == 0) {
           local_var_resp$response <- "API server error"
         }
         local_var_resp
@@ -1154,7 +1170,9 @@ SearchableDatabasesApi <- R6::R6Class(
     #' @return SearchableDatabase
     UpdateDatabase = function(database_id, searchable_database_parameters = NULL, data_file = NULL, ...) {
       local_var_response <- self$UpdateDatabaseWithHttpInfo(database_id, searchable_database_parameters, data_file = data_file, ...)
-      if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
+      if (is.null(local_var_response$status_code)) { # defensive: no status code means the call never reached the API
+        local_var_response
+      } else if (local_var_response$status_code >= 200 && local_var_response$status_code <= 299) {
         local_var_response$content
       } else if (local_var_response$status_code >= 300 && local_var_response$status_code <= 399) {
         local_var_response
@@ -1263,11 +1281,11 @@ SearchableDatabasesApi <- R6::R6Class(
         }
         local_var_resp
       } else if (local_var_resp$status_code >= 300 && local_var_resp$status_code <= 399) {
-        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp)
+        ApiResponse$new(paste("Server returned ", local_var_resp$status_code, " response status code."), local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
-        ApiResponse$new("API client error", local_var_resp)
+        ApiResponse$new("API client error", local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
-        if (is.null(local_var_resp$response) || local_var_resp$response == "") {
+        if (length(local_var_resp$response) == 0) {
           local_var_resp$response <- "API server error"
         }
         local_var_resp
