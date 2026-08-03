@@ -355,9 +355,6 @@ JobsApi <- R6::R6Class(
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
-        # length() instead of == "": the response body is a raw vector, and comparing a raw vector
-        # with "" yields one logical per byte, which makes || abort with
-        # "'length = <n>' in coercion to 'logical(1)'" instead of reporting the server error.
         if (length(local_var_resp$response) == 0) {
           local_var_resp$response <- "API server error"
         }
@@ -442,9 +439,6 @@ JobsApi <- R6::R6Class(
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
-        # length() instead of == "": the response body is a raw vector, and comparing a raw vector
-        # with "" yields one logical per byte, which makes || abort with
-        # "'length = <n>' in coercion to 'logical(1)'" instead of reporting the server error.
         if (length(local_var_resp$response) == 0) {
           local_var_resp$response <- "API server error"
         }
@@ -539,9 +533,6 @@ JobsApi <- R6::R6Class(
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
-        # length() instead of == "": the response body is a raw vector, and comparing a raw vector
-        # with "" yields one logical per byte, which makes || abort with
-        # "'length = <n>' in coercion to 'logical(1)'" instead of reporting the server error.
         if (length(local_var_resp$response) == 0) {
           local_var_resp$response <- "API server error"
         }
@@ -668,9 +659,6 @@ JobsApi <- R6::R6Class(
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
-        # length() instead of == "": the response body is a raw vector, and comparing a raw vector
-        # with "" yields one logical per byte, which makes || abort with
-        # "'length = <n>' in coercion to 'logical(1)'" instead of reporting the server error.
         if (length(local_var_resp$response) == 0) {
           local_var_resp$response <- "API server error"
         }
@@ -799,9 +787,6 @@ JobsApi <- R6::R6Class(
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
-        # length() instead of == "": the response body is a raw vector, and comparing a raw vector
-        # with "" yields one logical per byte, which makes || abort with
-        # "'length = <n>' in coercion to 'logical(1)'" instead of reporting the server error.
         if (length(local_var_resp$response) == 0) {
           local_var_resp$response <- "API server error"
         }
@@ -949,9 +934,6 @@ JobsApi <- R6::R6Class(
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
-        # length() instead of == "": the response body is a raw vector, and comparing a raw vector
-        # with "" yields one logical per byte, which makes || abort with
-        # "'length = <n>' in coercion to 'logical(1)'" instead of reporting the server error.
         if (length(local_var_resp$response) == 0) {
           local_var_resp$response <- "API server error"
         }
@@ -1081,9 +1063,6 @@ JobsApi <- R6::R6Class(
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
-        # length() instead of == "": the response body is a raw vector, and comparing a raw vector
-        # with "" yields one logical per byte, which makes || abort with
-        # "'length = <n>' in coercion to 'logical(1)'" instead of reporting the server error.
         if (length(local_var_resp$response) == 0) {
           local_var_resp$response <- "API server error"
         }
@@ -1197,9 +1176,6 @@ JobsApi <- R6::R6Class(
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
-        # length() instead of == "": the response body is a raw vector, and comparing a raw vector
-        # with "" yields one logical per byte, which makes || abort with
-        # "'length = <n>' in coercion to 'logical(1)'" instead of reporting the server error.
         if (length(local_var_resp$response) == 0) {
           local_var_resp$response <- "API server error"
         }
@@ -1313,9 +1289,6 @@ JobsApi <- R6::R6Class(
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
-        # length() instead of == "": the response body is a raw vector, and comparing a raw vector
-        # with "" yields one logical per byte, which makes || abort with
-        # "'length = <n>' in coercion to 'logical(1)'" instead of reporting the server error.
         if (length(local_var_resp$response) == 0) {
           local_var_resp$response <- "API server error"
         }
@@ -1452,9 +1425,6 @@ JobsApi <- R6::R6Class(
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
-        # length() instead of == "": the response body is a raw vector, and comparing a raw vector
-        # with "" yields one logical per byte, which makes || abort with
-        # "'length = <n>' in coercion to 'logical(1)'" instead of reporting the server error.
         if (length(local_var_resp$response) == 0) {
           local_var_resp$response <- "API server error"
         }
@@ -1615,9 +1585,6 @@ JobsApi <- R6::R6Class(
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
-        # length() instead of == "": the response body is a raw vector, and comparing a raw vector
-        # with "" yields one logical per byte, which makes || abort with
-        # "'length = <n>' in coercion to 'logical(1)'" instead of reporting the server error.
         if (length(local_var_resp$response) == 0) {
           local_var_resp$response <- "API server error"
         }
@@ -1747,9 +1714,6 @@ JobsApi <- R6::R6Class(
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
-        # length() instead of == "": the response body is a raw vector, and comparing a raw vector
-        # with "" yields one logical per byte, which makes || abort with
-        # "'length = <n>' in coercion to 'logical(1)'" instead of reporting the server error.
         if (length(local_var_resp$response) == 0) {
           local_var_resp$response <- "API server error"
         }
@@ -1897,9 +1861,6 @@ JobsApi <- R6::R6Class(
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
-        # length() instead of == "": the response body is a raw vector, and comparing a raw vector
-        # with "" yields one logical per byte, which makes || abort with
-        # "'length = <n>' in coercion to 'logical(1)'" instead of reporting the server error.
         if (length(local_var_resp$response) == 0) {
           local_var_resp$response <- "API server error"
         }
@@ -2049,9 +2010,6 @@ JobsApi <- R6::R6Class(
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
-        # length() instead of == "": the response body is a raw vector, and comparing a raw vector
-        # with "" yields one logical per byte, which makes || abort with
-        # "'length = <n>' in coercion to 'logical(1)'" instead of reporting the server error.
         if (length(local_var_resp$response) == 0) {
           local_var_resp$response <- "API server error"
         }
@@ -2222,9 +2180,6 @@ JobsApi <- R6::R6Class(
       } else if (local_var_resp$status_code >= 400 && local_var_resp$status_code <= 499) {
         ApiResponse$new("API client error", local_var_resp, local_var_resp$status_code, local_var_resp$status_code_desc)
       } else if (local_var_resp$status_code >= 500 && local_var_resp$status_code <= 599) {
-        # length() instead of == "": the response body is a raw vector, and comparing a raw vector
-        # with "" yields one logical per byte, which makes || abort with
-        # "'length = <n>' in coercion to 'logical(1)'" instead of reporting the server error.
         if (length(local_var_resp$response) == 0) {
           local_var_resp$response <- "API server error"
         }

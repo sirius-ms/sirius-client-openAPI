@@ -2212,10 +2212,6 @@ class ProjectsApi:
             _files['inputFiles'] = input_files
         if parameters is not None:
             # JSON-encode model parameters for multipart/form-data.
-            # to_json() must be preferred: it serialises with the property names of the API
-            # schema (by_alias) and with the generated null handling. A plain model_dump()
-            # emits the python attribute names instead (snake_case), which the server silently
-            # ignores, so the caller's parameters would be dropped and defaults used.
             import json
             if hasattr(parameters, 'to_json'):
                 params_json = parameters.to_json()
@@ -2548,10 +2544,6 @@ class ProjectsApi:
             _files['inputFiles'] = input_files
         if parameters is not None:
             # JSON-encode model parameters for multipart/form-data.
-            # to_json() must be preferred: it serialises with the property names of the API
-            # schema (by_alias) and with the generated null handling. A plain model_dump()
-            # emits the python attribute names instead (snake_case), which the server silently
-            # ignores, so the caller's parameters would be dropped and defaults used.
             import json
             if hasattr(parameters, 'to_json'):
                 params_json = parameters.to_json()
