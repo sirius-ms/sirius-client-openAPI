@@ -680,9 +680,6 @@
         {{/useRlangExceptionHandling}}
         {{/returnExceptionOnFailure}}
         {{^returnExceptionOnFailure}}
-        # length() instead of == "": the response body is a raw vector, and comparing a raw vector
-        # with "" yields one logical per byte, which makes || abort with
-        # "'length = <n>' in coercion to 'logical(1)'" instead of reporting the server error.
         if (length(local_var_resp$response) == 0) {
           local_var_resp$response <- "API server error"
         }
