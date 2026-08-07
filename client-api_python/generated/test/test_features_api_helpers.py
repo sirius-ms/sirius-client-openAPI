@@ -7,6 +7,7 @@ import unittest
 from PySirius import (
     AlignedFeature,
     AlignedFeatureOptField,
+    BasicSpectrum,
     BinaryFingerprint,
     DataQuality,
     FeatureAnnotations,
@@ -15,11 +16,13 @@ from PySirius import (
     FormulaCandidateOptField,
     MsData,
     PagedModelFormulaCandidate,
+    SimplePeak,
     SpectralLibraryMatch,
     StructureCandidateFormula,
     StructureCandidateOptField,
     StructureCandidateScored,
 )
+from PySirius.exceptions import ServiceException
 
 
 class DictModel:
@@ -91,6 +94,16 @@ class FakeApiClient:
         })
 
 
+def fake_ms_data():
+    return MsData(
+        mergedMs2=BasicSpectrum(
+            cosineQuery=False,
+            instrument="fake-instrument",
+            peaks=[SimplePeak(mz=47.0, intensity=1.0)],
+        ),
+    )
+
+
 class FakeFeaturesApi(FeaturesApi):
     def __init__(self):
         self.formula_candidate_calls = []
@@ -98,6 +111,7 @@ class FakeFeaturesApi(FeaturesApi):
         self.quant_table_row_calls = []
         self.quant_table_calls = []
         self.sirius_frag_tree_calls = []
+        self.single_feature_calls = []
         self.active_formula_candidate_requests = 0
         self.max_active_formula_candidate_requests = 0
         self.formula_candidate_lock = threading.Lock()
@@ -109,12 +123,16 @@ class FakeFeaturesApi(FeaturesApi):
             "opt_fields": opt_fields,
             "kwargs": kwargs,
         }
+        include_ms_data = any(
+            str(getattr(field, "value", field)) == "msData" for field in (opt_fields or [])
+        )
         return [
             AlignedFeature(
                 alignedFeatureId="feature-1",
                 charge=1,
                 detectedAdducts=["[M+H]+"],
                 hasMsMs=True,
+                msData=fake_ms_data() if include_ms_data else None,
                 topAnnotations=FeatureAnnotations(
                     formulaAnnotation=FormulaCandidate(formulaId="C6H12O6", rank=1),
                     structureAnnotation=StructureCandidateScored(inchiKey="IK1"),
@@ -122,8 +140,24 @@ class FakeFeaturesApi(FeaturesApi):
             ),
             AlignedFeature(alignedFeatureId="feature-2", charge=1, detectedAdducts=["[M+H]+"], hasMsMs=False),
             AlignedFeature(charge=1, detectedAdducts=["[M+H]+"], hasMsMs=True),
-            AlignedFeature(alignedFeatureId="feature-4", charge=1, detectedAdducts=["[M+H]+"], hasMsMs=True),
+            AlignedFeature(
+                alignedFeatureId="feature-4",
+                charge=1,
+                detectedAdducts=["[M+H]+"],
+                hasMsMs=True,
+                msData=fake_ms_data() if include_ms_data else None,
+            ),
         ]
+
+    def get_aligned_feature(self, project_id, aligned_feature_id, ms_data_search_prepared=None, opt_fields=None, **kwargs):
+        self.single_feature_calls.append(aligned_feature_id)
+        return AlignedFeature(
+            alignedFeatureId=aligned_feature_id,
+            charge=1,
+            detectedAdducts=["[M+H]+"],
+            hasMsMs=True,
+            msData=fake_ms_data(),
+        )
 
     def get_formula_candidate(self, project_id, aligned_feature_id, formula_id, ms_data_search_prepared=None, opt_fields=None, **kwargs):
         self.formula_candidate_calls.append({
@@ -345,7 +379,7 @@ class TestFeaturesApiHelpers(unittest.TestCase):
             top_annotation_max_workers=1,
         )
 
-        self.assertEqual(["project-1_feature-1"], list(records))
+        self.assertEqual(["project-1_feature-1", "project-1_feature-4"], sorted(records))
         self.assertNotIn("SiriusFragTree", records["project-1_feature-1"])
         self.assertEqual([], api.sirius_frag_tree_calls)
 
@@ -371,6 +405,133 @@ class TestFeaturesApiHelpers(unittest.TestCase):
 
         self.assertEqual({}, records)
         self.assertEqual("empty-project", api.aligned_call["project_id"])
+
+    def test_top_annotation_metadata_continues_when_structure_depiction_fails(self) -> None:
+        baseline_api = FakeFeaturesApi()
+        baseline_records = baseline_api.get_aligned_features_with_top_annotation_and_metadata(
+            "project-1",
+            top_annotation_max_workers=2,
+        )
+        api = FakeFeaturesApi()
+
+        def get_structure_annotated_spectrum_experimental(*args, **kwargs):
+            raise ServiceException(status=500, reason="CDK structure depiction failed")
+
+        api.get_structure_annotated_spectrum_experimental = get_structure_annotated_spectrum_experimental
+
+        with self.assertWarnsRegex(RuntimeWarning, "feature feature-1"):
+            records = api.get_aligned_features_with_top_annotation_and_metadata(
+                "project-1",
+                top_annotation_max_workers=2,
+            )
+
+        self.assertEqual(
+            set(baseline_records["project-1_feature-1"]),
+            set(records["project-1_feature-1"]),
+        )
+        self.assertTrue(records["project-1_feature-1"]["annotated"])
+        self.assertIsNone(records["project-1_feature-1"]["epimetheus_intensity"])
+
+    def test_top_annotation_metadata_exports_ms2_features_without_annotation(self) -> None:
+        api = FakeFeaturesApi()
+
+        records = api.get_aligned_features_with_top_annotation_and_metadata(
+            "project-1",
+            top_annotation_max_workers=1,
+        )
+
+        # feature-4 has MS/MS but no top annotation; feature-2 has no MS/MS and the
+        # fourth fake feature has no id, so both stay out.
+        self.assertEqual(["project-1_feature-1", "project-1_feature-4"], sorted(records))
+        annotated = records["project-1_feature-1"]
+        unannotated = records["project-1_feature-4"]
+        self.assertTrue(annotated["annotated"])
+        self.assertFalse(unannotated["annotated"])
+        self.assertEqual(set(annotated), set(unannotated))
+        self.assertIsNone(unannotated["best_inchi"])
+        self.assertIsNone(unannotated["best_formula_id"])
+        self.assertIsNone(unannotated["f1"])
+        self.assertIsNone(unannotated["epimetheus_intensity"])
+        self.assertIsNone(unannotated["missmatches"])
+        self.assertEqual([], unannotated["predicted_fp"])
+        self.assertEqual("feature-4", unannotated["feature_id"])
+        self.assertEqual({
+            "sample-a": {"AbsoluteEicIntensity": 50.0, "RelativeEicIntensity": 50.0 / 60.5},
+            "sample-b": {"AbsoluteEicIntensity": 60.5, "RelativeEicIntensity": 1.0},
+        }, unannotated["Sources"]["SourceFiles"])
+
+    def test_top_annotation_metadata_keeps_feature_when_annotation_call_fails(self) -> None:
+        api = FakeFeaturesApi()
+
+        def get_fingerprint_prediction(*args, **kwargs):
+            raise ServiceException(status=503, reason="service unavailable")
+
+        api.get_fingerprint_prediction = get_fingerprint_prediction
+
+        with self.assertWarnsRegex(RuntimeWarning, "1 of 2 MS/MS features"):
+            records = api.get_aligned_features_with_top_annotation_and_metadata(
+                "project-1",
+                top_annotation_max_workers=2,
+            )
+
+        self.assertEqual(["project-1_feature-1", "project-1_feature-4"], sorted(records))
+        self.assertFalse(records["project-1_feature-1"]["annotated"])
+        self.assertEqual("feature-1", records["project-1_feature-1"]["feature_id"])
+        self.assertEqual([{"mz": 47.0, "intensity": 1.0}], records["project-1_feature-1"][">ms2peaks"])
+
+    def test_top_annotation_metadata_falls_back_to_quant_table_rows(self) -> None:
+        api = FakeFeaturesApi()
+
+        def get_quant_table_experimental(*args, **kwargs):
+            raise ServiceException(status=500, reason="quant table NPE")
+
+        api.get_quant_table_experimental = get_quant_table_experimental
+
+        with self.assertWarnsRegex(RuntimeWarning, "falling back to per-feature quant-table rows"):
+            records = api.get_aligned_features_with_top_annotation_and_metadata(
+                "project-1",
+                top_annotation_max_workers=1,
+            )
+
+        self.assertEqual(["project-1_feature-1", "project-1_feature-4"], sorted(records))
+        self.assertEqual({
+            "sample-a": {"AbsoluteEicIntensity": 10.0, "RelativeEicIntensity": 10.0 / 20.5},
+            "sample-b": {"AbsoluteEicIntensity": 20.5, "RelativeEicIntensity": 1.0},
+        }, records["project-1_feature-1"]["Sources"]["SourceFiles"])
+        self.assertEqual(
+            ["feature-1", "feature-4"],
+            sorted(call["aligned_feature_id"] for call in api.quant_table_row_calls),
+        )
+
+    def test_top_annotation_metadata_retries_listing_without_ms_data(self) -> None:
+        api = FakeFeaturesApi()
+        bulk_listing = api.get_aligned_features
+        listing_opt_fields = []
+
+        def get_aligned_features(project_id, ms_data_search_prepared=None, opt_fields=None, **kwargs):
+            listing_opt_fields.append([str(getattr(f, "value", f)) for f in (opt_fields or [])])
+            if any(str(getattr(f, "value", f)) == "msData" for f in (opt_fields or [])):
+                raise ServiceException(status=500, reason="annotateApiFeature NPE")
+            return bulk_listing(project_id, ms_data_search_prepared, opt_fields, **kwargs)
+
+        api.get_aligned_features = get_aligned_features
+
+        with self.assertWarnsRegex(RuntimeWarning, "retrying without msData"):
+            records = api.get_aligned_features_with_top_annotation_and_metadata(
+                "project-1",
+                top_annotation_max_workers=1,
+            )
+
+        self.assertEqual(2, len(listing_opt_fields))
+        self.assertIn("msData", listing_opt_fields[0])
+        self.assertNotIn("msData", listing_opt_fields[1])
+        self.assertEqual(["project-1_feature-1", "project-1_feature-4"], sorted(records))
+        # msData was fetched per feature instead, so the spectra are still there.
+        self.assertEqual([{"mz": 47.0, "intensity": 1.0}], records["project-1_feature-1"][">ms2peaks"])
+        self.assertEqual(
+            ["feature-1", "feature-4"],
+            sorted(api.single_feature_calls),
+        )
 
     def test_get_aligned_features_with_top_tree_and_metadata_attaches_formula_and_quant_values(self) -> None:
         api = FakeFeaturesApi()

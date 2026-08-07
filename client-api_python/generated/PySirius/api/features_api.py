@@ -1831,6 +1831,164 @@ class FeaturesApi:
         }
 
 
+    def _helper_top_annotation_metadata(
+        self,
+        project_id: str,
+        feature_id: str,
+        formula_id: str,
+        inchi_key: str,
+        ms_data_search_prepared: Optional[bool],
+        formula_opt_fields: List[Any],
+        structure_opt_fields: List[Any],
+        include_sirius_frag_tree: bool,
+        _request_timeout: Any = None,
+        _request_auth: Optional[Dict[str, Any]] = None,
+        _content_type: Optional[str] = None,
+        _headers: Optional[Dict[str, Any]] = None,
+        _host_index: int = 0,
+    ) -> Tuple[
+        bool, Dict[str, Any], Any, set, set, Optional[float], Optional[float],
+        Optional[int], Optional[float], List[str], List[str], List[int],
+        List[Dict[str, Any]], List[Dict[str, Any]],
+    ]:
+        """Collect the top-annotation metadata of one feature.
+
+        Raises whatever the underlying calls raise; the caller decides whether a
+        failure downgrades the feature to unannotated.
+        """
+        top_annotation_formula = self.get_formula_candidate(
+            project_id=project_id,
+            aligned_feature_id=feature_id,
+            formula_id=formula_id,
+            ms_data_search_prepared=ms_data_search_prepared,
+            opt_fields=formula_opt_fields,
+            _request_timeout=_request_timeout,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        ).to_dict()
+        sirius_frag_tree = None
+        if include_sirius_frag_tree:
+            sirius_frag_tree = self._helper_to_dict(self.get_sirius_frag_tree_experimental(
+                project_id=project_id,
+                aligned_feature_id=feature_id,
+                formula_id=formula_id,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            ))
+        formula_structure_candidates = [
+            self._helper_to_dict(candidate)
+            for candidate in self.get_structure_candidates(
+                project_id=project_id,
+                aligned_feature_id=feature_id,
+                opt_fields=structure_opt_fields,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+        ]
+        structure_candidates = [
+            self._helper_to_dict(candidate)
+            for candidate in self.get_structure_candidates_by_formula(
+                project_id=project_id,
+                aligned_feature_id=feature_id,
+                formula_id=formula_id,
+                opt_fields=structure_opt_fields,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+        ]
+        top_structure_candidate = next(
+            (candidate for candidate in structure_candidates if candidate.get("inchiKey") == inchi_key),
+            structure_candidates[0] if structure_candidates else {},
+        )
+        annotation_bits = self._helper_fingerprint_bits(top_structure_candidate)
+        predicted_fingerprint = self.get_fingerprint_prediction(
+            project_id=project_id,
+            aligned_feature_id=feature_id,
+            formula_id=formula_id,
+            _request_timeout=_request_timeout,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+        predicted_bits = {
+            index for index, value in enumerate(predicted_fingerprint or [])
+            if value > 0.5
+        }
+        try:
+            annotated_spectrum = self.get_structure_annotated_spectrum_experimental(
+                project_id=project_id,
+                aligned_feature_id=feature_id,
+                formula_id=formula_id,
+                inchi_key=inchi_key,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            ).to_dict()
+            epimetheus_intensity = self._helper_epimetheus_intensity(
+                annotated_spectrum.get("peaks") or []
+            )
+        except ServiceException as error:
+            if error.status != 500:
+                raise
+            # Epimetheus cannot map substructures for some structures; no other
+            # endpoint carries the value, so it stays unknown rather than 0.0.
+            warnings.warn(
+                "Could not retrieve the structure-annotated spectrum for "
+                f"feature {feature_id}, formula {formula_id}, structure {inchi_key} "
+                "after an HTTP 500; continuing with epimetheus_intensity=None.",
+                RuntimeWarning,
+            )
+            epimetheus_intensity = None
+        mismatch_count = len(predicted_bits.symmetric_difference(annotation_bits))
+        fingerprint_union = predicted_bits.union(annotation_bits)
+        mismatch_fraction = mismatch_count / len(fingerprint_union) if fingerprint_union else 1.0
+
+        smiles_at_mces2: List[str] = []
+        inchikey_at_mces2: List[str] = []
+        fingerprints_to_mask = []
+        for candidate in formula_structure_candidates:
+            mces_distance = candidate.get("mcesDistToTopHit")
+            if mces_distance == float("inf"):
+                break
+            if mces_distance is not None and mces_distance < float("inf"):
+                if candidate.get("smiles"):
+                    smiles_at_mces2.append(candidate["smiles"])
+                if candidate.get("inchiKey"):
+                    inchikey_at_mces2.append(candidate["inchiKey"])
+                fingerprints_to_mask.append(self._helper_fingerprint_bits(candidate))
+
+        return (
+            True,
+            top_annotation_formula,
+            sirius_frag_tree,
+            annotation_bits,
+            predicted_bits,
+            epimetheus_intensity,
+            self._helper_f1_score(predicted_bits, annotation_bits),
+            mismatch_count,
+            mismatch_fraction,
+            smiles_at_mces2,
+            inchikey_at_mces2,
+            self._helper_bits_not_common_to_all(fingerprints_to_mask),
+            formula_structure_candidates[:10],
+            formula_structure_candidates,
+        )
+
+
     def get_aligned_features_with_top_annotation_and_metadata(
         self,
         project_id: str,
@@ -1864,16 +2022,35 @@ class FeaturesApi:
             ):
                 aligned_feature_opt_fields.append(required_field)
 
-        features = self.get_aligned_features(
-            project_id=project_id,
-            ms_data_search_prepared=ms_data_search_prepared,
-            opt_fields=aligned_feature_opt_fields,
-            _request_timeout=_request_timeout,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
+        def list_features(opt_fields_to_use):
+            return self.get_aligned_features(
+                project_id=project_id,
+                ms_data_search_prepared=ms_data_search_prepared,
+                opt_fields=opt_fields_to_use,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        ms_data_per_feature = False
+        try:
+            features = list_features(aligned_feature_opt_fields)
+        except ServiceException as error:
+            # A single unreadable feature can make the server-side annotation pass
+            # fail for the whole listing; msData is the field that triggers it.
+            ms_data_per_feature = True
+            warnings.warn(
+                f"Listing aligned features of project {project_id} with msData failed "
+                f"with HTTP {error.status}; retrying without msData and fetching it "
+                "per feature.",
+                RuntimeWarning,
+            )
+            features = list_features([
+                field for field in aligned_feature_opt_fields
+                if field not in (AlignedFeatureOptField.MSDATA, AlignedFeatureOptField.MSDATA.value)
+            ])
         features_to_enrich = [
             feature
             for feature in features
@@ -1882,15 +2059,27 @@ class FeaturesApi:
         if not features_to_enrich:
             return {}
 
-        quant_table = self.get_quant_table_experimental(
-            project_id=project_id,
-            quantification_type=quantification_type,
-            _request_timeout=_request_timeout,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
+        quant_rows_per_feature = False
+        try:
+            quant_table = self.get_quant_table_experimental(
+                project_id=project_id,
+                quantification_type=quantification_type,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+        except ServiceException as error:
+            # The bulk table only feeds the "Sources" field; fall back to the
+            # per-feature row endpoint instead of losing the whole export.
+            quant_rows_per_feature = True
+            warnings.warn(
+                f"Quantification table of project {project_id} failed with HTTP "
+                f"{error.status}; falling back to per-feature quant-table rows.",
+                RuntimeWarning,
+            )
+            quant_table = {}
         quant_table_column_names = quant_table.get("columnNames")
         quant_table_values_by_feature_id = {
             str(row_id): values
@@ -1902,11 +2091,57 @@ class FeaturesApi:
         formula_opt_fields = [FormulaCandidateOptField.STATISTICS]
         structure_opt_fields = [StructureCandidateOptField.FINGERPRINT]
 
+        annotation_failures: List[str] = []
+
         def enrich_feature(feature: AlignedFeature) -> Optional[Tuple[str, Dict[str, Any]]]:
             feature_dict = feature.to_dict()
             feature_id = feature_dict.get("alignedFeatureId")
             if not feature_dict.get("hasMsMs") or not feature_id:
                 return None
+
+            if ms_data_per_feature:
+                try:
+                    feature_dict["msData"] = self.get_aligned_feature(
+                        project_id=project_id,
+                        aligned_feature_id=feature_id,
+                        ms_data_search_prepared=ms_data_search_prepared,
+                        opt_fields=[AlignedFeatureOptField.MSDATA],
+                        _request_timeout=_request_timeout,
+                        _request_auth=_request_auth,
+                        _content_type=_content_type,
+                        _headers=_headers,
+                        _host_index=_host_index,
+                    ).to_dict().get("msData")
+                except Exception as error:
+                    warnings.warn(
+                        f"Could not retrieve msData for feature {feature_id}: "
+                        f"{error!r}; keeping the feature without spectra.",
+                        RuntimeWarning,
+                    )
+
+            quant_column_names = quant_table_column_names
+            quant_values = quant_table_values_by_feature_id.get(str(feature_id))
+            if quant_values is None and quant_rows_per_feature:
+                try:
+                    quant_row = self.get_quant_table_row_experimental(
+                        project_id=project_id,
+                        aligned_feature_id=feature_id,
+                        quantification_type=quantification_type,
+                        _request_timeout=_request_timeout,
+                        _request_auth=_request_auth,
+                        _content_type=_content_type,
+                        _headers=_headers,
+                        _host_index=_host_index,
+                    ) or {}
+                    quant_column_names = quant_row.get("columnNames") or quant_column_names
+                    row_values = quant_row.get("values") or []
+                    quant_values = row_values[0] if row_values and isinstance(row_values[0], list) else row_values
+                except Exception as error:
+                    warnings.warn(
+                        f"Could not retrieve the quant-table row for feature {feature_id}: "
+                        f"{error!r}; keeping the feature without source intensities.",
+                        RuntimeWarning,
+                    )
 
             top_annotations = feature_dict.get("topAnnotations") or {}
             formula_annotation = top_annotations.get("formulaAnnotation") or {}
@@ -1914,128 +2149,70 @@ class FeaturesApi:
             spectral_library_matches = structure_annotation.get("spectralLibraryMatches") or []
             formula_id = formula_annotation.get("formulaId")
             inchi_key = structure_annotation.get("inchiKey")
-            if not formula_id or not inchi_key:
-                return None
 
-            top_annotation_formula = self.get_formula_candidate(
-                project_id=project_id,
-                aligned_feature_id=feature_id,
-                formula_id=formula_id,
-                ms_data_search_prepared=ms_data_search_prepared,
-                opt_fields=formula_opt_fields,
-                _request_timeout=_request_timeout,
-                _request_auth=_request_auth,
-                _content_type=_content_type,
-                _headers=_headers,
-                _host_index=_host_index,
-            ).to_dict()
+            # Annotation-derived values stay None/empty for MS/MS features without a
+            # usable top annotation, so those features are still exported.
+            annotated = False
+            top_annotation_formula: Dict[str, Any] = {}
             sirius_frag_tree = None
-            if include_sirius_frag_tree:
-                sirius_frag_tree = self.get_sirius_frag_tree_experimental(
-                    project_id=project_id,
-                    aligned_feature_id=feature_id,
-                    formula_id=formula_id,
-                    _request_timeout=_request_timeout,
-                    _request_auth=_request_auth,
-                    _content_type=_content_type,
-                    _headers=_headers,
-                    _host_index=_host_index,
-                )
-                sirius_frag_tree = self._helper_to_dict(sirius_frag_tree)
-            formula_structure_candidates = [
-                self._helper_to_dict(candidate)
-                for candidate in self.get_structure_candidates(
-                    project_id=project_id,
-                    aligned_feature_id=feature_id,
-                    opt_fields=structure_opt_fields,
-                    _request_timeout=_request_timeout,
-                    _request_auth=_request_auth,
-                    _content_type=_content_type,
-                    _headers=_headers,
-                    _host_index=_host_index,
-                )
-            ]
-            structure_candidates = [
-                self._helper_to_dict(candidate)
-                for candidate in self.get_structure_candidates_by_formula(
-                    project_id=project_id,
-                    aligned_feature_id=feature_id,
-                    formula_id=formula_id,
-                    opt_fields=structure_opt_fields,
-                    _request_timeout=_request_timeout,
-                    _request_auth=_request_auth,
-                    _content_type=_content_type,
-                    _headers=_headers,
-                    _host_index=_host_index,
-                )
-            ]
-            top_structure_candidate = next(
-                (candidate for candidate in structure_candidates if candidate.get("inchiKey") == inchi_key),
-                structure_candidates[0] if structure_candidates else {},
-            )
-            annotation_bits = self._helper_fingerprint_bits(top_structure_candidate)
-            predicted_fingerprint = self.get_fingerprint_prediction(
-                project_id=project_id,
-                aligned_feature_id=feature_id,
-                formula_id=formula_id,
-                _request_timeout=_request_timeout,
-                _request_auth=_request_auth,
-                _content_type=_content_type,
-                _headers=_headers,
-                _host_index=_host_index,
-            )
-            predicted_bits = {
-                index for index, value in enumerate(predicted_fingerprint or [])
-                if value > 0.5
-            }
-            try:
-                annotated_spectrum = self.get_structure_annotated_spectrum_experimental(
-                    project_id=project_id,
-                    aligned_feature_id=feature_id,
-                    formula_id=formula_id,
-                    inchi_key=inchi_key,
-                    _request_timeout=_request_timeout,
-                    _request_auth=_request_auth,
-                    _content_type=_content_type,
-                    _headers=_headers,
-                    _host_index=_host_index,
-                ).to_dict()
-                annotated_peaks = annotated_spectrum.get("peaks") or []
-                epimetheus_intensity = self._helper_epimetheus_intensity(annotated_peaks)
-            except ServiceException as error:
-                if error.status != 500:
-                    raise
-                warnings.warn(
-                    "Could not retrieve the structure-annotated spectrum for "
-                    f"feature {feature_id}, formula {formula_id}, structure {inchi_key} "
-                    "after an HTTP 500; continuing with epimetheus_intensity=-1.0.",
-                    RuntimeWarning,
-                )
-                epimetheus_intensity = -1.0
-            mismatch_count = len(predicted_bits.symmetric_difference(annotation_bits))
-            fingerprint_union = predicted_bits.union(annotation_bits)
-            mismatch_fraction = mismatch_count / len(fingerprint_union) if fingerprint_union else 1.0
+            annotation_bits: set = set()
+            predicted_bits: set = set()
+            epimetheus_intensity: Optional[float] = None
+            f1_score: Optional[float] = None
+            mismatch_count: Optional[int] = None
+            mismatch_fraction: Optional[float] = None
+            smiles_at_mces2: List[str] = []
+            inchikey_at_mces2: List[str] = []
+            to_mask: List[int] = []
+            top_structure_candidates: List[Dict[str, Any]] = []
+            formula_structure_candidates: List[Dict[str, Any]] = []
 
-            smiles_at_mces2 = []
-            inchikey_at_mces2 = []
-            fingerprints_to_mask = []
-            for candidate in formula_structure_candidates:
-                mces_distance = candidate.get("mcesDistToTopHit")
-                if mces_distance == float("inf"):
-                    break
-                if mces_distance is not None and mces_distance < float("inf"):
-                    if candidate.get("smiles"):
-                        smiles_at_mces2.append(candidate["smiles"])
-                    if candidate.get("inchiKey"):
-                        inchikey_at_mces2.append(candidate["inchiKey"])
-                    fingerprints_to_mask.append(self._helper_fingerprint_bits(candidate))
-            top_structure_candidates = formula_structure_candidates[:10]
+            if formula_id and inchi_key:
+                try:
+                    (
+                        annotated,
+                        top_annotation_formula,
+                        sirius_frag_tree,
+                        annotation_bits,
+                        predicted_bits,
+                        epimetheus_intensity,
+                        f1_score,
+                        mismatch_count,
+                        mismatch_fraction,
+                        smiles_at_mces2,
+                        inchikey_at_mces2,
+                        to_mask,
+                        top_structure_candidates,
+                        formula_structure_candidates,
+                    ) = self._helper_top_annotation_metadata(
+                        project_id=project_id,
+                        feature_id=feature_id,
+                        formula_id=formula_id,
+                        inchi_key=inchi_key,
+                        ms_data_search_prepared=ms_data_search_prepared,
+                        formula_opt_fields=formula_opt_fields,
+                        structure_opt_fields=structure_opt_fields,
+                        include_sirius_frag_tree=include_sirius_frag_tree,
+                        _request_timeout=_request_timeout,
+                        _request_auth=_request_auth,
+                        _content_type=_content_type,
+                        _headers=_headers,
+                        _host_index=_host_index,
+                    )
+                except Exception as error:
+                    # One unreadable annotation must not drop the MS/MS feature.
+                    annotation_failures.append(feature_id)
+                    warnings.warn(
+                        f"Could not build the top-annotation metadata for feature "
+                        f"{feature_id}, formula {formula_id}, structure {inchi_key}: "
+                        f"{error!r}; exporting the feature as unannotated.",
+                        RuntimeWarning,
+                    )
 
             qualities = feature_dict.get("qualities") or {}
             ms_data = feature_dict.get("msData") or {}
             merged_ms1 = ms_data.get("mergedMs1") or {}
             merged_ms2 = ms_data.get("mergedMs2") or {}
-            quant_values = quant_table_values_by_feature_id.get(str(feature_id))
             median_mass_deviation = top_annotation_formula.get("medianMassDeviation") or {}
             record = {
                 "IsotopeQuality": self._helper_quality_name(qualities.get("ISOTOPE_QUALITY")),
@@ -2049,9 +2226,9 @@ class FeaturesApi:
                 "RTStartSeconds": feature_dict.get("rtStartSeconds"),
                 "RTEndSeconds": feature_dict.get("rtEndSeconds"),
                 "RTApexSeconds": feature_dict.get("rtApexSeconds"),
-                "Sources": self._helper_sources(project_id, quant_table_column_names, quant_values),
+                "Sources": self._helper_sources(project_id, quant_column_names, quant_values),
                 "confidence": max(0.0, top_annotations.get("confidenceApproxMatch") or 0.0),
-                "f1": self._helper_f1_score(predicted_bits, annotation_bits),
+                "f1": f1_score,
                 "epimetheus_intensity": epimetheus_intensity,
                 "missmatches": mismatch_count,
                 "missmatches_frac": mismatch_fraction,
@@ -2067,12 +2244,12 @@ class FeaturesApi:
                     for candidate in top_structure_candidates
                     if candidate.get("inchiKey")
                 ],
-                "best_inchi": inchi_key,
+                "best_inchi": inchi_key if annotated else None,
                 "predicted_fp": sorted(predicted_bits),
                 "feature_id": feature_id,
-                "best_formula_id": formula_id,
+                "best_formula_id": formula_id if annotated else None,
                 "formula_structure_candidates": len(formula_structure_candidates),
-                "to_mask": self._helper_bits_not_common_to_all(fingerprints_to_mask),
+                "to_mask": to_mask,
                 "topFingerprint": sorted(annotation_bits),
                 "topStructureCsiScore": structure_annotation.get("csiScore"),
                 "topStructureTanimoto": structure_annotation.get("tanimotoSimilarity"),
@@ -2080,7 +2257,7 @@ class FeaturesApi:
                     self._helper_plain_value(spectral_library_matches[0])
                     if spectral_library_matches else None
                 ),
-                "annotated": True,
+                "annotated": annotated,
                 "detectedAdducts": feature_dict.get("detectedAdducts"),
                 ">compound": structure_annotation.get("structureName"),
                 ">formula": formula_annotation.get("molecularFormula"),
@@ -2115,6 +2292,15 @@ class FeaturesApi:
                 if item is not None:
                     key, record = item
                     records[key] = record
+        if annotation_failures:
+            # A systematic outage would otherwise look like a successful export of
+            # unannotated features, so report the scale of the degradation once.
+            warnings.warn(
+                f"{len(annotation_failures)} of {len(features_to_enrich)} MS/MS features "
+                f"of project {project_id} were exported without annotation metadata "
+                "because their annotation could not be retrieved.",
+                RuntimeWarning,
+            )
         return records
 
 
