@@ -1785,6 +1785,21 @@ class FeaturesApi:
 
 
     @staticmethod
+    def _helper_canopus_bits(compound_classes: Optional[List[Dict[str, Any]]]) -> List[int]:
+        """Indices of the CANOPUS classes predicted above 0.5, like the fingerprint bits.
+
+        ClassyFire and NPC are separate embeddings, so their indices must stay in
+        separate lists; merging them would collide.
+        """
+        return sorted(
+            compound_class["index"]
+            for compound_class in compound_classes or []
+            if compound_class.get("index") is not None
+            and (compound_class.get("probability") or 0.0) > 0.5
+        )
+
+
+    @staticmethod
     def _helper_epimetheus_intensity(peaks: List[Dict[str, Any]]) -> float:
         total_intensity = 0.0
         epimetheus_intensity = 0.0
@@ -1953,6 +1968,28 @@ class FeaturesApi:
                 RuntimeWarning,
             )
             epimetheus_intensity = None
+        try:
+            canopus_prediction = self._helper_to_dict(self.get_canopus_prediction(
+                project_id=project_id,
+                aligned_feature_id=feature_id,
+                formula_id=formula_id,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )) or {}
+            canopus_classyfire_fp = self._helper_canopus_bits(canopus_prediction.get("classyFireClasses"))
+            canopus_npc_fp = self._helper_canopus_bits(canopus_prediction.get("npcClasses"))
+        except Exception as error:
+            # CANOPUS is one optional field; losing it must not cost the annotation.
+            warnings.warn(
+                f"Could not retrieve the CANOPUS prediction for feature {feature_id}, "
+                f"formula {formula_id}: {error!r}; continuing without compound classes.",
+                RuntimeWarning,
+            )
+            canopus_classyfire_fp = []
+            canopus_npc_fp = []
         mismatch_count = len(predicted_bits.symmetric_difference(annotation_bits))
         fingerprint_union = predicted_bits.union(annotation_bits)
         mismatch_fraction = mismatch_count / len(fingerprint_union) if fingerprint_union else 1.0
@@ -1986,7 +2023,10 @@ class FeaturesApi:
             self._helper_bits_not_common_to_all(fingerprints_to_mask),
             formula_structure_candidates[:10],
             formula_structure_candidates,
+            canopus_classyfire_fp,
+            canopus_npc_fp,
         )
+        # ponytail: positional tuple, fine at this size; switch to a dict if it grows again.
 
 
     def get_aligned_features_with_top_annotation_and_metadata(
@@ -2166,6 +2206,8 @@ class FeaturesApi:
             to_mask: List[int] = []
             top_structure_candidates: List[Dict[str, Any]] = []
             formula_structure_candidates: List[Dict[str, Any]] = []
+            canopus_classyfire_fp: List[int] = []
+            canopus_npc_fp: List[int] = []
 
             if formula_id and inchi_key:
                 try:
@@ -2184,6 +2226,8 @@ class FeaturesApi:
                         to_mask,
                         top_structure_candidates,
                         formula_structure_candidates,
+                        canopus_classyfire_fp,
+                        canopus_npc_fp,
                     ) = self._helper_top_annotation_metadata(
                         project_id=project_id,
                         feature_id=feature_id,
@@ -2246,6 +2290,8 @@ class FeaturesApi:
                 ],
                 "best_inchi": inchi_key if annotated else None,
                 "predicted_fp": sorted(predicted_bits),
+                "canopus_classyfire_fp": canopus_classyfire_fp,
+                "canopus_npc_fp": canopus_npc_fp,
                 "feature_id": feature_id,
                 "best_formula_id": formula_id if annotated else None,
                 "formula_structure_candidates": len(formula_structure_candidates),

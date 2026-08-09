@@ -112,6 +112,7 @@ class FakeFeaturesApi(FeaturesApi):
         self.quant_table_calls = []
         self.sirius_frag_tree_calls = []
         self.single_feature_calls = []
+        self.canopus_calls = []
         self.active_formula_candidate_requests = 0
         self.max_active_formula_candidate_requests = 0
         self.formula_candidate_lock = threading.Lock()
@@ -266,6 +267,26 @@ class FakeFeaturesApi(FeaturesApi):
                 {"mz": 100.0, "intensity": 8.0, "peakAnnotation": {"substructureAtoms": [1]}},
                 {"mz": 110.0, "intensity": 2.0, "peakAnnotation": {"fragmentId": 1}},
                 {"mz": 120.0, "intensity": 5.0},
+            ],
+        })
+
+    def get_canopus_prediction(self, project_id, aligned_feature_id, formula_id, **kwargs):
+        self.canopus_calls.append({
+            "project_id": project_id,
+            "aligned_feature_id": aligned_feature_id,
+            "formula_id": formula_id,
+        })
+        return DictModel({
+            "classyFireClasses": [
+                {"index": 7, "probability": 0.91, "name": "Alcohols"},
+                {"index": 3, "probability": 0.72, "name": "Primary alcohols"},
+                {"index": 5, "probability": 0.50, "name": "on the threshold"},
+                {"index": 9, "probability": 0.10, "name": "unlikely"},
+                {"index": None, "probability": 0.99, "name": "no index"},
+            ],
+            "npcClasses": [
+                {"index": 2, "probability": 0.80, "name": "Fatty acids"},
+                {"index": 4, "probability": 0.20, "name": "unlikely"},
             ],
         })
 
@@ -459,6 +480,57 @@ class TestFeaturesApiHelpers(unittest.TestCase):
             "sample-a": {"AbsoluteEicIntensity": 50.0, "RelativeEicIntensity": 50.0 / 60.5},
             "sample-b": {"AbsoluteEicIntensity": 60.5, "RelativeEicIntensity": 1.0},
         }, unannotated["Sources"]["SourceFiles"])
+
+    def test_top_annotation_metadata_adds_canopus_bits_only_for_annotated_features(self) -> None:
+        api = FakeFeaturesApi()
+
+        records = api.get_aligned_features_with_top_annotation_and_metadata(
+            "project-1",
+            top_annotation_max_workers=1,
+        )
+
+        annotated = records["project-1_feature-1"]
+        unannotated = records["project-1_feature-4"]
+        # Above 0.5 only, indices sorted, the two ontologies kept apart, and a
+        # class without an index skipped.
+        self.assertEqual([3, 7], annotated["canopus_classyfire_fp"])
+        self.assertEqual([2], annotated["canopus_npc_fp"])
+        # No top annotation -> no formula to ask CANOPUS about.
+        self.assertEqual([], unannotated["canopus_classyfire_fp"])
+        self.assertEqual([], unannotated["canopus_npc_fp"])
+        self.assertEqual(
+            [{"project_id": "project-1", "aligned_feature_id": "feature-1", "formula_id": "C6H12O6"}],
+            api.canopus_calls,
+        )
+
+    def test_top_annotation_metadata_keeps_annotation_when_canopus_fails(self) -> None:
+        baseline_api = FakeFeaturesApi()
+        baseline = baseline_api.get_aligned_features_with_top_annotation_and_metadata(
+            "project-1",
+            top_annotation_max_workers=1,
+        )["project-1_feature-1"]
+        api = FakeFeaturesApi()
+
+        def get_canopus_prediction(*args, **kwargs):
+            raise ServiceException(status=500, reason="canopus unavailable")
+
+        api.get_canopus_prediction = get_canopus_prediction
+
+        with self.assertWarnsRegex(RuntimeWarning, "CANOPUS prediction for feature feature-1"):
+            records = api.get_aligned_features_with_top_annotation_and_metadata(
+                "project-1",
+                top_annotation_max_workers=1,
+            )
+
+        record = records["project-1_feature-1"]
+        self.assertTrue(record["annotated"])
+        self.assertEqual([], record["canopus_classyfire_fp"])
+        self.assertEqual([], record["canopus_npc_fp"])
+        # everything else survives untouched
+        self.assertEqual(
+            {k: v for k, v in baseline.items() if not k.startswith("canopus_")},
+            {k: v for k, v in record.items() if not k.startswith("canopus_")},
+        )
 
     def test_top_annotation_metadata_keeps_feature_when_annotation_call_fails(self) -> None:
         api = FakeFeaturesApi()
