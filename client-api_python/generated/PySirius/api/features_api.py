@@ -2025,6 +2025,7 @@ class FeaturesApi:
             formula_structure_candidates,
             canopus_classyfire_fp,
             canopus_npc_fp,
+            [sorted(bits) for bits in fingerprints_to_mask],
         )
         # ponytail: positional tuple, fine at this size; switch to a dict if it grows again.
 
@@ -2208,6 +2209,7 @@ class FeaturesApi:
             formula_structure_candidates: List[Dict[str, Any]] = []
             canopus_classyfire_fp: List[int] = []
             canopus_npc_fp: List[int] = []
+            fingerprints_at_mces2: List[List[int]] = []
 
             if formula_id and inchi_key:
                 try:
@@ -2228,6 +2230,7 @@ class FeaturesApi:
                         formula_structure_candidates,
                         canopus_classyfire_fp,
                         canopus_npc_fp,
+                        fingerprints_at_mces2,
                     ) = self._helper_top_annotation_metadata(
                         project_id=project_id,
                         feature_id=feature_id,
@@ -2278,6 +2281,7 @@ class FeaturesApi:
                 "missmatches_frac": mismatch_fraction,
                 "smiles_at_mces2": smiles_at_mces2,
                 "inchikey_at_mces2": inchikey_at_mces2,
+                "fingerprints_at_mces2": fingerprints_at_mces2,
                 "top_strucuteres_smiles": [
                     candidate["smiles"]
                     for candidate in top_structure_candidates

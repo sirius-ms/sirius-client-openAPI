@@ -503,6 +503,28 @@ class TestFeaturesApiHelpers(unittest.TestCase):
             api.canopus_calls,
         )
 
+    def test_top_annotation_metadata_exports_candidate_bits_at_mces2(self) -> None:
+        api = FakeFeaturesApi()
+
+        records = api.get_aligned_features_with_top_annotation_and_metadata(
+            "project-1",
+            top_annotation_max_workers=1,
+        )
+
+        annotated = records["project-1_feature-1"]
+        # The fake returns IK1 (mces 0.0, bits 0+2), IK2 (mces 1.0, bits 0) and
+        # IK3 (mces inf, bits 1). Only the first two are within MCES 2, and the
+        # exported bit lists are exactly the ones the mask is built from.
+        self.assertEqual([[0, 2], [0]], annotated["fingerprints_at_mces2"])
+        self.assertEqual(["CCO", "CCC"], annotated["smiles_at_mces2"])
+        self.assertEqual(["IK1", "IK2"], annotated["inchikey_at_mces2"])
+        self.assertEqual([2], annotated["to_mask"])
+        self.assertEqual(
+            len(annotated["inchikey_at_mces2"]),
+            len(annotated["fingerprints_at_mces2"]),
+        )
+        self.assertEqual([], records["project-1_feature-4"]["fingerprints_at_mces2"])
+
     def test_top_annotation_metadata_keeps_annotation_when_canopus_fails(self) -> None:
         baseline_api = FakeFeaturesApi()
         baseline = baseline_api.get_aligned_features_with_top_annotation_and_metadata(
