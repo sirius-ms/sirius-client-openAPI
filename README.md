@@ -2,6 +2,7 @@
 [![conda-forge | py-sirius-ms](https://img.shields.io/conda/vn/conda-forge/py-sirius-ms?logo=anaconda&label=py-sirius-ms)](https://anaconda.org/conda-forge/py-sirius-ms)
 [![conda-forge | sirius-ms](https://img.shields.io/conda/vn/conda-forge/sirius-ms?logo=anaconda&label=sirius-ms)](https://anaconda.org/conda-forge/sirius-ms)
 [![Java SDK](https://img.shields.io/badge/Java_SDK-GitLab/Maven-fc6d26?labelColor=555&logo=gitlab&logoColor=white)](https://gitlab.com/bright-giant/registry-public/-/packages/)
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![DOI](https://img.shields.io/badge/DOI-10.1016%2Fj.xpro.2026.104771-blue)](https://doi.org/10.1016/j.xpro.2026.104771)
 
 
