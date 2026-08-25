@@ -26,3 +26,101 @@ jobs:
     secrets: inherit
     with:
       sirius_version: ${{ inputs.sirius_version }}
+
+  CompatGate:
+    # The backward compatibility gate for SDK users, and the check to require in the branch
+    # protection of the base branch.
+    #
+    # It lives here rather than in NewUpdate.yml because a check only counts towards branch
+    # protection when it reports on the pull request *head*. NewUpdate is dispatched on the temp
+    # branch before its own auto-commit, so its checks attach to the commit the run started at, not
+    # to the commit the pull request ends up pointing at.
+    #
+    # Needs neither SIRIUS nor the generators: it re-extracts the SDK surface from the checked out
+    # tree and compares it, plus the api-docs, against the base branch.
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - name: Set up R for the surface extractor
+        uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: "4.4"
+      - name: Compare the SDK surface against ${{ github.base_ref }}
+        id: compat
+        run: |
+          out="${RUNNER_TEMP}/compat"
+          mkdir -p "$out"
+          base="origin/${{ github.base_ref }}"
+          git fetch --no-tags origin "${{ github.base_ref }}"
+
+          for f in api-docs-strings.json api-docs-enums.json sdk-surface-python.json sdk-surface-r.json; do
+            git show "$base:.updater/api/$f" > "$out/base-$f" 2>/dev/null || : > "$out/base-$f"
+          done
+
+          # Re-extract from the tree instead of trusting the committed snapshots: a hand edit on the
+          # branch would otherwise leave a stale baseline for the next release.
+          python3 .updater/tools/sdk_symbols.py python -o "$out/sdk-surface-python.json"
+          python3 .updater/tools/sdk_symbols.py r      -o "$out/sdk-surface-r.json"
+
+          for language in python r; do
+            if ! diff -q "$out/sdk-surface-$language.json" ".updater/api/sdk-surface-$language.json" > /dev/null 2>&1; then
+              echo "::error::.updater/api/sdk-surface-$language.json does not match the generated"
+              echo "::error::clients in this branch. Run .updater/tools/run_compat_check.sh --write"
+              echo "::error::and commit the refreshed snapshot, otherwise the next release compares"
+              echo "::error::against a baseline that never existed."
+              exit 1
+            fi
+          done
+
+          if [ -s "$out/base-api-docs-strings.json" ]; then
+            python3 .updater/tools/api_compat_check.py "$out/base-api-docs-strings.json" \
+              .updater/api/api-docs-strings.json --report-only --label "R / strings" \
+              --json "$out/spec-r.json"
+          fi
+          if [ -s "$out/base-api-docs-enums.json" ]; then
+            python3 .updater/tools/api_compat_check.py "$out/base-api-docs-enums.json" \
+              .updater/api/api-docs-enums.json --report-only --label "Python / enums" \
+              --json "$out/spec-python.json"
+          fi
+          python3 .updater/tools/sdk_compat_check.py "$out/base-sdk-surface-python.json" \
+            "$out/sdk-surface-python.json" --report-only --json "$out/sdk-python.json"
+          python3 .updater/tools/sdk_compat_check.py "$out/base-sdk-surface-r.json" \
+            "$out/sdk-surface-r.json" --report-only --json "$out/sdk-r.json"
+
+          python3 .updater/tools/render_compat_report.py -o "$out/compat-report.md" \
+            "$out/spec-r.json" "$out/spec-python.json" "$out/sdk-python.json" "$out/sdk-r.json" \
+            --intro "Pull request #${{ github.event.pull_request.number }} against \`${{ github.base_ref }}\`."
+          cat "$out/compat-report.md" >> "$GITHUB_STEP_SUMMARY"
+      - name: Upload compatibility report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: compat-report-pr
+          path: ${{ runner.temp }}/compat
+          if-no-files-found: warn
+      - name: Verify the change stays backward compatible
+        run: |
+          breaking="${{ steps.compat.outputs.breaking }}"
+          migration="${{ steps.compat.outputs.migration }}"
+          if [ "${migration:-0}" != "0" ]; then
+            echo "::warning::$migration declared source breaking change(s). They do not block the"
+            echo "::warning::merge, but existing user code has to be migrated or kept working with"
+            echo "::warning::deprecated aliases. See the job summary."
+          fi
+          if [ -z "$breaking" ] || [ "$breaking" = "0" ]; then
+            echo "No undeclared breaking changes for existing SDK users."
+            exit 0
+          fi
+          if ${{ contains(github.event.pull_request.labels.*.name, 'allow-breaking-api-changes') }}; then
+            echo "::warning::$breaking breaking change(s) accepted via the"
+            echo "::warning::allow-breaking-api-changes label."
+            exit 0
+          fi
+          echo "::error::$breaking breaking change(s) for existing SDK users. See the job summary or"
+          echo "::error::the compat-report-pr artifact. Fix them, declare them with an API version"
+          echo "::error::bump, add them to .updater/tools/compat-accepted.json, or label this pull"
+          echo "::error::request allow-breaking-api-changes."
+          exit 1

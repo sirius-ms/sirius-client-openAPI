@@ -121,10 +121,22 @@ strings one was checked before, so enum-as-ref changes hitting the Python models
    `gh pr create --body-file`. The workflow locks the PR immediately after creation, so a follow-up
    `gh pr comment` would be rejected - the body is the only reliable channel. A `breaking-change`
    label is added when unexcused BREAKING findings exist.
-4. A separate `CompatGate` job re-reads the JSON and fails only on unexcused BREAKING findings. It is
-   the required status check: the PR exists, the branch is there, a workaround can be committed onto
-   it, and the merge stays blocked until the gate passes or `allow_breaking_api_changes` is set. That
-   input keeps its meaning, it just moves from "abort everything" to "excuse the gate".
+4. The blocking check is the `CompatGate` job in **`RunTests.yml`**, not in `NewUpdate.yml`. A check
+   only counts towards branch protection when it reports on the pull request *head*, and NewUpdate is
+   dispatched on the temp branch *before* its own auto-commit - its checks land on the commit the run
+   started at, which the auto-commit and every later commit then leave behind. The first attempt put
+   the gate in NewUpdate and the required check sat at "Expected, waiting for status to be reported"
+   forever.
+
+   The pull request job needs neither SIRIUS nor the generators: it re-extracts both snapshots from
+   the checked out tree and compares them, plus the api-docs, against `origin/$base_ref`. It fails on
+   unexcused BREAKING only; MIGRATION is a warning. It also asserts that the **committed** snapshots
+   match what it just extracted, so a hand edit on a branch cannot leave the next release comparing
+   against a baseline that never existed.
+
+   `allow_breaking_api_changes` keeps its meaning by travelling to the pull request as the
+   `allow-breaking-api-changes` label, which the gate honours; the label can also be added by hand on
+   any pull request.
 
 ## Deprecated aliases
 
