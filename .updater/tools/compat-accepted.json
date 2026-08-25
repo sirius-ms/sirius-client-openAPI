@@ -1,0 +1,10 @@
+{
+  "_comment": [
+    "Deliberate, reviewed breaks that must stop failing the compatibility gate.",
+    "Ids come from the check output ('id' field in the --json report), e.g.",
+    "  python:method-removed:CompoundsApi.add_compounds",
+    "  spec:operation-removed:getCompound",
+    "Keep entries short lived: remove one once the release that contained the break is out."
+  ],
+  "accepted": []
+}

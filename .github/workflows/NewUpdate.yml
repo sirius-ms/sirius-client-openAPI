@@ -12,7 +12,7 @@ on:
         type: string
         required: false
       allow_breaking_api_changes:
-        description: "Continue even if the new API removes or changes parts that SDK users rely on. Only for deliberate breaking releases."
+        description: "Let the compatibility gate pass even though the update removes or changes parts that SDK users rely on. The PR and the report are produced either way. Only for deliberate breaking releases."
         type: boolean
         required: false
         default: false
@@ -21,6 +21,8 @@ jobs:
   UpdateClients:
     runs-on: ubuntu-latest
     timeout-minutes: 90
+    outputs:
+      breaking: ${{ steps.compat.outputs.breaking }}
     steps:
       - name: checkout repo
         uses: actions/checkout@v6
@@ -89,17 +91,6 @@ jobs:
           jq . api-docs-strings.json | sponge api-docs-strings.json
           jq . api-docs-enums.json | sponge api-docs-enums.json
         working-directory: .updater/api
-      - name: Check API backward compatibility
-        # Compares the freshly fetched docs against the committed ones, i.e. the previous release.
-        # Fails on changes that would break SDK users (operations removed or renamed, schemas or
-        # properties removed, types changed, enum constants removed, request properties becoming
-        # mandatory) unless the API version was bumped. Removing something that the previous
-        # release already marked [EXPERIMENTAL]/[INTERNAL]/[DEPRECATED] is allowed.
-        run: |
-          git show HEAD:.updater/api/api-docs-strings.json > /tmp/api-docs-strings-previous.json
-          python3 .updater/tools/api_compat_check.py \
-            /tmp/api-docs-strings-previous.json .updater/api/api-docs-strings.json \
-            ${{ inputs.allow_breaking_api_changes && '--allow-breaking' || '' }}
       - name: Update Clients
         run: |
           # load package version from file
@@ -148,6 +139,61 @@ jobs:
           chmod +x ./patches/insert_wait_for_job_completion_in_rsirius_api.sh
           ./patches/insert_wait_for_job_completion_in_rsirius_api.sh
         working-directory: client-api_r
+      - name: Set up R for the surface extractor
+        uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: "4.4"
+      - name: Check backward compatibility
+        # Two levels, both against the committed state (= the previous release), so there is no
+        # extra baseline to maintain:
+        #   spec   - operations/schemas/properties removed, renamed, retyped, newly mandatory
+        #   SDK    - the generated surface, which also catches breakage a generator upgrade causes
+        #            while the spec stays byte identical
+        # Removing something the previous release already marked [EXPERIMENTAL]/[INTERNAL]/
+        # [DEPRECATED] is allowed. This step only reports; the CompatGate job decides.
+        id: compat
+        run: |
+          out="${RUNNER_TEMP}/compat"
+          mkdir -p "$out"
+
+          for f in api-docs-strings.json api-docs-enums.json sdk-surface-python.json sdk-surface-r.json; do
+            git show "HEAD:.updater/api/$f" > "$out/old-$f" 2>/dev/null || : > "$out/old-$f"
+          done
+
+          if [ -s "$out/old-api-docs-strings.json" ]; then
+            python3 .updater/tools/api_compat_check.py "$out/old-api-docs-strings.json" \
+              .updater/api/api-docs-strings.json --report-only --label "R / strings" \
+              --json "$out/spec-r.json"
+          fi
+          if [ -s "$out/old-api-docs-enums.json" ]; then
+            python3 .updater/tools/api_compat_check.py "$out/old-api-docs-enums.json" \
+              .updater/api/api-docs-enums.json --report-only --label "Python / enums" \
+              --json "$out/spec-python.json"
+          fi
+
+          python3 .updater/tools/sdk_symbols.py python -o .updater/api/sdk-surface-python.json
+          python3 .updater/tools/sdk_symbols.py r      -o .updater/api/sdk-surface-r.json
+
+          python3 .updater/tools/sdk_compat_check.py "$out/old-sdk-surface-python.json" \
+            .updater/api/sdk-surface-python.json --report-only --json "$out/sdk-python.json"
+          python3 .updater/tools/sdk_compat_check.py "$out/old-sdk-surface-r.json" \
+            .updater/api/sdk-surface-r.json --report-only --json "$out/sdk-r.json"
+
+          run_url="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          python3 .updater/tools/render_compat_report.py -o "$out/compat-report.md" \
+            "$out/spec-r.json" "$out/spec-python.json" "$out/sdk-python.json" "$out/sdk-r.json" \
+            --intro "SIRIUS \`$(cat .updater/api/packageVersion.txt)\`, produced by [this update run]($run_url)." \
+            --max-bytes 60000 \
+            --artifact-hint "The full list is in the \`compat-report\` artifact of [this run]($run_url)."
+
+          cat "$out/compat-report.md" >> "$GITHUB_STEP_SUMMARY"
+      - name: Upload compatibility report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: compat-report
+          path: ${{ runner.temp }}/compat
+          if-no-files-found: warn
       - name: Remove Sirius Rest Api
         run: |
           rm -rf *sirius*
@@ -176,14 +222,36 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.PAT_TOKEN }}
         run: |
-          pr_url=$(gh pr create \
+          body="${RUNNER_TEMP}/compat/pr-body.md"
+          {
+            echo "Automatic client updates from update workflows."
+            echo
+            cat "${RUNNER_TEMP}/compat/compat-report.md"
+          } > "$body"
+          if pr_url=$(gh pr create \
             --base ${{ inputs.target_branch }} \
             --title "AutoUpdated" \
-            --body "Automatic client updates from update workflows" \
-            --label "Feature" || gh pr view --json url --jq '.url')
+            --body-file "$body" \
+            --label "Feature"); then
+            echo "opened $pr_url"
+          else
+            # the pull request already exists (re-run on the same branch): refresh its body so the
+            # compatibility report describes this run, not the previous one
+            pr_url=$(gh pr view --json url --jq '.url')
+            gh pr edit --body-file "$body" || echo "could not refresh the pull request body"
+          fi
           pr_number=$(gh pr view --json number --jq '.number')
           echo "pr_number=$pr_number" >> $GITHUB_OUTPUT
           echo "pr_created=true" >> $GITHUB_OUTPUT
+      - name: Flag breaking changes on the pull request
+        if: steps.compat.outputs.breaking != '' && steps.compat.outputs.breaking != '0'
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ secrets.PAT_TOKEN }}
+        run: |
+          gh label create breaking-change --color B60205 \
+            --description "Update breaks the generated SDK surface" --force
+          gh pr edit ${{ steps.open-pr.outputs.pr_number }} --add-label breaking-change
       - name: check if request has been created
         run: echo ${{steps.open-pr.outputs.pr_created}}
       - name: lock pull request
@@ -204,3 +272,28 @@ jobs:
           id=$(gh workflow run RunTests.yml --ref ${GITHUB_REF_NAME} -f sirius_version="$version" | grep -oP '(?<=runs/)\d+')
           echo "run ID of RunTests is: $id"
           gh run watch $id --exit-status --interval 10
+
+  CompatGate:
+    # Deliberately a separate job: UpdateClients must finish so the branch, the generated clients
+    # and the pull request exist and a workaround can be committed onto them. This job is the one
+    # that turns red, and is the check to require in the branch protection of the base branch.
+    needs: UpdateClients
+    if: always() && needs.UpdateClients.result == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verify the update stays backward compatible
+        run: |
+          breaking="${{ needs.UpdateClients.outputs.breaking }}"
+          if [ -z "$breaking" ] || [ "$breaking" = "0" ]; then
+            echo "No breaking changes for existing SDK users."
+            exit 0
+          fi
+          if [ "${{ inputs.allow_breaking_api_changes }}" = "true" ]; then
+            echo "::warning::$breaking breaking change(s) accepted via allow_breaking_api_changes."
+            exit 0
+          fi
+          echo "::error::$breaking breaking change(s) for existing SDK users. See the pull request"
+          echo "::error::body or the compat-report artifact. Fix them, declare them with an API"
+          echo "::error::version bump, add them to .updater/tools/compat-accepted.json, or re-run"
+          echo "::error::with allow_breaking_api_changes: true."
+          exit 1
