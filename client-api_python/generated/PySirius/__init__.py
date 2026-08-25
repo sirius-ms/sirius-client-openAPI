@@ -321,3 +321,7 @@ from PySirius.models.zodiac_library_scoring import ZodiacLibraryScoring as Zodia
 from PySirius.pysirius_api import PySiriusAPI as PySiriusAPI
 from PySirius.pysirius_sdk import SiriusSDK as SiriusSDK
 from PySirius.pysirius_helper import Helper as Helper
+
+# install deprecated aliases for API methods renamed by the SIRIUS API
+from PySirius.pysirius_compat import install_deprecated_aliases as _install_deprecated_aliases
+_install_deprecated_aliases()

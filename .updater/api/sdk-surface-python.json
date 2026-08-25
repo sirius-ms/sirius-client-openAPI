@@ -3515,6 +3515,219 @@
       }
      ]
     },
+    "get_compounds_paged": {
+     "deprecated_alias_for": "get_compounds_page",
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/compounds/page",
+      "operation_id": "getCompoundsPage",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "page",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "size",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "sort",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "ms_data_search_prepared",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "opt_fields",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "opt_fields_features",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_timeout",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_auth",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_content_type",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_headers",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_host_index",
+       "required": false
+      }
+     ]
+    },
+    "get_compounds_paged_with_http_info": {
+     "deprecated_alias_for": "get_compounds_page_with_http_info",
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/compounds/page",
+      "operation_id": "getCompoundsPage",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "page",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "size",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "sort",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "ms_data_search_prepared",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "opt_fields",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "opt_fields_features",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_timeout",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_auth",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_content_type",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_headers",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_host_index",
+       "required": false
+      }
+     ]
+    },
+    "get_compounds_paged_without_preload_content": {
+     "deprecated_alias_for": "get_compounds_page_without_preload_content",
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/compounds/page",
+      "operation_id": "getCompoundsPage",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "page",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "size",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "sort",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "ms_data_search_prepared",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "opt_fields",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "opt_fields_features",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_timeout",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_auth",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_content_type",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_headers",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_host_index",
+       "required": false
+      }
+     ]
+    },
     "get_compounds_searchable_fields": {
      "origin": {
       "endpoint": "GET /api/projects/{projectId}/compounds/searchable-fields",
@@ -6129,6 +6342,204 @@
       }
      ]
     },
+    "get_aligned_features_paged": {
+     "deprecated_alias_for": "get_aligned_features_page",
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/aligned-features/page",
+      "operation_id": "getAlignedFeaturesPage",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "page",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "size",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "sort",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "ms_data_search_prepared",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "opt_fields",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_timeout",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_auth",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_content_type",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_headers",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_host_index",
+       "required": false
+      }
+     ]
+    },
+    "get_aligned_features_paged_with_http_info": {
+     "deprecated_alias_for": "get_aligned_features_page_with_http_info",
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/aligned-features/page",
+      "operation_id": "getAlignedFeaturesPage",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "page",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "size",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "sort",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "ms_data_search_prepared",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "opt_fields",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_timeout",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_auth",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_content_type",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_headers",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_host_index",
+       "required": false
+      }
+     ]
+    },
+    "get_aligned_features_paged_without_preload_content": {
+     "deprecated_alias_for": "get_aligned_features_page_without_preload_content",
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/aligned-features/page",
+      "operation_id": "getAlignedFeaturesPage",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "page",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "size",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "sort",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "ms_data_search_prepared",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "opt_fields",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_timeout",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_auth",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_content_type",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_headers",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_host_index",
+       "required": false
+      }
+     ]
+    },
     "get_aligned_features_searchable_fields": {
      "origin": {
       "endpoint": "GET /api/projects/{projectId}/aligned-features/searchable-fields",
@@ -6964,6 +7375,219 @@
       }
      ]
     },
+    "get_de_novo_structure_candidates_by_formula_paged": {
+     "deprecated_alias_for": "get_de_novo_structure_candidates_by_formula_page",
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/denovo-structures/page",
+      "operation_id": "getDeNovoStructureCandidatesByFormulaPage",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "aligned_feature_id",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "formula_id",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "page",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "size",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "sort",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "opt_fields",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_timeout",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_auth",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_content_type",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_headers",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_host_index",
+       "required": false
+      }
+     ]
+    },
+    "get_de_novo_structure_candidates_by_formula_paged_with_http_info": {
+     "deprecated_alias_for": "get_de_novo_structure_candidates_by_formula_page_with_http_info",
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/denovo-structures/page",
+      "operation_id": "getDeNovoStructureCandidatesByFormulaPage",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "aligned_feature_id",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "formula_id",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "page",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "size",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "sort",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "opt_fields",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_timeout",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_auth",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_content_type",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_headers",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_host_index",
+       "required": false
+      }
+     ]
+    },
+    "get_de_novo_structure_candidates_by_formula_paged_without_preload_content": {
+     "deprecated_alias_for": "get_de_novo_structure_candidates_by_formula_page_without_preload_content",
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/denovo-structures/page",
+      "operation_id": "getDeNovoStructureCandidatesByFormulaPage",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "aligned_feature_id",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "formula_id",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "page",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "size",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "sort",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "opt_fields",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_timeout",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_auth",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_content_type",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_headers",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_host_index",
+       "required": false
+      }
+     ]
+    },
     "get_de_novo_structure_candidates_by_formula_with_http_info": {
      "origin": {
       "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/denovo-structures",
@@ -7221,6 +7845,204 @@
        "kind": "positional",
        "name": "aligned_feature_id",
        "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "page",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "size",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "sort",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "opt_fields",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_timeout",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_auth",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_content_type",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_headers",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_host_index",
+       "required": false
+      }
+     ]
+    },
+    "get_de_novo_structure_candidates_paged": {
+     "deprecated_alias_for": "get_de_novo_structure_candidates_page",
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/denovo-structures/page",
+      "operation_id": "getDeNovoStructureCandidatesPage",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "aligned_feature_id",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "page",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "size",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "sort",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "opt_fields",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_timeout",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_auth",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_content_type",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_headers",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_host_index",
+       "required": false
+      }
+     ]
+    },
+    "get_de_novo_structure_candidates_paged_with_http_info": {
+     "deprecated_alias_for": "get_de_novo_structure_candidates_page_with_http_info",
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/denovo-structures/page",
+      "operation_id": "getDeNovoStructureCandidatesPage",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "aligned_feature_id",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "page",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "size",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "sort",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "opt_fields",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_timeout",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_auth",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_content_type",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_headers",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_host_index",
+       "required": false
+      }
+     ]
+    },
+    "get_de_novo_structure_candidates_paged_without_preload_content": {
+     "deprecated_alias_for": "get_de_novo_structure_candidates_page_without_preload_content",
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/denovo-structures/page",
+      "operation_id": "getDeNovoStructureCandidatesPage",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "aligned_feature_id",
+       "required": false
       },
       {
        "kind": "positional",
@@ -8789,6 +9611,219 @@
       }
      ]
     },
+    "get_formula_candidates_paged": {
+     "deprecated_alias_for": "get_formula_candidates_page",
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/page",
+      "operation_id": "getFormulaCandidatesPage",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "aligned_feature_id",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "page",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "size",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "sort",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "ms_data_search_prepared",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "opt_fields",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_timeout",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_auth",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_content_type",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_headers",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_host_index",
+       "required": false
+      }
+     ]
+    },
+    "get_formula_candidates_paged_with_http_info": {
+     "deprecated_alias_for": "get_formula_candidates_page_with_http_info",
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/page",
+      "operation_id": "getFormulaCandidatesPage",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "aligned_feature_id",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "page",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "size",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "sort",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "ms_data_search_prepared",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "opt_fields",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_timeout",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_auth",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_content_type",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_headers",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_host_index",
+       "required": false
+      }
+     ]
+    },
+    "get_formula_candidates_paged_without_preload_content": {
+     "deprecated_alias_for": "get_formula_candidates_page_without_preload_content",
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/page",
+      "operation_id": "getFormulaCandidatesPage",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "aligned_feature_id",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "page",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "size",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "sort",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "ms_data_search_prepared",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "opt_fields",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_timeout",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_auth",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_content_type",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_headers",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_host_index",
+       "required": false
+      }
+     ]
+    },
     "get_formula_candidates_with_http_info": {
      "origin": {
       "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas",
@@ -9969,6 +11004,249 @@
       }
      ]
     },
+    "get_spectral_library_matches_paged": {
+     "deprecated_alias_for": "get_spectral_library_matches_page",
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/spectral-library-matches/page",
+      "operation_id": "getSpectralLibraryMatchesPage",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "aligned_feature_id",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "page",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "size",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "sort",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "min_shared_peaks",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "min_similarity",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "inchi_key",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "opt_fields",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_timeout",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_auth",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_content_type",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_headers",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_host_index",
+       "required": false
+      }
+     ]
+    },
+    "get_spectral_library_matches_paged_with_http_info": {
+     "deprecated_alias_for": "get_spectral_library_matches_page_with_http_info",
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/spectral-library-matches/page",
+      "operation_id": "getSpectralLibraryMatchesPage",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "aligned_feature_id",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "page",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "size",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "sort",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "min_shared_peaks",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "min_similarity",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "inchi_key",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "opt_fields",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_timeout",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_auth",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_content_type",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_headers",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_host_index",
+       "required": false
+      }
+     ]
+    },
+    "get_spectral_library_matches_paged_without_preload_content": {
+     "deprecated_alias_for": "get_spectral_library_matches_page_without_preload_content",
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/spectral-library-matches/page",
+      "operation_id": "getSpectralLibraryMatchesPage",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "aligned_feature_id",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "page",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "size",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "sort",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "min_shared_peaks",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "min_similarity",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "inchi_key",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "opt_fields",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_timeout",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_auth",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_content_type",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_headers",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_host_index",
+       "required": false
+      }
+     ]
+    },
     "get_spectral_library_matches_summary": {
      "origin": {
       "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/spectral-library-matches/summary",
@@ -10594,6 +11872,219 @@
       }
      ]
     },
+    "get_structure_candidates_by_formula_paged": {
+     "deprecated_alias_for": "get_structure_candidates_by_formula_page",
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/db-structures/page",
+      "operation_id": "getStructureCandidatesByFormulaPage",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "aligned_feature_id",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "formula_id",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "page",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "size",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "sort",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "opt_fields",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_timeout",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_auth",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_content_type",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_headers",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_host_index",
+       "required": false
+      }
+     ]
+    },
+    "get_structure_candidates_by_formula_paged_with_http_info": {
+     "deprecated_alias_for": "get_structure_candidates_by_formula_page_with_http_info",
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/db-structures/page",
+      "operation_id": "getStructureCandidatesByFormulaPage",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "aligned_feature_id",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "formula_id",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "page",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "size",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "sort",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "opt_fields",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_timeout",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_auth",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_content_type",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_headers",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_host_index",
+       "required": false
+      }
+     ]
+    },
+    "get_structure_candidates_by_formula_paged_without_preload_content": {
+     "deprecated_alias_for": "get_structure_candidates_by_formula_page_without_preload_content",
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/db-structures/page",
+      "operation_id": "getStructureCandidatesByFormulaPage",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "aligned_feature_id",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "formula_id",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "page",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "size",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "sort",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "opt_fields",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_timeout",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_auth",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_content_type",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_headers",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_host_index",
+       "required": false
+      }
+     ]
+    },
     "get_structure_candidates_by_formula_with_http_info": {
      "origin": {
       "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/db-structures",
@@ -10851,6 +12342,204 @@
        "kind": "positional",
        "name": "aligned_feature_id",
        "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "page",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "size",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "sort",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "opt_fields",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_timeout",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_auth",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_content_type",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_headers",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_host_index",
+       "required": false
+      }
+     ]
+    },
+    "get_structure_candidates_paged": {
+     "deprecated_alias_for": "get_structure_candidates_page",
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/db-structures/page",
+      "operation_id": "getStructureCandidatesPage",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "aligned_feature_id",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "page",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "size",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "sort",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "opt_fields",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_timeout",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_auth",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_content_type",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_headers",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_host_index",
+       "required": false
+      }
+     ]
+    },
+    "get_structure_candidates_paged_with_http_info": {
+     "deprecated_alias_for": "get_structure_candidates_page_with_http_info",
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/db-structures/page",
+      "operation_id": "getStructureCandidatesPage",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "aligned_feature_id",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "page",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "size",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "sort",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "opt_fields",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_timeout",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_auth",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_content_type",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_headers",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_host_index",
+       "required": false
+      }
+     ]
+    },
+    "get_structure_candidates_paged_without_preload_content": {
+     "deprecated_alias_for": "get_structure_candidates_page_without_preload_content",
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/db-structures/page",
+      "operation_id": "getStructureCandidatesPage",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "aligned_feature_id",
+       "required": false
       },
       {
        "kind": "positional",
@@ -14344,6 +16033,189 @@
      ]
     },
     "get_jobs_page_without_preload_content": {
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/jobs/page",
+      "operation_id": "getJobsPage",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "page",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "size",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "sort",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "opt_fields",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_timeout",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_auth",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_content_type",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_headers",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_host_index",
+       "required": false
+      }
+     ]
+    },
+    "get_jobs_paged": {
+     "deprecated_alias_for": "get_jobs_page",
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/jobs/page",
+      "operation_id": "getJobsPage",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "page",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "size",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "sort",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "opt_fields",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_timeout",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_auth",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_content_type",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_headers",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_host_index",
+       "required": false
+      }
+     ]
+    },
+    "get_jobs_paged_with_http_info": {
+     "deprecated_alias_for": "get_jobs_page_with_http_info",
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/jobs/page",
+      "operation_id": "getJobsPage",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "page",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "size",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "sort",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "opt_fields",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_timeout",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_auth",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_content_type",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_headers",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_host_index",
+       "required": false
+      }
+     ]
+    },
+    "get_jobs_paged_without_preload_content": {
+     "deprecated_alias_for": "get_jobs_page_without_preload_content",
      "origin": {
       "endpoint": "GET /api/projects/{projectId}/jobs/page",
       "operation_id": "getJobsPage",

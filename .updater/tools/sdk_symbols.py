@@ -145,6 +145,43 @@ def _origin_for(base: str, targets: dict[str, dict], ops: dict[str, dict]) -> di
             "unstable": bool(op and op["unstable"])}
 
 
+def _compat_aliases(path: str) -> list[tuple[str, str, str, list[str]]]:
+    """(class, old name, new name, old parameters) declared in pysirius_compat.py
+
+    The aliases are attached to the generated classes at import time, so ``ast`` alone does not see
+    them - but they are public surface, and a snapshot without them would not notice when they are
+    eventually deleted. Read the declaration instead of importing anything.
+    """
+    if not os.path.exists(path):
+        return []
+    tree = ast.parse(open(path, encoding="utf-8").read())
+    out = []
+    for node in tree.body:
+        if not isinstance(node, ast.Assign):
+            continue
+        if not any(isinstance(t, ast.Name) and t.id.startswith("RENAMED_IN") for t in node.targets):
+            continue
+        for element in getattr(node.value, "elts", []):
+            values = getattr(element, "elts", [])
+            if len(values) != 4 or not isinstance(values[0], ast.Name):
+                continue
+            params = [c.value for c in getattr(values[3], "elts", [])
+                      if isinstance(c, ast.Constant)]
+            out.append((values[0].id, values[1].value, values[2].value, params))
+    return out
+
+
+def _variants(path: str) -> list[str]:
+    if not os.path.exists(path):
+        return [""]
+    tree = ast.parse(open(path, encoding="utf-8").read())
+    for node in tree.body:
+        if isinstance(node, ast.Assign) and any(
+                isinstance(t, ast.Name) and t.id == "VARIANTS" for t in node.targets):
+            return [c.value for c in getattr(node.value, "elts", []) if isinstance(c, ast.Constant)]
+    return [""]
+
+
 def extract_python(root: str, extra: list[str], spec: dict) -> dict:
     ops, schemas = operation_index(spec), schema_index(spec)
     classes: dict[str, dict] = {}
@@ -202,6 +239,25 @@ def extract_python(root: str, extra: list[str], spec: dict) -> dict:
                             "unstable": schemas[cls.name]["unstable"],
                             "orphan": schemas[cls.name]["orphan"]}
                            if cls.name in schemas else None),
+            }
+
+    compat = os.path.join(root, "pysirius_compat.py")
+    for cls_name, old_name, new_name, old_parameters in _compat_aliases(compat):
+        cls = classes.get(cls_name)
+        if not cls:
+            continue
+        for variant in _variants(compat):
+            old, new = old_name + variant, new_name + variant
+            if new not in cls["methods"] or old in cls["methods"]:
+                continue
+            # the wrapper forwards **kwargs, so the generator's own request options
+            # (_request_timeout, _headers, ...) still reach the new method
+            options = [p for p in cls["methods"][new]["params"] if p["name"].startswith("_")]
+            cls["methods"][old] = {
+                "params": [{"name": name, "required": index == 0, "kind": "positional"}
+                           for index, name in enumerate(old_parameters)] + options,
+                "origin": cls["methods"][new].get("origin"),
+                "deprecated_alias_for": new,
             }
 
     init = os.path.join(root, "__init__.py")

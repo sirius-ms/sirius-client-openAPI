@@ -6,11 +6,20 @@ Complements ``api_compat_check.py``: that one compares the server spec, this one
 stays byte identical - the openapi-generator 7.24 ``createDefaultObjectMapper`` -> ``createDefaultMapper``
 rename is the precedent this exists for.
 
-Policy, matching the spec guard: a removal or a shape change is breaking unless the previous release
-already marked its origin unstable ([EXPERIMENTAL] / [INTERNAL] / [DEPRECATED] / an operationId
-ending in "Experimental"), or the change is declared by an API version bump, or it is on the accept
-list. One deliberate difference: if the *generator* version changed between the two snapshots, an API
-version bump no longer excuses anything, because the API version says nothing about the SDK surface.
+Three severities, because "breaking" covers two different problems for two different people:
+
+BREAKING   nobody was warned. The change is not covered by an unstable marker, an API version bump
+           or the accept list. Fails the gate.
+MIGRATION  source breaking but declared: existing user code stops working (a renamed method is not
+           found, a reordered parameter binds the wrong value) and the API version bump announced
+           it. Not a build failure, but it must be visible - it is the list of call sites every SDK
+           user has to touch, and the list the deprecated aliases have to cover.
+TOLERATED  nothing to do: the origin was already marked unstable, the schema is generator noise, the
+           break is on the accept list, or an enum gained a constant.
+
+One deliberate difference from the spec guard: if the *generator* version changed between the two
+snapshots, an API version bump no longer downgrades anything, because the API version says nothing
+about the SDK surface.
 
 Usage:
     sdk_compat_check.py OLD_SNAPSHOT NEW_SNAPSHOT [--json OUT] [--report-only]
@@ -24,7 +33,7 @@ import json
 import os
 import sys
 
-BREAKING, TOLERATED, ADDITIVE = "BREAKING", "TOLERATED", "ADDITIVE"
+BREAKING, MIGRATION, TOLERATED, ADDITIVE = "BREAKING", "MIGRATION", "TOLERATED", "ADDITIVE"
 ACCEPT_LIST = os.path.join(os.path.dirname(os.path.abspath(__file__)), "compat-accepted.json")
 
 
@@ -259,7 +268,8 @@ def apply_policy(report: Report, old: dict, new: dict, accepted: dict[str, dict]
             finding["excuse"] = (f"accepted on {entry.get('added', '?')} by "
                                  f"{entry.get('by', '?')}: {entry.get('reason', '')}")
         elif version_bumped and not generator_changed:
-            finding["severity"] = TOLERATED
+            # declared, but user code still stops working - flag it, do not bury it under TOLERATED
+            finding["severity"] = MIGRATION
             finding["excuse"] = f"declared by the API version bump {old_api} -> {new_api}"
         elif version_bumped and generator_changed:
             finding["note"] = (f"the API version bump {old_api} -> {new_api} does not excuse this: "
@@ -287,7 +297,8 @@ def main() -> int:
         if args.json_out:
             with open(args.json_out, "w", encoding="utf-8") as handle:
                 json.dump({"language": new.get("language"), "baseline": None, "findings": [],
-                           "summary": {BREAKING: 0, TOLERATED: 0, ADDITIVE: 0}}, handle, indent=1)
+                           "summary": {BREAKING: 0, MIGRATION: 0, TOLERATED: 0, ADDITIVE: 0}},
+                          handle, indent=1)
         return 0 if args.report_only else 3
 
     old = load(args.old_snapshot)
@@ -299,7 +310,7 @@ def main() -> int:
     report = compare(old, new)
     apply_policy(report, old, new, load_accepted(args.accept_list))
 
-    buckets = {BREAKING: [], TOLERATED: [], ADDITIVE: []}
+    buckets = {BREAKING: [], MIGRATION: [], TOLERATED: [], ADDITIVE: []}
     for finding in report.findings:
         buckets[finding["severity"]].append(finding)
 
@@ -309,7 +320,7 @@ def main() -> int:
           f"generator {old['meta'].get('generator_version')} -> "
           f"{new['meta'].get('generator_version')})")
     print(f"classes: {len(old['classes'])} -> {len(new['classes'])}")
-    for title in (BREAKING, TOLERATED, ADDITIVE):
+    for title in (BREAKING, MIGRATION, TOLERATED, ADDITIVE):
         items = buckets[title]
         print(f"\n{title} ({len(items)})")
         for finding in items[:60]:
@@ -333,7 +344,12 @@ def main() -> int:
             }, handle, indent=1)
 
     if not buckets[BREAKING]:
-        print("\nOK: the generated SDK stays backward compatible.")
+        if buckets[MIGRATION]:
+            print(f"\nOK for the gate, but {len(buckets[MIGRATION])} declared source breaking "
+                  f"change(s): existing user code has to be migrated, or kept working with "
+                  f"deprecated aliases.")
+        else:
+            print("\nOK: the generated SDK stays backward compatible.")
         return 0
     print(f"\nFAILED: {len(buckets[BREAKING])} breaking change(s) in the generated SDK.\n"
           f"Either restore the removed parts, mark them unstable before removing them in a later\n"

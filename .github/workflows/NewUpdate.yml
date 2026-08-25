@@ -120,6 +120,7 @@ jobs:
           cp pysirius_api.py generated/PySirius
           cp pysirius_sdk.py generated/PySirius
           cp pysirius_helper.py generated/PySirius
+          cp pysirius_compat.py generated/PySirius
           
           chmod +x ./formatting/format_init.sh
           ./formatting/format_init.sh
@@ -128,6 +129,7 @@ jobs:
         run: |
           cp rsirius_sdk.R  generated/R/rsirius_sdk.R
           cp rsirius_helper.R  generated/R/rsirius_helper.R
+          cp rsirius_compat.R  generated/R/rsirius_compat.R
           echo >> generated/NAMESPACE
           echo "# SDK" >> generated/NAMESPACE
           echo "export(SiriusSDK)" >> generated/NAMESPACE

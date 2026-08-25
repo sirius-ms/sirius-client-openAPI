@@ -225,8 +225,8 @@ test_that("GetJobs", {
   })
 })
 
-test_that("GetJobsPaged", {
-  # tests for GetJobsPaged
+test_that("GetJobsPage", {
+  # tests for GetJobsPage
   # base path: http://localhost:8080
   # Get Page of jobs with information such as current state and progress (if available).
   # Get Page of jobs with information such as current state and progress (if available).
@@ -239,12 +239,12 @@ test_that("GetJobsPaged", {
 
   tryCatch({
 
-    project_id <- "GetJobsPaged"
+    project_id <- "GetJobsPage"
     project_dir <- paste(Sys.getenv("HOME"), paste0(project_id, ".sirius"), sep="/")
     projects_api$CreateProject(project_id, project_dir)
     projects_api$ImportPreprocessedDataAsJob(project_id, input_files=input_file)
 
-    response <- api_instance$GetJobsPaged(project_id)
+    response <- api_instance$GetJobsPage(project_id)
     expect_true(inherits(response, "PagedModelJob"))
 
   }, finally = {
@@ -369,6 +369,28 @@ test_that("StartJobFromConfig", {
     api$wait_for_job_completion(project_id, response$id)
 
     expect_true(inherits(response, "Job"))
+
+  }, finally = {
+
+    projects_api$CloseProject(project_id)
+    unlink(project_dir, recursive = TRUE)
+
+  })
+})
+
+test_that("GetJobsPaged (deprecated alias)", {
+  # the pre-API-3.2 name must keep working for one release; delete together with the alias in
+  # rsirius_compat.R when the deprecation period ends
+
+  tryCatch({
+
+    project_id <- "GetJobsPagedAlias"
+    project_dir <- paste(Sys.getenv("HOME"), paste0(project_id, ".sirius"), sep="/")
+    projects_api$CreateProject(project_id, project_dir)
+    projects_api$ImportPreprocessedDataAsJob(project_id, input_files=input_file)
+
+    expect_warning(response <- api_instance$GetJobsPaged(project_id), "renamed")
+    expect_true(inherits(response, "PagedModelJob"))
 
   }, finally = {
 

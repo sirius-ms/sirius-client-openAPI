@@ -4025,6 +4025,111 @@
       }
      ]
     },
+    "GetCompoundsPaged": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "page",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "size",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "sort",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "ms_data_search_prepared",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "opt_fields",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "opt_fields_features",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "data_file",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "...",
+       "required": false
+      }
+     ]
+    },
+    "GetCompoundsPagedWithHttpInfo": {
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/compounds/page",
+      "operation_id": "getCompoundsPage",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "page",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "size",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "sort",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "ms_data_search_prepared",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "opt_fields",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "opt_fields_features",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "data_file",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "...",
+       "required": false
+      }
+     ]
+    },
     "GetCompoundsSearchableFields": {
      "origin": {
       "endpoint": "GET /api/projects/{projectId}/compounds/searchable-fields",
@@ -6369,6 +6474,101 @@
       }
      ]
     },
+    "GetAlignedFeaturesPaged": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "page",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "size",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "sort",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "ms_data_search_prepared",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "opt_fields",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "data_file",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "...",
+       "required": false
+      }
+     ]
+    },
+    "GetAlignedFeaturesPagedWithHttpInfo": {
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/aligned-features/page",
+      "operation_id": "getAlignedFeaturesPage",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "page",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "size",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "sort",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "ms_data_search_prepared",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "opt_fields",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "data_file",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "...",
+       "required": false
+      }
+     ]
+    },
     "GetAlignedFeaturesSearchableFields": {
      "origin": {
       "endpoint": "GET /api/projects/{projectId}/aligned-features/searchable-fields",
@@ -6779,6 +6979,111 @@
       }
      ]
     },
+    "GetDeNovoStructureCandidatesByFormulaPaged": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "aligned_feature_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "formula_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "page",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "size",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "sort",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "opt_fields",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "data_file",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "...",
+       "required": false
+      }
+     ]
+    },
+    "GetDeNovoStructureCandidatesByFormulaPagedWithHttpInfo": {
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/denovo-structures/page",
+      "operation_id": "getDeNovoStructureCandidatesByFormulaPage",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "aligned_feature_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "formula_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "page",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "size",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "sort",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "opt_fields",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "data_file",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "...",
+       "required": false
+      }
+     ]
+    },
     "GetDeNovoStructureCandidatesByFormulaWithHttpInfo": {
      "origin": {
       "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/denovo-structures",
@@ -6870,6 +7175,101 @@
      ]
     },
     "GetDeNovoStructureCandidatesPageWithHttpInfo": {
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/denovo-structures/page",
+      "operation_id": "getDeNovoStructureCandidatesPage",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "aligned_feature_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "page",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "size",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "sort",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "opt_fields",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "data_file",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "...",
+       "required": false
+      }
+     ]
+    },
+    "GetDeNovoStructureCandidatesPaged": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "aligned_feature_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "page",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "size",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "sort",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "opt_fields",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "data_file",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "...",
+       "required": false
+      }
+     ]
+    },
+    "GetDeNovoStructureCandidatesPagedWithHttpInfo": {
      "origin": {
       "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/denovo-structures/page",
       "operation_id": "getDeNovoStructureCandidatesPage",
@@ -7664,6 +8064,111 @@
       }
      ]
     },
+    "GetFormulaCandidatesPaged": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "aligned_feature_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "page",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "size",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "sort",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "ms_data_search_prepared",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "opt_fields",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "data_file",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "...",
+       "required": false
+      }
+     ]
+    },
+    "GetFormulaCandidatesPagedWithHttpInfo": {
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/page",
+      "operation_id": "getFormulaCandidatesPage",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "aligned_feature_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "page",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "size",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "sort",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "ms_data_search_prepared",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "opt_fields",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "data_file",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "...",
+       "required": false
+      }
+     ]
+    },
     "GetFormulaCandidatesWithHttpInfo": {
      "origin": {
       "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas",
@@ -8244,6 +8749,131 @@
       }
      ]
     },
+    "GetSpectralLibraryMatchesPaged": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "aligned_feature_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "page",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "size",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "sort",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "min_shared_peaks",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "min_similarity",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "inchi_key",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "opt_fields",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "data_file",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "...",
+       "required": false
+      }
+     ]
+    },
+    "GetSpectralLibraryMatchesPagedWithHttpInfo": {
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/spectral-library-matches/page",
+      "operation_id": "getSpectralLibraryMatchesPage",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "aligned_feature_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "page",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "size",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "sort",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "min_shared_peaks",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "min_similarity",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "inchi_key",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "opt_fields",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "data_file",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "...",
+       "required": false
+      }
+     ]
+    },
     "GetSpectralLibraryMatchesSummary": {
      "origin": {
       "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/spectral-library-matches/summary",
@@ -8569,6 +9199,111 @@
       }
      ]
     },
+    "GetStructureCandidatesByFormulaPaged": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "aligned_feature_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "formula_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "page",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "size",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "sort",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "opt_fields",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "data_file",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "...",
+       "required": false
+      }
+     ]
+    },
+    "GetStructureCandidatesByFormulaPagedWithHttpInfo": {
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/db-structures/page",
+      "operation_id": "getStructureCandidatesByFormulaPage",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "aligned_feature_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "formula_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "page",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "size",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "sort",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "opt_fields",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "data_file",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "...",
+       "required": false
+      }
+     ]
+    },
     "GetStructureCandidatesByFormulaWithHttpInfo": {
      "origin": {
       "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/db-structures",
@@ -8660,6 +9395,101 @@
      ]
     },
     "GetStructureCandidatesPageWithHttpInfo": {
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/db-structures/page",
+      "operation_id": "getStructureCandidatesPage",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "aligned_feature_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "page",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "size",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "sort",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "opt_fields",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "data_file",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "...",
+       "required": false
+      }
+     ]
+    },
+    "GetStructureCandidatesPaged": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "aligned_feature_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "page",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "size",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "sort",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "opt_fields",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "data_file",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "...",
+       "required": false
+      }
+     ]
+    },
+    "GetStructureCandidatesPagedWithHttpInfo": {
      "origin": {
       "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/db-structures/page",
       "operation_id": "getStructureCandidatesPage",
@@ -11589,6 +12419,91 @@
      ]
     },
     "GetJobsPageWithHttpInfo": {
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/jobs/page",
+      "operation_id": "getJobsPage",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "page",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "size",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "sort",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "opt_fields",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "data_file",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "...",
+       "required": false
+      }
+     ]
+    },
+    "GetJobsPaged": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "page",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "size",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "sort",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "opt_fields",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "data_file",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "...",
+       "required": false
+      }
+     ]
+    },
+    "GetJobsPagedWithHttpInfo": {
      "origin": {
       "endpoint": "GET /api/projects/{projectId}/jobs/page",
       "operation_id": "getJobsPage",
