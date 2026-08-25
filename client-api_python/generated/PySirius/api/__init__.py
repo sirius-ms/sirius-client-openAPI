@@ -9,5 +9,6 @@ from PySirius.api.info_api import InfoApi
 from PySirius.api.jobs_api import JobsApi
 from PySirius.api.login_and_account_api import LoginAndAccountApi
 from PySirius.api.projects_api import ProjectsApi
+from PySirius.api.runs_api import RunsApi
 from PySirius.api.searchable_databases_api import SearchableDatabasesApi
 

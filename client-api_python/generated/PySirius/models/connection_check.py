@@ -27,7 +27,7 @@ class ConnectionCheck(BaseModel):
     ConnectionCheck
     """ # noqa: E501
     license_info: LicenseInfo = Field(alias="licenseInfo")
-    errors: List[ConnectionError] = Field(description="List of errors ordered by significance. first error should be reported and addressed first.  Following errors might just be follow-up errors")
+    errors: List[ConnectionError] = Field(description="List of errors ordered by significance. First error should be reported and addressed first.  Following errors might just be follow-up errors")
     __properties: ClassVar[List[str]] = ["licenseInfo", "errors"]
 
     model_config = ConfigDict(

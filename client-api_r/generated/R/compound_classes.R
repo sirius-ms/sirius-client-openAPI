@@ -10,8 +10,8 @@
 #' @field npcPathway  \link{CompoundClass} [optional]
 #' @field npcSuperclass  \link{CompoundClass} [optional]
 #' @field npcClass  \link{CompoundClass} [optional]
-#' @field classyFireLineage Most likely ClassyFire lineage from ordered from least specific to most specific class  classyFireLineage.get(classyFireLineage.size() - 1) gives the most specific ClassyFire compound class annotation list(\link{CompoundClass}) [optional]
-#' @field classyFireAlternatives Alternative ClassyFire classes with high probability that do not fit into the linage list(\link{CompoundClass}) [optional]
+#' @field classyFireLineage Most likely ClassyFire lineage, ordered from least specific to most specific class  classyFireLineage.get(classyFireLineage.size() - 1) gives the most specific ClassyFire compound class annotation list(\link{CompoundClass}) [optional]
+#' @field classyFireAlternatives Alternative ClassyFire classes with high probability that do not fit into the lineage list(\link{CompoundClass}) [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
 #' @export
@@ -30,8 +30,8 @@ CompoundClasses <- R6::R6Class(
     #' @param npcPathway npcPathway
     #' @param npcSuperclass npcSuperclass
     #' @param npcClass npcClass
-    #' @param classyFireLineage Most likely ClassyFire lineage from ordered from least specific to most specific class  classyFireLineage.get(classyFireLineage.size() - 1) gives the most specific ClassyFire compound class annotation
-    #' @param classyFireAlternatives Alternative ClassyFire classes with high probability that do not fit into the linage
+    #' @param classyFireLineage Most likely ClassyFire lineage, ordered from least specific to most specific class  classyFireLineage.get(classyFireLineage.size() - 1) gives the most specific ClassyFire compound class annotation
+    #' @param classyFireAlternatives Alternative ClassyFire classes with high probability that do not fit into the lineage
     #' @param ... Other optional arguments.
     initialize = function(`npcPathway` = NULL, `npcSuperclass` = NULL, `npcClass` = NULL, `classyFireLineage` = NULL, `classyFireAlternatives` = NULL, ...) {
       if (!is.null(`npcPathway`)) {

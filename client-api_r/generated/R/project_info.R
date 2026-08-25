@@ -7,14 +7,15 @@
 #' @title ProjectInfo
 #' @description ProjectInfo Class
 #' @format An \code{R6Class} generator object
-#' @field projectId a user selected unique name of the project for easy access. character [optional]
-#' @field location storage location of the project. character [optional]
+#' @field projectId A user-selected unique name of the project for easy access. character [optional]
+#' @field location Storage location of the project. character [optional]
 #' @field description Description of this project. character [optional]
 #' @field type Type of this project.  NULL if project type has not yet been specified by importing data. character [optional]
-#' @field compatible Indicates whether computed results (e.g. fingerprints, compounds classes) are compatible with the backend.  If true project is up-to-date and there are no restrictions regarding usage.  If false project is incompatible and therefore \"read only\" until the incompatible results have been removed. See updateProject endpoint for further information  If NULL the information has not been requested. character [optional]
+#' @field compatible Indicates whether computed results (e.g. fingerprints, compound classes) are compatible with the backend.  If true, the project is up-to-date and there are no restrictions regarding usage.  If false, the project is incompatible and therefore \"read only\" until the incompatible results have been removed. See the updateProject endpoint for further information.  If NULL, the information has not been requested. character [optional]
 #' @field numOfFeatures Number of features (aligned over runs) in this project. If NULL, information has not been requested (See OptField 'sizeInformation'). integer [optional]
-#' @field numOfCompounds Number of compounds (group of ion identities) in this project. If NULL, Information has not been requested (See OptField 'sizeInformation') or might be unavailable for this project type. integer [optional]
-#' @field numOfBytes Size in Bytes this project consumes on disk If NULL, Information has not been requested (See OptField 'sizeInformation'). integer [optional]
+#' @field numOfCompounds Number of compounds (group of ion identities) in this project. If NULL, information has not been requested (See OptField 'sizeInformation') or might be unavailable for this project type. integer [optional]
+#' @field numOfBytes Size in bytes this project consumes on disk. If NULL, information has not been requested (See OptField 'sizeInformation'). integer [optional]
+#' @field detectedAdducts Set of all detected adducts available in this project. list(character) [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
 #' @export
@@ -29,20 +30,22 @@ ProjectInfo <- R6::R6Class(
     `numOfFeatures` = NULL,
     `numOfCompounds` = NULL,
     `numOfBytes` = NULL,
+    `detectedAdducts` = NULL,
 
     #' @description
     #' Initialize a new ProjectInfo class.
     #'
-    #' @param projectId a user selected unique name of the project for easy access.
-    #' @param location storage location of the project.
+    #' @param projectId A user-selected unique name of the project for easy access.
+    #' @param location Storage location of the project.
     #' @param description Description of this project.
     #' @param type Type of this project.  NULL if project type has not yet been specified by importing data.
-    #' @param compatible Indicates whether computed results (e.g. fingerprints, compounds classes) are compatible with the backend.  If true project is up-to-date and there are no restrictions regarding usage.  If false project is incompatible and therefore \"read only\" until the incompatible results have been removed. See updateProject endpoint for further information  If NULL the information has not been requested.
+    #' @param compatible Indicates whether computed results (e.g. fingerprints, compound classes) are compatible with the backend.  If true, the project is up-to-date and there are no restrictions regarding usage.  If false, the project is incompatible and therefore \"read only\" until the incompatible results have been removed. See the updateProject endpoint for further information.  If NULL, the information has not been requested.
     #' @param numOfFeatures Number of features (aligned over runs) in this project. If NULL, information has not been requested (See OptField 'sizeInformation').
-    #' @param numOfCompounds Number of compounds (group of ion identities) in this project. If NULL, Information has not been requested (See OptField 'sizeInformation') or might be unavailable for this project type.
-    #' @param numOfBytes Size in Bytes this project consumes on disk If NULL, Information has not been requested (See OptField 'sizeInformation').
+    #' @param numOfCompounds Number of compounds (group of ion identities) in this project. If NULL, information has not been requested (See OptField 'sizeInformation') or might be unavailable for this project type.
+    #' @param numOfBytes Size in bytes this project consumes on disk. If NULL, information has not been requested (See OptField 'sizeInformation').
+    #' @param detectedAdducts Set of all detected adducts available in this project.
     #' @param ... Other optional arguments.
-    initialize = function(`projectId` = NULL, `location` = NULL, `description` = NULL, `type` = NULL, `compatible` = NULL, `numOfFeatures` = NULL, `numOfCompounds` = NULL, `numOfBytes` = NULL, ...) {
+    initialize = function(`projectId` = NULL, `location` = NULL, `description` = NULL, `type` = NULL, `compatible` = NULL, `numOfFeatures` = NULL, `numOfCompounds` = NULL, `numOfBytes` = NULL, `detectedAdducts` = NULL, ...) {
       if (!is.null(`projectId`)) {
         if (!(is.character(`projectId`) && length(`projectId`) == 1)) {
           stop(paste("Error! Invalid data for `projectId`. Must be a string:", `projectId`))
@@ -93,6 +96,14 @@ ProjectInfo <- R6::R6Class(
           stop(paste("Error! Invalid data for `numOfBytes`. Must be an integer:", `numOfBytes`))
         }
         self$`numOfBytes` <- `numOfBytes`
+      }
+      if (!is.null(`detectedAdducts`)) {
+        stopifnot(is.vector(`detectedAdducts`), length(`detectedAdducts`) != 0)
+        sapply(`detectedAdducts`, function(x) stopifnot(is.character(x)))
+        if (!identical(`detectedAdducts`, unique(`detectedAdducts`))) {
+          stop("Error! Items in `detectedAdducts` are not unique.")
+        }
+        self$`detectedAdducts` <- `detectedAdducts`
       }
     },
 
@@ -159,6 +170,10 @@ ProjectInfo <- R6::R6Class(
         ProjectInfoObject[["numOfBytes"]] <-
           self$`numOfBytes`
       }
+      if (!is.null(self$`detectedAdducts`)) {
+        ProjectInfoObject[["detectedAdducts"]] <-
+          self$`detectedAdducts`
+      }
       return(ProjectInfoObject)
     },
 
@@ -196,6 +211,12 @@ ProjectInfo <- R6::R6Class(
       if (!is.null(this_object$`numOfBytes`)) {
         self$`numOfBytes` <- this_object$`numOfBytes`
       }
+      if (!is.null(this_object$`detectedAdducts`)) {
+        self$`detectedAdducts` <- ApiClient$new()$deserializeObj(this_object$`detectedAdducts`, "set[character]", loadNamespace("RSirius"))
+        if (!identical(self$`detectedAdducts`, unique(self$`detectedAdducts`))) {
+          stop("Error! Items in `detectedAdducts` are not unique.")
+        }
+      }
       self
     },
 
@@ -228,6 +249,10 @@ ProjectInfo <- R6::R6Class(
       self$`numOfFeatures` <- this_object$`numOfFeatures`
       self$`numOfCompounds` <- this_object$`numOfCompounds`
       self$`numOfBytes` <- this_object$`numOfBytes`
+      self$`detectedAdducts` <- ApiClient$new()$deserializeObj(this_object$`detectedAdducts`, "set[character]", loadNamespace("RSirius"))
+      if (!identical(self$`detectedAdducts`, unique(self$`detectedAdducts`))) {
+        stop("Error! Items in `detectedAdducts` are not unique.")
+      }
       self
     },
 
@@ -252,6 +277,7 @@ ProjectInfo <- R6::R6Class(
     #'
     #' @return true if the values in all fields are valid.
     isValid = function() {
+
       TRUE
     },
 
@@ -261,6 +287,7 @@ ProjectInfo <- R6::R6Class(
     #' @return A list of invalid fields (if any).
     getInvalidFields = function() {
       invalid_fields <- list()
+
       invalid_fields
     },
 

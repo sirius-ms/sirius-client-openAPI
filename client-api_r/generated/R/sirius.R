@@ -7,25 +7,25 @@
 #' @title Sirius
 #' @description Sirius Class
 #' @format An \code{R6Class} generator object
-#' @field enabled tags whether the tool is enabled character [optional]
+#' @field enabled Indicates whether the tool is enabled. character [optional]
 #' @field profile Instrument specific profile for internal algorithms  Just select what comes closest to the instrument that was used for measuring the data. character [optional]
 #' @field numberOfCandidates Number of formula candidates to keep as result list (Formula Candidates). integer [optional]
 #' @field numberOfCandidatesPerIonization Use this parameter if you want to force SIRIUS to report at least  NumberOfCandidatesPerIonization results per ionization.  if <= 0, this parameter will have no effect and just the top  NumberOfCandidates results will be reported. integer [optional]
 #' @field massAccuracyMS2ppm Maximum allowed mass deviation. Only molecular formulas within this mass window are considered. numeric [optional]
 #' @field isotopeMs2Settings Specify how isotope patterns in MS/MS should be handled.  <p>  FILTER: When filtering is enabled, molecular formulas are excluded if their  theoretical isotope pattern does not match the theoretical one, even if their MS/MS pattern has high score.  <p>  SCORE: Use them for SCORING. To use this the instrument should produce clear MS/MS isotope patterns  <p>  IGNORE: Ignore that there might be isotope patterns in MS/MS character [optional]
-#' @field filterByIsotopePattern When filtering is enabled, molecular formulas are excluded if their theoretical isotope pattern does not match the theoretical one, even if their MS/MS pattern has high score. character [optional]
-#' @field enforceElGordoFormula El Gordo may predict that an MS/MS spectrum is a lipid spectrum. If enabled, the corresponding molecular formula will be enforeced as molecular formula candidate. character [optional]
+#' @field filterByIsotopePattern When filtering is enabled, molecular formulas are excluded if their theoretical isotope pattern does not match the measured one, even if their MS/MS pattern has high score. character [optional]
+#' @field enforceElGordoFormula El Gordo may predict that an MS/MS spectrum is a lipid spectrum. If enabled, the corresponding molecular formula will be enforced as a molecular formula candidate. character [optional]
 #' @field performBottomUpSearch If true, molecular formula generation via bottom up search is enabled. character [optional]
 #' @field performDenovoBelowMz Specifies the m/z below which de novo molecular formula generation is enabled. Set to 0 to disable de novo molecular formula generation. numeric [optional]
-#' @field formulaSearchDBs List Structure database to extract molecular formulas from to reduce formula search space.  SIRIUS is quite good at de novo formula annotation, so only enable if you have a good reason. list(character) [optional]
+#' @field formulaSearchDBs List of structure databases to extract molecular formulas from, to reduce the formula search space.  SIRIUS is quite good at de novo formula annotation, so only enable if you have a good reason. list(character) [optional]
 #' @field applyFormulaConstraintsToDBAndBottomUpSearch By default, the formula (element) constraints are only applied to de novo molecular formula generation.  If true, the constraints are as well applied to database search and bottom up search. character [optional]
 #' @field enforcedFormulaConstraints These configurations hold the information how to autodetect elements based on the given formula constraints.  Note: If the compound is already assigned to a specific molecular formula, this annotation is ignored.  <p>  Enforced: Enforced elements are always considered character [optional]
 #' @field fallbackFormulaConstraints These configurations hold the information how to autodetect elements based on the given formula constraints.  Note: If the compound is already assigned to a specific molecular formula, this annotation is ignored.  <p>  Fallback: Fallback elements are used, if the auto-detection fails (e.g. no isotope pattern available) character [optional]
 #' @field detectableElements These configurations hold the information how to autodetect elements based on the given formula constraints.  Note: If the compound is already assigned to a specific molecular formula, this annotation is ignored.  <p>  Detectable: Detectable elements are added to the chemical alphabet, if there are indications for them (e.g. in isotope pattern) list(character) [optional]
 #' @field ilpTimeout  \link{Timeout} [optional]
 #' @field useHeuristic  \link{UseHeuristic} [optional]
-#' @field injectSpecLibMatchFormulas If true formula candidates that belong to spectral library matches above a certain threshold will  we inject/preserved for further analyses no matter which score they have or which filter is applied character [optional]
-#' @field minScoreToInjectSpecLibMatch Similarity Threshold to inject formula candidates no matter which score/rank they have or which filter settings are applied.  If threshold >= 0 formulas candidates with reference spectrum similarity above the threshold will be injected. numeric [optional]
+#' @field injectSpecLibMatchFormulas If true formula candidates that belong to spectral library matches above a certain threshold will  be injected and preserved for further analyses, no matter which score they have or which filter is applied character [optional]
+#' @field minScoreToInjectSpecLibMatch Similarity Threshold to inject formula candidates no matter which score/rank they have or which filter settings are applied.  If the threshold is >= 0, formula candidates with a reference spectrum similarity above the threshold will be injected. numeric [optional]
 #' @field minPeaksToInjectSpecLibMatch Matching peaks threshold to inject formula candidates no matter which score they have or which filter is applied. integer [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
@@ -57,25 +57,25 @@ Sirius <- R6::R6Class(
     #' @description
     #' Initialize a new Sirius class.
     #'
-    #' @param enabled tags whether the tool is enabled
+    #' @param enabled Indicates whether the tool is enabled.
     #' @param profile Instrument specific profile for internal algorithms  Just select what comes closest to the instrument that was used for measuring the data.
     #' @param numberOfCandidates Number of formula candidates to keep as result list (Formula Candidates).
     #' @param numberOfCandidatesPerIonization Use this parameter if you want to force SIRIUS to report at least  NumberOfCandidatesPerIonization results per ionization.  if <= 0, this parameter will have no effect and just the top  NumberOfCandidates results will be reported.
     #' @param massAccuracyMS2ppm Maximum allowed mass deviation. Only molecular formulas within this mass window are considered.
     #' @param isotopeMs2Settings Specify how isotope patterns in MS/MS should be handled.  <p>  FILTER: When filtering is enabled, molecular formulas are excluded if their  theoretical isotope pattern does not match the theoretical one, even if their MS/MS pattern has high score.  <p>  SCORE: Use them for SCORING. To use this the instrument should produce clear MS/MS isotope patterns  <p>  IGNORE: Ignore that there might be isotope patterns in MS/MS
-    #' @param filterByIsotopePattern When filtering is enabled, molecular formulas are excluded if their theoretical isotope pattern does not match the theoretical one, even if their MS/MS pattern has high score.
-    #' @param enforceElGordoFormula El Gordo may predict that an MS/MS spectrum is a lipid spectrum. If enabled, the corresponding molecular formula will be enforeced as molecular formula candidate.
+    #' @param filterByIsotopePattern When filtering is enabled, molecular formulas are excluded if their theoretical isotope pattern does not match the measured one, even if their MS/MS pattern has high score.
+    #' @param enforceElGordoFormula El Gordo may predict that an MS/MS spectrum is a lipid spectrum. If enabled, the corresponding molecular formula will be enforced as a molecular formula candidate.
     #' @param performBottomUpSearch If true, molecular formula generation via bottom up search is enabled.
     #' @param performDenovoBelowMz Specifies the m/z below which de novo molecular formula generation is enabled. Set to 0 to disable de novo molecular formula generation.
-    #' @param formulaSearchDBs List Structure database to extract molecular formulas from to reduce formula search space.  SIRIUS is quite good at de novo formula annotation, so only enable if you have a good reason.
+    #' @param formulaSearchDBs List of structure databases to extract molecular formulas from, to reduce the formula search space.  SIRIUS is quite good at de novo formula annotation, so only enable if you have a good reason.
     #' @param applyFormulaConstraintsToDBAndBottomUpSearch By default, the formula (element) constraints are only applied to de novo molecular formula generation.  If true, the constraints are as well applied to database search and bottom up search.
     #' @param enforcedFormulaConstraints These configurations hold the information how to autodetect elements based on the given formula constraints.  Note: If the compound is already assigned to a specific molecular formula, this annotation is ignored.  <p>  Enforced: Enforced elements are always considered
     #' @param fallbackFormulaConstraints These configurations hold the information how to autodetect elements based on the given formula constraints.  Note: If the compound is already assigned to a specific molecular formula, this annotation is ignored.  <p>  Fallback: Fallback elements are used, if the auto-detection fails (e.g. no isotope pattern available)
     #' @param detectableElements These configurations hold the information how to autodetect elements based on the given formula constraints.  Note: If the compound is already assigned to a specific molecular formula, this annotation is ignored.  <p>  Detectable: Detectable elements are added to the chemical alphabet, if there are indications for them (e.g. in isotope pattern)
     #' @param ilpTimeout ilpTimeout
     #' @param useHeuristic useHeuristic
-    #' @param injectSpecLibMatchFormulas If true formula candidates that belong to spectral library matches above a certain threshold will  we inject/preserved for further analyses no matter which score they have or which filter is applied
-    #' @param minScoreToInjectSpecLibMatch Similarity Threshold to inject formula candidates no matter which score/rank they have or which filter settings are applied.  If threshold >= 0 formulas candidates with reference spectrum similarity above the threshold will be injected.
+    #' @param injectSpecLibMatchFormulas If true formula candidates that belong to spectral library matches above a certain threshold will  be injected and preserved for further analyses, no matter which score they have or which filter is applied
+    #' @param minScoreToInjectSpecLibMatch Similarity Threshold to inject formula candidates no matter which score/rank they have or which filter settings are applied.  If the threshold is >= 0, formula candidates with a reference spectrum similarity above the threshold will be injected.
     #' @param minPeaksToInjectSpecLibMatch Matching peaks threshold to inject formula candidates no matter which score they have or which filter is applied.
     #' @param ... Other optional arguments.
     initialize = function(`enabled` = NULL, `profile` = NULL, `numberOfCandidates` = NULL, `numberOfCandidatesPerIonization` = NULL, `massAccuracyMS2ppm` = NULL, `isotopeMs2Settings` = NULL, `filterByIsotopePattern` = NULL, `enforceElGordoFormula` = NULL, `performBottomUpSearch` = NULL, `performDenovoBelowMz` = NULL, `formulaSearchDBs` = NULL, `applyFormulaConstraintsToDBAndBottomUpSearch` = NULL, `enforcedFormulaConstraints` = NULL, `fallbackFormulaConstraints` = NULL, `detectableElements` = NULL, `ilpTimeout` = NULL, `useHeuristic` = NULL, `injectSpecLibMatchFormulas` = NULL, `minScoreToInjectSpecLibMatch` = NULL, `minPeaksToInjectSpecLibMatch` = NULL, ...) {

@@ -8,8 +8,8 @@
 #' @description BioTransformerParameters Class
 #' @format An \code{R6Class} generator object
 #' @field cyp450Mode Specify the Phase I/Cyp450 mode for all provided BioTransformerSequenceSteps. Will only be applied to Steps that  require the Cyp450 mode as parameter. Can be null in cases where only BioTransformerSequenceSteps are specified  that do not need the Cyp450 mode. character
-#' @field p2Mode Specify the Phase II mode for all provided BioTransformerSequenceSteps. Will only be applied to Steps that  require the Phase II mode  as parameter. Can be null in cases where only BioTransformerSequenceSteps are specified  that do not need the Phase II mode. character
-#' @field useDB \"Specify if you want to enable the retrieving from database (HMDB) feature.\" character [optional]
+#' @field p2Mode Specify the Phase II mode for all provided BioTransformerSequenceSteps. Will only be applied to Steps that  require the Phase II mode as parameter. Can be null in cases where only BioTransformerSequenceSteps are specified  that do not need the Phase II mode. character
+#' @field useDB Specify whether structures should additionally be retrieved from the HMDB database. character [optional]
 #' @field bioTransformerSequenceSteps Specify BioTransformerSequenceSteps to be applied to input structures. MultiStep MetabolicTransformations can  only be used as singletons (list size of one). list(\link{BioTransformerSequenceStep})
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
@@ -26,9 +26,9 @@ BioTransformerParameters <- R6::R6Class(
     #' Initialize a new BioTransformerParameters class.
     #'
     #' @param cyp450Mode Specify the Phase I/Cyp450 mode for all provided BioTransformerSequenceSteps. Will only be applied to Steps that  require the Cyp450 mode as parameter. Can be null in cases where only BioTransformerSequenceSteps are specified  that do not need the Cyp450 mode.
-    #' @param p2Mode Specify the Phase II mode for all provided BioTransformerSequenceSteps. Will only be applied to Steps that  require the Phase II mode  as parameter. Can be null in cases where only BioTransformerSequenceSteps are specified  that do not need the Phase II mode.
+    #' @param p2Mode Specify the Phase II mode for all provided BioTransformerSequenceSteps. Will only be applied to Steps that  require the Phase II mode as parameter. Can be null in cases where only BioTransformerSequenceSteps are specified  that do not need the Phase II mode.
     #' @param bioTransformerSequenceSteps Specify BioTransformerSequenceSteps to be applied to input structures. MultiStep MetabolicTransformations can  only be used as singletons (list size of one).
-    #' @param useDB \"Specify if you want to enable the retrieving from database (HMDB) feature.\". Default to TRUE.
+    #' @param useDB Specify whether structures should additionally be retrieved from the HMDB database.. Default to TRUE.
     #' @param ... Other optional arguments.
     initialize = function(`cyp450Mode`, `p2Mode`, `bioTransformerSequenceSteps`, `useDB` = TRUE, ...) {
       if (!missing(`cyp450Mode`)) {

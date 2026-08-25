@@ -8,13 +8,13 @@
 #' @description Subscription Class
 #' @format An \code{R6Class} generator object
 #' @field sid Unique identifier of this subscription character [optional]
-#' @field subscriberId ID of the owner of the subscription.  This can be the ID of any SubscriptionOwner (e.g.  Group or  User)  depending on the level on which a subscription should be is valid. character [optional]
+#' @field subscriberId ID of the owner of the subscription.  This can be the ID of any SubscriptionOwner (e.g. TagGroup or User)  depending on the level at which a subscription is valid. character [optional]
 #' @field subscriberName Optional name of the owner of this subscription character [optional]
 #' @field expirationDate  character [optional]
 #' @field startDate  character [optional]
 #' @field countQueries  character [optional]
 #' @field instanceLimit Limit of instances (features) that can be computed with this subscription integer [optional]
-#' @field instanceHashRecordingTime Hash is used to allow recomputing identical data without increasing counted instances (features).  The recording time is the amount of time an instance is memorized is integer [optional]
+#' @field instanceHashRecordingTime Hash is used to allow recomputing identical data without increasing counted instances (features).  The recording time is the amount of time an instance is memorized. integer [optional]
 #' @field maxQueriesPerInstance Maximum number of queries (e.g. prediction) that can be performed  for one instance before it is counted another time. integer [optional]
 #' @field maxUserAccounts  integer [optional]
 #' @field serviceUrl  character [optional]
@@ -50,13 +50,13 @@ Subscription <- R6::R6Class(
     #' Initialize a new Subscription class.
     #'
     #' @param sid Unique identifier of this subscription
-    #' @param subscriberId ID of the owner of the subscription.  This can be the ID of any SubscriptionOwner (e.g.  Group or  User)  depending on the level on which a subscription should be is valid.
+    #' @param subscriberId ID of the owner of the subscription.  This can be the ID of any SubscriptionOwner (e.g. TagGroup or User)  depending on the level at which a subscription is valid.
     #' @param subscriberName Optional name of the owner of this subscription
     #' @param expirationDate expirationDate
     #' @param startDate startDate
     #' @param countQueries countQueries
     #' @param instanceLimit Limit of instances (features) that can be computed with this subscription
-    #' @param instanceHashRecordingTime Hash is used to allow recomputing identical data without increasing counted instances (features).  The recording time is the amount of time an instance is memorized is
+    #' @param instanceHashRecordingTime Hash is used to allow recomputing identical data without increasing counted instances (features).  The recording time is the amount of time an instance is memorized.
     #' @param maxQueriesPerInstance Maximum number of queries (e.g. prediction) that can be performed  for one instance before it is counted another time.
     #' @param maxUserAccounts maxUserAccounts
     #' @param serviceUrl serviceUrl

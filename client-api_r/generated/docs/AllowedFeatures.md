@@ -10,5 +10,6 @@ Name | Type | Description | Notes
 **importMSRuns** | **character** |  | [optional] 
 **importPeakLists** | **character** |  | [optional] 
 **importCef** | **character** |  | [optional] 
+**transformationProducts** | **character** |  | [optional] 
 
 

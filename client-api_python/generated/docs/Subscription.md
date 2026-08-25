@@ -6,13 +6,13 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **sid** | **str** | Unique identifier of this subscription | [optional] 
-**subscriber_id** | **str** | ID of the owner of the subscription.  This can be the ID of any SubscriptionOwner (e.g.  Group or  User)  depending on the level on which a subscription should be is valid. | [optional] 
+**subscriber_id** | **str** | ID of the owner of the subscription.  This can be the ID of any SubscriptionOwner (e.g. TagGroup or User)  depending on the level at which a subscription is valid. | [optional] 
 **subscriber_name** | **str** | Optional name of the owner of this subscription | [optional] 
 **expiration_date** | **datetime** |  | [optional] 
 **start_date** | **datetime** |  | [optional] 
 **count_queries** | **bool** |  | [optional] 
 **instance_limit** | **int** | Limit of instances (features) that can be computed with this subscription | [optional] 
-**instance_hash_recording_time** | **int** | Hash is used to allow recomputing identical data without increasing counted instances (features).  The recording time is the amount of time an instance is memorized is | [optional] 
+**instance_hash_recording_time** | **int** | Hash is used to allow recomputing identical data without increasing counted instances (features).  The recording time is the amount of time an instance is memorized. | [optional] 
 **max_queries_per_instance** | **int** | Maximum number of queries (e.g. prediction) that can be performed  for one instance before it is counted another time. | [optional] 
 **max_user_accounts** | **int** |  | [optional] 
 **service_url** | **str** |  | [optional] 

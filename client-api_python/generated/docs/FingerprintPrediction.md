@@ -1,14 +1,14 @@
 # FingerprintPrediction
 
-User/developer friendly parameter subset for the CSI:FingerID Fingerprint tool  Needs results from Formula/SIRIUS Tool
+User/developer friendly parameter subset for the CSI:FingerID Fingerprint tool  Needs results from the Formula identification tool (Sirius).
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**enabled** | **bool** | tags whether the tool is enabled | [optional] 
+**enabled** | **bool** | Indicates whether the tool is enabled. | [optional] 
 **use_score_threshold** | **bool** | If true, an adaptive soft threshold will be applied to only compute Fingerprints for promising formula candidates  Enabling is highly recommended. | [optional] 
-**always_predict_high_ref_matches** | **bool** | If true Fingerprint/Classes/Structures will be predicted for formulas candidates with  reference spectrum similarity &gt; Sirius.minReferenceMatchScoreToInject will be predicted no matter which  score threshold rules apply.  If NULL default value will be used. | [optional] 
+**always_predict_high_ref_matches** | **bool** | If true, fingerprints, compound classes and structures will be predicted for formula candidates whose  reference spectrum similarity is above Sirius.minReferenceMatchScoreToInject, no matter which  score threshold rules would otherwise apply.  If NULL default value will be used. | [optional] 
 
 ## Example
 

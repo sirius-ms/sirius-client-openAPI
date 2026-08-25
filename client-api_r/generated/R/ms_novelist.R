@@ -7,8 +7,8 @@
 #' @title MsNovelist
 #' @description MsNovelist Class
 #' @format An \code{R6Class} generator object
-#' @field enabled tags whether the tool is enabled character [optional]
-#' @field numberOfCandidateToPredict Number of structure candidates to be predicted by MsNovelist.  Max Value 128. Values > 128 will be set to 128.  Actual number of returned candidate might be lower du to duplicates being created by MsNovelist. integer [optional]
+#' @field enabled Indicates whether the tool is enabled. character [optional]
+#' @field numberOfCandidateToPredict Number of structure candidates to be predicted by MsNovelist.  Max Value 128. Values > 128 will be set to 128.  The actual number of returned candidates might be lower due to duplicates being created by MsNovelist. integer [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
 #' @export
@@ -21,8 +21,8 @@ MsNovelist <- R6::R6Class(
     #' @description
     #' Initialize a new MsNovelist class.
     #'
-    #' @param enabled tags whether the tool is enabled
-    #' @param numberOfCandidateToPredict Number of structure candidates to be predicted by MsNovelist.  Max Value 128. Values > 128 will be set to 128.  Actual number of returned candidate might be lower du to duplicates being created by MsNovelist.
+    #' @param enabled Indicates whether the tool is enabled.
+    #' @param numberOfCandidateToPredict Number of structure candidates to be predicted by MsNovelist.  Max Value 128. Values > 128 will be set to 128.  The actual number of returned candidates might be lower due to duplicates being created by MsNovelist.
     #' @param ... Other optional arguments.
     initialize = function(`enabled` = NULL, `numberOfCandidateToPredict` = NULL, ...) {
       if (!is.null(`enabled`)) {

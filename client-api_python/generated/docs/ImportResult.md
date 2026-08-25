@@ -6,7 +6,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **affected_compound_ids** | **List[str]** | List of compoundIds that have been imported. | 
-**affected_aligned_feature_ids** | **List[str]** | List of alignedFeatureIds that have been imported.. | 
+**affected_aligned_feature_ids** | **List[str]** | List of alignedFeatureIds that have been imported. | 
 
 ## Example
 

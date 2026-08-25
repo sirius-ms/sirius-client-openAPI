@@ -6,15 +6,15 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**DeleteJob**](JobsApi.md#DeleteJob) | **DELETE** /api/projects/{projectId}/jobs/{jobId} | Delete job.
 [**DeleteJobConfig**](JobsApi.md#DeleteJobConfig) | **DELETE** /api/job-configs/{name} | Delete job configuration with given name.
-[**DeleteJobs**](JobsApi.md#DeleteJobs) | **DELETE** /api/projects/{projectId}/jobs | * Delete ALL jobs.
+[**DeleteJobs**](JobsApi.md#DeleteJobs) | **DELETE** /api/projects/{projectId}/jobs | Delete ALL jobs.
 [**GetCommand**](JobsApi.md#GetCommand) | **POST** /api/job-configs/get-command | Get a CLI command for the given job configuration.
 [**GetDefaultJobConfig**](JobsApi.md#GetDefaultJobConfig) | **GET** /api/default-job-config | Request default job configuration
 [**GetJob**](JobsApi.md#GetJob) | **GET** /api/projects/{projectId}/jobs/{jobId} | Get job information and its current state and progress (if available).
 [**GetJobConfig**](JobsApi.md#GetJobConfig) | **GET** /api/job-configs/{name} | Request job configuration with given name.
 [**GetJobConfigNames**](JobsApi.md#GetJobConfigNames) | **GET** /api/job-config-names | [DEPRECATED] Get all (non-default) job configuration names  
 [**GetJobConfigs**](JobsApi.md#GetJobConfigs) | **GET** /api/job-configs | Request all available job configurations
-[**GetJobs**](JobsApi.md#GetJobs) | **GET** /api/projects/{projectId}/jobs | Get List of all available jobs with information such as current state and progress (if available).
-[**GetJobsPaged**](JobsApi.md#GetJobsPaged) | **GET** /api/projects/{projectId}/jobs/page | Get Page of jobs with information such as current state and progress (if available).
+[**GetJobs**](JobsApi.md#GetJobs) | **GET** /api/projects/{projectId}/jobs | [DEPRECATED] Get list of all available jobs with information such as current state and progress (if available)
+[**GetJobsPage**](JobsApi.md#GetJobsPage) | **GET** /api/projects/{projectId}/jobs/page | Get Page of jobs with information such as current state and progress (if available).
 [**HasJobs**](JobsApi.md#HasJobs) | **GET** /api/projects/{projectId}/has-jobs | 
 [**SaveJobConfig**](JobsApi.md#SaveJobConfig) | **POST** /api/job-configs/{name} | Add new job configuration with given name.
 [**StartJob**](JobsApi.md#StartJob) | **POST** /api/projects/{projectId}/jobs | Start computation for given compounds and with given parameters.
@@ -70,6 +70,9 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **202** | Accepted |  -  |
+| **500** | Unexpected server-side error. The problem detail carries the reason. |  -  |
+| **404** | The referenced object does not exist in this SIRIUS instance or project. |  -  |
+| **400** | The request body or a parameter is malformed or violates a constraint. |  -  |
 
 # **DeleteJobConfig**
 > DeleteJobConfig(name)
@@ -114,19 +117,22 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **202** | Accepted |  -  |
+| **500** | Unexpected server-side error. The problem detail carries the reason. |  -  |
+| **404** | The referenced object does not exist in this SIRIUS instance or project. |  -  |
+| **400** | The request body or a parameter is malformed or violates a constraint. |  -  |
 
 # **DeleteJobs**
 > DeleteJobs(project_id, cancel_if_running = TRUE, await_deletion = TRUE)
 
-* Delete ALL jobs.
+Delete ALL jobs.
 
-* Delete ALL jobs. Specify how to behave for running jobs.
+Delete ALL jobs. Specify how to behave for running jobs.
 
 ### Example
 ```R
 library(RSirius)
 
-# * Delete ALL jobs.
+# Delete ALL jobs.
 #
 # prepare function argument(s)
 var_project_id <- "project_id_example" # character | project-space to delete jobs from
@@ -162,6 +168,9 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **202** | Accepted |  -  |
+| **500** | Unexpected server-side error. The problem detail carries the reason. |  -  |
+| **404** | The referenced object does not exist in this SIRIUS instance or project. |  -  |
+| **400** | The request body or a parameter is malformed or violates a constraint. |  -  |
 
 # **GetCommand**
 > array[character] GetCommand(job_submission)
@@ -203,12 +212,14 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: application/json
+ - **Accept**: application/json, application/problem+json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | OK |  -  |
+| **500** | Unexpected server-side error. The problem detail carries the reason. |  -  |
+| **400** | The request body or a parameter is malformed or violates a constraint. |  -  |
 
 # **GetDefaultJobConfig**
 > JobSubmission GetDefaultJobConfig(include_config_map = FALSE, move_parameters_to_config_map = FALSE, include_custom_dbs_for_structure_search = FALSE)
@@ -226,7 +237,7 @@ library(RSirius)
 # prepare function argument(s)
 var_include_config_map <- FALSE # character | if true, generic configmap with-defaults will be included (Optional)
 var_move_parameters_to_config_map <- FALSE # character | if true, object-based parameters will be converted to and added to the generic configMap parameters (Optional)
-var_include_custom_dbs_for_structure_search <- FALSE # character | if true, default database selection of structure db search                                            spectral library search contains also all available custom DB.                                            If No custom dbs are selected, spectral library search is disabled by default. (Optional)
+var_include_custom_dbs_for_structure_search <- FALSE # character | if true, default database selection of structure db search                                            and spectral library search also contains all available custom databases.                                            If no custom databases are selected, spectral library search is disabled by default. (Optional)
 
 api_instance <- rsirius_api$new()
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
@@ -241,7 +252,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **include_config_map** | **character**| if true, generic configmap with-defaults will be included | [optional] [default to FALSE]
  **move_parameters_to_config_map** | **character**| if true, object-based parameters will be converted to and added to the generic configMap parameters | [optional] [default to FALSE]
- **include_custom_dbs_for_structure_search** | **character**| if true, default database selection of structure db search                                            spectral library search contains also all available custom DB.                                            If No custom dbs are selected, spectral library search is disabled by default. | [optional] [default to FALSE]
+ **include_custom_dbs_for_structure_search** | **character**| if true, default database selection of structure db search                                            and spectral library search also contains all available custom databases.                                            If no custom databases are selected, spectral library search is disabled by default. | [optional] [default to FALSE]
 
 ### Return type
 
@@ -254,12 +265,14 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: application/json, application/problem+json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** | {@link JobSubmission JobSubmission} with all parameters set to default values. |  -  |
+| **200** | &lt;code&gt;JobSubmission&lt;/code&gt; with all parameters set to default values. |  -  |
+| **500** | Unexpected server-side error. The problem detail carries the reason. |  -  |
+| **400** | The request body or a parameter is malformed or violates a constraint. |  -  |
 
 # **GetJob**
 > Job GetJob(project_id, job_id, opt_fields = ["progress"])
@@ -276,7 +289,7 @@ library(RSirius)
 #
 # prepare function argument(s)
 var_project_id <- "project_id_example" # character | project-space to run jobs on
-var_job_id <- "job_id_example" # character | of the job to be returned
+var_job_id <- "job_id_example" # character | id of the job to be returned
 var_opt_fields <- c("none") # array[character] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
 
 api_instance <- rsirius_api$new()
@@ -291,7 +304,7 @@ dput(result)
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **character**| project-space to run jobs on | 
- **job_id** | **character**| of the job to be returned | 
+ **job_id** | **character**| id of the job to be returned | 
  **opt_fields** | Enum [none, command, progress, affectedIds] | set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;progress&quot;]]
 
 ### Return type
@@ -305,12 +318,15 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: application/json, application/problem+json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | OK |  -  |
+| **500** | Unexpected server-side error. The problem detail carries the reason. |  -  |
+| **404** | The referenced object does not exist in this SIRIUS instance or project. |  -  |
+| **400** | The request body or a parameter is malformed or violates a constraint. |  -  |
 
 # **GetJobConfig**
 > StoredJobSubmission GetJobConfig(name, move_parameters_to_config_map = FALSE)
@@ -354,12 +370,15 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: application/json, application/problem+json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** | {@link JobSubmission JobSubmission} for given name. |  -  |
+| **200** | &lt;code&gt;JobSubmission&lt;/code&gt; for given name. |  -  |
+| **500** | Unexpected server-side error. The problem detail carries the reason. |  -  |
+| **404** | The referenced object does not exist in this SIRIUS instance or project. |  -  |
+| **400** | The request body or a parameter is malformed or violates a constraint. |  -  |
 
 # **GetJobConfigNames**
 > array[character] GetJobConfigNames()
@@ -396,12 +415,13 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: application/json, application/problem+json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | OK |  -  |
+| **500** | Unexpected server-side error. The problem detail carries the reason. |  -  |
 
 # **GetJobConfigs**
 > array[StoredJobSubmission] GetJobConfigs()
@@ -438,25 +458,26 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: application/json, application/problem+json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** | list of available {@link JobSubmission JobSubmission}s |  -  |
+| **200** | list of available &lt;code&gt;JobSubmission&lt;/code&gt;s |  -  |
+| **500** | Unexpected server-side error. The problem detail carries the reason. |  -  |
 
 # **GetJobs**
 > array[Job] GetJobs(project_id, opt_fields = ["none"])
 
-Get List of all available jobs with information such as current state and progress (if available).
+[DEPRECATED] Get list of all available jobs with information such as current state and progress (if available)
 
-Get List of all available jobs with information such as current state and progress (if available).
+[DEPRECATED] Get list of all available jobs with information such as current state and progress (if available).  <p>  [DEPRECATED] Use /jobs/page instead. Loading all jobs at once does not scale for long running projects.  This endpoint will be removed in the next major version of this API.
 
 ### Example
 ```R
 library(RSirius)
 
-# Get List of all available jobs with information such as current state and progress (if available).
+# [DEPRECATED] Get list of all available jobs with information such as current state and progress (if available)
 #
 # prepare function argument(s)
 var_project_id <- "project_id_example" # character | project-space to run jobs on
@@ -487,15 +508,18 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: application/json, application/problem+json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | OK |  -  |
+| **500** | Unexpected server-side error. The problem detail carries the reason. |  -  |
+| **404** | The referenced object does not exist in this SIRIUS instance or project. |  -  |
+| **400** | The request body or a parameter is malformed or violates a constraint. |  -  |
 
-# **GetJobsPaged**
-> PagedModelJob GetJobsPaged(project_id, page = 0, size = 20, sort = var.sort, opt_fields = ["none"])
+# **GetJobsPage**
+> PagedModelJob GetJobsPage(project_id, page = 0, size = 20, sort = var.sort, opt_fields = ["none"])
 
 Get Page of jobs with information such as current state and progress (if available).
 
@@ -516,8 +540,8 @@ var_opt_fields <- c("none") # array[character] | set of optional fields to be in
 
 api_instance <- rsirius_api$new()
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
-# result <- api_instance$GetJobsPaged(var_project_id, page = var_page, size = var_size, sort = var_sort, opt_fields = var_opt_fieldsdata_file = "result.txt")
-result <- api_instance$jobs_api$GetJobsPaged(var_project_id, page = var_page, size = var_size, sort = var_sort, opt_fields = var_opt_fields)
+# result <- api_instance$GetJobsPage(var_project_id, page = var_page, size = var_size, sort = var_sort, opt_fields = var_opt_fieldsdata_file = "result.txt")
+result <- api_instance$jobs_api$GetJobsPage(var_project_id, page = var_page, size = var_size, sort = var_sort, opt_fields = var_opt_fields)
 dput(result)
 ```
 
@@ -542,12 +566,15 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: application/json, application/problem+json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | OK |  -  |
+| **500** | Unexpected server-side error. The problem detail carries the reason. |  -  |
+| **404** | The referenced object does not exist in this SIRIUS instance or project. |  -  |
+| **400** | The request body or a parameter is malformed or violates a constraint. |  -  |
 
 # **HasJobs**
 > character HasJobs(project_id, include_finished = FALSE)
@@ -587,12 +614,15 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: application/json, application/problem+json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | OK |  -  |
+| **500** | Unexpected server-side error. The problem detail carries the reason. |  -  |
+| **404** | The referenced object does not exist in this SIRIUS instance or project. |  -  |
+| **400** | The request body or a parameter is malformed or violates a constraint. |  -  |
 
 # **SaveJobConfig**
 > StoredJobSubmission SaveJobConfig(name, job_submission, override_existing = FALSE, move_parameters_to_config_map = FALSE)
@@ -640,12 +670,15 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: application/json
+ - **Accept**: application/json, application/problem+json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | StoredJobSubmission that contains the JobSubmission and the probably modified name of the config (to ensure path compatibility). |  -  |
+| **500** | Unexpected server-side error. The problem detail carries the reason. |  -  |
+| **404** | The referenced object does not exist in this SIRIUS instance or project. |  -  |
+| **400** | The request body or a parameter is malformed or violates a constraint. |  -  |
 
 # **StartJob**
 > Job StartJob(project_id, job_submission, opt_fields = ["command","progress"])
@@ -662,7 +695,7 @@ library(RSirius)
 #
 # prepare function argument(s)
 var_project_id <- "project_id_example" # character | project-space to run jobs on
-var_job_submission <- JobSubmission$new(c("fallbackAdducts_example"), c("enforcedAdducts_example"), c("detectableAdducts_example"), "recompute_example", SpectralLibrarySearch$new("enabled_example", c("spectraSearchDBs_example"), 123, 123, 123, "enableAnalogueSearch_example", 123, 123, "INTENSITY", 123), Sirius$new("enabled_example", "QTOF", 123, 123, 123, "IGNORE", "filterByIsotopePattern_example", "enforceElGordoFormula_example", "performBottomUpSearch_example", 123, c("formulaSearchDBs_example"), "applyFormulaConstraintsToDBAndBottomUpSearch_example", "enforcedFormulaConstraints_example", "fallbackFormulaConstraints_example", c("detectableElements_example"), Timeout$new(123, 123), UseHeuristic$new(123, 123), "injectSpecLibMatchFormulas_example", 123, 123), Zodiac$new("enabled_example", 123, 123, "runInTwoSteps_example", ZodiacEdgeFilterThresholds$new(123, 123, 123), ZodiacEpochs$new(123, 123, 123), ZodiacLibraryScoring$new("enabled_example", 123), ZodiacAnalogueNodes$new("enabled_example", 123, 123)), FingerprintPrediction$new("enabled_example", "useScoreThreshold_example", "alwaysPredictHighRefMatches_example"), Canopus$new("enabled_example"), StructureDbSearch$new("enabled_example", c("structureSearchDBs_example"), "tagStructuresWithLipidClass_example", "OFF"), MsNovelist$new("enabled_example", 123), c(key = "inner_example"), c("compoundIds_example"), c("alignedFeatureIds_example")) # JobSubmission | configuration of the job that will be submitted of the job to be returned
+var_job_submission <- JobSubmission$new(c("fallbackAdducts_example"), c("enforcedAdducts_example"), c("detectableAdducts_example"), "recompute_example", SpectralLibrarySearch$new("enabled_example", c("spectraSearchDBs_example"), 123, 123, 123, "enableAnalogueSearch_example", 123, 123, "INTENSITY", 123), Sirius$new("enabled_example", "QTOF", 123, 123, 123, "IGNORE", "filterByIsotopePattern_example", "enforceElGordoFormula_example", "performBottomUpSearch_example", 123, c("formulaSearchDBs_example"), "applyFormulaConstraintsToDBAndBottomUpSearch_example", "enforcedFormulaConstraints_example", "fallbackFormulaConstraints_example", c("detectableElements_example"), Timeout$new(123, 123), UseHeuristic$new(123, 123), "injectSpecLibMatchFormulas_example", 123, 123), Zodiac$new("enabled_example", 123, 123, "runInTwoSteps_example", ZodiacEdgeFilterThresholds$new(123, 123, 123), ZodiacEpochs$new(123, 123, 123), ZodiacLibraryScoring$new("enabled_example", 123), ZodiacAnalogueNodes$new("enabled_example", 123, 123)), FingerprintPrediction$new("enabled_example", "useScoreThreshold_example", "alwaysPredictHighRefMatches_example"), Canopus$new("enabled_example"), StructureDbSearch$new("enabled_example", c("structureSearchDBs_example"), "tagStructuresWithLipidClass_example", "OFF"), MsNovelist$new("enabled_example", 123), c(key = "inner_example"), c("compoundIds_example"), c("alignedFeatureIds_example")) # JobSubmission | configuration of the job to be submitted
 var_opt_fields <- c("none") # array[character] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
 
 api_instance <- rsirius_api$new()
@@ -677,7 +710,7 @@ dput(result)
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **character**| project-space to run jobs on | 
- **job_submission** | [**JobSubmission**](JobSubmission.md)| configuration of the job that will be submitted of the job to be returned | 
+ **job_submission** | [**JobSubmission**](JobSubmission.md)| configuration of the job to be submitted | 
  **opt_fields** | Enum [none, command, progress, affectedIds] | set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;command&quot;,&quot;progress&quot;]]
 
 ### Return type
@@ -691,12 +724,15 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: application/json
+ - **Accept**: application/json, application/problem+json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **202** | Accepted |  -  |
+| **500** | Unexpected server-side error. The problem detail carries the reason. |  -  |
+| **404** | The referenced object does not exist in this SIRIUS instance or project. |  -  |
+| **400** | The request body or a parameter is malformed or violates a constraint. |  -  |
 
 # **StartJobFromConfig**
 > Job StartJobFromConfig(project_id, job_config_name, request_body, recompute = var.recompute, opt_fields = ["command","progress"])
@@ -713,7 +749,7 @@ library(RSirius)
 #
 # prepare function argument(s)
 var_project_id <- "project_id_example" # character | project-space to run jobs on
-var_job_config_name <- "job_config_name_example" # character | name if the config to be used
+var_job_config_name <- "job_config_name_example" # character | name of the config to be used
 var_request_body <- c("property_example") # array[character] | List of alignedFeatureIds to be computed
 var_recompute <- "recompute_example" # character | enable or disable recompute. If null the stored value will be used. (Optional)
 var_opt_fields <- c("none") # array[character] | set of optional fields to be included. Use 'none' only to override defaults. (Optional)
@@ -730,7 +766,7 @@ dput(result)
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **character**| project-space to run jobs on | 
- **job_config_name** | **character**| name if the config to be used | 
+ **job_config_name** | **character**| name of the config to be used | 
  **request_body** | list( **character** )| List of alignedFeatureIds to be computed | 
  **recompute** | **character**| enable or disable recompute. If null the stored value will be used. | [optional] 
  **opt_fields** | Enum [none, command, progress, affectedIds] | set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;command&quot;,&quot;progress&quot;]]
@@ -746,10 +782,13 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: application/json
+ - **Accept**: application/json, application/problem+json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **202** | Accepted |  -  |
+| **500** | Unexpected server-side error. The problem detail carries the reason. |  -  |
+| **404** | The referenced object does not exist in this SIRIUS instance or project. |  -  |
+| **400** | The request body or a parameter is malformed or violates a constraint. |  -  |
 

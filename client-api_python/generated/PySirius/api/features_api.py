@@ -23,6 +23,7 @@ from PySirius.models.annotated_ms_ms_data import AnnotatedMsMsData
 from PySirius.models.annotated_spectrum import AnnotatedSpectrum
 from PySirius.models.canopus_prediction import CanopusPrediction
 from PySirius.models.compound_classes import CompoundClasses
+from PySirius.models.feature import Feature
 from PySirius.models.feature_import import FeatureImport
 from PySirius.models.formula_candidate import FormulaCandidate
 from PySirius.models.formula_candidate_opt_field import FormulaCandidateOptField
@@ -32,10 +33,15 @@ from PySirius.models.isotope_pattern_annotation import IsotopePatternAnnotation
 from PySirius.models.lipid_annotation import LipidAnnotation
 from PySirius.models.ms_data import MsData
 from PySirius.models.paged_model_aligned_feature import PagedModelAlignedFeature
+from PySirius.models.paged_model_feature import PagedModelFeature
 from PySirius.models.paged_model_formula_candidate import PagedModelFormulaCandidate
 from PySirius.models.paged_model_spectral_library_match import PagedModelSpectralLibraryMatch
 from PySirius.models.paged_model_structure_candidate_formula import PagedModelStructureCandidateFormula
 from PySirius.models.paged_model_structure_candidate_scored import PagedModelStructureCandidateScored
+from PySirius.models.quant_measure import QuantMeasure
+from PySirius.models.quant_table import QuantTable
+from PySirius.models.quant_table_opt_field import QuantTableOptField
+from PySirius.models.searchable_field import SearchableField
 from PySirius.models.spectral_library_match import SpectralLibraryMatch
 from PySirius.models.spectral_library_match_opt_field import SpectralLibraryMatchOptField
 from PySirius.models.spectral_library_match_summary import SpectralLibraryMatchSummary
@@ -83,7 +89,7 @@ class FeaturesApi:
     ) -> List[AlignedFeature]:
         """Import (aligned) features into the project.
 
-        Import (aligned) features into the project. Features must not exist in the project.  Otherwise, they will exist twice.
+        Import (aligned) features into the project. Features must not exist in the project, otherwise they will be duplicated.
 
         :param project_id: project-space to import into. (required)
         :type project_id: str
@@ -128,6 +134,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "List[AlignedFeature]",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -162,7 +171,7 @@ class FeaturesApi:
     ) -> ApiResponse[List[AlignedFeature]]:
         """Import (aligned) features into the project.
 
-        Import (aligned) features into the project. Features must not exist in the project.  Otherwise, they will exist twice.
+        Import (aligned) features into the project. Features must not exist in the project, otherwise they will be duplicated.
 
         :param project_id: project-space to import into. (required)
         :type project_id: str
@@ -207,6 +216,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "List[AlignedFeature]",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -241,7 +253,7 @@ class FeaturesApi:
     ) -> RESTResponseType:
         """Import (aligned) features into the project.
 
-        Import (aligned) features into the project. Features must not exist in the project.  Otherwise, they will exist twice.
+        Import (aligned) features into the project. Features must not exist in the project, otherwise they will be duplicated.
 
         :param project_id: project-space to import into. (required)
         :type project_id: str
@@ -286,6 +298,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "List[AlignedFeature]",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -345,7 +360,8 @@ class FeaturesApi:
         if 'Accept' not in _header_params:
             _header_params['Accept'] = self.api_client.select_header_accept(
                 [
-                    'application/json'
+                    'application/json', 
+                    'application/problem+json'
                 ]
             )
 
@@ -444,6 +460,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': None,
+            '500': None,
+            '404': None,
+            '400': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -515,6 +534,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': None,
+            '500': None,
+            '404': None,
+            '400': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -586,6 +608,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': None,
+            '500': None,
+            '404': None,
+            '400': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -712,6 +737,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': None,
+            '500': None,
+            '404': None,
+            '400': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -783,6 +811,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': None,
+            '500': None,
+            '404': None,
+            '400': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -854,6 +885,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': None,
+            '500': None,
+            '404': None,
+            '400': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -936,6 +970,285 @@ class FeaturesApi:
 
 
     @validate_call
+    def delete_aligned_features_by_query(
+        self,
+        project_id: Annotated[StrictStr, Field(description="project-space to delete from.")],
+        search_query: Annotated[StrictStr, Field(description="tag/text/range query in lucene syntax; must be non-empty (a blank query would match                     every feature).")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> None:
+        """Delete all features (aligned over runs) that match the given lucene search query from the specified  project-space.
+
+        Delete all features (aligned over runs) that match the given lucene search query from the specified  project-space. The query is resolved server-side against the search index, so callers do not need to  page the matching ids to the client and send them back for deletion.
+
+        :param project_id: project-space to delete from. (required)
+        :type project_id: str
+        :param search_query: tag/text/range query in lucene syntax; must be non-empty (a blank query would match                     every feature). (required)
+        :type search_query: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._delete_aligned_features_by_query_serialize(
+            project_id=project_id,
+            search_query=search_query,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': None,
+            '500': None,
+            '404': None,
+            '400': None,
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def delete_aligned_features_by_query_with_http_info(
+        self,
+        project_id: Annotated[StrictStr, Field(description="project-space to delete from.")],
+        search_query: Annotated[StrictStr, Field(description="tag/text/range query in lucene syntax; must be non-empty (a blank query would match                     every feature).")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[None]:
+        """Delete all features (aligned over runs) that match the given lucene search query from the specified  project-space.
+
+        Delete all features (aligned over runs) that match the given lucene search query from the specified  project-space. The query is resolved server-side against the search index, so callers do not need to  page the matching ids to the client and send them back for deletion.
+
+        :param project_id: project-space to delete from. (required)
+        :type project_id: str
+        :param search_query: tag/text/range query in lucene syntax; must be non-empty (a blank query would match                     every feature). (required)
+        :type search_query: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._delete_aligned_features_by_query_serialize(
+            project_id=project_id,
+            search_query=search_query,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': None,
+            '500': None,
+            '404': None,
+            '400': None,
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def delete_aligned_features_by_query_without_preload_content(
+        self,
+        project_id: Annotated[StrictStr, Field(description="project-space to delete from.")],
+        search_query: Annotated[StrictStr, Field(description="tag/text/range query in lucene syntax; must be non-empty (a blank query would match                     every feature).")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Delete all features (aligned over runs) that match the given lucene search query from the specified  project-space.
+
+        Delete all features (aligned over runs) that match the given lucene search query from the specified  project-space. The query is resolved server-side against the search index, so callers do not need to  page the matching ids to the client and send them back for deletion.
+
+        :param project_id: project-space to delete from. (required)
+        :type project_id: str
+        :param search_query: tag/text/range query in lucene syntax; must be non-empty (a blank query would match                     every feature). (required)
+        :type search_query: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._delete_aligned_features_by_query_serialize(
+            project_id=project_id,
+            search_query=search_query,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': None,
+            '500': None,
+            '404': None,
+            '400': None,
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _delete_aligned_features_by_query_serialize(
+        self,
+        project_id,
+        search_query,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if project_id is not None:
+            _path_params['projectId'] = project_id
+        # process the query parameters
+        if search_query is not None:
+            
+            _query_params.append(('searchQuery', search_query))
+            
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+        ]
+
+        return self.api_client.param_serialize(
+            method='PUT',
+            resource_path='/api/projects/{projectId}/aligned-features/delete-by-query',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
     def get_aligned_feature(
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
@@ -1002,6 +1315,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "AlignedFeature",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1081,6 +1397,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "AlignedFeature",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1160,6 +1479,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "AlignedFeature",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1218,7 +1540,8 @@ class FeaturesApi:
         if 'Accept' not in _header_params:
             _header_params['Accept'] = self.api_client.select_header_accept(
                 [
-                    'application/json'
+                    'application/json', 
+                    'application/problem+json'
                 ]
             )
 
@@ -1264,9 +1587,9 @@ class FeaturesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> List[AlignedFeature]:
-        """Get all available features (aligned over runs) in the given project-space.
+        """(Deprecated) [DEPRECATED] Get all available features (aligned over runs) in the given project-space
 
-        Get all available features (aligned over runs) in the given project-space.
+        [DEPRECATED] Get all available features (aligned over runs) in the given project-space.  <p>  [DEPRECATED] Use /aligned-features/page instead. Loading all features at once does not scale for large  projects. This endpoint will be removed in the next major version of this API.
 
         :param project_id: project-space to read from. (required)
         :type project_id: str
@@ -1295,6 +1618,7 @@ class FeaturesApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """ # noqa: E501
+        warnings.warn("GET /api/projects/{projectId}/aligned-features is deprecated.", DeprecationWarning)
 
         _param = self._get_aligned_features_serialize(
             project_id=project_id,
@@ -1308,6 +1632,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "List[AlignedFeature]",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1339,9 +1666,9 @@ class FeaturesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[List[AlignedFeature]]:
-        """Get all available features (aligned over runs) in the given project-space.
+        """(Deprecated) [DEPRECATED] Get all available features (aligned over runs) in the given project-space
 
-        Get all available features (aligned over runs) in the given project-space.
+        [DEPRECATED] Get all available features (aligned over runs) in the given project-space.  <p>  [DEPRECATED] Use /aligned-features/page instead. Loading all features at once does not scale for large  projects. This endpoint will be removed in the next major version of this API.
 
         :param project_id: project-space to read from. (required)
         :type project_id: str
@@ -1370,6 +1697,7 @@ class FeaturesApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """ # noqa: E501
+        warnings.warn("GET /api/projects/{projectId}/aligned-features is deprecated.", DeprecationWarning)
 
         _param = self._get_aligned_features_serialize(
             project_id=project_id,
@@ -1383,6 +1711,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "List[AlignedFeature]",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1414,9 +1745,9 @@ class FeaturesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get all available features (aligned over runs) in the given project-space.
+        """(Deprecated) [DEPRECATED] Get all available features (aligned over runs) in the given project-space
 
-        Get all available features (aligned over runs) in the given project-space.
+        [DEPRECATED] Get all available features (aligned over runs) in the given project-space.  <p>  [DEPRECATED] Use /aligned-features/page instead. Loading all features at once does not scale for large  projects. This endpoint will be removed in the next major version of this API.
 
         :param project_id: project-space to read from. (required)
         :type project_id: str
@@ -1445,6 +1776,7 @@ class FeaturesApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """ # noqa: E501
+        warnings.warn("GET /api/projects/{projectId}/aligned-features is deprecated.", DeprecationWarning)
 
         _param = self._get_aligned_features_serialize(
             project_id=project_id,
@@ -1458,6 +1790,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "List[AlignedFeature]",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1513,7 +1848,8 @@ class FeaturesApi:
         if 'Accept' not in _header_params:
             _header_params['Accept'] = self.api_client.select_header_accept(
                 [
-                    'application/json'
+                    'application/json', 
+                    'application/problem+json'
                 ]
             )
 
@@ -1541,12 +1877,13 @@ class FeaturesApi:
 
 
     @validate_call
-    def get_aligned_features_paged(
+    def get_aligned_features_page(
         self,
-        project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
+        project_id: Annotated[StrictStr, Field(description="project space to get features (aligned over runs) from.")],
         page: Annotated[Optional[Annotated[int, Field(strict=True, ge=0)]], Field(description="Zero-based page index (0..N)")] = None,
         size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
         sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
+        search_query: Annotated[Optional[StrictStr], Field(description="Optional search query in lucene syntax. Omit this parameter to page over all features.")] = None,
         ms_data_search_prepared: Annotated[Optional[StrictBool], Field(description="Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra.")] = None,
         opt_fields: Annotated[Optional[List[Optional[AlignedFeatureOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
@@ -1562,11 +1899,11 @@ class FeaturesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> PagedModelAlignedFeature:
-        """Get all available features (aligned over runs) in the given project-space.
+        """Get features (aligned over runs) in the given project-space
 
-        Get all available features (aligned over runs) in the given project-space.
+        Get features (aligned over runs) in the given project-space.   <h2>Supported filter syntax</h2>   <p>The filter string must contain one or more clauses. A clause is prefixed  by a field name.  </p>   Searchable fields are the indexed properties of the feature (e.g. <code>ionMass</code>, <code>name</code>,  <code>quality</code>, <code>hasMsMs</code>), its annotations addressed via dot notation  (e.g. <code>topAnnotations.structureAnnotation.structureName</code>), and project tags prefixed with the  namespace <code>tags.</code> (e.g. <code>tags.MyTag</code>).  Use the <code>searchable-fields</code> endpoint (getAlignedFeaturesSearchableFields) to list all fields that  can be searched, including their value type, whether they support word based (full text) search, and  whether results can be sorted by them.  Possible value types are <strong>text</strong>, <strong>integer</strong>, <strong>double</strong>,  <strong>boolean</strong>, <strong>date</strong>, or <strong>time</strong>.   <p>The format of the <strong>date</strong> type is <code>yyyy-MM-dd</code> and of the <strong>time</strong> type is <code>HH\\:mm\\:ss</code>.</p>   <p>A clause may be:</p>  <ul>      <li>a <strong>term</strong>: field name followed by a colon and the search term, e.g. <code>tags.MyTagA:sample</code></li>      <li>a <strong>phrase</strong>: field name followed by a colon and the search phrase in doublequotes, e.g. <code>name:&quot;Bicuculline methiodide&quot;</code></li>      <li>a <strong>regular expression</strong>: field name followed by a colon and the regex in slashes, e.g. <code>tags.MyTagA:/[mb]oat/</code></li>      <li>a <strong>comparison</strong>: field name followed by a comparison operator and a value, e.g. <code>ionMass&lt;300</code></li>      <li>a <strong>range</strong>: field name followed by a colon and an open (indiced by <code>[ </code> and <code>] </code>) or (semi-)closed range (indiced by <code>{</code> and <code>}</code>), e.g. <code>ionMass:[300 TO 400]</code></li>      <li>a <strong>boolean</strong>: boolean fields are matched as follows: e.g. <code>hasMsMs:true</code>, <code>tags.MyTagA:false</code></li>      <li>a <strong>value-less</strong>: tags without values (See TagDefinition) are matched as follows: e.g. <code>tags.MyTagA:*</code> or <code>tags.MyTagA:true</code></li>  </ul>   <p>Clauses may be <strong>grouped</strong> with brackets <code>( </code> and <code>) </code> and / or <strong>joined</strong> with <code>AND</code> or <code>OR </code> (or <code>&amp;&amp; </code> and <code>|| </code>)</p>   <h3>Example</h3>   <p>The syntax allows to build complex filter queries such as:</p>   <p><code>ionMass:[300 TO 400] AND quality:GOOD AND topAnnotations.compoundClassAnnotation.npcPathway:&quot;Alkaloids&quot; AND tags.city:&quot;new york&quot; OR tags.MyDateTag:[2023-10-01 TO 2023-12-24] OR tags.time&lt;10\\:00\\:00 </code></p>
 
-        :param project_id: project-space to read from. (required)
+        :param project_id: project space to get features (aligned over runs) from. (required)
         :type project_id: str
         :param page: Zero-based page index (0..N)
         :type page: int
@@ -1574,6 +1911,8 @@ class FeaturesApi:
         :type size: int
         :param sort: Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
         :type sort: List[str]
+        :param search_query: Optional search query in lucene syntax. Omit this parameter to page over all features.
+        :type search_query: str
         :param ms_data_search_prepared: Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra.
         :type ms_data_search_prepared: bool
         :param opt_fields: set of optional fields to be included. Use 'none' only to override defaults.
@@ -1600,11 +1939,12 @@ class FeaturesApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._get_aligned_features_paged_serialize(
+        _param = self._get_aligned_features_page_serialize(
             project_id=project_id,
             page=page,
             size=size,
             sort=sort,
+            search_query=search_query,
             ms_data_search_prepared=ms_data_search_prepared,
             opt_fields=opt_fields,
             _request_auth=_request_auth,
@@ -1615,6 +1955,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PagedModelAlignedFeature",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1628,12 +1971,13 @@ class FeaturesApi:
 
 
     @validate_call
-    def get_aligned_features_paged_with_http_info(
+    def get_aligned_features_page_with_http_info(
         self,
-        project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
+        project_id: Annotated[StrictStr, Field(description="project space to get features (aligned over runs) from.")],
         page: Annotated[Optional[Annotated[int, Field(strict=True, ge=0)]], Field(description="Zero-based page index (0..N)")] = None,
         size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
         sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
+        search_query: Annotated[Optional[StrictStr], Field(description="Optional search query in lucene syntax. Omit this parameter to page over all features.")] = None,
         ms_data_search_prepared: Annotated[Optional[StrictBool], Field(description="Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra.")] = None,
         opt_fields: Annotated[Optional[List[Optional[AlignedFeatureOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
@@ -1649,11 +1993,11 @@ class FeaturesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[PagedModelAlignedFeature]:
-        """Get all available features (aligned over runs) in the given project-space.
+        """Get features (aligned over runs) in the given project-space
 
-        Get all available features (aligned over runs) in the given project-space.
+        Get features (aligned over runs) in the given project-space.   <h2>Supported filter syntax</h2>   <p>The filter string must contain one or more clauses. A clause is prefixed  by a field name.  </p>   Searchable fields are the indexed properties of the feature (e.g. <code>ionMass</code>, <code>name</code>,  <code>quality</code>, <code>hasMsMs</code>), its annotations addressed via dot notation  (e.g. <code>topAnnotations.structureAnnotation.structureName</code>), and project tags prefixed with the  namespace <code>tags.</code> (e.g. <code>tags.MyTag</code>).  Use the <code>searchable-fields</code> endpoint (getAlignedFeaturesSearchableFields) to list all fields that  can be searched, including their value type, whether they support word based (full text) search, and  whether results can be sorted by them.  Possible value types are <strong>text</strong>, <strong>integer</strong>, <strong>double</strong>,  <strong>boolean</strong>, <strong>date</strong>, or <strong>time</strong>.   <p>The format of the <strong>date</strong> type is <code>yyyy-MM-dd</code> and of the <strong>time</strong> type is <code>HH\\:mm\\:ss</code>.</p>   <p>A clause may be:</p>  <ul>      <li>a <strong>term</strong>: field name followed by a colon and the search term, e.g. <code>tags.MyTagA:sample</code></li>      <li>a <strong>phrase</strong>: field name followed by a colon and the search phrase in doublequotes, e.g. <code>name:&quot;Bicuculline methiodide&quot;</code></li>      <li>a <strong>regular expression</strong>: field name followed by a colon and the regex in slashes, e.g. <code>tags.MyTagA:/[mb]oat/</code></li>      <li>a <strong>comparison</strong>: field name followed by a comparison operator and a value, e.g. <code>ionMass&lt;300</code></li>      <li>a <strong>range</strong>: field name followed by a colon and an open (indiced by <code>[ </code> and <code>] </code>) or (semi-)closed range (indiced by <code>{</code> and <code>}</code>), e.g. <code>ionMass:[300 TO 400]</code></li>      <li>a <strong>boolean</strong>: boolean fields are matched as follows: e.g. <code>hasMsMs:true</code>, <code>tags.MyTagA:false</code></li>      <li>a <strong>value-less</strong>: tags without values (See TagDefinition) are matched as follows: e.g. <code>tags.MyTagA:*</code> or <code>tags.MyTagA:true</code></li>  </ul>   <p>Clauses may be <strong>grouped</strong> with brackets <code>( </code> and <code>) </code> and / or <strong>joined</strong> with <code>AND</code> or <code>OR </code> (or <code>&amp;&amp; </code> and <code>|| </code>)</p>   <h3>Example</h3>   <p>The syntax allows to build complex filter queries such as:</p>   <p><code>ionMass:[300 TO 400] AND quality:GOOD AND topAnnotations.compoundClassAnnotation.npcPathway:&quot;Alkaloids&quot; AND tags.city:&quot;new york&quot; OR tags.MyDateTag:[2023-10-01 TO 2023-12-24] OR tags.time&lt;10\\:00\\:00 </code></p>
 
-        :param project_id: project-space to read from. (required)
+        :param project_id: project space to get features (aligned over runs) from. (required)
         :type project_id: str
         :param page: Zero-based page index (0..N)
         :type page: int
@@ -1661,6 +2005,8 @@ class FeaturesApi:
         :type size: int
         :param sort: Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
         :type sort: List[str]
+        :param search_query: Optional search query in lucene syntax. Omit this parameter to page over all features.
+        :type search_query: str
         :param ms_data_search_prepared: Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra.
         :type ms_data_search_prepared: bool
         :param opt_fields: set of optional fields to be included. Use 'none' only to override defaults.
@@ -1687,11 +2033,12 @@ class FeaturesApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._get_aligned_features_paged_serialize(
+        _param = self._get_aligned_features_page_serialize(
             project_id=project_id,
             page=page,
             size=size,
             sort=sort,
+            search_query=search_query,
             ms_data_search_prepared=ms_data_search_prepared,
             opt_fields=opt_fields,
             _request_auth=_request_auth,
@@ -1702,6 +2049,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PagedModelAlignedFeature",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1715,12 +2065,13 @@ class FeaturesApi:
 
 
     @validate_call
-    def get_aligned_features_paged_without_preload_content(
+    def get_aligned_features_page_without_preload_content(
         self,
-        project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
+        project_id: Annotated[StrictStr, Field(description="project space to get features (aligned over runs) from.")],
         page: Annotated[Optional[Annotated[int, Field(strict=True, ge=0)]], Field(description="Zero-based page index (0..N)")] = None,
         size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
         sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
+        search_query: Annotated[Optional[StrictStr], Field(description="Optional search query in lucene syntax. Omit this parameter to page over all features.")] = None,
         ms_data_search_prepared: Annotated[Optional[StrictBool], Field(description="Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra.")] = None,
         opt_fields: Annotated[Optional[List[Optional[AlignedFeatureOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
@@ -1736,11 +2087,11 @@ class FeaturesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get all available features (aligned over runs) in the given project-space.
+        """Get features (aligned over runs) in the given project-space
 
-        Get all available features (aligned over runs) in the given project-space.
+        Get features (aligned over runs) in the given project-space.   <h2>Supported filter syntax</h2>   <p>The filter string must contain one or more clauses. A clause is prefixed  by a field name.  </p>   Searchable fields are the indexed properties of the feature (e.g. <code>ionMass</code>, <code>name</code>,  <code>quality</code>, <code>hasMsMs</code>), its annotations addressed via dot notation  (e.g. <code>topAnnotations.structureAnnotation.structureName</code>), and project tags prefixed with the  namespace <code>tags.</code> (e.g. <code>tags.MyTag</code>).  Use the <code>searchable-fields</code> endpoint (getAlignedFeaturesSearchableFields) to list all fields that  can be searched, including their value type, whether they support word based (full text) search, and  whether results can be sorted by them.  Possible value types are <strong>text</strong>, <strong>integer</strong>, <strong>double</strong>,  <strong>boolean</strong>, <strong>date</strong>, or <strong>time</strong>.   <p>The format of the <strong>date</strong> type is <code>yyyy-MM-dd</code> and of the <strong>time</strong> type is <code>HH\\:mm\\:ss</code>.</p>   <p>A clause may be:</p>  <ul>      <li>a <strong>term</strong>: field name followed by a colon and the search term, e.g. <code>tags.MyTagA:sample</code></li>      <li>a <strong>phrase</strong>: field name followed by a colon and the search phrase in doublequotes, e.g. <code>name:&quot;Bicuculline methiodide&quot;</code></li>      <li>a <strong>regular expression</strong>: field name followed by a colon and the regex in slashes, e.g. <code>tags.MyTagA:/[mb]oat/</code></li>      <li>a <strong>comparison</strong>: field name followed by a comparison operator and a value, e.g. <code>ionMass&lt;300</code></li>      <li>a <strong>range</strong>: field name followed by a colon and an open (indiced by <code>[ </code> and <code>] </code>) or (semi-)closed range (indiced by <code>{</code> and <code>}</code>), e.g. <code>ionMass:[300 TO 400]</code></li>      <li>a <strong>boolean</strong>: boolean fields are matched as follows: e.g. <code>hasMsMs:true</code>, <code>tags.MyTagA:false</code></li>      <li>a <strong>value-less</strong>: tags without values (See TagDefinition) are matched as follows: e.g. <code>tags.MyTagA:*</code> or <code>tags.MyTagA:true</code></li>  </ul>   <p>Clauses may be <strong>grouped</strong> with brackets <code>( </code> and <code>) </code> and / or <strong>joined</strong> with <code>AND</code> or <code>OR </code> (or <code>&amp;&amp; </code> and <code>|| </code>)</p>   <h3>Example</h3>   <p>The syntax allows to build complex filter queries such as:</p>   <p><code>ionMass:[300 TO 400] AND quality:GOOD AND topAnnotations.compoundClassAnnotation.npcPathway:&quot;Alkaloids&quot; AND tags.city:&quot;new york&quot; OR tags.MyDateTag:[2023-10-01 TO 2023-12-24] OR tags.time&lt;10\\:00\\:00 </code></p>
 
-        :param project_id: project-space to read from. (required)
+        :param project_id: project space to get features (aligned over runs) from. (required)
         :type project_id: str
         :param page: Zero-based page index (0..N)
         :type page: int
@@ -1748,6 +2099,8 @@ class FeaturesApi:
         :type size: int
         :param sort: Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
         :type sort: List[str]
+        :param search_query: Optional search query in lucene syntax. Omit this parameter to page over all features.
+        :type search_query: str
         :param ms_data_search_prepared: Returns all fragment spectra in a preprocessed form as used for fast                             Cosine/Modified Cosine computation. Gives you spectra compatible with SpectralLibraryMatch                             peak assignments and reference spectra.
         :type ms_data_search_prepared: bool
         :param opt_fields: set of optional fields to be included. Use 'none' only to override defaults.
@@ -1774,11 +2127,12 @@ class FeaturesApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._get_aligned_features_paged_serialize(
+        _param = self._get_aligned_features_page_serialize(
             project_id=project_id,
             page=page,
             size=size,
             sort=sort,
+            search_query=search_query,
             ms_data_search_prepared=ms_data_search_prepared,
             opt_fields=opt_fields,
             _request_auth=_request_auth,
@@ -1789,6 +2143,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PagedModelAlignedFeature",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1797,12 +2154,13 @@ class FeaturesApi:
         return response_data.response
 
 
-    def _get_aligned_features_paged_serialize(
+    def _get_aligned_features_page_serialize(
         self,
         project_id,
         page,
         size,
         sort,
+        search_query,
         ms_data_search_prepared,
         opt_fields,
         _request_auth,
@@ -1843,6 +2201,10 @@ class FeaturesApi:
             
             _query_params.append(('sort', sort))
             
+        if search_query is not None:
+            
+            _query_params.append(('searchQuery', search_query))
+            
         if ms_data_search_prepared is not None:
             
             _query_params.append(('msDataSearchPrepared', ms_data_search_prepared))
@@ -1860,7 +2222,8 @@ class FeaturesApi:
         if 'Accept' not in _header_params:
             _header_params['Accept'] = self.api_client.select_header_accept(
                 [
-                    'application/json'
+                    'application/json', 
+                    'application/problem+json'
                 ]
             )
 
@@ -1872,6 +2235,276 @@ class FeaturesApi:
         return self.api_client.param_serialize(
             method='GET',
             resource_path='/api/projects/{projectId}/aligned-features/page',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def get_aligned_features_searchable_fields(
+        self,
+        project_id: Annotated[StrictStr, Field(description="project space to read the searchable feature fields from.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> List[SearchableField]:
+        """Get all fields that can be used in the searchQuery parameter of feature (aligned over runs) endpoints
+
+        Get all fields that can be used in the searchQuery parameter of feature (aligned over runs) endpoints.  <p>  Use this to build valid lucene queries: the field type determines which clauses are supported  (e.g. range queries like <code>ionMass:[300 TO 400]</code> for numeric fields, word based search for  full-text fields). Includes the dynamic tag fields (<code>tags.&lt;tagName&gt;</code>) of this project.  An empty list means there are no searchable fields.
+
+        :param project_id: project space to read the searchable feature fields from. (required)
+        :type project_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_aligned_features_searchable_fields_serialize(
+            project_id=project_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "List[SearchableField]",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def get_aligned_features_searchable_fields_with_http_info(
+        self,
+        project_id: Annotated[StrictStr, Field(description="project space to read the searchable feature fields from.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[List[SearchableField]]:
+        """Get all fields that can be used in the searchQuery parameter of feature (aligned over runs) endpoints
+
+        Get all fields that can be used in the searchQuery parameter of feature (aligned over runs) endpoints.  <p>  Use this to build valid lucene queries: the field type determines which clauses are supported  (e.g. range queries like <code>ionMass:[300 TO 400]</code> for numeric fields, word based search for  full-text fields). Includes the dynamic tag fields (<code>tags.&lt;tagName&gt;</code>) of this project.  An empty list means there are no searchable fields.
+
+        :param project_id: project space to read the searchable feature fields from. (required)
+        :type project_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_aligned_features_searchable_fields_serialize(
+            project_id=project_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "List[SearchableField]",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def get_aligned_features_searchable_fields_without_preload_content(
+        self,
+        project_id: Annotated[StrictStr, Field(description="project space to read the searchable feature fields from.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Get all fields that can be used in the searchQuery parameter of feature (aligned over runs) endpoints
+
+        Get all fields that can be used in the searchQuery parameter of feature (aligned over runs) endpoints.  <p>  Use this to build valid lucene queries: the field type determines which clauses are supported  (e.g. range queries like <code>ionMass:[300 TO 400]</code> for numeric fields, word based search for  full-text fields). Includes the dynamic tag fields (<code>tags.&lt;tagName&gt;</code>) of this project.  An empty list means there are no searchable fields.
+
+        :param project_id: project space to read the searchable feature fields from. (required)
+        :type project_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_aligned_features_searchable_fields_serialize(
+            project_id=project_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "List[SearchableField]",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _get_aligned_features_searchable_fields_serialize(
+        self,
+        project_id,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if project_id is not None:
+            _path_params['projectId'] = project_id
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json', 
+                    'application/problem+json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/api/projects/{projectId}/aligned-features/searchable-fields',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -1908,7 +2541,7 @@ class FeaturesApi:
     ) -> CompoundClasses:
         """Return Best matching compound classes for given formulaId
 
-        Return Best matching compound classes for given formulaId.  <p>  Set of the highest scoring compound classes (CANOPUS) on each hierarchy level of  the ClassyFire and NPC ontology,
+        Return Best matching compound classes for given formulaId.  <p>  Set of the highest scoring compound classes (CANOPUS) on each hierarchy level of the ClassyFire and NPC ontology,
 
         :param project_id: project-space to read from. (required)
         :type project_id: str
@@ -1950,6 +2583,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CompoundClasses",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1983,7 +2619,7 @@ class FeaturesApi:
     ) -> ApiResponse[CompoundClasses]:
         """Return Best matching compound classes for given formulaId
 
-        Return Best matching compound classes for given formulaId.  <p>  Set of the highest scoring compound classes (CANOPUS) on each hierarchy level of  the ClassyFire and NPC ontology,
+        Return Best matching compound classes for given formulaId.  <p>  Set of the highest scoring compound classes (CANOPUS) on each hierarchy level of the ClassyFire and NPC ontology,
 
         :param project_id: project-space to read from. (required)
         :type project_id: str
@@ -2025,6 +2661,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CompoundClasses",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2058,7 +2697,7 @@ class FeaturesApi:
     ) -> RESTResponseType:
         """Return Best matching compound classes for given formulaId
 
-        Return Best matching compound classes for given formulaId.  <p>  Set of the highest scoring compound classes (CANOPUS) on each hierarchy level of  the ClassyFire and NPC ontology,
+        Return Best matching compound classes for given formulaId.  <p>  Set of the highest scoring compound classes (CANOPUS) on each hierarchy level of the ClassyFire and NPC ontology,
 
         :param project_id: project-space to read from. (required)
         :type project_id: str
@@ -2100,6 +2739,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CompoundClasses",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2150,7 +2792,8 @@ class FeaturesApi:
         if 'Accept' not in _header_params:
             _header_params['Accept'] = self.api_client.select_header_accept(
                 [
-                    'application/json'
+                    'application/json', 
+                    'application/problem+json'
                 ]
             )
 
@@ -2240,6 +2883,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CanopusPrediction",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2315,6 +2961,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CanopusPrediction",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2390,6 +3039,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "CanopusPrediction",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2440,7 +3092,8 @@ class FeaturesApi:
         if 'Accept' not in _header_params:
             _header_params['Accept'] = self.api_client.select_header_accept(
                 [
-                    'application/json'
+                    'application/json', 
+                    'application/problem+json'
                 ]
             )
 
@@ -2486,9 +3139,9 @@ class FeaturesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> List[StructureCandidateFormula]:
-        """List of de novo structure candidates (e.g. generated by MsNovelist) ranked by CSI:FingerID score for the given 'alignedFeatureId' with minimal information.  StructureCandidates can be enriched with molecular fingerprint.
+        """(Deprecated) [DEPRECATED] List of de novo structure candidates (e
 
-        List of de novo structure candidates (e.g. generated by MsNovelist) ranked by CSI:FingerID score for the given 'alignedFeatureId' with minimal information.  StructureCandidates can be enriched with molecular fingerprint.
+        [DEPRECATED] List of de novo structure candidates (e.g. generated by MsNovelist) ranked by CSI:FingerID score for the given 'alignedFeatureId' with minimal information.  <p>  [DEPRECATED] Use /denovo-structures/page instead. Loading all entries at once does not scale for large  result sets. This endpoint will be removed in the next major version of this API.  StructureCandidates can be enriched with molecular fingerprint.
 
         :param project_id: project-space to read from. (required)
         :type project_id: str
@@ -2517,6 +3170,7 @@ class FeaturesApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """ # noqa: E501
+        warnings.warn("GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/denovo-structures is deprecated.", DeprecationWarning)
 
         _param = self._get_de_novo_structure_candidates_serialize(
             project_id=project_id,
@@ -2530,6 +3184,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "List[StructureCandidateFormula]",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2561,9 +3218,9 @@ class FeaturesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[List[StructureCandidateFormula]]:
-        """List of de novo structure candidates (e.g. generated by MsNovelist) ranked by CSI:FingerID score for the given 'alignedFeatureId' with minimal information.  StructureCandidates can be enriched with molecular fingerprint.
+        """(Deprecated) [DEPRECATED] List of de novo structure candidates (e
 
-        List of de novo structure candidates (e.g. generated by MsNovelist) ranked by CSI:FingerID score for the given 'alignedFeatureId' with minimal information.  StructureCandidates can be enriched with molecular fingerprint.
+        [DEPRECATED] List of de novo structure candidates (e.g. generated by MsNovelist) ranked by CSI:FingerID score for the given 'alignedFeatureId' with minimal information.  <p>  [DEPRECATED] Use /denovo-structures/page instead. Loading all entries at once does not scale for large  result sets. This endpoint will be removed in the next major version of this API.  StructureCandidates can be enriched with molecular fingerprint.
 
         :param project_id: project-space to read from. (required)
         :type project_id: str
@@ -2592,6 +3249,7 @@ class FeaturesApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """ # noqa: E501
+        warnings.warn("GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/denovo-structures is deprecated.", DeprecationWarning)
 
         _param = self._get_de_novo_structure_candidates_serialize(
             project_id=project_id,
@@ -2605,6 +3263,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "List[StructureCandidateFormula]",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2636,9 +3297,9 @@ class FeaturesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """List of de novo structure candidates (e.g. generated by MsNovelist) ranked by CSI:FingerID score for the given 'alignedFeatureId' with minimal information.  StructureCandidates can be enriched with molecular fingerprint.
+        """(Deprecated) [DEPRECATED] List of de novo structure candidates (e
 
-        List of de novo structure candidates (e.g. generated by MsNovelist) ranked by CSI:FingerID score for the given 'alignedFeatureId' with minimal information.  StructureCandidates can be enriched with molecular fingerprint.
+        [DEPRECATED] List of de novo structure candidates (e.g. generated by MsNovelist) ranked by CSI:FingerID score for the given 'alignedFeatureId' with minimal information.  <p>  [DEPRECATED] Use /denovo-structures/page instead. Loading all entries at once does not scale for large  result sets. This endpoint will be removed in the next major version of this API.  StructureCandidates can be enriched with molecular fingerprint.
 
         :param project_id: project-space to read from. (required)
         :type project_id: str
@@ -2667,6 +3328,7 @@ class FeaturesApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """ # noqa: E501
+        warnings.warn("GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/denovo-structures is deprecated.", DeprecationWarning)
 
         _param = self._get_de_novo_structure_candidates_serialize(
             project_id=project_id,
@@ -2680,6 +3342,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "List[StructureCandidateFormula]",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2733,7 +3398,8 @@ class FeaturesApi:
         if 'Accept' not in _header_params:
             _header_params['Accept'] = self.api_client.select_header_accept(
                 [
-                    'application/json'
+                    'application/json', 
+                    'application/problem+json'
                 ]
             )
 
@@ -2780,9 +3446,9 @@ class FeaturesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> List[StructureCandidateScored]:
-        """List of de novo structure candidates (e.g. generated by MsNovelist) ranked by CSI:FingerID score for the given 'formulaId' with minimal information.  StructureCandidates can be enriched with molecular fingerprint.
+        """(Deprecated) [DEPRECATED] List of de novo structure candidates (e
 
-        List of de novo structure candidates (e.g. generated by MsNovelist) ranked by CSI:FingerID score for the given 'formulaId' with minimal information.  StructureCandidates can be enriched with molecular fingerprint.
+        [DEPRECATED] List of de novo structure candidates (e.g. generated by MsNovelist) ranked by CSI:FingerID score for the given 'formulaId' with minimal information.  <p>  [DEPRECATED] Use /formulas/{formulaId}/denovo-structures/page instead. Loading all entries at once does not scale for large  result sets. This endpoint will be removed in the next major version of this API.  StructureCandidates can be enriched with molecular fingerprint.
 
         :param project_id: project-space to read from. (required)
         :type project_id: str
@@ -2813,6 +3479,7 @@ class FeaturesApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """ # noqa: E501
+        warnings.warn("GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/denovo-structures is deprecated.", DeprecationWarning)
 
         _param = self._get_de_novo_structure_candidates_by_formula_serialize(
             project_id=project_id,
@@ -2827,6 +3494,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "List[StructureCandidateScored]",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2859,9 +3529,9 @@ class FeaturesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[List[StructureCandidateScored]]:
-        """List of de novo structure candidates (e.g. generated by MsNovelist) ranked by CSI:FingerID score for the given 'formulaId' with minimal information.  StructureCandidates can be enriched with molecular fingerprint.
+        """(Deprecated) [DEPRECATED] List of de novo structure candidates (e
 
-        List of de novo structure candidates (e.g. generated by MsNovelist) ranked by CSI:FingerID score for the given 'formulaId' with minimal information.  StructureCandidates can be enriched with molecular fingerprint.
+        [DEPRECATED] List of de novo structure candidates (e.g. generated by MsNovelist) ranked by CSI:FingerID score for the given 'formulaId' with minimal information.  <p>  [DEPRECATED] Use /formulas/{formulaId}/denovo-structures/page instead. Loading all entries at once does not scale for large  result sets. This endpoint will be removed in the next major version of this API.  StructureCandidates can be enriched with molecular fingerprint.
 
         :param project_id: project-space to read from. (required)
         :type project_id: str
@@ -2892,6 +3562,7 @@ class FeaturesApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """ # noqa: E501
+        warnings.warn("GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/denovo-structures is deprecated.", DeprecationWarning)
 
         _param = self._get_de_novo_structure_candidates_by_formula_serialize(
             project_id=project_id,
@@ -2906,6 +3577,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "List[StructureCandidateScored]",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2938,9 +3612,9 @@ class FeaturesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """List of de novo structure candidates (e.g. generated by MsNovelist) ranked by CSI:FingerID score for the given 'formulaId' with minimal information.  StructureCandidates can be enriched with molecular fingerprint.
+        """(Deprecated) [DEPRECATED] List of de novo structure candidates (e
 
-        List of de novo structure candidates (e.g. generated by MsNovelist) ranked by CSI:FingerID score for the given 'formulaId' with minimal information.  StructureCandidates can be enriched with molecular fingerprint.
+        [DEPRECATED] List of de novo structure candidates (e.g. generated by MsNovelist) ranked by CSI:FingerID score for the given 'formulaId' with minimal information.  <p>  [DEPRECATED] Use /formulas/{formulaId}/denovo-structures/page instead. Loading all entries at once does not scale for large  result sets. This endpoint will be removed in the next major version of this API.  StructureCandidates can be enriched with molecular fingerprint.
 
         :param project_id: project-space to read from. (required)
         :type project_id: str
@@ -2971,6 +3645,7 @@ class FeaturesApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """ # noqa: E501
+        warnings.warn("GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/denovo-structures is deprecated.", DeprecationWarning)
 
         _param = self._get_de_novo_structure_candidates_by_formula_serialize(
             project_id=project_id,
@@ -2985,6 +3660,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "List[StructureCandidateScored]",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3041,7 +3719,8 @@ class FeaturesApi:
         if 'Accept' not in _header_params:
             _header_params['Accept'] = self.api_client.select_header_accept(
                 [
-                    'application/json'
+                    'application/json', 
+                    'application/problem+json'
                 ]
             )
 
@@ -3069,7 +3748,7 @@ class FeaturesApi:
 
 
     @validate_call
-    def get_de_novo_structure_candidates_by_formula_paged(
+    def get_de_novo_structure_candidates_by_formula_page(
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
         aligned_feature_id: Annotated[StrictStr, Field(description="feature (aligned over runs) the formula result belongs to.")],
@@ -3131,7 +3810,7 @@ class FeaturesApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._get_de_novo_structure_candidates_by_formula_paged_serialize(
+        _param = self._get_de_novo_structure_candidates_by_formula_page_serialize(
             project_id=project_id,
             aligned_feature_id=aligned_feature_id,
             formula_id=formula_id,
@@ -3147,6 +3826,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PagedModelStructureCandidateScored",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3160,7 +3842,7 @@ class FeaturesApi:
 
 
     @validate_call
-    def get_de_novo_structure_candidates_by_formula_paged_with_http_info(
+    def get_de_novo_structure_candidates_by_formula_page_with_http_info(
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
         aligned_feature_id: Annotated[StrictStr, Field(description="feature (aligned over runs) the formula result belongs to.")],
@@ -3222,7 +3904,7 @@ class FeaturesApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._get_de_novo_structure_candidates_by_formula_paged_serialize(
+        _param = self._get_de_novo_structure_candidates_by_formula_page_serialize(
             project_id=project_id,
             aligned_feature_id=aligned_feature_id,
             formula_id=formula_id,
@@ -3238,6 +3920,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PagedModelStructureCandidateScored",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3251,7 +3936,7 @@ class FeaturesApi:
 
 
     @validate_call
-    def get_de_novo_structure_candidates_by_formula_paged_without_preload_content(
+    def get_de_novo_structure_candidates_by_formula_page_without_preload_content(
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
         aligned_feature_id: Annotated[StrictStr, Field(description="feature (aligned over runs) the formula result belongs to.")],
@@ -3313,7 +3998,7 @@ class FeaturesApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._get_de_novo_structure_candidates_by_formula_paged_serialize(
+        _param = self._get_de_novo_structure_candidates_by_formula_page_serialize(
             project_id=project_id,
             aligned_feature_id=aligned_feature_id,
             formula_id=formula_id,
@@ -3329,6 +4014,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PagedModelStructureCandidateScored",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3337,7 +4025,7 @@ class FeaturesApi:
         return response_data.response
 
 
-    def _get_de_novo_structure_candidates_by_formula_paged_serialize(
+    def _get_de_novo_structure_candidates_by_formula_page_serialize(
         self,
         project_id,
         aligned_feature_id,
@@ -3401,7 +4089,8 @@ class FeaturesApi:
         if 'Accept' not in _header_params:
             _header_params['Accept'] = self.api_client.select_header_accept(
                 [
-                    'application/json'
+                    'application/json', 
+                    'application/problem+json'
                 ]
             )
 
@@ -3429,7 +4118,7 @@ class FeaturesApi:
 
 
     @validate_call
-    def get_de_novo_structure_candidates_paged(
+    def get_de_novo_structure_candidates_page(
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
         aligned_feature_id: Annotated[StrictStr, Field(description="feature (aligned over runs) the structure candidates belong to.")],
@@ -3488,7 +4177,7 @@ class FeaturesApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._get_de_novo_structure_candidates_paged_serialize(
+        _param = self._get_de_novo_structure_candidates_page_serialize(
             project_id=project_id,
             aligned_feature_id=aligned_feature_id,
             page=page,
@@ -3503,6 +4192,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PagedModelStructureCandidateFormula",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3516,7 +4208,7 @@ class FeaturesApi:
 
 
     @validate_call
-    def get_de_novo_structure_candidates_paged_with_http_info(
+    def get_de_novo_structure_candidates_page_with_http_info(
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
         aligned_feature_id: Annotated[StrictStr, Field(description="feature (aligned over runs) the structure candidates belong to.")],
@@ -3575,7 +4267,7 @@ class FeaturesApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._get_de_novo_structure_candidates_paged_serialize(
+        _param = self._get_de_novo_structure_candidates_page_serialize(
             project_id=project_id,
             aligned_feature_id=aligned_feature_id,
             page=page,
@@ -3590,6 +4282,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PagedModelStructureCandidateFormula",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3603,7 +4298,7 @@ class FeaturesApi:
 
 
     @validate_call
-    def get_de_novo_structure_candidates_paged_without_preload_content(
+    def get_de_novo_structure_candidates_page_without_preload_content(
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
         aligned_feature_id: Annotated[StrictStr, Field(description="feature (aligned over runs) the structure candidates belong to.")],
@@ -3662,7 +4357,7 @@ class FeaturesApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._get_de_novo_structure_candidates_paged_serialize(
+        _param = self._get_de_novo_structure_candidates_page_serialize(
             project_id=project_id,
             aligned_feature_id=aligned_feature_id,
             page=page,
@@ -3677,6 +4372,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PagedModelStructureCandidateFormula",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3685,7 +4383,7 @@ class FeaturesApi:
         return response_data.response
 
 
-    def _get_de_novo_structure_candidates_paged_serialize(
+    def _get_de_novo_structure_candidates_page_serialize(
         self,
         project_id,
         aligned_feature_id,
@@ -3746,7 +4444,8 @@ class FeaturesApi:
         if 'Accept' not in _header_params:
             _header_params['Accept'] = self.api_client.select_header_accept(
                 [
-                    'application/json'
+                    'application/json', 
+                    'application/problem+json'
                 ]
             )
 
@@ -3758,6 +4457,953 @@ class FeaturesApi:
         return self.api_client.param_serialize(
             method='GET',
             resource_path='/api/projects/{projectId}/aligned-features/{alignedFeatureId}/denovo-structures/page',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def get_feature_quant_table(
+        self,
+        project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
+        search_query: Annotated[Optional[StrictStr], Field(description="Optional search query in lucene syntax. Omit this parameter to quantify all features.")] = None,
+        type: Annotated[Optional[QuantMeasure], Field(description="quantification type.")] = None,
+        opt_fields: Optional[List[Optional[QuantTableOptField]]] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> QuantTable:
+        """Returns the full quantification table of features
+
+        Returns the full quantification table of features.  <p>  The quantification table contains the quantities of the features within all runs they are contained in.  Rows refer to features, columns to runs, both given as ids and names.  <p>  The optional search query allows to quantify an arbitrary subset of the project. It uses the same lucene  syntax as the paged listing endpoints. Omit it to quantify all objects of the project.
+
+        :param project_id: project-space to read from. (required)
+        :type project_id: str
+        :param search_query: Optional search query in lucene syntax. Omit this parameter to quantify all features.
+        :type search_query: str
+        :param type: quantification type.
+        :type type: QuantMeasure
+        :param opt_fields:
+        :type opt_fields: List[QuantTableOptField]
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_feature_quant_table_serialize(
+            project_id=project_id,
+            search_query=search_query,
+            type=type,
+            opt_fields=opt_fields,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "QuantTable",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def get_feature_quant_table_with_http_info(
+        self,
+        project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
+        search_query: Annotated[Optional[StrictStr], Field(description="Optional search query in lucene syntax. Omit this parameter to quantify all features.")] = None,
+        type: Annotated[Optional[QuantMeasure], Field(description="quantification type.")] = None,
+        opt_fields: Optional[List[Optional[QuantTableOptField]]] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[QuantTable]:
+        """Returns the full quantification table of features
+
+        Returns the full quantification table of features.  <p>  The quantification table contains the quantities of the features within all runs they are contained in.  Rows refer to features, columns to runs, both given as ids and names.  <p>  The optional search query allows to quantify an arbitrary subset of the project. It uses the same lucene  syntax as the paged listing endpoints. Omit it to quantify all objects of the project.
+
+        :param project_id: project-space to read from. (required)
+        :type project_id: str
+        :param search_query: Optional search query in lucene syntax. Omit this parameter to quantify all features.
+        :type search_query: str
+        :param type: quantification type.
+        :type type: QuantMeasure
+        :param opt_fields:
+        :type opt_fields: List[QuantTableOptField]
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_feature_quant_table_serialize(
+            project_id=project_id,
+            search_query=search_query,
+            type=type,
+            opt_fields=opt_fields,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "QuantTable",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def get_feature_quant_table_without_preload_content(
+        self,
+        project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
+        search_query: Annotated[Optional[StrictStr], Field(description="Optional search query in lucene syntax. Omit this parameter to quantify all features.")] = None,
+        type: Annotated[Optional[QuantMeasure], Field(description="quantification type.")] = None,
+        opt_fields: Optional[List[Optional[QuantTableOptField]]] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Returns the full quantification table of features
+
+        Returns the full quantification table of features.  <p>  The quantification table contains the quantities of the features within all runs they are contained in.  Rows refer to features, columns to runs, both given as ids and names.  <p>  The optional search query allows to quantify an arbitrary subset of the project. It uses the same lucene  syntax as the paged listing endpoints. Omit it to quantify all objects of the project.
+
+        :param project_id: project-space to read from. (required)
+        :type project_id: str
+        :param search_query: Optional search query in lucene syntax. Omit this parameter to quantify all features.
+        :type search_query: str
+        :param type: quantification type.
+        :type type: QuantMeasure
+        :param opt_fields:
+        :type opt_fields: List[QuantTableOptField]
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_feature_quant_table_serialize(
+            project_id=project_id,
+            search_query=search_query,
+            type=type,
+            opt_fields=opt_fields,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "QuantTable",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _get_feature_quant_table_serialize(
+        self,
+        project_id,
+        search_query,
+        type,
+        opt_fields,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+            'optFields': 'multi',
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if project_id is not None:
+            _path_params['projectId'] = project_id
+        # process the query parameters
+        if search_query is not None:
+            
+            _query_params.append(('searchQuery', search_query))
+            
+        if type is not None:
+            
+            _query_params.append(('type', type.value))
+            
+        if opt_fields is not None:
+            
+            _query_params.append(('optFields', opt_fields))
+            
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json', 
+                    'application/problem+json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/api/projects/{projectId}/aligned-features/quant-table',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def get_features(
+        self,
+        project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
+        aligned_feature_id: Annotated[StrictStr, Field(description="feature (aligned over runs) whose features to read.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> List[Feature]:
+        """(Deprecated) [DEPRECATED] Get all features the given feature (aligned over runs) was aligned from
+
+        [DEPRECATED] Get all features the given feature (aligned over runs) was aligned from.  <p>  [DEPRECATED] Use /features/page instead. Loading all features at once does not scale for a project with many  runs, since a feature is aligned from one feature per run it was detected in.
+
+        :param project_id: project-space to read from. (required)
+        :type project_id: str
+        :param aligned_feature_id: feature (aligned over runs) whose features to read. (required)
+        :type aligned_feature_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+        warnings.warn("GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/features is deprecated.", DeprecationWarning)
+
+        _param = self._get_features_serialize(
+            project_id=project_id,
+            aligned_feature_id=aligned_feature_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "List[Feature]",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def get_features_with_http_info(
+        self,
+        project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
+        aligned_feature_id: Annotated[StrictStr, Field(description="feature (aligned over runs) whose features to read.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[List[Feature]]:
+        """(Deprecated) [DEPRECATED] Get all features the given feature (aligned over runs) was aligned from
+
+        [DEPRECATED] Get all features the given feature (aligned over runs) was aligned from.  <p>  [DEPRECATED] Use /features/page instead. Loading all features at once does not scale for a project with many  runs, since a feature is aligned from one feature per run it was detected in.
+
+        :param project_id: project-space to read from. (required)
+        :type project_id: str
+        :param aligned_feature_id: feature (aligned over runs) whose features to read. (required)
+        :type aligned_feature_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+        warnings.warn("GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/features is deprecated.", DeprecationWarning)
+
+        _param = self._get_features_serialize(
+            project_id=project_id,
+            aligned_feature_id=aligned_feature_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "List[Feature]",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def get_features_without_preload_content(
+        self,
+        project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
+        aligned_feature_id: Annotated[StrictStr, Field(description="feature (aligned over runs) whose features to read.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """(Deprecated) [DEPRECATED] Get all features the given feature (aligned over runs) was aligned from
+
+        [DEPRECATED] Get all features the given feature (aligned over runs) was aligned from.  <p>  [DEPRECATED] Use /features/page instead. Loading all features at once does not scale for a project with many  runs, since a feature is aligned from one feature per run it was detected in.
+
+        :param project_id: project-space to read from. (required)
+        :type project_id: str
+        :param aligned_feature_id: feature (aligned over runs) whose features to read. (required)
+        :type aligned_feature_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+        warnings.warn("GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/features is deprecated.", DeprecationWarning)
+
+        _param = self._get_features_serialize(
+            project_id=project_id,
+            aligned_feature_id=aligned_feature_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "List[Feature]",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _get_features_serialize(
+        self,
+        project_id,
+        aligned_feature_id,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if project_id is not None:
+            _path_params['projectId'] = project_id
+        if aligned_feature_id is not None:
+            _path_params['alignedFeatureId'] = aligned_feature_id
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json', 
+                    'application/problem+json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/api/projects/{projectId}/aligned-features/{alignedFeatureId}/features',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def get_features_page(
+        self,
+        project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
+        aligned_feature_id: Annotated[StrictStr, Field(description="feature (aligned over runs) whose features to read.")],
+        page: Annotated[Optional[Annotated[int, Field(strict=True, ge=0)]], Field(description="Zero-based page index (0..N)")] = None,
+        size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
+        sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> PagedModelFeature:
+        """Page of features the given feature (aligned over runs) was aligned from, one per run it has been detected in
+
+        Page of features the given feature (aligned over runs) was aligned from, one per run it has been detected in.  <p>  A feature carries what is specific to the run it was detected in: where it sits on that run's retention time  axis, the m/z it was measured at there, and how much of it was measured. Use the run id to relate it to the run  it belongs to; a feature of a project that was imported from preprocessed data belongs to no run and has none.
+
+        :param project_id: project-space to read from. (required)
+        :type project_id: str
+        :param aligned_feature_id: feature (aligned over runs) whose features to read. (required)
+        :type aligned_feature_id: str
+        :param page: Zero-based page index (0..N)
+        :type page: int
+        :param size: The size of the page to be returned
+        :type size: int
+        :param sort: Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+        :type sort: List[str]
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_features_page_serialize(
+            project_id=project_id,
+            aligned_feature_id=aligned_feature_id,
+            page=page,
+            size=size,
+            sort=sort,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PagedModelFeature",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def get_features_page_with_http_info(
+        self,
+        project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
+        aligned_feature_id: Annotated[StrictStr, Field(description="feature (aligned over runs) whose features to read.")],
+        page: Annotated[Optional[Annotated[int, Field(strict=True, ge=0)]], Field(description="Zero-based page index (0..N)")] = None,
+        size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
+        sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[PagedModelFeature]:
+        """Page of features the given feature (aligned over runs) was aligned from, one per run it has been detected in
+
+        Page of features the given feature (aligned over runs) was aligned from, one per run it has been detected in.  <p>  A feature carries what is specific to the run it was detected in: where it sits on that run's retention time  axis, the m/z it was measured at there, and how much of it was measured. Use the run id to relate it to the run  it belongs to; a feature of a project that was imported from preprocessed data belongs to no run and has none.
+
+        :param project_id: project-space to read from. (required)
+        :type project_id: str
+        :param aligned_feature_id: feature (aligned over runs) whose features to read. (required)
+        :type aligned_feature_id: str
+        :param page: Zero-based page index (0..N)
+        :type page: int
+        :param size: The size of the page to be returned
+        :type size: int
+        :param sort: Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+        :type sort: List[str]
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_features_page_serialize(
+            project_id=project_id,
+            aligned_feature_id=aligned_feature_id,
+            page=page,
+            size=size,
+            sort=sort,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PagedModelFeature",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def get_features_page_without_preload_content(
+        self,
+        project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
+        aligned_feature_id: Annotated[StrictStr, Field(description="feature (aligned over runs) whose features to read.")],
+        page: Annotated[Optional[Annotated[int, Field(strict=True, ge=0)]], Field(description="Zero-based page index (0..N)")] = None,
+        size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
+        sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Page of features the given feature (aligned over runs) was aligned from, one per run it has been detected in
+
+        Page of features the given feature (aligned over runs) was aligned from, one per run it has been detected in.  <p>  A feature carries what is specific to the run it was detected in: where it sits on that run's retention time  axis, the m/z it was measured at there, and how much of it was measured. Use the run id to relate it to the run  it belongs to; a feature of a project that was imported from preprocessed data belongs to no run and has none.
+
+        :param project_id: project-space to read from. (required)
+        :type project_id: str
+        :param aligned_feature_id: feature (aligned over runs) whose features to read. (required)
+        :type aligned_feature_id: str
+        :param page: Zero-based page index (0..N)
+        :type page: int
+        :param size: The size of the page to be returned
+        :type size: int
+        :param sort: Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+        :type sort: List[str]
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_features_page_serialize(
+            project_id=project_id,
+            aligned_feature_id=aligned_feature_id,
+            page=page,
+            size=size,
+            sort=sort,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PagedModelFeature",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _get_features_page_serialize(
+        self,
+        project_id,
+        aligned_feature_id,
+        page,
+        size,
+        sort,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+            'sort': 'multi',
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if project_id is not None:
+            _path_params['projectId'] = project_id
+        if aligned_feature_id is not None:
+            _path_params['alignedFeatureId'] = aligned_feature_id
+        # process the query parameters
+        if page is not None:
+            
+            _query_params.append(('page', page))
+            
+        if size is not None:
+            
+            _query_params.append(('size', size))
+            
+        if sort is not None:
+            
+            _query_params.append(('sort', sort))
+            
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json', 
+                    'application/problem+json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/api/projects/{projectId}/aligned-features/{alignedFeatureId}/features/page',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -3836,6 +5482,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "List[float]",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3911,6 +5560,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "List[float]",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3986,6 +5638,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "List[float]",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4036,7 +5691,8 @@ class FeaturesApi:
         if 'Accept' not in _header_params:
             _header_params['Accept'] = self.api_client.select_header_accept(
                 [
-                    'application/json'
+                    'application/json', 
+                    'application/problem+json'
                 ]
             )
 
@@ -4085,7 +5741,7 @@ class FeaturesApi:
     ) -> AnnotatedMsMsData:
         """Returns MS/MS Spectrum annotated with fragments and losses for provided formulaId
 
-        Returns MS/MS Spectrum annotated with fragments and losses for provided formulaId.  <p>  Returns MS/MS Spectrum (Merged MS/MS and measured MS/MS) which is annotated with fragments and losses  for the given formula result identifier  These annotations are only available if a fragmentation tree and the structure candidate are available.
+        Returns MS/MS Spectrum annotated with fragments and losses for provided formulaId.  <p>  Returns MS/MS Spectrum (Merged MS/MS and measured MS/MS) which is annotated with fragments and losses  for the given formula result identifier.  These annotations are only available if a fragmentation tree and the structure candidate are available.
 
         :param project_id: project-space to read from. (required)
         :type project_id: str
@@ -4130,6 +5786,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "AnnotatedMsMsData",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4164,7 +5823,7 @@ class FeaturesApi:
     ) -> ApiResponse[AnnotatedMsMsData]:
         """Returns MS/MS Spectrum annotated with fragments and losses for provided formulaId
 
-        Returns MS/MS Spectrum annotated with fragments and losses for provided formulaId.  <p>  Returns MS/MS Spectrum (Merged MS/MS and measured MS/MS) which is annotated with fragments and losses  for the given formula result identifier  These annotations are only available if a fragmentation tree and the structure candidate are available.
+        Returns MS/MS Spectrum annotated with fragments and losses for provided formulaId.  <p>  Returns MS/MS Spectrum (Merged MS/MS and measured MS/MS) which is annotated with fragments and losses  for the given formula result identifier.  These annotations are only available if a fragmentation tree and the structure candidate are available.
 
         :param project_id: project-space to read from. (required)
         :type project_id: str
@@ -4209,6 +5868,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "AnnotatedMsMsData",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4243,7 +5905,7 @@ class FeaturesApi:
     ) -> RESTResponseType:
         """Returns MS/MS Spectrum annotated with fragments and losses for provided formulaId
 
-        Returns MS/MS Spectrum annotated with fragments and losses for provided formulaId.  <p>  Returns MS/MS Spectrum (Merged MS/MS and measured MS/MS) which is annotated with fragments and losses  for the given formula result identifier  These annotations are only available if a fragmentation tree and the structure candidate are available.
+        Returns MS/MS Spectrum annotated with fragments and losses for provided formulaId.  <p>  Returns MS/MS Spectrum (Merged MS/MS and measured MS/MS) which is annotated with fragments and losses  for the given formula result identifier.  These annotations are only available if a fragmentation tree and the structure candidate are available.
 
         :param project_id: project-space to read from. (required)
         :type project_id: str
@@ -4288,6 +5950,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "AnnotatedMsMsData",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4343,7 +6008,8 @@ class FeaturesApi:
         if 'Accept' not in _header_params:
             _header_params['Accept'] = self.api_client.select_header_accept(
                 [
-                    'application/json'
+                    'application/json', 
+                    'application/problem+json'
                 ]
             )
 
@@ -4441,6 +6107,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "AnnotatedSpectrum",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4524,6 +6193,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "AnnotatedSpectrum",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4607,6 +6279,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "AnnotatedSpectrum",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4667,7 +6342,8 @@ class FeaturesApi:
         if 'Accept' not in _header_params:
             _header_params['Accept'] = self.api_client.select_header_accept(
                 [
-                    'application/json'
+                    'application/json', 
+                    'application/problem+json'
                 ]
             )
 
@@ -4765,6 +6441,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "FormulaCandidate",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4848,6 +6527,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "FormulaCandidate",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4931,6 +6613,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "FormulaCandidate",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4992,7 +6677,8 @@ class FeaturesApi:
         if 'Accept' not in _header_params:
             _header_params['Accept'] = self.api_client.select_header_accept(
                 [
-                    'application/json'
+                    'application/json', 
+                    'application/problem+json'
                 ]
             )
 
@@ -5039,9 +6725,9 @@ class FeaturesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> List[FormulaCandidate]:
-        """List of FormulaResultContainers available for this feature with minimal information.
+        """(Deprecated) [DEPRECATED] List of FormulaResultContainers available for this feature with minimal information
 
-        List of FormulaResultContainers available for this feature with minimal information.  Can be enriched with an optional results overview.
+        [DEPRECATED] List of FormulaResultContainers available for this feature with minimal information.  <p>  [DEPRECATED] Use /formulas/page instead. Loading all entries at once does not scale for large  result sets. This endpoint will be removed in the next major version of this API.  Can be enriched with an optional results overview.
 
         :param project_id: project-space to read from. (required)
         :type project_id: str
@@ -5072,6 +6758,7 @@ class FeaturesApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """ # noqa: E501
+        warnings.warn("GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas is deprecated.", DeprecationWarning)
 
         _param = self._get_formula_candidates_serialize(
             project_id=project_id,
@@ -5086,6 +6773,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "List[FormulaCandidate]",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -5118,9 +6808,9 @@ class FeaturesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[List[FormulaCandidate]]:
-        """List of FormulaResultContainers available for this feature with minimal information.
+        """(Deprecated) [DEPRECATED] List of FormulaResultContainers available for this feature with minimal information
 
-        List of FormulaResultContainers available for this feature with minimal information.  Can be enriched with an optional results overview.
+        [DEPRECATED] List of FormulaResultContainers available for this feature with minimal information.  <p>  [DEPRECATED] Use /formulas/page instead. Loading all entries at once does not scale for large  result sets. This endpoint will be removed in the next major version of this API.  Can be enriched with an optional results overview.
 
         :param project_id: project-space to read from. (required)
         :type project_id: str
@@ -5151,6 +6841,7 @@ class FeaturesApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """ # noqa: E501
+        warnings.warn("GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas is deprecated.", DeprecationWarning)
 
         _param = self._get_formula_candidates_serialize(
             project_id=project_id,
@@ -5165,6 +6856,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "List[FormulaCandidate]",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -5197,9 +6891,9 @@ class FeaturesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """List of FormulaResultContainers available for this feature with minimal information.
+        """(Deprecated) [DEPRECATED] List of FormulaResultContainers available for this feature with minimal information
 
-        List of FormulaResultContainers available for this feature with minimal information.  Can be enriched with an optional results overview.
+        [DEPRECATED] List of FormulaResultContainers available for this feature with minimal information.  <p>  [DEPRECATED] Use /formulas/page instead. Loading all entries at once does not scale for large  result sets. This endpoint will be removed in the next major version of this API.  Can be enriched with an optional results overview.
 
         :param project_id: project-space to read from. (required)
         :type project_id: str
@@ -5230,6 +6924,7 @@ class FeaturesApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """ # noqa: E501
+        warnings.warn("GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas is deprecated.", DeprecationWarning)
 
         _param = self._get_formula_candidates_serialize(
             project_id=project_id,
@@ -5244,6 +6939,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "List[FormulaCandidate]",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -5302,7 +7000,8 @@ class FeaturesApi:
         if 'Accept' not in _header_params:
             _header_params['Accept'] = self.api_client.select_header_accept(
                 [
-                    'application/json'
+                    'application/json', 
+                    'application/problem+json'
                 ]
             )
 
@@ -5330,7 +7029,7 @@ class FeaturesApi:
 
 
     @validate_call
-    def get_formula_candidates_paged(
+    def get_formula_candidates_page(
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
         aligned_feature_id: Annotated[StrictStr, Field(description="feature (aligned over runs) the formula result belongs to.")],
@@ -5392,7 +7091,7 @@ class FeaturesApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._get_formula_candidates_paged_serialize(
+        _param = self._get_formula_candidates_page_serialize(
             project_id=project_id,
             aligned_feature_id=aligned_feature_id,
             page=page,
@@ -5408,6 +7107,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PagedModelFormulaCandidate",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -5421,7 +7123,7 @@ class FeaturesApi:
 
 
     @validate_call
-    def get_formula_candidates_paged_with_http_info(
+    def get_formula_candidates_page_with_http_info(
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
         aligned_feature_id: Annotated[StrictStr, Field(description="feature (aligned over runs) the formula result belongs to.")],
@@ -5483,7 +7185,7 @@ class FeaturesApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._get_formula_candidates_paged_serialize(
+        _param = self._get_formula_candidates_page_serialize(
             project_id=project_id,
             aligned_feature_id=aligned_feature_id,
             page=page,
@@ -5499,6 +7201,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PagedModelFormulaCandidate",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -5512,7 +7217,7 @@ class FeaturesApi:
 
 
     @validate_call
-    def get_formula_candidates_paged_without_preload_content(
+    def get_formula_candidates_page_without_preload_content(
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
         aligned_feature_id: Annotated[StrictStr, Field(description="feature (aligned over runs) the formula result belongs to.")],
@@ -5574,7 +7279,7 @@ class FeaturesApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._get_formula_candidates_paged_serialize(
+        _param = self._get_formula_candidates_page_serialize(
             project_id=project_id,
             aligned_feature_id=aligned_feature_id,
             page=page,
@@ -5590,6 +7295,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PagedModelFormulaCandidate",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -5598,7 +7306,7 @@ class FeaturesApi:
         return response_data.response
 
 
-    def _get_formula_candidates_paged_serialize(
+    def _get_formula_candidates_page_serialize(
         self,
         project_id,
         aligned_feature_id,
@@ -5664,7 +7372,8 @@ class FeaturesApi:
         if 'Accept' not in _header_params:
             _header_params['Accept'] = self.api_client.select_header_accept(
                 [
-                    'application/json'
+                    'application/json', 
+                    'application/problem+json'
                 ]
             )
 
@@ -5754,6 +7463,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "FragmentationTree",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -5829,6 +7541,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "FragmentationTree",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -5904,6 +7619,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "FragmentationTree",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -5954,7 +7672,8 @@ class FeaturesApi:
         if 'Accept' not in _header_params:
             _header_params['Accept'] = self.api_client.select_header_accept(
                 [
-                    'application/json'
+                    'application/json', 
+                    'application/problem+json'
                 ]
             )
 
@@ -6044,6 +7763,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "IsotopePatternAnnotation",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -6119,6 +7841,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "IsotopePatternAnnotation",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -6194,6 +7919,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "IsotopePatternAnnotation",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -6244,7 +7972,8 @@ class FeaturesApi:
         if 'Accept' not in _header_params:
             _header_params['Accept'] = self.api_client.select_header_accept(
                 [
-                    'application/json'
+                    'application/json', 
+                    'application/problem+json'
                 ]
             )
 
@@ -6334,6 +8063,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "LipidAnnotation",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -6409,6 +8141,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "LipidAnnotation",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -6484,6 +8219,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "LipidAnnotation",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -6534,7 +8272,8 @@ class FeaturesApi:
         if 'Accept' not in _header_params:
             _header_params['Accept'] = self.api_client.select_header_accept(
                 [
-                    'application/json'
+                    'application/json', 
+                    'application/problem+json'
                 ]
             )
 
@@ -6624,6 +8363,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "MsData",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -6699,6 +8441,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "MsData",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -6774,6 +8519,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "MsData",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -6826,7 +8574,8 @@ class FeaturesApi:
         if 'Accept' not in _header_params:
             _header_params['Accept'] = self.api_client.select_header_accept(
                 [
-                    'application/json'
+                    'application/json', 
+                    'application/problem+json'
                 ]
             )
 
@@ -6920,6 +8669,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "SpectralLibraryMatch",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -6999,6 +8751,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "SpectralLibraryMatch",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -7078,6 +8833,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "SpectralLibraryMatch",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -7134,7 +8892,8 @@ class FeaturesApi:
         if 'Accept' not in _header_params:
             _header_params['Accept'] = self.api_client.select_header_accept(
                 [
-                    'application/json'
+                    'application/json', 
+                    'application/problem+json'
                 ]
             )
 
@@ -7183,9 +8942,9 @@ class FeaturesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> List[SpectralLibraryMatch]:
-        """List of spectral library matches for the given 'alignedFeatureId'.
+        """(Deprecated) [DEPRECATED] List of spectral library matches for the given 'alignedFeatureId'
 
-        List of spectral library matches for the given 'alignedFeatureId'.
+        [DEPRECATED] List of spectral library matches for the given 'alignedFeatureId'.  <p>  [DEPRECATED] Use /spectral-library-matches/page instead. Loading all entries at once does not scale for large  result sets. This endpoint will be removed in the next major version of this API.
 
         :param project_id: project-space to read from. (required)
         :type project_id: str
@@ -7220,6 +8979,7 @@ class FeaturesApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """ # noqa: E501
+        warnings.warn("GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/spectral-library-matches is deprecated.", DeprecationWarning)
 
         _param = self._get_spectral_library_matches_serialize(
             project_id=project_id,
@@ -7236,6 +8996,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "List[SpectralLibraryMatch]",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -7270,9 +9033,9 @@ class FeaturesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[List[SpectralLibraryMatch]]:
-        """List of spectral library matches for the given 'alignedFeatureId'.
+        """(Deprecated) [DEPRECATED] List of spectral library matches for the given 'alignedFeatureId'
 
-        List of spectral library matches for the given 'alignedFeatureId'.
+        [DEPRECATED] List of spectral library matches for the given 'alignedFeatureId'.  <p>  [DEPRECATED] Use /spectral-library-matches/page instead. Loading all entries at once does not scale for large  result sets. This endpoint will be removed in the next major version of this API.
 
         :param project_id: project-space to read from. (required)
         :type project_id: str
@@ -7307,6 +9070,7 @@ class FeaturesApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """ # noqa: E501
+        warnings.warn("GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/spectral-library-matches is deprecated.", DeprecationWarning)
 
         _param = self._get_spectral_library_matches_serialize(
             project_id=project_id,
@@ -7323,6 +9087,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "List[SpectralLibraryMatch]",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -7357,9 +9124,9 @@ class FeaturesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """List of spectral library matches for the given 'alignedFeatureId'.
+        """(Deprecated) [DEPRECATED] List of spectral library matches for the given 'alignedFeatureId'
 
-        List of spectral library matches for the given 'alignedFeatureId'.
+        [DEPRECATED] List of spectral library matches for the given 'alignedFeatureId'.  <p>  [DEPRECATED] Use /spectral-library-matches/page instead. Loading all entries at once does not scale for large  result sets. This endpoint will be removed in the next major version of this API.
 
         :param project_id: project-space to read from. (required)
         :type project_id: str
@@ -7394,6 +9161,7 @@ class FeaturesApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """ # noqa: E501
+        warnings.warn("GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/spectral-library-matches is deprecated.", DeprecationWarning)
 
         _param = self._get_spectral_library_matches_serialize(
             project_id=project_id,
@@ -7410,6 +9178,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "List[SpectralLibraryMatch]",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -7478,7 +9249,8 @@ class FeaturesApi:
         if 'Accept' not in _header_params:
             _header_params['Accept'] = self.api_client.select_header_accept(
                 [
-                    'application/json'
+                    'application/json', 
+                    'application/problem+json'
                 ]
             )
 
@@ -7506,7 +9278,7 @@ class FeaturesApi:
 
 
     @validate_call
-    def get_spectral_library_matches_paged(
+    def get_spectral_library_matches_page(
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
         aligned_feature_id: Annotated[StrictStr, Field(description="feature (aligned over runs) the structure candidates belong to.")],
@@ -7574,7 +9346,7 @@ class FeaturesApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._get_spectral_library_matches_paged_serialize(
+        _param = self._get_spectral_library_matches_page_serialize(
             project_id=project_id,
             aligned_feature_id=aligned_feature_id,
             page=page,
@@ -7592,6 +9364,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PagedModelSpectralLibraryMatch",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -7605,7 +9380,7 @@ class FeaturesApi:
 
 
     @validate_call
-    def get_spectral_library_matches_paged_with_http_info(
+    def get_spectral_library_matches_page_with_http_info(
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
         aligned_feature_id: Annotated[StrictStr, Field(description="feature (aligned over runs) the structure candidates belong to.")],
@@ -7673,7 +9448,7 @@ class FeaturesApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._get_spectral_library_matches_paged_serialize(
+        _param = self._get_spectral_library_matches_page_serialize(
             project_id=project_id,
             aligned_feature_id=aligned_feature_id,
             page=page,
@@ -7691,6 +9466,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PagedModelSpectralLibraryMatch",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -7704,7 +9482,7 @@ class FeaturesApi:
 
 
     @validate_call
-    def get_spectral_library_matches_paged_without_preload_content(
+    def get_spectral_library_matches_page_without_preload_content(
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
         aligned_feature_id: Annotated[StrictStr, Field(description="feature (aligned over runs) the structure candidates belong to.")],
@@ -7772,7 +9550,7 @@ class FeaturesApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._get_spectral_library_matches_paged_serialize(
+        _param = self._get_spectral_library_matches_page_serialize(
             project_id=project_id,
             aligned_feature_id=aligned_feature_id,
             page=page,
@@ -7790,6 +9568,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PagedModelSpectralLibraryMatch",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -7798,7 +9579,7 @@ class FeaturesApi:
         return response_data.response
 
 
-    def _get_spectral_library_matches_paged_serialize(
+    def _get_spectral_library_matches_page_serialize(
         self,
         project_id,
         aligned_feature_id,
@@ -7874,7 +9655,8 @@ class FeaturesApi:
         if 'Accept' not in _header_params:
             _header_params['Accept'] = self.api_client.select_header_accept(
                 [
-                    'application/json'
+                    'application/json', 
+                    'application/problem+json'
                 ]
             )
 
@@ -7972,6 +9754,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "SpectralLibraryMatchSummary",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -8055,6 +9840,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "SpectralLibraryMatchSummary",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -8138,6 +9926,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "SpectralLibraryMatchSummary",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -8200,7 +9991,8 @@ class FeaturesApi:
         if 'Accept' not in _header_params:
             _header_params['Accept'] = self.api_client.select_header_accept(
                 [
-                    'application/json'
+                    'application/json', 
+                    'application/problem+json'
                 ]
             )
 
@@ -8246,9 +10038,9 @@ class FeaturesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> List[StructureCandidateFormula]:
-        """List of structure database search candidates ranked by CSI:FingerID score for the given 'alignedFeatureId' with minimal information.
+        """(Deprecated) [DEPRECATED] List of structure database search candidates ranked by CSI:FingerID score for the given 'alignedFeatureId' with minimal information
 
-        List of structure database search candidates ranked by CSI:FingerID score for the given 'alignedFeatureId' with minimal information.  StructureCandidates can be enriched with molecular fingerprint, structure database links.
+        [DEPRECATED] List of structure database search candidates ranked by CSI:FingerID score for the given 'alignedFeatureId' with minimal information.  <p>  [DEPRECATED] Use /db-structures/page instead. Loading all entries at once does not scale for large  result sets. This endpoint will be removed in the next major version of this API.  StructureCandidates can be enriched with molecular fingerprint, structure database links.
 
         :param project_id: project-space to read from. (required)
         :type project_id: str
@@ -8277,6 +10069,7 @@ class FeaturesApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """ # noqa: E501
+        warnings.warn("GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/db-structures is deprecated.", DeprecationWarning)
 
         _param = self._get_structure_candidates_serialize(
             project_id=project_id,
@@ -8290,6 +10083,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "List[StructureCandidateFormula]",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -8321,9 +10117,9 @@ class FeaturesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[List[StructureCandidateFormula]]:
-        """List of structure database search candidates ranked by CSI:FingerID score for the given 'alignedFeatureId' with minimal information.
+        """(Deprecated) [DEPRECATED] List of structure database search candidates ranked by CSI:FingerID score for the given 'alignedFeatureId' with minimal information
 
-        List of structure database search candidates ranked by CSI:FingerID score for the given 'alignedFeatureId' with minimal information.  StructureCandidates can be enriched with molecular fingerprint, structure database links.
+        [DEPRECATED] List of structure database search candidates ranked by CSI:FingerID score for the given 'alignedFeatureId' with minimal information.  <p>  [DEPRECATED] Use /db-structures/page instead. Loading all entries at once does not scale for large  result sets. This endpoint will be removed in the next major version of this API.  StructureCandidates can be enriched with molecular fingerprint, structure database links.
 
         :param project_id: project-space to read from. (required)
         :type project_id: str
@@ -8352,6 +10148,7 @@ class FeaturesApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """ # noqa: E501
+        warnings.warn("GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/db-structures is deprecated.", DeprecationWarning)
 
         _param = self._get_structure_candidates_serialize(
             project_id=project_id,
@@ -8365,6 +10162,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "List[StructureCandidateFormula]",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -8396,9 +10196,9 @@ class FeaturesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """List of structure database search candidates ranked by CSI:FingerID score for the given 'alignedFeatureId' with minimal information.
+        """(Deprecated) [DEPRECATED] List of structure database search candidates ranked by CSI:FingerID score for the given 'alignedFeatureId' with minimal information
 
-        List of structure database search candidates ranked by CSI:FingerID score for the given 'alignedFeatureId' with minimal information.  StructureCandidates can be enriched with molecular fingerprint, structure database links.
+        [DEPRECATED] List of structure database search candidates ranked by CSI:FingerID score for the given 'alignedFeatureId' with minimal information.  <p>  [DEPRECATED] Use /db-structures/page instead. Loading all entries at once does not scale for large  result sets. This endpoint will be removed in the next major version of this API.  StructureCandidates can be enriched with molecular fingerprint, structure database links.
 
         :param project_id: project-space to read from. (required)
         :type project_id: str
@@ -8427,6 +10227,7 @@ class FeaturesApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """ # noqa: E501
+        warnings.warn("GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/db-structures is deprecated.", DeprecationWarning)
 
         _param = self._get_structure_candidates_serialize(
             project_id=project_id,
@@ -8440,6 +10241,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "List[StructureCandidateFormula]",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -8493,7 +10297,8 @@ class FeaturesApi:
         if 'Accept' not in _header_params:
             _header_params['Accept'] = self.api_client.select_header_accept(
                 [
-                    'application/json'
+                    'application/json', 
+                    'application/problem+json'
                 ]
             )
 
@@ -8540,9 +10345,9 @@ class FeaturesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> List[StructureCandidateScored]:
-        """List of CSI:FingerID structure database search candidates for the given 'formulaId' with minimal information.
+        """(Deprecated) [DEPRECATED] List of CSI:FingerID structure database search candidates for the given 'formulaId' with minimal information
 
-        List of CSI:FingerID structure database search candidates for the given 'formulaId' with minimal information.  StructureCandidates can be enriched with molecular fingerprint, structure database links.
+        [DEPRECATED] List of CSI:FingerID structure database search candidates for the given 'formulaId' with minimal information.  <p>  [DEPRECATED] Use /formulas/{formulaId}/db-structures/page instead. Loading all entries at once does not scale for large  result sets. This endpoint will be removed in the next major version of this API.  StructureCandidates can be enriched with molecular fingerprint, structure database links.
 
         :param project_id: project-space to read from. (required)
         :type project_id: str
@@ -8573,6 +10378,7 @@ class FeaturesApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """ # noqa: E501
+        warnings.warn("GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/db-structures is deprecated.", DeprecationWarning)
 
         _param = self._get_structure_candidates_by_formula_serialize(
             project_id=project_id,
@@ -8587,6 +10393,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "List[StructureCandidateScored]",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -8619,9 +10428,9 @@ class FeaturesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[List[StructureCandidateScored]]:
-        """List of CSI:FingerID structure database search candidates for the given 'formulaId' with minimal information.
+        """(Deprecated) [DEPRECATED] List of CSI:FingerID structure database search candidates for the given 'formulaId' with minimal information
 
-        List of CSI:FingerID structure database search candidates for the given 'formulaId' with minimal information.  StructureCandidates can be enriched with molecular fingerprint, structure database links.
+        [DEPRECATED] List of CSI:FingerID structure database search candidates for the given 'formulaId' with minimal information.  <p>  [DEPRECATED] Use /formulas/{formulaId}/db-structures/page instead. Loading all entries at once does not scale for large  result sets. This endpoint will be removed in the next major version of this API.  StructureCandidates can be enriched with molecular fingerprint, structure database links.
 
         :param project_id: project-space to read from. (required)
         :type project_id: str
@@ -8652,6 +10461,7 @@ class FeaturesApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """ # noqa: E501
+        warnings.warn("GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/db-structures is deprecated.", DeprecationWarning)
 
         _param = self._get_structure_candidates_by_formula_serialize(
             project_id=project_id,
@@ -8666,6 +10476,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "List[StructureCandidateScored]",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -8698,9 +10511,9 @@ class FeaturesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """List of CSI:FingerID structure database search candidates for the given 'formulaId' with minimal information.
+        """(Deprecated) [DEPRECATED] List of CSI:FingerID structure database search candidates for the given 'formulaId' with minimal information
 
-        List of CSI:FingerID structure database search candidates for the given 'formulaId' with minimal information.  StructureCandidates can be enriched with molecular fingerprint, structure database links.
+        [DEPRECATED] List of CSI:FingerID structure database search candidates for the given 'formulaId' with minimal information.  <p>  [DEPRECATED] Use /formulas/{formulaId}/db-structures/page instead. Loading all entries at once does not scale for large  result sets. This endpoint will be removed in the next major version of this API.  StructureCandidates can be enriched with molecular fingerprint, structure database links.
 
         :param project_id: project-space to read from. (required)
         :type project_id: str
@@ -8731,6 +10544,7 @@ class FeaturesApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """ # noqa: E501
+        warnings.warn("GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/db-structures is deprecated.", DeprecationWarning)
 
         _param = self._get_structure_candidates_by_formula_serialize(
             project_id=project_id,
@@ -8745,6 +10559,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "List[StructureCandidateScored]",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -8801,7 +10618,8 @@ class FeaturesApi:
         if 'Accept' not in _header_params:
             _header_params['Accept'] = self.api_client.select_header_accept(
                 [
-                    'application/json'
+                    'application/json', 
+                    'application/problem+json'
                 ]
             )
 
@@ -8829,7 +10647,7 @@ class FeaturesApi:
 
 
     @validate_call
-    def get_structure_candidates_by_formula_paged(
+    def get_structure_candidates_by_formula_page(
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
         aligned_feature_id: Annotated[StrictStr, Field(description="feature (aligned over runs) the formula result belongs to.")],
@@ -8891,7 +10709,7 @@ class FeaturesApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._get_structure_candidates_by_formula_paged_serialize(
+        _param = self._get_structure_candidates_by_formula_page_serialize(
             project_id=project_id,
             aligned_feature_id=aligned_feature_id,
             formula_id=formula_id,
@@ -8907,6 +10725,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PagedModelStructureCandidateScored",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -8920,7 +10741,7 @@ class FeaturesApi:
 
 
     @validate_call
-    def get_structure_candidates_by_formula_paged_with_http_info(
+    def get_structure_candidates_by_formula_page_with_http_info(
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
         aligned_feature_id: Annotated[StrictStr, Field(description="feature (aligned over runs) the formula result belongs to.")],
@@ -8982,7 +10803,7 @@ class FeaturesApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._get_structure_candidates_by_formula_paged_serialize(
+        _param = self._get_structure_candidates_by_formula_page_serialize(
             project_id=project_id,
             aligned_feature_id=aligned_feature_id,
             formula_id=formula_id,
@@ -8998,6 +10819,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PagedModelStructureCandidateScored",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -9011,7 +10835,7 @@ class FeaturesApi:
 
 
     @validate_call
-    def get_structure_candidates_by_formula_paged_without_preload_content(
+    def get_structure_candidates_by_formula_page_without_preload_content(
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
         aligned_feature_id: Annotated[StrictStr, Field(description="feature (aligned over runs) the formula result belongs to.")],
@@ -9073,7 +10897,7 @@ class FeaturesApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._get_structure_candidates_by_formula_paged_serialize(
+        _param = self._get_structure_candidates_by_formula_page_serialize(
             project_id=project_id,
             aligned_feature_id=aligned_feature_id,
             formula_id=formula_id,
@@ -9089,6 +10913,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PagedModelStructureCandidateScored",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -9097,7 +10924,7 @@ class FeaturesApi:
         return response_data.response
 
 
-    def _get_structure_candidates_by_formula_paged_serialize(
+    def _get_structure_candidates_by_formula_page_serialize(
         self,
         project_id,
         aligned_feature_id,
@@ -9161,7 +10988,8 @@ class FeaturesApi:
         if 'Accept' not in _header_params:
             _header_params['Accept'] = self.api_client.select_header_accept(
                 [
-                    'application/json'
+                    'application/json', 
+                    'application/problem+json'
                 ]
             )
 
@@ -9189,7 +11017,7 @@ class FeaturesApi:
 
 
     @validate_call
-    def get_structure_candidates_paged(
+    def get_structure_candidates_page(
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
         aligned_feature_id: Annotated[StrictStr, Field(description="feature (aligned over runs) the structure candidates belong to.")],
@@ -9248,7 +11076,7 @@ class FeaturesApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._get_structure_candidates_paged_serialize(
+        _param = self._get_structure_candidates_page_serialize(
             project_id=project_id,
             aligned_feature_id=aligned_feature_id,
             page=page,
@@ -9263,6 +11091,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PagedModelStructureCandidateFormula",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -9276,7 +11107,7 @@ class FeaturesApi:
 
 
     @validate_call
-    def get_structure_candidates_paged_with_http_info(
+    def get_structure_candidates_page_with_http_info(
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
         aligned_feature_id: Annotated[StrictStr, Field(description="feature (aligned over runs) the structure candidates belong to.")],
@@ -9335,7 +11166,7 @@ class FeaturesApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._get_structure_candidates_paged_serialize(
+        _param = self._get_structure_candidates_page_serialize(
             project_id=project_id,
             aligned_feature_id=aligned_feature_id,
             page=page,
@@ -9350,6 +11181,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PagedModelStructureCandidateFormula",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -9363,7 +11197,7 @@ class FeaturesApi:
 
 
     @validate_call
-    def get_structure_candidates_paged_without_preload_content(
+    def get_structure_candidates_page_without_preload_content(
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
         aligned_feature_id: Annotated[StrictStr, Field(description="feature (aligned over runs) the structure candidates belong to.")],
@@ -9422,7 +11256,7 @@ class FeaturesApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._get_structure_candidates_paged_serialize(
+        _param = self._get_structure_candidates_page_serialize(
             project_id=project_id,
             aligned_feature_id=aligned_feature_id,
             page=page,
@@ -9437,6 +11271,9 @@ class FeaturesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PagedModelStructureCandidateFormula",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -9445,7 +11282,7 @@ class FeaturesApi:
         return response_data.response
 
 
-    def _get_structure_candidates_paged_serialize(
+    def _get_structure_candidates_page_serialize(
         self,
         project_id,
         aligned_feature_id,
@@ -9506,7 +11343,8 @@ class FeaturesApi:
         if 'Accept' not in _header_params:
             _header_params['Accept'] = self.api_client.select_header_accept(
                 [
-                    'application/json'
+                    'application/json', 
+                    'application/problem+json'
                 ]
             )
 

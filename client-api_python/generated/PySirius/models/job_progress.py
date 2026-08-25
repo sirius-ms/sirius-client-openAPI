@@ -23,14 +23,14 @@ from typing_extensions import Self
 
 class JobProgress(BaseModel):
     """
-    Progress information of a computation job that has already been submitted to SIRIUS.  if  currentProgress == maxProgress job is finished and should change to state done soon.  if a job is DONE all results can be accessed via the Project-Spaces api.
+    Progress information of a computation job that has already been submitted to SIRIUS.  If currentProgress == maxProgress, the job is finished and should change to state DONE soon.  If a job is DONE, all results can be accessed via the project-space API.
     """ # noqa: E501
     indeterminate: Optional[StrictBool] = Field(default=None, description="Is the progress indeterminate or not")
     state: Optional[JobState] = None
     current_progress: Optional[StrictInt] = Field(default=None, description="Current progress value of the job.", alias="currentProgress")
     max_progress: Optional[StrictInt] = Field(default=None, description="Progress value to reach (might also change during execution)", alias="maxProgress")
     message: Optional[StrictStr] = Field(default=None, description="Progress information and warnings.")
-    error_message: Optional[StrictStr] = Field(default=None, description="Error message if the job did not finish successfully failed.", alias="errorMessage")
+    error_message: Optional[StrictStr] = Field(default=None, description="Error message if the job did not finish successfully.", alias="errorMessage")
     __properties: ClassVar[List[str]] = ["indeterminate", "state", "currentProgress", "maxProgress", "message", "errorMessage"]
 
     model_config = ConfigDict(

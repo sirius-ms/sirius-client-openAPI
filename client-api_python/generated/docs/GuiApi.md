@@ -35,7 +35,7 @@ configuration = PySirius.Configuration(
 with PySirius.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = PySirius.GuiApi(api_client)
-    project_id = 'project_id_example' # str | if project-space the GUI instance is connected to.
+    project_id = 'project_id_example' # str | project-space the GUI instance is connected to.
     close_project = True # bool |  (optional)
 
     try:
@@ -54,7 +54,7 @@ with PySirius.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **project_id** | **str**| if project-space the GUI instance is connected to. | 
+ **project_id** | **str**| project-space the GUI instance is connected to. | 
  **close_project** | **bool**|  | [optional] 
 
 ### Return type
@@ -68,13 +68,16 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: application/json, application/problem+json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**500** | Unexpected server-side error. The problem detail carries the reason. |  -  |
+**404** | The referenced object does not exist in this SIRIUS instance or project. |  -  |
+**400** | The request body or a parameter is malformed or violates a constraint. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -133,13 +136,14 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: application/json, application/problem+json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | List of GUI windows that are currently managed by this SIRIUS instance. |  -  |
+**500** | Unexpected server-side error. The problem detail carries the reason. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -169,7 +173,7 @@ configuration = PySirius.Configuration(
 with PySirius.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = PySirius.GuiApi(api_client)
-    project_id = 'project_id_example' # str | of project-space the GUI instance will connect to.
+    project_id = 'project_id_example' # str | project-space the GUI instance will connect to.
 
     try:
         # Open GUI instance on specified project-space and bring the GUI window to foreground.
@@ -185,7 +189,7 @@ with PySirius.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **project_id** | **str**| of project-space the GUI instance will connect to. | 
+ **project_id** | **str**| project-space the GUI instance will connect to. | 
 
 ### Return type
 
@@ -205,6 +209,9 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **201** | Created |  -  |
+**500** | Unexpected server-side error. The problem detail carries the reason. |  -  |
+**404** | The referenced object does not exist in this SIRIUS instance or project. |  -  |
+**400** | The request body or a parameter is malformed or violates a constraint. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

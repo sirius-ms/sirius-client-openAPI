@@ -7,12 +7,12 @@
 #' @title StructureCandidate
 #' @description StructureCandidate Class
 #' @format An \code{R6Class} generator object
-#' @field inchiKey  character [optional]
+#' @field inchiKey InChIKey of the structure candidate.  Searching with a full 27 character key matches its 2D (skeleton) part, so stereoisomers of the  searched structure are found alike. character [optional]
 #' @field smiles  character [optional]
-#' @field structureName  character [optional]
+#' @field structureName Name of the structure candidate.  Searching also resolves the searched term as a PubChem synonym, so a structure is found by any  of its common names. character [optional]
 #' @field structureSvg SVG graphics of the structure candidate  OPTIONAL: needs to be added by parameter character [optional]
-#' @field dbLinks List of structure database links belonging to this structure candidate  OPTIONAL: needs to be added by parameter list(\link{DBLink}) [optional]
-#' @field spectralLibraryMatches List of spectral library matches belonging to this structure candidate  OPTIONAL: needs to be added by parameter list(\link{SpectralLibraryMatch}) [optional]
+#' @field dbLinks List of structure database links belonging to the structure candidate  OPTIONAL: needs to be added by parameter list(\link{DBLink}) [optional]
+#' @field spectralLibraryMatches List of spectral library matches belonging to the structure candidate  OPTIONAL: needs to be added by parameter list(\link{SpectralLibraryMatch}) [optional]
 #' @field xlogP  numeric [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
@@ -31,12 +31,12 @@ StructureCandidate <- R6::R6Class(
     #' @description
     #' Initialize a new StructureCandidate class.
     #'
-    #' @param inchiKey inchiKey
+    #' @param inchiKey InChIKey of the structure candidate.  Searching with a full 27 character key matches its 2D (skeleton) part, so stereoisomers of the  searched structure are found alike.
     #' @param smiles smiles
-    #' @param structureName structureName
+    #' @param structureName Name of the structure candidate.  Searching also resolves the searched term as a PubChem synonym, so a structure is found by any  of its common names.
     #' @param structureSvg SVG graphics of the structure candidate  OPTIONAL: needs to be added by parameter
-    #' @param dbLinks List of structure database links belonging to this structure candidate  OPTIONAL: needs to be added by parameter
-    #' @param spectralLibraryMatches List of spectral library matches belonging to this structure candidate  OPTIONAL: needs to be added by parameter
+    #' @param dbLinks List of structure database links belonging to the structure candidate  OPTIONAL: needs to be added by parameter
+    #' @param spectralLibraryMatches List of spectral library matches belonging to the structure candidate  OPTIONAL: needs to be added by parameter
     #' @param xlogP xlogP
     #' @param ... Other optional arguments.
     initialize = function(`inchiKey` = NULL, `smiles` = NULL, `structureName` = NULL, `structureSvg` = NULL, `dbLinks` = NULL, `spectralLibraryMatches` = NULL, `xlogP` = NULL, ...) {

@@ -465,6 +465,12 @@
      "required": false,
      "type": null
     },
+    "qualities": {
+     "alias": "qualities",
+     "name": "qualities",
+     "required": false,
+     "type": null
+    },
     "quality": {
      "alias": "quality",
      "name": "quality",
@@ -629,6 +635,11 @@
       },
       {
        "kind": "positional",
+       "name": "qualities",
+       "required": false
+      },
+      {
+       "kind": "positional",
        "name": "tags",
        "required": false
       },
@@ -732,6 +743,12 @@
      "name": "importPeakLists",
      "required": false,
      "type": null
+    },
+    "transformationProducts": {
+     "alias": "transformationProducts",
+     "name": "transformationProducts",
+     "required": false,
+     "type": null
     }
    },
    "kind": "model",
@@ -791,6 +808,11 @@
       {
        "kind": "positional",
        "name": "importCef",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "transformationProducts",
        "required": false
       },
       {
@@ -1352,6 +1374,97 @@
    },
    "origin": {
     "name": "AnnotatedSpectrum",
+    "orphan": false,
+    "type": "schema",
+    "unstable": false
+   }
+  },
+  "AnyValue": {
+   "bases": [
+    "R6Class"
+   ],
+   "enum_members": {},
+   "fields": {
+    "actual_instance": {
+     "alias": "actual_instance",
+     "name": "actual_instance",
+     "required": false,
+     "type": null
+    },
+    "actual_type": {
+     "alias": "actual_type",
+     "name": "actual_type",
+     "required": false,
+     "type": null
+    },
+    "any_of": {
+     "alias": "any_of",
+     "name": "any_of",
+     "required": false,
+     "type": null
+    }
+   },
+   "kind": "model",
+   "methods": {
+    "fromJSON": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "input",
+       "required": true
+      }
+     ]
+    },
+    "fromJSONString": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "input",
+       "required": true
+      }
+     ]
+    },
+    "initialize": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "instance",
+       "required": false
+      }
+     ]
+    },
+    "print": {
+     "origin": null,
+     "params": []
+    },
+    "toJSON": {
+     "origin": null,
+     "params": []
+    },
+    "toJSONString": {
+     "origin": null,
+     "params": []
+    },
+    "toString": {
+     "origin": null,
+     "params": []
+    },
+    "validateJSON": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "input",
+       "required": true
+      }
+     ]
+    }
+   },
+   "origin": {
+    "name": "AnyValue",
     "orphan": false,
     "type": "schema",
     "unstable": false
@@ -3627,6 +3740,86 @@
       }
      ]
     },
+    "GetCompoundQuantTable": {
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/compounds/quant-table",
+      "operation_id": "getCompoundQuantTable",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "search_query",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "type",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "opt_fields",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "data_file",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "...",
+       "required": false
+      }
+     ]
+    },
+    "GetCompoundQuantTableWithHttpInfo": {
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/compounds/quant-table",
+      "operation_id": "getCompoundQuantTable",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "search_query",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "type",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "opt_fields",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "data_file",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "...",
+       "required": false
+      }
+     ]
+    },
     "GetCompoundWithHttpInfo": {
      "origin": {
       "endpoint": "GET /api/projects/{projectId}/compounds/{compoundId}",
@@ -3677,7 +3870,7 @@
       "endpoint": "GET /api/projects/{projectId}/compounds",
       "operation_id": "getCompounds",
       "type": "operation",
-      "unstable": false
+      "unstable": true
      },
      "params": [
       {
@@ -3712,10 +3905,10 @@
       }
      ]
     },
-    "GetCompoundsPaged": {
+    "GetCompoundsPage": {
      "origin": {
       "endpoint": "GET /api/projects/{projectId}/compounds/page",
-      "operation_id": "getCompoundsPaged",
+      "operation_id": "getCompoundsPage",
       "type": "operation",
       "unstable": false
      },
@@ -3724,6 +3917,11 @@
        "kind": "positional",
        "name": "project_id",
        "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "search_query",
+       "required": false
       },
       {
        "kind": "positional",
@@ -3767,10 +3965,10 @@
       }
      ]
     },
-    "GetCompoundsPagedWithHttpInfo": {
+    "GetCompoundsPageWithHttpInfo": {
      "origin": {
       "endpoint": "GET /api/projects/{projectId}/compounds/page",
-      "operation_id": "getCompoundsPaged",
+      "operation_id": "getCompoundsPage",
       "type": "operation",
       "unstable": false
      },
@@ -3779,6 +3977,11 @@
        "kind": "positional",
        "name": "project_id",
        "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "search_query",
+       "required": false
       },
       {
        "kind": "positional",
@@ -3809,6 +4012,56 @@
        "kind": "positional",
        "name": "opt_fields_features",
        "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "data_file",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "...",
+       "required": false
+      }
+     ]
+    },
+    "GetCompoundsSearchableFields": {
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/compounds/searchable-fields",
+      "operation_id": "getCompoundsSearchableFields",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "data_file",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "...",
+       "required": false
+      }
+     ]
+    },
+    "GetCompoundsSearchableFieldsWithHttpInfo": {
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/compounds/searchable-fields",
+      "operation_id": "getCompoundsSearchableFields",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
       },
       {
        "kind": "positional",
@@ -3827,7 +4080,7 @@
       "endpoint": "GET /api/projects/{projectId}/compounds",
       "operation_id": "getCompounds",
       "type": "operation",
-      "unstable": false
+      "unstable": true
      },
      "params": [
       {
@@ -5020,6 +5273,222 @@
     "unstable": false
    }
   },
+  "Feature": {
+   "bases": [
+    "R6Class"
+   ],
+   "enum_members": {},
+   "fields": {
+    "alignedFeatureId": {
+     "alias": "alignedFeatureId",
+     "name": "alignedFeatureId",
+     "required": false,
+     "type": null
+    },
+    "apexIntensity": {
+     "alias": "apexIntensity",
+     "name": "apexIntensity",
+     "required": false,
+     "type": null
+    },
+    "apexMz": {
+     "alias": "apexMz",
+     "name": "apexMz",
+     "required": false,
+     "type": null
+    },
+    "areaUnderCurve": {
+     "alias": "areaUnderCurve",
+     "name": "areaUnderCurve",
+     "required": false,
+     "type": null
+    },
+    "averageMz": {
+     "alias": "averageMz",
+     "name": "averageMz",
+     "required": false,
+     "type": null
+    },
+    "featureId": {
+     "alias": "featureId",
+     "name": "featureId",
+     "required": false,
+     "type": null
+    },
+    "rtApexSeconds": {
+     "alias": "rtApexSeconds",
+     "name": "rtApexSeconds",
+     "required": false,
+     "type": null
+    },
+    "rtEndSeconds": {
+     "alias": "rtEndSeconds",
+     "name": "rtEndSeconds",
+     "required": false,
+     "type": null
+    },
+    "rtFwhmSeconds": {
+     "alias": "rtFwhmSeconds",
+     "name": "rtFwhmSeconds",
+     "required": false,
+     "type": null
+    },
+    "rtStartSeconds": {
+     "alias": "rtStartSeconds",
+     "name": "rtStartSeconds",
+     "required": false,
+     "type": null
+    },
+    "runId": {
+     "alias": "runId",
+     "name": "runId",
+     "required": false,
+     "type": null
+    }
+   },
+   "kind": "model",
+   "methods": {
+    "fromJSON": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "input_json",
+       "required": true
+      }
+     ]
+    },
+    "fromJSONString": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "input_json",
+       "required": true
+      }
+     ]
+    },
+    "getInvalidFields": {
+     "origin": null,
+     "params": []
+    },
+    "initialize": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "featureId",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "alignedFeatureId",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "runId",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "averageMz",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "apexMz",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "rtStartSeconds",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "rtEndSeconds",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "rtApexSeconds",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "rtFwhmSeconds",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "apexIntensity",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "areaUnderCurve",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "...",
+       "required": false
+      }
+     ]
+    },
+    "isValid": {
+     "origin": null,
+     "params": []
+    },
+    "print": {
+     "origin": null,
+     "params": []
+    },
+    "toJSON": {
+     "origin": null,
+     "params": []
+    },
+    "toJSONString": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "...",
+       "required": false
+      }
+     ]
+    },
+    "toList": {
+     "origin": null,
+     "params": []
+    },
+    "toSimpleType": {
+     "origin": null,
+     "params": []
+    },
+    "toString": {
+     "origin": null,
+     "params": []
+    },
+    "validateJSON": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "input",
+       "required": true
+      }
+     ]
+    }
+   },
+   "origin": {
+    "name": "Feature",
+    "orphan": false,
+    "type": "schema",
+    "unstable": false
+   }
+  },
   "FeatureAnnotations": {
    "bases": [
     "R6Class"
@@ -5600,6 +6069,56 @@
       }
      ]
     },
+    "DeleteAlignedFeaturesByQuery": {
+     "origin": {
+      "endpoint": "PUT /api/projects/{projectId}/aligned-features/delete-by-query",
+      "operation_id": "deleteAlignedFeaturesByQuery",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "search_query",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "...",
+       "required": false
+      }
+     ]
+    },
+    "DeleteAlignedFeaturesByQueryWithHttpInfo": {
+     "origin": {
+      "endpoint": "PUT /api/projects/{projectId}/aligned-features/delete-by-query",
+      "operation_id": "deleteAlignedFeaturesByQuery",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "search_query",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "...",
+       "required": false
+      }
+     ]
+    },
     "DeleteAlignedFeaturesWithHttpInfo": {
      "origin": {
       "endpoint": "PUT /api/projects/{projectId}/aligned-features/delete",
@@ -5710,7 +6229,7 @@
       "endpoint": "GET /api/projects/{projectId}/aligned-features",
       "operation_id": "getAlignedFeatures",
       "type": "operation",
-      "unstable": false
+      "unstable": true
      },
      "params": [
       {
@@ -5740,10 +6259,10 @@
       }
      ]
     },
-    "GetAlignedFeaturesPaged": {
+    "GetAlignedFeaturesPage": {
      "origin": {
       "endpoint": "GET /api/projects/{projectId}/aligned-features/page",
-      "operation_id": "getAlignedFeaturesPaged",
+      "operation_id": "getAlignedFeaturesPage",
       "type": "operation",
       "unstable": false
      },
@@ -5766,6 +6285,11 @@
       {
        "kind": "positional",
        "name": "sort",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "search_query",
        "required": false
       },
       {
@@ -5790,10 +6314,10 @@
       }
      ]
     },
-    "GetAlignedFeaturesPagedWithHttpInfo": {
+    "GetAlignedFeaturesPageWithHttpInfo": {
      "origin": {
       "endpoint": "GET /api/projects/{projectId}/aligned-features/page",
-      "operation_id": "getAlignedFeaturesPaged",
+      "operation_id": "getAlignedFeaturesPage",
       "type": "operation",
       "unstable": false
      },
@@ -5820,6 +6344,11 @@
       },
       {
        "kind": "positional",
+       "name": "search_query",
+       "required": false
+      },
+      {
+       "kind": "positional",
        "name": "ms_data_search_prepared",
        "required": false
       },
@@ -5827,6 +6356,56 @@
        "kind": "positional",
        "name": "opt_fields",
        "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "data_file",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "...",
+       "required": false
+      }
+     ]
+    },
+    "GetAlignedFeaturesSearchableFields": {
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/aligned-features/searchable-fields",
+      "operation_id": "getAlignedFeaturesSearchableFields",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "data_file",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "...",
+       "required": false
+      }
+     ]
+    },
+    "GetAlignedFeaturesSearchableFieldsWithHttpInfo": {
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/aligned-features/searchable-fields",
+      "operation_id": "getAlignedFeaturesSearchableFields",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
       },
       {
        "kind": "positional",
@@ -5845,7 +6424,7 @@
       "endpoint": "GET /api/projects/{projectId}/aligned-features",
       "operation_id": "getAlignedFeatures",
       "type": "operation",
-      "unstable": false
+      "unstable": true
      },
      "params": [
       {
@@ -6020,7 +6599,7 @@
       "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/denovo-structures",
       "operation_id": "getDeNovoStructureCandidates",
       "type": "operation",
-      "unstable": false
+      "unstable": true
      },
      "params": [
       {
@@ -6055,7 +6634,7 @@
       "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/denovo-structures",
       "operation_id": "getDeNovoStructureCandidatesByFormula",
       "type": "operation",
-      "unstable": false
+      "unstable": true
      },
      "params": [
       {
@@ -6090,10 +6669,10 @@
       }
      ]
     },
-    "GetDeNovoStructureCandidatesByFormulaPaged": {
+    "GetDeNovoStructureCandidatesByFormulaPage": {
      "origin": {
       "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/denovo-structures/page",
-      "operation_id": "getDeNovoStructureCandidatesByFormulaPaged",
+      "operation_id": "getDeNovoStructureCandidatesByFormulaPage",
       "type": "operation",
       "unstable": false
      },
@@ -6145,10 +6724,10 @@
       }
      ]
     },
-    "GetDeNovoStructureCandidatesByFormulaPagedWithHttpInfo": {
+    "GetDeNovoStructureCandidatesByFormulaPageWithHttpInfo": {
      "origin": {
       "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/denovo-structures/page",
-      "operation_id": "getDeNovoStructureCandidatesByFormulaPaged",
+      "operation_id": "getDeNovoStructureCandidatesByFormulaPage",
       "type": "operation",
       "unstable": false
      },
@@ -6205,7 +6784,7 @@
       "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/denovo-structures",
       "operation_id": "getDeNovoStructureCandidatesByFormula",
       "type": "operation",
-      "unstable": false
+      "unstable": true
      },
      "params": [
       {
@@ -6240,10 +6819,10 @@
       }
      ]
     },
-    "GetDeNovoStructureCandidatesPaged": {
+    "GetDeNovoStructureCandidatesPage": {
      "origin": {
       "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/denovo-structures/page",
-      "operation_id": "getDeNovoStructureCandidatesPaged",
+      "operation_id": "getDeNovoStructureCandidatesPage",
       "type": "operation",
       "unstable": false
      },
@@ -6290,10 +6869,10 @@
       }
      ]
     },
-    "GetDeNovoStructureCandidatesPagedWithHttpInfo": {
+    "GetDeNovoStructureCandidatesPageWithHttpInfo": {
      "origin": {
       "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/denovo-structures/page",
-      "operation_id": "getDeNovoStructureCandidatesPaged",
+      "operation_id": "getDeNovoStructureCandidatesPage",
       "type": "operation",
       "unstable": false
      },
@@ -6345,7 +6924,7 @@
       "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/denovo-structures",
       "operation_id": "getDeNovoStructureCandidates",
       "type": "operation",
-      "unstable": false
+      "unstable": true
      },
      "params": [
       {
@@ -6362,6 +6941,236 @@
        "kind": "positional",
        "name": "opt_fields",
        "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "data_file",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "...",
+       "required": false
+      }
+     ]
+    },
+    "GetFeatureQuantTable": {
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/aligned-features/quant-table",
+      "operation_id": "getFeatureQuantTable",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "search_query",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "type",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "opt_fields",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "data_file",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "...",
+       "required": false
+      }
+     ]
+    },
+    "GetFeatureQuantTableWithHttpInfo": {
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/aligned-features/quant-table",
+      "operation_id": "getFeatureQuantTable",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "search_query",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "type",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "opt_fields",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "data_file",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "...",
+       "required": false
+      }
+     ]
+    },
+    "GetFeatures": {
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/features",
+      "operation_id": "getFeatures",
+      "type": "operation",
+      "unstable": true
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "aligned_feature_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "data_file",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "...",
+       "required": false
+      }
+     ]
+    },
+    "GetFeaturesPage": {
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/features/page",
+      "operation_id": "getFeaturesPage",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "aligned_feature_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "page",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "size",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "sort",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "data_file",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "...",
+       "required": false
+      }
+     ]
+    },
+    "GetFeaturesPageWithHttpInfo": {
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/features/page",
+      "operation_id": "getFeaturesPage",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "aligned_feature_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "page",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "size",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "sort",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "data_file",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "...",
+       "required": false
+      }
+     ]
+    },
+    "GetFeaturesWithHttpInfo": {
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/features",
+      "operation_id": "getFeatures",
+      "type": "operation",
+      "unstable": true
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "aligned_feature_id",
+       "required": true
       },
       {
        "kind": "positional",
@@ -6710,7 +7519,7 @@
       "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas",
       "operation_id": "getFormulaCandidates",
       "type": "operation",
-      "unstable": false
+      "unstable": true
      },
      "params": [
       {
@@ -6745,10 +7554,10 @@
       }
      ]
     },
-    "GetFormulaCandidatesPaged": {
+    "GetFormulaCandidatesPage": {
      "origin": {
       "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/page",
-      "operation_id": "getFormulaCandidatesPaged",
+      "operation_id": "getFormulaCandidatesPage",
       "type": "operation",
       "unstable": false
      },
@@ -6800,10 +7609,10 @@
       }
      ]
     },
-    "GetFormulaCandidatesPagedWithHttpInfo": {
+    "GetFormulaCandidatesPageWithHttpInfo": {
      "origin": {
       "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/page",
-      "operation_id": "getFormulaCandidatesPaged",
+      "operation_id": "getFormulaCandidatesPage",
       "type": "operation",
       "unstable": false
      },
@@ -6860,7 +7669,7 @@
       "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas",
       "operation_id": "getFormulaCandidates",
       "type": "operation",
-      "unstable": false
+      "unstable": true
      },
      "params": [
       {
@@ -7260,7 +8069,7 @@
       "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/spectral-library-matches",
       "operation_id": "getSpectralLibraryMatches",
       "type": "operation",
-      "unstable": false
+      "unstable": true
      },
      "params": [
       {
@@ -7305,10 +8114,10 @@
       }
      ]
     },
-    "GetSpectralLibraryMatchesPaged": {
+    "GetSpectralLibraryMatchesPage": {
      "origin": {
       "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/spectral-library-matches/page",
-      "operation_id": "getSpectralLibraryMatchesPaged",
+      "operation_id": "getSpectralLibraryMatchesPage",
       "type": "operation",
       "unstable": false
      },
@@ -7370,10 +8179,10 @@
       }
      ]
     },
-    "GetSpectralLibraryMatchesPagedWithHttpInfo": {
+    "GetSpectralLibraryMatchesPageWithHttpInfo": {
      "origin": {
       "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/spectral-library-matches/page",
-      "operation_id": "getSpectralLibraryMatchesPaged",
+      "operation_id": "getSpectralLibraryMatchesPage",
       "type": "operation",
       "unstable": false
      },
@@ -7530,7 +8339,7 @@
       "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/spectral-library-matches",
       "operation_id": "getSpectralLibraryMatches",
       "type": "operation",
-      "unstable": false
+      "unstable": true
      },
      "params": [
       {
@@ -7580,7 +8389,7 @@
       "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/db-structures",
       "operation_id": "getStructureCandidates",
       "type": "operation",
-      "unstable": false
+      "unstable": true
      },
      "params": [
       {
@@ -7615,7 +8424,7 @@
       "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/db-structures",
       "operation_id": "getStructureCandidatesByFormula",
       "type": "operation",
-      "unstable": false
+      "unstable": true
      },
      "params": [
       {
@@ -7650,10 +8459,10 @@
       }
      ]
     },
-    "GetStructureCandidatesByFormulaPaged": {
+    "GetStructureCandidatesByFormulaPage": {
      "origin": {
       "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/db-structures/page",
-      "operation_id": "getStructureCandidatesByFormulaPaged",
+      "operation_id": "getStructureCandidatesByFormulaPage",
       "type": "operation",
       "unstable": false
      },
@@ -7705,10 +8514,10 @@
       }
      ]
     },
-    "GetStructureCandidatesByFormulaPagedWithHttpInfo": {
+    "GetStructureCandidatesByFormulaPageWithHttpInfo": {
      "origin": {
       "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/db-structures/page",
-      "operation_id": "getStructureCandidatesByFormulaPaged",
+      "operation_id": "getStructureCandidatesByFormulaPage",
       "type": "operation",
       "unstable": false
      },
@@ -7765,7 +8574,7 @@
       "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/db-structures",
       "operation_id": "getStructureCandidatesByFormula",
       "type": "operation",
-      "unstable": false
+      "unstable": true
      },
      "params": [
       {
@@ -7800,10 +8609,10 @@
       }
      ]
     },
-    "GetStructureCandidatesPaged": {
+    "GetStructureCandidatesPage": {
      "origin": {
       "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/db-structures/page",
-      "operation_id": "getStructureCandidatesPaged",
+      "operation_id": "getStructureCandidatesPage",
       "type": "operation",
       "unstable": false
      },
@@ -7850,10 +8659,10 @@
       }
      ]
     },
-    "GetStructureCandidatesPagedWithHttpInfo": {
+    "GetStructureCandidatesPageWithHttpInfo": {
      "origin": {
       "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/db-structures/page",
-      "operation_id": "getStructureCandidatesPaged",
+      "operation_id": "getStructureCandidatesPage",
       "type": "operation",
       "unstable": false
      },
@@ -7905,7 +8714,7 @@
       "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/db-structures",
       "operation_id": "getStructureCandidates",
       "type": "operation",
-      "unstable": false
+      "unstable": true
      },
      "params": [
       {
@@ -10709,7 +11518,7 @@
       "endpoint": "GET /api/projects/{projectId}/jobs",
       "operation_id": "getJobs",
       "type": "operation",
-      "unstable": false
+      "unstable": true
      },
      "params": [
       {
@@ -10734,10 +11543,10 @@
       }
      ]
     },
-    "GetJobsPaged": {
+    "GetJobsPage": {
      "origin": {
       "endpoint": "GET /api/projects/{projectId}/jobs/page",
-      "operation_id": "getJobsPaged",
+      "operation_id": "getJobsPage",
       "type": "operation",
       "unstable": false
      },
@@ -10779,10 +11588,10 @@
       }
      ]
     },
-    "GetJobsPagedWithHttpInfo": {
+    "GetJobsPageWithHttpInfo": {
      "origin": {
       "endpoint": "GET /api/projects/{projectId}/jobs/page",
-      "operation_id": "getJobsPaged",
+      "operation_id": "getJobsPage",
       "type": "operation",
       "unstable": false
      },
@@ -10829,7 +11638,7 @@
       "endpoint": "GET /api/projects/{projectId}/jobs",
       "operation_id": "getJobs",
       "type": "operation",
-      "unstable": false
+      "unstable": true
      },
      "params": [
       {
@@ -11203,6 +12012,18 @@
      "required": false,
      "type": null
     },
+    "sampleNames": {
+     "alias": "sampleNames",
+     "name": "sampleNames",
+     "required": false,
+     "type": null
+    },
+    "sampleTypes": {
+     "alias": "sampleTypes",
+     "name": "sampleTypes",
+     "required": false,
+     "type": null
+    },
     "traceMaxMassDeviation": {
      "alias": "traceMaxMassDeviation",
      "name": "traceMaxMassDeviation",
@@ -11239,6 +12060,16 @@
     "initialize": {
      "origin": null,
      "params": [
+      {
+       "kind": "positional",
+       "name": "sampleNames",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "sampleTypes",
+       "required": false
+      },
       {
        "kind": "positional",
        "name": "alignLCMSRuns",
@@ -12835,6 +13666,123 @@
     "unstable": false
    }
   },
+  "PagedModelFeature": {
+   "bases": [
+    "R6Class"
+   ],
+   "enum_members": {},
+   "fields": {
+    "content": {
+     "alias": "content",
+     "name": "content",
+     "required": false,
+     "type": null
+    },
+    "page": {
+     "alias": "page",
+     "name": "page",
+     "required": false,
+     "type": null
+    }
+   },
+   "kind": "model",
+   "methods": {
+    "fromJSON": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "input_json",
+       "required": true
+      }
+     ]
+    },
+    "fromJSONString": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "input_json",
+       "required": true
+      }
+     ]
+    },
+    "getInvalidFields": {
+     "origin": null,
+     "params": []
+    },
+    "initialize": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "content",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "page",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "...",
+       "required": false
+      }
+     ]
+    },
+    "isValid": {
+     "origin": null,
+     "params": []
+    },
+    "print": {
+     "origin": null,
+     "params": []
+    },
+    "toJSON": {
+     "origin": null,
+     "params": []
+    },
+    "toJSONString": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "...",
+       "required": false
+      }
+     ]
+    },
+    "toList": {
+     "origin": null,
+     "params": []
+    },
+    "toSimpleType": {
+     "origin": null,
+     "params": []
+    },
+    "toString": {
+     "origin": null,
+     "params": []
+    },
+    "validateJSON": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "input",
+       "required": true
+      }
+     ]
+    }
+   },
+   "origin": {
+    "name": "PagedModelFeature",
+    "orphan": false,
+    "type": "schema",
+    "unstable": false
+   }
+  },
   "PagedModelFormulaCandidate": {
    "bases": [
     "R6Class"
@@ -13064,6 +14012,123 @@
    },
    "origin": {
     "name": "PagedModelJob",
+    "orphan": false,
+    "type": "schema",
+    "unstable": false
+   }
+  },
+  "PagedModelRun": {
+   "bases": [
+    "R6Class"
+   ],
+   "enum_members": {},
+   "fields": {
+    "content": {
+     "alias": "content",
+     "name": "content",
+     "required": false,
+     "type": null
+    },
+    "page": {
+     "alias": "page",
+     "name": "page",
+     "required": false,
+     "type": null
+    }
+   },
+   "kind": "model",
+   "methods": {
+    "fromJSON": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "input_json",
+       "required": true
+      }
+     ]
+    },
+    "fromJSONString": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "input_json",
+       "required": true
+      }
+     ]
+    },
+    "getInvalidFields": {
+     "origin": null,
+     "params": []
+    },
+    "initialize": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "content",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "page",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "...",
+       "required": false
+      }
+     ]
+    },
+    "isValid": {
+     "origin": null,
+     "params": []
+    },
+    "print": {
+     "origin": null,
+     "params": []
+    },
+    "toJSON": {
+     "origin": null,
+     "params": []
+    },
+    "toJSONString": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "...",
+       "required": false
+      }
+     ]
+    },
+    "toList": {
+     "origin": null,
+     "params": []
+    },
+    "toSimpleType": {
+     "origin": null,
+     "params": []
+    },
+    "toString": {
+     "origin": null,
+     "params": []
+    },
+    "validateJSON": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "input",
+       "required": true
+      }
+     ]
+    }
+   },
+   "origin": {
+    "name": "PagedModelRun",
     "orphan": false,
     "type": "schema",
     "unstable": false
@@ -13914,6 +14979,167 @@
     "unstable": false
    }
   },
+  "ProblemDetail": {
+   "bases": [
+    "R6Class"
+   ],
+   "enum_members": {},
+   "fields": {
+    "detail": {
+     "alias": "detail",
+     "name": "detail",
+     "required": false,
+     "type": null
+    },
+    "instance": {
+     "alias": "instance",
+     "name": "instance",
+     "required": false,
+     "type": null
+    },
+    "properties": {
+     "alias": "properties",
+     "name": "properties",
+     "required": false,
+     "type": null
+    },
+    "status": {
+     "alias": "status",
+     "name": "status",
+     "required": false,
+     "type": null
+    },
+    "title": {
+     "alias": "title",
+     "name": "title",
+     "required": false,
+     "type": null
+    },
+    "type": {
+     "alias": "type",
+     "name": "type",
+     "required": false,
+     "type": null
+    }
+   },
+   "kind": "model",
+   "methods": {
+    "fromJSON": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "input_json",
+       "required": true
+      }
+     ]
+    },
+    "fromJSONString": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "input_json",
+       "required": true
+      }
+     ]
+    },
+    "getInvalidFields": {
+     "origin": null,
+     "params": []
+    },
+    "initialize": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "type",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "title",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "status",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "detail",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "instance",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "properties",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "...",
+       "required": false
+      }
+     ]
+    },
+    "isValid": {
+     "origin": null,
+     "params": []
+    },
+    "print": {
+     "origin": null,
+     "params": []
+    },
+    "toJSON": {
+     "origin": null,
+     "params": []
+    },
+    "toJSONString": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "...",
+       "required": false
+      }
+     ]
+    },
+    "toList": {
+     "origin": null,
+     "params": []
+    },
+    "toSimpleType": {
+     "origin": null,
+     "params": []
+    },
+    "toString": {
+     "origin": null,
+     "params": []
+    },
+    "validateJSON": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "input",
+       "required": true
+      }
+     ]
+    }
+   },
+   "origin": {
+    "name": "ProblemDetail",
+    "orphan": false,
+    "type": "schema",
+    "unstable": false
+   }
+  },
   "ProjectChangeEvent": {
    "bases": [
     "R6Class"
@@ -14093,6 +15319,12 @@
      "required": false,
      "type": null
     },
+    "detectedAdducts": {
+     "alias": "detectedAdducts",
+     "name": "detectedAdducts",
+     "required": false,
+     "type": null
+    },
     "location": {
      "alias": "location",
      "name": "location",
@@ -14201,6 +15433,11 @@
       },
       {
        "kind": "positional",
+       "name": "detectedAdducts",
+       "required": false
+      },
+      {
+       "kind": "positional",
        "name": "...",
        "required": false
       }
@@ -14273,6 +15510,56 @@
    },
    "kind": "api",
    "methods": {
+    "BuildSearchIndex": {
+     "origin": {
+      "endpoint": "PUT /api/projects/{projectId}/index",
+      "operation_id": "buildSearchIndex",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "force",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "...",
+       "required": false
+      }
+     ]
+    },
+    "BuildSearchIndexWithHttpInfo": {
+     "origin": {
+      "endpoint": "PUT /api/projects/{projectId}/index",
+      "operation_id": "buildSearchIndex",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "force",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "...",
+       "required": false
+      }
+     ]
+    },
     "CloseProject": {
      "origin": {
       "endpoint": "DELETE /api/projects/{projectId}",
@@ -14314,6 +15601,31 @@
       {
        "kind": "positional",
        "name": "compact",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "...",
+       "required": false
+      }
+     ]
+    },
+    "Create": {
+     "origin": {
+      "endpoint": "POST /api/projects/create",
+      "operation_id": "create",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "opt_fields",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "data_file",
        "required": false
       },
       {
@@ -14376,6 +15688,31 @@
        "name": "path_to_project",
        "required": false
       },
+      {
+       "kind": "positional",
+       "name": "opt_fields",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "data_file",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "...",
+       "required": false
+      }
+     ]
+    },
+    "CreateWithHttpInfo": {
+     "origin": {
+      "endpoint": "POST /api/projects/create",
+      "operation_id": "create",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
       {
        "kind": "positional",
        "name": "opt_fields",
@@ -15050,6 +16387,717 @@
        "kind": "positional",
        "name": "opt_fields",
        "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "data_file",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "...",
+       "required": false
+      }
+     ]
+    },
+    "initialize": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "api_client",
+       "required": true
+      }
+     ]
+    }
+   },
+   "origin": null
+  },
+  "QuantTable": {
+   "bases": [
+    "R6Class"
+   ],
+   "enum_members": {},
+   "fields": {
+    "columnIds": {
+     "alias": "columnIds",
+     "name": "columnIds",
+     "required": false,
+     "type": null
+    },
+    "columnNames": {
+     "alias": "columnNames",
+     "name": "columnNames",
+     "required": false,
+     "type": null
+    },
+    "columnSources": {
+     "alias": "columnSources",
+     "name": "columnSources",
+     "required": false,
+     "type": null
+    },
+    "quantificationMeasure": {
+     "alias": "quantificationMeasure",
+     "name": "quantificationMeasure",
+     "required": false,
+     "type": null
+    },
+    "rowIds": {
+     "alias": "rowIds",
+     "name": "rowIds",
+     "required": false,
+     "type": null
+    },
+    "rowType": {
+     "alias": "rowType",
+     "name": "rowType",
+     "required": false,
+     "type": null
+    },
+    "values": {
+     "alias": "values",
+     "name": "values",
+     "required": false,
+     "type": null
+    }
+   },
+   "kind": "model",
+   "methods": {
+    "fromJSON": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "input_json",
+       "required": true
+      }
+     ]
+    },
+    "fromJSONString": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "input_json",
+       "required": true
+      }
+     ]
+    },
+    "getInvalidFields": {
+     "origin": null,
+     "params": []
+    },
+    "initialize": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "quantificationMeasure",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "rowType",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "rowIds",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "columnIds",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "columnNames",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "columnSources",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "values",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "...",
+       "required": false
+      }
+     ]
+    },
+    "isValid": {
+     "origin": null,
+     "params": []
+    },
+    "print": {
+     "origin": null,
+     "params": []
+    },
+    "toJSON": {
+     "origin": null,
+     "params": []
+    },
+    "toJSONString": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "...",
+       "required": false
+      }
+     ]
+    },
+    "toList": {
+     "origin": null,
+     "params": []
+    },
+    "toSimpleType": {
+     "origin": null,
+     "params": []
+    },
+    "toString": {
+     "origin": null,
+     "params": []
+    },
+    "validateJSON": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "input",
+       "required": true
+      }
+     ]
+    }
+   },
+   "origin": {
+    "name": "QuantTable",
+    "orphan": false,
+    "type": "schema",
+    "unstable": false
+   }
+  },
+  "QuantTableOptField": {
+   "bases": [
+    "R6Class"
+   ],
+   "enum_members": {},
+   "fields": {},
+   "kind": "model",
+   "methods": {
+    "fromJSON": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "input_json",
+       "required": true
+      }
+     ]
+    },
+    "fromJSONString": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "input_json",
+       "required": true
+      }
+     ]
+    },
+    "initialize": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "...",
+       "required": false
+      }
+     ]
+    },
+    "toJSON": {
+     "origin": null,
+     "params": []
+    },
+    "toJSONString": {
+     "origin": null,
+     "params": []
+    }
+   },
+   "origin": {
+    "name": "QuantTableOptField",
+    "orphan": false,
+    "type": "schema",
+    "unstable": false
+   }
+  },
+  "Run": {
+   "bases": [
+    "R6Class"
+   ],
+   "enum_members": {},
+   "fields": {
+    "chromatography": {
+     "alias": "chromatography",
+     "name": "chromatography",
+     "required": false,
+     "type": null
+    },
+    "fragmentation": {
+     "alias": "fragmentation",
+     "name": "fragmentation",
+     "required": false,
+     "type": null
+    },
+    "ionization": {
+     "alias": "ionization",
+     "name": "ionization",
+     "required": false,
+     "type": null
+    },
+    "massAnalyzers": {
+     "alias": "massAnalyzers",
+     "name": "massAnalyzers",
+     "required": false,
+     "type": null
+    },
+    "name": {
+     "alias": "name",
+     "name": "name",
+     "required": false,
+     "type": null
+    },
+    "runId": {
+     "alias": "runId",
+     "name": "runId",
+     "required": false,
+     "type": null
+    },
+    "source": {
+     "alias": "source",
+     "name": "source",
+     "required": false,
+     "type": null
+    },
+    "tags": {
+     "alias": "tags",
+     "name": "tags",
+     "required": false,
+     "type": null
+    }
+   },
+   "kind": "model",
+   "methods": {
+    "fromJSON": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "input_json",
+       "required": true
+      }
+     ]
+    },
+    "fromJSONString": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "input_json",
+       "required": true
+      }
+     ]
+    },
+    "getInvalidFields": {
+     "origin": null,
+     "params": []
+    },
+    "initialize": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "runId",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "name",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "source",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "chromatography",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "ionization",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "fragmentation",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "massAnalyzers",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "tags",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "...",
+       "required": false
+      }
+     ]
+    },
+    "isValid": {
+     "origin": null,
+     "params": []
+    },
+    "print": {
+     "origin": null,
+     "params": []
+    },
+    "toJSON": {
+     "origin": null,
+     "params": []
+    },
+    "toJSONString": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "...",
+       "required": false
+      }
+     ]
+    },
+    "toList": {
+     "origin": null,
+     "params": []
+    },
+    "toSimpleType": {
+     "origin": null,
+     "params": []
+    },
+    "toString": {
+     "origin": null,
+     "params": []
+    },
+    "validateJSON": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "input",
+       "required": true
+      }
+     ]
+    }
+   },
+   "origin": {
+    "name": "Run",
+    "orphan": false,
+    "type": "schema",
+    "unstable": false
+   }
+  },
+  "RunOptField": {
+   "bases": [
+    "R6Class"
+   ],
+   "enum_members": {},
+   "fields": {},
+   "kind": "model",
+   "methods": {
+    "fromJSON": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "input_json",
+       "required": true
+      }
+     ]
+    },
+    "fromJSONString": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "input_json",
+       "required": true
+      }
+     ]
+    },
+    "initialize": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "...",
+       "required": false
+      }
+     ]
+    },
+    "toJSON": {
+     "origin": null,
+     "params": []
+    },
+    "toJSONString": {
+     "origin": null,
+     "params": []
+    }
+   },
+   "origin": {
+    "name": "RunOptField",
+    "orphan": false,
+    "type": "schema",
+    "unstable": false
+   }
+  },
+  "RunsApi": {
+   "bases": [
+    "R6Class"
+   ],
+   "enum_members": {},
+   "fields": {
+    "api_client": {
+     "alias": "api_client",
+     "name": "api_client",
+     "required": false,
+     "type": null
+    }
+   },
+   "kind": "api",
+   "methods": {
+    "GetRun": {
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/runs/{runId}",
+      "operation_id": "getRun",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "run_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "opt_fields",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "data_file",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "...",
+       "required": false
+      }
+     ]
+    },
+    "GetRunWithHttpInfo": {
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/runs/{runId}",
+      "operation_id": "getRun",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "run_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "opt_fields",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "data_file",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "...",
+       "required": false
+      }
+     ]
+    },
+    "GetRunsPage": {
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/runs/page",
+      "operation_id": "getRunsPage",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "search_query",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "page",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "size",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "sort",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "opt_fields",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "data_file",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "...",
+       "required": false
+      }
+     ]
+    },
+    "GetRunsPageWithHttpInfo": {
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/runs/page",
+      "operation_id": "getRunsPage",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "search_query",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "page",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "size",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "sort",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "opt_fields",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "data_file",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "...",
+       "required": false
+      }
+     ]
+    },
+    "GetRunsSearchableFields": {
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/runs/searchable-fields",
+      "operation_id": "getRunsSearchableFields",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "data_file",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "...",
+       "required": false
+      }
+     ]
+    },
+    "GetRunsSearchableFieldsWithHttpInfo": {
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/runs/searchable-fields",
+      "operation_id": "getRunsSearchableFields",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
       },
       {
        "kind": "positional",
@@ -15999,6 +18047,243 @@
     }
    },
    "origin": null
+  },
+  "SearchableField": {
+   "bases": [
+    "R6Class"
+   ],
+   "enum_members": {},
+   "fields": {
+    "defaultSearchField": {
+     "alias": "defaultSearchField",
+     "name": "defaultSearchField",
+     "required": false,
+     "type": null
+    },
+    "description": {
+     "alias": "description",
+     "name": "description",
+     "required": false,
+     "type": null
+    },
+    "fieldType": {
+     "alias": "fieldType",
+     "name": "fieldType",
+     "required": false,
+     "type": null
+    },
+    "fullTextSearch": {
+     "alias": "fullTextSearch",
+     "name": "fullTextSearch",
+     "required": false,
+     "type": null
+    },
+    "name": {
+     "alias": "name",
+     "name": "name",
+     "required": false,
+     "type": null
+    },
+    "possibleValues": {
+     "alias": "possibleValues",
+     "name": "possibleValues",
+     "required": false,
+     "type": null
+    },
+    "significantSuffixLength": {
+     "alias": "significantSuffixLength",
+     "name": "significantSuffixLength",
+     "required": false,
+     "type": null
+    },
+    "sortable": {
+     "alias": "sortable",
+     "name": "sortable",
+     "required": false,
+     "type": null
+    }
+   },
+   "kind": "model",
+   "methods": {
+    "fromJSON": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "input_json",
+       "required": true
+      }
+     ]
+    },
+    "fromJSONString": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "input_json",
+       "required": true
+      }
+     ]
+    },
+    "getInvalidFields": {
+     "origin": null,
+     "params": []
+    },
+    "initialize": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "name",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "fieldType",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "significantSuffixLength",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "fullTextSearch",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "sortable",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "defaultSearchField",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "possibleValues",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "description",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "...",
+       "required": false
+      }
+     ]
+    },
+    "isValid": {
+     "origin": null,
+     "params": []
+    },
+    "print": {
+     "origin": null,
+     "params": []
+    },
+    "toJSON": {
+     "origin": null,
+     "params": []
+    },
+    "toJSONString": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "...",
+       "required": false
+      }
+     ]
+    },
+    "toList": {
+     "origin": null,
+     "params": []
+    },
+    "toSimpleType": {
+     "origin": null,
+     "params": []
+    },
+    "toString": {
+     "origin": null,
+     "params": []
+    },
+    "validateJSON": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "input",
+       "required": true
+      }
+     ]
+    }
+   },
+   "origin": {
+    "name": "SearchableField",
+    "orphan": false,
+    "type": "schema",
+    "unstable": false
+   }
+  },
+  "SearchableFieldType": {
+   "bases": [
+    "R6Class"
+   ],
+   "enum_members": {},
+   "fields": {},
+   "kind": "model",
+   "methods": {
+    "fromJSON": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "input_json",
+       "required": true
+      }
+     ]
+    },
+    "fromJSONString": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "input_json",
+       "required": true
+      }
+     ]
+    },
+    "initialize": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "...",
+       "required": false
+      }
+     ]
+    },
+    "toJSON": {
+     "origin": null,
+     "params": []
+    },
+    "toJSONString": {
+     "origin": null,
+     "params": []
+    }
+   },
+   "origin": {
+    "name": "SearchableFieldType",
+    "orphan": false,
+    "type": "schema",
+    "unstable": false
+   }
   },
   "SecurityContext": {
    "bases": [
@@ -20275,6 +22560,12 @@
      "required": false,
      "type": null
     },
+    "runs_api": {
+     "alias": "runs_api",
+     "name": "runs_api",
+     "required": false,
+     "type": null
+    },
     "searchable_databases_api": {
      "alias": "searchable_databases_api",
      "name": "searchable_databases_api",
@@ -20327,6 +22618,7 @@
   "AnnotatedMsMsData",
   "AnnotatedPeak",
   "AnnotatedSpectrum",
+  "AnyValue",
   "ApiClient",
   "ApiResponse",
   "BackgroundComputationsStateEvent",
@@ -20349,6 +22641,7 @@
   "DBLink",
   "DataImportEvent",
   "Deviation",
+  "Feature",
   "FeatureAnnotations",
   "FeatureImport",
   "FeaturesApi",
@@ -20377,20 +22670,30 @@
   "PageMetadata",
   "PagedModelAlignedFeature",
   "PagedModelCompound",
+  "PagedModelFeature",
   "PagedModelFormulaCandidate",
   "PagedModelJob",
+  "PagedModelRun",
   "PagedModelSpectralLibraryMatch",
   "PagedModelStructureCandidateFormula",
   "PagedModelStructureCandidateScored",
   "ParentPeak",
   "PeakAnnotation",
   "PeakPair",
+  "ProblemDetail",
   "ProjectChangeEvent",
   "ProjectInfo",
   "ProjectsApi",
+  "QuantTable",
+  "QuantTableOptField",
+  "Run",
+  "RunOptField",
+  "RunsApi",
   "SearchableDatabase",
   "SearchableDatabaseParameters",
   "SearchableDatabasesApi",
+  "SearchableField",
+  "SearchableFieldType",
   "SecurityContext",
   "SecurityContextPrincipal",
   "SimplePeak",
@@ -20421,9 +22724,9 @@
  ],
  "language": "r",
  "meta": {
-  "api_version": "3.1",
+  "api_version": "3.2",
   "generator_version": "7.10.0",
-  "package_version": "6.3.12"
+  "package_version": "6.5.4"
  },
  "snapshot_version": 1
 }

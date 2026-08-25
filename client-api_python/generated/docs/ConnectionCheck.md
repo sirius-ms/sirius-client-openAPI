@@ -6,7 +6,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **license_info** | [**LicenseInfo**](LicenseInfo.md) |  | 
-**errors** | [**List[ConnectionError]**](ConnectionError.md) | List of errors ordered by significance. first error should be reported and addressed first.  Following errors might just be follow-up errors | 
+**errors** | [**List[ConnectionError]**](ConnectionError.md) | List of errors ordered by significance. First error should be reported and addressed first.  Following errors might just be follow-up errors | 
 
 ## Example
 

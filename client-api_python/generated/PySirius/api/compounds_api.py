@@ -23,6 +23,10 @@ from PySirius.models.compound_import import CompoundImport
 from PySirius.models.compound_opt_field import CompoundOptField
 from PySirius.models.instrument_profile import InstrumentProfile
 from PySirius.models.paged_model_compound import PagedModelCompound
+from PySirius.models.quant_measure import QuantMeasure
+from PySirius.models.quant_table import QuantTable
+from PySirius.models.quant_table_opt_field import QuantTableOptField
+from PySirius.models.searchable_field import SearchableField
 
 from PySirius.api_client import ApiClient, RequestSerialized
 from PySirius.api_response import ApiResponse
@@ -63,9 +67,9 @@ class CompoundsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> List[Compound]:
-        """Import Compounds and its contained features.
+        """Import compounds and their contained features.
 
-        Import Compounds and its contained features. Compounds and Features must not exist in the project.  Otherwise, they will exist twice.
+        Import compounds and their contained features. Compounds and features must not exist in the project.  Otherwise, they will exist twice.
 
         :param project_id: project-space to import into. (required)
         :type project_id: str
@@ -113,6 +117,9 @@ class CompoundsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "List[Compound]",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -146,9 +153,9 @@ class CompoundsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[List[Compound]]:
-        """Import Compounds and its contained features.
+        """Import compounds and their contained features.
 
-        Import Compounds and its contained features. Compounds and Features must not exist in the project.  Otherwise, they will exist twice.
+        Import compounds and their contained features. Compounds and features must not exist in the project.  Otherwise, they will exist twice.
 
         :param project_id: project-space to import into. (required)
         :type project_id: str
@@ -196,6 +203,9 @@ class CompoundsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "List[Compound]",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -229,9 +239,9 @@ class CompoundsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Import Compounds and its contained features.
+        """Import compounds and their contained features.
 
-        Import Compounds and its contained features. Compounds and Features must not exist in the project.  Otherwise, they will exist twice.
+        Import compounds and their contained features. Compounds and features must not exist in the project.  Otherwise, they will exist twice.
 
         :param project_id: project-space to import into. (required)
         :type project_id: str
@@ -279,6 +289,9 @@ class CompoundsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "List[Compound]",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -344,7 +357,8 @@ class CompoundsApi:
         if 'Accept' not in _header_params:
             _header_params['Accept'] = self.api_client.select_header_accept(
                 [
-                    'application/json'
+                    'application/json', 
+                    'application/problem+json'
                 ]
             )
 
@@ -443,6 +457,9 @@ class CompoundsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': None,
+            '500': None,
+            '404': None,
+            '400': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -514,6 +531,9 @@ class CompoundsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': None,
+            '500': None,
+            '404': None,
+            '400': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -585,6 +605,9 @@ class CompoundsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': None,
+            '500': None,
+            '404': None,
+            '400': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -723,6 +746,9 @@ class CompoundsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "Compound",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -806,6 +832,9 @@ class CompoundsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "Compound",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -889,6 +918,9 @@ class CompoundsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "Compound",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -953,7 +985,8 @@ class CompoundsApi:
         if 'Accept' not in _header_params:
             _header_params['Accept'] = self.api_client.select_header_accept(
                 [
-                    'application/json'
+                    'application/json', 
+                    'application/problem+json'
                 ]
             )
 
@@ -965,6 +998,328 @@ class CompoundsApi:
         return self.api_client.param_serialize(
             method='GET',
             resource_path='/api/projects/{projectId}/compounds/{compoundId}',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def get_compound_quant_table(
+        self,
+        project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
+        search_query: Annotated[Optional[StrictStr], Field(description="Optional query in lucene syntax selecting compounds by id. Omit this parameter to quantify all compounds.")] = None,
+        type: Annotated[Optional[QuantMeasure], Field(description="quantification type.")] = None,
+        opt_fields: Optional[List[Optional[QuantTableOptField]]] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> QuantTable:
+        """Returns the full quantification table of compounds
+
+        Returns the full quantification table of compounds.  <p>  The quantification table contains the quantities of the compounds within all runs they are contained in.  Rows refer to compounds, columns to runs, both given as ids and names.  <p>  Compounds are not indexed yet, so the optional search query may only refer to the compound id, e.g.  <code>compoundId:1 OR compoundId:2</code> or <code>NOT compoundId:3</code>. Such a query is answered with the same  semantics the search index would apply. Any query referring to other fields is rejected. Omit the query to  quantify all compounds.
+
+        :param project_id: project-space to read from. (required)
+        :type project_id: str
+        :param search_query: Optional query in lucene syntax selecting compounds by id. Omit this parameter to quantify all compounds.
+        :type search_query: str
+        :param type: quantification type.
+        :type type: QuantMeasure
+        :param opt_fields:
+        :type opt_fields: List[QuantTableOptField]
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_compound_quant_table_serialize(
+            project_id=project_id,
+            search_query=search_query,
+            type=type,
+            opt_fields=opt_fields,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "QuantTable",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def get_compound_quant_table_with_http_info(
+        self,
+        project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
+        search_query: Annotated[Optional[StrictStr], Field(description="Optional query in lucene syntax selecting compounds by id. Omit this parameter to quantify all compounds.")] = None,
+        type: Annotated[Optional[QuantMeasure], Field(description="quantification type.")] = None,
+        opt_fields: Optional[List[Optional[QuantTableOptField]]] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[QuantTable]:
+        """Returns the full quantification table of compounds
+
+        Returns the full quantification table of compounds.  <p>  The quantification table contains the quantities of the compounds within all runs they are contained in.  Rows refer to compounds, columns to runs, both given as ids and names.  <p>  Compounds are not indexed yet, so the optional search query may only refer to the compound id, e.g.  <code>compoundId:1 OR compoundId:2</code> or <code>NOT compoundId:3</code>. Such a query is answered with the same  semantics the search index would apply. Any query referring to other fields is rejected. Omit the query to  quantify all compounds.
+
+        :param project_id: project-space to read from. (required)
+        :type project_id: str
+        :param search_query: Optional query in lucene syntax selecting compounds by id. Omit this parameter to quantify all compounds.
+        :type search_query: str
+        :param type: quantification type.
+        :type type: QuantMeasure
+        :param opt_fields:
+        :type opt_fields: List[QuantTableOptField]
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_compound_quant_table_serialize(
+            project_id=project_id,
+            search_query=search_query,
+            type=type,
+            opt_fields=opt_fields,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "QuantTable",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def get_compound_quant_table_without_preload_content(
+        self,
+        project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
+        search_query: Annotated[Optional[StrictStr], Field(description="Optional query in lucene syntax selecting compounds by id. Omit this parameter to quantify all compounds.")] = None,
+        type: Annotated[Optional[QuantMeasure], Field(description="quantification type.")] = None,
+        opt_fields: Optional[List[Optional[QuantTableOptField]]] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Returns the full quantification table of compounds
+
+        Returns the full quantification table of compounds.  <p>  The quantification table contains the quantities of the compounds within all runs they are contained in.  Rows refer to compounds, columns to runs, both given as ids and names.  <p>  Compounds are not indexed yet, so the optional search query may only refer to the compound id, e.g.  <code>compoundId:1 OR compoundId:2</code> or <code>NOT compoundId:3</code>. Such a query is answered with the same  semantics the search index would apply. Any query referring to other fields is rejected. Omit the query to  quantify all compounds.
+
+        :param project_id: project-space to read from. (required)
+        :type project_id: str
+        :param search_query: Optional query in lucene syntax selecting compounds by id. Omit this parameter to quantify all compounds.
+        :type search_query: str
+        :param type: quantification type.
+        :type type: QuantMeasure
+        :param opt_fields:
+        :type opt_fields: List[QuantTableOptField]
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_compound_quant_table_serialize(
+            project_id=project_id,
+            search_query=search_query,
+            type=type,
+            opt_fields=opt_fields,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "QuantTable",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _get_compound_quant_table_serialize(
+        self,
+        project_id,
+        search_query,
+        type,
+        opt_fields,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+            'optFields': 'multi',
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if project_id is not None:
+            _path_params['projectId'] = project_id
+        # process the query parameters
+        if search_query is not None:
+            
+            _query_params.append(('searchQuery', search_query))
+            
+        if type is not None:
+            
+            _query_params.append(('type', type.value))
+            
+        if opt_fields is not None:
+            
+            _query_params.append(('optFields', opt_fields))
+            
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json', 
+                    'application/problem+json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/api/projects/{projectId}/compounds/quant-table',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -1000,9 +1355,9 @@ class CompoundsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> List[Compound]:
-        """List of all available compounds (group of ion identities) in the given project-space.
+        """(Deprecated) [DEPRECATED] List of all available compounds (group of ion identities) in the given project-space
 
-        List of all available compounds (group of ion identities) in the given project-space.
+        [DEPRECATED] List of all available compounds (group of ion identities) in the given project-space.  <p>  [DEPRECATED] Use /compounds/page instead. Loading all compounds at once does not scale for large projects.  This endpoint will be removed in the next major version of this API.
 
         :param project_id: project-space to read from. (required)
         :type project_id: str
@@ -1033,6 +1388,7 @@ class CompoundsApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """ # noqa: E501
+        warnings.warn("GET /api/projects/{projectId}/compounds is deprecated.", DeprecationWarning)
 
         _param = self._get_compounds_serialize(
             project_id=project_id,
@@ -1047,6 +1403,9 @@ class CompoundsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "List[Compound]",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1079,9 +1438,9 @@ class CompoundsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[List[Compound]]:
-        """List of all available compounds (group of ion identities) in the given project-space.
+        """(Deprecated) [DEPRECATED] List of all available compounds (group of ion identities) in the given project-space
 
-        List of all available compounds (group of ion identities) in the given project-space.
+        [DEPRECATED] List of all available compounds (group of ion identities) in the given project-space.  <p>  [DEPRECATED] Use /compounds/page instead. Loading all compounds at once does not scale for large projects.  This endpoint will be removed in the next major version of this API.
 
         :param project_id: project-space to read from. (required)
         :type project_id: str
@@ -1112,6 +1471,7 @@ class CompoundsApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """ # noqa: E501
+        warnings.warn("GET /api/projects/{projectId}/compounds is deprecated.", DeprecationWarning)
 
         _param = self._get_compounds_serialize(
             project_id=project_id,
@@ -1126,6 +1486,9 @@ class CompoundsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "List[Compound]",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1158,9 +1521,9 @@ class CompoundsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """List of all available compounds (group of ion identities) in the given project-space.
+        """(Deprecated) [DEPRECATED] List of all available compounds (group of ion identities) in the given project-space
 
-        List of all available compounds (group of ion identities) in the given project-space.
+        [DEPRECATED] List of all available compounds (group of ion identities) in the given project-space.  <p>  [DEPRECATED] Use /compounds/page instead. Loading all compounds at once does not scale for large projects.  This endpoint will be removed in the next major version of this API.
 
         :param project_id: project-space to read from. (required)
         :type project_id: str
@@ -1191,6 +1554,7 @@ class CompoundsApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """ # noqa: E501
+        warnings.warn("GET /api/projects/{projectId}/compounds is deprecated.", DeprecationWarning)
 
         _param = self._get_compounds_serialize(
             project_id=project_id,
@@ -1205,6 +1569,9 @@ class CompoundsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "List[Compound]",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1266,7 +1633,8 @@ class CompoundsApi:
         if 'Accept' not in _header_params:
             _header_params['Accept'] = self.api_client.select_header_accept(
                 [
-                    'application/json'
+                    'application/json', 
+                    'application/problem+json'
                 ]
             )
 
@@ -1294,9 +1662,10 @@ class CompoundsApi:
 
 
     @validate_call
-    def get_compounds_paged(
+    def get_compounds_page(
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
+        search_query: Annotated[Optional[StrictStr], Field(description="Optional search query in lucene syntax. Not yet supported for compounds; a non-empty                      query responds with 405 METHOD_NOT_ALLOWED. Omit this parameter to page over all compounds.")] = None,
         page: Annotated[Optional[Annotated[int, Field(strict=True, ge=0)]], Field(description="Zero-based page index (0..N)")] = None,
         size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
         sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
@@ -1316,12 +1685,14 @@ class CompoundsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> PagedModelCompound:
-        """Page of available compounds (group of ion identities) in the given project-space.
+        """Page of available compounds (group of ion identities) in the given project-space
 
-        Page of available compounds (group of ion identities) in the given project-space.
+        Page of available compounds (group of ion identities) in the given project-space.   <h2>Supported filter syntax</h2>   <p>The filter string must contain one or more clauses. A clause is prefixed  by a field name.  </p>  <p>  Use the <code>searchable-fields</code> endpoint (getCompoundsSearchableFields) to list the fields that can be  searched - since compound-level indexing is not implemented yet, it currently returns an empty list  (nothing searchable). The syntax below describes how queries will work once compound search is supported;  tag based fields are prefixed with the namespace <code>tags.</code>.  Possible value types are <strong>text</strong>, <strong>integer</strong>, <strong>double</strong>,  <strong>boolean</strong>, <strong>date</strong>, or <strong>time</strong>.   <p>The format of the <strong>date</strong> type is <code>yyyy-MM-dd</code> and of the <strong>time</strong> type is <code>HH\\:mm\\:ss</code>.</p>   <p>A clause may be:</p>  <ul>      <li>a <strong>term</strong>: field name followed by a colon and the search term, e.g. <code>tags.MyTagA:sample</code></li>      <li>a <strong>phrase</strong>: field name followed by a colon and the search phrase in doublequotes, e.g. <code>tags.MyTagA:&quot;Some Text&quot;</code></li>      <li>a <strong>regular expression</strong>: field name followed by a colon and the regex in slashes, e.g. <code>tags.MyTagA:/[mb]oat/</code></li>      <li>a <strong>comparison</strong>: field name followed by a comparison operator and a value, e.g. <code>tags.MyTagB&lt;3</code></li>      <li>a <strong>range</strong>: field name followed by a colon and an open (indiced by <code>[ </code> and <code>] </code>) or (semi-)closed range (indiced by <code>{</code> and <code>}</code>), e.g. <code>tags.MyTagB:[* TO 3] </code></li>  </ul>   <p>Clauses may be <strong>grouped</strong> with brackets <code>( </code> and <code>) </code> and / or <strong>joined</strong> with <code>AND</code> or <code>OR </code> (or <code>&amp;&amp; </code> and <code>|| </code>)</p>   <h3>Example</h3>   <p>The syntax allows to build complex filter queries such as:</p>   <p><code>tags.city:&quot;new york&quot; AND tags.ATextTag:/[mb]oat/ AND tags.count:[1 TO *] OR tags.realNumberTag&lt;=3.2 OR tags.MyDateTag:2024-01-01 OR tags.MyDateTag:[2023-10-01 TO 2023-12-24] OR tags.MyDateTag&lt;2022-01-01 OR tags.time:12\\:00\\:00 OR tags.time:[12\\:00\\:00 TO 14\\:00\\:00] OR tags.time&lt;10\\:00\\:00 </code></p>  <p>  <strong>Note:</strong> compound-level indexing is not implemented yet, so this endpoint always reads from the  project database. Passing a non-empty <code>searchQuery</code> is therefore not supported and responds with  405 METHOD_NOT_ALLOWED. Omit the parameter to page over all compounds.
 
         :param project_id: project-space to read from. (required)
         :type project_id: str
+        :param search_query: Optional search query in lucene syntax. Not yet supported for compounds; a non-empty                      query responds with 405 METHOD_NOT_ALLOWED. Omit this parameter to page over all compounds.
+        :type search_query: str
         :param page: Zero-based page index (0..N)
         :type page: int
         :param size: The size of the page to be returned
@@ -1356,8 +1727,9 @@ class CompoundsApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._get_compounds_paged_serialize(
+        _param = self._get_compounds_page_serialize(
             project_id=project_id,
+            search_query=search_query,
             page=page,
             size=size,
             sort=sort,
@@ -1372,6 +1744,9 @@ class CompoundsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PagedModelCompound",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1385,9 +1760,10 @@ class CompoundsApi:
 
 
     @validate_call
-    def get_compounds_paged_with_http_info(
+    def get_compounds_page_with_http_info(
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
+        search_query: Annotated[Optional[StrictStr], Field(description="Optional search query in lucene syntax. Not yet supported for compounds; a non-empty                      query responds with 405 METHOD_NOT_ALLOWED. Omit this parameter to page over all compounds.")] = None,
         page: Annotated[Optional[Annotated[int, Field(strict=True, ge=0)]], Field(description="Zero-based page index (0..N)")] = None,
         size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
         sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
@@ -1407,12 +1783,14 @@ class CompoundsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[PagedModelCompound]:
-        """Page of available compounds (group of ion identities) in the given project-space.
+        """Page of available compounds (group of ion identities) in the given project-space
 
-        Page of available compounds (group of ion identities) in the given project-space.
+        Page of available compounds (group of ion identities) in the given project-space.   <h2>Supported filter syntax</h2>   <p>The filter string must contain one or more clauses. A clause is prefixed  by a field name.  </p>  <p>  Use the <code>searchable-fields</code> endpoint (getCompoundsSearchableFields) to list the fields that can be  searched - since compound-level indexing is not implemented yet, it currently returns an empty list  (nothing searchable). The syntax below describes how queries will work once compound search is supported;  tag based fields are prefixed with the namespace <code>tags.</code>.  Possible value types are <strong>text</strong>, <strong>integer</strong>, <strong>double</strong>,  <strong>boolean</strong>, <strong>date</strong>, or <strong>time</strong>.   <p>The format of the <strong>date</strong> type is <code>yyyy-MM-dd</code> and of the <strong>time</strong> type is <code>HH\\:mm\\:ss</code>.</p>   <p>A clause may be:</p>  <ul>      <li>a <strong>term</strong>: field name followed by a colon and the search term, e.g. <code>tags.MyTagA:sample</code></li>      <li>a <strong>phrase</strong>: field name followed by a colon and the search phrase in doublequotes, e.g. <code>tags.MyTagA:&quot;Some Text&quot;</code></li>      <li>a <strong>regular expression</strong>: field name followed by a colon and the regex in slashes, e.g. <code>tags.MyTagA:/[mb]oat/</code></li>      <li>a <strong>comparison</strong>: field name followed by a comparison operator and a value, e.g. <code>tags.MyTagB&lt;3</code></li>      <li>a <strong>range</strong>: field name followed by a colon and an open (indiced by <code>[ </code> and <code>] </code>) or (semi-)closed range (indiced by <code>{</code> and <code>}</code>), e.g. <code>tags.MyTagB:[* TO 3] </code></li>  </ul>   <p>Clauses may be <strong>grouped</strong> with brackets <code>( </code> and <code>) </code> and / or <strong>joined</strong> with <code>AND</code> or <code>OR </code> (or <code>&amp;&amp; </code> and <code>|| </code>)</p>   <h3>Example</h3>   <p>The syntax allows to build complex filter queries such as:</p>   <p><code>tags.city:&quot;new york&quot; AND tags.ATextTag:/[mb]oat/ AND tags.count:[1 TO *] OR tags.realNumberTag&lt;=3.2 OR tags.MyDateTag:2024-01-01 OR tags.MyDateTag:[2023-10-01 TO 2023-12-24] OR tags.MyDateTag&lt;2022-01-01 OR tags.time:12\\:00\\:00 OR tags.time:[12\\:00\\:00 TO 14\\:00\\:00] OR tags.time&lt;10\\:00\\:00 </code></p>  <p>  <strong>Note:</strong> compound-level indexing is not implemented yet, so this endpoint always reads from the  project database. Passing a non-empty <code>searchQuery</code> is therefore not supported and responds with  405 METHOD_NOT_ALLOWED. Omit the parameter to page over all compounds.
 
         :param project_id: project-space to read from. (required)
         :type project_id: str
+        :param search_query: Optional search query in lucene syntax. Not yet supported for compounds; a non-empty                      query responds with 405 METHOD_NOT_ALLOWED. Omit this parameter to page over all compounds.
+        :type search_query: str
         :param page: Zero-based page index (0..N)
         :type page: int
         :param size: The size of the page to be returned
@@ -1447,8 +1825,9 @@ class CompoundsApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._get_compounds_paged_serialize(
+        _param = self._get_compounds_page_serialize(
             project_id=project_id,
+            search_query=search_query,
             page=page,
             size=size,
             sort=sort,
@@ -1463,6 +1842,9 @@ class CompoundsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PagedModelCompound",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1476,9 +1858,10 @@ class CompoundsApi:
 
 
     @validate_call
-    def get_compounds_paged_without_preload_content(
+    def get_compounds_page_without_preload_content(
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to read from.")],
+        search_query: Annotated[Optional[StrictStr], Field(description="Optional search query in lucene syntax. Not yet supported for compounds; a non-empty                      query responds with 405 METHOD_NOT_ALLOWED. Omit this parameter to page over all compounds.")] = None,
         page: Annotated[Optional[Annotated[int, Field(strict=True, ge=0)]], Field(description="Zero-based page index (0..N)")] = None,
         size: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="The size of the page to be returned")] = None,
         sort: Annotated[Optional[List[StrictStr]], Field(description="Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.")] = None,
@@ -1498,12 +1881,14 @@ class CompoundsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Page of available compounds (group of ion identities) in the given project-space.
+        """Page of available compounds (group of ion identities) in the given project-space
 
-        Page of available compounds (group of ion identities) in the given project-space.
+        Page of available compounds (group of ion identities) in the given project-space.   <h2>Supported filter syntax</h2>   <p>The filter string must contain one or more clauses. A clause is prefixed  by a field name.  </p>  <p>  Use the <code>searchable-fields</code> endpoint (getCompoundsSearchableFields) to list the fields that can be  searched - since compound-level indexing is not implemented yet, it currently returns an empty list  (nothing searchable). The syntax below describes how queries will work once compound search is supported;  tag based fields are prefixed with the namespace <code>tags.</code>.  Possible value types are <strong>text</strong>, <strong>integer</strong>, <strong>double</strong>,  <strong>boolean</strong>, <strong>date</strong>, or <strong>time</strong>.   <p>The format of the <strong>date</strong> type is <code>yyyy-MM-dd</code> and of the <strong>time</strong> type is <code>HH\\:mm\\:ss</code>.</p>   <p>A clause may be:</p>  <ul>      <li>a <strong>term</strong>: field name followed by a colon and the search term, e.g. <code>tags.MyTagA:sample</code></li>      <li>a <strong>phrase</strong>: field name followed by a colon and the search phrase in doublequotes, e.g. <code>tags.MyTagA:&quot;Some Text&quot;</code></li>      <li>a <strong>regular expression</strong>: field name followed by a colon and the regex in slashes, e.g. <code>tags.MyTagA:/[mb]oat/</code></li>      <li>a <strong>comparison</strong>: field name followed by a comparison operator and a value, e.g. <code>tags.MyTagB&lt;3</code></li>      <li>a <strong>range</strong>: field name followed by a colon and an open (indiced by <code>[ </code> and <code>] </code>) or (semi-)closed range (indiced by <code>{</code> and <code>}</code>), e.g. <code>tags.MyTagB:[* TO 3] </code></li>  </ul>   <p>Clauses may be <strong>grouped</strong> with brackets <code>( </code> and <code>) </code> and / or <strong>joined</strong> with <code>AND</code> or <code>OR </code> (or <code>&amp;&amp; </code> and <code>|| </code>)</p>   <h3>Example</h3>   <p>The syntax allows to build complex filter queries such as:</p>   <p><code>tags.city:&quot;new york&quot; AND tags.ATextTag:/[mb]oat/ AND tags.count:[1 TO *] OR tags.realNumberTag&lt;=3.2 OR tags.MyDateTag:2024-01-01 OR tags.MyDateTag:[2023-10-01 TO 2023-12-24] OR tags.MyDateTag&lt;2022-01-01 OR tags.time:12\\:00\\:00 OR tags.time:[12\\:00\\:00 TO 14\\:00\\:00] OR tags.time&lt;10\\:00\\:00 </code></p>  <p>  <strong>Note:</strong> compound-level indexing is not implemented yet, so this endpoint always reads from the  project database. Passing a non-empty <code>searchQuery</code> is therefore not supported and responds with  405 METHOD_NOT_ALLOWED. Omit the parameter to page over all compounds.
 
         :param project_id: project-space to read from. (required)
         :type project_id: str
+        :param search_query: Optional search query in lucene syntax. Not yet supported for compounds; a non-empty                      query responds with 405 METHOD_NOT_ALLOWED. Omit this parameter to page over all compounds.
+        :type search_query: str
         :param page: Zero-based page index (0..N)
         :type page: int
         :param size: The size of the page to be returned
@@ -1538,8 +1923,9 @@ class CompoundsApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._get_compounds_paged_serialize(
+        _param = self._get_compounds_page_serialize(
             project_id=project_id,
+            search_query=search_query,
             page=page,
             size=size,
             sort=sort,
@@ -1554,6 +1940,9 @@ class CompoundsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PagedModelCompound",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1562,9 +1951,10 @@ class CompoundsApi:
         return response_data.response
 
 
-    def _get_compounds_paged_serialize(
+    def _get_compounds_page_serialize(
         self,
         project_id,
+        search_query,
         page,
         size,
         sort,
@@ -1598,6 +1988,10 @@ class CompoundsApi:
         if project_id is not None:
             _path_params['projectId'] = project_id
         # process the query parameters
+        if search_query is not None:
+            
+            _query_params.append(('searchQuery', search_query))
+            
         if page is not None:
             
             _query_params.append(('page', page))
@@ -1631,7 +2025,8 @@ class CompoundsApi:
         if 'Accept' not in _header_params:
             _header_params['Accept'] = self.api_client.select_header_accept(
                 [
-                    'application/json'
+                    'application/json', 
+                    'application/problem+json'
                 ]
             )
 
@@ -1643,6 +2038,276 @@ class CompoundsApi:
         return self.api_client.param_serialize(
             method='GET',
             resource_path='/api/projects/{projectId}/compounds/page',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def get_compounds_searchable_fields(
+        self,
+        project_id: Annotated[StrictStr, Field(description="project space to read the searchable compound fields from.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> List[SearchableField]:
+        """Get all fields that can be used in the searchQuery parameter of compound endpoints
+
+        Get all fields that can be used in the searchQuery parameter of compound endpoints.  <p>  An empty list means there are no searchable fields. Since compound-level indexing is not implemented yet,  this currently always returns an empty list; it will list the searchable compound fields once compound  search is supported.
+
+        :param project_id: project space to read the searchable compound fields from. (required)
+        :type project_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_compounds_searchable_fields_serialize(
+            project_id=project_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "List[SearchableField]",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def get_compounds_searchable_fields_with_http_info(
+        self,
+        project_id: Annotated[StrictStr, Field(description="project space to read the searchable compound fields from.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[List[SearchableField]]:
+        """Get all fields that can be used in the searchQuery parameter of compound endpoints
+
+        Get all fields that can be used in the searchQuery parameter of compound endpoints.  <p>  An empty list means there are no searchable fields. Since compound-level indexing is not implemented yet,  this currently always returns an empty list; it will list the searchable compound fields once compound  search is supported.
+
+        :param project_id: project space to read the searchable compound fields from. (required)
+        :type project_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_compounds_searchable_fields_serialize(
+            project_id=project_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "List[SearchableField]",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def get_compounds_searchable_fields_without_preload_content(
+        self,
+        project_id: Annotated[StrictStr, Field(description="project space to read the searchable compound fields from.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Get all fields that can be used in the searchQuery parameter of compound endpoints
+
+        Get all fields that can be used in the searchQuery parameter of compound endpoints.  <p>  An empty list means there are no searchable fields. Since compound-level indexing is not implemented yet,  this currently always returns an empty list; it will list the searchable compound fields once compound  search is supported.
+
+        :param project_id: project space to read the searchable compound fields from. (required)
+        :type project_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_compounds_searchable_fields_serialize(
+            project_id=project_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "List[SearchableField]",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _get_compounds_searchable_fields_serialize(
+        self,
+        project_id,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if project_id is not None:
+            _path_params['projectId'] = project_id
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json', 
+                    'application/problem+json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/api/projects/{projectId}/compounds/searchable-fields',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,

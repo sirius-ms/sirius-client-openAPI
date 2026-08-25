@@ -11,14 +11,14 @@
 #' @field siriusVersion Version of the SIRIUS application character [optional]
 #' @field latestSiriusVersion Latest available Version of the SIRIUS application character [optional]
 #' @field latestSiriusLink Link to the latest available Version of the SIRIUS application character [optional]
-#' @field updateAvailable true if newer SIRIUS version is available character [optional]
+#' @field updateAvailable True if a newer SIRIUS version is available. character [optional]
 #' @field siriusLibVersion Version of the SIRIUS libraries character [optional]
 #' @field fingerIdLibVersion Version of the CSI:FingerID libraries character [optional]
 #' @field chemDbVersion Version of the Chemical Database available via SIRIUS web services character [optional]
 #' @field fingerIdModelVersion Version of the Machine learning models used for Fingerprint, Compound Class and Structure Prediction  Not available if web service is not reachable. character [optional]
 #' @field fingerprintId Version of the Molecular Fingerprint used by SIRIUS character [optional]
 #' @field availableILPSolvers Set of solvers that are configured correctly and can be loaded list(character)
-#' @field supportedILPSolvers Set of ILP Solvers that are Supported and their version information named list(character)
+#' @field supportedILPSolvers Set of ILP solvers that are supported, and their version information named list(character)
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
 #' @export
@@ -42,12 +42,12 @@ Info <- R6::R6Class(
     #' Initialize a new Info class.
     #'
     #' @param availableILPSolvers Set of solvers that are configured correctly and can be loaded
-    #' @param supportedILPSolvers Set of ILP Solvers that are Supported and their version information
+    #' @param supportedILPSolvers Set of ILP solvers that are supported, and their version information
     #' @param nightSkyApiVersion API version of the SIRIUS Nightsky API
     #' @param siriusVersion Version of the SIRIUS application
     #' @param latestSiriusVersion Latest available Version of the SIRIUS application
     #' @param latestSiriusLink Link to the latest available Version of the SIRIUS application
-    #' @param updateAvailable true if newer SIRIUS version is available
+    #' @param updateAvailable True if a newer SIRIUS version is available.
     #' @param siriusLibVersion Version of the SIRIUS libraries
     #' @param fingerIdLibVersion Version of the CSI:FingerID libraries
     #' @param chemDbVersion Version of the Chemical Database available via SIRIUS web services

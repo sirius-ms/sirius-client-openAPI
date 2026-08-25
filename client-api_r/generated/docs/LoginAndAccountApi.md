@@ -29,7 +29,7 @@ library(RSirius)
 # Get information about the account currently logged in.
 #
 # prepare function argument(s)
-var_include_subs <- FALSE # character | include available and active subscriptions in {@link AccountInfo AccountInfo}. (Optional)
+var_include_subs <- FALSE # character | include available and active subscriptions in <code>AccountInfo</code>. (Optional)
 
 api_instance <- rsirius_api$new()
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
@@ -42,7 +42,7 @@ dput(result)
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **include_subs** | **character**| include available and active subscriptions in {@link AccountInfo AccountInfo}. | [optional] [default to FALSE]
+ **include_subs** | **character**| include available and active subscriptions in &lt;code&gt;AccountInfo&lt;/code&gt;. | [optional] [default to FALSE]
 
 ### Return type
 
@@ -55,12 +55,14 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: application/json, application/problem+json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Basic information about the account that has been logged in and its subscriptions. |  -  |
+| **500** | Unexpected server-side error. The problem detail carries the reason. |  -  |
+| **400** | The request body or a parameter is malformed or violates a constraint. |  -  |
 
 # **GetSignUpURL**
 > character GetSignUpURL()
@@ -97,12 +99,13 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: text/plain;charset=UTF-8
+ - **Accept**: text/plain;charset=UTF-8, application/problem+json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | OK |  -  |
+| **500** | Unexpected server-side error. The problem detail carries the reason. |  -  |
 
 # **GetSubscriptions**
 > array[Subscription] GetSubscriptions()
@@ -139,12 +142,13 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: application/json, application/problem+json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | OK |  -  |
+| **500** | Unexpected server-side error. The problem detail carries the reason. |  -  |
 
 # **IsLoggedIn**
 > character IsLoggedIn()
@@ -181,12 +185,13 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: application/json, application/problem+json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | true if the user is logged in |  -  |
+| **500** | Unexpected server-side error. The problem detail carries the reason. |  -  |
 
 # **Login**
 > AccountInfo Login(accept_terms, account_credentials, fail_when_logged_in = FALSE, include_subs = FALSE)
@@ -205,7 +210,7 @@ library(RSirius)
 var_accept_terms <- "accept_terms_example" # character | 
 var_account_credentials <- AccountCredentials$new("username_example", "password_example", "refreshToken_example") # AccountCredentials | used to log in.
 var_fail_when_logged_in <- FALSE # character | if true request fails if an active login already exists. (Optional)
-var_include_subs <- FALSE # character | include available and active subscriptions in {@link AccountInfo AccountInfo}. (Optional)
+var_include_subs <- FALSE # character | include available and active subscriptions in <code>AccountInfo</code>. (Optional)
 
 api_instance <- rsirius_api$new()
 # to save the result into a file, simply add the optional `data_file` parameter, e.g.
@@ -221,7 +226,7 @@ Name | Type | Description  | Notes
  **accept_terms** | **character**|  | 
  **account_credentials** | [**AccountCredentials**](AccountCredentials.md)| used to log in. | 
  **fail_when_logged_in** | **character**| if true request fails if an active login already exists. | [optional] [default to FALSE]
- **include_subs** | **character**| include available and active subscriptions in {@link AccountInfo AccountInfo}. | [optional] [default to FALSE]
+ **include_subs** | **character**| include available and active subscriptions in &lt;code&gt;AccountInfo&lt;/code&gt;. | [optional] [default to FALSE]
 
 ### Return type
 
@@ -234,12 +239,14 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: application/json
+ - **Accept**: application/json, application/problem+json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Basic information about the account that has been logged in and its subscriptions. |  -  |
+| **500** | Unexpected server-side error. The problem detail carries the reason. |  -  |
+| **400** | The request body or a parameter is malformed or violates a constraint. |  -  |
 
 # **Logout**
 > Logout()
@@ -279,6 +286,7 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | OK |  -  |
+| **500** | Unexpected server-side error. The problem detail carries the reason. |  -  |
 
 # **OpenPortal**
 > OpenPortal()
@@ -318,6 +326,7 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | OK |  -  |
+| **500** | Unexpected server-side error. The problem detail carries the reason. |  -  |
 
 # **SelectSubscription**
 > AccountInfo SelectSubscription(sid)
@@ -359,12 +368,14 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: application/json, application/problem+json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Account information with updated active subscription |  -  |
+| **500** | Unexpected server-side error. The problem detail carries the reason. |  -  |
+| **400** | The request body or a parameter is malformed or violates a constraint. |  -  |
 
 # **SignUp**
 > character SignUp()
@@ -401,10 +412,11 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: text/plain;charset=UTF-8
+ - **Accept**: text/plain;charset=UTF-8, application/problem+json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | OK |  -  |
+| **500** | Unexpected server-side error. The problem detail carries the reason. |  -  |
 

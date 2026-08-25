@@ -7,24 +7,25 @@
 #' @title AlignedFeature
 #' @description AlignedFeature Class
 #' @format An \code{R6Class} generator object
-#' @field alignedFeatureId  character [optional]
-#' @field compoundId  character [optional]
-#' @field name  character [optional]
+#' @field alignedFeatureId Unique identifier of the aligned feature within the project. character [optional]
+#' @field compoundId Identifier of the compound the feature belongs to.  Features that are different adducts or isotopologues of the same molecule share it. character [optional]
+#' @field name Informative, human-readable name of the feature. character [optional]
 #' @field externalFeatureId Externally provided FeatureId (e.g. by some preprocessing tool).  This FeatureId is NOT used by SIRIUS but is stored to ease mapping information back to the source. character [optional]
-#' @field ionMass  numeric [optional]
-#' @field charge Ion mode (charge) this feature has been measured in. integer
-#' @field detectedAdducts Adducts of this feature that have been detected during preprocessing. list(character)
-#' @field rtStartSeconds  numeric [optional]
-#' @field rtEndSeconds  numeric [optional]
-#' @field rtApexSeconds  numeric [optional]
-#' @field quality Quality of this feature. character [optional]
-#' @field hasMs1 If true, the feature has at lease one MS1 spectrum character [optional]
-#' @field hasMsMs If true, the feature has at lease one MS/MS spectrum character [optional]
+#' @field ionMass Mass-to-charge ratio (m/z) of the precursor ion of the feature. numeric [optional]
+#' @field charge Ion mode (charge) the feature has been measured in. integer
+#' @field detectedAdducts Adducts that have been detected for the feature during preprocessing.  Never empty: if no adduct could be detected, the unknown ion type matching the feature's  charge ([M+?]+ or [M+?]-) is reported instead, so every feature is filterable by adduct. list(character)
+#' @field rtStartSeconds Start of the retention time range the feature was detected in, in seconds. numeric [optional]
+#' @field rtEndSeconds End of the retention time range the feature was detected in, in seconds. numeric [optional]
+#' @field rtApexSeconds Retention time of the intensity apex of the feature, in seconds. numeric [optional]
+#' @field quality Overall quality of the feature. NOT_APPLICABLE if no quality data is available character [optional]
+#' @field hasMs1 If true, the feature has at least one MS1 spectrum character [optional]
+#' @field hasMsMs If true, the feature has at least one MS/MS spectrum character [optional]
 #' @field msData  \link{MsData} [optional]
 #' @field topAnnotations  \link{FeatureAnnotations} [optional]
 #' @field topAnnotationsDeNovo  \link{FeatureAnnotations} [optional]
-#' @field computing Write lock for this feature. If the feature is locked no write operations are possible.  True if any computation is modifying this feature or its results character [optional]
+#' @field computing Write lock for the feature. If the feature is locked no write operations are possible.  True if any computation is modifying the feature or its results. character [optional]
 #' @field computedTools  \link{ComputedSubtools} [optional]
+#' @field qualities Qualities per top level quality category. named list(character) [optional]
 #' @field tags Key: tagName, value: tag named list(\link{Tag}) [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
@@ -50,32 +51,34 @@ AlignedFeature <- R6::R6Class(
     `topAnnotationsDeNovo` = NULL,
     `computing` = NULL,
     `computedTools` = NULL,
+    `qualities` = NULL,
     `tags` = NULL,
 
     #' @description
     #' Initialize a new AlignedFeature class.
     #'
-    #' @param charge Ion mode (charge) this feature has been measured in.
-    #' @param detectedAdducts Adducts of this feature that have been detected during preprocessing.
-    #' @param alignedFeatureId alignedFeatureId
-    #' @param compoundId compoundId
-    #' @param name name
+    #' @param charge Ion mode (charge) the feature has been measured in.
+    #' @param detectedAdducts Adducts that have been detected for the feature during preprocessing.  Never empty: if no adduct could be detected, the unknown ion type matching the feature's  charge ([M+?]+ or [M+?]-) is reported instead, so every feature is filterable by adduct.
+    #' @param alignedFeatureId Unique identifier of the aligned feature within the project.
+    #' @param compoundId Identifier of the compound the feature belongs to.  Features that are different adducts or isotopologues of the same molecule share it.
+    #' @param name Informative, human-readable name of the feature.
     #' @param externalFeatureId Externally provided FeatureId (e.g. by some preprocessing tool).  This FeatureId is NOT used by SIRIUS but is stored to ease mapping information back to the source.
-    #' @param ionMass ionMass
-    #' @param rtStartSeconds rtStartSeconds
-    #' @param rtEndSeconds rtEndSeconds
-    #' @param rtApexSeconds rtApexSeconds
-    #' @param quality Quality of this feature.
-    #' @param hasMs1 If true, the feature has at lease one MS1 spectrum
-    #' @param hasMsMs If true, the feature has at lease one MS/MS spectrum
+    #' @param ionMass Mass-to-charge ratio (m/z) of the precursor ion of the feature.
+    #' @param rtStartSeconds Start of the retention time range the feature was detected in, in seconds.
+    #' @param rtEndSeconds End of the retention time range the feature was detected in, in seconds.
+    #' @param rtApexSeconds Retention time of the intensity apex of the feature, in seconds.
+    #' @param quality Overall quality of the feature. NOT_APPLICABLE if no quality data is available
+    #' @param hasMs1 If true, the feature has at least one MS1 spectrum
+    #' @param hasMsMs If true, the feature has at least one MS/MS spectrum
     #' @param msData msData
     #' @param topAnnotations topAnnotations
     #' @param topAnnotationsDeNovo topAnnotationsDeNovo
-    #' @param computing Write lock for this feature. If the feature is locked no write operations are possible.  True if any computation is modifying this feature or its results
+    #' @param computing Write lock for the feature. If the feature is locked no write operations are possible.  True if any computation is modifying the feature or its results.
     #' @param computedTools computedTools
+    #' @param qualities Qualities per top level quality category.
     #' @param tags Key: tagName, value: tag
     #' @param ... Other optional arguments.
-    initialize = function(`charge`, `detectedAdducts`, `alignedFeatureId` = NULL, `compoundId` = NULL, `name` = NULL, `externalFeatureId` = NULL, `ionMass` = NULL, `rtStartSeconds` = NULL, `rtEndSeconds` = NULL, `rtApexSeconds` = NULL, `quality` = NULL, `hasMs1` = NULL, `hasMsMs` = NULL, `msData` = NULL, `topAnnotations` = NULL, `topAnnotationsDeNovo` = NULL, `computing` = NULL, `computedTools` = NULL, `tags` = NULL, ...) {
+    initialize = function(`charge`, `detectedAdducts`, `alignedFeatureId` = NULL, `compoundId` = NULL, `name` = NULL, `externalFeatureId` = NULL, `ionMass` = NULL, `rtStartSeconds` = NULL, `rtEndSeconds` = NULL, `rtApexSeconds` = NULL, `quality` = NULL, `hasMs1` = NULL, `hasMsMs` = NULL, `msData` = NULL, `topAnnotations` = NULL, `topAnnotationsDeNovo` = NULL, `computing` = NULL, `computedTools` = NULL, `qualities` = NULL, `tags` = NULL, ...) {
       if (!missing(`charge`)) {
         if (!(is.numeric(`charge`) && length(`charge`) == 1)) {
           stop(paste("Error! Invalid data for `charge`. Must be an integer:", `charge`))
@@ -180,6 +183,11 @@ AlignedFeature <- R6::R6Class(
       if (!is.null(`computedTools`)) {
         stopifnot(R6::is.R6(`computedTools`))
         self$`computedTools` <- `computedTools`
+      }
+      if (!is.null(`qualities`)) {
+        stopifnot(is.vector(`qualities`), length(`qualities`) != 0)
+        sapply(`qualities`, function(x) stopifnot(is.character(x)))
+        self$`qualities` <- `qualities`
       }
       if (!is.null(`tags`)) {
         stopifnot(is.vector(`tags`), length(`tags`) != 0)
@@ -291,6 +299,10 @@ AlignedFeature <- R6::R6Class(
         AlignedFeatureObject[["computedTools"]] <-
           self$`computedTools`$toSimpleType()
       }
+      if (!is.null(self$`qualities`)) {
+        AlignedFeatureObject[["qualities"]] <-
+          self$`qualities`
+      }
       if (!is.null(self$`tags`)) {
         AlignedFeatureObject[["tags"]] <-
           lapply(self$`tags`, function(x) x$toSimpleType())
@@ -373,6 +385,9 @@ AlignedFeature <- R6::R6Class(
         `computedtools_object`$fromJSON(jsonlite::toJSON(this_object$`computedTools`, auto_unbox = TRUE, digits = NA, null = 'null'))
         self$`computedTools` <- `computedtools_object`
       }
+      if (!is.null(this_object$`qualities`)) {
+        self$`qualities` <- ApiClient$new()$deserializeObj(this_object$`qualities`, "map(character)", loadNamespace("RSirius"))
+      }
       if (!is.null(this_object$`tags`)) {
         self$`tags` <- ApiClient$new()$deserializeObj(this_object$`tags`, "map(Tag)", loadNamespace("RSirius"))
       }
@@ -421,6 +436,7 @@ AlignedFeature <- R6::R6Class(
       self$`topAnnotationsDeNovo` <- FeatureAnnotations$new()$fromJSON(jsonlite::toJSON(this_object$`topAnnotationsDeNovo`, auto_unbox = TRUE, digits = NA, null = 'null'))
       self$`computing` <- this_object$`computing`
       self$`computedTools` <- ComputedSubtools$new()$fromJSON(jsonlite::toJSON(this_object$`computedTools`, auto_unbox = TRUE, digits = NA, null = 'null'))
+      self$`qualities` <- ApiClient$new()$deserializeObj(this_object$`qualities`, "map(character)", loadNamespace("RSirius"))
       self$`tags` <- ApiClient$new()$deserializeObj(this_object$`tags`, "map(Tag)", loadNamespace("RSirius"))
       self
     },

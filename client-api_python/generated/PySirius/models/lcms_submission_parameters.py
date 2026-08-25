@@ -15,7 +15,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictBool
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from PySirius.models.deviation import Deviation
 from typing import Optional, Set
@@ -25,13 +25,15 @@ class LcmsSubmissionParameters(BaseModel):
     """
     LcmsSubmissionParameters
     """ # noqa: E501
+    sample_names: Optional[List[Optional[StrictStr]]] = Field(default=None, description="Sample names for each input file to link imported results, e.g. QuantTable back to the input data.  If NULL or empty sample names will be derived from the input files.  <p>  The names are matched to the input files by index. Partial lists are allowed: a NULL entry and any  input file without a corresponding entry get their name derived from the input file. Surplus entries  that match no input file are ignored.  <p>  Names must neither be blank nor duplicated, otherwise the import is rejected.", alias="sampleNames")
+    sample_types: Optional[List[Optional[StrictStr]]] = Field(default=None, description="Sample type for each input file to be used to compute fold changes between blank and sample runs  If NULL or empty no fold changes will be computed during preprocessing.  <p>  The types are matched to the input files by index. In contrast to sampleNames either all or no sample  types have to be given: if the number of types does not match the number of input files or if any type  is NULL or blank, the import is rejected.", alias="sampleTypes")
     align_lcms_runs: Optional[StrictBool] = Field(default=True, description="Specifies whether LC/MS runs should be aligned", alias="alignLCMSRuns")
-    noise_intensity: Optional[float] = Field(default=-1, description="Noise level under which all peaks are considered to be likely noise. A peak has to be at least 3x noise level  to be picked as feature. Peaks with MS/MS are still picked even though they might be below noise level.  If not specified, the noise intensity is detected automatically from data. We recommend to NOT specify  this parameter, as the automated detection is usually sufficient.", alias="noiseIntensity")
+    noise_intensity: Optional[float] = Field(default=-1, description="Noise level under which all peaks are considered to be likely noise. A peak has to be at least 3x noise level  to be picked as feature. Peaks with MS/MS are still picked even though they might be below noise level.  If not specified, the noise intensity is detected automatically from the data. We recommend NOT specifying  this parameter, as the automated detection is usually sufficient.", alias="noiseIntensity")
     trace_max_mass_deviation: Optional[Deviation] = Field(default=None, alias="traceMaxMassDeviation")
     align_max_mass_deviation: Optional[Deviation] = Field(default=None, alias="alignMaxMassDeviation")
-    align_max_retention_time_deviation: Optional[float] = Field(default=-1, description="Maximal allowed retention time error in seconds for aligning features. If not specified, this parameter is estimated from data.", alias="alignMaxRetentionTimeDeviation")
-    min_snr: Optional[float] = Field(default=3, description="Minimum ratio between peak height and noise intensity for detecting features. By default, this value is 3. Features with good MS/MS are always picked independent of their intensity. For picking very low intensive features we recommend a min-snr of 2, but this will increase runtime and storage memory", alias="minSNR")
-    __properties: ClassVar[List[str]] = ["alignLCMSRuns", "noiseIntensity", "traceMaxMassDeviation", "alignMaxMassDeviation", "alignMaxRetentionTimeDeviation", "minSNR"]
+    align_max_retention_time_deviation: Optional[float] = Field(default=-1, description="Maximum allowed retention time error in seconds for aligning features. If not specified, this parameter is estimated from the data.", alias="alignMaxRetentionTimeDeviation")
+    min_snr: Optional[float] = Field(default=3, description="Minimum ratio between peak height and noise intensity for detecting features. By default, this value is 3. Features with good MS/MS are always picked independent of their intensity. For picking very low intensity features we recommend a min-snr of 2, but this will increase runtime and storage requirements", alias="minSNR")
+    __properties: ClassVar[List[str]] = ["sampleNames", "sampleTypes", "alignLCMSRuns", "noiseIntensity", "traceMaxMassDeviation", "alignMaxMassDeviation", "alignMaxRetentionTimeDeviation", "minSNR"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -78,6 +80,16 @@ class LcmsSubmissionParameters(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of align_max_mass_deviation
         if self.align_max_mass_deviation:
             _dict['alignMaxMassDeviation'] = self.align_max_mass_deviation.to_dict()
+        # set to None if sample_names (nullable) is None
+        # and model_fields_set contains the field
+        if self.sample_names is None and "sample_names" in self.model_fields_set:
+            _dict['sampleNames'] = None
+
+        # set to None if sample_types (nullable) is None
+        # and model_fields_set contains the field
+        if self.sample_types is None and "sample_types" in self.model_fields_set:
+            _dict['sampleTypes'] = None
+
         # set to None if trace_max_mass_deviation (nullable) is None
         # and model_fields_set contains the field
         if self.trace_max_mass_deviation is None and "trace_max_mass_deviation" in self.model_fields_set:
@@ -100,6 +112,8 @@ class LcmsSubmissionParameters(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
+            "sampleNames": obj.get("sampleNames"),
+            "sampleTypes": obj.get("sampleTypes"),
             "alignLCMSRuns": obj.get("alignLCMSRuns") if obj.get("alignLCMSRuns") is not None else True,
             "noiseIntensity": obj.get("noiseIntensity") if obj.get("noiseIntensity") is not None else -1,
             "traceMaxMassDeviation": Deviation.from_dict(obj["traceMaxMassDeviation"]) if obj.get("traceMaxMassDeviation") is not None else None,

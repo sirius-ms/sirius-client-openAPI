@@ -7,16 +7,16 @@
 #' @title StructureCandidateFormula
 #' @description StructureCandidateFormula Class
 #' @format An \code{R6Class} generator object
-#' @field inchiKey  character [optional]
+#' @field inchiKey InChIKey of the structure candidate.  Searching with a full 27 character key matches its 2D (skeleton) part, so stereoisomers of the  searched structure are found alike. character [optional]
 #' @field smiles  character [optional]
-#' @field structureName  character [optional]
+#' @field structureName Name of the structure candidate.  Searching also resolves the searched term as a PubChem synonym, so a structure is found by any  of its common names. character [optional]
 #' @field structureSvg SVG graphics of the structure candidate  OPTIONAL: needs to be added by parameter character [optional]
-#' @field dbLinks List of structure database links belonging to this structure candidate  OPTIONAL: needs to be added by parameter list(\link{DBLink}) [optional]
-#' @field spectralLibraryMatches List of spectral library matches belonging to this structure candidate  OPTIONAL: needs to be added by parameter list(\link{SpectralLibraryMatch}) [optional]
+#' @field dbLinks List of structure database links belonging to the structure candidate  OPTIONAL: needs to be added by parameter list(\link{DBLink}) [optional]
+#' @field spectralLibraryMatches List of spectral library matches belonging to the structure candidate  OPTIONAL: needs to be added by parameter list(\link{SpectralLibraryMatch}) [optional]
 #' @field xlogP  numeric [optional]
-#' @field rank the overall rank of this candidate among all candidates of this feature integer [optional]
+#' @field rank The overall rank of this candidate among all candidates of this feature. integer [optional]
 #' @field csiScore CSI:FingerID score of the fingerprint of this compound to the predicted fingerprint of CSI:FingerID  This is the score used for ranking structure candidates numeric [optional]
-#' @field tanimotoSimilarity Tanimoto similarly of the fingerprint of this compound to the predicted fingerprint of CSI:FingerID numeric [optional]
+#' @field tanimotoSimilarity Tanimoto similarity of the fingerprint of this compound to the predicted fingerprint of CSI:FingerID numeric [optional]
 #' @field mcesDistToTopHit Maximum Common Edge Subgraph (MCES) distance to the top scoring hit (CSI:FingerID) in a candidate list. numeric [optional]
 #' @field fingerprint  \link{BinaryFingerprint} [optional]
 #' @field molecularFormula Molecular formula of this candidate character [optional]
@@ -47,16 +47,16 @@ StructureCandidateFormula <- R6::R6Class(
     #' @description
     #' Initialize a new StructureCandidateFormula class.
     #'
-    #' @param inchiKey inchiKey
+    #' @param inchiKey InChIKey of the structure candidate.  Searching with a full 27 character key matches its 2D (skeleton) part, so stereoisomers of the  searched structure are found alike.
     #' @param smiles smiles
-    #' @param structureName structureName
+    #' @param structureName Name of the structure candidate.  Searching also resolves the searched term as a PubChem synonym, so a structure is found by any  of its common names.
     #' @param structureSvg SVG graphics of the structure candidate  OPTIONAL: needs to be added by parameter
-    #' @param dbLinks List of structure database links belonging to this structure candidate  OPTIONAL: needs to be added by parameter
-    #' @param spectralLibraryMatches List of spectral library matches belonging to this structure candidate  OPTIONAL: needs to be added by parameter
+    #' @param dbLinks List of structure database links belonging to the structure candidate  OPTIONAL: needs to be added by parameter
+    #' @param spectralLibraryMatches List of spectral library matches belonging to the structure candidate  OPTIONAL: needs to be added by parameter
     #' @param xlogP xlogP
-    #' @param rank the overall rank of this candidate among all candidates of this feature
+    #' @param rank The overall rank of this candidate among all candidates of this feature.
     #' @param csiScore CSI:FingerID score of the fingerprint of this compound to the predicted fingerprint of CSI:FingerID  This is the score used for ranking structure candidates
-    #' @param tanimotoSimilarity Tanimoto similarly of the fingerprint of this compound to the predicted fingerprint of CSI:FingerID
+    #' @param tanimotoSimilarity Tanimoto similarity of the fingerprint of this compound to the predicted fingerprint of CSI:FingerID
     #' @param mcesDistToTopHit Maximum Common Edge Subgraph (MCES) distance to the top scoring hit (CSI:FingerID) in a candidate list.
     #' @param fingerprint fingerprint
     #' @param molecularFormula Molecular formula of this candidate

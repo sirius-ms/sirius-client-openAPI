@@ -24,8 +24,8 @@ class MsNovelist(BaseModel):
     """
     MsNovelist
     """ # noqa: E501
-    enabled: Optional[StrictBool] = Field(default=None, description="tags whether the tool is enabled")
-    number_of_candidate_to_predict: Optional[StrictInt] = Field(default=None, description="Number of structure candidates to be predicted by MsNovelist.  Max Value 128. Values > 128 will be set to 128.  Actual number of returned candidate might be lower du to duplicates being created by MsNovelist.", alias="numberOfCandidateToPredict")
+    enabled: Optional[StrictBool] = Field(default=None, description="Indicates whether the tool is enabled.")
+    number_of_candidate_to_predict: Optional[StrictInt] = Field(default=None, description="Number of structure candidates to be predicted by MsNovelist.  Max Value 128. Values > 128 will be set to 128.  The actual number of returned candidates might be lower due to duplicates being created by MsNovelist.", alias="numberOfCandidateToPredict")
     __properties: ClassVar[List[str]] = ["enabled", "numberOfCandidateToPredict"]
 
     model_config = ConfigDict(

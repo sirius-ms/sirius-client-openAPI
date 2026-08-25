@@ -28,12 +28,12 @@ class Compound(BaseModel):
     """
     Compound
     """ # noqa: E501
-    compound_id: Optional[StrictStr] = Field(default=None, description="uid of this compound Entity", alias="compoundId")
+    compound_id: Optional[StrictStr] = Field(default=None, description="Unique id of the compound entity.", alias="compoundId")
     name: Optional[StrictStr] = Field(default=None, description="Some (optional) human-readable name")
-    rt_start_seconds: Optional[float] = Field(default=None, description="The merged/consensus retention time start (earliest rt) of this compound", alias="rtStartSeconds")
-    rt_end_seconds: Optional[float] = Field(default=None, description="The merged/consensus retention time end (latest rt) of this compound", alias="rtEndSeconds")
-    neutral_mass: Optional[float] = Field(default=None, description="Neutral mass of this compound. Ion masse minus the mass of the assigned adduct of each feature of  this compound should result in the same neutral mass", alias="neutralMass")
-    features: Optional[List[AlignedFeature]] = Field(default=None, description="List of aligned features (adducts) that belong to the same (this) compound")
+    rt_start_seconds: Optional[float] = Field(default=None, description="The merged/consensus retention time start (earliest rt) of the compound", alias="rtStartSeconds")
+    rt_end_seconds: Optional[float] = Field(default=None, description="The merged/consensus retention time end (latest rt) of the compound", alias="rtEndSeconds")
+    neutral_mass: Optional[float] = Field(default=None, description="Neutral mass of the compound. Ion mass minus the mass of the assigned adduct of each feature of  the compound should result in the same neutral mass", alias="neutralMass")
+    features: Optional[List[AlignedFeature]] = Field(default=None, description="List of aligned features (adducts) that belong to the compound")
     consensus_annotations: Optional[ConsensusAnnotationsCSI] = Field(default=None, alias="consensusAnnotations")
     consensus_annotations_de_novo: Optional[ConsensusAnnotationsDeNovo] = Field(default=None, alias="consensusAnnotationsDeNovo")
     custom_annotations: Optional[ConsensusAnnotationsCSI] = Field(default=None, alias="customAnnotations")

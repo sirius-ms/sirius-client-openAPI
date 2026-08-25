@@ -7,18 +7,22 @@
 #' @title LcmsSubmissionParameters
 #' @description LcmsSubmissionParameters Class
 #' @format An \code{R6Class} generator object
+#' @field sampleNames Sample names for each input file to link imported results, e.g. QuantTable back to the input data.  If NULL or empty sample names will be derived from the input files.  <p>  The names are matched to the input files by index. Partial lists are allowed: a NULL entry and any  input file without a corresponding entry get their name derived from the input file. Surplus entries  that match no input file are ignored.  <p>  Names must neither be blank nor duplicated, otherwise the import is rejected. list(character) [optional]
+#' @field sampleTypes Sample type for each input file to be used to compute fold changes between blank and sample runs  If NULL or empty no fold changes will be computed during preprocessing.  <p>  The types are matched to the input files by index. In contrast to sampleNames either all or no sample  types have to be given: if the number of types does not match the number of input files or if any type  is NULL or blank, the import is rejected. list(character) [optional]
 #' @field alignLCMSRuns Specifies whether LC/MS runs should be aligned character [optional]
-#' @field noiseIntensity Noise level under which all peaks are considered to be likely noise. A peak has to be at least 3x noise level  to be picked as feature. Peaks with MS/MS are still picked even though they might be below noise level.  If not specified, the noise intensity is detected automatically from data. We recommend to NOT specify  this parameter, as the automated detection is usually sufficient. numeric [optional]
+#' @field noiseIntensity Noise level under which all peaks are considered to be likely noise. A peak has to be at least 3x noise level  to be picked as feature. Peaks with MS/MS are still picked even though they might be below noise level.  If not specified, the noise intensity is detected automatically from the data. We recommend NOT specifying  this parameter, as the automated detection is usually sufficient. numeric [optional]
 #' @field traceMaxMassDeviation  \link{Deviation} [optional]
 #' @field alignMaxMassDeviation  \link{Deviation} [optional]
-#' @field alignMaxRetentionTimeDeviation Maximal allowed retention time error in seconds for aligning features. If not specified, this parameter is estimated from data. numeric [optional]
-#' @field minSNR Minimum ratio between peak height and noise intensity for detecting features. By default, this value is 3. Features with good MS/MS are always picked independent of their intensity. For picking very low intensive features we recommend a min-snr of 2, but this will increase runtime and storage memory numeric [optional]
+#' @field alignMaxRetentionTimeDeviation Maximum allowed retention time error in seconds for aligning features. If not specified, this parameter is estimated from the data. numeric [optional]
+#' @field minSNR Minimum ratio between peak height and noise intensity for detecting features. By default, this value is 3. Features with good MS/MS are always picked independent of their intensity. For picking very low intensity features we recommend a min-snr of 2, but this will increase runtime and storage requirements numeric [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
 #' @export
 LcmsSubmissionParameters <- R6::R6Class(
   "LcmsSubmissionParameters",
   public = list(
+    `sampleNames` = NULL,
+    `sampleTypes` = NULL,
     `alignLCMSRuns` = NULL,
     `noiseIntensity` = NULL,
     `traceMaxMassDeviation` = NULL,
@@ -29,14 +33,26 @@ LcmsSubmissionParameters <- R6::R6Class(
     #' @description
     #' Initialize a new LcmsSubmissionParameters class.
     #'
+    #' @param sampleNames Sample names for each input file to link imported results, e.g. QuantTable back to the input data.  If NULL or empty sample names will be derived from the input files.  <p>  The names are matched to the input files by index. Partial lists are allowed: a NULL entry and any  input file without a corresponding entry get their name derived from the input file. Surplus entries  that match no input file are ignored.  <p>  Names must neither be blank nor duplicated, otherwise the import is rejected.
+    #' @param sampleTypes Sample type for each input file to be used to compute fold changes between blank and sample runs  If NULL or empty no fold changes will be computed during preprocessing.  <p>  The types are matched to the input files by index. In contrast to sampleNames either all or no sample  types have to be given: if the number of types does not match the number of input files or if any type  is NULL or blank, the import is rejected.
     #' @param alignLCMSRuns Specifies whether LC/MS runs should be aligned. Default to TRUE.
-    #' @param noiseIntensity Noise level under which all peaks are considered to be likely noise. A peak has to be at least 3x noise level  to be picked as feature. Peaks with MS/MS are still picked even though they might be below noise level.  If not specified, the noise intensity is detected automatically from data. We recommend to NOT specify  this parameter, as the automated detection is usually sufficient.. Default to -1.
+    #' @param noiseIntensity Noise level under which all peaks are considered to be likely noise. A peak has to be at least 3x noise level  to be picked as feature. Peaks with MS/MS are still picked even though they might be below noise level.  If not specified, the noise intensity is detected automatically from the data. We recommend NOT specifying  this parameter, as the automated detection is usually sufficient.. Default to -1.
     #' @param traceMaxMassDeviation traceMaxMassDeviation
     #' @param alignMaxMassDeviation alignMaxMassDeviation
-    #' @param alignMaxRetentionTimeDeviation Maximal allowed retention time error in seconds for aligning features. If not specified, this parameter is estimated from data.. Default to -1.
-    #' @param minSNR Minimum ratio between peak height and noise intensity for detecting features. By default, this value is 3. Features with good MS/MS are always picked independent of their intensity. For picking very low intensive features we recommend a min-snr of 2, but this will increase runtime and storage memory. Default to 3.
+    #' @param alignMaxRetentionTimeDeviation Maximum allowed retention time error in seconds for aligning features. If not specified, this parameter is estimated from the data.. Default to -1.
+    #' @param minSNR Minimum ratio between peak height and noise intensity for detecting features. By default, this value is 3. Features with good MS/MS are always picked independent of their intensity. For picking very low intensity features we recommend a min-snr of 2, but this will increase runtime and storage requirements. Default to 3.
     #' @param ... Other optional arguments.
-    initialize = function(`alignLCMSRuns` = TRUE, `noiseIntensity` = -1, `traceMaxMassDeviation` = NULL, `alignMaxMassDeviation` = NULL, `alignMaxRetentionTimeDeviation` = -1, `minSNR` = 3, ...) {
+    initialize = function(`sampleNames` = NULL, `sampleTypes` = NULL, `alignLCMSRuns` = TRUE, `noiseIntensity` = -1, `traceMaxMassDeviation` = NULL, `alignMaxMassDeviation` = NULL, `alignMaxRetentionTimeDeviation` = -1, `minSNR` = 3, ...) {
+      if (!is.null(`sampleNames`)) {
+        stopifnot(is.vector(`sampleNames`), length(`sampleNames`) != 0)
+        sapply(`sampleNames`, function(x) stopifnot(is.character(x)))
+        self$`sampleNames` <- `sampleNames`
+      }
+      if (!is.null(`sampleTypes`)) {
+        stopifnot(is.vector(`sampleTypes`), length(`sampleTypes`) != 0)
+        sapply(`sampleTypes`, function(x) stopifnot(is.character(x)))
+        self$`sampleTypes` <- `sampleTypes`
+      }
       if (!is.null(`alignLCMSRuns`)) {
         if (!(is.logical(`alignLCMSRuns`) && length(`alignLCMSRuns`) == 1)) {
           stop(paste("Error! Invalid data for `alignLCMSRuns`. Must be a boolean:", `alignLCMSRuns`))
@@ -102,6 +118,14 @@ LcmsSubmissionParameters <- R6::R6Class(
     #' @return A base R type, e.g. a list or numeric/character array.
     toSimpleType = function() {
       LcmsSubmissionParametersObject <- list()
+      if (!is.null(self$`sampleNames`)) {
+        LcmsSubmissionParametersObject[["sampleNames"]] <-
+          self$`sampleNames`
+      }
+      if (!is.null(self$`sampleTypes`)) {
+        LcmsSubmissionParametersObject[["sampleTypes"]] <-
+          self$`sampleTypes`
+      }
       if (!is.null(self$`alignLCMSRuns`)) {
         LcmsSubmissionParametersObject[["alignLCMSRuns"]] <-
           self$`alignLCMSRuns`
@@ -136,6 +160,12 @@ LcmsSubmissionParameters <- R6::R6Class(
     #' @return the instance of LcmsSubmissionParameters
     fromJSON = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
+      if (!is.null(this_object$`sampleNames`)) {
+        self$`sampleNames` <- ApiClient$new()$deserializeObj(this_object$`sampleNames`, "array[character]", loadNamespace("RSirius"))
+      }
+      if (!is.null(this_object$`sampleTypes`)) {
+        self$`sampleTypes` <- ApiClient$new()$deserializeObj(this_object$`sampleTypes`, "array[character]", loadNamespace("RSirius"))
+      }
       if (!is.null(this_object$`alignLCMSRuns`)) {
         self$`alignLCMSRuns` <- this_object$`alignLCMSRuns`
       }
@@ -179,6 +209,8 @@ LcmsSubmissionParameters <- R6::R6Class(
     #' @return the instance of LcmsSubmissionParameters
     fromJSONString = function(input_json) {
       this_object <- jsonlite::fromJSON(input_json)
+      self$`sampleNames` <- ApiClient$new()$deserializeObj(this_object$`sampleNames`, "array[character]", loadNamespace("RSirius"))
+      self$`sampleTypes` <- ApiClient$new()$deserializeObj(this_object$`sampleTypes`, "array[character]", loadNamespace("RSirius"))
       self$`alignLCMSRuns` <- this_object$`alignLCMSRuns`
       self$`noiseIntensity` <- this_object$`noiseIntensity`
       self$`traceMaxMassDeviation` <- Deviation$new()$fromJSON(jsonlite::toJSON(this_object$`traceMaxMassDeviation`, auto_unbox = TRUE, digits = NA, null = 'null'))

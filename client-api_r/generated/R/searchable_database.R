@@ -11,7 +11,7 @@
 #' @field customDb Indicates whether the database is a user managed custom database or if it is a  database that is included in SIRIUS which cannot be modified. character
 #' @field searchable True when this database can be used as a search parameter.  False if the database is just an additional filter that can be applied after search. character
 #' @field dbDate Date on which the data was imported / database was created. character [optional]
-#' @field dbVersion database schema version integer [optional]
+#' @field dbVersion Database schema version. integer [optional]
 #' @field updateNeeded If true the database version is outdated and the database needs to be updated or re-imported before it can be used. character
 #' @field numberOfStructures Number of unique compounds available in this database. integer [optional]
 #' @field numberOfFormulas Number of different molecular formulas available in this database. integer [optional]
@@ -19,7 +19,7 @@
 #' @field errorMessage Error message if the database could not be loaded character [optional]
 #' @field displayName display name of the database  Should be short character [optional]
 #' @field location Storage location of user database  Might be NULL for non-user databases or if default location is used. character [optional]
-#' @field matchRtOfReferenceSpectra Indicates whether this database shall be used to use retention time information for library matching.  Typically used for in-house spectral libraries that have been measured on character [optional]
+#' @field matchRtOfReferenceSpectra Indicates whether this database shall be used to use retention time information for library matching.  Typically used for in-house spectral libraries that were measured on the same  chromatographic setup as the samples being analysed, so that retention times are comparable. character [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
 #' @export
@@ -48,14 +48,14 @@ SearchableDatabase <- R6::R6Class(
     #' @param searchable True when this database can be used as a search parameter.  False if the database is just an additional filter that can be applied after search.
     #' @param updateNeeded If true the database version is outdated and the database needs to be updated or re-imported before it can be used.
     #' @param dbDate Date on which the data was imported / database was created.
-    #' @param dbVersion database schema version
+    #' @param dbVersion Database schema version.
     #' @param numberOfStructures Number of unique compounds available in this database.
     #' @param numberOfFormulas Number of different molecular formulas available in this database.
     #' @param numberOfReferenceSpectra Number of reference spectra available in this database
     #' @param errorMessage Error message if the database could not be loaded
     #' @param displayName display name of the database  Should be short
     #' @param location Storage location of user database  Might be NULL for non-user databases or if default location is used.
-    #' @param matchRtOfReferenceSpectra Indicates whether this database shall be used to use retention time information for library matching.  Typically used for in-house spectral libraries that have been measured on. Default to FALSE.
+    #' @param matchRtOfReferenceSpectra Indicates whether this database shall be used to use retention time information for library matching.  Typically used for in-house spectral libraries that were measured on the same  chromatographic setup as the samples being analysed, so that retention times are comparable.. Default to FALSE.
     #' @param ... Other optional arguments.
     initialize = function(`databaseId`, `customDb`, `searchable`, `updateNeeded`, `dbDate` = NULL, `dbVersion` = NULL, `numberOfStructures` = NULL, `numberOfFormulas` = NULL, `numberOfReferenceSpectra` = NULL, `errorMessage` = NULL, `displayName` = NULL, `location` = NULL, `matchRtOfReferenceSpectra` = FALSE, ...) {
       if (!missing(`databaseId`)) {

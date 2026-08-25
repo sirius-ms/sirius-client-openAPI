@@ -6,8 +6,8 @@ User/developer friendly parameter subset for the Spectral library search tool.
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**enabled** | **bool** | tags whether the tool is enabled | [optional] 
-**spectra_search_dbs** | **List[Optional[str]]** | Structure Databases with Reference spectra to search in.  &lt;p&gt;  Defaults to BIO + Custom Databases. Possible values are available to Database API. | [optional] 
+**enabled** | **bool** | Indicates whether the tool is enabled. | [optional] 
+**spectra_search_dbs** | **List[Optional[str]]** | Structure Databases with Reference spectra to search in.  &lt;p&gt;  Defaults to BIO + Custom Databases. Possible values are available via the Database API. | [optional] 
 **precursor_deviation_ppm** | **float** | Maximum allowed mass deviation in ppm for matching the precursor. If not specified, the same value as for the peaks is used. | [optional] 
 **min_similarity** | **float** | Minimal spectral similarity of a spectral match to be considered a hit. | [optional] 
 **min_num_of_peaks** | **int** | Minimal number of matching peaks of a spectral match to be considered a hit. | [optional] 

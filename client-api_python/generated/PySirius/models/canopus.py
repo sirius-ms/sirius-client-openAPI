@@ -22,9 +22,9 @@ from typing_extensions import Self
 
 class Canopus(BaseModel):
     """
-    User/developer friendly parameter subset for the CANOPUS tool  CANOPUS is parameter free, so this Object is just a flag that canopus should be executed.  Needs results from FingerprintPrediction Tool
+    User/developer friendly parameter subset for the CANOPUS tool  CANOPUS is parameter-free, so this object is just a flag that CANOPUS should be executed.  Needs results from the FingerprintPrediction tool.
     """ # noqa: E501
-    enabled: Optional[StrictBool] = Field(default=None, description="tags whether the tool is enabled")
+    enabled: Optional[StrictBool] = Field(default=None, description="Indicates whether the tool is enabled.")
     __properties: ClassVar[List[str]] = ["enabled"]
 
     model_config = ConfigDict(

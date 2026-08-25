@@ -8,6 +8,6 @@ Name | Type | Description | Notes
 **lipidMapsId** | **character** | LIPID MAPS id of the predicted lipid class. | [optional] 
 **lipidClassName** | **character** | Human-readable name of the predicted lipid class. | [optional] 
 **hypotheticalStructure** | **character** | Hypothetical molecular structure of the predicted lipid species as SMILES.  NULL if hypothetical structure not available. | [optional] 
-**chainsUnknown** | **character** | True of the formula composition of the chains could not be determined from the MS/MS. | [optional] 
+**chainsUnknown** | **character** | True if the formula composition of the chains could not be determined from the MS/MS. | [optional] 
 
 

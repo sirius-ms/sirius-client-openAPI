@@ -1,13 +1,13 @@
 #' Create a new Canopus
 #'
 #' @description
-#' User/developer friendly parameter subset for the CANOPUS tool  CANOPUS is parameter free, so this Object is just a flag that canopus should be executed.  Needs results from FingerprintPrediction Tool
+#' User/developer friendly parameter subset for the CANOPUS tool  CANOPUS is parameter-free, so this object is just a flag that CANOPUS should be executed.  Needs results from the FingerprintPrediction tool.
 #'
 #' @docType class
 #' @title Canopus
 #' @description Canopus Class
 #' @format An \code{R6Class} generator object
-#' @field enabled tags whether the tool is enabled character [optional]
+#' @field enabled Indicates whether the tool is enabled. character [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
 #' @export
@@ -19,7 +19,7 @@ Canopus <- R6::R6Class(
     #' @description
     #' Initialize a new Canopus class.
     #'
-    #' @param enabled tags whether the tool is enabled
+    #' @param enabled Indicates whether the tool is enabled.
     #' @param ... Other optional arguments.
     initialize = function(`enabled` = NULL, ...) {
       if (!is.null(`enabled`)) {

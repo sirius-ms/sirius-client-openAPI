@@ -30,7 +30,8 @@ class AllowedFeatures(BaseModel):
     import_ms_runs: Optional[StrictBool] = Field(default=None, alias="importMSRuns")
     import_peak_lists: Optional[StrictBool] = Field(default=None, alias="importPeakLists")
     import_cef: Optional[StrictBool] = Field(default=None, alias="importCef")
-    __properties: ClassVar[List[str]] = ["cli", "api", "deNovo", "importMSRuns", "importPeakLists", "importCef"]
+    transformation_products: Optional[StrictBool] = Field(default=None, alias="transformationProducts")
+    __properties: ClassVar[List[str]] = ["cli", "api", "deNovo", "importMSRuns", "importPeakLists", "importCef", "transformationProducts"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -88,7 +89,8 @@ class AllowedFeatures(BaseModel):
             "deNovo": obj.get("deNovo"),
             "importMSRuns": obj.get("importMSRuns"),
             "importPeakLists": obj.get("importPeakLists"),
-            "importCef": obj.get("importCef")
+            "importCef": obj.get("importCef"),
+            "transformationProducts": obj.get("transformationProducts")
         })
         return _obj
 

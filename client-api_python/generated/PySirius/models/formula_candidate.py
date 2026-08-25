@@ -32,7 +32,7 @@ class FormulaCandidate(BaseModel):
     Molecular formula candidate that holds a unique identifier (molecular formula + adduct).  It can be extended with optional scoring metrics and the raw results  such as fragmentation trees and simulated isotope pattern.
     """ # noqa: E501
     formula_id: Optional[StrictStr] = Field(default=None, description="Unique identifier of this formula candidate", alias="formulaId")
-    molecular_formula: Optional[StrictStr] = Field(default=None, description="molecular formula of this formula candidate", alias="molecularFormula")
+    molecular_formula: Optional[StrictStr] = Field(default=None, description="Molecular formula of this formula candidate.", alias="molecularFormula")
     adduct: Optional[StrictStr] = Field(default=None, description="Adduct of this formula candidate")
     rank: Optional[StrictInt] = None
     sirius_score_normalized: Optional[float] = Field(default=None, description="Normalized Sirius Score of the formula candidate.  If NULL result is not available", alias="siriusScoreNormalized")

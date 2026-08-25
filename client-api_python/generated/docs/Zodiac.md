@@ -1,15 +1,15 @@
 # Zodiac
 
-User/developer friendly parameter subset for the ZODIAC tool (Network base molecular formula re-ranking).  Needs results from Formula/SIRIUS Tool
+User/developer friendly parameter subset for the ZODIAC tool (network-based molecular formula re-ranking).  Needs results from the Formula/SIRIUS tool.
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**enabled** | **bool** | tags whether the tool is enabled | [optional] 
+**enabled** | **bool** | Indicates whether the tool is enabled. | [optional] 
 **considered_candidates_at300_mz** | **int** | Maximum number of candidate molecular formulas (fragmentation trees computed by SIRIUS) per compound which are considered by ZODIAC for compounds below 300 m/z. | [optional] 
 **considered_candidates_at800_mz** | **int** | Maximum number of candidate molecular formulas (fragmentation trees computed by SIRIUS) per compound which are considered by ZODIAC for compounds above 800 m/z. | [optional] 
-**run_in_two_steps** | **bool** | As default ZODIAC runs a 2-step approach. First running &#39;good quality compounds&#39; only, and afterwards including the remaining. | [optional] 
+**run_in_two_steps** | **bool** | By default, ZODIAC runs a 2-step approach: first running only &#39;good quality compounds&#39;, and afterwards including the remaining ones. | [optional] 
 **edge_filter_thresholds** | [**ZodiacEdgeFilterThresholds**](ZodiacEdgeFilterThresholds.md) |  | [optional] 
 **gibbs_sampler_parameters** | [**ZodiacEpochs**](ZodiacEpochs.md) |  | [optional] 
 **library_search_anchors** | [**ZodiacLibraryScoring**](ZodiacLibraryScoring.md) |  | [optional] 

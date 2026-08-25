@@ -29,7 +29,7 @@ class BioTransformerParameters(BaseModel):
     """ # noqa: E501
     cyp450_mode: Optional[Cyp450Mode] = Field(alias="cyp450Mode")
     p2_mode: Optional[P2Mode] = Field(alias="p2Mode")
-    use_db: Optional[StrictBool] = Field(default=True, description="\"Specify if you want to enable the retrieving from database (HMDB) feature.\"", alias="useDB")
+    use_db: Optional[StrictBool] = Field(default=True, description="Specify whether structures should additionally be retrieved from the HMDB database.", alias="useDB")
     bio_transformer_sequence_steps: List[BioTransformerSequenceStep] = Field(description="Specify BioTransformerSequenceSteps to be applied to input structures. MultiStep MetabolicTransformations can  only be used as singletons (list size of one).", alias="bioTransformerSequenceSteps")
     __properties: ClassVar[List[str]] = ["cyp450Mode", "p2Mode", "useDB", "bioTransformerSequenceSteps"]
 

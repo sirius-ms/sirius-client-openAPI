@@ -30,6 +30,7 @@ class AlignedFeatureOptField(str, Enum):
     TOPANNOTATIONS = 'topAnnotations'
     TOPANNOTATIONSDENOVO = 'topAnnotationsDeNovo'
     COMPUTEDTOOLS = 'computedTools'
+    QUALITIES = 'qualities'
     TAGS = 'tags'
 
     @classmethod

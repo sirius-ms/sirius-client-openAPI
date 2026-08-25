@@ -23,7 +23,7 @@ library(RSirius)
 # Close GUI instance of given project-space if available.
 #
 # prepare function argument(s)
-var_project_id <- "project_id_example" # character | if project-space the GUI instance is connected to.
+var_project_id <- "project_id_example" # character | project-space the GUI instance is connected to.
 var_close_project <- "close_project_example" # character |  (Optional)
 
 api_instance <- rsirius_api$new()
@@ -37,7 +37,7 @@ dput(result)
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **project_id** | **character**| if project-space the GUI instance is connected to. | 
+ **project_id** | **character**| project-space the GUI instance is connected to. | 
  **close_project** | **character**|  | [optional] 
 
 ### Return type
@@ -51,12 +51,15 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: application/json, application/problem+json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | OK |  -  |
+| **500** | Unexpected server-side error. The problem detail carries the reason. |  -  |
+| **404** | The referenced object does not exist in this SIRIUS instance or project. |  -  |
+| **400** | The request body or a parameter is malformed or violates a constraint. |  -  |
 
 # **GetGuis**
 > array[GuiInfo] GetGuis()
@@ -93,12 +96,13 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: application/json, application/problem+json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | List of GUI windows that are currently managed by this SIRIUS instance. |  -  |
+| **500** | Unexpected server-side error. The problem detail carries the reason. |  -  |
 
 # **OpenGui**
 > OpenGui(project_id)
@@ -114,7 +118,7 @@ library(RSirius)
 # Open GUI instance on specified project-space and bring the GUI window to foreground.
 #
 # prepare function argument(s)
-var_project_id <- "project_id_example" # character | of project-space the GUI instance will connect to.
+var_project_id <- "project_id_example" # character | project-space the GUI instance will connect to.
 
 api_instance <- rsirius_api$new()
 api_instance$gui_api$OpenGui(var_project_id)
@@ -124,7 +128,7 @@ api_instance$gui_api$OpenGui(var_project_id)
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **project_id** | **character**| of project-space the GUI instance will connect to. | 
+ **project_id** | **character**| project-space the GUI instance will connect to. | 
 
 ### Return type
 
@@ -143,4 +147,7 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **201** | Created |  -  |
+| **500** | Unexpected server-side error. The problem detail carries the reason. |  -  |
+| **404** | The referenced object does not exist in this SIRIUS instance or project. |  -  |
+| **400** | The request body or a parameter is malformed or violates a constraint. |  -  |
 

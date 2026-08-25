@@ -5,12 +5,12 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**compound_id** | **str** | uid of this compound Entity | [optional] 
+**compound_id** | **str** | Unique id of the compound entity. | [optional] 
 **name** | **str** | Some (optional) human-readable name | [optional] 
-**rt_start_seconds** | **float** | The merged/consensus retention time start (earliest rt) of this compound | [optional] 
-**rt_end_seconds** | **float** | The merged/consensus retention time end (latest rt) of this compound | [optional] 
-**neutral_mass** | **float** | Neutral mass of this compound. Ion masse minus the mass of the assigned adduct of each feature of  this compound should result in the same neutral mass | [optional] 
-**features** | [**List[AlignedFeature]**](AlignedFeature.md) | List of aligned features (adducts) that belong to the same (this) compound | [optional] 
+**rt_start_seconds** | **float** | The merged/consensus retention time start (earliest rt) of the compound | [optional] 
+**rt_end_seconds** | **float** | The merged/consensus retention time end (latest rt) of the compound | [optional] 
+**neutral_mass** | **float** | Neutral mass of the compound. Ion mass minus the mass of the assigned adduct of each feature of  the compound should result in the same neutral mass | [optional] 
+**features** | [**List[AlignedFeature]**](AlignedFeature.md) | List of aligned features (adducts) that belong to the compound | [optional] 
 **consensus_annotations** | [**ConsensusAnnotationsCSI**](ConsensusAnnotationsCSI.md) |  | [optional] 
 **consensus_annotations_de_novo** | [**ConsensusAnnotationsDeNovo**](ConsensusAnnotationsDeNovo.md) |  | [optional] 
 **custom_annotations** | [**ConsensusAnnotationsCSI**](ConsensusAnnotationsCSI.md) |  | [optional] 

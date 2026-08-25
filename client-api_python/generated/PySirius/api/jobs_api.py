@@ -108,6 +108,9 @@ class JobsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '202': None,
+            '500': None,
+            '404': None,
+            '400': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -187,6 +190,9 @@ class JobsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '202': None,
+            '500': None,
+            '404': None,
+            '400': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -266,6 +272,9 @@ class JobsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '202': None,
+            '500': None,
+            '404': None,
+            '400': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -398,6 +407,9 @@ class JobsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '202': None,
+            '500': None,
+            '404': None,
+            '400': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -465,6 +477,9 @@ class JobsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '202': None,
+            '500': None,
+            '404': None,
+            '400': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -532,6 +547,9 @@ class JobsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '202': None,
+            '500': None,
+            '404': None,
+            '400': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -615,9 +633,9 @@ class JobsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> None:
-        """* Delete ALL jobs.
+        """Delete ALL jobs.
 
-        * Delete ALL jobs. Specify how to behave for running jobs.
+        Delete ALL jobs. Specify how to behave for running jobs.
 
         :param project_id: project-space to delete jobs from (required)
         :type project_id: str
@@ -659,6 +677,9 @@ class JobsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '202': None,
+            '500': None,
+            '404': None,
+            '400': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -690,9 +711,9 @@ class JobsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[None]:
-        """* Delete ALL jobs.
+        """Delete ALL jobs.
 
-        * Delete ALL jobs. Specify how to behave for running jobs.
+        Delete ALL jobs. Specify how to behave for running jobs.
 
         :param project_id: project-space to delete jobs from (required)
         :type project_id: str
@@ -734,6 +755,9 @@ class JobsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '202': None,
+            '500': None,
+            '404': None,
+            '400': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -765,9 +789,9 @@ class JobsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """* Delete ALL jobs.
+        """Delete ALL jobs.
 
-        * Delete ALL jobs. Specify how to behave for running jobs.
+        Delete ALL jobs. Specify how to behave for running jobs.
 
         :param project_id: project-space to delete jobs from (required)
         :type project_id: str
@@ -809,6 +833,9 @@ class JobsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '202': None,
+            '500': None,
+            '404': None,
+            '400': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -938,6 +965,8 @@ class JobsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "List[str]",
+            '500': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1005,6 +1034,8 @@ class JobsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "List[str]",
+            '500': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1072,6 +1103,8 @@ class JobsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "List[str]",
+            '500': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1116,7 +1149,8 @@ class JobsApi:
         if 'Accept' not in _header_params:
             _header_params['Accept'] = self.api_client.select_header_accept(
                 [
-                    'application/json'
+                    'application/json', 
+                    'application/problem+json'
                 ]
             )
 
@@ -1161,7 +1195,7 @@ class JobsApi:
         self,
         include_config_map: Annotated[Optional[StrictBool], Field(description="if true, generic configmap with-defaults will be included")] = None,
         move_parameters_to_config_map: Annotated[Optional[StrictBool], Field(description="if true, object-based parameters will be converted to and added to the generic configMap parameters")] = None,
-        include_custom_dbs_for_structure_search: Annotated[Optional[StrictBool], Field(description="if true, default database selection of structure db search                                            spectral library search contains also all available custom DB.                                            If No custom dbs are selected, spectral library search is disabled by default.")] = None,
+        include_custom_dbs_for_structure_search: Annotated[Optional[StrictBool], Field(description="if true, default database selection of structure db search                                            and spectral library search also contains all available custom databases.                                            If no custom databases are selected, spectral library search is disabled by default.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1183,7 +1217,7 @@ class JobsApi:
         :type include_config_map: bool
         :param move_parameters_to_config_map: if true, object-based parameters will be converted to and added to the generic configMap parameters
         :type move_parameters_to_config_map: bool
-        :param include_custom_dbs_for_structure_search: if true, default database selection of structure db search                                            spectral library search contains also all available custom DB.                                            If No custom dbs are selected, spectral library search is disabled by default.
+        :param include_custom_dbs_for_structure_search: if true, default database selection of structure db search                                            and spectral library search also contains all available custom databases.                                            If no custom databases are selected, spectral library search is disabled by default.
         :type include_custom_dbs_for_structure_search: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -1219,6 +1253,8 @@ class JobsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "JobSubmission",
+            '500': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1236,7 +1272,7 @@ class JobsApi:
         self,
         include_config_map: Annotated[Optional[StrictBool], Field(description="if true, generic configmap with-defaults will be included")] = None,
         move_parameters_to_config_map: Annotated[Optional[StrictBool], Field(description="if true, object-based parameters will be converted to and added to the generic configMap parameters")] = None,
-        include_custom_dbs_for_structure_search: Annotated[Optional[StrictBool], Field(description="if true, default database selection of structure db search                                            spectral library search contains also all available custom DB.                                            If No custom dbs are selected, spectral library search is disabled by default.")] = None,
+        include_custom_dbs_for_structure_search: Annotated[Optional[StrictBool], Field(description="if true, default database selection of structure db search                                            and spectral library search also contains all available custom databases.                                            If no custom databases are selected, spectral library search is disabled by default.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1258,7 +1294,7 @@ class JobsApi:
         :type include_config_map: bool
         :param move_parameters_to_config_map: if true, object-based parameters will be converted to and added to the generic configMap parameters
         :type move_parameters_to_config_map: bool
-        :param include_custom_dbs_for_structure_search: if true, default database selection of structure db search                                            spectral library search contains also all available custom DB.                                            If No custom dbs are selected, spectral library search is disabled by default.
+        :param include_custom_dbs_for_structure_search: if true, default database selection of structure db search                                            and spectral library search also contains all available custom databases.                                            If no custom databases are selected, spectral library search is disabled by default.
         :type include_custom_dbs_for_structure_search: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -1294,6 +1330,8 @@ class JobsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "JobSubmission",
+            '500': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1311,7 +1349,7 @@ class JobsApi:
         self,
         include_config_map: Annotated[Optional[StrictBool], Field(description="if true, generic configmap with-defaults will be included")] = None,
         move_parameters_to_config_map: Annotated[Optional[StrictBool], Field(description="if true, object-based parameters will be converted to and added to the generic configMap parameters")] = None,
-        include_custom_dbs_for_structure_search: Annotated[Optional[StrictBool], Field(description="if true, default database selection of structure db search                                            spectral library search contains also all available custom DB.                                            If No custom dbs are selected, spectral library search is disabled by default.")] = None,
+        include_custom_dbs_for_structure_search: Annotated[Optional[StrictBool], Field(description="if true, default database selection of structure db search                                            and spectral library search also contains all available custom databases.                                            If no custom databases are selected, spectral library search is disabled by default.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1333,7 +1371,7 @@ class JobsApi:
         :type include_config_map: bool
         :param move_parameters_to_config_map: if true, object-based parameters will be converted to and added to the generic configMap parameters
         :type move_parameters_to_config_map: bool
-        :param include_custom_dbs_for_structure_search: if true, default database selection of structure db search                                            spectral library search contains also all available custom DB.                                            If No custom dbs are selected, spectral library search is disabled by default.
+        :param include_custom_dbs_for_structure_search: if true, default database selection of structure db search                                            and spectral library search also contains all available custom databases.                                            If no custom databases are selected, spectral library search is disabled by default.
         :type include_custom_dbs_for_structure_search: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -1369,6 +1407,8 @@ class JobsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "JobSubmission",
+            '500': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1425,7 +1465,8 @@ class JobsApi:
         if 'Accept' not in _header_params:
             _header_params['Accept'] = self.api_client.select_header_accept(
                 [
-                    'application/json'
+                    'application/json', 
+                    'application/problem+json'
                 ]
             )
 
@@ -1456,7 +1497,7 @@ class JobsApi:
     def get_job(
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to run jobs on")],
-        job_id: Annotated[StrictStr, Field(description="of the job to be returned")],
+        job_id: Annotated[StrictStr, Field(description="id of the job to be returned")],
         opt_fields: Annotated[Optional[List[Optional[JobOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
@@ -1477,7 +1518,7 @@ class JobsApi:
 
         :param project_id: project-space to run jobs on (required)
         :type project_id: str
-        :param job_id: of the job to be returned (required)
+        :param job_id: id of the job to be returned (required)
         :type job_id: str
         :param opt_fields: set of optional fields to be included. Use 'none' only to override defaults.
         :type opt_fields: List[JobOptField]
@@ -1515,6 +1556,9 @@ class JobsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "Job",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1531,7 +1575,7 @@ class JobsApi:
     def get_job_with_http_info(
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to run jobs on")],
-        job_id: Annotated[StrictStr, Field(description="of the job to be returned")],
+        job_id: Annotated[StrictStr, Field(description="id of the job to be returned")],
         opt_fields: Annotated[Optional[List[Optional[JobOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
@@ -1552,7 +1596,7 @@ class JobsApi:
 
         :param project_id: project-space to run jobs on (required)
         :type project_id: str
-        :param job_id: of the job to be returned (required)
+        :param job_id: id of the job to be returned (required)
         :type job_id: str
         :param opt_fields: set of optional fields to be included. Use 'none' only to override defaults.
         :type opt_fields: List[JobOptField]
@@ -1590,6 +1634,9 @@ class JobsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "Job",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1606,7 +1653,7 @@ class JobsApi:
     def get_job_without_preload_content(
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to run jobs on")],
-        job_id: Annotated[StrictStr, Field(description="of the job to be returned")],
+        job_id: Annotated[StrictStr, Field(description="id of the job to be returned")],
         opt_fields: Annotated[Optional[List[Optional[JobOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
@@ -1627,7 +1674,7 @@ class JobsApi:
 
         :param project_id: project-space to run jobs on (required)
         :type project_id: str
-        :param job_id: of the job to be returned (required)
+        :param job_id: id of the job to be returned (required)
         :type job_id: str
         :param opt_fields: set of optional fields to be included. Use 'none' only to override defaults.
         :type opt_fields: List[JobOptField]
@@ -1665,6 +1712,9 @@ class JobsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "Job",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1718,7 +1768,8 @@ class JobsApi:
         if 'Accept' not in _header_params:
             _header_params['Accept'] = self.api_client.select_header_accept(
                 [
-                    'application/json'
+                    'application/json', 
+                    'application/problem+json'
                 ]
             )
 
@@ -1804,6 +1855,9 @@ class JobsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "StoredJobSubmission",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1875,6 +1929,9 @@ class JobsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "StoredJobSubmission",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1946,6 +2003,9 @@ class JobsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "StoredJobSubmission",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1995,7 +2055,8 @@ class JobsApi:
         if 'Accept' not in _header_params:
             _header_params['Accept'] = self.api_client.select_header_accept(
                 [
-                    'application/json'
+                    'application/json', 
+                    'application/problem+json'
                 ]
             )
 
@@ -2074,6 +2135,7 @@ class JobsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "List[str]",
+            '500': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2138,6 +2200,7 @@ class JobsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "List[str]",
+            '500': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2202,6 +2265,7 @@ class JobsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "List[str]",
+            '500': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2243,7 +2307,8 @@ class JobsApi:
         if 'Accept' not in _header_params:
             _header_params['Accept'] = self.api_client.select_header_accept(
                 [
-                    'application/json'
+                    'application/json', 
+                    'application/problem+json'
                 ]
             )
 
@@ -2321,6 +2386,7 @@ class JobsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "List[StoredJobSubmission]",
+            '500': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2384,6 +2450,7 @@ class JobsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "List[StoredJobSubmission]",
+            '500': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2447,6 +2514,7 @@ class JobsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "List[StoredJobSubmission]",
+            '500': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2488,7 +2556,8 @@ class JobsApi:
         if 'Accept' not in _header_params:
             _header_params['Accept'] = self.api_client.select_header_accept(
                 [
-                    'application/json'
+                    'application/json', 
+                    'application/problem+json'
                 ]
             )
 
@@ -2533,9 +2602,9 @@ class JobsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> List[Job]:
-        """Get List of all available jobs with information such as current state and progress (if available).
+        """(Deprecated) [DEPRECATED] Get list of all available jobs with information such as current state and progress (if available)
 
-        Get List of all available jobs with information such as current state and progress (if available).
+        [DEPRECATED] Get list of all available jobs with information such as current state and progress (if available).  <p>  [DEPRECATED] Use /jobs/page instead. Loading all jobs at once does not scale for long running projects.  This endpoint will be removed in the next major version of this API.
 
         :param project_id: project-space to run jobs on (required)
         :type project_id: str
@@ -2562,6 +2631,7 @@ class JobsApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """ # noqa: E501
+        warnings.warn("GET /api/projects/{projectId}/jobs is deprecated.", DeprecationWarning)
 
         _param = self._get_jobs_serialize(
             project_id=project_id,
@@ -2574,6 +2644,9 @@ class JobsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "List[Job]",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2604,9 +2677,9 @@ class JobsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[List[Job]]:
-        """Get List of all available jobs with information such as current state and progress (if available).
+        """(Deprecated) [DEPRECATED] Get list of all available jobs with information such as current state and progress (if available)
 
-        Get List of all available jobs with information such as current state and progress (if available).
+        [DEPRECATED] Get list of all available jobs with information such as current state and progress (if available).  <p>  [DEPRECATED] Use /jobs/page instead. Loading all jobs at once does not scale for long running projects.  This endpoint will be removed in the next major version of this API.
 
         :param project_id: project-space to run jobs on (required)
         :type project_id: str
@@ -2633,6 +2706,7 @@ class JobsApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """ # noqa: E501
+        warnings.warn("GET /api/projects/{projectId}/jobs is deprecated.", DeprecationWarning)
 
         _param = self._get_jobs_serialize(
             project_id=project_id,
@@ -2645,6 +2719,9 @@ class JobsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "List[Job]",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2675,9 +2752,9 @@ class JobsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get List of all available jobs with information such as current state and progress (if available).
+        """(Deprecated) [DEPRECATED] Get list of all available jobs with information such as current state and progress (if available)
 
-        Get List of all available jobs with information such as current state and progress (if available).
+        [DEPRECATED] Get list of all available jobs with information such as current state and progress (if available).  <p>  [DEPRECATED] Use /jobs/page instead. Loading all jobs at once does not scale for long running projects.  This endpoint will be removed in the next major version of this API.
 
         :param project_id: project-space to run jobs on (required)
         :type project_id: str
@@ -2704,6 +2781,7 @@ class JobsApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """ # noqa: E501
+        warnings.warn("GET /api/projects/{projectId}/jobs is deprecated.", DeprecationWarning)
 
         _param = self._get_jobs_serialize(
             project_id=project_id,
@@ -2716,6 +2794,9 @@ class JobsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "List[Job]",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2766,7 +2847,8 @@ class JobsApi:
         if 'Accept' not in _header_params:
             _header_params['Accept'] = self.api_client.select_header_accept(
                 [
-                    'application/json'
+                    'application/json', 
+                    'application/problem+json'
                 ]
             )
 
@@ -2794,7 +2876,7 @@ class JobsApi:
 
 
     @validate_call
-    def get_jobs_paged(
+    def get_jobs_page(
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to run jobs on")],
         page: Annotated[Optional[Annotated[int, Field(strict=True, ge=0)]], Field(description="Zero-based page index (0..N)")] = None,
@@ -2850,7 +2932,7 @@ class JobsApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._get_jobs_paged_serialize(
+        _param = self._get_jobs_page_serialize(
             project_id=project_id,
             page=page,
             size=size,
@@ -2864,6 +2946,9 @@ class JobsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PagedModelJob",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2877,7 +2962,7 @@ class JobsApi:
 
 
     @validate_call
-    def get_jobs_paged_with_http_info(
+    def get_jobs_page_with_http_info(
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to run jobs on")],
         page: Annotated[Optional[Annotated[int, Field(strict=True, ge=0)]], Field(description="Zero-based page index (0..N)")] = None,
@@ -2933,7 +3018,7 @@ class JobsApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._get_jobs_paged_serialize(
+        _param = self._get_jobs_page_serialize(
             project_id=project_id,
             page=page,
             size=size,
@@ -2947,6 +3032,9 @@ class JobsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PagedModelJob",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2960,7 +3048,7 @@ class JobsApi:
 
 
     @validate_call
-    def get_jobs_paged_without_preload_content(
+    def get_jobs_page_without_preload_content(
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to run jobs on")],
         page: Annotated[Optional[Annotated[int, Field(strict=True, ge=0)]], Field(description="Zero-based page index (0..N)")] = None,
@@ -3016,7 +3104,7 @@ class JobsApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._get_jobs_paged_serialize(
+        _param = self._get_jobs_page_serialize(
             project_id=project_id,
             page=page,
             size=size,
@@ -3030,6 +3118,9 @@ class JobsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PagedModelJob",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3038,7 +3129,7 @@ class JobsApi:
         return response_data.response
 
 
-    def _get_jobs_paged_serialize(
+    def _get_jobs_page_serialize(
         self,
         project_id,
         page,
@@ -3096,7 +3187,8 @@ class JobsApi:
         if 'Accept' not in _header_params:
             _header_params['Accept'] = self.api_client.select_header_accept(
                 [
-                    'application/json'
+                    'application/json', 
+                    'application/problem+json'
                 ]
             )
 
@@ -3181,6 +3273,9 @@ class JobsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "bool",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3251,6 +3346,9 @@ class JobsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "bool",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3321,6 +3419,9 @@ class JobsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "bool",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3370,7 +3471,8 @@ class JobsApi:
         if 'Accept' not in _header_params:
             _header_params['Accept'] = self.api_client.select_header_accept(
                 [
-                    'application/json'
+                    'application/json', 
+                    'application/problem+json'
                 ]
             )
 
@@ -3464,6 +3566,9 @@ class JobsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "StoredJobSubmission",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3543,6 +3648,9 @@ class JobsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "StoredJobSubmission",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3622,6 +3730,9 @@ class JobsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "StoredJobSubmission",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3679,7 +3790,8 @@ class JobsApi:
         if 'Accept' not in _header_params:
             _header_params['Accept'] = self.api_client.select_header_accept(
                 [
-                    'application/json'
+                    'application/json', 
+                    'application/problem+json'
                 ]
             )
 
@@ -3723,7 +3835,7 @@ class JobsApi:
     def start_job(
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to run jobs on")],
-        job_submission: Annotated[JobSubmission, Field(description="configuration of the job that will be submitted of the job to be returned")],
+        job_submission: Annotated[JobSubmission, Field(description="configuration of the job to be submitted")],
         opt_fields: Annotated[Optional[List[Optional[JobOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
@@ -3744,7 +3856,7 @@ class JobsApi:
 
         :param project_id: project-space to run jobs on (required)
         :type project_id: str
-        :param job_submission: configuration of the job that will be submitted of the job to be returned (required)
+        :param job_submission: configuration of the job to be submitted (required)
         :type job_submission: JobSubmission
         :param opt_fields: set of optional fields to be included. Use 'none' only to override defaults.
         :type opt_fields: List[JobOptField]
@@ -3782,6 +3894,9 @@ class JobsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '202': "Job",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3798,7 +3913,7 @@ class JobsApi:
     def start_job_with_http_info(
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to run jobs on")],
-        job_submission: Annotated[JobSubmission, Field(description="configuration of the job that will be submitted of the job to be returned")],
+        job_submission: Annotated[JobSubmission, Field(description="configuration of the job to be submitted")],
         opt_fields: Annotated[Optional[List[Optional[JobOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
@@ -3819,7 +3934,7 @@ class JobsApi:
 
         :param project_id: project-space to run jobs on (required)
         :type project_id: str
-        :param job_submission: configuration of the job that will be submitted of the job to be returned (required)
+        :param job_submission: configuration of the job to be submitted (required)
         :type job_submission: JobSubmission
         :param opt_fields: set of optional fields to be included. Use 'none' only to override defaults.
         :type opt_fields: List[JobOptField]
@@ -3857,6 +3972,9 @@ class JobsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '202': "Job",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3873,7 +3991,7 @@ class JobsApi:
     def start_job_without_preload_content(
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to run jobs on")],
-        job_submission: Annotated[JobSubmission, Field(description="configuration of the job that will be submitted of the job to be returned")],
+        job_submission: Annotated[JobSubmission, Field(description="configuration of the job to be submitted")],
         opt_fields: Annotated[Optional[List[Optional[JobOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
         _request_timeout: Union[
             None,
@@ -3894,7 +4012,7 @@ class JobsApi:
 
         :param project_id: project-space to run jobs on (required)
         :type project_id: str
-        :param job_submission: configuration of the job that will be submitted of the job to be returned (required)
+        :param job_submission: configuration of the job to be submitted (required)
         :type job_submission: JobSubmission
         :param opt_fields: set of optional fields to be included. Use 'none' only to override defaults.
         :type opt_fields: List[JobOptField]
@@ -3932,6 +4050,9 @@ class JobsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '202': "Job",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3985,7 +4106,8 @@ class JobsApi:
         if 'Accept' not in _header_params:
             _header_params['Accept'] = self.api_client.select_header_accept(
                 [
-                    'application/json'
+                    'application/json', 
+                    'application/problem+json'
                 ]
             )
 
@@ -4029,7 +4151,7 @@ class JobsApi:
     def start_job_from_config(
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to run jobs on")],
-        job_config_name: Annotated[StrictStr, Field(description="name if the config to be used")],
+        job_config_name: Annotated[StrictStr, Field(description="name of the config to be used")],
         request_body: Annotated[List[StrictStr], Field(description="List of alignedFeatureIds to be computed")],
         recompute: Annotated[Optional[StrictBool], Field(description="enable or disable recompute. If null the stored value will be used.")] = None,
         opt_fields: Annotated[Optional[List[Optional[JobOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
@@ -4052,7 +4174,7 @@ class JobsApi:
 
         :param project_id: project-space to run jobs on (required)
         :type project_id: str
-        :param job_config_name: name if the config to be used (required)
+        :param job_config_name: name of the config to be used (required)
         :type job_config_name: str
         :param request_body: List of alignedFeatureIds to be computed (required)
         :type request_body: List[str]
@@ -4096,6 +4218,9 @@ class JobsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '202': "Job",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4112,7 +4237,7 @@ class JobsApi:
     def start_job_from_config_with_http_info(
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to run jobs on")],
-        job_config_name: Annotated[StrictStr, Field(description="name if the config to be used")],
+        job_config_name: Annotated[StrictStr, Field(description="name of the config to be used")],
         request_body: Annotated[List[StrictStr], Field(description="List of alignedFeatureIds to be computed")],
         recompute: Annotated[Optional[StrictBool], Field(description="enable or disable recompute. If null the stored value will be used.")] = None,
         opt_fields: Annotated[Optional[List[Optional[JobOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
@@ -4135,7 +4260,7 @@ class JobsApi:
 
         :param project_id: project-space to run jobs on (required)
         :type project_id: str
-        :param job_config_name: name if the config to be used (required)
+        :param job_config_name: name of the config to be used (required)
         :type job_config_name: str
         :param request_body: List of alignedFeatureIds to be computed (required)
         :type request_body: List[str]
@@ -4179,6 +4304,9 @@ class JobsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '202': "Job",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4195,7 +4323,7 @@ class JobsApi:
     def start_job_from_config_without_preload_content(
         self,
         project_id: Annotated[StrictStr, Field(description="project-space to run jobs on")],
-        job_config_name: Annotated[StrictStr, Field(description="name if the config to be used")],
+        job_config_name: Annotated[StrictStr, Field(description="name of the config to be used")],
         request_body: Annotated[List[StrictStr], Field(description="List of alignedFeatureIds to be computed")],
         recompute: Annotated[Optional[StrictBool], Field(description="enable or disable recompute. If null the stored value will be used.")] = None,
         opt_fields: Annotated[Optional[List[Optional[JobOptField]]], Field(description="set of optional fields to be included. Use 'none' only to override defaults.")] = None,
@@ -4218,7 +4346,7 @@ class JobsApi:
 
         :param project_id: project-space to run jobs on (required)
         :type project_id: str
-        :param job_config_name: name if the config to be used (required)
+        :param job_config_name: name of the config to be used (required)
         :type job_config_name: str
         :param request_body: List of alignedFeatureIds to be computed (required)
         :type request_body: List[str]
@@ -4262,6 +4390,9 @@ class JobsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '202': "Job",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4326,7 +4457,8 @@ class JobsApi:
         if 'Accept' not in _header_params:
             _header_params['Accept'] = self.api_client.select_header_accept(
                 [
-                    'application/json'
+                    'application/json', 
+                    'application/problem+json'
                 ]
             )
 

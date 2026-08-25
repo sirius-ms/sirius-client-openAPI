@@ -459,6 +459,12 @@
      "required": false,
      "type": "Optional[StrictStr]"
     },
+    "qualities": {
+     "alias": "qualities",
+     "name": "qualities",
+     "required": false,
+     "type": "Optional[Dict[str, Optional[DataQuality]]]"
+    },
     "quality": {
      "alias": "quality",
      "name": "quality",
@@ -553,6 +559,7 @@
     "COMPUTEDTOOLS": "computedTools",
     "MSDATA": "msData",
     "NONE": "none",
+    "QUALITIES": "qualities",
     "TAGS": "tags",
     "TOPANNOTATIONS": "topAnnotations",
     "TOPANNOTATIONSDENOVO": "topAnnotationsDeNovo",
@@ -618,6 +625,12 @@
     "import_peak_lists": {
      "alias": "importPeakLists",
      "name": "import_peak_lists",
+     "required": false,
+     "type": "Optional[StrictBool]"
+    },
+    "transformation_products": {
+     "alias": "transformationProducts",
+     "name": "transformation_products",
      "required": false,
      "type": "Optional[StrictBool]"
     }
@@ -926,6 +939,110 @@
    },
    "origin": {
     "name": "AnnotatedSpectrum",
+    "orphan": false,
+    "type": "schema",
+    "unstable": false
+   }
+  },
+  "AnyValue": {
+   "bases": [
+    "BaseModel"
+   ],
+   "enum_members": {},
+   "fields": {
+    "any_of_schemas": {
+     "alias": "any_of_schemas",
+     "name": "any_of_schemas",
+     "required": false,
+     "type": "Set[str]"
+    },
+    "anyof_schema_1_validator": {
+     "alias": "anyof_schema_1_validator",
+     "name": "anyof_schema_1_validator",
+     "required": false,
+     "type": "Optional[StrictStr]"
+    },
+    "anyof_schema_2_validator": {
+     "alias": "anyof_schema_2_validator",
+     "name": "anyof_schema_2_validator",
+     "required": false,
+     "type": "Optional[StrictInt]"
+    },
+    "anyof_schema_3_validator": {
+     "alias": "anyof_schema_3_validator",
+     "name": "anyof_schema_3_validator",
+     "required": false,
+     "type": "Optional[float]"
+    },
+    "anyof_schema_4_validator": {
+     "alias": "anyof_schema_4_validator",
+     "name": "anyof_schema_4_validator",
+     "required": false,
+     "type": "Optional[StrictBool]"
+    }
+   },
+   "kind": "model",
+   "methods": {
+    "__init__": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "vararg",
+       "name": "*args",
+       "required": false
+      },
+      {
+       "kind": "kwarg",
+       "name": "**kwargs",
+       "required": false
+      }
+     ]
+    },
+    "actual_instance_must_validate_anyof": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "v",
+       "required": true
+      }
+     ]
+    },
+    "from_dict": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "obj",
+       "required": true
+      }
+     ]
+    },
+    "from_json": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "json_str",
+       "required": true
+      }
+     ]
+    },
+    "to_dict": {
+     "origin": null,
+     "params": []
+    },
+    "to_json": {
+     "origin": null,
+     "params": []
+    },
+    "to_str": {
+     "origin": null,
+     "params": []
+    }
+   },
+   "origin": {
+    "name": "AnyValue",
     "orphan": false,
     "type": "schema",
     "unstable": false
@@ -2833,6 +2950,171 @@
       }
      ]
     },
+    "get_compound_quant_table": {
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/compounds/quant-table",
+      "operation_id": "getCompoundQuantTable",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "search_query",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "type",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "opt_fields",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_timeout",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_auth",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_content_type",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_headers",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_host_index",
+       "required": false
+      }
+     ]
+    },
+    "get_compound_quant_table_with_http_info": {
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/compounds/quant-table",
+      "operation_id": "getCompoundQuantTable",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "search_query",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "type",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "opt_fields",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_timeout",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_auth",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_content_type",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_headers",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_host_index",
+       "required": false
+      }
+     ]
+    },
+    "get_compound_quant_table_without_preload_content": {
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/compounds/quant-table",
+      "operation_id": "getCompoundQuantTable",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "search_query",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "type",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "opt_fields",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_timeout",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_auth",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_content_type",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_headers",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_host_index",
+       "required": false
+      }
+     ]
+    },
     "get_compound_with_http_info": {
      "origin": {
       "endpoint": "GET /api/projects/{projectId}/compounds/{compoundId}",
@@ -2958,7 +3240,7 @@
       "endpoint": "GET /api/projects/{projectId}/compounds",
       "operation_id": "getCompounds",
       "type": "operation",
-      "unstable": false
+      "unstable": true
      },
      "params": [
       {
@@ -3008,10 +3290,10 @@
       }
      ]
     },
-    "get_compounds_paged": {
+    "get_compounds_page": {
      "origin": {
       "endpoint": "GET /api/projects/{projectId}/compounds/page",
-      "operation_id": "getCompoundsPaged",
+      "operation_id": "getCompoundsPage",
       "type": "operation",
       "unstable": false
      },
@@ -3020,6 +3302,11 @@
        "kind": "positional",
        "name": "project_id",
        "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "search_query",
+       "required": false
       },
       {
        "kind": "positional",
@@ -3078,10 +3365,10 @@
       }
      ]
     },
-    "get_compounds_paged_with_http_info": {
+    "get_compounds_page_with_http_info": {
      "origin": {
       "endpoint": "GET /api/projects/{projectId}/compounds/page",
-      "operation_id": "getCompoundsPaged",
+      "operation_id": "getCompoundsPage",
       "type": "operation",
       "unstable": false
      },
@@ -3090,6 +3377,11 @@
        "kind": "positional",
        "name": "project_id",
        "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "search_query",
+       "required": false
       },
       {
        "kind": "positional",
@@ -3148,10 +3440,10 @@
       }
      ]
     },
-    "get_compounds_paged_without_preload_content": {
+    "get_compounds_page_without_preload_content": {
      "origin": {
       "endpoint": "GET /api/projects/{projectId}/compounds/page",
-      "operation_id": "getCompoundsPaged",
+      "operation_id": "getCompoundsPage",
       "type": "operation",
       "unstable": false
      },
@@ -3160,6 +3452,11 @@
        "kind": "positional",
        "name": "project_id",
        "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "search_query",
+       "required": false
       },
       {
        "kind": "positional",
@@ -3190,6 +3487,126 @@
        "kind": "positional",
        "name": "opt_fields_features",
        "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_timeout",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_auth",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_content_type",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_headers",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_host_index",
+       "required": false
+      }
+     ]
+    },
+    "get_compounds_searchable_fields": {
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/compounds/searchable-fields",
+      "operation_id": "getCompoundsSearchableFields",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "_request_timeout",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_auth",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_content_type",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_headers",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_host_index",
+       "required": false
+      }
+     ]
+    },
+    "get_compounds_searchable_fields_with_http_info": {
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/compounds/searchable-fields",
+      "operation_id": "getCompoundsSearchableFields",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "_request_timeout",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_auth",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_content_type",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_headers",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_host_index",
+       "required": false
+      }
+     ]
+    },
+    "get_compounds_searchable_fields_without_preload_content": {
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/compounds/searchable-fields",
+      "operation_id": "getCompoundsSearchableFields",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
       },
       {
        "kind": "positional",
@@ -3223,7 +3640,7 @@
       "endpoint": "GET /api/projects/{projectId}/compounds",
       "operation_id": "getCompounds",
       "type": "operation",
-      "unstable": false
+      "unstable": true
      },
      "params": [
       {
@@ -3278,7 +3695,7 @@
       "endpoint": "GET /api/projects/{projectId}/compounds",
       "operation_id": "getCompounds",
       "type": "operation",
-      "unstable": false
+      "unstable": true
      },
      "params": [
       {
@@ -4368,6 +4785,121 @@
     "unstable": false
    }
   },
+  "Feature": {
+   "bases": [
+    "BaseModel"
+   ],
+   "enum_members": {},
+   "fields": {
+    "aligned_feature_id": {
+     "alias": "alignedFeatureId",
+     "name": "aligned_feature_id",
+     "required": false,
+     "type": "Optional[StrictStr]"
+    },
+    "apex_intensity": {
+     "alias": "apexIntensity",
+     "name": "apex_intensity",
+     "required": false,
+     "type": "Optional[float]"
+    },
+    "apex_mz": {
+     "alias": "apexMz",
+     "name": "apex_mz",
+     "required": false,
+     "type": "Optional[float]"
+    },
+    "area_under_curve": {
+     "alias": "areaUnderCurve",
+     "name": "area_under_curve",
+     "required": false,
+     "type": "Optional[float]"
+    },
+    "average_mz": {
+     "alias": "averageMz",
+     "name": "average_mz",
+     "required": false,
+     "type": "Optional[float]"
+    },
+    "feature_id": {
+     "alias": "featureId",
+     "name": "feature_id",
+     "required": false,
+     "type": "Optional[StrictStr]"
+    },
+    "rt_apex_seconds": {
+     "alias": "rtApexSeconds",
+     "name": "rt_apex_seconds",
+     "required": false,
+     "type": "Optional[float]"
+    },
+    "rt_end_seconds": {
+     "alias": "rtEndSeconds",
+     "name": "rt_end_seconds",
+     "required": false,
+     "type": "Optional[float]"
+    },
+    "rt_fwhm_seconds": {
+     "alias": "rtFwhmSeconds",
+     "name": "rt_fwhm_seconds",
+     "required": false,
+     "type": "Optional[float]"
+    },
+    "rt_start_seconds": {
+     "alias": "rtStartSeconds",
+     "name": "rt_start_seconds",
+     "required": false,
+     "type": "Optional[float]"
+    },
+    "run_id": {
+     "alias": "runId",
+     "name": "run_id",
+     "required": false,
+     "type": "Optional[StrictStr]"
+    }
+   },
+   "kind": "model",
+   "methods": {
+    "from_dict": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "obj",
+       "required": true
+      }
+     ]
+    },
+    "from_json": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "json_str",
+       "required": true
+      }
+     ]
+    },
+    "to_dict": {
+     "origin": null,
+     "params": []
+    },
+    "to_json": {
+     "origin": null,
+     "params": []
+    },
+    "to_str": {
+     "origin": null,
+     "params": []
+    }
+   },
+   "origin": {
+    "name": "Feature",
+    "orphan": false,
+    "type": "schema",
+    "unstable": false
+   }
+  },
   "FeatureAnnotations": {
    "bases": [
     "BaseModel"
@@ -4947,6 +5479,141 @@
       }
      ]
     },
+    "delete_aligned_features_by_query": {
+     "origin": {
+      "endpoint": "PUT /api/projects/{projectId}/aligned-features/delete-by-query",
+      "operation_id": "deleteAlignedFeaturesByQuery",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "search_query",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "_request_timeout",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_auth",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_content_type",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_headers",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_host_index",
+       "required": false
+      }
+     ]
+    },
+    "delete_aligned_features_by_query_with_http_info": {
+     "origin": {
+      "endpoint": "PUT /api/projects/{projectId}/aligned-features/delete-by-query",
+      "operation_id": "deleteAlignedFeaturesByQuery",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "search_query",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "_request_timeout",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_auth",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_content_type",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_headers",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_host_index",
+       "required": false
+      }
+     ]
+    },
+    "delete_aligned_features_by_query_without_preload_content": {
+     "origin": {
+      "endpoint": "PUT /api/projects/{projectId}/aligned-features/delete-by-query",
+      "operation_id": "deleteAlignedFeaturesByQuery",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "search_query",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "_request_timeout",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_auth",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_content_type",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_headers",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_host_index",
+       "required": false
+      }
+     ]
+    },
     "delete_aligned_features_with_http_info": {
      "origin": {
       "endpoint": "PUT /api/projects/{projectId}/aligned-features/delete",
@@ -5207,7 +5874,7 @@
       "endpoint": "GET /api/projects/{projectId}/aligned-features",
       "operation_id": "getAlignedFeatures",
       "type": "operation",
-      "unstable": false
+      "unstable": true
      },
      "params": [
       {
@@ -5252,10 +5919,10 @@
       }
      ]
     },
-    "get_aligned_features_paged": {
+    "get_aligned_features_page": {
      "origin": {
       "endpoint": "GET /api/projects/{projectId}/aligned-features/page",
-      "operation_id": "getAlignedFeaturesPaged",
+      "operation_id": "getAlignedFeaturesPage",
       "type": "operation",
       "unstable": false
      },
@@ -5278,6 +5945,11 @@
       {
        "kind": "positional",
        "name": "sort",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "search_query",
        "required": false
       },
       {
@@ -5317,10 +5989,10 @@
       }
      ]
     },
-    "get_aligned_features_paged_with_http_info": {
+    "get_aligned_features_page_with_http_info": {
      "origin": {
       "endpoint": "GET /api/projects/{projectId}/aligned-features/page",
-      "operation_id": "getAlignedFeaturesPaged",
+      "operation_id": "getAlignedFeaturesPage",
       "type": "operation",
       "unstable": false
      },
@@ -5343,6 +6015,11 @@
       {
        "kind": "positional",
        "name": "sort",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "search_query",
        "required": false
       },
       {
@@ -5382,10 +6059,10 @@
       }
      ]
     },
-    "get_aligned_features_paged_without_preload_content": {
+    "get_aligned_features_page_without_preload_content": {
      "origin": {
       "endpoint": "GET /api/projects/{projectId}/aligned-features/page",
-      "operation_id": "getAlignedFeaturesPaged",
+      "operation_id": "getAlignedFeaturesPage",
       "type": "operation",
       "unstable": false
      },
@@ -5412,6 +6089,11 @@
       },
       {
        "kind": "positional",
+       "name": "search_query",
+       "required": false
+      },
+      {
+       "kind": "positional",
        "name": "ms_data_search_prepared",
        "required": false
       },
@@ -5419,6 +6101,126 @@
        "kind": "positional",
        "name": "opt_fields",
        "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_timeout",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_auth",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_content_type",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_headers",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_host_index",
+       "required": false
+      }
+     ]
+    },
+    "get_aligned_features_searchable_fields": {
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/aligned-features/searchable-fields",
+      "operation_id": "getAlignedFeaturesSearchableFields",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "_request_timeout",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_auth",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_content_type",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_headers",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_host_index",
+       "required": false
+      }
+     ]
+    },
+    "get_aligned_features_searchable_fields_with_http_info": {
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/aligned-features/searchable-fields",
+      "operation_id": "getAlignedFeaturesSearchableFields",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "_request_timeout",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_auth",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_content_type",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_headers",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_host_index",
+       "required": false
+      }
+     ]
+    },
+    "get_aligned_features_searchable_fields_without_preload_content": {
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/aligned-features/searchable-fields",
+      "operation_id": "getAlignedFeaturesSearchableFields",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
       },
       {
        "kind": "positional",
@@ -5452,7 +6254,7 @@
       "endpoint": "GET /api/projects/{projectId}/aligned-features",
       "operation_id": "getAlignedFeatures",
       "type": "operation",
-      "unstable": false
+      "unstable": true
      },
      "params": [
       {
@@ -5502,7 +6304,7 @@
       "endpoint": "GET /api/projects/{projectId}/aligned-features",
       "operation_id": "getAlignedFeatures",
       "type": "operation",
-      "unstable": false
+      "unstable": true
      },
      "params": [
       {
@@ -5852,7 +6654,7 @@
       "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/denovo-structures",
       "operation_id": "getDeNovoStructureCandidates",
       "type": "operation",
-      "unstable": false
+      "unstable": true
      },
      "params": [
       {
@@ -5902,7 +6704,7 @@
       "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/denovo-structures",
       "operation_id": "getDeNovoStructureCandidatesByFormula",
       "type": "operation",
-      "unstable": false
+      "unstable": true
      },
      "params": [
       {
@@ -5952,10 +6754,10 @@
       }
      ]
     },
-    "get_de_novo_structure_candidates_by_formula_paged": {
+    "get_de_novo_structure_candidates_by_formula_page": {
      "origin": {
       "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/denovo-structures/page",
-      "operation_id": "getDeNovoStructureCandidatesByFormulaPaged",
+      "operation_id": "getDeNovoStructureCandidatesByFormulaPage",
       "type": "operation",
       "unstable": false
      },
@@ -6022,10 +6824,10 @@
       }
      ]
     },
-    "get_de_novo_structure_candidates_by_formula_paged_with_http_info": {
+    "get_de_novo_structure_candidates_by_formula_page_with_http_info": {
      "origin": {
       "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/denovo-structures/page",
-      "operation_id": "getDeNovoStructureCandidatesByFormulaPaged",
+      "operation_id": "getDeNovoStructureCandidatesByFormulaPage",
       "type": "operation",
       "unstable": false
      },
@@ -6092,10 +6894,10 @@
       }
      ]
     },
-    "get_de_novo_structure_candidates_by_formula_paged_without_preload_content": {
+    "get_de_novo_structure_candidates_by_formula_page_without_preload_content": {
      "origin": {
       "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/denovo-structures/page",
-      "operation_id": "getDeNovoStructureCandidatesByFormulaPaged",
+      "operation_id": "getDeNovoStructureCandidatesByFormulaPage",
       "type": "operation",
       "unstable": false
      },
@@ -6167,7 +6969,7 @@
       "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/denovo-structures",
       "operation_id": "getDeNovoStructureCandidatesByFormula",
       "type": "operation",
-      "unstable": false
+      "unstable": true
      },
      "params": [
       {
@@ -6222,7 +7024,7 @@
       "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/denovo-structures",
       "operation_id": "getDeNovoStructureCandidatesByFormula",
       "type": "operation",
-      "unstable": false
+      "unstable": true
      },
      "params": [
       {
@@ -6272,10 +7074,10 @@
       }
      ]
     },
-    "get_de_novo_structure_candidates_paged": {
+    "get_de_novo_structure_candidates_page": {
      "origin": {
       "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/denovo-structures/page",
-      "operation_id": "getDeNovoStructureCandidatesPaged",
+      "operation_id": "getDeNovoStructureCandidatesPage",
       "type": "operation",
       "unstable": false
      },
@@ -6337,10 +7139,10 @@
       }
      ]
     },
-    "get_de_novo_structure_candidates_paged_with_http_info": {
+    "get_de_novo_structure_candidates_page_with_http_info": {
      "origin": {
       "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/denovo-structures/page",
-      "operation_id": "getDeNovoStructureCandidatesPaged",
+      "operation_id": "getDeNovoStructureCandidatesPage",
       "type": "operation",
       "unstable": false
      },
@@ -6402,10 +7204,10 @@
       }
      ]
     },
-    "get_de_novo_structure_candidates_paged_without_preload_content": {
+    "get_de_novo_structure_candidates_page_without_preload_content": {
      "origin": {
       "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/denovo-structures/page",
-      "operation_id": "getDeNovoStructureCandidatesPaged",
+      "operation_id": "getDeNovoStructureCandidatesPage",
       "type": "operation",
       "unstable": false
      },
@@ -6472,7 +7274,7 @@
       "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/denovo-structures",
       "operation_id": "getDeNovoStructureCandidates",
       "type": "operation",
-      "unstable": false
+      "unstable": true
      },
      "params": [
       {
@@ -6522,7 +7324,7 @@
       "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/denovo-structures",
       "operation_id": "getDeNovoStructureCandidates",
       "type": "operation",
-      "unstable": false
+      "unstable": true
      },
      "params": [
       {
@@ -6539,6 +7341,486 @@
        "kind": "positional",
        "name": "opt_fields",
        "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_timeout",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_auth",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_content_type",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_headers",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_host_index",
+       "required": false
+      }
+     ]
+    },
+    "get_feature_quant_table": {
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/aligned-features/quant-table",
+      "operation_id": "getFeatureQuantTable",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "search_query",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "type",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "opt_fields",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_timeout",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_auth",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_content_type",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_headers",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_host_index",
+       "required": false
+      }
+     ]
+    },
+    "get_feature_quant_table_with_http_info": {
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/aligned-features/quant-table",
+      "operation_id": "getFeatureQuantTable",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "search_query",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "type",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "opt_fields",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_timeout",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_auth",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_content_type",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_headers",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_host_index",
+       "required": false
+      }
+     ]
+    },
+    "get_feature_quant_table_without_preload_content": {
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/aligned-features/quant-table",
+      "operation_id": "getFeatureQuantTable",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "search_query",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "type",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "opt_fields",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_timeout",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_auth",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_content_type",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_headers",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_host_index",
+       "required": false
+      }
+     ]
+    },
+    "get_features": {
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/features",
+      "operation_id": "getFeatures",
+      "type": "operation",
+      "unstable": true
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "aligned_feature_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "_request_timeout",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_auth",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_content_type",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_headers",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_host_index",
+       "required": false
+      }
+     ]
+    },
+    "get_features_page": {
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/features/page",
+      "operation_id": "getFeaturesPage",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "aligned_feature_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "page",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "size",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "sort",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_timeout",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_auth",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_content_type",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_headers",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_host_index",
+       "required": false
+      }
+     ]
+    },
+    "get_features_page_with_http_info": {
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/features/page",
+      "operation_id": "getFeaturesPage",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "aligned_feature_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "page",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "size",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "sort",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_timeout",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_auth",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_content_type",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_headers",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_host_index",
+       "required": false
+      }
+     ]
+    },
+    "get_features_page_without_preload_content": {
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/features/page",
+      "operation_id": "getFeaturesPage",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "aligned_feature_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "page",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "size",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "sort",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_timeout",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_auth",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_content_type",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_headers",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_host_index",
+       "required": false
+      }
+     ]
+    },
+    "get_features_with_http_info": {
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/features",
+      "operation_id": "getFeatures",
+      "type": "operation",
+      "unstable": true
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "aligned_feature_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "_request_timeout",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_auth",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_content_type",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_headers",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_host_index",
+       "required": false
+      }
+     ]
+    },
+    "get_features_without_preload_content": {
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/features",
+      "operation_id": "getFeatures",
+      "type": "operation",
+      "unstable": true
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "aligned_feature_id",
+       "required": true
       },
       {
        "kind": "positional",
@@ -7247,7 +8529,7 @@
       "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas",
       "operation_id": "getFormulaCandidates",
       "type": "operation",
-      "unstable": false
+      "unstable": true
      },
      "params": [
       {
@@ -7297,10 +8579,10 @@
       }
      ]
     },
-    "get_formula_candidates_paged": {
+    "get_formula_candidates_page": {
      "origin": {
       "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/page",
-      "operation_id": "getFormulaCandidatesPaged",
+      "operation_id": "getFormulaCandidatesPage",
       "type": "operation",
       "unstable": false
      },
@@ -7367,10 +8649,10 @@
       }
      ]
     },
-    "get_formula_candidates_paged_with_http_info": {
+    "get_formula_candidates_page_with_http_info": {
      "origin": {
       "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/page",
-      "operation_id": "getFormulaCandidatesPaged",
+      "operation_id": "getFormulaCandidatesPage",
       "type": "operation",
       "unstable": false
      },
@@ -7437,10 +8719,10 @@
       }
      ]
     },
-    "get_formula_candidates_paged_without_preload_content": {
+    "get_formula_candidates_page_without_preload_content": {
      "origin": {
       "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/page",
-      "operation_id": "getFormulaCandidatesPaged",
+      "operation_id": "getFormulaCandidatesPage",
       "type": "operation",
       "unstable": false
      },
@@ -7512,7 +8794,7 @@
       "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas",
       "operation_id": "getFormulaCandidates",
       "type": "operation",
-      "unstable": false
+      "unstable": true
      },
      "params": [
       {
@@ -7567,7 +8849,7 @@
       "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas",
       "operation_id": "getFormulaCandidates",
       "type": "operation",
-      "unstable": false
+      "unstable": true
      },
      "params": [
       {
@@ -8387,7 +9669,7 @@
       "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/spectral-library-matches",
       "operation_id": "getSpectralLibraryMatches",
       "type": "operation",
-      "unstable": false
+      "unstable": true
      },
      "params": [
       {
@@ -8447,10 +9729,10 @@
       }
      ]
     },
-    "get_spectral_library_matches_paged": {
+    "get_spectral_library_matches_page": {
      "origin": {
       "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/spectral-library-matches/page",
-      "operation_id": "getSpectralLibraryMatchesPaged",
+      "operation_id": "getSpectralLibraryMatchesPage",
       "type": "operation",
       "unstable": false
      },
@@ -8527,10 +9809,10 @@
       }
      ]
     },
-    "get_spectral_library_matches_paged_with_http_info": {
+    "get_spectral_library_matches_page_with_http_info": {
      "origin": {
       "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/spectral-library-matches/page",
-      "operation_id": "getSpectralLibraryMatchesPaged",
+      "operation_id": "getSpectralLibraryMatchesPage",
       "type": "operation",
       "unstable": false
      },
@@ -8607,10 +9889,10 @@
       }
      ]
     },
-    "get_spectral_library_matches_paged_without_preload_content": {
+    "get_spectral_library_matches_page_without_preload_content": {
      "origin": {
       "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/spectral-library-matches/page",
-      "operation_id": "getSpectralLibraryMatchesPaged",
+      "operation_id": "getSpectralLibraryMatchesPage",
       "type": "operation",
       "unstable": false
      },
@@ -8872,7 +10154,7 @@
       "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/spectral-library-matches",
       "operation_id": "getSpectralLibraryMatches",
       "type": "operation",
-      "unstable": false
+      "unstable": true
      },
      "params": [
       {
@@ -8937,7 +10219,7 @@
       "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/spectral-library-matches",
       "operation_id": "getSpectralLibraryMatches",
       "type": "operation",
-      "unstable": false
+      "unstable": true
      },
      "params": [
       {
@@ -9002,7 +10284,7 @@
       "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/db-structures",
       "operation_id": "getStructureCandidates",
       "type": "operation",
-      "unstable": false
+      "unstable": true
      },
      "params": [
       {
@@ -9052,7 +10334,7 @@
       "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/db-structures",
       "operation_id": "getStructureCandidatesByFormula",
       "type": "operation",
-      "unstable": false
+      "unstable": true
      },
      "params": [
       {
@@ -9102,10 +10384,10 @@
       }
      ]
     },
-    "get_structure_candidates_by_formula_paged": {
+    "get_structure_candidates_by_formula_page": {
      "origin": {
       "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/db-structures/page",
-      "operation_id": "getStructureCandidatesByFormulaPaged",
+      "operation_id": "getStructureCandidatesByFormulaPage",
       "type": "operation",
       "unstable": false
      },
@@ -9172,10 +10454,10 @@
       }
      ]
     },
-    "get_structure_candidates_by_formula_paged_with_http_info": {
+    "get_structure_candidates_by_formula_page_with_http_info": {
      "origin": {
       "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/db-structures/page",
-      "operation_id": "getStructureCandidatesByFormulaPaged",
+      "operation_id": "getStructureCandidatesByFormulaPage",
       "type": "operation",
       "unstable": false
      },
@@ -9242,10 +10524,10 @@
       }
      ]
     },
-    "get_structure_candidates_by_formula_paged_without_preload_content": {
+    "get_structure_candidates_by_formula_page_without_preload_content": {
      "origin": {
       "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/db-structures/page",
-      "operation_id": "getStructureCandidatesByFormulaPaged",
+      "operation_id": "getStructureCandidatesByFormulaPage",
       "type": "operation",
       "unstable": false
      },
@@ -9317,7 +10599,7 @@
       "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/db-structures",
       "operation_id": "getStructureCandidatesByFormula",
       "type": "operation",
-      "unstable": false
+      "unstable": true
      },
      "params": [
       {
@@ -9372,7 +10654,7 @@
       "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/formulas/{formulaId}/db-structures",
       "operation_id": "getStructureCandidatesByFormula",
       "type": "operation",
-      "unstable": false
+      "unstable": true
      },
      "params": [
       {
@@ -9422,10 +10704,10 @@
       }
      ]
     },
-    "get_structure_candidates_paged": {
+    "get_structure_candidates_page": {
      "origin": {
       "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/db-structures/page",
-      "operation_id": "getStructureCandidatesPaged",
+      "operation_id": "getStructureCandidatesPage",
       "type": "operation",
       "unstable": false
      },
@@ -9487,10 +10769,10 @@
       }
      ]
     },
-    "get_structure_candidates_paged_with_http_info": {
+    "get_structure_candidates_page_with_http_info": {
      "origin": {
       "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/db-structures/page",
-      "operation_id": "getStructureCandidatesPaged",
+      "operation_id": "getStructureCandidatesPage",
       "type": "operation",
       "unstable": false
      },
@@ -9552,10 +10834,10 @@
       }
      ]
     },
-    "get_structure_candidates_paged_without_preload_content": {
+    "get_structure_candidates_page_without_preload_content": {
      "origin": {
       "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/db-structures/page",
-      "operation_id": "getStructureCandidatesPaged",
+      "operation_id": "getStructureCandidatesPage",
       "type": "operation",
       "unstable": false
      },
@@ -9622,7 +10904,7 @@
       "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/db-structures",
       "operation_id": "getStructureCandidates",
       "type": "operation",
-      "unstable": false
+      "unstable": true
      },
      "params": [
       {
@@ -9672,7 +10954,7 @@
       "endpoint": "GET /api/projects/{projectId}/aligned-features/{alignedFeatureId}/db-structures",
       "operation_id": "getStructureCandidates",
       "type": "operation",
-      "unstable": false
+      "unstable": true
      },
      "params": [
       {
@@ -12901,7 +14183,7 @@
       "endpoint": "GET /api/projects/{projectId}/jobs",
       "operation_id": "getJobs",
       "type": "operation",
-      "unstable": false
+      "unstable": true
      },
      "params": [
       {
@@ -12941,10 +14223,10 @@
       }
      ]
     },
-    "get_jobs_paged": {
+    "get_jobs_page": {
      "origin": {
       "endpoint": "GET /api/projects/{projectId}/jobs/page",
-      "operation_id": "getJobsPaged",
+      "operation_id": "getJobsPage",
       "type": "operation",
       "unstable": false
      },
@@ -13001,10 +14283,10 @@
       }
      ]
     },
-    "get_jobs_paged_with_http_info": {
+    "get_jobs_page_with_http_info": {
      "origin": {
       "endpoint": "GET /api/projects/{projectId}/jobs/page",
-      "operation_id": "getJobsPaged",
+      "operation_id": "getJobsPage",
       "type": "operation",
       "unstable": false
      },
@@ -13061,10 +14343,10 @@
       }
      ]
     },
-    "get_jobs_paged_without_preload_content": {
+    "get_jobs_page_without_preload_content": {
      "origin": {
       "endpoint": "GET /api/projects/{projectId}/jobs/page",
-      "operation_id": "getJobsPaged",
+      "operation_id": "getJobsPage",
       "type": "operation",
       "unstable": false
      },
@@ -13126,7 +14408,7 @@
       "endpoint": "GET /api/projects/{projectId}/jobs",
       "operation_id": "getJobs",
       "type": "operation",
-      "unstable": false
+      "unstable": true
      },
      "params": [
       {
@@ -13171,7 +14453,7 @@
       "endpoint": "GET /api/projects/{projectId}/jobs",
       "operation_id": "getJobs",
       "type": "operation",
-      "unstable": false
+      "unstable": true
      },
      "params": [
       {
@@ -13879,6 +15161,18 @@
      "name": "noise_intensity",
      "required": false,
      "type": "Optional[float]"
+    },
+    "sample_names": {
+     "alias": "sampleNames",
+     "name": "sample_names",
+     "required": false,
+     "type": "Optional[List[Optional[StrictStr]]]"
+    },
+    "sample_types": {
+     "alias": "sampleTypes",
+     "name": "sample_types",
+     "required": false,
+     "type": "Optional[List[Optional[StrictStr]]]"
     },
     "trace_max_mass_deviation": {
      "alias": "traceMaxMassDeviation",
@@ -15635,6 +16929,67 @@
     "unstable": false
    }
   },
+  "PagedModelFeature": {
+   "bases": [
+    "BaseModel"
+   ],
+   "enum_members": {},
+   "fields": {
+    "content": {
+     "alias": "content",
+     "name": "content",
+     "required": false,
+     "type": "Optional[List[Feature]]"
+    },
+    "page": {
+     "alias": "page",
+     "name": "page",
+     "required": false,
+     "type": "Optional[PageMetadata]"
+    }
+   },
+   "kind": "model",
+   "methods": {
+    "from_dict": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "obj",
+       "required": true
+      }
+     ]
+    },
+    "from_json": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "json_str",
+       "required": true
+      }
+     ]
+    },
+    "to_dict": {
+     "origin": null,
+     "params": []
+    },
+    "to_json": {
+     "origin": null,
+     "params": []
+    },
+    "to_str": {
+     "origin": null,
+     "params": []
+    }
+   },
+   "origin": {
+    "name": "PagedModelFeature",
+    "orphan": false,
+    "type": "schema",
+    "unstable": false
+   }
+  },
   "PagedModelFormulaCandidate": {
    "bases": [
     "BaseModel"
@@ -15752,6 +17107,67 @@
    },
    "origin": {
     "name": "PagedModelJob",
+    "orphan": false,
+    "type": "schema",
+    "unstable": false
+   }
+  },
+  "PagedModelRun": {
+   "bases": [
+    "BaseModel"
+   ],
+   "enum_members": {},
+   "fields": {
+    "content": {
+     "alias": "content",
+     "name": "content",
+     "required": false,
+     "type": "Optional[List[Run]]"
+    },
+    "page": {
+     "alias": "page",
+     "name": "page",
+     "required": false,
+     "type": "Optional[PageMetadata]"
+    }
+   },
+   "kind": "model",
+   "methods": {
+    "from_dict": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "obj",
+       "required": true
+      }
+     ]
+    },
+    "from_json": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "json_str",
+       "required": true
+      }
+     ]
+    },
+    "to_dict": {
+     "origin": null,
+     "params": []
+    },
+    "to_json": {
+     "origin": null,
+     "params": []
+    },
+    "to_str": {
+     "origin": null,
+     "params": []
+    }
+   },
+   "origin": {
+    "name": "PagedModelRun",
     "orphan": false,
     "type": "schema",
     "unstable": false
@@ -16201,6 +17617,91 @@
     "unstable": false
    }
   },
+  "ProblemDetail": {
+   "bases": [
+    "BaseModel"
+   ],
+   "enum_members": {},
+   "fields": {
+    "detail": {
+     "alias": "detail",
+     "name": "detail",
+     "required": false,
+     "type": "Optional[StrictStr]"
+    },
+    "instance": {
+     "alias": "instance",
+     "name": "instance",
+     "required": false,
+     "type": "Optional[StrictStr]"
+    },
+    "properties": {
+     "alias": "properties",
+     "name": "properties",
+     "required": false,
+     "type": "Optional[Dict[str, Dict[str, Any]]]"
+    },
+    "status": {
+     "alias": "status",
+     "name": "status",
+     "required": false,
+     "type": "Optional[StrictInt]"
+    },
+    "title": {
+     "alias": "title",
+     "name": "title",
+     "required": false,
+     "type": "Optional[StrictStr]"
+    },
+    "type": {
+     "alias": "type",
+     "name": "type",
+     "required": false,
+     "type": "Optional[StrictStr]"
+    }
+   },
+   "kind": "model",
+   "methods": {
+    "from_dict": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "obj",
+       "required": true
+      }
+     ]
+    },
+    "from_json": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "json_str",
+       "required": true
+      }
+     ]
+    },
+    "to_dict": {
+     "origin": null,
+     "params": []
+    },
+    "to_json": {
+     "origin": null,
+     "params": []
+    },
+    "to_str": {
+     "origin": null,
+     "params": []
+    }
+   },
+   "origin": {
+    "name": "ProblemDetail",
+    "orphan": false,
+    "type": "schema",
+    "unstable": false
+   }
+  },
   "ProjectChangeEvent": {
    "bases": [
     "BaseModel"
@@ -16341,6 +17842,12 @@
      "required": false,
      "type": "Optional[StrictStr]"
     },
+    "detected_adducts": {
+     "alias": "detectedAdducts",
+     "name": "detected_adducts",
+     "required": false,
+     "type": "Optional[List[Optional[StrictStr]]]"
+    },
     "location": {
      "alias": "location",
      "name": "location",
@@ -16427,6 +17934,7 @@
    ],
    "enum_members": {
     "COMPATIBILITYINFO": "compatibilityInfo",
+    "DETECTEDADDUCTS": "detectedAdducts",
     "NONE": "none",
     "SIZEINFORMATION": "sizeInformation"
    },
@@ -16496,6 +18004,141 @@
       {
        "kind": "positional",
        "name": "api_client",
+       "required": false
+      }
+     ]
+    },
+    "build_search_index": {
+     "origin": {
+      "endpoint": "PUT /api/projects/{projectId}/index",
+      "operation_id": "buildSearchIndex",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "force",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_timeout",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_auth",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_content_type",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_headers",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_host_index",
+       "required": false
+      }
+     ]
+    },
+    "build_search_index_with_http_info": {
+     "origin": {
+      "endpoint": "PUT /api/projects/{projectId}/index",
+      "operation_id": "buildSearchIndex",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "force",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_timeout",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_auth",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_content_type",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_headers",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_host_index",
+       "required": false
+      }
+     ]
+    },
+    "build_search_index_without_preload_content": {
+     "origin": {
+      "endpoint": "PUT /api/projects/{projectId}/index",
+      "operation_id": "buildSearchIndex",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "force",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_timeout",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_auth",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_content_type",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_headers",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_host_index",
        "required": false
       }
      ]
@@ -16606,6 +18249,46 @@
       {
        "kind": "positional",
        "name": "compact",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_timeout",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_auth",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_content_type",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_headers",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_host_index",
+       "required": false
+      }
+     ]
+    },
+    "create": {
+     "origin": {
+      "endpoint": "POST /api/projects/create",
+      "operation_id": "create",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "opt_fields",
        "required": false
       },
       {
@@ -16753,6 +18436,86 @@
        "name": "path_to_project",
        "required": false
       },
+      {
+       "kind": "positional",
+       "name": "opt_fields",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_timeout",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_auth",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_content_type",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_headers",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_host_index",
+       "required": false
+      }
+     ]
+    },
+    "create_with_http_info": {
+     "origin": {
+      "endpoint": "POST /api/projects/create",
+      "operation_id": "create",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "opt_fields",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_timeout",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_auth",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_content_type",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_headers",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_host_index",
+       "required": false
+      }
+     ]
+    },
+    "create_without_preload_content": {
+     "origin": {
+      "endpoint": "POST /api/projects/create",
+      "operation_id": "create",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
       {
        "kind": "positional",
        "name": "opt_fields",
@@ -18342,6 +20105,190 @@
    },
    "origin": null
   },
+  "QuantMeasure": {
+   "bases": [
+    "str",
+    "Enum"
+   ],
+   "enum_members": {
+    "APEX_INTENSITY": "APEX_INTENSITY",
+    "AREA_UNDER_CURVE": "AREA_UNDER_CURVE"
+   },
+   "fields": {},
+   "kind": "enum",
+   "methods": {
+    "from_json": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "json_str",
+       "required": true
+      }
+     ]
+    }
+   },
+   "origin": {
+    "name": "QuantMeasure",
+    "orphan": false,
+    "type": "schema",
+    "unstable": false
+   }
+  },
+  "QuantRowType": {
+   "bases": [
+    "str",
+    "Enum"
+   ],
+   "enum_members": {
+    "CLASSYFIRE_CLASSES": "CLASSYFIRE_CLASSES",
+    "COMPOUNDS": "COMPOUNDS",
+    "FEATURES": "FEATURES",
+    "NPC_CLASSES": "NPC_CLASSES"
+   },
+   "fields": {},
+   "kind": "enum",
+   "methods": {
+    "from_json": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "json_str",
+       "required": true
+      }
+     ]
+    }
+   },
+   "origin": {
+    "name": "QuantRowType",
+    "orphan": false,
+    "type": "schema",
+    "unstable": false
+   }
+  },
+  "QuantTable": {
+   "bases": [
+    "BaseModel"
+   ],
+   "enum_members": {},
+   "fields": {
+    "column_ids": {
+     "alias": "columnIds",
+     "name": "column_ids",
+     "required": false,
+     "type": "Optional[List[Optional[StrictStr]]]"
+    },
+    "column_names": {
+     "alias": "columnNames",
+     "name": "column_names",
+     "required": false,
+     "type": "Optional[List[Optional[StrictStr]]]"
+    },
+    "column_sources": {
+     "alias": "columnSources",
+     "name": "column_sources",
+     "required": false,
+     "type": "Optional[List[Optional[StrictStr]]]"
+    },
+    "quantification_measure": {
+     "alias": "quantificationMeasure",
+     "name": "quantification_measure",
+     "required": false,
+     "type": "Optional[QuantMeasure]"
+    },
+    "row_ids": {
+     "alias": "rowIds",
+     "name": "row_ids",
+     "required": false,
+     "type": "Optional[List[Optional[StrictStr]]]"
+    },
+    "row_type": {
+     "alias": "rowType",
+     "name": "row_type",
+     "required": false,
+     "type": "Optional[QuantRowType]"
+    },
+    "values": {
+     "alias": "values",
+     "name": "values",
+     "required": false,
+     "type": "Optional[List[List[float]]]"
+    }
+   },
+   "kind": "model",
+   "methods": {
+    "from_dict": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "obj",
+       "required": true
+      }
+     ]
+    },
+    "from_json": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "json_str",
+       "required": true
+      }
+     ]
+    },
+    "to_dict": {
+     "origin": null,
+     "params": []
+    },
+    "to_json": {
+     "origin": null,
+     "params": []
+    },
+    "to_str": {
+     "origin": null,
+     "params": []
+    }
+   },
+   "origin": {
+    "name": "QuantTable",
+    "orphan": false,
+    "type": "schema",
+    "unstable": false
+   }
+  },
+  "QuantTableOptField": {
+   "bases": [
+    "str",
+    "Enum"
+   ],
+   "enum_members": {
+    "COLUMNNAMES": "columnNames",
+    "COLUMNSOURCES": "columnSources",
+    "NONE": "none"
+   },
+   "fields": {},
+   "kind": "enum",
+   "methods": {
+    "from_json": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "json_str",
+       "required": true
+      }
+     ]
+    }
+   },
+   "origin": {
+    "name": "QuantTableOptField",
+    "orphan": false,
+    "type": "schema",
+    "unstable": false
+   }
+  },
   "RESTClientObject": {
    "bases": [],
    "enum_members": {},
@@ -18436,6 +20383,617 @@
     "read": {
      "origin": null,
      "params": []
+    }
+   },
+   "origin": null
+  },
+  "Run": {
+   "bases": [
+    "BaseModel"
+   ],
+   "enum_members": {},
+   "fields": {
+    "chromatography": {
+     "alias": "chromatography",
+     "name": "chromatography",
+     "required": false,
+     "type": "Optional[StrictStr]"
+    },
+    "fragmentation": {
+     "alias": "fragmentation",
+     "name": "fragmentation",
+     "required": false,
+     "type": "Optional[StrictStr]"
+    },
+    "ionization": {
+     "alias": "ionization",
+     "name": "ionization",
+     "required": false,
+     "type": "Optional[StrictStr]"
+    },
+    "mass_analyzers": {
+     "alias": "massAnalyzers",
+     "name": "mass_analyzers",
+     "required": false,
+     "type": "Optional[List[Optional[StrictStr]]]"
+    },
+    "name": {
+     "alias": "name",
+     "name": "name",
+     "required": false,
+     "type": "Optional[StrictStr]"
+    },
+    "run_id": {
+     "alias": "runId",
+     "name": "run_id",
+     "required": false,
+     "type": "Optional[StrictStr]"
+    },
+    "source": {
+     "alias": "source",
+     "name": "source",
+     "required": false,
+     "type": "Optional[StrictStr]"
+    },
+    "tags": {
+     "alias": "tags",
+     "name": "tags",
+     "required": false,
+     "type": "Optional[Dict[str, Optional[Tag]]]"
+    }
+   },
+   "kind": "model",
+   "methods": {
+    "from_dict": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "obj",
+       "required": true
+      }
+     ]
+    },
+    "from_json": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "json_str",
+       "required": true
+      }
+     ]
+    },
+    "to_dict": {
+     "origin": null,
+     "params": []
+    },
+    "to_json": {
+     "origin": null,
+     "params": []
+    },
+    "to_str": {
+     "origin": null,
+     "params": []
+    }
+   },
+   "origin": {
+    "name": "Run",
+    "orphan": false,
+    "type": "schema",
+    "unstable": false
+   }
+  },
+  "RunOptField": {
+   "bases": [
+    "str",
+    "Enum"
+   ],
+   "enum_members": {
+    "NONE": "none",
+    "TAGS": "tags"
+   },
+   "fields": {},
+   "kind": "enum",
+   "methods": {
+    "from_json": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "json_str",
+       "required": true
+      }
+     ]
+    }
+   },
+   "origin": {
+    "name": "RunOptField",
+    "orphan": false,
+    "type": "schema",
+    "unstable": false
+   }
+  },
+  "RunsApi": {
+   "bases": [],
+   "enum_members": {},
+   "fields": {},
+   "kind": "api",
+   "methods": {
+    "__init__": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "api_client",
+       "required": false
+      }
+     ]
+    },
+    "get_run": {
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/runs/{runId}",
+      "operation_id": "getRun",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "run_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "opt_fields",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_timeout",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_auth",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_content_type",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_headers",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_host_index",
+       "required": false
+      }
+     ]
+    },
+    "get_run_with_http_info": {
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/runs/{runId}",
+      "operation_id": "getRun",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "run_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "opt_fields",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_timeout",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_auth",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_content_type",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_headers",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_host_index",
+       "required": false
+      }
+     ]
+    },
+    "get_run_without_preload_content": {
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/runs/{runId}",
+      "operation_id": "getRun",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "run_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "opt_fields",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_timeout",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_auth",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_content_type",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_headers",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_host_index",
+       "required": false
+      }
+     ]
+    },
+    "get_runs_page": {
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/runs/page",
+      "operation_id": "getRunsPage",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "search_query",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "page",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "size",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "sort",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "opt_fields",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_timeout",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_auth",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_content_type",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_headers",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_host_index",
+       "required": false
+      }
+     ]
+    },
+    "get_runs_page_with_http_info": {
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/runs/page",
+      "operation_id": "getRunsPage",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "search_query",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "page",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "size",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "sort",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "opt_fields",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_timeout",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_auth",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_content_type",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_headers",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_host_index",
+       "required": false
+      }
+     ]
+    },
+    "get_runs_page_without_preload_content": {
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/runs/page",
+      "operation_id": "getRunsPage",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "search_query",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "page",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "size",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "sort",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "opt_fields",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_timeout",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_auth",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_content_type",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_headers",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_host_index",
+       "required": false
+      }
+     ]
+    },
+    "get_runs_searchable_fields": {
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/runs/searchable-fields",
+      "operation_id": "getRunsSearchableFields",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "_request_timeout",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_auth",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_content_type",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_headers",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_host_index",
+       "required": false
+      }
+     ]
+    },
+    "get_runs_searchable_fields_with_http_info": {
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/runs/searchable-fields",
+      "operation_id": "getRunsSearchableFields",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "_request_timeout",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_auth",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_content_type",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_headers",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_host_index",
+       "required": false
+      }
+     ]
+    },
+    "get_runs_searchable_fields_without_preload_content": {
+     "origin": {
+      "endpoint": "GET /api/projects/{projectId}/runs/searchable-fields",
+      "operation_id": "getRunsSearchableFields",
+      "type": "operation",
+      "unstable": false
+     },
+     "params": [
+      {
+       "kind": "positional",
+       "name": "project_id",
+       "required": true
+      },
+      {
+       "kind": "positional",
+       "name": "_request_timeout",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_request_auth",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_content_type",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_headers",
+       "required": false
+      },
+      {
+       "kind": "positional",
+       "name": "_host_index",
+       "required": false
+      }
+     ]
     }
    },
    "origin": null
@@ -19867,6 +22425,140 @@
     }
    },
    "origin": null
+  },
+  "SearchableField": {
+   "bases": [
+    "BaseModel"
+   ],
+   "enum_members": {},
+   "fields": {
+    "default_search_field": {
+     "alias": "defaultSearchField",
+     "name": "default_search_field",
+     "required": false,
+     "type": "Optional[StrictBool]"
+    },
+    "description": {
+     "alias": "description",
+     "name": "description",
+     "required": false,
+     "type": "Optional[StrictStr]"
+    },
+    "field_type": {
+     "alias": "fieldType",
+     "name": "field_type",
+     "required": true,
+     "type": "SearchableFieldType"
+    },
+    "full_text_search": {
+     "alias": "fullTextSearch",
+     "name": "full_text_search",
+     "required": false,
+     "type": "Optional[StrictBool]"
+    },
+    "name": {
+     "alias": "name",
+     "name": "name",
+     "required": true,
+     "type": "StrictStr"
+    },
+    "possible_values": {
+     "alias": "possibleValues",
+     "name": "possible_values",
+     "required": false,
+     "type": "Optional[List[Optional[StrictStr]]]"
+    },
+    "significant_suffix_length": {
+     "alias": "significantSuffixLength",
+     "name": "significant_suffix_length",
+     "required": true,
+     "type": "StrictInt"
+    },
+    "sortable": {
+     "alias": "sortable",
+     "name": "sortable",
+     "required": false,
+     "type": "Optional[StrictBool]"
+    }
+   },
+   "kind": "model",
+   "methods": {
+    "from_dict": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "obj",
+       "required": true
+      }
+     ]
+    },
+    "from_json": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "json_str",
+       "required": true
+      }
+     ]
+    },
+    "to_dict": {
+     "origin": null,
+     "params": []
+    },
+    "to_json": {
+     "origin": null,
+     "params": []
+    },
+    "to_str": {
+     "origin": null,
+     "params": []
+    }
+   },
+   "origin": {
+    "name": "SearchableField",
+    "orphan": false,
+    "type": "schema",
+    "unstable": false
+   }
+  },
+  "SearchableFieldType": {
+   "bases": [
+    "str",
+    "Enum"
+   ],
+   "enum_members": {
+    "BOOLEAN": "BOOLEAN",
+    "DATE": "DATE",
+    "DOUBLE": "DOUBLE",
+    "ENUM": "ENUM",
+    "FLOAT": "FLOAT",
+    "INTEGER": "INTEGER",
+    "LONG": "LONG",
+    "TEXT": "TEXT",
+    "TIME": "TIME"
+   },
+   "fields": {},
+   "kind": "enum",
+   "methods": {
+    "from_json": {
+     "origin": null,
+     "params": [
+      {
+       "kind": "positional",
+       "name": "json_str",
+       "required": true
+      }
+     ]
+    }
+   },
+   "origin": {
+    "name": "SearchableFieldType",
+    "orphan": false,
+    "type": "schema",
+    "unstable": false
+   }
   },
   "SecurityContext": {
    "bases": [
@@ -21660,7 +24352,7 @@
      "alias": "value",
      "name": "value",
      "required": false,
-     "type": "Optional[Dict[str, Any]]"
+     "type": "Optional[AnyValue]"
     }
    },
    "kind": "model",
@@ -22333,6 +25025,7 @@
   "AnnotatedMsMsData",
   "AnnotatedPeak",
   "AnnotatedSpectrum",
+  "AnyValue",
   "ApiAttributeError",
   "ApiClient",
   "ApiException",
@@ -22371,6 +25064,7 @@
   "DataImportEvent",
   "DataQuality",
   "Deviation",
+  "Feature",
   "FeatureAnnotations",
   "FeatureImport",
   "FeaturesApi",
@@ -22408,14 +25102,17 @@
   "PageMetadata",
   "PagedModelAlignedFeature",
   "PagedModelCompound",
+  "PagedModelFeature",
   "PagedModelFormulaCandidate",
   "PagedModelJob",
+  "PagedModelRun",
   "PagedModelSpectralLibraryMatch",
   "PagedModelStructureCandidateFormula",
   "PagedModelStructureCandidateScored",
   "ParentPeak",
   "PeakAnnotation",
   "PeakPair",
+  "ProblemDetail",
   "ProjectChangeEvent",
   "ProjectEventType",
   "ProjectInfo",
@@ -22423,9 +25120,18 @@
   "ProjectType",
   "ProjectsApi",
   "PySiriusAPI",
+  "QuantMeasure",
+  "QuantRowType",
+  "QuantTable",
+  "QuantTableOptField",
+  "Run",
+  "RunOptField",
+  "RunsApi",
   "SearchableDatabase",
   "SearchableDatabaseParameters",
   "SearchableDatabasesApi",
+  "SearchableField",
+  "SearchableFieldType",
   "SecurityContext",
   "SecurityContextPrincipal",
   "SimplePeak",
@@ -22461,9 +25167,9 @@
  ],
  "language": "python",
  "meta": {
-  "api_version": "3.1",
+  "api_version": "3.2",
   "generator_version": "7.16.0",
-  "package_version": "6.3.12"
+  "package_version": "6.5.4"
  },
  "snapshot_version": 1
 }

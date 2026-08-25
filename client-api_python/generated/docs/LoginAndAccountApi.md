@@ -42,7 +42,7 @@ configuration = PySirius.Configuration(
 with PySirius.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = PySirius.LoginAndAccountApi(api_client)
-    include_subs = False # bool | include available and active subscriptions in {@link AccountInfo AccountInfo}. (optional) (default to False)
+    include_subs = False # bool | include available and active subscriptions in <code>AccountInfo</code>. (optional) (default to False)
 
     try:
         # Get information about the account currently logged in.
@@ -60,7 +60,7 @@ with PySirius.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **include_subs** | **bool**| include available and active subscriptions in {@link AccountInfo AccountInfo}. | [optional] [default to False]
+ **include_subs** | **bool**| include available and active subscriptions in &lt;code&gt;AccountInfo&lt;/code&gt;. | [optional] [default to False]
 
 ### Return type
 
@@ -73,13 +73,15 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: application/json, application/problem+json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Basic information about the account that has been logged in and its subscriptions. |  -  |
+**500** | Unexpected server-side error. The problem detail carries the reason. |  -  |
+**400** | The request body or a parameter is malformed or violates a constraint. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -136,13 +138,14 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: text/plain;charset=UTF-8
+ - **Accept**: text/plain;charset=UTF-8, application/problem+json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**500** | Unexpected server-side error. The problem detail carries the reason. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -200,13 +203,14 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: application/json, application/problem+json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**500** | Unexpected server-side error. The problem detail carries the reason. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -263,13 +267,14 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: application/json, application/problem+json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | true if the user is logged in |  -  |
+**500** | Unexpected server-side error. The problem detail carries the reason. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -304,7 +309,7 @@ with PySirius.ApiClient(configuration) as api_client:
     accept_terms = True # bool | 
     account_credentials = PySirius.AccountCredentials() # AccountCredentials | used to log in.
     fail_when_logged_in = False # bool | if true request fails if an active login already exists. (optional) (default to False)
-    include_subs = False # bool | include available and active subscriptions in {@link AccountInfo AccountInfo}. (optional) (default to False)
+    include_subs = False # bool | include available and active subscriptions in <code>AccountInfo</code>. (optional) (default to False)
 
     try:
         # Login into SIRIUS web services and activate default subscription if available.
@@ -325,7 +330,7 @@ Name | Type | Description  | Notes
  **accept_terms** | **bool**|  | 
  **account_credentials** | [**AccountCredentials**](AccountCredentials.md)| used to log in. | 
  **fail_when_logged_in** | **bool**| if true request fails if an active login already exists. | [optional] [default to False]
- **include_subs** | **bool**| include available and active subscriptions in {@link AccountInfo AccountInfo}. | [optional] [default to False]
+ **include_subs** | **bool**| include available and active subscriptions in &lt;code&gt;AccountInfo&lt;/code&gt;. | [optional] [default to False]
 
 ### Return type
 
@@ -338,13 +343,15 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: application/json
+ - **Accept**: application/json, application/problem+json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Basic information about the account that has been logged in and its subscriptions. |  -  |
+**500** | Unexpected server-side error. The problem detail carries the reason. |  -  |
+**400** | The request body or a parameter is malformed or violates a constraint. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -406,6 +413,7 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**500** | Unexpected server-side error. The problem detail carries the reason. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -467,6 +475,7 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**500** | Unexpected server-side error. The problem detail carries the reason. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -528,13 +537,15 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: application/json, application/problem+json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Account information with updated active subscription |  -  |
+**500** | Unexpected server-side error. The problem detail carries the reason. |  -  |
+**400** | The request body or a parameter is malformed or violates a constraint. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -591,13 +602,14 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: text/plain;charset=UTF-8
+ - **Accept**: text/plain;charset=UTF-8, application/problem+json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**500** | Unexpected server-side error. The problem detail carries the reason. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

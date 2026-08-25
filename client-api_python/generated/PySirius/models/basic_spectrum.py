@@ -25,7 +25,7 @@ class BasicSpectrum(BaseModel):
     """
     BasicSpectrum
     """ # noqa: E501
-    name: Optional[StrictStr] = Field(default=None, description="Optional Displayable name of this spectrum.")
+    name: Optional[StrictStr] = Field(default=None, description="Optional display name of this spectrum.")
     ms_level: Optional[StrictInt] = Field(default=None, description="MS level of the measured spectrum.  Artificial spectra with no msLevel (e.g. Simulated Isotope patterns) use null or zero", alias="msLevel")
     collision_energy: Optional[StrictStr] = Field(default=None, description="Collision energy used for MS/MS spectra  Null for spectra where collision energy is not applicable", alias="collisionEnergy")
     instrument: Optional[StrictStr] = Field(default=None, description="Instrument information.")
@@ -34,7 +34,7 @@ class BasicSpectrum(BaseModel):
     cosine_query: StrictBool = Field(description="True if spectrum is in cosine query normalized format.  Such spectrum is compatible with SpectralLibraryMatch peak assignments to reference spectra.", alias="cosineQuery")
     precursor_peak: Optional[SimplePeak] = Field(default=None, alias="precursorPeak")
     peaks: List[SimplePeak] = Field(description="The peaks of this spectrum which might contain additional annotations such as molecular formulas.")
-    abs_intensity_factor: Optional[float] = Field(default=None, description="Factor to convert relative intensities to absolute intensities.  Might be null or 1 for spectra where absolute intensities are not available (E.g. artificial or merged spectra)  <p>  DEPRECATED: Spectra are always returned with raw intensities.  Use provided normalization factors to normalize on the fly.", alias="absIntensityFactor")
+    abs_intensity_factor: Optional[float] = Field(default=None, description="Factor to convert relative intensities to absolute intensities.  Might be null or 1 for spectra where absolute intensities are not available (e.g. artificial or merged spectra)  <p>  DEPRECATED: Spectra are always returned with raw intensities.  Use provided normalization factors to normalize on the fly.", alias="absIntensityFactor")
     max_norm_factor: Optional[float] = Field(default=None, description="Factor to convert absolute intensities to MAX norm.", alias="maxNormFactor")
     sum_norm_factor: Optional[float] = Field(default=None, description="Factor to convert absolute intensities to SUM norm.", alias="sumNormFactor")
     l2_norm_factor: Optional[float] = Field(default=None, description="Factor to convert absolute intensities to L2 (Euclidean) norm.", alias="l2NormFactor")
