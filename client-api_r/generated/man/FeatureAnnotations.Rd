@@ -42,9 +42,9 @@ df
 
 \item{\code{confidenceApproxMatch}}{Confidence Score that represents the confidence whether the top hit or a very similar hit (estimated by MCES distance) is correct. numeric [optional]}
 
-\item{\code{expansiveSearchState}}{Result that shows if structure annotation was expanded by using PubChem as fallback and if so, which confidence mode was used (as per input paramter) character [optional]}
+\item{\code{expansiveSearchState}}{Result that shows if structure annotation was expanded by using PubChem as fallback and if so, which confidence mode was used (as per input parameter) character [optional]}
 
-\item{\code{specifiedDatabases}}{List of databases that have been specified by for structure db search. Null if no structure db search has been performed. list(character) [optional]}
+\item{\code{specifiedDatabases}}{List of databases that have been specified for structure db search. Null if no structure db search has been performed. list(character) [optional]}
 
 \item{\code{expandedDatabases}}{List of databases that have been used to expand search space during expansive search. Null if no structure db search has been performed. list(character) [optional]}
 }
@@ -100,9 +100,9 @@ Initialize a new FeatureAnnotations class.
 
 \item{\code{confidenceApproxMatch}}{Confidence Score that represents the confidence whether the top hit or a very similar hit (estimated by MCES distance) is correct.}
 
-\item{\code{expansiveSearchState}}{Result that shows if structure annotation was expanded by using PubChem as fallback and if so, which confidence mode was used (as per input paramter)}
+\item{\code{expansiveSearchState}}{Result that shows if structure annotation was expanded by using PubChem as fallback and if so, which confidence mode was used (as per input parameter)}
 
-\item{\code{specifiedDatabases}}{List of databases that have been specified by for structure db search. Null if no structure db search has been performed.}
+\item{\code{specifiedDatabases}}{List of databases that have been specified for structure db search. Null if no structure db search has been performed.}
 
 \item{\code{expandedDatabases}}{List of databases that have been used to expand search space during expansive search. Null if no structure db search has been performed.}
 

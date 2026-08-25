@@ -34,9 +34,9 @@ df
 \describe{
 \item{\code{cyp450Mode}}{Specify the Phase I/Cyp450 mode for all provided BioTransformerSequenceSteps. Will only be applied to Steps that  require the Cyp450 mode as parameter. Can be null in cases where only BioTransformerSequenceSteps are specified  that do not need the Cyp450 mode. character}
 
-\item{\code{p2Mode}}{Specify the Phase II mode for all provided BioTransformerSequenceSteps. Will only be applied to Steps that  require the Phase II mode  as parameter. Can be null in cases where only BioTransformerSequenceSteps are specified  that do not need the Phase II mode. character}
+\item{\code{p2Mode}}{Specify the Phase II mode for all provided BioTransformerSequenceSteps. Will only be applied to Steps that  require the Phase II mode as parameter. Can be null in cases where only BioTransformerSequenceSteps are specified  that do not need the Phase II mode. character}
 
-\item{\code{useDB}}{\"Specify if you want to enable the retrieving from database (HMDB) feature.\" character [optional]}
+\item{\code{useDB}}{Specify whether structures should additionally be retrieved from the HMDB database. character [optional]}
 
 \item{\code{bioTransformerSequenceSteps}}{Specify BioTransformerSequenceSteps to be applied to input structures. MultiStep MetabolicTransformations can  only be used as singletons (list size of one). list(\link{BioTransformerSequenceStep})}
 }
@@ -80,11 +80,11 @@ Initialize a new BioTransformerParameters class.
 \describe{
 \item{\code{cyp450Mode}}{Specify the Phase I/Cyp450 mode for all provided BioTransformerSequenceSteps. Will only be applied to Steps that  require the Cyp450 mode as parameter. Can be null in cases where only BioTransformerSequenceSteps are specified  that do not need the Cyp450 mode.}
 
-\item{\code{p2Mode}}{Specify the Phase II mode for all provided BioTransformerSequenceSteps. Will only be applied to Steps that  require the Phase II mode  as parameter. Can be null in cases where only BioTransformerSequenceSteps are specified  that do not need the Phase II mode.}
+\item{\code{p2Mode}}{Specify the Phase II mode for all provided BioTransformerSequenceSteps. Will only be applied to Steps that  require the Phase II mode as parameter. Can be null in cases where only BioTransformerSequenceSteps are specified  that do not need the Phase II mode.}
 
 \item{\code{bioTransformerSequenceSteps}}{Specify BioTransformerSequenceSteps to be applied to input structures. MultiStep MetabolicTransformations can  only be used as singletons (list size of one).}
 
-\item{\code{useDB}}{\"Specify if you want to enable the retrieving from database (HMDB) feature.\". Default to TRUE.}
+\item{\code{useDB}}{Specify whether structures should additionally be retrieved from the HMDB database.. Default to TRUE.}
 
 \item{\code{...}}{Other optional arguments.}
 }

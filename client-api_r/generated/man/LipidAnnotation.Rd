@@ -40,7 +40,7 @@ df
 
 \item{\code{hypotheticalStructure}}{Hypothetical molecular structure of the predicted lipid species as SMILES.  NULL if hypothetical structure not available. character [optional]}
 
-\item{\code{chainsUnknown}}{True of the formula composition of the chains could not be determined from the MS/MS. character [optional]}
+\item{\code{chainsUnknown}}{True if the formula composition of the chains could not be determined from the MS/MS. character [optional]}
 }
 \if{html}{\out{</div>}}
 }
@@ -89,7 +89,7 @@ Initialize a new LipidAnnotation class.
 
 \item{\code{hypotheticalStructure}}{Hypothetical molecular structure of the predicted lipid species as SMILES.  NULL if hypothetical structure not available.}
 
-\item{\code{chainsUnknown}}{True of the formula composition of the chains could not be determined from the MS/MS.}
+\item{\code{chainsUnknown}}{True if the formula composition of the chains could not be determined from the MS/MS.}
 
 \item{\code{...}}{Other optional arguments.}
 }

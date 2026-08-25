@@ -32,9 +32,9 @@ df
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{enabled}}{tags whether the tool is enabled character [optional]}
+\item{\code{enabled}}{Indicates whether the tool is enabled. character [optional]}
 
-\item{\code{numberOfCandidateToPredict}}{Number of structure candidates to be predicted by MsNovelist.  Max Value 128. Values > 128 will be set to 128.  Actual number of returned candidate might be lower du to duplicates being created by MsNovelist. integer [optional]}
+\item{\code{numberOfCandidateToPredict}}{Number of structure candidates to be predicted by MsNovelist.  Max Value 128. Values > 128 will be set to 128.  The actual number of returned candidates might be lower due to duplicates being created by MsNovelist. integer [optional]}
 }
 \if{html}{\out{</div>}}
 }
@@ -68,9 +68,9 @@ Initialize a new MsNovelist class.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{enabled}}{tags whether the tool is enabled}
+\item{\code{enabled}}{Indicates whether the tool is enabled.}
 
-\item{\code{numberOfCandidateToPredict}}{Number of structure candidates to be predicted by MsNovelist.  Max Value 128. Values > 128 will be set to 128.  Actual number of returned candidate might be lower du to duplicates being created by MsNovelist.}
+\item{\code{numberOfCandidateToPredict}}{Number of structure candidates to be predicted by MsNovelist.  Max Value 128. Values > 128 will be set to 128.  The actual number of returned candidates might be lower due to duplicates being created by MsNovelist.}
 
 \item{\code{...}}{Other optional arguments.}
 }

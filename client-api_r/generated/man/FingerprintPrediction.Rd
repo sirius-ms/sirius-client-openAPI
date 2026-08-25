@@ -8,7 +8,7 @@
 An \code{R6Class} generator object
 }
 \description{
-User/developer friendly parameter subset for the CSI:FingerID Fingerprint tool  Needs results from Formula/SIRIUS Tool
+User/developer friendly parameter subset for the CSI:FingerID Fingerprint tool  Needs results from the Formula identification tool (Sirius).
 
 FingerprintPrediction Class
 }
@@ -32,11 +32,11 @@ df
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{enabled}}{tags whether the tool is enabled character [optional]}
+\item{\code{enabled}}{Indicates whether the tool is enabled. character [optional]}
 
 \item{\code{useScoreThreshold}}{If true, an adaptive soft threshold will be applied to only compute Fingerprints for promising formula candidates  Enabling is highly recommended. character [optional]}
 
-\item{\code{alwaysPredictHighRefMatches}}{If true Fingerprint/Classes/Structures will be predicted for formulas candidates with  reference spectrum similarity > Sirius.minReferenceMatchScoreToInject will be predicted no matter which  score threshold rules apply.  If NULL default value will be used. character [optional]}
+\item{\code{alwaysPredictHighRefMatches}}{If true, fingerprints, compound classes and structures will be predicted for formula candidates whose  reference spectrum similarity is above Sirius.minReferenceMatchScoreToInject, no matter which  score threshold rules would otherwise apply.  If NULL default value will be used. character [optional]}
 }
 \if{html}{\out{</div>}}
 }
@@ -75,11 +75,11 @@ Initialize a new FingerprintPrediction class.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{enabled}}{tags whether the tool is enabled}
+\item{\code{enabled}}{Indicates whether the tool is enabled.}
 
 \item{\code{useScoreThreshold}}{If true, an adaptive soft threshold will be applied to only compute Fingerprints for promising formula candidates  Enabling is highly recommended.}
 
-\item{\code{alwaysPredictHighRefMatches}}{If true Fingerprint/Classes/Structures will be predicted for formulas candidates with  reference spectrum similarity > Sirius.minReferenceMatchScoreToInject will be predicted no matter which  score threshold rules apply.  If NULL default value will be used.}
+\item{\code{alwaysPredictHighRefMatches}}{If true, fingerprints, compound classes and structures will be predicted for formula candidates whose  reference spectrum similarity is above Sirius.minReferenceMatchScoreToInject, no matter which  score threshold rules would otherwise apply.  If NULL default value will be used.}
 
 \item{\code{...}}{Other optional arguments.}
 }

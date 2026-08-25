@@ -40,7 +40,7 @@ df
 
 \item{\code{latestSiriusLink}}{Link to the latest available Version of the SIRIUS application character [optional]}
 
-\item{\code{updateAvailable}}{true if newer SIRIUS version is available character [optional]}
+\item{\code{updateAvailable}}{True if a newer SIRIUS version is available. character [optional]}
 
 \item{\code{siriusLibVersion}}{Version of the SIRIUS libraries character [optional]}
 
@@ -54,7 +54,7 @@ df
 
 \item{\code{availableILPSolvers}}{Set of solvers that are configured correctly and can be loaded list(character)}
 
-\item{\code{supportedILPSolvers}}{Set of ILP Solvers that are Supported and their version information named list(character)}
+\item{\code{supportedILPSolvers}}{Set of ILP solvers that are supported, and their version information named list(character)}
 }
 \if{html}{\out{</div>}}
 }
@@ -104,7 +104,7 @@ Initialize a new Info class.
 \describe{
 \item{\code{availableILPSolvers}}{Set of solvers that are configured correctly and can be loaded}
 
-\item{\code{supportedILPSolvers}}{Set of ILP Solvers that are Supported and their version information}
+\item{\code{supportedILPSolvers}}{Set of ILP solvers that are supported, and their version information}
 
 \item{\code{nightSkyApiVersion}}{API version of the SIRIUS Nightsky API}
 
@@ -114,7 +114,7 @@ Initialize a new Info class.
 
 \item{\code{latestSiriusLink}}{Link to the latest available Version of the SIRIUS application}
 
-\item{\code{updateAvailable}}{true if newer SIRIUS version is available}
+\item{\code{updateAvailable}}{True if a newer SIRIUS version is available.}
 
 \item{\code{siriusLibVersion}}{Version of the SIRIUS libraries}
 

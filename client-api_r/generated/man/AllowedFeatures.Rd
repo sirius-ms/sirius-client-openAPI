@@ -43,6 +43,8 @@ df
 \item{\code{importPeakLists}}{character [optional]}
 
 \item{\code{importCef}}{character [optional]}
+
+\item{\code{transformationProducts}}{character [optional]}
 }
 \if{html}{\out{</div>}}
 }
@@ -77,6 +79,7 @@ Initialize a new AllowedFeatures class.
   importMSRuns = NULL,
   importPeakLists = NULL,
   importCef = NULL,
+  transformationProducts = NULL,
   ...
 )}\if{html}{\out{</div>}}
 }
@@ -95,6 +98,8 @@ Initialize a new AllowedFeatures class.
 \item{\code{importPeakLists}}{importPeakLists}
 
 \item{\code{importCef}}{importCef}
+
+\item{\code{transformationProducts}}{transformationProducts}
 
 \item{\code{...}}{Other optional arguments.}
 }

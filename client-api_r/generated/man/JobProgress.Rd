@@ -8,7 +8,7 @@
 An \code{R6Class} generator object
 }
 \description{
-Progress information of a computation job that has already been submitted to SIRIUS.  if  currentProgress == maxProgress job is finished and should change to state done soon.  if a job is DONE all results can be accessed via the Project-Spaces api.
+Progress information of a computation job that has already been submitted to SIRIUS.  If currentProgress == maxProgress, the job is finished and should change to state DONE soon.  If a job is DONE, all results can be accessed via the project-space API.
 
 JobProgress Class
 }
@@ -42,7 +42,7 @@ df
 
 \item{\code{message}}{Progress information and warnings. character [optional]}
 
-\item{\code{errorMessage}}{Error message if the job did not finish successfully failed. character [optional]}
+\item{\code{errorMessage}}{Error message if the job did not finish successfully. character [optional]}
 }
 \if{html}{\out{</div>}}
 }
@@ -94,7 +94,7 @@ Initialize a new JobProgress class.
 
 \item{\code{message}}{Progress information and warnings.}
 
-\item{\code{errorMessage}}{Error message if the job did not finish successfully failed.}
+\item{\code{errorMessage}}{Error message if the job did not finish successfully.}
 
 \item{\code{...}}{Other optional arguments.}
 }

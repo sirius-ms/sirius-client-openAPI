@@ -32,25 +32,25 @@ df
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{inchiKey}}{character [optional]}
+\item{\code{inchiKey}}{InChIKey of the structure candidate.  Searching with a full 27 character key matches its 2D (skeleton) part, so stereoisomers of the  searched structure are found alike. character [optional]}
 
 \item{\code{smiles}}{character [optional]}
 
-\item{\code{structureName}}{character [optional]}
+\item{\code{structureName}}{Name of the structure candidate.  Searching also resolves the searched term as a PubChem synonym, so a structure is found by any  of its common names. character [optional]}
 
 \item{\code{structureSvg}}{SVG graphics of the structure candidate  OPTIONAL: needs to be added by parameter character [optional]}
 
-\item{\code{dbLinks}}{List of structure database links belonging to this structure candidate  OPTIONAL: needs to be added by parameter list(\link{DBLink}) [optional]}
+\item{\code{dbLinks}}{List of structure database links belonging to the structure candidate  OPTIONAL: needs to be added by parameter list(\link{DBLink}) [optional]}
 
-\item{\code{spectralLibraryMatches}}{List of spectral library matches belonging to this structure candidate  OPTIONAL: needs to be added by parameter list(\link{SpectralLibraryMatch}) [optional]}
+\item{\code{spectralLibraryMatches}}{List of spectral library matches belonging to the structure candidate  OPTIONAL: needs to be added by parameter list(\link{SpectralLibraryMatch}) [optional]}
 
 \item{\code{xlogP}}{numeric [optional]}
 
-\item{\code{rank}}{the overall rank of this candidate among all candidates of this feature integer [optional]}
+\item{\code{rank}}{The overall rank of this candidate among all candidates of this feature. integer [optional]}
 
 \item{\code{csiScore}}{CSI:FingerID score of the fingerprint of this compound to the predicted fingerprint of CSI:FingerID  This is the score used for ranking structure candidates numeric [optional]}
 
-\item{\code{tanimotoSimilarity}}{Tanimoto similarly of the fingerprint of this compound to the predicted fingerprint of CSI:FingerID numeric [optional]}
+\item{\code{tanimotoSimilarity}}{Tanimoto similarity of the fingerprint of this compound to the predicted fingerprint of CSI:FingerID numeric [optional]}
 
 \item{\code{mcesDistToTopHit}}{Maximum Common Edge Subgraph (MCES) distance to the top scoring hit (CSI:FingerID) in a candidate list. numeric [optional]}
 
@@ -111,25 +111,25 @@ Initialize a new StructureCandidateFormula class.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{inchiKey}}{inchiKey}
+\item{\code{inchiKey}}{InChIKey of the structure candidate.  Searching with a full 27 character key matches its 2D (skeleton) part, so stereoisomers of the  searched structure are found alike.}
 
 \item{\code{smiles}}{smiles}
 
-\item{\code{structureName}}{structureName}
+\item{\code{structureName}}{Name of the structure candidate.  Searching also resolves the searched term as a PubChem synonym, so a structure is found by any  of its common names.}
 
 \item{\code{structureSvg}}{SVG graphics of the structure candidate  OPTIONAL: needs to be added by parameter}
 
-\item{\code{dbLinks}}{List of structure database links belonging to this structure candidate  OPTIONAL: needs to be added by parameter}
+\item{\code{dbLinks}}{List of structure database links belonging to the structure candidate  OPTIONAL: needs to be added by parameter}
 
-\item{\code{spectralLibraryMatches}}{List of spectral library matches belonging to this structure candidate  OPTIONAL: needs to be added by parameter}
+\item{\code{spectralLibraryMatches}}{List of spectral library matches belonging to the structure candidate  OPTIONAL: needs to be added by parameter}
 
 \item{\code{xlogP}}{xlogP}
 
-\item{\code{rank}}{the overall rank of this candidate among all candidates of this feature}
+\item{\code{rank}}{The overall rank of this candidate among all candidates of this feature.}
 
 \item{\code{csiScore}}{CSI:FingerID score of the fingerprint of this compound to the predicted fingerprint of CSI:FingerID  This is the score used for ranking structure candidates}
 
-\item{\code{tanimotoSimilarity}}{Tanimoto similarly of the fingerprint of this compound to the predicted fingerprint of CSI:FingerID}
+\item{\code{tanimotoSimilarity}}{Tanimoto similarity of the fingerprint of this compound to the predicted fingerprint of CSI:FingerID}
 
 \item{\code{mcesDistToTopHit}}{Maximum Common Edge Subgraph (MCES) distance to the top scoring hit (CSI:FingerID) in a candidate list.}
 

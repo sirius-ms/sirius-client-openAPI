@@ -32,17 +32,21 @@ df
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
+\item{\code{sampleNames}}{Sample names for each input file to link imported results, e.g. QuantTable back to the input data.  If NULL or empty sample names will be derived from the input files.  <p>  The names are matched to the input files by index. Partial lists are allowed: a NULL entry and any  input file without a corresponding entry get their name derived from the input file. Surplus entries  that match no input file are ignored.  <p>  Names must neither be blank nor duplicated, otherwise the import is rejected. list(character) [optional]}
+
+\item{\code{sampleTypes}}{Sample type for each input file to be used to compute fold changes between blank and sample runs  If NULL or empty no fold changes will be computed during preprocessing.  <p>  The types are matched to the input files by index. In contrast to sampleNames either all or no sample  types have to be given: if the number of types does not match the number of input files or if any type  is NULL or blank, the import is rejected. list(character) [optional]}
+
 \item{\code{alignLCMSRuns}}{Specifies whether LC/MS runs should be aligned character [optional]}
 
-\item{\code{noiseIntensity}}{Noise level under which all peaks are considered to be likely noise. A peak has to be at least 3x noise level  to be picked as feature. Peaks with MS/MS are still picked even though they might be below noise level.  If not specified, the noise intensity is detected automatically from data. We recommend to NOT specify  this parameter, as the automated detection is usually sufficient. numeric [optional]}
+\item{\code{noiseIntensity}}{Noise level under which all peaks are considered to be likely noise. A peak has to be at least 3x noise level  to be picked as feature. Peaks with MS/MS are still picked even though they might be below noise level.  If not specified, the noise intensity is detected automatically from the data. We recommend NOT specifying  this parameter, as the automated detection is usually sufficient. numeric [optional]}
 
 \item{\code{traceMaxMassDeviation}}{\link{Deviation} [optional]}
 
 \item{\code{alignMaxMassDeviation}}{\link{Deviation} [optional]}
 
-\item{\code{alignMaxRetentionTimeDeviation}}{Maximal allowed retention time error in seconds for aligning features. If not specified, this parameter is estimated from data. numeric [optional]}
+\item{\code{alignMaxRetentionTimeDeviation}}{Maximum allowed retention time error in seconds for aligning features. If not specified, this parameter is estimated from the data. numeric [optional]}
 
-\item{\code{minSNR}}{Minimum ratio between peak height and noise intensity for detecting features. By default, this value is 3. Features with good MS/MS are always picked independent of their intensity. For picking very low intensive features we recommend a min-snr of 2, but this will increase runtime and storage memory numeric [optional]}
+\item{\code{minSNR}}{Minimum ratio between peak height and noise intensity for detecting features. By default, this value is 3. Features with good MS/MS are always picked independent of their intensity. For picking very low intensity features we recommend a min-snr of 2, but this will increase runtime and storage requirements numeric [optional]}
 }
 \if{html}{\out{</div>}}
 }
@@ -71,6 +75,8 @@ df
 Initialize a new LcmsSubmissionParameters class.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{LcmsSubmissionParameters$new(
+  sampleNames = NULL,
+  sampleTypes = NULL,
   alignLCMSRuns = TRUE,
   noiseIntensity = -1,
   traceMaxMassDeviation = NULL,
@@ -84,17 +90,21 @@ Initialize a new LcmsSubmissionParameters class.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
+\item{\code{sampleNames}}{Sample names for each input file to link imported results, e.g. QuantTable back to the input data.  If NULL or empty sample names will be derived from the input files.  <p>  The names are matched to the input files by index. Partial lists are allowed: a NULL entry and any  input file without a corresponding entry get their name derived from the input file. Surplus entries  that match no input file are ignored.  <p>  Names must neither be blank nor duplicated, otherwise the import is rejected.}
+
+\item{\code{sampleTypes}}{Sample type for each input file to be used to compute fold changes between blank and sample runs  If NULL or empty no fold changes will be computed during preprocessing.  <p>  The types are matched to the input files by index. In contrast to sampleNames either all or no sample  types have to be given: if the number of types does not match the number of input files or if any type  is NULL or blank, the import is rejected.}
+
 \item{\code{alignLCMSRuns}}{Specifies whether LC/MS runs should be aligned. Default to TRUE.}
 
-\item{\code{noiseIntensity}}{Noise level under which all peaks are considered to be likely noise. A peak has to be at least 3x noise level  to be picked as feature. Peaks with MS/MS are still picked even though they might be below noise level.  If not specified, the noise intensity is detected automatically from data. We recommend to NOT specify  this parameter, as the automated detection is usually sufficient.. Default to -1.}
+\item{\code{noiseIntensity}}{Noise level under which all peaks are considered to be likely noise. A peak has to be at least 3x noise level  to be picked as feature. Peaks with MS/MS are still picked even though they might be below noise level.  If not specified, the noise intensity is detected automatically from the data. We recommend NOT specifying  this parameter, as the automated detection is usually sufficient.. Default to -1.}
 
 \item{\code{traceMaxMassDeviation}}{traceMaxMassDeviation}
 
 \item{\code{alignMaxMassDeviation}}{alignMaxMassDeviation}
 
-\item{\code{alignMaxRetentionTimeDeviation}}{Maximal allowed retention time error in seconds for aligning features. If not specified, this parameter is estimated from data.. Default to -1.}
+\item{\code{alignMaxRetentionTimeDeviation}}{Maximum allowed retention time error in seconds for aligning features. If not specified, this parameter is estimated from the data.. Default to -1.}
 
-\item{\code{minSNR}}{Minimum ratio between peak height and noise intensity for detecting features. By default, this value is 3. Features with good MS/MS are always picked independent of their intensity. For picking very low intensive features we recommend a min-snr of 2, but this will increase runtime and storage memory. Default to 3.}
+\item{\code{minSNR}}{Minimum ratio between peak height and noise intensity for detecting features. By default, this value is 3. Features with good MS/MS are always picked independent of their intensity. For picking very low intensity features we recommend a min-snr of 2, but this will increase runtime and storage requirements. Default to 3.}
 
 \item{\code{...}}{Other optional arguments.}
 }

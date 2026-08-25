@@ -36,7 +36,7 @@ df
 
 \item{\code{molecularFormula}}{neutral molecular formula of the fragment without adduct character [optional]}
 
-\item{\code{adduct}}{This combines the ionization plus adduct of the fragment. In contrast to the {@link FragmentationTree FragmentationTree}s adduct,  this adduct may not include any in-source loss. character [optional]}
+\item{\code{adduct}}{This combines the ionization plus adduct of the fragment. In contrast to the <code>FragmentationTree</code>'s adduct,  this adduct may not include any in-source loss. character [optional]}
 
 \item{\code{massDeviationDa}}{numeric [optional]}
 
@@ -94,7 +94,7 @@ Initialize a new FragmentNode class.
 
 \item{\code{molecularFormula}}{neutral molecular formula of the fragment without adduct}
 
-\item{\code{adduct}}{This combines the ionization plus adduct of the fragment. In contrast to the {@link FragmentationTree FragmentationTree}s adduct,  this adduct may not include any in-source loss.}
+\item{\code{adduct}}{This combines the ionization plus adduct of the fragment. In contrast to the <code>FragmentationTree</code>'s adduct,  this adduct may not include any in-source loss.}
 
 \item{\code{massDeviationDa}}{massDeviationDa}
 

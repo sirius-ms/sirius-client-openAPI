@@ -8,7 +8,7 @@
 An \code{R6Class} generator object
 }
 \description{
-Identifier created by the SIRIUS Nightsky API for a newly created Job.  Object can be enriched with Job status/progress information ({@link JobProgress JobProgress}) and/or Job command information.  This is a return value of the API. So nullable values can also be NOT_REQUIRED to allow for easy removal.
+Identifier created by the SIRIUS Nightsky API for a newly created Job.  Object can be enriched with Job status/progress information (<code>JobProgress</code>) and/or Job command information.  This is a return value of the API. So nullable values can also be NOT_REQUIRED to allow for easy removal.
 
 Job Class
 }
@@ -38,9 +38,9 @@ df
 
 \item{\code{progress}}{\link{JobProgress} [optional]}
 
-\item{\code{affectedCompoundIds}}{List of compoundIds that are affected by this job.  This lis will also contain compoundIds where not all features of the compound are affected by the job.  If this job is creating compounds (e.g. data import jobs) this value will be NULL until the jobs has finished list(character) [optional]}
+\item{\code{affectedCompoundIds}}{List of compoundIds that are affected by this job.  This list will also contain compoundIds where not all features of the compound are affected by the job.  If this job is creating compounds (e.g. data import jobs) this value will be NULL until the job has finished list(character) [optional]}
 
-\item{\code{affectedAlignedFeatureIds}}{List of alignedFeatureIds that are affected by this job.  If this job is creating features (e.g. data import jobs) this value will be NULL until the jobs has finished list(character) [optional]}
+\item{\code{affectedAlignedFeatureIds}}{List of alignedFeatureIds that are affected by this job.  If this job is creating features (e.g. data import jobs) this value will be NULL until the job has finished list(character) [optional]}
 
 \item{\code{jobEffect}}{Effect this job has. The affected ids are added, removed or modified.  Null if job does not affect features/compounds  Not available/null if affected Ids are not requested character [optional]}
 }
@@ -90,9 +90,9 @@ Initialize a new Job class.
 
 \item{\code{progress}}{progress}
 
-\item{\code{affectedCompoundIds}}{List of compoundIds that are affected by this job.  This lis will also contain compoundIds where not all features of the compound are affected by the job.  If this job is creating compounds (e.g. data import jobs) this value will be NULL until the jobs has finished}
+\item{\code{affectedCompoundIds}}{List of compoundIds that are affected by this job.  This list will also contain compoundIds where not all features of the compound are affected by the job.  If this job is creating compounds (e.g. data import jobs) this value will be NULL until the job has finished}
 
-\item{\code{affectedAlignedFeatureIds}}{List of alignedFeatureIds that are affected by this job.  If this job is creating features (e.g. data import jobs) this value will be NULL until the jobs has finished}
+\item{\code{affectedAlignedFeatureIds}}{List of alignedFeatureIds that are affected by this job.  If this job is creating features (e.g. data import jobs) this value will be NULL until the job has finished}
 
 \item{\code{jobEffect}}{Effect this job has. The affected ids are added, removed or modified.  Null if job does not affect features/compounds  Not available/null if affected Ids are not requested}
 

@@ -34,7 +34,7 @@ df
 \describe{
 \item{\code{formulaId}}{Unique identifier of this formula candidate character [optional]}
 
-\item{\code{molecularFormula}}{molecular formula of this formula candidate character [optional]}
+\item{\code{molecularFormula}}{Molecular formula of this formula candidate. character [optional]}
 
 \item{\code{adduct}}{Adduct of this formula candidate character [optional]}
 
@@ -128,7 +128,7 @@ Initialize a new FormulaCandidate class.
 \describe{
 \item{\code{formulaId}}{Unique identifier of this formula candidate}
 
-\item{\code{molecularFormula}}{molecular formula of this formula candidate}
+\item{\code{molecularFormula}}{Molecular formula of this formula candidate.}
 
 \item{\code{adduct}}{Adduct of this formula candidate}
 

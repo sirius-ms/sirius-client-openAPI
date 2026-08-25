@@ -34,7 +34,7 @@ df
 \describe{
 \item{\code{affectedCompoundIds}}{List of compoundIds that have been imported. list(character)}
 
-\item{\code{affectedAlignedFeatureIds}}{List of alignedFeatureIds that have been imported.. list(character)}
+\item{\code{affectedAlignedFeatureIds}}{List of alignedFeatureIds that have been imported. list(character)}
 }
 \if{html}{\out{</div>}}
 }
@@ -70,7 +70,7 @@ Initialize a new ImportResult class.
 \describe{
 \item{\code{affectedCompoundIds}}{List of compoundIds that have been imported.}
 
-\item{\code{affectedAlignedFeatureIds}}{List of alignedFeatureIds that have been imported..}
+\item{\code{affectedAlignedFeatureIds}}{List of alignedFeatureIds that have been imported.}
 
 \item{\code{...}}{Other optional arguments.}
 }

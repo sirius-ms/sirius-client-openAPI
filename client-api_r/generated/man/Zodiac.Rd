@@ -8,7 +8,7 @@
 An \code{R6Class} generator object
 }
 \description{
-User/developer friendly parameter subset for the ZODIAC tool (Network base molecular formula re-ranking).  Needs results from Formula/SIRIUS Tool
+User/developer friendly parameter subset for the ZODIAC tool (network-based molecular formula re-ranking).  Needs results from the Formula/SIRIUS tool.
 
 Zodiac Class
 }
@@ -32,13 +32,13 @@ df
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{enabled}}{tags whether the tool is enabled character [optional]}
+\item{\code{enabled}}{Indicates whether the tool is enabled. character [optional]}
 
 \item{\code{consideredCandidatesAt300Mz}}{Maximum number of candidate molecular formulas (fragmentation trees computed by SIRIUS) per compound which are considered by ZODIAC for compounds below 300 m/z. integer [optional]}
 
 \item{\code{consideredCandidatesAt800Mz}}{Maximum number of candidate molecular formulas (fragmentation trees computed by SIRIUS) per compound which are considered by ZODIAC for compounds above 800 m/z. integer [optional]}
 
-\item{\code{runInTwoSteps}}{As default ZODIAC runs a 2-step approach. First running 'good quality compounds' only, and afterwards including the remaining. character [optional]}
+\item{\code{runInTwoSteps}}{By default, ZODIAC runs a 2-step approach: first running only 'good quality compounds', and afterwards including the remaining ones. character [optional]}
 
 \item{\code{edgeFilterThresholds}}{\link{ZodiacEdgeFilterThresholds} [optional]}
 
@@ -90,13 +90,13 @@ Initialize a new Zodiac class.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{enabled}}{tags whether the tool is enabled}
+\item{\code{enabled}}{Indicates whether the tool is enabled.}
 
 \item{\code{consideredCandidatesAt300Mz}}{Maximum number of candidate molecular formulas (fragmentation trees computed by SIRIUS) per compound which are considered by ZODIAC for compounds below 300 m/z.}
 
 \item{\code{consideredCandidatesAt800Mz}}{Maximum number of candidate molecular formulas (fragmentation trees computed by SIRIUS) per compound which are considered by ZODIAC for compounds above 800 m/z.}
 
-\item{\code{runInTwoSteps}}{As default ZODIAC runs a 2-step approach. First running 'good quality compounds' only, and afterwards including the remaining.}
+\item{\code{runInTwoSteps}}{By default, ZODIAC runs a 2-step approach: first running only 'good quality compounds', and afterwards including the remaining ones.}
 
 \item{\code{edgeFilterThresholds}}{edgeFilterThresholds}
 

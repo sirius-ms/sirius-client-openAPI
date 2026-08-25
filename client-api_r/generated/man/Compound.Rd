@@ -32,17 +32,17 @@ df
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{compoundId}}{uid of this compound Entity character [optional]}
+\item{\code{compoundId}}{Unique id of the compound entity. character [optional]}
 
 \item{\code{name}}{Some (optional) human-readable name character [optional]}
 
-\item{\code{rtStartSeconds}}{The merged/consensus retention time start (earliest rt) of this compound numeric [optional]}
+\item{\code{rtStartSeconds}}{The merged/consensus retention time start (earliest rt) of the compound numeric [optional]}
 
-\item{\code{rtEndSeconds}}{The merged/consensus retention time end (latest rt) of this compound numeric [optional]}
+\item{\code{rtEndSeconds}}{The merged/consensus retention time end (latest rt) of the compound numeric [optional]}
 
-\item{\code{neutralMass}}{Neutral mass of this compound. Ion masse minus the mass of the assigned adduct of each feature of  this compound should result in the same neutral mass numeric [optional]}
+\item{\code{neutralMass}}{Neutral mass of the compound. Ion mass minus the mass of the assigned adduct of each feature of  the compound should result in the same neutral mass numeric [optional]}
 
-\item{\code{features}}{List of aligned features (adducts) that belong to the same (this) compound list(\link{AlignedFeature}) [optional]}
+\item{\code{features}}{List of aligned features (adducts) that belong to the compound list(\link{AlignedFeature}) [optional]}
 
 \item{\code{consensusAnnotations}}{\link{ConsensusAnnotationsCSI} [optional]}
 
@@ -96,17 +96,17 @@ Initialize a new Compound class.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{compoundId}}{uid of this compound Entity}
+\item{\code{compoundId}}{Unique id of the compound entity.}
 
 \item{\code{name}}{Some (optional) human-readable name}
 
-\item{\code{rtStartSeconds}}{The merged/consensus retention time start (earliest rt) of this compound}
+\item{\code{rtStartSeconds}}{The merged/consensus retention time start (earliest rt) of the compound}
 
-\item{\code{rtEndSeconds}}{The merged/consensus retention time end (latest rt) of this compound}
+\item{\code{rtEndSeconds}}{The merged/consensus retention time end (latest rt) of the compound}
 
-\item{\code{neutralMass}}{Neutral mass of this compound. Ion masse minus the mass of the assigned adduct of each feature of  this compound should result in the same neutral mass}
+\item{\code{neutralMass}}{Neutral mass of the compound. Ion mass minus the mass of the assigned adduct of each feature of  the compound should result in the same neutral mass}
 
-\item{\code{features}}{List of aligned features (adducts) that belong to the same (this) compound}
+\item{\code{features}}{List of aligned features (adducts) that belong to the compound}
 
 \item{\code{consensusAnnotations}}{consensusAnnotations}
 

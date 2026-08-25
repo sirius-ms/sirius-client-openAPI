@@ -32,7 +32,7 @@ df
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{enabled}}{tags whether the tool is enabled character [optional]}
+\item{\code{enabled}}{Indicates whether the tool is enabled. character [optional]}
 
 \item{\code{profile}}{Instrument specific profile for internal algorithms  Just select what comes closest to the instrument that was used for measuring the data. character [optional]}
 
@@ -44,15 +44,15 @@ df
 
 \item{\code{isotopeMs2Settings}}{Specify how isotope patterns in MS/MS should be handled.  <p>  FILTER: When filtering is enabled, molecular formulas are excluded if their  theoretical isotope pattern does not match the theoretical one, even if their MS/MS pattern has high score.  <p>  SCORE: Use them for SCORING. To use this the instrument should produce clear MS/MS isotope patterns  <p>  IGNORE: Ignore that there might be isotope patterns in MS/MS character [optional]}
 
-\item{\code{filterByIsotopePattern}}{When filtering is enabled, molecular formulas are excluded if their theoretical isotope pattern does not match the theoretical one, even if their MS/MS pattern has high score. character [optional]}
+\item{\code{filterByIsotopePattern}}{When filtering is enabled, molecular formulas are excluded if their theoretical isotope pattern does not match the measured one, even if their MS/MS pattern has high score. character [optional]}
 
-\item{\code{enforceElGordoFormula}}{El Gordo may predict that an MS/MS spectrum is a lipid spectrum. If enabled, the corresponding molecular formula will be enforeced as molecular formula candidate. character [optional]}
+\item{\code{enforceElGordoFormula}}{El Gordo may predict that an MS/MS spectrum is a lipid spectrum. If enabled, the corresponding molecular formula will be enforced as a molecular formula candidate. character [optional]}
 
 \item{\code{performBottomUpSearch}}{If true, molecular formula generation via bottom up search is enabled. character [optional]}
 
 \item{\code{performDenovoBelowMz}}{Specifies the m/z below which de novo molecular formula generation is enabled. Set to 0 to disable de novo molecular formula generation. numeric [optional]}
 
-\item{\code{formulaSearchDBs}}{List Structure database to extract molecular formulas from to reduce formula search space.  SIRIUS is quite good at de novo formula annotation, so only enable if you have a good reason. list(character) [optional]}
+\item{\code{formulaSearchDBs}}{List of structure databases to extract molecular formulas from, to reduce the formula search space.  SIRIUS is quite good at de novo formula annotation, so only enable if you have a good reason. list(character) [optional]}
 
 \item{\code{applyFormulaConstraintsToDBAndBottomUpSearch}}{By default, the formula (element) constraints are only applied to de novo molecular formula generation.  If true, the constraints are as well applied to database search and bottom up search. character [optional]}
 
@@ -66,9 +66,9 @@ df
 
 \item{\code{useHeuristic}}{\link{UseHeuristic} [optional]}
 
-\item{\code{injectSpecLibMatchFormulas}}{If true formula candidates that belong to spectral library matches above a certain threshold will  we inject/preserved for further analyses no matter which score they have or which filter is applied character [optional]}
+\item{\code{injectSpecLibMatchFormulas}}{If true formula candidates that belong to spectral library matches above a certain threshold will  be injected and preserved for further analyses, no matter which score they have or which filter is applied character [optional]}
 
-\item{\code{minScoreToInjectSpecLibMatch}}{Similarity Threshold to inject formula candidates no matter which score/rank they have or which filter settings are applied.  If threshold >= 0 formulas candidates with reference spectrum similarity above the threshold will be injected. numeric [optional]}
+\item{\code{minScoreToInjectSpecLibMatch}}{Similarity Threshold to inject formula candidates no matter which score/rank they have or which filter settings are applied.  If the threshold is >= 0, formula candidates with a reference spectrum similarity above the threshold will be injected. numeric [optional]}
 
 \item{\code{minPeaksToInjectSpecLibMatch}}{Matching peaks threshold to inject formula candidates no matter which score they have or which filter is applied. integer [optional]}
 }
@@ -126,7 +126,7 @@ Initialize a new Sirius class.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{enabled}}{tags whether the tool is enabled}
+\item{\code{enabled}}{Indicates whether the tool is enabled.}
 
 \item{\code{profile}}{Instrument specific profile for internal algorithms  Just select what comes closest to the instrument that was used for measuring the data.}
 
@@ -138,15 +138,15 @@ Initialize a new Sirius class.
 
 \item{\code{isotopeMs2Settings}}{Specify how isotope patterns in MS/MS should be handled.  <p>  FILTER: When filtering is enabled, molecular formulas are excluded if their  theoretical isotope pattern does not match the theoretical one, even if their MS/MS pattern has high score.  <p>  SCORE: Use them for SCORING. To use this the instrument should produce clear MS/MS isotope patterns  <p>  IGNORE: Ignore that there might be isotope patterns in MS/MS}
 
-\item{\code{filterByIsotopePattern}}{When filtering is enabled, molecular formulas are excluded if their theoretical isotope pattern does not match the theoretical one, even if their MS/MS pattern has high score.}
+\item{\code{filterByIsotopePattern}}{When filtering is enabled, molecular formulas are excluded if their theoretical isotope pattern does not match the measured one, even if their MS/MS pattern has high score.}
 
-\item{\code{enforceElGordoFormula}}{El Gordo may predict that an MS/MS spectrum is a lipid spectrum. If enabled, the corresponding molecular formula will be enforeced as molecular formula candidate.}
+\item{\code{enforceElGordoFormula}}{El Gordo may predict that an MS/MS spectrum is a lipid spectrum. If enabled, the corresponding molecular formula will be enforced as a molecular formula candidate.}
 
 \item{\code{performBottomUpSearch}}{If true, molecular formula generation via bottom up search is enabled.}
 
 \item{\code{performDenovoBelowMz}}{Specifies the m/z below which de novo molecular formula generation is enabled. Set to 0 to disable de novo molecular formula generation.}
 
-\item{\code{formulaSearchDBs}}{List Structure database to extract molecular formulas from to reduce formula search space.  SIRIUS is quite good at de novo formula annotation, so only enable if you have a good reason.}
+\item{\code{formulaSearchDBs}}{List of structure databases to extract molecular formulas from, to reduce the formula search space.  SIRIUS is quite good at de novo formula annotation, so only enable if you have a good reason.}
 
 \item{\code{applyFormulaConstraintsToDBAndBottomUpSearch}}{By default, the formula (element) constraints are only applied to de novo molecular formula generation.  If true, the constraints are as well applied to database search and bottom up search.}
 
@@ -160,9 +160,9 @@ Initialize a new Sirius class.
 
 \item{\code{useHeuristic}}{useHeuristic}
 
-\item{\code{injectSpecLibMatchFormulas}}{If true formula candidates that belong to spectral library matches above a certain threshold will  we inject/preserved for further analyses no matter which score they have or which filter is applied}
+\item{\code{injectSpecLibMatchFormulas}}{If true formula candidates that belong to spectral library matches above a certain threshold will  be injected and preserved for further analyses, no matter which score they have or which filter is applied}
 
-\item{\code{minScoreToInjectSpecLibMatch}}{Similarity Threshold to inject formula candidates no matter which score/rank they have or which filter settings are applied.  If threshold >= 0 formulas candidates with reference spectrum similarity above the threshold will be injected.}
+\item{\code{minScoreToInjectSpecLibMatch}}{Similarity Threshold to inject formula candidates no matter which score/rank they have or which filter settings are applied.  If the threshold is >= 0, formula candidates with a reference spectrum similarity above the threshold will be injected.}
 
 \item{\code{minPeaksToInjectSpecLibMatch}}{Matching peaks threshold to inject formula candidates no matter which score they have or which filter is applied.}
 

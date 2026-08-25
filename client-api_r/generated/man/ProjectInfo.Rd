@@ -32,21 +32,23 @@ df
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{projectId}}{a user selected unique name of the project for easy access. character [optional]}
+\item{\code{projectId}}{A user-selected unique name of the project for easy access. character [optional]}
 
-\item{\code{location}}{storage location of the project. character [optional]}
+\item{\code{location}}{Storage location of the project. character [optional]}
 
 \item{\code{description}}{Description of this project. character [optional]}
 
 \item{\code{type}}{Type of this project.  NULL if project type has not yet been specified by importing data. character [optional]}
 
-\item{\code{compatible}}{Indicates whether computed results (e.g. fingerprints, compounds classes) are compatible with the backend.  If true project is up-to-date and there are no restrictions regarding usage.  If false project is incompatible and therefore \"read only\" until the incompatible results have been removed. See updateProject endpoint for further information  If NULL the information has not been requested. character [optional]}
+\item{\code{compatible}}{Indicates whether computed results (e.g. fingerprints, compound classes) are compatible with the backend.  If true, the project is up-to-date and there are no restrictions regarding usage.  If false, the project is incompatible and therefore \"read only\" until the incompatible results have been removed. See the updateProject endpoint for further information.  If NULL, the information has not been requested. character [optional]}
 
 \item{\code{numOfFeatures}}{Number of features (aligned over runs) in this project. If NULL, information has not been requested (See OptField 'sizeInformation'). integer [optional]}
 
-\item{\code{numOfCompounds}}{Number of compounds (group of ion identities) in this project. If NULL, Information has not been requested (See OptField 'sizeInformation') or might be unavailable for this project type. integer [optional]}
+\item{\code{numOfCompounds}}{Number of compounds (group of ion identities) in this project. If NULL, information has not been requested (See OptField 'sizeInformation') or might be unavailable for this project type. integer [optional]}
 
-\item{\code{numOfBytes}}{Size in Bytes this project consumes on disk If NULL, Information has not been requested (See OptField 'sizeInformation'). integer [optional]}
+\item{\code{numOfBytes}}{Size in bytes this project consumes on disk. If NULL, information has not been requested (See OptField 'sizeInformation'). integer [optional]}
+
+\item{\code{detectedAdducts}}{Set of all detected adducts available in this project. list(character) [optional]}
 }
 \if{html}{\out{</div>}}
 }
@@ -83,6 +85,7 @@ Initialize a new ProjectInfo class.
   numOfFeatures = NULL,
   numOfCompounds = NULL,
   numOfBytes = NULL,
+  detectedAdducts = NULL,
   ...
 )}\if{html}{\out{</div>}}
 }
@@ -90,21 +93,23 @@ Initialize a new ProjectInfo class.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{projectId}}{a user selected unique name of the project for easy access.}
+\item{\code{projectId}}{A user-selected unique name of the project for easy access.}
 
-\item{\code{location}}{storage location of the project.}
+\item{\code{location}}{Storage location of the project.}
 
 \item{\code{description}}{Description of this project.}
 
 \item{\code{type}}{Type of this project.  NULL if project type has not yet been specified by importing data.}
 
-\item{\code{compatible}}{Indicates whether computed results (e.g. fingerprints, compounds classes) are compatible with the backend.  If true project is up-to-date and there are no restrictions regarding usage.  If false project is incompatible and therefore \"read only\" until the incompatible results have been removed. See updateProject endpoint for further information  If NULL the information has not been requested.}
+\item{\code{compatible}}{Indicates whether computed results (e.g. fingerprints, compound classes) are compatible with the backend.  If true, the project is up-to-date and there are no restrictions regarding usage.  If false, the project is incompatible and therefore \"read only\" until the incompatible results have been removed. See the updateProject endpoint for further information.  If NULL, the information has not been requested.}
 
 \item{\code{numOfFeatures}}{Number of features (aligned over runs) in this project. If NULL, information has not been requested (See OptField 'sizeInformation').}
 
-\item{\code{numOfCompounds}}{Number of compounds (group of ion identities) in this project. If NULL, Information has not been requested (See OptField 'sizeInformation') or might be unavailable for this project type.}
+\item{\code{numOfCompounds}}{Number of compounds (group of ion identities) in this project. If NULL, information has not been requested (See OptField 'sizeInformation') or might be unavailable for this project type.}
 
-\item{\code{numOfBytes}}{Size in Bytes this project consumes on disk If NULL, Information has not been requested (See OptField 'sizeInformation').}
+\item{\code{numOfBytes}}{Size in bytes this project consumes on disk. If NULL, information has not been requested (See OptField 'sizeInformation').}
+
+\item{\code{detectedAdducts}}{Set of all detected adducts available in this project.}
 
 \item{\code{...}}{Other optional arguments.}
 }
