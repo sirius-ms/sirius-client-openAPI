@@ -410,7 +410,16 @@ ApiClient  <- R6::R6Class(
       if (length(headers) == 0) {
         return(invisible(NULL))
       } else {
-        for (header in headers) {
+        # An error-only media type must never be preferred. SIRIUS documents its RFC 7807 error body
+        # on every operation, so "first JSON-ish wins" made the CSV and text/plain endpoints ask the
+        # server for application/problem+json and get HTTP 406 back. Only fall back to it when the
+        # operation offers nothing else.
+        candidates <- Filter(function(h) !str_detect(h, "(?i)problem[+]json"), headers)
+        if (length(candidates) == 0) {
+          candidates <- headers
+        }
+
+        for (header in candidates) {
           if (str_detect(header, "(?i)^(application/json|[^;/ \t]+/[^;/ \t]+[+]json)[ \t]*(;.*)?$")) {
             # return JSON-related MIME
             return(header)
@@ -418,7 +427,7 @@ ApiClient  <- R6::R6Class(
         }
 
         # not json mime type, simply return the first one
-        return(headers[[1]])
+        return(candidates[[1]])
       }
     }
   )

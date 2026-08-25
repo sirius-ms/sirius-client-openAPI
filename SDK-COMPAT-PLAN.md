@@ -183,6 +183,12 @@ Run on this repository before the mechanism went in:
   level and 0 for R - the shim absorbs every rename, and what is left is the `Tag.value` type change
   that no alias can hide. That gap between "20 declared at the API" and "1 reaching users" is the
   thing the two levels exist to measure.
+* **What both levels missed in that same run.** Four endpoints started returning HTTP 406. Neither
+  guard saw it coming: the spec's media types are byte identical to the previous release and the SDK
+  surface did not move. The cause was behavioural on both sides - SIRIUS began documenting its RFC
+  7807 error body on every operation, and the generators' "first media type containing json wins"
+  rule then asked the CSV and text/plain endpoints for `application/problem+json`. A structural diff
+  cannot reach that; a canary that calls one CSV endpoint would have caught it on the first run.
 * **Synthetic breakage**: an injected method rename, a removed field, a changed field type, a
   changed wire alias, a dropped enum constant, a removed API class and a new mandatory parameter are
   all reported as breaking; the removal of an operation the baseline marked `[EXPERIMENTAL]` and the
