@@ -26,7 +26,7 @@ class FragmentNode(BaseModel):
     """ # noqa: E501
     fragment_id: Optional[StrictInt] = Field(default=None, alias="fragmentId")
     molecular_formula: Optional[StrictStr] = Field(default=None, description="neutral molecular formula of the fragment without adduct", alias="molecularFormula")
-    adduct: Optional[StrictStr] = Field(default=None, description="This combines the ionization plus adduct of the fragment. In contrast to the {@link FragmentationTree FragmentationTree}s adduct,  this adduct may not include any in-source loss.")
+    adduct: Optional[StrictStr] = Field(default=None, description="This combines the ionization plus adduct of the fragment. In contrast to the <code>FragmentationTree</code>'s adduct,  this adduct may not include any in-source loss.")
     mass_deviation_da: Optional[float] = Field(default=None, alias="massDeviationDa")
     mass_deviation_ppm: Optional[float] = Field(default=None, alias="massDeviationPpm")
     score: Optional[float] = None

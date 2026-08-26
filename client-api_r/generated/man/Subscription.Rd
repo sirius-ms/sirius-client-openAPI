@@ -34,7 +34,7 @@ df
 \describe{
 \item{\code{sid}}{Unique identifier of this subscription character [optional]}
 
-\item{\code{subscriberId}}{ID of the owner of the subscription.  This can be the ID of any SubscriptionOwner (e.g.  Group or  User)  depending on the level on which a subscription should be is valid. character [optional]}
+\item{\code{subscriberId}}{ID of the owner of the subscription.  This can be the ID of any SubscriptionOwner (e.g. TagGroup or User)  depending on the level at which a subscription is valid. character [optional]}
 
 \item{\code{subscriberName}}{Optional name of the owner of this subscription character [optional]}
 
@@ -46,7 +46,7 @@ df
 
 \item{\code{instanceLimit}}{Limit of instances (features) that can be computed with this subscription integer [optional]}
 
-\item{\code{instanceHashRecordingTime}}{Hash is used to allow recomputing identical data without increasing counted instances (features).  The recording time is the amount of time an instance is memorized is integer [optional]}
+\item{\code{instanceHashRecordingTime}}{Hash is used to allow recomputing identical data without increasing counted instances (features).  The recording time is the amount of time an instance is memorized. integer [optional]}
 
 \item{\code{maxQueriesPerInstance}}{Maximum number of queries (e.g. prediction) that can be performed  for one instance before it is counted another time. integer [optional]}
 
@@ -116,7 +116,7 @@ Initialize a new Subscription class.
 \describe{
 \item{\code{sid}}{Unique identifier of this subscription}
 
-\item{\code{subscriberId}}{ID of the owner of the subscription.  This can be the ID of any SubscriptionOwner (e.g.  Group or  User)  depending on the level on which a subscription should be is valid.}
+\item{\code{subscriberId}}{ID of the owner of the subscription.  This can be the ID of any SubscriptionOwner (e.g. TagGroup or User)  depending on the level at which a subscription is valid.}
 
 \item{\code{subscriberName}}{Optional name of the owner of this subscription}
 
@@ -128,7 +128,7 @@ Initialize a new Subscription class.
 
 \item{\code{instanceLimit}}{Limit of instances (features) that can be computed with this subscription}
 
-\item{\code{instanceHashRecordingTime}}{Hash is used to allow recomputing identical data without increasing counted instances (features).  The recording time is the amount of time an instance is memorized is}
+\item{\code{instanceHashRecordingTime}}{Hash is used to allow recomputing identical data without increasing counted instances (features).  The recording time is the amount of time an instance is memorized.}
 
 \item{\code{maxQueriesPerInstance}}{Maximum number of queries (e.g. prediction) that can be performed  for one instance before it is counted another time.}
 

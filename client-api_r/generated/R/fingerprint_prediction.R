@@ -1,15 +1,15 @@
 #' Create a new FingerprintPrediction
 #'
 #' @description
-#' User/developer friendly parameter subset for the CSI:FingerID Fingerprint tool  Needs results from Formula/SIRIUS Tool
+#' User/developer friendly parameter subset for the CSI:FingerID Fingerprint tool  Needs results from the Formula identification tool (Sirius).
 #'
 #' @docType class
 #' @title FingerprintPrediction
 #' @description FingerprintPrediction Class
 #' @format An \code{R6Class} generator object
-#' @field enabled tags whether the tool is enabled character [optional]
+#' @field enabled Indicates whether the tool is enabled. character [optional]
 #' @field useScoreThreshold If true, an adaptive soft threshold will be applied to only compute Fingerprints for promising formula candidates  Enabling is highly recommended. character [optional]
-#' @field alwaysPredictHighRefMatches If true Fingerprint/Classes/Structures will be predicted for formulas candidates with  reference spectrum similarity > Sirius.minReferenceMatchScoreToInject will be predicted no matter which  score threshold rules apply.  If NULL default value will be used. character [optional]
+#' @field alwaysPredictHighRefMatches If true, fingerprints, compound classes and structures will be predicted for formula candidates whose  reference spectrum similarity is above Sirius.minReferenceMatchScoreToInject, no matter which  score threshold rules would otherwise apply.  If NULL default value will be used. character [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
 #' @export
@@ -23,9 +23,9 @@ FingerprintPrediction <- R6::R6Class(
     #' @description
     #' Initialize a new FingerprintPrediction class.
     #'
-    #' @param enabled tags whether the tool is enabled
+    #' @param enabled Indicates whether the tool is enabled.
     #' @param useScoreThreshold If true, an adaptive soft threshold will be applied to only compute Fingerprints for promising formula candidates  Enabling is highly recommended.
-    #' @param alwaysPredictHighRefMatches If true Fingerprint/Classes/Structures will be predicted for formulas candidates with  reference spectrum similarity > Sirius.minReferenceMatchScoreToInject will be predicted no matter which  score threshold rules apply.  If NULL default value will be used.
+    #' @param alwaysPredictHighRefMatches If true, fingerprints, compound classes and structures will be predicted for formula candidates whose  reference spectrum similarity is above Sirius.minReferenceMatchScoreToInject, no matter which  score threshold rules would otherwise apply.  If NULL default value will be used.
     #' @param ... Other optional arguments.
     initialize = function(`enabled` = NULL, `useScoreThreshold` = NULL, `alwaysPredictHighRefMatches` = NULL, ...) {
       if (!is.null(`enabled`)) {

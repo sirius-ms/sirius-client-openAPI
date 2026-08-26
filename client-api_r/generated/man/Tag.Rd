@@ -32,9 +32,9 @@ df
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{tagName}}{Name of the tag as defined by the corresponding TagDefinition  Links tag object to their definition. character}
+\item{\code{tagName}}{Name of the tag as defined by the corresponding TagDefinition  Links the tag object to its definition. character}
 
-\item{\code{value}}{Optional value of the tag.  <p>  Generic value of the tag as defined by the corresponding TagDefinition.  Can be Integer, Double, Boolean and String, whereas String values can represent Text, Date (yyyy-MM-dd) or Time (HH:mm:ss). object [optional]}
+\item{\code{value}}{\link{AnyValue} [optional]}
 }
 \if{html}{\out{</div>}}
 }
@@ -68,9 +68,9 @@ Initialize a new Tag class.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{tagName}}{Name of the tag as defined by the corresponding TagDefinition  Links tag object to their definition.}
+\item{\code{tagName}}{Name of the tag as defined by the corresponding TagDefinition  Links the tag object to its definition.}
 
-\item{\code{value}}{Optional value of the tag.  <p>  Generic value of the tag as defined by the corresponding TagDefinition.  Can be Integer, Double, Boolean and String, whereas String values can represent Text, Date (yyyy-MM-dd) or Time (HH:mm:ss).}
+\item{\code{value}}{value}
 
 \item{\code{...}}{Other optional arguments.}
 }

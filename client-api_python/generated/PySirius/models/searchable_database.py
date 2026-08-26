@@ -28,7 +28,7 @@ class SearchableDatabase(BaseModel):
     custom_db: StrictBool = Field(description="Indicates whether the database is a user managed custom database or if it is a  database that is included in SIRIUS which cannot be modified.", alias="customDb")
     searchable: StrictBool = Field(description="True when this database can be used as a search parameter.  False if the database is just an additional filter that can be applied after search.")
     db_date: Optional[StrictStr] = Field(default=None, description="Date on which the data was imported / database was created.", alias="dbDate")
-    db_version: Optional[StrictInt] = Field(default=None, description="database schema version", alias="dbVersion")
+    db_version: Optional[StrictInt] = Field(default=None, description="Database schema version.", alias="dbVersion")
     update_needed: StrictBool = Field(description="If true the database version is outdated and the database needs to be updated or re-imported before it can be used.", alias="updateNeeded")
     number_of_structures: Optional[StrictInt] = Field(default=None, description="Number of unique compounds available in this database.", alias="numberOfStructures")
     number_of_formulas: Optional[StrictInt] = Field(default=None, description="Number of different molecular formulas available in this database.", alias="numberOfFormulas")
@@ -36,7 +36,7 @@ class SearchableDatabase(BaseModel):
     error_message: Optional[StrictStr] = Field(default=None, description="Error message if the database could not be loaded", alias="errorMessage")
     display_name: Optional[StrictStr] = Field(default=None, description="display name of the database  Should be short", alias="displayName")
     location: Optional[StrictStr] = Field(default=None, description="Storage location of user database  Might be NULL for non-user databases or if default location is used.")
-    match_rt_of_reference_spectra: Optional[StrictBool] = Field(default=False, description="Indicates whether this database shall be used to use retention time information for library matching.  Typically used for in-house spectral libraries that have been measured on", alias="matchRtOfReferenceSpectra")
+    match_rt_of_reference_spectra: Optional[StrictBool] = Field(default=False, description="Indicates whether this database shall be used to use retention time information for library matching.  Typically used for in-house spectral libraries that were measured on the same  chromatographic setup as the samples being analysed, so that retention times are comparable.", alias="matchRtOfReferenceSpectra")
     __properties: ClassVar[List[str]] = ["databaseId", "customDb", "searchable", "dbDate", "dbVersion", "updateNeeded", "numberOfStructures", "numberOfFormulas", "numberOfReferenceSpectra", "errorMessage", "displayName", "location", "matchRtOfReferenceSpectra"]
 
     model_config = ConfigDict(

@@ -1,7 +1,7 @@
 #' Create a new JobProgress
 #'
 #' @description
-#' Progress information of a computation job that has already been submitted to SIRIUS.  if  currentProgress == maxProgress job is finished and should change to state done soon.  if a job is DONE all results can be accessed via the Project-Spaces api.
+#' Progress information of a computation job that has already been submitted to SIRIUS.  If currentProgress == maxProgress, the job is finished and should change to state DONE soon.  If a job is DONE, all results can be accessed via the project-space API.
 #'
 #' @docType class
 #' @title JobProgress
@@ -12,7 +12,7 @@
 #' @field currentProgress Current progress value of the job. integer [optional]
 #' @field maxProgress Progress value to reach (might also change during execution) integer [optional]
 #' @field message Progress information and warnings. character [optional]
-#' @field errorMessage Error message if the job did not finish successfully failed. character [optional]
+#' @field errorMessage Error message if the job did not finish successfully. character [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
 #' @export
@@ -34,7 +34,7 @@ JobProgress <- R6::R6Class(
     #' @param currentProgress Current progress value of the job.
     #' @param maxProgress Progress value to reach (might also change during execution)
     #' @param message Progress information and warnings.
-    #' @param errorMessage Error message if the job did not finish successfully failed.
+    #' @param errorMessage Error message if the job did not finish successfully.
     #' @param ... Other optional arguments.
     initialize = function(`indeterminate` = NULL, `state` = NULL, `currentProgress` = NULL, `maxProgress` = NULL, `message` = NULL, `errorMessage` = NULL, ...) {
       if (!is.null(`indeterminate`)) {

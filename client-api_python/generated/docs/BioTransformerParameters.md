@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **cyp450_mode** | [**Cyp450Mode**](Cyp450Mode.md) |  | [default to Cyp450Mode.COMBINED]
 **p2_mode** | [**P2Mode**](P2Mode.md) |  | [default to P2Mode.BT_RULE_BASED]
-**use_db** | **bool** | \&quot;Specify if you want to enable the retrieving from database (HMDB) feature.\&quot; | [optional] [default to True]
+**use_db** | **bool** | Specify whether structures should additionally be retrieved from the HMDB database. | [optional] [default to True]
 **bio_transformer_sequence_steps** | [**List[BioTransformerSequenceStep]**](BioTransformerSequenceStep.md) | Specify BioTransformerSequenceSteps to be applied to input structures. MultiStep MetabolicTransformations can  only be used as singletons (list size of one). | 
 
 ## Example

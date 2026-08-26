@@ -8,7 +8,7 @@
 #' @description FormulaCandidate Class
 #' @format An \code{R6Class} generator object
 #' @field formulaId Unique identifier of this formula candidate character [optional]
-#' @field molecularFormula molecular formula of this formula candidate character [optional]
+#' @field molecularFormula Molecular formula of this formula candidate. character [optional]
 #' @field adduct Adduct of this formula candidate character [optional]
 #' @field rank  integer [optional]
 #' @field siriusScoreNormalized Normalized Sirius Score of the formula candidate.  If NULL result is not available numeric [optional]
@@ -58,7 +58,7 @@ FormulaCandidate <- R6::R6Class(
     #' Initialize a new FormulaCandidate class.
     #'
     #' @param formulaId Unique identifier of this formula candidate
-    #' @param molecularFormula molecular formula of this formula candidate
+    #' @param molecularFormula Molecular formula of this formula candidate.
     #' @param adduct Adduct of this formula candidate
     #' @param rank rank
     #' @param siriusScoreNormalized Normalized Sirius Score of the formula candidate.  If NULL result is not available

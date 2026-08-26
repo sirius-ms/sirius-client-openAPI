@@ -23,7 +23,7 @@ from typing_extensions import Self
 
 class CanopusPrediction(BaseModel):
     """
-    Container class that holds the CANOPUS compound class predictions for alle predictable compound classes.  This is the full CANOPUS result.
+    Container class that holds the CANOPUS compound class predictions for all predictable compound classes.  This is the full CANOPUS result.
     """ # noqa: E501
     classy_fire_classes: Optional[List[Optional[CompoundClass]]] = Field(default=None, description="All predicted ClassyFire classes", alias="classyFireClasses")
     npc_classes: Optional[List[Optional[CompoundClass]]] = Field(default=None, description="All predicted NPC classes", alias="npcClasses")

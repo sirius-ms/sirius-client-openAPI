@@ -79,11 +79,19 @@ no extra state to maintain, and the surface delta shows up as a readable hunk in
 
 `.updater/tools/sdk_compat_check.py` diffs two snapshots and classifies:
 
-| Severity  | Examples |
-| --------- | -------- |
-| BREAKING  | class / method / field / export removed; method renamed; parameter removed, reordered or newly required; field type or alias changed; enum constant removed or its wire value changed |
-| TOLERATED | the old symbol's origin was already marked unstable; enum constant added (strict clients such as pydantic still reject unknown values on responses); breaks declared by an API version bump; entries on the accept list |
-| ADDITIVE  | new classes, methods, optional fields, optional parameters, exports |
+| Severity  | Meaning | Examples |
+| --------- | ------- | -------- |
+| BREAKING  | nobody was warned; fails the gate | class / method / field / export removed; method renamed; parameter removed, reordered or newly required; field type or alias changed; enum constant removed or its wire value changed - none of it covered by a marker, a version bump or the accept list |
+| MIGRATION | source breaking but declared; does not fail the gate, but must be visible | the same changes, announced by an API version bump. User code written against the previous SDK still stops working - a renamed method is not found, a reordered parameter binds the wrong value |
+| TOLERATED | nothing to do | the old symbol's origin was already marked unstable; the schema is not reachable from any operation; enum constant added (strict clients such as pydantic still reject unknown values on responses); entries on the accept list |
+| ADDITIVE  | new surface | new classes, methods, optional fields, optional parameters, exports |
+
+**Why MIGRATION exists.** An API version bump declares a break; it does not undo it. Filing the
+`get*Paged` -> `get*Page` renames of API 3.2 under TOLERATED said "nothing to do here" about nine
+methods that every existing script calls. MIGRATION is the honest middle: it does not block the
+release, and it is the list of call sites users have to touch - which is exactly the list the
+deprecated aliases have to cover. The report renders it as an open table plus an old -> new rename
+checklist.
 
 * **Rename detection** matches on provenance, not on name: a method whose origin operation is
   unchanged but whose name changed is reported as a rename, not as removal + addition. That is the
@@ -113,10 +121,46 @@ strings one was checked before, so enum-as-ref changes hitting the Python models
    `gh pr create --body-file`. The workflow locks the PR immediately after creation, so a follow-up
    `gh pr comment` would be rejected - the body is the only reliable channel. A `breaking-change`
    label is added when unexcused BREAKING findings exist.
-4. A separate `CompatGate` job re-reads the JSON and fails only on unexcused BREAKING findings. It is
-   the required status check: the PR exists, the branch is there, a workaround can be committed onto
-   it, and the merge stays blocked until the gate passes or `allow_breaking_api_changes` is set. That
-   input keeps its meaning, it just moves from "abort everything" to "excuse the gate".
+4. The blocking check is the `CompatGate` job in **`RunTests.yml`**, not in `NewUpdate.yml`. A check
+   only counts towards branch protection when it reports on the pull request *head*, and NewUpdate is
+   dispatched on the temp branch *before* its own auto-commit - its checks land on the commit the run
+   started at, which the auto-commit and every later commit then leave behind. The first attempt put
+   the gate in NewUpdate and the required check sat at "Expected, waiting for status to be reported"
+   forever.
+
+   The pull request job needs neither SIRIUS nor the generators: it re-extracts both snapshots from
+   the checked out tree and compares them, plus the api-docs, against `origin/$base_ref`. It fails on
+   unexcused BREAKING only; MIGRATION is a warning. It also asserts that the **committed** snapshots
+   match what it just extracted, so a hand edit on a branch cannot leave the next release comparing
+   against a baseline that never existed.
+
+   `allow_breaking_api_changes` keeps its meaning by travelling to the pull request as the
+   `allow-breaking-api-changes` label, which the gate honours; the label can also be added by hand on
+   any pull request.
+
+## Deprecated aliases
+
+A MIGRATION finding is not only something to report, it is something to soften. When an operation is
+renamed, the old SDK method names are kept for one release as thin deprecated wrappers, the same way
+the Java SDK does it in its hand written `*ApiCompat` classes:
+
+| | |
+| --- | --- |
+| `client-api_python/pysirius_compat.py` | declares the renames, attaches the old names to the generated API classes at import time (users get the classes from `PySirius` directly, so a subclass would never be reached), warns with `FutureWarning` |
+| `client-api_r/rsirius_compat.R` | adds the old names to the generated R6 generators with `$set()`, warns via `.Deprecated()` |
+
+Both bind the caller's positional arguments to the **old** parameter names and forward by keyword,
+because a rename can come with an inserted parameter - API 3.2 added `searchQuery` in second
+position to `getCompoundsPage` and in fifth to `getAlignedFeaturesPage`, so a naive delegation would
+silently shift every positional argument.
+
+The aliases are public surface, so both extractors report them: the R extractor understands
+`Generator$set("public", ...)`, and the Python extractor reads the declaration table out of
+`pysirius_compat.py` rather than importing anything. Without that, deleting the aliases later would
+go unnoticed - which is the whole point of keeping them in the snapshot.
+
+The test suites move to the new names; one test per API keeps the deprecated name covered so the
+shim cannot rot silently.
 
 ## Stage 4 (optional, not implemented) - behavioural canaries
 
@@ -145,6 +189,18 @@ Run on this repository before the mechanism went in:
   `R/api_response.R`, and the difference is a removed `warning("The response is binary and will not
   be converted to text.")` **inside** a method body. A symbol diff cannot see that, and should not
   pretend to - it is the argument for stage 4.
+* **First production run (SIRIUS 6.3.12 -> 6.5.4, API 3.1 -> 3.2)**: 0 breaking, 20 MIGRATION at
+  the spec level (nine `get*Paged` -> `get*Page` operationId renames plus `Tag.value` retyped from
+  `object` to `AnyValue`), and after the deprecated aliases were added, **1** MIGRATION at the SDK
+  level and 0 for R - the shim absorbs every rename, and what is left is the `Tag.value` type change
+  that no alias can hide. That gap between "20 declared at the API" and "1 reaching users" is the
+  thing the two levels exist to measure.
+* **What both levels missed in that same run.** Four endpoints started returning HTTP 406. Neither
+  guard saw it coming: the spec's media types are byte identical to the previous release and the SDK
+  surface did not move. The cause was behavioural on both sides - SIRIUS began documenting its RFC
+  7807 error body on every operation, and the generators' "first media type containing json wins"
+  rule then asked the CSV and text/plain endpoints for `application/problem+json`. A structural diff
+  cannot reach that; a canary that calls one CSV endpoint would have caught it on the first run.
 * **Synthetic breakage**: an injected method rename, a removed field, a changed field type, a
   changed wire alias, a dropped enum constant, a removed API class and a new mandatory parameter are
   all reported as breaking; the removal of an operation the baseline marked `[EXPERIMENTAL]` and the

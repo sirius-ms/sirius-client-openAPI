@@ -8,7 +8,8 @@ Usage:
     render_compat_report.py -o compat-report.md RESULT.json [RESULT.json ...]
         [--title "..."] [--max-bytes 60000] [--artifact-hint "..."]
 
-Prints ``breaking=<n>`` to stdout (and to $GITHUB_OUTPUT if set) so the workflow can label the PR.
+Prints ``breaking=<n>`` and ``migration=<n>`` to stdout (and to $GITHUB_OUTPUT if set) so the
+workflow can label the pull request.
 """
 from __future__ import annotations
 
@@ -17,7 +18,16 @@ import json
 import os
 import sys
 
-BREAKING, TOLERATED, ADDITIVE = "BREAKING", "TOLERATED", "ADDITIVE"
+BREAKING, MIGRATION, TOLERATED, ADDITIVE = "BREAKING", "MIGRATION", "TOLERATED", "ADDITIVE"
+
+MIGRATION_NOTE = """
+> ⚠️ **Declared source breaking changes.** The API version bump announces them, so they do not fail
+> the gate - but code written against the previous SDK stops working: a renamed method is simply not
+> found, a reordered parameter silently binds the wrong value. Every entry below is a call site SDK
+> users have to touch. Cover them with deprecated aliases (`pysirius_compat.py`,
+> `rsirius_compat.R`) so the previous names keep working for one release, and migrate the test
+> suites to the new names.
+"""
 
 WHAT_NOW = """
 <details><summary>What to do with a breaking change</summary>
@@ -62,9 +72,28 @@ def meta_line(result: dict) -> str:
     return ", ".join(bits)
 
 
-def table(findings: list[dict], with_reason: bool) -> list[str]:
+def rename_pairs(findings: list[dict]) -> list[tuple[str, str]]:
+    """old -> new for every rename, so the report doubles as the alias checklist"""
+    pairs = []
+    for finding in findings:
+        if "renamed" not in finding["kind"]:
+            continue
+        message = finding["message"]
+        if " renamed " in message and " -> " in message:
+            tail = message.split(" renamed ", 1)[1].split(" (")[0]
+            if " -> " in tail:
+                before, after = tail.split(" -> ", 1)
+                pairs.append((before.strip(), after.strip()))
+        elif " renamed to " in message:
+            before = message.split(" renamed to ")[0].split()[-1]
+            after = message.split(" renamed to ")[1].split()[0]
+            pairs.append((before.strip(), after.strip()))
+    return pairs
+
+
+def table(findings: list[dict], with_reason: bool, reason_header: str = "Why it is not breaking") -> list[str]:
     header = ["| What | Detail |", "| --- | --- |"] if not with_reason else \
-             ["| What | Detail | Why it is not breaking |", "| --- | --- | --- |"]
+             [f"| What | Detail | {reason_header} |", "| --- | --- | --- |"]
     rows = []
     for finding in findings:
         message = finding["message"].replace("|", "\\|").replace("\n", " ")
@@ -80,7 +109,7 @@ def table(findings: list[dict], with_reason: bool) -> list[str]:
 
 
 def section(result: dict) -> list[str]:
-    buckets: dict[str, list[dict]] = {BREAKING: [], TOLERATED: [], ADDITIVE: []}
+    buckets: dict[str, list[dict]] = {BREAKING: [], MIGRATION: [], TOLERATED: [], ADDITIVE: []}
     for finding in result.get("findings") or []:
         buckets.setdefault(finding["severity"], []).append(finding)
 
@@ -98,8 +127,19 @@ def section(result: dict) -> list[str]:
         ids = "\n".join(finding["id"] for finding in buckets[BREAKING])
         out += ["<details><summary>Finding ids (for <code>compat-accepted.json</code>)</summary>",
                 "", "```", ids, "```", "", "</details>", ""]
-    else:
+    elif not buckets[MIGRATION]:
         out += ["No breaking changes. ✅", ""]
+
+    if buckets[MIGRATION]:
+        out += [f"**{len(buckets[MIGRATION])} declared source breaking change(s)** - existing user "
+                f"code has to be migrated", ""]
+        out += table(buckets[MIGRATION], with_reason=True, reason_header="Declared by")
+        out += [""]
+        pairs = rename_pairs(buckets[MIGRATION])
+        if pairs:
+            out += ["Renames to alias:", "", "| was | is now |", "| --- | --- |"]
+            out += [f"| `{before}` | `{after}` |" for before, after in pairs]
+            out += [""]
 
     for title, key in (("Tolerated", TOLERATED), ("Additive", ADDITIVE)):
         items = buckets[key]
@@ -127,22 +167,32 @@ def main() -> int:
     results = [load(path) for path in args.results if os.path.exists(path)]
     breaking = sum(len([f for f in (r.get("findings") or []) if f["severity"] == BREAKING])
                    for r in results)
+    migration = sum(len([f for f in (r.get("findings") or []) if f["severity"] == MIGRATION])
+                    for r in results)
 
     lines = [f"## {args.title}", ""]
     if args.intro:
         lines += [args.intro, ""]
     if breaking:
-        lines += [f"> ⛔ **{breaking} breaking change(s)** for existing SDK users. The update branch "
-                  f"is here so a workaround can be committed before this is merged.", ""]
+        lines += [f"> ⛔ **{breaking} undeclared breaking change(s)** for existing SDK users. The "
+                  f"update branch is here so a workaround can be committed before this is merged.",
+                  ""]
+    elif migration:
+        lines += [f"> ⚠️ No undeclared breaks, but **{migration} declared source breaking "
+                  f"change(s)**: user code written against the previous SDK stops working.", ""]
     else:
         lines += ["> ✅ The generated clients stay backward compatible.", ""]
 
-    lines += ["| Source | Breaking | Tolerated | Additive |", "| --- | --- | --- | --- |"]
+    lines += ["| Source | Breaking | Migration | Tolerated | Additive |",
+              "| --- | --- | --- | --- | --- |"]
     for result in results:
         summary = result.get("summary") or {}
         lines.append(f"| {label(result)} | {summary.get(BREAKING, 0)} | "
-                     f"{summary.get(TOLERATED, 0)} | {summary.get(ADDITIVE, 0)} |")
+                     f"{summary.get(MIGRATION, 0)} | {summary.get(TOLERATED, 0)} | "
+                     f"{summary.get(ADDITIVE, 0)} |")
     lines += [""]
+    if migration:
+        lines += [MIGRATION_NOTE, ""]
 
     for result in results:
         lines += section(result)
@@ -161,9 +211,11 @@ def main() -> int:
         handle.write(report + "\n")
 
     print(f"breaking={breaking}")
+    print(f"migration={migration}")
     if os.environ.get("GITHUB_OUTPUT"):
         with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as handle:
             handle.write(f"breaking={breaking}\n")
+            handle.write(f"migration={migration}\n")
     return 0
 
 

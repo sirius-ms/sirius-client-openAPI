@@ -5,16 +5,16 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**inchi_key** | **str** |  | [optional] 
+**inchi_key** | **str** | InChIKey of the structure candidate.  Searching with a full 27 character key matches its 2D (skeleton) part, so stereoisomers of the  searched structure are found alike. | [optional] 
 **smiles** | **str** |  | [optional] 
-**structure_name** | **str** |  | [optional] 
+**structure_name** | **str** | Name of the structure candidate.  Searching also resolves the searched term as a PubChem synonym, so a structure is found by any  of its common names. | [optional] 
 **structure_svg** | **str** | SVG graphics of the structure candidate  OPTIONAL: needs to be added by parameter | [optional] 
-**db_links** | [**List[DBLink]**](DBLink.md) | List of structure database links belonging to this structure candidate  OPTIONAL: needs to be added by parameter | [optional] 
-**spectral_library_matches** | [**List[SpectralLibraryMatch]**](SpectralLibraryMatch.md) | List of spectral library matches belonging to this structure candidate  OPTIONAL: needs to be added by parameter | [optional] 
+**db_links** | [**List[DBLink]**](DBLink.md) | List of structure database links belonging to the structure candidate  OPTIONAL: needs to be added by parameter | [optional] 
+**spectral_library_matches** | [**List[SpectralLibraryMatch]**](SpectralLibraryMatch.md) | List of spectral library matches belonging to the structure candidate  OPTIONAL: needs to be added by parameter | [optional] 
 **xlog_p** | **float** |  | [optional] 
-**rank** | **int** | the overall rank of this candidate among all candidates of this feature | [optional] 
+**rank** | **int** | The overall rank of this candidate among all candidates of this feature. | [optional] 
 **csi_score** | **float** | CSI:FingerID score of the fingerprint of this compound to the predicted fingerprint of CSI:FingerID  This is the score used for ranking structure candidates | [optional] 
-**tanimoto_similarity** | **float** | Tanimoto similarly of the fingerprint of this compound to the predicted fingerprint of CSI:FingerID | [optional] 
+**tanimoto_similarity** | **float** | Tanimoto similarity of the fingerprint of this compound to the predicted fingerprint of CSI:FingerID | [optional] 
 **mces_dist_to_top_hit** | **float** | Maximum Common Edge Subgraph (MCES) distance to the top scoring hit (CSI:FingerID) in a candidate list. | [optional] 
 **fingerprint** | [**BinaryFingerprint**](BinaryFingerprint.md) |  | [optional] 
 

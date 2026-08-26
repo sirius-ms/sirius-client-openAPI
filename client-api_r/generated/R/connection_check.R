@@ -8,7 +8,7 @@
 #' @description ConnectionCheck Class
 #' @format An \code{R6Class} generator object
 #' @field licenseInfo  \link{LicenseInfo}
-#' @field errors List of errors ordered by significance. first error should be reported and addressed first.  Following errors might just be follow-up errors list(\link{ConnectionError})
+#' @field errors List of errors ordered by significance. First error should be reported and addressed first.  Following errors might just be follow-up errors list(\link{ConnectionError})
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
 #' @export
@@ -22,7 +22,7 @@ ConnectionCheck <- R6::R6Class(
     #' Initialize a new ConnectionCheck class.
     #'
     #' @param licenseInfo licenseInfo
-    #' @param errors List of errors ordered by significance. first error should be reported and addressed first.  Following errors might just be follow-up errors
+    #' @param errors List of errors ordered by significance. First error should be reported and addressed first.  Following errors might just be follow-up errors
     #' @param ... Other optional arguments.
     initialize = function(`licenseInfo`, `errors`, ...) {
       if (!missing(`licenseInfo`)) {

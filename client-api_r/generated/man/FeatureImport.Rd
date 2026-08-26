@@ -52,7 +52,7 @@ df
 
 \item{\code{mergedMs1}}{\link{BasicSpectrum} [optional]}
 
-\item{\code{ms1Spectra}}{List of MS1Spectra belonging to this feature. These spectra will be merged an only a representative  mergedMs1 spectrum will be stored in SIRIUS. At least one of these spectra should contain the  isotope pattern of the precursor ion.  Note: Will be ignored if 'mergedMs1' is given. list(\link{BasicSpectrum}) [optional]}
+\item{\code{ms1Spectra}}{List of MS1Spectra belonging to this feature. These spectra will be merged and only a representative  mergedMs1 spectrum will be stored in SIRIUS. At least one of these spectra should contain the  isotope pattern of the precursor ion.  Note: Will be ignored if 'mergedMs1' is given. list(\link{BasicSpectrum}) [optional]}
 
 \item{\code{ms2Spectra}}{List of MS/MS spectra that belong to this feature. list(\link{BasicSpectrum}) [optional]}
 }
@@ -122,7 +122,7 @@ Initialize a new FeatureImport class.
 
 \item{\code{mergedMs1}}{mergedMs1}
 
-\item{\code{ms1Spectra}}{List of MS1Spectra belonging to this feature. These spectra will be merged an only a representative  mergedMs1 spectrum will be stored in SIRIUS. At least one of these spectra should contain the  isotope pattern of the precursor ion.  Note: Will be ignored if 'mergedMs1' is given.}
+\item{\code{ms1Spectra}}{List of MS1Spectra belonging to this feature. These spectra will be merged and only a representative  mergedMs1 spectrum will be stored in SIRIUS. At least one of these spectra should contain the  isotope pattern of the precursor ion.  Note: Will be ignored if 'mergedMs1' is given.}
 
 \item{\code{ms2Spectra}}{List of MS/MS spectra that belong to this feature.}
 

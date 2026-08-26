@@ -87,6 +87,7 @@ class InfoApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ConnectionCheck",
+            '500': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -149,6 +150,7 @@ class InfoApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ConnectionCheck",
+            '500': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -211,6 +213,7 @@ class InfoApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ConnectionCheck",
+            '500': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -252,7 +255,8 @@ class InfoApi:
         if 'Accept' not in _header_params:
             _header_params['Accept'] = self.api_client.select_header_accept(
                 [
-                    'application/json'
+                    'application/json', 
+                    'application/problem+json'
                 ]
             )
 
@@ -337,6 +341,8 @@ class InfoApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "Info",
+            '500': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -407,6 +413,8 @@ class InfoApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "Info",
+            '500': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -477,6 +485,8 @@ class InfoApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "Info",
+            '500': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -528,7 +538,8 @@ class InfoApi:
         if 'Accept' not in _header_params:
             _header_params['Accept'] = self.api_client.select_header_accept(
                 [
-                    'application/json'
+                    'application/json', 
+                    'application/problem+json'
                 ]
             )
 

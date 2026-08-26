@@ -32,7 +32,7 @@ df
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{name}}{Optional Displayable name of this spectrum. character [optional]}
+\item{\code{name}}{Optional display name of this spectrum. character [optional]}
 
 \item{\code{msLevel}}{MS level of the measured spectrum.  Artificial spectra with no msLevel (e.g. Simulated Isotope patterns) use null or zero integer [optional]}
 
@@ -50,7 +50,7 @@ df
 
 \item{\code{peaks}}{The peaks of this spectrum which might contain additional annotations such as molecular formulas. list(\link{AnnotatedPeak})}
 
-\item{\code{absIntensityFactor}}{Factor to convert relative intensities to absolute intensities.  Might be null or 1 for spectra where absolute intensities are not available (E.g. artificial or merged spectra)  <p>  DEPRECATED: Spectra are always returned with raw intensities.  Use provided normalization factors to normalize on the fly. numeric [optional]}
+\item{\code{absIntensityFactor}}{Factor to convert relative intensities to absolute intensities.  Might be null or 1 for spectra where absolute intensities are not available (e.g. artificial or merged spectra)  <p>  DEPRECATED: Spectra are always returned with raw intensities.  Use provided normalization factors to normalize on the fly. numeric [optional]}
 
 \item{\code{maxNormFactor}}{Factor to convert absolute intensities to MAX norm. numeric [optional]}
 
@@ -115,7 +115,7 @@ Initialize a new AnnotatedSpectrum class.
 
 \item{\code{peaks}}{The peaks of this spectrum which might contain additional annotations such as molecular formulas.}
 
-\item{\code{name}}{Optional Displayable name of this spectrum.}
+\item{\code{name}}{Optional display name of this spectrum.}
 
 \item{\code{msLevel}}{MS level of the measured spectrum.  Artificial spectra with no msLevel (e.g. Simulated Isotope patterns) use null or zero}
 
@@ -129,7 +129,7 @@ Initialize a new AnnotatedSpectrum class.
 
 \item{\code{precursorPeak}}{precursorPeak}
 
-\item{\code{absIntensityFactor}}{Factor to convert relative intensities to absolute intensities.  Might be null or 1 for spectra where absolute intensities are not available (E.g. artificial or merged spectra)  <p>  DEPRECATED: Spectra are always returned with raw intensities.  Use provided normalization factors to normalize on the fly.}
+\item{\code{absIntensityFactor}}{Factor to convert relative intensities to absolute intensities.  Might be null or 1 for spectra where absolute intensities are not available (e.g. artificial or merged spectra)  <p>  DEPRECATED: Spectra are always returned with raw intensities.  Use provided normalization factors to normalize on the fly.}
 
 \item{\code{maxNormFactor}}{Factor to convert absolute intensities to MAX norm.}
 

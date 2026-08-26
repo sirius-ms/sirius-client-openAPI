@@ -12,7 +12,7 @@
 """  # noqa: E501
 
 
-__version__ = "6.3.12"
+__version__ = "6.5.4"
 
 # Define package exports
 __all__ = [
@@ -24,6 +24,7 @@ __all__ = [
     "JobsApi",
     "LoginAndAccountApi",
     "ProjectsApi",
+    "RunsApi",
     "SearchableDatabasesApi",
     "ApiResponse",
     "ApiClient",
@@ -42,6 +43,7 @@ __all__ = [
     "AnnotatedMsMsData",
     "AnnotatedPeak",
     "AnnotatedSpectrum",
+    "AnyValue",
     "ApiVersion",
     "BackgroundComputationsStateEvent",
     "BasicSpectrum",
@@ -71,6 +73,7 @@ __all__ = [
     "DataImportEvent",
     "DataQuality",
     "Deviation",
+    "Feature",
     "FeatureAnnotations",
     "FeatureImport",
     "FingerprintPrediction",
@@ -101,21 +104,32 @@ __all__ = [
     "PageMetadata",
     "PagedModelAlignedFeature",
     "PagedModelCompound",
+    "PagedModelFeature",
     "PagedModelFormulaCandidate",
     "PagedModelJob",
+    "PagedModelRun",
     "PagedModelSpectralLibraryMatch",
     "PagedModelStructureCandidateFormula",
     "PagedModelStructureCandidateScored",
     "ParentPeak",
     "PeakAnnotation",
     "PeakPair",
+    "ProblemDetail",
     "ProjectChangeEvent",
     "ProjectEventType",
     "ProjectInfo",
     "ProjectInfoOptField",
     "ProjectType",
+    "QuantMeasure",
+    "QuantRowType",
+    "QuantTable",
+    "QuantTableOptField",
+    "Run",
+    "RunOptField",
     "SearchableDatabase",
     "SearchableDatabaseParameters",
+    "SearchableField",
+    "SearchableFieldType",
     "SecurityContext",
     "SecurityContextPrincipal",
     "SimplePeak",
@@ -161,6 +175,7 @@ from PySirius.api.info_api import InfoApi as InfoApi
 from PySirius.api.jobs_api import JobsApi as JobsApi
 from PySirius.api.login_and_account_api import LoginAndAccountApi as LoginAndAccountApi
 from PySirius.api.projects_api import ProjectsApi as ProjectsApi
+from PySirius.api.runs_api import RunsApi as RunsApi
 from PySirius.api.searchable_databases_api import SearchableDatabasesApi as SearchableDatabasesApi
 
 # import ApiClient
@@ -183,6 +198,7 @@ from PySirius.models.allowed_features import AllowedFeatures as AllowedFeatures
 from PySirius.models.annotated_ms_ms_data import AnnotatedMsMsData as AnnotatedMsMsData
 from PySirius.models.annotated_peak import AnnotatedPeak as AnnotatedPeak
 from PySirius.models.annotated_spectrum import AnnotatedSpectrum as AnnotatedSpectrum
+from PySirius.models.any_value import AnyValue as AnyValue
 from PySirius.models.api_version import ApiVersion as ApiVersion
 from PySirius.models.background_computations_state_event import BackgroundComputationsStateEvent as BackgroundComputationsStateEvent
 from PySirius.models.basic_spectrum import BasicSpectrum as BasicSpectrum
@@ -212,6 +228,7 @@ from PySirius.models.db_link import DBLink as DBLink
 from PySirius.models.data_import_event import DataImportEvent as DataImportEvent
 from PySirius.models.data_quality import DataQuality as DataQuality
 from PySirius.models.deviation import Deviation as Deviation
+from PySirius.models.feature import Feature as Feature
 from PySirius.models.feature_annotations import FeatureAnnotations as FeatureAnnotations
 from PySirius.models.feature_import import FeatureImport as FeatureImport
 from PySirius.models.fingerprint_prediction import FingerprintPrediction as FingerprintPrediction
@@ -242,21 +259,32 @@ from PySirius.models.p2_mode import P2Mode as P2Mode
 from PySirius.models.page_metadata import PageMetadata as PageMetadata
 from PySirius.models.paged_model_aligned_feature import PagedModelAlignedFeature as PagedModelAlignedFeature
 from PySirius.models.paged_model_compound import PagedModelCompound as PagedModelCompound
+from PySirius.models.paged_model_feature import PagedModelFeature as PagedModelFeature
 from PySirius.models.paged_model_formula_candidate import PagedModelFormulaCandidate as PagedModelFormulaCandidate
 from PySirius.models.paged_model_job import PagedModelJob as PagedModelJob
+from PySirius.models.paged_model_run import PagedModelRun as PagedModelRun
 from PySirius.models.paged_model_spectral_library_match import PagedModelSpectralLibraryMatch as PagedModelSpectralLibraryMatch
 from PySirius.models.paged_model_structure_candidate_formula import PagedModelStructureCandidateFormula as PagedModelStructureCandidateFormula
 from PySirius.models.paged_model_structure_candidate_scored import PagedModelStructureCandidateScored as PagedModelStructureCandidateScored
 from PySirius.models.parent_peak import ParentPeak as ParentPeak
 from PySirius.models.peak_annotation import PeakAnnotation as PeakAnnotation
 from PySirius.models.peak_pair import PeakPair as PeakPair
+from PySirius.models.problem_detail import ProblemDetail as ProblemDetail
 from PySirius.models.project_change_event import ProjectChangeEvent as ProjectChangeEvent
 from PySirius.models.project_event_type import ProjectEventType as ProjectEventType
 from PySirius.models.project_info import ProjectInfo as ProjectInfo
 from PySirius.models.project_info_opt_field import ProjectInfoOptField as ProjectInfoOptField
 from PySirius.models.project_type import ProjectType as ProjectType
+from PySirius.models.quant_measure import QuantMeasure as QuantMeasure
+from PySirius.models.quant_row_type import QuantRowType as QuantRowType
+from PySirius.models.quant_table import QuantTable as QuantTable
+from PySirius.models.quant_table_opt_field import QuantTableOptField as QuantTableOptField
+from PySirius.models.run import Run as Run
+from PySirius.models.run_opt_field import RunOptField as RunOptField
 from PySirius.models.searchable_database import SearchableDatabase as SearchableDatabase
 from PySirius.models.searchable_database_parameters import SearchableDatabaseParameters as SearchableDatabaseParameters
+from PySirius.models.searchable_field import SearchableField as SearchableField
+from PySirius.models.searchable_field_type import SearchableFieldType as SearchableFieldType
 from PySirius.models.security_context import SecurityContext as SecurityContext
 from PySirius.models.security_context_principal import SecurityContextPrincipal as SecurityContextPrincipal
 from PySirius.models.simple_peak import SimplePeak as SimplePeak
@@ -293,3 +321,7 @@ from PySirius.models.zodiac_library_scoring import ZodiacLibraryScoring as Zodia
 from PySirius.pysirius_api import PySiriusAPI as PySiriusAPI
 from PySirius.pysirius_sdk import SiriusSDK as SiriusSDK
 from PySirius.pysirius_helper import Helper as Helper
+
+# install deprecated aliases for API methods renamed by the SIRIUS API
+from PySirius.pysirius_compat import install_deprecated_aliases as _install_deprecated_aliases
+_install_deprecated_aliases()

@@ -32,31 +32,31 @@ df
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{alignedFeatureId}}{character [optional]}
+\item{\code{alignedFeatureId}}{Unique identifier of the aligned feature within the project. character [optional]}
 
-\item{\code{compoundId}}{character [optional]}
+\item{\code{compoundId}}{Identifier of the compound the feature belongs to.  Features that are different adducts or isotopologues of the same molecule share it. character [optional]}
 
-\item{\code{name}}{character [optional]}
+\item{\code{name}}{Informative, human-readable name of the feature. character [optional]}
 
 \item{\code{externalFeatureId}}{Externally provided FeatureId (e.g. by some preprocessing tool).  This FeatureId is NOT used by SIRIUS but is stored to ease mapping information back to the source. character [optional]}
 
-\item{\code{ionMass}}{numeric [optional]}
+\item{\code{ionMass}}{Mass-to-charge ratio (m/z) of the precursor ion of the feature. numeric [optional]}
 
-\item{\code{charge}}{Ion mode (charge) this feature has been measured in. integer}
+\item{\code{charge}}{Ion mode (charge) the feature has been measured in. integer}
 
-\item{\code{detectedAdducts}}{Adducts of this feature that have been detected during preprocessing. list(character)}
+\item{\code{detectedAdducts}}{Adducts that have been detected for the feature during preprocessing.  Never empty: if no adduct could be detected, the unknown ion type matching the feature's  charge ([M+?]+ or [M+?]-) is reported instead, so every feature is filterable by adduct. list(character)}
 
-\item{\code{rtStartSeconds}}{numeric [optional]}
+\item{\code{rtStartSeconds}}{Start of the retention time range the feature was detected in, in seconds. numeric [optional]}
 
-\item{\code{rtEndSeconds}}{numeric [optional]}
+\item{\code{rtEndSeconds}}{End of the retention time range the feature was detected in, in seconds. numeric [optional]}
 
-\item{\code{rtApexSeconds}}{numeric [optional]}
+\item{\code{rtApexSeconds}}{Retention time of the intensity apex of the feature, in seconds. numeric [optional]}
 
-\item{\code{quality}}{Quality of this feature. character [optional]}
+\item{\code{quality}}{Overall quality of the feature. NOT_APPLICABLE if no quality data is available character [optional]}
 
-\item{\code{hasMs1}}{If true, the feature has at lease one MS1 spectrum character [optional]}
+\item{\code{hasMs1}}{If true, the feature has at least one MS1 spectrum character [optional]}
 
-\item{\code{hasMsMs}}{If true, the feature has at lease one MS/MS spectrum character [optional]}
+\item{\code{hasMsMs}}{If true, the feature has at least one MS/MS spectrum character [optional]}
 
 \item{\code{msData}}{\link{MsData} [optional]}
 
@@ -64,9 +64,11 @@ df
 
 \item{\code{topAnnotationsDeNovo}}{\link{FeatureAnnotations} [optional]}
 
-\item{\code{computing}}{Write lock for this feature. If the feature is locked no write operations are possible.  True if any computation is modifying this feature or its results character [optional]}
+\item{\code{computing}}{Write lock for the feature. If the feature is locked no write operations are possible.  True if any computation is modifying the feature or its results. character [optional]}
 
 \item{\code{computedTools}}{\link{ComputedSubtools} [optional]}
+
+\item{\code{qualities}}{Qualities per top level quality category. named list(character) [optional]}
 
 \item{\code{tags}}{Key: tagName, value: tag named list(\link{Tag}) [optional]}
 }
@@ -115,6 +117,7 @@ Initialize a new AlignedFeature class.
   topAnnotationsDeNovo = NULL,
   computing = NULL,
   computedTools = NULL,
+  qualities = NULL,
   tags = NULL,
   ...
 )}\if{html}{\out{</div>}}
@@ -123,31 +126,31 @@ Initialize a new AlignedFeature class.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{charge}}{Ion mode (charge) this feature has been measured in.}
+\item{\code{charge}}{Ion mode (charge) the feature has been measured in.}
 
-\item{\code{detectedAdducts}}{Adducts of this feature that have been detected during preprocessing.}
+\item{\code{detectedAdducts}}{Adducts that have been detected for the feature during preprocessing.  Never empty: if no adduct could be detected, the unknown ion type matching the feature's  charge ([M+?]+ or [M+?]-) is reported instead, so every feature is filterable by adduct.}
 
-\item{\code{alignedFeatureId}}{alignedFeatureId}
+\item{\code{alignedFeatureId}}{Unique identifier of the aligned feature within the project.}
 
-\item{\code{compoundId}}{compoundId}
+\item{\code{compoundId}}{Identifier of the compound the feature belongs to.  Features that are different adducts or isotopologues of the same molecule share it.}
 
-\item{\code{name}}{name}
+\item{\code{name}}{Informative, human-readable name of the feature.}
 
 \item{\code{externalFeatureId}}{Externally provided FeatureId (e.g. by some preprocessing tool).  This FeatureId is NOT used by SIRIUS but is stored to ease mapping information back to the source.}
 
-\item{\code{ionMass}}{ionMass}
+\item{\code{ionMass}}{Mass-to-charge ratio (m/z) of the precursor ion of the feature.}
 
-\item{\code{rtStartSeconds}}{rtStartSeconds}
+\item{\code{rtStartSeconds}}{Start of the retention time range the feature was detected in, in seconds.}
 
-\item{\code{rtEndSeconds}}{rtEndSeconds}
+\item{\code{rtEndSeconds}}{End of the retention time range the feature was detected in, in seconds.}
 
-\item{\code{rtApexSeconds}}{rtApexSeconds}
+\item{\code{rtApexSeconds}}{Retention time of the intensity apex of the feature, in seconds.}
 
-\item{\code{quality}}{Quality of this feature.}
+\item{\code{quality}}{Overall quality of the feature. NOT_APPLICABLE if no quality data is available}
 
-\item{\code{hasMs1}}{If true, the feature has at lease one MS1 spectrum}
+\item{\code{hasMs1}}{If true, the feature has at least one MS1 spectrum}
 
-\item{\code{hasMsMs}}{If true, the feature has at lease one MS/MS spectrum}
+\item{\code{hasMsMs}}{If true, the feature has at least one MS/MS spectrum}
 
 \item{\code{msData}}{msData}
 
@@ -155,9 +158,11 @@ Initialize a new AlignedFeature class.
 
 \item{\code{topAnnotationsDeNovo}}{topAnnotationsDeNovo}
 
-\item{\code{computing}}{Write lock for this feature. If the feature is locked no write operations are possible.  True if any computation is modifying this feature or its results}
+\item{\code{computing}}{Write lock for the feature. If the feature is locked no write operations are possible.  True if any computation is modifying the feature or its results.}
 
 \item{\code{computedTools}}{computedTools}
+
+\item{\code{qualities}}{Qualities per top level quality category.}
 
 \item{\code{tags}}{Key: tagName, value: tag}
 

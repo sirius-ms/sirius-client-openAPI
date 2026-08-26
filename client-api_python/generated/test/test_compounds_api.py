@@ -107,12 +107,21 @@ class TestCompoundsApi(unittest.TestCase):
         self.assertEqual(len(response), 1)
         self.assertIsInstance(response[0], Compound)
 
-    def test_get_compounds_paged(self) -> None:
-        """Test case for get_compounds_paged
+    def test_get_compounds_page(self) -> None:
+        """Test case for get_compounds_page
 
         Page of available compounds (group of ion identities) in the given project-space.
         """
-        response = self.api.compounds().get_compounds_paged(self.project_id)
+        response = self.api.compounds().get_compounds_page(self.project_id)
+        self.assertIsInstance(response, PagedModelCompound)
+
+    def test_get_compounds_paged_deprecated_alias(self) -> None:
+        """The pre-API-3.2 name still works and warns.
+
+        Delete together with the alias in PySirius.pysirius_compat when the deprecation period ends.
+        """
+        with self.assertWarns(FutureWarning):
+            response = self.api.compounds().get_compounds_paged(self.project_id)
         self.assertIsInstance(response, PagedModelCompound)
 
 if __name__ == '__main__':

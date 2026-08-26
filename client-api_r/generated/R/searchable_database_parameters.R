@@ -9,7 +9,7 @@
 #' @format An \code{R6Class} generator object
 #' @field displayName display name of the database  Should be short character [optional]
 #' @field location Storage location of user database  Might be NULL for non-user databases or if default location is used. character [optional]
-#' @field matchRtOfReferenceSpectra Indicates whether this database shall be used to use retention time information for library matching.  Typically used for in-house spectral libraries that have been measured on character [optional]
+#' @field matchRtOfReferenceSpectra Indicates whether this database shall be used to use retention time information for library matching.  Typically used for in-house spectral libraries that were measured on the same  chromatographic setup as the samples being analyzed, so that retention times are comparable. character [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
 #' @export
@@ -25,7 +25,7 @@ SearchableDatabaseParameters <- R6::R6Class(
     #'
     #' @param displayName display name of the database  Should be short
     #' @param location Storage location of user database  Might be NULL for non-user databases or if default location is used.
-    #' @param matchRtOfReferenceSpectra Indicates whether this database shall be used to use retention time information for library matching.  Typically used for in-house spectral libraries that have been measured on. Default to FALSE.
+    #' @param matchRtOfReferenceSpectra Indicates whether this database shall be used to use retention time information for library matching.  Typically used for in-house spectral libraries that were measured on the same  chromatographic setup as the samples being analyzed, so that retention times are comparable.. Default to FALSE.
     #' @param ... Other optional arguments.
     initialize = function(`displayName` = NULL, `location` = NULL, `matchRtOfReferenceSpectra` = FALSE, ...) {
       if (!is.null(`displayName`)) {

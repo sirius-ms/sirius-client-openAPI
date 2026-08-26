@@ -24,13 +24,13 @@ from typing_extensions import Self
 
 class Job(BaseModel):
     """
-    Identifier created by the SIRIUS Nightsky API for a newly created Job.  Object can be enriched with Job status/progress information ({@link JobProgress JobProgress}) and/or Job command information.  This is a return value of the API. So nullable values can also be NOT_REQUIRED to allow for easy removal.
+    Identifier created by the SIRIUS Nightsky API for a newly created Job.  Object can be enriched with Job status/progress information (<code>JobProgress</code>) and/or Job command information.  This is a return value of the API. So nullable values can also be NOT_REQUIRED to allow for easy removal.
     """ # noqa: E501
     id: Optional[StrictStr] = Field(default=None, description="Unique identifier to access the job via the API")
     command: Optional[StrictStr] = Field(default=None, description="Command string of the executed Task")
     progress: Optional[JobProgress] = None
-    affected_compound_ids: Optional[List[Optional[StrictStr]]] = Field(default=None, description="List of compoundIds that are affected by this job.  This lis will also contain compoundIds where not all features of the compound are affected by the job.  If this job is creating compounds (e.g. data import jobs) this value will be NULL until the jobs has finished", alias="affectedCompoundIds")
-    affected_aligned_feature_ids: Optional[List[Optional[StrictStr]]] = Field(default=None, description="List of alignedFeatureIds that are affected by this job.  If this job is creating features (e.g. data import jobs) this value will be NULL until the jobs has finished", alias="affectedAlignedFeatureIds")
+    affected_compound_ids: Optional[List[Optional[StrictStr]]] = Field(default=None, description="List of compoundIds that are affected by this job.  This list will also contain compoundIds where not all features of the compound are affected by the job.  If this job is creating compounds (e.g. data import jobs) this value will be NULL until the job has finished", alias="affectedCompoundIds")
+    affected_aligned_feature_ids: Optional[List[Optional[StrictStr]]] = Field(default=None, description="List of alignedFeatureIds that are affected by this job.  If this job is creating features (e.g. data import jobs) this value will be NULL until the job has finished", alias="affectedAlignedFeatureIds")
     job_effect: Optional[JobEffect] = Field(default=None, alias="jobEffect")
     __properties: ClassVar[List[str]] = ["id", "command", "progress", "affectedCompoundIds", "affectedAlignedFeatureIds", "jobEffect"]
 

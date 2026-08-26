@@ -42,7 +42,7 @@ class LoginAndAccountApi:
     @validate_call
     def get_account_info(
         self,
-        include_subs: Annotated[Optional[StrictBool], Field(description="include available and active subscriptions in {@link AccountInfo AccountInfo}.")] = None,
+        include_subs: Annotated[Optional[StrictBool], Field(description="include available and active subscriptions in <code>AccountInfo</code>.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -60,7 +60,7 @@ class LoginAndAccountApi:
 
         Get information about the account currently logged in. Fails if not logged in.
 
-        :param include_subs: include available and active subscriptions in {@link AccountInfo AccountInfo}.
+        :param include_subs: include available and active subscriptions in <code>AccountInfo</code>.
         :type include_subs: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -94,6 +94,8 @@ class LoginAndAccountApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "AccountInfo",
+            '500': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -109,7 +111,7 @@ class LoginAndAccountApi:
     @validate_call
     def get_account_info_with_http_info(
         self,
-        include_subs: Annotated[Optional[StrictBool], Field(description="include available and active subscriptions in {@link AccountInfo AccountInfo}.")] = None,
+        include_subs: Annotated[Optional[StrictBool], Field(description="include available and active subscriptions in <code>AccountInfo</code>.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -127,7 +129,7 @@ class LoginAndAccountApi:
 
         Get information about the account currently logged in. Fails if not logged in.
 
-        :param include_subs: include available and active subscriptions in {@link AccountInfo AccountInfo}.
+        :param include_subs: include available and active subscriptions in <code>AccountInfo</code>.
         :type include_subs: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -161,6 +163,8 @@ class LoginAndAccountApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "AccountInfo",
+            '500': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -176,7 +180,7 @@ class LoginAndAccountApi:
     @validate_call
     def get_account_info_without_preload_content(
         self,
-        include_subs: Annotated[Optional[StrictBool], Field(description="include available and active subscriptions in {@link AccountInfo AccountInfo}.")] = None,
+        include_subs: Annotated[Optional[StrictBool], Field(description="include available and active subscriptions in <code>AccountInfo</code>.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -194,7 +198,7 @@ class LoginAndAccountApi:
 
         Get information about the account currently logged in. Fails if not logged in.
 
-        :param include_subs: include available and active subscriptions in {@link AccountInfo AccountInfo}.
+        :param include_subs: include available and active subscriptions in <code>AccountInfo</code>.
         :type include_subs: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -228,6 +232,8 @@ class LoginAndAccountApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "AccountInfo",
+            '500': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -274,7 +280,8 @@ class LoginAndAccountApi:
         if 'Accept' not in _header_params:
             _header_params['Accept'] = self.api_client.select_header_accept(
                 [
-                    'application/json'
+                    'application/json', 
+                    'application/problem+json'
                 ]
             )
 
@@ -352,6 +359,7 @@ class LoginAndAccountApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "str",
+            '500': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -415,6 +423,7 @@ class LoginAndAccountApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "str",
+            '500': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -478,6 +487,7 @@ class LoginAndAccountApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "str",
+            '500': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -519,7 +529,8 @@ class LoginAndAccountApi:
         if 'Accept' not in _header_params:
             _header_params['Accept'] = self.api_client.select_header_accept(
                 [
-                    'text/plain;charset=UTF-8'
+                    'text/plain;charset=UTF-8', 
+                    'application/problem+json'
                 ]
             )
 
@@ -597,6 +608,7 @@ class LoginAndAccountApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "List[Subscription]",
+            '500': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -660,6 +672,7 @@ class LoginAndAccountApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "List[Subscription]",
+            '500': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -723,6 +736,7 @@ class LoginAndAccountApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "List[Subscription]",
+            '500': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -764,7 +778,8 @@ class LoginAndAccountApi:
         if 'Accept' not in _header_params:
             _header_params['Accept'] = self.api_client.select_header_accept(
                 [
-                    'application/json'
+                    'application/json', 
+                    'application/problem+json'
                 ]
             )
 
@@ -842,6 +857,7 @@ class LoginAndAccountApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "bool",
+            '500': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -905,6 +921,7 @@ class LoginAndAccountApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "bool",
+            '500': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -968,6 +985,7 @@ class LoginAndAccountApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "bool",
+            '500': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1009,7 +1027,8 @@ class LoginAndAccountApi:
         if 'Accept' not in _header_params:
             _header_params['Accept'] = self.api_client.select_header_accept(
                 [
-                    'application/json'
+                    'application/json', 
+                    'application/problem+json'
                 ]
             )
 
@@ -1042,7 +1061,7 @@ class LoginAndAccountApi:
         accept_terms: StrictBool,
         account_credentials: Annotated[AccountCredentials, Field(description="used to log in.")],
         fail_when_logged_in: Annotated[Optional[StrictBool], Field(description="if true request fails if an active login already exists.")] = None,
-        include_subs: Annotated[Optional[StrictBool], Field(description="include available and active subscriptions in {@link AccountInfo AccountInfo}.")] = None,
+        include_subs: Annotated[Optional[StrictBool], Field(description="include available and active subscriptions in <code>AccountInfo</code>.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1066,7 +1085,7 @@ class LoginAndAccountApi:
         :type account_credentials: AccountCredentials
         :param fail_when_logged_in: if true request fails if an active login already exists.
         :type fail_when_logged_in: bool
-        :param include_subs: include available and active subscriptions in {@link AccountInfo AccountInfo}.
+        :param include_subs: include available and active subscriptions in <code>AccountInfo</code>.
         :type include_subs: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -1103,6 +1122,8 @@ class LoginAndAccountApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "AccountInfo",
+            '500': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1121,7 +1142,7 @@ class LoginAndAccountApi:
         accept_terms: StrictBool,
         account_credentials: Annotated[AccountCredentials, Field(description="used to log in.")],
         fail_when_logged_in: Annotated[Optional[StrictBool], Field(description="if true request fails if an active login already exists.")] = None,
-        include_subs: Annotated[Optional[StrictBool], Field(description="include available and active subscriptions in {@link AccountInfo AccountInfo}.")] = None,
+        include_subs: Annotated[Optional[StrictBool], Field(description="include available and active subscriptions in <code>AccountInfo</code>.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1145,7 +1166,7 @@ class LoginAndAccountApi:
         :type account_credentials: AccountCredentials
         :param fail_when_logged_in: if true request fails if an active login already exists.
         :type fail_when_logged_in: bool
-        :param include_subs: include available and active subscriptions in {@link AccountInfo AccountInfo}.
+        :param include_subs: include available and active subscriptions in <code>AccountInfo</code>.
         :type include_subs: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -1182,6 +1203,8 @@ class LoginAndAccountApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "AccountInfo",
+            '500': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1200,7 +1223,7 @@ class LoginAndAccountApi:
         accept_terms: StrictBool,
         account_credentials: Annotated[AccountCredentials, Field(description="used to log in.")],
         fail_when_logged_in: Annotated[Optional[StrictBool], Field(description="if true request fails if an active login already exists.")] = None,
-        include_subs: Annotated[Optional[StrictBool], Field(description="include available and active subscriptions in {@link AccountInfo AccountInfo}.")] = None,
+        include_subs: Annotated[Optional[StrictBool], Field(description="include available and active subscriptions in <code>AccountInfo</code>.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1224,7 +1247,7 @@ class LoginAndAccountApi:
         :type account_credentials: AccountCredentials
         :param fail_when_logged_in: if true request fails if an active login already exists.
         :type fail_when_logged_in: bool
-        :param include_subs: include available and active subscriptions in {@link AccountInfo AccountInfo}.
+        :param include_subs: include available and active subscriptions in <code>AccountInfo</code>.
         :type include_subs: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -1261,6 +1284,8 @@ class LoginAndAccountApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "AccountInfo",
+            '500': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1320,7 +1345,8 @@ class LoginAndAccountApi:
         if 'Accept' not in _header_params:
             _header_params['Accept'] = self.api_client.select_header_accept(
                 [
-                    'application/json'
+                    'application/json', 
+                    'application/problem+json'
                 ]
             )
 
@@ -1411,6 +1437,7 @@ class LoginAndAccountApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': None,
+            '500': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1474,6 +1501,7 @@ class LoginAndAccountApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': None,
+            '500': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1537,6 +1565,7 @@ class LoginAndAccountApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': None,
+            '500': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1649,6 +1678,7 @@ class LoginAndAccountApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': None,
+            '500': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1712,6 +1742,7 @@ class LoginAndAccountApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': None,
+            '500': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1775,6 +1806,7 @@ class LoginAndAccountApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': None,
+            '500': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1891,6 +1923,8 @@ class LoginAndAccountApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "AccountInfo",
+            '500': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1958,6 +1992,8 @@ class LoginAndAccountApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "AccountInfo",
+            '500': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2025,6 +2061,8 @@ class LoginAndAccountApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "AccountInfo",
+            '500': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2071,7 +2109,8 @@ class LoginAndAccountApi:
         if 'Accept' not in _header_params:
             _header_params['Accept'] = self.api_client.select_header_accept(
                 [
-                    'application/json'
+                    'application/json', 
+                    'application/problem+json'
                 ]
             )
 
@@ -2149,6 +2188,7 @@ class LoginAndAccountApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "str",
+            '500': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2212,6 +2252,7 @@ class LoginAndAccountApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "str",
+            '500': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2275,6 +2316,7 @@ class LoginAndAccountApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "str",
+            '500': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2316,7 +2358,8 @@ class LoginAndAccountApi:
         if 'Accept' not in _header_params:
             _header_params['Accept'] = self.api_client.select_header_accept(
                 [
-                    'text/plain;charset=UTF-8'
+                    'text/plain;charset=UTF-8', 
+                    'application/problem+json'
                 ]
             )
 

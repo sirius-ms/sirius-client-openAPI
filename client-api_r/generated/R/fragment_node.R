@@ -9,7 +9,7 @@
 #' @format An \code{R6Class} generator object
 #' @field fragmentId  integer [optional]
 #' @field molecularFormula neutral molecular formula of the fragment without adduct character [optional]
-#' @field adduct This combines the ionization plus adduct of the fragment. In contrast to the {@link FragmentationTree FragmentationTree}s adduct,  this adduct may not include any in-source loss. character [optional]
+#' @field adduct This combines the ionization plus adduct of the fragment. In contrast to the <code>FragmentationTree</code>'s adduct,  this adduct may not include any in-source loss. character [optional]
 #' @field massDeviationDa  numeric [optional]
 #' @field massDeviationPpm  numeric [optional]
 #' @field score  numeric [optional]
@@ -35,7 +35,7 @@ FragmentNode <- R6::R6Class(
     #'
     #' @param fragmentId fragmentId
     #' @param molecularFormula neutral molecular formula of the fragment without adduct
-    #' @param adduct This combines the ionization plus adduct of the fragment. In contrast to the {@link FragmentationTree FragmentationTree}s adduct,  this adduct may not include any in-source loss.
+    #' @param adduct This combines the ionization plus adduct of the fragment. In contrast to the <code>FragmentationTree</code>'s adduct,  this adduct may not include any in-source loss.
     #' @param massDeviationDa massDeviationDa
     #' @param massDeviationPpm massDeviationPpm
     #' @param score score

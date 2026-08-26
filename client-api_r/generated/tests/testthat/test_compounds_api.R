@@ -131,8 +131,8 @@ test_that("GetCompounds", {
   })
 })
 
-test_that("GetCompoundsPaged", {
-  # tests for GetCompoundsPaged
+test_that("GetCompoundsPage", {
+  # tests for GetCompoundsPage
   # base path: http://localhost:8080
   # Page of available compounds (group of ion identities) in the given project-space.
   # Page of available compounds (group of ion identities) in the given project-space.
@@ -146,11 +146,31 @@ test_that("GetCompoundsPaged", {
 
   tryCatch({
 
-    project_id <- "GetCompoundsPaged"
+    project_id <- "GetCompoundsPage"
     project_dir <- paste(Sys.getenv("HOME"), paste0(project_id, ".sirius"), sep = "/")
     projects_api$CreateProject(project_id, project_dir)
 
-    response <- api_instance$GetCompoundsPaged(project_id)
+    response <- api_instance$GetCompoundsPage(project_id)
+    expect_true(inherits(response, "PagedModelCompound"))
+
+  }, finally = {
+
+    projects_api$CloseProject(project_id)
+    unlink(project_dir, recursive = TRUE)
+
+  })
+})
+test_that("GetCompoundsPaged (deprecated alias)", {
+  # the pre-API-3.2 name must keep working for one release; delete together with the alias in
+  # rsirius_compat.R when the deprecation period ends
+
+  tryCatch({
+
+    project_id <- "GetCompoundsPagedAlias"
+    project_dir <- paste(Sys.getenv("HOME"), paste0(project_id, ".sirius"), sep = "/")
+    projects_api$CreateProject(project_id, project_dir)
+
+    expect_warning(response <- api_instance$GetCompoundsPaged(project_id), "renamed")
     expect_true(inherits(response, "PagedModelCompound"))
 
   }, finally = {

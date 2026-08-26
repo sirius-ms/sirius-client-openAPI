@@ -34,7 +34,7 @@ df
 \describe{
 \item{\code{licenseInfo}}{\link{LicenseInfo}}
 
-\item{\code{errors}}{List of errors ordered by significance. first error should be reported and addressed first.  Following errors might just be follow-up errors list(\link{ConnectionError})}
+\item{\code{errors}}{List of errors ordered by significance. First error should be reported and addressed first.  Following errors might just be follow-up errors list(\link{ConnectionError})}
 }
 \if{html}{\out{</div>}}
 }
@@ -70,7 +70,7 @@ Initialize a new ConnectionCheck class.
 \describe{
 \item{\code{licenseInfo}}{licenseInfo}
 
-\item{\code{errors}}{List of errors ordered by significance. first error should be reported and addressed first.  Following errors might just be follow-up errors}
+\item{\code{errors}}{List of errors ordered by significance. First error should be reported and addressed first.  Following errors might just be follow-up errors}
 
 \item{\code{...}}{Other optional arguments.}
 }

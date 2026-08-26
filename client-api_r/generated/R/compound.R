@@ -7,12 +7,12 @@
 #' @title Compound
 #' @description Compound Class
 #' @format An \code{R6Class} generator object
-#' @field compoundId uid of this compound Entity character [optional]
+#' @field compoundId Unique id of the compound entity. character [optional]
 #' @field name Some (optional) human-readable name character [optional]
-#' @field rtStartSeconds The merged/consensus retention time start (earliest rt) of this compound numeric [optional]
-#' @field rtEndSeconds The merged/consensus retention time end (latest rt) of this compound numeric [optional]
-#' @field neutralMass Neutral mass of this compound. Ion masse minus the mass of the assigned adduct of each feature of  this compound should result in the same neutral mass numeric [optional]
-#' @field features List of aligned features (adducts) that belong to the same (this) compound list(\link{AlignedFeature}) [optional]
+#' @field rtStartSeconds The merged/consensus retention time start (earliest rt) of the compound numeric [optional]
+#' @field rtEndSeconds The merged/consensus retention time end (latest rt) of the compound numeric [optional]
+#' @field neutralMass Neutral mass of the compound. Ion mass minus the mass of the assigned adduct of each feature of  the compound should result in the same neutral mass numeric [optional]
+#' @field features List of aligned features (adducts) that belong to the compound list(\link{AlignedFeature}) [optional]
 #' @field consensusAnnotations  \link{ConsensusAnnotationsCSI} [optional]
 #' @field consensusAnnotationsDeNovo  \link{ConsensusAnnotationsDeNovo} [optional]
 #' @field customAnnotations  \link{ConsensusAnnotationsCSI} [optional]
@@ -37,12 +37,12 @@ Compound <- R6::R6Class(
     #' @description
     #' Initialize a new Compound class.
     #'
-    #' @param compoundId uid of this compound Entity
+    #' @param compoundId Unique id of the compound entity.
     #' @param name Some (optional) human-readable name
-    #' @param rtStartSeconds The merged/consensus retention time start (earliest rt) of this compound
-    #' @param rtEndSeconds The merged/consensus retention time end (latest rt) of this compound
-    #' @param neutralMass Neutral mass of this compound. Ion masse minus the mass of the assigned adduct of each feature of  this compound should result in the same neutral mass
-    #' @param features List of aligned features (adducts) that belong to the same (this) compound
+    #' @param rtStartSeconds The merged/consensus retention time start (earliest rt) of the compound
+    #' @param rtEndSeconds The merged/consensus retention time end (latest rt) of the compound
+    #' @param neutralMass Neutral mass of the compound. Ion mass minus the mass of the assigned adduct of each feature of  the compound should result in the same neutral mass
+    #' @param features List of aligned features (adducts) that belong to the compound
     #' @param consensusAnnotations consensusAnnotations
     #' @param consensusAnnotationsDeNovo consensusAnnotationsDeNovo
     #' @param customAnnotations customAnnotations

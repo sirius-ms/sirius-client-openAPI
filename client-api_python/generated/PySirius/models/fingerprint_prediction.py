@@ -22,11 +22,11 @@ from typing_extensions import Self
 
 class FingerprintPrediction(BaseModel):
     """
-    User/developer friendly parameter subset for the CSI:FingerID Fingerprint tool  Needs results from Formula/SIRIUS Tool
+    User/developer friendly parameter subset for the CSI:FingerID Fingerprint tool  Needs results from the Formula identification tool (Sirius).
     """ # noqa: E501
-    enabled: Optional[StrictBool] = Field(default=None, description="tags whether the tool is enabled")
+    enabled: Optional[StrictBool] = Field(default=None, description="Indicates whether the tool is enabled.")
     use_score_threshold: Optional[StrictBool] = Field(default=None, description="If true, an adaptive soft threshold will be applied to only compute Fingerprints for promising formula candidates  Enabling is highly recommended.", alias="useScoreThreshold")
-    always_predict_high_ref_matches: Optional[StrictBool] = Field(default=None, description="If true Fingerprint/Classes/Structures will be predicted for formulas candidates with  reference spectrum similarity > Sirius.minReferenceMatchScoreToInject will be predicted no matter which  score threshold rules apply.  If NULL default value will be used.", alias="alwaysPredictHighRefMatches")
+    always_predict_high_ref_matches: Optional[StrictBool] = Field(default=None, description="If true, fingerprints, compound classes and structures will be predicted for formula candidates whose  reference spectrum similarity is above Sirius.minReferenceMatchScoreToInject, no matter which  score threshold rules would otherwise apply.  If NULL default value will be used.", alias="alwaysPredictHighRefMatches")
     __properties: ClassVar[List[str]] = ["enabled", "useScoreThreshold", "alwaysPredictHighRefMatches"]
 
     model_config = ConfigDict(

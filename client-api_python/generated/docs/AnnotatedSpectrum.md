@@ -6,7 +6,7 @@ Spectrum model with peak annotations based on the fragmentation tree and Epimeth
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**name** | **str** | Optional Displayable name of this spectrum. | [optional] 
+**name** | **str** | Optional display name of this spectrum. | [optional] 
 **ms_level** | **int** | MS level of the measured spectrum.  Artificial spectra with no msLevel (e.g. Simulated Isotope patterns) use null or zero | [optional] 
 **collision_energy** | **str** | Collision energy used for MS/MS spectra  Null for spectra where collision energy is not applicable | [optional] 
 **instrument** | **str** | Instrument information. | [optional] 
@@ -15,7 +15,7 @@ Name | Type | Description | Notes
 **cosine_query** | **bool** | True if spectrum is in cosine query normalized format.  Such spectrum is compatible with SpectralLibraryMatch peak assignments to reference spectra. | [default to False]
 **precursor_peak** | [**SimplePeak**](SimplePeak.md) |  | [optional] 
 **peaks** | [**List[AnnotatedPeak]**](AnnotatedPeak.md) | The peaks of this spectrum which might contain additional annotations such as molecular formulas. | 
-**abs_intensity_factor** | **float** | Factor to convert relative intensities to absolute intensities.  Might be null or 1 for spectra where absolute intensities are not available (E.g. artificial or merged spectra)  &lt;p&gt;  DEPRECATED: Spectra are always returned with raw intensities.  Use provided normalization factors to normalize on the fly. | [optional] 
+**abs_intensity_factor** | **float** | Factor to convert relative intensities to absolute intensities.  Might be null or 1 for spectra where absolute intensities are not available (e.g. artificial or merged spectra)  &lt;p&gt;  DEPRECATED: Spectra are always returned with raw intensities.  Use provided normalization factors to normalize on the fly. | [optional] 
 **max_norm_factor** | **float** | Factor to convert absolute intensities to MAX norm. | [optional] 
 **sum_norm_factor** | **float** | Factor to convert absolute intensities to SUM norm. | [optional] 
 **l2_norm_factor** | **float** | Factor to convert absolute intensities to L2 (Euclidean) norm. | [optional] 

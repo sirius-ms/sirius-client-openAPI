@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **import_ms_runs** | **bool** |  | [optional] 
 **import_peak_lists** | **bool** |  | [optional] 
 **import_cef** | **bool** |  | [optional] 
+**transformation_products** | **bool** |  | [optional] 
 
 ## Example
 

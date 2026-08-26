@@ -44,7 +44,7 @@ df
 
 \item{\code{id}}{Unique id of the class. Might be undefined for certain classification ontologies. integer [optional]}
 
-\item{\code{probability}}{prediction probability numeric [optional]}
+\item{\code{probability}}{Prediction probability. numeric [optional]}
 
 \item{\code{index}}{Absolute index of this property in the predicted vector/embedding integer [optional]}
 
@@ -108,7 +108,7 @@ Initialize a new CompoundClass class.
 
 \item{\code{id}}{Unique id of the class. Might be undefined for certain classification ontologies.}
 
-\item{\code{probability}}{prediction probability}
+\item{\code{probability}}{Prediction probability.}
 
 \item{\code{index}}{Absolute index of this property in the predicted vector/embedding}
 

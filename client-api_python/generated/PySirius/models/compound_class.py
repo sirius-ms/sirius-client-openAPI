@@ -31,7 +31,7 @@ class CompoundClass(BaseModel):
     name: Optional[StrictStr] = Field(default=None, description="Name of the compound class.")
     description: Optional[StrictStr] = Field(default=None, description="Description of the compound class.")
     id: Optional[StrictInt] = Field(default=None, description="Unique id of the class. Might be undefined for certain classification ontologies.")
-    probability: Optional[float] = Field(default=None, description="prediction probability")
+    probability: Optional[float] = Field(default=None, description="Prediction probability.")
     index: Optional[StrictInt] = Field(default=None, description="Absolute index of this property in the predicted vector/embedding")
     parent_id: Optional[StrictInt] = Field(default=None, description="Unique id of the parent class. Might be undefined for certain classification ontologies.", alias="parentId")
     parent_name: Optional[StrictStr] = Field(default=None, description="Name of the parent compound class.", alias="parentName")

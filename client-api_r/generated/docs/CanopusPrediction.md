@@ -1,6 +1,6 @@
 # RSirius::CanopusPrediction
 
-Container class that holds the CANOPUS compound class predictions for alle predictable compound classes.  This is the full CANOPUS result.
+Container class that holds the CANOPUS compound class predictions for all predictable compound classes.  This is the full CANOPUS result.
 
 ## Properties
 Name | Type | Description | Notes

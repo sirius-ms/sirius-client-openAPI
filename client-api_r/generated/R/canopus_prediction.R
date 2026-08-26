@@ -1,7 +1,7 @@
 #' Create a new CanopusPrediction
 #'
 #' @description
-#' Container class that holds the CANOPUS compound class predictions for alle predictable compound classes.  This is the full CANOPUS result.
+#' Container class that holds the CANOPUS compound class predictions for all predictable compound classes.  This is the full CANOPUS result.
 #'
 #' @docType class
 #' @title CanopusPrediction

@@ -11,7 +11,7 @@
 #' @field lipidMapsId LIPID MAPS id of the predicted lipid class. character [optional]
 #' @field lipidClassName Human-readable name of the predicted lipid class. character [optional]
 #' @field hypotheticalStructure Hypothetical molecular structure of the predicted lipid species as SMILES.  NULL if hypothetical structure not available. character [optional]
-#' @field chainsUnknown True of the formula composition of the chains could not be determined from the MS/MS. character [optional]
+#' @field chainsUnknown True if the formula composition of the chains could not be determined from the MS/MS. character [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
 #' @export
@@ -31,7 +31,7 @@ LipidAnnotation <- R6::R6Class(
     #' @param lipidMapsId LIPID MAPS id of the predicted lipid class.
     #' @param lipidClassName Human-readable name of the predicted lipid class.
     #' @param hypotheticalStructure Hypothetical molecular structure of the predicted lipid species as SMILES.  NULL if hypothetical structure not available.
-    #' @param chainsUnknown True of the formula composition of the chains could not be determined from the MS/MS.
+    #' @param chainsUnknown True if the formula composition of the chains could not be determined from the MS/MS.
     #' @param ... Other optional arguments.
     initialize = function(`lipidSpecies` = NULL, `lipidMapsId` = NULL, `lipidClassName` = NULL, `hypotheticalStructure` = NULL, `chainsUnknown` = NULL, ...) {
       if (!is.null(`lipidSpecies`)) {

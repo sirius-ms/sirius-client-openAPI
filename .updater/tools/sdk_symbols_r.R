@@ -87,6 +87,28 @@ for (path in args) {
   }
   exprs <- parse(path, keep.source = FALSE)
   for (e in exprs) {
+    # members added to an existing generator after the fact: Generator$set("public", "Name", fn).
+    # The deprecated aliases in rsirius_compat.R are declared this way, and they are public surface
+    # like any other method, so the snapshot has to contain them.
+    if (is.call(e) && is.call(e[[1L]]) && identical(as.character(e[[1L]][[1L]]), "$") &&
+        identical(as.character(e[[1L]][[3L]]), "set")) {
+      target <- paste(deparse(e[[1L]][[2L]]), collapse = "")
+      a <- as.list(e)[-1L]
+      if (length(a) >= 3L && identical(as.character(a[[1L]]), "public") &&
+          is.character(a[[2L]]) && is_function_def(a[[3L]])) {
+        nm <- as.character(a[[2L]])
+        d <- call_details(a[[3L]])
+        if (is.null(classes[[target]])) {
+          classes[[target]] <- list(name = target, file = basename(path),
+                                    methods = list(), fields = list())
+        }
+        classes[[target]]$methods[[nm]] <- list(
+          params = formals_of(a[[3L]]),
+          path = d$path, http_method = d$http_method, delegates_to = d$delegates_to
+        )
+      }
+      next
+    }
     if (!is.call(e) || !as.character(e[[1L]])[[1L]] %in% c("<-", "=")) next
     lhs <- e[[2L]]
     rhs <- e[[3L]]

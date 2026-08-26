@@ -158,6 +158,14 @@ jobs:
           multi_reporter = MultiReporter$new(reporters=list(SummaryReporter$new(), FailReporter$new()))
           test_file("client-api_r/generated/tests/testthat/test_compounds_api.R", reporter=multi_reporter)
         shell: Rscript {0}
+      - name: Test API client (no server needed)
+        if: always() && steps.rsirius_install.outcome == 'success'
+        run: |
+          library(RSirius)
+          library(testthat)
+          multi_reporter = MultiReporter$new(reporters=list(SummaryReporter$new(), FailReporter$new()))
+          test_file("client-api_r/generated/tests/testthat/test_api_client.R", reporter=multi_reporter)
+        shell: Rscript {0}
       - name: Test Databases API
         if: always() && steps.api_start.outcome == 'success' && steps.rsirius_install.outcome == 'success' && steps.login.outcome == 'success'
         run: |

@@ -27,16 +27,16 @@ class StructureCandidateFormula(BaseModel):
     """
     StructureCandidateFormula
     """ # noqa: E501
-    inchi_key: Optional[StrictStr] = Field(default=None, alias="inchiKey")
+    inchi_key: Optional[StrictStr] = Field(default=None, description="InChIKey of the structure candidate.  Searching with a full 27 character key matches its 2D (skeleton) part, so stereoisomers of the  searched structure are found alike.", alias="inchiKey")
     smiles: Optional[StrictStr] = None
-    structure_name: Optional[StrictStr] = Field(default=None, alias="structureName")
+    structure_name: Optional[StrictStr] = Field(default=None, description="Name of the structure candidate.  Searching also resolves the searched term as a PubChem synonym, so a structure is found by any  of its common names.", alias="structureName")
     structure_svg: Optional[StrictStr] = Field(default=None, description="SVG graphics of the structure candidate  OPTIONAL: needs to be added by parameter", alias="structureSvg")
-    db_links: Optional[List[Optional[DBLink]]] = Field(default=None, description="List of structure database links belonging to this structure candidate  OPTIONAL: needs to be added by parameter", alias="dbLinks")
-    spectral_library_matches: Optional[List[Optional[SpectralLibraryMatch]]] = Field(default=None, description="List of spectral library matches belonging to this structure candidate  OPTIONAL: needs to be added by parameter", alias="spectralLibraryMatches")
+    db_links: Optional[List[Optional[DBLink]]] = Field(default=None, description="List of structure database links belonging to the structure candidate  OPTIONAL: needs to be added by parameter", alias="dbLinks")
+    spectral_library_matches: Optional[List[Optional[SpectralLibraryMatch]]] = Field(default=None, description="List of spectral library matches belonging to the structure candidate  OPTIONAL: needs to be added by parameter", alias="spectralLibraryMatches")
     xlog_p: Optional[float] = Field(default=None, alias="xlogP")
-    rank: Optional[StrictInt] = Field(default=None, description="the overall rank of this candidate among all candidates of this feature")
+    rank: Optional[StrictInt] = Field(default=None, description="The overall rank of this candidate among all candidates of this feature.")
     csi_score: Optional[float] = Field(default=None, description="CSI:FingerID score of the fingerprint of this compound to the predicted fingerprint of CSI:FingerID  This is the score used for ranking structure candidates", alias="csiScore")
-    tanimoto_similarity: Optional[float] = Field(default=None, description="Tanimoto similarly of the fingerprint of this compound to the predicted fingerprint of CSI:FingerID", alias="tanimotoSimilarity")
+    tanimoto_similarity: Optional[float] = Field(default=None, description="Tanimoto similarity of the fingerprint of this compound to the predicted fingerprint of CSI:FingerID", alias="tanimotoSimilarity")
     mces_dist_to_top_hit: Optional[float] = Field(default=None, description="Maximum Common Edge Subgraph (MCES) distance to the top scoring hit (CSI:FingerID) in a candidate list.", alias="mcesDistToTopHit")
     fingerprint: Optional[BinaryFingerprint] = None
     molecular_formula: Optional[StrictStr] = Field(default=None, description="Molecular formula of this candidate", alias="molecularFormula")

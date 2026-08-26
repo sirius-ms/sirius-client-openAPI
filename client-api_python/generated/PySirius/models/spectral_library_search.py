@@ -25,8 +25,8 @@ class SpectralLibrarySearch(BaseModel):
     """
     User/developer friendly parameter subset for the Spectral library search tool.
     """ # noqa: E501
-    enabled: Optional[StrictBool] = Field(default=None, description="tags whether the tool is enabled")
-    spectra_search_dbs: Optional[List[Optional[StrictStr]]] = Field(default=None, description="Structure Databases with Reference spectra to search in.  <p>  Defaults to BIO + Custom Databases. Possible values are available to Database API.", alias="spectraSearchDBs")
+    enabled: Optional[StrictBool] = Field(default=None, description="Indicates whether the tool is enabled.")
+    spectra_search_dbs: Optional[List[Optional[StrictStr]]] = Field(default=None, description="Structure Databases with Reference spectra to search in.  <p>  Defaults to BIO + Custom Databases. Possible values are available via the Database API.", alias="spectraSearchDBs")
     precursor_deviation_ppm: Optional[float] = Field(default=None, description="Maximum allowed mass deviation in ppm for matching the precursor. If not specified, the same value as for the peaks is used.", alias="precursorDeviationPpm")
     min_similarity: Optional[float] = Field(default=None, description="Minimal spectral similarity of a spectral match to be considered a hit.", alias="minSimilarity")
     min_num_of_peaks: Optional[StrictInt] = Field(default=None, description="Minimal number of matching peaks of a spectral match to be considered a hit.", alias="minNumOfPeaks")

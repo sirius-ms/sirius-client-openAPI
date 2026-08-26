@@ -8,7 +8,7 @@
 An \code{R6Class} generator object
 }
 \description{
-User/developer friendly parameter subset for the CANOPUS tool  CANOPUS is parameter free, so this Object is just a flag that canopus should be executed.  Needs results from FingerprintPrediction Tool
+User/developer friendly parameter subset for the CANOPUS tool  CANOPUS is parameter-free, so this object is just a flag that CANOPUS should be executed.  Needs results from the FingerprintPrediction tool.
 
 Canopus Class
 }
@@ -32,7 +32,7 @@ df
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{enabled}}{tags whether the tool is enabled character [optional]}
+\item{\code{enabled}}{Indicates whether the tool is enabled. character [optional]}
 }
 \if{html}{\out{</div>}}
 }
@@ -66,7 +66,7 @@ Initialize a new Canopus class.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{enabled}}{tags whether the tool is enabled}
+\item{\code{enabled}}{Indicates whether the tool is enabled.}
 
 \item{\code{...}}{Other optional arguments.}
 }

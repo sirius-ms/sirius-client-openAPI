@@ -8,7 +8,7 @@
 An \code{R6Class} generator object
 }
 \description{
-User/developer friendly parameter subset for the CSI:FingerID structure db search tool.  Needs results from FingerprintPrediction and Canopus Tool.  Non-Null parameters in this Object well override their equivalent value in the config map.
+User/developer friendly parameter subset for the CSI:FingerID structure db search tool.  Needs results from the FingerprintPrediction and CANOPUS tools.  Non-null parameters in this object override their equivalent value in the config map.
 
 StructureDbSearch Class
 }
@@ -32,9 +32,9 @@ df
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{enabled}}{tags whether the tool is enabled character [optional]}
+\item{\code{enabled}}{Indicates whether the tool is enabled. character [optional]}
 
-\item{\code{structureSearchDBs}}{Structure databases to search in, If expansive search is enabled this DB selection will be expanded to PubChem  if not high confidence hit was found in the selected databases.  <p>  Defaults to BIO + Custom Databases. Possible values are available to Database API. list(character) [optional]}
+\item{\code{structureSearchDBs}}{Structure databases to search in, If expansive search is enabled this DB selection will be expanded to PubChem  if no high confidence hit was found in the selected databases.  <p>  Defaults to BIO + Custom Databases. Possible values are available via the Database API. list(character) [optional]}
 
 \item{\code{tagStructuresWithLipidClass}}{Candidates matching the lipid class estimated by El Gordo will be tagged.  The lipid class will only be available if El Gordo predicts that the MS/MS is a lipid spectrum.  If this parameter is set to 'false' El Gordo will still be executed and e.g. improve the fragmentation  tree, but the matching structure candidates will not be tagged if they match lipid class. character [optional]}
 
@@ -78,9 +78,9 @@ Initialize a new StructureDbSearch class.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{enabled}}{tags whether the tool is enabled}
+\item{\code{enabled}}{Indicates whether the tool is enabled.}
 
-\item{\code{structureSearchDBs}}{Structure databases to search in, If expansive search is enabled this DB selection will be expanded to PubChem  if not high confidence hit was found in the selected databases.  <p>  Defaults to BIO + Custom Databases. Possible values are available to Database API.}
+\item{\code{structureSearchDBs}}{Structure databases to search in, If expansive search is enabled this DB selection will be expanded to PubChem  if no high confidence hit was found in the selected databases.  <p>  Defaults to BIO + Custom Databases. Possible values are available via the Database API.}
 
 \item{\code{tagStructuresWithLipidClass}}{Candidates matching the lipid class estimated by El Gordo will be tagged.  The lipid class will only be available if El Gordo predicts that the MS/MS is a lipid spectrum.  If this parameter is set to 'false' El Gordo will still be executed and e.g. improve the fragmentation  tree, but the matching structure candidates will not be tagged if they match lipid class.}
 

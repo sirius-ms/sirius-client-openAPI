@@ -29,14 +29,14 @@ class Info(BaseModel):
     sirius_version: Optional[StrictStr] = Field(default=None, description="Version of the SIRIUS application", alias="siriusVersion")
     latest_sirius_version: Optional[StrictStr] = Field(default=None, description="Latest available Version of the SIRIUS application", alias="latestSiriusVersion")
     latest_sirius_link: Optional[StrictStr] = Field(default=None, description="Link to the latest available Version of the SIRIUS application", alias="latestSiriusLink")
-    update_available: Optional[StrictBool] = Field(default=None, description="true if newer SIRIUS version is available", alias="updateAvailable")
+    update_available: Optional[StrictBool] = Field(default=None, description="True if a newer SIRIUS version is available.", alias="updateAvailable")
     sirius_lib_version: Optional[StrictStr] = Field(default=None, description="Version of the SIRIUS libraries", alias="siriusLibVersion")
     finger_id_lib_version: Optional[StrictStr] = Field(default=None, description="Version of the CSI:FingerID libraries", alias="fingerIdLibVersion")
     chem_db_version: Optional[StrictStr] = Field(default=None, description="Version of the Chemical Database available via SIRIUS web services", alias="chemDbVersion")
     finger_id_model_version: Optional[StrictStr] = Field(default=None, description="Version of the Machine learning models used for Fingerprint, Compound Class and Structure Prediction  Not available if web service is not reachable.", alias="fingerIdModelVersion")
     fingerprint_id: Optional[StrictStr] = Field(default=None, description="Version of the Molecular Fingerprint used by SIRIUS", alias="fingerprintId")
     available_ilp_solvers: List[Solver] = Field(description="Set of solvers that are configured correctly and can be loaded", alias="availableILPSolvers")
-    supported_ilp_solvers: Dict[str, StrictStr] = Field(description="Set of ILP Solvers that are Supported and their version information", alias="supportedILPSolvers")
+    supported_ilp_solvers: Dict[str, StrictStr] = Field(description="Set of ILP solvers that are supported, and their version information", alias="supportedILPSolvers")
     __properties: ClassVar[List[str]] = ["nightSkyApiVersion", "siriusVersion", "latestSiriusVersion", "latestSiriusLink", "updateAvailable", "siriusLibVersion", "fingerIdLibVersion", "chemDbVersion", "fingerIdModelVersion", "fingerprintId", "availableILPSolvers", "supportedILPSolvers"]
 
     model_config = ConfigDict(

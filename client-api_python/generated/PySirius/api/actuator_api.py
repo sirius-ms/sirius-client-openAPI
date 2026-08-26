@@ -84,6 +84,7 @@ class ActuatorApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "object",
+            '500': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -146,6 +147,7 @@ class ActuatorApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "object",
+            '500': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -208,6 +210,7 @@ class ActuatorApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "object",
+            '500': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -251,7 +254,8 @@ class ActuatorApi:
                 [
                     'application/vnd.spring-boot.actuator.v3+json', 
                     'application/vnd.spring-boot.actuator.v2+json', 
-                    'application/json'
+                    'application/json', 
+                    'application/problem+json'
                 ]
             )
 
@@ -329,6 +333,7 @@ class ActuatorApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '204': None,
             '400': None,
+            '500': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -392,6 +397,7 @@ class ActuatorApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '204': None,
             '400': None,
+            '500': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -455,6 +461,7 @@ class ActuatorApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '204': None,
             '400': None,
+            '500': None,
         }
         response_data = self.api_client.call_api(
             *_param,

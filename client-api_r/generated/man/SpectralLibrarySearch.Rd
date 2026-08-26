@@ -32,9 +32,9 @@ df
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{enabled}}{tags whether the tool is enabled character [optional]}
+\item{\code{enabled}}{Indicates whether the tool is enabled. character [optional]}
 
-\item{\code{spectraSearchDBs}}{Structure Databases with Reference spectra to search in.  <p>  Defaults to BIO + Custom Databases. Possible values are available to Database API. list(character) [optional]}
+\item{\code{spectraSearchDBs}}{Structure Databases with Reference spectra to search in.  <p>  Defaults to BIO + Custom Databases. Possible values are available via the Database API. list(character) [optional]}
 
 \item{\code{precursorDeviationPpm}}{Maximum allowed mass deviation in ppm for matching the precursor. If not specified, the same value as for the peaks is used. numeric [optional]}
 
@@ -48,7 +48,7 @@ df
 
 \item{\code{minNumOfPeaksAnalogue}}{Minimal number of matching peaks of a spectral match to be considered an analogue hit. integer [optional]}
 
-\item{\code{scoring}}{NO LONGER SUPPORTED (IGNORED)  Specify scoring method to match spectra  INTENSITY: Intensity weighted. Each peak matches at most one peak in the other spectrum.  GAUSSIAN: Treat peaks as (un-normalized) Gaussians and score overlapping areas of PDFs. Each peak might score against multiple peaks in the other spectrum.  MODIFIED_COSINE:  This algorithm requires that there is at most one pair of peaks (u,v) where the m/z of u and v are within the allowed mass tolerance. To be used for analog search with different precursor masses. character [optional]}
+\item{\code{scoring}}{NO LONGER SUPPORTED (IGNORED)  Specify scoring method to match spectra  INTENSITY: Intensity weighted. Each peak matches at most one peak in the other spectrum.  GAUSSIAN: Treat peaks as (un-normalized) Gaussians and score overlapping areas of PDFs. Each peak might score against multiple peaks in the other spectrum.  MODIFIED_COSINE: This algorithm requires that there is at most one pair of peaks (u,v) where the m/z of u and v are within the allowed mass tolerance. To be used for analog search with different precursor masses. character [optional]}
 
 \item{\code{peakDeviationPpm}}{NO LONGER SUPPORTED (IGNORED)  Maximum allowed mass deviation in ppm for matching peaks. numeric [optional]}
 }
@@ -96,9 +96,9 @@ Initialize a new SpectralLibrarySearch class.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{enabled}}{tags whether the tool is enabled}
+\item{\code{enabled}}{Indicates whether the tool is enabled.}
 
-\item{\code{spectraSearchDBs}}{Structure Databases with Reference spectra to search in.  <p>  Defaults to BIO + Custom Databases. Possible values are available to Database API.}
+\item{\code{spectraSearchDBs}}{Structure Databases with Reference spectra to search in.  <p>  Defaults to BIO + Custom Databases. Possible values are available via the Database API.}
 
 \item{\code{precursorDeviationPpm}}{Maximum allowed mass deviation in ppm for matching the precursor. If not specified, the same value as for the peaks is used.}
 
@@ -112,7 +112,7 @@ Initialize a new SpectralLibrarySearch class.
 
 \item{\code{minNumOfPeaksAnalogue}}{Minimal number of matching peaks of a spectral match to be considered an analogue hit.}
 
-\item{\code{scoring}}{NO LONGER SUPPORTED (IGNORED)  Specify scoring method to match spectra  INTENSITY: Intensity weighted. Each peak matches at most one peak in the other spectrum.  GAUSSIAN: Treat peaks as (un-normalized) Gaussians and score overlapping areas of PDFs. Each peak might score against multiple peaks in the other spectrum.  MODIFIED_COSINE:  This algorithm requires that there is at most one pair of peaks (u,v) where the m/z of u and v are within the allowed mass tolerance. To be used for analog search with different precursor masses.}
+\item{\code{scoring}}{NO LONGER SUPPORTED (IGNORED)  Specify scoring method to match spectra  INTENSITY: Intensity weighted. Each peak matches at most one peak in the other spectrum.  GAUSSIAN: Treat peaks as (un-normalized) Gaussians and score overlapping areas of PDFs. Each peak might score against multiple peaks in the other spectrum.  MODIFIED_COSINE: This algorithm requires that there is at most one pair of peaks (u,v) where the m/z of u and v are within the allowed mass tolerance. To be used for analog search with different precursor masses.}
 
 \item{\code{peakDeviationPpm}}{NO LONGER SUPPORTED (IGNORED)  Maximum allowed mass deviation in ppm for matching peaks.}
 

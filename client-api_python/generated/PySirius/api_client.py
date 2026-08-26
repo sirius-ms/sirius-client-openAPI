@@ -89,7 +89,7 @@ class ApiClient:
             self.default_headers[header_name] = header_value
         self.cookie = cookie
         # Set default User-Agent.
-        self.user_agent = 'OpenAPI-Generator/6.3.12/python'
+        self.user_agent = 'OpenAPI-Generator/6.5.4/python'
         self.client_side_validation = configuration.client_side_validation
 
     def __enter__(self):
@@ -580,17 +580,25 @@ class ApiClient:
     def select_header_accept(self, accepts: List[str]) -> Optional[str]:
         """Returns `Accept` based on an array of accepts provided.
 
+        The stock implementation returns the first media type containing "json", which picks
+        `application/problem+json` for every operation that does not return JSON on success: SIRIUS
+        documents its RFC 7807 error body on all of them, so the CSV and text/plain endpoints ended
+        up asking the server for the error format and got HTTP 406 back. An error-only media type is
+        therefore never preferred; it is only used when the operation offers nothing else.
+
         :param accepts: List of headers.
         :return: Accept (e.g. application/json).
         """
         if not accepts:
             return None
 
-        for accept in accepts:
+        candidates = [a for a in accepts if 'problem+json' not in a.lower()] or list(accepts)
+
+        for accept in candidates:
             if re.search('json', accept, re.IGNORECASE):
                 return accept
 
-        return accepts[0]
+        return candidates[0]
 
     def select_header_content_type(self, content_types):
         """Returns `Content-Type` based on an array of content_types provided.

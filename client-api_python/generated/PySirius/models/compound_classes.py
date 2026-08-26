@@ -28,8 +28,8 @@ class CompoundClasses(BaseModel):
     npc_pathway: Optional[CompoundClass] = Field(default=None, alias="npcPathway")
     npc_superclass: Optional[CompoundClass] = Field(default=None, alias="npcSuperclass")
     npc_class: Optional[CompoundClass] = Field(default=None, alias="npcClass")
-    classy_fire_lineage: Optional[List[Optional[CompoundClass]]] = Field(default=None, description="Most likely ClassyFire lineage from ordered from least specific to most specific class  classyFireLineage.get(classyFireLineage.size() - 1) gives the most specific ClassyFire compound class annotation", alias="classyFireLineage")
-    classy_fire_alternatives: Optional[List[Optional[CompoundClass]]] = Field(default=None, description="Alternative ClassyFire classes with high probability that do not fit into the linage", alias="classyFireAlternatives")
+    classy_fire_lineage: Optional[List[Optional[CompoundClass]]] = Field(default=None, description="Most likely ClassyFire lineage, ordered from least specific to most specific class  classyFireLineage.get(classyFireLineage.size() - 1) gives the most specific ClassyFire compound class annotation", alias="classyFireLineage")
+    classy_fire_alternatives: Optional[List[Optional[CompoundClass]]] = Field(default=None, description="Alternative ClassyFire classes with high probability that do not fit into the lineage", alias="classyFireAlternatives")
     __properties: ClassVar[List[str]] = ["npcPathway", "npcSuperclass", "npcClass", "classyFireLineage", "classyFireAlternatives"]
 
     model_config = ConfigDict(

@@ -28,7 +28,7 @@ class LipidAnnotation(BaseModel):
     lipid_maps_id: Optional[StrictStr] = Field(default=None, description="LIPID MAPS id of the predicted lipid class.", alias="lipidMapsId")
     lipid_class_name: Optional[StrictStr] = Field(default=None, description="Human-readable name of the predicted lipid class.", alias="lipidClassName")
     hypothetical_structure: Optional[StrictStr] = Field(default=None, description="Hypothetical molecular structure of the predicted lipid species as SMILES.  NULL if hypothetical structure not available.", alias="hypotheticalStructure")
-    chains_unknown: Optional[StrictBool] = Field(default=None, description="True of the formula composition of the chains could not be determined from the MS/MS.", alias="chainsUnknown")
+    chains_unknown: Optional[StrictBool] = Field(default=None, description="True if the formula composition of the chains could not be determined from the MS/MS.", alias="chainsUnknown")
     __properties: ClassVar[List[str]] = ["lipidSpecies", "lipidMapsId", "lipidClassName", "hypotheticalStructure", "chainsUnknown"]
 
     model_config = ConfigDict(

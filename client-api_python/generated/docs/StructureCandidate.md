@@ -5,12 +5,12 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**inchi_key** | **str** |  | [optional] 
+**inchi_key** | **str** | InChIKey of the structure candidate.  Searching with a full 27 character key matches its 2D (skeleton) part, so stereoisomers of the  searched structure are found alike. | [optional] 
 **smiles** | **str** |  | [optional] 
-**structure_name** | **str** |  | [optional] 
+**structure_name** | **str** | Name of the structure candidate.  Searching also resolves the searched term as a PubChem synonym, so a structure is found by any  of its common names. | [optional] 
 **structure_svg** | **str** | SVG graphics of the structure candidate  OPTIONAL: needs to be added by parameter | [optional] 
-**db_links** | [**List[DBLink]**](DBLink.md) | List of structure database links belonging to this structure candidate  OPTIONAL: needs to be added by parameter | [optional] 
-**spectral_library_matches** | [**List[SpectralLibraryMatch]**](SpectralLibraryMatch.md) | List of spectral library matches belonging to this structure candidate  OPTIONAL: needs to be added by parameter | [optional] 
+**db_links** | [**List[DBLink]**](DBLink.md) | List of structure database links belonging to the structure candidate  OPTIONAL: needs to be added by parameter | [optional] 
+**spectral_library_matches** | [**List[SpectralLibraryMatch]**](SpectralLibraryMatch.md) | List of spectral library matches belonging to the structure candidate  OPTIONAL: needs to be added by parameter | [optional] 
 **xlog_p** | **float** |  | [optional] 
 
 ## Example

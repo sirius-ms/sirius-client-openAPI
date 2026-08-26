@@ -36,7 +36,7 @@ class FeatureImport(BaseModel):
     rt_apex_seconds: Optional[float] = Field(default=None, alias="rtApexSeconds")
     data_quality: Optional[DataQuality] = Field(default=None, alias="dataQuality")
     merged_ms1: Optional[BasicSpectrum] = Field(default=None, alias="mergedMs1")
-    ms1_spectra: Optional[List[Optional[BasicSpectrum]]] = Field(default=None, description="List of MS1Spectra belonging to this feature. These spectra will be merged an only a representative  mergedMs1 spectrum will be stored in SIRIUS. At least one of these spectra should contain the  isotope pattern of the precursor ion.  Note: Will be ignored if 'mergedMs1' is given.", alias="ms1Spectra")
+    ms1_spectra: Optional[List[Optional[BasicSpectrum]]] = Field(default=None, description="List of MS1Spectra belonging to this feature. These spectra will be merged and only a representative  mergedMs1 spectrum will be stored in SIRIUS. At least one of these spectra should contain the  isotope pattern of the precursor ion.  Note: Will be ignored if 'mergedMs1' is given.", alias="ms1Spectra")
     ms2_spectra: Optional[List[Optional[BasicSpectrum]]] = Field(default=None, description="List of MS/MS spectra that belong to this feature.", alias="ms2Spectra")
     __properties: ClassVar[List[str]] = ["name", "externalFeatureId", "ionMass", "charge", "detectedAdducts", "rtStartSeconds", "rtEndSeconds", "rtApexSeconds", "dataQuality", "mergedMs1", "ms1Spectra", "ms2Spectra"]
 

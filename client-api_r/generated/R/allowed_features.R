@@ -13,6 +13,7 @@
 #' @field importMSRuns  character [optional]
 #' @field importPeakLists  character [optional]
 #' @field importCef  character [optional]
+#' @field transformationProducts  character [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
 #' @export
@@ -25,6 +26,7 @@ AllowedFeatures <- R6::R6Class(
     `importMSRuns` = NULL,
     `importPeakLists` = NULL,
     `importCef` = NULL,
+    `transformationProducts` = NULL,
 
     #' @description
     #' Initialize a new AllowedFeatures class.
@@ -35,8 +37,9 @@ AllowedFeatures <- R6::R6Class(
     #' @param importMSRuns importMSRuns
     #' @param importPeakLists importPeakLists
     #' @param importCef importCef
+    #' @param transformationProducts transformationProducts
     #' @param ... Other optional arguments.
-    initialize = function(`cli` = NULL, `api` = NULL, `deNovo` = NULL, `importMSRuns` = NULL, `importPeakLists` = NULL, `importCef` = NULL, ...) {
+    initialize = function(`cli` = NULL, `api` = NULL, `deNovo` = NULL, `importMSRuns` = NULL, `importPeakLists` = NULL, `importCef` = NULL, `transformationProducts` = NULL, ...) {
       if (!is.null(`cli`)) {
         if (!(is.logical(`cli`) && length(`cli`) == 1)) {
           stop(paste("Error! Invalid data for `cli`. Must be a boolean:", `cli`))
@@ -72,6 +75,12 @@ AllowedFeatures <- R6::R6Class(
           stop(paste("Error! Invalid data for `importCef`. Must be a boolean:", `importCef`))
         }
         self$`importCef` <- `importCef`
+      }
+      if (!is.null(`transformationProducts`)) {
+        if (!(is.logical(`transformationProducts`) && length(`transformationProducts`) == 1)) {
+          stop(paste("Error! Invalid data for `transformationProducts`. Must be a boolean:", `transformationProducts`))
+        }
+        self$`transformationProducts` <- `transformationProducts`
       }
     },
 
@@ -130,6 +139,10 @@ AllowedFeatures <- R6::R6Class(
         AllowedFeaturesObject[["importCef"]] <-
           self$`importCef`
       }
+      if (!is.null(self$`transformationProducts`)) {
+        AllowedFeaturesObject[["transformationProducts"]] <-
+          self$`transformationProducts`
+      }
       return(AllowedFeaturesObject)
     },
 
@@ -158,6 +171,9 @@ AllowedFeatures <- R6::R6Class(
       if (!is.null(this_object$`importCef`)) {
         self$`importCef` <- this_object$`importCef`
       }
+      if (!is.null(this_object$`transformationProducts`)) {
+        self$`transformationProducts` <- this_object$`transformationProducts`
+      }
       self
     },
 
@@ -185,6 +201,7 @@ AllowedFeatures <- R6::R6Class(
       self$`importMSRuns` <- this_object$`importMSRuns`
       self$`importPeakLists` <- this_object$`importPeakLists`
       self$`importCef` <- this_object$`importCef`
+      self$`transformationProducts` <- this_object$`transformationProducts`
       self
     },
 

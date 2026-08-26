@@ -29,26 +29,27 @@ class AlignedFeature(BaseModel):
     """
     The AlignedFeature contains the ID of a feature (aligned over runs) together with some read-only information  that might be displayed in some summary view.
     """ # noqa: E501
-    aligned_feature_id: Optional[StrictStr] = Field(default=None, alias="alignedFeatureId")
-    compound_id: Optional[StrictStr] = Field(default=None, alias="compoundId")
-    name: Optional[StrictStr] = None
+    aligned_feature_id: Optional[StrictStr] = Field(default=None, description="Unique identifier of the aligned feature within the project.", alias="alignedFeatureId")
+    compound_id: Optional[StrictStr] = Field(default=None, description="Identifier of the compound the feature belongs to.  Features that are different adducts or isotopologues of the same molecule share it.", alias="compoundId")
+    name: Optional[StrictStr] = Field(default=None, description="Informative, human-readable name of the feature.")
     external_feature_id: Optional[StrictStr] = Field(default=None, description="Externally provided FeatureId (e.g. by some preprocessing tool).  This FeatureId is NOT used by SIRIUS but is stored to ease mapping information back to the source.", alias="externalFeatureId")
-    ion_mass: Optional[float] = Field(default=None, alias="ionMass")
-    charge: StrictInt = Field(description="Ion mode (charge) this feature has been measured in.")
-    detected_adducts: List[StrictStr] = Field(description="Adducts of this feature that have been detected during preprocessing.", alias="detectedAdducts")
-    rt_start_seconds: Optional[float] = Field(default=None, alias="rtStartSeconds")
-    rt_end_seconds: Optional[float] = Field(default=None, alias="rtEndSeconds")
-    rt_apex_seconds: Optional[float] = Field(default=None, alias="rtApexSeconds")
+    ion_mass: Optional[float] = Field(default=None, description="Mass-to-charge ratio (m/z) of the precursor ion of the feature.", alias="ionMass")
+    charge: StrictInt = Field(description="Ion mode (charge) the feature has been measured in.")
+    detected_adducts: List[StrictStr] = Field(description="Adducts that have been detected for the feature during preprocessing.  Never empty: if no adduct could be detected, the unknown ion type matching the feature's  charge ([M+?]+ or [M+?]-) is reported instead, so every feature is filterable by adduct.", alias="detectedAdducts")
+    rt_start_seconds: Optional[float] = Field(default=None, description="Start of the retention time range the feature was detected in, in seconds.", alias="rtStartSeconds")
+    rt_end_seconds: Optional[float] = Field(default=None, description="End of the retention time range the feature was detected in, in seconds.", alias="rtEndSeconds")
+    rt_apex_seconds: Optional[float] = Field(default=None, description="Retention time of the intensity apex of the feature, in seconds.", alias="rtApexSeconds")
     quality: Optional[DataQuality] = None
-    has_ms1: Optional[StrictBool] = Field(default=None, description="If true, the feature has at lease one MS1 spectrum", alias="hasMs1")
-    has_ms_ms: Optional[StrictBool] = Field(default=None, description="If true, the feature has at lease one MS/MS spectrum", alias="hasMsMs")
+    has_ms1: Optional[StrictBool] = Field(default=None, description="If true, the feature has at least one MS1 spectrum", alias="hasMs1")
+    has_ms_ms: Optional[StrictBool] = Field(default=None, description="If true, the feature has at least one MS/MS spectrum", alias="hasMsMs")
     ms_data: Optional[MsData] = Field(default=None, alias="msData")
     top_annotations: Optional[FeatureAnnotations] = Field(default=None, alias="topAnnotations")
     top_annotations_de_novo: Optional[FeatureAnnotations] = Field(default=None, alias="topAnnotationsDeNovo")
-    computing: Optional[StrictBool] = Field(default=None, description="Write lock for this feature. If the feature is locked no write operations are possible.  True if any computation is modifying this feature or its results")
+    computing: Optional[StrictBool] = Field(default=None, description="Write lock for the feature. If the feature is locked no write operations are possible.  True if any computation is modifying the feature or its results.")
     computed_tools: Optional[ComputedSubtools] = Field(default=None, alias="computedTools")
+    qualities: Optional[Dict[str, Optional[DataQuality]]] = Field(default=None, description="Qualities per top level quality category.")
     tags: Optional[Dict[str, Optional[Tag]]] = Field(default=None, description="Key: tagName, value: tag")
-    __properties: ClassVar[List[str]] = ["alignedFeatureId", "compoundId", "name", "externalFeatureId", "ionMass", "charge", "detectedAdducts", "rtStartSeconds", "rtEndSeconds", "rtApexSeconds", "quality", "hasMs1", "hasMsMs", "msData", "topAnnotations", "topAnnotationsDeNovo", "computing", "computedTools", "tags"]
+    __properties: ClassVar[List[str]] = ["alignedFeatureId", "compoundId", "name", "externalFeatureId", "ionMass", "charge", "detectedAdducts", "rtStartSeconds", "rtEndSeconds", "rtApexSeconds", "quality", "hasMs1", "hasMsMs", "msData", "topAnnotations", "topAnnotationsDeNovo", "computing", "computedTools", "qualities", "tags"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -148,6 +149,11 @@ class AlignedFeature(BaseModel):
         if self.computed_tools is None and "computed_tools" in self.model_fields_set:
             _dict['computedTools'] = None
 
+        # set to None if qualities (nullable) is None
+        # and model_fields_set contains the field
+        if self.qualities is None and "qualities" in self.model_fields_set:
+            _dict['qualities'] = None
+
         # set to None if tags (nullable) is None
         # and model_fields_set contains the field
         if self.tags is None and "tags" in self.model_fields_set:
@@ -183,6 +189,7 @@ class AlignedFeature(BaseModel):
             "topAnnotationsDeNovo": FeatureAnnotations.from_dict(obj["topAnnotationsDeNovo"]) if obj.get("topAnnotationsDeNovo") is not None else None,
             "computing": obj.get("computing"),
             "computedTools": ComputedSubtools.from_dict(obj["computedTools"]) if obj.get("computedTools") is not None else None,
+            "qualities": dict((_k, _v) for _k, _v in obj.get("qualities").items()) if obj.get("qualities") is not None else None,
             "tags": dict(
                 (_k, Tag.from_dict(_v))
                 for _k, _v in obj["tags"].items()

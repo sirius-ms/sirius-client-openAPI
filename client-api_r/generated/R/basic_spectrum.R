@@ -7,7 +7,7 @@
 #' @title BasicSpectrum
 #' @description BasicSpectrum Class
 #' @format An \code{R6Class} generator object
-#' @field name Optional Displayable name of this spectrum. character [optional]
+#' @field name Optional display name of this spectrum. character [optional]
 #' @field msLevel MS level of the measured spectrum.  Artificial spectra with no msLevel (e.g. Simulated Isotope patterns) use null or zero integer [optional]
 #' @field collisionEnergy Collision energy used for MS/MS spectra  Null for spectra where collision energy is not applicable character [optional]
 #' @field instrument Instrument information. character [optional]
@@ -16,7 +16,7 @@
 #' @field cosineQuery True if spectrum is in cosine query normalized format.  Such spectrum is compatible with SpectralLibraryMatch peak assignments to reference spectra. character
 #' @field precursorPeak  \link{SimplePeak} [optional]
 #' @field peaks The peaks of this spectrum which might contain additional annotations such as molecular formulas. list(\link{SimplePeak})
-#' @field absIntensityFactor Factor to convert relative intensities to absolute intensities.  Might be null or 1 for spectra where absolute intensities are not available (E.g. artificial or merged spectra)  <p>  DEPRECATED: Spectra are always returned with raw intensities.  Use provided normalization factors to normalize on the fly. numeric [optional]
+#' @field absIntensityFactor Factor to convert relative intensities to absolute intensities.  Might be null or 1 for spectra where absolute intensities are not available (e.g. artificial or merged spectra)  <p>  DEPRECATED: Spectra are always returned with raw intensities.  Use provided normalization factors to normalize on the fly. numeric [optional]
 #' @field maxNormFactor Factor to convert absolute intensities to MAX norm. numeric [optional]
 #' @field sumNormFactor Factor to convert absolute intensities to SUM norm. numeric [optional]
 #' @field l2NormFactor Factor to convert absolute intensities to L2 (Euclidean) norm. numeric [optional]
@@ -47,14 +47,14 @@ BasicSpectrum <- R6::R6Class(
     #'
     #' @param cosineQuery True if spectrum is in cosine query normalized format.  Such spectrum is compatible with SpectralLibraryMatch peak assignments to reference spectra.
     #' @param peaks The peaks of this spectrum which might contain additional annotations such as molecular formulas.
-    #' @param name Optional Displayable name of this spectrum.
+    #' @param name Optional display name of this spectrum.
     #' @param msLevel MS level of the measured spectrum.  Artificial spectra with no msLevel (e.g. Simulated Isotope patterns) use null or zero
     #' @param collisionEnergy Collision energy used for MS/MS spectra  Null for spectra where collision energy is not applicable
     #' @param instrument Instrument information.
     #' @param precursorMz Precursor m/z of the MS/MS spectrum  Null for spectra where precursor m/z is not applicable
     #' @param scanNumber Scan number of the spectrum.  Might be null for artificial spectra with no scan number (e.g. Simulated Isotope patterns or merged spectra)
     #' @param precursorPeak precursorPeak
-    #' @param absIntensityFactor Factor to convert relative intensities to absolute intensities.  Might be null or 1 for spectra where absolute intensities are not available (E.g. artificial or merged spectra)  <p>  DEPRECATED: Spectra are always returned with raw intensities.  Use provided normalization factors to normalize on the fly.
+    #' @param absIntensityFactor Factor to convert relative intensities to absolute intensities.  Might be null or 1 for spectra where absolute intensities are not available (e.g. artificial or merged spectra)  <p>  DEPRECATED: Spectra are always returned with raw intensities.  Use provided normalization factors to normalize on the fly.
     #' @param maxNormFactor Factor to convert absolute intensities to MAX norm.
     #' @param sumNormFactor Factor to convert absolute intensities to SUM norm.
     #' @param l2NormFactor Factor to convert absolute intensities to L2 (Euclidean) norm.

@@ -26,12 +26,12 @@ class StructureCandidate(BaseModel):
     """
     StructureCandidate
     """ # noqa: E501
-    inchi_key: Optional[StrictStr] = Field(default=None, alias="inchiKey")
+    inchi_key: Optional[StrictStr] = Field(default=None, description="InChIKey of the structure candidate.  Searching with a full 27 character key matches its 2D (skeleton) part, so stereoisomers of the  searched structure are found alike.", alias="inchiKey")
     smiles: Optional[StrictStr] = None
-    structure_name: Optional[StrictStr] = Field(default=None, alias="structureName")
+    structure_name: Optional[StrictStr] = Field(default=None, description="Name of the structure candidate.  Searching also resolves the searched term as a PubChem synonym, so a structure is found by any  of its common names.", alias="structureName")
     structure_svg: Optional[StrictStr] = Field(default=None, description="SVG graphics of the structure candidate  OPTIONAL: needs to be added by parameter", alias="structureSvg")
-    db_links: Optional[List[Optional[DBLink]]] = Field(default=None, description="List of structure database links belonging to this structure candidate  OPTIONAL: needs to be added by parameter", alias="dbLinks")
-    spectral_library_matches: Optional[List[Optional[SpectralLibraryMatch]]] = Field(default=None, description="List of spectral library matches belonging to this structure candidate  OPTIONAL: needs to be added by parameter", alias="spectralLibraryMatches")
+    db_links: Optional[List[Optional[DBLink]]] = Field(default=None, description="List of structure database links belonging to the structure candidate  OPTIONAL: needs to be added by parameter", alias="dbLinks")
+    spectral_library_matches: Optional[List[Optional[SpectralLibraryMatch]]] = Field(default=None, description="List of spectral library matches belonging to the structure candidate  OPTIONAL: needs to be added by parameter", alias="spectralLibraryMatches")
     xlog_p: Optional[float] = Field(default=None, alias="xlogP")
     __properties: ClassVar[List[str]] = ["inchiKey", "smiles", "structureName", "structureSvg", "dbLinks", "spectralLibraryMatches", "xlogP"]
 

@@ -26,12 +26,12 @@ from typing_extensions import Self
 
 class Zodiac(BaseModel):
     """
-    User/developer friendly parameter subset for the ZODIAC tool (Network base molecular formula re-ranking).  Needs results from Formula/SIRIUS Tool
+    User/developer friendly parameter subset for the ZODIAC tool (network-based molecular formula re-ranking).  Needs results from the Formula/SIRIUS tool.
     """ # noqa: E501
-    enabled: Optional[StrictBool] = Field(default=None, description="tags whether the tool is enabled")
+    enabled: Optional[StrictBool] = Field(default=None, description="Indicates whether the tool is enabled.")
     considered_candidates_at300_mz: Optional[StrictInt] = Field(default=None, description="Maximum number of candidate molecular formulas (fragmentation trees computed by SIRIUS) per compound which are considered by ZODIAC for compounds below 300 m/z.", alias="consideredCandidatesAt300Mz")
     considered_candidates_at800_mz: Optional[StrictInt] = Field(default=None, description="Maximum number of candidate molecular formulas (fragmentation trees computed by SIRIUS) per compound which are considered by ZODIAC for compounds above 800 m/z.", alias="consideredCandidatesAt800Mz")
-    run_in_two_steps: Optional[StrictBool] = Field(default=None, description="As default ZODIAC runs a 2-step approach. First running 'good quality compounds' only, and afterwards including the remaining.", alias="runInTwoSteps")
+    run_in_two_steps: Optional[StrictBool] = Field(default=None, description="By default, ZODIAC runs a 2-step approach: first running only 'good quality compounds', and afterwards including the remaining ones.", alias="runInTwoSteps")
     edge_filter_thresholds: Optional[ZodiacEdgeFilterThresholds] = Field(default=None, alias="edgeFilterThresholds")
     gibbs_sampler_parameters: Optional[ZodiacEpochs] = Field(default=None, alias="gibbsSamplerParameters")
     library_search_anchors: Optional[ZodiacLibraryScoring] = Field(default=None, alias="librarySearchAnchors")

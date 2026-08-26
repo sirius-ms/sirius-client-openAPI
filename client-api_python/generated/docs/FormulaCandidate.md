@@ -7,7 +7,7 @@ Molecular formula candidate that holds a unique identifier (molecular formula + 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **formula_id** | **str** | Unique identifier of this formula candidate | [optional] 
-**molecular_formula** | **str** | molecular formula of this formula candidate | [optional] 
+**molecular_formula** | **str** | Molecular formula of this formula candidate. | [optional] 
 **adduct** | **str** | Adduct of this formula candidate | [optional] 
 **rank** | **int** |  | [optional] 
 **sirius_score_normalized** | **float** | Normalized Sirius Score of the formula candidate.  If NULL result is not available | [optional] 

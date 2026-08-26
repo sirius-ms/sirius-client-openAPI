@@ -38,9 +38,9 @@ df
 
 \item{\code{npcClass}}{\link{CompoundClass} [optional]}
 
-\item{\code{classyFireLineage}}{Most likely ClassyFire lineage from ordered from least specific to most specific class  classyFireLineage.get(classyFireLineage.size() - 1) gives the most specific ClassyFire compound class annotation list(\link{CompoundClass}) [optional]}
+\item{\code{classyFireLineage}}{Most likely ClassyFire lineage, ordered from least specific to most specific class  classyFireLineage.get(classyFireLineage.size() - 1) gives the most specific ClassyFire compound class annotation list(\link{CompoundClass}) [optional]}
 
-\item{\code{classyFireAlternatives}}{Alternative ClassyFire classes with high probability that do not fit into the linage list(\link{CompoundClass}) [optional]}
+\item{\code{classyFireAlternatives}}{Alternative ClassyFire classes with high probability that do not fit into the lineage list(\link{CompoundClass}) [optional]}
 }
 \if{html}{\out{</div>}}
 }
@@ -87,9 +87,9 @@ Initialize a new CompoundClasses class.
 
 \item{\code{npcClass}}{npcClass}
 
-\item{\code{classyFireLineage}}{Most likely ClassyFire lineage from ordered from least specific to most specific class  classyFireLineage.get(classyFireLineage.size() - 1) gives the most specific ClassyFire compound class annotation}
+\item{\code{classyFireLineage}}{Most likely ClassyFire lineage, ordered from least specific to most specific class  classyFireLineage.get(classyFireLineage.size() - 1) gives the most specific ClassyFire compound class annotation}
 
-\item{\code{classyFireAlternatives}}{Alternative ClassyFire classes with high probability that do not fit into the linage}
+\item{\code{classyFireAlternatives}}{Alternative ClassyFire classes with high probability that do not fit into the lineage}
 
 \item{\code{...}}{Other optional arguments.}
 }

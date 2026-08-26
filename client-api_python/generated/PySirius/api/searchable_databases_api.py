@@ -42,7 +42,7 @@ class SearchableDatabasesApi:
     @validate_call
     def add_databases(
         self,
-        request_body: List[StrictStr],
+        request_body: Annotated[List[StrictStr], Field(description="local file paths of the database files (.siriusdb) to register. Each must exist,                         must not already be registered, and its name must not collide with an existing                         database.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -58,8 +58,9 @@ class SearchableDatabasesApi:
     ) -> List[SearchableDatabase]:
         """(Deprecated) [DEPRECATED] This endpoint is based on local file paths and will likely be replaced in future versions of this API.
 
+        Register existing custom database files with this SIRIUS instance, so that they become searchable.  <p>  Use this to make databases that already exist on disk available again, for example after reinstalling  SIRIUS or when sharing a database file with a colleague. The files are opened in place, not copied.
 
-        :param request_body: (required)
+        :param request_body: local file paths of the database files (.siriusdb) to register. Each must exist,                         must not already be registered, and its name must not collide with an existing                         database. (required)
         :type request_body: List[str]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -94,6 +95,8 @@ class SearchableDatabasesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "List[SearchableDatabase]",
+            '500': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -109,7 +112,7 @@ class SearchableDatabasesApi:
     @validate_call
     def add_databases_with_http_info(
         self,
-        request_body: List[StrictStr],
+        request_body: Annotated[List[StrictStr], Field(description="local file paths of the database files (.siriusdb) to register. Each must exist,                         must not already be registered, and its name must not collide with an existing                         database.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -125,8 +128,9 @@ class SearchableDatabasesApi:
     ) -> ApiResponse[List[SearchableDatabase]]:
         """(Deprecated) [DEPRECATED] This endpoint is based on local file paths and will likely be replaced in future versions of this API.
 
+        Register existing custom database files with this SIRIUS instance, so that they become searchable.  <p>  Use this to make databases that already exist on disk available again, for example after reinstalling  SIRIUS or when sharing a database file with a colleague. The files are opened in place, not copied.
 
-        :param request_body: (required)
+        :param request_body: local file paths of the database files (.siriusdb) to register. Each must exist,                         must not already be registered, and its name must not collide with an existing                         database. (required)
         :type request_body: List[str]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -161,6 +165,8 @@ class SearchableDatabasesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "List[SearchableDatabase]",
+            '500': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -176,7 +182,7 @@ class SearchableDatabasesApi:
     @validate_call
     def add_databases_without_preload_content(
         self,
-        request_body: List[StrictStr],
+        request_body: Annotated[List[StrictStr], Field(description="local file paths of the database files (.siriusdb) to register. Each must exist,                         must not already be registered, and its name must not collide with an existing                         database.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -192,8 +198,9 @@ class SearchableDatabasesApi:
     ) -> RESTResponseType:
         """(Deprecated) [DEPRECATED] This endpoint is based on local file paths and will likely be replaced in future versions of this API.
 
+        Register existing custom database files with this SIRIUS instance, so that they become searchable.  <p>  Use this to make databases that already exist on disk available again, for example after reinstalling  SIRIUS or when sharing a database file with a colleague. The files are opened in place, not copied.
 
-        :param request_body: (required)
+        :param request_body: local file paths of the database files (.siriusdb) to register. Each must exist,                         must not already be registered, and its name must not collide with an existing                         database. (required)
         :type request_body: List[str]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -228,6 +235,8 @@ class SearchableDatabasesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "List[SearchableDatabase]",
+            '500': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -273,7 +282,8 @@ class SearchableDatabasesApi:
         if 'Accept' not in _header_params:
             _header_params['Accept'] = self.api_client.select_header_accept(
                 [
-                    'application/json'
+                    'application/json', 
+                    'application/problem+json'
                 ]
             )
 
@@ -316,8 +326,8 @@ class SearchableDatabasesApi:
     @validate_call
     def create_database(
         self,
-        database_id: Annotated[str, Field(strict=True)],
-        searchable_database_parameters: Optional[SearchableDatabaseParameters] = None,
+        database_id: Annotated[str, Field(strict=True, description="id of the new database. Must be URL-safe, that is letters, digits, '-' and '_' only,                     and must not be in use by another database.")],
+        searchable_database_parameters: Annotated[Optional[SearchableDatabaseParameters], Field(description="optional settings for the new database. If omitted, the database is created in the                     default custom database directory with default settings. Supply a location to place                     the database file elsewhere, a displayName for the user interface, and                     matchRtOfReferenceSpectra for in-house libraries whose retention times are comparable                     to the measured samples.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -331,12 +341,13 @@ class SearchableDatabasesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> SearchableDatabase:
-        """create_database
+        """Create a new, empty custom database
 
+        Create a new, empty custom database.  <p>  The new database is created on disk and registered with this SIRIUS instance, so it can immediately be  used as a search parameter and imported into via the import endpoint. It contains no structures and no  reference spectra until something is imported.
 
-        :param database_id: (required)
+        :param database_id: id of the new database. Must be URL-safe, that is letters, digits, '-' and '_' only,                     and must not be in use by another database. (required)
         :type database_id: str
-        :param searchable_database_parameters:
+        :param searchable_database_parameters: optional settings for the new database. If omitted, the database is created in the                     default custom database directory with default settings. Supply a location to place                     the database file elsewhere, a displayName for the user interface, and                     matchRtOfReferenceSpectra for in-house libraries whose retention times are comparable                     to the measured samples.
         :type searchable_database_parameters: SearchableDatabaseParameters
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -371,6 +382,9 @@ class SearchableDatabasesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "SearchableDatabase",
+            '500': "ProblemDetail",
+            '400': "ProblemDetail",
+            '409': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -386,8 +400,8 @@ class SearchableDatabasesApi:
     @validate_call
     def create_database_with_http_info(
         self,
-        database_id: Annotated[str, Field(strict=True)],
-        searchable_database_parameters: Optional[SearchableDatabaseParameters] = None,
+        database_id: Annotated[str, Field(strict=True, description="id of the new database. Must be URL-safe, that is letters, digits, '-' and '_' only,                     and must not be in use by another database.")],
+        searchable_database_parameters: Annotated[Optional[SearchableDatabaseParameters], Field(description="optional settings for the new database. If omitted, the database is created in the                     default custom database directory with default settings. Supply a location to place                     the database file elsewhere, a displayName for the user interface, and                     matchRtOfReferenceSpectra for in-house libraries whose retention times are comparable                     to the measured samples.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -401,12 +415,13 @@ class SearchableDatabasesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[SearchableDatabase]:
-        """create_database
+        """Create a new, empty custom database
 
+        Create a new, empty custom database.  <p>  The new database is created on disk and registered with this SIRIUS instance, so it can immediately be  used as a search parameter and imported into via the import endpoint. It contains no structures and no  reference spectra until something is imported.
 
-        :param database_id: (required)
+        :param database_id: id of the new database. Must be URL-safe, that is letters, digits, '-' and '_' only,                     and must not be in use by another database. (required)
         :type database_id: str
-        :param searchable_database_parameters:
+        :param searchable_database_parameters: optional settings for the new database. If omitted, the database is created in the                     default custom database directory with default settings. Supply a location to place                     the database file elsewhere, a displayName for the user interface, and                     matchRtOfReferenceSpectra for in-house libraries whose retention times are comparable                     to the measured samples.
         :type searchable_database_parameters: SearchableDatabaseParameters
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -441,6 +456,9 @@ class SearchableDatabasesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "SearchableDatabase",
+            '500': "ProblemDetail",
+            '400': "ProblemDetail",
+            '409': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -456,8 +474,8 @@ class SearchableDatabasesApi:
     @validate_call
     def create_database_without_preload_content(
         self,
-        database_id: Annotated[str, Field(strict=True)],
-        searchable_database_parameters: Optional[SearchableDatabaseParameters] = None,
+        database_id: Annotated[str, Field(strict=True, description="id of the new database. Must be URL-safe, that is letters, digits, '-' and '_' only,                     and must not be in use by another database.")],
+        searchable_database_parameters: Annotated[Optional[SearchableDatabaseParameters], Field(description="optional settings for the new database. If omitted, the database is created in the                     default custom database directory with default settings. Supply a location to place                     the database file elsewhere, a displayName for the user interface, and                     matchRtOfReferenceSpectra for in-house libraries whose retention times are comparable                     to the measured samples.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -471,12 +489,13 @@ class SearchableDatabasesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """create_database
+        """Create a new, empty custom database
 
+        Create a new, empty custom database.  <p>  The new database is created on disk and registered with this SIRIUS instance, so it can immediately be  used as a search parameter and imported into via the import endpoint. It contains no structures and no  reference spectra until something is imported.
 
-        :param database_id: (required)
+        :param database_id: id of the new database. Must be URL-safe, that is letters, digits, '-' and '_' only,                     and must not be in use by another database. (required)
         :type database_id: str
-        :param searchable_database_parameters:
+        :param searchable_database_parameters: optional settings for the new database. If omitted, the database is created in the                     default custom database directory with default settings. Supply a location to place                     the database file elsewhere, a displayName for the user interface, and                     matchRtOfReferenceSpectra for in-house libraries whose retention times are comparable                     to the measured samples.
         :type searchable_database_parameters: SearchableDatabaseParameters
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -511,6 +530,9 @@ class SearchableDatabasesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "SearchableDatabase",
+            '500': "ProblemDetail",
+            '400': "ProblemDetail",
+            '409': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -558,7 +580,8 @@ class SearchableDatabasesApi:
         if 'Accept' not in _header_params:
             _header_params['Accept'] = self.api_client.select_header_accept(
                 [
-                    'application/json'
+                    'application/json', 
+                    'application/problem+json'
                 ]
             )
 
@@ -601,8 +624,8 @@ class SearchableDatabasesApi:
     @validate_call
     def get_custom_databases(
         self,
-        include_stats: Optional[StrictBool] = None,
-        include_with_errors: Optional[StrictBool] = None,
+        include_stats: Annotated[Optional[StrictBool], Field(description="if true, the number of structures, formulas and reference spectra is included                           per database. Slower, since the database files have to be read.")] = None,
+        include_with_errors: Annotated[Optional[StrictBool], Field(description="if true, databases that could not be loaded are listed as well, carrying the                           reason in their errorMessage field.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -616,12 +639,13 @@ class SearchableDatabasesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> List[SearchableDatabase]:
-        """get_custom_databases
+        """List only the custom databases, that is the structure databases and spectral libraries the user has  created or added.
 
+        List only the custom databases, that is the structure databases and spectral libraries the user has  created or added. These are the databases that can be modified and imported into.
 
-        :param include_stats:
+        :param include_stats: if true, the number of structures, formulas and reference spectra is included                           per database. Slower, since the database files have to be read.
         :type include_stats: bool
-        :param include_with_errors:
+        :param include_with_errors: if true, databases that could not be loaded are listed as well, carrying the                           reason in their errorMessage field.
         :type include_with_errors: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -656,6 +680,8 @@ class SearchableDatabasesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "List[SearchableDatabase]",
+            '500': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -671,8 +697,8 @@ class SearchableDatabasesApi:
     @validate_call
     def get_custom_databases_with_http_info(
         self,
-        include_stats: Optional[StrictBool] = None,
-        include_with_errors: Optional[StrictBool] = None,
+        include_stats: Annotated[Optional[StrictBool], Field(description="if true, the number of structures, formulas and reference spectra is included                           per database. Slower, since the database files have to be read.")] = None,
+        include_with_errors: Annotated[Optional[StrictBool], Field(description="if true, databases that could not be loaded are listed as well, carrying the                           reason in their errorMessage field.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -686,12 +712,13 @@ class SearchableDatabasesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[List[SearchableDatabase]]:
-        """get_custom_databases
+        """List only the custom databases, that is the structure databases and spectral libraries the user has  created or added.
 
+        List only the custom databases, that is the structure databases and spectral libraries the user has  created or added. These are the databases that can be modified and imported into.
 
-        :param include_stats:
+        :param include_stats: if true, the number of structures, formulas and reference spectra is included                           per database. Slower, since the database files have to be read.
         :type include_stats: bool
-        :param include_with_errors:
+        :param include_with_errors: if true, databases that could not be loaded are listed as well, carrying the                           reason in their errorMessage field.
         :type include_with_errors: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -726,6 +753,8 @@ class SearchableDatabasesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "List[SearchableDatabase]",
+            '500': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -741,8 +770,8 @@ class SearchableDatabasesApi:
     @validate_call
     def get_custom_databases_without_preload_content(
         self,
-        include_stats: Optional[StrictBool] = None,
-        include_with_errors: Optional[StrictBool] = None,
+        include_stats: Annotated[Optional[StrictBool], Field(description="if true, the number of structures, formulas and reference spectra is included                           per database. Slower, since the database files have to be read.")] = None,
+        include_with_errors: Annotated[Optional[StrictBool], Field(description="if true, databases that could not be loaded are listed as well, carrying the                           reason in their errorMessage field.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -756,12 +785,13 @@ class SearchableDatabasesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """get_custom_databases
+        """List only the custom databases, that is the structure databases and spectral libraries the user has  created or added.
 
+        List only the custom databases, that is the structure databases and spectral libraries the user has  created or added. These are the databases that can be modified and imported into.
 
-        :param include_stats:
+        :param include_stats: if true, the number of structures, formulas and reference spectra is included                           per database. Slower, since the database files have to be read.
         :type include_stats: bool
-        :param include_with_errors:
+        :param include_with_errors: if true, databases that could not be loaded are listed as well, carrying the                           reason in their errorMessage field.
         :type include_with_errors: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -796,6 +826,8 @@ class SearchableDatabasesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "List[SearchableDatabase]",
+            '500': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -847,7 +879,8 @@ class SearchableDatabasesApi:
         if 'Accept' not in _header_params:
             _header_params['Accept'] = self.api_client.select_header_accept(
                 [
-                    'application/json'
+                    'application/json', 
+                    'application/problem+json'
                 ]
             )
 
@@ -877,8 +910,8 @@ class SearchableDatabasesApi:
     @validate_call
     def get_database(
         self,
-        database_id: StrictStr,
-        include_stats: Optional[StrictBool] = None,
+        database_id: Annotated[StrictStr, Field(description="id of the database to retrieve, as reported by the listing endpoints.")],
+        include_stats: Annotated[Optional[StrictBool], Field(description="if true (the default here), the number of structures, formulas and reference spectra                      is included.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -892,12 +925,13 @@ class SearchableDatabasesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> SearchableDatabase:
-        """get_database
+        """Get a single searchable database by its id.
 
+        Get a single searchable database by its id.
 
-        :param database_id: (required)
+        :param database_id: id of the database to retrieve, as reported by the listing endpoints. (required)
         :type database_id: str
-        :param include_stats:
+        :param include_stats: if true (the default here), the number of structures, formulas and reference spectra                      is included.
         :type include_stats: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -932,6 +966,9 @@ class SearchableDatabasesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "SearchableDatabase",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -947,8 +984,8 @@ class SearchableDatabasesApi:
     @validate_call
     def get_database_with_http_info(
         self,
-        database_id: StrictStr,
-        include_stats: Optional[StrictBool] = None,
+        database_id: Annotated[StrictStr, Field(description="id of the database to retrieve, as reported by the listing endpoints.")],
+        include_stats: Annotated[Optional[StrictBool], Field(description="if true (the default here), the number of structures, formulas and reference spectra                      is included.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -962,12 +999,13 @@ class SearchableDatabasesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[SearchableDatabase]:
-        """get_database
+        """Get a single searchable database by its id.
 
+        Get a single searchable database by its id.
 
-        :param database_id: (required)
+        :param database_id: id of the database to retrieve, as reported by the listing endpoints. (required)
         :type database_id: str
-        :param include_stats:
+        :param include_stats: if true (the default here), the number of structures, formulas and reference spectra                      is included.
         :type include_stats: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -1002,6 +1040,9 @@ class SearchableDatabasesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "SearchableDatabase",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1017,8 +1058,8 @@ class SearchableDatabasesApi:
     @validate_call
     def get_database_without_preload_content(
         self,
-        database_id: StrictStr,
-        include_stats: Optional[StrictBool] = None,
+        database_id: Annotated[StrictStr, Field(description="id of the database to retrieve, as reported by the listing endpoints.")],
+        include_stats: Annotated[Optional[StrictBool], Field(description="if true (the default here), the number of structures, formulas and reference spectra                      is included.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1032,12 +1073,13 @@ class SearchableDatabasesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """get_database
+        """Get a single searchable database by its id.
 
+        Get a single searchable database by its id.
 
-        :param database_id: (required)
+        :param database_id: id of the database to retrieve, as reported by the listing endpoints. (required)
         :type database_id: str
-        :param include_stats:
+        :param include_stats: if true (the default here), the number of structures, formulas and reference spectra                      is included.
         :type include_stats: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -1072,6 +1114,9 @@ class SearchableDatabasesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "SearchableDatabase",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1121,7 +1166,8 @@ class SearchableDatabasesApi:
         if 'Accept' not in _header_params:
             _header_params['Accept'] = self.api_client.select_header_accept(
                 [
-                    'application/json'
+                    'application/json', 
+                    'application/problem+json'
                 ]
             )
 
@@ -1151,8 +1197,8 @@ class SearchableDatabasesApi:
     @validate_call
     def get_databases(
         self,
-        include_stats: Optional[StrictBool] = None,
-        include_with_errors: Optional[StrictBool] = None,
+        include_stats: Annotated[Optional[StrictBool], Field(description="if true, the number of structures, formulas and reference spectra is included                            per database. Computing these counts touches the database files, so requesting                            them is noticeably slower than a plain listing.")] = None,
+        include_with_errors: Annotated[Optional[StrictBool], Field(description="if true, databases that could not be loaded are listed as well, carrying the                            reason in their errorMessage field. Use this to show a broken database to the                            user instead of silently hiding it.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1166,12 +1212,13 @@ class SearchableDatabasesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> List[SearchableDatabase]:
-        """get_databases
+        """List all searchable databases, both the ones included in SIRIUS and the custom ones added by the user
 
+        List all searchable databases, both the ones included in SIRIUS and the custom ones added by the user.  <p>  A searchable database provides structures and reference spectra (optional), and can be selected as a search  parameter for structure database search and spectral library search. Note that every imported spectral  library also acts as a structure database.
 
-        :param include_stats:
+        :param include_stats: if true, the number of structures, formulas and reference spectra is included                            per database. Computing these counts touches the database files, so requesting                            them is noticeably slower than a plain listing.
         :type include_stats: bool
-        :param include_with_errors:
+        :param include_with_errors: if true, databases that could not be loaded are listed as well, carrying the                            reason in their errorMessage field. Use this to show a broken database to the                            user instead of silently hiding it.
         :type include_with_errors: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -1206,6 +1253,8 @@ class SearchableDatabasesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "List[SearchableDatabase]",
+            '500': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1221,8 +1270,8 @@ class SearchableDatabasesApi:
     @validate_call
     def get_databases_with_http_info(
         self,
-        include_stats: Optional[StrictBool] = None,
-        include_with_errors: Optional[StrictBool] = None,
+        include_stats: Annotated[Optional[StrictBool], Field(description="if true, the number of structures, formulas and reference spectra is included                            per database. Computing these counts touches the database files, so requesting                            them is noticeably slower than a plain listing.")] = None,
+        include_with_errors: Annotated[Optional[StrictBool], Field(description="if true, databases that could not be loaded are listed as well, carrying the                            reason in their errorMessage field. Use this to show a broken database to the                            user instead of silently hiding it.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1236,12 +1285,13 @@ class SearchableDatabasesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[List[SearchableDatabase]]:
-        """get_databases
+        """List all searchable databases, both the ones included in SIRIUS and the custom ones added by the user
 
+        List all searchable databases, both the ones included in SIRIUS and the custom ones added by the user.  <p>  A searchable database provides structures and reference spectra (optional), and can be selected as a search  parameter for structure database search and spectral library search. Note that every imported spectral  library also acts as a structure database.
 
-        :param include_stats:
+        :param include_stats: if true, the number of structures, formulas and reference spectra is included                            per database. Computing these counts touches the database files, so requesting                            them is noticeably slower than a plain listing.
         :type include_stats: bool
-        :param include_with_errors:
+        :param include_with_errors: if true, databases that could not be loaded are listed as well, carrying the                            reason in their errorMessage field. Use this to show a broken database to the                            user instead of silently hiding it.
         :type include_with_errors: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -1276,6 +1326,8 @@ class SearchableDatabasesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "List[SearchableDatabase]",
+            '500': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1291,8 +1343,8 @@ class SearchableDatabasesApi:
     @validate_call
     def get_databases_without_preload_content(
         self,
-        include_stats: Optional[StrictBool] = None,
-        include_with_errors: Optional[StrictBool] = None,
+        include_stats: Annotated[Optional[StrictBool], Field(description="if true, the number of structures, formulas and reference spectra is included                            per database. Computing these counts touches the database files, so requesting                            them is noticeably slower than a plain listing.")] = None,
+        include_with_errors: Annotated[Optional[StrictBool], Field(description="if true, databases that could not be loaded are listed as well, carrying the                            reason in their errorMessage field. Use this to show a broken database to the                            user instead of silently hiding it.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1306,12 +1358,13 @@ class SearchableDatabasesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """get_databases
+        """List all searchable databases, both the ones included in SIRIUS and the custom ones added by the user
 
+        List all searchable databases, both the ones included in SIRIUS and the custom ones added by the user.  <p>  A searchable database provides structures and reference spectra (optional), and can be selected as a search  parameter for structure database search and spectral library search. Note that every imported spectral  library also acts as a structure database.
 
-        :param include_stats:
+        :param include_stats: if true, the number of structures, formulas and reference spectra is included                            per database. Computing these counts touches the database files, so requesting                            them is noticeably slower than a plain listing.
         :type include_stats: bool
-        :param include_with_errors:
+        :param include_with_errors: if true, databases that could not be loaded are listed as well, carrying the                            reason in their errorMessage field. Use this to show a broken database to the                            user instead of silently hiding it.
         :type include_with_errors: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -1346,6 +1399,8 @@ class SearchableDatabasesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "List[SearchableDatabase]",
+            '500': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1397,7 +1452,8 @@ class SearchableDatabasesApi:
         if 'Accept' not in _header_params:
             _header_params['Accept'] = self.api_client.select_header_accept(
                 [
-                    'application/json'
+                    'application/json', 
+                    'application/problem+json'
                 ]
             )
 
@@ -1427,7 +1483,7 @@ class SearchableDatabasesApi:
     @validate_call
     def get_included_databases(
         self,
-        include_stats: Optional[StrictBool] = None,
+        include_stats: Annotated[Optional[StrictBool], Field(description="if true, the number of structures, formulas and reference spectra is included per                      database. Slower, since the database files have to be read.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1441,10 +1497,11 @@ class SearchableDatabasesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> List[SearchableDatabase]:
-        """get_included_databases
+        """List only the databases that ship with SIRIUS, such as PubChem and the bio databases.
 
+        List only the databases that ship with SIRIUS, such as PubChem and the bio databases. These are  read-only: they cannot be imported into, modified or removed.
 
-        :param include_stats:
+        :param include_stats: if true, the number of structures, formulas and reference spectra is included per                      database. Slower, since the database files have to be read.
         :type include_stats: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -1478,6 +1535,8 @@ class SearchableDatabasesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "List[SearchableDatabase]",
+            '500': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1493,7 +1552,7 @@ class SearchableDatabasesApi:
     @validate_call
     def get_included_databases_with_http_info(
         self,
-        include_stats: Optional[StrictBool] = None,
+        include_stats: Annotated[Optional[StrictBool], Field(description="if true, the number of structures, formulas and reference spectra is included per                      database. Slower, since the database files have to be read.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1507,10 +1566,11 @@ class SearchableDatabasesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[List[SearchableDatabase]]:
-        """get_included_databases
+        """List only the databases that ship with SIRIUS, such as PubChem and the bio databases.
 
+        List only the databases that ship with SIRIUS, such as PubChem and the bio databases. These are  read-only: they cannot be imported into, modified or removed.
 
-        :param include_stats:
+        :param include_stats: if true, the number of structures, formulas and reference spectra is included per                      database. Slower, since the database files have to be read.
         :type include_stats: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -1544,6 +1604,8 @@ class SearchableDatabasesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "List[SearchableDatabase]",
+            '500': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1559,7 +1621,7 @@ class SearchableDatabasesApi:
     @validate_call
     def get_included_databases_without_preload_content(
         self,
-        include_stats: Optional[StrictBool] = None,
+        include_stats: Annotated[Optional[StrictBool], Field(description="if true, the number of structures, formulas and reference spectra is included per                      database. Slower, since the database files have to be read.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1573,10 +1635,11 @@ class SearchableDatabasesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """get_included_databases
+        """List only the databases that ship with SIRIUS, such as PubChem and the bio databases.
 
+        List only the databases that ship with SIRIUS, such as PubChem and the bio databases. These are  read-only: they cannot be imported into, modified or removed.
 
-        :param include_stats:
+        :param include_stats: if true, the number of structures, formulas and reference spectra is included per                      database. Slower, since the database files have to be read.
         :type include_stats: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -1610,6 +1673,8 @@ class SearchableDatabasesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "List[SearchableDatabase]",
+            '500': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1656,7 +1721,8 @@ class SearchableDatabasesApi:
         if 'Accept' not in _header_params:
             _header_params['Accept'] = self.api_client.select_header_accept(
                 [
-                    'application/json'
+                    'application/json', 
+                    'application/problem+json'
                 ]
             )
 
@@ -1686,9 +1752,9 @@ class SearchableDatabasesApi:
     @validate_call
     def import_into_database(
         self,
-        database_id: Annotated[StrictStr, Field(description="database to import into")],
+        database_id: Annotated[StrictStr, Field(description="id of the custom database to import into. Must exist.")],
         input_files: Annotated[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]], Field(description="files to import into project")],
-        buffer_size: Optional[StrictInt] = None,
+        buffer_size: Annotated[Optional[StrictInt], Field(description="number of compounds to keep in memory before writing them to the                                  database. Raise it to speed up large imports on machines with enough RAM.")] = None,
         bio_transformer_parameters: Optional[BioTransformerParameters] = None,
         _request_timeout: Union[
             None,
@@ -1707,11 +1773,11 @@ class SearchableDatabasesApi:
 
         Start import of structure and spectra files into the specified database.
 
-        :param database_id: database to import into (required)
+        :param database_id: id of the custom database to import into. Must exist. (required)
         :type database_id: str
         :param input_files: files to import into project (required)
         :type input_files: List[bytearray]
-        :param buffer_size:
+        :param buffer_size: number of compounds to keep in memory before writing them to the                                  database. Raise it to speed up large imports on machines with enough RAM.
         :type buffer_size: int
         :param bio_transformer_parameters:
         :type bio_transformer_parameters: BioTransformerParameters
@@ -1750,6 +1816,9 @@ class SearchableDatabasesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "SearchableDatabase",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1765,9 +1834,9 @@ class SearchableDatabasesApi:
     @validate_call
     def import_into_database_with_http_info(
         self,
-        database_id: Annotated[StrictStr, Field(description="database to import into")],
+        database_id: Annotated[StrictStr, Field(description="id of the custom database to import into. Must exist.")],
         input_files: Annotated[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]], Field(description="files to import into project")],
-        buffer_size: Optional[StrictInt] = None,
+        buffer_size: Annotated[Optional[StrictInt], Field(description="number of compounds to keep in memory before writing them to the                                  database. Raise it to speed up large imports on machines with enough RAM.")] = None,
         bio_transformer_parameters: Optional[BioTransformerParameters] = None,
         _request_timeout: Union[
             None,
@@ -1786,11 +1855,11 @@ class SearchableDatabasesApi:
 
         Start import of structure and spectra files into the specified database.
 
-        :param database_id: database to import into (required)
+        :param database_id: id of the custom database to import into. Must exist. (required)
         :type database_id: str
         :param input_files: files to import into project (required)
         :type input_files: List[bytearray]
-        :param buffer_size:
+        :param buffer_size: number of compounds to keep in memory before writing them to the                                  database. Raise it to speed up large imports on machines with enough RAM.
         :type buffer_size: int
         :param bio_transformer_parameters:
         :type bio_transformer_parameters: BioTransformerParameters
@@ -1829,6 +1898,9 @@ class SearchableDatabasesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "SearchableDatabase",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1844,9 +1916,9 @@ class SearchableDatabasesApi:
     @validate_call
     def import_into_database_without_preload_content(
         self,
-        database_id: Annotated[StrictStr, Field(description="database to import into")],
+        database_id: Annotated[StrictStr, Field(description="id of the custom database to import into. Must exist.")],
         input_files: Annotated[List[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]], Field(description="files to import into project")],
-        buffer_size: Optional[StrictInt] = None,
+        buffer_size: Annotated[Optional[StrictInt], Field(description="number of compounds to keep in memory before writing them to the                                  database. Raise it to speed up large imports on machines with enough RAM.")] = None,
         bio_transformer_parameters: Optional[BioTransformerParameters] = None,
         _request_timeout: Union[
             None,
@@ -1865,11 +1937,11 @@ class SearchableDatabasesApi:
 
         Start import of structure and spectra files into the specified database.
 
-        :param database_id: database to import into (required)
+        :param database_id: id of the custom database to import into. Must exist. (required)
         :type database_id: str
         :param input_files: files to import into project (required)
         :type input_files: List[bytearray]
-        :param buffer_size:
+        :param buffer_size: number of compounds to keep in memory before writing them to the                                  database. Raise it to speed up large imports on machines with enough RAM.
         :type buffer_size: int
         :param bio_transformer_parameters:
         :type bio_transformer_parameters: BioTransformerParameters
@@ -1908,6 +1980,9 @@ class SearchableDatabasesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "SearchableDatabase",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1974,7 +2049,8 @@ class SearchableDatabasesApi:
         if 'Accept' not in _header_params:
             _header_params['Accept'] = self.api_client.select_header_accept(
                 [
-                    'application/json'
+                    'application/json', 
+                    'application/problem+json'
                 ]
             )
 
@@ -2017,8 +2093,8 @@ class SearchableDatabasesApi:
     @validate_call
     def remove_database(
         self,
-        database_id: StrictStr,
-        delete: Optional[StrictBool] = None,
+        database_id: Annotated[StrictStr, Field(description="id of the database to remove.")],
+        delete: Annotated[Optional[StrictBool], Field(description="if true, the database file is deleted from disk and the data is lost. If false (the                    default), only the registration is removed and the file is kept, so the database can                    be registered again later.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2032,12 +2108,13 @@ class SearchableDatabasesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> None:
-        """remove_database
+        """Remove a custom database from this SIRIUS instance, and optionally delete it from disk
 
+        Remove a custom database from this SIRIUS instance, and optionally delete it from disk.  <p>  This is idempotent: removing a database that is not registered succeeds and does nothing, so a client  does not have to check first.
 
-        :param database_id: (required)
+        :param database_id: id of the database to remove. (required)
         :type database_id: str
-        :param delete:
+        :param delete: if true, the database file is deleted from disk and the data is lost. If false (the                    default), only the registration is removed and the file is kept, so the database can                    be registered again later.
         :type delete: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -2072,6 +2149,8 @@ class SearchableDatabasesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': None,
+            '500': None,
+            '400': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2087,8 +2166,8 @@ class SearchableDatabasesApi:
     @validate_call
     def remove_database_with_http_info(
         self,
-        database_id: StrictStr,
-        delete: Optional[StrictBool] = None,
+        database_id: Annotated[StrictStr, Field(description="id of the database to remove.")],
+        delete: Annotated[Optional[StrictBool], Field(description="if true, the database file is deleted from disk and the data is lost. If false (the                    default), only the registration is removed and the file is kept, so the database can                    be registered again later.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2102,12 +2181,13 @@ class SearchableDatabasesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[None]:
-        """remove_database
+        """Remove a custom database from this SIRIUS instance, and optionally delete it from disk
 
+        Remove a custom database from this SIRIUS instance, and optionally delete it from disk.  <p>  This is idempotent: removing a database that is not registered succeeds and does nothing, so a client  does not have to check first.
 
-        :param database_id: (required)
+        :param database_id: id of the database to remove. (required)
         :type database_id: str
-        :param delete:
+        :param delete: if true, the database file is deleted from disk and the data is lost. If false (the                    default), only the registration is removed and the file is kept, so the database can                    be registered again later.
         :type delete: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -2142,6 +2222,8 @@ class SearchableDatabasesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': None,
+            '500': None,
+            '400': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2157,8 +2239,8 @@ class SearchableDatabasesApi:
     @validate_call
     def remove_database_without_preload_content(
         self,
-        database_id: StrictStr,
-        delete: Optional[StrictBool] = None,
+        database_id: Annotated[StrictStr, Field(description="id of the database to remove.")],
+        delete: Annotated[Optional[StrictBool], Field(description="if true, the database file is deleted from disk and the data is lost. If false (the                    default), only the registration is removed and the file is kept, so the database can                    be registered again later.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2172,12 +2254,13 @@ class SearchableDatabasesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """remove_database
+        """Remove a custom database from this SIRIUS instance, and optionally delete it from disk
 
+        Remove a custom database from this SIRIUS instance, and optionally delete it from disk.  <p>  This is idempotent: removing a database that is not registered succeeds and does nothing, so a client  does not have to check first.
 
-        :param database_id: (required)
+        :param database_id: id of the database to remove. (required)
         :type database_id: str
-        :param delete:
+        :param delete: if true, the database file is deleted from disk and the data is lost. If false (the                    default), only the registration is removed and the file is kept, so the database can                    be registered again later.
         :type delete: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -2212,6 +2295,8 @@ class SearchableDatabasesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': None,
+            '500': None,
+            '400': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2284,8 +2369,8 @@ class SearchableDatabasesApi:
     @validate_call
     def update_database(
         self,
-        database_id: StrictStr,
-        searchable_database_parameters: Optional[SearchableDatabaseParameters] = None,
+        database_id: Annotated[StrictStr, Field(description="id of the database to update.")],
+        searchable_database_parameters: Annotated[Optional[SearchableDatabaseParameters], Field(description="the settings to apply.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2299,12 +2384,13 @@ class SearchableDatabasesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> SearchableDatabase:
-        """update_database
+        """Change the settings of an existing custom database
 
+        Change the settings of an existing custom database.  <p>  NOT IMPLEMENTED YET: changing the display name and the retention time matching flag of an existing database  is not supported so far, and every request currently fails. The request and response shape is settled  though, so a client can be written against this endpoint today: it will start succeeding in a future  version without any change on the client side.  <p>  Until then, create a new database with the desired settings and import into it.
 
-        :param database_id: (required)
+        :param database_id: id of the database to update. (required)
         :type database_id: str
-        :param searchable_database_parameters:
+        :param searchable_database_parameters: the settings to apply.
         :type searchable_database_parameters: SearchableDatabaseParameters
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -2339,6 +2425,8 @@ class SearchableDatabasesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "SearchableDatabase",
+            '500': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2354,8 +2442,8 @@ class SearchableDatabasesApi:
     @validate_call
     def update_database_with_http_info(
         self,
-        database_id: StrictStr,
-        searchable_database_parameters: Optional[SearchableDatabaseParameters] = None,
+        database_id: Annotated[StrictStr, Field(description="id of the database to update.")],
+        searchable_database_parameters: Annotated[Optional[SearchableDatabaseParameters], Field(description="the settings to apply.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2369,12 +2457,13 @@ class SearchableDatabasesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[SearchableDatabase]:
-        """update_database
+        """Change the settings of an existing custom database
 
+        Change the settings of an existing custom database.  <p>  NOT IMPLEMENTED YET: changing the display name and the retention time matching flag of an existing database  is not supported so far, and every request currently fails. The request and response shape is settled  though, so a client can be written against this endpoint today: it will start succeeding in a future  version without any change on the client side.  <p>  Until then, create a new database with the desired settings and import into it.
 
-        :param database_id: (required)
+        :param database_id: id of the database to update. (required)
         :type database_id: str
-        :param searchable_database_parameters:
+        :param searchable_database_parameters: the settings to apply.
         :type searchable_database_parameters: SearchableDatabaseParameters
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -2409,6 +2498,8 @@ class SearchableDatabasesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "SearchableDatabase",
+            '500': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2424,8 +2515,8 @@ class SearchableDatabasesApi:
     @validate_call
     def update_database_without_preload_content(
         self,
-        database_id: StrictStr,
-        searchable_database_parameters: Optional[SearchableDatabaseParameters] = None,
+        database_id: Annotated[StrictStr, Field(description="id of the database to update.")],
+        searchable_database_parameters: Annotated[Optional[SearchableDatabaseParameters], Field(description="the settings to apply.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2439,12 +2530,13 @@ class SearchableDatabasesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """update_database
+        """Change the settings of an existing custom database
 
+        Change the settings of an existing custom database.  <p>  NOT IMPLEMENTED YET: changing the display name and the retention time matching flag of an existing database  is not supported so far, and every request currently fails. The request and response shape is settled  though, so a client can be written against this endpoint today: it will start succeeding in a future  version without any change on the client side.  <p>  Until then, create a new database with the desired settings and import into it.
 
-        :param database_id: (required)
+        :param database_id: id of the database to update. (required)
         :type database_id: str
-        :param searchable_database_parameters:
+        :param searchable_database_parameters: the settings to apply.
         :type searchable_database_parameters: SearchableDatabaseParameters
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -2479,6 +2571,8 @@ class SearchableDatabasesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "SearchableDatabase",
+            '500': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2526,7 +2620,8 @@ class SearchableDatabasesApi:
         if 'Accept' not in _header_params:
             _header_params['Accept'] = self.api_client.select_header_accept(
                 [
-                    'application/json'
+                    'application/json', 
+                    'application/problem+json'
                 ]
             )
 

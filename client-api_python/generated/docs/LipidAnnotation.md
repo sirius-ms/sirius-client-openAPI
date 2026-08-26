@@ -9,7 +9,7 @@ Name | Type | Description | Notes
 **lipid_maps_id** | **str** | LIPID MAPS id of the predicted lipid class. | [optional] 
 **lipid_class_name** | **str** | Human-readable name of the predicted lipid class. | [optional] 
 **hypothetical_structure** | **str** | Hypothetical molecular structure of the predicted lipid species as SMILES.  NULL if hypothetical structure not available. | [optional] 
-**chains_unknown** | **bool** | True of the formula composition of the chains could not be determined from the MS/MS. | [optional] 
+**chains_unknown** | **bool** | True if the formula composition of the chains could not be determined from the MS/MS. | [optional] 
 
 ## Example
 

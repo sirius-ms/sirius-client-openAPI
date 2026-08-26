@@ -6,15 +6,15 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**delete_job**](JobsApi.md#delete_job) | **DELETE** /api/projects/{projectId}/jobs/{jobId} | Delete job.
 [**delete_job_config**](JobsApi.md#delete_job_config) | **DELETE** /api/job-configs/{name} | Delete job configuration with given name.
-[**delete_jobs**](JobsApi.md#delete_jobs) | **DELETE** /api/projects/{projectId}/jobs | * Delete ALL jobs.
+[**delete_jobs**](JobsApi.md#delete_jobs) | **DELETE** /api/projects/{projectId}/jobs | Delete ALL jobs.
 [**get_command**](JobsApi.md#get_command) | **POST** /api/job-configs/get-command | Get a CLI command for the given job configuration.
 [**get_default_job_config**](JobsApi.md#get_default_job_config) | **GET** /api/default-job-config | Request default job configuration
 [**get_job**](JobsApi.md#get_job) | **GET** /api/projects/{projectId}/jobs/{jobId} | Get job information and its current state and progress (if available).
 [**get_job_config**](JobsApi.md#get_job_config) | **GET** /api/job-configs/{name} | Request job configuration with given name.
 [**get_job_config_names**](JobsApi.md#get_job_config_names) | **GET** /api/job-config-names | [DEPRECATED] Get all (non-default) job configuration names  
 [**get_job_configs**](JobsApi.md#get_job_configs) | **GET** /api/job-configs | Request all available job configurations
-[**get_jobs**](JobsApi.md#get_jobs) | **GET** /api/projects/{projectId}/jobs | Get List of all available jobs with information such as current state and progress (if available).
-[**get_jobs_paged**](JobsApi.md#get_jobs_paged) | **GET** /api/projects/{projectId}/jobs/page | Get Page of jobs with information such as current state and progress (if available).
+[**get_jobs**](JobsApi.md#get_jobs) | **GET** /api/projects/{projectId}/jobs | [DEPRECATED] Get list of all available jobs with information such as current state and progress (if available)
+[**get_jobs_page**](JobsApi.md#get_jobs_page) | **GET** /api/projects/{projectId}/jobs/page | Get Page of jobs with information such as current state and progress (if available).
 [**has_jobs**](JobsApi.md#has_jobs) | **GET** /api/projects/{projectId}/has-jobs | 
 [**save_job_config**](JobsApi.md#save_job_config) | **POST** /api/job-configs/{name} | Add new job configuration with given name.
 [**start_job**](JobsApi.md#start_job) | **POST** /api/projects/{projectId}/jobs | Start computation for given compounds and with given parameters.
@@ -89,6 +89,9 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **202** | Accepted |  -  |
+**500** | Unexpected server-side error. The problem detail carries the reason. |  -  |
+**404** | The referenced object does not exist in this SIRIUS instance or project. |  -  |
+**400** | The request body or a parameter is malformed or violates a constraint. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -154,15 +157,18 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **202** | Accepted |  -  |
+**500** | Unexpected server-side error. The problem detail carries the reason. |  -  |
+**404** | The referenced object does not exist in this SIRIUS instance or project. |  -  |
+**400** | The request body or a parameter is malformed or violates a constraint. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **delete_jobs**
 > delete_jobs(project_id, cancel_if_running=cancel_if_running, await_deletion=await_deletion)
 
-* Delete ALL jobs.
+Delete ALL jobs.
 
-* Delete ALL jobs. Specify how to behave for running jobs.
+Delete ALL jobs. Specify how to behave for running jobs.
 
 ### Example
 
@@ -188,7 +194,7 @@ with PySirius.ApiClient(configuration) as api_client:
     await_deletion = True # bool | If true, request will block until deletion succeeded or failed.                         If the job is still running the request will wait until the job has finished. (optional) (default to True)
 
     try:
-        # * Delete ALL jobs.
+        # Delete ALL jobs.
         api_instance.delete_jobs(project_id, cancel_if_running=cancel_if_running, await_deletion=await_deletion)
     except Exception as e:
         print("Exception when calling JobsApi->delete_jobs: %s\n" % e)
@@ -223,6 +229,9 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **202** | Accepted |  -  |
+**500** | Unexpected server-side error. The problem detail carries the reason. |  -  |
+**404** | The referenced object does not exist in this SIRIUS instance or project. |  -  |
+**400** | The request body or a parameter is malformed or violates a constraint. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -284,13 +293,15 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: application/json
+ - **Accept**: application/json, application/problem+json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**500** | Unexpected server-side error. The problem detail carries the reason. |  -  |
+**400** | The request body or a parameter is malformed or violates a constraint. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -323,7 +334,7 @@ with PySirius.ApiClient(configuration) as api_client:
     api_instance = PySirius.JobsApi(api_client)
     include_config_map = False # bool | if true, generic configmap with-defaults will be included (optional) (default to False)
     move_parameters_to_config_map = False # bool | if true, object-based parameters will be converted to and added to the generic configMap parameters (optional) (default to False)
-    include_custom_dbs_for_structure_search = False # bool | if true, default database selection of structure db search                                            spectral library search contains also all available custom DB.                                            If No custom dbs are selected, spectral library search is disabled by default. (optional) (default to False)
+    include_custom_dbs_for_structure_search = False # bool | if true, default database selection of structure db search                                            and spectral library search also contains all available custom databases.                                            If no custom databases are selected, spectral library search is disabled by default. (optional) (default to False)
 
     try:
         # Request default job configuration
@@ -343,7 +354,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **include_config_map** | **bool**| if true, generic configmap with-defaults will be included | [optional] [default to False]
  **move_parameters_to_config_map** | **bool**| if true, object-based parameters will be converted to and added to the generic configMap parameters | [optional] [default to False]
- **include_custom_dbs_for_structure_search** | **bool**| if true, default database selection of structure db search                                            spectral library search contains also all available custom DB.                                            If No custom dbs are selected, spectral library search is disabled by default. | [optional] [default to False]
+ **include_custom_dbs_for_structure_search** | **bool**| if true, default database selection of structure db search                                            and spectral library search also contains all available custom databases.                                            If no custom databases are selected, spectral library search is disabled by default. | [optional] [default to False]
 
 ### Return type
 
@@ -356,13 +367,15 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: application/json, application/problem+json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | {@link JobSubmission JobSubmission} with all parameters set to default values. |  -  |
+**200** | &lt;code&gt;JobSubmission&lt;/code&gt; with all parameters set to default values. |  -  |
+**500** | Unexpected server-side error. The problem detail carries the reason. |  -  |
+**400** | The request body or a parameter is malformed or violates a constraint. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -395,7 +408,7 @@ with PySirius.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = PySirius.JobsApi(api_client)
     project_id = 'project_id_example' # str | project-space to run jobs on
-    job_id = 'job_id_example' # str | of the job to be returned
+    job_id = 'job_id_example' # str | id of the job to be returned
     opt_fields = ["progress"] # List[JobOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to ["progress"])
 
     try:
@@ -415,7 +428,7 @@ with PySirius.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **str**| project-space to run jobs on | 
- **job_id** | **str**| of the job to be returned | 
+ **job_id** | **str**| id of the job to be returned | 
  **opt_fields** | [**List[JobOptField]**](JobOptField.md)| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;progress&quot;]]
 
 ### Return type
@@ -429,13 +442,16 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: application/json, application/problem+json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**500** | Unexpected server-side error. The problem detail carries the reason. |  -  |
+**404** | The referenced object does not exist in this SIRIUS instance or project. |  -  |
+**400** | The request body or a parameter is malformed or violates a constraint. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -499,13 +515,16 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: application/json, application/problem+json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | {@link JobSubmission JobSubmission} for given name. |  -  |
+**200** | &lt;code&gt;JobSubmission&lt;/code&gt; for given name. |  -  |
+**500** | Unexpected server-side error. The problem detail carries the reason. |  -  |
+**404** | The referenced object does not exist in this SIRIUS instance or project. |  -  |
+**400** | The request body or a parameter is malformed or violates a constraint. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -564,13 +583,14 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: application/json, application/problem+json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**500** | Unexpected server-side error. The problem detail carries the reason. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -628,22 +648,26 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: application/json, application/problem+json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | list of available {@link JobSubmission JobSubmission}s |  -  |
+**200** | list of available &lt;code&gt;JobSubmission&lt;/code&gt;s |  -  |
+**500** | Unexpected server-side error. The problem detail carries the reason. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_jobs**
 > List[Job] get_jobs(project_id, opt_fields=opt_fields)
 
-Get List of all available jobs with information such as current state and progress (if available).
+[DEPRECATED] Get list of all available jobs with information such as current state and progress (if available)
 
-Get List of all available jobs with information such as current state and progress (if available).
+[DEPRECATED] Get list of all available jobs with information such as current state and progress (if available).
+ <p>
+ [DEPRECATED] Use /jobs/page instead. Loading all jobs at once does not scale for long running projects.
+ This endpoint will be removed in the next major version of this API.
 
 ### Example
 
@@ -670,7 +694,7 @@ with PySirius.ApiClient(configuration) as api_client:
     opt_fields = ["none"] # List[JobOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to ["none"])
 
     try:
-        # Get List of all available jobs with information such as current state and progress (if available).
+        # [DEPRECATED] Get list of all available jobs with information such as current state and progress (if available)
         api_response = api_instance.get_jobs(project_id, opt_fields=opt_fields)
         print("The response of JobsApi->get_jobs:\n")
         pprint(api_response)
@@ -699,18 +723,21 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: application/json, application/problem+json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**500** | Unexpected server-side error. The problem detail carries the reason. |  -  |
+**404** | The referenced object does not exist in this SIRIUS instance or project. |  -  |
+**400** | The request body or a parameter is malformed or violates a constraint. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_jobs_paged**
-> PagedModelJob get_jobs_paged(project_id, page=page, size=size, sort=sort, opt_fields=opt_fields)
+# **get_jobs_page**
+> PagedModelJob get_jobs_page(project_id, page=page, size=size, sort=sort, opt_fields=opt_fields)
 
 Get Page of jobs with information such as current state and progress (if available).
 
@@ -745,11 +772,11 @@ with PySirius.ApiClient(configuration) as api_client:
 
     try:
         # Get Page of jobs with information such as current state and progress (if available).
-        api_response = api_instance.get_jobs_paged(project_id, page=page, size=size, sort=sort, opt_fields=opt_fields)
-        print("The response of JobsApi->get_jobs_paged:\n")
+        api_response = api_instance.get_jobs_page(project_id, page=page, size=size, sort=sort, opt_fields=opt_fields)
+        print("The response of JobsApi->get_jobs_page:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling JobsApi->get_jobs_paged: %s\n" % e)
+        print("Exception when calling JobsApi->get_jobs_page: %s\n" % e)
 ```
 
 
@@ -776,13 +803,16 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: application/json, application/problem+json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**500** | Unexpected server-side error. The problem detail carries the reason. |  -  |
+**404** | The referenced object does not exist in this SIRIUS instance or project. |  -  |
+**400** | The request body or a parameter is malformed or violates a constraint. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -840,13 +870,16 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: application/json, application/problem+json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
+**500** | Unexpected server-side error. The problem detail carries the reason. |  -  |
+**404** | The referenced object does not exist in this SIRIUS instance or project. |  -  |
+**400** | The request body or a parameter is malformed or violates a constraint. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -915,13 +948,16 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: application/json
+ - **Accept**: application/json, application/problem+json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | StoredJobSubmission that contains the JobSubmission and the probably modified name of the config (to ensure path compatibility). |  -  |
+**500** | Unexpected server-side error. The problem detail carries the reason. |  -  |
+**404** | The referenced object does not exist in this SIRIUS instance or project. |  -  |
+**400** | The request body or a parameter is malformed or violates a constraint. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -955,7 +991,7 @@ with PySirius.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = PySirius.JobsApi(api_client)
     project_id = 'project_id_example' # str | project-space to run jobs on
-    job_submission = PySirius.JobSubmission() # JobSubmission | configuration of the job that will be submitted of the job to be returned
+    job_submission = PySirius.JobSubmission() # JobSubmission | configuration of the job to be submitted
     opt_fields = ["command","progress"] # List[JobOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to ["command","progress"])
 
     try:
@@ -975,7 +1011,7 @@ with PySirius.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **str**| project-space to run jobs on | 
- **job_submission** | [**JobSubmission**](JobSubmission.md)| configuration of the job that will be submitted of the job to be returned | 
+ **job_submission** | [**JobSubmission**](JobSubmission.md)| configuration of the job to be submitted | 
  **opt_fields** | [**List[JobOptField]**](JobOptField.md)| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;command&quot;,&quot;progress&quot;]]
 
 ### Return type
@@ -989,13 +1025,16 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: application/json
+ - **Accept**: application/json, application/problem+json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **202** | Accepted |  -  |
+**500** | Unexpected server-side error. The problem detail carries the reason. |  -  |
+**404** | The referenced object does not exist in this SIRIUS instance or project. |  -  |
+**400** | The request body or a parameter is malformed or violates a constraint. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1028,7 +1067,7 @@ with PySirius.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = PySirius.JobsApi(api_client)
     project_id = 'project_id_example' # str | project-space to run jobs on
-    job_config_name = 'job_config_name_example' # str | name if the config to be used
+    job_config_name = 'job_config_name_example' # str | name of the config to be used
     request_body = ['request_body_example'] # List[str] | List of alignedFeatureIds to be computed
     recompute = True # bool | enable or disable recompute. If null the stored value will be used. (optional)
     opt_fields = ["command","progress"] # List[JobOptField] | set of optional fields to be included. Use 'none' only to override defaults. (optional) (default to ["command","progress"])
@@ -1050,7 +1089,7 @@ with PySirius.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **project_id** | **str**| project-space to run jobs on | 
- **job_config_name** | **str**| name if the config to be used | 
+ **job_config_name** | **str**| name of the config to be used | 
  **request_body** | [**List[str]**](str.md)| List of alignedFeatureIds to be computed | 
  **recompute** | **bool**| enable or disable recompute. If null the stored value will be used. | [optional] 
  **opt_fields** | [**List[JobOptField]**](JobOptField.md)| set of optional fields to be included. Use &#39;none&#39; only to override defaults. | [optional] [default to [&quot;command&quot;,&quot;progress&quot;]]
@@ -1066,13 +1105,16 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: application/json
+ - **Accept**: application/json, application/problem+json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **202** | Accepted |  -  |
+**500** | Unexpected server-side error. The problem detail carries the reason. |  -  |
+**404** | The referenced object does not exist in this SIRIUS instance or project. |  -  |
+**400** | The request body or a parameter is malformed or violates a constraint. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

@@ -25,15 +25,16 @@ class ProjectInfo(BaseModel):
     """
     ProjectInfo
     """ # noqa: E501
-    project_id: Optional[StrictStr] = Field(default=None, description="a user selected unique name of the project for easy access.", alias="projectId")
-    location: Optional[StrictStr] = Field(default=None, description="storage location of the project.")
+    project_id: Optional[StrictStr] = Field(default=None, description="A user-selected unique name of the project for easy access.", alias="projectId")
+    location: Optional[StrictStr] = Field(default=None, description="Storage location of the project.")
     description: Optional[StrictStr] = Field(default=None, description="Description of this project.")
     type: Optional[ProjectType] = None
-    compatible: Optional[StrictBool] = Field(default=None, description="Indicates whether computed results (e.g. fingerprints, compounds classes) are compatible with the backend.  If true project is up-to-date and there are no restrictions regarding usage.  If false project is incompatible and therefore \"read only\" until the incompatible results have been removed. See updateProject endpoint for further information  If NULL the information has not been requested.")
+    compatible: Optional[StrictBool] = Field(default=None, description="Indicates whether computed results (e.g. fingerprints, compound classes) are compatible with the backend.  If true, the project is up-to-date and there are no restrictions regarding usage.  If false, the project is incompatible and therefore \"read only\" until the incompatible results have been removed. See the updateProject endpoint for further information.  If NULL, the information has not been requested.")
     num_of_features: Optional[StrictInt] = Field(default=None, description="Number of features (aligned over runs) in this project. If NULL, information has not been requested (See OptField 'sizeInformation').", alias="numOfFeatures")
-    num_of_compounds: Optional[StrictInt] = Field(default=None, description="Number of compounds (group of ion identities) in this project. If NULL, Information has not been requested (See OptField 'sizeInformation') or might be unavailable for this project type.", alias="numOfCompounds")
-    num_of_bytes: Optional[StrictInt] = Field(default=None, description="Size in Bytes this project consumes on disk If NULL, Information has not been requested (See OptField 'sizeInformation').", alias="numOfBytes")
-    __properties: ClassVar[List[str]] = ["projectId", "location", "description", "type", "compatible", "numOfFeatures", "numOfCompounds", "numOfBytes"]
+    num_of_compounds: Optional[StrictInt] = Field(default=None, description="Number of compounds (group of ion identities) in this project. If NULL, information has not been requested (See OptField 'sizeInformation') or might be unavailable for this project type.", alias="numOfCompounds")
+    num_of_bytes: Optional[StrictInt] = Field(default=None, description="Size in bytes this project consumes on disk. If NULL, information has not been requested (See OptField 'sizeInformation').", alias="numOfBytes")
+    detected_adducts: Optional[List[Optional[StrictStr]]] = Field(default=None, description="Set of all detected adducts available in this project.", alias="detectedAdducts")
+    __properties: ClassVar[List[str]] = ["projectId", "location", "description", "type", "compatible", "numOfFeatures", "numOfCompounds", "numOfBytes", "detectedAdducts"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -104,6 +105,11 @@ class ProjectInfo(BaseModel):
         if self.num_of_bytes is None and "num_of_bytes" in self.model_fields_set:
             _dict['numOfBytes'] = None
 
+        # set to None if detected_adducts (nullable) is None
+        # and model_fields_set contains the field
+        if self.detected_adducts is None and "detected_adducts" in self.model_fields_set:
+            _dict['detectedAdducts'] = None
+
         return _dict
 
     @classmethod
@@ -123,7 +129,8 @@ class ProjectInfo(BaseModel):
             "compatible": obj.get("compatible"),
             "numOfFeatures": obj.get("numOfFeatures"),
             "numOfCompounds": obj.get("numOfCompounds"),
-            "numOfBytes": obj.get("numOfBytes")
+            "numOfBytes": obj.get("numOfBytes"),
+            "detectedAdducts": obj.get("detectedAdducts")
         })
         return _obj
 

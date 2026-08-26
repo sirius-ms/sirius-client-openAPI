@@ -27,13 +27,13 @@ class Subscription(BaseModel):
     Subscription
     """ # noqa: E501
     sid: Optional[StrictStr] = Field(default=None, description="Unique identifier of this subscription")
-    subscriber_id: Optional[StrictStr] = Field(default=None, description="ID of the owner of the subscription.  This can be the ID of any SubscriptionOwner (e.g.  Group or  User)  depending on the level on which a subscription should be is valid.", alias="subscriberId")
+    subscriber_id: Optional[StrictStr] = Field(default=None, description="ID of the owner of the subscription.  This can be the ID of any SubscriptionOwner (e.g. TagGroup or User)  depending on the level at which a subscription is valid.", alias="subscriberId")
     subscriber_name: Optional[StrictStr] = Field(default=None, description="Optional name of the owner of this subscription", alias="subscriberName")
     expiration_date: Optional[datetime] = Field(default=None, alias="expirationDate")
     start_date: Optional[datetime] = Field(default=None, alias="startDate")
     count_queries: Optional[StrictBool] = Field(default=None, alias="countQueries")
     instance_limit: Optional[StrictInt] = Field(default=None, description="Limit of instances (features) that can be computed with this subscription", alias="instanceLimit")
-    instance_hash_recording_time: Optional[StrictInt] = Field(default=None, description="Hash is used to allow recomputing identical data without increasing counted instances (features).  The recording time is the amount of time an instance is memorized is", alias="instanceHashRecordingTime")
+    instance_hash_recording_time: Optional[StrictInt] = Field(default=None, description="Hash is used to allow recomputing identical data without increasing counted instances (features).  The recording time is the amount of time an instance is memorized.", alias="instanceHashRecordingTime")
     max_queries_per_instance: Optional[StrictInt] = Field(default=None, description="Maximum number of queries (e.g. prediction) that can be performed  for one instance before it is counted another time.", alias="maxQueriesPerInstance")
     max_user_accounts: Optional[StrictInt] = Field(default=None, alias="maxUserAccounts")
     service_url: Optional[StrictStr] = Field(default=None, alias="serviceUrl")

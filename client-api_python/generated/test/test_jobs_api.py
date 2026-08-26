@@ -154,12 +154,12 @@ class TestJobsApi(unittest.TestCase):
         self.assertIsInstance(response, list)
         self.assertIsInstance(response[0], Job)
 
-    def test_get_jobs_paged(self) -> None:
-        """Test case for get_jobs_paged
+    def test_get_jobs_page(self) -> None:
+        """Test case for get_jobs_page
 
         Get Page of jobs with information such as current state and progress (if available).
         """
-        response = self.api.jobs().get_jobs_paged(self.project_id)
+        response = self.api.jobs().get_jobs_page(self.project_id)
         self.assertIsInstance(response, PagedModelJob)
 
     def test_has_jobs(self) -> None:
@@ -236,6 +236,15 @@ class TestJobsApi(unittest.TestCase):
 
         self.api.jobs().delete_job_config(config_name)
         self.assertIsInstance(response, Job)
+
+    def test_get_jobs_paged_deprecated_alias(self) -> None:
+        """The pre-API-3.2 name still works and warns.
+
+        Delete together with the alias in PySirius.pysirius_compat when the deprecation period ends.
+        """
+        with self.assertWarns(FutureWarning):
+            response = self.api.jobs().get_jobs_paged(self.project_id)
+        self.assertIsInstance(response, PagedModelJob)
 
 if __name__ == '__main__':
     unittest.main()

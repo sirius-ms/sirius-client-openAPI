@@ -12,7 +12,7 @@ on:
         type: string
         required: false
       allow_breaking_api_changes:
-        description: "Let the compatibility gate pass even though the update removes or changes parts that SDK users rely on. The PR and the report are produced either way. Only for deliberate breaking releases."
+        description: "Label the resulting pull request so the CompatGate check accepts an update that removes or changes parts SDK users rely on. The PR and the report are produced either way. Only for deliberate breaking releases."
         type: boolean
         required: false
         default: false
@@ -21,8 +21,6 @@ jobs:
   UpdateClients:
     runs-on: ubuntu-latest
     timeout-minutes: 90
-    outputs:
-      breaking: ${{ steps.compat.outputs.breaking }}
     steps:
       - name: checkout repo
         uses: actions/checkout@v6
@@ -120,6 +118,7 @@ jobs:
           cp pysirius_api.py generated/PySirius
           cp pysirius_sdk.py generated/PySirius
           cp pysirius_helper.py generated/PySirius
+          cp pysirius_compat.py generated/PySirius
           
           chmod +x ./formatting/format_init.sh
           ./formatting/format_init.sh
@@ -128,6 +127,7 @@ jobs:
         run: |
           cp rsirius_sdk.R  generated/R/rsirius_sdk.R
           cp rsirius_helper.R  generated/R/rsirius_helper.R
+          cp rsirius_compat.R  generated/R/rsirius_compat.R
           echo >> generated/NAMESPACE
           echo "# SDK" >> generated/NAMESPACE
           echo "export(SiriusSDK)" >> generated/NAMESPACE
@@ -150,7 +150,9 @@ jobs:
         #   SDK    - the generated surface, which also catches breakage a generator upgrade causes
         #            while the spec stays byte identical
         # Removing something the previous release already marked [EXPERIMENTAL]/[INTERNAL]/
-        # [DEPRECATED] is allowed. This step only reports; the CompatGate job decides.
+        # [DEPRECATED] is allowed. This only reports, so that a breaking update still produces a
+        # branch, generated clients and a pull request to build the workaround on. The blocking
+        # check is the CompatGate job in RunTests.yml, which runs on the pull request itself.
         id: compat
         run: |
           out="${RUNNER_TEMP}/compat"
@@ -252,6 +254,14 @@ jobs:
           gh label create breaking-change --color B60205 \
             --description "Update breaks the generated SDK surface" --force
           gh pr edit ${{ steps.open-pr.outputs.pr_number }} --add-label breaking-change
+
+          # this is what allow_breaking_api_changes now does: the gate runs on the pull request, so
+          # the decision has to travel to the pull request as a label
+          if [ "${{ inputs.allow_breaking_api_changes }}" = "true" ]; then
+            gh label create allow-breaking-api-changes --color 0E8A16 \
+              --description "CompatGate accepts the breaking changes in this pull request" --force
+            gh pr edit ${{ steps.open-pr.outputs.pr_number }} --add-label allow-breaking-api-changes
+          fi
       - name: check if request has been created
         run: echo ${{steps.open-pr.outputs.pr_created}}
       - name: lock pull request
@@ -272,28 +282,3 @@ jobs:
           id=$(gh workflow run RunTests.yml --ref ${GITHUB_REF_NAME} -f sirius_version="$version" | grep -oP '(?<=runs/)\d+')
           echo "run ID of RunTests is: $id"
           gh run watch $id --exit-status --interval 10
-
-  CompatGate:
-    # Deliberately a separate job: UpdateClients must finish so the branch, the generated clients
-    # and the pull request exist and a workaround can be committed onto them. This job is the one
-    # that turns red, and is the check to require in the branch protection of the base branch.
-    needs: UpdateClients
-    if: always() && needs.UpdateClients.result == 'success'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Verify the update stays backward compatible
-        run: |
-          breaking="${{ needs.UpdateClients.outputs.breaking }}"
-          if [ -z "$breaking" ] || [ "$breaking" = "0" ]; then
-            echo "No breaking changes for existing SDK users."
-            exit 0
-          fi
-          if [ "${{ inputs.allow_breaking_api_changes }}" = "true" ]; then
-            echo "::warning::$breaking breaking change(s) accepted via allow_breaking_api_changes."
-            exit 0
-          fi
-          echo "::error::$breaking breaking change(s) for existing SDK users. See the pull request"
-          echo "::error::body or the compat-report artifact. Fix them, declare them with an API"
-          echo "::error::version bump, add them to .updater/tools/compat-accepted.json, or re-run"
-          echo "::error::with allow_breaking_api_changes: true."
-          exit 1

@@ -17,7 +17,7 @@
 #' @field rtApexSeconds  numeric [optional]
 #' @field dataQuality A optional feature quality flag that can be used to filter features to be shown in the gui or to be considered for further analysis. character [optional]
 #' @field mergedMs1  \link{BasicSpectrum} [optional]
-#' @field ms1Spectra List of MS1Spectra belonging to this feature. These spectra will be merged an only a representative  mergedMs1 spectrum will be stored in SIRIUS. At least one of these spectra should contain the  isotope pattern of the precursor ion.  Note: Will be ignored if 'mergedMs1' is given. list(\link{BasicSpectrum}) [optional]
+#' @field ms1Spectra List of MS1Spectra belonging to this feature. These spectra will be merged and only a representative  mergedMs1 spectrum will be stored in SIRIUS. At least one of these spectra should contain the  isotope pattern of the precursor ion.  Note: Will be ignored if 'mergedMs1' is given. list(\link{BasicSpectrum}) [optional]
 #' @field ms2Spectra List of MS/MS spectra that belong to this feature. list(\link{BasicSpectrum}) [optional]
 #' @importFrom R6 R6Class
 #' @importFrom jsonlite fromJSON toJSON
@@ -51,7 +51,7 @@ FeatureImport <- R6::R6Class(
     #' @param rtApexSeconds rtApexSeconds
     #' @param dataQuality A optional feature quality flag that can be used to filter features to be shown in the gui or to be considered for further analysis.
     #' @param mergedMs1 mergedMs1
-    #' @param ms1Spectra List of MS1Spectra belonging to this feature. These spectra will be merged an only a representative  mergedMs1 spectrum will be stored in SIRIUS. At least one of these spectra should contain the  isotope pattern of the precursor ion.  Note: Will be ignored if 'mergedMs1' is given.
+    #' @param ms1Spectra List of MS1Spectra belonging to this feature. These spectra will be merged and only a representative  mergedMs1 spectrum will be stored in SIRIUS. At least one of these spectra should contain the  isotope pattern of the precursor ion.  Note: Will be ignored if 'mergedMs1' is given.
     #' @param ms2Spectra List of MS/MS spectra that belong to this feature.
     #' @param ... Other optional arguments.
     initialize = function(`ionMass`, `charge`, `name` = NULL, `externalFeatureId` = NULL, `detectedAdducts` = NULL, `rtStartSeconds` = NULL, `rtEndSeconds` = NULL, `rtApexSeconds` = NULL, `dataQuality` = NULL, `mergedMs1` = NULL, `ms1Spectra` = NULL, `ms2Spectra` = NULL, ...) {

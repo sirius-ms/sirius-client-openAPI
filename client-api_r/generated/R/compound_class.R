@@ -13,7 +13,7 @@
 #' @field name Name of the compound class. character [optional]
 #' @field description Description of the compound class. character [optional]
 #' @field id Unique id of the class. Might be undefined for certain classification ontologies. integer [optional]
-#' @field probability prediction probability numeric [optional]
+#' @field probability Prediction probability. numeric [optional]
 #' @field index Absolute index of this property in the predicted vector/embedding integer [optional]
 #' @field parentId Unique id of the parent class. Might be undefined for certain classification ontologies. integer [optional]
 #' @field parentName Name of the parent compound class. character [optional]
@@ -43,7 +43,7 @@ CompoundClass <- R6::R6Class(
     #' @param name Name of the compound class.
     #' @param description Description of the compound class.
     #' @param id Unique id of the class. Might be undefined for certain classification ontologies.
-    #' @param probability prediction probability
+    #' @param probability Prediction probability.
     #' @param index Absolute index of this property in the predicted vector/embedding
     #' @param parentId Unique id of the parent class. Might be undefined for certain classification ontologies.
     #' @param parentName Name of the parent compound class.

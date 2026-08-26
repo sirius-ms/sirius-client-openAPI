@@ -40,7 +40,7 @@ class GuiApi:
     @validate_call
     def close_gui(
         self,
-        project_id: Annotated[StrictStr, Field(description="if project-space the GUI instance is connected to.")],
+        project_id: Annotated[StrictStr, Field(description="project-space the GUI instance is connected to.")],
         close_project: Optional[StrictBool] = None,
         _request_timeout: Union[
             None,
@@ -59,7 +59,7 @@ class GuiApi:
 
         Close GUI instance of given project-space if available.
 
-        :param project_id: if project-space the GUI instance is connected to. (required)
+        :param project_id: project-space the GUI instance is connected to. (required)
         :type project_id: str
         :param close_project:
         :type close_project: bool
@@ -96,6 +96,9 @@ class GuiApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "bool",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -111,7 +114,7 @@ class GuiApi:
     @validate_call
     def close_gui_with_http_info(
         self,
-        project_id: Annotated[StrictStr, Field(description="if project-space the GUI instance is connected to.")],
+        project_id: Annotated[StrictStr, Field(description="project-space the GUI instance is connected to.")],
         close_project: Optional[StrictBool] = None,
         _request_timeout: Union[
             None,
@@ -130,7 +133,7 @@ class GuiApi:
 
         Close GUI instance of given project-space if available.
 
-        :param project_id: if project-space the GUI instance is connected to. (required)
+        :param project_id: project-space the GUI instance is connected to. (required)
         :type project_id: str
         :param close_project:
         :type close_project: bool
@@ -167,6 +170,9 @@ class GuiApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "bool",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -182,7 +188,7 @@ class GuiApi:
     @validate_call
     def close_gui_without_preload_content(
         self,
-        project_id: Annotated[StrictStr, Field(description="if project-space the GUI instance is connected to.")],
+        project_id: Annotated[StrictStr, Field(description="project-space the GUI instance is connected to.")],
         close_project: Optional[StrictBool] = None,
         _request_timeout: Union[
             None,
@@ -201,7 +207,7 @@ class GuiApi:
 
         Close GUI instance of given project-space if available.
 
-        :param project_id: if project-space the GUI instance is connected to. (required)
+        :param project_id: project-space the GUI instance is connected to. (required)
         :type project_id: str
         :param close_project:
         :type close_project: bool
@@ -238,6 +244,9 @@ class GuiApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "bool",
+            '500': "ProblemDetail",
+            '404': "ProblemDetail",
+            '400': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -287,7 +296,8 @@ class GuiApi:
         if 'Accept' not in _header_params:
             _header_params['Accept'] = self.api_client.select_header_accept(
                 [
-                    'application/json'
+                    'application/json', 
+                    'application/problem+json'
                 ]
             )
 
@@ -365,6 +375,7 @@ class GuiApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "List[GuiInfo]",
+            '500': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -428,6 +439,7 @@ class GuiApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "List[GuiInfo]",
+            '500': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -491,6 +503,7 @@ class GuiApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "List[GuiInfo]",
+            '500': "ProblemDetail",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -532,7 +545,8 @@ class GuiApi:
         if 'Accept' not in _header_params:
             _header_params['Accept'] = self.api_client.select_header_accept(
                 [
-                    'application/json'
+                    'application/json', 
+                    'application/problem+json'
                 ]
             )
 
@@ -562,7 +576,7 @@ class GuiApi:
     @validate_call
     def open_gui(
         self,
-        project_id: Annotated[StrictStr, Field(description="of project-space the GUI instance will connect to.")],
+        project_id: Annotated[StrictStr, Field(description="project-space the GUI instance will connect to.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -580,7 +594,7 @@ class GuiApi:
 
         Open GUI instance on specified project-space and bring the GUI window to foreground.
 
-        :param project_id: of project-space the GUI instance will connect to. (required)
+        :param project_id: project-space the GUI instance will connect to. (required)
         :type project_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -614,6 +628,9 @@ class GuiApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '201': None,
+            '500': None,
+            '404': None,
+            '400': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -629,7 +646,7 @@ class GuiApi:
     @validate_call
     def open_gui_with_http_info(
         self,
-        project_id: Annotated[StrictStr, Field(description="of project-space the GUI instance will connect to.")],
+        project_id: Annotated[StrictStr, Field(description="project-space the GUI instance will connect to.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -647,7 +664,7 @@ class GuiApi:
 
         Open GUI instance on specified project-space and bring the GUI window to foreground.
 
-        :param project_id: of project-space the GUI instance will connect to. (required)
+        :param project_id: project-space the GUI instance will connect to. (required)
         :type project_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -681,6 +698,9 @@ class GuiApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '201': None,
+            '500': None,
+            '404': None,
+            '400': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -696,7 +716,7 @@ class GuiApi:
     @validate_call
     def open_gui_without_preload_content(
         self,
-        project_id: Annotated[StrictStr, Field(description="of project-space the GUI instance will connect to.")],
+        project_id: Annotated[StrictStr, Field(description="project-space the GUI instance will connect to.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -714,7 +734,7 @@ class GuiApi:
 
         Open GUI instance on specified project-space and bring the GUI window to foreground.
 
-        :param project_id: of project-space the GUI instance will connect to. (required)
+        :param project_id: project-space the GUI instance will connect to. (required)
         :type project_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -748,6 +768,9 @@ class GuiApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '201': None,
+            '500': None,
+            '404': None,
+            '400': None,
         }
         response_data = self.api_client.call_api(
             *_param,

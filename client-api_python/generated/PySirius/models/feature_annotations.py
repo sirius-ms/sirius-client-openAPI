@@ -34,7 +34,7 @@ class FeatureAnnotations(BaseModel):
     confidence_exact_match: Optional[float] = Field(default=None, description="Confidence Score that represents the confidence whether the top hit is correct.", alias="confidenceExactMatch")
     confidence_approx_match: Optional[float] = Field(default=None, description="Confidence Score that represents the confidence whether the top hit or a very similar hit (estimated by MCES distance) is correct.", alias="confidenceApproxMatch")
     expansive_search_state: Optional[ConfidenceMode] = Field(default=None, alias="expansiveSearchState")
-    specified_databases: Optional[List[Optional[StrictStr]]] = Field(default=None, description="List of databases that have been specified by for structure db search. Null if no structure db search has been performed.", alias="specifiedDatabases")
+    specified_databases: Optional[List[Optional[StrictStr]]] = Field(default=None, description="List of databases that have been specified for structure db search. Null if no structure db search has been performed.", alias="specifiedDatabases")
     expanded_databases: Optional[List[Optional[StrictStr]]] = Field(default=None, description="List of databases that have been used to expand search space during expansive search. Null if no structure db search has been performed.", alias="expandedDatabases")
     __properties: ClassVar[List[str]] = ["formulaAnnotation", "structureAnnotation", "compoundClassAnnotation", "confidenceExactMatch", "confidenceApproxMatch", "expansiveSearchState", "specifiedDatabases", "expandedDatabases"]
 

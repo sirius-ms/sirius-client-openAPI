@@ -28,7 +28,7 @@ import json
 import os
 import sys
 
-BREAKING, TOLERATED, ADDITIVE = "BREAKING", "TOLERATED", "ADDITIVE"
+BREAKING, MIGRATION, TOLERATED, ADDITIVE = "BREAKING", "MIGRATION", "TOLERATED", "ADDITIVE"
 ACCEPT_LIST = os.path.join(os.path.dirname(os.path.abspath(__file__)), "compat-accepted.json")
 
 UNSTABLE_MARKERS = ("[EXPERIMENTAL]", "[INTERNAL]", "[DEPRECATED]")
@@ -227,10 +227,11 @@ def main() -> int:
             finding["excuse"] = (f"accepted on {entry.get('added', '?')} by {entry.get('by', '?')}: "
                                  f"{entry.get('reason', '')}")
         elif old_version != new_version:
-            finding["severity"] = TOLERATED
+            # the bump declares it, but every SDK call site still breaks - MIGRATION, not TOLERATED
+            finding["severity"] = MIGRATION
             finding["excuse"] = f"declared by the API version bump {old_version} -> {new_version}"
 
-    buckets = {BREAKING: [], TOLERATED: [], ADDITIVE: []}
+    buckets = {BREAKING: [], MIGRATION: [], TOLERATED: [], ADDITIVE: []}
     for finding in findings:
         buckets[finding["severity"]].append(finding)
 
@@ -238,7 +239,7 @@ def main() -> int:
     print(f"operations : {len(operations(old))} -> {len(operations(new))}")
     print(f"schemas    : {len(schemas(old))} -> {len(schemas(new))}")
 
-    for title in (BREAKING, TOLERATED, ADDITIVE):
+    for title in (BREAKING, MIGRATION, TOLERATED, ADDITIVE):
         items = buckets[title]
         print(f"\n{title} ({len(items)})")
         for finding in items[:60]:
@@ -257,7 +258,11 @@ def main() -> int:
                       handle, indent=1)
 
     if not buckets[BREAKING]:
-        print("\nOK: no SDK breaking changes.")
+        if buckets[MIGRATION]:
+            print(f"\nOK for the gate, but {len(buckets[MIGRATION])} declared source breaking "
+                  f"change(s) that SDK users have to migrate to.")
+        else:
+            print("\nOK: no SDK breaking changes.")
         return 0
 
     if args.allow_breaking:
