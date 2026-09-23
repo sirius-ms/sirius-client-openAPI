@@ -39,3 +39,77 @@ Testing is automated in [PythonTest](.github/workflows/PythonTest.yml) and [RTes
 Note that our tests always assume the REST service running on port 8080 and that we start SIRIUS manually on this port. This is mainly due to GitHub runners having special layouts of e.g. file hierarchy. Automatic detection of port and PID by the `SiriusSDK` classes is tested in the conda-forge build process for Windows, macOS and Linux. If you make use of this, you need to remove the hardcoded port from the tests. 
 
 Note also that our tests can **not** be run in parallel, due to the nature of them running on one instance of SIRIUS and many making use of our [tomato example dataset](https://github.com/sirius-ms/sirius-client-openAPI/releases/download/tomato_small_projectspace/tomato_small.sirius). If you run locally, make sure you download the tomato dataset and check that **all** paths in the tests are correct for your setup. The tests often depend on project spaces (which are files), and incorrectly setting paths may lead to files not being cleaned up properly. We recomment starting with `test_projects_api` ([Python Script](client-api_python/generated/test/test_projects_api.py), [R Script](client-api_r/generated/tests/testthat/test_projects_api.R)) to see if your setup works.
+
+<!-- repo-structure:start -->
+## Repository structure
+
+```
+.
+├── .github/
+│   ├── workflows/
+│   │   ├── NewUpdate.yml
+│   │   ├── PythonTest.yml
+│   │   ├── RepoStructure.yml
+│   │   ├── RManualGeneration.yml
+│   │   ├── RTest.yml
+│   │   ├── RunTests.yml
+│   │   ├── SetupBranch.yml
+│   │   ├── updater.yml
+│   │   └── VersionTagger.yml
+│   └── CommitID
+├── .updater/
+│   ├── api/
+│   │   ├── api-docs-enums.json
+│   │   ├── api-docs-strings.json
+│   │   ├── packageVersion.txt
+│   │   ├── sdk-surface-python.json
+│   │   └── sdk-surface-r.json
+│   ├── clientTests/
+│   │   ├── CondaFeedstockMinimalTests/
+│   │   ├── CondaFeedstockSuperMinimalTests/
+│   │   └── Data/
+│   ├── config/
+│   │   ├── Python/
+│   │   └── R/
+│   ├── tools/
+│   │   ├── api_compat_check.py
+│   │   ├── compat-accepted.json
+│   │   ├── render_compat_report.py
+│   │   ├── run_compat_check.sh
+│   │   ├── sdk_compat_check.py
+│   │   ├── sdk_symbols.py
+│   │   ├── sdk_symbols_r.R
+│   │   └── update_repo_structure.py
+│   └── .ignoreMe
+├── client-api_python/
+│   ├── formatting/
+│   │   └── format_init.sh
+│   ├── generated/
+│   ├── templates/
+│   ├── LICENSE.txt
+│   ├── pysirius_api.py
+│   ├── pysirius_compat.py
+│   ├── pysirius_helper.py
+│   ├── pysirius_sdk.py
+│   └── README.md
+├── client-api_r/
+│   ├── generated/
+│   ├── patches/
+│   │   ├── insert_wait_for_job_completion_in_rsirius_api.sh
+│   │   └── list_syntax_fix.sh
+│   ├── templates/
+│   ├── LICENSE.txt
+│   ├── README.md
+│   ├── rsirius_compat.R
+│   ├── rsirius_helper.R
+│   └── rsirius_sdk.R
+├── .gitattributes
+├── .gitignore
+├── api-docs-enums.json
+├── api-docs-strings.json
+├── CONTRIBUTING.md
+├── LICENSE
+├── README.md
+└── SDK-COMPAT-PLAN.md
+```
+<!-- repo-structure:end -->

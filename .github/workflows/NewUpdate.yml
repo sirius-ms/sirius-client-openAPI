@@ -219,6 +219,14 @@ jobs:
           echo "generation done!"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Run RepoStructure
+        run: |
+          id=$(gh workflow run RepoStructure.yml --ref ${GITHUB_REF_NAME} | grep -oP '(?<=runs/)\d+')
+          echo "run ID of RepoStructure is: $id"
+          gh run watch $id --exit-status --interval 10
+          echo "README structure updated!"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: update file and create pull request
         id: open-pr
         env:
