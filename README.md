@@ -43,73 +43,73 @@ Note also that our tests can **not** be run in parallel, due to the nature of th
 <!-- repo-structure:start -->
 ## Repository structure
 
-```
+<pre>
 .
-├── .github/
-│   ├── workflows/
-│   │   ├── NewUpdate.yml
-│   │   ├── PythonTest.yml
-│   │   ├── RepoStructure.yml
-│   │   ├── RManualGeneration.yml
-│   │   ├── RTest.yml
-│   │   ├── RunTests.yml
-│   │   ├── SetupBranch.yml
-│   │   ├── updater.yml
-│   │   └── VersionTagger.yml
-│   └── CommitID
-├── .updater/
-│   ├── api/
-│   │   ├── api-docs-enums.json
-│   │   ├── api-docs-strings.json
-│   │   ├── packageVersion.txt
-│   │   ├── sdk-surface-python.json
-│   │   └── sdk-surface-r.json
-│   ├── clientTests/
-│   │   ├── CondaFeedstockMinimalTests/
-│   │   ├── CondaFeedstockSuperMinimalTests/
-│   │   └── Data/
-│   ├── config/
-│   │   ├── Python/
-│   │   └── R/
-│   ├── tools/
-│   │   ├── api_compat_check.py
-│   │   ├── compat-accepted.json
-│   │   ├── render_compat_report.py
-│   │   ├── run_compat_check.sh
-│   │   ├── sdk_compat_check.py
-│   │   ├── sdk_symbols.py
-│   │   ├── sdk_symbols_r.R
-│   │   └── update_repo_structure.py
-│   └── .ignoreMe
-├── client-api_python/
-│   ├── formatting/
-│   │   └── format_init.sh
-│   ├── generated/
-│   ├── templates/
-│   ├── LICENSE.txt
-│   ├── pysirius_api.py
-│   ├── pysirius_compat.py
-│   ├── pysirius_helper.py
-│   ├── pysirius_sdk.py
-│   └── README.md
-├── client-api_r/
-│   ├── generated/
-│   ├── patches/
-│   │   ├── insert_wait_for_job_completion_in_rsirius_api.sh
-│   │   └── list_syntax_fix.sh
-│   ├── templates/
-│   ├── LICENSE.txt
-│   ├── README.md
-│   ├── rsirius_compat.R
-│   ├── rsirius_helper.R
-│   └── rsirius_sdk.R
-├── .gitattributes
-├── .gitignore
-├── api-docs-enums.json
-├── api-docs-strings.json
-├── CONTRIBUTING.md
-├── LICENSE
-├── README.md
-└── SDK-COMPAT-PLAN.md
-```
+├── <a href=".github">.github/</a>
+│   ├── <a href=".github/workflows">workflows/</a>
+│   │   ├── <a href=".github/workflows/NewUpdate.yml">NewUpdate.yml</a>
+│   │   ├── <a href=".github/workflows/PythonTest.yml">PythonTest.yml</a>
+│   │   ├── <a href=".github/workflows/RepoStructure.yml">RepoStructure.yml</a>
+│   │   ├── <a href=".github/workflows/RManualGeneration.yml">RManualGeneration.yml</a>
+│   │   ├── <a href=".github/workflows/RTest.yml">RTest.yml</a>
+│   │   ├── <a href=".github/workflows/RunTests.yml">RunTests.yml</a>
+│   │   ├── <a href=".github/workflows/SetupBranch.yml">SetupBranch.yml</a>
+│   │   ├── <a href=".github/workflows/updater.yml">updater.yml</a>
+│   │   └── <a href=".github/workflows/VersionTagger.yml">VersionTagger.yml</a>
+│   └── <a href=".github/CommitID">CommitID</a>
+├── <a href=".updater">.updater/</a>
+│   ├── <a href=".updater/api">api/</a>
+│   │   ├── <a href=".updater/api/api-docs-enums.json">api-docs-enums.json</a>
+│   │   ├── <a href=".updater/api/api-docs-strings.json">api-docs-strings.json</a>
+│   │   ├── <a href=".updater/api/packageVersion.txt">packageVersion.txt</a>
+│   │   ├── <a href=".updater/api/sdk-surface-python.json">sdk-surface-python.json</a>
+│   │   └── <a href=".updater/api/sdk-surface-r.json">sdk-surface-r.json</a>
+│   ├── <a href=".updater/clientTests">clientTests/</a>
+│   │   ├── <a href=".updater/clientTests/CondaFeedstockMinimalTests">CondaFeedstockMinimalTests/</a>
+│   │   ├── <a href=".updater/clientTests/CondaFeedstockSuperMinimalTests">CondaFeedstockSuperMinimalTests/</a>
+│   │   └── <a href=".updater/clientTests/Data">Data/</a>
+│   ├── <a href=".updater/config">config/</a>
+│   │   ├── <a href=".updater/config/Python">Python/</a>
+│   │   └── <a href=".updater/config/R">R/</a>
+│   ├── <a href=".updater/tools">tools/</a>
+│   │   ├── <a href=".updater/tools/api_compat_check.py">api_compat_check.py</a>
+│   │   ├── <a href=".updater/tools/compat-accepted.json">compat-accepted.json</a>
+│   │   ├── <a href=".updater/tools/render_compat_report.py">render_compat_report.py</a>
+│   │   ├── <a href=".updater/tools/run_compat_check.sh">run_compat_check.sh</a>
+│   │   ├── <a href=".updater/tools/sdk_compat_check.py">sdk_compat_check.py</a>
+│   │   ├── <a href=".updater/tools/sdk_symbols.py">sdk_symbols.py</a>
+│   │   ├── <a href=".updater/tools/sdk_symbols_r.R">sdk_symbols_r.R</a>
+│   │   └── <a href=".updater/tools/update_repo_structure.py">update_repo_structure.py</a>
+│   └── <a href=".updater/.ignoreMe">.ignoreMe</a>
+├── <a href="client-api_python">client-api_python/</a>
+│   ├── <a href="client-api_python/formatting">formatting/</a>
+│   │   └── <a href="client-api_python/formatting/format_init.sh">format_init.sh</a>
+│   ├── <a href="client-api_python/generated">generated/</a>
+│   ├── <a href="client-api_python/templates">templates/</a>
+│   ├── <a href="client-api_python/LICENSE.txt">LICENSE.txt</a>
+│   ├── <a href="client-api_python/pysirius_api.py">pysirius_api.py</a>
+│   ├── <a href="client-api_python/pysirius_compat.py">pysirius_compat.py</a>
+│   ├── <a href="client-api_python/pysirius_helper.py">pysirius_helper.py</a>
+│   ├── <a href="client-api_python/pysirius_sdk.py">pysirius_sdk.py</a>
+│   └── <a href="client-api_python/README.md">README.md</a>
+├── <a href="client-api_r">client-api_r/</a>
+│   ├── <a href="client-api_r/generated">generated/</a>
+│   ├── <a href="client-api_r/patches">patches/</a>
+│   │   ├── <a href="client-api_r/patches/insert_wait_for_job_completion_in_rsirius_api.sh">insert_wait_for_job_completion_in_rsirius_api.sh</a>
+│   │   └── <a href="client-api_r/patches/list_syntax_fix.sh">list_syntax_fix.sh</a>
+│   ├── <a href="client-api_r/templates">templates/</a>
+│   ├── <a href="client-api_r/LICENSE.txt">LICENSE.txt</a>
+│   ├── <a href="client-api_r/README.md">README.md</a>
+│   ├── <a href="client-api_r/rsirius_compat.R">rsirius_compat.R</a>
+│   ├── <a href="client-api_r/rsirius_helper.R">rsirius_helper.R</a>
+│   └── <a href="client-api_r/rsirius_sdk.R">rsirius_sdk.R</a>
+├── <a href=".gitattributes">.gitattributes</a>
+├── <a href=".gitignore">.gitignore</a>
+├── <a href="api-docs-enums.json">api-docs-enums.json</a>
+├── <a href="api-docs-strings.json">api-docs-strings.json</a>
+├── <a href="CONTRIBUTING.md">CONTRIBUTING.md</a>
+├── <a href="LICENSE">LICENSE</a>
+├── <a href="README.md">README.md</a>
+└── <a href="SDK-COMPAT-PLAN.md">SDK-COMPAT-PLAN.md</a>
+</pre>
 <!-- repo-structure:end -->
