@@ -6,9 +6,11 @@ generated code are collapsed to a single line.
 Usage: python3 .updater/tools/update_repo_structure.py [--check]
 """
 import argparse
+import html
 import subprocess
 import sys
 from pathlib import Path
+from urllib.parse import quote
 
 ROOT = Path(__file__).resolve().parents[2]
 README = ROOT / "README.md"
@@ -53,8 +55,9 @@ def render(node, prefix="", path="", depth=1):
     for i, (name, child) in enumerate(items):
         full = f"{path}{name}"
         last = i == len(items) - 1
-        label = name + ("/" if child is not None else "")
-        lines.append(f"{prefix}{'└── ' if last else '├── '}{label}")
+        label = html.escape(name + ("/" if child is not None else ""))
+        link = f'<a href="{quote(full)}">{label}</a>'
+        lines.append(f"{prefix}{'└── ' if last else '├── '}{link}")
         if child and depth < MAX_DEPTH and full not in COLLAPSE:
             lines += render(child, prefix + ("    " if last else "│   "), full + "/", depth + 1)
     return lines
@@ -65,7 +68,8 @@ def section(files):
     return (
         f"{START}\n"
         "## Repository structure\n\n"
-        f"```\n.\n{body}\n```\n{END}\n"
+        # <pre> instead of a code block, GitHub renders links only there
+        f"<pre>\n.\n{body}\n</pre>\n{END}\n"
     )
 
 
