@@ -1,0 +1,20 @@
+# Regenerates the "Repository structure" section at the end of README.md from the tracked files.
+# Runs as the last update step of NewUpdate, and can be started by hand.
+
+name: RepoStructure
+
+on: [workflow_dispatch]
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+    - uses: actions/checkout@v6
+    - name: Update repository structure in README
+      run: python3 .updater/tools/update_repo_structure.py
+    - name: update files and push to remote
+      uses: stefanzweifel/git-auto-commit-action@v7
+      with:
+        commit_message: Auto-Updated Repository Structure
+        file_pattern: README.md
